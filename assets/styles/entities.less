@@ -1,0 +1,1423 @@
+/********************************************************************************
+    Incluso Digital CSS Entities
+    Description:    This file provides CSS rules for all the business entities 
+                    of the Incluso Digital Application.
+    Uses:           bootstrap.css, base.css
+
+    Color Palette:  Please look at base.css
+    Index:
+        00. $Text n containers
+        01. $video-gallery
+        02. $my-progress
+        03. $current-satge
+        04. $my-badges
+        05. $user-avatar
+        06. $top-users
+********************************************************************************/
+@import "less-utilities.less";
+
+
+/* xs viewport */
+@media screen {
+
+ 
+
+    .incluso-app {
+
+        /***********************************************************************
+         01. $text n containers
+         Description: CSS for most used parts
+        ************************************************************************/
+            .to-top{
+                bottom: 20px;
+                color: #f00;
+                left: 43.5%;
+                left: ~"calc(50% - 6vw)";
+                position: absolute;
+                text-align: center;
+                color: @clr-greenLight;
+            }
+            img{
+                width:100%;
+            }
+            .txt-title{
+                color: white;
+                font-weight: bold;
+                margin: 5% 10%;
+                font-size:120%;
+            }
+            .txt-renglon{
+                color: white;
+                font-weight: bold;
+                margin: 0% 10%;
+                padding: 5% 0;
+                width:80%;
+            }
+            .txt-bigger{
+                font-size: 150%;
+                line-height: normal;
+            }
+            .subtitle{
+                color: @clr-greenLight;
+                font-size: 150%;
+                padding: 5% 10%;
+                text-transform: uppercase;
+            }
+            .min-pad{
+                padding: 5px 0px;
+            }
+            .green-giant{
+                color: #0f9847;
+                font-size: 1000%;
+            }
+            .green-pill{    
+                border: 1px solid #0f9847;
+                border-radius: 25px;
+                margin: -5px -10px;
+                padding: 5px 10px;           
+                color: #0f9847;
+            }
+            .green{           
+                color: #0f9847 !important;                
+            }
+            .red{
+                color:#ef4823 !important;
+            }
+            .white{
+                color:white !important;
+            }
+            .pill{
+                border: 2px solid rgba(255, 255, 255, 0.3);
+                border-radius: 200px;
+                color: rgba(255, 255, 255, 0.75);
+                line-height: normal;
+                margin: 5vw 10vw;
+                padding: 2vw 3vw 7vw;
+            }
+            .sm-pill{
+                border: 1px solid #bbd331;
+                border-radius: 100px;
+                color: #bbd331;
+                margin: -0.3vw -1vw;
+                padding: 0.3vw 1vw;
+            }
+            .centered{
+                text-align: center;  
+                .spinner{
+                    max-width: 79%;
+                    margin: 0 auto;
+                    .circle{
+                        height: 56%;
+                        left: 23%;
+                        position: absolute;
+                        text-align: center;
+                        top: 19%;
+                        width: 54%;
+                    }
+                } 
+                
+            }
+            .distribuido{
+                display: inline-flex;
+                justify-content: space-between;
+                a{
+                    padding:.5%;
+                }
+            }
+            .fl-left{
+                float:left;
+            }
+            .fl-right{
+                float:right;
+            }
+            .notw{
+                opacity:.5;
+            }
+            .white{
+                    color:white;
+            }
+            .hangar-bay{
+                background-image:url('@{url-images}/bg-hangarbay.jpg');
+                background-color: #24282a;
+                background-repeat: no-repeat;
+                background-size: cover;
+
+                #ship{
+
+                    display: block;
+                    width: 100%;
+                    min-height: 200px;
+                    padding-bottom: 40px;
+
+                    img{
+                        margin: 5% 20%;
+                        width: 60%;
+                    }
+                }
+
+            }
+            .blueprint{
+                background-image:url('@{url-images}/bg-blueprint-ship.jpg');
+                background-color: #112845;
+                background-position: -1px 0px;
+                background-repeat: no-repeat;
+                background-size: 100% auto;
+                border-bottom: 10px solid #24282a;
+            }
+            .starway{
+                background: #1f2733;
+                background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
+                background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
+                background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );                
+                background-image:url('@{url-images}/bg-stars-02.png');
+                background-size: 100% auto;
+            }
+            .progreso{
+                background-image:url('@{url-images}/bg-progress-spinn.jpg');
+                background-size:cover;
+                background-color: #24282A;
+                padding-top: 5px;
+                padding-bottom: 10px;
+            }
+            .spinner{    
+                max-width: 49%;
+                padding: 5% 9% 10%;
+                position: relative;
+                .circle{
+                    background-color: rgba(13, 15, 19, 0.55);
+                    border-radius: 50%;
+                    display: block;
+                    height: 46%;
+                    left: 28%;
+                    position: absolute;
+                    text-align: center;
+                    top: 22%;
+                    width: 44%;
+                }
+                .text{
+                    color: white;
+                    font-size: 20px;
+                    font-weight: bold;
+                    left: 39.5%;
+                    left: ~"calc(50% - 19px)";
+                    position: absolute;
+                    top: 39.5%;
+                    top: ~"calc(50% - 25px)";
+                    width: auto;
+                }
+                @i: 0;
+                .loop (@i) when (@i <= 100) {
+                    &[data-progress="@{i}"] {
+                        background-image: url("@{url-images}/prcnt/@{i}.png");
+                    }
+                    .loop(@i + 1);
+                }
+                .loop(@i);
+            }
+            .holoproj{
+                background-image:url('@{url-images}/bg-holoproj-top.jpg');
+                background-size:cover;
+                background-color: #24282A;
+                background-position: 0 100%;
+                padding: 10px 0 60px;
+                position: relative;
+                .light{
+                    position:absolute;
+                    bottom:0;
+                    animation: 2s ease .5s normal none infinite running flicker;
+                    width: 100%;
+                    img{
+                        width: 100%;
+                    }
+                }
+
+            }
+            .jector{
+                background-image:url('@{url-images}/bg-holoproj-bot.jpg');
+                background-size:cover;
+                background-color: #24282A;
+                background-position: 0 0;
+                padding-top: 60px;
+            }
+            .parts{
+                background-image:url('@{url-images}/bg-footer-ship.jpg');
+                background-position: 0 -3px;
+                background-size: cover;
+                border-top: 2px solid #2a2f32;
+                padding: 20px 0;
+            }
+            .add{
+                border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+                border-top: 2px solid rgba(255, 255, 255, 0.3);
+                color: white;
+                font-size: 150%;
+                margin: 4% 10%;
+                padding: 2% 3%;
+                span{
+                    padding-left:3%;
+                }
+            }
+            .up-line{
+                border-top:2px solid rgba(255, 255, 255, 0.3);
+                margin: 0 10%;
+                padding: 4% 0;
+                width: 80%;
+            }
+            .part{    
+                display: inline-flex;  
+                z-index: 2;  
+                align-items: center;    
+                justify-content: space-between;
+                background: #1f2733;
+                border-radius: 5px;
+                color: white;
+                font-size: 120%;
+                margin: 2% 10%;
+                padding: 3% 5%;
+                width: 80%;
+                position: relative;
+                background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
+                background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
+                background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );
+                .date{
+                    color: rgba(255, 255, 255, 0.3);
+                   font-size: 70%;
+                }
+                .icomoon{
+                    color:@clr-greenLight;
+                    font-size:150%;
+                    padding-right: 5%;
+                }
+                .icon-checked-join{
+                    color:@clr-greenicon;
+                }
+                .icon-wrong{
+                    color:gray;
+                }
+                div{
+                    display: inherit;
+                }
+                span{
+                    line-height: normal;
+                    display: inline-flex;   
+                }
+                &.list{
+                    display: block;
+                }
+                &.part2{
+                    background: -moz-radial-gradient(center, ellipse cover,  rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+                    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(31, 39, 51, 0.68)), color-stop(100%,rgba(20, 25, 33, 0.68)));
+                    background: -webkit-radial-gradient(center, ellipse cover,  rgba(31, 39, 51, 0.68) 0%,rgba(20, 25, 33, 0.68) 100%);
+                    background: -o-radial-gradient(center, ellipse cover,  rgba(31, 39, 51, 0.68) 0%,rgba(20, 25, 33, 0.68) 100%);
+                    background: -ms-radial-gradient(center, ellipse cover,  rgba(31, 39, 51, 0.68)3 0%,rgba(20, 25, 33, 0.68) 100%);
+                    background: radial-gradient(ellipse at center,  rgba(31, 39, 51, 0.68) 0%,rgba(20, 25, 33, 0.68) 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(31, 39, 51, 0.68)', endColorstr='rgba(20, 25, 33, 0.68)',GradientType=1 );
+                    margin-top:-4%;
+                    z-index:1;
+                    .icomoon{
+                        font-size: 100%;
+                    }
+                }
+                &.part3{
+                    display: flex;
+                    flex-flow: row wrap;
+                    align-items: stretch;
+                    & > div > div{
+                        display: block;
+                        font-size: 3vw;
+                        text-align: center;
+                        width: 32%;
+                    }
+                }
+                hr{
+                    width:100%;
+                    border-color: rgba(128, 152, 160,.5);;
+                }
+            }
+            .showmore{
+                background: rgba(28, 28, 28, 0.5) none repeat scroll 0 0;
+                color: rgb(8, 178, 144);
+                justify-content: flex-start;
+                font-size: 4.5vw;
+                i.icomoon{
+                    color: rgb(8, 178, 144);
+                }
+            }
+            .ordeon{
+                display: none;
+            }
+            .wall{
+                .part{
+                    display: block; 
+                    justify-content: unset; 
+                    padding: 0px;
+                    .author{
+                        width: 100%; 
+                        display: inline-flex; 
+                        border-bottom: 2px solid rgba(255, 255, 255, 0.08); 
+                        margin-bottom: 3%; 
+                        padding: 2% 5%;
+                        img{
+                            margin-right: 3%; 
+                            width: 15%;
+                        }
+                        div{
+                            display:block;
+                            span, div{
+                                color:gray;
+                            }
+                        }
+                    }
+                    .block{
+                        border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+                        margin: 0 5%;
+                        padding: 3% 0;
+                        width:90%;
+                    }
+                    .coment{
+                        display: inline-flex;
+                        img{
+                            margin-right: 5%; 
+                            width: 20%;
+                            height: 20%;
+                        }
+                        div{
+                            display:block;
+                            font-size: 80%;
+                            span{
+                                color:gray;
+                            }
+                            div{
+                                font-size: 120%;
+                                padding-top: 2%;
+                            }
+                        } 
+                    }
+                    .social{
+                        width: 100%; 
+                        border-top: 2px solid rgba(255, 255, 255, 0.08); 
+                        display: inline-block;
+                        div{
+                            display: inline-flex;
+                            justify-content: space-around;
+                            padding: 3% 5%;
+                            width: 49%;
+                            font-size:80%;
+                            &:nth-child(1){
+                                border-right: 2px solid rgba(255, 255, 255, 0.08);
+                                color:#E80D81;
+                                i{
+                                    color:#E80D81;
+                                    margin: 0;
+                                    padding:0;
+                                }
+                            }
+                            &:nth-child(2){
+                                color:#08B190;
+                                i{
+                                    color:#08B190;
+                                    margin: 0;
+                                    padding:0;
+                                }
+                            }
+                        }
+                    }
+                }
+                .vermas{
+                    border: 2px dashed rgba(255, 255, 255, 0.25);
+                    border-radius: 6px;
+                    display: inline-flex;
+                    justify-content: space-between;
+                    margin: 2% 10%;
+                    padding: 2% 5%;
+                    width: 80%;
+                    color:white;
+                    i{
+                        color:white;
+                        padding:0;
+                    }
+                }
+            }
+            .modalDialog {
+                position: relative;
+                font-family: Arial, Helvetica, sans-serif;
+                z-index: 99999;
+                opacity:0;
+                -webkit-transition: opacity 400ms ease-in;
+                -moz-transition: opacity 400ms ease-in;
+                transition: opacity 400ms ease-in;
+                pointer-events: none;
+                .txt-renglon{
+                    color: @clr-orangeLighter;
+                }
+                &:target {
+                    opacity:1;
+                    pointer-events: auto;
+                    &:before {
+                      content:"";
+                      display:block;
+                      height:25vw;
+                      margin:-25vw 0 0;
+                    }
+                }
+                > div {
+                    width: 100%;
+                    position: absolute;
+                    margin: 0;
+                    padding: 2% 0;
+                    background: #fff;
+                    .add{
+                        border-color: rgba(133,133,133,.2);
+                        color: #9c9c9c;
+                        padding: 2% 0;    
+                        display: flex;
+                        justify-content: space-between;
+                        input{
+                            border: 0px solid transparent;
+                        }
+                        i{
+                            color: #9c9c9c;
+                        }
+                    }        
+                }
+            }
+            .close {    
+                width: 0; 
+                height: 0; 
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-bottom: 10px solid white;
+                position: absolute;
+                right: ~"calc(50% - 3px)";
+                top: -10px;
+                opacity: 1;
+            }
+            .close:hover { 
+                border-bottom: 10px solid black;
+            }
+            .sharer{
+                display: inline-block;
+                height: 15vw;
+                margin: 6vw 0;
+                position: relative;
+                .icon{
+                    background-color: @clr-greenMedium;
+                    border: 2px solid gray;
+                    border-radius: 50%;
+                    bottom: 0;
+                    font-size: 7vw;
+                    height: 12vw;
+                    left: -4vw;
+                    line-height: 11vw;
+                    padding: 0vw;
+                    position: absolute;
+                    top: 0;
+                    width: 12vw;
+                    color:black;
+                }
+                .txt{
+                    background-color: gray;
+                    border-radius: 100px;
+                    color: white;
+                    line-height: 8vw;
+                    margin: 2vw 0;
+                    padding: 0 3vw 0 9vw;
+                }
+                &.active{
+                    .icon{
+                        background-color: @clr-orangeDark;
+                        color:white;
+                    }
+                    .txt{
+                        background-color: @clr-gray-asphalt;
+                    }
+                }
+            }
+
+
+        /***********************************************************************
+         00. $points
+         Description: CSS to represent a user's score in points and an icon
+        ************************************************************************/
+        .user-points {
+            display: inline-block;
+            width: auto;
+            padding: 3px 8px;
+            margin-left: 3px;
+            width:auto; height: auto;
+            background-color: transparent;
+            border: 3.2px solid @clr-green;
+            .border-radius(21px);
+            color: @clr-green;
+            font-size: 24px;
+            font-weight: bold;
+
+            .icomoon {
+                color: @clr-green;
+                font-size: 80%;
+                font-weight: bold;
+            }
+        }
+        /***********************************************************************/
+
+
+        /***********************************************************************
+         01. $video-gallery
+         Description: CSS for video gallery component
+        ************************************************************************/
+        .video-gallery {
+            margin-top: 10px;
+
+            .stage {
+                display: block;
+                position: relative;
+                padding: 0;
+                margin: 0 auto;
+                width: 97%;
+                height: auto;
+
+                .icon {
+                    display: block;
+                    position: absolute;
+                    z-index: 2;
+                }
+                .icon-close {
+                    right: -22px; top: -22px;
+                    padding: 0;
+                    margin: 0;
+                    width: 46px;
+                    height: 46px;
+                    border: 5px solid @clr-black;
+                    .border-radius-circle ();
+                    background-color:@clr-orange;
+                    background-image: url('@{url-images}/ics-gentera.png');
+                    background-position: center -127px;
+                    background-repeat: no-repeat;
+                }
+                .icon-play {
+                    display: none;
+                    left: 50%; top: 50%;
+                    padding: 0;
+                    margin: -41px 0 0 -41px;
+                    width: 82px;
+                    height: 82px;
+                    border: none;
+                    background-color: transparent;
+                    background-image: url('@{url-images}/icn-video-play.png');
+                    background-position: center center;
+                }                 
+            }
+            .stage.perform {
+                .player {display: block;}
+                .carousel {display: none;}
+            }
+            .player {
+                display: none;
+                position: relative;
+                overflow: hidden;
+                padding:0;
+                margin: 0 auto;
+                width: inherit; 
+                height: inherit;
+                border:6px solid @clr-black;
+                .border-radius(6px);
+            }
+            .carousel {
+                display: block;
+                width: 320px; 
+                height: 180px;
+                margin: 0 auto;
+            }
+        }
+        /***********************************************************************/
+
+
+        /***********************************************************************
+         02. $my-progress
+         Description: CSS for video gallery component
+        ************************************************************************/        
+        .my-progress {
+            margin-top: 70px;
+
+            .progress {
+                display: block;
+                position: relative;
+                padding: 0 ;
+                margin: 32px auto 18px;
+                width: 203px;
+                height: 203px;
+                background-color: transparent;
+                background-image: url('@{url-images}/img-progress-component.png');
+                background-position: center center;
+            }
+            label {
+                display: block;
+                margin-top: 81px;
+                width: auto; 
+                height: auto;
+                color: @clr-white;
+                font-family: Robot, Arial, Sans-serif;
+                font-size: 30px;
+                font-weight: 600;
+                text-align: center;
+            }
+            .stage {
+                display: block;
+                padding:1px 0;
+                margin: 5px 0;
+            }
+            img {
+                display: block;
+                padding: 0;
+                margin: 0 auto;
+                width: auto; 
+                height: auto;
+            }
+        }
+        /***********************************************************************/     
+
+
+        /***********************************************************************
+         03. $current-satge
+         Description: CSS for video gallery component
+        ************************************************************************/   
+        .current-satge {
+            margin-top: 26px;
+
+            h3 {
+                margin-bottom: 6px;
+            }
+            .btn {
+                display: block;
+                margin: 32px auto;
+            }
+        }
+        /***********************************************************************/ 
+
+
+        /***********************************************************************
+         04. $my-badges
+         Description: CSS for user badges component
+        ************************************************************************/  
+        .my-badges {
+            z-index: 9;
+            margin-top: 147px;
+            background: #335565;
+            background: -moz-linear-gradient(top,  #335565 0%, #2c4c5b 100%);
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#335565), color-stop(100%,#2c4c5b));
+            background: -webkit-linear-gradient(top,  #335565 0%,#2c4c5b 100%);
+            background: -o-linear-gradient(top,  #335565 0%,#2c4c5b 100%);
+            background: -ms-linear-gradient(top,  #335565 0%,#2c4c5b 100%);
+            background: linear-gradient(to bottom,  #335565 0%,#2c4c5b 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#335565', endColorstr='#2c4c5b',GradientType=0 );
+            &:before{
+                background-color: transparent;
+                background-image: url("@{url-images}/bg-badges-pre.png");
+                background-position: 0 100%;
+                background-size: cover;
+                content: " ";
+                height: 54%;
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: -54%;
+            }
+            &:after{
+                background-color: transparent;
+                background-image: url("@{url-images}/bg-badges-post.png");
+                background-size: cover;
+                content: " ";
+                height: 54%;
+                left: 0;
+                position: absolute;
+                right: 0;
+                bottom: -53.5%;
+            }
+            h3 {
+                margin-bottom: 15px;
+            }
+            img {
+                display: block;
+                padding: 0;
+                margin: 0 auto;
+
+            } 
+            p {
+                margin-top: 15px;
+            }    
+        } 
+        /***********************************************************************/ 
+
+
+        /***********************************************************************
+         05. $user-avatar
+         Description: CSS to represent a user avatar picture with info
+        ************************************************************************/  
+        .user-container{
+            display: flex; 
+            justify-content: center;
+        }
+        .active {
+            .user-avatar{
+                figure {
+                    border:0px solid #171f20;
+                }
+                figcaption{
+                    border-color: #171f20;
+                }
+            }
+        }
+        .user-avatar {
+            display: block;
+            position: relative;
+            overflow: visible;
+            padding: 0;
+            margin: 0 auto;
+            width: 100%;
+            height: auto;
+
+            figure {
+                overflow: hidden;
+                background-color: transparent;
+                /*border: 10px solid transparent; */
+            }            
+            img {
+                display: block;
+                padding: 0; 
+                margin: 0; 
+                border:none; 
+                max-width:100%;     
+                border-radius:50%;          
+            }
+            figcaption {
+                padding: 0;
+                margin: -3vw auto 0;
+                width: 6vw;
+                height: 6vw;
+                background-color: @clr-blueMedium;
+                /*border: 5px solid @clr-green;*/
+                .border-radius-circle ();                      
+                color: @clr-green;
+                font-family: Roboto, Sans-serif, Arial;
+                font-weight: 700;
+                line-height: 6vw;
+                text-align: center;
+                position:relative;
+            }
+            button {
+                display: block;
+                position: absolute;
+                top:41%;
+                /*right: -50px;*/   right: -32%; 
+                padding:5px;
+                margin:0;
+                background:none transparent;
+                border:none;
+                line-height: 1;
+
+                .icomoon {
+                    color: @clr-green;
+                    /*font-size: 28px;*/ font-size: 6vw;
+                    font-weight: bold;
+                }
+            }
+        }
+        /***********************************************************************/   
+
+
+        /***********************************************************************
+         06. $user-data
+         Description: CSS to represent the user's data section beneath to avatar
+        ************************************************************************/          
+        .user-data {
+            display: block;
+            position: relative;
+            padding: 18px 0;
+            margin: 60px auto 0;
+            /*width: 370px; */
+            width: auto;
+            height: auto;
+            background-color: @clr-blueDark;
+            .border-radius(6px);
+
+            p {
+                padding:0;
+                margin:0 auto;
+                color: @clr-white;
+                font-family: Roboto, Sans-serif, Arial;
+                font-size: 1.2em; /*18px;*/
+                font-weight: 500;
+                line-height: 1.4;
+                text-transform: capitalize;
+            }
+            label {
+                padding: 0;
+                margin: 0;
+                color: @clr-blueLight;
+                font-weight: inherit;
+            }
+            span {
+                padding: 0;
+                margin: 0;                    
+                color: inherit;
+                font-weight: 700;
+            } 
+            .inline-list {
+                margin-top: 10px;
+                margin-bottom: 3px;
+                text-align: center;
+            }
+            li {
+                display: inline;
+                float: none;
+                padding: 3px 8px;
+                margin-left:3px;
+                background-color: transparent;
+                border: 2px solid @clr-green;
+                .border-radius(15px);
+                color: @clr-green;
+
+                span {
+                    color: inherit;
+                    font-family: Play, Sans-serif, Arial;
+                    font-weight: 700;
+                }
+            }
+            .points {
+                position: relative;
+            }
+        }
+        /***********************************************************************/        
+
+
+        /***********************************************************************
+         06. $top-users
+         Description: CSS to represent the tabbed list of top users and current
+        ************************************************************************/ 
+        .top-users {
+            margin-top: 164px;
+            margin-bottom:0;
+            background: #1e2e2e;
+            &:before{
+                background-color: transparent;
+                background-image: url("@{url-images}/bg-topusers-pre.png");
+                background-position: 50% 0;
+                background-size: contain;
+                content: " ";
+                height: 24%;
+                left: 0;
+                position: absolute;
+                right: 0;
+                top: -24%;
+            }
+
+            .head,
+            .body {
+                padding: 0;
+                margin: 0 auto;
+            }
+            .row {
+                margin-left: 0;
+                margin-right: 0;
+
+                &> div {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+            .user-avatar {
+                position: relative;
+                overflow: visible;
+            }
+
+            .arrow-up {
+                display: none;
+                position: absolute;
+                bottom:-63px; left: 52%;
+                margin-left:-20px;
+                .css-arrow-up(20px, @clr-blueDark);
+            }
+            .current-user {
+                /*width: 370px;*/
+                padding: 0;
+                margin: 40px auto 0;
+
+                a {
+                    display: block;
+                    margin: 0 auto;
+                    /*width: 115px;*/
+                    width: auto;
+                }
+                .user-data {
+                    margin-top: 8px;
+                    height: auto;
+                    background-color: transparent;
+                }
+            }
+            [data-content-id] {
+                display: none;
+            }
+            .tabs {
+                display: block; 
+                padding: 0;
+                margin: 0 auto;
+                /*width: 370px;  */              
+                &[data-tab-selected="1"] {
+                    [data-tab-id="1"] {
+                        .arrow-up {
+                            display: block;
+                        }
+                        figcaption {
+                            background-color: @clr-blueDark;
+                        }
+                    }
+                    [data-content-id="1"] {
+                        display: block;
+                    }
+                    
+                }
+                &[data-tab-selected="2"] {
+                    [data-tab-id="2"] {
+                        .arrow-up {
+                            display: block;
+                        }
+                        figcaption {
+                            background-color: @clr-blueDark;
+                        }
+                    }
+                    [data-content-id="2"] {
+                        display: block;
+                    }                    
+                    
+                } 
+                &[data-tab-selected="3"] {
+                    [data-tab-id="3"] {
+                        .arrow-up {
+                            display: block;
+                        }
+                        figcaption {
+                            background-color: @clr-blueDark;
+                        }
+                    }
+                    [data-content-id="3"] {
+                        display: block;
+                    }                    
+                    
+                }
+            }   
+        }
+        /***********************************************************************/
+
+
+        /***********************************************************************
+         07. $ilustration
+         Description: CSS to represent an area to place a graphic illustration
+        ************************************************************************/
+        .ilustration {
+            background-color: #1e2e2e;
+            background-image: url("@{url-images}/bg-ilustration-launchpad.png");
+            background-position: 0 100%;
+            background-repeat: no-repeat;
+            background-size: cover;
+            .space-ship{
+                padding: 26% 16% 7.5%;
+            }
+        }
+        /***********************************************************************/
+
+
+        /***********************************************************************
+         $user-dashboard
+         Description: CSS to represent an area to place a graphic illustration
+        ************************************************************************/
+        .user-dashboard {
+            padding-top: 150px;
+            height: 858px;
+            /* .gradient-sky (); */
+            /*background: url('@{url-images}/img-profile-spaceship-dashboard-top.png') left top no-repeat, 
+                        url('@{url-images}/img-profile-spaceship-dashboard-bottom.png') left bottom no-repeat, 
+                        url('@{url-images}/img-bg-profile-sky.jpg') center top repeat-y;*/
+
+            background: url('@{url-images}/img-profile-spaceship-dashboard-top.png') left top no-repeat, url('@{url-images}/img-bg-profile-top.jpg') left top no-repeat;
+
+            .user-data {
+                margin-top: 8px;
+                height: auto;
+                background-color: transparent;
+
+                p {
+                    text-align: center;
+                }
+            }
+        }
+        /***********************************************************************/
+
+
+        /***********************************************************************
+         $profile-data
+         Description: CSS to represent profile data section related to avatar
+        ************************************************************************/
+        .profile-data {
+            height: 228px; height: 72vw;
+            margin-top: 24px;
+            font-weight: bold;
+            text-align: center;
+
+            background-attachment: scroll;
+            background-image:url('@{url-images}/img-profile-spaceship-dashboard-middle.png');
+            background-position: center bottom;
+            background-repeat: no-repeat;    
+            .background-size(100%, auto);
+
+            .user-name {
+                padding: 10px 0 32px;  padding: 2vw 0 7vw;
+                margin:0;
+                color:@clr-white;
+                font-size: 1.8em;
+                font-weight: inherit;
+                text-transform: uppercase;
+            }
+            .user-points {
+                width: auto;
+                padding: 1px 12px;  padding: 0.222vw 2.5vw;
+                margin: 0;
+                border-width: 0.21em;
+                .border-radius-all(0.888em);
+                color: @clr-green;
+                font-size: 24px;  font-size: 5vw;
+                font-weight: 600;
+            }
+        }
+        /***********************************************************************/
+
+
+        /***********************************************************************
+         $profile-settings
+         Description: CSS to represent profile settings area related to user
+        ************************************************************************/
+        .profile-settings {
+            position: relative;
+            z-index: 2;
+            margin:0;
+            height: 32vw;
+
+            background-attachment: scroll;
+            background-image:url('@{url-images}/img-profile-spaceship-dashboard-settings.png');
+            background-position: center top;
+            background-repeat: no-repeat;
+            .background-size(100%, auto);
+
+            .user-avatar {margin-top:10px;}
+            .btn {
+                display: block;
+                width: auto;
+                height: 10vw;
+                margin-top: 6vw;
+                
+                &.btn-icon-aside {
+                    width: 39vw;
+                }
+            }
+            & > .container {
+                position: relative;
+                height: inherit;
+                background-attachment: scroll;
+                background-image:url('@{url-images}/img-profile-spaceship-dashboard-settings.png');
+                background-color: transparent;
+                background-position: center 0;
+                background-repeat: no-repeat;
+                .background-size(100%, auto);
+            }              
+        }
+        /***********************************************************************/ 
+
+
+        /***********************************************************************
+         $profile-options
+         Description: CSS to represent user's profile dashboard landing page
+        ************************************************************************/
+        .profile-options {
+            margin:0;
+            /*padding:32px 0 15px;*/
+            padding: 12vw 0 6vw;
+            height: auto;
+            min-height: 120vw;
+            background-attachment: scroll;
+            /*background-image:url('@{url-images}/img-profile-spaceship-dashboard-bottom.png');
+            background-color: @clr-gray-asphalt;*/
+            background-position: center 0;
+            background-repeat: no-repeat;
+            .gradient-custom('img-profile-spaceship-dashboard-bottom.png', @clr-gray-asphalt, @clr-gray-asphalt2);
+            .background-size(100%, auto); 
+
+            .list-group {
+                .list-group-item {
+                    .gradient-navy-blue();
+                    border: none;
+                }
+                a {
+                    display: block;
+                    position: relative;
+                    height: 77px;
+                    padding: 0;
+                    margin: 0;
+                    font-size: 24px;
+                    font-weight: bold;
+                    line-height: 77px;
+                }
+                span {
+                    color: @clr-white;
+                    line-height: inherit;
+                }
+                span:first-child + span {
+                    display: block;
+                    overflow: hidden;
+                    width:auto;
+                    padding: 0;
+                    margin: 0 72px 0 48px;
+                    text-overflow:ellipsis;
+                    white-space: nowrap;
+                }
+                .icomoon {
+                    display: block;
+                    position: absolute;
+                    z-index: 1;
+                    padding: 0 0 0 12px;
+                    margin: 0;
+                    color: @clr-green;
+                    font-size: 1.4em;
+                    font-weight: normal;
+                }
+                .icomoon.icon-arrow-slim-right {
+                    top: 0; right: 0;
+                    padding: 0 9px 0 0;
+                    font-size: 1.2em;
+                }
+                .icomoon.icon-star {
+                    top: 50%; right: 30px;
+                    padding: 3px 9px;
+                    margin: -1.2em 6px 0 0;
+                    border: 2px solid @clr-green;
+                    .border-radius(21px);
+                    font-size: 0.6em; /*15px;*/
+                    line-height: 1.2em; /*21px;*/
+                }  
+
+                .no-badge {
+                    span:first-child + span {
+                        margin-right: 51px;
+                    }
+                    .icomoon.icon-star {
+                        display: none;
+                    }
+                }
+            }
+        }
+        /***********************************************************************/           
+
+
+        /***********************************************************************
+         $my-profile-form
+         Description: CSS to represent user's profile editable form
+        ************************************************************************/
+        .my-profile-form {
+            display: block;
+            width: auto;
+            height: auto;
+            padding: 0;
+            margin: 0 auto;
+
+            h5 {
+                width: auto;
+                padding: 0;
+                margin: 0 0 6vw 0;
+
+                color: @clr-gray-asphalt;
+                font-size: 4vw;
+                font-weight: bold;
+                line-height: 4vw;
+                text-align: left;
+                text-transform: capitalize;
+            }
+            p, li {
+                width: auto;
+                color: @clr-white;
+                line-height: 1.2;
+            }
+            p {
+                margin-bottom:3px;
+                font-size: 1.2em;
+
+                & > label {
+                    margin: 0;
+                }
+            }
+            li {
+                margin-top: 15px;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+
+                & > p {
+                    margin-top:0;
+                }
+            }                
+            label, em {
+                color:@clr-gray-platinum;
+                font-size: inherit;
+                font-style: normal;
+                line-height: inherit;
+            }
+            hr {
+                margin: 15px 0;
+            }
+            & > section {
+                display: block;
+                width: auto;
+                height: auto;
+                padding: 0;
+                margin: 12vw 0 0;
+            }
+            & > section:first-child {
+                margin-top: 0;
+            }           
+            .page-number {
+                margin: 3vw 0;
+
+                p.text-center {
+                    span {
+                        font-size: 4.8vw;
+                        font-weight: bold;
+                    }
+                    span:last-child {
+                        color: @clr-blueGray;
+                    }
+                }
+            }
+            .btn {
+                margin-top: 6vw;
+                border-width: 0.6vw;
+
+                &:first-child {
+                    margin-top: 0;
+                }
+                &.btn-transparent {
+                    color: @clr-gray-asphalt;
+                }
+                &.btn-primary {
+                    text-transform: uppercase;
+                }
+                &.btn-add {
+                    padding: 3.2vw 0;
+                    font-size: 4vw;
+                    line-height: 4vw;
+
+                    font-family: Roboto;
+                    .icomoon {
+                        padding: 0.1vw 3vw;
+                    }
+                }
+            }
+            .button-group .btn {
+                margin-top: 0;
+            }
+            .form-group {
+                border: none;
+                margin-bottom: 0;
+
+                .form-control {
+                    border-top-width: 0;
+                    text-indent: 3px;
+                }
+                .form-control:first-child {
+                    /*border-top:1px solid;*/
+                }
+                select.form-control {
+                    text-indent: 0;
+                    /*border-left-color: transparent !important;
+                    border-right-color: transparent !important;*/
+                }
+                &:first-child {
+                    .form-control:first-child {
+                        border-top-width: 1pt;
+                    }
+                }
+            }
+        }
+        /***********************************************************************/
+
+
+        /***********************************************************************
+         $profile-dashboard
+         Description: CSS to represent user's profile dashboard component
+        ************************************************************************/
+        .profile-dashboard {
+            width: 100vw;
+            margin:0;
+            background-attachment: scroll;
+            background-color: @clr-black;
+            background-image:url('@{url-images}/bg-xs-profile-sky.jpg');
+            background-position: center -98px;
+            background-position: center -18vw;
+            background-repeat: no-repeat;
+            .background-size(auto, 100%);
+
+            .user-avatar {
+                width: 33.3vw;
+                margin-top: 3vw;
+
+                figcaption {
+                    width: 9vw;
+                    height: 9vw;
+                    margin: -6vw auto 0;
+                    border: 0.3em solid @clr-green;
+                    box-sizing: content-box;
+                    font-size: 5.1vw;
+                    line-height: 9vw;
+                }
+            }             
+
+            & > .row {
+                padding: 0 5%;
+                margin-left: 0;
+                margin-right: 0;
+
+                & > div {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+        }
+        /***********************************************************************/
+    }
+}
+
+/* sm viewport */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .ns-app {
+        
+    }    
+}
+
+/* md viewport */
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+    .ns-app {
+        
+    }
+}
+
+/* lg viewport */
+@media screen and (min-width: 1200px) {
+    .ns-app {
+        
+    }
+}

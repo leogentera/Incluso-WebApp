@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'icomoon';
+  src: url('incluso-icons.eot');
+  src: url('incluso-icons.eot?#iefix') format('embedded-opentype'),
+       url('incluso-icons.woff2') format('woff2'),
+       url('incluso-icons.woff') format('woff'),
+       url('incluso-icons.ttf') format('truetype'),
+       url('incluso-icons.svg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+

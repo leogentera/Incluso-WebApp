@@ -1,0 +1,2963 @@
+/********************************************************************************
+    Incluso Digital CSS Base Styles
+
+    Description:    CSS rules for grid system, controls, components, widgets and
+    				plugins are defined/overriden in this file.
+    Uses:           Bootstrap.css, Modernizer.
+    Targets:        Modern Browsers, Android's WebView.
+	
+	Index:
+            01. $incluso-app    
+            02. $btn                (bootstrap)
+            03. $btn-back-to-top    
+            04. $button-group       (bootstrap)    
+            05. $form-control       (bootstrap)
+            06. $input-group        (bootstrap)
+            07. $alert              (bootstrap)
+            08. $navbar             (bootstrap)
+            09. $navbar-toggle      (bootstrap)
+            10. $panel              (bootstrap)
+            10. $list-group
+            11. $inline-list
+            12. $block-list
+            13. $component            
+            14. $pages
+            15. $footer
+            16. $spinner
+            17. $form
+********************************************************************************/
+/****************************************************************************
+ LESS Utilities - variables and functions
+****************************************************************************/
+/* Path vars */
+/* Color Palette */
+/* shape variables */
+/* parametric color functions */
+/* Custom Functions */
+body {
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: inherit;
+  font-size: 4vw;
+}
+/****************************************************************************
+     $menu 
+     Description: CSS rules to make the off canvas without javascript.
+     very important!!!
+    ****************************************************************************/
+#site-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  background-color: #040203;
+}
+#site-canvas {
+  width: 100vw;
+  position: relative;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+.show-nav #site-canvas {
+  -webkit-transform: translateX(80%);
+  transform: translateX(80%);
+  transform: translate3d(80%, 0, 0);
+  -webkit-transform: translate3d(80%, 0, 0);
+}
+.show-nav #site-menu {
+  left: 0px;
+}
+#site-menu {
+  -webkit-transition: all 300ms ease;
+  -moz-transition: all 300ms ease;
+  -o-transition: all 300ms ease;
+  transition: all 300ms ease;
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: -80%;
+  background-color: #040203;
+  padding: 0px;
+  background-image: url('../images/bg-menu.jpg');
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+}
+.ease {
+  -webkit-transition: 300ms ease all;
+  transition: 300ms ease all;
+}
+.incluso-app {
+  /****************************************************************************
+     $incluso-app 
+     Description: CSS rules for basic namespace wrapper.
+     very important!!!
+    ****************************************************************************/
+  padding: 0;
+  margin: 0 auto;
+  max-width: 100vw;
+  font-family: Play, Sans-serif, Arial;
+  /***************************************************************************/
+  /****************************************************************************
+     $nav-tabs
+     Description: CSS rules for menu.
+    ****************************************************************************/
+  /****************************************************************************
+     $btn
+     Description: CSS override to bootstrap's btn class.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $btn-icon-aside
+     Description: CSS to represent a button with an icon aside
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $btn-back-to-top
+     Description: CSS to represent a back-to-top button
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $button-group 
+     Description: CSS overrides to bootstrap's input-group class.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $form-control
+     Description: CSS overrides to bootstrap's form-control class.
+    ****************************************************************************/
+  /* custom placeholder */
+  /***************************************************************************/
+  /****************************************************************************
+     $checkbox
+     Description: CSS overrides to bootstrap's checkbox class. Customization.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $input-group 
+     Description: CSS overrides to bootstrap's input-group class.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $alert
+     Description: CSS overrides to bootstrap's alert class.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $modal
+     Description: CSS overrides to bootstrap's modal hierarchy class.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $navbar
+     Description: CSS overrides to bootstrap's navbar class and descendants.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $navbar-toggle
+     Description: CSS override to bootstrap's navbar toggle button on mobile.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $panel
+     Description: CSS override to bootstrap's panel class.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $list-group
+     Description: CSS overrides to bootstrap's list-group class and descendants.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $inline-list
+     Description: CSS class to represent an inline list of elements.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $block-list
+     Description: CSS class to represent a block list of elements.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $component
+     Description: CSS generic class for components
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $pages
+     Description: CSS class for a page wrapper with pages and buttons
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $footer
+     Description: CSS class for a page wrapper with pages and buttons
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     16. $spinner
+     Description: CSS class to positionante, show and hide the preloader image
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     16. $forma
+     Description: CSS class to create the form components
+    ****************************************************************************/
+}
+.incluso-app a:hover {
+  text-decoration: none;
+}
+.incluso-app a:focus {
+  text-decoration: none;
+}
+.incluso-app video {
+  width: 100%;
+  height: auto;
+}
+.incluso-app ol {
+  list-style: outside none decimal-leading-zero;
+  padding-left: 7vw;
+}
+.incluso-app .nav-tabs {
+  border: 0;
+}
+.incluso-app .nav-tabs.nav-justified {
+  display: flex;
+  justify-content: space-between;
+}
+.incluso-app .nav-tabs.nav-justified > li {
+  display: inline-flex;
+}
+.incluso-app .nav-tabs.nav-justified > .active > a,
+.incluso-app .nav-tabs.nav-justified > .active > a:hover,
+.incluso-app .nav-tabs.nav-justified > .active > a:focus,
+.incluso-app .nav-tabs > li > a,
+.incluso-app .nav-tabs > li.active > a,
+.incluso-app .nav-tabs > li.active > a:hover,
+.incluso-app .nav-tabs > li.active > a:focus {
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+}
+.incluso-app #site-menu .nav > li {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.28);
+  display: block;
+  margin-right: 6vw;
+  position: relative;
+  padding: 3vw 0;
+}
+.incluso-app #site-menu .nav > li > i {
+  padding: 2vw 1vw;
+}
+.incluso-app #site-menu .nav > li > a {
+  color: white;
+  display: block;
+  font-size: 5vw;
+  padding: 1vw 3vw;
+  position: relative;
+  width: 90%;
+}
+.incluso-app #site-menu .nav > li > a:focus,
+.incluso-app #site-menu .nav > li > a:hover {
+  background-color: rgba(255, 255, 255, 0.28);
+}
+.incluso-app #site-menu .nav > li a.menu-blue {
+  color: #39a6dd;
+}
+.incluso-app #site-menu .nav > li a.menu-green {
+  color: #80c241;
+}
+.incluso-app #site-menu .nav > li a.menu-pink {
+  color: #e70e80;
+}
+.incluso-app #site-menu .nav > li .submenu {
+  border-top: 2px solid rgba(255, 255, 255, 0.28);
+  display: none;
+  padding: 6vw 0 6vw 6vw;
+}
+.incluso-app #site-menu .nav > li .submenu li:first-child {
+  color: #39a6dd;
+  text-transform: uppercase;
+}
+.incluso-app #site-menu .nav > li .submenu a {
+  color: white;
+}
+.incluso-app #site-menu .nav > li .submenu ul {
+  list-style: none;
+  padding: 4vw 0;
+}
+.incluso-app .btn {
+  border: none;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+.incluso-app .btn-cnt {
+  width: 80%;
+  margin: 0 10%;
+  text-transform: uppercase;
+}
+.incluso-app .btn-primary {
+  background: #f5421a;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #f6522e 0%, #f5421a 92%, #dc300a 93%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f6522e), color-stop(92%, #f5421a), color-stop(93%, #dc300a));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #f6522e 0%, #f5421a 92%, #dc300a 93%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #f6522e 0%, #f5421a 92%, #dc300a 93%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #f6522e 0%, #f5421a 92%, #dc300a 93%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #f6522e 0%, #f5421a 92%, #dc300a 93%);
+  /* W3C */
+  color: #ffffff;
+}
+.incluso-app .btn-primary:active {
+  background: none #ba2908;
+  -webkit-box-shadow: inset 0 0 3vw 0.6vw #671705;
+  -moz-box-shadow: inset 0 0 3vw 0.6vw #671705;
+  box-shadow: inset 0 0 3vw 0.6vw #671705;
+  outline: none;
+}
+.incluso-app .btn-facebook {
+  background: #2b5fa9;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #2f68b9 0%, #2b5fa9 92%, #265395 93%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2f68b9), color-stop(92%, #2b5fa9), color-stop(93%, #265395));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #2f68b9 0%, #2b5fa9 92%, #265395 93%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #2f68b9 0%, #2b5fa9 92%, #265395 93%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #2f68b9 0%, #2b5fa9 92%, #265395 93%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #2f68b9 0%, #2b5fa9 92%, #265395 93%);
+  /* W3C */
+  color: #ffffff;
+}
+.incluso-app .btn-facebook:active {
+  background: none #1b3d6c;
+  -webkit-box-shadow: inset 0 0 3vw 0.6vw #1b3d6c;
+  -moz-box-shadow: inset 0 0 3vw 0.6vw #1b3d6c;
+  box-shadow: inset 0 0 3vw 0.6vw #1b3d6c;
+  outline: none;
+}
+.incluso-app .btn-facebook .icon-facebook {
+  float: left;
+  font-size: 28px;
+}
+.incluso-app .btn-default.btn-transparent {
+  background: transparent;
+  color: #ffffff;
+  font-size: 4.2vw;
+}
+.incluso-app .btn-default.btn-transparent:active {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  text-decoration: underline;
+}
+.incluso-app a.btn-transparent:hover {
+  text-decoration: underline;
+}
+.incluso-app .btn-link {
+  display: block;
+  padding: 9px 3px;
+  color: #ffffff;
+  font-size: 21px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.incluso-app .btn-link:hover,
+.incluso-app .btn-link:focus {
+  text-decoration: none;
+}
+.incluso-app .btn-add {
+  border-style: dashed;
+  border-color: #08b290;
+  -webkit-border-radius: 1vw;
+  -moz-border-radius: 1vw;
+  border-radius: 1vw;
+  background-color: transparent;
+  color: #08b290;
+  text-align: left;
+}
+.incluso-app .btn-lg,
+.incluso-app .btn-group-lg > .btn {
+  padding-top: 4vw;
+  padding-bottom: 4vw;
+  font-size: 4.8vw;
+  letter-spacing: 0.1em;
+  line-height: 5vw;
+}
+.incluso-app .btn-xl {
+  height: auto;
+  padding: 6vw 0;
+  font-size: 5.8vw;
+  line-height: 6vw;
+}
+.incluso-app .btn-lg {
+  height: auto;
+  padding: 4vw 0;
+  font-size: 4.8vw;
+  line-height: 5vw;
+}
+.incluso-app .btn-icon-aside {
+  display: inline-block;
+  position: relative;
+  height: 2em;
+  /*42px;*/
+  margin-top: 18%;
+  /*41px;*/
+  padding: 2px 12px;
+  background-color: #2a3333;
+  -webkit-border-radius: 32px;
+  -moz-border-radius: 32px;
+  border-radius: 32px;
+}
+.incluso-app .btn-icon-aside.left {
+  padding-right: 15px;
+  text-align: left;
+}
+.incluso-app .btn-icon-aside.left > span {
+  margin-left: 30px;
+  color: #ffffff;
+  font-size: 1em;
+  /*20px;*/
+  font-weight: 700;
+  line-height: 1;
+  text-align: right;
+}
+.incluso-app .btn-icon-aside.left .btn-icon {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: -0.3em;
+  width: 36px;
+  height: 36px;
+  background-color: #bcd431;
+  border: 3px solid #2a3333;
+  -webkit-border-radius: 32px;
+  -moz-border-radius: 32px;
+  border-radius: 32px;
+  text-align: center;
+}
+.incluso-app .btn-icon-aside.left .icomoon {
+  color: #1c374a;
+  font-size: 1.2em;
+  line-height: 32px;
+}
+.incluso-app .btn-icon-aside.right {
+  padding-left: 15px;
+  text-align: right;
+}
+.incluso-app .btn-icon-aside.right > span {
+  margin-right: 30px;
+  color: #ffffff;
+  font-size: 1em;
+  /*20px;*/
+  font-weight: 700;
+  line-height: 1;
+  text-align: left;
+}
+.incluso-app .btn-icon-aside.right .btn-icon {
+  display: block;
+  position: absolute;
+  right: 0;
+  top: -0.3em;
+  width: 36px;
+  height: 36px;
+  background-color: #bcd431;
+  border: 3px solid #2a3333;
+  -webkit-border-radius: 32px;
+  -moz-border-radius: 32px;
+  border-radius: 32px;
+  text-align: center;
+}
+.incluso-app .btn-icon-aside.right .icomoon {
+  color: #1c374a;
+  font-size: 22px;
+  font-size: 1.2em;
+  line-height: 32px;
+}
+.incluso-app .btn-back-to-top {
+  color: #bcd431;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+.incluso-app .btn-back-to-top span {
+  display: block;
+  padding: 6px 0 0;
+  width: auto;
+  text-transform: uppercase;
+}
+.incluso-app .button-group {
+  display: block;
+  position: relative;
+}
+.incluso-app .button-group:before,
+.incluso-app .button-group:after {
+  display: table;
+  content: " ";
+}
+.incluso-app .button-group:after {
+  clear: both;
+}
+.incluso-app .button-group .btn {
+  display: inline-block;
+  float: left;
+  width: 75%;
+  height: 55px;
+  height: auto;
+}
+.incluso-app .button-group .btn:first-child {
+  width: 20%;
+  margin-right: 5%;
+}
+.incluso-app .button-group .btn .icomoon {
+  font-size: smaller;
+  line-height: 1;
+}
+.incluso-app .form-control {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  line-height: 1.42857143;
+  font-weight: 700;
+  /* control sizing */
+  /*&.form-control-xl {
+            height:75px;
+            padding:12px 16px;
+            font-size: 32px;
+        }
+        &.form-control-lg {
+            height:66px;
+            padding:21px 16px;
+            font-size: 24px;
+        }*/
+}
+.incluso-app .form-control:focus {
+  border-color: #06BACC;
+}
+.incluso-app .form-control.form-control-xl {
+  height: auto;
+  padding: 6vw 0;
+  font-size: 5.8vw;
+  line-height: 6vw;
+}
+.incluso-app .form-control.form-control-lg {
+  height: auto;
+  padding: 4vw 0;
+  font-size: 4.8vw;
+  line-height: 5.6vw;
+}
+.incluso-app .form-control.form-control-md {
+  height: 40px;
+  padding: 6px 16px;
+  font-size: 16px;
+}
+.incluso-app .form-control.form-control-sm {
+  height: 35px;
+  padding: 6px 16px;
+  font-size: 14px;
+}
+.incluso-app .form-control.form-control-xs {
+  height: 30px;
+  padding: 6px 16px;
+  font-size: 12px;
+}
+.incluso-app .form-control.theme-form {
+  background-color: transparent;
+  border-left: none;
+  border-top: 1pt solid;
+  border-right: none;
+  border-bottom: 1pt solid;
+  border-color: rgba(142, 170, 179, 0.5);
+  color: #8eaab3;
+}
+.incluso-app .form-control.theme-form::-webkit-input-placeholder {
+  color: #8eaab3 !important;
+  font-weight: 100;
+}
+.incluso-app .form-control.theme-form:-moz-placeholder {
+  /* Firefox 18- */
+  color: #8eaab3 !important;
+  font-weight: 100;
+}
+.incluso-app .form-control.theme-form::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #8eaab3 !important;
+  font-weight: 100;
+}
+.incluso-app .form-control.theme-default {
+  background-color: transparent;
+  border-left: none;
+  border-top: none;
+  border-right: none;
+  border-bottom: none;
+  color: #ffffff;
+}
+.incluso-app .form-control.theme-default::-webkit-input-placeholder {
+  color: #ffffff !important;
+  font-weight: 100;
+}
+.incluso-app .form-control.theme-default:-moz-placeholder {
+  /* Firefox 18- */
+  color: #ffffff !important;
+  font-weight: 100;
+}
+.incluso-app .form-control.theme-default::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #ffffff !important;
+  font-weight: 100;
+}
+.incluso-app .form-control.select-wrapper select + .placeholder-fallback {
+  color: #ffffff !important;
+  font-weight: 100;
+}
+.incluso-app select.ng-pristine:before {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: inherit;
+  content: "";
+  width: auto;
+}
+.incluso-app select option:first-child {
+  display: none;
+}
+.incluso-app .custom-placeholder-wrapper {
+  position: relative;
+}
+.incluso-app .custom-placeholder-wrapper .custom-placeholder {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+}
+.incluso-app .custom-placeholder-wrapper .custom-placeholder.form-control-xl {
+  height: auto;
+  padding: 6vw 0;
+  font-size: 5.8vw;
+  line-height: 6vw;
+}
+.incluso-app .custom-placeholder-wrapper .custom-placeholder.form-control-lg {
+  height: auto;
+  padding: 4vw 0;
+  font-size: 4.8vw;
+  line-height: 5.6vw;
+}
+.incluso-app .custom-placeholder-wrapper .form-control.ng-dirty + .custom-placeholder {
+  display: none;
+}
+.incluso-app .custom-placeholder-wrapper .form-control.ng-pristine + .custom-placeholder {
+  display: block;
+}
+.incluso-app .custom-placeholder-wrapper .theme-default.ng-pristine + .custom-placeholder {
+  color: #ffffff;
+  font-weight: 100;
+}
+.incluso-app .checkbox.checkbox-custom label {
+  display: block;
+  width: auto;
+  padding: 0;
+  margin: 0 auto;
+}
+.incluso-app .checkbox.checkbox-custom label span {
+  display: block;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0 auto;
+  font-size: 3.9vw;
+  font-weight: bold;
+  line-height: 6vw;
+  /*text-indent: 6vw;*/
+}
+.incluso-app .checkbox.checkbox-custom input {
+  visibility: hidden;
+  display: none;
+  width: 0;
+  height: 0;
+}
+.incluso-app .checkbox.checkbox-custom input + span:before {
+  /*
+                display: block;
+                float: left;
+                width: 6vw;
+                height: 6vw; 
+
+                */
+  /*width: 3.9vw;
+                height: 3.9vw;*/
+  padding: 1vw 1.2vw;
+  margin-right: 6vw;
+  border-style: solid;
+  border-width: 1pt;
+  border-color: rgba(255, 255, 255, 0.3);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  background-color: transparent;
+  content: "";
+  content: "\e62b";
+  color: transparent;
+  font-family: icomoon;
+  font-size: 3.6vw;
+  line-height: 3vw;
+  /*font-size: 6vw;*/
+  /*text-indent: 15px;*/
+}
+.incluso-app .checkbox.checkbox-custom input:checked + span:before {
+  /*content: "\2713";*/
+  color: #08b290;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+.incluso-app .checkbox.checkbox-custom a {
+  color: #ffffff;
+  text-decoration: underline;
+}
+.incluso-app .checkbox.checkbox-custom a:active {
+  text-decoration: underline;
+}
+.incluso-app .input-group {
+  width: 100%;
+  /* by size */
+  /* by theme */
+}
+.incluso-app .input-group .input-group-addon {
+  padding: 0;
+  border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+.incluso-app .input-group .input-group-control {
+  display: table-cell;
+  padding: 0;
+  border: none;
+}
+.incluso-app .input-group .form-control:hover,
+.incluso-app .input-group .form-control:focus,
+.incluso-app .input-group .form-control:active {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.incluso-app .input-group select.form-control option {
+  color: #121b1c;
+}
+.incluso-app .input-group select.form-control option:first-child {
+  color: #121b1c;
+  padding-left: 0;
+}
+.incluso-app .input-group.input-group-lg .input-group-addon {
+  height: auto;
+  padding: 4vw 6vw 4vw 0;
+  font-size: 6vw;
+  line-height: 12vw;
+}
+.incluso-app .input-group.input-group-lg .input-group-addon + .form-control {
+  height: auto;
+  padding: 4vw 0;
+  font-size: 6vw;
+  line-height: 12vw;
+}
+.incluso-app .input-group.input-group-lg .input-group-control .form-control {
+  height: auto;
+  padding: 3.8vw 0;
+  font-size: 6vw;
+  line-height: 12vw;
+}
+.incluso-app .input-group.input-group-lg .input-group-control .form-control + .custom-placeholder {
+  height: auto;
+  /*padding: 5vw 0;*/
+  font-size: 6vw;
+  line-height: 12vw;
+}
+.incluso-app .input-group.theme-default {
+  border-bottom-width: 1pt;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+.incluso-app .input-group.theme-default .input-group-addon {
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+}
+.incluso-app .input-group.theme-default .input-group-addon + .form-control {
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+}
+.incluso-app .input-group.theme-default .input-group-control .form-control {
+  background-color: transparent;
+  border: none;
+  color: #ffffff;
+}
+.incluso-app .alert {
+  display: block;
+  height: auto;
+  padding: 0;
+  border: none;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+.incluso-app .alert.fixed-top {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+}
+.incluso-app .alert.alert-warning {
+  background-color: rgba(245, 70, 31, 0.5);
+}
+.incluso-app .alert.alert-success {
+  background-color: rgba(104, 189, 69, 0.5);
+}
+.incluso-app .alert .alert-message {
+  position: relative;
+  margin: 0 3vw 0 0;
+  padding: 3vw 0 3vw 13vw;
+}
+.incluso-app .alert .icomoon {
+  display: block;
+  position: absolute;
+  z-index: 1;
+  left: 16px;
+  left: 3.3vw;
+  top: 16px;
+  top: 3.3vw;
+  color: #ffffff;
+  font-size: 28px;
+  font-size: 6vw;
+}
+.incluso-app .alert .icomoon + p {
+  margin-top: 0;
+}
+.incluso-app .alert p {
+  display: block;
+  margin: 4vw 0 0 0;
+  padding: 1vw 0;
+  color: #ffffff;
+  font-size: 4vw;
+  font-weight: 600;
+}
+.incluso-app .alert ol,
+.incluso-app .alert ul {
+  display: block;
+  margin: 0;
+  padding: 4vw 0 0 0;
+  color: #ffffff;
+  font-size: 4vw;
+  font-weight: 300;
+  list-style-position: inside;
+}
+.incluso-app .alert ol li,
+.incluso-app .alert ul li {
+  color: inherit;
+  font-size: inherit;
+  text-transform: none;
+}
+.incluso-app .alert ol li:first-letter,
+.incluso-app .alert ul li:first-letter {
+  text-transform: capitalize;
+}
+.incluso-app .modal-extend-default .modal-title {
+  font-size: 6vw;
+}
+.incluso-app .modal-extend-default .modal-body {
+  max-height: 50vh;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+.incluso-app .modal-extend-default .modal-body p,
+.incluso-app .modal-extend-default .modal-body ol li {
+  font-size: 4.2vw;
+}
+.incluso-app .navbar {
+  position: relative;
+  margin-bottom: 0;
+  border-radius: 0px;
+}
+.incluso-app .navbar .icomoon {
+  font-size: 6vw;
+  line-height: 18vw;
+}
+.incluso-app .step-dashboard .navbar {
+  background-color: #158ccd;
+  border-color: #158ccd;
+}
+.incluso-app .navbar-welcome {
+  background-color: #f5461f;
+  border-color: #f5461f;
+}
+.incluso-app .navbar-welcome .navbar-toggle,
+.incluso-app .navbar-step .navbar-toggle {
+  border-color: transparent;
+}
+.incluso-app .navbar-welcome .navbar-toggle .icon-bar,
+.incluso-app .navbar-step .navbar-toggle .icon-bar {
+  background-color: #ffffff;
+}
+.incluso-app .navbar-step {
+  background-color: #158ccd;
+}
+.incluso-app .navbar-assets {
+  display: block;
+  position: static;
+  padding: 0;
+  margin: 0 2vw;
+  height: 18vw;
+  width: auto;
+}
+.incluso-app .navbar-assets .navbar-heading {
+  display: inline-block;
+  overflow: hidden;
+  float: left;
+  margin: 0;
+  width: 47vw;
+  max-width: 60%;
+  color: #ffffff;
+  font-family: 'Play';
+  font-size: 6vw;
+  font-weight: bold;
+  line-height: 18vw;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.incluso-app .navbar-assets .navbar-heading a {
+  color: #ffffff;
+}
+.incluso-app .navbar-assets .navbar-tools {
+  display: inline-block;
+  float: right;
+  margin: 0;
+  width: 45vw;
+  max-width: 48%;
+  list-style-type: none;
+  padding: 0 9px 0 0;
+}
+.incluso-app .navbar-tools li {
+  display: inline-block;
+  padding: 0;
+  margin: 0 0 0 8px;
+  margin: 0 0 0 .5vw;
+  width: 9vw;
+  height: 9vw;
+}
+.incluso-app .navbar-tools li.active .icomoon {
+  color: #bf2a09;
+}
+.incluso-app .navbar-tools a {
+  color: white;
+  display: block;
+  padding: 0;
+  margin: 0;
+  width: inherit;
+  height: inherit;
+}
+.incluso-app .navbar-toggle {
+  position: absolute;
+  left: 0;
+  top: 0;
+  float: none;
+  padding: 0;
+  margin: 0;
+  width: 42px;
+}
+.incluso-app .navbar-toggle .icomoon {
+  color: white;
+  font-size: 26px;
+  font-weight: bold;
+  line-height: 62px;
+  text-align: center;
+}
+.incluso-app .navbar-toggle .icon-bar {
+  display: block;
+  width: 6px;
+  height: 6px;
+  -webkit-border-radius: 16px;
+  -moz-border-radius: 16px;
+  border-radius: 16px;
+}
+.incluso-app .panel > .panel-heading {
+  padding: 5.5vw 2.6vw;
+  -webkit-border-radius: 1.5vw 1.5vw 0 0;
+  -moz-border-radius: 1.5vw 1.5vw 0 0;
+  border-radius: 1.5vw 1.5vw 0 0;
+  font-size: 4.8vw;
+  line-height: 5.2vw;
+  vertical-align: middle;
+}
+.incluso-app .panel > .panel-heading.with-icons .icomoon {
+  margin-right: 3vw;
+  color: #bcd431;
+  font-size: inherit;
+  vertical-align: middle;
+}
+.incluso-app .panel .panel-title {
+  margin: 0;
+  font-size: inherit;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+.incluso-app .panel > .panel-body {
+  padding-left: 6vw;
+  padding-right: 6vw;
+  padding-top: 6vw;
+  padding-bottom: 6vw;
+  -webkit-border-radius: 0 0 1.5vw 1.5vw;
+  -moz-border-radius: 0 0 1.5vw 1.5vw;
+  border-radius: 0 0 1.5vw 1.5vw;
+}
+.incluso-app .panel.panel-default {
+  border: none;
+  background-color: rgba(21, 25, 34, 0.7);
+}
+.incluso-app .panel.panel-default .panel-heading {
+  background-color: #121b1c;
+  border: none;
+  color: #ffffff;
+}
+.incluso-app .panel.panel-default .panel-title {
+  color: #ffffff;
+}
+.incluso-app .panel.panel-form {
+  background-color: transparent;
+}
+.incluso-app .panel.panel-form .panel-body {
+  background-color: #ffffff;
+  color: rgba(142, 170, 179, 0.5);
+}
+.incluso-app .list-group.separate-items .list-group-item {
+  padding: 0;
+  margin: 12px 0 0 0;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+.incluso-app .list-group.separate-items .list-group-item a {
+  display: block;
+  height: 77px;
+  padding: 0;
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  line-height: 77px;
+}
+.incluso-app .list-group.separate-items .list-group-item .icomoon {
+  font-weight: normal;
+}
+.incluso-app .list-group.separate-items .list-group-item:first-child {
+  margin-top: 0;
+}
+.incluso-app .inline-list {
+  display: block;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+}
+.incluso-app .inline-list li {
+  display: inline-block;
+  float: left;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  height: auto;
+}
+.incluso-app .block-list {
+  display: block;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  height: auto;
+  list-style-type: none;
+}
+.incluso-app .block-list li {
+  display: block;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  height: auto;
+}
+.incluso-app .component {
+  display: block;
+  padding: 0;
+  /*padding: 0 5%;*/
+  margin: 30px 0 10px;
+  position: relative;
+  z-index: 10;
+}
+.incluso-app .component h3 {
+  display: block;
+  padding: 0;
+  margin: 0 0 33px;
+  color: #bcd431;
+  font-family: Play, Sans-serif;
+  font-size: 1.1em;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.incluso-app .component p {
+  padding: 0;
+  margin: 0 auto 15px;
+  width: 93%;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 300;
+  text-align: center;
+}
+.incluso-app .component figure {
+  padding: 0;
+  margin: 0;
+}
+.incluso-app .component video {
+  display: block;
+  padding: 0;
+  margin: 0 auto;
+}
+.incluso-app .pages {
+  display: block;
+  /*.button-group {
+            display: block;
+            position: relative;
+
+            .btn {
+                display: block;
+                width: auto;
+
+                &:first-child {
+                    position: absolute;
+                    width: 60px;
+                }
+                &:first-child + .btn {
+                    margin-left: 80px;
+                }
+            }
+        }*/
+}
+.incluso-app .pages .page {
+  display: none;
+  margin-bottom: 15px;
+}
+.incluso-app .pages .page.active {
+  display: block;
+}
+.incluso-app .pages .page-number {
+  margin: 15px 0;
+  margin: 3vw 0;
+  color: #ffffff;
+  font-size: 24px;
+  font-size: 5vw;
+  font-weight: bold;
+}
+.incluso-app .pages .page-number span {
+  color: #08b290;
+}
+.incluso-app .pages .page-number span:last-child {
+  color: #ffffff;
+}
+.incluso-app .pages .btn {
+  margin-bottom: 1.5vw;
+}
+.incluso-app .footer {
+  background-image: url('../images/bg-footer-ship.gif');
+  background-position: 0 99%;
+  background-size: cover;
+  display: block;
+  position: relative;
+  padding: 20px 0 0;
+  margin: 0;
+  min-height: 180px;
+  box-shadow: 0 28px 10px -28px black inset;
+}
+.incluso-app .footer .block-list {
+  padding-bottom: 50px;
+  margin: 0 auto;
+  text-align: center;
+}
+.incluso-app .footer .block-list li {
+  margin-top: 12px;
+}
+.incluso-app .footer .block-list li:first-child {
+  margin-top: 0;
+}
+.incluso-app .footer .block-list .btn-link {
+  border-width: 3px;
+}
+.incluso-app .footer .btn-back-to-top {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  margin-left: -30px;
+}
+.incluso-app .form label {
+  cursor: pointer;
+  display: block;
+  font-size: 5vw;
+  line-height: 8vw;
+  margin-right: 15px;
+  padding-left: 10vw;
+  position: relative;
+}
+.incluso-app .form input[type="radio"],
+.incluso-app .form input[type="checkbox"] {
+  display: none;
+}
+.incluso-app .form input[type="radio"] + label::before,
+.incluso-app .form input[type="checkbox"] + label::before {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.incluso-app .form label::before {
+  background-color: transparent;
+  content: "";
+  display: inline-block;
+  font-size: 7vw;
+  height: 8vw;
+  left: 0;
+  line-height: 8vw;
+  margin-right: 10px;
+  position: absolute;
+  width: 8vw;
+}
+.incluso-app .form input[type=radio] + label::before {
+  font-size: 15vw;
+  height: 8vw;
+  line-height: 5vw;
+  padding: 0;
+  width: 8vw;
+}
+.incluso-app .form input[type=checkbox] + label::before {
+  border-radius: 3px;
+  padding: 0;
+  content: "\2713";
+  color: rgba(0, 0, 0, 0);
+}
+.incluso-app .form input[type=checkbox]:checked + label:before {
+  content: "\2713";
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+  color: #e1e455;
+  text-align: center;
+}
+.incluso-app .form input[type=checkbox]:checked + label {
+  color: #e1e455;
+}
+.incluso-app .form input[type=radio] + label:before {
+  content: "\2022";
+  color: rgba(0, 0, 0, 0);
+  border-radius: 50%;
+}
+.incluso-app .form input[type=radio]:checked + label:before {
+  content: "\2022";
+  background-color: #e1e455;
+  text-align: center;
+}
+.incluso-app .form .tnf {
+  margin: 2vw 0;
+}
+.incluso-app .form .tnf label:before {
+  display: none;
+  content: "";
+}
+.incluso-app .form .tnf label {
+  padding: 0 !important;
+  display: inline-block;
+}
+.incluso-app .form .tnf input[type=radio]:checked + label {
+  background-color: #08b190;
+}
+.incluso-app .form .tnf label {
+  border: 1px solid #08b190;
+  display: inline-block;
+  line-height: 200%;
+  margin: -2.5px !important;
+  padding: 0;
+  text-align: center;
+  width: 50%;
+}
+.incluso-app .form .tnf label:hover {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.incluso-app .form .tnf label:nth-child(2) {
+  border-radius: 10px 0 0 10px;
+}
+.incluso-app .form .tnf label:nth-child(4) {
+  border-radius: 0 10px 10px 0;
+}
+.incluso-app .form div.cs-select {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  text-align: left;
+  background: #fff;
+  z-index: 100;
+  width: 100%;
+  max-width: 500px;
+  margin: 10px 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.incluso-app .form div.cs-select:focus {
+  outline: none;
+}
+.incluso-app .form .cs-select select {
+  display: none;
+}
+.incluso-app .form .cs-select span {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  padding: 1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.incluso-app .form .cs-select > span {
+  padding-right: 3em;
+}
+.incluso-app .form .cs-select > span::after,
+.incluso-app .form .cs-select .cs-selected span::after {
+  speak: none;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.incluso-app .form .cs-select > span::after {
+  content: "\e612";
+  right: 1em;
+}
+.incluso-app .form .cs-select .cs-selected span::after {
+  content: '\2713';
+  margin-left: 1em;
+}
+.incluso-app .form .cs-select.cs-active > span::after {
+  -webkit-transform: translateY(-50%) rotate(180deg);
+  transform: translateY(-50%) rotate(180deg);
+}
+.incluso-app .form div.cs-active {
+  z-index: 200;
+}
+.incluso-app .form .cs-select .cs-options {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  background: #fff;
+  visibility: hidden;
+}
+.incluso-app .form .cs-select.cs-active .cs-options {
+  visibility: visible;
+}
+.incluso-app .form .cs-select ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.incluso-app .form .cs-select ul span {
+  padding: 1em;
+}
+.incluso-app .form .cs-select ul li.cs-focus span {
+  background-color: #ddd;
+}
+.incluso-app .form .cs-select li.cs-optgroup ul {
+  padding-left: 1em;
+}
+.incluso-app .form .cs-select li.cs-optgroup > span {
+  cursor: default;
+}
+.incluso-app .form div.cs-skin-rotate {
+  background: transparent;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+}
+@media screen and (max-width: 30em) {
+  .incluso-app .form div.cs-skin-rotate {
+    font-size: 1em;
+  }
+}
+.incluso-app .form .cs-skin-rotate > span,
+.incluso-app .form .cs-skin-rotate .cs-options li {
+  background: transparent;
+  -webkit-transform-origin: 50% 50% -200px;
+  transform-origin: 50% 50% -200px;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transition: -webkit-transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s, opacity 0.3s;
+}
+@media screen and (max-width: 30em) {
+  .incluso-app .form .cs-skin-rotate > span,
+  .incluso-app .form .cs-skin-rotate .cs-options li {
+    -webkit-transform-origin: 50% 50% -100px;
+    transform-origin: 50% 50% -100px;
+  }
+}
+.incluso-app .form .cs-skin-rotate > span {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+.incluso-app .form .cs-skin-rotate.cs-active > span {
+  opacity: 0;
+  -webkit-transform: rotate3d(0, 1, 0, -90deg);
+  transform: rotate3d(0, 1, 0, -90deg);
+}
+.incluso-app .form .cs-skin-rotate > span::after,
+.incluso-app .form .cs-skin-rotate .cs-selected span::after {
+  font-family: 'icomoon';
+}
+.incluso-app .form .cs-skin-rotate > span::after,
+.incluso-app .form .cs-skin-rotate.cs-active > span::after {
+  -webkit-transform: translate3d(0, -50%, 0) rotate3d(0, 0, 1, -90deg);
+  transform: translate3d(0, -50%, 0) rotate3d(0, 0, 1, -90deg);
+}
+.incluso-app .form .cs-skin-rotate ul span::after {
+  content: '';
+  opacity: 0;
+}
+.incluso-app .form .cs-skin-rotate .cs-selected span::after {
+  opacity: 0.5;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+}
+.incluso-app .form .cs-skin-rotate .cs-options {
+  background: transparent;
+  top: 0;
+  overflow: visible;
+  visibility: visible;
+  pointer-events: none;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.incluso-app .form .cs-skin-rotate .cs-options ul {
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+.incluso-app .form .cs-skin-rotate .cs-options li {
+  opacity: 0;
+  -webkit-transform: rotate3d(0, 1, 0, 90deg);
+  transform: rotate3d(0, 1, 0, 90deg);
+}
+.incluso-app .form .cs-skin-rotate.cs-active .cs-options li {
+  opacity: 1;
+  -webkit-transform: rotate3d(0, 1, 0, 0deg);
+  transform: rotate3d(0, 1, 0, 0deg);
+  pointer-events: auto;
+}
+.incluso-app .form .cs-skin-rotate .cs-options li:nth-child(2) {
+  -webkit-transition-delay: 0.05s;
+  transition-delay: 0.05s;
+}
+.incluso-app .form .cs-skin-rotate .cs-options li:nth-child(3) {
+  -webkit-transition-delay: 0.1s;
+  transition-delay: 0.1s;
+}
+.incluso-app .form .cs-skin-rotate .cs-options li:nth-child(4) {
+  -webkit-transition-delay: 0.15s;
+  transition-delay: 0.15s;
+}
+.incluso-app .form .cs-skin-rotate .cs-options li:nth-child(5) {
+  -webkit-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+}
+.incluso-app .form .cs-skin-rotate.cs-active .cs-options ul li {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+.incluso-app .form .cs-skin-rotate .cs-options li span {
+  background-color: #1f2733;
+  padding: 5px 0;
+}
+.incluso-app .form .cs-skin-rotate .cs-options li span:hover,
+.incluso-app .form .cs-skin-rotate .cs-options li.cs-focus span,
+.incluso-app .form .cs-skin-rotate .cs-selected span {
+  opacity: 0.8;
+}
+@keyframes flicker {
+  from {
+    opacity: 0.5;
+  }
+  4% {
+    opacity: 0.5;
+  }
+  6% {
+    opacity: 0.45;
+  }
+  8% {
+    opacity: 0.55;
+  }
+  10% {
+    opacity: 0.45;
+  }
+  11% {
+    opacity: 0.5;
+  }
+  12% {
+    opacity: 0.65;
+  }
+  14% {
+    opacity: 0.55;
+  }
+  16% {
+    opacity: 0.70;
+  }
+  17% {
+    opacity: 0.55;
+  }
+  19% {
+    opacity: 0.5;
+  }
+  20% {
+    opacity: 0.5;
+  }
+  24% {
+    opacity: 0.5;
+  }
+  26% {
+    opacity: 0.69;
+  }
+  28% {
+    opacity: 0.5;
+  }
+  38% {
+    opacity: 0.45;
+  }
+  40% {
+    opacity: 0.5;
+  }
+  42% {
+    opacity: 0.6;
+  }
+  44% {
+    opacity: 0.5;
+  }
+  46% {
+    opacity: 0.5;
+  }
+  56% {
+    opacity: 0.5;
+  }
+  58% {
+    opacity: 0.75;
+  }
+  60% {
+    opacity: 0.5;
+  }
+  68% {
+    opacity: 0.5;
+  }
+  70% {
+    opacity: .6;
+    /*peak*/
+  }
+  72% {
+    opacity: 0.5;
+  }
+  93% {
+    opacity: 0.5;
+  }
+  95% {
+    opacity: .6;
+    /*peak*/
+  }
+  97% {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+@-webkit-keyframes empty {
+  0% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes empty {
+  0% {
+    opacity: 1;
+  }
+}
+@keyframes empty {
+  0% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@-moz-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.radial-progress {
+  -webkit-clip-path: polygon(0 100%, 0 0, 100% 0, 80% 100%);
+  clip-path: polygon(0 100%, 0 0, 100% 0, 80% 100%);
+  -webkit-clip-path: url("#myClip");
+  clip-path: url("#myClip");
+  margin: 20px;
+  width: 300px;
+  height: 300px;
+  background-color: #366b8e;
+  border-radius: 50%;
+}
+.radial-progress .circle .mask,
+.radial-progress .circle .fill,
+.radial-progress .circle .shadow {
+  width: 300px;
+  height: 300px;
+  position: absolute;
+  border-radius: 50%;
+}
+.radial-progress .circle .mask,
+.radial-progress .circle .fill {
+  -webkit-backface-visibility: hidden;
+  transition: -webkit-transform 1s;
+  transition: -ms-transform 1s;
+  transition: transform 1s;
+  border-radius: 50%;
+}
+.radial-progress .circle .mask {
+  clip: rect(0px, 300px, 300px, 150px);
+}
+.radial-progress .circle .mask .fill {
+  clip: rect(0px, 150px, 300px, 0px);
+  background-color: #bcd431;
+}
+.radial-progress[data-progress="0"] .circle .mask.full,
+.radial-progress[data-progress="0"] .circle .fill {
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.radial-progress[data-progress="0"] .circle .fill.fix {
+  -webkit-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.radial-progress[data-progress="1"] .circle .mask.full,
+.radial-progress[data-progress="1"] .circle .fill {
+  -webkit-transform: rotate(1.8deg);
+  -ms-transform: rotate(1.8deg);
+  transform: rotate(1.8deg);
+}
+.radial-progress[data-progress="1"] .circle .fill.fix {
+  -webkit-transform: rotate(3.6deg);
+  -ms-transform: rotate(3.6deg);
+  transform: rotate(3.6deg);
+}
+.radial-progress[data-progress="2"] .circle .mask.full,
+.radial-progress[data-progress="2"] .circle .fill {
+  -webkit-transform: rotate(3.6deg);
+  -ms-transform: rotate(3.6deg);
+  transform: rotate(3.6deg);
+}
+.radial-progress[data-progress="2"] .circle .fill.fix {
+  -webkit-transform: rotate(7.2deg);
+  -ms-transform: rotate(7.2deg);
+  transform: rotate(7.2deg);
+}
+.radial-progress[data-progress="3"] .circle .mask.full,
+.radial-progress[data-progress="3"] .circle .fill {
+  -webkit-transform: rotate(5.4deg);
+  -ms-transform: rotate(5.4deg);
+  transform: rotate(5.4deg);
+}
+.radial-progress[data-progress="3"] .circle .fill.fix {
+  -webkit-transform: rotate(10.8deg);
+  -ms-transform: rotate(10.8deg);
+  transform: rotate(10.8deg);
+}
+.radial-progress[data-progress="4"] .circle .mask.full,
+.radial-progress[data-progress="4"] .circle .fill {
+  -webkit-transform: rotate(7.2deg);
+  -ms-transform: rotate(7.2deg);
+  transform: rotate(7.2deg);
+}
+.radial-progress[data-progress="4"] .circle .fill.fix {
+  -webkit-transform: rotate(14.4deg);
+  -ms-transform: rotate(14.4deg);
+  transform: rotate(14.4deg);
+}
+.radial-progress[data-progress="5"] .circle .mask.full,
+.radial-progress[data-progress="5"] .circle .fill {
+  -webkit-transform: rotate(9deg);
+  -ms-transform: rotate(9deg);
+  transform: rotate(9deg);
+}
+.radial-progress[data-progress="5"] .circle .fill.fix {
+  -webkit-transform: rotate(18deg);
+  -ms-transform: rotate(18deg);
+  transform: rotate(18deg);
+}
+.radial-progress[data-progress="6"] .circle .mask.full,
+.radial-progress[data-progress="6"] .circle .fill {
+  -webkit-transform: rotate(10.8deg);
+  -ms-transform: rotate(10.8deg);
+  transform: rotate(10.8deg);
+}
+.radial-progress[data-progress="6"] .circle .fill.fix {
+  -webkit-transform: rotate(21.6deg);
+  -ms-transform: rotate(21.6deg);
+  transform: rotate(21.6deg);
+}
+.radial-progress[data-progress="7"] .circle .mask.full,
+.radial-progress[data-progress="7"] .circle .fill {
+  -webkit-transform: rotate(12.6deg);
+  -ms-transform: rotate(12.6deg);
+  transform: rotate(12.6deg);
+}
+.radial-progress[data-progress="7"] .circle .fill.fix {
+  -webkit-transform: rotate(25.2deg);
+  -ms-transform: rotate(25.2deg);
+  transform: rotate(25.2deg);
+}
+.radial-progress[data-progress="8"] .circle .mask.full,
+.radial-progress[data-progress="8"] .circle .fill {
+  -webkit-transform: rotate(14.4deg);
+  -ms-transform: rotate(14.4deg);
+  transform: rotate(14.4deg);
+}
+.radial-progress[data-progress="8"] .circle .fill.fix {
+  -webkit-transform: rotate(28.8deg);
+  -ms-transform: rotate(28.8deg);
+  transform: rotate(28.8deg);
+}
+.radial-progress[data-progress="9"] .circle .mask.full,
+.radial-progress[data-progress="9"] .circle .fill {
+  -webkit-transform: rotate(16.2deg);
+  -ms-transform: rotate(16.2deg);
+  transform: rotate(16.2deg);
+}
+.radial-progress[data-progress="9"] .circle .fill.fix {
+  -webkit-transform: rotate(32.4deg);
+  -ms-transform: rotate(32.4deg);
+  transform: rotate(32.4deg);
+}
+.radial-progress[data-progress="10"] .circle .mask.full,
+.radial-progress[data-progress="10"] .circle .fill {
+  -webkit-transform: rotate(18deg);
+  -ms-transform: rotate(18deg);
+  transform: rotate(18deg);
+}
+.radial-progress[data-progress="10"] .circle .fill.fix {
+  -webkit-transform: rotate(36deg);
+  -ms-transform: rotate(36deg);
+  transform: rotate(36deg);
+}
+.radial-progress[data-progress="11"] .circle .mask.full,
+.radial-progress[data-progress="11"] .circle .fill {
+  -webkit-transform: rotate(19.8deg);
+  -ms-transform: rotate(19.8deg);
+  transform: rotate(19.8deg);
+}
+.radial-progress[data-progress="11"] .circle .fill.fix {
+  -webkit-transform: rotate(39.6deg);
+  -ms-transform: rotate(39.6deg);
+  transform: rotate(39.6deg);
+}
+.radial-progress[data-progress="12"] .circle .mask.full,
+.radial-progress[data-progress="12"] .circle .fill {
+  -webkit-transform: rotate(21.6deg);
+  -ms-transform: rotate(21.6deg);
+  transform: rotate(21.6deg);
+}
+.radial-progress[data-progress="12"] .circle .fill.fix {
+  -webkit-transform: rotate(43.2deg);
+  -ms-transform: rotate(43.2deg);
+  transform: rotate(43.2deg);
+}
+.radial-progress[data-progress="13"] .circle .mask.full,
+.radial-progress[data-progress="13"] .circle .fill {
+  -webkit-transform: rotate(23.4deg);
+  -ms-transform: rotate(23.4deg);
+  transform: rotate(23.4deg);
+}
+.radial-progress[data-progress="13"] .circle .fill.fix {
+  -webkit-transform: rotate(46.8deg);
+  -ms-transform: rotate(46.8deg);
+  transform: rotate(46.8deg);
+}
+.radial-progress[data-progress="14"] .circle .mask.full,
+.radial-progress[data-progress="14"] .circle .fill {
+  -webkit-transform: rotate(25.2deg);
+  -ms-transform: rotate(25.2deg);
+  transform: rotate(25.2deg);
+}
+.radial-progress[data-progress="14"] .circle .fill.fix {
+  -webkit-transform: rotate(50.4deg);
+  -ms-transform: rotate(50.4deg);
+  transform: rotate(50.4deg);
+}
+.radial-progress[data-progress="15"] .circle .mask.full,
+.radial-progress[data-progress="15"] .circle .fill {
+  -webkit-transform: rotate(27deg);
+  -ms-transform: rotate(27deg);
+  transform: rotate(27deg);
+}
+.radial-progress[data-progress="15"] .circle .fill.fix {
+  -webkit-transform: rotate(54deg);
+  -ms-transform: rotate(54deg);
+  transform: rotate(54deg);
+}
+.radial-progress[data-progress="16"] .circle .mask.full,
+.radial-progress[data-progress="16"] .circle .fill {
+  -webkit-transform: rotate(28.8deg);
+  -ms-transform: rotate(28.8deg);
+  transform: rotate(28.8deg);
+}
+.radial-progress[data-progress="16"] .circle .fill.fix {
+  -webkit-transform: rotate(57.6deg);
+  -ms-transform: rotate(57.6deg);
+  transform: rotate(57.6deg);
+}
+.radial-progress[data-progress="17"] .circle .mask.full,
+.radial-progress[data-progress="17"] .circle .fill {
+  -webkit-transform: rotate(30.6deg);
+  -ms-transform: rotate(30.6deg);
+  transform: rotate(30.6deg);
+}
+.radial-progress[data-progress="17"] .circle .fill.fix {
+  -webkit-transform: rotate(61.2deg);
+  -ms-transform: rotate(61.2deg);
+  transform: rotate(61.2deg);
+}
+.radial-progress[data-progress="18"] .circle .mask.full,
+.radial-progress[data-progress="18"] .circle .fill {
+  -webkit-transform: rotate(32.4deg);
+  -ms-transform: rotate(32.4deg);
+  transform: rotate(32.4deg);
+}
+.radial-progress[data-progress="18"] .circle .fill.fix {
+  -webkit-transform: rotate(64.8deg);
+  -ms-transform: rotate(64.8deg);
+  transform: rotate(64.8deg);
+}
+.radial-progress[data-progress="19"] .circle .mask.full,
+.radial-progress[data-progress="19"] .circle .fill {
+  -webkit-transform: rotate(34.2deg);
+  -ms-transform: rotate(34.2deg);
+  transform: rotate(34.2deg);
+}
+.radial-progress[data-progress="19"] .circle .fill.fix {
+  -webkit-transform: rotate(68.4deg);
+  -ms-transform: rotate(68.4deg);
+  transform: rotate(68.4deg);
+}
+.radial-progress[data-progress="20"] .circle .mask.full,
+.radial-progress[data-progress="20"] .circle .fill {
+  -webkit-transform: rotate(36deg);
+  -ms-transform: rotate(36deg);
+  transform: rotate(36deg);
+}
+.radial-progress[data-progress="20"] .circle .fill.fix {
+  -webkit-transform: rotate(72deg);
+  -ms-transform: rotate(72deg);
+  transform: rotate(72deg);
+}
+.radial-progress[data-progress="21"] .circle .mask.full,
+.radial-progress[data-progress="21"] .circle .fill {
+  -webkit-transform: rotate(37.8deg);
+  -ms-transform: rotate(37.8deg);
+  transform: rotate(37.8deg);
+}
+.radial-progress[data-progress="21"] .circle .fill.fix {
+  -webkit-transform: rotate(75.6deg);
+  -ms-transform: rotate(75.6deg);
+  transform: rotate(75.6deg);
+}
+.radial-progress[data-progress="22"] .circle .mask.full,
+.radial-progress[data-progress="22"] .circle .fill {
+  -webkit-transform: rotate(39.6deg);
+  -ms-transform: rotate(39.6deg);
+  transform: rotate(39.6deg);
+}
+.radial-progress[data-progress="22"] .circle .fill.fix {
+  -webkit-transform: rotate(79.2deg);
+  -ms-transform: rotate(79.2deg);
+  transform: rotate(79.2deg);
+}
+.radial-progress[data-progress="23"] .circle .mask.full,
+.radial-progress[data-progress="23"] .circle .fill {
+  -webkit-transform: rotate(41.4deg);
+  -ms-transform: rotate(41.4deg);
+  transform: rotate(41.4deg);
+}
+.radial-progress[data-progress="23"] .circle .fill.fix {
+  -webkit-transform: rotate(82.8deg);
+  -ms-transform: rotate(82.8deg);
+  transform: rotate(82.8deg);
+}
+.radial-progress[data-progress="24"] .circle .mask.full,
+.radial-progress[data-progress="24"] .circle .fill {
+  -webkit-transform: rotate(43.2deg);
+  -ms-transform: rotate(43.2deg);
+  transform: rotate(43.2deg);
+}
+.radial-progress[data-progress="24"] .circle .fill.fix {
+  -webkit-transform: rotate(86.4deg);
+  -ms-transform: rotate(86.4deg);
+  transform: rotate(86.4deg);
+}
+.radial-progress[data-progress="25"] .circle .mask.full,
+.radial-progress[data-progress="25"] .circle .fill {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.radial-progress[data-progress="25"] .circle .fill.fix {
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.radial-progress[data-progress="26"] .circle .mask.full,
+.radial-progress[data-progress="26"] .circle .fill {
+  -webkit-transform: rotate(46.8deg);
+  -ms-transform: rotate(46.8deg);
+  transform: rotate(46.8deg);
+}
+.radial-progress[data-progress="26"] .circle .fill.fix {
+  -webkit-transform: rotate(93.6deg);
+  -ms-transform: rotate(93.6deg);
+  transform: rotate(93.6deg);
+}
+.radial-progress[data-progress="27"] .circle .mask.full,
+.radial-progress[data-progress="27"] .circle .fill {
+  -webkit-transform: rotate(48.6deg);
+  -ms-transform: rotate(48.6deg);
+  transform: rotate(48.6deg);
+}
+.radial-progress[data-progress="27"] .circle .fill.fix {
+  -webkit-transform: rotate(97.2deg);
+  -ms-transform: rotate(97.2deg);
+  transform: rotate(97.2deg);
+}
+.radial-progress[data-progress="28"] .circle .mask.full,
+.radial-progress[data-progress="28"] .circle .fill {
+  -webkit-transform: rotate(50.4deg);
+  -ms-transform: rotate(50.4deg);
+  transform: rotate(50.4deg);
+}
+.radial-progress[data-progress="28"] .circle .fill.fix {
+  -webkit-transform: rotate(100.8deg);
+  -ms-transform: rotate(100.8deg);
+  transform: rotate(100.8deg);
+}
+.radial-progress[data-progress="29"] .circle .mask.full,
+.radial-progress[data-progress="29"] .circle .fill {
+  -webkit-transform: rotate(52.2deg);
+  -ms-transform: rotate(52.2deg);
+  transform: rotate(52.2deg);
+}
+.radial-progress[data-progress="29"] .circle .fill.fix {
+  -webkit-transform: rotate(104.4deg);
+  -ms-transform: rotate(104.4deg);
+  transform: rotate(104.4deg);
+}
+.radial-progress[data-progress="30"] .circle .mask.full,
+.radial-progress[data-progress="30"] .circle .fill {
+  -webkit-transform: rotate(54deg);
+  -ms-transform: rotate(54deg);
+  transform: rotate(54deg);
+}
+.radial-progress[data-progress="30"] .circle .fill.fix {
+  -webkit-transform: rotate(108deg);
+  -ms-transform: rotate(108deg);
+  transform: rotate(108deg);
+}
+.radial-progress[data-progress="31"] .circle .mask.full,
+.radial-progress[data-progress="31"] .circle .fill {
+  -webkit-transform: rotate(55.8deg);
+  -ms-transform: rotate(55.8deg);
+  transform: rotate(55.8deg);
+}
+.radial-progress[data-progress="31"] .circle .fill.fix {
+  -webkit-transform: rotate(111.6deg);
+  -ms-transform: rotate(111.6deg);
+  transform: rotate(111.6deg);
+}
+.radial-progress[data-progress="32"] .circle .mask.full,
+.radial-progress[data-progress="32"] .circle .fill {
+  -webkit-transform: rotate(57.6deg);
+  -ms-transform: rotate(57.6deg);
+  transform: rotate(57.6deg);
+}
+.radial-progress[data-progress="32"] .circle .fill.fix {
+  -webkit-transform: rotate(115.2deg);
+  -ms-transform: rotate(115.2deg);
+  transform: rotate(115.2deg);
+}
+.radial-progress[data-progress="33"] .circle .mask.full,
+.radial-progress[data-progress="33"] .circle .fill {
+  -webkit-transform: rotate(59.4deg);
+  -ms-transform: rotate(59.4deg);
+  transform: rotate(59.4deg);
+}
+.radial-progress[data-progress="33"] .circle .fill.fix {
+  -webkit-transform: rotate(118.8deg);
+  -ms-transform: rotate(118.8deg);
+  transform: rotate(118.8deg);
+}
+.radial-progress[data-progress="34"] .circle .mask.full,
+.radial-progress[data-progress="34"] .circle .fill {
+  -webkit-transform: rotate(61.2deg);
+  -ms-transform: rotate(61.2deg);
+  transform: rotate(61.2deg);
+}
+.radial-progress[data-progress="34"] .circle .fill.fix {
+  -webkit-transform: rotate(122.4deg);
+  -ms-transform: rotate(122.4deg);
+  transform: rotate(122.4deg);
+}
+.radial-progress[data-progress="35"] .circle .mask.full,
+.radial-progress[data-progress="35"] .circle .fill {
+  -webkit-transform: rotate(63deg);
+  -ms-transform: rotate(63deg);
+  transform: rotate(63deg);
+}
+.radial-progress[data-progress="35"] .circle .fill.fix {
+  -webkit-transform: rotate(126deg);
+  -ms-transform: rotate(126deg);
+  transform: rotate(126deg);
+}
+.radial-progress[data-progress="36"] .circle .mask.full,
+.radial-progress[data-progress="36"] .circle .fill {
+  -webkit-transform: rotate(64.8deg);
+  -ms-transform: rotate(64.8deg);
+  transform: rotate(64.8deg);
+}
+.radial-progress[data-progress="36"] .circle .fill.fix {
+  -webkit-transform: rotate(129.6deg);
+  -ms-transform: rotate(129.6deg);
+  transform: rotate(129.6deg);
+}
+.radial-progress[data-progress="37"] .circle .mask.full,
+.radial-progress[data-progress="37"] .circle .fill {
+  -webkit-transform: rotate(66.6deg);
+  -ms-transform: rotate(66.6deg);
+  transform: rotate(66.6deg);
+}
+.radial-progress[data-progress="37"] .circle .fill.fix {
+  -webkit-transform: rotate(133.2deg);
+  -ms-transform: rotate(133.2deg);
+  transform: rotate(133.2deg);
+}
+.radial-progress[data-progress="38"] .circle .mask.full,
+.radial-progress[data-progress="38"] .circle .fill {
+  -webkit-transform: rotate(68.4deg);
+  -ms-transform: rotate(68.4deg);
+  transform: rotate(68.4deg);
+}
+.radial-progress[data-progress="38"] .circle .fill.fix {
+  -webkit-transform: rotate(136.8deg);
+  -ms-transform: rotate(136.8deg);
+  transform: rotate(136.8deg);
+}
+.radial-progress[data-progress="39"] .circle .mask.full,
+.radial-progress[data-progress="39"] .circle .fill {
+  -webkit-transform: rotate(70.2deg);
+  -ms-transform: rotate(70.2deg);
+  transform: rotate(70.2deg);
+}
+.radial-progress[data-progress="39"] .circle .fill.fix {
+  -webkit-transform: rotate(140.4deg);
+  -ms-transform: rotate(140.4deg);
+  transform: rotate(140.4deg);
+}
+.radial-progress[data-progress="40"] .circle .mask.full,
+.radial-progress[data-progress="40"] .circle .fill {
+  -webkit-transform: rotate(72deg);
+  -ms-transform: rotate(72deg);
+  transform: rotate(72deg);
+}
+.radial-progress[data-progress="40"] .circle .fill.fix {
+  -webkit-transform: rotate(144deg);
+  -ms-transform: rotate(144deg);
+  transform: rotate(144deg);
+}
+.radial-progress[data-progress="41"] .circle .mask.full,
+.radial-progress[data-progress="41"] .circle .fill {
+  -webkit-transform: rotate(73.8deg);
+  -ms-transform: rotate(73.8deg);
+  transform: rotate(73.8deg);
+}
+.radial-progress[data-progress="41"] .circle .fill.fix {
+  -webkit-transform: rotate(147.6deg);
+  -ms-transform: rotate(147.6deg);
+  transform: rotate(147.6deg);
+}
+.radial-progress[data-progress="42"] .circle .mask.full,
+.radial-progress[data-progress="42"] .circle .fill {
+  -webkit-transform: rotate(75.6deg);
+  -ms-transform: rotate(75.6deg);
+  transform: rotate(75.6deg);
+}
+.radial-progress[data-progress="42"] .circle .fill.fix {
+  -webkit-transform: rotate(151.2deg);
+  -ms-transform: rotate(151.2deg);
+  transform: rotate(151.2deg);
+}
+.radial-progress[data-progress="43"] .circle .mask.full,
+.radial-progress[data-progress="43"] .circle .fill {
+  -webkit-transform: rotate(77.4deg);
+  -ms-transform: rotate(77.4deg);
+  transform: rotate(77.4deg);
+}
+.radial-progress[data-progress="43"] .circle .fill.fix {
+  -webkit-transform: rotate(154.8deg);
+  -ms-transform: rotate(154.8deg);
+  transform: rotate(154.8deg);
+}
+.radial-progress[data-progress="44"] .circle .mask.full,
+.radial-progress[data-progress="44"] .circle .fill {
+  -webkit-transform: rotate(79.2deg);
+  -ms-transform: rotate(79.2deg);
+  transform: rotate(79.2deg);
+}
+.radial-progress[data-progress="44"] .circle .fill.fix {
+  -webkit-transform: rotate(158.4deg);
+  -ms-transform: rotate(158.4deg);
+  transform: rotate(158.4deg);
+}
+.radial-progress[data-progress="45"] .circle .mask.full,
+.radial-progress[data-progress="45"] .circle .fill {
+  -webkit-transform: rotate(81deg);
+  -ms-transform: rotate(81deg);
+  transform: rotate(81deg);
+}
+.radial-progress[data-progress="45"] .circle .fill.fix {
+  -webkit-transform: rotate(162deg);
+  -ms-transform: rotate(162deg);
+  transform: rotate(162deg);
+}
+.radial-progress[data-progress="46"] .circle .mask.full,
+.radial-progress[data-progress="46"] .circle .fill {
+  -webkit-transform: rotate(82.8deg);
+  -ms-transform: rotate(82.8deg);
+  transform: rotate(82.8deg);
+}
+.radial-progress[data-progress="46"] .circle .fill.fix {
+  -webkit-transform: rotate(165.6deg);
+  -ms-transform: rotate(165.6deg);
+  transform: rotate(165.6deg);
+}
+.radial-progress[data-progress="47"] .circle .mask.full,
+.radial-progress[data-progress="47"] .circle .fill {
+  -webkit-transform: rotate(84.6deg);
+  -ms-transform: rotate(84.6deg);
+  transform: rotate(84.6deg);
+}
+.radial-progress[data-progress="47"] .circle .fill.fix {
+  -webkit-transform: rotate(169.2deg);
+  -ms-transform: rotate(169.2deg);
+  transform: rotate(169.2deg);
+}
+.radial-progress[data-progress="48"] .circle .mask.full,
+.radial-progress[data-progress="48"] .circle .fill {
+  -webkit-transform: rotate(86.4deg);
+  -ms-transform: rotate(86.4deg);
+  transform: rotate(86.4deg);
+}
+.radial-progress[data-progress="48"] .circle .fill.fix {
+  -webkit-transform: rotate(172.8deg);
+  -ms-transform: rotate(172.8deg);
+  transform: rotate(172.8deg);
+}
+.radial-progress[data-progress="49"] .circle .mask.full,
+.radial-progress[data-progress="49"] .circle .fill {
+  -webkit-transform: rotate(88.2deg);
+  -ms-transform: rotate(88.2deg);
+  transform: rotate(88.2deg);
+}
+.radial-progress[data-progress="49"] .circle .fill.fix {
+  -webkit-transform: rotate(176.4deg);
+  -ms-transform: rotate(176.4deg);
+  transform: rotate(176.4deg);
+}
+.radial-progress[data-progress="50"] .circle .mask.full,
+.radial-progress[data-progress="50"] .circle .fill {
+  -webkit-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.radial-progress[data-progress="50"] .circle .fill.fix {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.radial-progress[data-progress="51"] .circle .mask.full,
+.radial-progress[data-progress="51"] .circle .fill {
+  -webkit-transform: rotate(91.8deg);
+  -ms-transform: rotate(91.8deg);
+  transform: rotate(91.8deg);
+}
+.radial-progress[data-progress="51"] .circle .fill.fix {
+  -webkit-transform: rotate(183.6deg);
+  -ms-transform: rotate(183.6deg);
+  transform: rotate(183.6deg);
+}
+.radial-progress[data-progress="52"] .circle .mask.full,
+.radial-progress[data-progress="52"] .circle .fill {
+  -webkit-transform: rotate(93.6deg);
+  -ms-transform: rotate(93.6deg);
+  transform: rotate(93.6deg);
+}
+.radial-progress[data-progress="52"] .circle .fill.fix {
+  -webkit-transform: rotate(187.2deg);
+  -ms-transform: rotate(187.2deg);
+  transform: rotate(187.2deg);
+}
+.radial-progress[data-progress="53"] .circle .mask.full,
+.radial-progress[data-progress="53"] .circle .fill {
+  -webkit-transform: rotate(95.4deg);
+  -ms-transform: rotate(95.4deg);
+  transform: rotate(95.4deg);
+}
+.radial-progress[data-progress="53"] .circle .fill.fix {
+  -webkit-transform: rotate(190.8deg);
+  -ms-transform: rotate(190.8deg);
+  transform: rotate(190.8deg);
+}
+.radial-progress[data-progress="54"] .circle .mask.full,
+.radial-progress[data-progress="54"] .circle .fill {
+  -webkit-transform: rotate(97.2deg);
+  -ms-transform: rotate(97.2deg);
+  transform: rotate(97.2deg);
+}
+.radial-progress[data-progress="54"] .circle .fill.fix {
+  -webkit-transform: rotate(194.4deg);
+  -ms-transform: rotate(194.4deg);
+  transform: rotate(194.4deg);
+}
+.radial-progress[data-progress="55"] .circle .mask.full,
+.radial-progress[data-progress="55"] .circle .fill {
+  -webkit-transform: rotate(99deg);
+  -ms-transform: rotate(99deg);
+  transform: rotate(99deg);
+}
+.radial-progress[data-progress="55"] .circle .fill.fix {
+  -webkit-transform: rotate(198deg);
+  -ms-transform: rotate(198deg);
+  transform: rotate(198deg);
+}
+.radial-progress[data-progress="56"] .circle .mask.full,
+.radial-progress[data-progress="56"] .circle .fill {
+  -webkit-transform: rotate(100.8deg);
+  -ms-transform: rotate(100.8deg);
+  transform: rotate(100.8deg);
+}
+.radial-progress[data-progress="56"] .circle .fill.fix {
+  -webkit-transform: rotate(201.6deg);
+  -ms-transform: rotate(201.6deg);
+  transform: rotate(201.6deg);
+}
+.radial-progress[data-progress="57"] .circle .mask.full,
+.radial-progress[data-progress="57"] .circle .fill {
+  -webkit-transform: rotate(102.6deg);
+  -ms-transform: rotate(102.6deg);
+  transform: rotate(102.6deg);
+}
+.radial-progress[data-progress="57"] .circle .fill.fix {
+  -webkit-transform: rotate(205.2deg);
+  -ms-transform: rotate(205.2deg);
+  transform: rotate(205.2deg);
+}
+.radial-progress[data-progress="58"] .circle .mask.full,
+.radial-progress[data-progress="58"] .circle .fill {
+  -webkit-transform: rotate(104.4deg);
+  -ms-transform: rotate(104.4deg);
+  transform: rotate(104.4deg);
+}
+.radial-progress[data-progress="58"] .circle .fill.fix {
+  -webkit-transform: rotate(208.8deg);
+  -ms-transform: rotate(208.8deg);
+  transform: rotate(208.8deg);
+}
+.radial-progress[data-progress="59"] .circle .mask.full,
+.radial-progress[data-progress="59"] .circle .fill {
+  -webkit-transform: rotate(106.2deg);
+  -ms-transform: rotate(106.2deg);
+  transform: rotate(106.2deg);
+}
+.radial-progress[data-progress="59"] .circle .fill.fix {
+  -webkit-transform: rotate(212.4deg);
+  -ms-transform: rotate(212.4deg);
+  transform: rotate(212.4deg);
+}
+.radial-progress[data-progress="60"] .circle .mask.full,
+.radial-progress[data-progress="60"] .circle .fill {
+  -webkit-transform: rotate(108deg);
+  -ms-transform: rotate(108deg);
+  transform: rotate(108deg);
+}
+.radial-progress[data-progress="60"] .circle .fill.fix {
+  -webkit-transform: rotate(216deg);
+  -ms-transform: rotate(216deg);
+  transform: rotate(216deg);
+}
+.radial-progress[data-progress="61"] .circle .mask.full,
+.radial-progress[data-progress="61"] .circle .fill {
+  -webkit-transform: rotate(109.8deg);
+  -ms-transform: rotate(109.8deg);
+  transform: rotate(109.8deg);
+}
+.radial-progress[data-progress="61"] .circle .fill.fix {
+  -webkit-transform: rotate(219.6deg);
+  -ms-transform: rotate(219.6deg);
+  transform: rotate(219.6deg);
+}
+.radial-progress[data-progress="62"] .circle .mask.full,
+.radial-progress[data-progress="62"] .circle .fill {
+  -webkit-transform: rotate(111.6deg);
+  -ms-transform: rotate(111.6deg);
+  transform: rotate(111.6deg);
+}
+.radial-progress[data-progress="62"] .circle .fill.fix {
+  -webkit-transform: rotate(223.2deg);
+  -ms-transform: rotate(223.2deg);
+  transform: rotate(223.2deg);
+}
+.radial-progress[data-progress="63"] .circle .mask.full,
+.radial-progress[data-progress="63"] .circle .fill {
+  -webkit-transform: rotate(113.4deg);
+  -ms-transform: rotate(113.4deg);
+  transform: rotate(113.4deg);
+}
+.radial-progress[data-progress="63"] .circle .fill.fix {
+  -webkit-transform: rotate(226.8deg);
+  -ms-transform: rotate(226.8deg);
+  transform: rotate(226.8deg);
+}
+.radial-progress[data-progress="64"] .circle .mask.full,
+.radial-progress[data-progress="64"] .circle .fill {
+  -webkit-transform: rotate(115.2deg);
+  -ms-transform: rotate(115.2deg);
+  transform: rotate(115.2deg);
+}
+.radial-progress[data-progress="64"] .circle .fill.fix {
+  -webkit-transform: rotate(230.4deg);
+  -ms-transform: rotate(230.4deg);
+  transform: rotate(230.4deg);
+}
+.radial-progress[data-progress="65"] .circle .mask.full,
+.radial-progress[data-progress="65"] .circle .fill {
+  -webkit-transform: rotate(117deg);
+  -ms-transform: rotate(117deg);
+  transform: rotate(117deg);
+}
+.radial-progress[data-progress="65"] .circle .fill.fix {
+  -webkit-transform: rotate(234deg);
+  -ms-transform: rotate(234deg);
+  transform: rotate(234deg);
+}
+.radial-progress[data-progress="66"] .circle .mask.full,
+.radial-progress[data-progress="66"] .circle .fill {
+  -webkit-transform: rotate(118.8deg);
+  -ms-transform: rotate(118.8deg);
+  transform: rotate(118.8deg);
+}
+.radial-progress[data-progress="66"] .circle .fill.fix {
+  -webkit-transform: rotate(237.6deg);
+  -ms-transform: rotate(237.6deg);
+  transform: rotate(237.6deg);
+}
+.radial-progress[data-progress="67"] .circle .mask.full,
+.radial-progress[data-progress="67"] .circle .fill {
+  -webkit-transform: rotate(120.6deg);
+  -ms-transform: rotate(120.6deg);
+  transform: rotate(120.6deg);
+}
+.radial-progress[data-progress="67"] .circle .fill.fix {
+  -webkit-transform: rotate(241.2deg);
+  -ms-transform: rotate(241.2deg);
+  transform: rotate(241.2deg);
+}
+.radial-progress[data-progress="68"] .circle .mask.full,
+.radial-progress[data-progress="68"] .circle .fill {
+  -webkit-transform: rotate(122.4deg);
+  -ms-transform: rotate(122.4deg);
+  transform: rotate(122.4deg);
+}
+.radial-progress[data-progress="68"] .circle .fill.fix {
+  -webkit-transform: rotate(244.8deg);
+  -ms-transform: rotate(244.8deg);
+  transform: rotate(244.8deg);
+}
+.radial-progress[data-progress="69"] .circle .mask.full,
+.radial-progress[data-progress="69"] .circle .fill {
+  -webkit-transform: rotate(124.2deg);
+  -ms-transform: rotate(124.2deg);
+  transform: rotate(124.2deg);
+}
+.radial-progress[data-progress="69"] .circle .fill.fix {
+  -webkit-transform: rotate(248.4deg);
+  -ms-transform: rotate(248.4deg);
+  transform: rotate(248.4deg);
+}
+.radial-progress[data-progress="70"] .circle .mask.full,
+.radial-progress[data-progress="70"] .circle .fill {
+  -webkit-transform: rotate(126deg);
+  -ms-transform: rotate(126deg);
+  transform: rotate(126deg);
+}
+.radial-progress[data-progress="70"] .circle .fill.fix {
+  -webkit-transform: rotate(252deg);
+  -ms-transform: rotate(252deg);
+  transform: rotate(252deg);
+}
+.radial-progress[data-progress="71"] .circle .mask.full,
+.radial-progress[data-progress="71"] .circle .fill {
+  -webkit-transform: rotate(127.8deg);
+  -ms-transform: rotate(127.8deg);
+  transform: rotate(127.8deg);
+}
+.radial-progress[data-progress="71"] .circle .fill.fix {
+  -webkit-transform: rotate(255.6deg);
+  -ms-transform: rotate(255.6deg);
+  transform: rotate(255.6deg);
+}
+.radial-progress[data-progress="72"] .circle .mask.full,
+.radial-progress[data-progress="72"] .circle .fill {
+  -webkit-transform: rotate(129.6deg);
+  -ms-transform: rotate(129.6deg);
+  transform: rotate(129.6deg);
+}
+.radial-progress[data-progress="72"] .circle .fill.fix {
+  -webkit-transform: rotate(259.2deg);
+  -ms-transform: rotate(259.2deg);
+  transform: rotate(259.2deg);
+}
+.radial-progress[data-progress="73"] .circle .mask.full,
+.radial-progress[data-progress="73"] .circle .fill {
+  -webkit-transform: rotate(131.4deg);
+  -ms-transform: rotate(131.4deg);
+  transform: rotate(131.4deg);
+}
+.radial-progress[data-progress="73"] .circle .fill.fix {
+  -webkit-transform: rotate(262.8deg);
+  -ms-transform: rotate(262.8deg);
+  transform: rotate(262.8deg);
+}
+.radial-progress[data-progress="74"] .circle .mask.full,
+.radial-progress[data-progress="74"] .circle .fill {
+  -webkit-transform: rotate(133.2deg);
+  -ms-transform: rotate(133.2deg);
+  transform: rotate(133.2deg);
+}
+.radial-progress[data-progress="74"] .circle .fill.fix {
+  -webkit-transform: rotate(266.4deg);
+  -ms-transform: rotate(266.4deg);
+  transform: rotate(266.4deg);
+}
+.radial-progress[data-progress="75"] .circle .mask.full,
+.radial-progress[data-progress="75"] .circle .fill {
+  -webkit-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+.radial-progress[data-progress="75"] .circle .fill.fix {
+  -webkit-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.radial-progress[data-progress="76"] .circle .mask.full,
+.radial-progress[data-progress="76"] .circle .fill {
+  -webkit-transform: rotate(136.8deg);
+  -ms-transform: rotate(136.8deg);
+  transform: rotate(136.8deg);
+}
+.radial-progress[data-progress="76"] .circle .fill.fix {
+  -webkit-transform: rotate(273.6deg);
+  -ms-transform: rotate(273.6deg);
+  transform: rotate(273.6deg);
+}
+.radial-progress[data-progress="77"] .circle .mask.full,
+.radial-progress[data-progress="77"] .circle .fill {
+  -webkit-transform: rotate(138.6deg);
+  -ms-transform: rotate(138.6deg);
+  transform: rotate(138.6deg);
+}
+.radial-progress[data-progress="77"] .circle .fill.fix {
+  -webkit-transform: rotate(277.2deg);
+  -ms-transform: rotate(277.2deg);
+  transform: rotate(277.2deg);
+}
+.radial-progress[data-progress="78"] .circle .mask.full,
+.radial-progress[data-progress="78"] .circle .fill {
+  -webkit-transform: rotate(140.4deg);
+  -ms-transform: rotate(140.4deg);
+  transform: rotate(140.4deg);
+}
+.radial-progress[data-progress="78"] .circle .fill.fix {
+  -webkit-transform: rotate(280.8deg);
+  -ms-transform: rotate(280.8deg);
+  transform: rotate(280.8deg);
+}
+.radial-progress[data-progress="79"] .circle .mask.full,
+.radial-progress[data-progress="79"] .circle .fill {
+  -webkit-transform: rotate(142.2deg);
+  -ms-transform: rotate(142.2deg);
+  transform: rotate(142.2deg);
+}
+.radial-progress[data-progress="79"] .circle .fill.fix {
+  -webkit-transform: rotate(284.4deg);
+  -ms-transform: rotate(284.4deg);
+  transform: rotate(284.4deg);
+}
+.radial-progress[data-progress="80"] .circle .mask.full,
+.radial-progress[data-progress="80"] .circle .fill {
+  -webkit-transform: rotate(144deg);
+  -ms-transform: rotate(144deg);
+  transform: rotate(144deg);
+}
+.radial-progress[data-progress="80"] .circle .fill.fix {
+  -webkit-transform: rotate(288deg);
+  -ms-transform: rotate(288deg);
+  transform: rotate(288deg);
+}
+.radial-progress[data-progress="81"] .circle .mask.full,
+.radial-progress[data-progress="81"] .circle .fill {
+  -webkit-transform: rotate(145.8deg);
+  -ms-transform: rotate(145.8deg);
+  transform: rotate(145.8deg);
+}
+.radial-progress[data-progress="81"] .circle .fill.fix {
+  -webkit-transform: rotate(291.6deg);
+  -ms-transform: rotate(291.6deg);
+  transform: rotate(291.6deg);
+}
+.radial-progress[data-progress="82"] .circle .mask.full,
+.radial-progress[data-progress="82"] .circle .fill {
+  -webkit-transform: rotate(147.6deg);
+  -ms-transform: rotate(147.6deg);
+  transform: rotate(147.6deg);
+}
+.radial-progress[data-progress="82"] .circle .fill.fix {
+  -webkit-transform: rotate(295.2deg);
+  -ms-transform: rotate(295.2deg);
+  transform: rotate(295.2deg);
+}
+.radial-progress[data-progress="83"] .circle .mask.full,
+.radial-progress[data-progress="83"] .circle .fill {
+  -webkit-transform: rotate(149.4deg);
+  -ms-transform: rotate(149.4deg);
+  transform: rotate(149.4deg);
+}
+.radial-progress[data-progress="83"] .circle .fill.fix {
+  -webkit-transform: rotate(298.8deg);
+  -ms-transform: rotate(298.8deg);
+  transform: rotate(298.8deg);
+}
+.radial-progress[data-progress="84"] .circle .mask.full,
+.radial-progress[data-progress="84"] .circle .fill {
+  -webkit-transform: rotate(151.2deg);
+  -ms-transform: rotate(151.2deg);
+  transform: rotate(151.2deg);
+}
+.radial-progress[data-progress="84"] .circle .fill.fix {
+  -webkit-transform: rotate(302.4deg);
+  -ms-transform: rotate(302.4deg);
+  transform: rotate(302.4deg);
+}
+.radial-progress[data-progress="85"] .circle .mask.full,
+.radial-progress[data-progress="85"] .circle .fill {
+  -webkit-transform: rotate(153deg);
+  -ms-transform: rotate(153deg);
+  transform: rotate(153deg);
+}
+.radial-progress[data-progress="85"] .circle .fill.fix {
+  -webkit-transform: rotate(306deg);
+  -ms-transform: rotate(306deg);
+  transform: rotate(306deg);
+}
+.radial-progress[data-progress="86"] .circle .mask.full,
+.radial-progress[data-progress="86"] .circle .fill {
+  -webkit-transform: rotate(154.8deg);
+  -ms-transform: rotate(154.8deg);
+  transform: rotate(154.8deg);
+}
+.radial-progress[data-progress="86"] .circle .fill.fix {
+  -webkit-transform: rotate(309.6deg);
+  -ms-transform: rotate(309.6deg);
+  transform: rotate(309.6deg);
+}
+.radial-progress[data-progress="87"] .circle .mask.full,
+.radial-progress[data-progress="87"] .circle .fill {
+  -webkit-transform: rotate(156.6deg);
+  -ms-transform: rotate(156.6deg);
+  transform: rotate(156.6deg);
+}
+.radial-progress[data-progress="87"] .circle .fill.fix {
+  -webkit-transform: rotate(313.2deg);
+  -ms-transform: rotate(313.2deg);
+  transform: rotate(313.2deg);
+}
+.radial-progress[data-progress="88"] .circle .mask.full,
+.radial-progress[data-progress="88"] .circle .fill {
+  -webkit-transform: rotate(158.4deg);
+  -ms-transform: rotate(158.4deg);
+  transform: rotate(158.4deg);
+}
+.radial-progress[data-progress="88"] .circle .fill.fix {
+  -webkit-transform: rotate(316.8deg);
+  -ms-transform: rotate(316.8deg);
+  transform: rotate(316.8deg);
+}
+.radial-progress[data-progress="89"] .circle .mask.full,
+.radial-progress[data-progress="89"] .circle .fill {
+  -webkit-transform: rotate(160.2deg);
+  -ms-transform: rotate(160.2deg);
+  transform: rotate(160.2deg);
+}
+.radial-progress[data-progress="89"] .circle .fill.fix {
+  -webkit-transform: rotate(320.4deg);
+  -ms-transform: rotate(320.4deg);
+  transform: rotate(320.4deg);
+}
+.radial-progress[data-progress="90"] .circle .mask.full,
+.radial-progress[data-progress="90"] .circle .fill {
+  -webkit-transform: rotate(162deg);
+  -ms-transform: rotate(162deg);
+  transform: rotate(162deg);
+}
+.radial-progress[data-progress="90"] .circle .fill.fix {
+  -webkit-transform: rotate(324deg);
+  -ms-transform: rotate(324deg);
+  transform: rotate(324deg);
+}
+.radial-progress[data-progress="91"] .circle .mask.full,
+.radial-progress[data-progress="91"] .circle .fill {
+  -webkit-transform: rotate(163.8deg);
+  -ms-transform: rotate(163.8deg);
+  transform: rotate(163.8deg);
+}
+.radial-progress[data-progress="91"] .circle .fill.fix {
+  -webkit-transform: rotate(327.6deg);
+  -ms-transform: rotate(327.6deg);
+  transform: rotate(327.6deg);
+}
+.radial-progress[data-progress="92"] .circle .mask.full,
+.radial-progress[data-progress="92"] .circle .fill {
+  -webkit-transform: rotate(165.6deg);
+  -ms-transform: rotate(165.6deg);
+  transform: rotate(165.6deg);
+}
+.radial-progress[data-progress="92"] .circle .fill.fix {
+  -webkit-transform: rotate(331.2deg);
+  -ms-transform: rotate(331.2deg);
+  transform: rotate(331.2deg);
+}
+.radial-progress[data-progress="93"] .circle .mask.full,
+.radial-progress[data-progress="93"] .circle .fill {
+  -webkit-transform: rotate(167.4deg);
+  -ms-transform: rotate(167.4deg);
+  transform: rotate(167.4deg);
+}
+.radial-progress[data-progress="93"] .circle .fill.fix {
+  -webkit-transform: rotate(334.8deg);
+  -ms-transform: rotate(334.8deg);
+  transform: rotate(334.8deg);
+}
+.radial-progress[data-progress="94"] .circle .mask.full,
+.radial-progress[data-progress="94"] .circle .fill {
+  -webkit-transform: rotate(169.2deg);
+  -ms-transform: rotate(169.2deg);
+  transform: rotate(169.2deg);
+}
+.radial-progress[data-progress="94"] .circle .fill.fix {
+  -webkit-transform: rotate(338.4deg);
+  -ms-transform: rotate(338.4deg);
+  transform: rotate(338.4deg);
+}
+.radial-progress[data-progress="95"] .circle .mask.full,
+.radial-progress[data-progress="95"] .circle .fill {
+  -webkit-transform: rotate(171deg);
+  -ms-transform: rotate(171deg);
+  transform: rotate(171deg);
+}
+.radial-progress[data-progress="95"] .circle .fill.fix {
+  -webkit-transform: rotate(342deg);
+  -ms-transform: rotate(342deg);
+  transform: rotate(342deg);
+}
+.radial-progress[data-progress="96"] .circle .mask.full,
+.radial-progress[data-progress="96"] .circle .fill {
+  -webkit-transform: rotate(172.8deg);
+  -ms-transform: rotate(172.8deg);
+  transform: rotate(172.8deg);
+}
+.radial-progress[data-progress="96"] .circle .fill.fix {
+  -webkit-transform: rotate(345.6deg);
+  -ms-transform: rotate(345.6deg);
+  transform: rotate(345.6deg);
+}
+.radial-progress[data-progress="97"] .circle .mask.full,
+.radial-progress[data-progress="97"] .circle .fill {
+  -webkit-transform: rotate(174.6deg);
+  -ms-transform: rotate(174.6deg);
+  transform: rotate(174.6deg);
+}
+.radial-progress[data-progress="97"] .circle .fill.fix {
+  -webkit-transform: rotate(349.2deg);
+  -ms-transform: rotate(349.2deg);
+  transform: rotate(349.2deg);
+}
+.radial-progress[data-progress="98"] .circle .mask.full,
+.radial-progress[data-progress="98"] .circle .fill {
+  -webkit-transform: rotate(176.4deg);
+  -ms-transform: rotate(176.4deg);
+  transform: rotate(176.4deg);
+}
+.radial-progress[data-progress="98"] .circle .fill.fix {
+  -webkit-transform: rotate(352.8deg);
+  -ms-transform: rotate(352.8deg);
+  transform: rotate(352.8deg);
+}
+.radial-progress[data-progress="99"] .circle .mask.full,
+.radial-progress[data-progress="99"] .circle .fill {
+  -webkit-transform: rotate(178.2deg);
+  -ms-transform: rotate(178.2deg);
+  transform: rotate(178.2deg);
+}
+.radial-progress[data-progress="99"] .circle .fill.fix {
+  -webkit-transform: rotate(356.4deg);
+  -ms-transform: rotate(356.4deg);
+  transform: rotate(356.4deg);
+}
+.radial-progress[data-progress="100"] .circle .mask.full,
+.radial-progress[data-progress="100"] .circle .fill {
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.radial-progress[data-progress="100"] .circle .fill.fix {
+  -webkit-transform: rotate(360deg);
+  -ms-transform: rotate(360deg);
+  transform: rotate(360deg);
+}
+.owl-carousel .owl-wrapper:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+/* display none until init */
+.owl-carousel {
+  display: none;
+  position: relative;
+  width: 100%;
+  -ms-touch-action: pan-y;
+}
+.owl-carousel .owl-wrapper {
+  display: none;
+  position: relative;
+  -webkit-transform: translate3d(0px, 0px, 0px);
+}
+.owl-carousel .owl-wrapper-outer {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+.owl-carousel .owl-wrapper-outer.autoHeight {
+  -webkit-transition: height 500ms ease-in-out;
+  -moz-transition: height 500ms ease-in-out;
+  -ms-transition: height 500ms ease-in-out;
+  -o-transition: height 500ms ease-in-out;
+  transition: height 500ms ease-in-out;
+}
+.owl-carousel .owl-item {
+  float: left;
+}
+.owl-controls .owl-page,
+.owl-controls .owl-buttons div {
+  cursor: pointer;
+}
+.owl-controls {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+/* mouse grab icon */
+.grabbing {
+  cursor: url(grabbing.png) 8 8, move;
+}
+/* fix */
+.owl-carousel .owl-wrapper,
+.owl-carousel .owl-item {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+}
+.owl-theme .owl-controls {
+  margin-top: 10px;
+  text-align: center;
+}
+/* Styling Next and Prev buttons */
+.owl-theme .owl-controls .owl-buttons div {
+  color: #FFF;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+  /*IE7 life-saver */
+  margin: 5px;
+  padding: 3px 10px;
+  font-size: 12px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+  background: #869791;
+  filter: alpha(opacity=50);
+  /*IE7 fix*/
+  opacity: 0.5;
+}
+/* Clickable class fix problem with hover on touch devices */
+/* Use it for non-touch hover action */
+.owl-theme .owl-controls.clickable .owl-buttons div:hover {
+  filter: alpha(opacity=100);
+  /*IE7 fix*/
+  opacity: 1;
+  text-decoration: none;
+}
+/* Styling Pagination*/
+.owl-theme .owl-controls .owl-page {
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+  /*IE7 life-saver */
+}
+.owl-theme .owl-controls .owl-page span {
+  display: block;
+  width: 12px;
+  height: 12px;
+  margin: 5px 7px;
+  filter: alpha(opacity=50);
+  /*IE7 fix*/
+  opacity: 0.5;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  background: #869791;
+}
+.owl-theme .owl-controls .owl-page.active span,
+.owl-theme .owl-controls.clickable .owl-page:hover span {
+  filter: alpha(opacity=100);
+  /*IE7 fix*/
+  opacity: 1;
+}
+/* If PaginationNumbers is true */
+.owl-theme .owl-controls .owl-page span.owl-numbers {
+  height: auto;
+  width: auto;
+  color: #FFF;
+  padding: 2px 10px;
+  font-size: 12px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  border-radius: 30px;
+}
+/* preloading images */
+.owl-item.loading {
+  min-height: 80%;
+  background: url(AjaxLoader.gif) no-repeat center center;
+}
+.owl-origin {
+  -webkit-perspective: 1200px;
+  -webkit-perspective-origin-x: 50%;
+  -webkit-perspective-origin-y: 50%;
+  -moz-perspective: 1200px;
+  -moz-perspective-origin-x: 50%;
+  -moz-perspective-origin-y: 50%;
+  perspective: 1200px;
+}
+/* fade */
+.owl-fade-out {
+  z-index: 10;
+  -webkit-animation: fadeOut .7s both ease;
+  -moz-animation: fadeOut .7s both ease;
+  animation: fadeOut .7s both ease;
+}
+.owl-fade-in {
+  -webkit-animation: fadeIn .7s both ease;
+  -moz-animation: fadeIn .7s both ease;
+  animation: fadeIn .7s both ease;
+}

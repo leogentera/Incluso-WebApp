@@ -1,0 +1,537 @@
+/********************************************************************************
+    Incluso Digital CSS Overrides
+
+    Description:    This file provides CSS rules for all the views that conform 
+                    the Incluso Digital Application.
+    Uses:           bootstrap.css, base.css, entities.css
+
+    Color Palette:  Please look at base.css
+    Index:
+        01. public
+        02. start-dashboard
+        03. profile-dashboard
+********************************************************************************/
+/****************************************************************************
+ LESS Utilities - variables and functions
+****************************************************************************/
+/* Path vars */
+/* Color Palette */
+/* shape variables */
+/* parametric color functions */
+/* Custom Functions */
+/* Public Pages */
+.incluso-app.public {
+  background-attachment: fixed;
+  background-image: url('../images/bg-sm-public-page.jpg');
+  background-position: center -23px;
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  /* grid system override */
+  /*.input-group-addon {
+        font-size: 24px;
+    }*/
+  /* checkbox overrides */
+  /* buttons overrides and some decoration */
+}
+.incluso-app.public .container-fluid {
+  padding-left: 3vw;
+  padding-right: 3vw;
+}
+.incluso-app.public .row {
+  margin-left: -3vw;
+  margin-right: -3vw;
+}
+.incluso-app.public .col-xs-1,
+.incluso-app.public .col-sm-1,
+.incluso-app.public .col-md-1,
+.incluso-app.public .col-lg-1,
+.incluso-app.public .col-xs-2,
+.incluso-app.public .col-sm-2,
+.incluso-app.public .col-md-2,
+.incluso-app.public .col-lg-2,
+.incluso-app.public .col-xs-3,
+.incluso-app.public .col-sm-3,
+.incluso-app.public .col-md-3,
+.incluso-app.public .col-lg-3,
+.incluso-app.public .col-xs-4,
+.incluso-app.public .col-sm-4,
+.incluso-app.public .col-md-4,
+.incluso-app.public .col-lg-4,
+.incluso-app.public .col-xs-5,
+.incluso-app.public .col-sm-5,
+.incluso-app.public .col-md-5,
+.incluso-app.public .col-lg-5,
+.incluso-app.public .col-xs-6,
+.incluso-app.public .col-sm-6,
+.incluso-app.public .col-md-6,
+.incluso-app.public .col-lg-6,
+.incluso-app.public .col-xs-7,
+.incluso-app.public .col-sm-7,
+.incluso-app.public .col-md-7,
+.incluso-app.public .col-lg-7,
+.incluso-app.public .col-xs-8,
+.incluso-app.public .col-sm-8,
+.incluso-app.public .col-md-8,
+.incluso-app.public .col-lg-8,
+.incluso-app.public .col-xs-9,
+.incluso-app.public .col-sm-9,
+.incluso-app.public .col-md-9,
+.incluso-app.public .col-lg-9,
+.incluso-app.public .col-xs-10,
+.incluso-app.public .col-sm-10,
+.incluso-app.public .col-md-10,
+.incluso-app.public .col-lg-10,
+.incluso-app.public .col-xs-11,
+.incluso-app.public .col-sm-11,
+.incluso-app.public .col-md-11,
+.incluso-app.public .col-lg-11,
+.incluso-app.public .col-xs-12,
+.incluso-app.public .col-sm-12,
+.incluso-app.public .col-md-12,
+.incluso-app.public .col-lg-12 {
+  padding-left: 3vw;
+  padding-right: 3vw;
+}
+.incluso-app.public header {
+  position: relative;
+  padding-top: 80px;
+  padding-top: 16vw;
+  padding-bottom: 16px;
+  padding-bottom: 3vw;
+  margin: 0 auto;
+  width: 92%;
+}
+.incluso-app.public header img {
+  display: block;
+  margin: 0 auto;
+  width: auto;
+  width: 55vw;
+}
+.incluso-app.public header figcaption {
+  margin: 10px auto;
+  margin: 0;
+  padding: 24px 0 10px 0;
+  padding: 6vw 0 3vw 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.6em;
+  font-size: 5.6vw;
+  font-weight: bold;
+  line-height: 28px;
+  line-height: 6.6vw;
+}
+.incluso-app.public header figcaption span {
+  padding-left: 2vw;
+}
+.incluso-app.public header figcaption span:first-child {
+  padding-left: 0;
+}
+.incluso-app.public section {
+  margin: 0 auto;
+  width: 92%;
+}
+.incluso-app.public .form-group {
+  margin-bottom: 0;
+}
+.incluso-app.public .checkbox {
+  /*width: 66%;*/
+  /*margin:28px 0;*/
+  margin: 6vw 0;
+}
+.incluso-app.public .checkbox input {
+  position: static;
+  margin-left: 0;
+  /*width: 24px;
+            height: 24px;*/
+}
+.incluso-app.public .checkbox label {
+  /*padding-left: 3%;*/
+  line-height: 1.4;
+  vertical-align: middle;
+}
+.incluso-app.public .checkbox label span {
+  /*font-size: 20px;*/
+  color: white;
+  font-weight: 500;
+  /*margin-left: 20px;*/
+}
+.incluso-app.public .btn-primary {
+  text-transform: uppercase;
+}
+.incluso-app.public .btn-spacer {
+  height: auto;
+  padding: 4vw 0;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 4.1vw;
+  font-weight: 500;
+}
+.incluso-app.public .btn-facebook {
+  position: relative;
+  font-size: 1.2em;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.incluso-app.public .btn-facebook .icomoon {
+  position: absolute;
+  left: 3vw;
+  font-size: 6vw;
+}
+.incluso-app.public footer {
+  /*padding: 64px 0; padding: 15vw 0;*/
+  padding: 12vw 0 15vw;
+}
+.incluso-app.public footer a {
+  display: inline-block;
+  padding: 1.8vw 0;
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: normal;
+  text-decoration: none;
+}
+.incluso-app.public footer a:hover {
+  text-decoration: underline;
+}
+.incluso-app.public form h1 {
+  margin: 2.1vw 0 5vw;
+  color: #ffffff;
+  font-size: 4.1vw;
+  font-weight: bold;
+  letter-spacing: 0.037em;
+  text-transform: capitalize;
+}
+.incluso-app.public .login {
+  position: relative;
+}
+.incluso-app.public .login .input-group .input-group-addon.addon-lg {
+  /*font-size: 6vw;
+                line-height: 6vw;*/
+  /*vertical-align: top;  -unused */
+}
+.incluso-app.public .login .input-group .form-control {
+  /*font-size: 6vw;
+                line-height: 6vw;*/
+  vertical-align: bottom;
+}
+.incluso-app.public .register #emailAddOn {
+  /*line-height: 10vw;*/
+}
+/* Dashboard */
+.incluso-app.start-dashboard {
+  background-attachment: scroll;
+  background-position: center -23px;
+  background-repeat: no-repeat;
+  /*background-size: cover;*/
+  background: #14181d;
+  background: -moz-linear-gradient(top, #14181d 0%, #173a4a 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #14181d), color-stop(100%, #173a4a));
+  background: -webkit-linear-gradient(top, #14181d 0%, #173a4a 100%);
+  background: -o-linear-gradient(top, #14181d 0%, #173a4a 100%);
+  background: -ms-linear-gradient(top, #14181d 0%, #173a4a 100%);
+  background: linear-gradient(to bottom, #14181d 0%, #173a4a 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#14181d', endColorstr='#173a4a', GradientType=0);
+  /* tabs */
+}
+.incluso-app.start-dashboard .navbar {
+  background-color: #ee4823;
+  border-color: #ee4823;
+}
+.incluso-app.start-dashboard .container {
+  background-attachment: fixed;
+  background-image: url("../images/bg-stars-01.png");
+  background-size: contain;
+}
+.incluso-app.start-dashboard #site-canvas {
+  background-attachment: scroll;
+  background-image: url("../images/bg-stars-02.png");
+  background-size: contain;
+}
+.incluso-app.start-dashboard h1 {
+  display: block;
+  padding: 0;
+  margin: 42px 0 15px;
+  color: #FFF;
+  font-family: Roboto, Arial;
+  font-size: 1.4em;
+  font-weight: 400;
+  text-transform: capitalize;
+}
+.incluso-app.start-dashboard .component {
+  padding: 0 5%;
+}
+.incluso-app.start-dashboard .container {
+  padding: 0;
+}
+.incluso-app.start-dashboard .user-avatar figure {
+  border: 0px solid transparent;
+}
+.incluso-app.start-dashboard .user-avatar figcaption {
+  background-color: #243436;
+  color: #ffffff;
+  font-size: 1em;
+}
+.incluso-app.start-dashboard .global-progress {
+  margin-top: 50px;
+}
+.incluso-app.start-dashboard .current-satge h3 {
+  margin-top: 24px;
+  color: #ffffff;
+}
+.incluso-app.start-dashboard .current-satge .btn {
+  text-transform: uppercase;
+}
+.incluso-app.start-dashboard .active .user-avatar figcaption {
+  background-color: #121b1c;
+  /* @clr-grayDark; */
+}
+.incluso-app.start-dashboard .active .arrow-up {
+  display: block;
+  bottom: -69px;
+}
+.incluso-app.start-dashboard footer li:last-child {
+  display: none;
+}
+.incluso-app.start-dashboard .db-bg {
+  background-image: url("../images/bg-footer-rocks.png");
+  background-position: 50% 0;
+  box-shadow: unset;
+}
+/* Profile Dashboard */
+.incluso-app.profile {
+  background: #13171c;
+  /* Old browsers */
+  /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzEzMTcxYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMxNjNhNGEiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+  background: -moz-linear-gradient(top, #13171c 0%, 100%);
+  /* FF3.6+ *#163a4a/
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#13171c), color-stop(100%,#163a4a)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #13171c 0%, #163a4a 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #13171c 0%, #163a4a 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #13171c 0%, #163a4a 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #13171c 0%, #163a4a 100%);
+  /* W3C */
+  /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#13171c', endColorstr='#163a4a',GradientType=0 ); /* IE6-8 */
+}
+.incluso-app.profile .navbar {
+  background-color: #ee4823;
+  border-color: #ee4823;
+}
+.incluso-app.profile footer {
+  padding-bottom: 30px;
+  background-color: #3c4448;
+  background-image: url('../images/img-footer-texture.png');
+  background-position: center 10px;
+  background-repeat: no-repeat;
+  -webkit-background-size: 80% auto;
+  -moz-background-size: 80% auto;
+  background-size: 80% auto;
+}
+.incluso-app.profile footer .btn-back-to-top {
+  display: block;
+  padding: 20px 0 0;
+}
+.incluso-app.profile footer .block-list,
+.incluso-app.profile footer .btn-back-to-top {
+  margin-left: auto;
+  margin-right: auto;
+}
+.incluso-app.profile footer li:last-child {
+  display: none;
+}
+.incluso-app.profile .panel-title {
+  display: inline;
+}
+.incluso-app.profile .user-avatar figcaption {
+  border: 3px solid #bcd431;
+  box-sizing: content-box;
+}
+/* Edit Profile */
+.incluso-app.edit-profile .list-group {
+  margin: 0 auto;
+  width: 92%;
+}
+.incluso-app.edit-profile .panel {
+  margin: 0 auto;
+  width: 92%;
+}
+.incluso-app.edit-profile .my-profile-form select.form-control {
+  /*border-left-style: solid !important;
+            border-left-color: @clr-white !important;*/
+  /*.clr-white(border-left-color, 0.0);*/
+  /*border-left-width: 0 !important;*/
+  /*border-right-style: solid !important;
+            border-right-color: @clr-white !important;*/
+  /*border-right-width: 0 !important;*/
+  /*border-top-style: solid !important;
+            border-top-color: @clr-white !important;*/
+  /*border-top-width: 0 !important;*/
+  /*border: none !important;*/
+}
+/* Step dashboard*/
+.incluso-app.step-dashboard {
+  background: -moz-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f2733), color-stop(100%, #141921));
+  background: -webkit-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: -o-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: -ms-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: radial-gradient(ellipse at center, #1f2733 0%, #141921 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1f2733', endColorstr='#141921', GradientType=1);
+}
+.incluso-app.step-dashboard .navbar {
+  background-color: #158ccd;
+  border-color: #158ccd;
+}
+.incluso-app.step-dashboard .video-gallery {
+  margin: 0;
+  padding: 20px;
+  background-image: url('../images/bg-video-lg.jpg');
+  background-color: #2A2E31;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.incluso-app.step-dashboard .carousel .control {
+  position: absolute;
+  top: 20%;
+  font-size: 300%;
+  color: #08b190;
+  text-decoration: none;
+}
+.incluso-app.step-dashboard .carousel #prev {
+  left: 3%;
+}
+.incluso-app.step-dashboard .carousel #next {
+  right: 3%;
+}
+.incluso-app.step-dashboard footer.footer {
+  background-image: url('../images/img-footer-texture-lg.png');
+  background-color: #24292B;
+  box-shadow: unset;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.incluso-app.step-dashboard footer.footer li:last-child {
+  display: none;
+}
+.incluso-app.step-dashboard .txt-small {
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  font-size: 80%;
+  line-height: normal;
+  margin: 0 2vw;
+  padding: 1vw 2vw;
+}
+.incluso-app.step-dashboard .gr-bg {
+  background: none #0A9648;
+}
+.incluso-app.notif-dashboard {
+  background: -moz-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f2733), color-stop(100%, #141921));
+  background: -webkit-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: -o-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: -ms-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: radial-gradient(ellipse at center, #1f2733 0%, #141921 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1f2733', endColorstr='#141921', GradientType=1);
+}
+.incluso-app.notif-dashboard .navbar {
+  background-color: #ee4823;
+  border-color: #ee4823;
+}
+.incluso-app.notif-dashboard #controller .owl-item {
+  text-align: center;
+  border: 1px solid #08b190;
+  font-weight: lighter;
+  color: #08b190;
+  cursor: pointer;
+}
+.incluso-app.notif-dashboard #controller .owl-item.synced {
+  background-color: #08b190;
+  color: white;
+}
+.incluso-app.notif-dashboard #controller .owl-item:first-child {
+  border-radius: 5px 0 0 5px;
+}
+.incluso-app.notif-dashboard #controller .owl-item:last-child {
+  border-radius: 0 5px 5px 0;
+}
+.incluso-app.score-dashboard {
+  background: -moz-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f2733), color-stop(100%, #141921));
+  background: -webkit-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: -o-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: -ms-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+  background: radial-gradient(ellipse at center, #1f2733 0%, #141921 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1f2733', endColorstr='#141921', GradientType=1);
+}
+.incluso-app.score-dashboard .navbar {
+  background-color: #ee4823;
+  border-color: #ee4823;
+}
+.incluso-app.score-dashboard .score {
+  background-image: url('../images/bg-toppoints-hud.png');
+  background-position: 50% 0;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  height: 33vw;
+}
+.incluso-app.score-dashboard .score div {
+  font-size: 11vw;
+  padding: 7vw;
+}
+.incluso-app.show-nav #menuton {
+  color: rgba(0, 0, 0, 0.2);
+}
+#site-menu .navbar .container-fluid {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+.starcontain .part div {
+  display: block;
+  font-size: 86%;
+}
+.starcontain .part .sm-pill {
+  display: inline-flex;
+}
+.green {
+  color: #0f9847 !important;
+}
+.lightgreen {
+  color: #bcd431 !important;
+}
+.sosogreen {
+  color: #08b190 !important;
+}
+.red {
+  color: #ef4823 !important;
+}
+.white {
+  color: white !important;
+}
+.gray {
+  color: #8098a0 !important;
+}
+.pink {
+  color: #e70e80 !important;
+}
+.pointer,
+a {
+  cursor: pointer;
+}
+.no-padding {
+  padding: 0 !important;
+}
+.bord {
+  border: 1px solid #08b190;
+}
+section.part.inbloq {
+  display: inline-block;
+}
+section.part.inbloq div {
+  width: 100%;
+  text-align: justify;
+}
