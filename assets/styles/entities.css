@@ -1,0 +1,1632 @@
+/********************************************************************************
+    Incluso Digital CSS Entities
+    Description:    This file provides CSS rules for all the business entities 
+                    of the Incluso Digital Application.
+    Uses:           bootstrap.css, base.css
+
+    Color Palette:  Please look at base.css
+    Index:
+        00. $Text n containers
+        01. $video-gallery
+        02. $my-progress
+        03. $current-satge
+        04. $my-badges
+        05. $user-avatar
+        06. $top-users
+********************************************************************************/
+/****************************************************************************
+ LESS Utilities - variables and functions
+****************************************************************************/
+/* Path vars */
+/* Color Palette */
+/* shape variables */
+/* parametric color functions */
+/* Custom Functions */
+/* xs viewport */
+@media screen {
+  .incluso-app {
+    /***********************************************************************
+         01. $text n containers
+         Description: CSS for most used parts
+        ************************************************************************/
+    /***********************************************************************
+         00. $points
+         Description: CSS to represent a user's score in points and an icon
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         01. $video-gallery
+         Description: CSS for video gallery component
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         02. $my-progress
+         Description: CSS for video gallery component
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         03. $current-satge
+         Description: CSS for video gallery component
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         04. $my-badges
+         Description: CSS for user badges component
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         05. $user-avatar
+         Description: CSS to represent a user avatar picture with info
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         06. $user-data
+         Description: CSS to represent the user's data section beneath to avatar
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         06. $top-users
+         Description: CSS to represent the tabbed list of top users and current
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         07. $ilustration
+         Description: CSS to represent an area to place a graphic illustration
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         $user-dashboard
+         Description: CSS to represent an area to place a graphic illustration
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         $profile-data
+         Description: CSS to represent profile data section related to avatar
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         $profile-settings
+         Description: CSS to represent profile settings area related to user
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         $profile-options
+         Description: CSS to represent user's profile dashboard landing page
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         $profile-dashboard
+         Description: CSS to represent user's profile dashboard landing page
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         $my-profile-form
+         Description: CSS to represent user's profile editable form
+        ************************************************************************/
+    /***********************************************************************/
+  }
+  .incluso-app .to-top {
+    bottom: 20px;
+    color: #f00;
+    left: 43.5%;
+    left: calc(50% - 6vw);
+    position: absolute;
+    text-align: center;
+    color: #e1e455;
+  }
+  .incluso-app img {
+    width: 100%;
+  }
+  .incluso-app .txt-title {
+    color: white;
+    font-weight: bold;
+    margin: 5% 10%;
+    font-size: 120%;
+  }
+  .incluso-app .txt-renglon {
+    color: white;
+    font-weight: bold;
+    margin: 0% 10%;
+    padding: 5% 0;
+    width: 80%;
+  }
+  .incluso-app .txt-bigger {
+    font-size: 150%;
+    line-height: normal;
+  }
+  .incluso-app .subtitle {
+    color: #e1e455;
+    font-size: 150%;
+    padding: 5% 10%;
+    text-transform: uppercase;
+  }
+  .incluso-app .min-pad {
+    padding: 5px 0px;
+  }
+  .incluso-app .green-giant {
+    color: #0f9847;
+    font-size: 1000%;
+  }
+  .incluso-app .green-pill {
+    border: 1px solid #0f9847;
+    border-radius: 25px;
+    margin: -5px -10px;
+    padding: 5px 10px;
+    color: #0f9847;
+  }
+  .incluso-app .green {
+    color: #0f9847 !important;
+  }
+  .incluso-app .red {
+    color: #ef4823 !important;
+  }
+  .incluso-app .white {
+    color: white !important;
+  }
+  .incluso-app .pill {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 200px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: normal;
+    margin: 5vw 10vw;
+    padding: 2vw 3vw 7vw;
+  }
+  .incluso-app .sm-pill {
+    border: 1px solid #bbd331;
+    border-radius: 100px;
+    color: #bbd331;
+    margin: -0.3vw -1vw;
+    padding: 0.3vw 1vw;
+  }
+  .incluso-app .centered {
+    text-align: center;
+  }
+  .incluso-app .centered .spinner {
+    max-width: 79%;
+    margin: 0 auto;
+  }
+  .incluso-app .centered .spinner .circle {
+    height: 56%;
+    left: 23%;
+    position: absolute;
+    text-align: center;
+    top: 19%;
+    width: 54%;
+  }
+  .incluso-app .distribuido {
+    display: inline-flex;
+    justify-content: space-between;
+  }
+  .incluso-app .distribuido a {
+    padding: .5%;
+  }
+  .incluso-app .fl-left {
+    float: left;
+  }
+  .incluso-app .fl-right {
+    float: right;
+  }
+  .incluso-app .notw {
+    opacity: .5;
+  }
+  .incluso-app .white {
+    color: white;
+  }
+  .incluso-app .hangar-bay {
+    background-image: url('../images/bg-hangarbay.jpg');
+    background-color: #24282a;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .incluso-app .hangar-bay #ship {
+    display: block;
+    width: 100%;
+    min-height: 200px;
+    padding-bottom: 40px;
+  }
+  .incluso-app .hangar-bay #ship img {
+    margin: 5% 20%;
+    width: 60%;
+  }
+  .incluso-app .blueprint {
+    background-image: url('../images/bg-blueprint-ship.jpg');
+    background-color: #112845;
+    background-position: -1px 0px;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    border-bottom: 10px solid #24282a;
+  }
+  .incluso-app .starway {
+    background: #1f2733;
+    background: -moz-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f2733), color-stop(100%, #141921));
+    background: -webkit-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: -o-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: -ms-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: radial-gradient(ellipse at center, #1f2733 0%, #141921 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1f2733', endColorstr='#141921', GradientType=1);
+    background-image: url('../images/bg-stars-02.png');
+    background-size: 100% auto;
+  }
+  .incluso-app .progreso {
+    background-image: url('../images/bg-progress-spinn.jpg');
+    background-size: cover;
+    background-color: #24282A;
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+  .incluso-app .spinner {
+    max-width: 49%;
+    padding: 5% 9% 10%;
+    position: relative;
+  }
+  .incluso-app .spinner .circle {
+    background-color: rgba(13, 15, 19, 0.55);
+    border-radius: 50%;
+    display: block;
+    height: 46%;
+    left: 28%;
+    position: absolute;
+    text-align: center;
+    top: 22%;
+    width: 44%;
+  }
+  .incluso-app .spinner .text {
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    left: 39.5%;
+    left: calc(50% - 19px);
+    position: absolute;
+    top: 39.5%;
+    top: calc(50% - 25px);
+    width: auto;
+  }
+  .incluso-app .spinner[data-progress="0"] {
+    background-image: url("../images/prcnt/0.png");
+  }
+  .incluso-app .spinner[data-progress="1"] {
+    background-image: url("../images/prcnt/1.png");
+  }
+  .incluso-app .spinner[data-progress="2"] {
+    background-image: url("../images/prcnt/2.png");
+  }
+  .incluso-app .spinner[data-progress="3"] {
+    background-image: url("../images/prcnt/3.png");
+  }
+  .incluso-app .spinner[data-progress="4"] {
+    background-image: url("../images/prcnt/4.png");
+  }
+  .incluso-app .spinner[data-progress="5"] {
+    background-image: url("../images/prcnt/5.png");
+  }
+  .incluso-app .spinner[data-progress="6"] {
+    background-image: url("../images/prcnt/6.png");
+  }
+  .incluso-app .spinner[data-progress="7"] {
+    background-image: url("../images/prcnt/7.png");
+  }
+  .incluso-app .spinner[data-progress="8"] {
+    background-image: url("../images/prcnt/8.png");
+  }
+  .incluso-app .spinner[data-progress="9"] {
+    background-image: url("../images/prcnt/9.png");
+  }
+  .incluso-app .spinner[data-progress="10"] {
+    background-image: url("../images/prcnt/10.png");
+  }
+  .incluso-app .spinner[data-progress="11"] {
+    background-image: url("../images/prcnt/11.png");
+  }
+  .incluso-app .spinner[data-progress="12"] {
+    background-image: url("../images/prcnt/12.png");
+  }
+  .incluso-app .spinner[data-progress="13"] {
+    background-image: url("../images/prcnt/13.png");
+  }
+  .incluso-app .spinner[data-progress="14"] {
+    background-image: url("../images/prcnt/14.png");
+  }
+  .incluso-app .spinner[data-progress="15"] {
+    background-image: url("../images/prcnt/15.png");
+  }
+  .incluso-app .spinner[data-progress="16"] {
+    background-image: url("../images/prcnt/16.png");
+  }
+  .incluso-app .spinner[data-progress="17"] {
+    background-image: url("../images/prcnt/17.png");
+  }
+  .incluso-app .spinner[data-progress="18"] {
+    background-image: url("../images/prcnt/18.png");
+  }
+  .incluso-app .spinner[data-progress="19"] {
+    background-image: url("../images/prcnt/19.png");
+  }
+  .incluso-app .spinner[data-progress="20"] {
+    background-image: url("../images/prcnt/20.png");
+  }
+  .incluso-app .spinner[data-progress="21"] {
+    background-image: url("../images/prcnt/21.png");
+  }
+  .incluso-app .spinner[data-progress="22"] {
+    background-image: url("../images/prcnt/22.png");
+  }
+  .incluso-app .spinner[data-progress="23"] {
+    background-image: url("../images/prcnt/23.png");
+  }
+  .incluso-app .spinner[data-progress="24"] {
+    background-image: url("../images/prcnt/24.png");
+  }
+  .incluso-app .spinner[data-progress="25"] {
+    background-image: url("../images/prcnt/25.png");
+  }
+  .incluso-app .spinner[data-progress="26"] {
+    background-image: url("../images/prcnt/26.png");
+  }
+  .incluso-app .spinner[data-progress="27"] {
+    background-image: url("../images/prcnt/27.png");
+  }
+  .incluso-app .spinner[data-progress="28"] {
+    background-image: url("../images/prcnt/28.png");
+  }
+  .incluso-app .spinner[data-progress="29"] {
+    background-image: url("../images/prcnt/29.png");
+  }
+  .incluso-app .spinner[data-progress="30"] {
+    background-image: url("../images/prcnt/30.png");
+  }
+  .incluso-app .spinner[data-progress="31"] {
+    background-image: url("../images/prcnt/31.png");
+  }
+  .incluso-app .spinner[data-progress="32"] {
+    background-image: url("../images/prcnt/32.png");
+  }
+  .incluso-app .spinner[data-progress="33"] {
+    background-image: url("../images/prcnt/33.png");
+  }
+  .incluso-app .spinner[data-progress="34"] {
+    background-image: url("../images/prcnt/34.png");
+  }
+  .incluso-app .spinner[data-progress="35"] {
+    background-image: url("../images/prcnt/35.png");
+  }
+  .incluso-app .spinner[data-progress="36"] {
+    background-image: url("../images/prcnt/36.png");
+  }
+  .incluso-app .spinner[data-progress="37"] {
+    background-image: url("../images/prcnt/37.png");
+  }
+  .incluso-app .spinner[data-progress="38"] {
+    background-image: url("../images/prcnt/38.png");
+  }
+  .incluso-app .spinner[data-progress="39"] {
+    background-image: url("../images/prcnt/39.png");
+  }
+  .incluso-app .spinner[data-progress="40"] {
+    background-image: url("../images/prcnt/40.png");
+  }
+  .incluso-app .spinner[data-progress="41"] {
+    background-image: url("../images/prcnt/41.png");
+  }
+  .incluso-app .spinner[data-progress="42"] {
+    background-image: url("../images/prcnt/42.png");
+  }
+  .incluso-app .spinner[data-progress="43"] {
+    background-image: url("../images/prcnt/43.png");
+  }
+  .incluso-app .spinner[data-progress="44"] {
+    background-image: url("../images/prcnt/44.png");
+  }
+  .incluso-app .spinner[data-progress="45"] {
+    background-image: url("../images/prcnt/45.png");
+  }
+  .incluso-app .spinner[data-progress="46"] {
+    background-image: url("../images/prcnt/46.png");
+  }
+  .incluso-app .spinner[data-progress="47"] {
+    background-image: url("../images/prcnt/47.png");
+  }
+  .incluso-app .spinner[data-progress="48"] {
+    background-image: url("../images/prcnt/48.png");
+  }
+  .incluso-app .spinner[data-progress="49"] {
+    background-image: url("../images/prcnt/49.png");
+  }
+  .incluso-app .spinner[data-progress="50"] {
+    background-image: url("../images/prcnt/50.png");
+  }
+  .incluso-app .spinner[data-progress="51"] {
+    background-image: url("../images/prcnt/51.png");
+  }
+  .incluso-app .spinner[data-progress="52"] {
+    background-image: url("../images/prcnt/52.png");
+  }
+  .incluso-app .spinner[data-progress="53"] {
+    background-image: url("../images/prcnt/53.png");
+  }
+  .incluso-app .spinner[data-progress="54"] {
+    background-image: url("../images/prcnt/54.png");
+  }
+  .incluso-app .spinner[data-progress="55"] {
+    background-image: url("../images/prcnt/55.png");
+  }
+  .incluso-app .spinner[data-progress="56"] {
+    background-image: url("../images/prcnt/56.png");
+  }
+  .incluso-app .spinner[data-progress="57"] {
+    background-image: url("../images/prcnt/57.png");
+  }
+  .incluso-app .spinner[data-progress="58"] {
+    background-image: url("../images/prcnt/58.png");
+  }
+  .incluso-app .spinner[data-progress="59"] {
+    background-image: url("../images/prcnt/59.png");
+  }
+  .incluso-app .spinner[data-progress="60"] {
+    background-image: url("../images/prcnt/60.png");
+  }
+  .incluso-app .spinner[data-progress="61"] {
+    background-image: url("../images/prcnt/61.png");
+  }
+  .incluso-app .spinner[data-progress="62"] {
+    background-image: url("../images/prcnt/62.png");
+  }
+  .incluso-app .spinner[data-progress="63"] {
+    background-image: url("../images/prcnt/63.png");
+  }
+  .incluso-app .spinner[data-progress="64"] {
+    background-image: url("../images/prcnt/64.png");
+  }
+  .incluso-app .spinner[data-progress="65"] {
+    background-image: url("../images/prcnt/65.png");
+  }
+  .incluso-app .spinner[data-progress="66"] {
+    background-image: url("../images/prcnt/66.png");
+  }
+  .incluso-app .spinner[data-progress="67"] {
+    background-image: url("../images/prcnt/67.png");
+  }
+  .incluso-app .spinner[data-progress="68"] {
+    background-image: url("../images/prcnt/68.png");
+  }
+  .incluso-app .spinner[data-progress="69"] {
+    background-image: url("../images/prcnt/69.png");
+  }
+  .incluso-app .spinner[data-progress="70"] {
+    background-image: url("../images/prcnt/70.png");
+  }
+  .incluso-app .spinner[data-progress="71"] {
+    background-image: url("../images/prcnt/71.png");
+  }
+  .incluso-app .spinner[data-progress="72"] {
+    background-image: url("../images/prcnt/72.png");
+  }
+  .incluso-app .spinner[data-progress="73"] {
+    background-image: url("../images/prcnt/73.png");
+  }
+  .incluso-app .spinner[data-progress="74"] {
+    background-image: url("../images/prcnt/74.png");
+  }
+  .incluso-app .spinner[data-progress="75"] {
+    background-image: url("../images/prcnt/75.png");
+  }
+  .incluso-app .spinner[data-progress="76"] {
+    background-image: url("../images/prcnt/76.png");
+  }
+  .incluso-app .spinner[data-progress="77"] {
+    background-image: url("../images/prcnt/77.png");
+  }
+  .incluso-app .spinner[data-progress="78"] {
+    background-image: url("../images/prcnt/78.png");
+  }
+  .incluso-app .spinner[data-progress="79"] {
+    background-image: url("../images/prcnt/79.png");
+  }
+  .incluso-app .spinner[data-progress="80"] {
+    background-image: url("../images/prcnt/80.png");
+  }
+  .incluso-app .spinner[data-progress="81"] {
+    background-image: url("../images/prcnt/81.png");
+  }
+  .incluso-app .spinner[data-progress="82"] {
+    background-image: url("../images/prcnt/82.png");
+  }
+  .incluso-app .spinner[data-progress="83"] {
+    background-image: url("../images/prcnt/83.png");
+  }
+  .incluso-app .spinner[data-progress="84"] {
+    background-image: url("../images/prcnt/84.png");
+  }
+  .incluso-app .spinner[data-progress="85"] {
+    background-image: url("../images/prcnt/85.png");
+  }
+  .incluso-app .spinner[data-progress="86"] {
+    background-image: url("../images/prcnt/86.png");
+  }
+  .incluso-app .spinner[data-progress="87"] {
+    background-image: url("../images/prcnt/87.png");
+  }
+  .incluso-app .spinner[data-progress="88"] {
+    background-image: url("../images/prcnt/88.png");
+  }
+  .incluso-app .spinner[data-progress="89"] {
+    background-image: url("../images/prcnt/89.png");
+  }
+  .incluso-app .spinner[data-progress="90"] {
+    background-image: url("../images/prcnt/90.png");
+  }
+  .incluso-app .spinner[data-progress="91"] {
+    background-image: url("../images/prcnt/91.png");
+  }
+  .incluso-app .spinner[data-progress="92"] {
+    background-image: url("../images/prcnt/92.png");
+  }
+  .incluso-app .spinner[data-progress="93"] {
+    background-image: url("../images/prcnt/93.png");
+  }
+  .incluso-app .spinner[data-progress="94"] {
+    background-image: url("../images/prcnt/94.png");
+  }
+  .incluso-app .spinner[data-progress="95"] {
+    background-image: url("../images/prcnt/95.png");
+  }
+  .incluso-app .spinner[data-progress="96"] {
+    background-image: url("../images/prcnt/96.png");
+  }
+  .incluso-app .spinner[data-progress="97"] {
+    background-image: url("../images/prcnt/97.png");
+  }
+  .incluso-app .spinner[data-progress="98"] {
+    background-image: url("../images/prcnt/98.png");
+  }
+  .incluso-app .spinner[data-progress="99"] {
+    background-image: url("../images/prcnt/99.png");
+  }
+  .incluso-app .spinner[data-progress="100"] {
+    background-image: url("../images/prcnt/100.png");
+  }
+  .incluso-app .holoproj {
+    background-image: url('../images/bg-holoproj-top.jpg');
+    background-size: cover;
+    background-color: #24282A;
+    background-position: 0 100%;
+    padding: 10px 0 60px;
+    position: relative;
+  }
+  .incluso-app .holoproj .light {
+    position: absolute;
+    bottom: 0;
+    animation: 2s ease .5s normal none infinite running flicker;
+    width: 100%;
+  }
+  .incluso-app .holoproj .light img {
+    width: 100%;
+  }
+  .incluso-app .jector {
+    background-image: url('../images/bg-holoproj-bot.jpg');
+    background-size: cover;
+    background-color: #24282A;
+    background-position: 0 0;
+    padding-top: 60px;
+  }
+  .incluso-app .parts {
+    background-image: url('../images/bg-footer-ship.jpg');
+    background-position: 0 -3px;
+    background-size: cover;
+    border-top: 2px solid #2a2f32;
+    padding: 20px 0;
+  }
+  .incluso-app .add {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 150%;
+    margin: 4% 10%;
+    padding: 2% 3%;
+  }
+  .incluso-app .add span {
+    padding-left: 3%;
+  }
+  .incluso-app .up-line {
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    margin: 0 10%;
+    padding: 4% 0;
+    width: 80%;
+  }
+  .incluso-app .part {
+    display: inline-flex;
+    z-index: 2;
+    align-items: center;
+    justify-content: space-between;
+    background: #1f2733;
+    border-radius: 5px;
+    color: white;
+    font-size: 120%;
+    margin: 2% 10%;
+    padding: 3% 5%;
+    width: 80%;
+    position: relative;
+    background: -moz-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f2733), color-stop(100%, #141921));
+    background: -webkit-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: -o-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: -ms-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: radial-gradient(ellipse at center, #1f2733 0%, #141921 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1f2733', endColorstr='#141921', GradientType=1);
+  }
+  .incluso-app .part .date {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 70%;
+  }
+  .incluso-app .part .icomoon {
+    color: #e1e455;
+    font-size: 150%;
+    padding-right: 5%;
+  }
+  .incluso-app .part .icon-checked-join {
+    color: #08b190;
+  }
+  .incluso-app .part .icon-wrong {
+    color: gray;
+  }
+  .incluso-app .part div {
+    display: inherit;
+  }
+  .incluso-app .part span {
+    line-height: normal;
+    display: inline-flex;
+  }
+  .incluso-app .part.list {
+    display: block;
+  }
+  .incluso-app .part.part2 {
+    background: -moz-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(31, 39, 51, 0.68)), color-stop(100%, rgba(20, 25, 33, 0.68)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 3 0%, rgba(20, 25, 33, 0.68) 100%);
+    background: radial-gradient(ellipse at center, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba(31, 39, 51, 0.68)', endColorstr='rgba(20, 25, 33, 0.68)', GradientType=1);
+    margin-top: -4%;
+    z-index: 1;
+  }
+  .incluso-app .part.part2 .icomoon {
+    font-size: 100%;
+  }
+  .incluso-app .showmore {
+    background: rgba(28, 28, 28, 0.5) none repeat scroll 0 0;
+    color: #08b290;
+    justify-content: flex-start;
+    font-size: 4.5vw;
+  }
+  .incluso-app .showmore i.icomoon {
+    color: #08b290;
+  }
+  .incluso-app .ordeon {
+    display: none;
+  }
+  .incluso-app .wall .part {
+    display: block;
+    justify-content: unset;
+    padding: 0px;
+  }
+  .incluso-app .wall .part .author {
+    width: 100%;
+    display: inline-flex;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 3%;
+    padding: 2% 5%;
+  }
+  .incluso-app .wall .part .author img {
+    margin-right: 3%;
+    width: 15%;
+  }
+  .incluso-app .wall .part .author div {
+    display: block;
+  }
+  .incluso-app .wall .part .author div span,
+  .incluso-app .wall .part .author div div {
+    color: gray;
+  }
+  .incluso-app .wall .part .block {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+    margin: 0 5%;
+    padding: 3% 0;
+    width: 90%;
+  }
+  .incluso-app .wall .part .coment {
+    display: inline-flex;
+  }
+  .incluso-app .wall .part .coment img {
+    margin-right: 5%;
+    width: 20%;
+    height: 20%;
+  }
+  .incluso-app .wall .part .coment div {
+    display: block;
+    font-size: 80%;
+  }
+  .incluso-app .wall .part .coment div span {
+    color: gray;
+  }
+  .incluso-app .wall .part .coment div div {
+    font-size: 120%;
+    padding-top: 2%;
+  }
+  .incluso-app .wall .part .social {
+    width: 100%;
+    border-top: 2px solid rgba(255, 255, 255, 0.08);
+    display: inline-block;
+  }
+  .incluso-app .wall .part .social div {
+    display: inline-flex;
+    justify-content: space-around;
+    padding: 3% 5%;
+    width: 49%;
+    font-size: 80%;
+  }
+  .incluso-app .wall .part .social div:nth-child(1) {
+    border-right: 2px solid rgba(255, 255, 255, 0.08);
+    color: #E80D81;
+  }
+  .incluso-app .wall .part .social div:nth-child(1) i {
+    color: #E80D81;
+    margin: 0;
+    padding: 0;
+  }
+  .incluso-app .wall .part .social div:nth-child(2) {
+    color: #08B190;
+  }
+  .incluso-app .wall .part .social div:nth-child(2) i {
+    color: #08B190;
+    margin: 0;
+    padding: 0;
+  }
+  .incluso-app .wall .vermas {
+    border: 2px dashed rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+    display: inline-flex;
+    justify-content: space-between;
+    margin: 2% 10%;
+    padding: 2% 5%;
+    width: 80%;
+    color: white;
+  }
+  .incluso-app .wall .vermas i {
+    color: white;
+    padding: 0;
+  }
+  .incluso-app .paginate,
+  .incluso-app .paginate a {
+    color: #08b190;
+    margin: 5% 15%;
+  }
+  .incluso-app .paginate i,
+  .incluso-app .paginate a i {
+    font-size: 300%;
+  }
+  .incluso-app .modalDialog {
+    position: relative;
+    font-family: Arial, Helvetica, sans-serif;
+    z-index: 99999;
+    opacity: 0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+  }
+  .incluso-app .modalDialog .txt-renglon {
+    color: #ee4823;
+  }
+  .incluso-app .modalDialog:target {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .incluso-app .modalDialog:target:before {
+    content: "";
+    display: block;
+    height: 25vw;
+    margin: -25vw 0 0;
+  }
+  .incluso-app .modalDialog > div {
+    width: 100%;
+    position: absolute;
+    margin: 0;
+    padding: 2% 0;
+    background: #fff;
+  }
+  .incluso-app .modalDialog > div .add {
+    border-color: rgba(133, 133, 133, 0.2);
+    color: #9c9c9c;
+    padding: 2% 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  .incluso-app .modalDialog > div .add input {
+    border: 0px solid transparent;
+  }
+  .incluso-app .modalDialog > div .add i {
+    color: #9c9c9c;
+  }
+  .incluso-app .close {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid white;
+    position: absolute;
+    right: calc(50% - 3px);
+    top: -10px;
+    opacity: 1;
+  }
+  .incluso-app .close:hover {
+    border-bottom: 10px solid black;
+  }
+  .incluso-app .sharer {
+    display: inline-block;
+    height: 15vw;
+    margin: 6vw 0;
+    position: relative;
+  }
+  .incluso-app .sharer .icon {
+    background-color: #bcd431;
+    border: 2px solid gray;
+    border-radius: 50%;
+    bottom: 0;
+    font-size: 7vw;
+    height: 12vw;
+    left: -4vw;
+    line-height: 11vw;
+    padding: 0vw;
+    position: absolute;
+    top: 0;
+    width: 12vw;
+    color: black;
+  }
+  .incluso-app .sharer .txt {
+    background-color: gray;
+    border-radius: 100px;
+    color: white;
+    line-height: 8vw;
+    margin: 2vw 0;
+    padding: 0 3vw 0 9vw;
+  }
+  .incluso-app .sharer.active .icon {
+    background-color: #d43f27;
+    color: white;
+  }
+  .incluso-app .sharer.active .txt {
+    background-color: #444d53;
+  }
+  .incluso-app .user-points {
+    display: inline-block;
+    padding: 3px 8px;
+    margin-left: 3px;
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    border: 3.2px solid #bcd431;
+    -webkit-border-radius: 21px;
+    -moz-border-radius: 21px;
+    border-radius: 21px;
+    color: #bcd431;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  .incluso-app .user-points .icomoon {
+    color: #bcd431;
+    font-size: 80%;
+    font-weight: bold;
+  }
+  .incluso-app .video-gallery {
+    margin-top: 10px;
+  }
+  .incluso-app .video-gallery .stage {
+    display: block;
+    position: relative;
+    padding: 0;
+    margin: 0 auto;
+    width: 97%;
+    height: auto;
+  }
+  .incluso-app .video-gallery .stage .icon {
+    display: block;
+    position: absolute;
+    z-index: 2;
+  }
+  .incluso-app .video-gallery .stage .icon-close {
+    right: -22px;
+    top: -22px;
+    padding: 0;
+    margin: 0;
+    width: 46px;
+    height: 46px;
+    border: 5px solid #000000;
+    -webkit-border-radius: 90px;
+    -moz-border-radius: 90px;
+    border-radius: 90px;
+    background-color: #f5461f;
+    background-image: url('../images/ics-gentera.png');
+    background-position: center -127px;
+    background-repeat: no-repeat;
+  }
+  .incluso-app .video-gallery .stage .icon-play {
+    display: none;
+    left: 50%;
+    top: 50%;
+    padding: 0;
+    margin: -41px 0 0 -41px;
+    width: 82px;
+    height: 82px;
+    border: none;
+    background-color: transparent;
+    background-image: url('../images/icn-video-play.png');
+    background-position: center center;
+  }
+  .incluso-app .video-gallery .stage.perform .player {
+    display: block;
+  }
+  .incluso-app .video-gallery .stage.perform .carousel {
+    display: none;
+  }
+  .incluso-app .video-gallery .player {
+    display: none;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    margin: 0 auto;
+    width: inherit;
+    height: inherit;
+    border: 6px solid #000000;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+  }
+  .incluso-app .video-gallery .carousel {
+    display: block;
+    width: 320px;
+    height: 180px;
+    margin: 0 auto;
+  }
+  .incluso-app .my-progress {
+    margin-top: 70px;
+  }
+  .incluso-app .my-progress .progress {
+    display: block;
+    position: relative;
+    padding: 0 ;
+    margin: 32px auto 18px;
+    width: 203px;
+    height: 203px;
+    background-color: transparent;
+    background-image: url('../images/img-progress-component.png');
+    background-position: center center;
+  }
+  .incluso-app .my-progress label {
+    display: block;
+    margin-top: 81px;
+    width: auto;
+    height: auto;
+    color: #ffffff;
+    font-family: Robot, Arial, Sans-serif;
+    font-size: 30px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .incluso-app .my-progress .stage {
+    display: block;
+    padding: 1px 0;
+    margin: 5px 0;
+  }
+  .incluso-app .my-progress img {
+    display: block;
+    padding: 0;
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+  }
+  .incluso-app .current-satge {
+    margin-top: 26px;
+  }
+  .incluso-app .current-satge h3 {
+    margin-bottom: 6px;
+  }
+  .incluso-app .current-satge .btn {
+    display: block;
+    margin: 32px auto;
+  }
+  .incluso-app .my-badges {
+    z-index: 9;
+    margin-top: 147px;
+    background: #335565;
+    background: -moz-linear-gradient(top, #335565 0%, #2c4c5b 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #335565), color-stop(100%, #2c4c5b));
+    background: -webkit-linear-gradient(top, #335565 0%, #2c4c5b 100%);
+    background: -o-linear-gradient(top, #335565 0%, #2c4c5b 100%);
+    background: -ms-linear-gradient(top, #335565 0%, #2c4c5b 100%);
+    background: linear-gradient(to bottom, #335565 0%, #2c4c5b 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#335565', endColorstr='#2c4c5b', GradientType=0);
+  }
+  .incluso-app .my-badges:before {
+    background-color: transparent;
+    background-image: url("../images/bg-badges-pre.png");
+    background-position: 0 100%;
+    background-size: cover;
+    content: " ";
+    height: 54%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: -54%;
+  }
+  .incluso-app .my-badges:after {
+    background-color: transparent;
+    background-image: url("../images/bg-badges-post.png");
+    background-size: cover;
+    content: " ";
+    height: 54%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    bottom: -53.5%;
+  }
+  .incluso-app .my-badges h3 {
+    margin-bottom: 15px;
+  }
+  .incluso-app .my-badges img {
+    display: block;
+    padding: 0;
+    margin: 0 auto;
+  }
+  .incluso-app .my-badges p {
+    margin-top: 15px;
+  }
+  .incluso-app .user-container {
+    display: flex;
+    justify-content: center;
+  }
+  .incluso-app .active .user-avatar figure {
+    border: 0px solid #171f20;
+  }
+  .incluso-app .active .user-avatar figcaption {
+    border-color: #171f20;
+  }
+  .incluso-app .user-avatar {
+    display: block;
+    position: relative;
+    overflow: visible;
+    padding: 0;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+  }
+  .incluso-app .user-avatar figure {
+    overflow: hidden;
+    background-color: transparent;
+    /*border: 10px solid transparent; */
+  }
+  .incluso-app .user-avatar img {
+    display: block;
+    padding: 0;
+    margin: 0;
+    border: none;
+    max-width: 100%;
+    border-radius: 50%;
+  }
+  .incluso-app .user-avatar figcaption {
+    padding: 0;
+    margin: -3vw auto 0;
+    width: 6vw;
+    height: 6vw;
+    background-color: #243436;
+    /*border: 5px solid @clr-green;*/
+    -webkit-border-radius: 90px;
+    -moz-border-radius: 90px;
+    border-radius: 90px;
+    color: #bcd431;
+    font-family: Roboto, Sans-serif, Arial;
+    font-weight: 700;
+    line-height: 6vw;
+    text-align: center;
+    position: relative;
+  }
+  .incluso-app .user-avatar button {
+    display: block;
+    position: absolute;
+    top: 41%;
+    right: -50px;
+    padding: 5px;
+    margin: 0;
+    background: none transparent;
+    border: none;
+    line-height: 1;
+  }
+  .incluso-app .user-avatar button .icomoon {
+    color: #bcd431;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  .incluso-app .user-data {
+    display: block;
+    position: relative;
+    padding: 18px 0;
+    margin: 60px auto 0;
+    /*width: 370px; */
+    width: auto;
+    height: auto;
+    background-color: #121b1c;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    border-radius: 6px;
+  }
+  .incluso-app .user-data p {
+    padding: 0;
+    margin: 0 auto;
+    color: #ffffff;
+    font-family: Roboto, Sans-serif, Arial;
+    font-size: 1.2em;
+    /*18px;*/
+    font-weight: 500;
+    line-height: 1.4;
+    text-transform: capitalize;
+  }
+  .incluso-app .user-data label {
+    padding: 0;
+    margin: 0;
+    color: #355a6b;
+    font-weight: inherit;
+  }
+  .incluso-app .user-data span {
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    font-weight: 700;
+  }
+  .incluso-app .user-data .inline-list {
+    margin-top: 10px;
+    margin-bottom: 3px;
+    text-align: center;
+  }
+  .incluso-app .user-data li {
+    display: inline;
+    float: none;
+    padding: 3px 8px;
+    margin-left: 3px;
+    background-color: transparent;
+    border: 2px solid #bcd431;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    color: #bcd431;
+  }
+  .incluso-app .user-data li span {
+    color: inherit;
+    font-family: Play, Sans-serif, Arial;
+    font-weight: 700;
+  }
+  .incluso-app .user-data .points {
+    position: relative;
+  }
+  .incluso-app .top-users {
+    margin-top: 164px;
+    margin-bottom: 0;
+    background: #1e2e2e;
+  }
+  .incluso-app .top-users:before {
+    background-color: transparent;
+    background-image: url("../images/bg-topusers-pre.png");
+    background-position: 50% 0;
+    background-size: contain;
+    content: " ";
+    height: 24%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: -24%;
+  }
+  .incluso-app .top-users .head,
+  .incluso-app .top-users .body {
+    padding: 0;
+    margin: 0 auto;
+  }
+  .incluso-app .top-users .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .incluso-app .top-users .row > div {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .incluso-app .top-users .user-avatar {
+    position: relative;
+    overflow: visible;
+  }
+  .incluso-app .top-users .arrow-up {
+    display: none;
+    position: absolute;
+    bottom: -63px;
+    left: 52%;
+    margin-left: -20px;
+    width: 0;
+    height: 0;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid #121b1c;
+  }
+  .incluso-app .top-users .current-user {
+    /*width: 370px;*/
+    padding: 0;
+    margin: 40px auto 0;
+  }
+  .incluso-app .top-users .current-user a {
+    display: block;
+    margin: 0 auto;
+    /*width: 115px;*/
+    width: auto;
+  }
+  .incluso-app .top-users .current-user .user-data {
+    margin-top: 8px;
+    height: auto;
+    background-color: transparent;
+  }
+  .incluso-app .top-users [data-content-id] {
+    display: none;
+  }
+  .incluso-app .top-users .tabs {
+    display: block;
+    padding: 0;
+    margin: 0 auto;
+    /*width: 370px;  */
+  }
+  .incluso-app .top-users .tabs[data-tab-selected="1"] [data-tab-id="1"] .arrow-up {
+    display: block;
+  }
+  .incluso-app .top-users .tabs[data-tab-selected="1"] [data-tab-id="1"] figcaption {
+    background-color: #121b1c;
+  }
+  .incluso-app .top-users .tabs[data-tab-selected="1"] [data-content-id="1"] {
+    display: block;
+  }
+  .incluso-app .top-users .tabs[data-tab-selected="2"] [data-tab-id="2"] .arrow-up {
+    display: block;
+  }
+  .incluso-app .top-users .tabs[data-tab-selected="2"] [data-tab-id="2"] figcaption {
+    background-color: #121b1c;
+  }
+  .incluso-app .top-users .tabs[data-tab-selected="2"] [data-content-id="2"] {
+    display: block;
+  }
+  .incluso-app .top-users .tabs[data-tab-selected="3"] [data-tab-id="3"] .arrow-up {
+    display: block;
+  }
+  .incluso-app .top-users .tabs[data-tab-selected="3"] [data-tab-id="3"] figcaption {
+    background-color: #121b1c;
+  }
+  .incluso-app .top-users .tabs[data-tab-selected="3"] [data-content-id="3"] {
+    display: block;
+  }
+  .incluso-app .ilustration {
+    background-color: #1e2e2e;
+    background-image: url("../images/bg-ilustration-launchpad.png");
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .incluso-app .ilustration .space-ship {
+    padding: 26% 16% 7.5%;
+  }
+  .incluso-app .user-dashboard {
+    padding-top: 150px;
+    height: 858px;
+    /* .gradient-sky (); */
+    /*background: url('@{url-images}/img-profile-spaceship-dashboard-top.png') left top no-repeat, 
+                        url('@{url-images}/img-profile-spaceship-dashboard-bottom.png') left bottom no-repeat, 
+                        url('@{url-images}/img-bg-profile-sky.jpg') center top repeat-y;*/
+    background: url('../images/img-profile-spaceship-dashboard-top.png') left top no-repeat, url('../images/img-bg-profile-top.jpg') left top no-repeat;
+  }
+  .incluso-app .user-dashboard .user-data {
+    margin-top: 8px;
+    height: auto;
+    background-color: transparent;
+  }
+  .incluso-app .user-dashboard .user-data p {
+    text-align: center;
+  }
+  .incluso-app .profile-data {
+    height: 228px;
+    margin-top: 24px;
+    font-weight: bold;
+    text-align: center;
+    background-attachment: scroll;
+    background-image: url('../images/img-profile-spaceship-dashboard-middle.png');
+    background-position: center bottom;
+    background-repeat: no-repeat;
+    -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    background-size: 100% auto;
+  }
+  .incluso-app .profile-data .user-name {
+    padding: 10px 0 32px;
+    margin: 0;
+    color: #ffffff;
+    font-size: 1.8em;
+    font-weight: inherit;
+    text-transform: uppercase;
+  }
+  .incluso-app .profile-data .user-points {
+    width: auto;
+    padding: 1px 12px;
+    margin: 0;
+    color: #bcd431;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  .incluso-app .profile-settings {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    height: 132px;
+    background-attachment: scroll;
+    /*background-image:url('@{url-images}/img-profile-spaceship-dashboard-settings.png');*/
+    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png');
+    /*background-color: @clr-gray-asphalt;*/
+    background-position: center 100px;
+    background-repeat: no-repeat;
+    -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    background-size: 100% auto;
+    /*&:after {
+                display:block;
+                position:absolute;
+                z-index: 0;
+                bottom: 0;
+                width: 100%; 
+                height: 12px;
+                background-attachment: scroll;
+                background-image:url('@{url-images}/img-profile-spaceship-dashboard-bottom.png');
+                background-color: @clr-gray-asphalt;
+                background-position: center 0;
+                background-repeat: no-repeat;
+                .background-size(100%, auto);
+                content: " ";
+            }*/
+  }
+  .incluso-app .profile-settings .user-avatar {
+    margin-top: 10px;
+  }
+  .incluso-app .profile-settings .btn {
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .incluso-app .profile-settings > .container {
+    position: relative;
+    height: inherit;
+    background-attachment: scroll;
+    background-image: url('../images/img-profile-spaceship-dashboard-settings.png');
+    /*background:none;*/
+    background-color: transparent;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    background-size: 100% auto;
+  }
+  .incluso-app .profile-options {
+    margin: 0;
+    padding: 32px 0 15px;
+    height: auto;
+    background-attachment: scroll;
+    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png');
+    background-color: #444d53;
+    background-position: center 0;
+    background-repeat: no-repeat;
+    -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    background-size: 100% auto;
+  }
+  .incluso-app .profile-options .list-group .list-group-item {
+    background: #1f2733;
+    background: -moz-radial-gradient(center, ellipse cover, #1f2733 0%, #14181f 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f2733), color-stop(100%, #14181f));
+    background: -webkit-radial-gradient(center, ellipse cover, #1f2733 0%, #14181f 100%);
+    background: -o-radial-gradient(center, ellipse cover, #1f2733 0%, #14181f 100%);
+    background: -ms-radial-gradient(center, ellipse cover, #1f2733 0%, #14181f 100%);
+    background: radial-gradient(ellipse at center, #1f2733 0%, #14181f 100%);
+    border: none;
+  }
+  .incluso-app .profile-options .list-group a {
+    display: block;
+    position: relative;
+    height: 77px;
+    padding: 0;
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    line-height: 77px;
+  }
+  .incluso-app .profile-options .list-group span {
+    color: #ffffff;
+    line-height: inherit;
+  }
+  .incluso-app .profile-options .list-group span:first-child + span {
+    display: block;
+    overflow: hidden;
+    width: auto;
+    padding: 0;
+    margin: 0 72px 0 48px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .incluso-app .profile-options .list-group .icomoon {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    padding: 0 0 0 12px;
+    margin: 0;
+    color: #bcd431;
+    font-size: 1.4em;
+    font-weight: normal;
+  }
+  .incluso-app .profile-options .list-group .icomoon.icon-arrow-slim-right {
+    top: 0;
+    right: 0;
+    padding: 0 9px 0 0;
+    font-size: 1.2em;
+  }
+  .incluso-app .profile-options .list-group .icomoon.icon-star {
+    top: 50%;
+    right: 30px;
+    padding: 3px 9px;
+    margin: -1.2em 6px 0 0;
+    border: 2px solid #bcd431;
+    -webkit-border-radius: 21px;
+    -moz-border-radius: 21px;
+    border-radius: 21px;
+    font-size: 0.6em;
+    /*15px;*/
+    line-height: 1.2em;
+    /*21px;*/
+  }
+  .incluso-app .profile-options .list-group .no-badge span:first-child + span {
+    margin-right: 51px;
+  }
+  .incluso-app .profile-options .list-group .no-badge .icomoon.icon-star {
+    display: none;
+  }
+  .incluso-app .profile-dashboard {
+    width: 100vw;
+    margin: 0;
+    background-attachment: scroll;
+    background-image: url('../images/bg-xs-profile-sky.jpg');
+    background-position: center -98px;
+    background-repeat: no-repeat;
+  }
+  .incluso-app .profile-dashboard .user-avatar {
+    margin-top: 10px;
+  }
+  .incluso-app .profile-dashboard > .row {
+    padding: 0 5%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .incluso-app .profile-dashboard > .row > div {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .incluso-app .my-profile-form {
+    display: block;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0 auto;
+  }
+  .incluso-app .my-profile-form h5 {
+    width: auto;
+    padding: 0;
+    margin: 0 0 6vw 0;
+    color: #444d53;
+    font-size: 4vw;
+    font-weight: bold;
+    line-height: 4vw;
+    text-align: left;
+    text-transform: capitalize;
+  }
+  .incluso-app .my-profile-form p,
+  .incluso-app .my-profile-form li {
+    width: auto;
+    color: #ffffff;
+    line-height: 1.2;
+  }
+  .incluso-app .my-profile-form p {
+    margin-bottom: 3px;
+    font-size: 1.2em;
+  }
+  .incluso-app .my-profile-form p > label {
+    margin: 0;
+  }
+  .incluso-app .my-profile-form li {
+    margin-top: 15px;
+  }
+  .incluso-app .my-profile-form li:first-child {
+    margin-top: 0;
+  }
+  .incluso-app .my-profile-form li > p {
+    margin-top: 0;
+  }
+  .incluso-app .my-profile-form label,
+  .incluso-app .my-profile-form em {
+    color: #8098a0;
+    font-size: inherit;
+    font-style: normal;
+    line-height: inherit;
+  }
+  .incluso-app .my-profile-form hr {
+    margin: 15px 0;
+  }
+  .incluso-app .my-profile-form > section {
+    display: block;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 12vw 0 0;
+  }
+  .incluso-app .my-profile-form > section:first-child {
+    margin-top: 0;
+  }
+  .incluso-app .my-profile-form .page-number {
+    margin: 3vw 0;
+  }
+  .incluso-app .my-profile-form .page-number p.text-center span {
+    font-size: 4.8vw;
+    font-weight: bold;
+  }
+  .incluso-app .my-profile-form .page-number p.text-center span:last-child {
+    color: #8eaab3;
+  }
+  .incluso-app .my-profile-form .btn {
+    margin-top: 6vw;
+    border-width: 0.6vw;
+  }
+  .incluso-app .my-profile-form .btn:first-child {
+    margin-top: 0;
+  }
+  .incluso-app .my-profile-form .btn.btn-transparent {
+    color: #444d53;
+  }
+  .incluso-app .my-profile-form .btn.btn-primary {
+    text-transform: uppercase;
+  }
+  .incluso-app .my-profile-form .btn.btn-add {
+    padding: 3.2vw 0;
+    font-size: 4vw;
+    line-height: 4vw;
+    font-family: Roboto;
+  }
+  .incluso-app .my-profile-form .btn.btn-add .icomoon {
+    padding: 0.1vw 3vw;
+  }
+  .incluso-app .my-profile-form .form-group {
+    border: none;
+    margin-bottom: 0;
+  }
+  .incluso-app .my-profile-form .form-group .form-control {
+    border-top-width: 0;
+    text-indent: 3px;
+  }
+  .incluso-app .my-profile-form .form-group .form-control:first-child {
+    /*border-top:1px solid;*/
+  }
+  .incluso-app .my-profile-form .form-group select.form-control {
+    text-indent: 0;
+    /*border-left-color: transparent !important;
+                    border-right-color: transparent !important;*/
+  }
+  .incluso-app .my-profile-form .form-group:first-child .form-control:first-child {
+    border-top-width: 1pt;
+  }
+}
+/* sm viewport */
+/* md viewport */
+/* lg viewport */
