@@ -44,7 +44,7 @@
 						<input id="otros" type="checkbox" value="check1" name="check">
 						<label for="otros">Otros</label>
 					</section>
-					<div class="add"><i class="icomoon icon-edit"></i><input id="otros" type="text" name="txtAbierto" placeholder="Aquí escribe otros..."></div>	
+					<div id="agregar" class="add" style="display:none"><i class="icomoon icon-edit"></i><input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..."></div>	
 				</div>
 				<!--Pregunta tipo Texto Abierto-->
 				<div>
@@ -73,7 +73,7 @@
 						<div class="part"><span>Punto 2</span><i class="icomoon icon-edit fl-right"></i></div>
 						<div class="part"><span>Punto 3</span><i class="icomoon icon-edit fl-right"></i></div>
 					</section>
-					<div class="add"><i class="icomoon icon-edit"></i><span>Nuevo punto</span></div>
+					<div class="add"><i class="icomoon icon-edit"></i><input id="texto1" type="text" name="txtAbierto" placeholder="Nuevo punto"></div>
 				</div>
 			</div>
 			<section id="controls" class="controls">
@@ -82,11 +82,10 @@
 					<a href="#" id="next"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
 					<div class="centered"><span id="index" class="txt-bigger">3/</span><span class="white txt-bigger">5</span></div>	
 				</div>
-				<button class="btn btn-primary btn-lg btn-cnt hidden" id="save" type="button">Terminar</button>
-				<div class="txt-renglon centered txt-bigger">Cancelar<div>					
+				<button class="btn btn-primary btn-lg btn-cnt" id="save" type="button">Terminar</button>
+				<div class="txt-renglon centered txt-bigger">Cancelar</div>					
 			</section>
 			<div id="finalized">
-
 			</div>
 			<img src=".../../assets/images/img-lines-ftr.png" class="centered">
 		</article>
@@ -119,12 +118,13 @@ $(document).ready(function() {
 	$("#next").click(function(){
 		owl.trigger('owl.next');
 		return false;
-	})
+	});
 	$("#prev").click(function(){
 		owl.trigger('owl.prev');
 		return false;
-	})
-});
+	});
+
+	});
 </script>
 
 <script type="text/javascript" src="../../Scripts/scriptmenu.js"></script>
