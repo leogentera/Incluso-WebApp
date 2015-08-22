@@ -24,6 +24,7 @@ angular
             $scope.$emit('HidePreloader'); //hide preloader
             $scope.jsonActivities = [];            
             var starsNoMandatory = 0;
+            var starsMandatory = 0;
 
             $scope.statusObligatorios = 0;            
             $scope.activities={id:50,
@@ -110,16 +111,26 @@ angular
                                     seen:false,
                                     url:"http:\/\/www.imaginarium.es\/images2\/club-acciones\/test_intelig_CAST.pdf"
                                   },
-                                    {
-                                      id:4,
-                                      name:"Contenido",
-                                      description:null,
-                                      activityType:"page",
-                                      stars:null,
-                                      mandatory: true,
-                                      seen:false,
-                                      pageContent:"\u003Cp\u003E\u003Cspan lang=\u0022EN-US\u0022 style=\u0027font-family: \u0022Calibri\u0022,sans-serif; font-size: 11pt; mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; mso-bidi-font-family: \u0022Times New Roman\u0022; mso-ansi-language: EN-US; mso-fareast-language: ES-MX; mso-bidi-language: AR-SA;\u0027\u003EM00dleAdmin!\u003C\/span\u003E\u003Cbr\u003E\u003C\/p\u003E"
-                                    }
+                                  {
+                                    id:4,
+                                    name:"Contenido",
+                                    description:null,
+                                    activityType:"page",
+                                    stars:null,
+                                    mandatory: true,
+                                    seen:false,
+                                    pageContent:"\u003Cp\u003E\u003Cspan lang=\u0022EN-US\u0022 style=\u0027font-family: \u0022Calibri\u0022,sans-serif; font-size: 11pt; mso-fareast-font-family: Calibri; mso-fareast-theme-font: minor-latin; mso-bidi-font-family: \u0022Times New Roman\u0022; mso-ansi-language: EN-US; mso-fareast-language: ES-MX; mso-bidi-language: AR-SA;\u0027\u003EM00dleAdmin!\u003C\/span\u003E\u003Cbr\u003E\u003C\/p\u003E"
+                                  },
+                                  {
+                                    id:9,
+                                    name:"Contenido",
+                                    description:null,
+                                    activityType:"page",
+                                    stars:null,
+                                    mandatory: false,
+                                    seen:false,
+                                    pageContent:"\u003Cp\u003EEjemplo html\u003Cbr\u003Econ \u003Cstrong\u003Enegritas\u003C\/strong\u003E\u003C\/p\u003E"
+                                  }
                                  ]
                                };
 
@@ -128,10 +139,11 @@ angular
                 $scope.activities.activity[i].activityType = "video";                
               }
               if($scope.activities.activity[i].mandatory && $scope.activities.activity[i].seen){                
-                $scope.statusObligatorios+=1;                
+                $scope.statusObligatorios+=1; 
+                starsMandatory += 50;               
               }
               else if (!$scope.activities.activity[i].mandatory && $scope.activities.activity[i].seen){
-                starsNoMandatory+=50;
+                starsNoMandatory += 50;
               }
             }
 
@@ -142,14 +154,15 @@ angular
                   $scope.activities.activity[i].seen = true; 
                   if($scope.activities.activity[i].mandatory){                    
                     $scope.statusObligatorios+=1;    
-                    assingStars();  
+                    assingStars(true);
+                    starsMandatory += 50;  
                     if($scope.statusObligatorios == 5){
                       $scope.activities.completed = true;
                       alert("Prueba: Ya has visto 5 elementos obligatorios");
                     }
                   }
                   else{
-                    assingStars();
+                    assingStars(false);
                     starsNoMandatory+=50;  
                   }                
                 }
@@ -158,8 +171,13 @@ angular
               }
             }
 
-            function assingStars(){
-              if(starsNoMandatory < 500){
+            function assingStars(isMandatory){
+              if(starsMandatory < 250 && isMandatory){
+                $scope.userprofile.stars += 50;   
+                alert("Tienes "+$scope.userprofile.stars+" estrellas")
+                localStorage.setItem("profile", JSON.stringify($scope.userprofile)); 
+              }
+              else if(starsNoMandatory < 500){
                 $scope.userprofile.stars += 50;   
                 alert("Tienes "+$scope.userprofile.stars+" estrellas")
                 localStorage.setItem("profile", JSON.stringify($scope.userprofile));           
