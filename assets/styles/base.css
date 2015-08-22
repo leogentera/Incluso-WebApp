@@ -1268,8 +1268,8 @@ body.modal-open {
 }
 .incluso-app .navbar .icomoon {
   font-size: 6vw;
-  /*line-height: 17vw;*/
-  vertical-align: top;
+  line-height: 1;
+  vertical-align: bottom;
 }
 .incluso-app .navbar span {
   font-size: 6vw;
@@ -1287,7 +1287,7 @@ body.modal-open {
 .incluso-app .navbar ul li {
   display: inline-block;
   margin-right: 1vw;
-  line-height: 7vw;
+  line-height: 6vw;
 }
 .incluso-app .navbar ul li a {
   font-size: 6vw;
@@ -1346,8 +1346,8 @@ body.modal-open {
 }
 .incluso-app .navbar-assets .navbar-heading {
   display: inline-block;
-  overflow: hidden;
-  /*float: left;*/
+  /*overflow: hidden;
+            float: left;*/
   margin: 0;
   width: 46vw;
   max-width: 50vw;
@@ -1364,7 +1364,7 @@ body.modal-open {
   color: #ffffff;
 }
 .incluso-app .navbar-assets .btn-group {
-  padding: 2.5vh 0px;
+  padding: 2.7vh 0;
 }
 .incluso-app .navbar-assets .navbar-tools {
   display: inline-block;
