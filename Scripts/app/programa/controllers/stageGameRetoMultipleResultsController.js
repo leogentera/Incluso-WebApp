@@ -26,21 +26,6 @@ angular
 
              $scope.fortalezas = _.filter($scope.retoMultipleActivities, function(a){ return a.score == "3"});
              $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3"});
-             $scope.groups = [
-                {
-                  name: 'Dynamic Group Header - 1',
-                  descruotuib: 'Dynamic Group Body - 1'
-                },
-                {
-                  title: 'Dynamic Group Header - 2',
-                  content: 'Dynamic Group Body - 2'
-                }
-              ];
-
-              $scope.status = {
-                isFirstOpen: true,
-                isFirstDisabled: false
-              };
 
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
