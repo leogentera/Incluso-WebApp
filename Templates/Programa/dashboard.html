@@ -141,7 +141,8 @@
                 <a href="">
                   <div class="user-avatar">
                     <figure class="user-avatar-">
-                      <img src="assets/images/img-avatar-dummy-01.png" alt="avatar" />
+                      <!--<img src="assets/images/img-avatar-dummy-01.png" alt="avatar" />-->
+                      <img src="{{user.profileimageurlsmall == null || user.profileimageurlsmall == '' ? 'assets/images/img-avatar-dummy-01.png' : user.profileimageurlsmall }}" alt="avatar" />
                       <figcaption>{{user.place}}</figcaption>
                     </figure>
                   </div>
