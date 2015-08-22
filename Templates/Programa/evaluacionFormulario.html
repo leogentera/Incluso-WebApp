@@ -14,10 +14,10 @@
 					<div class="txt-renglon txt-bigger">1. ¿Pregunta de falso/verdadero?</div>
 					<section class="form txt-renglon txt-bigger part list">
 						<div class="tnf">
-							<input id="true" type="radio" value="verdadero" name="vf">
+							<input id="tru" type="radio" value="verdadero" name="vf">
 							<label for="tru">Verdadero</label>
-							<input id="false" type="radio" value="falso" name="vf">
-							<label for="false">Falso</label>
+							<input id="fols" type="radio" value="falso" name="vf">
+							<label for="fols">Falso</label>
 						</div>
 					</section>
 				</div>
@@ -41,15 +41,17 @@
 						<label for="check7">Opción 7</label>
 						<input id="check8" type="checkbox" value="check1" name="check">
 						<label for="check8">Opción 8</label>
-						<input id="check9" type="checkbox" value="check1" name="check">
-						<label for="check9">Otros</label>
+						<input id="otros" type="checkbox" value="check1" name="check">
+						<label for="otros">Otros</label>
 					</section>
-					<div class="add"><i class="icomoon icon-edit"></i><span>Aquí escribe otros</span></div>	
+					<div class="add"><i class="icomoon icon-edit"></i><input id="otros" type="text" name="txtAbierto" placeholder="Aquí escribe otros..."></div>	
 				</div>
 				<!--Pregunta tipo Texto Abierto-->
 				<div>
 					<div class="txt-renglon txt-bigger">3. ¿Pregunta de Texto Abierto?</div>
-					<div class="add"><i class="iconmoon icon-edit"></i><input id="texto1" type="text" name="txtAbierto"></div>
+					<section class="form txt-renglon txt-bigger part list">
+						<div class="add"><i class="icomoon icon-edit"></i><input id="texto1" type="text" name="txtAbierto" placeholder="Tu respuesta aquí..."></div>
+					</section>					
 				</div>
 				<!--Pregunta tipo Selección Simple-->
 				<div>
@@ -86,7 +88,15 @@
 			<div id="finalized">
 
 			</div>
+			<img src=".../../assets/images/img-lines-ftr.png" class="centered">
 		</article>
+		<footer class="footer">
+			<ul class="block-list">
+				<li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
+				<li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
+			</ul>
+			<a href="#navBar" class="to-top"><i class="icomoon icon-double-arrow-up"></i><br>SUBIR</a>
+		</footer>
 	</div>
 </div>
 
@@ -115,4 +125,15 @@ $(document).ready(function() {
 		return false;
 	})
 });
+</script>
+
+<script type="text/javascript" src="../../Scripts/scriptmenu.js"></script>
+<script src="../../Scripts/classie.js"></script>
+<script src="../../Scripts/selectFx.js"></script>
+<script>
+(function() {
+	[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
+		new SelectFx(el);
+	} );
+})();
 </script>
