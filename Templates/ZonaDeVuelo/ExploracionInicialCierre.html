@@ -1,0 +1,93 @@
+<div class="incluso-app step-dashboard" id="site-wrapper">
+  <div id="site-menu" >
+	<!--<menu-component></menu-component>-->
+  </div>
+  <div id="site-canvas">
+
+
+ 
+<article class="blueprint">
+
+  <section>
+<div class="txt-renglon centered txt-bigger"></div> 
+<div class="subtitle">SubTitle</div>
+<div class="txt-renglon txt-bigger">Description</div> 
+</section>
+
+
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+  </article>
+
+  <footer class="footer">
+    <ul class="block-list">
+      <li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
+      <li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
+    </ul>
+    <a class="to-top" ng-click="scrollToTop();"><i class="icomoon icon-double-arrow-up"></i><br/>SUBIR</a>
+  </footer>
+		</div>
+		</div>
+  <!-- html -->
+  <!-- scripts -->
+
+    
+  <script>
+  $(document).ready(function() {
+
+    setTimeout(function(){
+
+      var hits = 1;
+      var owl = $("#owl-demo");
+      owl.owlCarousel({
+        navigation:false,
+        pagination:false,
+        paginationSpeed : 1000,
+        goToFirstSpeed : 2000,
+        singleItem : true,
+        autoHeight : true,
+        afterMove: callback2
+      });
+      var owl2 = $("#owl-demo2");
+      owl2.owlCarousel({
+        navigation:false,
+        pagination:false,
+        paginationSpeed : 1000,
+        goToFirstSpeed : 2000,
+        singleItem : true,
+        autoHeight : true,
+        afterMove: callback1
+      });
+      function callback1(event) {
+        var item      = this.currentItem;
+        owl.trigger("owl.goTo",item);
+      }
+      function callback2(event) {
+        var item      = this.currentItem;
+        owl2.trigger("owl.goTo",item);
+      }
+
+      $("#next").click(function(){
+        owl.trigger('owl.next');
+        return false;
+      })
+      $("#prev").click(function(){
+        owl.trigger('owl.prev');
+        return false;
+      })
+    }, 1000);
+
+});
+</script>
+

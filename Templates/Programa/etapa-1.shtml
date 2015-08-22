@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Incluso Digital</title>
+  <link href='http://fonts.googleapis.com/css?family=Play:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="../../assets/styles/dev-css.css">
+	
+  <script type="text/javascript" src="../../Scripts/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="../../Scripts/bootstrap-3.3.2.js"></script>
+  <script type="text/javascript" src="../../Scripts/angular.js"></script>
+  <script type="text/javascript" src="../../Scripts/owl.carousel.min.js"></script>
+</head>
+<body ng-app>
+<div class="incluso-app step-dashboard" id="site-wrapper">
+  <div id="site-menu" >
+<!--#include file="menu.html" -->
+  </div>
+  <div id="site-canvas">
+
+    <nav ng-controller="navController">
+      <div class="navbar" id="navBar">
+        <div class="container-fluid">
+          
+          <div class="row">
+
+            <div class="navbar-assets">
+              <h1 class="navbar-heading"><a href="#" data-transition="ease" id="menuton"><i class="icomoon icon-more-options"></i> Estación: Conócete</a></h1>
+              <ul class="navbar-tools">
+                <li class="contribute">
+                  <a href="">
+                    <i class="icomoon icon-edit"></i>
+                  </a>
+                </li>
+                <li class="notifications">
+                  <a href="">
+                    <i class="icomoon icon-antena"></i>
+                  </a>
+                </li>
+                <li class="chat">
+                  <a href="">
+                    <i class="icomoon icon-chat"></i>
+                  </a>
+                </li>
+                <li class="profile">
+                  <a href="" ng-href="#/Perfil/">
+                    <i class="icomoon icon-emoticon-smile"></i>
+                  </a>
+                </li>                 
+              </ul>
+            </div> 
+          </div>
+        </div>
+      </div> <!-- /.container-fluid -->
+    </nav>
+
+  <article>
+
+<section class="component video-gallery">
+          <h3>- Título de Video -</h3>
+          <div class="stage perform">
+            <button class="icon icon-close"></button>
+            <button class="icon icon-play"></button> 
+            <figure class="player">
+
+			  <video controls poster="../../assets/images/ptr-video-0001.jpg"> 
+   <source src="../../assets/media/video1.mp4" type="video/mp4"> 
+   <source src="../../assets/media/video1.webm" type="video/webm"> 
+                Ups! Parece que tu dispositivo no soporta video
+</video> 
+            </figure>
+          </div>
+        </section>
+
+	<section class="holoproj">
+	<div class="centered txt-title">MIS RETOS</div>
+<div id="carousel-example-generic2" class="carousel">
+
+	<div id="owl-demo2" class="owl-carousel">
+	  <div id="item1" class="item visib">
+	   <img src="../../assets/images/img-rotator-01-lg.png">
+     <div class="txt-renglon centered">¡Completa los retos para obtener el puente para tu nave y ganar más estrellas!</div>
+    </div>
+
+    <div id="item2" class="item hidd">
+     <img src="../../assets/images/img-rotator-02-lg.png">
+     <div class="txt-renglon centered">¡Completa los retos para obtener el motor para tu nave y ganar más estrellas!</div>
+    </div>
+
+    <div id="item3" class="item hidd">
+		  <img src="../../assets/images/img-rotator-03-lg.png">
+       <div class="txt-renglon centered">¡Completa los retos para obtener el cuerpo para tu nave y ganar más estrellas!</div>
+    </div>
+
+    <div id="item4" class="item hidd">
+       <img src="../../assets/images/img-rotator-04-lg.png">
+       <div class="txt-renglon centered">¡Completa los retos para obtener los estabilizadores para tu nave y ganar más estrellas!</div>
+    </div>
+
+    <div id="item5" class="item hidd">
+     <img src="../../assets/images/img-rotator-05-lg.png">
+     <div class="txt-renglon centered">¡Completa los retos para obtener la proa para tu nave y ganar más estrellas!</div>
+    </div>
+	 </div>
+
+      <a class="control" href="#" id="prev">
+        <span class="icomoon icon-arrow-bold-left"></span>
+      </a>
+      <a class="control" href="#" id="next">
+        <span class="icomoon icon-arrow-bold-right"></span>
+      </a>
+</div> 
+
+	  <div class="light"><img src="../../assets/images/img-light-cone.png"></div>
+	</section>	
+
+	<section class="jector">
+	</section>
+	<section class="parts">
+	<div id="owl-demo" class="owl-carousel">
+            <div>
+				<div class="part"><i class="icomoon icon-checked-join"></i><span>Sueña</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+			</div>
+            <div>
+				<div class="part"><i class="icomoon icon-checked-join"></i><span>Sueña</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+				<div class="part"><i class="icomoon icon-wrong"></i><span>Fora Común</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+			</div>
+            <div>
+				<div class="part"><i class="icomoon icon-checked-join"></i><span>Sueña</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+				<div class="part"><i class="icomoon icon-wrong"></i><span>Fora Común</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+				<div class="part"><i class="icomoon icon-wrong"></i><span>Fora Común</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+			</div>
+            <div>
+				<div class="part"><i class="icomoon icon-checked-join"></i><span>Sueña</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+				<div class="part"><i class="icomoon icon-wrong"></i><span>Fora Común</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+				<div class="part"><i class="icomoon icon-checked-join"></i><span>Sueña</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+				<div class="part"><i class="icomoon icon-wrong"></i><span>Fora Común</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+			</div>
+            <div>
+				<div class="part"><i class="icomoon icon-checked-join"></i><span>Sueña</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+				<div class="part"><i class="icomoon icon-wrong"></i><span>Fora Común</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+				<div class="part"><i class="icomoon icon-wrong"></i><span>Fora Común</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+				<div class="part"><i class="icomoon icon-checked-join"></i><span>Sueña</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+				<div class="part"><i class="icomoon icon-wrong"></i><span>Fora Común</span><span><i class="icomoon icon-star fl-right"></i><i class="icomoon icon-play fl-right"></i></span></div>
+			</div>
+              
+    </div>
+	
+<div><img src="../../assets/images/img-consoles.png"></div>
+	</section>
+	
+	
+	<section class="progreso">
+		<div class="spinner">
+			<img src="../../assets/images/prcnt/80.png"><div class="circle"></div><div class="text">80%</div>
+		</div>
+	</section>
+	<section class="hangar-bay">	
+	    <div id="ship">
+      <img src="../../assets/images/img-ship-01.png"/>
+    </div>
+	</section>
+	
+  </article>
+
+  <footer class="footer">
+    <ul class="block-list">
+      <li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
+      <li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
+    </ul>
+    <a href="#navBar" class="to-top"><i class="icomoon icon-double-arrow-up"></i><br/>SUBIR</a>
+  </footer>
+		</div>
+		</div>
+  <!-- html -->
+  <!-- scripts -->
+
+    
+    <script>
+    $(document).ready(function() {
+	var hits = 1;
+    var owl = $("#owl-demo");
+		owl.owlCarousel({
+			navigation:false,
+			pagination:false,
+			paginationSpeed : 1000,
+			goToFirstSpeed : 2000,
+			singleItem : true,
+			autoHeight : true,
+			afterMove: callback2
+		});
+    var owl2 = $("#owl-demo2");
+		owl2.owlCarousel({
+			navigation:false,
+			pagination:false,
+			paginationSpeed : 1000,
+			goToFirstSpeed : 2000,
+			singleItem : true,
+			autoHeight : true,
+			afterMove: callback1
+		});
+	function callback1(event) {
+		var item      = this.currentItem;
+		owl.trigger("owl.goTo",item);
+	}
+	function callback2(event) {
+		var item      = this.currentItem;
+		owl2.trigger("owl.goTo",item);
+	}
+
+		$("#next").click(function(){
+			owl.trigger('owl.next');
+			return false;
+		  })
+		$("#prev").click(function(){
+			owl.trigger('owl.prev');
+			return false;
+		  })
+
+    });
+    </script>	
+
+</body>
+</html>

@@ -8,8 +8,8 @@
 /* Custom Functions */
 @font-face {
   font-family: 'icomoon';
-  src: url('../fonts/icomoon.eot?-ogwy2j');
-  src: url('../fonts/icomoon.eot?#iefix-ogwy2j') format('embedded-opentype'), url('../fonts/icomoon.ttf?-ogwy2j') format('truetype'), url('../fonts/icomoon.woff?-ogwy2j') format('woff'), url('../fonts/icomoon.svg?-ogwy2j#icomoon') format('svg');
+  src: url('../fonts/icomoon.eot?2svj3j');
+  src: url('../fonts/icomoon.eot?#iefix2svj3j') format('embedded-opentype'), url('../fonts/icomoon.ttf?2svj3j') format('truetype'), url('../fonts/icomoon.woff?2svj3j') format('woff'), url('../fonts/icomoon.svg?2svj3j#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +24,21 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-logout:before {
+  content: "\e666";
+}
+.icon-privacy:before {
+  content: "\e667";
+}
+.icon-broadcast:before {
+  content: "\e668";
+}
+.icon-community:before {
+  content: "\e664";
+}
+.icon-headset:before {
+  content: "\e665";
 }
 .icon-notes:before {
   content: "\e65e";

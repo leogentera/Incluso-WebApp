@@ -1,0 +1,266 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "Scripts/global.js",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Scripts/app/public/controllers/login.js",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Programa/pvalnum.html",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Programa/gustypref.html",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Programa/forocom.html",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Programa/falsverd.html",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/app/programa/controllers/dashboard.js",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Programa/cuaytal.html",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Programa/dashboard.html",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Programa/complet.html",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Programa/compactiv.html",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/global.js",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/app/public/controllers/login.js",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/app/home/controllers/home.js",
+		"/C/temp/git/local_catalogs_external/version.php",
+		"/C/temp/git/local_catalogs_external/lang/en/local_local_catalogs_external.php",
+		"/C/temp/git/local_catalogs_external/db/services.php",
+		"/C/temp/git/local_catalogs_external/externallib.php",
+		"/E/moodle/local/Catalogs/externallib.php",
+		"/E/moodle/local/Catalogs/db/services.php",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Public/Index.html",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/app/public/controllers/register.js",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/app/public/controllers/recoverPassword.js",
+		"/C/Projects/git/Incluso/MobileApplication/facebookLogin.html",
+		"/E/moodle/mod/chat/index.php",
+		"/E/moodle/mod/chat/db/access.php",
+		"/E/moodle/webservice/xmlrpc/server.php",
+		"/E/moodle/webservice/xmlrpc/locallib.php",
+		"/E/moodle/webservice/xmlrpc/lib.php",
+		"/E/moodle/mod/chat/db/events.php",
+		"/E/moodle/webservice/xmlrpc/simpleserver.php",
+		"/E/moodle/webservice/rest/server.php",
+		"/E/moodle/version.php",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Public/Register.html",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Public/RecoverPassword.html",
+		"/E/moodle/local/readme.txt",
+		"/E/moodle/local/upgrade.txt",
+		"/E/moodle/course/ajax/management.php",
+		"/C/Projects/git/Incluso/MobileApplication/index.html",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/app/module.js",
+		"/C/Projects/git/Incluso/MobileApplication/Templates/Public/Login.html",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/app/public/controllers/recoverPassword",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/backbone.js",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/app/models/Courses.js",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/app/models/Course.js",
+		"/E/xampp/apache/conf/extra/httpd-vhosts.conf",
+		"/E/xampp/apache/conf/httpd.conf",
+		"/C/Projects/git/Incluso/MobileApplication/Scripts/backbone_offline.js"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"_IsOffline",
+			"txtCredentials",
+			"{\n",
+			"my",
+			"my ser",
+			"wstemplate",
+			"wstemplate\n",
+			"<sele",
+			"<input",
+			"ajax",
+			"header",
+			"options",
+			"'options'",
+			"method",
+			"options",
+			"credentials"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "Scripts/global.js",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "Scripts/app/public/controllers/login.js",
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 225.0,
+	"status_bar_visible": true
+}

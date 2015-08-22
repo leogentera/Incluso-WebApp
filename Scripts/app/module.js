@@ -13,11 +13,35 @@
 		'incluso.public.login',
         'incluso.public.recoverPassword',
         'incluso.public.register',
+        'incluso.programa.tutorial',
+        'incluso.programa.acercaPrograma',
+        'incluso.juegos.avatar',
         'incluso.programa.dashboard',
         'incluso.programa.dashboard.etapa',
-        'incluso.programa.profile'
+        'incluso.programa.profile',
+        'incluso.programa.notificationcontroller',
+        'incluso.programa.chatcontroller',
+        'incluso.programa.leaderboard',
+
+        'incluso.stage.dashboardcontroller',
+        'incluso.stage.forumcontroller',
+        'incluso.stage.forumcommentscontroller',
+        'incluso.stage.contentscontroller',
+        'incluso.stage.messagecontroller',
+        'incluso.stage.gameretomultiplecontroller',
+        'incluso.stage.gameretomultipleexternalappcontroller',
+        'incluso.stage.gameretomultipleresultscontroller',
+        'incluso.stage.quizcontroller',
+        'incluso.stage.chatcontroller',
+        'incluso.program.alerts',
+        'incluso.program.myInterests',
+        'incluso.program.myStrengths',
+        'incluso.program.hallOfFame',
+        'incluso.program.privacyNotice',
+        'incluso.program.termsOfUse',
+        'incluso.program.helpAndSupport',
     ])
-    .run(function ($templateCache, $http) {
+    .run(function ($templateCache, $http, $rootScope) {
         $http.get('Templates/Public/Login.html', { cache: $templateCache });
         $http.get('Templates/Public/RecoverPassword.html', { cache: $templateCache });
         $http.get('Templates/Public/Register.html', { cache: $templateCache });
@@ -26,7 +50,67 @@
         $http.get('Templates/Programa/profile.html', { cache: $templateCache });
         $http.get('Templates/Programa/editProfile.html', { cache: $templateCache });
         $http.get('Templates/Programa/etapa.html', { cache: $templateCache });
+        $http.get('Templates/Programa/Tutorial.html', { cache: $templateCache });
+        $http.get('Templates/Programa/acercaPrograma.html', { cache: $templateCache });  
+        $http.get('Templates/Juegos/Avatar.html', { cache: $templateCache });
+        $http.get('Templates/Programa/Alerts.html', { cache: $templateCache });
+        $http.get('Templates/Programa/AlertsDetail.html', { cache: $templateCache });
+        $http.get('Templates/Programa/MyInterests.html', { cache: $templateCache });
+        $http.get('Templates/Programa/MyStrengths.html', { cache: $templateCache });
+        $http.get('Templates/Programa/HallOfFame.html', { cache: $templateCache });
+        $http.get('Templates/Programa/PrivacyNotice.html', { cache: $templateCache });
+        $http.get('Templates/Programa/TermsOfUse.html', { cache: $templateCache });
+        $http.get('Templates/Programa/HelpAndSupport.html', { cache: $templateCache });
+        $http.get('Templates/Programa/ClosingStage.html', { cache: $templateCache });
 
+        $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
+        $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
+        $http.get('Templates/Programa/Dashboard.html', { cache: $templateCache });  
+        $http.get('Templates/Chat/index.html', { cache: $templateCache });  
+
+        $http.get('Templates/Leaderboard/index.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/ExploracionInicial.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultiple.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleExternalApp.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustos.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/Suena.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporte.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
+
+         document.addEventListener("keyup", function(e) {
+            if (e.keyCode === 27)
+                $rootScope.$broadcast("escapePressed", e.target);
+        });
+
+        document.addEventListener("click", function(e) {
+            $rootScope.$broadcast("documentClicked", e.target);
+
+        });
     })
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
@@ -35,7 +119,7 @@
             controller: 'programaProfileController'
         });
 
-        $routeProvider.when('/Perfil', {
+        $routeProvider.when('/Profile', {
             templateUrl: 'Templates/Programa/profile.html',
             controller: 'programaProfileController'
         });
@@ -49,6 +133,12 @@
             templateUrl: 'Templates/Programa/etapa.html',
             controller: 'programaEtapaController'
         });
+
+        $routeProvider.when('/Foro', {
+            templateUrl: 'Templates/Programa/foro.html',
+            controller: 'programaForoController'
+        });
+
 
         $routeProvider.when('/', {
             templateUrl: 'Templates/Public/Login.html',
@@ -70,6 +160,236 @@
             controller: 'publicRegisterController'
         });
 
+        $routeProvider.when('/Tutorial', {
+            templateUrl: 'Templates/Programa/Tutorial.html',
+            controller: 'programaTutorialController'
+        });
+
+        $routeProvider.when('/Juegos/Avatar', {
+            templateUrl: 'Templates/Juegos/Avatar.html',
+            controller: 'juegosAvatarController'
+        });
+
+        $routeProvider.when('/AcercaPrograma', {
+            templateUrl: 'Templates/Programa/acercaPrograma.html',
+            controller: 'programaAcercaProgramaController'
+        });
+
+        $routeProvider.when('/MyInterests', {
+            templateUrl: 'Templates/Programa/MyInterests.html',
+            controller: 'MyInterestsController'
+        }); 
+
+        $routeProvider.when('/MyStrengths', {
+            templateUrl: 'Templates/Programa/MyStrengths.html',
+            controller: 'MyStrengthsController'
+        });
+
+        $routeProvider.when('/HallOfFame', {
+            templateUrl: 'Templates/Programa/HallOfFame.html',
+            controller: 'HallOfFameController'
+        });
+
+        $routeProvider.when('/PrivacyNotice', {
+            templateUrl: 'Templates/Programa/PrivacyNotice.html',
+            controller: 'PrivacyNoticeController'
+        });
+
+        $routeProvider.when('/TermsOfUse', {
+            templateUrl: 'Templates/Programa/TermsOfUse.html',
+            controller: 'TermsOfUseController'
+        });
+
+        $routeProvider.when('/HelpAndSupport', {
+            templateUrl: 'Templates/Programa/HelpAndSupport.html',
+            controller: 'HelpAndSupportController'
+        });
+
+        $routeProvider.when('/Juegos/Game', {
+            templateUrl: 'Templates/Juegos/Game.html',
+            controller: 'GameController'
+        });
+       
+        $routeProvider.when('/Alerts', { 
+            templateUrl: 'Templates/Programa/Alerts.html',
+            controller: 'AlertsController'
+        });
+       
+        $routeProvider.when('/AlertsDetail/:notificationId', { 
+            templateUrl: function(params){ return 'Templates/Programa/AlertsDetail.html?notificationId=' + params.notificationId; },
+            controller: 'programaNotificationController'
+        });
+            
+        $routeProvider.when('/Chat', { 
+            templateUrl: 'Templates/Chat/index.html',
+            controller: 'programaChatController'
+        });
+            
+        $routeProvider.when('/Leaderboard', { 
+            templateUrl: 'Templates/Leaderboard/index.html',
+            controller: 'programaLeaderBoard'
+        });        
+
+        $routeProvider.when('/ZonaDeVuelo/Dashboard', {
+            templateUrl: 'Templates/ZonaDeVuelo/dashboard.html',
+            controller: 'stageDashboardController'
+        });
+
+        $routeProvider.when('/ZonaDeVuelo/ExploracionInicial/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/ExploracionInicial.html',
+            controller: 'stageQuizController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/ExploracionInicialCierre', { 
+            templateUrl: 'Templates/ZonaDeVuelo/ExploracionInicialCierre.html',
+            controller: 'stageQuizController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre', { 
+            templateUrl: 'Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html',
+            controller: 'stageMessageController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/FuenteDeEnergia/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultiple/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/RetoMultiple.html',
+            controller: 'stageGameRetoMultipleController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultipleExternalApp', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/RetoMultipleExternalApp.html',
+            controller: 'stageGameRetoMultipleExternalAppController'
+        });
+
+        $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados.html',
+            controller: 'stageGameRetoMultipleResultsController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos.html',
+            controller: 'stageForumController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios.html',
+            controller: 'stageForumCommentsController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html',
+            controller: 'stageDashboardController'  //this may need to be change to another type of controller
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/:moodleid/:discussionId', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html',
+            controller: 'stageForumController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html',
+            controller: 'stageForumController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html',
+            controller: 'stageForumController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html',
+            controller: 'stageForumController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Conocete/MensajeDeCierre', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html',
+            controller: 'stageMessageController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html',
+            controller: 'stageQuizController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/Cierre', { 
+            templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html',
+            controller: 'stageMessageController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustos.html',
+            controller: 'stageuizController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/Cierre', { 
+            templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html',
+            controller: 'stageMessageController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/Suena.html',
+            controller: 'stageuizController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/Cierre', { 
+            templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html',
+            controller: 'stageMessageController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html',
+            controller: 'stageForumController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios', { 
+            templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html',
+            controller: 'stageForumController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MensajeDeCierre', { 
+            templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html',
+            controller: 'stageMessageController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/CabinaDeSoporte/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporte.html',
+            controller: 'stageChatController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/CabinaDeSoporteCierre', { 
+            templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html',
+            controller: 'stageMessageController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/ExploracionFinal/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/ExploracionFinal.html',
+            controller: 'stageQuizController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/ExploracionFinalCierre', { 
+            templateUrl: 'Templates/ZonaDeVuelo/ExploracionFinalCierre.html',
+            controller: 'stageMessageController'
+        });
+    
+        $routeProvider.when('/ZonaDeVuelo/Cierre/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Cierre.html',
+            controller: 'programaEndController'
+        });
+
         $routeProvider.otherwise({
         	redirectTo: '/'
         });
@@ -81,8 +401,12 @@
     }])
     .controller('RootController', ['$scope', '$route', '$routeParams', '$location', function ($scope, $route, $routeParams, $location) {
         $scope.$on('$routeChangeSuccess', function (e, current, previous) {
+            console.log($location.path());  
             $scope.activeViewPath = $location.path();
-        });
+            
+            $("#menuton span").text($(".main-title").text()); 
+
+        });        
     }])
     // Not sure why there's 2 required names
     .directive('requiredname', function () {
@@ -331,4 +655,98 @@
                 scope.$apply(attrs.ngBlur);
             });
         };
+    })
+    .directive('menuComponent', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Programa/menu.html'
+        };
+    })
+    .directive('toolbarComponent', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Programa/toolbar.html'
+        };
+    })
+    .directive('footerComponent', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Programa/footer.html'
+        };
+    })
+    .directive('preloaderComponent', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Shared/_preloader.html'
+        };
+    })
+    .directive("menu", function() {
+        return {
+            restrict: "E",
+            template: "<div class='sidebar' ng-class='{ show: visible, left: alignment === \"left\", right: alignment === \"right\" }' ng-transclude></div>",
+            transclude: true,
+            scope: {
+                visible: "=",
+                alignment: "@"
+            }
+        };
+    })    
+    .directive("menuItem", function() {
+         return {
+             restrict: "E",
+             template: "<div ng-click='navigateTo()' ng-transclude></div>",
+             transclude: true,
+             scope: {
+                 hash: "@",
+                 
+             },
+             link: function($scope, $location) {
+                
+                 $scope.navigateTo = function() {
+                    //console.log($location);
+                     window.location.hash = $scope.hash;
+                 }
+             }
+         };
+     })
+    .directive("submenu", function(){
+        return {
+            restrict: "E",
+            template: "<div class='submenu' ng-transclude></div>",
+            transclude: true,
+            scope: {
+
+            }
+        };
+    })
+    .directive("submenuItem", function(){
+        return {
+            restrict: "E",
+            template: "<div ng-click='navigateTo()' ng-transclude></div>",
+            transclude: true,
+            scope: {
+                 hash: "@",                 
+             },
+             link: function($scope, $location) {
+                
+                 $scope.navigateTo = function() {                    
+                     window.location.hash = $scope.hash;                     
+                }
+            }
+        };
+    })
+    .directive("submenuItemTitle", function(){
+        return {
+            restrict: "E",
+            template: "<h3 class='submenuTitle' ng-transclude></h3>",
+            transclude: true,
+            scope: {
+
+            }
+        };
     });
+     

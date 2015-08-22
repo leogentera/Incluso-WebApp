@@ -13,6 +13,8 @@
         04. $my-badges
         05. $user-avatar
         06. $top-users
+
+            $acerca-programa
 ********************************************************************************/
 /****************************************************************************
  LESS Utilities - variables and functions
@@ -90,13 +92,14 @@
         ************************************************************************/
     /***********************************************************************/
     /***********************************************************************
-         $profile-options
-         Description: CSS to represent user's profile dashboard landing page
+         $profile-info-asset
+         Description: CSS to represent a block or asset of a user information 
+         at the read only mode of profile view. 
         ************************************************************************/
     /***********************************************************************/
     /***********************************************************************
-         $profile-dashboard
-         Description: CSS to represent user's profile dashboard landing page
+         $profile-options
+         Description: CSS to represent user's profile options area
         ************************************************************************/
     /***********************************************************************/
     /***********************************************************************
@@ -104,6 +107,30 @@
          Description: CSS to represent user's profile editable form
         ************************************************************************/
     /***********************************************************************/
+    /***********************************************************************
+         $profile-dashboard
+         Description: CSS to represent user's profile dashboard component
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         $terms-and-conditions
+         Description: CSS to represent modal for terms and conditionss
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         $app
+         Description: CSS to represent mobileangularui component for main layout
+        ************************************************************************/
+    /***********************************************************************
+         $green-lantern-theme
+         Description: CSS to represent look of a list of items with colors green and dark
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
+         $media-collapse
+         Description: CSS to represent look collapsible panel with the content as media [video/image]
+        ************************************************************************/
+    /*********************************************************************/
   }
   .incluso-app .to-top {
     bottom: 20px;
@@ -138,7 +165,6 @@
     color: #e1e455;
     font-size: 150%;
     padding: 5% 10%;
-    text-transform: uppercase;
   }
   .incluso-app .min-pad {
     padding: 5px 0px;
@@ -642,7 +668,7 @@
     border-radius: 5px;
     color: white;
     font-size: 120%;
-    margin: 2% 10%;
+    margin: 2vh 10%;
     padding: 3% 5%;
     width: 80%;
     position: relative;
@@ -692,6 +718,21 @@
   }
   .incluso-app .part.part2 .icomoon {
     font-size: 100%;
+  }
+  .incluso-app .part.part3 {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+  }
+  .incluso-app .part.part3 > div > div {
+    display: block;
+    font-size: 3vw;
+    text-align: center;
+    width: 32%;
+  }
+  .incluso-app .part hr {
+    width: 100%;
+    border-color: rgba(128, 152, 160, 0.5);
   }
   .incluso-app .showmore {
     background: rgba(28, 28, 28, 0.5) none repeat scroll 0 0;
@@ -795,15 +836,6 @@
   .incluso-app .wall .vermas i {
     color: white;
     padding: 0;
-  }
-  .incluso-app .paginate,
-  .incluso-app .paginate a {
-    color: #08b190;
-    margin: 5% 15%;
-  }
-  .incluso-app .paginate i,
-  .incluso-app .paginate a i {
-    font-size: 300%;
   }
   .incluso-app .modalDialog {
     position: relative;
@@ -935,6 +967,7 @@
     z-index: 2;
   }
   .incluso-app .video-gallery .stage .icon-close {
+    display: none;
     right: -22px;
     top: -22px;
     padding: 0;
@@ -951,7 +984,7 @@
     background-repeat: no-repeat;
   }
   .incluso-app .video-gallery .stage .icon-play {
-    display: none;
+    display: block;
     left: 50%;
     top: 50%;
     padding: 0;
@@ -962,6 +995,10 @@
     background-color: transparent;
     background-image: url('../images/icn-video-play.png');
     background-position: center center;
+  }
+  .incluso-app .video-gallery .stage .icon-play:before {
+    display: none;
+    content: none;
   }
   .incluso-app .video-gallery .stage.perform .player {
     display: block;
@@ -1081,16 +1118,6 @@
   .incluso-app .my-badges p {
     margin-top: 15px;
   }
-  .incluso-app .user-container {
-    display: flex;
-    justify-content: center;
-  }
-  .incluso-app .active .user-avatar figure {
-    border: 0px solid #171f20;
-  }
-  .incluso-app .active .user-avatar figcaption {
-    border-color: #171f20;
-  }
   .incluso-app .user-avatar {
     display: block;
     position: relative;
@@ -1134,7 +1161,8 @@
     display: block;
     position: absolute;
     top: 41%;
-    right: -50px;
+    /*right: -50px;*/
+    right: -32%;
     padding: 5px;
     margin: 0;
     background: none transparent;
@@ -1143,8 +1171,19 @@
   }
   .incluso-app .user-avatar button .icomoon {
     color: #bcd431;
-    font-size: 28px;
+    /*font-size: 28px;*/
+    font-size: 6vw;
     font-weight: bold;
+  }
+  .incluso-app .user-container {
+    display: flex;
+    justify-content: center;
+  }
+  .incluso-app .active .user-avatar figure {
+    border: 0px solid #171f20;
+  }
+  .incluso-app .active .user-avatar figcaption {
+    border-color: #171f20;
   }
   .incluso-app .user-data {
     display: block;
@@ -1334,6 +1373,7 @@
   }
   .incluso-app .profile-data {
     height: 228px;
+    height: 72vw;
     margin-top: 24px;
     font-weight: bold;
     text-align: center;
@@ -1347,6 +1387,7 @@
   }
   .incluso-app .profile-data .user-name {
     padding: 10px 0 32px;
+    padding: 2vw 0 7vw;
     margin: 0;
     color: #ffffff;
     font-size: 1.8em;
@@ -1356,56 +1397,50 @@
   .incluso-app .profile-data .user-points {
     width: auto;
     padding: 1px 12px;
+    padding: 0.222vw 2.5vw;
     margin: 0;
+    border-width: 0.21em;
+    -webkit-border-radius: 0.888em;
+    -moz-border-radius: 0.888em;
+    border-radius: 0.888em;
     color: #bcd431;
     font-size: 24px;
+    font-size: 5vw;
     font-weight: 600;
   }
   .incluso-app .profile-settings {
     position: relative;
     z-index: 2;
     margin: 0;
-    height: 132px;
+    height: 32vw;
     background-attachment: scroll;
-    /*background-image:url('@{url-images}/img-profile-spaceship-dashboard-settings.png');*/
-    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png');
-    /*background-color: @clr-gray-asphalt;*/
-    background-position: center 100px;
+    background-image: url('../images/img-profile-spaceship-dashboard-settings.png');
+    background-position: center top;
     background-repeat: no-repeat;
     -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
     background-size: 100% auto;
-    /*&:after {
-                display:block;
-                position:absolute;
-                z-index: 0;
-                bottom: 0;
-                width: 100%; 
-                height: 12px;
-                background-attachment: scroll;
-                background-image:url('@{url-images}/img-profile-spaceship-dashboard-bottom.png');
-                background-color: @clr-gray-asphalt;
-                background-position: center 0;
-                background-repeat: no-repeat;
-                .background-size(100%, auto);
-                content: " ";
-            }*/
   }
   .incluso-app .profile-settings .user-avatar {
     margin-top: 10px;
   }
   .incluso-app .profile-settings .btn {
     display: block;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    width: auto;
+    height: 10vw;
+    margin-top: 6vw;
+  }
+  .incluso-app .profile-settings .btn.btn-icon-aside {
+    width: 36vw;
+  }
+  .incluso-app .profile-settings .btn.btn-icon-aside.right {
+    display: none;
   }
   .incluso-app .profile-settings > .container {
     position: relative;
     height: inherit;
     background-attachment: scroll;
     background-image: url('../images/img-profile-spaceship-dashboard-settings.png');
-    /*background:none;*/
     background-color: transparent;
     background-position: center 0;
     background-repeat: no-repeat;
@@ -1413,15 +1448,90 @@
     -moz-background-size: 100% auto;
     background-size: 100% auto;
   }
+  .incluso-app .profile-info-asset {
+    display: block;
+    padding: 0;
+    margin: 6vw 0 0;
+    border-top-style: solid;
+    border-top-width: 0.1em;
+    border-top-color: rgba(255, 255, 255, 0.5);
+  }
+  .incluso-app .profile-info-asset:first-child {
+    margin-top: 0;
+    border-top-style: none;
+  }
+  .incluso-app .profile-info-asset:first-child h4 {
+    margin-top: 0;
+  }
+  .incluso-app .profile-info-asset h4 {
+    color: #bcd431 !important;
+    font-size: 4.1vw;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: left;
+    margin: 6vw 0 0;
+  }
+  .incluso-app .profile-info-asset label {
+    color: #08b290;
+    font-size: 3.9vw;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+  }
+  .incluso-app .profile-info-asset p {
+    min-height: 8.5vw;
+    color: #ffffff;
+    font-size: 3.9vw;
+    font-size: 6vw;
+    font-size: 5vw;
+    font-weight: normal;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+  }
+  .incluso-app .profile-info-asset .from-group {
+    padding: 1.5vw 0 0;
+    margin: 1.5vw 0 0;
+  }
+  .incluso-app .profile-info-asset .block-list {
+    min-height: 8.5vw;
+  }
+  .incluso-app .profile-info-asset .block-list p {
+    margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .incluso-app .profile-info-asset .block-list p span {
+    padding-right: 1vw;
+  }
+  .incluso-app .profile-info-asset .block-list p em {
+    color: #8098a0;
+    font-style: normal;
+  }
   .incluso-app .profile-options {
     margin: 0;
-    padding: 32px 0 15px;
+    padding: 12vw 0 6vw;
     height: auto;
+    min-height: 120vw;
     background-attachment: scroll;
-    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png');
-    background-color: #444d53;
     background-position: center 0;
     background-repeat: no-repeat;
+    background-color: #3c4448;
+    /* Old browsers */
+    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png');
+    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), -moz-linear-gradient(top, #444d53 0%, #3c4448 92%);
+    /* FF3.6+ */
+    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #444d53), color-stop(92%, #3c4448));
+    /* Chrome,Safari4+ */
+    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), -webkit-linear-gradient(top, #444d53 0%, #3c4448 92%);
+    /* Chrome10+,Safari5.1+ */
+    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), -o-linear-gradient(top, #444d53 0%, #3c4448 92%);
+    /* Opera 11.10+ */
+    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), -ms-linear-gradient(top, #444d53 0%, #3c4448 92%);
+    /* IE10+ */
+    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), linear-gradient(to bottom, #444d53 0%, #3c4448 92%);
+    /* W3C */
     -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
     background-size: 100% auto;
@@ -1437,14 +1547,7 @@
     border: none;
   }
   .incluso-app .profile-options .list-group a {
-    display: block;
     position: relative;
-    height: 77px;
-    padding: 0;
-    margin: 0;
-    font-size: 24px;
-    font-weight: bold;
-    line-height: 77px;
   }
   .incluso-app .profile-options .list-group span {
     color: #ffffff;
@@ -1455,7 +1558,7 @@
     overflow: hidden;
     width: auto;
     padding: 0;
-    margin: 0 72px 0 48px;
+    margin: 0px 18vw 0px 11vw;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -1463,57 +1566,43 @@
     display: block;
     position: absolute;
     z-index: 1;
-    padding: 0 0 0 12px;
+    padding: 0px 0px 0px 2.6vw;
     margin: 0;
     color: #bcd431;
-    font-size: 1.4em;
-    font-weight: normal;
+    font-size: 1.1em;
   }
   .incluso-app .profile-options .list-group .icomoon.icon-arrow-slim-right {
     top: 0;
     right: 0;
     padding: 0 9px 0 0;
+    padding: 0px 1.5vw 0px 0px;
     font-size: 1.2em;
+    font-size: 6vw;
   }
   .incluso-app .profile-options .list-group .icomoon.icon-star {
     top: 50%;
     right: 30px;
-    padding: 3px 9px;
-    margin: -1.2em 6px 0 0;
+    right: 6.3vw;
+    /*padding: 3px 9px;*/
+    padding: 1vw 2vw;
+    /*margin: -1.2em 6px 0 0;*/
+    margin: -3.4vw 1.2vw 0px 0px;
     border: 2px solid #bcd431;
     -webkit-border-radius: 21px;
     -moz-border-radius: 21px;
     border-radius: 21px;
     font-size: 0.6em;
     /*15px;*/
+    font-size: 3vw;
     line-height: 1.2em;
     /*21px;*/
+    line-height: 3.2vw;
   }
   .incluso-app .profile-options .list-group .no-badge span:first-child + span {
     margin-right: 51px;
   }
   .incluso-app .profile-options .list-group .no-badge .icomoon.icon-star {
     display: none;
-  }
-  .incluso-app .profile-dashboard {
-    width: 100vw;
-    margin: 0;
-    background-attachment: scroll;
-    background-image: url('../images/bg-xs-profile-sky.jpg');
-    background-position: center -98px;
-    background-repeat: no-repeat;
-  }
-  .incluso-app .profile-dashboard .user-avatar {
-    margin-top: 10px;
-  }
-  .incluso-app .profile-dashboard > .row {
-    padding: 0 5%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-  .incluso-app .profile-dashboard > .row > div {
-    padding-left: 0;
-    padding-right: 0;
   }
   .incluso-app .my-profile-form {
     display: block;
@@ -1547,7 +1636,8 @@
     margin: 0;
   }
   .incluso-app .my-profile-form li {
-    margin-top: 15px;
+    /*margin-top: 15px;*/
+    margin-top: 9vw;
   }
   .incluso-app .my-profile-form li:first-child {
     margin-top: 0;
@@ -1607,12 +1697,41 @@
   .incluso-app .my-profile-form .btn.btn-add .icomoon {
     padding: 0.1vw 3vw;
   }
+  .incluso-app .my-profile-form .button-group .btn {
+    margin-top: 0;
+  }
+  .incluso-app .my-profile-form .checkbox.checkbox-custom input + span:before {
+    margin-right: 3vw;
+    border-color: rgba(142, 170, 179, 0.5);
+  }
   .incluso-app .my-profile-form .form-group {
+    position: relative;
     border: none;
     margin-bottom: 0;
   }
+  .incluso-app .my-profile-form .form-group h5 {
+    margin-bottom: 1vw;
+  }
+  .incluso-app .my-profile-form .form-group h5 span:first-child {
+    color: #3c4448;
+    font-size: 3vw;
+    text-transform: uppercase;
+  }
+  .incluso-app .my-profile-form .form-group h5 .btn-circle {
+    display: inline;
+    float: right;
+    /*position: absolute;
+                        right: 0;*/
+    margin: 0;
+  }
+  .incluso-app .my-profile-form .form-group h5 .btn-circle .icomoon {
+    color: #ffffff;
+    font-size: 2vw;
+    font-weight: 100;
+  }
   .incluso-app .my-profile-form .form-group .form-control {
-    border-top-width: 0;
+    /*border-top-width: 0;*/
+    border-top-width: 1pt;
     text-indent: 3px;
   }
   .incluso-app .my-profile-form .form-group .form-control:first-child {
@@ -1625,6 +1744,364 @@
   }
   .incluso-app .my-profile-form .form-group:first-child .form-control:first-child {
     border-top-width: 1pt;
+  }
+  .incluso-app .my-profile-form .form-group .form-control + .form-control {
+    border-top-width: 0;
+  }
+  .incluso-app .my-profile-form .form-group .form-control.ng-pristine.ng-touched + .custom-placeholder {
+    display: none;
+  }
+  .incluso-app .profile-dashboard {
+    width: 100vw;
+    margin: 0;
+    background-attachment: scroll;
+    background-color: #000000;
+    background-image: url('../images/bg-xs-profile-sky.jpg');
+    background-position: center -98px;
+    background-position: center -18vw;
+    background-repeat: no-repeat;
+    -webkit-background-size: auto 100%;
+    -moz-background-size: auto 100%;
+    background-size: auto 100%;
+  }
+  .incluso-app .profile-dashboard .user-avatar {
+    width: 33.3vw;
+    height: auto;
+    min-height: 33.3vw;
+    margin-top: 3vw;
+  }
+  .incluso-app .profile-dashboard .user-avatar img {
+    min-height: inherit;
+  }
+  .incluso-app .profile-dashboard .user-avatar figcaption {
+    width: 9vw;
+    height: 9vw;
+    margin: -6vw auto 0;
+    border: 0.3em solid #bcd431;
+    box-sizing: content-box;
+    font-size: 5.1vw;
+    line-height: 9vw;
+  }
+  .incluso-app .profile-dashboard > .row {
+    padding: 0 5%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .incluso-app .profile-dashboard > .row > div {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .incluso-app .modal.terms-and-conditions .modal-dialog {
+    margin-top: 15vh;
+  }
+  .incluso-app .modal.terms-and-conditions .modal-body {
+    height: 50vh;
+    padding-top: 0;
+  }
+  .incluso-app .modal.terms-and-conditions .modal-footer {
+    display: none;
+  }
+  .incluso-app .sidebar-left-active .app {
+    margin-left: 85vw;
+  }
+  .incluso-app .app {
+    background: #000;
+    /*-webkit-transition: all 500ms ease;
+            -moz-transition: all 500ms ease;
+            -o-transition: all 500ms ease;
+            transition: all 500ms ease; */
+    -webkit-transition: -webkit-transform ease 800ms;
+    -moz-transition: -webkit-transform ease 800ms;
+    -ms-transition: -webkit-transform ease 800ms;
+    -o-transition: -webkit-transform ease 800ms;
+    transition: -webkit-transform ease 800ms;
+    -webkit-transition: transform ease 800ms;
+    -moz-transition: transform ease 800ms;
+    -ms-transition: transform ease 800ms;
+    -o-transition: transform ease 800ms;
+    transition: transform ease 800ms;
+    z-index: 20;
+  }
+  .incluso-app .app,
+  .incluso-app .app-body {
+    overflow-y: auto;
+  }
+  .incluso-app .app-content,
+  .incluso-app .app-body {
+    height: auto;
+  }
+  .incluso-app .green-lantern-theme {
+    padding: 0px;
+  }
+  .incluso-app .green-lantern-theme .list-item {
+    display: inline-flex;
+    width: 100%;
+    margin: 2% 0px;
+    padding: 3% 5%;
+    z-index: 2;
+    align-items: center;
+    justify-content: space-between;
+    background: #1f2733;
+    cursor: pointer;
+    color: white;
+    font-size: 120%;
+    position: relative;
+    background: -moz-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f2733), color-stop(100%, #141921));
+    background: -webkit-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: -o-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: -ms-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
+    background: radial-gradient(ellipse at center, #1f2733 0%, #141921 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1f2733', endColorstr='#141921', GradientType=1);
+  }
+  .incluso-app .green-lantern-theme .list-item .date {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 70%;
+  }
+  .incluso-app .green-lantern-theme .list-item .icomoon {
+    color: #e1e455;
+    font-size: 150%;
+    padding-right: 5%;
+  }
+  .incluso-app .green-lantern-theme .list-item .icon-checked-join {
+    color: #08b190;
+  }
+  .incluso-app .green-lantern-theme .list-item .icon-wrong {
+    color: gray;
+  }
+  .incluso-app .green-lantern-theme .list-item div {
+    display: block;
+    font-size: 86%;
+  }
+  .incluso-app .green-lantern-theme .list-item span {
+    line-height: normal;
+    display: inline-flex;
+  }
+  .incluso-app .green-lantern-theme .list-item.showmore div {
+    color: #08B290;
+  }
+  .incluso-app .green-lantern-theme .list-item.showmore .icomoon {
+    color: #08B290;
+  }
+  .incluso-app .green-lantern-theme .highlight {
+    border: 1px solid #08B190;
+  }
+  .incluso-app .green-lantern-theme .rounded-item {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+  }
+  .incluso-app .green-lantern-theme.notifications .nav-tabs {
+    margin: 2.5vh 0px;
+  }
+  .incluso-app .green-lantern-theme.notifications .nav-tabs .item {
+    width: 26.5vw;
+    text-align: center;
+    font-weight: lighter;
+    border: 1px solid #08B190;
+    cursor: pointer;
+  }
+  .incluso-app .green-lantern-theme.notifications .nav-tabs .item a {
+    color: #08B190;
+  }
+  .incluso-app .green-lantern-theme.notifications .nav-tabs .item.active {
+    background-color: #08B190;
+  }
+  .incluso-app .green-lantern-theme.notifications .nav-tabs .item.active a {
+    color: #FFF;
+  }
+  .incluso-app .green-lantern-theme.notifications .nav-tabs.item:first-child {
+    border-radius: 5px 0px 0px 5px;
+  }
+  .incluso-app .green-lantern-theme.notifications .nav-tabs li:first-child {
+    -webkit-border-radius: 5px 0px 0px 5px;
+    -moz-border-radius: 5px 0px 0px 5px;
+    border-radius: 5px 0px 0px 5px;
+  }
+  .incluso-app .green-lantern-theme.notifications .nav-tabs li:last-child {
+    -webkit-border-radius: 0px 5px 5px 0px;
+    -moz-border-radius: 0px 5px 5px 0px;
+    border-radius: 0px 5px 5px 0px;
+  }
+  .incluso-app .collapse-media .panel {
+    display: block;
+    margin-bottom: 0px;
+    background-color: transparent;
+  }
+  .incluso-app .collapse-media .panel .panel-heading {
+    padding: 3.3vw 2.6vw;
+    background-color: #0d0f14;
+    -webkit-border-radius: 3vw 3vw 0 0;
+    -moz-border-radius: 3vw 3vw 0 0;
+    border-radius: 3vw 3vw 0 0;
+    color: #bcd431;
+    cursor: pointer;
+  }
+  .incluso-app .collapse-media .panel .panel-heading h3 {
+    margin: 0 auto;
+    text-align: left;
+  }
+  .incluso-app .collapse-media .panel .panel-heading span {
+    display: inline-block;
+    vertical-align: top;
+    line-height: 6vw;
+  }
+  .incluso-app .collapse-media .panel .panel-heading span:first-child {
+    font-size: 6vw;
+  }
+  .incluso-app .collapse-media .panel .panel-heading span:first-child + span {
+    padding-left: 1vw;
+    font-size: 4.3vw;
+    /*line-height: 4vw;*/
+  }
+  .incluso-app .collapse-media .panel .panel-heading .icon-arrow,
+  .incluso-app .collapse-media .panel .panel-heading .icon-arrow-up {
+    float: right;
+    font-size: 5vw;
+  }
+  .incluso-app .collapse-media .panel .panel-body {
+    /*.clr-blueDark(background-color, 0.9);*/
+    background-color: rgba(13, 15, 20, 0.5);
+  }
+  .incluso-app .border-box {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+  .incluso-app menu {
+    display: block;
+    z-index: 100;
+  }
+  .incluso-app menu .sidebar li {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.28);
+    display: block;
+    margin-right: 6vw;
+    position: relative;
+    padding: 1vw 0;
+  }
+  .incluso-app menu .sidebar li a:hover,
+  .incluso-app menu .sidebar li.active > a:focus {
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+  }
+  .incluso-app menu .sidebar li > i {
+    padding: 3vw 1vw;
+  }
+  .incluso-app menu .sidebar li > a {
+    color: white;
+    display: block;
+    font-size: 5vw;
+    padding: 1.5vh 3vw;
+    position: relative;
+    width: 100%;
+  }
+  .incluso-app menu .sidebar li > a:focus,
+  .incluso-app menu .sidebar li > a:hover {
+    background-color: rgba(255, 255, 255, 0.28);
+  }
+  .incluso-app menu .sidebar li > a > .icomoon {
+    margin-right: 1vw;
+  }
+  .incluso-app menu .sidebar li > a > .glyphicon {
+    margin-right: 1vw;
+  }
+  .incluso-app menu .sidebar li:last-child a {
+    padding: 3vh 3vw;
+  }
+  .incluso-app menu .sidebar li a.menu-blue {
+    color: #39a6dd;
+  }
+  .incluso-app menu .sidebar li a.menu-green {
+    color: #80c241;
+  }
+  .incluso-app menu .sidebar li a.menu-pink {
+    color: #e70e80;
+  }
+  .incluso-app menu .sidebar li .submenu {
+    border-top: 2px solid rgba(255, 255, 255, 0.28);
+    display: none;
+    padding: 6vw 0 6vw 6vw;
+  }
+  .incluso-app menu .sidebar li .submenu li {
+    margin: 1vh 0px;
+  }
+  .incluso-app menu .sidebar li .submenu li:first-child {
+    color: #39a6dd;
+    /*text-transform: uppercase;*/
+  }
+  .incluso-app menu .sidebar li .submenu a {
+    color: white;
+    line-height: 20px;
+  }
+  .incluso-app menu .sidebar li .submenu ul {
+    list-style: none;
+    padding: 3vw 0;
+  }
+  .incluso-app menu > div {
+    position: absolute;
+    z-index: 1100;
+    top: 0;
+    width: 85vw;
+    height: 100%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-transition: -webkit-transform ease 250ms;
+    -moz-transition: -webkit-transform ease 250ms;
+    -ms-transition: -webkit-transform ease 250ms;
+    -o-transition: -webkit-transform ease 250ms;
+    transition: -webkit-transform ease 250ms;
+    -webkit-transition: transform ease 250ms;
+    -moz-transition: transform ease 250ms;
+    -ms-transition: transform ease 250ms;
+    -o-transition: transform ease 250ms;
+    transition: transform ease 250ms;
+  }
+  .incluso-app menu > div.left {
+    height: 100%;
+    background: #273D7A;
+    left: -85vw;
+    background-image: url('../images/bg-menu.jpg');
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+  }
+  .incluso-app menu > div.show.left {
+    transform: translate3d(85vw, 0, 0);
+    -ms-transform: translate3d(85vw, 0, 0);
+    -webkit-transform: translate3d(85vw, 0, 0);
+    -o-transform: translate3d(85vw, 0, 0);
+    -moz-transform: translate3d(85vw, 0, 0);
+  }
+  .incluso-app menu > div.right {
+    background: #6B1919;
+    right: -85vw;
+  }
+  .incluso-app menu > div.show.right {
+    transform: translate3d(-85vw, 0, 0);
+    -ms-transform: translate3d(-85vw, 0, 0);
+    -webkit-transform: translate3d(-85vw, 0, 0);
+    -o-transform: translate3d(-85vw, 0, 0);
+    -moz-transform: translate3d(-85vw, 0, 0);
+  }
+  .incluso-app menu > div > menu-item {
+    display: block;
+  }
+  .incluso-app menu > div > menu-item > div {
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 10px 15px;
+    border-bottom: solid 1px #555;
+    cursor: pointer;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    color: #B0B0B0;
+  }
+  .incluso-app menu > div > menu-item > div:hover {
+    color: #F0F0F0;
+  }
+  .incluso-app menu > div > menu-item > div > span {
+    float: left;
+    color: inherit;
   }
 }
 /* sm viewport */

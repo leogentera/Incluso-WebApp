@@ -1,0 +1,147 @@
+
+<div class="incluso-app notif-dashboard" id="site-wrapper">
+ 
+  <div id="site-canvas">
+
+    <article class="starway">
+
+      <!--<div class="txt-renglon">
+          <div id="controller" class="owl-carousel">
+            <div class="item"><span>Todas</span></div>
+            <div class="item"><span>No Leídas</span></div>
+            <div class="item"><span>Leídas</span></div>
+          </div>
+      </div>-->
+        <tabset class="notifications txt-renglon green-lantern-theme">          
+          <tab heading="Todas" class="item">    
+            <ul class="green-lantern-theme">              
+              <li class="{{notif.read == 'true' ? 'list-item rounded-item' : 'rounded-item list-item highlight'}}" ng-repeat="notif in notifications | orderBy: '-notificationDate'" ng-show="qty('All')" ng-click="showAlertDetail(notif.notificationId)">
+                <span class="icomoon icon-antena pull-left no-padding pink"></span>
+                <div class="pull-left"><div class="date">{{notif.notificationDate | date: 'fullDate'}}</div>{{ notif.notificationTitle }}</div>
+                <span class="{{notif.read == 'true' ? 'icomoon icon-checked-join pull-right no-padding green' : 'icomoon icon-gauge pull-right no-padding gray'}}"></span>
+              </li>
+              <li class="list-item rounded-item showmore" ng-show="showLoadMoreBar('All')">
+                <span class="icomoon icon-show-more"></span> 
+                <div ng-click="showMore('All')" >
+                  Mostrar más notificaciones...
+                </div>
+              </li>      
+            </ul>
+          </tab>
+          <tab heading="No leídas" class="item">
+            <ul class="green-lantern-theme">
+              <li class="list-item rounded-item highlight" ng-repeat="notif in notifications | orderBy: '-notificationDate' | filter: {read:'false'}" ng-click="showAlertDetail(notif.notificationId)" ng-show="qty('UnRead')">
+                <span class="icomoon icon-antena pull-left no-padding pink"></span>
+                <div class="pull-left"><div class="date">{{notif.notificationDate | date: 'fullDate'}}</div>{{ notif.notificationTitle }}</div>
+                <span class="icomoon icon-gauge fl-right no-padding gray"></span>
+              </li>
+              <li class="list-item rounded-item showmore" ng-show="showLoadMoreBar('Unread')">
+                <span class="icomoon  icon-show-more fl-right"></span>
+                <div ng-click="showMore('UnRead')" > 
+                  Mostrar más notificaciones...
+                </div>
+              </li>
+            </ul>
+          </tab>
+          <tab heading="Leídas" class="item">
+              <ul class="green-lantern-theme">
+                <li class="list-item rounded-item highlight" ng-repeat="notif in notifications | orderBy: '-notificationDate' | filter: {read:'true'} " ng-click="showAlertDetail(notif.notificationId)" ng-show="qty('Read')">
+				  <span class="icomoon icon-antena pull-left no-padding pink"></span>
+                  <div class="pull-left"><div class="date">{{notif.notificationDate | date: 'fullDate'}}</div>{{ notif.notificationTitle }}</div>
+				  <span class="icomoon icon-checked-join pull-right no-padding green"></span>
+				</li>
+                <li class="list-item rounded-item showmore" ng-show="showLoadMoreBar('Read')">
+				  <span class="icomoon  icon-show-more fl-right"></span>
+				  <div ng-click="showMore('Read')"> 
+					Mostrar más notificaciones...
+				  </div>
+				</li>
+              </ul>
+          </tab>
+        </tabset>
+	  <div><img src="assets/images/img-lines-ftr.png"></div>
+    </article>  
+  </div>
+</div>
+    
+    <script>
+
+
+    $(document).ready(function() {
+     
+      var carousel = $("#carousel");
+      var controller = $("#controller");
+     
+      carousel.owlCarousel({
+        singleItem : true,
+        slideSpeed : 1000,
+        navigation: false,
+        pagination:false,
+        afterAction : syncPosition,
+        responsiveRefreshRate : 200,
+        autoHeight : true,
+      });
+     
+      controller.owlCarousel({
+        items : 3,
+        itemsDesktop      : [1199,3],
+        itemsDesktopSmall     : [979,3],
+        itemsTablet       : [768,3],
+        itemsMobile       : [479,3],
+        pagination:false,
+        responsiveRefreshRate : 100,
+        afterInit : function(el){
+          el.find(".owl-item").eq(0).addClass("synced");
+        }
+      });
+     
+      function syncPosition(el){
+        var current = this.currentItem;
+        $("#controller")
+          .find(".owl-item")
+          .removeClass("synced")
+          .eq(current)
+          .addClass("synced")
+        if($("#controller").data("owlCarousel") !== undefined){
+          center(current)
+        }
+      }
+     
+      $("#controller").on("click", ".owl-item", function(e){
+        e.preventDefault();
+        var number = $(this).data("owlItem");
+        carousel.trigger("owl.goTo",number);
+      });
+     
+      function center(number){
+        var controllervisible = controller.data("owlCarousel").owl.visibleItems;
+        var num = number;
+        var found = false;
+        for(var i in controllervisible){
+          if(num === controllervisible[i]){
+            var found = true;
+          }
+        }
+     
+        if(found===false){
+          if(num>controllervisible[controllervisible.length-1]){
+            controller.trigger("owl.goTo", num - controllervisible.length+2)
+          }else{
+            if(num - 1 === -1){
+              num = 0;
+            }
+            controller.trigger("owl.goTo", num);
+          }
+        } else if(num === controllervisible[controllervisible.length-1]){
+          controller.trigger("owl.goTo", controllervisible[1])
+        } else if(num === controllervisible[0]){
+          controller.trigger("owl.goTo", num-1)
+        }
+        
+      }
+     
+    });
+
+
+    </script>
+  

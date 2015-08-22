@@ -1,0 +1,50 @@
+<div class="incluso-app start-dashboard acerca-programa" id="site-wrapper">
+  <div id="site-menu" >
+
+  </div>
+  <div id="site-canvas">
+
+<article class="blueprint">
+      <div class="container">
+
+        <section class="component">
+          <h3 ng-class="main-title">Mis fortalezas</h3>
+        </section>
+
+  <section class="txt-renglon up-line">
+  <h4>Escudo</h4>
+  <img src="assets/images/img-rotator-05-lg.png" class="centered">
+  </section>  
+
+
+  <section class="txt-renglon up-line">
+    <h4>Fortalezas</h4>
+  </section>
+
+
+    <div id="item{{index}}" ng-repeat="a in activityDetails">
+
+      <div class="part gr-bg">
+      <div><i class="icomoon icon-checked-join white"></i>{{a.sub_actividad}}</div> 
+      <div><span>xxx</span><i class="icomoon icon-required white txt-small acc" data-id="1"></i></div>
+      </div>
+      <div class="part part2" id="ord1">
+      --description--
+      </div>
+
+    </div>
+
+    <br/><br/>
+    <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
+    <br/><br/>
+    <img src="assets/images/img-lines-ftr.png" class="centered">
+    <br/>  
+
+        
+      </div> <!-- /.container -->
+
+    </article>
+
+  </div>
+</div>
+  

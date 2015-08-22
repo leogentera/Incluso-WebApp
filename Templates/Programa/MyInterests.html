@@ -1,0 +1,125 @@
+
+<div class="incluso-app step-dashboard" id="site-wrapper">
+  <div id="site-menu" >
+<!--#include file="menu.html" -->
+  </div>
+  <div id="site-canvas">
+ 
+  <article class="blueprint">
+	<section>
+		<div class="subtitle">Mis gustos y preferencias</div>
+		<div class="txt-renglon">Selecciona las opciones que te identifican.</div>
+	</section>
+	<div id="owl" class="owl-carousel">
+		<div>
+			<section class="form txt-renglon txt-bigger part list">
+				<div class="txt-renglon txt-bigger">1. Hobbies</div>
+				<input type="checkbox" value="check1" name="check" id="check1">
+				<label for="check1">Deportes</label>
+				<input type="checkbox" value="check1" name="check" id="check2">
+				<label for="check2">Carpintería</label>
+				<input type="checkbox" value="check1" name="check" id="check3">
+				<label for="check3">Pintura</label>
+				<input type="checkbox" value="check1" name="check" id="check4">
+				<label for="check4">Tocar un instrumento</label>
+				<input type="checkbox" value="check1" name="check" id="check5">
+				<label for="check5">Cantar</label>
+				<input type="checkbox" value="check1" name="check" id="check6">
+				<label for="check6">Baile / Danza</label>
+				<input type="checkbox" value="check1" name="check" id="check7">
+				<label for="check7">Leer</label>
+				<input type="checkbox" value="check1" name="check" id="check8">
+				<label for="check8">Escribir</label>
+				<input type="checkbox" value="check1" name="check" id="check9">
+				<label for="check9">Otros</label>
+			</section>
+			<div class="add"><i class="icomoon icon-edit"></i><span>Aquí escribe otros</span></div>
+		</div>
+		<div>
+			<section class="form txt-renglon txt-bigger part list">
+				<div class="txt-renglon txt-bigger">2. Deportes</div>
+				<input type="checkbox" value="check1" name="check" id="check11">
+				<label for="check11">Basket</label>
+				<input type="checkbox" value="check1" name="check" id="check12">
+				<label for="check12">Futbol</label>
+				<input type="checkbox" value="check1" name="check" id="check13">
+				<label for="check13">Badminton</label>
+				<input type="checkbox" value="check1" name="check" id="check14">
+				<label for="check14">Esgrima</label>
+				<input type="checkbox" value="check1" name="check" id="check15">
+				<label for="check15">Do Shin Kan</label>
+			</section>
+			<div class="add"><i class="icomoon icon-edit"></i><span>Aquí escribe otros</span></div>
+		</div>
+		<div>
+			<section class="form txt-renglon txt-bigger part list">
+				<div class="txt-renglon txt-bigger">3. Oficios</div>
+					<input type="checkbox" value="check1" name="check" id="check21">
+					<label for="check21">Carpintería</label>
+					<input type="checkbox" value="check1" name="check" id="check22">
+					<label for="check22">Fontanería</label>
+					<input type="checkbox" value="check1" name="check" id="check23">
+					<label for="check23">Repostería</label>
+			</section>
+			<div class="add"><i class="icomoon icon-edit"></i><span>Aquí escribe otros</span></div>
+		</div>
+		<div>
+			<section class="form txt-renglon txt-bigger part list">
+				<div class="txt-renglon txt-bigger">4. Artes</div>
+					<input type="checkbox" value="check1" name="check" id="check31">
+					<label for="check31">Escénicas</label>
+					<input type="checkbox" value="check1" name="check" id="check32">
+					<label for="check32">Plásticas</label>
+					<input type="checkbox" value="check1" name="check" id="check33">
+					<label for="check33">Visuales</label>
+					<input type="checkbox" value="check1" name="check" id="check34">
+					<label for="check34">Quinéticas</label>
+			</section>
+			<div class="add"><i class="icomoon icon-edit"></i><span>Aquí escribe otros</span></div>
+		</div>
+	</div>
+	<section class="controls">
+		<div class="paginate">
+			<a href="#" id="prev">
+			<i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
+			<a href="#" id="next">
+			<i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
+			<div class="centered"><span class="txt-bigger" id="index">1</span><span>/</span><span class="white txt-bigger" id="total">4</span></div>
+		</div>
+		<br/>
+		<div class="txt-renglon centered txt-bigger">Cancelar</div>
+		<br/><br/>
+		<img src="../../assets/images/img-lines-ftr.png" class="centered">
+		<br/>  
+	</section>
+
+  </article>
+
+ 
+  <script>
+    $(document).ready(function() {
+    var owl = $("#owl");
+		owl.owlCarousel({
+			navigation:false,
+			pagination:false,
+			paginationSpeed : 1000,
+			goToFirstSpeed : 2000,
+			singleItem : true,
+			autoHeight : true,
+			afterMove: callback
+		});
+	function callback(event) {
+		var item      = this.currentItem;
+		$("#index").html(item + 1);
+	}
+		$("#next").click(function(){
+			owl.trigger('owl.next');
+			return false;
+		  })
+		$("#prev").click(function(){
+			owl.trigger('owl.prev');
+			return false;
+		  })
+
+        });
+    </script>

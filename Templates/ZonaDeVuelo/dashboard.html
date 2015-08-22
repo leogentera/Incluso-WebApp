@@ -1,0 +1,209 @@
+<div class="incluso-app start-dashboard" id="site-wrapper">
+  <div id="site" >   
+    <!--<menu-component></menu-component>-->
+
+    <article>
+      <div class="container">
+
+        <h1 class="text-center">¡Bienvenido {{user.alias}}!</h1>
+        <section class="component video-gallery" ng-controller="videoCollapsiblePanelController">
+            <div class="panel panel-video">
+              <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
+                <h3>
+                  <span class="icomoon icon-video-file"></span>
+                  <span>¿Qué es incluso?</span>
+                  <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
+                  <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
+                </h3>
+              </div>
+              <div class="panel-body" collapse="isCollapsed">
+                <div class="stage perform">
+                  <button class="icon icon-close"></button>
+                  <button class="icon icon-play" ng-click="playWelcome()"></button>
+                  <figure class="player">
+                    <img src="assets/images/ptr-video-0001.jpg" ng-click="playWelcome()" alt="video" />
+                  </figure>
+                </div>
+              </div>
+            </div>
+        </section>
+
+        <section class="component global-progress txt-renglon centered">
+          <h3>- Avance Global -</h3>
+          <div class="spinner">
+            <img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.ceil(usercourse.globalProgress)}}.png" alt="progress" /><div class="circle"></div><div class="text">{{usercourse == null ? 0 : usercourse.globalProgress}}%</div>
+          </div>
+        </section>
+
+        <section class="component current-satge">
+          <img  src="assets/images/estacion{{currentStage != null ? currentStage : 1}}.png" alt="estacion"/>
+          <h3>- Estación: {{stage.name}} -</h3>
+          <a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firstTime == 1 ? "Iniciar Aventura" : "Continuar misión"}}</span></a>
+        </section>
+
+        <section class="component my-badges">
+          <h3>- Mi Escudo -</h3>
+          <img src="assets/images/img-badges-blocked.png" alt="badges" />
+        </section>
+
+        <section class="component top-users" style="width: 100vw">
+          <h3>- Usuarios top 3 -</h3>
+          <tabset justified="true">
+            <tab>
+              <tab-heading>
+                <div class="user-container">
+                  <div class="user-avatar">
+                    <figure>
+                      <img src="assets/images/img-avatar-dummy-01.png" alt="avatar" />
+                      <figcaption>1</figcaption>
+                      <div class="arrow-up"></div>
+                    </figure>
+                  </div>
+                </div>
+              </tab-heading>
+              <div class="user-data">
+                <div>
+                  <p>
+                    <label for="">1er. Lugar:</label>
+                    <span>{{course.leaderboard[0] != null ? course.leaderboard[0].fullname : ""}}</span>
+                  </p>
+                  <ul class="inline-list">
+                    <li class="points"><span>{{course.leaderboard[0] != null ? course.leaderboard[0].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
+                    <li><span>{{course.leaderboard[0] != null ? course.leaderboard[0].progress : 0}}%</span></li>
+                  </ul>
+                </div>
+              </div>
+            </tab>
+
+            <tab>
+              <tab-heading>
+                <div class="user-container">
+                  <div class="user-avatar">
+                    <figure>
+                      <img src="assets/images/img-avatar-dummy-02.png" alt="avatar" />
+                      <figcaption>2</figcaption>
+                      <div class="arrow-up"></div>
+                    </figure>
+                  </div>
+                </div>
+              </tab-heading>
+              <div class="user-data">
+                <div>
+                  <p>
+                    <label for="">2do. Lugar:</label>
+                    <span>{{course.leaderboard[1] != null ? course.leaderboard[1].fullname : ""}}</span>
+                  </p>
+                  <ul class="inline-list">
+                    <li class="points"><span>{{course.leaderboard[1] != null ? course.leaderboard[1].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
+                    <li><span>{{course.leaderboard[1] != null ? course.leaderboard[1].progress : 0}}%</span></li>
+                  </ul>
+                </div>
+              </div>
+            </tab>
+
+            <tab>
+              <tab-heading>
+                <div class="user-container">
+                  <div class="user-avatar">
+                    <figure>
+                      <img src="assets/images/img-avatar-dummy-03.png" alt="avatar" />
+                      <figcaption>3</figcaption>
+                      <div class="arrow-up"></div>
+                    </figure>
+                  </div>
+                </div>
+              </tab-heading>
+              <div class="user-data">
+                <div>
+                  <p>
+                    <label for="">3er. Lugar:</label>
+                    <span>{{course.leaderboard[2] != null ? course.leaderboard[2].fullname : ""}}</span>
+                  </p>
+                  <ul class="inline-list">
+                    <li class="points"><span>{{course.leaderboard[2] != null ? course.leaderboard[2].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
+                    <li><span>{{course.leaderboard[2] != null ? course.leaderboard[2].progress : 0}}%</span></li>
+                  </ul>
+                </div>
+              </div>
+            </tab>
+          </tabset>
+
+          <div class="current-user">
+            <div class="row">
+              <div class="col-xs-4 col-xs-offset-4">
+                <a href="">
+                  <div class="user-avatar">
+                    <figure class="user-avatar-">
+                      <img src="assets/images/img-avatar-dummy-01.png" alt="avatar" />
+                      <figcaption>{{user.place}}</figcaption>
+                    </figure>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            <div class="user-data">
+              <div >
+                <p>
+                  <span>Mi puntuación actual</span>
+                </p>
+                <ul class="inline-list">
+                  <li class="points"><span>{{user.stars}}</span> <i class="icomoon icon-star"></i></li>
+                  <li><span>{{usercourse.globalProgress}}%</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="ilustration">
+          <figure class="space-ship">
+            <img src="assets/images/img-ship-02.png" alt="La nave" />
+          </figure>
+        </section>
+
+<!--<footer class="footer db-bg" ng-class="{'show': showFooter}">
+    <ul class="block-list">
+      <li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
+      <li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
+    </ul>
+    <div class="to-top" ng-click="scrollToTop('navbar');"><i class="icomoon icon-double-arrow-up"></i><br/>SUBIR</div>
+</footer>-->
+
+      </div> <!-- /.container -->
+
+      
+
+      <script type="text/ng-template" id="tutorialModal.html">
+        <div class="modal-robot robot-lg user-help">
+          <img src="assets/images/img-robot-lg.png" alt="robot" />
+          <div class="modal-header">
+            <button class="icon icon-close" ng-click="cancel()">
+              <span class="icomoon icon-cross"></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p class="centered">Has completado satisfactoriamente
+              tu capacitación, ahora puedes aplicar 
+              tus conocimiento para poder
+              lograr tu sueños!
+            </p>
+            <p class="centered">¡Continúa con las estaciones Incluso y gana más estrellas! </p>
+            <figure class="player">
+                <video controls  poster="assets/images/ptr-video-0001.jpg" > 
+                <source src="assets/media/TutorialTest2.mp4" type="video/mp4"> Ups! Parece que tu dispositivo no soporta video</video> 
+            </figure>
+          </div>
+          <!--<div class="modal-footer">
+            <div class="row">
+              <div class="col-xs-12">
+                <button type="button" class="btn btn-primary btn-lg btn-block">Continuar a mi Perfil</button>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </script> 
+    </article>
+  </div>
+</div>
+<!--<script type="text/javascript" src="Scripts/scriptmenu.js"></script>-->

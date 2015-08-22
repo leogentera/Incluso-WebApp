@@ -1,0 +1,133 @@
+<div class="incluso-app profile" id="site-wrapper">
+    <div id="site-menu">
+        <menu-component></menu-component>
+    </div>
+    <div id="site-canvas">
+
+        <nav ng-controller="navController">
+            <div class="navbar" id="Div1">
+                <div class="container-fluid">
+
+                    <div class="row">
+
+                        <div class="navbar-assets">
+                            <h1 class="navbar-heading"><a data-transition="ease" id="menuton"><i class="icomoon icon-more-options"></i>Mi perfil</a></h1>
+                            <ul class="navbar-tools">
+                                <li class="contribute">
+                                    <a href="">
+                                        <i class="icomoon icon-edit"></i>
+                                    </a>
+                                </li>
+                                <li class="notifications">
+                                    <a href="">
+                                        <i class="icomoon icon-antena"></i>
+                                    </a>
+                                </li>
+                                <li class="chat">
+                                    <a href="">
+                                        <i class="icomoon icon-chat"></i>
+                                    </a>
+                                </li>
+                                <li class="profile active">
+                                    <a href="" ng-href="#/Perfil/">
+                                        <i class="icomoon icon-emoticon-smile"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+
+        <article>
+            <section class="component profile-dashboard">
+                <div>
+                    <figure>
+                        <img src="assets/images/img-profile-spaceship-dashboard-top.png" alt="" />
+                    </figure>
+                </div>
+                <div>
+                    <div class="user-avatar">
+                        <figure>
+                            <img src="assets/images/img-avatar-dummy-01.png" alt="" class="img-responsive" />
+                            <figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption>
+                        </figure>
+                        <button type="button" id="editProfile">
+                            <span class="icomoon icon-edit"></span>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <div class="profile-data">
+                        <h4 class="user-name" ng-bind="model.alias"></h4>
+                        <!-- <h4 class="user-name">leonardo garza r.</h4> -->
+                        <p class="user-points">
+                            <span ng-bind="model.stars"></span>
+                            <span class="icomoon icon-star"></span>
+                        </p>
+                    </div>
+                    <div class="profile-settings">
+                        <button class="btn btn-icon-aside left" ng-click="edit();">
+                            <div class="btn-icon">
+                                <span class="icomoon icon-settings"></span>
+                            </div>
+                            <span for="">Editar perfil</span>
+                        </button>
+
+                        <button class="btn btn-icon-aside right">
+                            <div class="btn-icon">
+                                <span class="icomoon icon-lock"></span>
+                            </div>
+                            <span for="">Privacidad</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <section class="component profile-options">
+                <div class="part"><div class="fl-left"><i class="icomoon icon-arrow-bold-left"></i> <i class="icomoon icon-badge"></i></div>Mis Insignias<i></i></div>
+				<div class="part part2 part3">
+				
+
+	<div><img src="assets/images/img-badges-blocked.png"/>Casco Espacial</div>
+	<div><img src="assets/images/img-badges-blocked.png"/>ID de Aventura</div>
+	<div><img src="assets/images/img-badges-blocked.png"/>Corazón Digital</div>
+	<hr/>
+	<div><img src="assets/images/img-badges-blocked.png"/>Primer Foro</div>
+	<div><img src="assets/images/img-badges-blocked.png"/>Turbina C0N0-CT</div>
+	<div><img src="assets/images/img-badges-blocked.png"/>Reloj Espacial</div>
+	<hr/>
+	<div><img src="assets/images/img-badges-blocked.png"/>Rayo Láser</div>
+	<div><img src="assets/images/img-badges-blocked.png"/>Binoculares</div>
+	<div><img src="assets/images/img-badges-blocked.png"/>Sueño Espacial</div>
+	<hr/>
+	<div><img src="assets/images/img-badges-blocked.png"/>Primer Despegue</div>
+	<div><img src="assets/images/img-badges-blocked.png"/>Motor SVEÑA</div>
+	<div><img src="assets/images/img-badges-blocked.png"/>Satélite Amistad</div>
+	<hr/>
+	
+				
+				</div>
+				<div class="paginate">
+<a id="prev" href="#">
+<i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
+<a id="next" href="#">
+<i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
+<div class="centered"><span id="index" class="txt-bigger">1</span><span>/</span><span id="total" class="white txt-bigger">3</span></div>
+</div>
+            </section>
+        </article>
+
+        <footer>
+            <ul class="block-list">
+                <li><a href="" class="btn-link">Preguntas Frecuentes</a></li>
+                <li><a href="" class="btn-link">Ayuda y Soporte</a></li>
+            </ul>
+            <a class="btn-back-to-top" ng-click="scrollToTop();">
+                <span class="icomoon icon-double-arrow-up"></span>
+                <span>Subir</span>
+            </a>
+        </footer>
+    </div>
+</div>

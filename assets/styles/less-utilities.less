@@ -83,6 +83,9 @@
 .clr-blueGray(@prop, @alpha) {
 	@{prop}: rgba(142, 170, 179, @alpha);
 }
+.clr-blueDark(@prop, @alpha) {
+	@{prop}: rgba(18, 27, 28, @alpha);
+}
 
 /* Custom Functions */
 .border-radius(@radius) {
@@ -119,6 +122,11 @@
   -webkit-box-shadow: none;
      -moz-box-shadow: none;
           box-shadow: none;
+}
+.box-shadow-custom(@x, @y, @blur, @spread, @color) {
+	-webkit-box-shadow: @arguments; 
+	-moz-box-shadow: @arguments; 
+	box-shadow: @arguments;
 }
 .box-shadow-inset-custom(@x, @y, @blur, @spread, @color) {
 	-webkit-box-shadow:inset @arguments; 
@@ -190,6 +198,7 @@
 	background: radial-gradient(ellipse at center, #1f2733 0%, #14181f 100%);
 
 }
+
 .gradient-custom(@img-name, @top-color, @bottom-color) {
 	background-color: @bottom-color; /* Old browsers */
 	background-image: url('@{url-images}/@{img-name}');

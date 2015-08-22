@@ -25,6 +25,11 @@
         	$scope.organization = [];
         	$scope.users = [];
 
+            $rootScope.pageName = "Mi perfil"
+            $rootScope.navbarBlue = false;
+            $rootScope.showToolbar = true;
+            $rootScope.showFooter = true;
+
         	$scope.account = {
         		AccountId: -1,
         		UserName: '',

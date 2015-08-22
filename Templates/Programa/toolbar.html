@@ -1,0 +1,32 @@
+<div id="navBar" class="navbar navbar-app navbar-absolute-top" ng-class="{'navbar-blue': navbarBlue, 'navbar-orange': navbarOrange, 'show': showToolbar }">
+  <div class="navbar-brand navbar-brand-center navbar-assets" ui-yield-to="title">
+      <div class="btn-group pull-left">
+        <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle" ng-click="sideToggle()">
+          <h1 class="navbar-heading"><a id="menuton"><i class="icomoon icon-more-options"></i> <span>{{pageName}}</span></a></h1>
+          <!--<i class="fa fa-bars"></i> Menu-->
+        </div>
+      </div>
+      <ul class="navbar-tools">
+          <li class="contribute hidden" ng-class="toolbarOptionActive('/Community')">
+            <a ng-click="navigateTo('Community', 'Comunidad', 'null', 'navbarblue')">
+              <i class="icomoon icon-community"></i>
+            </a>
+          </li>
+          <li class="notifications" ng-class="toolbarOptionActive('/Alerts')">          <!-- sending name of view to validate if this is the current view -->
+            <a ng-click="navigateTo('Alerts', 'Notificaciones', 'null', 'navbarorange')">
+              <i class="icomoon icon-broadcast"></i>
+            </a>
+          </li>
+          <li class="chat" ng-class="toolbarOptionActive('/Chat')">
+            <a ng-click="navigateTo('/Chat', 'Cabina de soporte', 'null', 'navbarorange')">
+              <i class="icomoon icon-headset"></i>
+            </a>
+          </li>
+          <li class="profile" ng-class="toolbarOptionActive('/Profile')">
+            <a ng-click="navigateTo('Profile', 'Mi perfil', 'null', 'navbarblue')">
+              <i class="icomoon icon-profile"></i>
+            </a>
+          </li>
+        </ul>
+  </div>
+</div>

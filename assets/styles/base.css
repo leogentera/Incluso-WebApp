@@ -40,6 +40,12 @@ body {
   width: 100%;
   height: inherit;
   font-size: 4vw;
+  background-color: #000;
+}
+body.modal-open {
+  overflow: hidden;
+  position: fixed;
+  x-index: 1;
 }
 /****************************************************************************
      $menu 
@@ -50,6 +56,7 @@ body {
   position: relative;
   overflow: hidden;
   width: 100vw;
+  min-height: 62vh;
   background-color: #040203;
 }
 #site-canvas {
@@ -72,20 +79,41 @@ body {
   left: 0px;
 }
 #site-menu {
-  -webkit-transition: all 300ms ease;
-  -moz-transition: all 300ms ease;
-  -o-transition: all 300ms ease;
-  transition: all 300ms ease;
-  width: 80%;
+  /*-webkit-transition: all 300ms ease;
+    -moz-transition: all 300ms ease;
+    -o-transition: all 300ms ease;
+    transition: all 300ms ease;*/
+  width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
-  left: -80%;
+  /*left: -80%;*/
   background-color: #040203;
   padding: 0px;
   background-image: url('../images/bg-menu.jpg');
   background-repeat: no-repeat;
   background-size: 100% auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sidebar-left {
+  display: block;
+  width: 85vw;
+  pointer-events: all;
+}
+.incluso-app .sidebar-left .navbar-assets {
+  width: auto;
+}
+.sidebar-left-in .app {
+  height: auto;
+  /*transform: translate(85vw, 0px);
+    -webkit-transform: translate(85vw, 0px);
+    -moz-transform: translate(85vw, 0px);*/
+  transform: translate3d(85vw, 0, 0);
+  -ms-transform: translate3d(85vw, 0, 0);
+  -webkit-transform: translate3d(85vw, 0, 0);
+  -o-transform: translate3d(85vw, 0, 0);
+  -moz-transform: translate3d(85vw, 0, 0);
 }
 .ease {
   -webkit-transition: 300ms ease all;
@@ -103,9 +131,30 @@ body {
   font-family: Play, Sans-serif, Arial;
   /***************************************************************************/
   /****************************************************************************
+     $container-fluid
+     Description: CSS overrides for bootstrap's container-fluid class
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $row
+     Description: CSS overrides for bootstrap's row class
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $col
+     Description: CSS overrides for bootstrap's column series of classes
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $anchor-top
+     Description: CSS styles to represent a hidden anchor used to scroll to top
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
      $nav-tabs
      Description: CSS rules for menu.
     ****************************************************************************/
+  /***************************************************************************/
   /****************************************************************************
      $btn
      Description: CSS override to bootstrap's btn class.
@@ -140,6 +189,11 @@ body {
   /****************************************************************************
      $input-group 
      Description: CSS overrides to bootstrap's input-group class.
+    ****************************************************************************/
+  /***************************************************************************/
+  /****************************************************************************
+     $form-group
+     Description: CSS overrides to bootstrap's form-group class.
     ****************************************************************************/
   /***************************************************************************/
   /****************************************************************************
@@ -198,8 +252,8 @@ body {
     ****************************************************************************/
   /***************************************************************************/
   /****************************************************************************
-     16. $spinner
-     Description: CSS class to positionante, show and hide the preloader image
+     16. $app-preloader
+     Description: CSS class to represent a backdrop layer and an animation
     ****************************************************************************/
   /***************************************************************************/
   /****************************************************************************
@@ -220,6 +274,73 @@ body {
 .incluso-app ol {
   list-style: outside none decimal-leading-zero;
   padding-left: 7vw;
+}
+.incluso-app .container-fluid {
+  padding-left: 3vw;
+  padding-right: 3vw;
+}
+.incluso-app .row {
+  margin-left: -3vw;
+  margin-right: -3vw;
+}
+.incluso-app .col-xs-1,
+.incluso-app .col-sm-1,
+.incluso-app .col-md-1,
+.incluso-app .col-lg-1,
+.incluso-app .col-xs-2,
+.incluso-app .col-sm-2,
+.incluso-app .col-md-2,
+.incluso-app .col-lg-2,
+.incluso-app .col-xs-3,
+.incluso-app .col-sm-3,
+.incluso-app .col-md-3,
+.incluso-app .col-lg-3,
+.incluso-app .col-xs-4,
+.incluso-app .col-sm-4,
+.incluso-app .col-md-4,
+.incluso-app .col-lg-4,
+.incluso-app .col-xs-5,
+.incluso-app .col-sm-5,
+.incluso-app .col-md-5,
+.incluso-app .col-lg-5,
+.incluso-app .col-xs-6,
+.incluso-app .col-sm-6,
+.incluso-app .col-md-6,
+.incluso-app .col-lg-6,
+.incluso-app .col-xs-7,
+.incluso-app .col-sm-7,
+.incluso-app .col-md-7,
+.incluso-app .col-lg-7,
+.incluso-app .col-xs-8,
+.incluso-app .col-sm-8,
+.incluso-app .col-md-8,
+.incluso-app .col-lg-8,
+.incluso-app .col-xs-9,
+.incluso-app .col-sm-9,
+.incluso-app .col-md-9,
+.incluso-app .col-lg-9,
+.incluso-app .col-xs-10,
+.incluso-app .col-sm-10,
+.incluso-app .col-md-10,
+.incluso-app .col-lg-10,
+.incluso-app .col-xs-11,
+.incluso-app .col-sm-11,
+.incluso-app .col-md-11,
+.incluso-app .col-lg-11,
+.incluso-app .col-xs-12,
+.incluso-app .col-sm-12,
+.incluso-app .col-md-12,
+.incluso-app .col-lg-12 {
+  padding-left: 3vw;
+  padding-right: 3vw;
+}
+.incluso-app .anchor-top {
+  display: block;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  padding: 0;
+  margin: 0;
 }
 .incluso-app .nav-tabs {
   border: 0;
@@ -247,22 +368,31 @@ body {
   display: block;
   margin-right: 6vw;
   position: relative;
-  padding: 3vw 0;
+  padding: 1vw 0;
 }
 .incluso-app #site-menu .nav > li > i {
-  padding: 2vw 1vw;
+  padding: 3vw 1vw;
 }
 .incluso-app #site-menu .nav > li > a {
   color: white;
   display: block;
   font-size: 5vw;
-  padding: 1vw 3vw;
+  padding: 1.5vh 3vw;
   position: relative;
-  width: 90%;
+  width: 100%;
 }
 .incluso-app #site-menu .nav > li > a:focus,
 .incluso-app #site-menu .nav > li > a:hover {
   background-color: rgba(255, 255, 255, 0.28);
+}
+.incluso-app #site-menu .nav > li > a > .icomoon {
+  margin-right: 1vw;
+}
+.incluso-app #site-menu .nav > li > a > .glyphicon {
+  margin-right: 1vw;
+}
+.incluso-app #site-menu .nav > li.separate {
+  height: 9vh;
 }
 .incluso-app #site-menu .nav > li a.menu-blue {
   color: #39a6dd;
@@ -278,16 +408,20 @@ body {
   display: none;
   padding: 6vw 0 6vw 6vw;
 }
+.incluso-app #site-menu .nav > li .submenu li {
+  margin: 1vh 0px;
+}
 .incluso-app #site-menu .nav > li .submenu li:first-child {
   color: #39a6dd;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 .incluso-app #site-menu .nav > li .submenu a {
   color: white;
+  line-height: 20px;
 }
 .incluso-app #site-menu .nav > li .submenu ul {
   list-style: none;
-  padding: 4vw 0;
+  padding: 3vw 0;
 }
 .incluso-app .btn {
   border: none;
@@ -367,13 +501,19 @@ body {
 .incluso-app a.btn-transparent:hover {
   text-decoration: underline;
 }
+.incluso-app .btn-uppercase {
+  text-transform: uppercase;
+}
 .incluso-app .btn-link {
   display: block;
-  padding: 9px 3px;
+  /*padding: 9px 3px;*/
+  padding: 1.8vw 0px;
   color: #ffffff;
-  font-size: 21px;
+  /*font-size: 21px;*/
+  font-size: 4.4vw;
   font-weight: 600;
-  letter-spacing: 1px;
+  /*letter-spacing: 1px;*/
+  letter-spacing: 0.06em;
   text-align: center;
 }
 .incluso-app .btn-link:hover,
@@ -389,6 +529,23 @@ body {
   background-color: transparent;
   color: #08b290;
   text-align: left;
+}
+.incluso-app .btn-circle {
+  width: 6vw;
+  height: 6vw;
+  padding: 0;
+  margin: 0;
+  background-color: #f5461f;
+  border: 1pt solid #ffffff;
+  -webkit-border-radius: 99px;
+  -moz-border-radius: 99px;
+  border-radius: 99px;
+  line-height: 1em;
+  text-align: center;
+}
+.incluso-app .btn-circle .icomoon {
+  /*line-height: 6vw;*/
+  text-align: center;
 }
 .incluso-app .btn-lg,
 .incluso-app .btn-group-lg > .btn {
@@ -414,89 +571,81 @@ body {
   display: inline-block;
   position: relative;
   height: 2em;
-  /*42px;*/
-  margin-top: 18%;
-  /*41px;*/
+  margin: 0 auto;
   padding: 2px 12px;
+  /* + */
   background-color: #2a3333;
   -webkit-border-radius: 32px;
   -moz-border-radius: 32px;
   border-radius: 32px;
+  /* + */
+}
+.incluso-app .btn-icon-aside .btn-icon {
+  display: block;
+  position: absolute;
+  top: -0.3em;
+  width: 11.6vw;
+  height: 11.6vw;
+  background-color: #bcd431;
+  border: 0.42em solid #2a3333;
+  -webkit-border-radius: 32px;
+  -moz-border-radius: 32px;
+  border-radius: 32px;
+  /* + */
+  text-align: center;
+}
+.incluso-app .btn-icon-aside .icomoon {
+  color: #1c374a;
+  font-size: 5vw;
+  line-height: 9.6vw;
+}
+.incluso-app .btn-icon-aside > span {
+  color: #ffffff;
+  font-size: 3.3vw;
+  font-weight: 700;
+  line-height: 1;
 }
 .incluso-app .btn-icon-aside.left {
-  padding-right: 15px;
+  float: left;
+  padding: 0 4vw 0 12.9vw;
+  margin-left: 9vw;
   text-align: left;
 }
 .incluso-app .btn-icon-aside.left > span {
-  margin-left: 30px;
-  color: #ffffff;
-  font-size: 1em;
-  /*20px;*/
-  font-weight: 700;
-  line-height: 1;
   text-align: right;
 }
 .incluso-app .btn-icon-aside.left .btn-icon {
-  display: block;
-  position: absolute;
   left: 0;
-  top: -0.3em;
-  width: 36px;
-  height: 36px;
-  background-color: #bcd431;
-  border: 3px solid #2a3333;
-  -webkit-border-radius: 32px;
-  -moz-border-radius: 32px;
-  border-radius: 32px;
-  text-align: center;
-}
-.incluso-app .btn-icon-aside.left .icomoon {
-  color: #1c374a;
-  font-size: 1.2em;
-  line-height: 32px;
 }
 .incluso-app .btn-icon-aside.right {
-  padding-left: 15px;
-  text-align: right;
+  float: right;
+  padding: 0 12.9vw 0 4vw;
+  margin-right: 9vw;
+  text-align: left;
 }
 .incluso-app .btn-icon-aside.right > span {
-  margin-right: 30px;
-  color: #ffffff;
-  font-size: 1em;
-  /*20px;*/
-  font-weight: 700;
-  line-height: 1;
   text-align: left;
 }
 .incluso-app .btn-icon-aside.right .btn-icon {
-  display: block;
-  position: absolute;
   right: 0;
-  top: -0.3em;
-  width: 36px;
-  height: 36px;
-  background-color: #bcd431;
-  border: 3px solid #2a3333;
-  -webkit-border-radius: 32px;
-  -moz-border-radius: 32px;
-  border-radius: 32px;
-  text-align: center;
 }
-.incluso-app .btn-icon-aside.right .icomoon {
-  color: #1c374a;
-  font-size: 22px;
-  font-size: 1.2em;
-  line-height: 32px;
+.incluso-app .btn-icon-aside.active .btn-icon {
+  background-color: #f5461f;
+}
+.incluso-app .btn-icon-aside.active .btn-icon .icomoon {
+  color: #ffffff;
 }
 .incluso-app .btn-back-to-top {
   color: #bcd431;
-  font-size: 16px;
+  /*font-size: 16px;*/
+  font-size: 3.3vw;
   font-weight: bold;
   text-align: center;
 }
 .incluso-app .btn-back-to-top span {
   display: block;
-  padding: 6px 0 0;
+  /*padding: 6px 0 0;*/
+  padding: 1vw 0px 0px;
   width: auto;
   text-transform: uppercase;
 }
@@ -518,6 +667,7 @@ body {
   width: 75%;
   height: 55px;
   height: auto;
+  margin-top: 0;
 }
 .incluso-app .button-group .btn:first-child {
   width: 20%;
@@ -606,6 +756,10 @@ body {
   color: #8eaab3 !important;
   font-weight: 100;
 }
+.incluso-app .form-control.theme-form.select-wrapper select + .placeholder-fallback {
+  color: #8eaab3 !important;
+  font-weight: 100;
+}
 .incluso-app .form-control.theme-default {
   background-color: transparent;
   border-left: none;
@@ -646,6 +800,16 @@ body {
 }
 .incluso-app .custom-placeholder-wrapper {
   position: relative;
+  /*.form-control[data-show-placeholder="false"] + .custom-placeholder {
+            display: none;
+        }
+        .ng-dirty[data-show-placeholder="false"] + .custom-placeholder {
+            display: none; 
+        }        
+        .form-control[data-show-placeholder="true"] + .custom-placeholder {
+            display: block;
+        }*/
+  /* reset model */
 }
 .incluso-app .custom-placeholder-wrapper .custom-placeholder {
   position: absolute;
@@ -668,10 +832,12 @@ body {
 .incluso-app .custom-placeholder-wrapper .form-control.ng-dirty + .custom-placeholder {
   display: none;
 }
-.incluso-app .custom-placeholder-wrapper .form-control.ng-pristine + .custom-placeholder {
-  display: block;
-}
 .incluso-app .custom-placeholder-wrapper .theme-default.ng-pristine + .custom-placeholder {
+  color: #ffffff;
+  font-weight: 100;
+}
+.incluso-app .custom-placeholder-wrapper .form-control.ng-dirty[data-show-placeholder="true"] + .custom-placeholder {
+  display: block;
   color: #ffffff;
   font-weight: 100;
 }
@@ -754,8 +920,27 @@ body {
 }
 .incluso-app .input-group .input-group-control {
   display: table-cell;
+  position: relative;
   padding: 0;
   border: none;
+  vertical-align: middle;
+}
+.incluso-app .input-group .input-group-control:before {
+  display: block;
+  position: absolute;
+  z-index: 30;
+  right: 3vw;
+  top: 50%;
+  width: 3vw;
+  height: 3vw;
+  padding: 0;
+  margin: 0 0 0 0;
+  width: 0;
+  height: 0;
+  border-left: 1vw solid transparent;
+  border-right: 1vw solid transparent;
+  border-top: 1vw solid #ffffff;
+  content: "";
 }
 .incluso-app .input-group .form-control:hover,
 .incluso-app .input-group .form-control:focus,
@@ -815,6 +1000,25 @@ body {
   border: none;
   color: #ffffff;
 }
+.incluso-app .form-group {
+  width: 100%;
+  padding: 0;
+  /* by theme */
+}
+.incluso-app .form-group .form-group-control {
+  display: block;
+  padding: 0;
+  border: none;
+}
+.incluso-app .form-group.theme-form .form-group-control > .form-control {
+  border-top-width: 0 !important;
+  color: #8eaab3;
+}
+.incluso-app .form-group.theme-form .form-group-control .custom-placeholder {
+  background-color: transparent;
+  border: none;
+  color: #8eaab3;
+}
 .incluso-app .alert {
   display: block;
   height: auto;
@@ -849,8 +1053,7 @@ body {
   top: 16px;
   top: 3.3vw;
   color: #ffffff;
-  font-size: 28px;
-  font-size: 6vw;
+  font-size: 5vw;
 }
 .incluso-app .alert .icomoon + p {
   margin-top: 0;
@@ -883,11 +1086,29 @@ body {
 .incluso-app .alert ul li:first-letter {
   text-transform: capitalize;
 }
+.incluso-app .modal .modal-header {
+  position: relative;
+  padding: 3vw;
+}
+.incluso-app .modal .modal-body {
+  padding: 3vw;
+}
+.incluso-app .modal .modal-footer {
+  padding: 3vw;
+}
+.incluso-app .modal .modal-backdrop {
+  position: fixed;
+}
+.incluso-app .modal.ng-isolate-scope {
+  background-color: rgba(18, 27, 28, 0.966);
+  position: fixed;
+  z-index: 2050 !important;
+}
 .incluso-app .modal-extend-default .modal-title {
   font-size: 6vw;
 }
 .incluso-app .modal-extend-default .modal-body {
-  max-height: 50vh;
+  height: 100vw;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
@@ -895,14 +1116,191 @@ body {
 .incluso-app .modal-extend-default .modal-body ol li {
   font-size: 4.2vw;
 }
+.incluso-app .modal-theme-default {
+  background-color: rgba(18, 27, 28, 0.9);
+}
+.incluso-app .modal-theme-default .modal-dialog {
+  width: 90vw;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 3vh;
+}
+.incluso-app .modal-theme-default .modal-content {
+  height: auto;
+  margin: 0 auto;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  /*.clr-blueDark(background-color, 0.9);*/
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.3);
+  border-width: 1pt;
+  border-style: solid;
+}
+.incluso-app .modal-theme-default .modal-title {
+  padding: 3.6vw 0 0 0;
+  color: #bcd431;
+  font-family: Play, Sans-serif;
+  font-size: 6.3vw;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.incluso-app .modal-theme-default .modal-header {
+  border: none;
+}
+.incluso-app .modal-theme-default .modal-header .icon {
+  position: absolute;
+  right: -3.6vw;
+  top: -3.6vw;
+  padding: 0px;
+  margin: 0px;
+  width: 9vw;
+  height: 9vw;
+  line-height: 6vw;
+}
+.incluso-app .modal-theme-default .modal-header .icon .icomoon {
+  color: #ffffff;
+  font-size: 2.8vw;
+  text-align: center;
+}
+.incluso-app .modal-theme-default .modal-body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 60vh;
+  border: none;
+}
+.incluso-app .modal-theme-default .modal-body p,
+.incluso-app .modal-theme-default .modal-body ol li {
+  height: auto;
+  color: #ffffff;
+  font-size: 5vw;
+  text-align: justify;
+}
+.incluso-app .modal-theme-default .modal-footer {
+  border: none;
+  margin: 0;
+}
+.incluso-app .modal-theme-default .icon-close {
+  background-color: #f5461f;
+  border: 0.23em solid #ffffff;
+  -webkit-border-radius: 90px;
+  -moz-border-radius: 90px;
+  border-radius: 90px;
+}
+.incluso-app .user-help-modal .modal-content {
+  width: 90vw;
+  margin: 0px auto;
+  background: transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.incluso-app .user-help-modal .user-help {
+  margin: 0px auto;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border: 1px solid #55666B;
+}
+.incluso-app .user-help-modal .user-help img {
+  position: absolute;
+  top: 10vh;
+}
+.incluso-app .user-help-modal .user-help .modal-header {
+  border: 0px none;
+}
+.incluso-app .user-help-modal .user-help .icon {
+  position: absolute;
+  right: -3.5vw;
+  top: -3.5vh;
+  padding: 0px;
+  margin: 0px;
+  width: 8vw;
+  height: 8vw;
+  line-height: 6vw;
+}
+.incluso-app .user-help-modal .user-help .icon .icomoon {
+  color: #ffffff;
+  font-size: 3vw;
+  text-align: center;
+}
+.incluso-app .user-help-modal .user-help .modal-title {
+  position: relative;
+  color: #bcd431;
+  font-size: 6vw;
+  text-align: center;
+}
+.incluso-app .user-help-modal .user-help .modal-body {
+  padding: 5vh 4vw;
+  -webkit-overflow-scrolling: touch;
+}
+.incluso-app .user-help-modal .user-help .modal-body p,
+.incluso-app .user-help-modal .user-help .modal-body ol li {
+  color: #ffffff;
+  font-size: 4.2vw;
+}
+.incluso-app .user-help-modal .user-help .modal-body figure {
+  margin-top: 4vh;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.incluso-app .user-help-modal .user-help .modal-footer {
+  margin-bottom: 4vh;
+  border: 0px none;
+}
+.incluso-app .user-help-modal .user-help .icon-close {
+  background-color: #f5461f;
+  border: 3pt solid #ffffff;
+  -webkit-border-radius: 90px;
+  -moz-border-radius: 90px;
+  border-radius: 90px;
+}
+.incluso-app .user-help-modal .user-help.robot-lg {
+  margin-top: 50vw;
+}
 .incluso-app .navbar {
   position: relative;
+  height: 10vh;
   margin-bottom: 0;
   border-radius: 0px;
+  background-color: #EE4823;
+  border-color: rgba(0, 0, 0, 0.2);
+  /*#EE4823;*/
+  overflow: hidden;
 }
 .incluso-app .navbar .icomoon {
   font-size: 6vw;
-  line-height: 18vw;
+  line-height: 15vw;
+  vertical-align: top;
+}
+.incluso-app .navbar.etapa-uno {
+  background-color: #138BCB;
+  border-color: #138BCB;
+}
+.incluso-app .navbar-absolute-top {
+  display: none;
+}
+.incluso-app .navbar.navbar-orange {
+  background-color: #EE4823;
+  border-color: rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 700ms ease;
+  -moz-transition: all 700ms ease;
+  -o-transition: all 700ms ease;
+  transition: all 700ms ease;
+}
+.incluso-app .navbar.navbar-blue {
+  background-color: #158CCD;
+  border-color: rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 700ms ease;
+  -moz-transition: all 700ms ease;
+  -o-transition: all 700ms ease;
+  transition: all 700ms ease;
 }
 .incluso-app .step-dashboard .navbar {
   background-color: #158ccd;
@@ -928,23 +1326,29 @@ body {
   position: static;
   padding: 0;
   margin: 0 2vw;
-  height: 18vw;
-  width: auto;
+  height: 12vw;
+  width: 95vw;
+}
+.incluso-app .navbar-assets .sidebar-toggle {
+  padding: 0px 1vw;
+  text-align: left;
+  line-height: inherit;
 }
 .incluso-app .navbar-assets .navbar-heading {
   display: inline-block;
   overflow: hidden;
-  float: left;
+  /*float: left;*/
   margin: 0;
-  width: 47vw;
-  max-width: 60%;
+  width: 46vw;
+  max-width: 50vw;
   color: #ffffff;
   font-family: 'Play';
-  font-size: 6vw;
+  font-size: 4vw;
   font-weight: bold;
-  line-height: 18vw;
+  line-height: 14vw;
   text-overflow: ellipsis;
   white-space: nowrap;
+  text-transform: none;
 }
 .incluso-app .navbar-assets .navbar-heading a {
   color: #ffffff;
@@ -954,7 +1358,7 @@ body {
   float: right;
   margin: 0;
   width: 45vw;
-  max-width: 48%;
+  max-width: 48vw;
   list-style-type: none;
   padding: 0 9px 0 0;
 }
@@ -966,8 +1370,17 @@ body {
   width: 9vw;
   height: 9vw;
 }
+.incluso-app .navbar-tools li:hover .icomoon,
 .incluso-app .navbar-tools li.active .icomoon {
-  color: #bf2a09;
+  color: rgba(185, 85, 120, 0.6);
+  /*darken(@clr-orange, 15%);*/
+  -webkit-transition: all 700ms ease;
+  -moz-transition: all 700ms ease;
+  -o-transition: all 700ms ease;
+  transition: all 700ms ease;
+}
+.incluso-app .navbar-tools li.disabled {
+  pointer-events: none;
 }
 .incluso-app .navbar-tools a {
   color: white;
@@ -1001,6 +1414,11 @@ body {
   -moz-border-radius: 16px;
   border-radius: 16px;
 }
+.incluso-app .panel {
+  -webkit-border-radius: 1.5vw;
+  -moz-border-radius: 1.5vw;
+  border-radius: 1.5vw;
+}
 .incluso-app .panel > .panel-heading {
   padding: 5.5vw 2.6vw;
   -webkit-border-radius: 1.5vw 1.5vw 0 0;
@@ -1020,11 +1438,11 @@ body {
   margin: 0;
   font-size: inherit;
   font-weight: 700;
-  text-transform: capitalize;
+  text-transform: none;
 }
 .incluso-app .panel > .panel-body {
-  padding-left: 6vw;
-  padding-right: 6vw;
+  padding-left: 3vw;
+  padding-right: 3vw;
   padding-top: 6vw;
   padding-bottom: 6vw;
   -webkit-border-radius: 0 0 1.5vw 1.5vw;
@@ -1053,18 +1471,20 @@ body {
 .incluso-app .list-group.separate-items .list-group-item {
   padding: 0;
   margin: 12px 0 0 0;
-  -webkit-border-radius: 9px;
-  -moz-border-radius: 9px;
-  border-radius: 9px;
+  -webkit-border-radius: 1.5vw;
+  -moz-border-radius: 1.5vw;
+  border-radius: 1.5vw;
 }
 .incluso-app .list-group.separate-items .list-group-item a {
   display: block;
-  height: 77px;
+  /*height: 77px;*/
+  height: 16vw;
   padding: 0;
   margin: 0;
   font-size: 1.2em;
   font-weight: bold;
-  line-height: 77px;
+  /*line-height: 77px;*/
+  line-height: 16vw;
 }
 .incluso-app .list-group.separate-items .list-group-item .icomoon {
   font-weight: normal;
@@ -1119,7 +1539,6 @@ body {
   font-size: 1.1em;
   font-weight: 700;
   text-align: center;
-  text-transform: uppercase;
   letter-spacing: 1px;
 }
 .incluso-app .component p {
@@ -1177,18 +1596,35 @@ body {
 }
 .incluso-app .pages .page-number span {
   color: #08b290;
+  /*&:last-child {
+                    color: @clr-white;
+                }*/
 }
-.incluso-app .pages .page-number span:last-child {
+.incluso-app .pages .page-number p span:first-child.icomoon {
+  margin-right: 10vw;
+  font-size: 7vw;
+}
+.incluso-app .pages .page-number p span:last-child.icomoon {
+  margin-left: 10vw;
+  font-size: 7vw;
+}
+.incluso-app .pages .page-number .total-number {
   color: #ffffff;
+}
+.incluso-app .pages .page-number .disabled {
+  cursor: text;
+  opacity: .2;
+  -moz-opacity: 0.2;
 }
 .incluso-app .pages .btn {
   margin-bottom: 1.5vw;
+  text-transform: uppercase;
 }
 .incluso-app .footer {
+  display: none;
   background-image: url('../images/bg-footer-ship.gif');
   background-position: 0 99%;
   background-size: cover;
-  display: block;
   position: relative;
   padding: 20px 0 0;
   margin: 0;
@@ -1214,6 +1650,85 @@ body {
   left: 50%;
   bottom: 0;
   margin-left: -30px;
+}
+.incluso-app .footer.pages {
+  background-image: url('../images/img-footer-texture-lg.png');
+  background-color: #24292B;
+  box-shadow: unset;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.incluso-app .footer::before {
+  position: absolute;
+  width: 100vw;
+  height: 18vh;
+  content: " ";
+  background-image: url('../images/img-footer-texture-lg.png');
+  background-color: transparent;
+  box-shadow: unset;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.incluso-app .footer.db-bg {
+  background-image: url("../images/bg-footer-rocks.png");
+  background-position: 50% 0;
+  box-shadow: unset;
+}
+.incluso-app .app-preloader {
+  overflow: hidden;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(18, 27, 28, 0.9);
+  /* Spinner Circle Rotation */
+}
+.incluso-app .app-preloader img {
+  display: none;
+  position: relative;
+  top: 50%;
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0 auto;
+  margin-top: -16px;
+}
+.incluso-app .app-preloader .spinner {
+  clear: both;
+  position: relative;
+  top: 50%;
+  padding: 0;
+  margin: -3vw auto 0.1vw auto;
+  width: 32px;
+  height: 32px;
+}
+.incluso-app .app-preloader .spinner-circle {
+  border: 4px rgba(255, 255, 255, 0.25) solid;
+  border-top: 4px #ffffff solid;
+  border-radius: 50%;
+  -webkit-animation: rotateSpinner .6s infinite linear;
+  animation: rotateSpinner .6s infinite linear;
+}
+@-webkit-keyframes rotateSpinner {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@keyframes rotateSpinner {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
 .incluso-app .form label {
   cursor: pointer;
@@ -1505,6 +2020,29 @@ body {
 .incluso-app .form .cs-skin-rotate .cs-selected span {
   opacity: 0.8;
 }
+/***********************************************************************
+         $acerca-programa
+         Description: CSS to represent acerca-programa content page
+        ************************************************************************/
+.acerca-programa a {
+  color: #ffffff;
+}
+.acerca-programa .component h3 {
+  text-align: left;
+}
+.acerca-programa .component p {
+  margin: 0px 0px 10px;
+  text-align: left;
+}
+.acerca-programa .component figure img {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+.acerca-programa .component button {
+  margin: 15px 0px;
+}
+/******************************************************************************/
 @keyframes flicker {
   from {
     opacity: 0.5;

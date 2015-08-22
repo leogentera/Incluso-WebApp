@@ -34,6 +34,12 @@ body {
     width: 100%;
     height: inherit;
     font-size: 4vw;
+    background-color: #000;
+    &.modal-open {
+        overflow: hidden;
+        position:fixed;
+        x-index: 1;
+    }
 }
     /****************************************************************************
      $menu 
@@ -45,6 +51,7 @@ body {
     position: relative;
     overflow: hidden;
     width: 100vw;
+    min-height: 62vh;
     background-color: #040203;
 }
 #site-canvas {
@@ -70,20 +77,42 @@ body {
     left: 0px;
 }
 #site-menu {
-    -webkit-transition: all 300ms ease;
+    /*-webkit-transition: all 300ms ease;
     -moz-transition: all 300ms ease;
     -o-transition: all 300ms ease;
-    transition: all 300ms ease;
-    width: 80%;
+    transition: all 300ms ease;*/
+    width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
-    left: -80%;
+    /*left: -80%;*/
     background-color: #040203;
     padding: 0px;
     background-image: url('../images/bg-menu.jpg');
     background-repeat: no-repeat;
     background-size: 100% auto;
+    overflow-y: auto; 
+    overflow-x: hidden;
+}
+
+.sidebar-left {
+    display: block;
+    width: 85vw;
+    pointer-events: all;    
+}
+
+.incluso-app .sidebar-left .navbar-assets {
+    width: auto;
+}
+.transition (@value1,@value2:X,...) { @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`; -webkit-transition: @value; -moz-transition: @value; -ms-transition: @value; -o-transition: @value; transition: @value; }
+.transform (@value1,@value2:X,...) { @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`; transform:@value; -ms-transform:@value; -webkit-transform:@value; -o-transform:@value; -moz-transform:@value; }
+@menu-width: 85vw;
+.sidebar-left-in .app {
+    height: auto;
+    /*transform: translate(85vw, 0px);
+    -webkit-transform: translate(85vw, 0px);
+    -moz-transform: translate(85vw, 0px);*/
+    .transform(translate3d(@menu-width, 0, 0)); 
 }
 
 .ease { 
@@ -121,12 +150,69 @@ body {
 
 
     /****************************************************************************
+     $container-fluid
+     Description: CSS overrides for bootstrap's container-fluid class
+    ****************************************************************************/
+    .container-fluid {
+        padding-left: 3vw;
+        padding-right: 3vw;
+    }
+    /***************************************************************************/ 
+
+
+    /****************************************************************************
+     $row
+     Description: CSS overrides for bootstrap's row class
+    ****************************************************************************/
+    .row {
+        margin-left: -3vw;
+        margin-right: -3vw;
+    }
+    /***************************************************************************/    
+
+
+    /****************************************************************************
+     $col
+     Description: CSS overrides for bootstrap's column series of classes
+    ****************************************************************************/
+    .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, 
+    .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, 
+    .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, 
+    .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, 
+    .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, 
+    .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, 
+    .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, 
+    .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, 
+    .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, 
+    .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, 
+    .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, 
+    .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+        padding-left: 3vw;
+        padding-right: 3vw;
+    }
+    /***************************************************************************/     
+
+
+    /****************************************************************************
+     $anchor-top
+     Description: CSS styles to represent a hidden anchor used to scroll to top
+    ****************************************************************************/  
+    .anchor-top {
+        display:block;
+        visibility:hidden;
+        width:0;
+        height:0;
+        padding:0;
+        margin:0;
+    }
+    /***************************************************************************/ 
+
+
+    /****************************************************************************
      $nav-tabs
      Description: CSS rules for menu.
     ****************************************************************************/     
-    .nav-tabs{
-        border: 0;
-    }
+    .nav-tabs{border: 0;}
     .nav-tabs.nav-justified{
         display: flex;
         justify-content:space-between;
@@ -134,7 +220,8 @@ body {
             display: inline-flex;
         }
     }
-    .nav-tabs.nav-justified > .active > a, .nav-tabs.nav-justified > .active > a:hover, 
+    .nav-tabs.nav-justified > .active > a, 
+    .nav-tabs.nav-justified > .active > a:hover, 
     .nav-tabs.nav-justified > .active > a:focus,
     .nav-tabs > li > a, 
     .nav-tabs > li.active > a, 
@@ -148,17 +235,17 @@ body {
         display: block;
         margin-right: 6vw;
         position: relative;
-        padding: 3vw 0;
+        padding: 1vw 0;
         & > i{
-            padding: 2vw 1vw;
+            padding: 3vw 1vw;
         }
         & > a{
             color: white;
             display: block;
             font-size: 5vw;
-            padding: 1vw 3vw;
+            padding: 1.5vh 3vw;
             position: relative;
-            width:90%;
+            width: 100%;
             &:focus, &:hover{
                 background-color: rgba(255, 255, 255, 0.28);
             }
@@ -168,6 +255,10 @@ body {
             & > .glyphicon {
                 margin-right: 1vw;
             } 
+        }
+
+        &.separate { 
+            height: 9vh;
         }
         a.menu-blue{
             color: @clr-bluemenu;
@@ -182,19 +273,26 @@ body {
             border-top: 2px solid rgba(255, 255, 255, 0.28);
             display: none;
             padding: 6vw 0 6vw 6vw;
+            li {
+                margin: 1vh 0px; 
+            }
             li:first-child{
                 color:  @clr-bluemenu;
-                text-transform: uppercase;
+                /*text-transform: uppercase;*/
             }
             a{
                 color: white;
+                line-height: 20px;
             }
             ul{
                 list-style: none;
-                padding:4vw 0;
+                padding:3vw 0;
             }
         }
     }
+    /***************************************************************************/ 
+    
+
     /****************************************************************************
      $btn
      Description: CSS override to bootstrap's btn class.
@@ -249,13 +347,17 @@ body {
         text-decoration: underline;
     }
 
+    .btn-uppercase {
+        text-transform: uppercase;
+    }
+
     .btn-link {
         display: block;
-        padding: 9px 3px;
+        /*padding: 9px 3px;*/ padding: 1.8vw 0px;
         color: @clr-white;
-        font-size: 21px;
+        /*font-size: 21px;*/  font-size: 4.4vw;
         font-weight: 600;
-        letter-spacing: 1px;
+        /*letter-spacing: 1px;*/  letter-spacing: 0.06em;
         text-align: center;
     }
     .btn-link:hover, .btn-link:focus {
@@ -269,6 +371,23 @@ body {
         color: @clr-blueTurquoise;
         text-align: left;
     }
+    .btn-circle {
+        width: 6vw;
+        height: 6vw;
+        padding: 0;
+        margin: 0;
+        background-color: @clr-orange;
+        border: 1pt solid @clr-white;
+        .border-radius-all(99px);
+        line-height: 1em;
+        text-align: center;
+
+        .icomoon {
+            /*line-height: 6vw;*/
+            text-align: center;
+        }
+    }
+
     .btn-lg, .btn-group-lg > .btn {
         padding-top: 4vw;
         padding-bottom: 4vw;
@@ -276,8 +395,6 @@ body {
         letter-spacing: 0.1em;
         line-height: 5vw;
     }
-
-
     .btn-xl {
         height:auto;
         padding:6vw 0;
@@ -373,12 +490,12 @@ body {
     ****************************************************************************/
     .btn-back-to-top {
         color: @clr-green;
-        font-size: 16px;
+        /*font-size: 16px;*/  font-size: 3.3vw;
         font-weight: bold;
         text-align: center;
         span {
             display: block;
-            padding: 6px 0 0;
+            /*padding: 6px 0 0;*/ padding: 1vw 0px 0px;
             width: auto;
             text-transform: uppercase;
         }
@@ -481,6 +598,8 @@ body {
             font-size: 12px;
         }
 
+            
+
         &.theme-form {
             background-color: transparent;
             border-left: none;
@@ -501,6 +620,12 @@ body {
             &::-moz-placeholder {  /* Firefox 19+ */   
                 color:@clr-blueGray !important;
                 font-weight:100;
+            }
+            &.select-wrapper {
+                select + .placeholder-fallback {
+                    color:@clr-blueGray !important;
+                    font-weight:100;                
+                }
             }
         }
         &.theme-default {
@@ -691,8 +816,24 @@ body {
         } 
         .input-group-control {
             display: table-cell;
+            position: relative;
             padding: 0;
             border: none;
+            vertical-align: middle;
+
+            &:before {
+                display: block;
+                position: absolute;
+                z-index: 30;
+                right: 3vw;
+                top: 50%;
+                width:3vw;
+                height: 3vw;
+                padding: 0;
+                margin: 0 0 0 0;
+                .css-arrow-down(1vw, @clr-white);
+                content:"";
+            }
         }
         .form-control:hover, 
         .form-control:focus,
@@ -761,9 +902,40 @@ body {
                 color:@clr-white;
             }             
         }
-
     }
     /***************************************************************************/
+
+
+
+    /****************************************************************************
+     $form-group
+     Description: CSS overrides to bootstrap's form-group class.
+    ****************************************************************************/
+    .form-group {
+        width: 100%;
+        padding: 0;
+
+        .form-group-control {
+            display: block;
+            padding: 0;
+            border: none;
+        }  
+
+        /* by theme */
+        &.theme-form {
+            .form-group-control > .form-control {
+                border-top-width: 0 !important;
+                .clr-blueGray(color, 1);
+            }
+            .form-group-control .custom-placeholder {
+                background-color: transparent;
+                border: none;
+                .clr-blueGray(color, 1);
+            }             
+        }        
+    }
+    /***************************************************************************/
+
 
 
     /****************************************************************************
@@ -800,7 +972,7 @@ body {
             left:16px; left: 3.3vw;
             top:16px; top: 3.3vw;
             color:@clr-white;
-            font-size:28px; font-size: 6vw;
+            font-size: 5vw;
         }
         .icomoon + p {
             margin-top: 0;
@@ -830,7 +1002,7 @@ body {
                     text-transform: capitalize;
                 }
             }
-        }        
+        }
     }
     /***************************************************************************/     
 
@@ -841,19 +1013,176 @@ body {
     ****************************************************************************/
     .modal {
         .modal-dialog {}
-        .modal-header {}
-        .modal-body {}
-        .modal-footer {}
+        .modal-content {}
+        .modal-header {
+            position: relative;
+            padding: 3vw;
+        }
+        .modal-body {
+            padding: 3vw;
+        }
+        .modal-footer {
+            padding: 3vw;
+        }
+        .modal-backdrop {
+            position:fixed;
+        }
+        &.ng-isolate-scope {
+            background-color: rgba(18, 27, 28, 0.966);
+            position: fixed;
+            z-index: 2050 !important;
+        }
     }
     .modal-extend-default {
         .modal-title {font-size: 6vw;}
         .modal-body {
-            max-height: 50vh;
+            height: 100vw;
             overflow-y: scroll;
             -webkit-overflow-scrolling: touch;
 
             p, ol li {
                 font-size: 4.2vw;
+            }
+        }
+    }
+    .modal-theme-default {
+        .clr-blueDark(background-color, 0.9);
+
+        .modal-dialog {
+            width: 90vw;
+            height: auto;
+            margin: 0 auto;
+            margin-top:3vh;
+        }
+        .modal-content {
+            height: auto;
+            margin: 0 auto;
+            .box-shadow-reset();
+            /*.clr-blueDark(background-color, 0.9);*/
+            background-color: transparent;
+            .clr-white(border-color, 0.3);
+            border-width:1pt;
+            border-style: solid;
+        }
+        .modal-title {
+            padding: 3.6vw 0 0 0;
+            color:@clr-green;
+            font-family: Play, Sans-serif;
+            font-size: 6.3vw;
+            font-weight: 700;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;                 
+        }
+        .modal-header {
+            border:none;
+
+            .icon {
+                position: absolute;
+                right: -3.6vw;
+                top: -3.6vw;
+                padding: 0px;
+                margin: 0px;
+                width: 9vw;
+                height: 9vw;
+                line-height: 6vw;
+                .icomoon {
+                    color: @clr-white;
+                    font-size: 2.8vw;
+                    text-align: center;
+                }
+            }             
+        }
+        .modal-body {
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            height: 60vh;
+            border:none;
+
+            p, ol li {
+                height: auto;
+                color: @clr-white;
+                font-size: 5vw; 
+                text-align: justify;
+            }                
+        }
+        .modal-footer {
+            border:none;
+            margin: 0;
+        }
+        .icon-close {
+            background-color: @clr-orange;
+            border: 0.23em solid @clr-white;
+            .border-radius-circle();
+        }
+    }
+    .user-help-modal {
+        .modal-content {
+            width: 90vw;
+            margin: 0px auto;
+            background: transparent;;
+            .box-shadow-reset();
+        }
+        .user-help {
+            
+            margin: 0px auto;
+            .box-shadow-reset();
+            .border-radius(4px);
+            border: 1px solid #55666B;
+            img {
+                position: absolute;
+                top: 10vh;
+            }
+            .modal-header {
+                border: 0px none;
+            }
+                .icon {
+                    position: absolute;
+                    right: -3.5vw;
+                    top: -3.5vh;
+                    padding: 0px;
+                    margin: 0px;
+                    width: 8vw;
+                    height: 8vw;
+                    line-height: 6vw;
+                    .icomoon {
+                        color: @clr-white;
+                        font-size: 3vw;
+                        text-align: center;
+                    }
+                
+            }
+            .modal-title {
+                position: relative;
+                color: @clr-green;
+                font-size: 6vw;
+                text-align: center;
+            }
+            .modal-body {
+                padding: 5vh 4vw;
+                -webkit-overflow-scrolling: touch;
+
+                p, ol li {
+                    color: @clr-white;
+                    font-size: 4.2vw;
+                }
+                figure {
+                    margin-top: 4vh;
+                    .border-radius(4px);
+                }
+            }
+            .modal-footer { 
+                margin-bottom: 4vh;
+                border: 0px none; 
+            }
+            .icon-close {
+                background-color: @clr-orange;
+                border: 3pt solid @clr-white;
+                .border-radius-circle();
+            }
+
+            &.robot-lg {
+                margin-top: 50vw;
             }
         }
     }
@@ -866,14 +1195,46 @@ body {
     ****************************************************************************/
     .navbar {
         position: relative;
+        height: 10vh;
         margin-bottom: 0;
         border-radius: 0px;
-
+        background-color: #EE4823;
+        border-color: rgba(0, 0, 0, 0.2);/*#EE4823;*/
+        overflow: hidden;
         .icomoon {
             font-size: 6vw;
-            line-height:18vw;
-        }        
+            line-height: 15vw;
+            vertical-align: top;
+        }   
+
+        &.etapa-uno {
+            background-color: #138BCB;
+            border-color: #138BCB;
+        }     
     }
+
+    .navbar-absolute-top {
+        display: none;
+    }
+
+    .navbar.navbar-orange {
+        background-color: #EE4823;
+        border-color: rgba(0, 0, 0, 0.2);
+        -webkit-transition: all 700ms ease;
+            -moz-transition: all 700ms ease;
+            -o-transition: all 700ms ease;
+            transition: all 700ms ease;
+    }
+
+    .navbar.navbar-blue {
+        background-color: #158CCD;
+        border-color: rgba(0, 0, 0, 0.2);
+        -webkit-transition: all 700ms ease;
+            -moz-transition: all 700ms ease;
+            -o-transition: all 700ms ease;
+            transition: all 700ms ease;
+    }
+
     .step-dashboard{   
         .navbar{     
         background-color: @clr-bluenav;
@@ -896,21 +1257,29 @@ body {
         position: static;
         padding: 0; 
         margin: 0 2vw;
-        height: 18vw; width: auto;
+        height: 12vw; 
+        width: 95vw;
+
+        .sidebar-toggle {
+            padding: 0px 1vw;
+            text-align: left;
+            line-height: inherit;
+        }
         .navbar-heading {
             display: inline-block;
             overflow: hidden;
-            float: left;
+            /*float: left;*/
             margin: 0;
-            width: 47vw;
-            max-width:60%;
+            width: 46vw;
+            max-width:50vw;
             color: @clr-white;
             font-family: 'Play';   
-            font-size: 6vw;
+            font-size: 4vw;
             font-weight: bold;
-            line-height: 18vw;
+            line-height: 14vw;
             text-overflow:ellipsis;
             white-space: nowrap;
+            text-transform: none;
             a{
                 color: @clr-white;            
             }
@@ -920,7 +1289,7 @@ body {
             float: right;
             margin: 0;
             width: 45vw;  
-            max-width:48%;  
+            max-width:48vw;
             list-style-type: none;   
             padding: 0 9px 0 0;
         }
@@ -931,13 +1300,22 @@ body {
             padding: 0; 
             margin: 0 0 0 8px; 
             margin: 0 0 0 .5vw;
-            width:9vw; 
+            width: 9vw; 
             height: 9vw;
 
+            &:hover,
             &.active {
                 .icomoon {
-                    color: darken(@clr-orange, 15%);
+                    color: rgba(185, 85, 120, 0.6);/*darken(@clr-orange, 15%);*/
+                    -webkit-transition: all 700ms ease;
+                    -moz-transition: all 700ms ease;
+                    -o-transition: all 700ms ease;
+                    transition: all 700ms ease;
                 }
+            }
+
+            &.disabled {
+                pointer-events: none;
             }
         }
         a {
@@ -977,7 +1355,6 @@ body {
       -webkit-border-radius:16px;
          -moz-border-radius:16px;
               border-radius:16px;
-
     }
     /***************************************************************************/
 
@@ -987,6 +1364,7 @@ body {
      Description: CSS override to bootstrap's panel class.
     ****************************************************************************/
     .panel {
+        .border-radius(1.5vw);
         & > .panel-heading {
             padding: 5.5vw 2.6vw;
             .border-radius(1.5vw, 1.5vw, 0, 0);
@@ -1007,11 +1385,11 @@ body {
             margin: 0;
             font-size: inherit;
             font-weight: 700;
-            text-transform: capitalize;
+            text-transform: none;
         }
         & > .panel-body {
-            padding-left: 6vw;
-            padding-right: 6vw;
+            padding-left: 3vw;
+            padding-right: 3vw;
             padding-top: 6vw;
             padding-bottom: 6vw; 
             .border-radius(0, 0, 1.5vw, 1.5vw);
@@ -1056,12 +1434,12 @@ body {
 
                 a {
                     display: block;
-                    height: 77px;
+                    /*height: 77px;*/ height: 16vw;
                     padding: 0;
                     margin: 0;
                     font-size: 1.2em;
                     font-weight: bold;
-                    line-height: 77px;
+                    /*line-height: 77px;*/ line-height: 16vw;
                 }
                 .icomoon {font-weight: normal;}
             }
@@ -1136,7 +1514,6 @@ body {
             font-size: 1.1em;
             font-weight: 700;
             text-align: center;
-            text-transform: uppercase;
             letter-spacing: 1px;
         }
         p {
@@ -1185,13 +1562,34 @@ body {
             span {
                 color: @clr-blueTurquoise;
 
-                &:last-child {
+                /*&:last-child {
                     color: @clr-white;
-                }
+                }*/
+            } 
+
+            p span:first-child.icomoon {
+                margin-right: 10vw;
+                font-size: 7vw;
+            }
+
+            p span:last-child.icomoon {
+                margin-left: 10vw;
+                font-size: 7vw;
+            } 
+
+            .total-number {
+                color: @clr-white;
+            }
+
+            .disabled {
+                cursor: text;   
+                opacity: .2;
+                -moz-opacity: 0.2;                
             }
         }
         .btn {
             margin-bottom: 1.5vw;
+            text-transform: uppercase;
         }
         /*.button-group {
             display: block;
@@ -1219,10 +1617,10 @@ body {
      Description: CSS class for a page wrapper with pages and buttons
     ****************************************************************************/
    .footer {
+        display: none;
         background-image:url('../images/bg-footer-ship.gif');
         background-position: 0 99%;
         background-size: cover;
-        display: block;
         position: relative;
         padding: 20px 0 0;
         margin: 0;
@@ -1250,14 +1648,94 @@ body {
             bottom: 0;
             margin-left: -30px;
         }
+
+        &.pages {
+            background-image: url('@{url-images}/img-footer-texture-lg.png');
+            background-color: #24292B;
+            box-shadow: unset;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: contain;
+            
+        }
+        &::before {
+            position: absolute;
+            width: 100vw;
+            height: 18vh;
+            content: " ";
+            background-image: url('@{url-images}/img-footer-texture-lg.png');
+            background-color: transparent;
+            box-shadow: unset;
+            background-position: 50% 50%;
+            background-repeat: no-repeat;
+            background-size: contain;
+            
+        }
+
+        &.db-bg{
+            background-image: url("@{url-images}/bg-footer-rocks.png");
+            background-position: 50% 0;
+            box-shadow: unset;
+        }
+
     }
     /***************************************************************************/
 
+
     /****************************************************************************
-     16. $spinner
-     Description: CSS class to positionante, show and hide the preloader image
+     16. $app-preloader
+     Description: CSS class to represent a backdrop layer and an animation
     ****************************************************************************/
-    .spinner {}
+    .app-preloader {
+        overflow: hidden;
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 30;
+        width: 100vw;
+        height: 100vh;
+        .clr-blueDark(background-color, 0.9);
+
+        img {
+            display:none;
+            position: relative;
+            top: 50%;
+            width:auto;
+            height:auto;
+            padding:0;
+            margin: 0 auto;
+            margin-top: -16px; 
+        }
+
+        .spinner {
+            clear: both;
+            position: relative;
+            top: 50%;
+            padding:0;
+            margin: -3vw auto 0.1vw auto;
+            width: 32px;
+            height: 32px;
+        }
+
+
+        /* Spinner Circle Rotation */
+        .spinner-circle {
+            border: 4px rgba(255,255,255,0.25) solid;
+            border-top: 4px rgba(255,255,255,1) solid;
+            border-radius: 50%;
+            -webkit-animation: rotateSpinner .6s infinite linear;
+            animation: rotateSpinner .6s infinite linear;
+        }
+        @-webkit-keyframes rotateSpinner {
+            from { -webkit-transform: rotate(0deg); }
+            to { -webkit-transform: rotate(359deg); }
+        }
+        @keyframes rotateSpinner {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(359deg); }
+        }        
+    }
     /***************************************************************************/
  
 
@@ -1587,6 +2065,28 @@ body {
     }
 }
 
+        /***********************************************************************
+         $acerca-programa
+         Description: CSS to represent acerca-programa content page
+        ************************************************************************/
+        .acerca-programa {
+            a { color: @clr-white; }
+            .component {
+                h3 {
+                    text-align: left;
+                }
+                p {
+                    margin: 0px 0px 10px;
+                    text-align: left;
+                }
+                figure img {
+                    .border-radius(4px);
+                }
+                button { margin: 15px 0px; }
+            }
+        }
+
+        /******************************************************************************/
 
 @keyframes flicker {
     from {

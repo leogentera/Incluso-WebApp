@@ -1,0 +1,332 @@
+<div class="incluso-app public" ng-app>
+  <article class="register" ng-controller="publicRegisterController">
+
+    <div class="alert alert-warning" role="alert" ng-show="!registerModel.modelState.isValid && !isRegistered" ng-cloak>      
+      <div class="alert-message">
+        <div class="icomoon icon-warning"></div>
+        <p>¡Error! Verifica tus datos</p>
+        <ul ng-if="registerModel.modelState.errorMessages.length > 0">
+          <li ng-repeat="msg in registerModel.modelState.errorMessages">{{msg}}</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="alert alert-success" role="alert" ng-show="isRegistered" ng-cloak>
+      <div class="alert-message">
+        <div class="icomoon icon-checked-clip"></div>
+        <p>¡Te has registrado correctamente!</p> 
+      </div>
+    </div>
+
+    <script type="text/ng-template" id="termsAndConditionsModal.html">
+      <div class="modal-header">
+        <h3 class="modal-title"> &mdash; Términos y Condiciones &mdash; </h3>
+        <button class="icon icon-close" ng-click="cancel()">
+          <span class="icomoon icon-cross"></span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Todos los elementos que conforman el contenido de esta aplicación, identificado por el
+              nombre de “Misión Incluso”, incluyendo de manera enunciativa más no limitativa, los
+              nombres comerciales, marcas u otros signos distintivos que figuren en la misma son
+              propiedad de Gentera, S.A.B. y se encuentran protegidos bajo las leyes de Propiedad
+              Industrial. Los derechos de Propiedad Intelectual sobre los contenidos, diseño gráfico,
+              estructura, elementos audiovisuales y demás elementos de este sitio web son
+              propiedad exclusivamente de Gentera, S.A.B., quedando expresamente prohibido su
+              reenvío, transmisión, modificación, reproducción, distribución, comercialización o
+              cualquier otro tipo de explotación comercial en términos de las leyes aplicables sin el
+              previo consentimiento y autorización expresa para ello, por parte del titular de los
+              derechos patrimoniales mencionado previamente.
+              En virtud de lo anterior, salvo el uso que se llegue a dar para fines personales o
+              privados, a los cuales se encuentra autorizado el usuario, cualquier uso distinto que se
+              dé a cualquiera de los elementos de propiedad intelectual e industrial mencionados en
+              el párrafo previo constituirá en sí mismo una infracción a los derechos de propiedad
+              intelectual e industrial por lo que el titular de los mismos, podrá proceder civil e incluso
+              penalmente de acuerdo a las leyes aplicables.</p>        
+      </div>
+      <div class="modal-footer"></div>
+    </script>
+
+    <header>
+      <figure>
+        <!-- <img src="assets/images/img-logo-gentera.svg" alt="" class="login-logo"> -->
+        <img src="assets/images/img-logo-gentera-lg.png" alt="" class="login-logo" />
+        <figcaption class="center-block text-center">
+          <span>Estudia</span>
+          <span>|</span>
+          <span>Trabaja</span>
+          <span>|</span>
+          <span>Emprende</span>
+        </figcaption>
+      </figure> 
+    </header>    
+
+    <section>
+      <form action="" class="register-form container-fluid" name="registerForm" >
+        <div class="row">
+          <div class="col-xs-12">
+            <h1>Datos de registro</h1>
+          </div>
+        </div>
+        <div class="pages">
+
+          <div class="page" data-page="1" ng-class="currentPage === 1 ? 'active' : ''">
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="userNameAddOn">
+                      <span class="icomoon icon-user"></span>
+                    </p>
+                    <input type="text" ng-model="registerModel.username" name="userName" class="form-control form-control-lg theme-default" placeholder="Nombre de usuario" aria-describedby="userNameAddOn" pattern="[A-Za-z0-9]+" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="aliasAddOn">
+                      <span class="icomoon icon-user"></span>
+                    </p>
+                    <input type="text" ng-model="registerModel.firstname" name="firstName" class="form-control form-control-lg theme-default" placeholder="Nombre(s)" aria-describedby="aliasAddOn" pattern="[A-Za-z]+" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="aliasAddOn">
+                      <span class="icomoon icon-user"></span>
+                    </p>
+                    <input type="text" ng-model="registerModel.lastname" name="lastName" class="form-control form-control-lg theme-default" placeholder="Apellido paterno" aria-describedby="aliasAddOn" pattern="[A-Za-z]+" required />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="aliasAddOn">
+                      <span class="icomoon icon-user"></span>
+                    </p>
+                    <input type="text" ng-model="registerModel.mothername" name="motherName" class="form-control form-control-lg theme-default" placeholder="Apellido materno" aria-describedby="aliasAddOn" pattern="[A-Za-z]+" required />
+                  </div>
+                </div>
+              </div>
+            </div> 
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="birthDateAddOn">
+                      <span class="icomoon icon-calendar"></span>
+                    </p>                    
+                    
+                    <p class="input-group-control custom-placeholder-wrapper">
+                      <input type="date" ng-model="registerModel.birthday" name="birthday" class="form-control form-control-lg theme-default" aria-describedby="birthDateAddOn" minlength="10" maxlength="10" required />
+                      <span class="custom-placeholder form-control-lg">Fecha de nacimiento</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div> 
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="genderAddOn">
+                      <span class="icomoon icon-dna"></span>                      
+                    </p>
+                    <p class="input-group-control custom-placeholder-wrapper">
+                      <select ng-model="registerModel.gender" name="gender" ng-options="item for item in genderItems" ng-init="registerModel.gender == null" class="form-control form-control-lg theme-default" aria-describedby="genderAddOn" required>
+                        <option value="" ng-disabled="!!registerModel.gender">Género</option>
+                      </select>                  
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="countryAddOn">
+                      <span class="icomoon icon-earth"></span>                        
+                    </p>
+                    <p class="input-group-control custom-placeholder-wrapper">
+                      <select ng-model="registerModel.country" name="country" ng-options="item for item in countryItems" ng-init="registerModel.country == null" class="form-control form-control-lg theme-default" aria-describedby="countryAddOn" required>
+                        <option value="" ng-disabled="!!registerModel.country">País</option>                        
+                      </select>                      
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>        
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="cityAddOn">
+                      <span class="icomoon icon-map"></span> 
+                    </p>
+                    <p class="input-group-control custom-placeholder-wrapper">
+                      <select ng-model="registerModel.city" name="city" ng-options="item for item in cityItems" ng-init="registerModel.city == null" class="form-control form-control-lg theme-default" aria-describedby="cityAddOn" required>
+                        <option value="" ng-disabled="!!registerModel.city">Ciudad</option>
+                      </select>
+                      <!--<span class="custom-placeholder form-control-lg">Ciudad</span>-->
+                    </p>                    
+                  </div>
+                </div>            
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="page-number">
+                  <p class="text-center">
+                    <span>1</span>
+                    <span>/</span>
+                    <span class="total-number">2</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(2)">Continuar</button>
+              </div>
+              <div class="col-xs-12">
+                <a type="button" class="btn btn-default btn-transparent btn-lg btn-block" ng-click="login()">Cancelar</a>
+              </div> 
+            </div>          
+
+          </div>   
+
+          <div class="page" data-page="2" ng-class="currentPage === 2 ? 'active' : ''">
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="emailAddOn">
+                      <span class="icomoon icon-envelope"></span>                      
+                    </p>
+                    <input type="email" ng-disabled="isRegistered" ng-model="registerModel.email" name="email" class="form-control form-control-lg theme-default" placeholder="Correo" aria-describedby="emailAddOn" required/>
+                  </div>
+                </div>
+              </div>
+            </div>   
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="accountPasswordAddOn">
+                      <span class="icomoon icon-lock"></span>
+                    </p>
+                    <input type="password" ng-disabled="isRegistered" ng-model="registerModel.password" name="password" class="form-control form-control-lg theme-default" placeholder="Contraseña" aria-describedby="accountPasswordAddOn" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W|_).{8,}" required />
+                  </div>
+                </div>
+              </div>
+            </div> 
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="confirmPasswordAddOn">
+                      <span class="icomoon icon-lock"></span> 
+                    </p>
+                    <input type="password" ng-disabled="isRegistered" ng-model="registerModel.confirmPassword" name="confirmPassword" class="form-control form-control-lg theme-default" placeholder="Repetir contraseña" aria-describedby="confirmPasswordAddOn" required />
+                  </div>
+                </div>
+              </div>
+            </div>             
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="securityQuestionAddOn">
+                      <span class="icomoon icon-help"></span>
+                    </p>
+                    <p class="input-group-control custom-placeholder-wrapper">
+                      <select ng-disabled="isRegistered" ng-model="registerModel.secretQuestion" ng-init="registerModel.secretQuestion == null" ng-options="item for item in securityquestionItems" name="securityQuestion" class="form-control form-control-lg theme-default" aria-describedby="securityQuestionAddOn" data-show-placeholder="$scope.isRegistered" required>
+                        <option value="" ng-disabled="!!registerModel.secretQuestion">Pregunta de seguridad</option>
+                      </select>                      
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>       
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="form-group">
+                  <div class="input-group input-group-lg theme-default">
+                    <p class="input-group-addon" id="securityAnswerAddOn">
+                      <span class="icomoon icon-help"></span>
+                    </p>
+                    <input type="text" ng-disabled="isRegistered" ng-model="registerModel.secretAnswer" name="secretAnswer" class="form-control form-control-lg theme-default" placeholder="Respuesta de seguridad" aria-describedby="securityAnswerAddOn" patern="[A-Za-z0-9]" required />
+                  </div>
+                </div>            
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12">
+                  <div class="checkbox checkbox-custom">
+                    <label>
+                      <input type="checkbox" ng-disabled="isRegistered" name="termsAndConditions" ng-model="registerModel.termsAndConditions" /> 
+                      <span><a href="" ng-click="openModal()">Acepto los términos y condiciones</a></span>
+                    </label>
+                  </div>
+              </div>
+            </div>            
+
+            <div class="row">
+              <div class="col-xs-12">
+                <div class="page-number">
+                  <p class="text-center">
+                    <span>2</span>
+                    <span>/</span>
+                    <span class="total-number">2</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-12" ng-show="!isRegistered">
+                <div class="button-group">
+                  <button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg" ng-click="navigateToPage(1)">
+                    <span class="icomoon icon-arrow-slim-left"></span>
+                  </button>
+                  <button type="button" ng-disabled="isRegistered" ng-click="register()" class="btn btn-primary btn-lg">Registrarme</button>
+                </div>
+              </div>
+              <div class="col-xs-12" ng-show="!isRegistered">
+                <a type="button" ng-disabled="isRegistered" ng-click="login()" class="btn btn-default btn-transparent btn-lg btn-block">Cancelar</a>
+              </div>       
+            </div>          
+
+          </div> 
+        </div> 
+      </form>      
+    </section>
+
+  </article>
+</div>

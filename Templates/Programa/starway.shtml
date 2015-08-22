@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Incluso Digital</title>
+  <link href='http://fonts.googleapis.com/css?family=Play:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="../../assets/styles/dev-css.css">
+	
+  <script type="text/javascript" src="../../Scripts/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="../../Scripts/bootstrap-3.3.2.js"></script>
+  <script type="text/javascript" src="../../Scripts/angular.js"></script>
+  <script type="text/javascript" src="../../Scripts/owl.carousel.min.js"></script>
+</head>
+<body ng-app>
+<div class="incluso-app score-dashboard" id="site-wrapper">
+  <div id="site-menu" >
+<!--#include file="menu.html" -->
+  </div>
+  <div id="site-canvas">
+
+    <nav ng-controller="navController">
+      <div class="navbar" id="navBar">
+        <div class="container-fluid">
+          
+          <div class="row">
+
+            <div class="navbar-assets">
+              <h1 class="navbar-heading"><a href="#" data-transition="ease" id="menuton"><i class="icomoon icon-more-options"></i> Mis Estrellas</a></h1>
+              <ul class="navbar-tools">
+                <li class="contribute">
+                  <a href="">
+                    <i class="icomoon icon-edit"></i>
+                  </a>
+                </li>
+                <li class="notifications">
+                  <a href="">
+                    <i class="icomoon icon-antena"></i>
+                  </a>
+                </li>
+                <li class="chat">
+                  <a href="">
+                    <i class="icomoon icon-chat"></i>
+                  </a>
+                </li>
+                <li class="profile">
+                  <a href="" ng-href="#/Perfil/">
+                    <i class="icomoon icon-emoticon-smile"></i>
+                  </a>
+                </li>                 
+              </ul>
+            </div> 
+          </div>
+        </div>
+      </div> <!-- /.container-fluid -->
+    </nav>
+
+  <article class="starway">
+
+<section class="score centered txt-bigger lightgreen">
+ <div id="totstars">240</div>
+</section>
+<section class="centered">
+<div class="sharer">
+<i class="icomoon icon-share icon"></i><a href="#openModal1" class="modbut"><div class="txt">Compartir puntuación</div></a>
+</div>
+</section>
+<section class="modales">
+
+<div id="openModal1" class="modalDialog">
+	<div>
+		<a href="#close" title="Close" class="close"></a>
+		<div class="txt-renglon txt-bigger">"Puntuación 240 Estrellas"</div>
+<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value=""/></div>
+
+<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+	</div>
+</div>
+</section>
+	<section class="starcontain">
+<div class="subtitle centered">Mis estrellas</div>
+<div class="part">
+<div class="fl-left"><div class="date">21 de Julio 2015 - 4:30 PM</div>Conócete:Descubre Más</div><div class="fl-right sm-pill">+240&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+</div>
+<div class="part">
+<div class="fl-left"><div class="date">20 de Junio 2015 - 10:22 PM</div>Conócete:Mis Cualidades</div><div class="fl-right sm-pill">+50&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+</div>
+<div class="part">
+<div class="fl-left"><div class="date">20 de Junio 2015 - 5:50 PM</div>Conócete:Sueña</div><div class="fl-right sm-pill">+40&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+</div>
+<div class="part">
+<div class="fl-left"><div class="date">19 de Junio 2015 - 3:22 PM</div>Conócete:Foro Común</div><div class="fl-right sm-pill">+30&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+</div>
+<div class="part">
+<div class="fl-left"><div class="date">16 de Mayo 2015 - 11:42 AM</div>Evaluación Inicial</div><div class="fl-right sm-pill">+20&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+</div>
+
+<div class="part showmore">
+<i class="icomoon  icon-show-more fl-right"></i> Mostrar más estrellas...
+</div>
+	</section>
+	<section class="starcontain">
+<div class="subtitle centered">Mis Recompensas</div>
+<div class="part">
+<div class="fl-left"><div class="date">21 de Julio 2015 - 4:30 PM</div>Nueva Mochila Incluso</div>
+<i class="icomoon icon-arrow-bold-right fl-right"></i>
+</div>
+<div class="part">
+<div class="fl-left"><div class="date">20 de Junio 2015 - 10:22 PM</div>Estuche nuevo para celular</div>
+<i class="icomoon icon-arrow-bold-right fl-right"></i>
+</div>
+<div class="part">
+<div class="fl-left"><div class="date">20 de Junio 2015 - 5:50 PM</div>¡Te regalamos 1000 estrellas!</div>
+<i class="icomoon icon-arrow-bold-right fl-right"></i>
+</div>
+<div class="part">
+<div class="fl-left"><div class="date">19 de Junio 2015 - 3:22 PM</div>Gorra Incluso</div>
+<i class="icomoon icon-arrow-bold-right fl-right"></i>
+</div>
+<div class="part">
+<div class="fl-left"><div class="date">16 de Mayo 2015 - 11:42 AM</div>Sudadera Incluso</div>
+<i class="icomoon icon-arrow-bold-right fl-right"></i>
+</div>
+
+<div class="part showmore">
+<i class="icomoon  icon-show-more fl-right"></i> Mostrar más recompensas...
+</div>
+	</section>
+<div><img src="../../assets/images/img-lines-ftr.png"></div>	
+  </article>
+
+  <footer class="footer">
+    <ul class="block-list">
+      <li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
+      <li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
+    </ul>
+    <a href="#navBar" class="to-top"><i class="icomoon icon-double-arrow-up"></i><br/>SUBIR</a>
+  </footer>
+		</div>
+		</div>
+  <!-- html -->
+  <!-- scripts -->
+
+    
+    <script>
+var $root = $('html, body');
+$('.modbut').click(function() {
+    var href = $.attr(this, 'href');
+	$(this).parent().addClass('active');
+    $root.animate({
+        scrollTop: $(href).offset().top
+    }, 500, function () {
+        window.location.hash = href;
+    });
+    return false;
+});
+    </script>
+  <script type="text/javascript" src="../../Scripts/scriptmenu.js"></script>
+
+</body>
+</html>

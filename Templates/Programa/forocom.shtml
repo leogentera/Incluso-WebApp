@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Incluso Digital</title>
+  <link href='http://fonts.googleapis.com/css?family=Play:400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,500' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" type="text/css" href="../../assets/styles/dev-css.css">
+	
+  <script type="text/javascript" src="../../Scripts/jquery-2.1.4.min.js"></script>
+  <script type="text/javascript" src="../../Scripts/bootstrap-3.3.2.js"></script>
+  <script type="text/javascript" src="../../Scripts/angular.js"></script>
+  <script type="text/javascript" src="../../Scripts/owl.carousel.min.js"></script>
+</head>
+<body ng-app>
+<div class="incluso-app step-dashboard" id="site-wrapper">
+  <div id="site-menu" >
+<!--#include file="menu.html" -->
+  </div>
+  <div id="site-canvas">
+
+    <nav ng-controller="navController">
+      <div class="navbar" id="navBar">
+        <div class="container-fluid">
+          
+          <div class="row">
+
+            <div class="navbar-assets">
+              <h1 class="navbar-heading"><a href="#" data-transition="ease" id="menuton"><i class="icomoon icon-more-options white"></i> Estación: Conócete</a></h1>
+              <ul class="navbar-tools">
+                <li class="contribute">
+                  <a href="">
+                    <i class="icomoon icon-edit"></i>
+                  </a>
+                </li>
+                <li class="notifications">
+                  <a href="">
+                    <i class="icomoon icon-antena"></i>
+                  </a>
+                </li>
+                <li class="chat">
+                  <a href="">
+                    <i class="icomoon icon-chat"></i>
+                  </a>
+                </li>
+                <li class="profile">
+                  <a href="" ng-href="#/Perfil/">
+                    <i class="icomoon icon-emoticon-smile"></i>
+                  </a>
+                </li>                 
+              </ul>
+            </div> 
+          </div>
+        </div>
+      </div> 
+    </nav>
+
+   <article class="blueprint">
+
+	<section>
+<div class="txt-renglon centered txt-bigger"></div>	
+<div class="subtitle">Foro Común</div>
+<div class="txt-renglon"> Participa en las siguientes discusiones.</div>	
+</section>
+
+<section class="">
+	<div class="part"><span>¿Cómo te sientes cuando ves
+que varias personas tienen
+sueños similares a los tuyos?</span><i class="icomoon icon-arrow-right-aligned fl-right"></i></div>
+	<div class="part"><span>¿Cuál ha sido tu avance para
+alcanzar tus sueños?</span><i class="icomoon icon-arrow-right-aligned fl-right"></i></div>
+	<div class="part"><span>¿Crees que en algún momento
+del proceso te rindas?</span><i class="icomoon icon-arrow-right-aligned fl-right"></i></div>
+	<div class="part"><span>¿Qué te motiva para lograr
+conseguir tus sueños?</span><i class="icomoon icon-arrow-right-aligned fl-right"></i></div>
+	<div class="part"><span>¿Crees que pedir ayuda es algo
+positivo o negativo?</span><i class="icomoon icon-arrow-right-aligned fl-right"></i></div>
+	<div class="part"><span>
+¿Considerarías apoyarte en
+alguien para lograr tus sueños?</span><i class="icomoon icon-arrow-right-aligned fl-right"></i></div>
+</section>
+<section>
+<button class="btn btn-primary btn-lg btn-cnt" type="button">Regresar</button>
+<div class="txt-renglon centered txt-bigger"></div>	
+</section>
+
+  </article>
+
+  <footer class="footer">
+    <ul class="block-list">
+      <li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
+      <li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
+    </ul>
+    <a href="#navBar" class="to-top"><i class="icomoon icon-double-arrow-up"></i><br/>SUBIR</a>
+  </footer>
+		</div>
+		</div>
+  <!-- html -->
+  <!-- scripts -->
+
+  <script type="text/javascript" src="../../Scripts/scriptmenu.js"></script>
+
+</body>
+</html>

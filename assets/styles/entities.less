@@ -13,15 +13,14 @@
         04. $my-badges
         05. $user-avatar
         06. $top-users
+
+            $acerca-programa
 ********************************************************************************/
 @import "less-utilities.less";
 
 
 /* xs viewport */
 @media screen {
-
- 
-
     .incluso-app {
 
         /***********************************************************************
@@ -61,7 +60,6 @@
                 color: @clr-greenLight;
                 font-size: 150%;
                 padding: 5% 10%;
-                text-transform: uppercase;
             }
             .min-pad{
                 padding: 5px 0px;
@@ -276,7 +274,7 @@
                 border-radius: 5px;
                 color: white;
                 font-size: 120%;
-                margin: 2% 10%;
+                margin: 2vh 10%;
                 padding: 3% 5%;
                 width: 80%;
                 position: relative;
@@ -590,6 +588,7 @@
                     z-index: 2;
                 }
                 .icon-close {
+                    display: none;
                     right: -22px; top: -22px;
                     padding: 0;
                     margin: 0;
@@ -603,7 +602,7 @@
                     background-repeat: no-repeat;
                 }
                 .icon-play {
-                    display: none;
+                    display: block;
                     left: 50%; top: 50%;
                     padding: 0;
                     margin: -41px 0 0 -41px;
@@ -613,6 +612,11 @@
                     background-color: transparent;
                     background-image: url('@{url-images}/icn-video-play.png');
                     background-position: center center;
+
+                    &:before {
+                        display:none;
+                        content:none;
+                    }
                 }                 
             }
             .stage.perform {
@@ -761,20 +765,6 @@
          05. $user-avatar
          Description: CSS to represent a user avatar picture with info
         ************************************************************************/  
-        .user-container{
-            display: flex; 
-            justify-content: center;
-        }
-        .active {
-            .user-avatar{
-                figure {
-                    border:0px solid #171f20;
-                }
-                figcaption{
-                    border-color: #171f20;
-                }
-            }
-        }
         .user-avatar {
             display: block;
             position: relative;
@@ -830,6 +820,20 @@
                 }
             }
         }
+        .user-container{
+            display: flex; 
+            justify-content: center;
+        }
+        .active {
+            .user-avatar{
+                figure {
+                    border:0px solid #171f20;
+                }
+                figcaption{
+                    border-color: #171f20;
+                }
+            }
+        }        
         /***********************************************************************/   
 
 
@@ -1123,7 +1127,9 @@
                 margin-top: 6vw;
                 
                 &.btn-icon-aside {
-                    width: 39vw;
+                    width: 36vw;
+
+                    &.right {display:none;}
                 }
             }
             & > .container {
@@ -1141,18 +1147,86 @@
 
 
         /***********************************************************************
+         $profile-info-asset
+         Description: CSS to represent a block or asset of a user information 
+         at the read only mode of profile view. 
+        ************************************************************************/
+        .profile-info-asset {
+            display: block;
+            padding: 0;
+            margin: 6vw 0 0;
+            border-top-style: solid;
+            border-top-width: 0.1em;
+            .clr-white(border-top-color, 0.5); 
+
+            &:first-child {
+                margin-top: 0;
+                border-top-style: none;
+
+                h4 {
+                    margin-top: 0;
+                }
+            }
+
+            h4 {
+                color: @clr-green !important; 
+                font-size: 4.1vw; font-size: 1.5em;
+                font-weight: bold;
+                text-align: left;
+                margin: 6vw 0 0;
+            }
+            label {
+                color: @clr-blueTurquoise;
+                font-size: 3.9vw;
+                text-align: left;
+                padding: 0;
+                margin:  0;
+            }
+            p {
+                min-height: 8.5vw;
+                color: @clr-white;
+                font-size: 3.9vw; font-size:6vw; font-size: 5vw;
+                font-weight: normal;
+                text-align: left; 
+                padding: 0;
+                margin:  0;                
+            }
+            .from-group {
+                padding: 1.5vw 0 0;
+                margin: 1.5vw 0 0;
+            }
+            .block-list {
+                min-height: 8.5vw;
+
+                p {
+                    margin:0;
+                    overflow:hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+
+                    span {
+                        padding-right: 1vw;
+                    }
+                    em {
+                        color: @clr-gray-platinum;
+                        font-style: normal;
+                    }
+                }
+            }
+        }
+        /***********************************************************************/
+
+
+        /***********************************************************************
          $profile-options
-         Description: CSS to represent user's profile dashboard landing page
+         Description: CSS to represent user's profile options area
         ************************************************************************/
         .profile-options {
             margin:0;
-            /*padding:32px 0 15px;*/
             padding: 12vw 0 6vw;
             height: auto;
             min-height: 120vw;
             background-attachment: scroll;
-            /*background-image:url('@{url-images}/img-profile-spaceship-dashboard-bottom.png');
-            background-color: @clr-gray-asphalt;*/
             background-position: center 0;
             background-repeat: no-repeat;
             .gradient-custom('img-profile-spaceship-dashboard-bottom.png', @clr-gray-asphalt, @clr-gray-asphalt2);
@@ -1164,14 +1238,7 @@
                     border: none;
                 }
                 a {
-                    display: block;
                     position: relative;
-                    height: 77px;
-                    padding: 0;
-                    margin: 0;
-                    font-size: 24px;
-                    font-weight: bold;
-                    line-height: 77px;
                 }
                 span {
                     color: @clr-white;
@@ -1182,7 +1249,7 @@
                     overflow: hidden;
                     width:auto;
                     padding: 0;
-                    margin: 0 72px 0 48px;
+                    margin: 0px 18vw 0px 11vw;
                     text-overflow:ellipsis;
                     white-space: nowrap;
                 }
@@ -1190,25 +1257,24 @@
                     display: block;
                     position: absolute;
                     z-index: 1;
-                    padding: 0 0 0 12px;
+                    padding: 0px 0px 0px 2.6vw;
                     margin: 0;
                     color: @clr-green;
-                    font-size: 1.4em;
-                    font-weight: normal;
+                    font-size: 1.1em;
                 }
                 .icomoon.icon-arrow-slim-right {
                     top: 0; right: 0;
-                    padding: 0 9px 0 0;
-                    font-size: 1.2em;
+                    padding: 0 9px 0 0;  padding: 0px 1.5vw 0px 0px;
+                    font-size: 1.2em; font-size: 6vw;
                 }
                 .icomoon.icon-star {
-                    top: 50%; right: 30px;
-                    padding: 3px 9px;
-                    margin: -1.2em 6px 0 0;
+                    top: 50%; right: 30px; right: 6.3vw;
+                    /*padding: 3px 9px;*/ padding: 1vw 2vw;
+                    /*margin: -1.2em 6px 0 0;*/ margin: -3.4vw 1.2vw 0px 0px;
                     border: 2px solid @clr-green;
                     .border-radius(21px);
-                    font-size: 0.6em; /*15px;*/
-                    line-height: 1.2em; /*21px;*/
+                    font-size: 0.6em; /*15px;*/ font-size: 3vw;
+                    line-height: 1.2em; /*21px;*/ line-height: 3.2vw;
                 }  
 
                 .no-badge {
@@ -1221,7 +1287,7 @@
                 }
             }
         }
-        /***********************************************************************/           
+        /***********************************************************************/
 
 
         /***********************************************************************
@@ -1261,7 +1327,8 @@
                 }
             }
             li {
-                margin-top: 15px;
+                /*margin-top: 15px;*/
+                margin-top: 9vw;
 
                 &:first-child {
                     margin-top: 0;
@@ -1330,16 +1397,49 @@
             .button-group .btn {
                 margin-top: 0;
             }
+            .checkbox.checkbox-custom {
+                input + span:before {
+                    margin-right: 3vw;
+                    .clr-blueGray(border-color, 0.5);
+                }
+            }
             .form-group {
+                position: relative;
                 border: none;
                 margin-bottom: 0;
 
+                h5 {
+                    margin-bottom: 1vw;
+
+
+                    span:first-child {
+                        color: @clr-gray-asphalt2;
+                        font-size: 3vw;
+                        text-transform: uppercase;
+                    }                    
+                    .btn-circle {
+                        display: inline;
+                        float: right;
+                        /*position: absolute;
+                        right: 0;*/
+                        margin: 0;
+
+                        .icomoon {
+                            color: @clr-white;
+                            font-size: 2vw;
+                            font-weight: 100;
+                        }
+                    }                    
+                }
+
                 .form-control {
-                    border-top-width: 0;
+                    /*border-top-width: 0;*/
+                    border-top-width: 1pt;
                     text-indent: 3px;
                 }
                 .form-control:first-child {
                     /*border-top:1px solid;*/
+
                 }
                 select.form-control {
                     text-indent: 0;
@@ -1351,6 +1451,10 @@
                         border-top-width: 1pt;
                     }
                 }
+                .form-control + .form-control {border-top-width: 0;}
+                .form-control.ng-pristine.ng-touched + .custom-placeholder {
+                    display: none; 
+                } 
             }
         }
         /***********************************************************************/
@@ -1373,8 +1477,13 @@
 
             .user-avatar {
                 width: 33.3vw;
+                height: auto;
+                min-height: 33.3vw;
                 margin-top: 3vw;
 
+                img {
+                    min-height:inherit;
+                }
                 figcaption {
                     width: 9vw;
                     height: 9vw;
@@ -1384,7 +1493,7 @@
                     font-size: 5.1vw;
                     line-height: 9vw;
                 }
-            }             
+            } 
 
             & > .row {
                 padding: 0 5%;
@@ -1398,6 +1507,280 @@
             }
         }
         /***********************************************************************/
+
+
+        /***********************************************************************
+         $terms-and-conditions
+         Description: CSS to represent modal for terms and conditionss
+        ************************************************************************/
+        .modal.terms-and-conditions {
+            .modal-dialog {
+                margin-top:15vh;
+            }
+            .modal-body {
+                height: 50vh;
+                padding-top: 0;
+            }
+            .modal-footer {
+                display: none;
+            }
+        }
+        /***********************************************************************/
+
+        
+        /***********************************************************************
+         $app
+         Description: CSS to represent mobileangularui component for main layout
+        ************************************************************************/
+         .transition (@value1,@value2:X,...) { @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`; -webkit-transition: @value; -moz-transition: @value; -ms-transition: @value; -o-transition: @value; transition: @value; }
+        .transform (@value1,@value2:X,...) { @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`; transform:@value; -ms-transform:@value; -webkit-transform:@value; -o-transform:@value; -moz-transform:@value; }
+        .sidebar-left-active .app {
+           margin-left: 85vw;            
+        }
+
+        .app {
+            background: #000;
+            /*-webkit-transition: all 500ms ease;
+            -moz-transition: all 500ms ease;
+            -o-transition: all 500ms ease;
+            transition: all 500ms ease; */
+            .transition(-webkit-transform ease 800ms); .transition(transform ease 800ms);
+            z-index: 20;
+        }
+
+        .app, .app-body {
+            overflow-y: auto;
+        }
+
+        .app-content, .app-body {
+            height: auto;
+        }
+        
+
+ 
+        /***********************************************************************
+         $green-lantern-theme
+         Description: CSS to represent look of a list of items with colors green and dark
+        ************************************************************************/
+        .green-lantern-theme {
+            padding: 0px;
+            .list-item { 
+                display: inline-flex;  
+                width: 100%;
+                margin: 2% 0px;
+                padding: 3% 5%;
+                z-index: 2;  
+                align-items: center;    
+                justify-content: space-between;
+                background: #1f2733;
+                cursor: pointer;
+                color: white;
+                font-size: 120%;                
+                position: relative;
+                background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
+                background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
+                background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );
+                .date{
+                    color: rgba(255, 255, 255, 0.3);
+                   font-size: 70%;
+                }
+                .icomoon{
+                    color:@clr-greenLight;
+                    font-size:150%;
+                    padding-right: 5%;
+                }
+                .icon-checked-join{
+                    color:@clr-greenicon;
+                }
+                .icon-wrong{
+                    color:gray;
+                }
+                div{
+                    display: block;
+                    font-size: 86%;
+                }
+                span{
+                    line-height: normal;
+                    display: inline-flex;   
+                }
+                &.showmore {
+                    div {
+                        color: #08B290;
+                    }
+                    .icomoon {
+                        color: #08B290;
+                    }
+                }
+             }
+            .highlight {
+                border: 1px solid #08B190;
+            }
+            .rounded-item { 
+                .border-radius(5px);
+            }
+
+            &.notifications {
+                .nav-tabs {
+                    margin: 2.5vh 0px;
+                    .item {
+                        width: 26.5vw;
+                        text-align: center;
+                        font-weight: lighter;                        
+                        border: 1px solid #08B190;                        
+                        cursor: pointer;
+                        a {
+                            color: #08B190;
+                        }
+                        &.active {
+                            background-color: #08B190;                            
+                            a {
+                                color: #FFF;    
+                            }
+                        }
+
+                    }
+                    &.item:first-child {
+                        border-radius: 5px 0px 0px 5px;
+                    }
+                    li:first-child {
+                        .border-radius(5px,0px,0px,5px);
+                    }
+                    li:last-child {
+                        .border-radius(0px,5px,5px,0px);
+                    }
+                }
+            }
+        }
+        /***********************************************************************/
+
+        /***********************************************************************
+         $media-collapse
+         Description: CSS to represent look collapsible panel with the content as media [video/image]
+        ************************************************************************/
+        .collapse-media {
+            .panel {
+                display:block;
+                margin-bottom: 0px;
+                background-color: transparent;
+
+                .panel-heading {
+                    padding: 3.3vw 2.6vw;
+                    background-color: rgb(13,15,20);
+                    .border-radius(3vw, 3vw, 0, 0);
+                    color: @clr-green;
+                    cursor: pointer;
+
+                    h3 {
+                        margin: 0 auto;
+                        text-align: left;
+                    }
+                    span {
+                        display:inline-block;
+                        vertical-align: top;
+                        line-height: 6vw;
+                    }
+                    span:first-child {
+                        font-size: 6vw;
+                    }
+                    span:first-child + span {
+                        padding-left: 1vw;
+                        font-size: 4.3vw;
+                        /*line-height: 4vw;*/
+                    }
+                    .icon-arrow, .icon-arrow-up {
+                        float: right;
+                        font-size: 5vw;
+                    }
+                }
+                .panel-body {
+                    /*.clr-blueDark(background-color, 0.9);*/
+                    background-color: rgba(13,15,20,0.5);
+                }
+            }
+
+        }
+        /*********************************************************************/
+
+        .transition (@value1,@value2:X,...) { @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`; -webkit-transition: @value; -moz-transition: @value; -ms-transition: @value; -o-transition: @value; transition: @value; }
+        .transform (@value1,@value2:X,...) { @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`; transform:@value; -ms-transform:@value; -webkit-transform:@value; -o-transform:@value; -moz-transform:@value; }
+        .border-box { box-sizing:border-box; -moz-box-sizing:border-box; }
+
+        menu { display:block;
+            @menu-width: 85vw;
+            z-index: 100;
+
+            .sidebar li { border-bottom: 2px solid rgba(255, 255, 255, 0.28); display: block; margin-right: 6vw; position: relative; padding: 1vw 0;
+                    a:hover, &.active > a:focus{
+                        background-color: transparent;
+                        border:0;
+                        padding: 0;
+                    }
+                    & > i{ padding: 3vw 1vw; }
+                    & > a{ color: white; display: block; font-size: 5vw; padding: 1.5vh 3vw; position: relative; width: 100%;
+                        &:focus, &:hover{
+                            background-color: rgba(255, 255, 255, 0.28);
+                        }
+                        & > .icomoon {
+                            margin-right: 1vw;
+                        }  
+                        & > .glyphicon {
+                            margin-right: 1vw;
+                        } 
+                    }
+                
+                    &:last-child a { 
+                        padding: 3vh 3vw;
+                    }
+                    a.menu-blue{
+                        color: @clr-bluemenu;
+                    }
+                    a.menu-green{
+                        color: @clr-greenmenu;
+                    }
+                    a.menu-pink{
+                        color: @clr-pinkmenu;
+                    }
+                    .submenu{
+                        border-top: 2px solid rgba(255, 255, 255, 0.28);
+                        display: none;
+                        padding: 6vw 0 6vw 6vw;
+                        li {
+                            margin: 1vh 0px; 
+                        }
+                        li:first-child{
+                            color:  @clr-bluemenu;
+                            /*text-transform: uppercase;*/
+                        }
+                        a{
+                            color: white;
+                            line-height: 20px;
+                        }
+                        ul{
+                            list-style: none;
+                            padding:3vw 0;
+                        }
+                    }
+            }
+            >div { position:absolute; z-index:1100; top:0;  width:@menu-width; height:100%; .border-box; .transition(-webkit-transform ease 250ms); .transition(transform ease 250ms);
+                &.left { height: 100%; background:#273D7A; left:@menu-width*-1; background-image: url('../images/bg-menu.jpg'); background-repeat: no-repeat; background-size: 100% auto; }
+                &.show.left { .transform(translate3d(@menu-width, 0, 0)); }
+
+                &.right { background:#6B1919; right:@menu-width*-1; }
+                &.show.right { .transform(translate3d(@menu-width*-1, 0, 0)); }
+
+                >menu-item { display:block;
+                    >div { float:left; width:100%; margin:0; padding:10px 15px; border-bottom:solid 1px #555; cursor:pointer; .border-box; color:#B0B0B0;
+                        &:hover { color:#F0F0F0; }
+                        >span { float:left; color:inherit; }
+                    }
+                }
+            }
+        }
+
     }
 }
 

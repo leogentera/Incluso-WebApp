@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html class="incluso-app">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+        <title>Incluso Digital</title>
+        <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-hover.min.css" />
+        <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-base.min.css" />
+        <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-desktop.min.css" />
+        <link href="assets/styles/dev-css.css" rel='stylesheet' type='text/css' />
+        <link href="assets/styles/jquery-ui.css" rel="stylesheet" type="text/css">
+        <style>
+            body:after {
+                content: url(assets/images/img-ship-02.png)
+                url(assets/images/bg-topusers-pre.png)
+                url(assets/images/bg-badges-pre.png)
+                url(assets/images/bg-badges-post.png)
+                url(assets/images/bg-stars-01.png)
+                url(assets/images/ptr-video-0001.jpg)
+                url(assets/images/bg-ilustration-launchpad.png)
+                url(assets/images/bg-stars-02.png)
+                url(assets/images/bg-stars-01.png)
+                url(assets/images/img-profile-spaceship-dashboard-top.png)
+                url(assets/images/img-profile-spaceship-dashboard-middle.png)
+                url(assets/images/img-profile-spaceship-dashboard-bottom.png)
+                url(assets/images/bg-xs-profile-sky.jpg);
+                display: none;
+            }
+            [ng-cloak]{display: none !important; height:0;}
+        </style>
+    </head>
+
+    <body class="incluso-app">
+        <!-- preloader -->
+        <div class="app-preloader" id="spinner" ng-show="loading" style="display:none">
+            <div class="spinner spinner-circle"></div>
+        </div> 
+        <!-- Main menu / sidebar -->
+        <menu-component></menu-component> 
+        <!-- app wrapper -->
+        <div class="app">
+            <a style="visibility:hidden; display:block; height: 1px;" id="top"></a>
+            
+            <!-- toolbar for private views -->
+            <toolbar-component></toolbar-component>
+
+            <!-- App Body -->
+            <div class="app-body" ng-click="sideToggle('outside')">
+                <div class="app-content">
+                    <!-- <ng-view></ng-view> -->
+
+                    <div class="incluso-app profile" id="site-wrapper">
+                        <article>
+                            <section class="component profile-dashboard">
+                                <div>
+                                    <figure>
+                                        <img src="assets/images/img-profile-spaceship-dashboard-top.png" alt="" />
+                                    </figure>
+                                </div>
+                                <div>
+                                    <div class="user-avatar">
+                                        <figure>
+                                            <img src="assets/images/img-avatar-dummy-01.png" alt="" class="img-responsive" />
+                                            <figcaption>3</figcaption>
+                                        </figure>
+                                        <button type="button" id="editProfile" ng-click="avatar()">
+                                            <span class="icomoon icon-edit"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="profile-data">
+                                        <!-- <h4 class="user-name" ng-bind="model.alias"></h4> -->
+                                        <h4 class="user-name">leonardo garza r.</h4> 
+                                        <p class="user-points">
+                                            <span>100</span>
+                                            <span class="icomoon icon-star"></span>
+                                        </p>
+                                    </div>
+                                    <div class="profile-settings">
+                                        <button class="btn btn-icon-aside left" ng-click="edit();">
+                                            <div class="btn-icon">
+                                                <span class="icomoon icon-settings"></span>
+                                            </div>
+                                            <span for="">Editar perfil</span>
+                                        </button>
+
+                                        <button class="btn btn-icon-aside right">
+                                            <div class="btn-icon">
+                                                <span class="icomoon icon-lock"></span>
+                                            </div>
+                                            <span for="">Privacidad</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                            <section class="component profile-options">
+                                <div class="pages">
+                                    <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <ul class="list-group separate-items">
+                                                        <li class="list-group-item" ng-click="navigateToPage(2)">
+                                                            <a href="">
+                                                                <span class="icomoon icon-information"></span>
+                                                                <span>Mi Información</span>
+                                                                <span class="icomoon icon-star"></span>
+                                                                <span class="icomoon icon-arrow-slim-right"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li class="list-group-item" ng-click="navigateToPage(3)">
+                                                            <a href="">
+                                                                <span class="icomoon icon-document"></span>
+                                                                <span>Mi personalidad</span>
+                                                                <span class="icomoon icon-star"></span>
+                                                                <span class="icomoon icon-arrow-slim-right"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li class="list-group-item" ng-click="navigateToPage(4)">
+                                                            <a href="">
+                                                                <span class="icomoon icon-required"></span>
+                                                                <span>Socioeconómicos</span>
+                                                                <span class="icomoon icon-star"></span>
+                                                                <span class="icomoon icon-arrow-slim-right"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li class="list-group-item no-badge" ng-click="navigateToPage(5)">
+                                                            <a href="">
+                                                                <span class="icomoon icon-badge"></span>
+                                                                <span>Uso tecnología</span>
+                                                                <span class="icomoon icon-star"></span>
+                                                                <span class="icomoon icon-arrow-slim-right"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <!-- <li class="list-group-item no-badge" ng-click="navigateToPage(6)" ng-show="model.strengths.length > 0">  -->
+                                                        <li class="list-group-item no-badge" ng-click="navigateToPage(6)">
+
+                                                            <a href="">
+                                                                <span class="icomoon icon-workman"></span>
+                                                                <span>Mis logros</span>
+                                                                <span class="icomoon icon-star"></span>
+                                                                <span class="icomoon icon-arrow-slim-right"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li class="list-group-item no-badge" ng-click="navigateToPage(7)" ng-show="model.recomendedBachelorDegrees.length > 0">
+                                                            <a href="">
+                                                                <span class="icomoon icon-user"></span>
+                                                                <span>Mis habilidades</span>
+                                                                <span class="icomoon icon-star"></span>
+                                                                <span class="icomoon icon-arrow-slim-right"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">
+                                                            <a href="">
+                                                                <span class="icomoon icon-rocket"></span>
+                                                                <span>Mis áreas de oportunidad</span>
+                                                                <span class="icomoon icon-star"></span>
+                                                                <span class="icomoon icon-arrow-slim-right"></span>
+                                                            </a>
+                                                        </li>
+
+                                                        <li class="list-group-item no-badge" ng-click="navigateToPage(9)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">
+                                                            <a href="">
+                                                                <span class="icomoon icon-rocket"></span>
+                                                                <span>Elige el rumbo</span>
+                                                                <span class="icomoon icon-star"></span>
+                                                                <span class="icomoon icon-arrow-slim-right"></span>
+                                                            </a>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="page" ng-class="currentPage == 2 ? 'active' : ''">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading" ng-click="navigateToPage(1)">
+                                                            <span class="icomoon icon-arrow-slim-left"></span>
+                                                            <span class="icomoon icon-information"></span>
+                                                            <h3 class="panel-title">Mi información</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12">
+                                                                        
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Datos Generales</h4>
+                                                                            <div class="from-group">
+                                                                                <label>Nombres(s)</label>
+                                                                                <p>Guillermo Gil</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Apellido paterno</label>
+                                                                                <p>Ulloa</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Apellido materno</label>
+                                                                                <p>Hdz</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Alias</label>
+                                                                                <p>memoui</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Sexo</label>
+                                                                                <p>Hombre</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Fecha de nacimiento</label>
+                                                                                <p>10-10-1999</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>País de nacimiento</label>
+                                                                                <p>México</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Edad</label>
+                                                                                <p>15</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Estado civil</label>
+                                                                                <p>Soltero</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Educación</h4>
+                                                                            <ul class="block-list">
+                                                                                <li>
+                                                                                    <div class="from-group">
+                                                                                        <label>Secundaria</label>
+                                                                                        <p>Colegio Franco Mexicano</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="from-group">
+                                                                                        <label>Preparatoria</label>
+                                                                                        <p>Colegio Cristobal Colón</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Dirección</h4>
+                                                                            <div class="from-group">
+                                                                                <label>País</label>
+                                                                                <p>México</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Ciudad</label>
+                                                                                <p>Monterrey</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Delegación/Municipio</label>
+                                                                                <p>San Pedro Garza García</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Código postal</label>
+                                                                                <p>66000</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Calle</label>
+                                                                                <p>Vasconcelos</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Número</label>
+                                                                                <p>124</p>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Colonia</label>
+                                                                                <p>Del Valle</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Teléfonos</h4>
+                                                                            <ul class="block-list">
+                                                                                <li>
+                                                                                    <div class="from-group">
+                                                                                        <label>Teléfono 1</label>
+                                                                                        <p>(81) 1352-9000</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="from-group">
+                                                                                        <label>Teléfono 2</label>
+                                                                                        <p>(81) 1352-9000</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="from-group">
+                                                                                        <label>Teléfono 3</label>
+                                                                                        <p>(81) 1352-9000</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Redes sociales</h4>
+                                                                            <ul class="block-list">
+                                                                                <li>
+                                                                                    <div class="from-group">
+                                                                                        <label>Twitter</label>
+                                                                                        <p>@leogarza995</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="from-group">
+                                                                                        <label>Facebook</label>
+                                                                                        <p>/leogarza995</p>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div> 
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Familia Compartamos</h4>
+                                                                            <ul class="block-list">
+                                                                                <li>
+                                                                                    <div class="from-group">
+                                                                                        <label>Papá</label>
+                                                                                        <p>Leonardo Garza Sada</p>
+                                                                                        <p>
+                                                                                            <em>No. Cliente:</em>
+                                                                                            <span>8920093</span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <div class="from-group">
+                                                                                        <label>Mamá</label>
+                                                                                        <p>María Guadalupe González Roque</p>
+                                                                                        <p>
+                                                                                            <em>No. Cliente:</em>
+                                                                                            <span>8920094</span>
+                                                                                        </p>
+                                                                                    </div>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="page" ng-class="currentPage == 3 ? 'active' : ''">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading" ng-click="navigateToPage(1)">
+                                                            <span class="icomoon icon-arrow-slim-left"></span>
+                                                            <span class="icomoon icon-information"></span>
+                                                            <h3 class="panel-title">Mi personalidad</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12">
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Mis gustos</h4>
+                                                                            <div class="from-group">
+                                                                                <label>Mis deportes preferidos</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Fútbol soccer</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Atletismo</p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Actividades artísticas</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Tocar piano</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Dibujar</p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Hobbies</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Patinar</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Escuchar música</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Leer</p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Mis cualidades</h4>
+                                                                            <div class="from-group">
+                                                                                <label>Talentos</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Música</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Ayudar a los demás</p>
+                                                                                    </li> 
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Valores</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Honesto</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Integro</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Generoso</p>
+                                                                                    </li> 
+                                                                                    <li>
+                                                                                        <p>Cuidadoso</p>
+                                                                                    </li> 
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>Habilidades</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Improvisación musical</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Enseñanza y comunicación</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Análisis numérico</p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+
+                                                                            <div class="from-group">
+                                                                                <label>A quién admiro</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Albert Einstein</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Dalai Lama</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Princesa Diana</p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="page" ng-class="currentPage == 4 ? 'active' : ''">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading" ng-click="navigateToPage(1)">
+                                                            <span class="icomoon icon-arrow-slim-left"></span>
+                                                            <span class="icomoon icon-information"></span>
+                                                            <h3 class="panel-title">Socioeconómicos</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12">
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Vivienda</h4>
+                                                                            <div class="from-group">
+                                                                                <label>Vivo con</label>
+                                                                                <p>Mis Papás</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Actividad</h4>
+                                                                            <div class="from-group">
+                                                                                <label>Mi actividad principal</label>
+                                                                                <p>Estudiante</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Actualmente estudio</h4>
+                                                                            <div class="from-group">
+                                                                                <label>Nivel</label>
+                                                                                <p>Secundaria</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Familiar</h4>
+                                                                            <div class="from-group">
+                                                                                <label>Tengo hijos</label>
+                                                                                <p>No</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Ingresos</h4>
+                                                                            <div class="from-group">
+                                                                                <label>Recibo ingresos</label>
+                                                                                <p>Si</p>
+                                                                            </div>
+                                                                            <div class="from-group">
+                                                                                <label>Fuente de ingresos</label>
+                                                                                <p>Clases de Pintura</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Salud</h4>
+                                                                            <div class="from-group">
+                                                                                <label>Cuento con seguro médico</label>
+                                                                                <p>Si</p>
+                                                                            </div>
+                                                                            <div class="from-group">
+                                                                                <label>Mi seguro es</label>
+                                                                                <p>33300921</p>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="page active" ng-class="currentPage == 5 ? 'active' : ''">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading" ng-click="navigateToPage(1)">
+                                                            <span class="icomoon icon-arrow-slim-left"></span>
+                                                            <span class="icomoon icon-information"></span>
+                                                            <h3 class="panel-title">Uso Tecnología</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12">
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Dispositivos</h4>
+                                                                            <div class="from-group">
+                                                                                <label>¿Qué dispositivo sabes usar?</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Celular</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Laptop</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Tableta</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Computadora</p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <div class="from-group">
+                                                                                <label>¿Con qué dispositivos móviles cuentas?</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Celular</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Laptop</p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                            <div class="from-group">
+                                                                                <label>¿Qué es lo que más haces con un celular?</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Mensajear</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Ver facebook</p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="profile-info-asset">
+                                                                            <h4>Videojuegos</h4>
+                                                                            <div class="from-group">
+                                                                                <label>¿Juegas videojuegos?</label>
+                                                                                <p>Si</p>
+                                                                            </div>
+                                                                            <div class="from-group">
+                                                                                <label>¿Con qué frecuencia juegas videojuegos?</label>
+                                                                                <p>1 vez a la semana</p>
+                                                                            </div>
+                                                                            <div class="from-group">
+                                                                                <label>¿Cuántas horas juegas al día?</label>
+                                                                                <p>5 horas</p>
+                                                                            </div>
+                                                                            <div class="from-group">
+                                                                                <label>¿Qué tipo de videojuegos te gustan más?</label>
+                                                                                <p>De aventura</p>
+                                                                            </div>
+                                                                            <div class="from-group">
+                                                                                <label>¿Cuáles son tus juegos favoritos?</label>
+                                                                                <ul class="block-list">
+                                                                                    <li>
+                                                                                        <p>Las aventuras de Tintin</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Lego Batman</p>
+                                                                                    </li>
+                                                                                    <li>
+                                                                                        <p>Mario Kart</p>
+                                                                                    </li>
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="page" ng-class="currentPage == 6 ? 'active' : ''">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(1)"></span>
+                                                            <span class="icomoon icon-information"></span>
+                                                            <h3 class="panel-title">Mis Logros</h3>
+                                                        </div>
+                                                        <div class="panel-body">This is the Body
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+
+                                                                    <div ng-repeat="badge in model.badgesToEarn">         
+                                                                        
+                                                                        <img class="badgesviews" ng-src="data:image/png;base64,{{badge.badgeimage}}" alt="" class="img-responsive" width="100px" height="100px" ng-click="showDetailBadge(badge.id, badge.badgeimage, badge.name, badge.dateIssued, badge.earned_times)" />      
+                                                                        <div class="badgename" ng-bind="badge.name"></div>
+                                                                        <br />
+                                                                    </div>
+
+
+                                                                    <!--
+                                                                    <div class="col-xs-12" ng-repeat="s in model.strengths">
+                                                                        <h5 ng-bind="s.name"></h5>
+                                                                        <ul class="block-list" ng-repeat="v in s.values">
+                                                                            <li>
+                                                                                <p ng-bind="v"></p>
+                                                                            </li>
+                                                                        </ul>
+                                                                        <hr />
+                                                                        <br />
+                                                                    </div>
+                                                                    -->
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="page" ng-class="currentPage == 7 ? 'active' : ''">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(1)"></span>
+                                                            <span class="icomoon icon-information"></span>
+                                                            <h3 class="panel-title">Carreras Afínes</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12">
+                                                                        <ul class="block-list" ng-repeat="b in model.recomendedBachelorDegrees">
+                                                                            <li>
+                                                                                <p ng-bind="b"></p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="page" ng-class="currentPage == 8 ? 'active' : ''">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(1)"></span>
+                                                            <span class="icomoon icon-information"></span>
+                                                            <h3 class="panel-title">Mis Sueños</h3>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="col-xs-12">
+                                                                        <h5>Sueños Ser</h5>
+                                                                        <ul class="block-list" ng-repeat="db in model.dreamsToBe">
+                                                                            <li>
+                                                                                <p ng-bind="db"></p>
+                                                                            </li>
+                                                                        </ul>
+                                                                        <hr />
+                                                                        </ul>
+
+                                                                        <h5>Sueños Tener</h5>
+                                                                        <ul class="block-list" ng-repeat="dh in model.dreamsToHave">
+                                                                            <li>
+                                                                                <p ng-bind="dh"></p>
+                                                                            </li>
+                                                                        </ul>
+                                                                        <hr />
+                                                                        </ul>
+
+                                                                        <h5>Sueños Hacer</h5>
+                                                                        <ul class="block-list" ng-repeat="dd in model.dreamsToDo">
+                                                                            <li>
+                                                                                <p ng-bind="dd"></p>
+                                                                            </li>
+                                                                        </ul>
+                                                                        <hr />
+                                                                        </ul>
+                                                                        <br />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="page" ng-class="currentPage == 10 ? 'active' : ''">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(1)"></span>
+                                                            <span class="icomoon icon-information"></span>
+                                                            <h3 class="panel-title">Mis Insignias</h3><span>{{badgeId}}</span>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <div class="container-fluid">
+                                                                <div class="row">
+                                                                    <div class="text-center">
+                                                                    <img class="badgesviews" ng-src="data:image/png;base64,{{badgeBadgeimage}}" alt="" class="img-responsive" width="100px" height="100px"  />      
+                                                                    <div class="badgename" ng-bind="badgeName"></div>
+                                                                    <div class="badgename" ng-bind="badgeDateIssued"></div>
+                                                                    <div style="color:white;">
+                                                                        <span style="color:green;">Tú y <span class="badgename" ng-bind="earnedTimes"></span></span> jóvenes han ganado esta bandera
+                                                                    </div>
+                                                                    </div>
+
+
+                                                                    <br />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </article>
+
+                        <!-- <footer>
+                            <ul class="block-list">
+                                <li><a href="" class="btn-link">Preguntas Frecuentes</a></li>
+                                <li><a href="" class="btn-link">Ayuda y Soporte</a></li>
+                            </ul>
+                            <a class="btn-back-to-top" ng-click="scrollToTop();">
+                                <span class="icomoon icon-double-arrow-up"></span>
+                                <span>Subir</span>
+                            </a>
+                        </footer>-->
+                    </div>
+
+                </div>
+            </div>
+            <footer-component></footer-component>
+        </div><!-- ~ .app -->
+ 
+        <script src="Scripts/jquery-2.1.4.min.js"></script>    
+        <script src="Scripts/Plugins/jquery-ui.js"></script>
+        <script src="Scripts/Plugins/underscore-min.js"></script>
+        <script src="Scripts/backbone.js"></script>
+        <script src="Scripts/backbone_offline.js"></script>
+
+        <script src="Scripts/angular-ui/angular.min.js"></script>
+        <script src="Scripts/angular-route.js"></script>
+        <script src="Scripts/app/module.js"></script>
+
+        <script src="Scripts/angular-sanitize.js"></script>
+        <script src="Scripts/angular-resource.js"></script>
+        <script src="Scripts/angular-ui/ui-bootstrap.js"></script>
+        <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script> 
+        <script src="Scripts/moment.js"></script>
+        <script src="Scripts/owl.carousel.min.js"></script>
+
+        <script src="Scripts/angular-ui/compoenents/sidebars.js"></script>
+        <script src="Scripts/utils.js"></script>
+        <script src="Scripts/global.js"></script>
+
+    
+        <script src="Scripts/app/shared/services/moodleServices.js"></script>
+        <script src="Scripts/app/models/Profile.js"></script>
+        <script src="Scripts/app/models/Dashboard.js"></script>
+        <script src="Scripts/app/models/Course.js"></script>
+        <script src="Scripts/app/models/Courses.js"></script>
+        <script src="Scripts/app/shared/controllers/navigation.js"></script>
+        <script src="Scripts/app/home/controllers/home.js"></script>
+        <script src="Scripts/app/public/controllers/login.js"></script>
+        <script src="Scripts/app/public/controllers/register.js"></script>
+        <script src="Scripts/app/public/controllers/recoverPassword.js"></script>
+        <script src="Scripts/app/programa/controllers/dashboard.js"></script>
+        <script src="Scripts/app/programa/controllers/dashboard.etapa.js"></script>
+        <script src="Scripts/app/programa/controllers/profile.js"></script>
+        <script src="Scripts/app/programa/controllers/foro.js"></script>
+
+        <script src="Scripts/app/programa/controllers/acercaPrograma.js"></script>
+        <script src="Scripts/app/programa/controllers/MyInterests.js"></script>
+        <script src="Scripts/app/programa/controllers/MyStrengths.js"></script> 
+        <script src="Scripts/app/programa/controllers/HallOfFame.js"></script> 
+        <script src="Scripts/app/programa/controllers/PrivacyNotice.js"></script> 
+        <script src="Scripts/app/programa/controllers/TermsOfUse.js"></script>
+        <script src="Scripts/app/programa/controllers/ExplorationInitial.js"></script> 
+        <script src="Scripts/app/programa/controllers/ExplorationFinal.js"></script> 
+        <script src="Scripts/app/programa/controllers/HelpAndSupport.js"></script> 
+        <script src="Scripts/app/programa/controllers/Alerts.js"></script>
+        <script src="Scripts/app/juegos/GameController.js"></script> 
+          
+        <script src="Scripts/app/programa/controllers/stageDashboardController.js"></script>   
+        <script src="Scripts/app/programa/controllers/programaChatController.js"></script>
+        <script src="Scripts/app/programa/controllers/programaDashboardController.js"></script>
+        <script src="Scripts/app/programa/controllers/programaLeaderBoard.js"></script>
+        
+
+        <script src="Scripts/app/programa/controllers/programaNotificationController.js"></script>
+        <script src="Scripts/app/programa/controllers/stageGameRetoMultipleController.js"></script>
+        <script src="Scripts/app/programa/controllers/stageGameRetoMultipleExternalAppController.js"></script>
+        <script src="Scripts/app/programa/controllers/stageGameRetoMultipleResultsController.js"></script>
+        <script src="Scripts/app/programa/controllers/stageChatController.js"></script>
+        <script src="Scripts/app/programa/controllers/stageContentsController.js"></script>
+        <script src="Scripts/app/programa/controllers/stageDashboardController.js"></script>
+        <script src="Scripts/app/programa/controllers/stageForumController.js"></script>
+        <script src="Scripts/app/programa/controllers/stageForumCommentsController.js"></script>
+        <script src="Scripts/app/programa/controllers/stageMessageController.js"></script>
+        <script src="Scripts/app/programa/controllers/stageQuizController.js"></script>
+        <script src="Scripts/app/programa/controllers/tutorial.js"></script>
+        <script src="Scripts/app/juegos/avatarController.js"></script>
+
+        <!-- <script src="Scripts/cordova.js"></script> -->
+    </body>
+</html>

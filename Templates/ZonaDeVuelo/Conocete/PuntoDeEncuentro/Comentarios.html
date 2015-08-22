@@ -1,0 +1,144 @@
+<div class="incluso-app step-dashboard" id="site-wrapper">
+  <div id="site-menu" >
+  <!--<menu-component></menu-component>-->
+  </div>
+  <div id="site-canvas">
+
+
+<article class="blueprint">
+
+  <section>
+    <div class="txt-renglon centered txt-bigger"></div>
+    <div class="subtitle">Foro Común</div>
+
+    <div class="txt-renglon txt-bigger">{{discussion.message}}</div>  
+  </section>
+
+  <section class="txt-renglon centered collapse-media">
+    <div class="panel">
+      <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
+        <h3>
+          <span class="icomoon icon-video-file"></span>
+          <span>Fotografía de foro</span>
+          <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
+          <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
+        </h3>
+      </div>
+      <div class="panel-body" collapse="isCollapsed">
+        <div class="stage perform">
+          <figure class="player">
+              <img src="{{ discussion.image[0].fileurl }}" alt="{{ discussion.image[0].filename }}">
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="txt-renglon distribuido">
+    <a href="#openModal1"><img src="assets/images/aa.svg"></a>
+    <a href="#openModal2"><img src="assets/images/link.svg"></a>
+    <a href="#openModal3"><img src="assets/images/play.svg"></a>
+    <a href="#openModal4"><img src="assets/images/clip.svg"></a>
+  </section>
+
+<section class="modales">
+
+<div id="openModal1" class="modalDialog">
+  <div>
+    <a href="#close" title="Close" class="close"></a>
+<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value=""/></div>
+
+<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+  </div>
+</div>
+
+<div id="openModal2" class="modalDialog">
+  <div>
+    <a href="#close" title="Close" class="close"></a>
+<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar tu enlace..." value=""/></div>
+
+<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+  </div>
+</div>
+
+<div id="openModal3" class="modalDialog">
+  <div>
+    <a href="#close" title="Close" class="close"></a>
+<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar ruta de tu peli..." value=""/></div>
+
+<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+  </div>
+</div>
+
+<div id="openModal4" class="modalDialog">
+  <div>
+    <a href="#close" title="Close" class="close"></a>
+<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Atachea algo..." value=""/></div>
+
+<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+  </div>
+</div>
+</section>
+
+
+<section class="wall">
+
+    <div id="item{{index}}" ng-repeat="p in discussion.posts[0].replies">
+
+
+
+        <div class="part">
+          <div class="author"><img src="assets/images/avatar.svg">
+          <div>{{p.postAutor}} <span>publicó:</span>
+          <div>{{p.created | date: 'dd MMMM yyyy'}}</div>
+          </div>
+        </div>
+        <div class="block">  
+            {{p.message }}
+            <!--ng-bind-html="p.message | parseLinks" -->
+            <div ng-repeat="attachment in p.attachments">
+                <a href="{{ attachmentsfileurl }}"><i class="icomoon icon-required"></i> {{ attachment.filename }} </a>
+            </div>
+          <div>A <span class="green">{{p.likes}}</span> jóvenes les gusta esto</div></div>
+
+
+          <div id="item{{$index}}" ng-repeat="r in p.replies">
+
+            <div class="coment block"><img src="assets/images/avatar.svg">
+              <div>{{r.postAutor}}<span>publicó:</span>   <div>{{r.message}}</div>
+              </div>
+            </div>
+          </div>
+
+        <div class="vermas">
+        Ver más comentarios
+        <i class="icomoon icon-plus"></i>
+        </div>
+        <div class="social">
+        <div><i class="icomoon icon-required"></i> Me gusta
+        </div>
+        <div><i class="icomoon icon-required"></i> Comentar
+        </div>
+        </div>
+        </div>
+    </div>
+
+
+<section>
+<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
+<div class="txt-renglon centered txt-bigger"></div> 
+</section>
+
+  </article>
+
+  <footer class="footer">
+    <ul class="block-list">
+      <li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
+      <li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
+    </ul>
+    <a href="#navBar" class="to-top"><i class="icomoon icon-double-arrow-up"></i><br/>SUBIR</a>
+  </footer>
+    </div>
+    </div>
+  <!-- html -->
+
