@@ -40,7 +40,8 @@ angular
                                   file: {
                                         id: 3,
                                         filename: "Archivo 1.txt",
-                                        path: "assets/images/avatar.svg"
+                                        path: "assets/images/avatar.svg",
+                                        pageContent:"\u003Cp\u003E\u003Cbr\u003EContenido ejemplo de fotografía\u003C\/p\u003E"
                                       }
                                   },
                                   {id: 16,
@@ -159,6 +160,7 @@ angular
                     if($scope.statusObligatorios == 5){
                       $scope.activities.completed = true;
                       alert("Prueba: Ya has visto 5 elementos obligatorios");
+                      $scope.activities.completed = true;
                     }
                   }
                   else{
