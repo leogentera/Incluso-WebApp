@@ -101,6 +101,12 @@ body.modal-open {
   width: 85vw;
   pointer-events: all;
 }
+.sidebar-left .navbar ul {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.sidebar-left .navbar ul .icomoon {
+  line-height: 12vw;
+}
 .incluso-app .sidebar-left .navbar-assets {
   width: auto;
 }
@@ -1262,12 +1268,30 @@ body.modal-open {
 }
 .incluso-app .navbar .icomoon {
   font-size: 6vw;
-  line-height: 15vw;
+  /*line-height: 17vw;*/
   vertical-align: top;
+}
+.incluso-app .navbar span {
+  font-size: 6vw;
+  line-height: 1vw;
 }
 .incluso-app .navbar.etapa-uno {
   background-color: #138BCB;
   border-color: #138BCB;
+}
+.incluso-app .navbar ul {
+  margin: 0px;
+  padding: 3vw;
+  line-height: 7vw;
+}
+.incluso-app .navbar ul li {
+  display: inline-block;
+  margin-right: 1vw;
+  line-height: 7vw;
+}
+.incluso-app .navbar ul li a {
+  font-size: 6vw;
+  color: #FFF;
 }
 .incluso-app .navbar-absolute-top {
   display: none;
@@ -1331,13 +1355,16 @@ body.modal-open {
   font-family: 'Play';
   font-size: 4vw;
   font-weight: bold;
-  line-height: 14vw;
+  /*line-height: 14vw;*/
   text-overflow: ellipsis;
   white-space: nowrap;
   text-transform: none;
 }
 .incluso-app .navbar-assets .navbar-heading a {
   color: #ffffff;
+}
+.incluso-app .navbar-assets .btn-group {
+  padding: 2.5vh 0px;
 }
 .incluso-app .navbar-assets .navbar-tools {
   display: inline-block;
@@ -1346,7 +1373,7 @@ body.modal-open {
   width: 45vw;
   max-width: 48vw;
   list-style-type: none;
-  padding: 0 9px 0 0;
+  padding: 2.5vh 0px;
 }
 .incluso-app .navbar-tools li {
   display: inline-block;
