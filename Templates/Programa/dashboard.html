@@ -53,7 +53,8 @@
                 <div class="user-container">
                   <div class="user-avatar">
                     <figure>
-                      <img src="assets/images/img-avatar-dummy-01.png" alt="avatar" />
+                      <!--<img src="assets/images/img-avatar-dummy-01.png" alt="avatar" />-->
+                      <img src="assets/images/{{course.leaderboard[0].picture == null ? 'img-avatar-dummy-01.png' : course.leaderboard[0].picture }}" alt="avatar" />
                       <figcaption>1</figcaption>
                       <div class="arrow-up"></div>
                     </figure>
@@ -63,8 +64,8 @@
               <div class="user-data">
                 <div>
                   <p>
-                    <label for="">1er. Lugar:</label>
-                    <span>{{course.leaderboard[0] != null ? course.leaderboard[0].fullname : ""}}</span>
+                    <label for="">1er. Lugar: </label>
+                    <span>{{course.leaderboard[0].alias != null ? course.leaderboard[0].alias : "Tu alias"}}</span>
                   </p>
                   <ul class="inline-list">
                     <li class="points"><span>{{course.leaderboard[0] != null ? course.leaderboard[0].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
@@ -79,7 +80,8 @@
                 <div class="user-container">
                   <div class="user-avatar">
                     <figure>
-                      <img src="assets/images/img-avatar-dummy-02.png" alt="avatar" />
+                      <!--<img src="assets/images/img-avatar-dummy-02.png" alt="avatar" />-->
+                      <img src="assets/images/{{course.leaderboard[1].picture == null ? 'img-avatar-dummy-02.png' : course.leaderboard[1].picture }}" alt="avatar" />
                       <figcaption>2</figcaption>
                       <div class="arrow-up"></div>
                     </figure>
@@ -89,8 +91,8 @@
               <div class="user-data">
                 <div>
                   <p>
-                    <label for="">2do. Lugar:</label>
-                    <span>{{course.leaderboard[1] != null ? course.leaderboard[1].fullname : ""}}</span>
+                    <label for="">2do. Lugar: </label>
+                    <span>{{course.leaderboard[1].alias != null ? course.leaderboard[1].alias : "Tu alias"}}</span>
                   </p>
                   <ul class="inline-list">
                     <li class="points"><span>{{course.leaderboard[1] != null ? course.leaderboard[1].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
@@ -105,7 +107,8 @@
                 <div class="user-container">
                   <div class="user-avatar">
                     <figure>
-                      <img src="assets/images/img-avatar-dummy-03.png" alt="avatar" />
+                      <!--<img src="assets/images/img-avatar-dummy-03.png" alt="avatar" />-->
+                      <img src="assets/images/{{course.leaderboard[2].picture == null ? 'img-avatar-dummy-03.png' : course.leaderboard[2].picture }}" alt="avatar" />
                       <figcaption>3</figcaption>
                       <div class="arrow-up"></div>
                     </figure>
@@ -115,8 +118,8 @@
               <div class="user-data">
                 <div>
                   <p>
-                    <label for="">3er. Lugar:</label>
-                    <span>{{course.leaderboard[2] != null ? course.leaderboard[2].fullname : ""}}</span>
+                    <label for="">3er. Lugar: </label>
+                    <span>{{course.leaderboard[2].alias != null ? course.leaderboard[2].alias : "Tu alias"}}</span>
                   </p>
                   <ul class="inline-list">
                     <li class="points"><span>{{course.leaderboard[2] != null ? course.leaderboard[2].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
