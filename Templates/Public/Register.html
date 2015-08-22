@@ -148,8 +148,10 @@
                       <span class="icomoon icon-dna"></span>                      
                     </p>
                     <p class="input-group-control custom-placeholder-wrapper">
-                      <select ng-model="registerModel.gender" name="gender" ng-options="item for item in genderItems" ng-init="registerModel.gender == null" class="form-control form-control-lg theme-default" aria-describedby="genderAddOn" required>
-                        <option value="" ng-disabled="!!registerModel.gender">Género</option>
+                      <select ng-model="registerModel.gender" name="gender" ng-options="item for item in genderItems" ng-init="registerModel.gender == null" class="form-control form-control-lg theme-default" aria-describedby="genderAddOn" required  ng-class="{'selected': registerModel.gender.length != 0}">
+                        <option value="" ng-disabled="!!registerModel.gender">
+                          <span>{{registerModel.gender.length}}</span>
+                        </option>
                       </select>                  
                     </p>
                   </div>
