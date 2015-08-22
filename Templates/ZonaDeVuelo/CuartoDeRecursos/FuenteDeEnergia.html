@@ -40,10 +40,10 @@
                       <span>Visita el sitio web!</span>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="content.mandatory"></i>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                      <i class="icomoon icon-checked-join" ng-show="content.seen"></i>
                       <i class="icomoon icon-edit" ng-hide="content.seen"></i>
                     </div>
                   </div>
@@ -58,10 +58,10 @@
                         <span>Video tutorial Incluso</span>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="content.mandatory"></i>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                      <i class="icomoon icon-checked-join" ng-show="content.seen"></i>
                       <i class="icomoon icon-edit" ng-hide="content.seen"></i>
                     </div>
                   </div>
@@ -76,10 +76,10 @@
                         <span>Texto</span>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="content.mandatory"></i>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                      <i class="icomoon icon-checked-join" ng-show="content.seen"></i>
                       <i class="icomoon icon-edit" ng-hide="content.seen"></i>
                     </div>
                   </div>
@@ -94,11 +94,11 @@
                       <span>Fotografía</span>
                     </div>        
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="content.mandatory"></i>
                     </div>
                     <div class="col-xs-1">
                       <i class="icomoon icon-edit" ng-hide="content.seen"></i>
-                      <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                      <i class="icomoon icon-checked-join" ng-show="content.seen"></i>
                     </div>
                   </div>      
                 </div>
@@ -110,7 +110,10 @@
                     </div>
                     <div class="message">
                         <a ng-hide="content.isVideo" ng-click="updateStatus(content.id)" href={{content.url}} target="_blank">{{content.url}}</a>
-                        <span ng-click="updateStatus(content.id)" ng-bind-html="content.pageContent"></span>
+                        <span ng-click="updateStatus(content.id)" ng-if="content.activityType == 'page' && !content.seen">Mostrar texto...</span>
+                        <span ng-show="content.seen" ng-bind-html="content.pageContent"></span>
+
+                        <span ng-bind-html="content.file.pageContent"></span>
                         <a ng-show="content.isVideo" ng-click="updateStatus(content.id)" href={{content.url}} target="_blank">{{content.url}}</a>
                     </div>
                   </div>

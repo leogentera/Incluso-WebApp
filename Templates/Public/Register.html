@@ -131,9 +131,9 @@
                       <span class="icomoon icon-calendar"></span>
                     </p>                    
                     
-                    <p class="input-group-control custom-placeholder-wrapper">
+                    <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                       <input type="date" ng-model="registerModel.birthday" name="birthday" class="form-control form-control-lg theme-default" aria-describedby="birthDateAddOn" minlength="10" maxlength="10" required />
-                      <span class="custom-placeholder form-control-lg">Fecha de nacimiento</span>
+                      <span class="custom-placeholder form-control-lg" ng-hide="registerModel.birthday.length !== 0">Fecha de nacimiento</span>
                     </p>
                   </div>
                 </div>
@@ -147,12 +147,11 @@
                     <p class="input-group-addon" id="genderAddOn">
                       <span class="icomoon icon-dna"></span>                      
                     </p>
-                    <p class="input-group-control custom-placeholder-wrapper">
+                    <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
                       <select ng-model="registerModel.gender" name="gender" ng-options="item for item in genderItems" ng-init="registerModel.gender == null" class="form-control form-control-lg theme-default" aria-describedby="genderAddOn" required  ng-class="{'selected': registerModel.gender.length != 0}">
-                        <option value="" ng-disabled="!!registerModel.gender">
-                          <span>{{registerModel.gender.length}}</span>
-                        </option>
-                      </select>                  
+                        <option value="" ng-disabled="!!registerModel.gender">Género</option>
+                      </select>
+                      <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                     </p>
                   </div>
                 </div>
@@ -166,10 +165,11 @@
                     <p class="input-group-addon" id="countryAddOn">
                       <span class="icomoon icon-earth"></span>                        
                     </p>
-                    <p class="input-group-control custom-placeholder-wrapper">
-                      <select ng-model="registerModel.country" name="country" ng-options="item for item in countryItems" ng-init="registerModel.country == null" class="form-control form-control-lg theme-default" aria-describedby="countryAddOn" required>
+                    <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                      <select ng-model="registerModel.country" name="country" ng-options="item for item in countryItems" ng-init="registerModel.country == null" class="form-control form-control-lg theme-default" aria-describedby="countryAddOn" required ng-class="{'selected': registerModel.country.length != 0}">
                         <option value="" ng-disabled="!!registerModel.country">País</option>                        
-                      </select>                      
+                      </select>
+                      <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                     </p>
                   </div>
                 </div>
@@ -183,11 +183,11 @@
                     <p class="input-group-addon" id="cityAddOn">
                       <span class="icomoon icon-map"></span> 
                     </p>
-                    <p class="input-group-control custom-placeholder-wrapper">
-                      <select ng-model="registerModel.city" name="city" ng-options="item for item in cityItems" ng-init="registerModel.city == null" class="form-control form-control-lg theme-default" aria-describedby="cityAddOn" required>
+                    <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                      <select ng-model="registerModel.city" name="city" ng-options="item for item in cityItems" ng-init="registerModel.city == null" class="form-control form-control-lg theme-default" aria-describedby="cityAddOn" required ng-class="{'selected': registerModel.city.length != 0}">
                         <option value="" ng-disabled="!!registerModel.city">Ciudad</option>
                       </select>
-                      <!--<span class="custom-placeholder form-control-lg">Ciudad</span>-->
+                      <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                     </p>                    
                   </div>
                 </div>            
@@ -265,10 +265,11 @@
                     <p class="input-group-addon" id="securityQuestionAddOn">
                       <span class="icomoon icon-help"></span>
                     </p>
-                    <p class="input-group-control custom-placeholder-wrapper">
-                      <select ng-disabled="isRegistered" ng-model="registerModel.secretQuestion" ng-init="registerModel.secretQuestion == null" ng-options="item for item in securityquestionItems" name="securityQuestion" class="form-control form-control-lg theme-default" aria-describedby="securityQuestionAddOn" data-show-placeholder="$scope.isRegistered" required>
+                    <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
+                      <select ng-disabled="isRegistered" ng-model="registerModel.secretQuestion" ng-init="registerModel.secretQuestion == null" ng-options="item for item in securityquestionItems" name="securityQuestion" class="form-control form-control-lg theme-default" aria-describedby="securityQuestionAddOn" data-show-placeholder="$scope.isRegistered" required ng-class="{'selected': registerModel.secretQuestion.length != 0}">
                         <option value="" ng-disabled="!!registerModel.secretQuestion">Pregunta de seguridad</option>
-                      </select>                      
+                      </select>
+                      <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                     </p>
                   </div>
                 </div>

@@ -6,13 +6,21 @@
               <div id="site-menu" >
                   <nav class="ng-scope">
                     <div id="navBar" class="navbar" ng-class="{'navbar-blue': navbarBlue, 'navbar-orange': navbarOrange}">
-                      <div class="container-fluid">
+                      <ul ng-click="sideToggle()">
+                        <li>
+                          <i class="icomoon icon-cross white"></i>
+                        </li>
+                        <li>
+                          <a class="navbar-heading"> Menu</a>
+                        </li>
+                      </ul>
+                      <!--<div class="container-fluid">
                         <div class="row">
                           <div class="navbar-assets" ng-click="sideToggle()">
                             <h1 class="navbar-heading"><a id="closeaton" data-transition="ease"><i class="icomoon icon-cross white"></i> Menu</a></h1>
                           </div>
                         </div>
-                      </div>
+                      </div>-->
                     </div>
                   </nav>
                   <ul class="nav" ng-controller="menuController">
