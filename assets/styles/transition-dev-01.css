@@ -39,7 +39,71 @@
   padding: 5% 6%;
   width: 90%;
 }
+.incluso-app .evaluation .part .add {
+  margin: 0;
+  font-size: 106%;
+  padding: 4% 0;
+}
+.incluso-app .evaluation .part .add .icomoon::before {
+  padding-right: 3% !important;
+}
+.incluso-app .evaluation .part .add .icomoon {
+  font-size: 86% !important;
+  padding-right: 0 !important;
+}
+.incluso-app .evaluation .part .add input {
+  width: 91% !important;
+}
 .incluso-app .evaluation .controls .centered span {
   position: relative;
   top: -8px;
+  font-weight: bold;
+}
+.incluso-app .evaluation .controls .centered.txt-bigger {
+  font-size: 120%;
+}
+.incluso-app .evaluation .form label {
+  font-size: 4.5vw;
+  padding-left: 8vw;
+}
+.incluso-app .evaluation .form label::before {
+  font-size: 4vw;
+  height: 5vw;
+  width: 5vw;
+  line-height: 5vw;
+  margin-top: 6px;
+}
+.incluso-app .evaluation .add {
+  padding: 3% 0;
+  font-size: 115%;
+}
+.incluso-app .evaluation .add .icomoon::before {
+  color: white;
+  font-size: 92%;
+  padding-right: 3%;
+}
+.incluso-app .evaluation .add input {
+  background: transparent;
+  color: white;
+  border: none;
+  width: 91%;
+  font-weight: normal;
+}
+.incluso-app .evaluation .add input::-webkit-input-placeholder {
+  color: white !important;
+  opacity: 1;
+}
+.incluso-app .evaluation .add input:-moz-placeholder {
+  /* Firefox 18- */
+  color: white !important;
+  opacity: 1;
+}
+.incluso-app .evaluation .add input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: white !important;
+  opacity: 1;
+}
+.incluso-app .evaluation .add input:-ms-input-placeholder {
+  color: white !important;
+  opacity: 1;
 }

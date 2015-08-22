@@ -35,8 +35,8 @@
         .txt-renglon {
 
             &.txt-bigger {
-                font-size: 129%;
-            } 
+                font-size: 129%;                
+            }             
 
         }
 
@@ -44,6 +44,25 @@
             margin: 0vh 5%;
             padding: 5% 6%;
             width: 90%;
+
+            .add {
+                margin: 0;
+                font-size: 106%;
+                padding: 4% 0;
+
+                .icomoon::before {                    
+                    padding-right: 3% !important;                    
+                }
+
+                .icomoon {
+                    font-size: 86% !important;
+                    padding-right: 0 !important;
+                }
+
+                input {
+                    width: 91% !important;
+                }
+            }  
         }
 
         .controls {           
@@ -51,12 +70,74 @@
                 span {
                     position: relative;
                     top: -8px;
+                    font-weight: bold;
                 }
+                &.txt-bigger {
+                    font-size: 120%;
+                }                
             }
-        }
+        } 
+
+        .form {    
+            label {
+
+                &::before{
+                    font-size: 4vw;
+                    height: 5vw;
+                    width: 5vw;
+                    line-height: 5vw;
+                    margin-top: 6px;
+                }  
+
+                font-size: 4.5vw;
+                padding-left: 8vw;
+
+            }      
+
+        }       
+
+        .add {            
+            padding: 3% 0;
+            font-size: 115%;
+
+            .icomoon::before {
+                color: white;
+                font-size: 92%;
+                padding-right: 3%;
+            }
+
+            input {
+                background: transparent;
+                color: white;
+                border: none;
+                width: 91%;
+                font-weight: normal;
+
+                &::-webkit-input-placeholder {
+                    color: white !important;
+                    opacity: 1; 
+                }
+
+                &:-moz-placeholder { /* Firefox 18- */
+                   color: white !important;
+                   opacity: 1;   
+               }
+
+               &::-moz-placeholder {  /* Firefox 19+ */
+                   color: white !important;
+                   opacity: 1;   
+               }
+
+               &:-ms-input-placeholder {  
+                   color: white !important; 
+                   opacity: 1;  
+               }
+           } 
 
 
-    }
 
+       }
+
+   }    
 
 }
