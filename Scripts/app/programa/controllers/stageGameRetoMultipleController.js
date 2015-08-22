@@ -24,7 +24,7 @@ angular
 
             $scope.user = moodleFactory.Services.GetCacheJson("profile");
             $scope.activities = moodleFactory.Services.GetCacheJson("activities");
-            $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
+            $scope.retoMultipleActivities = null; //moodleFactory.Services.GetCacheJson("retoMultipleActivities");
             
             if ( $scope.activities == null) {
             $scope.activities = [  
@@ -85,37 +85,37 @@ angular
                            {  
                               "coursemoduleid":57,
                               "activitytype":"quiz",
-                              "name":"Juego Naturista",
+                              "name":"Naturista",
                               "intro":""
                            },
                            {  
                               "coursemoduleid":58,
                               "activitytype":"quiz",
-                              "name":"Juego Liguistica",
+                              "name":"Liguistica",
                               "intro":""
                            },
                            {  
                               "coursemoduleid":59,
                               "activitytype":"quiz",
-                              "name":"Juego Corporal",
+                              "name":"Corporal",
                               "intro":""
                            },
                            {  
                               "coursemoduleid":60,
                               "activitytype":"quiz",
-                              "name":"Juego Espacial",
+                              "name":"Espacial",
                               "intro":""
                            },
                            {  
                               "coursemoduleid":61,
                               "activitytype":"quiz",
-                              "name":"Juego Musical",
+                              "name":"Musical",
                               "intro":""
                            },
                            {  
                               "coursemoduleid":62,
                               "activitytype":"quiz",
-                              "name":"Juego Matem\u00e1tico",
+                              "name":"Matem\u00e1tico",
                               "intro":""
                            },
                            {  
@@ -199,13 +199,13 @@ angular
                            {  
                               "coursemoduleid":105,
                               "activitytype":"quiz",
-                              "name":"Juego Intrapersonal",
+                              "name":"Intrapersonal",
                               "intro":""
                            },
                            {  
                               "coursemoduleid":106,
                               "activitytype":"quiz",
-                              "name":"Juego Interpersonal",
+                              "name":"Interpersonal",
                               "intro":""
                            },
                            {  
@@ -310,74 +310,182 @@ angular
 
             if ($scope.retoMultipleActivities == null) {
                      $scope.retoMultipleActivities = [
-                                 {  
+                                 {
                                     "id":21,
-                                    "name":"Juego Naturista",
-                                    "description":null,
+                                    "name":"Naturalista",
+                                    "description":"\u003Cp\u003E\u003Ctable border=\u00220\u0022 cellpadding=\u00220\u0022 cellspacing=\u00220\u0022 width=\u0022302\u0022 style=\u0022border-collapse:\r\n collapse;width:227pt\u0022\u003E\r\n \u003Ccolgroup\u003E\u003Ccol width=\u0022302\u0022 style=\u0022;width:227pt\u0022\u003E\r\n \u003C\/colgroup\u003E\u003Ctbody\u003E\u003Ctr height=\u002280\u0022 style=\u0022height:60.0pt\u0022\u003E\r\n\r\n  \u003Ctd height=\u002280\u0022 class=\u0022xl64\u0022 width=\u0022302\u0022 style=\u0022height:60.0pt;width:227pt;\r\n  font-size:11.0pt;color:black;font-weight:400;text-decoration:none;text-underline-style:\r\n  none;text-line-through:none;font-family:Calibri;border:none\u0022\u003ESi prefieres\r\n  platicar con las plantas que con tu abuelita, las hormigas se vuelven tus\r\n  mascotas y entiendes m\u00e1s de biolog\u00eda que otra cosa.\u003Cbr\u003E\r\n    Naturalmente esta es tu inteligencia\u003C\/td\u003E\r\n\r\n \u003C\/tr\u003E\r\n\u003C\/tbody\u003E\u003C\/table\u003E\u003Cbr\u003E\u003C\/p\u003E",
                                     "activityType":"quiz",
                                     "status":"-1",
-                                    "stars":300,
+                                    "stars":-1,
                                     "dateIssued":null,
                                     "score":-1,
                                     "quizType":"survey",
                                     "grade":null,
-                                    "questions":[  
-                                       {  
-                                          "id":22,
-                                          "question":"\u003Cp\u003E\u00bfNivel naturista?\u003Cbr\u003E\u003C\/p\u003E",
+                                    "questions":[
+                                       {
+                                          "id":32,
+                                          "question":"\u003Cp\u003E\u00bfMe fue f\u00e1cil completar el reto?\u003C\/p\u003E",
                                           "questiontype":"multichoice",
-                                          "answers":[  
-                                             {  
-                                                "id":69,
+                                          "answers":[
+                                             {
+                                                "id":99,
+                                                "answer":"\u003Cp\u003ES\u00ed\u003C\/p\u003E",
+                                                "fraction":"1.0000000"
+                                             },
+                                             {
+                                                "id":100,
+                                                "answer":"\u003Cp\u003ENo\u003C\/p\u003E",
+                                                "fraction":"0.0000000"
+                                             }
+                                          ],
+                                          "userAnswer":""
+                                       },
+                                       {
+                                          "id":33,
+                                          "question":"\u003Cp\u003E\u00bfDisfrut\u00e9 este reto?\u003C\/p\u003E",
+                                          "questiontype":"multichoice",
+                                          "answers":[
+                                             {
+                                                "id":101,
+                                                "answer":"\u003Cp\u003ES\u00ed\u003C\/p\u003E",
+                                                "fraction":"1.0000000"
+                                             },
+                                             {
+                                                "id":102,
+                                                "answer":"\u003Cp\u003ENo\u003C\/p\u003E",
+                                                "fraction":"0.0000000"
+                                             }
+                                          ],
+                                          "userAnswer":""
+                                       },
+                                       {
+                                          "id":34,
+                                          "question":"\u003Cp\u003E\u00bfMe gustar\u00eda tener mi propio jard\u00edn en el que pueda cultivar mis alimentos?\u003C\/p\u003E",
+                                          "questiontype":"multichoice",
+                                          "answers":[
+                                             {
+                                                "id":103,
+                                                "answer":"\u003Cp\u003ES\u00ed\u003C\/p\u003E",
+                                                "fraction":"1.0000000"
+                                             },
+                                             {
+                                                "id":104,
+                                                "answer":"\u003Cp\u003ENo\u003C\/p\u003E",
+                                                "fraction":"0.0000000"
+                                             }
+                                          ],
+                                          "userAnswer":""
+                                       },
+                                       {
+                                          "id":42,
+                                          "question":"\u003Cp\u003ENivel\u003C\/p\u003E",
+                                          "questiontype":"multichoice",
+                                          "answers":[
+                                             {
+                                                "id":119,
                                                 "answer":"\u003Cp\u003EAlto\u003C\/p\u003E",
                                                 "fraction":"1.0000000"
                                              },
-                                             {  
-                                                "id":70,
+                                             {
+                                                "id":120,
                                                 "answer":"\u003Cp\u003EMedio\u003C\/p\u003E",
-                                                "fraction":"0.0000000"
+                                                "fraction":"0.6000000"
                                              },
-                                             {  
-                                                "id":71,
+                                             {
+                                                "id":121,
                                                 "answer":"\u003Cp\u003EBajo\u003C\/p\u003E",
-                                                "fraction":"0.0000000"
+                                                "fraction":"0.2000000"
                                              }
                                           ],
                                           "userAnswer":""
                                        }
                                     ]
                                  },
-                                 {  
+                                 {
                                     "id":21,
-                                    "name":"Juego Musical",
-                                    "description":null,
+                                    "name":"Musical",
+                                    "description":"\u003Cp\u003E\u003Ctable border=\u00220\u0022 cellpadding=\u00220\u0022 cellspacing=\u00220\u0022 width=\u0022302\u0022 style=\u0022border-collapse:\r\n collapse;width:227pt\u0022\u003E\r\n \u003Ccolgroup\u003E\u003Ccol width=\u0022302\u0022 style=\u0022;width:227pt\u0022\u003E\r\n \u003C\/colgroup\u003E\u003Ctbody\u003E\u003Ctr height=\u002280\u0022 style=\u0022height:60.0pt\u0022\u003E\r\n\r\n  \u003Ctd height=\u002280\u0022 class=\u0022xl64\u0022 width=\u0022302\u0022 style=\u0022height:60.0pt;width:227pt;\r\n  font-size:11.0pt;color:black;font-weight:400;text-decoration:none;text-underline-style:\r\n  none;text-line-through:none;font-family:Calibri;border:none\u0022\u003ESi prefieres\r\n  platicar con las plantas que con tu abuelita, las hormigas se vuelven tus\r\n  mascotas y entiendes m\u00e1s de biolog\u00eda que otra cosa.\u003Cbr\u003E\r\n    Naturalmente esta es tu inteligencia\u003C\/td\u003E\r\n\r\n \u003C\/tr\u003E\r\n\u003C\/tbody\u003E\u003C\/table\u003E\u003Cbr\u003E\u003C\/p\u003E",
                                     "activityType":"quiz",
                                     "status":"-1",
-                                    "stars":300,
+                                    "stars":-1,
                                     "dateIssued":null,
                                     "score":-1,
                                     "quizType":"survey",
                                     "grade":null,
-                                    "questions":[  
-                                       {  
-                                          "id":22,
-                                          "question":"\u003Cp\u003E\u00bfNivel musical?\u003Cbr\u003E\u003C\/p\u003E",
+                                    "questions":[
+                                       {
+                                          "id":32,
+                                          "question":"\u003Cp\u003E\u00bfMe fue f\u00e1cil completar el reto?\u003C\/p\u003E",
                                           "questiontype":"multichoice",
-                                          "answers":[  
-                                             {  
-                                                "id":69,
+                                          "answers":[
+                                             {
+                                                "id":99,
+                                                "answer":"\u003Cp\u003ES\u00ed\u003C\/p\u003E",
+                                                "fraction":"1.0000000"
+                                             },
+                                             {
+                                                "id":100,
+                                                "answer":"\u003Cp\u003ENo\u003C\/p\u003E",
+                                                "fraction":"0.0000000"
+                                             }
+                                          ],
+                                          "userAnswer":""
+                                       },
+                                       {
+                                          "id":33,
+                                          "question":"\u003Cp\u003E\u00bfDisfrut\u00e9 este reto?\u003C\/p\u003E",
+                                          "questiontype":"multichoice",
+                                          "answers":[
+                                             {
+                                                "id":101,
+                                                "answer":"\u003Cp\u003ES\u00ed\u003C\/p\u003E",
+                                                "fraction":"1.0000000"
+                                             },
+                                             {
+                                                "id":102,
+                                                "answer":"\u003Cp\u003ENo\u003C\/p\u003E",
+                                                "fraction":"0.0000000"
+                                             }
+                                          ],
+                                          "userAnswer":""
+                                       },
+                                       {
+                                          "id":34,
+                                          "question":"\u003Cp\u003E\u00bfMe gustar\u00eda tener mi propio jard\u00edn en el que pueda cultivar mis alimentos?\u003C\/p\u003E",
+                                          "questiontype":"multichoice",
+                                          "answers":[
+                                             {
+                                                "id":103,
+                                                "answer":"\u003Cp\u003ES\u00ed\u003C\/p\u003E",
+                                                "fraction":"1.0000000"
+                                             },
+                                             {
+                                                "id":104,
+                                                "answer":"\u003Cp\u003ENo\u003C\/p\u003E",
+                                                "fraction":"0.0000000"
+                                             }
+                                          ],
+                                          "userAnswer":""
+                                       },
+                                       {
+                                          "id":42,
+                                          "question":"\u003Cp\u003ENivel\u003C\/p\u003E",
+                                          "questiontype":"multichoice",
+                                          "answers":[
+                                             {
+                                                "id":119,
                                                 "answer":"\u003Cp\u003EAlto\u003C\/p\u003E",
                                                 "fraction":"1.0000000"
                                              },
-                                             {  
-                                                "id":70,
+                                             {
+                                                "id":120,
                                                 "answer":"\u003Cp\u003EMedio\u003C\/p\u003E",
-                                                "fraction":"0.0000000"
+                                                "fraction":"0.6000000"
                                              },
-                                             {  
-                                                "id":71,
+                                             {
+                                                "id":121,
                                                 "answer":"\u003Cp\u003EBajo\u003C\/p\u003E",
-                                                "fraction":"0.0000000"
+                                                "fraction":"0.2000000"
                                              }
                                           ],
                                           "userAnswer":""
@@ -410,40 +518,19 @@ angular
                 for(i = 0; i < $scope.retoMultipleActivities.length; i++) {
                     var subactivity = {
                                         "estrellas": $scope.retoMultipleActivities[i].stars,
-                                        "sub_actividad": $scope.retoMultipleActivities[i].name,
-                                        "preguntas": []
+                                        "sub_actividad": $scope.retoMultipleActivities[i].name
                                     };
-
-
-                    for(j = 0; j < $scope.retoMultipleActivities[i].questions.length; j++) {
-                        var pregunta ={
-                                   "pregunta":$scope.retoMultipleActivities[i].questions[j].question,
-                                   "catalogorespuestas":[]
-                                };
-
-                        for(k = 0; k < $scope.retoMultipleActivities[i].questions[j].answers.length; k++ )
-                        {
-                            var respuesta = {
-                                         "respuestaid": $scope.retoMultipleActivities[i].questions[j].answers[k].id,
-                                         "respuesta":  $scope.retoMultipleActivities[i].questions[j].answers[k].answer
-                                      };
-
-                            pregunta.catalogorespuestas.push(respuesta);
-
-                        }
-
-                        subactivity.preguntas.push(pregunta);
-                    }
 
                     request.sub_actividades.push(subactivity);
                 }
+
                 return request;
 
             }
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-                localStorage.setItem("tmpRetoMultiple", JSON.stringify(r));
+                localStorage.setItem("tmpRetoMultipleRequest", JSON.stringify(r));
                 $location.path('/ZonaDeVuelo/Conocete/RetoMultipleExternalApp');
             }
 
