@@ -159,6 +159,7 @@ angular
                     if($scope.statusObligatorios == 5){
                       $scope.activities.completed = true;
                       alert("Prueba: Ya has visto 5 elementos obligatorios");
+                      $scope.activities.completed = true;
                     }
                   }
                   else{
