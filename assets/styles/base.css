@@ -1340,17 +1340,18 @@ body.modal-open {
   width: 95vw;
 }
 .incluso-app .navbar-assets .sidebar-toggle {
+  width: 44vw;
   padding: 0px 1vw;
   text-align: left;
   line-height: inherit;
 }
 .incluso-app .navbar-assets .navbar-heading {
   display: inline-block;
-  /*overflow: hidden;
-            float: left;*/
+  overflow: hidden;
+  /*float: left;*/
   margin: 0;
-  width: 46vw;
-  max-width: 50vw;
+  width: 45vw;
+  max-width: 45vw;
   color: #ffffff;
   font-family: 'Play';
   font-size: 4vw;
@@ -1364,14 +1365,14 @@ body.modal-open {
   color: #ffffff;
 }
 .incluso-app .navbar-assets .btn-group {
+  width: 44vw;
   padding: 2.7vh 0;
 }
 .incluso-app .navbar-assets .navbar-tools {
   display: inline-block;
   float: right;
   margin: 0;
-  width: 45vw;
-  max-width: 48vw;
+  width: 44vw;
   list-style-type: none;
   padding: 2.5vh 0px;
 }
