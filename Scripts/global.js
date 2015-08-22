@@ -1,7 +1,6 @@
 //global variables
 
-//var API_RESOURCE = "http://incluso.sieenasoftware.com/RestfulAPI/public/{0}";
-var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}";
+var API_RESOURCE = "http://incluso.sieenasoftware.com/RestfulAPI/public/{0}";
 
 var _courseId = 4;
 
