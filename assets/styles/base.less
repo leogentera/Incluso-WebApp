@@ -695,32 +695,7 @@ body {
                 font-size: 4.8vw;
                 line-height: 5.6vw;
             }
-        }        
-        /*.form-control[data-show-placeholder="false"] + .custom-placeholder {
-            display: none;
-        }
-        .ng-dirty[data-show-placeholder="false"] + .custom-placeholder {
-            display: none; 
-        }        
-        .form-control[data-show-placeholder="true"] + .custom-placeholder {
-            display: block;
-        }*/
-
-
-        .form-control.ng-dirty + .custom-placeholder {
-            display: none; 
         } 
-        .theme-default.ng-pristine + .custom-placeholder {
-            color:@clr-white;
-            font-weight:100; 
-        }
-
-        /* reset model */
-        .form-control.ng-dirty[data-show-placeholder="true"] + .custom-placeholder {
-            display: block;
-            color:@clr-white;
-            font-weight:100; 
-        }
     }
     /***************************************************************************/
 
@@ -900,7 +875,15 @@ body {
                 background-color: transparent;
                 border: none;
                 color:@clr-white;
-            }             
+            }
+            .input-group-control select.form-control {
+                .clr-white(color, 0.3);
+                font-weight: normal;
+            }
+            .input-group-control select.form-control.selected {
+                .clr-white(color, 1);
+                font-weight: bold;
+            }            
         }
     }
     /***************************************************************************/
