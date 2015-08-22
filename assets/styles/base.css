@@ -30,6 +30,7 @@
  LESS Utilities - variables and functions
 ****************************************************************************/
 /* Path vars */
+/* Placeholder default opacity */
 /* Color Palette */
 /* shape variables */
 /* parametric color functions */
@@ -100,6 +101,12 @@ body.modal-open {
   display: block;
   width: 85vw;
   pointer-events: all;
+}
+.sidebar-left .navbar ul {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.sidebar-left .navbar ul .icomoon {
+  line-height: 12vw;
 }
 .incluso-app .sidebar-left .navbar-assets {
   width: auto;
@@ -179,6 +186,8 @@ body.modal-open {
      $form-control
      Description: CSS overrides to bootstrap's form-control class.
     ****************************************************************************/
+  /* sepcial overrides for selects */
+  /* custom caret */
   /* custom placeholder */
   /***************************************************************************/
   /****************************************************************************
@@ -691,20 +700,18 @@ body.modal-open {
   color: #ffffff;
   line-height: 1.42857143;
   font-weight: 700;
-  /* control sizing */
-  /*&.form-control-xl {
-            height:75px;
-            padding:12px 16px;
-            font-size: 32px;
-        }
-        &.form-control-lg {
-            height:66px;
-            padding:21px 16px;
-            font-size: 24px;
-        }*/
+  /* by size */
+  /* by theme */
 }
 .incluso-app .form-control:focus {
   border-color: #06BACC;
+}
+.incluso-app .form-control:hover,
+.incluso-app .form-control:focus,
+.incluso-app .form-control:active {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 .incluso-app .form-control.form-control-xl {
   height: auto;
@@ -769,43 +776,83 @@ body.modal-open {
   color: #ffffff;
 }
 .incluso-app .form-control.theme-default::-webkit-input-placeholder {
-  color: #ffffff !important;
+  color: rgba(255, 255, 255, 0.5);
   font-weight: 100;
 }
 .incluso-app .form-control.theme-default:-moz-placeholder {
-  /* Firefox 18- */
-  color: #ffffff !important;
+  color: rgba(255, 255, 255, 0.5);
   font-weight: 100;
 }
 .incluso-app .form-control.theme-default::-moz-placeholder {
-  /* Firefox 19+ */
-  color: #ffffff !important;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 100;
+}
+.incluso-app .form-control.theme-default + .custom-placeholder {
+  color: rgba(255, 255, 255, 0.5);
   font-weight: 100;
 }
 .incluso-app .form-control.select-wrapper select + .placeholder-fallback {
   color: #ffffff !important;
   font-weight: 100;
 }
-.incluso-app select.ng-pristine:before {
+.incluso-app select.form-control {
+  text-indent: -0.4vw !important;
+  text-overflow: ellipsis;
+  /* by size */
+  /* by theme */
+  /* data validation ui states */
+}
+.incluso-app select.form-control.form-control-xl {
+  padding-right: 6vw;
+}
+.incluso-app select.form-control.form-control-lg {
+  padding-right: 6vw;
+}
+.incluso-app select.form-control.theme-form {
+  color: #8eaab3 !important;
+  font-weight: 100;
+}
+.incluso-app select.form-control.theme-default {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: normal;
+}
+.incluso-app select.form-control.theme-default.selected {
+  color: #ffffff;
+  font-weight: bold;
+}
+.incluso-app select.form-control option:first-child {
+  display: none;
+}
+.incluso-app .custom-caret-wrapper {
+  position: relative;
+  /* by theme */
+}
+.incluso-app .custom-caret-wrapper .custom-caret {
   display: block;
   position: absolute;
-  left: 0;
-  top: 0;
-  height: inherit;
-  content: "";
-  width: auto;
+  z-index: 30;
+  right: 1.8vw;
+  top: 50%;
+  width: 3vw;
+  height: 3vw;
+  padding: 0;
+  margin: -1.2vw 0 0 0;
+  /*color:@clr-white;*/
+  font-size: 3.2vw;
 }
-.incluso-app select option:first-child {
-  display: none;
+.incluso-app .custom-caret-wrapper .form-control.theme-default + .custom-caret {
+  color: #ffffff;
 }
 .incluso-app .custom-placeholder-wrapper {
   position: relative;
+  /* by theme */
 }
 .incluso-app .custom-placeholder-wrapper .custom-placeholder {
   position: absolute;
   left: 0;
   top: 0;
   z-index: 0;
+  text-indent: -0.4vw !important;
 }
 .incluso-app .custom-placeholder-wrapper .custom-placeholder.form-control-xl {
   height: auto;
@@ -818,6 +865,16 @@ body.modal-open {
   padding: 4vw 0;
   font-size: 4.8vw;
   line-height: 5.6vw;
+}
+.incluso-app .custom-placeholder-wrapper .form-control.theme-form + .custom-placeholder {
+  /* should be here all the color settings only for custom placeholder */
+  color: #8eaab3 !important;
+  font-weight: 100;
+}
+.incluso-app .custom-placeholder-wrapper .form-control.theme-default + .custom-placeholder {
+  /* should be here all the color settings only for custom placeholder */
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 100;
 }
 .incluso-app .checkbox.checkbox-custom label {
   display: block;
@@ -886,6 +943,11 @@ body.modal-open {
 }
 .incluso-app .input-group {
   width: 100%;
+  /*.form-control:hover, 
+        .form-control:focus,
+        .form-control:active {
+            .box-shadow-reset();
+        }*/
   /* by size */
   /* by theme */
 }
@@ -902,30 +964,6 @@ body.modal-open {
   padding: 0;
   border: none;
   vertical-align: middle;
-}
-.incluso-app .input-group .input-group-control:before {
-  display: block;
-  position: absolute;
-  z-index: 30;
-  right: 3vw;
-  top: 50%;
-  width: 3vw;
-  height: 3vw;
-  padding: 0;
-  margin: 0 0 0 0;
-  width: 0;
-  height: 0;
-  border-left: 1vw solid transparent;
-  border-right: 1vw solid transparent;
-  border-top: 1vw solid #ffffff;
-  content: "";
-}
-.incluso-app .input-group .form-control:hover,
-.incluso-app .input-group .form-control:focus,
-.incluso-app .input-group .form-control:active {
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
 }
 .incluso-app .input-group select.form-control option {
   color: #121b1c;
@@ -958,10 +996,21 @@ body.modal-open {
   font-size: 6vw;
   line-height: 12vw;
 }
+.incluso-app .input-group.input-group-lg .input-group-control select.form-control {
+  padding-right: 6vw;
+}
 .incluso-app .input-group.theme-default {
   border-bottom-width: 1pt;
   border-bottom-style: solid;
   border-bottom-color: rgba(255, 255, 255, 0.3);
+  /*.input-group-control select.form-control {
+                .clr-white(color, @dec-placeholderOpacity);
+                font-weight: normal;
+            }
+            .input-group-control select.form-control.selected {
+                .clr-white(color, 1);
+                font-weight: bold;
+            } */
 }
 .incluso-app .input-group.theme-default .input-group-addon {
   background-color: transparent;
@@ -969,22 +1018,14 @@ body.modal-open {
   color: #ffffff;
 }
 .incluso-app .input-group.theme-default .input-group-addon + .form-control {
-  background-color: transparent;
+  /*background-color: transparent;*/
   border: none;
-  color: #ffffff;
+  /*color:@clr-white;*/
 }
 .incluso-app .input-group.theme-default .input-group-control .form-control {
-  background-color: transparent;
+  /*background-color: transparent;*/
   border: none;
-  color: #ffffff;
-}
-.incluso-app .input-group.theme-default .input-group-control select.form-control {
-  color: rgba(255, 255, 255, 0.3);
-  font-weight: normal;
-}
-.incluso-app .input-group.theme-default .input-group-control select.form-control.selected {
-  color: #ffffff;
-  font-weight: bold;
+  /*color:@clr-white;*/
 }
 .incluso-app .form-group {
   width: 100%;
@@ -1262,12 +1303,30 @@ body.modal-open {
 }
 .incluso-app .navbar .icomoon {
   font-size: 6vw;
-  line-height: 15vw;
-  vertical-align: top;
+  line-height: 1;
+  vertical-align: bottom;
+}
+.incluso-app .navbar span {
+  font-size: 6vw;
+  line-height: 1vw;
 }
 .incluso-app .navbar.etapa-uno {
   background-color: #138BCB;
   border-color: #138BCB;
+}
+.incluso-app .navbar ul {
+  margin: 0px;
+  padding: 3vw;
+  line-height: 7vw;
+}
+.incluso-app .navbar ul li {
+  display: inline-block;
+  margin-right: 1vw;
+  line-height: 6vw;
+}
+.incluso-app .navbar ul li a {
+  font-size: 6vw;
+  color: #FFF;
 }
 .incluso-app .navbar-absolute-top {
   display: none;
@@ -1316,6 +1375,7 @@ body.modal-open {
   width: 95vw;
 }
 .incluso-app .navbar-assets .sidebar-toggle {
+  width: 44vw;
   padding: 0px 1vw;
   text-align: left;
   line-height: inherit;
@@ -1325,13 +1385,13 @@ body.modal-open {
   overflow: hidden;
   /*float: left;*/
   margin: 0;
-  width: 46vw;
-  max-width: 50vw;
+  width: 45vw;
+  max-width: 45vw;
   color: #ffffff;
   font-family: 'Play';
   font-size: 4vw;
   font-weight: bold;
-  line-height: 14vw;
+  /*line-height: 14vw;*/
   text-overflow: ellipsis;
   white-space: nowrap;
   text-transform: none;
@@ -1339,14 +1399,17 @@ body.modal-open {
 .incluso-app .navbar-assets .navbar-heading a {
   color: #ffffff;
 }
+.incluso-app .navbar-assets .btn-group {
+  width: 44vw;
+  padding: 2.7vh 0;
+}
 .incluso-app .navbar-assets .navbar-tools {
   display: inline-block;
   float: right;
   margin: 0;
-  width: 45vw;
-  max-width: 48vw;
+  width: 44vw;
   list-style-type: none;
-  padding: 0 9px 0 0;
+  padding: 2.5vh 0px;
 }
 .incluso-app .navbar-tools li {
   display: inline-block;
