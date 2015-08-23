@@ -2,22 +2,180 @@
     Incluso Digital CSS Styles
 
     Parallel work file for UI Developer 01
-********************************************************************************/
-@import "less-utilities.less";
+    ********************************************************************************/
+    @import "less-utilities.less";
 
 
-.incluso-app {
-    
+    .incluso-app {
+
     /********************************************************************************
      Base styles (if needed)
-    ********************************************************************************/
-    /* Start writing base classes here */
-
+     ********************************************************************************/
+     /* Start writing base classes here */
+     .form input[type="radio"]:checked + label::before {
+        color: #e1e455;
+        background-color: transparent;
+    }
 
     /********************************************************************************
      Entities styles (if needed)
-    ********************************************************************************/
-    /* Start writing base classes here */
+     ********************************************************************************/
+     /* Start writing base classes here */
+     .evaluation {
 
-  
+        .subtitle {            
+            padding-top: 60px;
+            text-transform: uppercase;
+            font-weight: bold;
+
+            + .txt-renglon {
+                font-size: 4.5vw;
+                font-weight: normal;
+                padding: 2.5% 0;                
+            }            
+        }
+
+        .txt-renglon {
+
+            &.txt-bigger {
+                font-size: 129%;                
+            }             
+
+        }
+
+        .part {                    
+
+            margin: 1vh 5%;
+            width: 90%;
+
+            &.list {                
+                padding: 5% 6%;
+                
+
+                .add {
+                    margin: 0;
+                    font-size: 106%;
+                    padding: 4% 0;
+
+                    .icomoon::before {                    
+                        padding-right: 3% !important;                    
+                    }
+
+                    .icomoon {
+                        font-size: 86% !important;
+                        padding-right: 0 !important;
+                    }
+
+                    input {
+                        width: 91% !important;
+                    }
+                }  
+            }
+
+            span {
+                font-weight: bold;
+
+                +.icomoon {
+                    color: white;
+                    font-size: 92% !important;
+                    padding-right: 0 !important;
+                }  
+
+            }
+
+            
+        }
+
+        .controls {           
+            .centered {
+                span {
+                    position: relative;
+                    top: -9px;
+                    font-weight: bold;
+                }
+                &.txt-bigger {
+                    font-size: 120%;
+                }                
+            }
+
+            button.btn {
+                margin-top: 4%;
+                margin-bottom: 4%;
+            }
+        } 
+
+        .form {    
+            label {
+
+                &::before{
+                    font-size: 4vw;
+                    height: 5vw;
+                    width: 5vw;
+                    line-height: 4.5vw;
+                    margin-top: 3px;
+                }  
+
+                font-size: 4.5vw;
+                padding-left: 8vw;                
+
+            }      
+
+            input[type="radio"] + label::before {
+                font-size: 9vw;
+                height: 6vw;
+                width: 6vw;
+                line-height: 5vw;
+                margin-top: 2px;
+            }
+
+        }       
+
+        .add {   
+
+            &#agregar {
+                display:none;
+            }    
+
+            padding: 3% 0;
+            font-size: 115%;
+
+            .icomoon::before {
+                color: white;
+                font-size: 92%;
+                padding-right: 3%;
+            }
+
+            input {
+                background: transparent;
+                color: white;
+                border: none;
+                width: 91%;
+                font-weight: normal;
+
+                &::-webkit-input-placeholder {
+                    color: white !important;
+                    opacity: 1; 
+                }
+
+                &:-moz-placeholder { /* Firefox 18- */
+                 color: white !important;
+                 opacity: 1;   
+             }
+
+             &::-moz-placeholder {  /* Firefox 19+ */
+                 color: white !important;
+                 opacity: 1;   
+             }
+
+             &:-ms-input-placeholder {  
+                 color: white !important; 
+                 opacity: 1;  
+             }
+         } 
+
+
+     }
+
+ }    
+
 }

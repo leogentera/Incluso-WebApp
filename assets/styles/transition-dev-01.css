@@ -2,7 +2,7 @@
     Incluso Digital CSS Styles
 
     Parallel work file for UI Developer 01
-********************************************************************************/
+    ********************************************************************************/
 /****************************************************************************
  LESS Utilities - variables and functions
 ****************************************************************************/
@@ -14,10 +14,124 @@
 .incluso-app {
   /********************************************************************************
      Base styles (if needed)
-    ********************************************************************************/
+     ********************************************************************************/
   /* Start writing base classes here */
   /********************************************************************************
      Entities styles (if needed)
-    ********************************************************************************/
+     ********************************************************************************/
   /* Start writing base classes here */
+}
+.incluso-app .form input[type="radio"]:checked + label::before {
+  color: #e1e455;
+  background-color: transparent;
+}
+.incluso-app .evaluation .subtitle {
+  padding-top: 60px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.incluso-app .evaluation .subtitle + .txt-renglon {
+  font-size: 4.5vw;
+  font-weight: normal;
+  padding: 2.5% 0;
+}
+.incluso-app .evaluation .txt-renglon.txt-bigger {
+  font-size: 129%;
+}
+.incluso-app .evaluation .part {
+  margin: 1vh 5%;
+  width: 90%;
+}
+.incluso-app .evaluation .part.list {
+  padding: 5% 6%;
+}
+.incluso-app .evaluation .part.list .add {
+  margin: 0;
+  font-size: 106%;
+  padding: 4% 0;
+}
+.incluso-app .evaluation .part.list .add .icomoon::before {
+  padding-right: 3% !important;
+}
+.incluso-app .evaluation .part.list .add .icomoon {
+  font-size: 86% !important;
+  padding-right: 0 !important;
+}
+.incluso-app .evaluation .part.list .add input {
+  width: 91% !important;
+}
+.incluso-app .evaluation .part span {
+  font-weight: bold;
+}
+.incluso-app .evaluation .part span + .icomoon {
+  color: white;
+  font-size: 92% !important;
+  padding-right: 0 !important;
+}
+.incluso-app .evaluation .controls .centered span {
+  position: relative;
+  top: -9px;
+  font-weight: bold;
+}
+.incluso-app .evaluation .controls .centered.txt-bigger {
+  font-size: 120%;
+}
+.incluso-app .evaluation .controls button.btn {
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+.incluso-app .evaluation .form label {
+  font-size: 4.5vw;
+  padding-left: 8vw;
+}
+.incluso-app .evaluation .form label::before {
+  font-size: 4vw;
+  height: 5vw;
+  width: 5vw;
+  line-height: 4.5vw;
+  margin-top: 3px;
+}
+.incluso-app .evaluation .form input[type="radio"] + label::before {
+  font-size: 9vw;
+  height: 6vw;
+  width: 6vw;
+  line-height: 5vw;
+  margin-top: 2px;
+}
+.incluso-app .evaluation .add {
+  padding: 3% 0;
+  font-size: 115%;
+}
+.incluso-app .evaluation .add#agregar {
+  display: none;
+}
+.incluso-app .evaluation .add .icomoon::before {
+  color: white;
+  font-size: 92%;
+  padding-right: 3%;
+}
+.incluso-app .evaluation .add input {
+  background: transparent;
+  color: white;
+  border: none;
+  width: 91%;
+  font-weight: normal;
+}
+.incluso-app .evaluation .add input::-webkit-input-placeholder {
+  color: white !important;
+  opacity: 1;
+}
+.incluso-app .evaluation .add input:-moz-placeholder {
+  /* Firefox 18- */
+  color: white !important;
+  opacity: 1;
+}
+.incluso-app .evaluation .add input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: white !important;
+  opacity: 1;
+}
+.incluso-app .evaluation .add input:-ms-input-placeholder {
+  color: white !important;
+  opacity: 1;
 }

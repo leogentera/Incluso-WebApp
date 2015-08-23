@@ -1,0 +1,139 @@
+<div id="site-wrapper" class="incluso-app step-dashboard">
+	<div id="site-menu">
+		<!--#include file="menu.html"-->
+	</div>
+	<div id="site-canvas">
+		<article class="blueprint evaluation">
+			<section>
+				<div class="subtitle">Evaluación "Título"</div>
+				<div class="txt-renglon">Responde lo siguiente:</div>				
+			</section>
+			<div id="owl" class="owl-carousel">
+				<!--Pregunta tipo Si/No-->
+				<div>					
+					<div class="txt-renglon txt-bigger">1. ¿Pregunta de falso/verdadero?</div>
+					<section class="form txt-renglon txt-bigger part list">
+						<div class="tnf">
+							<input id="tru" type="radio" value="verdadero" name="vf">
+							<label for="tru">Verdadero</label>
+							<input id="fols" type="radio" value="falso" name="vf">
+							<label for="fols">Falso</label>
+						</div>
+					</section>
+				</div>
+				<!--Pregunta tipo Opción Multiple + Otro-->
+				<div>
+					<div class="txt-renglon txt-bigger">2. ¿Pregunta de selección múltiple?</div>
+					<section class="form txt-renglon txt-bigger part list">						
+						<input id="check1" type="checkbox" value="check1" name="check">
+						<label for="check1">Opción 1</label>
+						<input id="check2" type="checkbox" value="check1" name="check">
+						<label for="check2">Opción 2</label>
+						<input id="check3" type="checkbox" value="check1" name="check">
+						<label for="check3">Opción 3</label>
+						<input id="check4" type="checkbox" value="check1" name="check">
+						<label for="check4">Opción 4</label>
+						<input id="check5" type="checkbox" value="check1" name="check">
+						<label for="check5">Opción 5</label>
+						<input id="check6" type="checkbox" value="check1" name="check">
+						<label for="check6">Opción 6</label>
+						<input id="check7" type="checkbox" value="check1" name="check">
+						<label for="check7">Opción 7</label>
+						<input id="check8" type="checkbox" value="check1" name="check">
+						<label for="check8">Opción 8</label>
+						<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
+						<label for="otros">Otros</label>
+					</section>
+					<div id="agregar" class="add" ng-show="showAddNewOption==true"><i class="icomoon icon-edit"></i><input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..."></div>	
+				</div>
+				<!--Pregunta tipo Texto Abierto-->
+				<div>
+					<div class="txt-renglon txt-bigger">3. ¿Pregunta de Texto Abierto?</div>
+					<section class="form txt-renglon txt-bigger part list">
+						<div class="add"><i class="icomoon icon-edit"></i><input id="texto1" type="text" name="txtAbierto" placeholder="Tu respuesta aquí..."></div>
+					</section>					
+				</div>
+				<!--Pregunta tipo Selección Simple-->
+				<div>
+					<div class="txt-renglon txt-bigger">4. ¿Pregunta de Selección Sencilla?</div>
+					<section class="form txt-renglon txt-bigger part list">
+						<input id="option1" type="radio" value="option1" name="option">
+						<label for="option1">Option 1</label>
+						<input id="option2" type="radio" value="option2" name="option">
+						<label for="option2">Option 2</label>
+						<input id="option3" type="radio" value="option3" name="option">
+						<label for="option3">Option 3</label>
+					</section>
+				</div>
+				<!--Pregunta tipo Lista Dinámica-->
+				<div>
+					<div class="txt-renglon txt-bigger">5. ¿Pregunta de Lista Dinámica?</div>
+					<section>
+						<div class="part"><span>Punto 1</span><i class="icomoon icon-edit fl-right"></i></div>
+						<div class="part"><span>Punto 2</span><i class="icomoon icon-edit fl-right"></i></div>
+						<div class="part"><span>Punto 3</span><i class="icomoon icon-edit fl-right"></i></div>
+					</section>
+					<div class="add"><i class="icomoon icon-edit"></i><input id="texto1" type="text" name="txtAbierto" placeholder="Nuevo punto"></div>
+				</div>
+			</div>
+			<section id="controls" class="controls">
+				<div class="paginate">
+					<a href="#" id="prev"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
+					<a href="#" id="next"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
+					<div class="centered"><span id="index" class="txt-bigger">1/</span><span class="white txt-bigger">5</span></div>	
+				</div>
+				<button class="btn btn-primary btn-lg btn-cnt" id="save" type="button">Terminar</button>
+				<div class="txt-renglon centered txt-bigger">Cancelar</div>					
+			</section>
+			<div id="finalized">
+			</div>
+			<img src=".../../assets/images/img-lines-ftr.png" class="centered">
+		</article>
+		<footer class="footer">
+			<ul class="block-list">
+				<li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
+				<li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
+			</ul>
+			<a href="#navBar" class="to-top"><i class="icomoon icon-double-arrow-up"></i><br>SUBIR</a>
+		</footer>
+	</div>
+</div>
+
+<script>
+$(document).ready(function() {
+	var owl = $("#owl");
+	owl.owlCarousel({
+		navigation:false,
+		pagination:false,
+		paginationSpeed : 1000,
+		goToFirstSpeed : 2000,
+		singleItem : true,
+		autoHeight : true,
+		afterMove: callback
+	});
+	function callback(event) {
+		var item      = this.currentItem;
+		$("#index").html(item + 1);
+	}
+	$("#next").click(function(){
+		owl.trigger('owl.next');
+		return false;
+	});
+	$("#prev").click(function(){
+		owl.trigger('owl.prev');
+		return false;
+	});
+
+	});
+</script>
+
+<script type="text/javascript" src="../../Scripts/scriptmenu.js"></script>
+<script src="../../Scripts/classie.js"></script>
+<script src="../../Scripts/selectFx.js"></script>
+<script>
+(function() {
+	[].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
+		new SelectFx(el);
+	} );
+})();
+</script>
