@@ -34,16 +34,16 @@
                 <div ng-if="content.activityType == 'url'">
                   <div class="type">
                     <div class="col-xs-1 type-icon">
-                      <i class="icomoon icon-hyperlink" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-hyperlink"></i>
                     </div>
                     <div class="col-xs-9">
                       <span>Visita el sitio web!</span>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="content.mandatory"></i>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                      <i class="icomoon icon-checked-join" ng-show="content.seen"></i>
                       <i class="icomoon icon-edit" ng-hide="content.seen"></i>
                     </div>
                   </div>
@@ -52,16 +52,16 @@
                 <div ng-if="content.activityType == 'video' ">
                   <div class="type">
                     <div class="col-xs-1 type-icon">
-                      <i class="icomoon icon-video-file" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-video-file"></i>
                     </div>
                     <div class="col-xs-9">
                         <span>Video tutorial Incluso</span>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="content.mandatory"></i>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                      <i class="icomoon icon-checked-join" ng-show="content.seen"></i>
                       <i class="icomoon icon-edit" ng-hide="content.seen"></i>
                     </div>
                   </div>
@@ -70,16 +70,16 @@
                 <div ng-if="content.activityType == 'page'">
                   <div class="type">
                     <div class="col-xs-1 type-icon">
-                      <i class="icomoon icon-text" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-text"></i>
                     </div>
                     <div class="col-xs-9">
                         <span>Texto</span>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="content.mandatory"></i>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                      <i class="icomoon icon-checked-join" ng-show="content.seen"></i>
                       <i class="icomoon icon-edit" ng-hide="content.seen"></i>
                     </div>
                   </div>
@@ -88,33 +88,36 @@
                 <div ng-if="content.activityType == 'file'">
                   <div class="type">
                     <div class="col-xs-1 type-icon">
-                      <i class="icomoon icon-camera" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-camera"></i>
                     </div>
                     <div class="col-xs-9">   
                       <span>Fotografía</span>
                     </div>        
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="content.mandatory"></i>
                     </div>
                     <div class="col-xs-1">
                       <i class="icomoon icon-edit" ng-hide="content.seen"></i>
-                      <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                      <i class="icomoon icon-checked-join" ng-show="content.seen"></i>
                     </div>
                   </div>      
                 </div>
 
                 <div class="detail">  
                   <div>
-                    <div class="image-container">
+                    <div ng-if="content.activityType == 'file'" class="image-container">
                       <img ng-click="updateStatus(content.id)" ng-src="{{content.file.path}}" class="image-element">
                     </div>
                     <div class="message">
                         <a ng-hide="content.isVideo" ng-click="updateStatus(content.id)" href={{content.url}} target="_blank">{{content.url}}</a>
-                        <span ng-click="updateStatus(content.id)">{{content.pageContent}}</span>
+                        <span ng-click="updateStatus(content.id)" ng-if="content.activityType == 'page' && !content.seen">Mostrar texto...</span>
+                        <span ng-show="content.seen" ng-bind-html="content.pageContent"></span>
+
+                        <span ng-bind-html="content.file.pageContent"></span>
                         <a ng-show="content.isVideo" ng-click="updateStatus(content.id)" href={{content.url}} target="_blank">{{content.url}}</a>
                     </div>
                   </div>
-                  <div class="interact">
+                  <div class="interact hidden">
                     <div class="col-xs-6 like">
                       <i class="icomoon icon-like"></i>
                       <span>Me gusta</span>

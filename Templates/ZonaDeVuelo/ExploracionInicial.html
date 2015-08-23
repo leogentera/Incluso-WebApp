@@ -1,6 +1,6 @@
 <div class="incluso-app step-dashboard" id="site-wrapper">
   <div id="site-menu">
-    <!--#include file="menu.html" -->
+    <!--<menu-component></menu-component>-->
   </div>
   <div id="site-canvas">
 
@@ -12,11 +12,24 @@
 
       </section>
       <section id="taitel">
-        <div class="subtitle">Evaluación "Título :)"</div>
+        <div class="subtitle">Exploración inicial</div>
         <div class="txt-renglon">Responde lo siguiente:</div>
       </section>
 
-      <div id="owl" class="owl-carousel">
+      <div>
+        <div class="txt-renglon txt-bigger">1.Pregunta de Selección Sencilla</div>
+        <section class="form txt-renglon txt-bigger part list">
+          <input type="radio" value="sime" name="gender" id="male">
+          <label for="male">Me gusta</label>
+          <input type="radio" value="nome" name="gender" id="female">
+          <label for="female">No me gusta</label>
+          <input type="radio" value="auno" name="gender" id="auno">
+          <label for="auno">Aún no me decido</label>
+        </section>
+      </div>
+
+
+      <!--<div id="owl" class="owl-carousel">
         <div>
           <div class="txt-renglon txt-bigger">1.Pregunta de Selección Sencilla</div>
           <section class="form txt-renglon txt-bigger part list">
@@ -57,9 +70,9 @@
             </div>
           </section>
         </div>
-      </div>
-      
-      <section id="controls" class="controls">
+      </div>-->
+
+      <!--<section id="controls" class="controls">
         <div class="paginate">
           <a href="#" id="prev">
             <i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
@@ -69,9 +82,14 @@
         </div>
         <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button">Terminar</button>
         <div class="txt-renglon centered txt-bigger">Cancelar</div>
+      </section>-->
+
+      <section id="controls" class="controls">
+        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button">Terminar</button>
+        <div class="txt-renglon centered txt-bigger">Cancelar</div>
       </section>
-      
-      <div id="finalized">
+
+      <!--<div id="finalized">
         <div class="txt-renglon centered txt-bigger"></div>
         <div class="txt-renglon centered txt-bigger min-pad">Has completado la actividad</div>
         <div class="subtitle centered min-pad">"Título de evaluación"</div>
@@ -138,24 +156,57 @@
           <button class="btn btn-primary btn-lg btn-cnt" type="button">Terminar</button>
           <div class="txt-renglon centered txt-bigger"></div>
         </section>
+      </div>-->
 
-      </div>
+      <!--<br/>
       <br/>
-      <br/>
-      <img src="assets/images/img-lines-ftr.png" class="centered">
-      <br/>
+      <img src="../../assets/images/img-lines-ftr.png" class="centered">
+      <br/>-->
+
+      <script type="text/ng-template" id="tutorialModal.html">
+        <div class="modal-robot robot-lg user-help">
+          <img src="assets/images/img-robot-lg.png" alt="robot" />
+          <div class="modal-header">
+            <button class="icon icon-close" ng-click="cancel()">
+              <span class="icomoon icon-cross"></span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h3 class="subtitle centered">Exploración inicial</h3>
+            <p class="centered">Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad
+            </p>
+            <!--<p class="centered">¡Continúa con las estaciones Incluso y gana más estrellas! </p>-->
+            <!--<figure class="player">
+                <video controls  poster="assets/images/ptr-video-0001.jpg" > 
+                <source src="assets/media/TutorialTest2.mp4" type="video/mp4"> Ups! Parece que tu dispositivo no soporta video</video> 
+            </figure>-->
+          </div>
+          <!--<div class="modal-footer">
+            <div class="row">
+              <div class="col-xs-12">
+                <button type="button" class="btn btn-primary btn-lg btn-block">Continuar a mi Perfil</button>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </script>
+
     </article>
+  </div>
+</div>
 
-    <footer class="footer">
+<!--<footer class="footer">
       <ul class="block-list">
         <li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
         <li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
       </ul>
       <a href="#navBar" class="to-top"><i class="icomoon icon-double-arrow-up"></i><br/>SUBIR</a>
-    </footer>
-    <!-- html -->
-    <!-- scripts -->
-    <script>
+    </footer>-->
+
+
+<!-- html -->
+<!-- scripts -->
+<!--<script>
       $(document).ready(function() {
 	var step = 0;
 	
@@ -199,9 +250,9 @@ var cual = $(this).attr('data-id');
 });	
 
     });
-    </script>
+    </script>-->
 
-    <script type="text/javascript" src="../../Scripts/scriptmenu.js"></script>
+<!--<script type="text/javascript" src="../../Scripts/scriptmenu.js"></script>
     <script src="../../Scripts/classie.js"></script>
     <script src="../../Scripts/selectFx.js"></script>
     <script>
@@ -210,4 +261,4 @@ var cual = $(this).attr('data-id');
 					new SelectFx(el);
 				} );
 			})();
-    </script>
+    </script>-->
