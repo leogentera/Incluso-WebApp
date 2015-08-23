@@ -803,8 +803,17 @@ body.modal-open {
   padding-right: 6vw;
 }
 .incluso-app select.form-control.theme-form {
-  color: #8eaab3 !important;
+  color: #8eaab3;
+  color: rgba(142, 170, 179, 0.5);
   font-weight: 100;
+}
+.incluso-app select.form-control.theme-form.selected {
+  color: #8eaab3;
+  font-weight: bold;
+}
+.incluso-app select.form-control.theme-form option {
+  color: #8eaab3;
+  font-weight: bold;
 }
 .incluso-app select.form-control.theme-default {
   color: rgba(255, 255, 255, 0.5);
@@ -812,6 +821,9 @@ body.modal-open {
 }
 .incluso-app select.form-control.theme-default.selected {
   color: #ffffff;
+  font-weight: bold;
+}
+.incluso-app select.form-control.theme-default option {
   font-weight: bold;
 }
 .incluso-app select.form-control option:first-child {
@@ -836,6 +848,9 @@ body.modal-open {
 }
 .incluso-app .custom-caret-wrapper .form-control.theme-default + .custom-caret {
   color: #ffffff;
+}
+.incluso-app .custom-caret-wrapper .form-control.theme-form + .custom-caret {
+  color: #8098a0;
 }
 .incluso-app .custom-placeholder-wrapper {
   position: relative;
@@ -1033,7 +1048,7 @@ body.modal-open {
 }
 .incluso-app .form-group.theme-form .form-group-control > .form-control {
   border-top-width: 0 !important;
-  color: #8eaab3;
+  /*.clr-blueGray(color, 1);*/
 }
 .incluso-app .form-group.theme-form .form-group-control .custom-placeholder {
   background-color: transparent;

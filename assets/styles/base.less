@@ -670,8 +670,19 @@ body {
 
         /* by theme */
         &.theme-form {
-            color:@clr-blueGray !important;
-            font-weight:100;   
+            color:@clr-blueGray;
+            .clr-blueGray(color, @dec-placeholderOpacity);
+            font-weight:100;
+
+            &.selected { 
+                .clr-blueGray(color, 1);
+                font-weight: bold;
+            }
+
+            option {
+                .clr-blueGray(color, 1);
+                font-weight: bold;
+            }
         }
         &.theme-default {
             .clr-white(color, @dec-placeholderOpacity);
@@ -681,6 +692,8 @@ body {
                 .clr-white(color, 1);
                 font-weight: bold;
             } 
+
+            option {font-weight: bold;}
         }
 
         /* data validation ui states */
@@ -713,6 +726,9 @@ body {
         .form-control.theme-default + .custom-caret {
             color:@clr-white;
         }
+        .form-control.theme-form + .custom-caret {
+            color:@clr-gray-platinum;
+        }        
     }
 
     /* custom placeholder */
@@ -951,7 +967,7 @@ body {
         &.theme-form {
             .form-group-control > .form-control {
                 border-top-width: 0 !important;
-                .clr-blueGray(color, 1);
+                /*.clr-blueGray(color, 1);*/
             }
             .form-group-control .custom-placeholder {
                 background-color: transparent;
