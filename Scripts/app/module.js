@@ -21,7 +21,7 @@
         'incluso.programa.profile',
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
-        'incluso.programa.leaderboard',
+        'incluso.programa.leaderboard',        
 
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumcontroller',
@@ -40,6 +40,7 @@
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
         'incluso.program.helpAndSupport',
+        'incluso.programa.evaluacionFormulario',
     ])
     .run(function ($templateCache, $http, $rootScope) {
         $http.get('Templates/Public/Login.html', { cache: $templateCache });
@@ -62,6 +63,7 @@
         $http.get('Templates/Programa/TermsOfUse.html', { cache: $templateCache });
         $http.get('Templates/Programa/HelpAndSupport.html', { cache: $templateCache });
         $http.get('Templates/Programa/ClosingStage.html', { cache: $templateCache });
+        $http.get('Templates/Programa/evaluacionFormulario.html', { cache: $templateCache });
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
@@ -122,6 +124,11 @@
         $routeProvider.when('/Profile', {
             templateUrl: 'Templates/Programa/profile.html',
             controller: 'programaProfileController'
+        });
+
+        $routeProvider.when('/evaluacionFormulario', {
+            templateUrl: 'Templates/Programa/evaluacionFormulario.html',
+            controller: 'evaluacionFormulario'
         });
 
         $routeProvider.when('/ProgramaDashboard', {
