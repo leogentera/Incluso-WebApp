@@ -39,11 +39,10 @@ angular
                               "fecha_inicio":"2015-07-15 14:23:12",
                               "fecha_fin":"2015-07-15  14:28:12",
                               "estado":"15500",
-                              "nivel_de_reto":"1",
                               "respuestas":[
                                  {
                                     "Pregunta 1":"¿Nivel inteligencia?",
-                                    "respuesta":"Si"
+                                    "respuesta":"1"
                                  },
                                  {
                                     "Pregunta 2":"¿Me fue fácil completar el reto?",
@@ -75,11 +74,10 @@ angular
                               "duracion":"3 ",
                               "fecha_inicio":"2015-07-15  14:53:12",
                               "fecha_fin":"2015-07-15  14:56:12",
-                              "nivel_de_reto":"3",
                               "respuestas":[
                                  {
                                     "Pregunta 1":"¿Nivel inteligencia?",
-                                    "respuesta":"No"
+                                    "respuesta":"2"
                                  },
                                  {
                                     "Pregunta 2":"¿Me fue fácil completar el reto?",
@@ -98,6 +96,7 @@ angular
                         ];
 
                 var shield = "";
+                var quizesRequests = [];
 
                 //answer questions and send to the server (or keep on device until it turns online)
                 for(i = 0; i < response.length; i++) {
@@ -107,30 +106,55 @@ angular
                             return q.userAnswer && q.userAnswer != '' ? 'answered' : 'unanswered';
                         });
 
-                        //only answer activities where no previously answers are found
-                        if (questionAnswers && !questionAnswers.answered) {
-                            if (response[i].respuestas) {
+                        if (response[i].respuestas) {
 
-                                if (response[i].respuestas.length > 0 && response[i].respuestas[0].respuesta == "Si") {
-                                  shield = response[i].sub_actividad;
+                            if (response[i].respuestas.length > 0 && response[i].respuestas[0].respuesta == "Si") {
+                              shield = response[i].sub_actividad;
+                            }
+
+                          var logEntry = {
+                                  "userid":_getItem("userId"),
+                                  "answers":[]
+                                  };
+
+                            for(j = 0; j < response[i].respuestas.length; j++) {
+
+                                var answer = "0";
+                                if (j==0) {
+                                  activity.score = response[i].respuestas[0].respuesta;
+
+                                  if (activity.score == "1") activity.calificacion = "Bajo";
+                                  if (activity.score == "2") activity.calificacion = "Medio";
+                                  if (activity.score == "3") activity.calificacion = "Alto";
                                 }
 
-                                for(j = 0; j < response[i].respuestas.length; j++) {
-
-                                    activity.score = response[i].nivel_de_reto;
-
-                                    if (activity.score == 1) activity.calificacion = "Bajo";
-                                    if (activity.score == 2) activity.calificacion = "Medio";
-                                    if (activity.score == 3) activity.calificacion = "Alto";
-
-                                    //matched based on indexes request and response should match order
-                                    if (activity.questions.length > j) {
-                                        if (activity.questions[j]) {
-                                            activity.questions[j].userAnswer = response[i].respuestas[j].respuesta;
-                                        }
+                                //matched based on indexes request and response should match order
+                                if (j > 0 && j <= activity.questions.length) {
+                                    if (activity.questions[j - 1]) {
+                                        activity.questions[j - 1]["userAnswer"] = response[i].respuestas[j].respuesta;
+                                        answer = response[i].respuestas[j].respuesta;
                                     }
                                 }
+
+                                if (j > 0) {
+                                  logEntry.answers.push(answer);
+                                }
                             }
+
+                          console.log("calificacion:" + activity.calificacion);
+                          logEntry.answers.push(activity.calificacion);
+                          quizesRequests.push(logEntry);
+
+                        } else {
+
+                          //no answers.  log entry
+                          var logEntry = {
+                                  "userid":_getItem("userId"),
+                                  "answers":["0", "0", "Si", "Bajo"]  //3 questions and 4th is the control for grading
+                                  };
+
+                          quizesRequests.push(logEntry);
+
                         }
                     }
                 }
@@ -162,6 +186,11 @@ angular
                                     completedActivities.completed >= $scope.retoMultipleActivities.length;
 
                 //save response
+                for(i = 0; i < quizesRequests.length; i++){
+                  console.log("saving quiz");
+                  console.log(quizesRequests[i].answers);
+                  //quizesRequests(logEntry[i]);
+                }
                  localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
             }
 
@@ -174,6 +203,18 @@ angular
                 } else {
                     $location.path('/ZonaDeVuelo/Conocete/ProgramaDashboard');
                 }
+            }
+
+            $scope.saveQuiz = function(activityId, quiz) {
+              _putAsyncData
+                moodleFactory.Services.PutAsyncQuiz(activityId, quiz,
+
+                    function (data) {
+                        console.log('Save profile successful...');
+                    },
+                    function (date) {
+                        console.log('Save profile fail...');
+                    });
             }
 
             $scope.saveUser = function () {
