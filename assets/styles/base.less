@@ -612,20 +612,24 @@ body {
             .clr-blueGray(color, 1);
 
             &::-webkit-input-placeholder {
-                color:@clr-blueGray !important;
+                //*color:@clr-blueGray !important;*/
+                .clr-blueGray(color, @dec-placeholderOpacity);
                 font-weight:100;
             }
             &:-moz-placeholder { /* Firefox 18- */
-                color:@clr-blueGray !important;
+                /*color:@clr-blueGray !important;*/
+                .clr-blueGray(color, @dec-placeholderOpacity);
                 font-weight:100;
             }
             &::-moz-placeholder {  /* Firefox 19+ */   
-                color:@clr-blueGray !important;
+                /*color:@clr-blueGray !important;*/
+                .clr-blueGray(color, @dec-placeholderOpacity);
                 font-weight:100;
             }
             &.select-wrapper {
                 select + .placeholder-fallback {
-                    color:@clr-blueGray !important;
+                    /*color:@clr-blueGray !important;*/
+                    .clr-blueGray(color, @dec-placeholderOpacity);
                     font-weight:100;                
                 }
             }

@@ -24,5 +24,6 @@ angular
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
             }
-
+            
+            
         }]);

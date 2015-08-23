@@ -750,21 +750,24 @@ body.modal-open {
   color: #8eaab3;
 }
 .incluso-app .form-control.theme-form::-webkit-input-placeholder {
-  color: #8eaab3 !important;
+  color: rgba(142, 170, 179, 0.5);
   font-weight: 100;
 }
 .incluso-app .form-control.theme-form:-moz-placeholder {
   /* Firefox 18- */
-  color: #8eaab3 !important;
+  /*color:@clr-blueGray !important;*/
+  color: rgba(142, 170, 179, 0.5);
   font-weight: 100;
 }
 .incluso-app .form-control.theme-form::-moz-placeholder {
   /* Firefox 19+ */
-  color: #8eaab3 !important;
+  /*color:@clr-blueGray !important;*/
+  color: rgba(142, 170, 179, 0.5);
   font-weight: 100;
 }
 .incluso-app .form-control.theme-form.select-wrapper select + .placeholder-fallback {
-  color: #8eaab3 !important;
+  /*color:@clr-blueGray !important;*/
+  color: rgba(142, 170, 179, 0.5);
   font-weight: 100;
 }
 .incluso-app .form-control.theme-default {

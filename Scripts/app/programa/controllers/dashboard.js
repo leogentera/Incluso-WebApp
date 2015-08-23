@@ -17,6 +17,10 @@
 
             console.log('loading user'); 
             $scope.user = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
+
+            if (!$scope.user.shield) {
+                $scope.user.shield = "blocked";
+            }
             if (!$scope.user) {
                 $location.path('/');
                 return "";

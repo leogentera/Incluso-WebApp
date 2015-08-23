@@ -4,7 +4,7 @@
 	</div>
 	<div id="site-canvas">
 		<article class="blueprint evaluation">
-			<section>
+			<section id="title">
 				<div class="subtitle">Evaluación "Título"</div>
 				<div class="txt-renglon">Responde lo siguiente:</div>				
 			</section>
@@ -86,6 +86,28 @@
 				<div class="txt-renglon centered txt-bigger">Cancelar</div>					
 			</section>
 			<div id="finalized">
+				<section class="header-title">
+					<div class="txt-renglon centered txt-bigger min-pad">Has completado la actividad</div>
+					<div class="subtitle centered min-pad">"Nombre Actividad"</div>
+					<div class="txt-renglon centered txt-bigger min-pad">¡Felicidades!</div>
+				</section>
+				<section class="centered txt-bigger">
+					<i class="icomoon icon-checked-join txt-bigger green-giant"></i>
+				</section>
+				<section class="txt-renglon pill">
+					<div class="fl-left">Estrellas ganadas:</div>
+					<div class="fl-right sm-pill">240&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+				</section>
+				<section class="txt-renglon centered form">
+					¿Que opinas de ésta actividad?
+					<section class="txt-renglon txt-bigger">
+						<input id="like" type="radio" value="option1" name="like">
+						<label for="like">Me gusta</label>
+						<input id="dislike" type="radio" value="option2" name="like">
+						<label for="dislike">No me gusta</label>
+					</section>																
+					<button class="btn btn-primary btn-lg btn-cnt">Terminar</button>
+				</section>
 			</div>
 			<img src=".../../assets/images/img-lines-ftr.png" class="centered">
 		</article>
@@ -123,6 +145,16 @@ $(document).ready(function() {
 		owl.trigger('owl.prev');
 		return false;
 	});
+
+	$("#save").click(function(){
+		$(owl).hide("slow");
+		$("#controls").hide();
+		$("#title").hide();
+		$("#finalized").show("slow");
+		return false;
+	});
+	
+		$("#finalized").hide();
 
 	});
 </script>
