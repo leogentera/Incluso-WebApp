@@ -12,6 +12,7 @@
         // http://zinkpulse.com/organizing-modules-in-angularjs/ and http://cliffmeyers.com/blog/2013/4/21/code-organization-angularjs-javascript
 		'incluso.public.login',
         'incluso.public.recoverPassword',
+        //'incluso.public.recoverPasswordEmail',
         'incluso.public.register',
         'incluso.programa.tutorial',
         'incluso.programa.acercaPrograma',
@@ -45,6 +46,7 @@
     .run(function ($templateCache, $http, $rootScope) {
         $http.get('Templates/Public/Login.html', { cache: $templateCache });
         $http.get('Templates/Public/RecoverPassword.html', { cache: $templateCache });
+        $http.get('Templates/Public/RecoverPasswordEmail.html', { cache: $templateCache });
         $http.get('Templates/Public/Register.html', { cache: $templateCache });
         $http.get('Templates/Programa/Dashboard.html', { cache: $templateCache });
         /*$http.get('Templates/Programa/Step.html', { cache: $templateCache });*/
@@ -159,6 +161,11 @@
 
         $routeProvider.when('/RecoverPassword', {
             templateUrl: 'Templates/Public/RecoverPassword.html',
+            controller: 'publicRecoverPasswordController'
+        });
+
+        $routeProvider.when('/RecoverPasswordEmail', {
+            templateUrl: 'Templates/Public/RecoverPasswordEmail.html',
             controller: 'publicRecoverPasswordController'
         });
 
