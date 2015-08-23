@@ -85,12 +85,13 @@
       
       <div ng-repeat="reto in logroEducativo.retos">
         <div class="part" ng-repeat="actividad in reto.actividades">
-          <i class="icomoon icon-checked-join"></i>
+          <i class="icomoon icon-checked-join" ng-show="actividad.status == 1"></i>
+          <i class="icomoon icon-star" ng-show="actividad.status == 0"></i>
           <span ng-bind="actividad.name"></span>
           <span>
                 <i class="icomoon icon-star fl-right"></i>
                 <i class="icomoon icon-play fl-right"></i>
-                </span>
+          </span>
         </div>
       </div>
       <!--
@@ -234,9 +235,11 @@
   </section>
   <section class="progreso">
     <div class="spinner">
-      <img src="assets/images/prcnt/{{Math.ceil(model.StageProgress)}}.png">
+      <!-- <img src="assets/images/prcnt/{{Math.ceil(model.StageProgress)}}.png">  -->
+      <span ng-bind="puntosObtenidos"></span>
+      <img src="assets/images/prcnt/{{Math.ceil(puntosObtenidos)}}.png">
       <div class="circle"></div>
-      <div class="text">{{model.StageProgress}}%</div>
+      <div class="text">{{puntosObtenidos}}%</div>
     </div>
   </section>
   <section class="hangar-bay">

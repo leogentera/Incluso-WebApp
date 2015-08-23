@@ -70,7 +70,7 @@
                            ],
                 "etapasLogradas" : [1],  //Etapas completadas
                 "retos" : [ {"name" : "Exploración inicial", "icon" : "assets/images/img-rotator-01-lg.png", 
-                                "actividades" : [{"name" : "Exploracion inicial", "status" : 1}]}, 
+                                "actividades" : [{"name" : "Exploracion inicial", "status" : 0}]}, 
                             {"name" : "Cuarto de recursos", "icon" : "assets/images/img-rotator-01-lg.png", 
                                "actividades" : [{"name" : "Fuente de energia", "status" : 1}]}, 
                             {"name" : "Conócete",  "icon" : "assets/images/img-rotator-01-lg.png",
@@ -83,6 +83,22 @@
                                 "actividades" : [{"name" : "Exploracion final", "status" : 1}]}, 
                           ]                            
                 };
+                
+              var puntosObtenidos = 0;
+              
+              var numRetos = $scope.logroEducativo.retos.length;
+              
+              for (var i = 0; i < numRetos; i++) {
+                  var numActividades = $scope.logroEducativo.retos[i].actividades.length;
+                  
+                  for (var j = 0; j < numActividades; j++) {
+                      puntosObtenidos = puntosObtenidos + $scope.logroEducativo.retos[i].actividades[j].status;
+                  }
+                  
+              }
+              
+              $scope.puntosObtenidos = puntosObtenidos*100/13;
+              alert($scope.puntosObtenidos);
 
 
             /* scroll to top function and listener */
