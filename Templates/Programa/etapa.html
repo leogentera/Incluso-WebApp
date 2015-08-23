@@ -342,9 +342,17 @@
         owl2.trigger("owl.goTo",item);
       }
 
-      $("#next").click(function(ev){alert("click");
+      $("#next").click(function(ev){
         owl.trigger('owl.next');
-        ev.preventDefault();        
+        
+        if (owl2.currentItem == 5) {
+            owl2.trigger("owl.goTo", 0);
+            owl.trigger("owl.goTo", 0);
+        }
+        
+        
+        ev.preventDefault(); 
+               
       })
       
       $("#prev").click(function(ev){
