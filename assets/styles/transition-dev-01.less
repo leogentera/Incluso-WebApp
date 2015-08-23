@@ -74,7 +74,7 @@
 
             span {
                 font-weight: bold;
-                
+
                 +.icomoon {
                     color: white;
                     font-size: 92% !important;
@@ -90,12 +90,17 @@
             .centered {
                 span {
                     position: relative;
-                    top: -8px;
+                    top: -9px;
                     font-weight: bold;
                 }
                 &.txt-bigger {
                     font-size: 120%;
                 }                
+            }
+
+            button.btn {
+                margin-top: 4%;
+                margin-bottom: 4%;
             }
         } 
 
@@ -106,8 +111,8 @@
                     font-size: 4vw;
                     height: 5vw;
                     width: 5vw;
-                    line-height: 5vw;
-                    margin-top: 6px;
+                    line-height: 4.5vw;
+                    margin-top: 3px;
                 }  
 
                 font-size: 4.5vw;
@@ -116,16 +121,21 @@
             }      
 
             input[type="radio"] + label::before {
-                font-size: 8.5vw;
+                font-size: 9vw;
                 height: 6vw;
                 width: 6vw;
-                line-height: 4.5vw;
-                margin-top: 5px;
+                line-height: 5vw;
+                margin-top: 2px;
             }
 
         }       
 
-        .add {            
+        .add {   
+
+            &#agregar {
+                display:none;
+            }    
+
             padding: 3% 0;
             font-size: 115%;
 
@@ -162,7 +172,6 @@
                  opacity: 1;  
              }
          } 
-
 
 
      }

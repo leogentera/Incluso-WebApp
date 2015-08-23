@@ -70,11 +70,15 @@
 }
 .incluso-app .evaluation .controls .centered span {
   position: relative;
-  top: -8px;
+  top: -9px;
   font-weight: bold;
 }
 .incluso-app .evaluation .controls .centered.txt-bigger {
   font-size: 120%;
+}
+.incluso-app .evaluation .controls button.btn {
+  margin-top: 4%;
+  margin-bottom: 4%;
 }
 .incluso-app .evaluation .form label {
   font-size: 4.5vw;
@@ -84,19 +88,22 @@
   font-size: 4vw;
   height: 5vw;
   width: 5vw;
-  line-height: 5vw;
-  margin-top: 6px;
+  line-height: 4.5vw;
+  margin-top: 3px;
 }
 .incluso-app .evaluation .form input[type="radio"] + label::before {
-  font-size: 8.5vw;
+  font-size: 9vw;
   height: 6vw;
   width: 6vw;
-  line-height: 4.5vw;
-  margin-top: 5px;
+  line-height: 5vw;
+  margin-top: 2px;
 }
 .incluso-app .evaluation .add {
   padding: 3% 0;
   font-size: 115%;
+}
+.incluso-app .evaluation .add#agregar {
+  display: none;
 }
 .incluso-app .evaluation .add .icomoon::before {
   color: white;
