@@ -25,6 +25,5 @@ angular
                 $location.path('/ProgramaDashboard');
             }
             
-            $scope.prueba = "Esto es una prueba";
-
+            
         }]);
