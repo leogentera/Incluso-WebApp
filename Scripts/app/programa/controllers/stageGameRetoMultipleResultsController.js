@@ -23,6 +23,7 @@ angular
             $scope.$emit('HidePreloader'); //hide preloader
 
              $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
+            $scope.profile = moodleFactory.Services.GetCacheJson("profile");
 
              $scope.fortalezas = _.filter($scope.retoMultipleActivities, function(a){ return a.score == "3"});
              $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3"});
