@@ -13,6 +13,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
+            _httpFactory = $http;
             $rootScope.pageName = "Estación: Conócete"
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = false;
@@ -23,6 +24,7 @@ angular
             $scope.$emit('HidePreloader'); //hide preloader
             $scope.user = moodleFactory.Services.GetCacheJson("profile");
             $scope.activities = moodleFactory.Services.GetCacheJson("activities");
+            $scope.profile = moodleFactory.Services.GetCacheJson("profile");
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
             $scope.tmpRetoMultipleRequest = localStorage.getItem("tmpRetoMultipleRequest");   //this is only for debug only
 
@@ -41,7 +43,7 @@ angular
                               "respuestas":[
                                  {
                                     "Pregunta 1":"¿Nivel inteligencia?",
-                                    "respuesta":"1"
+                                    "respuesta":"Si"
                                  },
                                  {
                                     "Pregunta 2":"¿Me fue fácil completar el reto?",
@@ -77,7 +79,7 @@ angular
                               "respuestas":[
                                  {
                                     "Pregunta 1":"¿Nivel inteligencia?",
-                                    "respuesta":"1"
+                                    "respuesta":"No"
                                  },
                                  {
                                     "Pregunta 2":"¿Me fue fácil completar el reto?",
@@ -95,6 +97,8 @@ angular
                            }
                         ];
 
+                var shield = "";
+
                 //answer questions and send to the server (or keep on device until it turns online)
                 for(i = 0; i < response.length; i++) {
                     var activity = _.find($scope.retoMultipleActivities, function(a){ return a.name == response[i].sub_actividad; });
@@ -106,6 +110,11 @@ angular
                         //only answer activities where no previously answers are found
                         if (questionAnswers && !questionAnswers.answered) {
                             if (response[i].respuestas) {
+
+                                if (response[i].respuestas.length > 0 && response[i].respuestas[0].respuesta == "Si") {
+                                  shield = response[i].sub_actividad;
+                                }
+
                                 for(j = 0; j < response[i].respuestas.length; j++) {
 
                                     activity.score = response[i].nivel_de_reto;
@@ -124,6 +133,14 @@ angular
                             }
                         }
                     }
+                }
+
+
+                if (shield && $scope.profile) {
+
+                  //update profile
+                  $scope.profile["shield"] = shield;
+                  localStorage.setItem("profile", JSON.stringify($scope.profile));
                 }
 
                 var completedActivities = _.countBy($scope.retoMultipleActivities, function(a) {
@@ -151,12 +168,25 @@ angular
 
             $scope.saveAndContinue = function () {
                 requestCallback();
-                if ($scope.IsComplete) 
+                if ($scope.IsComplete) {
+                    //$scope.saveUser();
                     $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');
-                else
+                } else {
                     $location.path('/ZonaDeVuelo/Conocete/ProgramaDashboard');
+                }
             }
 
+            $scope.saveUser = function () {
+
+                moodleFactory.Services.PutAsyncProfile(_getItem("userId"), $scope.profile,
+
+                    function (data) {
+                        console.log('Save profile successful...');
+                    },
+                    function (date) {
+                        console.log('Save profile fail...');
+                    });
+            };
 
             $scope.back = function () {
 

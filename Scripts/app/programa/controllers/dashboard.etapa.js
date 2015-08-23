@@ -39,6 +39,8 @@ angular
                     Challenges: currentUserStage.challenges
                 };
             }
+            
+            $scope.puntosObtenidos = 92.3;
 
             $(".navbar").addClass("etapa-uno");
             getDataAsync();
