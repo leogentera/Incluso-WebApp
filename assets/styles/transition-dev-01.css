@@ -7,6 +7,7 @@
  LESS Utilities - variables and functions
 ****************************************************************************/
 /* Path vars */
+/* Placeholder default opacity */
 /* Color Palette */
 /* shape variables */
 /* parametric color functions */
@@ -134,4 +135,25 @@
 .incluso-app .evaluation .add input:-ms-input-placeholder {
   color: white !important;
   opacity: 1;
+}
+.incluso-app .evaluation #finalized .header-title {
+  padding-top: 60px;
+  padding-bottom: 10px;
+}
+.incluso-app .evaluation #finalized .subtitle {
+  padding-top: 5px;
+}
+.incluso-app .evaluation #finalized .green-giant {
+  font-size: 640%;
+}
+.incluso-app .evaluation #finalized .txt-renglon.pill {
+  font-weight: normal;
+  font-size: 4.5vw;
+  margin: 8vw 10vw 3vw;
+}
+.incluso-app .evaluation #finalized .txt-renglon.pill .sm-pill {
+  border-width: 2px;
+  font-size: 5.5vw;
+  font-weight: bold;
+  padding: 1vw 2.5vw;
 }
