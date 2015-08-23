@@ -98,7 +98,15 @@ body {
 .sidebar-left {
     display: block;
     width: 85vw;
-    pointer-events: all;    
+    pointer-events: all;   
+    .navbar { 
+        ul {
+            background-color: rgba(0,0,0, 0.2);
+            .icomoon {
+                line-height: 12vw;
+            }
+        }
+    }
 }
 
 .incluso-app .sidebar-left .navbar-assets {
@@ -1243,16 +1251,34 @@ body {
         background-color: #EE4823;
         border-color: rgba(0, 0, 0, 0.2);/*#EE4823;*/
         overflow: hidden;
+
         .icomoon {
             font-size: 6vw;
-            line-height: 15vw;
-            vertical-align: top;
+            line-height: 1;
+            vertical-align: bottom;
         }   
-
+        span {
+            font-size: 6vw;
+            line-height: 1vw;
+        }
         &.etapa-uno {
             background-color: #138BCB;
             border-color: #138BCB;
         }     
+        ul {
+            margin:  0px;
+            padding: 3vw;
+            line-height: 7vw;
+            li {
+                display: inline-block;
+                margin-right: 1vw;
+                line-height: 6vw;
+                a{
+                    font-size: 6vw;
+                    color: #FFF;
+                }
+            }
+        }    
     }
 
     .navbar-absolute-top {
@@ -1303,6 +1329,7 @@ body {
         width: 95vw;
 
         .sidebar-toggle {
+            width: 44vw;
             padding: 0px 1vw;
             text-align: left;
             line-height: inherit;
@@ -1312,13 +1339,13 @@ body {
             overflow: hidden;
             /*float: left;*/
             margin: 0;
-            width: 46vw;
-            max-width:50vw;
+            width: 45vw;
+            max-width:45vw;
             color: @clr-white;
             font-family: 'Play';   
             font-size: 4vw;
             font-weight: bold;
-            line-height: 14vw;
+            /*line-height: 14vw;*/
             text-overflow:ellipsis;
             white-space: nowrap;
             text-transform: none;
@@ -1326,14 +1353,17 @@ body {
                 color: @clr-white;            
             }
         }
+        .btn-group {
+            width: 44vw;
+            padding: 2.7vh 0;
+        }
         .navbar-tools {
             display: inline-block;
             float: right;
             margin: 0;
-            width: 45vw;  
-            max-width:48vw;
+            width: 44vw; 
             list-style-type: none;   
-            padding: 0 9px 0 0;
+            padding: 2.5vh 0px;
         }
     }
     .navbar-tools{ 
