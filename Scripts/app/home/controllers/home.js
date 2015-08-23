@@ -60,7 +60,7 @@
                 $anchorScroll();      
             }
             
-            $scope.challengeName = "MIS RRR";
+            $scope.challengeName = "MIS RETOS";
             
             $scope.logroEducativo = {
                 "userId" : 53,
