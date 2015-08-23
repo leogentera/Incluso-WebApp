@@ -74,13 +74,13 @@
                             {"name" : "Cuarto de recursos", "icon" : "assets/images/img-rotator-01-lg.png", 
                                "actividades" : [{"name" : "Fuente de energia", "status" : 1}]}, 
                             {"name" : "Conócete",  "icon" : "assets/images/img-rotator-01-lg.png",
-                                "actividades" : [{"name" : "Exploracion inicial", "status" : 1}]}, 
+                                "actividades" : [{"name" : "Fuente de energia", "status" : 1}, {"name" : "Reto múltiple", "status" : 1}, {"name" : "Punto de encuentro", "status" : 1}, {"name" : "Zona de contacto", "status" : 1}  ]}, 
                             {"name" : "Mis sueños", "icon" : "assets/images/img-rotator-01-lg.png",
-                                "actividades" : [{"name" : "Exploracion inicial", "status" : 1}]}, 
+                                "actividades" : [{"name" : "Fuente de energia", "status" : 1}, {"name" : "Mis gustos", "status" : 1}, {"name" : "Mis cualidades", "status" : 1}, {"name" : "Sueña", "status" : 1}, {"name" : "Punto de encuentro", "status" : 1} ]},
                             {"name" : "Cabina de soporte", "icon" : "assets/images/img-rotator-01-lg.png", 
-                               "actividades" : [{"name" : "Exploracion inicial", "status" : 1}]}, 
+                               "actividades" : [{"name" : "Chat", "status" : 1}]}, 
                             {"name" : "Exploración final", "icon" : "assets/images/img-rotator-01-lg.png", 
-                                "actividades" : [{"name" : "Exploracion inicial", "status" : 1}]}, 
+                                "actividades" : [{"name" : "Exploracion final", "status" : 1}]}, 
                           ]                            
                 };
 
