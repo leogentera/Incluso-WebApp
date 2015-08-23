@@ -333,24 +333,17 @@
       });
       
       function callback1(event) {
-        var item = this.currentItem;
-        owl.trigger("owl.goTo",item);
+        var item = this.currentItem;       
+        owl.trigger("owl.goTo", item);
       }
       
       function callback2(event) {
-        var item = this.currentItem;
-        owl2.trigger("owl.goTo",item);
+        var item = this.currentItem;   
+        owl2.trigger("owl.goTo", item);
       }
 
       $("#next").click(function(ev){
         owl.trigger('owl.next');
-        
-        if (owl2.currentItem == 5) {
-            owl2.trigger("owl.goTo", 0);
-            owl.trigger("owl.goTo", 0);
-        }
-        
-        
         ev.preventDefault(); 
                
       })
