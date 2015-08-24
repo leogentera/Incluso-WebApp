@@ -22,7 +22,7 @@ angular
             $scope.$emit('HidePreloader');
             $scope.model = getDataAsync();
             
-            $scope.totalBadges = $scope.model.badges.length;
+            $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
             $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
             $scope.badgePage = 0;
             $scope.normalBadgePage = $scope.badgePage + 1;
@@ -192,13 +192,13 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (badgeId, badgeBadgeimage, badgeName, badgeDateIssued, earnedTimes) {
+            $scope.showDetailBadge = function (badgeId, badgeName, badgeDateIssued, earnedTimes) {
                 $scope.currentPage = 10;
                 $scope.badgeId = badgeId;
-                $scope.badgeBadgeimage = badgeBadgeimage;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
+                //$scope.status = status;
             };
 
             $scope.edit = function () {
