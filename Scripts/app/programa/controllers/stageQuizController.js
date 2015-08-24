@@ -19,6 +19,10 @@ angular
             $rootScope.showFooterRocks = false;
 
 
+
+            $scope.$emit('HidePreloader'); //hide preloader
+
+
             $scope.currentPage = 1;
             // $scope.stage = JSON.parse(moodleFactory.Services.GetCacheObject("stage"));
             $scope.stage = JSON.parse(localStorage.getItem("stage"));
@@ -240,6 +244,7 @@ angular
 
                 if ($scope.firstTime == 1) {
                     setTimeout(function () {
+
                         var modalInstance = $modal.open({
                             animation: $scope.animationsEnabled,
                             templateUrl: 'tutorialModal.html',
@@ -250,13 +255,26 @@ angular
                         console.log("modal open");
                     }, 500);
                 }
+
+                //     var modalInstance = $modal.open({
+                //         animation: $scope.animationsEnabled,
+                //         templateUrl: 'OpeningStageModal.html',
+                //         controller: 'OpeningStageController',
+                //         size: size,
+                //         windowClass: 'user-help-modal'
+                //     });
+                //     console.log("modal open");
+                // }, 500);
+                // }
+
             };
 
             $scope.openModal();
 
         }])
-    .controller('tutorialController', function ($scope, $modalInstance) {
+    .controller('OpeningStageController', function ($scope, $modalInstance) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
     });
+

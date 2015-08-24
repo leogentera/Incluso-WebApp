@@ -9,89 +9,50 @@ angular
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-            
-            var newNotifications = [
-                {
-                    notificationId: 1,
-                    notificationTitle:'Has ganado una estrella',
-                    read:'false',
-                    notificationDate: new Date('01/02/2005'),
-                    notificationDetail : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras venenatis velit magna, vitae commodo metus volutpat a. Morbi euismod mauris lectus. Praesent suscipit consequat felis, a aliquet nibh porttitor vitae. Praesent volutpat tortor ipsum, tempor lacinia justo aliquet ut. Maecenas dolor mauris, vestibulum non varius a, feugiat in elit. Nulla libero elit, gravida quis orci pulvinar, consequat rhoncus ex. Praesent a ultrices nisi. Ut vel volutpat tortor, a ultrices nisl. Nullam at faucibus velit. Nunc pharetra lacus nisi.'},
-                {
-                    notificationId: 2,
-                    notificationTitle:'Has completado una act',
-                    read:'false',
-                    notificationDate: new Date('01/02/2005'),
-                    notificationDetail : 'nteger ut convallis felis. Fusce in tincidunt nisl. Pellentesque quis neque leo. Aliquam eget lectus at sem gravida eleifend bibendum vel nulla. Curabitur quis augue non urna vestibulum sodales. Maecenas nec sem bibendum, pharetra turpis efficitur, hendrerit mi. Donec sit amet est ac dui ultricies dignissim. Fusce ac sodales tortor, in gravida leo. Nulla sem purus, varius sit amet nisi nec, interdum accumsan nisi. Fusce dolor urna, hendrerit quis interdum at, fringilla a orci. Sed dignissim ornare lectus, et tristique erat hendrerit eu. Vivamus ut consectetur ex, eu suscipit libero.'},
-                {
-                    notificationId: 3,
-                    notificationTitle:'Has completado una etapa',
-                    read:'false',
-                    notificationDate: new Date('01/02/2004'),
-                    notificationDetail : 'Ut consequat tristique est ac ultrices. Donec et euismod nisi. Proin sapien est, imperdiet quis ligula ac, efficitur sollicitudin metus. Sed nec risus arcu. Nam id blandit orci. Nam ornare fermentum lorem vel fermentum. Vivamus ex diam, eleifend et bibendum ac, varius a mi. Mauris commodo dolor neque, sed pretium lacus ultrices vitae'},
-                {
-                    notificationId: 4,
-                    notificationTitle:'Has ganado una estrella',
-                    read:'false',
-                    notificationDate: new Date('01/02/2010'),
-                    notificationDetail : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras venenatis velit magna, vitae commodo metus volutpat a. Morbi euismod mauris lectus. Praesent suscipit consequat felis, a aliquet nibh porttitor vitae. Praesent volutpat tortor ipsum, tempor lacinia justo aliquet ut. Maecenas dolor mauris, vestibulum non varius a, feugiat in elit. Nulla libero elit, gravida quis orci pulvinar, consequat rhoncus ex. Praesent a ultrices nisi. Ut vel volutpat tortor, a ultrices nisl. Nullam at faucibus velit. Nunc pharetra lacus nisi.'},
-                {
-                    notificationId: 5,
-                    notificationTitle:'Has completado una act',
-                    read:'false',
-                    notificationDate: new Date('01/02/2015'),
-                    notificationDetail : 'nteger ut convallis felis. Fusce in tincidunt nisl. Pellentesque quis neque leo. Aliquam eget lectus at sem gravida eleifend bibendum vel nulla. Curabitur quis augue non urna vestibulum sodales. Maecenas nec sem bibendum, pharetra turpis efficitur, hendrerit mi. Donec sit amet est ac dui ultricies dignissim. Fusce ac sodales tortor, in gravida leo. Nulla sem purus, varius sit amet nisi nec, interdum accumsan nisi. Fusce dolor urna, hendrerit quis interdum at, fringilla a orci. Sed dignissim ornare lectus, et tristique erat hendrerit eu. Vivamus ut consectetur ex, eu suscipit libero.'},
-                {
-                    notificationId: 6,
-                    notificationTitle:'Has completado una etapa',
-                    read:'false',
-                    notificationDate: new Date('01/02/2002'),
-                    notificationDetail : 'Ut consequat tristique est ac ultrices. Donec et euismod nisi. Proin sapien est, imperdiet quis ligula ac, efficitur sollicitudin metus. Sed nec risus arcu. Nam id blandit orci. Nam ornare fermentum lorem vel fermentum. Vivamus ex diam, eleifend et bibendum ac, varius a mi. Mauris commodo dolor neque, sed pretium lacus ultrices vitae'},
-                {
-                    notificationId: 7,
-                    notificationTitle:'Has ganado una estrella',
-                    read:'false',
-                    notificationDate: new Date('01/02/2014'),
-                    notificationDetail : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras venenatis velit magna, vitae commodo metus volutpat a. Morbi euismod mauris lectus. Praesent suscipit consequat felis, a aliquet nibh porttitor vitae. Praesent volutpat tortor ipsum, tempor lacinia justo aliquet ut. Maecenas dolor mauris, vestibulum non varius a, feugiat in elit. Nulla libero elit, gravida quis orci pulvinar, consequat rhoncus ex. Praesent a ultrices nisi. Ut vel volutpat tortor, a ultrices nisl. Nullam at faucibus velit. Nunc pharetra lacus nisi.'},
-                {
-                    notificationId: 8,
-                    notificationTitle:'Has completado una act',
-                    read:'false',
-                    notificationDate: new Date('01/02/2011'),
-                    notificationDetail : 'nteger ut convallis felis. Fusce in tincidunt nisl. Pellentesque quis neque leo. Aliquam eget lectus at sem gravida eleifend bibendum vel nulla. Curabitur quis augue non urna vestibulum sodales. Maecenas nec sem bibendum, pharetra turpis efficitur, hendrerit mi. Donec sit amet est ac dui ultricies dignissim. Fusce ac sodales tortor, in gravida leo. Nulla sem purus, varius sit amet nisi nec, interdum accumsan nisi. Fusce dolor urna, hendrerit quis interdum at, fringilla a orci. Sed dignissim ornare lectus, et tristique erat hendrerit eu. Vivamus ut consectetur ex, eu suscipit libero.'},
-                {
-                    notificationId: 9,
-                    notificationTitle:'Has completado una etapa',
-                    read:'false',
-                    notificationDate: new Date('01/02/2009'),
-                    notificationDetail : 'Ut consequat tristique est ac ultrices. Donec et euismod nisi. Proin sapien est, imperdiet quis ligula ac, efficitur sollicitudin metus. Sed nec risus arcu. Nam id blandit orci. Nam ornare fermentum lorem vel fermentum. Vivamus ex diam, eleifend et bibendum ac, varius a mi. Mauris commodo dolor neque, sed pretium lacus ultrices vitae'},
-                {
-                    notificationId: 10,
-                    notificationTitle:'Has ganado una estrella',
-                    read:'false',
-                    notificationDate: new Date('01/02/2015'),
-                    notificationDetail : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras venenatis velit magna, vitae commodo metus volutpat a. Morbi euismod mauris lectus. Praesent suscipit consequat felis, a aliquet nibh porttitor vitae. Praesent volutpat tortor ipsum, tempor lacinia justo aliquet ut. Maecenas dolor mauris, vestibulum non varius a, feugiat in elit. Nulla libero elit, gravida quis orci pulvinar, consequat rhoncus ex. Praesent a ultrices nisi. Ut vel volutpat tortor, a ultrices nisl. Nullam at faucibus velit. Nunc pharetra lacus nisi.'},
-                {
-                    notificationId: 11,
-                    notificationTitle:'Has completado una act',
-                    read:'false',
-                    notificationDate: new Date('01/02/2014'),
-                    notificationDetail : 'nteger ut convallis felis. Fusce in tincidunt nisl. Pellentesque quis neque leo. Aliquam eget lectus at sem gravida eleifend bibendum vel nulla. Curabitur quis augue non urna vestibulum sodales. Maecenas nec sem bibendum, pharetra turpis efficitur, hendrerit mi. Donec sit amet est ac dui ultricies dignissim. Fusce ac sodales tortor, in gravida leo. Nulla sem purus, varius sit amet nisi nec, interdum accumsan nisi. Fusce dolor urna, hendrerit quis interdum at, fringilla a orci. Sed dignissim ornare lectus, et tristique erat hendrerit eu. Vivamus ut consectetur ex, eu suscipit libero.'},
-                {
-                    notificationId: 12,
-                    notificationTitle:'Has completado una etapa',
-                    read:'false',
-                    notificationDate: new Date('01/02/2002'),
-                    notificationDetail : 'Ut consequat tristique est ac ultrices. Donec et euismod nisi. Proin sapien est, imperdiet quis ligula ac, efficitur sollicitudin metus. Sed nec risus arcu. Nam id blandit orci. Nam ornare fermentum lorem vel fermentum. Vivamus ex diam, eleifend et bibendum ac, varius a mi. Mauris commodo dolor neque, sed pretium lacus ultrices vitae'}                    
-            ];
-            
-            var notificationsLocalStorage = localStorage.getItem("notifications");            
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {            
+            //var newNotifications = [
+            //    {
+            //        id: 1,
+            //        name:'Has ganado una estrella',
+            //        read:'false',
+            //        timemodified: new Date('01/02/2005'),
+            //        description : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras venenatis velit magna, vitae commodo metus volutpat a. Morbi euismod mauris lectus. Praesent suscipit consequat felis, a aliquet nibh porttitor vitae. Praesent volutpat tortor ipsum, tempor lacinia justo aliquet ut. Maecenas dolor mauris, vestibulum non varius a, feugiat in elit. Nulla libero elit, gravida quis orci pulvinar, consequat rhoncus ex. Praesent a ultrices nisi. Ut vel volutpat tortor, a ultrices nisl. Nullam at faucibus velit. Nunc pharetra lacus nisi.'},
+            //    {
+            //        id: 2,
+            //        name:'Has completado una act',
+            //        read:'false',
+            //        timemodified: new Date('01/02/2005'),
+            //        description : 'nteger ut convallis felis. Fusce in tincidunt nisl. Pellentesque quis neque leo. Aliquam eget lectus at sem gravida eleifend bibendum vel nulla. Curabitur quis augue non urna vestibulum sodales. Maecenas nec sem bibendum, pharetra turpis efficitur, hendrerit mi. Donec sit amet est ac dui ultricies dignissim. Fusce ac sodales tortor, in gravida leo. Nulla sem purus, varius sit amet nisi nec, interdum accumsan nisi. Fusce dolor urna, hendrerit quis interdum at, fringilla a orci. Sed dignissim ornare lectus, et tristique erat hendrerit eu. Vivamus ut consectetur ex, eu suscipit libero.'},
+            //    {
+            //        id: 3,
+            //        name:'Has completado una etapa',
+            //        read:'false',
+            //        timemodified: new Date('01/02/2004'),
+            //        description : 'Ut consequat tristique est ac ultrices. Donec et euismod nisi. Proin sapien est, imperdiet quis ligula ac, efficitur sollicitudin metus. Sed nec risus arcu. Nam id blandit orci. Nam ornare fermentum lorem vel fermentum. Vivamus ex diam, eleifend et bibendum ac, varius a mi. Mauris commodo dolor neque, sed pretium lacus ultrices vitae'},
+            //];
                         
-            $scope.notifications = notificationsLocalStorage ? JSON.parse(notificationsLocalStorage) : newNotifications;
+            //var notificationsLocalStorage = localStorage.getItem("notifications");                                            
+            //                        
+            //$scope.notifications = notificationsLocalStorage ? JSON.parse(notificationsLocalStorage) : newNotifications;
+                        
+                                    
+            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             
-           
+            //var activitiesperUser = _.filter(userCourse.stages, function(stages){
+            //    var st = stages;
+            //    debugger;
+            //    for(i=0; i< stages.challenges.length; i++){
+            //        var currentChallenge = stages.challenges[i];
+            //        for(j=0; j< currentChallenge.length; j++){                           
+            //               return _.where(currentChallenge[j].activity,{status: 0});
+            //        }                    
+            //    }
+            //});
             
+            $scope.notifications = JSON.parse(localStorage.getItem("notifications"));            
+                     
+            //var activitiesCompleted =  
+                                            
             var notificationsQuantityInitial = 6;
             
             $scope.notificationsQuantity = notificationsQuantityInitial;
@@ -103,7 +64,7 @@ angular
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-                    
+                                                
             //////// displaying notificacions as carousel ////////
             $scope.myInterval = 5000;
             $scope.noWrapSlides = false;
@@ -156,7 +117,7 @@ angular
             $scope.showLoadMoreBar = function(type){
                 switch(type){
                 case 'All':
-                    return !($scope.notificationsQuantity == $scope.notifications.length);
+                    return !($scope.notificationsQuantity >= $scope.notifications.length);
                 case 'Read':                    
                     return !($scope.notificationsQuantityRead >= _.where($scope.notifications, {read:'true'}).length);
                     break;
@@ -176,9 +137,7 @@ angular
                 $scope.notifications[alertId -1 ].read = "true";
                 localStorage.setItem("notifications", JSON.stringify($scope.notifications));
                 $scope.navigateTo('/AlertsDetail/' + alertId, 'Notificaciones', 'null', 'navbarorange');
-            }
-            
-            
+            }                    
             
             $scope.navigateTo = function(url,name,sideToggle,navbarColor){
                 $location.path(url);

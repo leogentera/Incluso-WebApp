@@ -97,16 +97,19 @@ body.modal-open {
   overflow-y: auto;
   overflow-x: hidden;
 }
-.sidebar-left {
+.incluso-app .sidebar-left {
   display: block;
   width: 85vw;
   pointer-events: all;
 }
-.sidebar-left .navbar ul {
+.incluso-app .sidebar-left .navbar ul {
   background-color: rgba(0, 0, 0, 0.2);
 }
-.sidebar-left .navbar ul .icomoon {
+.incluso-app .sidebar-left .navbar ul .icomoon {
   line-height: 12vw;
+}
+.incluso-app .sidebar-left .navbar ul li {
+  width: auto;
 }
 .incluso-app .sidebar-left .navbar-assets {
   width: auto;
@@ -1345,12 +1348,12 @@ body.modal-open {
   overflow: hidden;
 }
 .incluso-app .navbar .icomoon {
-  font-size: 6vw;
+  font-size: 5.5vw;
   line-height: 1;
   vertical-align: bottom;
 }
 .incluso-app .navbar span {
-  font-size: 6vw;
+  font-size: 6.2vw;
   line-height: 1vw;
 }
 .incluso-app .navbar.etapa-uno {
@@ -1364,7 +1367,8 @@ body.modal-open {
 }
 .incluso-app .navbar ul li {
   display: inline-block;
-  margin-right: 1vw;
+  width: 13vw;
+  /*margin-right: 1vw;*/
   line-height: 6vw;
 }
 .incluso-app .navbar ul li a {
@@ -1418,7 +1422,7 @@ body.modal-open {
   width: 95vw;
 }
 .incluso-app .navbar-assets .sidebar-toggle {
-  width: 44vw;
+  width: 50vw;
   padding: 0px 1vw;
   text-align: left;
   line-height: inherit;
@@ -1428,8 +1432,8 @@ body.modal-open {
   overflow: hidden;
   /*float: left;*/
   margin: 0;
-  width: 45vw;
-  max-width: 45vw;
+  width: 48vw;
+  max-width: 48vw;
   color: #ffffff;
   font-family: 'Play';
   font-size: 4vw;
@@ -1444,7 +1448,7 @@ body.modal-open {
 }
 .incluso-app .navbar-assets .btn-group {
   width: 44vw;
-  padding: 2.7vh 0;
+  padding-top: 3vh;
 }
 .incluso-app .navbar-assets .navbar-tools {
   display: inline-block;
@@ -1452,7 +1456,7 @@ body.modal-open {
   margin: 0;
   width: 44vw;
   list-style-type: none;
-  padding: 2.5vh 0px;
+  padding-top: 3vh;
 }
 .incluso-app .navbar-tools li {
   display: inline-block;
@@ -1510,6 +1514,10 @@ body.modal-open {
   -webkit-border-radius: 1.5vw;
   -moz-border-radius: 1.5vw;
   border-radius: 1.5vw;
+}
+
+.incluso-app .panel.panel-video{
+  background-color: #121b1c;
 }
 .incluso-app .panel > .panel-heading {
   padding: 5.5vw 2.6vw;

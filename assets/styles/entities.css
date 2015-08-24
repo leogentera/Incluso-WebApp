@@ -647,6 +647,7 @@
     background-size: cover;
     border-top: 2px solid #2a2f32;
     padding: 20px 0;
+    cursor:pointer;
   }
   .incluso-app .add {
     border-bottom: 2px solid rgba(255, 255, 255, 0.3);
@@ -868,7 +869,7 @@
   }
   .incluso-app .modalDialog > div {
     width: 100%;
-    position: absolute;
+    position: relative;
     margin: 0;
     padding: 2% 0;
     background: #fff;
