@@ -686,6 +686,29 @@ body.modal-open {
   font-size: smaller;
   line-height: 1;
 }
+.incluso-app .button-group.page-controls .btn {
+  display: inline-block;
+  float: left;
+  height: auto;
+  margin-top: 0;
+}
+.incluso-app .button-group.page-controls .btn.control {
+  width: 20%;
+}
+.incluso-app .button-group.page-controls .btn.control.left {
+  margin-right: 5%;
+}
+.incluso-app .button-group.page-controls .btn.control.riht {
+  margin-left: 5%;
+}
+.incluso-app .button-group.page-controls .btn.action {
+  width: 50%;
+  margin: 0;
+}
+.incluso-app .button-group.page-controls .btn .icomoon {
+  font-size: smaller;
+  line-height: 1;
+}
 .incluso-app .form-control {
   -webkit-appearance: none;
   -moz-appearance: none;
