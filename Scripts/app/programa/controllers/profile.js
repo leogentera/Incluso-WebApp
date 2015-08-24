@@ -192,10 +192,9 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (badgeId, badgeBadgeimage, badgeName, badgeDateIssued, earnedTimes) {
+            $scope.showDetailBadge = function (badgeId, badgeName, badgeDateIssued, earnedTimes) {
                 $scope.currentPage = 10;
                 $scope.badgeId = badgeId;
-                $scope.badgeBadgeimage = badgeBadgeimage;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
