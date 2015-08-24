@@ -1,23 +1,249 @@
 /********************************************************************************
-    Incluso Digital CSS Styles
+Incluso Digital CSS Styles
 
-    Parallel work file for UI Developer 01
+Parallel work file for UI Developer 01
 ********************************************************************************/
 @import "less-utilities.less";
 
 
 .incluso-app {
-    
-    /********************************************************************************
-     Base styles (if needed)
-    ********************************************************************************/
-    /* Start writing base classes here */
-
 
     /********************************************************************************
-     Entities styles (if needed)
+    Base styles (if needed)
     ********************************************************************************/
     /* Start writing base classes here */
+    .form input[type="radio"]:checked + label::before {
+        color: #e1e455;
+        background-color: transparent;
+    }
 
-  
+    .form input[type="radio"]:checked + label {
+        color: #e1e455;
+    }
+
+    .form .tnf input[type="radio"]:checked + label {
+        color: white;
+    }  
+
+    /********************************************************************************
+    Entities styles (if needed)
+    ********************************************************************************/
+    /* Start writing base classes here */
+    .evaluation {
+
+        .subtitle {            
+            padding-top: 60px;
+            text-transform: uppercase;
+            font-weight: bold;
+
+            + .txt-renglon {
+                font-size: 4.5vw;
+                font-weight: normal;
+                padding: 2.5% 0;                
+            }            
+        }
+
+        .txt-renglon {
+
+            &.txt-bigger {
+                font-size: 129%;                
+            }             
+
+        }
+
+        .part {                    
+            margin: 1vh 5%;
+            width: 90%;
+
+            &.list {                
+                padding: 5% 6%;
+
+                .add {
+                    margin: 0;
+                    font-size: 106%;
+                    padding: 4% 0;
+
+                    .icomoon::before {                    
+                        padding-right: 3% !important;                    
+                    }
+
+                    .icomoon {
+                        font-size: 86% !important;
+                        padding-right: 0 !important;
+                    }
+
+                    input {
+                        width: 91% !important;
+                    }
+                }  
+            }
+
+            span {
+                font-weight: bold;
+
+                +.icomoon {
+                    color: white;
+                    font-size: 92% !important;
+                    padding-right: 0 !important;
+                }  
+            }
+
+        }
+
+        .controls { 
+
+            .centered {
+
+                span {
+                    position: relative;
+                    top: -9px;
+                    font-weight: bold;
+                }
+
+                &.txt-bigger {
+                    font-size: 120%;
+                }                
+            }
+
+            .btn {
+                margin-top: 4%;
+                margin-bottom: 4%;
+            }
+        }
+
+        .form {   
+
+            label {
+                font-size: 4.5vw;
+                padding-left: 8vw;    
+
+                &::before{
+                    font-size: 4vw;
+                    height: 5vw;
+                    width: 5vw;
+                    line-height: 4.5vw;
+                    margin-top: 3px;
+                }  
+            }      
+
+            input[type="radio"] + label::before {
+                font-size: 9vw;
+                height: 6vw;
+                width: 6vw;
+                line-height: 5vw;
+                margin-top: 1px;
+            }
+
+        }
+
+        .add {  
+
+           padding: 3% 0;
+           font-size: 115%;
+
+           &#agregar {
+            display:none;
+        }    
+
+        .icomoon::before {
+            color: white;
+            font-size: 92%;
+            padding-right: 3%;
+        }
+
+        input {
+            background: transparent;
+            color: white;
+            border: none;
+            width: 91%;
+            font-weight: normal;
+
+            &::-webkit-input-placeholder {
+                color: white !important;
+                opacity: 1; 
+            }
+
+            &:-moz-placeholder { /* Firefox 18- */
+               color: white !important;
+               opacity: 1;   
+           }
+
+           &::-moz-placeholder {  /* Firefox 19+ */
+             color: white !important;
+             opacity: 1;   
+         }
+
+         &:-ms-input-placeholder {  
+             color: white !important; 
+             opacity: 1;  
+         }
+     }        
+
+ }
+
+ #finalized {
+
+    .header-title {
+        padding-top: 40px;
+        padding-bottom: 10px;
+    }
+
+    .subtitle {
+        padding-top: 5px;
+    }
+
+    .green-giant {
+        font-size: 640%;
+    }
+
+    .txt-renglon {
+        &.pill {
+            font-weight: normal;
+            font-size: 4.5vw;
+            margin: 8vw 5vw 3vw;
+            padding: 5vw 4vw 10vw 7vw;
+            width: 90%;
+
+            .sm-pill {
+                border-width: 2px;
+                font-size: 5.5vw;
+                font-weight: bold;
+                padding: 0.7vw 3vw 1vw;
+                position: relative;
+                top: -6px;
+
+                .icon-star {
+                    font-size: 4.5vw;
+                    position: relative;
+                    top: 4.5px;
+                }
+            }
+        }
+
+        &.form {
+            font-weight: normal;
+            font-size: 4.5vw;
+
+            section {
+                margin: 0;
+                width: 100%;
+
+                label {
+                    width: auto;
+                    margin-left: 4vw;
+                    display: inline-block;
+                }
+            }
+
+            .btn {
+                width: 100%;
+                margin: 3% 0 0;
+            }
+        }
+    }
+}
+
+
+    } //evaluation
+
 }

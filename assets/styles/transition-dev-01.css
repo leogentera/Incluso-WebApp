@@ -1,23 +1,191 @@
 /********************************************************************************
-    Incluso Digital CSS Styles
+Incluso Digital CSS Styles
 
-    Parallel work file for UI Developer 01
+Parallel work file for UI Developer 01
 ********************************************************************************/
 /****************************************************************************
  LESS Utilities - variables and functions
 ****************************************************************************/
 /* Path vars */
+/* Placeholder default opacity */
 /* Color Palette */
 /* shape variables */
 /* parametric color functions */
 /* Custom Functions */
 .incluso-app {
   /********************************************************************************
-     Base styles (if needed)
+    Base styles (if needed)
     ********************************************************************************/
   /* Start writing base classes here */
   /********************************************************************************
-     Entities styles (if needed)
+    Entities styles (if needed)
     ********************************************************************************/
   /* Start writing base classes here */
+}
+.incluso-app .form input[type="radio"]:checked + label::before {
+  color: #e1e455;
+  background-color: transparent;
+}
+.incluso-app .form input[type="radio"]:checked + label {
+  color: #e1e455;
+}
+.incluso-app .form .tnf input[type="radio"]:checked + label {
+  color: white;
+}
+.incluso-app .evaluation .subtitle {
+  padding-top: 60px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.incluso-app .evaluation .subtitle + .txt-renglon {
+  font-size: 4.5vw;
+  font-weight: normal;
+  padding: 2.5% 0;
+}
+.incluso-app .evaluation .txt-renglon.txt-bigger {
+  font-size: 129%;
+}
+.incluso-app .evaluation .part {
+  margin: 1vh 5%;
+  width: 90%;
+}
+.incluso-app .evaluation .part.list {
+  padding: 5% 6%;
+}
+.incluso-app .evaluation .part.list .add {
+  margin: 0;
+  font-size: 106%;
+  padding: 4% 0;
+}
+.incluso-app .evaluation .part.list .add .icomoon::before {
+  padding-right: 3% !important;
+}
+.incluso-app .evaluation .part.list .add .icomoon {
+  font-size: 86% !important;
+  padding-right: 0 !important;
+}
+.incluso-app .evaluation .part.list .add input {
+  width: 91% !important;
+}
+.incluso-app .evaluation .part span {
+  font-weight: bold;
+}
+.incluso-app .evaluation .part span + .icomoon {
+  color: white;
+  font-size: 92% !important;
+  padding-right: 0 !important;
+}
+.incluso-app .evaluation .controls .centered span {
+  position: relative;
+  top: -9px;
+  font-weight: bold;
+}
+.incluso-app .evaluation .controls .centered.txt-bigger {
+  font-size: 120%;
+}
+.incluso-app .evaluation .controls .btn {
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+.incluso-app .evaluation .form label {
+  font-size: 4.5vw;
+  padding-left: 8vw;
+}
+.incluso-app .evaluation .form label::before {
+  font-size: 4vw;
+  height: 5vw;
+  width: 5vw;
+  line-height: 4.5vw;
+  margin-top: 3px;
+}
+.incluso-app .evaluation .form input[type="radio"] + label::before {
+  font-size: 9vw;
+  height: 6vw;
+  width: 6vw;
+  line-height: 5vw;
+  margin-top: 1px;
+}
+.incluso-app .evaluation .add {
+  padding: 3% 0;
+  font-size: 115%;
+}
+.incluso-app .evaluation .add#agregar {
+  display: none;
+}
+.incluso-app .evaluation .add .icomoon::before {
+  color: white;
+  font-size: 92%;
+  padding-right: 3%;
+}
+.incluso-app .evaluation .add input {
+  background: transparent;
+  color: white;
+  border: none;
+  width: 91%;
+  font-weight: normal;
+}
+.incluso-app .evaluation .add input::-webkit-input-placeholder {
+  color: white !important;
+  opacity: 1;
+}
+.incluso-app .evaluation .add input:-moz-placeholder {
+  /* Firefox 18- */
+  color: white !important;
+  opacity: 1;
+}
+.incluso-app .evaluation .add input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: white !important;
+  opacity: 1;
+}
+.incluso-app .evaluation .add input:-ms-input-placeholder {
+  color: white !important;
+  opacity: 1;
+}
+.incluso-app .evaluation #finalized .header-title {
+  padding-top: 40px;
+  padding-bottom: 10px;
+}
+.incluso-app .evaluation #finalized .subtitle {
+  padding-top: 5px;
+}
+.incluso-app .evaluation #finalized .green-giant {
+  font-size: 640%;
+}
+.incluso-app .evaluation #finalized .txt-renglon.pill {
+  font-weight: normal;
+  font-size: 4.5vw;
+  margin: 8vw 5vw 3vw;
+  padding: 5vw 4vw 10vw 7vw;
+  width: 90%;
+}
+.incluso-app .evaluation #finalized .txt-renglon.pill .sm-pill {
+  border-width: 2px;
+  font-size: 5.5vw;
+  font-weight: bold;
+  padding: 0.7vw 3vw 1vw;
+  position: relative;
+  top: -6px;
+}
+.incluso-app .evaluation #finalized .txt-renglon.pill .sm-pill .icon-star {
+  font-size: 4.5vw;
+  position: relative;
+  top: 4.5px;
+}
+.incluso-app .evaluation #finalized .txt-renglon.form {
+  font-weight: normal;
+  font-size: 4.5vw;
+}
+.incluso-app .evaluation #finalized .txt-renglon.form section {
+  margin: 0;
+  width: 100%;
+}
+.incluso-app .evaluation #finalized .txt-renglon.form section label {
+  width: auto;
+  margin-left: 4vw;
+  display: inline-block;
+}
+.incluso-app .evaluation #finalized .txt-renglon.form .btn {
+  width: 100%;
+  margin: 3% 0 0;
 }

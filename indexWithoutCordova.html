@@ -28,6 +28,27 @@
                 display: none;
             }
             [ng-cloak]{display: none !important; height:0;}
+            
+            /*.incluso-app select.form-control {
+                color: rgba(255,255,255,0.3);
+                font-weight: normal;
+            }
+            .incluso-app select.selected {
+                color: rgba(255,255,255,1);
+                font-weight: bold;
+            }
+            .incluso-app select option {
+                color:white;
+                font-weight: normal;
+            }
+            .incluso-app select option span {
+                color:white;
+                font-weight: bold;
+            }
+            .incluso-app option:first-child {
+                color:red;
+            }*/
+
         </style>
     </head>
 
@@ -37,17 +58,21 @@
             <div class="spinner spinner-circle"></div>
         </div> 
         <!-- Main menu / sidebar -->
-        <menu-component></menu-component> 
+        <menu-component></menu-component>
+        
+
         <!-- app wrapper -->
         <div class="app">
             <a class="anchor-top" id="top"></a>
             
             <!-- toolbar for private views -->
             <toolbar-component></toolbar-component>
+            
+            
 
             <!-- App Body -->
             <div class="app-body" ng-click="sideToggle('outside')">
-                <div class="app-content">
+                <div class="app-content">                                                            
                     <ng-view></ng-view>
                 </div>
             </div>
@@ -70,6 +95,7 @@
         <script src="Scripts/angular-ui/ui-bootstrap-tpls.js"></script> 
         <script src="Scripts/moment.js"></script>
         <script src="Scripts/owl.carousel.min.js"></script>
+        <script src="Scripts/i18n/angular-locale_es-mx.js"></script>
 
         <script src="Scripts/angular-ui/compoenents/sidebars.js"></script>
         <script src="Scripts/utils.js"></script>
@@ -107,6 +133,7 @@
         <script src="Scripts/app/programa/controllers/programaChatController.js"></script>
         <script src="Scripts/app/programa/controllers/programaDashboardController.js"></script>
         <script src="Scripts/app/programa/controllers/programaLeaderBoard.js"></script>
+        <script src="Scripts/app/programa/controllers/evaluacionFormulario.js"></script>
         
 
         <script src="Scripts/app/programa/controllers/programaNotificationController.js"></script>
@@ -123,5 +150,6 @@
         <script src="Scripts/app/programa/controllers/tutorial.js"></script>
         <script src="Scripts/app/juegos/avatarController.js"></script>
 
+        <!-- <script src="Scripts/cordova.js"></script> -->
     </body>
 </html>

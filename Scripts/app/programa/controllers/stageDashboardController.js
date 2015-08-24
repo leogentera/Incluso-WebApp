@@ -47,8 +47,7 @@ angular
 
                     currentStage++;
                 }
-                
-                debugger;                                                
+                                                    
                 var totalActivitiesInCurrentStageCompleted = _.where($scope.usercourse.stages[currentStage].challenges.activities, {status:''}).length;
                 
                 //pending add flag shownMessageRobot
