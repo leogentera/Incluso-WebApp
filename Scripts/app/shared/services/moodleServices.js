@@ -103,7 +103,7 @@
                     localStorage.setItem(key, JSON.stringify(data));
                     errorCallback();
             });
-        }
+        };
         
         return {
             GetAsyncProfile: _getAsyncProfile,
