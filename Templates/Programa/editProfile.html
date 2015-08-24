@@ -245,7 +245,7 @@
 												</section>
 
 												<section>
-													<h5>Educación</h5>
+													<h4>Educación</h4>
 													<ul class="block-list">
 														<li ng-repeat="s in model.studies">
 
@@ -288,29 +288,26 @@
 													</button>
 												</section>
 
-												<section>
-													<div class="page-number">
-														<p class="text-center">
-															<span>1</span>
-															<span>/</span>
-													 		<span>3</span>
-														</p>
-												 	</div>
+												<div class="page-number">
+													<p class="text-center">
+														<span>1</span>
+														<span>/</span>
+												 		<span>3</span>
+													</p>
+											 	</div>
 
-												 	<div class="actions">
-												 		<div class="button-group page-controls">
-													 		<button type="button" class="btn btn-primary btn-lg control left" disabled>
-																<span class="icomoon icon-arrow-slim-left"></span>
-															</button>
-															<button type="button" class="btn btn-primary btn-lg btn-block action" ng-click="save()">Guardar</button>
-															<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg control riht" ng-click="navigateToPage(3)">
-																<span class="icomoon icon-arrow-slim-right"></span>
-															</button>
-														</div>
-														<!-- <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(3)">Continuar</button> -->
-														<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
-												 	</div>
-												</section>
+											 	<div class="actions">
+											 		<div class="button-group page-controls">
+												 		<button type="button" class="btn btn-primary btn-lg control left" disabled>
+															<span class="icomoon icon-arrow-slim-left"></span>
+														</button>
+														<button type="button" class="btn btn-primary btn-lg btn-block action" ng-click="save()">Guardar</button>
+														<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg control riht" ng-click="navigateToPage(3)">
+															<span class="icomoon icon-arrow-slim-right"></span>
+														</button>
+													</div>
+													<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+											 	</div>
 
 											</fieldset>
 						  				</div>
@@ -335,155 +332,171 @@
 											<fieldset class="my-profile-form">
 
 												<section>
-													<h5>Dirección</h5>
-													<ul class="block-list">
-														<li>
+													<h4>Dirección</h4>
 
-															<div class="form-group">
-																<select ng-model="model.address.country" ng-options="item for item in countryItems" ng-init="model.address.country == null"
-																class="form-control form-control-lg theme-form">
-																<option value="" ng-disabled="!!model.address.country">País</option>
+													<div class="form-group theme-form">
+														<div class="form-group-control custom-caret-wrapper">
+															<select 
+																class="form-control form-control-lg theme-form" 
+																ng-model="model.address.country" 
+																ng-options="item for item in countryItems" 
+																ng-init="model.address.country == null" 
+																ng-class="{'selected': model.address.country.length != 0 && model.address.country != null}">
+																<option value="" ng-disabled="!!model.address.country">País {{model.address == null}}</option>
 															</select>
+															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 														</div>
+													</div>
 
-														<div class="form-group">
-															<select ng-model="model.address.city" ng-options="item for item in cityItems" ng-init="model.address.city == null" class="form-control form-control-lg theme-form">
-																<option value="" ng-disabled="!!model.address.city">Ciudad</option>
+													<div class="form-group theme-form">
+														<div class="form-group-control custom-caret-wrapper">
+															<select 
+																class="form-control form-control-lg theme-form" 
+																ng-model="model.address.state" 
+																ng-options="item for item in stateItems" 
+																ng-init="model.address.state == null" 
+																ng-class="{'selected': model.address.state.length != 0 && model.address.state != null}">
+																<option value="" ng-disabled="!!model.address.state">Estado {{model.address == null}}</option>
 															</select>
+															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 														</div>
+													</div>															
 
-														<div class="form-group">
-															<input type="text" class="form-control form-control-lg theme-form" placeholder="Municipio / Delegación" ng-model="model.address.town"
-															/>
+													<div class="form-group theme-form">
+														<div class="form-group-control custom-caret-wrapper">
+															<select 
+																class="form-control form-control-lg theme-form" 
+																ng-model="model.address.city" 
+																ng-options="item for item in cityItems" 
+																ng-init="model.address.city == null"
+																ng-class="{'selected': model.address.city.length != 0 && model.address.city != null}">
+																<option value="" ng-disabled="!!model.address.city">Ciudad {{model.address == null}}</option>
+															</select>
+															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 														</div>
+													</div>
 
-														<div class="form-group">
-															<input type="text" class="form-control form-control-lg theme-form" placeholder="Código Postal" ng-model="model.address.postalCode"
-															/>
+													<div class="form-group theme-form">
+														<div class="form-group-control">
+															<input 
+																type="text" 
+																class="form-control form-control-lg theme-form" 
+																placeholder="Municipio / Delegación" 
+																ng-model="model.address.town" />
 														</div>
+													</div>
 
-														<div class="form-group">
+													<div class="form-group theme-form">
+														<div class="form-group-control">
+															<input type="text" class="form-control form-control-lg theme-form" placeholder="Código Postal" ng-model="model.address.postalCode" />
+														</div>
+													</div>
+
+													<div class="form-group theme-form">
+														<div class="form-group-control">
 															<input type="text" class="form-control form-control-lg theme-form" placeholder="Calle" ng-model="model.address.street" />
 														</div>
+													</div>
 
-														<div class="form-group col-2">
-															<input type="text" class="form-control form-control-lg theme-form" placeholder="Núm. Ext." ng-model="model.address.num_ext"
-															/>
-															<input type="text" class="form-control form-control-lg theme-form" placeholder="Núm. Int." ng-model="model.address.num_int"
-															/>
+													<div class="form-group theme-form container">
+														<div class="row">
+															<div class="col-xs-6">
+																<div class="form-group-control">
+																	<input type="text" class="form-control form-control-lg theme-form" placeholder="Núm. Ext." ng-model="model.address.num_ext" />
+																</div>
+															</div>
+
+															<div class="col-xs-6">
+																<div class="form-group-control">
+																	<input type="text" class="form-control form-control-lg theme-form" placeholder="Núm. Int." ng-model="model.address.num_int" />
+																</div>
+															</div>
 														</div>
+													</div>
 
-														<div class="form-group">
-															<select ng-model="model.address.state" ng-options="item for item in stateItems" ng-init="model.address.state == null" class="form-control form-control-lg theme-form">
-																<option value="" ng-disabled="!!model.address.state">Estado</option>
-															</select>
+													<div class="form-group theme-form">
+														<div class="form-group-control">
+															<input type="text" class="form-control form-control-lg theme-form" placeholder="Colonia" ng-model="model.address.colony" />
 														</div>
+													</div>
+												</section>
 
-														<div class="form-group">
-															<input type="text" class="form-control form-control-lg theme-form" placeholder="Colonia" ng-model="model.address.colony"
+												<section>
+													<h5>Teléfono</h5>
+													<ul class="block-list">
+														<li ng-repeat="p in model.phones">
+															<!--<div class="form-group theme-form">-->
+															<h5>
+																<span>Teléfono {{model.phones.indexOf(p) + 1}}</span>
+																<button class="btn btn-circle" ng-click="deletePhone($index);">
+																	<span class="icomoon icon-cross"></span>
+																</button>
+															</h5>
+															<input type="text" class="form-control form-control-lg theme-form" placeholder="Número Telefónico" ng-model="model.phones[$index]"
 															/>
-														</div>
-													</li>
-												</ul>
-											</section>
 
-											<section>
-												<h5>Teléfono</h5>
-												<ul class="block-list">
-													<li ng-repeat="p in model.phones">
-														<!--<div class="form-group theme-form">-->
-														<h5>
-															<span>Teléfono {{model.phones.indexOf(p) + 1}}</span>
-															<button class="btn btn-circle" ng-click="deletePhone($index);">
-																<span class="icomoon icon-cross"></span>
-															</button>
-														</h5>
-														<input type="text" class="form-control form-control-lg theme-form" placeholder="Número Telefónico" ng-model="model.phones[$index]"
-														/>
+															<!--</div>-->
+														</li>
+													</ul>
 
-														<!--</div>-->
-													</li>
-												</ul>
-												<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addPhone();">
-													<span class="icomoon icon-plus"></span>Agregar número...
-												</button>
-											</section>
+													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addPhone();">
+														<span class="icomoon icon-plus"></span>Agregar número...
+													</button>
+												</section>
 
-							  <!--<section>
-								<h5>Correo</h5>
-								<ul class="block-list">
-								  <li>
-									<div class="form-group theme-form">
-									  <h5><span>Correo 1</span></h5>
-									  <input type="text" class="form-control form-control-lg theme-form" placeholder="Correo Electrónico" ng-model="model.email">
+												<section>
+													<h5>Redes sociales</h5>
+													<ul class="block-list">
+														<li ng-repeat="sn in model.socialNetworks">
+															<div class="form-group theme-form">
+																<h5>
+																	<span>Red Social {{model.socialNetworks.indexOf(sn) + 1}}</span>
+																	<button class="btn btn-circle" ng-click="deleteSocialNetwork($index);">
+																		<span class="icomoon icon-cross"></span>
+																	</button>
+																</h5>
+																<select ng-model="model.socialNetworks[$index].socialNetwork" ng-options="item for item in socialNetworksList" ng-init="model.socialNetwork == null"
+																	class="form-control form-control-lg theme-form">
+																	<option value="" ng-disabled="!!model.socialNetwork">Red social</option>
+																</select>
+															</div>
+															<div class="form-group">
+																<input type="text" class="form-control form-control-lg theme-form" placeholder="Nombre Red social" ng-model="model.socialNetworks[$index].socialNetworkId" />
+															</div>
+														</li>
+													</ul>
+													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSocialNetwork();">
+														<span class="icomoon icon-plus"></span>Agregar nueva red...
+													</button>
+												</section>
+
+												<div class="page-number">
+													<p class="text-center">
+														<span>2</span>
+														<span>/</span>
+														<span>3</span>
+													</p>
+												</div>
+
+												<div class="actions">
+													<div class="button-group page-controls">
+														<button type="button" class="btn btn-primary btn-lg control left" ng-disabled="isRegistered" ng-click="navigateToPage(2)">
+															<span class="icomoon icon-arrow-slim-left"></span>
+														</button>
+														<button type="button" class="btn btn-primary btn-lg btn-block action" ng-click="save()">Guardar</button>
+														<button type="button" class="btn btn-primary btn-lg control riht" ng-disabled="isRegistered" ng-click="navigateToPage(4)">
+															<span class="icomoon icon-arrow-slim-right"></span>
+														</button>
+													</div>
+													<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+												</div>
+
+											</fieldset>
+										</div>
 									</div>
-								  </li>
-								  <li ng-repeat="se in model.additionalEmails track by $index">
-									<div class="form-group">                                  
-									  <h5>
-										<span>Correo {{model.additionalEmails.indexOf(se) + 2}}</span>
-										<button class="btn btn-circle" ng-click="deleteAdditionalEmails($index);">
-										  <span class="icomoon icon-cross"></span>
-										</button>
-									  </h5>
-									  <input type="text" class="form-control form-control-lg theme-form" placeholder="Correo Electrónico Adicional" ng-model="model.additionalEmails[$index]">
-									</div>
-								  </li>
-								</ul>
-								<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addEmail();">
-								  <span class="icomoon icon-plus"></span>Agregar nuevo correo...
-								</button>
-							</section>-->
-
-							<section>
-								<h5>Redes sociales</h5>
-								<ul class="block-list">
-									<li ng-repeat="sn in model.socialNetworks">
-										<div class="form-group theme-form">
-											<h5>
-												<span>Red Social {{model.socialNetworks.indexOf(sn) + 1}}</span>
-												<button class="btn btn-circle" ng-click="deleteSocialNetwork($index);">
-													<span class="icomoon icon-cross"></span>
-												</button>
-											</h5>
-											<select ng-model="model.socialNetworks[$index].socialNetwork" ng-options="item for item in socialNetworksList" ng-init="model.socialNetwork == null"
-											class="form-control form-control-lg theme-form">
-											<option value="" ng-disabled="!!model.socialNetwork">Red social</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<input type="text" class="form-control form-control-lg theme-form" placeholder="Nombre Red social" ng-model="model.socialNetworks[$index].socialNetworkId"
-										/>
-									</div>
-								</li>
-							</ul>
-							<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSocialNetwork();">
-								<span class="icomoon icon-plus"></span>Agregar nueva red...
-							</button>
-						</section>
-
-						<div class="page-number">
-							<p class="text-center">
-								<span>2</span>
-								<span>/</span>
-								<span>3</span>
-							</p>
+								</div>
+							</div>
 						</div>
-
-						<div class="button-group">
-							<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg" ng-click="navigateToPage(2)">
-								<span class="icomoon icon-arrow-slim-left"></span>
-							</button>
-							<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(4)">Continuar</button>
-							<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
-						</div>
-
-					</fieldset>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 					</div>
 
 				<div class="page " ng-class="currentPage == 4 ? 'active' : ''">

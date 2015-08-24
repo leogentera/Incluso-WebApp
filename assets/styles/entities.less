@@ -1294,6 +1294,43 @@
          $my-profile-form
          Description: CSS to represent user's profile editable form
         ************************************************************************/
+        .my-profile-information {
+            display: block;
+            width: auto;
+            height: auto;
+            padding: 0;
+            margin: 0 auto;
+
+          
+            /*h5 {
+                width: auto;
+                padding: 0;
+                margin: 0 0 6vw 0;
+
+                color: @clr-gray-asphalt;
+                font-size: 4vw;
+                font-weight: bold;
+                line-height: 4vw;
+                text-align: left;
+                text-transform: capitalize;
+            }*/
+            h5 {
+                color: @clr-blueTurquoise;
+                text-align: left;
+            }
+            h4 {color:white;}
+            p:not(.text-center) {
+                width: auto;
+                color: @clr-white;
+                text-align: left;
+            } 
+        }
+        /***********************************************************************/
+
+        /***********************************************************************
+         $my-profile-form
+         Description: CSS to represent user's profile editable form
+        ************************************************************************/
         .my-profile-form {
             display: block;
             width: auto;
@@ -1304,10 +1341,10 @@
             h4 {
                 width: auto;
                 padding: 0;
-                margin: 0;
+                margin: 0 0 6vw 0;
 
-                color: @clr-blueTurquoise;
-                font-size: 4vw;
+                color: @clr-gray-asphalt;
+                font-size: 5vw;
                 font-weight: bold;
                 line-height: 4vw;
                 text-align: left;
@@ -1326,7 +1363,7 @@
                 text-align: left;
                 text-transform: capitalize;
             }
-            p, li {
+            /*p, li {
                 width: auto;
                 color: @clr-white;
                 line-height: 1.2;
@@ -1339,6 +1376,12 @@
                     margin: 0;
                 }
             }
+            label, em {
+                color:@clr-gray-platinum;
+                font-size: inherit;
+                font-style: normal;
+                line-height: inherit;
+            }*/
             li {
                 margin-top: 9vw;
 
@@ -1346,16 +1389,11 @@
                     margin-top: 0;
                 }
 
-                & > p {
+                /*& > p {
                     margin-top:0;
-                }
-            }                
-            label, em {
-                color:@clr-gray-platinum;
-                font-size: inherit;
-                font-style: normal;
-                line-height: inherit;
+                }*/
             }
+
             & > section {
                 display: block;
                 width: auto;
@@ -1363,12 +1401,72 @@
                 padding: 0;
                 margin: 12vw 0 0;
             }
-            & > section:first-child {
+            & > section:first-child,
+            & > .checkbox + section {
                 margin-top: 0;
+
+                h4 + .form-group {
+                    .form-control.theme-form {
+                        border-top-width: 1pt;
+                        border-top-style: solid;
+                        .clr-blueGray(border-color, 0.5);
+                    }
+                }
             }
 
+            .checkbox.checkbox-custom {
+                margin-bottom: 6vw;
+
+                label {
+                    color:@clr-gray-platinum;
+                    font-size: inherit;
+                    font-style: normal;
+                    line-height: inherit;
+                }
+                input + span:before {
+                    margin-right: 3vw;
+                    .clr-blueGray(border-color, 0.5);
+                }
+            }
+            .form-group {
+                border: none;
+                margin-bottom: 0;
+
+                h5 {
+                    position: relative;
+                    margin-bottom: 1vw;
+
+                    span:first-child {
+                        font-size: 3vw;
+                        text-transform: uppercase;
+                    }                    
+                    .btn-circle {
+                        display: inline-block;
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        width: 5.1vw;
+                        height: 5.1vw;
+                        margin: 0;
+                        border: none;
+
+                        .icomoon {
+                            color: @clr-white;
+                            font-size: 2vw;
+                            font-weight: 100;
+                            line-height: 5.1vw;
+                            vertical-align: top;
+                        }
+                    }                    
+                }
+                h5 + .form-group-control {
+                    .form-control {
+                        border-top-width: 1pt !important;
+                    }
+                }
+            }
             .page-number {
-                margin: 3vw 0;
+                /* margin: 3vw 0; */
 
                 p.text-center {
                     span {
@@ -1406,49 +1504,7 @@
             }
             .button-group .btn {
                 margin-top: 0;
-            }
-            .checkbox.checkbox-custom {
-                input + span:before {
-                    margin-right: 3vw;
-                    .clr-blueGray(border-color, 0.5);
-                }
-            }
-            .form-group {
-                border: none;
-                margin-bottom: 0;
-
-                h5 {
-                    position: relative;
-                    margin-bottom: 1vw;
-
-                    span:first-child {
-                        color: @clr-gray-asphalt2;
-                        font-size: 3vw;
-                        text-transform: uppercase;
-                    }                    
-                    .btn-circle {
-                        display: inline-block;
-                        position: absolute;
-                        right: 0;
-                        bottom: 0;
-                        width: 5vw;
-                        height: 5vw;
-                        margin: 0;
-                        border: none;
-
-                        .icomoon {
-                            color: @clr-white;
-                            font-size: 2vw;
-                            font-weight: 100;
-                        }
-                    }                    
-                }
-                h5 + .form-group-control {
-                    .form-control {
-                        border-top-width: 1pt !important;
-                    }
-                }
-            }     
+            }   
         }
         /***********************************************************************/
 
