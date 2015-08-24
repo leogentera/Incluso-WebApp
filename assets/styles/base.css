@@ -97,16 +97,19 @@ body.modal-open {
   overflow-y: auto;
   overflow-x: hidden;
 }
-.sidebar-left {
+.incluso-app .sidebar-left {
   display: block;
   width: 85vw;
   pointer-events: all;
 }
-.sidebar-left .navbar ul {
+.incluso-app .sidebar-left .navbar ul {
   background-color: rgba(0, 0, 0, 0.2);
 }
-.sidebar-left .navbar ul .icomoon {
+.incluso-app .sidebar-left .navbar ul .icomoon {
   line-height: 12vw;
+}
+.incluso-app .sidebar-left .navbar ul li {
+  width: auto;
 }
 .incluso-app .sidebar-left .navbar-assets {
   width: auto;
@@ -1445,7 +1448,7 @@ body.modal-open {
 }
 .incluso-app .navbar-assets .btn-group {
   width: 44vw;
-  padding: 2.7vh 0;
+  padding-top: 3vh;
 }
 .incluso-app .navbar-assets .navbar-tools {
   display: inline-block;
@@ -1453,7 +1456,7 @@ body.modal-open {
   margin: 0;
   width: 44vw;
   list-style-type: none;
-  padding: 2.5vh 0px;
+  padding-top: 3vh;
 }
 .incluso-app .navbar-tools li {
   display: inline-block;
