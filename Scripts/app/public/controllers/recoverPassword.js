@@ -16,7 +16,7 @@ angular
             $scope.$emit('scrollTop'); //- scroll
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
-
+            $scope.$emit('HidePreloader');
             /* ViewModel */
             $scope.recoverPasswordModel = {
                 email: "",
