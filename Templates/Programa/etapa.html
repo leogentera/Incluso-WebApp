@@ -4,7 +4,7 @@
   <div id="site-canvas">
     <article>
 
-<!--
+      <!--
       <section class="component video-gallery">
         <h3>- Título de Video -</h3>
         <a ng-click="openClosingStageModal()">X</a>
@@ -25,18 +25,15 @@
         </figure>
 
       </section>
-      
       -->
-
-
       
 
       <section class="component video-gallery">
-        <div class="panel panel-video" style="background-color: #333;">
+        <div class="panel panel-video" style="background-color: #121b1c;">
           <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
             <h3>
               <span class="icomoon icon-video-file"></span>
-              <span>Mis Retos</span>
+              <span ng-bind="nombreEtapaActual"></span>
               <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
               <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
             </h3>
@@ -44,10 +41,10 @@
           <div class="panel-body" collapse="isCollapsed">
           <div class="stage perform">
             <button class="icon icon-close"></button>
-            <button class="icon icon-play" ng-click="playWelcome()"></button>
+            <button class="icon icon-play" ng-click="playVideo('assets/media', 'TutorialTest2.mp4')"></button>
             <figure class="player">
-              <!-- <img src="assets/images/ptr-video-0001.jpg" ng-click="playVideo('assets/media', 'TutorialTest2.mp4')" alt="video" />  -->
-              <img src="assets/images/ptr-video-0001.jpg" ng-click="playVideo(document.getElementById('myVideo'))" alt="video" />
+              <img src="assets/images/ptr-video-0001.jpg" ng-click="playVideo('assets/media', 'TutorialTest2.mp4')" alt="video" /> 
+              
             </figure>
           </div>
           <figure class="player">
