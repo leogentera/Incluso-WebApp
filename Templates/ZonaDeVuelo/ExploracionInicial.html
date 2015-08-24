@@ -2,6 +2,18 @@
   <div id="site-menu">
     <!--#include file="menu.html"-->
   </div>
+
+  <div class="alert alert-warning" role="alert" ng-show="!model.modelState.isValid && model.modelState.errorMessages.length > 0"
+  ng-cloak>
+    <div class="alert-message">
+      <div class="icomoon icon-warning"></div>
+      <p>¡Error! Verifica tus datos</p>
+      <ul ng-if="model.modelState.errorMessages.length > 0">
+        <li ng-repeat="msg in model.modelState.errorMessages">{{msg}}</li>
+      </ul>
+    </div>
+  </div>
+
   <div id="site-canvas">
     <article class="blueprint evaluation">
       <div class="pages">
@@ -11,54 +23,35 @@
             <div class="txt-renglon">Responde lo siguiente:</div>
           </section>
 
-          <!--<div id="owl2" class="owl-carousel">
-        <div class="txt-renglon txt-bigger">2. ¿Pregunta de selección múltiple?</div>
-        <section class="form txt-renglon txt-bigger part list">
-          hola
-        </section>
-        
-        <div class="txt-renglon txt-bigger">2. ¿Pregunta de selección múltiple?</div>
-        <section class="form txt-renglon txt-bigger part list">
-          Adios
-        </section>
-      </div>-->
-
           <div id="owl" class="owl-carousel">
-            
+
             <!--Pregunta tipo Si/No-->
             <div>
-              <div class="txt-renglon txt-bigger">1. ¿Pregunta de falso/verdadero?</div>
+              <!--respuesta: {{firstQuestionAnswer}}-->
+              <div class="txt-renglon txt-bigger">1. ¿Alguna vez has tenido un sueño que no has sabido cómo alcanzar?</div>
               <section class="form txt-renglon txt-bigger part list">
                 <div class="tnf">
-                  <input id="tru" type="radio" value="verdadero" name="vf">
-                  <label for="tru">Verdadero</label>
-                  <input id="fols" type="radio" value="falso" name="vf">
-                  <label for="fols">Falso</label>
+                  <input id="tru" type="radio" ng-model="firstQuestionAnswer" value="verdadero" name="true">
+                  <label for="tru">Si</label>
+                  <input id="fols" type="radio" ng-model="firstQuestionAnswer" value="falso" name="false">
+                  <label for="fols">No</label>
                 </div>
               </section>
             </div>
 
             <!--Pregunta tipo Opción Multiple + Otro-->
             <div>
-              <div class="txt-renglon txt-bigger">2. ¿Pregunta de selección múltiple?</div>
+              <div class="txt-renglon txt-bigger">2. ¿Qué de lo siguiente has intentado hacer para lograrlo? Puedes elegir más de una.</div>
               <section class="form txt-renglon txt-bigger part list">
-                <input id="check1" type="checkbox" value="check1" name="check">
-                <label for="check1">Opción 1</label>
-                <input id="check2" type="checkbox" value="check1" name="check">
-                <label for="check2">Opción 2</label>
-                <input id="check3" type="checkbox" value="check1" name="check">
-                <label for="check3">Opción 3</label>
-                <input id="check4" type="checkbox" value="check1" name="check">
-                <label for="check4">Opción 4</label>
-                <input id="check5" type="checkbox" value="check1" name="check">
-                <label for="check5">Opción 5</label>
-                <input id="check6" type="checkbox" value="check1" name="check">
-                <label for="check6">Opción 6</label>
-                <input id="check7" type="checkbox" value="check1" name="check">
-                <label for="check7">Opción 7</label>
-                <input id="check8" type="checkbox" value="check1" name="check">
-                <label for="check8">Opción 8</label>
-                <input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
+                <input id="check1" type="checkbox" value="check1" name="check" ng-model="secondQuestionAnswer.options[0].option">
+                <label for="check1">Pedir ayuda a alguien</label>
+                <input id="check2" type="checkbox" value="check1" name="check" ng-model="secondQuestionAnswer.options[1].option">
+                <label for="check2">Investigar del tema</label>
+                <input id="check3" type="checkbox" value="check1" name="check" ng-model="secondQuestionAnswer.options[2].option">
+                <label for="check3">Nada, porque parece imposible</label>
+                <input id="check4" type="checkbox" value="check1" name="check" ng-model="secondQuestionAnswer.options[3].option">
+                <label for="check4">Trazar un plan de lo que necesito hacer</label>
+                <input id="otros" type="checkbox" value="check1" name="check">
                 <label for="otros">Otros</label>
               </section>
               <div id="agregar" class="add" ng-show="showAddNewOption==true"><i class="icomoon icon-edit"></i>
@@ -68,30 +61,30 @@
 
             <!--Pregunta tipo Texto Abierto-->
             <div>
-              <div class="txt-renglon txt-bigger">3. ¿Pregunta de Texto Abierto?</div>
+              <div class="txt-renglon txt-bigger">3. ¿Qué persona exitosa que conoces te inspira?</div>
               <section class="form txt-renglon txt-bigger part list">
                 <div class="add"><i class="icomoon icon-edit"></i>
-                  <input id="texto1" type="text" name="txtAbierto" placeholder="Tu respuesta aquí...">
+                  <input id="texto1" type="text" name="txtAbierto" placeholder="Tu respuesta aquí..." ng-model="thirdQuestionAnswer">
                 </div>
               </section>
             </div>
 
             <!--Pregunta tipo Selección Simple-->
             <div>
-              <div class="txt-renglon txt-bigger">4. ¿Pregunta de Selección Sencilla?</div>
+              <div class="txt-renglon txt-bigger">4. ¿Sabes cuáles son tus habilidades?</div>
               <section class="form txt-renglon txt-bigger part list">
-                <input id="option1" type="radio" value="option1" name="option">
-                <label for="option1">Option 1</label>
-                <input id="option2" type="radio" value="option2" name="option">
-                <label for="option2">Option 2</label>
-                <input id="option3" type="radio" value="option3" name="option">
-                <label for="option3">Option 3</label>
+                <input id="option1" type="radio" value="1" name="option" ng-model="fourthQuestionAnswer">
+                <label for="option1">Sí</label>
+                <input id="option2" type="radio" value="2" name="option" ng-model="fourthQuestionAnswer">
+                <label for="option2">No</label>
+                <input id="option3" type="radio" value="3" name="option" ng-model="fourthQuestionAnswer">
+                <label for="option3">Mas o menos</label>
               </section>
             </div>
 
             <!--Pregunta tipo Lista Dinámica-->
             <div>
-              <div class="txt-renglon txt-bigger">5. ¿Pregunta de Lista Dinámica?</div>
+              <div class="txt-renglon txt-bigger">5. Menciona tus principales habilidades</div>
               <section>
                 <div class="part"><span>Punto 1</span><i class="icomoon icon-edit fl-right"></i></div>
                 <div class="part"><span>Punto 2</span><i class="icomoon icon-edit fl-right"></i></div>
@@ -101,7 +94,7 @@
                 <input id="texto1" type="text" name="txtAbierto" placeholder="Nuevo punto">
               </div>
               <section class="controls">
-                <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button" ng-click="navigateToPage(2)">Continuar</button>
+                <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button" ng-click="validateAnsweredQuestions()">Guardar</button>
               </section>
             </div>
           </div>
@@ -133,13 +126,17 @@
             </section>
             <section class="txt-renglon centered form">
               ¿Que opinas de ésta actividad?
-              <section class="txt-renglon txt-bigger">
-                <input id="like" type="radio" value="option1" name="like">
-                <label for="like">Me gusta</label>
-                <input id="dislike" type="radio" value="option2" name="like">
-                <label for="dislike">No me gusta</label>
+              <section class="txt-renglon txt-bigger clearfix">
+                <div class="opinion">
+                  <input id="like" type="radio" value="option1" name="like">
+                  <label for="like">Me gusta</label>
+                </div>
+                <div class="opinion">
+                  <input id="dislike" type="radio" value="option2" name="like">
+                  <label for="dislike">No me gusta</label>
+                </div>
               </section>
-              <button class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToStage()">Terminar</button>
+              <button class="btn btn-primary btn-lg btn-cnt" ng-click="activityCompleted()">Terminar</button>
             </section>
           </div>
         </div>
