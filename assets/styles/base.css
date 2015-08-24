@@ -1515,6 +1515,10 @@ body.modal-open {
   -moz-border-radius: 1.5vw;
   border-radius: 1.5vw;
 }
+
+.incluso-app .panel.panel-video{
+  background-color: #121b1c;
+}
 .incluso-app .panel > .panel-heading {
   padding: 5.5vw 2.6vw;
   -webkit-border-radius: 1.5vw 1.5vw 0 0;

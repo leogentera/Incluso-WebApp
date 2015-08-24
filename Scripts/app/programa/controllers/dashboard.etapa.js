@@ -32,7 +32,7 @@ angular
             var etapa1 = userCourse.stages[0];
             */
             //var challenges = etapa1.
-            
+            $scope.isCollapsed = false;
             
             $scope.challengeName = "MIS RETOS";
             
@@ -106,7 +106,8 @@ angular
                 }                      
               }
               
-              var idEtapa = 0;              
+              var idEtapa = 0;      
+              $scope.nombreEtapaActual = $scope.logroEducativo.etapas[idEtapa].name;      
               
               //var numRetos = $scope.logroEducativo.retosPorEtapa[idEtapa].retos.length;  //Total de retos en la Etapa 1 (índice 0)
               
@@ -145,10 +146,16 @@ angular
             //$scope.avanceGlobal = Math.ceil(avanceGlobal*100/totalDeActividades);
             $scope.avanceEnEtapaActual = Math.ceil(avanceEnEtapaActual*100/totalActividadesEnEtapaActual);
             
-            $scope.playVideo = function(videoAddress, videoName){                 
+           /*
+            $scope.playVideo = function(elem){                  
                  //var videoAddress = "assets/media";
                  //var videoName = "TutorialTest2.mp4";
-                playVideo(videoAddress, videoName);
+                 elem.play();
+            };
+            */
+            
+            $scope.playVideo = function(videoAddress, videoName){
+                 playVideo(videoAddress, videoName);
             };
 
             $scope.openClosingStageModal = function (size) {
