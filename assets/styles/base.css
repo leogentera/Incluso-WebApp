@@ -1345,12 +1345,12 @@ body.modal-open {
   overflow: hidden;
 }
 .incluso-app .navbar .icomoon {
-  font-size: 6vw;
+  font-size: 5.5vw;
   line-height: 1;
   vertical-align: bottom;
 }
 .incluso-app .navbar span {
-  font-size: 6vw;
+  font-size: 6.2vw;
   line-height: 1vw;
 }
 .incluso-app .navbar.etapa-uno {
@@ -1419,7 +1419,7 @@ body.modal-open {
   width: 95vw;
 }
 .incluso-app .navbar-assets .sidebar-toggle {
-  width: 44vw;
+  width: 50vw;
   padding: 0px 1vw;
   text-align: left;
   line-height: inherit;
@@ -1429,8 +1429,8 @@ body.modal-open {
   overflow: hidden;
   /*float: left;*/
   margin: 0;
-  width: 45vw;
-  max-width: 45vw;
+  width: 48vw;
+  max-width: 48vw;
   color: #ffffff;
   font-family: 'Play';
   font-size: 4vw;
