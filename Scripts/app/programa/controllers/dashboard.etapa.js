@@ -145,10 +145,11 @@ angular
             //$scope.avanceGlobal = Math.ceil(avanceGlobal*100/totalDeActividades);
             $scope.avanceEnEtapaActual = Math.ceil(avanceEnEtapaActual*100/totalActividadesEnEtapaActual);
             
-            $scope.playVideo = function(videoAddress, videoName){                 
+            //$scope.playVideo = function(videoAddress, videoName){    
+            $scope.playVideo = function(elem){                  
                  //var videoAddress = "assets/media";
                  //var videoName = "TutorialTest2.mp4";
-                playVideo(videoAddress, videoName);
+                 elem.play();
             };
 
             $scope.openClosingStageModal = function (size) {
