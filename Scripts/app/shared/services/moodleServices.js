@@ -24,6 +24,10 @@
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };
 
+        var _getAsyncForumInfo = function(activityId, topicId, successCallback, errorCallback){
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId + '/' + topicId), successCallback, errorCallback);
+        };
+
         var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback){
             _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + 'user/' + userId ), successCallback,errorCallback);
         };
@@ -40,6 +44,10 @@
             _putAsyncData("activity/" + activityId, data, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };    
 
+        var _getUserNotifications = function(userId,successCallback,errorCallback){
+            _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback);
+        };
+        
         var _getCacheObject = function(key){
             return localStorage.getItem(key);
         };
@@ -108,7 +116,9 @@
                     localStorage.setItem(key, JSON.stringify(data));
                     errorCallback();
             });
-        }
+        };
+        
+        
         
         return {
             GetAsyncProfile: _getAsyncProfile,
@@ -122,6 +132,8 @@
             GetAsyncActivities: _getAsyncActivitiesInfo,
             PutAsyncActivity: _putAsyncActivityInfo,
             PutAsyncQuiz: _putAsyncQuiz,
+            GetAsyncForumInfo: _getAsyncForumInfo,
+            GetUserNotification: _getUserNotifications
 
         };
     })();
