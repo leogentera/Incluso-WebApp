@@ -372,7 +372,7 @@ body {
         text-decoration: none;
     }
     .btn-add {
-        border-style: dashed;
+        border-style: solid;
         border-color: @clr-blueTurquoise;
         .border-radius-all(1vw);
         background-color: transparent;
@@ -527,15 +527,16 @@ body {
             clear: both;
         }        
 
+        /* 2 buttons layout */
         .btn {
             display: inline-block;
             float: left;
-            width: 75%;
+            width: 80%;
             height: 55px; height: auto;
             margin-top: 0;
 
             &:first-child {
-                width: 20%;
+                width: 15%;
                 margin-right: 5%;
             }
 
@@ -543,7 +544,36 @@ body {
                 font-size: smaller;
                 line-height: 1;
             }
+        }
 
+        /* 3 buttons layout */
+        &.page-controls {
+            .btn {
+                display: inline-block;
+                float:left;
+                height: auto;
+                margin-top: 0;
+
+                &.control {
+                    width: 15%;
+                    
+                    &.left {
+                        margin-right: 5%;
+                    }
+                    &.riht {
+                        margin-left: 5%;
+                    }                    
+                }
+                &.action {
+                    width: 60%;
+                    margin: 0;
+                }
+
+                .icomoon {
+                    font-size: smaller;
+                    line-height: 1;
+                }
+            }
         }
     }
     /***************************************************************************/ 
@@ -977,8 +1007,9 @@ body {
 
         /* by theme */
         &.theme-form {
-            .form-group-control > .form-control {
-                border-top-width: 0 !important;
+            .form-group-control > .form-control.theme-form {
+                /*border-top-width: 0 !important;*/
+                border-top-width: 0
                 /*.clr-blueGray(color, 1);*/
             }
             .form-group-control .custom-placeholder {
@@ -1592,7 +1623,7 @@ body {
             text-align: center;
             letter-spacing: 1px;
         }
-        p {
+        p:not(.text-center) {
             padding: 0;
             margin: 0 auto 15px;
             width: 93%;
@@ -1665,7 +1696,7 @@ body {
         }
         .btn {
             margin-bottom: 1.5vw;
-            text-transform: uppercase;
+            /*text-transform: uppercase;*/
         }
         /*.button-group {
             display: block;
@@ -1692,7 +1723,7 @@ body {
      $footer
      Description: CSS class for a page wrapper with pages and buttons
     ****************************************************************************/
-   .footer {
+    .footer {
         display: none;
         background-image:url('../images/bg-footer-ship.gif');
         background-position: 0 99%;

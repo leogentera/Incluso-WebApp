@@ -35,15 +35,15 @@
   </section>
 
   <section class="txt-renglon distribuido">
-    <a href="#openModal1"><img src="assets/images/aa.svg"></a>
-    <a href="#openModal2"><img src="assets/images/link.svg"></a>
-    <a href="#openModal3"><img src="assets/images/play.svg"></a>
-    <a href="#openModal4"><img src="assets/images/clip.svg"></a>
+    <a href="" ng-click="collapseText()"><img src="assets/images/aa.svg"></a>
+    <a href="" ng-click="collapseLink()"><img src="assets/images/link.svg"></a>
+    <a href="" ng-click="collapseVideo()"><img src="assets/images/play.svg  "></a>
+    <a href="" ng-click="collapseAttachment()"><img src="assets/images/clip.svg"></a>
   </section>
 
 <section class="modales">
 
-<div id="openModal1" class="modalDialog">
+<div id="openModal1" class="modalDialog" collapse="isTextCollapsed">
   <div>
     <a href="#close" title="Close" class="close"></a>
 <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value=""/></div>
@@ -52,7 +52,7 @@
   </div>
 </div>
 
-<div id="openModal2" class="modalDialog">
+<div id="openModal2" class="modalDialog" collapse="isLinkCollapsed">
   <div>
     <a href="#close" title="Close" class="close"></a>
 <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar tu enlace..." value=""/></div>
@@ -61,7 +61,7 @@
   </div>
 </div>
 
-<div id="openModal3" class="modalDialog">
+<div id="openModal3" class="modalDialog" collapse="isVideoCollapsed">
   <div>
     <a href="#close" title="Close" class="close"></a>
 <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar ruta de tu peli..." value=""/></div>
@@ -70,7 +70,7 @@
   </div>
 </div>
 
-<div id="openModal4" class="modalDialog">
+<div id="openModal4" class="modalDialog" collapse="isAttachmentCollapsed">
   <div>
     <a href="#close" title="Close" class="close"></a>
 <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Atachea algo..." value=""/></div>
@@ -117,9 +117,10 @@
         <div class="social">
         <div><i class="icomoon icon-required"></i> Me gusta
         </div>
-        <div><i class="icomoon icon-required"></i> Comentar
+        <div ng-click="postComment()"><i class="icomoon icon-required"></i> Comentar
         </div>
         </div>
+
         </div>
     </div>
 

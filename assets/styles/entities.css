@@ -104,6 +104,11 @@
         ************************************************************************/
     /***********************************************************************/
     /***********************************************************************
+         $my-profile-information 
+         Description: CSS to represent user's profile read only information
+        ************************************************************************/
+    /***********************************************************************/
+    /***********************************************************************
          $my-profile-form
          Description: CSS to represent user's profile editable form
         ************************************************************************/
@@ -1395,7 +1400,7 @@
     font-weight: inherit;
     text-transform: uppercase;
   }
-  .incluso-app .profile-data .user-points {
+  .incluso-app .profile-data p.user-points {
     width: auto;
     padding: 1px 12px;
     padding: 0.222vw 2.5vw;
@@ -1605,12 +1610,42 @@
   .incluso-app .profile-options .list-group .no-badge .icomoon.icon-star {
     display: none;
   }
+  .incluso-app .my-profile-information {
+    display: block;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0 auto;
+  }
+  .incluso-app .my-profile-information h5 {
+    color: #08b290;
+    text-align: left;
+  }
+  .incluso-app .my-profile-information h4 {
+    color: white;
+  }
+  .incluso-app .my-profile-information p:not(.text-center) {
+    width: auto;
+    color: #ffffff;
+    text-align: left;
+  }
   .incluso-app .my-profile-form {
     display: block;
     width: auto;
     height: auto;
     padding: 0;
     margin: 0 auto;
+  }
+  .incluso-app .my-profile-form h4 {
+    width: auto;
+    padding: 0;
+    margin: 0 0 6vw 0;
+    color: #444d53;
+    font-size: 5vw;
+    font-weight: bold;
+    line-height: 4vw;
+    text-align: left;
+    text-transform: none;
   }
   .incluso-app .my-profile-form h5 {
     width: auto;
@@ -1623,38 +1658,11 @@
     text-align: left;
     text-transform: capitalize;
   }
-  .incluso-app .my-profile-form p,
   .incluso-app .my-profile-form li {
-    width: auto;
-    color: #ffffff;
-    line-height: 1.2;
-  }
-  .incluso-app .my-profile-form p {
-    margin-bottom: 3px;
-    font-size: 1.2em;
-  }
-  .incluso-app .my-profile-form p > label {
-    margin: 0;
-  }
-  .incluso-app .my-profile-form li {
-    /*margin-top: 15px;*/
     margin-top: 9vw;
   }
   .incluso-app .my-profile-form li:first-child {
     margin-top: 0;
-  }
-  .incluso-app .my-profile-form li > p {
-    margin-top: 0;
-  }
-  .incluso-app .my-profile-form label,
-  .incluso-app .my-profile-form em {
-    color: #8098a0;
-    font-size: inherit;
-    font-style: normal;
-    line-height: inherit;
-  }
-  .incluso-app .my-profile-form hr {
-    margin: 15px 0;
   }
   .incluso-app .my-profile-form > section {
     display: block;
@@ -1663,11 +1671,63 @@
     padding: 0;
     margin: 12vw 0 0;
   }
-  .incluso-app .my-profile-form > section:first-child {
+  .incluso-app .my-profile-form > section:first-child,
+  .incluso-app .my-profile-form > .checkbox + section {
     margin-top: 0;
   }
+  .incluso-app .my-profile-form > section:first-child h4 + .form-group .form-control.theme-form,
+  .incluso-app .my-profile-form > .checkbox + section h4 + .form-group .form-control.theme-form {
+    border-top-width: 1pt;
+    border-top-style: solid;
+    border-color: rgba(142, 170, 179, 0.5);
+  }
+  .incluso-app .my-profile-form .checkbox.checkbox-custom {
+    margin-bottom: 6vw;
+  }
+  .incluso-app .my-profile-form .checkbox.checkbox-custom label {
+    color: #8098a0;
+    font-size: inherit;
+    font-style: normal;
+    line-height: inherit;
+  }
+  .incluso-app .my-profile-form .checkbox.checkbox-custom input + span:before {
+    margin-right: 3vw;
+    border-color: rgba(142, 170, 179, 0.5);
+  }
+  .incluso-app .my-profile-form .form-group {
+    border: none;
+    margin-bottom: 0;
+  }
+  .incluso-app .my-profile-form .form-group h5 {
+    position: relative;
+    margin-bottom: 1vw;
+  }
+  .incluso-app .my-profile-form .form-group h5 span:first-child {
+    font-size: 3vw;
+    text-transform: uppercase;
+  }
+  .incluso-app .my-profile-form .form-group h5 .btn-circle {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 5.1vw;
+    height: 5.1vw;
+    margin: 0;
+    border: none;
+  }
+  .incluso-app .my-profile-form .form-group h5 .btn-circle .icomoon {
+    color: #ffffff;
+    font-size: 2vw;
+    font-weight: 100;
+    line-height: 5.1vw;
+    vertical-align: top;
+  }
+  .incluso-app .my-profile-form .form-group h5 + .form-group-control .form-control {
+    border-top-width: 1pt !important;
+  }
   .incluso-app .my-profile-form .page-number {
-    margin: 3vw 0;
+    /* margin: 3vw 0; */
   }
   .incluso-app .my-profile-form .page-number p.text-center span {
     font-size: 4.8vw;
@@ -1700,57 +1760,6 @@
   }
   .incluso-app .my-profile-form .button-group .btn {
     margin-top: 0;
-  }
-  .incluso-app .my-profile-form .checkbox.checkbox-custom input + span:before {
-    margin-right: 3vw;
-    border-color: rgba(142, 170, 179, 0.5);
-  }
-  .incluso-app .my-profile-form .form-group {
-    position: relative;
-    border: none;
-    margin-bottom: 0;
-  }
-  .incluso-app .my-profile-form .form-group h5 {
-    margin-bottom: 1vw;
-  }
-  .incluso-app .my-profile-form .form-group h5 span:first-child {
-    color: #3c4448;
-    font-size: 3vw;
-    text-transform: uppercase;
-  }
-  .incluso-app .my-profile-form .form-group h5 .btn-circle {
-    display: inline;
-    float: right;
-    /*position: absolute;
-                        right: 0;*/
-    margin: 0;
-  }
-  .incluso-app .my-profile-form .form-group h5 .btn-circle .icomoon {
-    color: #ffffff;
-    font-size: 2vw;
-    font-weight: 100;
-  }
-  .incluso-app .my-profile-form .form-group .form-control {
-    /*border-top-width: 0;*/
-    border-top-width: 1pt;
-    text-indent: 3px;
-  }
-  .incluso-app .my-profile-form .form-group .form-control:first-child {
-    /*border-top:1px solid;*/
-  }
-  .incluso-app .my-profile-form .form-group select.form-control {
-    text-indent: 0;
-    /*border-left-color: transparent !important;
-                    border-right-color: transparent !important;*/
-  }
-  .incluso-app .my-profile-form .form-group:first-child .form-control:first-child {
-    border-top-width: 1pt;
-  }
-  .incluso-app .my-profile-form .form-group .form-control + .form-control {
-    border-top-width: 0;
-  }
-  .incluso-app .my-profile-form .form-group .form-control.ng-pristine.ng-touched + .custom-placeholder {
-    display: none;
   }
   .incluso-app .profile-dashboard {
     width: 100vw;

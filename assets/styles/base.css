@@ -530,7 +530,7 @@ body.modal-open {
   text-decoration: none;
 }
 .incluso-app .btn-add {
-  border-style: dashed;
+  border-style: solid;
   border-color: #08b290;
   -webkit-border-radius: 1vw;
   -moz-border-radius: 1vw;
@@ -661,6 +661,8 @@ body.modal-open {
 .incluso-app .button-group {
   display: block;
   position: relative;
+  /* 2 buttons layout */
+  /* 3 buttons layout */
 }
 .incluso-app .button-group:before,
 .incluso-app .button-group:after {
@@ -673,16 +675,39 @@ body.modal-open {
 .incluso-app .button-group .btn {
   display: inline-block;
   float: left;
-  width: 75%;
+  width: 80%;
   height: 55px;
   height: auto;
   margin-top: 0;
 }
 .incluso-app .button-group .btn:first-child {
-  width: 20%;
+  width: 15%;
   margin-right: 5%;
 }
 .incluso-app .button-group .btn .icomoon {
+  font-size: smaller;
+  line-height: 1;
+}
+.incluso-app .button-group.page-controls .btn {
+  display: inline-block;
+  float: left;
+  height: auto;
+  margin-top: 0;
+}
+.incluso-app .button-group.page-controls .btn.control {
+  width: 15%;
+}
+.incluso-app .button-group.page-controls .btn.control.left {
+  margin-right: 5%;
+}
+.incluso-app .button-group.page-controls .btn.control.riht {
+  margin-left: 5%;
+}
+.incluso-app .button-group.page-controls .btn.action {
+  width: 60%;
+  margin: 0;
+}
+.incluso-app .button-group.page-controls .btn .icomoon {
   font-size: smaller;
   line-height: 1;
 }
@@ -1055,9 +1080,9 @@ body.modal-open {
   padding: 0;
   border: none;
 }
-.incluso-app .form-group.theme-form .form-group-control > .form-control {
-  border-top-width: 0 !important;
-  /*.clr-blueGray(color, 1);*/
+.incluso-app .form-group.theme-form .form-group-control > .form-control.theme-form {
+  /*border-top-width: 0 !important;*/
+  border-top-width: 0 /*.clr-blueGray(color, 1);*/;
 }
 .incluso-app .form-group.theme-form .form-group-control .custom-placeholder {
   background-color: transparent;
@@ -1608,7 +1633,7 @@ body.modal-open {
   text-align: center;
   letter-spacing: 1px;
 }
-.incluso-app .component p {
+.incluso-app .component p:not(.text-center) {
   padding: 0;
   margin: 0 auto 15px;
   width: 93%;
@@ -1685,7 +1710,7 @@ body.modal-open {
 }
 .incluso-app .pages .btn {
   margin-bottom: 1.5vw;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 .incluso-app .footer {
   display: none;
