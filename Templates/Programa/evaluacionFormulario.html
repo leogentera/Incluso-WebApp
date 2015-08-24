@@ -101,10 +101,14 @@
 				<section class="txt-renglon centered form">
 					¿Que opinas de ésta actividad?
 					<section class="txt-renglon txt-bigger">
-						<input id="like" type="radio" value="option1" name="like">
-						<label for="like">Me gusta</label>
-						<input id="dislike" type="radio" value="option2" name="like">
-						<label for="dislike">No me gusta</label>
+						<div class="opinion">
+							<input id="like" type="radio" value="option1" name="like">
+							<label for="like">Me gusta</label>
+						</div>
+						<div class="opinion">
+							<input id="dislike" type="radio" value="option2" name="like">
+							<label for="dislike">No me gusta</label>
+						</div>											
 					</section>																
 					<button class="btn btn-primary btn-lg btn-cnt">Terminar</button>
 				</section>
@@ -154,9 +158,9 @@ $(document).ready(function() {
 		return false;
 	});
 	
-		$("#finalized").hide();
+	$("#finalized").hide();
 
-	});
+});
 </script>
 
 <script type="text/javascript" src="../../Scripts/scriptmenu.js"></script>
