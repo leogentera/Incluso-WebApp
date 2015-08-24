@@ -100,7 +100,7 @@
               }
               
               $scope.puntosObtenidos = puntosObtenidos*100/13;
-              alert($scope.puntosObtenidos);
+              
               
               //*******************************************************************
 
