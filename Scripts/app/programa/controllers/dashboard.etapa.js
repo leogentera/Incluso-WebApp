@@ -61,7 +61,7 @@ angular
                   
               }
               
-              $scope.puntosObtenidos = puntosObtenidos*100/13;
+              $scope.puntosObtenidos = Math.ceil(puntosObtenidos*100/13);
               
             
             //$scope.puntosObtenidos = 92.3;
