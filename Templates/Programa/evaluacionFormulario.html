@@ -91,7 +91,85 @@
 					<div class="subtitle centered min-pad">"Nombre Actividad"</div>
 					<div class="txt-renglon centered txt-bigger min-pad">¡Felicidades!</div>
 				</section>
-				<section class="centered txt-bigger">
+				<section class="txt-renglon pill">
+					<div class="fl-left">Mi puntuación</div>
+					<div class="fl-right green-pill"><span>80</span><span class="white">/100</span></div>
+				</section>
+				<section class="question-parts">
+					<div id="question1">
+						<div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}">
+							<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
+								<i class="fl-left icomoon icon-wrong-join"></i>
+								¿Pregunta selección sencilla?
+								<i class="fl-right icomoon icon-arrow-up" ng-show="isCollapsed"></i>
+							</div>
+							<div id="results1" class="panel-body" collapse="!isCollapsed">
+								<ul>
+									<li>Tocar un instrumento</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="question2">
+						<div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}">
+							<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
+								<i class="fl-left icomoon icon-wrong-join active"></i>
+								¿Pregunta selección múltiple?
+								<i class="fl-right icomoon icon-arrow-up" ng-show="isCollapsed"></i>
+							</div>
+							<div id="results1" class="panel-body" collapse="!isCollapsed">
+								<ul>
+									<li>Pintura</li>
+									<li class="failed clearfix"><i class="fl-left icomoon icon-wrong"></i>Tocar un instrumento</li>
+									<li>Leer</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="question3">
+						<div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}">
+							<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
+								<i class="fl-left icomoon icon-wrong-join"></i>
+								¿Pregunta texto abierto?
+								<i class="fl-right icomoon icon-arrow-up" ng-show="isCollapsed"></i>
+							</div>
+							<div id="results1" class="panel-body" collapse="!isCollapsed">
+								<ul>
+									<li>Pintura</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="question4">
+						<div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}">
+							<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
+								<i class="fl-left icomoon icon-wrong-join"></i>
+								¿Pregunta falso/verdadero?
+								<i class="fl-right icomoon icon-arrow-up" ng-show="isCollapsed"></i>
+							</div>
+							<div id="results1" class="panel-body" collapse="!isCollapsed">
+								<ul>
+									<li>Pintura</li>									
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div id="question5">
+						<div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}">
+							<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
+								<i class="fl-left icomoon icon-wrong-join"></i>
+								¿Pregunta selección sencilla?
+								<i class="fl-right icomoon icon-arrow-up" ng-show="isCollapsed"></i>
+							</div>
+							<div id="results1" class="panel-body" collapse="!isCollapsed">
+								<ul>									
+									<li>Tocar un instrumento</li>
+								</ul>
+							</div>
+						</div>
+					</div>																
+				</section>
+				<section class="centered txt-bigger hidden">
 					<i class="icomoon icon-checked-join txt-bigger green-giant"></i>
 				</section>
 				<section class="txt-renglon pill">
@@ -100,7 +178,7 @@
 				</section>
 				<section class="txt-renglon centered form">
 					¿Que opinas de ésta actividad?
-					<section class="txt-renglon txt-bigger">
+					<section class="txt-renglon txt-bigger clearfix">
 						<div class="opinion">
 							<input id="like" type="radio" value="option1" name="like">
 							<label for="like">Me gusta</label>
