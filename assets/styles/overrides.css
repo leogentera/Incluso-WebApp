@@ -566,7 +566,7 @@ section.part.inbloq.text-left .actions {
   background-color: #0A9648;
   color: #FFF;
 }
-.results-challenge .collapse-media .panel .panel-heading .icomoon {
+.results-challenge .collapse-media .panel .panel-heading .icon-checked-join {
   margin-right: 2vw;
   font-size: 6vw;
   vertical-align: top;
@@ -579,7 +579,7 @@ section.part.inbloq.text-left .actions {
   border-right: 1px solid #B9E4F9;
   font-size: 4.8vw;
 }
-.results-challenge .collapse-media .panel .panel-heading div .glyphicon {
+.results-challenge .collapse-media .panel .panel-heading div span.icomoon {
   padding-left: 2vw;
 }
 .results-challenge .collapse-media .panel.collapsed .panel-heading {
