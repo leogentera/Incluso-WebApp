@@ -334,6 +334,7 @@ angular
                       }
                    ]
                 };
+           $scope.activity = "Here is a value";
 
             function getDataAsync() {
                 moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback);
@@ -341,10 +342,11 @@ angular
             }
 
             function getActivityInfoCallback() {
-                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
+                //$scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
+               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 64));
             }
 
-//            getDataAsync();
+            getDataAsync();
 
             $scope.showComentarios = function (discussionId) {
               $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.moodleid + "/" + discussionId);

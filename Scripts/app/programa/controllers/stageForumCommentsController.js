@@ -50,8 +50,12 @@ angular
               $scope.isVideoCollapsed = true;
             };
 
+           $scope.postTextToForum = function(){
+              alert("Posting text in the forum");
+           };
 
-            $scope.activity = {
+
+            /*$scope.activity = {
                    id:7,
                    name:"Foro",
                    description:"",
@@ -340,33 +344,25 @@ angular
                          ]
                       }
                    ]
-                };
+                };*/
 
-            $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.id == $routeParams.discussionId; });
-
+           //$scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussionId == 3; });
 
             function getDataAsync() {
                 moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback);
-//                moodleFactory.Services.GetAsyncActivity($routeParams.moodleid, getActivityInfoCallback);
             }
 
             function getActivityInfoCallback() {
-                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
+                //$scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid + "/" + $routeParams.discussionId));
+               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
+               $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.id == $routeParams.discussionId; });
             }
 
-            //getDataAsync();
+            getDataAsync();
 
             $scope.back = function () {
                $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/zv_puntodeencuentro#top');
                //$location.path('/ProgramaDashboard');
             };
-
-           $scope.postComment = function(){
-              alert("Posting comment");
-           };
-
-           $scope.testClick = function(){
-              alert("This click works!");
-           };
 
         }]);
