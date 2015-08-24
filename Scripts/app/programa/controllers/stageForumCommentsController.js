@@ -21,6 +21,36 @@ angular
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
 
+           $scope.isTextCollapsed = true;
+            $scope.collapseText = function(){
+               $scope.isTextCollapsed = !$scope.isTextCollapsed;
+               $scope.isLinkCollapsed = true;
+               $scope.isVideoCollapsed = true;
+               $scope.isAttachmentCollapsed = true;
+            };
+            $scope.isLinkCollapsed = true;
+            $scope.collapseLink = function(){
+              $scope.isLinkCollapsed = !$scope.isLinkCollapsed;
+              $scope.isTextCollapsed = true;
+              $scope.isVideoCollapsed = true;
+              $scope.isAttachmentCollapsed = true;
+            };
+            $scope.isVideoCollapsed = true;
+            $scope.collapseVideo = function(){
+              $scope.isVideoCollapsed = !$scope.isVideoCollapsed;
+              $scope.isTextCollapsed = true;
+              $scope.isLinkCollapsed = true;
+              $scope.isAttachmentCollapsed = true;
+            };
+            $scope.isAttachmentCollapsed = true;
+            $scope.collapseAttachment = function(){
+              $scope.isAttachmentCollapsed = !$scope.isAttachmentCollapsed;
+              $scope.isTextCollapsed = true;
+              $scope.isLinkCollapsed = true;
+              $scope.isVideoCollapsed = true;
+            };
+
+
             $scope.activity = {
                    id:7,
                    name:"Foro",
@@ -324,11 +354,19 @@ angular
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
             }
 
-            getDataAsync();
+            //getDataAsync();
 
             $scope.back = function () {
                $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/zv_puntodeencuentro#top');
                //$location.path('/ProgramaDashboard');
-            }
+            };
+
+           $scope.postComment = function(){
+              alert("Posting comment");
+           };
+
+           $scope.testClick = function(){
+              alert("This click works!");
+           };
 
         }]);
