@@ -60,7 +60,9 @@
                 $anchorScroll();      
             }
             
-            $scope.challengeName = "MIS RETOS";
+            //*******************************************************************
+            /*
+            $scope.challengeName = "MIS R";
             
             $scope.logroEducativo = {
                 "userId" : 53,
@@ -98,7 +100,11 @@
               }
               
               $scope.puntosObtenidos = puntosObtenidos*100/13;
-              alert($scope.puntosObtenidos);
+              
+              /*
+              
+              
+              //*******************************************************************
 
 
             /* scroll to top function and listener */

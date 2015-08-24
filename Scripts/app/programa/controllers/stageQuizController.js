@@ -17,7 +17,7 @@ angular
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            
+            $scope.$emit('HidePreloader'); //hide preloader
 
             $scope.currentPage = 1;
             // $scope.stage = JSON.parse(moodleFactory.Services.GetCacheObject("stage"));
@@ -136,8 +136,8 @@ angular
                     setTimeout(function () {
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
-                        templateUrl: 'tutorialModal.html',
-                        controller: 'tutorialController',
+                        templateUrl: 'OpeningStageModal.html',
+                        controller: 'OpeningStageController',
                         size: size,
                         windowClass: 'user-help-modal'
                     });
@@ -149,8 +149,9 @@ angular
             $scope.openModal();
 
         }])
-    .controller('tutorialController', function ($scope, $modalInstance) {
+    .controller('OpeningStageController', function ($scope, $modalInstance) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
     });
+
