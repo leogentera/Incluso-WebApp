@@ -198,9 +198,10 @@
             opacity: 0.3;
         }
         .container.chat .component .msg-container {
-            padding: 10vw 2%;
+            padding: 5vw 2%;
             display: block;
-            height: 300px;
+            min-height: 70vh;
+            max-height: 74vh;
             overflow-y: auto;
         }
         .container.chat .component .msg-container .msg {
@@ -263,15 +264,23 @@
             right: 0;
         }
         .container.chat .component .typing-section {
+            /*min-height: 6vh;
+            max-height: 20vh;*/
+            height: auto;
             background: rgb(256,256,256);
             padding: 2vw 0;
         }
-        .container.chat .component .typing-section input[type="text"] {
-            border-color: transparent;
-            padding: 0 2vw;
-            font-size: 5vw;
+        .container.chat .component .typing-section input[type="text"],
+        .container.chat .component .typing-section textarea {
             float: none;
             display: inline-block;
+            width: 88vw;
+            resize: none;            
+            padding: 0 2vw;
+            border-color: transparent;
+            overflow-y: auto;
+            font-size: 4.5vw;
+            
             vertical-align: middle;
         }
         .container.chat .component .typing-section input[type="text"]::-webkit-input-placeholder {
