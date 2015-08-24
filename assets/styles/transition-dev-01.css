@@ -159,7 +159,8 @@ Parallel work file for UI Developer 01
   padding: 5vw 4vw 10vw 7vw;
   width: 90%;
 }
-.incluso-app .evaluation #finalized .txt-renglon.pill .sm-pill {
+.incluso-app .evaluation #finalized .txt-renglon.pill .sm-pill,
+.incluso-app .evaluation #finalized .txt-renglon.pill .green-pill {
   border-width: 2px;
   font-size: 5.5vw;
   font-weight: bold;
@@ -167,10 +168,15 @@ Parallel work file for UI Developer 01
   position: relative;
   top: -6px;
 }
-.incluso-app .evaluation #finalized .txt-renglon.pill .sm-pill .icon-star {
+.incluso-app .evaluation #finalized .txt-renglon.pill .sm-pill .icon-star,
+.incluso-app .evaluation #finalized .txt-renglon.pill .green-pill .icon-star {
   font-size: 4.5vw;
   position: relative;
   top: 4.5px;
+}
+.incluso-app .evaluation #finalized .txt-renglon.pill .green-pill {
+  margin: -0.3vw -1vw;
+  padding: 0.7vw 2.3vw 1vw;
 }
 .incluso-app .evaluation #finalized .txt-renglon.form {
   font-weight: normal;
@@ -193,4 +199,72 @@ Parallel work file for UI Developer 01
 .incluso-app .evaluation #finalized .txt-renglon.form .btn {
   width: 100%;
   margin: 3% 0 0;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel {
+  background-color: transparent;
+  padding: 0;
+  margin: 3% 2.5%;
+  width: 95%;
+  font-weight: normal;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel > .panel-heading {
+  background: rgba(0, 0, 0, 0) radial-gradient(ellipse at center center, #1f2733 0%, #141921 100%) repeat scroll 0 0;
+  border-radius: 1.5vw;
+  padding: 2.5vw 4.6vw;
+  font-size: 5vw;
+  line-height: 1.4;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel > .panel-heading .icon-wrong-join {
+  color: transparent;
+  margin-right: 1.5vw;
+  font-size: 7vw;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel > .panel-heading .icon-wrong-join.active {
+  color: #ee4823;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel > .panel-heading .icon-arrow-up {
+  position: relative;
+  top: 1vw;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel.collapsed > .panel-heading {
+  border-radius: 1.5vw 1.5vw 0 0;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel .panel-body {
+  background-color: rgba(13, 15, 20, 0.5);
+  color: white;
+  padding: 2.5vw 3vw 4.5vw;
+  font-size: 5vw;
+  font-weight: bold;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel .panel-body ul {
+  list-style: none;
+  padding: 0 3.7vw;
+  margin: 0;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel .panel-body ul li {
+  padding: .2vw 0;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel .panel-body ul li:first-child,
+.incluso-app .evaluation #finalized .txt-renglon.panel .panel-body ul li:last-child {
+  padding: 0;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel .panel-body ul li::before {
+  font-size: 6vw;
+  content: "•";
+  padding-right: 3.3vw;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel .panel-body ul li.failed {
+  color: #ee4823;
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel .panel-body ul li.failed::before {
+  content: "";
+}
+.incluso-app .evaluation #finalized .txt-renglon.panel .panel-body ul li.failed .icon-wrong {
+  font-size: 4vw;
+  margin-left: -0.5vw;
+  margin-top: 1.85vw;
+  padding-right: 2.7vw;
+}
+.incluso-app .evaluation #finalized .question-parts {
+  margin: 8vw 0;
 }
