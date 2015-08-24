@@ -24,6 +24,10 @@
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };
 
+        var _getAsyncForumInfo = function(activityId, topicId, successCallback, errorCallback){
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId + '/' + topicId), successCallback, errorCallback);
+        };
+
         var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback){
             _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + 'user/' + userId ), successCallback,errorCallback);
         };
@@ -128,7 +132,9 @@
             GetAsyncActivities: _getAsyncActivitiesInfo,
             PutAsyncActivity: _putAsyncActivityInfo,
             PutAsyncQuiz: _putAsyncQuiz,
+            GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications
+
         };
     })();
 }).call(this);
