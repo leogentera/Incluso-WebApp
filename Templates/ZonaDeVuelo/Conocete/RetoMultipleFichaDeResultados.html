@@ -1,64 +1,53 @@
-<div class="incluso-app start-dashboard acerca-programa" id="site-wrapper">
-  <div id="site-menu" >
-
-  </div>
+<div class="incluso-app results-challenge" id="site-wrapper">
   <div id="site-canvas">
-
-<article class="blueprint">
-      <div class="container">
-
-        <section class="component">
-          <h3 ng-class="main-title">Mis fortalezas</h3>
-        </section>
-
-  <section class="txt-renglon up-line">
-  <h4>Escudo</h4>
-  <img src="assets/images/escudos/{{profile.shield}}.png" class="centered">
-  </section>  
-
-
-  <section class="txt-renglon up-line">
-    <h4>Fortalezas</h4>
-  </section>
-
-    <div id="item{{index}}" ng-repeat="a in fortalezas">
-
-      <div class="part gr-bg">
-      <div><i class="icomoon icon-checked-join white"></i>{{a.name}}</div> 
-      <div><span>{{a.calificacion}}</span> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-up': !status.open}"></i></div>
+    <article class="blueprint">
+      <div class="subtitle">Mis fortalezas</div>
+      <section class="txt-renglon up-line">
+        <h4>Escudo</h4>
+        <img src="assets/images/escudos/{{profile.shield}}.png" class="centered" />
+      </section>  
+      <section class="txt-renglon up-line">
+        <h4>Fortalezas</h4>
+      </section>
+      <div id="item{{index}}" class="collapse-media" ng-repeat="a in fortalezas">
+        <div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}" >      
+          <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">        
+            <i class="icomoon icon-checked-join white"></i>{{a.name}}
+            <div>
+              <span>{{a.calificacion}}</span> 
+              <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
+              <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
+              <!--<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-up': !status.open}"></i>-->
+            </div>
+          </div>
+        
+          <div class="panel-body" id="ord1" ng-bind-html="a.description" collapse="isCollapsed"></div>
+        </div>                    
       </div>
-      <div class="part part2" id="ord1" ng-bind-html="a.description">
-      </div>
-
-    </div>
 
       <section class="txt-renglon up-line">
-    <h4>Inteligencias a fortalecer</h4>
-  </section>
+        <h4>Inteligencias a fortalecer</h4>
+      </section>
 
-    <div id="item{{index}}" ng-repeat="a in aFortalecer">
+      <div id="item{{index}}" class="collapse-media" ng-repeat="a in aFortalecer">
 
-      <div class="part gr-bg">
-      <div><i class="icomoon icon-checked-join white"></i>{{a.name}}</div> 
-      <div><span>{{a.calificacion}}</span> <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-up': !status.open}"></i></div>
+        <div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}" >
+          <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">          
+            <i class="icomoon icon-checked-join white"></i>{{a.name}} 
+            <div>
+              <span>{{a.calificacion}}</span> 
+              <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
+              <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
+              <!--<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-up': !status.open}"></i>-->
+            </div>
+          </div>
+          <div class="panel-body" id="ord1" ng-bind-html="a.description" collapse="isCollapsed"></div>
+        </div>
       </div>
-      <div class="part part2" id="ord1" ng-bind-html="a.description">
-      </div>
 
-    </div>
-
-
-    <br/><br/>
-    <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
-    <br/><br/>
-    <img src="assets/images/img-lines-ftr.png" class="centered">
-    <br/>  
-
-        
-      </div> <!-- /.container -->
-
+      <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
+      <img src="assets/images/img-lines-ftr.png" class="centered">
     </article>
-
   </div>
 </div>
   

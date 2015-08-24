@@ -17,10 +17,10 @@ angular
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false;
-                                    
+                                                
             var userNotifications = JSON.parse(localStorage.getItem("notifications"));
                                 
-            $scope.notification = _.find(userNotifications, function(d){return d.notificationId == $routeParams.notificationId; });
+            $scope.notification = _.find(userNotifications, function(d){return d.id == $routeParams.id; });
             
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader

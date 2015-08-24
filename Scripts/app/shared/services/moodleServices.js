@@ -44,6 +44,10 @@
             _putAsyncData("activity/" + activityId, data, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };    
 
+        var _getUserNotifications = function(userId,successCallback,errorCallback){
+            _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback);
+        };
+        
         var _getCacheObject = function(key){
             return localStorage.getItem(key);
         };
@@ -112,7 +116,9 @@
                     localStorage.setItem(key, JSON.stringify(data));
                     errorCallback();
             });
-        }
+        };
+        
+        
         
         return {
             GetAsyncProfile: _getAsyncProfile,
@@ -126,7 +132,8 @@
             GetAsyncActivities: _getAsyncActivitiesInfo,
             PutAsyncActivity: _putAsyncActivityInfo,
             PutAsyncQuiz: _putAsyncQuiz,
-            GetAsyncForumInfo: _getAsyncForumInfo
+            GetAsyncForumInfo: _getAsyncForumInfo,
+            GetUserNotification: _getUserNotifications
 
         };
     })();
