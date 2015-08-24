@@ -1754,7 +1754,11 @@
     text-transform: uppercase;
   }
   .incluso-app .my-profile-form .btn.btn-add {
-    padding: 3.2vw 0;
+    padding: 3.6vw 0;
+    border-width: 0.12em;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
     font-size: 4vw;
     line-height: 4vw;
     font-family: Roboto;
