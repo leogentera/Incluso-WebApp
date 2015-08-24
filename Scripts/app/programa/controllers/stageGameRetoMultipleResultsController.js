@@ -21,6 +21,7 @@ angular
 
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
+            $scope.isCollapsed = true;
 
              $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
             $scope.profile = moodleFactory.Services.GetCacheJson("profile");

@@ -10,7 +10,7 @@
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-
+            
             _httpFactory = $http;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
@@ -55,6 +55,7 @@
 
             $(".navbar").removeClass("etapa-uno");
             getDataAsync();
+            getUserNotifications();
 
             $scope.logout = function(){
                 logout($http, $scope, $location);
@@ -105,7 +106,7 @@
                 console.log(data);
                 $scope.$emit('HidePreloader'); //hide preloader
                 $scope.$emit('scrollTop'); //- scroll
-            }                                    
+            }
                                                         
             function getCurrentStage(){                
                 var currentStage = 1;                                            
@@ -130,6 +131,16 @@
                 return currentStage;
             }
 
+            function getUserNotifications(){                
+                moodleFactory.Services.GetUserNotification($scope.user.id, getUserNotificationsCallback, errorCallback);                
+            }
+            
+            function getUserNotificationsCallback(data){
+                
+                var notifications = JSON.parse(localStorage.getItem("notifications"));                                    
+                debugger;
+            }
+            
             /* open terms and conditions modal */
             $scope.openModal = function (size) {
                 setTimeout(function(){ 
@@ -143,6 +154,9 @@
                     console.log("modal open");
                 }, 1000);
             };
+           
+           
+           
            
         }])
         .controller('tutorialController', function ($scope, $modalInstance) {

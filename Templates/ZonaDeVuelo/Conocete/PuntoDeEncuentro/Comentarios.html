@@ -48,7 +48,7 @@
     <a href="#close" title="Close" class="close"></a>
 <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value=""/></div>
 
-<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="">Compartir</button>
   </div>
 </div>
 
@@ -83,14 +83,14 @@
 
 <section class="wall">
 
-    <div id="item{{index}}" ng-repeat="p in discussion.posts[0].replies">
+    <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies">
 
 
 
         <div class="part">
           <div class="author"><img src="assets/images/avatar.svg">
           <div>{{p.postAutor}} <span>publicó:</span>
-          <div>{{p.created | date: 'dd MMMM yyyy'}}</div>
+          <div>{{p.created | date: "dd MMMM yyyy"}}</div>
           </div>
         </div>
         <div class="block">  
@@ -117,11 +117,20 @@
         <div class="social">
         <div><i class="icomoon icon-required"></i> Me gusta
         </div>
-        <div ng-click="postComment()"><i class="icomoon icon-required"></i> Comentar
+        <div ng-click=""><i class="icomoon icon-required"></i> Comentar
         </div>
         </div>
 
         </div>
+        <section class="modales">
+        <div id="openModal1" class="modalDialog" collapse=true>
+            <div>
+                <a href="#close" title="Close" class="close"></a>
+                <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value=""/></div>
+
+                <button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+            </div>
+        </div> </section>
     </div>
 
 
