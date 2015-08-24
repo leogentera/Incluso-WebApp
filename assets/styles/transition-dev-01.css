@@ -180,9 +180,14 @@ Parallel work file for UI Developer 01
   margin: 0;
   width: 100%;
 }
+.incluso-app .evaluation #finalized .txt-renglon.form section .opinion {
+  display: inline-block;
+  float: left;
+  margin: 0 4vw;
+}
 .incluso-app .evaluation #finalized .txt-renglon.form section label {
   width: auto;
-  margin-left: 4vw;
+  margin: 0;
   display: inline-block;
 }
 .incluso-app .evaluation #finalized .txt-renglon.form .btn {
