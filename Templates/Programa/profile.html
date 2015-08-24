@@ -974,6 +974,7 @@
                                                         />
                                                         
                                                         <span class="badgename text-center" ng-bind="badge.name"></span>
+                                                    </div>
                                                         <!--
                                                         <div class="col-xs-12" ng-repeat="s in model.strengths">
                                                             <h5 ng-bind="s.name"></h5>
@@ -986,6 +987,7 @@
                                                             <br />
                                                         </div>
                                                     </div>
+                                                    -->
                                                     <div class="pager">
                                                         <div class="icomoon icon-arrow-bold-left" ng-click="changepage(-1)"></div>
                                                         <span>
@@ -1111,8 +1113,17 @@
                                                 <div class="row">
                                                     <div class="text-center">
                                                         <div class="achievement-badge">
+                                                            <!--
                                                             <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px" height="100px"
                                                             />
+                                                            -->
+                                                            <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px"
+                                                            height="100px" />
+                                                            <!--
+                                                            <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
+                                                            height="100px" ng-show="status == 'pending'"
+                                                            />
+                                                            -->
                                                             <div class="badgename" ng-bind="badgeName"></div>
                                                             <div class="badgedate" ng-bind="badgeDateIssued"></div>
                                                         </div>
