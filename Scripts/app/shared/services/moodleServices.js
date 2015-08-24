@@ -40,6 +40,10 @@
             _putAsyncData("activity/" + activityId, data, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };    
 
+        var _getUserNotifications = function(userId,successCallback,errorCallback){
+            _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback);
+        };
+        
         var _getCacheObject = function(key){
             return localStorage.getItem(key);
         };
@@ -110,6 +114,8 @@
             });
         };
         
+        
+        
         return {
             GetAsyncProfile: _getAsyncProfile,
             PutAsyncProfile: _putAsyncProfile,
@@ -122,7 +128,7 @@
             GetAsyncActivities: _getAsyncActivitiesInfo,
             PutAsyncActivity: _putAsyncActivityInfo,
             PutAsyncQuiz: _putAsyncQuiz,
-
+            GetUserNotification: _getUserNotifications
         };
     })();
 }).call(this);
