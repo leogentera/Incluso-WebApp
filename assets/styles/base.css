@@ -530,7 +530,7 @@ body.modal-open {
   text-decoration: none;
 }
 .incluso-app .btn-add {
-  border-style: dashed;
+  border-style: solid;
   border-color: #08b290;
   -webkit-border-radius: 1vw;
   -moz-border-radius: 1vw;

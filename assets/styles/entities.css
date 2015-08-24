@@ -104,8 +104,8 @@
         ************************************************************************/
     /***********************************************************************/
     /***********************************************************************
-         $my-profile-form
-         Description: CSS to represent user's profile editable form
+         $my-profile-information 
+         Description: CSS to represent user's profile read only information
         ************************************************************************/
     /***********************************************************************/
     /***********************************************************************
@@ -1400,7 +1400,7 @@
     font-weight: inherit;
     text-transform: uppercase;
   }
-  .incluso-app .profile-data .user-points {
+  .incluso-app .profile-data p.user-points {
     width: auto;
     padding: 1px 12px;
     padding: 0.222vw 2.5vw;
@@ -1616,18 +1616,6 @@
     height: auto;
     padding: 0;
     margin: 0 auto;
-    /*h5 {
-                width: auto;
-                padding: 0;
-                margin: 0 0 6vw 0;
-
-                color: @clr-gray-asphalt;
-                font-size: 4vw;
-                font-weight: bold;
-                line-height: 4vw;
-                text-align: left;
-                text-transform: capitalize;
-            }*/
   }
   .incluso-app .my-profile-information h5 {
     color: #08b290;
@@ -1647,25 +1635,6 @@
     height: auto;
     padding: 0;
     margin: 0 auto;
-    /*p, li {
-                width: auto;
-                color: @clr-white;
-                line-height: 1.2;
-            }
-            p {
-                margin-bottom:3px;
-                font-size: 1.2em;
-
-                & > label {
-                    margin: 0;
-                }
-            }
-            label, em {
-                color:@clr-gray-platinum;
-                font-size: inherit;
-                font-style: normal;
-                line-height: inherit;
-            }*/
   }
   .incluso-app .my-profile-form h4 {
     width: auto;
@@ -1691,9 +1660,6 @@
   }
   .incluso-app .my-profile-form li {
     margin-top: 9vw;
-    /*& > p {
-                    margin-top:0;
-                }*/
   }
   .incluso-app .my-profile-form li:first-child {
     margin-top: 0;
