@@ -137,6 +137,10 @@
          Description: CSS to represent look collapsible panel with the content as media [video/image]
         ************************************************************************/
     /*********************************************************************/
+    /***********************************************************************
+         $bubble
+         Description: CSS to represent look for generic bubble near to the element
+        ************************************************************************/
   }
   .incluso-app .to-top {
     bottom: 20px;
@@ -647,7 +651,6 @@
     background-size: cover;
     border-top: 2px solid #2a2f32;
     padding: 20px 0;
-    cursor:pointer;
   }
   .incluso-app .add {
     border-bottom: 2px solid rgba(255, 255, 255, 0.3);
@@ -869,7 +872,7 @@
   }
   .incluso-app .modalDialog > div {
     width: 100%;
-    position: relative;
+    position: absolute;
     margin: 0;
     padding: 2% 0;
     background: #fff;
@@ -1974,6 +1977,18 @@
   .incluso-app .collapse-media .panel .panel-body {
     /*.clr-blueDark(background-color, 0.9);*/
     background-color: rgba(13, 15, 20, 0.5);
+  }
+  .incluso-app .bubble {
+    display: block;
+    background-color: yellow;
+    border-radius: 15px 15px 10px 10px;
+    position: absolute;
+    z-index: 1900;
+    margin-top: -14px;
+  }
+  .incluso-app .bubble .bubble-sm {
+    width: 6vw;
+    height: 3.5vh;
   }
   .incluso-app .border-box {
     box-sizing: border-box;

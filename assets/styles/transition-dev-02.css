@@ -217,6 +217,7 @@
   float: left;
 }
 .incluso-app .container.chat .component .msg-container .msg .text span {
+  width: 100%;
   color: #ffffff;
   font-family: Play;
   font-size: 4vw;
@@ -233,7 +234,7 @@
   background: #004e70;
   border-radius: 4vw 4vw 4vw 0;
   padding: 1vw 4vw;
-  width: 96%;
+  width: 92vw;
   margin-left: 20px;
 }
 .incluso-app .container.chat .component .msg-container .msg.received .msg-icn {
@@ -254,7 +255,7 @@
   font-size: 5vw;
   border-radius: 4vw 4vw 0 4vw;
   padding: 1vw 4vw;
-  width: 96%;
+  width: 92vw;
   margin-right: 20px;
   float: right;
 }
@@ -278,13 +279,18 @@
 .incluso-app .container.chat .component .typing-section textarea {
   float: none;
   display: inline-block;
-  width: 88vw;
+  width: 86.5vw;
   resize: none;
   padding: 0 2vw;
   border-color: transparent;
   overflow-y: auto;
   font-size: 4.5vw;
+  outline: none;
   vertical-align: middle;
+}
+.incluso-app .container.chat .component .typing-section input[type="text"]:focus,
+.incluso-app .container.chat .component .typing-section textarea:focus {
+  outline: none;
 }
 .incluso-app .container.chat .component .typing-section input[type="text"]::-webkit-input-placeholder {
   color: #565656;
