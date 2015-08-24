@@ -1364,7 +1364,8 @@ body.modal-open {
 }
 .incluso-app .navbar ul li {
   display: inline-block;
-  margin-right: 1vw;
+  width: 13vw;
+  /*margin-right: 1vw;*/
   line-height: 6vw;
 }
 .incluso-app .navbar ul li a {
