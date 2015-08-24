@@ -1301,6 +1301,19 @@
             padding: 0;
             margin: 0 auto;
 
+            h4 {
+                width: auto;
+                padding: 0;
+                margin: 0;
+
+                color: @clr-blueTurquoise;
+                font-size: 4vw;
+                font-weight: bold;
+                line-height: 4vw;
+                text-align: left;
+                text-transform: none;
+            }            
+
             h5 {
                 width: auto;
                 padding: 0;
@@ -1327,7 +1340,6 @@
                 }
             }
             li {
-                /*margin-top: 15px;*/
                 margin-top: 9vw;
 
                 &:first-child {
@@ -1344,9 +1356,6 @@
                 font-style: normal;
                 line-height: inherit;
             }
-            hr {
-                margin: 15px 0;
-            }
             & > section {
                 display: block;
                 width: auto;
@@ -1356,7 +1365,8 @@
             }
             & > section:first-child {
                 margin-top: 0;
-            }           
+            }
+
             .page-number {
                 margin: 3vw 0;
 
@@ -1404,13 +1414,12 @@
                 }
             }
             .form-group {
-                position: relative;
                 border: none;
                 margin-bottom: 0;
 
                 h5 {
+                    position: relative;
                     margin-bottom: 1vw;
-
 
                     span:first-child {
                         color: @clr-gray-asphalt2;
@@ -1418,11 +1427,14 @@
                         text-transform: uppercase;
                     }                    
                     .btn-circle {
-                        display: inline;
-                        float: right;
-                        /*position: absolute;
-                        right: 0;*/
+                        display: inline-block;
+                        position: absolute;
+                        right: 0;
+                        bottom: 0;
+                        width: 5vw;
+                        height: 5vw;
                         margin: 0;
+                        border: none;
 
                         .icomoon {
                             color: @clr-white;
@@ -1431,31 +1443,12 @@
                         }
                     }                    
                 }
-
-                .form-control {
-                    /*border-top-width: 0;*/
-                    border-top-width: 1pt;
-                    text-indent: 3px;
-                }
-                .form-control:first-child {
-                    /*border-top:1px solid;*/
-
-                }
-                select.form-control {
-                    text-indent: 0;
-                    /*border-left-color: transparent !important;
-                    border-right-color: transparent !important;*/
-                }
-                &:first-child {
-                    .form-control:first-child {
-                        border-top-width: 1pt;
+                h5 + .form-group-control {
+                    .form-control {
+                        border-top-width: 1pt !important;
                     }
                 }
-                .form-control + .form-control {border-top-width: 0;}
-                .form-control.ng-pristine.ng-touched + .custom-placeholder {
-                    display: none; 
-                } 
-            }
+            }     
         }
         /***********************************************************************/
 
