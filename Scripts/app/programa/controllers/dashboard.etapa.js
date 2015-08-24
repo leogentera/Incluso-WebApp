@@ -32,7 +32,7 @@ angular
             var etapa1 = userCourse.stages[0];
             */
             //var challenges = etapa1.
-            
+            $scope.isCollapsed = false;
             
             $scope.challengeName = "MIS RETOS";
             
