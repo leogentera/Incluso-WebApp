@@ -562,3 +562,41 @@ section.part.inbloq.text-left .actions {
 .incluso-app .old-code {
   display: none !important;
 }
+.results-challenge .collapse-media .panel .panel-heading {
+  background-color: #0A9648;
+  color: #FFF;
+}
+.results-challenge .collapse-media .panel .panel-heading .icomoon {
+  margin-right: 2vw;
+  font-size: 6vw;
+  vertical-align: top;
+}
+.results-challenge .collapse-media .panel .panel-heading div {
+  float: right;
+}
+.results-challenge .collapse-media .panel .panel-heading div span:first-child {
+  padding-right: 2vw;
+  border-right: 1px solid #B9E4F9;
+  font-size: 4.8vw;
+}
+.results-challenge .collapse-media .panel .panel-heading div .glyphicon {
+  padding-left: 2vw;
+}
+.results-challenge .collapse-media .panel.collapsed .panel-heading {
+  background: -moz-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(31, 39, 51, 0.68)), color-stop(100%, rgba(20, 25, 33, 0.68)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 3 0%, rgba(20, 25, 33, 0.68) 100%);
+  background: radial-gradient(ellipse at center, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba(31, 39, 51, 0.68)', endColorstr='rgba(20, 25, 33, 0.68)', GradientType=1);
+}
+.results-challenge .collapse-media .panel .panel-body.in {
+  background: -moz-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(31, 39, 51, 0.68)), color-stop(100%, rgba(20, 25, 33, 0.68)));
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+  background: -o-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+  background: -ms-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 3 0%, rgba(20, 25, 33, 0.68) 100%);
+  background: radial-gradient(ellipse at center, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba(31, 39, 51, 0.68)', endColorstr='rgba(20, 25, 33, 0.68)', GradientType=1);
+}
