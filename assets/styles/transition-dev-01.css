@@ -217,6 +217,7 @@ Parallel work file for UI Developer 01
 .incluso-app .evaluation #finalized .txt-renglon.panel > .panel-heading .icon-wrong-join {
   color: transparent;
   margin-right: 1.5vw;
+  margin-top: 2px;
   font-size: 7vw;
 }
 .incluso-app .evaluation #finalized .txt-renglon.panel > .panel-heading .icon-wrong-join.active {
@@ -262,8 +263,8 @@ Parallel work file for UI Developer 01
 .incluso-app .evaluation #finalized .txt-renglon.panel .panel-body ul li.failed .icon-wrong {
   font-size: 4vw;
   margin-left: -0.5vw;
-  margin-top: 1.85vw;
-  padding-right: 2.7vw;
+  margin-top: 1.65vw;
+  padding-right: 2.6vw;
 }
 .incluso-app .evaluation #finalized .question-parts {
   margin: 8vw 0;
