@@ -960,29 +960,34 @@
                                             <h3 class="panel-title" style="cursor:pointer;">Mis Logros</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <div class="my-profile-information">
-                                                <div class="container-fluid">
-                                                    <div class="row">
 
-                                                        <div ng-repeat="badge in wholeBadgesPages[badgePage]" class="badge-item text-center">
-                                                            <img class="badgesviews" ng-src="assets/images/2.png" alt="" class="img-responsive" width="100px"
-                                                            height="100px" ng-click="showDetailBadge(badge.id, badge.badgeimage, badge.name, badge.dateIssued, badge.earned_times)"
-                                                            />
-                                                            <span class="badgename text-center" ng-bind="badge.name"></span>
-                                                            <!--
-                                                            <div class="col-xs-12" ng-repeat="s in model.strengths">
-                                                                <h5 ng-bind="s.name"></h5>
-                                                                <ul class="block-list" ng-repeat="v in s.values">
-                                                                    <li>
-                                                                        <p ng-bind="v"></p>
-                                                                    </li>
-                                                                </ul>
-                                                                <hr />
-                                                                <br />
-                                                            </div>
-                                                            -->
+                                            <div class="container-fluid">
+                                                <div class="row">
+
+                                                    <div ng-repeat="badge in wholeBadgesPages[badgePage]" class="badge-item text-center">
+                                                        <img class="badgesviews" ng-src="assets/images/insignias/{{badge.id}}.svg" alt="" class="img-responsive" width="100px"
+                                                        height="100px" ng-click="showDetailBadge(badge.id, badge.name, badge.dateIssued, badge.earned_times)" ng-show="badge.status != 'pending'"
+                                                        />
+                                                        
+                                                        <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
+                                                        height="100px" ng-click="showDetailBadge('placeholder', badge.name, badge.dateIssued, badge.earned_times)" ng-show="badge.status == 'pending'"
+                                                        />
+                                                        
+                                                        <span class="badgename text-center" ng-bind="badge.name"></span>
+                                                    </div>
+                                                        <!--
+                                                        <div class="col-xs-12" ng-repeat="s in model.strengths">
+                                                            <h5 ng-bind="s.name"></h5>
+                                                            <ul class="block-list" ng-repeat="v in s.values">
+                                                                <li>
+                                                                    <p ng-bind="v"></p>
+                                                                </li>
+                                                            </ul>
+                                                            <hr />
+                                                            <br />
                                                         </div>
                                                     </div>
+                                                    -->
                                                     <div class="pager">
                                                         <div class="icomoon icon-arrow-bold-left" ng-click="changepage(-1)"></div>
                                                         <span>
@@ -1102,29 +1107,39 @@
                                             <h3 class="panel-title">Mis Insignias</h3>
                                         </div>
                                         <div class="panel-body">
-                                            <div class="my-profile-information">
-                                                <div class="container-fluid">
-                                                    <div class="row">
-                                                        <div class="text-center">
-                                                            <div class="achievement-badge">
-                                                                <img class="badgesviews" ng-src="data:image/png;base64,{{badgeBadgeimage}}" alt="" class="img-responsive" width="100px" height="100px"
-                                                                />
-                                                                <div class="badgename" ng-bind="badgeName"></div>
-                                                                <div class="badgedate" ng-bind="badgeDateIssued"></div>
-                                                            </div>
-                                                            <div class="achievement-description">
-                                                                <span>
-                                                                    Cumpliste con los retos de la seccion de "Mis Sueños" y asi obtuviste la Turbina CONO-CT para colocarla en tu nave espacial y estar mas cerca del despegue de tu aventura.
-                                                                </span>
-                                                            </div>
-                                                            <div class="earned-info">
-                                                                <span class="users">Tú y <span ng-bind="earnedTimes"></span></span>
-                                                                jóvenes han ganado esta bandera
-                                                            </div>
-                                                            <div class="share-achievement">
-                                                                <span class="icon-container">
-                                                                    <span class="icomoon icon-share"></span>
-                                                                </span>
+
+                                        <div class="my-profile-information">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="text-center">
+                                                        <div class="achievement-badge">
+                                                            <!--
+                                                            <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px" height="100px"
+                                                            />
+                                                            -->
+                                                            <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px"
+                                                            height="100px" />
+                                                            <!--
+                                                            <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
+                                                            height="100px" ng-show="status == 'pending'"
+                                                            />
+                                                            -->
+                                                            <div class="badgename" ng-bind="badgeName"></div>
+                                                            <div class="badgedate" ng-bind="badgeDateIssued"></div>
+                                                        </div>
+                                                        <div class="achievement-description">
+                                                            <span>
+                                                                Cumpliste con los retos de la seccion de "Mis Sueños" y asi obtuviste la Turbina CONO-CT para colocarla en tu nave espacial y estar mas cerca del despegue de tu aventura.
+                                                            </span>
+                                                        </div>
+                                                        <div class="earned-info">
+                                                            <span class="users">Tú y <span ng-bind="earnedTimes"></span></span>
+                                                            jóvenes han ganado esta bandera
+                                                        </div>
+                                                        <div class="share-achievement">
+                                                            <span class="icon-container">
+                                                                <span class="icomoon icon-share"></span>
+                                                            </span>
                                                                 <span class="share-text">Compartir Insignia</span>
                                                             </div>
                                                             <button class="btn btn-primary btn-lg btn-cnt" ng-click="back()" type="button">Regresar</button>
