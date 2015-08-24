@@ -12,16 +12,49 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
-            //debugger;            
-
             $rootScope.pageName = "Estación: Conócete"
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
-            $rootScope.showFooterRocks = false; 
+            $rootScope.showFooterRocks = false;
+            
+
+            $scope.currentPage = 1;
+            // $scope.stage = JSON.parse(moodleFactory.Services.GetCacheObject("stage"));
+            $scope.stage = JSON.parse(localStorage.getItem("stage"));
+            $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));            
+            $scope.currentStageId = getCurrentStageId();
+            $scope.firstTime = $scope.usercourse.stages[$scope.currentStageId].firstTime;
+
+            function getCurrentStageId() {
+                var currentStageId = null;
+                
+                if ($scope.usercourse != null) {
+                    for (var index = 0; index < $scope.usercourse.stages.length; ++index) {
+                        if($scope.usercourse.stages[index].id == $scope.stage.id )
+                        {
+                            currentStageId = index;
+                            break;
+                        }                        
+                    }
+                }
+                return currentStageId;
+            };
+
+            $scope.navigateToPage = function (pageNumber) {
+                $scope.currentPage = pageNumber;
+            };
+
+            $scope.navigateToStage = function () {
+                $scope.usercourse.stages[$scope.currentStageId].firstTime = 0;                
+                var borrame = JSON.parse(localStorage.getItem("usercourse"));    
+                localStorage.setItem("usercourse",JSON.stringify($scope.usercourse));
+                var borrame2 =  JSON.parse(localStorage.getItem("usercourse"));                    
+                $location.path('/ProgramaDashboardEtapa/' + $scope.stage.id);
+            };
 
             //$scope.scrollToTop();
-            $scope.$emit('HidePreloader'); //hide preloader
+            //$scope.$emit('HidePreloader'); //hide preloader
             
             $scope.model = getDataAsync();
 
@@ -83,24 +116,24 @@ angular
                             "userAnswer": false
                         }
                     ]
-                }
+                };
 
                 if (!activity) {
                     $location.path('/');
                     return "";
-                }                
+                }
 
                 return activity;
-            }         
-            
-            $scope.firstTime = 0;
+            }
 
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
             }
-            
+
             $scope.openModal = function (size) {
-                setTimeout(function(){ 
+                
+               if($scope.firstTime == 1){
+                    setTimeout(function () {
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
                         templateUrl: 'tutorialModal.html',
@@ -109,14 +142,15 @@ angular
                         windowClass: 'user-help-modal'
                     });
                     console.log("modal open");
-                }, 1000);
+                }, 500);
+               }
             };
-            
+
             $scope.openModal();
 
         }])
-        .controller('tutorialController', function ($scope, $modalInstance) {
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-        });
+    .controller('tutorialController', function ($scope, $modalInstance) {
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });
