@@ -573,6 +573,9 @@ section.part.inbloq.text-left .actions {
 }
 .results-challenge .collapse-media .panel .panel-heading div {
   float: right;
+  width: 25vw;
+  text-align: center;
+  vertical-align: baseline;
 }
 .results-challenge .collapse-media .panel .panel-heading div span:first-child {
   padding-right: 2vw;
@@ -581,6 +584,9 @@ section.part.inbloq.text-left .actions {
 }
 .results-challenge .collapse-media .panel .panel-heading div span.icomoon {
   padding-left: 2vw;
+}
+.results-challenge .collapse-media .panel table {
+  width: 100% !important;
 }
 .results-challenge .collapse-media .panel.collapsed .panel-heading {
   background: -moz-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
