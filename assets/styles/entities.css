@@ -1899,6 +1899,7 @@
   .incluso-app .green-lantern-theme .list-item div {
     display: block;
     font-size: 86%;
+    text-align: center;
   }
   .incluso-app .green-lantern-theme .list-item span {
     line-height: normal;

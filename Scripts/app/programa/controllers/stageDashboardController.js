@@ -18,7 +18,6 @@ angular
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false; 
 
-             debugger;
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
 
