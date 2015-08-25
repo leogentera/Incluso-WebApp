@@ -933,7 +933,7 @@
 						</div>
 					</div>
 
-					<div class="page active" ng-class="currentPage == 8 ? 'active' : ''">
+					<div class="page" ng-class="currentPage == 8 ? 'active' : ''">
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-xs-12">
@@ -1463,102 +1463,99 @@
 						</div>
 					</div>
 
-<div class="page" ng-class="currentPage == 11 ? 'active' : ''">
-	<div class="container-fluid">
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="panel panel-default panel-form">
-					<div class="panel-heading with-icons" ng-click="navigateToPage(1)">
-						<span class="icomoon icon-arrow-slim-left"></span>
-						<span class="icomoon icon-information"></span>
-						<h3 class="panel-title">Uso Tecnología</h3>
-					</div>
-					<div class="panel-body">
-						<fieldset class="my-profile-form">
-							<section>
-								<h5>Videojuegos</h5>
+					<div class="page" ng-class="currentPage == 11 ? 'active' : ''">
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-xs-12">
+										<div class="panel panel-default panel-form">
+											<div class="panel-heading with-icons" ng-click="navigateToPage(1)">
+												<span class="icomoon icon-arrow-slim-left"></span>
+												<span class="icomoon icon-information"></span>
+												<h3 class="panel-title">Uso Tecnología</h3>
+											</div>
+											<div class="panel-body">
+												<fieldset class="my-profile-form">
+													<section>
+														
+														<h5>Videojuegos</h5>
 
-								<h4>¿Juegas videojuegos?</h4>
-								<input type="text" class="form-control form-control-lg theme-form" placeholder="¿Juegas videojuegos?" ng-model="s.playVideogames"
-								/>
-								<select ng-model="model.playVideogames" ng-options="item for item in yesNoList" ng-init="model.playVideogames == null" class="form-control form-control-lg theme-form">
-									<option value="" ng-disabled="!!model.playVideogames">¿Juegas videojuegos?</option>
-								</select>
+														<h4>¿Juegas videojuegos?</h4>
+														<input type="text" class="form-control form-control-lg theme-form" placeholder="¿Juegas videojuegos?" ng-model="s.playVideogames" />
+														<select ng-model="model.playVideogames" ng-options="item for item in yesNoList" ng-init="model.playVideogames == null" class="form-control form-control-lg theme-form">
+															<option value="" ng-disabled="!!model.playVideogames">¿Juegas videojuegos?</option>
+														</select>
 
-								<h4>¿Con qué frecuencia juegas videojuegos?</h4>
-								<select ng-model="model.videoGamesFrecuency[$index]" ng-options="item for item in videoGamesFrecuencyList" ng-init="model.videoGamesFrecuency == null"
-								class="form-control form-control-lg theme-form">
-								<option value="" ng-disabled="!!model.videoGamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
-							</select>
+														<h4>¿Con qué frecuencia juegas videojuegos?</h4>
+														<select ng-model="model.videoGamesFrecuency[$index]" ng-options="item for item in videoGamesFrecuencyList" ng-init="model.videoGamesFrecuency == null" class="form-control form-control-lg theme-form">
+																<option value="" ng-disabled="!!model.videoGamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
+														</select>
 
-							<h4>¿Qué tipo de videojuegos te gustan más?</h4>
-							<ul class="block-list">
-								<li ng-repeat="s in model.kindOfVideoGames">
-									<div class="form-group theme-form">
-										<h5>
-											<span>Videojuejo {{model.kindOfVideoGames.indexOf(s) + 1}}</span>
-											<button class="btn btn-circle" ng-click="deleteKindOfVideoGame($index);">
-												<span class="icomoon icon-cross"></span>
-											</button>
-										</h5>
-										<select ng-model="model.kindOfVideoGames[$index]" ng-options="item for item in kindOfVideoGamesList" ng-init="model.kindOfVideoGames == null"
-										class="form-control form-control-lg theme-form">
-										<option value="" ng-disabled="!!model.kindOfVideoGames">¿Qué tipo de videojuegos te gustan más?</option>
-									</select>
-								</div>
-							</li>
-						</ul>
-						<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addKindOfVideoGame();">
-							<span class="icomoon icon-plus"></span>Agregar videojuego...
-						</button>
+														<h4>¿Qué tipo de videojuegos te gustan más?</h4>
+														<ul class="block-list">
+															<li ng-repeat="s in model.kindOfVideoGames">
+																<div class="form-group theme-form">
+																	<h5>
+																		<span>Videojuejo {{model.kindOfVideoGames.indexOf(s) + 1}}</span>
+																		<button class="btn btn-circle" ng-click="deleteKindOfVideoGame($index);">
+																			<span class="icomoon icon-cross"></span>
+																		</button>
+																	</h5>
+																	<select ng-model="model.kindOfVideoGames[$index]" ng-options="item for item in kindOfVideoGamesList" ng-init="model.kindOfVideoGames == null" class="form-control form-control-lg theme-form">
+																		<option value="" ng-disabled="!!model.kindOfVideoGames">¿Qué tipo de videojuegos te gustan más?</option>
+																	</select>
+																</div>
+															</li>
+														</ul>
+														<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addKindOfVideoGame();">
+															<span class="icomoon icon-plus"></span>Agregar videojuego...
+														</button>
 
+														<section>
+															<h4>¿Cuáles son tus juegos favoritos?</h4>
+															<ul class="block-list">
+																<li ng-repeat="p in model.favoriteGames track by $index">
+																	<div class="form-group theme-form">
+																		<h5>
+																			<span>Juago {{model.favoriteGames.indexOf(p) + 1}}</span>
+																			<button class="btn btn-circle" ng-click="deleteFavoriteGame($index);">
+																				<span class="icomoon icon-cross"></span>
+																			</button>
+																		</h5>
+																		<input type="text" class="form-control form-control-lg theme-form" placeholder="Juego favorito" ng-model="model.favoriteGames[$index]"
+																		/>
+																	</div>
+																</li>
+															</ul>
+															<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addFavoriteGame();">
+																<span class="icomoon icon-plus"></span>Agregar juego...
+															</button>
+														</section>
 
-						<section>
-							<h4>¿Cuáles son tus juegos favoritos?</h4>
-							<ul class="block-list">
-								<li ng-repeat="p in model.favoriteGames track by $index">
-									<div class="form-group theme-form">
-										<h5>
-											<span>Juago {{model.favoriteGames.indexOf(p) + 1}}</span>
-											<button class="btn btn-circle" ng-click="deleteFavoriteGame($index);">
-												<span class="icomoon icon-cross"></span>
-											</button>
-										</h5>
-										<input type="text" class="form-control form-control-lg theme-form" placeholder="Juego favorito" ng-model="model.favoriteGames[$index]"
-										/>
+														<div class="page-number">
+															<p class="text-center">
+																<span>2</span>
+																<span>/</span>
+																<span>2</span>
+															</p>
+														</div>
+
+														<div class="button-group">
+															<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg" ng-click="navigateToPage(10)">
+																<span class="icomoon icon-arrow-slim-left"></span>
+															</button>
+															<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(1)">Continuar</button>
+															<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+														</div>
+
+													</section>
+												</fieldset>
+											</div>
+										</div>
 									</div>
-								</li>
-							</ul>
-							<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addFavoriteGame();">
-								<span class="icomoon icon-plus"></span>Agregar juego...
-							</button>
-						</section>
-
-						<div class="page-number">
-							<p class="text-center">
-								<span>2</span>
-								<span>/</span>
-								<span>2</span>
-							</p>
+								</div>
+							</div>
 						</div>
-
-						<div class="button-group">
-							<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg" ng-click="navigateToPage(10)">
-								<span class="icomoon icon-arrow-slim-left"></span>
-							</button>
-							<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(1)">Continuar</button>
-							<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
-						</div>
-
-					</section>
-				</fieldset>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
-</div>
-</div>
+					</div>
 
 			</form>
 	 	</section>
