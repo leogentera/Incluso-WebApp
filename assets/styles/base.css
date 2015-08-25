@@ -1084,8 +1084,7 @@ body.modal-open {
   border: none;
 }
 .incluso-app .form-group.theme-form .form-group-control > .form-control.theme-form {
-  /*border-top-width: 0 !important;*/
-  border-top-width: 0 /*.clr-blueGray(color, 1);*/;
+  border-top-width: 0;
 }
 .incluso-app .form-group.theme-form .form-group-control .custom-placeholder {
   background-color: transparent;

@@ -1733,6 +1733,9 @@
   .incluso-app .my-profile-form .form-group h5 + .form-group-control .form-control {
     border-top-width: 1pt !important;
   }
+  .incluso-app .my-profile-form h4 + .form-group.theme-form .form-group-control:first-child > .form-control.theme-form {
+    border-top-width: 1pt;
+  }
   .incluso-app .my-profile-form .page-number {
     /* margin: 3vw 0; */
   }
