@@ -1994,9 +1994,9 @@
   .incluso-app .bubble {
     display: block;
     background-color: #B8CF33;
-    -webkit-border-radius: 14px 14px 11px 11px;
-    -moz-border-radius: 14px 14px 11px 11px;
-    border-radius: 14px 14px 11px 11px;
+    -webkit-border-radius: 13px 13px 11px 11px;
+    -moz-border-radius: 13px 13px 11px 11px;
+    border-radius: 13px 13px 11px 11px;
     position: absolute;
     z-index: 1900;
     margin-top: -1vh;
@@ -2005,18 +2005,18 @@
   }
   .incluso-app .bubble.bubble-sm {
     width: 10vw;
-    height: 5vh;
+    height: 4.8vh;
   }
   .incluso-app .bubble .glyphicon-triangle-top {
     position: absolute;
-    left: 2.5vw;
+    left: 2.7vw;
     font-size: 4vw;
     top: -0.1vh;
     color: #B8CF33;
   }
   .incluso-app .bubble .number-alerts {
     color: #000;
-    font-size: 3.5vw;
+    font-size: 3vw;
     font-weight: 600;
   }
   .incluso-app .border-box {
