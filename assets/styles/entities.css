@@ -1934,6 +1934,9 @@
   .incluso-app .green-lantern-theme.notifications .nav-tabs .item a {
     color: #08B190;
   }
+  .incluso-app .green-lantern-theme.notifications .nav-tabs .item a:focus {
+    outline: none;
+  }
   .incluso-app .green-lantern-theme.notifications .nav-tabs .item.active {
     background-color: #08B190;
   }
@@ -1952,6 +1955,9 @@
     -webkit-border-radius: 0px 5px 5px 0px;
     -moz-border-radius: 0px 5px 5px 0px;
     border-radius: 0px 5px 5px 0px;
+  }
+  .incluso-app .green-lantern-theme.notifications .tab-content {
+    min-height: 40vh;
   }
   .incluso-app .collapse-media .panel {
     display: block;
