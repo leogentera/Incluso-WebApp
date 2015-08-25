@@ -1898,8 +1898,9 @@
   }
   .incluso-app .green-lantern-theme .list-item div {
     display: block;
+    width: 100%;
+    padding: 0px 3vw;
     font-size: 86%;
-    text-align: center;
   }
   .incluso-app .green-lantern-theme .list-item span {
     line-height: normal;
