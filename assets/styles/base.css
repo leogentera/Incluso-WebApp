@@ -1837,8 +1837,7 @@ body.modal-open {
 }
 .incluso-app .app-footer {
   display: none;
-  padding: 0;
-  padding-bottom: 30px;
+  padding: 6vw 0;
   margin: 0;
   border: none;
   -webkit-box-shadow: none;
