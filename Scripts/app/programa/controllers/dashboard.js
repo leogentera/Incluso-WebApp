@@ -108,18 +108,18 @@
                 $scope.$emit('scrollTop'); //- scroll
             }
                                                         
-            function getCurrentStage(){                
-                var currentStage = 1;                                            
+            function getCurrentStage(){
+                var currentStage = 1;
                 
-                for(var i = 0; i < $scope.usercourse.stages.length; i++){                    
+                for(var i = 0; i < $scope.usercourse.stages.length; i++){
                     var uc = $scope.usercourse.stages[i];
                     
                     localStorage.setItem("stage", JSON.stringify(uc));
                     $scope.stage = uc;
-                    var firstTimeStage = localStorage.getItem("firstTimeStage");                    
+                    var firstTimeStage = localStorage.getItem("firstTimeStage");
                     if (firstTimeStage == 0) {
                         $scope.stage.firstTime = 0;
-                    }                        
+                    }
                     
                     if(uc.stageStatus === 0){
                         break;
@@ -131,18 +131,18 @@
                 return currentStage;
             }
 
-            function getUserNotifications(){                
-                moodleFactory.Services.GetUserNotification($scope.user.id, getUserNotificationsCallback, errorCallback);                
+            function getUserNotifications(){
+                moodleFactory.Services.GetUserNotification($scope.user.id, getUserNotificationsCallback, errorCallback);
             }
             
-            function getUserNotificationsCallback(data){
-                
-                var notifications = JSON.parse(localStorage.getItem("notifications"));                                    
+            
+            function getUserNotificationsCallback(data){                
+                var notifications = JSON.parse(localStorage.getItem("notifications"));                
             }
             
             /* open terms and conditions modal */
             $scope.openModal = function (size) {
-                setTimeout(function(){ 
+                setTimeout(function(){
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
                         templateUrl: 'tutorialModal.html',

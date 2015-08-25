@@ -9,8 +9,8 @@
         '$modal',
         function ($rootScope, $scope, $location, $anchorScroll, $window, $modal ) {
         	// http://stackoverflow.com/questions/15033195/showing-spinner-gif-during-http-request-in-angular
-			// To handle page reloads
-
+			// To handle page reloads		
+			
         	if ($location.$$path.split('/')[1]) {
         		$scope.loading = true;
         	} else {
@@ -127,6 +127,18 @@
             $scope.$on('ShowPreloader', _showPreloader);
             $scope.$on('HidePreloader', _hidePreloader);
 
+
+			$scope.showNotification = function(){
+				
+				if ($scope.pageName == 'Notificaciones') {
+					return false;
+				}else{
+				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
+				var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
+				$rootScope.totalNotifications = countNotificationsUnread;
+				return  countNotificationsUnread > 0;
+				}
+			}
 
             //// new menu behavior ////
             $scope.leftVisible = false;

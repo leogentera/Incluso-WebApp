@@ -42,6 +42,19 @@ var _getItem = function(key) {
   return localStorage.getItem(key);
 };
 
+var _readNotification = function(currentUserId,currentNotificationId){
+    
+      var data = {
+          userId:  currentUserId,
+          notificationId: currentNotificationId};
+  
+      moodleFactory.Services.PutUserNotificationRead(currentNotificationId,data,function(){
+        //LocalStorage.setItem("notifications",data.notifications);
+      },function(){
+        //console.log(error on getting notifications data);
+        });
+}
+
 function syncCacheData (){
 
     //localStorage.setItem("profile", JSON.stringify(dummyProfile));
@@ -53,9 +66,9 @@ function syncCacheData (){
 
 var _endActivity = function(userId,activityId){
   
-    moodleFactory.Services.PutAsyncActivity(userId,activityId,function(data){
+    moodleFactory.Services.PutAsyncActivity(userId,activityId,function(){
         //LocalStorage.setItem("notifications",data.notifications);
-      },function(data){
+      },function(){
         //console.log(error on getting notifications data);
         });
 };
