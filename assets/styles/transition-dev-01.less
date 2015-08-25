@@ -197,6 +197,7 @@ Parallel work file for UI Developer 01
     }
 
     .txt-renglon {
+
         &.pill {
             font-weight: normal;
             font-size: 4.5vw;
@@ -204,7 +205,8 @@ Parallel work file for UI Developer 01
             padding: 5vw 4vw 10vw 7vw;
             width: 90%;
 
-            .sm-pill {
+            .sm-pill,
+            .green-pill {
                 border-width: 2px;
                 font-size: 5.5vw;
                 font-weight: bold;
@@ -218,6 +220,11 @@ Parallel work file for UI Developer 01
                     top: 4.5px;
                 }
             }
+
+            .green-pill {
+                margin: -0.3vw -1vw;
+                padding: 0.7vw 2.3vw 1vw;                
+            }            
         }
 
         &.form {
@@ -245,8 +252,99 @@ Parallel work file for UI Developer 01
                 width: 100%;
                 margin: 3% 0 0;
             }
+        }                
+
+        &.panel {
+            background-color: transparent;
+            padding: 0;
+            margin: 3% 2.5%;
+            width: 95%;
+            font-weight: normal;
+
+            > .panel-heading {
+                background: rgba(0, 0, 0, 0) radial-gradient(ellipse at center center , #1f2733 0%, #141921 100%) repeat scroll 0 0;
+                border-radius: 1.5vw 1.5vw 0 0;
+                padding: 2.5vw 4.6vw;
+                font-size: 5vw;
+                line-height: 1.4;                        
+
+                .icon-wrong-join {                                        
+                    color: transparent;
+                    margin-right: 1.5vw; 
+                    margin-top: 2px;
+                    font-size: 7vw;                                    
+                }
+
+                .icon-wrong-join.active {                                        
+                    color: #ee4823;                                   
+                }
+
+                .icon-arrow-up {
+                    position: relative;
+                    top: 1vw;
+                }
+                
+            }
+
+            &.collapsed {
+
+                > .panel-heading {
+                    border-radius: 1.5vw;                 
+             }
+
+         } 
+
+         .panel-body {
+            background-color: rgba(13, 15, 20, 0.5);
+            color: white;
+            padding: 2.5vw 3vw 4.5vw;
+            font-size: 5vw;
+            font-weight: bold;
+
+            ul {
+                list-style: none;
+                padding: 0 3.7vw;
+                margin: 0;
+
+                li {
+                    padding: .2vw 0;
+
+                    &:first-child, 
+                    &:last-child {
+                        padding: 0;
+                    }                   
+
+                    &::before {
+                        font-size: 6vw;
+                        content: "•";
+                        padding-right: 3.3vw;                        
+                    }
+
+                    &.failed {
+                        color: #ee4823; 
+
+                        &::before {
+                            content: "";
+                        }
+
+                        .icon-wrong {
+                            font-size: 4vw;
+                            margin-left: -0.5vw;
+                            margin-top: 1.65vw;
+                            padding-right: 2.6vw;                              
+                        }
+                    }                        
+                }
+            }
         }
     }
+}
+
+.question-parts {
+    margin: 8vw 0;
+}
+
+
 }
 
 

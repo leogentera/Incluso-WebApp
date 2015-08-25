@@ -1,14 +1,19 @@
 <div class="incluso-app start-dashboard acerca-programa" id="site-wrapper">
-  <div id="site-menu" >
 
-  </div>
   <div id="site-canvas">
     <article>
       <div class="container chat">
         <section class="component">
           <div class="container-shadow col-xs-12"></div>
-            <div class="msg-container">
-              <div class="msg received">
+            <div class="msg-container" >
+              <div class="{{msge.messageSent == 1 ? 'msg sent' : 'msg received'}}" ng-repeat="msge in messages">
+                <div class="msg-icn glyphicon glyphicon-triangle-bottom"></div>
+                <div class="text">
+                  <span>{{msge.messageText}}<span>
+                  <span class="date">{{msge.messageDate | date:'fullDate'}} {{msge.messageDate | date:'mediumTime'}}</span>
+                </div>
+              </div>              
+              <!--<div class="msg received">
                 <div class="msg-icn glyphicon glyphicon-triangle-bottom"></div>
                 <div class="text">
                   <span>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</span>
@@ -18,20 +23,6 @@
               <div class="msg sent">
                 <div class="msg-icn glyphicon glyphicon-triangle-bottom"></div>
                 <div class="text">
-                  <span>Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur.</span>
-                  <span class="date">Julio 29, 8:41 a.m.</span>
-                </div> 
-              </div>
-              <div class="msg received">
-                <div class="msg-icn glyphicon glyphicon-triangle-bottom"></div>
-                <div class="text">
-                  <span>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</span>
-                  <span class="date">Julio 29, 8:41 a.m.</span>
-                </div>
-              </div>
-              <div class="msg sent">
-                <div class="msg-icn glyphicon glyphicon-triangle-bottom"></div>
-                <div class="text">
                   <span>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</span>
                   <span class="date">Julio 29, 8:41 a.m.</span>
                 </div>
@@ -42,12 +33,11 @@
                   <span>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</span>
                   <span class="date">Julio 29, 8:41 a.m.</span>
                 </div>
-              </div>
+              </div>-->
             </div>
-          <div class="typing-section col-xs-12">
-              <input type="text" placeholder="Escribe tu mensaje aquí..."  class="col-xs-10" />
-              <div class="send-text col-xs-2">
-              </div>
+          <div class="typing-section col-xs-12">              
+              <textarea type="text" placeholder="Escribe tu mensaje aquí..." ng-model="currentMessage" class="col-xs-10" />
+              <div class="send-text col-xs-2" ng-click="sendMessage()"></div>
           </div>
         </section>
       </div> <!-- /.container -->

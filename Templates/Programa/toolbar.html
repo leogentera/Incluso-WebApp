@@ -14,13 +14,21 @@
           </li>
           <li class="notifications" ng-class="toolbarOptionActive('/Alerts')">          <!-- sending name of view to validate if this is the current view -->
             <a ng-click="navigateTo('Alerts', 'Notificaciones', 'null', 'navbarorange')">
-              <i class="icomoon icon-broadcast"></i>
+              <i class="icomoon icon-broadcast"></i>              
             </a>
+            <div class="bubble bubble-sm" ng-show="showNotification()">
+              <span class="glyphicon glyphicon-triangle-top"></span>
+              <span class="number-alerts">{{totalNotifications}}</span>
+            </div>
           </li>
           <li class="chat" ng-class="toolbarOptionActive('/Chat')">
             <a ng-click="navigateTo('/Chat', 'Cabina de soporte', 'null', 'navbarorange')">
               <i class="icomoon icon-headset"></i>
             </a>
+            <div class="bubble bubble-sm">
+              <span class="glyphicon glyphicon-triangle-top"></span>
+              <span class="number-alerts">...</span>
+            </div>
           </li>
           <li class="profile" ng-class="toolbarOptionActive('/Profile')">
             <a ng-click="navigateTo('Profile', 'Mi perfil', 'null', 'navbarblue')">
@@ -28,5 +36,6 @@
             </a>
           </li>
         </ul>
+        
   </div>
 </div>

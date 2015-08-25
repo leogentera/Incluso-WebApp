@@ -32,15 +32,14 @@ angular
             //];
                         
             //var notificationsLocalStorage = localStorage.getItem("notifications");                                            
-            //                        
-            //$scope.notifications = notificationsLocalStorage ? JSON.parse(notificationsLocalStorage) : newNotifications;
+                                    
+            //$scope.notifications = newNotifications;
                         
                                     
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             
             //var activitiesperUser = _.filter(userCourse.stages, function(stages){
-            //    var st = stages;
-            //    debugger;
+            //    var st = stages;            
             //    for(i=0; i< stages.challenges.length; i++){
             //        var currentChallenge = stages.challenges[i];
             //        for(j=0; j< currentChallenge.length; j++){                           
@@ -49,9 +48,8 @@ angular
             //    }
             //});
             
-            $scope.notifications = JSON.parse(localStorage.getItem("notifications"));            
-                     
-            //var activitiesCompleted =  
+            $scope.notifications = JSON.parse(localStorage.getItem("notifications"));
+                                 
                                             
             var notificationsQuantityInitial = 6;
             
@@ -119,10 +117,10 @@ angular
                 case 'All':
                     return !($scope.notificationsQuantity >= $scope.notifications.length);
                 case 'Read':                    
-                    return !($scope.notificationsQuantityRead >= _.where($scope.notifications, {read:'true'}).length);
+                    return !($scope.notificationsQuantityRead >= _.where($scope.notifications, {read: true}).length);
                     break;
                 default :
-                    return !($scope.notificationsQuantityUnread >= _.where($scope.notifications, {read:'false'}).length);
+                    return !($scope.notificationsQuantityUnread >= _.where($scope.notifications, {read: false }).length);
                     break;
                 }
             }
@@ -134,7 +132,7 @@ angular
             }
             
             $scope.showAlertDetail = function (alertId) {
-                $scope.notifications[alertId -1 ].read = "true";
+                $scope.notifications[alertId -1 ].read = true ;
                 localStorage.setItem("notifications", JSON.stringify($scope.notifications));
                 $scope.navigateTo('/AlertsDetail/' + alertId, 'Notificaciones', 'null', 'navbarorange');
             }                    
