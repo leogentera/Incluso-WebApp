@@ -135,10 +135,8 @@
                 moodleFactory.Services.GetUserNotification($scope.user.id, getUserNotificationsCallback, errorCallback);
             }
             
-            function getUserNotificationsCallback(data){
-                
-                var notifications = JSON.parse(localStorage.getItem("notifications"));
-                debugger;
+            function getUserNotificationsCallback(data){                
+                var notifications = JSON.parse(localStorage.getItem("notifications"));                
             }
             
             /* open terms and conditions modal */

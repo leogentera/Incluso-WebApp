@@ -39,8 +39,7 @@ angular
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             
             //var activitiesperUser = _.filter(userCourse.stages, function(stages){
-            //    var st = stages;
-            //    debugger;
+            //    var st = stages;            
             //    for(i=0; i< stages.challenges.length; i++){
             //        var currentChallenge = stages.challenges[i];
             //        for(j=0; j< currentChallenge.length; j++){                           

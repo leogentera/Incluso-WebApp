@@ -16,9 +16,9 @@
             <a ng-click="navigateTo('Alerts', 'Notificaciones', 'null', 'navbarorange')">
               <i class="icomoon icon-broadcast"></i>              
             </a>
-            <div class="bubble bubble-sm">
+            <div class="bubble bubble-sm" ng-show="showNotification()">
               <span class="glyphicon glyphicon-triangle-top"></span>
-              <span class="number-alerts">2</span>
+              <span class="number-alerts">{{totalNotifications}}</span>
             </div>
           </li>
           <li class="chat" ng-class="toolbarOptionActive('/Chat')">
