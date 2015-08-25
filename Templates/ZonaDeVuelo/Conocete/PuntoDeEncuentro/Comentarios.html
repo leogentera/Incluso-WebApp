@@ -18,7 +18,7 @@
     <div class="panel">
       <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
         <h3>
-          <span class="icomoon icon-video-file"></span>
+          <span class="icomoon icon-camera"></span>
           <span>Fotografía de foro</span>
           <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
           <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
@@ -46,36 +46,36 @@
 <div id="openModal1" class="modalDialog" collapse="isTextCollapsed">
   <div>
     <a href="#close" title="Close" class="close"></a>
-<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value=""/></div>
+<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value="" ng-model="textToPost" /></div>
 
-<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="">Compartir</button>
+<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postTextToForum()">Compartir</button>
   </div>
 </div>
 
 <div id="openModal2" class="modalDialog" collapse="isLinkCollapsed">
   <div>
     <a href="#close" title="Close" class="close"></a>
-<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar tu enlace..." value=""/></div>
+<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar tu enlace..." value="" ng-model="linkToPost" /></div>
 
-<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postLinkToForum()" >Compartir</button>
   </div>
 </div>
 
 <div id="openModal3" class="modalDialog" collapse="isVideoCollapsed">
   <div>
     <a href="#close" title="Close" class="close"></a>
-<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar ruta de tu peli..." value=""/></div>
+<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar ruta de tu peli..." value="" ng-model="videoToPost" /></div>
 
-<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postVideoToForum()" >Compartir</button>
   </div>
 </div>
 
 <div id="openModal4" class="modalDialog" collapse="isAttachmentCollapsed">
   <div>
     <a href="#close" title="Close" class="close"></a>
-<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Atachea algo..." value=""/></div>
+<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Atachea algo..." value="" ng-model="attachmentToPost" /></div>
 
-<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postAttachmentToForum()" >Compartir</button>
   </div>
 </div>
 </section>
@@ -99,7 +99,7 @@
             <div ng-repeat="attachment in p.attachments">
                 <a href="{{ attachmentsfileurl }}"><i class="icomoon icon-required"></i> {{ attachment.filename }} </a>
             </div>
-          <div>A <span class="green">{{p.likes}}</span> jóvenes les gusta esto</div></div>
+          <div>A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto</div></div>
 
 
           <div id="item{{$index}}" ng-repeat="r in p.replies">
@@ -117,13 +117,13 @@
         <div class="social">
         <div><i class="icomoon icon-required"></i> Me gusta
         </div>
-        <div ng-click=""><i class="icomoon icon-required"></i> Comentar
+        <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]"><i class="icomoon icon-required"></i> Comentar
         </div>
         </div>
 
         </div>
         <section class="modales">
-        <div id="openModal1" class="modalDialog" collapse=true>
+        <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[{{$index}}]">
             <div>
                 <a href="#close" title="Close" class="close"></a>
                 <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value=""/></div>

@@ -21,17 +21,17 @@ angular
                                     messageText: "Que tal Coach, tengo algunas dudas, no he podido completar la etapa conócete.",
                                     messageSenderId: 47,
                                     messageSent: 1,
-                                    messageDate: new Date('21/08/2015 08:08:02')},
+                                    messageDate: new Date('21/08/2015 21:08:02')},
                                 {
                                     messageText: "Bien Ulises, no te preocupes, estoy aquí para ayudarte, te parece si leemos de nuevo el tutorial para esta etapa?, te adjunto la liga...",
                                     messageSenderId: 1,
                                     messageSent: 0,
-                                    messageDate: new Date('21/08/2015 08:15:46')},
+                                    messageDate: new Date('21/08/2015 21:15:46')},
                                 {
                                     messageText: "Ah ahora entiendo, me hace falta completar una actividad que no había visto, gracias Coach, estamos en contacto.",
                                     messageSenderId: 47,
                                     messageSent: 1,
-                                    messageDate: new Date('21/08/2015 08:25:11')},
+                                    messageDate: new Date('22/08/2015 08:25:11')},
                                 {
                                     messageText: "Claro Ulises, no dudes en contactarme cuando tengas dudas.",
                                     messageSenderId: 1,
