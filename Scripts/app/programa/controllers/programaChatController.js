@@ -46,7 +46,7 @@ angular
             $rootScope.pageName = "Estación: Conócete"
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = true;
-            $rootScope.showFooter = true; 
+            $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false; 
 
             $scope.scrollToTop();

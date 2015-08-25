@@ -1,7 +1,5 @@
 <div class="incluso-app start-dashboard acerca-programa" id="site-wrapper">
-  <div id="site-menu" >
 
-  </div>
   <div id="site-canvas">
     <article>
       <div class="container chat">
@@ -37,10 +35,9 @@
                 </div>
               </div>-->
             </div>
-          <div class="typing-section col-xs-12">
-              <input type="text" placeholder="Escribe tu mensaje aquí..." ng-model="currentMessage" class="col-xs-10" />
-              <div class="send-text col-xs-2" ng-click="sendMessage()">
-              </div>
+          <div class="typing-section col-xs-12">              
+              <textarea type="text" placeholder="Escribe tu mensaje aquí..." ng-model="currentMessage" class="col-xs-10" />
+              <div class="send-text col-xs-2" ng-click="sendMessage()"></div>
           </div>
         </section>
       </div> <!-- /.container -->

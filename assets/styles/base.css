@@ -703,7 +703,7 @@ body.modal-open {
 .incluso-app .button-group.page-controls .btn.control.left {
   margin-right: 5%;
 }
-.incluso-app .button-group.page-controls .btn.control.riht {
+.incluso-app .button-group.page-controls .btn.control.right {
   margin-left: 5%;
 }
 .incluso-app .button-group.page-controls .btn.action {
@@ -1084,8 +1084,7 @@ body.modal-open {
   border: none;
 }
 .incluso-app .form-group.theme-form .form-group-control > .form-control.theme-form {
-  /*border-top-width: 0 !important;*/
-  border-top-width: 0 /*.clr-blueGray(color, 1);*/;
+  border-top-width: 0;
 }
 .incluso-app .form-group.theme-form .form-group-control .custom-placeholder {
   background-color: transparent;
@@ -1345,7 +1344,7 @@ body.modal-open {
   background-color: #EE4823;
   border-color: rgba(0, 0, 0, 0.2);
   /*#EE4823;*/
-  overflow: hidden;
+  /*overflow: hidden;*/
 }
 .incluso-app .navbar .icomoon {
   font-size: 5.5vw;
@@ -1514,10 +1513,6 @@ body.modal-open {
   -webkit-border-radius: 1.5vw;
   -moz-border-radius: 1.5vw;
   border-radius: 1.5vw;
-}
-
-.incluso-app .panel.panel-video{
-  background-color: #121b1c;
 }
 .incluso-app .panel > .panel-heading {
   padding: 5.5vw 2.6vw;
