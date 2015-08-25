@@ -135,9 +135,10 @@
                 moodleFactory.Services.GetUserNotification($scope.user.id, getUserNotificationsCallback, errorCallback);
             }
             
+            
             function getUserNotificationsCallback(data){                
                 var notifications = JSON.parse(localStorage.getItem("notifications"));                
-            }
+
             
             /* open terms and conditions modal */
             $scope.openModal = function (size) {

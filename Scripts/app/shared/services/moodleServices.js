@@ -37,7 +37,7 @@
         };
             
         var _getAsyncCourse = function(courseId, successCallback, errorCallback){
-            _getAsyncData("course", API_RESOURCE.format('course/' + courseId), successCallback, errorCallback);
+            _getCourseAsyncData("course", API_RESOURCE.format('course/' + courseId), successCallback, errorCallback);
         };
 
         var _putAsyncQuiz = function(activityId, data, successCallback, errorCallback){            
@@ -68,11 +68,24 @@
                 headers: {'Content-Type': 'application/json'},
                 }).success(function(data, status, headers, config) {
                     localStorage.setItem(key, JSON.stringify(data));
-                    successCallback();
+                    successCallback(data);
                 }).error(function(data, status, headers, config) {
                     errorCallback(data);
             });
         };
+
+        var _getCourseAsyncData = function(key, url, successCallback, errorCallback){
+            _httpFactory({
+                method: 'GET',
+                url: url, 
+                headers: {'Content-Type': 'application/json'},
+                }).success(function(data, status, headers, config) {
+                    createTree(data);
+                    successCallback();
+                }).error(function(data, status, headers, config) {
+                    errorCallback(data);
+            });
+        };        
 
         var _postAsyncData = function(key, data, url, successCallback, errorCallback){
             _httpFactory({
@@ -118,7 +131,122 @@
             });
         };
         
-        
+        var createTree = function(activities) {
+
+            var activityManagers = [];
+
+            if (activities.length > 0) {
+
+                //course
+                var course = {
+                    coursename: activities[0].sectionname,
+                    section: activities[0].section,
+                    stages: _.filter(activities,function(a) { 
+                        return a.parentsection == activities[0].section && a.section != activities[0].section && a.activity_type == 'ActivityManager' 
+                    })
+                };
+
+                var assign = null;
+
+                //stages
+                for(i = 0; i < course.stages.length; i++) {
+                    console.log('stage:' + course.stages[i].sectionname);
+                    course.stages[i]["challenges"] = _.filter(activities,function(a) { 
+                        return a.parentsection == course.stages[i].section && a.section != course.stages[i].section && a.activity_type == 'ActivityManager' 
+                    });
+
+                    assign = _.find(activities,function(a) { 
+                        return a.parentsection == course.stages[i].parentsection && 
+                            a.section == course.stages[i].section &&
+                            a.activity_type == 'assign' 
+                    });
+
+                    if (assign) {
+                        course.stages[i].coursemoduleid = assign.coursemoduleid;
+                        course.stages[i].points = assign.points;
+                        course.stages[i].activity_identifier = assign.activity_identifier;
+                    }
+
+
+                    //challenges
+                    for(j = 0; j < course.stages[i].challenges.length; j++) {
+                        console.log('challenge:' + course.stages[i].challenges[j].sectionname);
+
+                       assign = _.find(activities,function(a) { 
+                            return a.parentsection == course.stages[i].challenges[j].parentsection && 
+                                a.section == course.stages[i].challenges[j].section &&
+                                a.activity_type == 'assign' 
+                        });
+
+                        if (assign) {
+                            course.stages[i].challenges[j].coursemoduleid = assign.coursemoduleid;
+                            course.stages[i].challenges[j].points = assign.points;
+                            course.stages[i].challenges[j].activity_identifier = assign.activity_identifier;
+                        }
+
+                        if (course.stages[i].challenges[j].activity_type == "ActivityManager") {
+                            activityManagers.push(course.stages[i].challenges[j]);
+                        }
+
+                        course.stages[i].challenges[j]["activities"] = _.filter(activities,function(a) { 
+                            return a.parentsection == course.stages[i].challenges[j].section && a.section != course.stages[i].challenges[j].section && a.activity_type == 'ActivityManager' 
+                        });
+
+                        var childrenActivities =  _.filter(activities,function(a) { 
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && a.activity_type != 'assign'
+                        });
+
+                        for(k = 0; k < childrenActivities.length; k++) {
+                            course.stages[i].challenges[j]["activities"].push(childrenActivities[k]);
+                        }
+
+                        //activities
+                        for(k= 0; k< course.stages[i].challenges[j].activities.length; k++) {
+
+
+                            if (course.stages[i].challenges[j].activities[k].activity_type == 'ActivityManager') {
+
+                                activityManagers.push(course.stages[i].challenges[j].activities[k]);
+
+                               assign = _.find(activities,function(a) { 
+                                    return a.parentsection == course.stages[i].challenges[j].activities[k].parentsection && 
+                                        a.section == course.stages[i].challenges[j].activities[k].section &&
+                                        a.activity_type == 'assign' 
+                                });
+
+                                if (assign) {
+                                    course.stages[i].challenges[j].activities[k].coursemoduleid = assign.coursemoduleid;
+                                    course.stages[i].challenges[j].activities[k].points = assign.points;
+                                    course.stages[i].challenges[j].activities[k].activity_identifier = assign.activity_identifier;
+                                }
+
+                                course.stages[i].challenges[j].activities[k]["activities"] = _.filter(activities,function(a) { 
+                                    return a.parentsection == course.stages[i].challenges[j].activities[k].section && a.section != course.stages[i].challenges[j].activities[k].section && a.activity_type == 'ActivityManager' 
+                                });
+
+                                childrenActivities =  _.filter(activities,function(a) { 
+                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager' 
+                                });
+
+                                if (course.stages[i].challenges[j].activities[k]["activities"]) {
+                                    for(l = 0; l < childrenActivities.length; l++) {
+                                        course.stages[i].challenges[j].activities[k]["activities"].push(childrenActivities[l]);
+                                    }
+                                } else {
+                                    course.stages[i].challenges[j].activities[k]["activities"] = childrenActivities;
+                                }
+                            }
+
+                        }
+
+                    }
+                }
+
+            localStorage.setItem("course", JSON.stringify(course));
+            localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
+                
+            }
+        }        
         
         return {
             GetAsyncProfile: _getAsyncProfile,

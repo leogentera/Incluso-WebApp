@@ -37,8 +37,7 @@ angular
             $scope.challengeName = "MIS RETOS";
             
             $scope.goToUrl = function(url) {
-                $location.path(url);
-                
+                $location.path(url);                
             }
             
             //El key "status" de los elementos del array "etapas" del objeto "logroEducativo" indica si la etapa ya se completó (1) o no se ha completado (9)
@@ -50,23 +49,39 @@ angular
                             {"idEtapa" : 2, "name" : "Zona de Aterrizaje", "status" : 0}  ],                           
                 
                 
-                "retosPorEtapa" :  [    { "idEtapa" : 1, "retos" : [    {"idReto": 1, "name" : "Exploración inicial", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Exploracion inicial", "link": "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial", "status" : 1} ] },
-                                                                        {"idReto": 2, "name" : "Cuarto de recursos", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Fuente de energía", "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia",  "status" : 1} ] },
-                                                                        {"idReto": 3, "name" : "Conócete", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Fuente de energía", "link":"/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia", "status" : 0},  {"id" : 2, "name" : "Reto múltiple", "link":"/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple",  "status" : 0},  {"id" : 3, "name" : "Punto de encuentro", "link":"/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/zv_puntodeencuentro", "status" : 0},  {"id" : 4, "name" : "Zona de contacto", "link":"/ZonaDeVuelo/Conocete/ZonaDeContacto','Zona de contacto", "status" : 0} ]},
-                                                                        {"idReto": 4, "name" : "Mis sueños", "icon" : "assets/images/img-rotator-01-lg.png",  "actividades" : [ {"id" : 1, "name" : "Fuente de energía", "link":"/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia", "status" : 0},  {"id" : 2, "name" : "Mis gustos", "link":"/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos", "status" : 0},  {"id" : 3, "name" : "Mis cualidades", "link":"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades", "status" : 0},  {"id" : 4, "name" : "Sueña", "link": "/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena", "status" : 0},  {"id" : 5, "name" : "Punto de encuentro", "link":"/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro", "status" : 0} ] },
-                                                                        {"idReto": 5, "name" : "Cabina de soporte", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Chat", "link":"/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat", "status" : 0} ]},
-                                                                        {"idReto": 6, "name" : "Exploración final", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Exploracion final", "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal", "status" : 0} ]  }
+                "retosPorEtapa" :  [    { "idEtapa" : 1, "retos" : [    {"idReto": 1, "name" : "Exploración inicial", "actividades" : [ {"id" : 1, "name" : "Exploracion inicial", "link": "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial", "status" : 1} ] },
+                                                                        {"idReto": 2, "name" : "Cuarto de recursos", "actividades" : [ {"id" : 1, "name" : "Fuente de energía", "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia",  "status" : 1} ] },
+                                                                        {"idReto": 3, "name" : "Conócete", "actividades" : [ {"id" : 1, "name" : "Fuente de energía", "link":"/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia", "status" : 0},  {"id" : 2, "name" : "Reto múltiple", "link":"/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple",  "status" : 0},  {"id" : 3, "name" : "Punto de encuentro", "link":"/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/zv_puntodeencuentro", "status" : 0},  {"id" : 4, "name" : "Zona de contacto", "link":"/ZonaDeVuelo/Conocete/ZonaDeContacto','Zona de contacto", "status" : 0} ]},
+                                                                        {"idReto": 4, "name" : "Mis sueños", "actividades" : [ {"id" : 1, "name" : "Fuente de energía", "link":"/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia", "status" : 0},  {"id" : 2, "name" : "Mis gustos", "link":"/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos", "status" : 0},  {"id" : 3, "name" : "Mis cualidades", "link":"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades", "status" : 0},  {"id" : 4, "name" : "Sueña", "link": "/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena", "status" : 0},  {"id" : 5, "name" : "Punto de encuentro", "link":"/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro", "status" : 0} ] },
+                                                                        {"idReto": 5, "name" : "Cabina de soporte", "actividades" : [ {"id" : 1, "name" : "Chat", "link":"/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat", "status" : 0} ]},
+                                                                        {"idReto": 6, "name" : "Exploración final", "actividades" : [ {"id" : 1, "name" : "Exploracion final", "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal", "status" : 0} ]  }
                                                                     ]},
                                                                     
-                                        { "idEtapa" : 2, "retos" : [    {"idReto": 7, "name" : "Reto 1", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] },
-                                                                        {"idReto": 8, "name" : "Reto 2", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ]},                                                                    
+                                        { "idEtapa" : 2, "retos" : [    {"idReto": 7, "name" : "Reto 1", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] },
+                                                                        {"idReto": 8, "name" : "Reto 2", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ]}                                                                    
                                                                     ]},
                                                                     
-                                        { "idEtapa" : 3, "retos" : [    {"idReto": 9, "name" : "Reto 1", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] },
-                                                                        {"idReto": 10, "name" : "Reto 1", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] },                                                                    
+                                        { "idEtapa" : 3, "retos" : [    {"idReto": 9, "name" : "Reto 1", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] },
+                                                                        {"idReto": 10, "name" : "Reto 1", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] }                                                                    
                                                                     ]}
                                     ]
             };
+            
+            $scope.retosIconos = {
+                1 : "assets/images/challenges/img-evaluacion inicial.svg",
+                2 : "assets/images/challenges/img-cuarto-recursos.svg",
+                3 : "assets/images/challenges/img-conocete.svg",
+                4 : "assets/images/challenges/img-mis-suenos.svg",
+                5 : "assets/images/challenges/img-cabina-soporte.svg",
+                6 : "assets/images/challenges/img-evaluacion final.svg",
+                7 : "assets/images/challenges/img-evaluacion inicial.svg",
+                8 : "assets/images/challenges/img-evaluacion inicial.svg",
+                9 : "assets/images/challenges/img-evaluacion inicial.svg",
+                10 : "assets/images/challenges/img-evaluacion inicial.svg"
+            };
+            
+            
+            
                  
               $scope.avanceGlobal = 0;  //Avance global del usuario, considerando todas las Actividdes de todos los Retos de todas las Etapas
               var avanceEtapa = [0, 0, 0]; //Avance del usuario, considerando todas las Actividades de todos los Retos, por cada Etapa
@@ -89,6 +104,7 @@ angular
                         totalDeActividades += $scope.logroEducativo.retosPorEtapa[i].retos[j].actividades.length;               
                 }                      
               }
+              
               
               $scope.idEtapa = 0;      //Se identifica la etapa actual como la Etapa 1
               $scope.nombreEtapaActual = $scope.logroEducativo.etapas[$scope.idEtapa].name;   //Se obtiene el nombre de la etapa actual a partir del objeto $scope.logroEducativo
