@@ -189,7 +189,7 @@ angular
                 for(i = 0; i < quizesRequests.length; i++){
                   console.log("saving quiz");
                   console.log(quizesRequests[i].answers);
-                  //quizesRequests(logEntry[i]);
+                  //saveQuiz(activityId,  quizesRequests[i].answers);
                 }
                  localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
             }
