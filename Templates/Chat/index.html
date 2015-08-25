@@ -12,7 +12,7 @@
                 <div class="msg-icn glyphicon glyphicon-triangle-bottom"></div>
                 <div class="text">
                   <span>{{msge.messageText}}<span>
-                  <span class="date">{{msge.messageDate | date: 'fullDate'}}</span>
+                  <span class="date">{{msge.messageDate | date:'fullDate'}} {{msge.messageDate | date:'mediumTime'}}</span>
                 </div>
               </div>              
               <!--<div class="msg received">
