@@ -1054,17 +1054,29 @@
 									<div class="panel-body">
 										<fieldset class="my-profile-form">
 											<section>
-												<h5>Familiar</h5>
-												<select ng-model="model.children" ng-options="item for item in yesNoList" ng-init="model.children == null" class="form-control form-control-lg theme-form">
-													<option value="" ng-disabled="!!model.children">Familiar</option>
-												</select>
+												<h4>Familiar</h4>
+												<div class="form-group theme-form">
+													<div class="form-group-control custom-caret-wrapper">
+														<select ng-model="model.children" ng-options="item for item in yesNoList" ng-init="model.children == null" class="form-control form-control-lg theme-form">
+															<option value="" ng-disabled="!!model.children">Familiar</option>
+														</select>
+													</div>
+												</div>
+											</section>
 
-												<h5>Ingresos</h5>
-												<h4>¿Recibo ingresos?</h4>
-												<select ng-model="model.gotMoneyIncome" ng-options="item for item in yesNoList" ng-init="model.gotMoneyIncome == null" class="form-control form-control-lg theme-form">
-													<option value="" ng-disabled="!!model.gotMoneyIncome">¿Recibo ingresos?</option>
-												</select>
+											<section>
+												<h4>Ingresos</h4>
+												<div class="form-group theme-form">
+													<div class="form-group-control custom-caret-wrapper">
+														<select ng-model="model.gotMoneyIncome" ng-options="item for item in yesNoList" ng-init="model.gotMoneyIncome == null" class="form-control form-control-lg theme-form">
+															<option value="" ng-disabled="!!model.gotMoneyIncome">¿Recibo ingresos?</option>
+														</select>
+														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+													</div>
+												</div>
+											</section>
 
+											<section>
 												<h4>Fuente de ingresos</h4>
 												<ul class="block-list">
 													<li ng-repeat="s in model.moneyIncome">
@@ -1075,16 +1087,59 @@
 																	<span class="icomoon icon-cross"></span>
 																</button>
 															</h5>
-															<select ng-model="model.moneyIncome[$index]" ng-options="item for item in moneyIncomeList" ng-init="model.moneyIncome == null"
-															class="form-control form-control-lg theme-form">
-																<option value="" ng-disabled="!!model.moneyIncome">Ingreso</option>
-															</select>
+															<div class="form-group-control custom-caret-wrapper">
+																<select ng-model="model.moneyIncome[$index]" ng-options="item for item in moneyIncomeList" ng-init="model.moneyIncome == null"
+																class="form-control form-control-lg theme-form">
+																	<option value="" ng-disabled="!!model.moneyIncome">Ingreso</option>
+																</select>
+																<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+															</div>
 														</div>
 													</li>
 												</ul>
 												<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addMoneyIncome();">
 													<span class="icomoon icon-plus"></span>Agregar ingreso...
-												</button>
+												</button>													
+											</section>
+
+											<section>
+												<div class="old-code">
+													<h5>Familiar</h5>
+													<select ng-model="model.children" ng-options="item for item in yesNoList" ng-init="model.children == null" class="form-control form-control-lg theme-form">
+														<option value="" ng-disabled="!!model.children">Familiar</option>
+													</select>
+												</div>
+
+												<div class="old-code">
+													<h5>Ingresos</h5>
+													<h4>¿Recibo ingresos?</h4>
+													<select ng-model="model.gotMoneyIncome" ng-options="item for item in yesNoList" ng-init="model.gotMoneyIncome == null" class="form-control form-control-lg theme-form">
+														<option value="" ng-disabled="!!model.gotMoneyIncome">¿Recibo ingresos?</option>
+													</select>
+												</div>
+
+												<div class="old-code">
+													<h4>Fuente de ingresos</h4>
+													<ul class="block-list">
+														<li ng-repeat="s in model.moneyIncome">
+															<div class="form-group theme-form">
+																<h5>
+																	<span>Ingreso {{model.moneyIncome.indexOf(s) + 1}}</span>
+																	<button class="btn btn-circle" ng-click="deleteMoneyIncome($index);">
+																		<span class="icomoon icon-cross"></span>
+																	</button>
+																</h5>
+																<select ng-model="model.moneyIncome[$index]" ng-options="item for item in moneyIncomeList" ng-init="model.moneyIncome == null"
+																class="form-control form-control-lg theme-form">
+																	<option value="" ng-disabled="!!model.moneyIncome">Ingreso</option>
+																</select>
+															</div>
+														</li>
+													</ul>
+													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addMoneyIncome();">
+														<span class="icomoon icon-plus"></span>Agregar ingreso...
+													</button>													
+												</div>
 
 												<h5>Salud</h5>
 												<h4>¿Cuento con seguro médico?</h4>
@@ -1116,7 +1171,6 @@
 													<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(1)">Continuar</button>
 													<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
 												</div>
-
 											</section>
 										</fieldset>
 									</div>
