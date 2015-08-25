@@ -54,7 +54,7 @@
         };
         
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
-            _putAsyncData("notifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
+            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
         };
         
         var _getCacheObject = function(key){

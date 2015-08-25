@@ -45,8 +45,8 @@ var _getItem = function(key) {
 var _readNotification = function(currentUserId,currentNotificationId){
     
       var data = {
-          userId:  currentUserId,
-          notificationId: currentNotificationId};
+          userid:  currentUserId,
+          notificationid: currentNotificationId};
   
       moodleFactory.Services.PutUserNotificationRead(currentNotificationId,data,function(){
         //LocalStorage.setItem("notifications",data.notifications);
@@ -66,12 +66,8 @@ function syncCacheData (){
 
 var _endActivity = function(userId,activityId){
   
-    moodleFactory.Services.PutAsyncActivity(userId,activityId,function(){
-        //LocalStorage.setItem("notifications",data.notifications);
-      },function(){
-        //console.log(error on getting notifications data);
-        });
-};
+    moodleFactory.Services.PutAsyncActivity(userId,activityId,successCallback,errorCallback);
+}
 
 syncCacheData();
 var logout = function($scope, $location){

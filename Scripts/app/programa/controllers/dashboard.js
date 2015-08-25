@@ -136,7 +136,7 @@
             }
             
             
-            function getUserNotificationsCallback(data){                
+            function getUserNotificationsCallback(data){
                 var notifications = JSON.parse(localStorage.getItem("notifications"));                
             }
             
