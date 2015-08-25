@@ -80,28 +80,33 @@
             <!--Pregunta tipo Lista Dinámica-->
             <div>
               <div class="txt-renglon txt-bigger">5. Menciona tus principales habilidades</div>
-
-              <ul class="block-list">
+              
+              <ul class="block-list clearfix">
                 <li ng-repeat="ability in AnswersResult.answers[4].fifth">
+                  <section class="form txt-renglon part list clearfix">
                   <div class="form-group theme-form">
-                    <h5>
-																	<span>Habilidad {{AnswersResult.answers[4].fifth.indexOf(ability) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteAbility($index);">
-																		<span class="icomoon icon-cross"></span>
-																	</button>
-																</h5>
-                    <div class="add"><i class="icomoon icon-edit"></i>
-                      <input type="text" class="form-control form-control-lg theme-form" placeholder="Nueva habilidad" ng-model="AnswersResult.answers[4].fifth[$index]"
-                      />
-                    </div>
-                  </div>
-                </li>
-              </ul>
-              <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addAbility();">
-                <span class="icomoon icon-plus"></span>Agregar nueva habilidad...
-              </button>
 
-            </div>
+                     <div class="clearfix">
+                      <span>Habilidad {{AnswersResult.answers[4].fifth.indexOf(ability) + 1}}</span>
+                      <button class="btn btn-circle fl-right" ng-click="deleteAbility($index);">
+                        <i class="icomoon icon-cross white"></i>
+                      </button>
+                    </div>
+                    <div class="add"><i class="icomoon icon-edit"></i>
+                      <input type="text" class="form-control form-control-lg theme-form" placeholder="Nueva habilidad" ng-model="AnswersResult.answers[4].fifth[$index]"/>
+                    </div>
+                  
+                </div>
+                </section>
+              </li>
+            </ul>
+          </section>
+          <div class="txt-renglon">
+            <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addAbility();">
+              <span class="icomoon icon-plus"></span>Agregar nueva habilidad...
+            </button>
+          </div>
+        </div>
           </div>
 
           <section id="controls" class="controls">
