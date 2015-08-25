@@ -848,7 +848,6 @@
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     z-index: 99999;
-    opacity: 0;
     -webkit-transition: opacity 400ms ease-in;
     -moz-transition: opacity 400ms ease-in;
     transition: opacity 400ms ease-in;
