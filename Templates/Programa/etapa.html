@@ -70,6 +70,7 @@
 
             <div class="item visib" ng-repeat="reto in logroEducativo.retosPorEtapa[idEtapa].retos">
               <img ng-src="{{reto.icon}}">
+              <img ng-src="{{retosIconos[reto.idReto]}}">
               <div class="txt-renglon centered" ng-bind="reto.name"></div>
             </div>
 
