@@ -1528,20 +1528,8 @@
     background-position: center 0;
     background-repeat: no-repeat;
     background-color: #3c4448;
-    /* Old browsers */
     background-image: url('../images/img-profile-spaceship-dashboard-bottom.png');
-    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), -moz-linear-gradient(top, #444d53 0%, #3c4448 92%);
-    /* FF3.6+ */
-    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #444d53), color-stop(92%, #3c4448));
-    /* Chrome,Safari4+ */
-    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), -webkit-linear-gradient(top, #444d53 0%, #3c4448 92%);
-    /* Chrome10+,Safari5.1+ */
-    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), -o-linear-gradient(top, #444d53 0%, #3c4448 92%);
-    /* Opera 11.10+ */
-    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), -ms-linear-gradient(top, #444d53 0%, #3c4448 92%);
-    /* IE10+ */
-    background-image: url('../images/img-profile-spaceship-dashboard-bottom.png'), linear-gradient(to bottom, #444d53 0%, #3c4448 92%);
-    /* W3C */
+    /*.gradient-custom('img-profile-spaceship-dashboard-bottom.png', @clr-gray-asphalt, @clr-gray-asphalt2);*/
     -webkit-background-size: 100% auto;
     -moz-background-size: 100% auto;
     background-size: 100% auto;
