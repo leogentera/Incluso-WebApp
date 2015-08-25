@@ -47,6 +47,11 @@
         var _getUserNotifications = function(userId,successCallback,errorCallback){
             _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback);
         };
+
+        var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
+            _postAsyncData(key,data, API_RESOURCE.format('forum'), successCallback, errorCallback);
+
+        };
         
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
             _putAsyncData("notifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
@@ -98,9 +103,11 @@
                 data: data,
                 headers: {'Content-Type': 'application/json'},
                 }).success(function(data, status, headers, config) {
+                console.log('success');
                     localStorage.setItem(key, JSON.stringify(data));
                     successCallback();
                 }).error(function(data, status, headers, config) {
+                console.log(data);
                     localStorage.setItem(key, JSON.stringify(data));
                     errorCallback();
             });
@@ -269,7 +276,9 @@
             PutAsyncQuiz: _putAsyncQuiz,
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
-            PutUserNotificationRead: _putUserNotificationRead
+            PutUserNotificationRead: _putUserNotificationRead,
+            PostAsyncForumPost: _postAsyncForumPost
+
         };
     })();
 }).call(this);

@@ -344,6 +344,7 @@ angular
             function getActivityInfoCallback() {
                 //$scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 64));
+               //localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
             }
 
             getDataAsync();
