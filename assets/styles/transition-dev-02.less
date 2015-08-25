@@ -198,9 +198,10 @@
             opacity: 0.3;
         }
         .container.chat .component .msg-container {
-            padding: 10vw 2%;
+            padding: 5vw 2%;
             display: block;
-            height: 300px;
+            min-height: 70vh;
+            max-height: 74vh;
             overflow-y: auto;
         }
         .container.chat .component .msg-container .msg {
@@ -212,6 +213,7 @@
 
         }
         .container.chat .component .msg-container .msg .text span {
+            width: 100%;
             color: rgb(256,256,256);
             font-family: Play;
             font-size: 4vw;
@@ -228,7 +230,7 @@
             background: rgb(0,78,112);
             border-radius: 4vw 4vw 4vw 0;
             padding: 1vw 4vw;
-            width: 96%;
+            width: 92vw;
             margin-left: 20px;
         }
         .container.chat .component .msg-container .msg.received .msg-icn {
@@ -249,7 +251,7 @@
             font-size: 5vw;
             border-radius: 4vw 4vw 0 4vw;
             padding: 1vw 4vw;
-            width: 96%;
+            width: 92vw;
             margin-right: 20px;
             float: right;
         }
@@ -263,17 +265,29 @@
             right: 0;
         }
         .container.chat .component .typing-section {
+            /*min-height: 6vh;
+            max-height: 20vh;*/
+            height: auto;
             background: rgb(256,256,256);
             padding: 2vw 0;
         }
-        .container.chat .component .typing-section input[type="text"] {
-            border-color: transparent;
-            padding: 0 2vw;
-            font-size: 5vw;
+        .container.chat .component .typing-section input[type="text"],
+        .container.chat .component .typing-section textarea {
             float: none;
             display: inline-block;
+            width: 86.5vw;
+            resize: none;            
+            padding: 0 2vw;
+            border-color: transparent;
+            overflow-y: auto;
+            font-size: 4.5vw;
+            outline: none;
             vertical-align: middle;
+            &:focus {
+                outline: none;
+            }
         }
+
         .container.chat .component .typing-section input[type="text"]::-webkit-input-placeholder {
             color: rgb(86,86,86);
         }
