@@ -1655,12 +1655,12 @@
     width: auto;
     padding: 0;
     margin: 0 0 6vw 0;
-    color: #444d53;
+    color: #3c4448;
     font-size: 4vw;
     font-weight: bold;
     line-height: 4vw;
     text-align: left;
-    text-transform: capitalize;
+    text-transform: uppercase;
   }
   .incluso-app .my-profile-form li {
     margin-top: 9vw;
@@ -1674,6 +1674,9 @@
     height: auto;
     padding: 0;
     margin: 12vw 0 0;
+  }
+  .incluso-app .my-profile-form > section h5 {
+    color: #444d53;
   }
   .incluso-app .my-profile-form > section:first-child,
   .incluso-app .my-profile-form > .checkbox + section {
@@ -1724,11 +1727,14 @@
     color: #ffffff;
     font-size: 2vw;
     font-weight: 100;
-    line-height: 5.1vw;
+    line-height: 5.3vw;
     vertical-align: top;
   }
   .incluso-app .my-profile-form .form-group h5 + .form-group-control .form-control {
     border-top-width: 1pt !important;
+  }
+  .incluso-app .my-profile-form h4 + .form-group.theme-form .form-group-control:first-child > .form-control.theme-form {
+    border-top-width: 1pt;
   }
   .incluso-app .my-profile-form .page-number {
     /* margin: 3vw 0; */
@@ -1767,6 +1773,9 @@
     padding: 0.1vw 3vw;
   }
   .incluso-app .my-profile-form .button-group .btn {
+    margin-top: 0;
+  }
+  .incluso-app .my-profile-form .button-group + .btn {
     margin-top: 0;
   }
   .incluso-app .profile-dashboard {
