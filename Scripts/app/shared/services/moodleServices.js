@@ -29,7 +29,7 @@
         };
 
         var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback){
-            _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + 'user/' + userId ), successCallback,errorCallback);
+            _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + '/user/' + userId ), successCallback,errorCallback);
         };
         
         var _getAsyncActivitiesInfo = function(activityId, successCallback, errorCallback){
@@ -46,6 +46,10 @@
 
         var _getUserNotifications = function(userId,successCallback,errorCallback){
             _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback);
+        };
+        
+        var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
+            _putAsyncData("notifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
         };
         
         var _getCacheObject = function(key){
@@ -117,19 +121,22 @@
             });
         };
 
-        var _endActivity = function(userId,activityId){            
-             _httpFactory({
-                method: 'PUT',
-                url: "activity/" + activityId + "userId/" + userId,                
-                headers: {'Content-Type': 'application/json'},
-                }).success(function(data, status, headers, config) {
-                    localStorage.setItem(key, JSON.stringify(data));
-                    successCallback();
-                }).error(function(data, status, headers, config) {
-                    localStorage.setItem(key, JSON.stringify(data));
-                    errorCallback();
-            });
-        };
+        //var _endActivity = function(userId,activityId){            
+        //     _httpFactory({
+        //        method: 'PUT',
+        //        url: "activity/" + activityId + "userId/" + userId,                
+        //        headers: {'Content-Type': 'application/json'},
+        //        }).success(function(data, status, headers, config) {
+        //            localStorage.setItem(key, JSON.stringify(data));
+        //            successCallback();
+        //        }).error(function(data, status, headers, config) {
+        //            localStorage.setItem(key, JSON.stringify(data));
+        //            errorCallback();
+        //    });
+        //};
+        
+        
+        
         
         var createTree = function(activities) {
 
@@ -261,8 +268,8 @@
             PutAsyncActivity: _putAsyncActivityInfo,
             PutAsyncQuiz: _putAsyncQuiz,
             GetAsyncForumInfo: _getAsyncForumInfo,
-            GetUserNotification: _getUserNotifications
-
+            GetUserNotification: _getUserNotifications,
+            PutUserNotificationRead: _putUserNotificationRead
         };
     })();
 }).call(this);
