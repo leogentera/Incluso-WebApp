@@ -67,24 +67,8 @@ angular
                                                                     ]}
                                     ]
             };
-            
-            /*                           
-                                "actividades" : [{"name" : "Exploracion inicial", "status" : 0}]}, 
-                            {"name" : "Cuarto de recursos", "icon" : "assets/images/img-rotator-01-lg.png", 
-                               "actividades" : [{"name" : "Fuente de energia", "status" : 1}]}, 
-                            {"name" : "Conócete",  "icon" : "assets/images/img-rotator-01-lg.png",
-                                "actividades" : [{"name" : "Fuente de energia", "status" : 1}, {"name" : "Reto múltiple", "status" : 1}, {"name" : "Punto de encuentro", "status" : 1}, {"name" : "Zona de contacto", "status" : 1}  ]}, 
-                            {"name" : "Mis sueños", "icon" : "assets/images/img-rotator-01-lg.png",
-                                "actividades" : [{"name" : "Fuente de energia", "status" : 1}, {"name" : "Mis gustos", "status" : 1}, {"name" : "Mis cualidades", "status" : 1}, {"name" : "Sueña", "status" : 1}, {"name" : "Punto de encuentro", "status" : 1} ]},
-                            {"name" : "Cabina de soporte", "icon" : "assets/images/img-rotator-01-lg.png", 
-                               "actividades" : [{"name" : "Chat", "status" : 1}]}, 
-                            {"name" : "Exploración final", "icon" : "assets/images/img-rotator-01-lg.png", 
-                                "actividades" : [{"name" : "Exploracion final", "status" : 1}]}, 
-                          ]                            
-                },
-                */
-                
-              var avanceGlobal = 0;  //Avance global del usuario, considerando todas las Actividdes de todos los Retos de todas las Etapas
+                 
+              $scope.avanceGlobal = 0;  //Avance global del usuario, considerando todas las Actividdes de todos los Retos de todas las Etapas
               var avanceEtapa = [0, 0, 0]; //Avance del usuario, considerando todas las Actividades de todos los Retos, por cada Etapa
               
               var totalDeEtapas = $scope.logroEducativo.etapas.length; //Número total de Etapas
@@ -118,7 +102,7 @@ angular
                         var actividadesEnReto = $scope.logroEducativo.retosPorEtapa[i].retos[j].actividades.length;     
                         
                     for (var k = 0; k < actividadesEnReto; k++) {
-                        avanceGlobal += $scope.logroEducativo.retosPorEtapa[i].retos[j].actividades[k].status;               
+                        $scope.avanceGlobal += $scope.logroEducativo.retosPorEtapa[i].retos[j].actividades[k].status;               
                     }            
                  }                      
               }
