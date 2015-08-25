@@ -268,6 +268,12 @@ body.modal-open {
      Description: CSS class to represent a backdrop layer and an animation
     ****************************************************************************/
   /***************************************************************************/
+  /***********************************************************************
+     00. $points
+     Description: CSS to represent the main footer for the application with
+     themes to overrides diferent views.
+    ************************************************************************/
+  /***********************************************************************/
   /****************************************************************************
      16. $forma
      Description: CSS class to create the form components
@@ -442,6 +448,10 @@ body.modal-open {
   border-radius: 3px;
   font-weight: 600;
 }
+.incluso-app .btn:hover,
+.incluso-app .btn:active {
+  outline: none;
+}
 .incluso-app .btn-cnt {
   width: 80%;
   margin: 0 10%;
@@ -533,7 +543,7 @@ body.modal-open {
   text-decoration: none;
 }
 .incluso-app .btn-add {
-  border-style: dashed;
+  border-style: solid;
   border-color: #08b290;
   -webkit-border-radius: 1vw;
   -moz-border-radius: 1vw;
@@ -1724,7 +1734,7 @@ body.modal-open {
   padding: 20px 0 0;
   margin: 0;
   min-height: 180px;
-  box-shadow: 0 28px 10px -28px black inset;
+  /*box-shadow: 0 28px 10px -28px black inset;*/
 }
 .incluso-app .footer .block-list {
   padding-bottom: 50px;
@@ -1824,6 +1834,46 @@ body.modal-open {
   to {
     transform: rotate(359deg);
   }
+}
+.incluso-app .app-footer {
+  display: none;
+  padding: 0;
+  padding-bottom: 30px;
+  margin: 0;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-color: #3c4448;
+  background-image: url('../images/img-footer-texture.png');
+  background-position: center 10px;
+  background-repeat: no-repeat;
+  -webkit-background-size: 80% auto;
+  -moz-background-size: 80% auto;
+  background-size: 80% auto;
+  /* by theme */
+}
+.incluso-app .app-footer .btn-back-to-top {
+  display: block;
+  padding: 5vw 0px 0px;
+}
+.incluso-app .app-footer .block-list,
+.incluso-app .app-footer .btn-back-to-top {
+  margin-left: auto;
+  margin-right: auto;
+}
+.incluso-app .app-footer li:last-child {
+  display: none;
+}
+.incluso-app .app-footer.theme-rocks {
+  background-image: url("../images/bg-footer-rocks.png");
+  background-position: 50% 0;
+  -webkit-background-size: 100% auto;
+  -moz-background-size: 100% auto;
+  background-size: 100% auto;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 }
 .incluso-app .form label {
   cursor: pointer;
