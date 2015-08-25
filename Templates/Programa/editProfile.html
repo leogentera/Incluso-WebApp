@@ -933,7 +933,7 @@
 						</div>
 					</div>
 
-					<div class="page" ng-class="currentPage == 8 ? 'active' : ''">
+					<div class="page active" ng-class="currentPage == 8 ? 'active' : ''">
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-xs-12">
@@ -1000,7 +1000,7 @@
 																ng-model="model.grade[$index]" 
 																ng-options="item for item in gradeList" 
 																ng-init="model.grade == null" 
-																ng-class="{'selected': model.level[$index].length != 0 && model.level[$index] != null}">
+																ng-class="{'selected': model.grade[$index].length != 0 && model.grade[$index] != null}">
 																<option value="" ng-disabled="!!model.grade">Grado</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1056,7 +1056,12 @@
 													<h4>Familiar</h4>
 													<div class="form-group theme-form">
 														<div class="form-group-control custom-caret-wrapper">
-															<select ng-model="model.children" ng-options="item for item in yesNoList" ng-init="model.children == null" class="form-control form-control-lg theme-form">
+															<select 
+																class="form-control form-control-lg theme-form" 
+																ng-model="model.children" 
+																ng-options="item for item in yesNoList" 
+																ng-init="model.children == null" 
+																ng-class="{'selected': model.children.length != 0 && model.children != null}">
 																<option value="" ng-disabled="!!model.children">Familiar</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1068,7 +1073,12 @@
 													<h4>Ingresos</h4>
 													<div class="form-group theme-form">
 														<div class="form-group-control custom-caret-wrapper">
-															<select ng-model="model.gotMoneyIncome" ng-options="item for item in yesNoList" ng-init="model.gotMoneyIncome == null" class="form-control form-control-lg theme-form">
+															<select 
+																class="form-control form-control-lg theme-form"
+																ng-model="model.gotMoneyIncome" 
+																ng-options="item for item in yesNoList" 
+																ng-init="model.gotMoneyIncome == null" 
+																ng-class="{'selected': model.gotMoneyIncome.length != 0 && model.gotMoneyIncome != null}">
 																<option value="" ng-disabled="!!model.gotMoneyIncome">¿Recibo ingresos?</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1088,8 +1098,12 @@
 																	</button>
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
-																	<select ng-model="model.moneyIncome[$index]" ng-options="item for item in moneyIncomeList" ng-init="model.moneyIncome == null"
-																	class="form-control form-control-lg theme-form">
+																	<select 
+																		class="form-control form-control-lg theme-form" 
+																		ng-model="model.moneyIncome[$index]" 
+																		ng-options="item for item in moneyIncomeList" 
+																		ng-init="model.moneyIncome == null" 
+																		ng-class="{'selected': model.moneyIncome[$index].length != 0 && model.moneyIncome[$index] != null}">
 																		<option value="" ng-disabled="!!model.moneyIncome">Ingreso</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1099,10 +1113,61 @@
 													</ul>
 													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addMoneyIncome();">
 														<span class="icomoon icon-plus"></span>Agregar ingreso...
-													</button>													
+													</button>
 												</section>
 
 												<section>
+													<h4>Salud</h4>
+													<div class="form-group theme-form">
+														<div class="form-group-control custom-caret-wrapper">
+															<select 
+																class="form-control form-control-lg theme-form" 
+																ng-model="model.medicalCoverage" 
+																ng-options="item for item in yesNoList" 
+																ng-init="model.medicalCoverage == null"
+																ng-class="{'selected': model.medicalCoverage.length != 0 && model.medicalCoverage != null}">
+																<option value="" ng-disabled="!!model.medicalCoverage">¿Cuento con seguro médico?</option>
+															</select>
+															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+														</div>
+
+														<div class="form-group-control">
+															<input type="text" class="form-control form-control-lg theme-form" placeholder="Mi seguro es" ng-model="s.medicalInsurance" />
+														</div>
+
+														<div class="form-group-control custom-caret-wrapper">
+															<select 
+																class="form-control form-control-lg theme-form" 
+																ng-model="model.medicalInsurance" 
+																ng-options="item for item in medicalInsuranceList" 
+																ng-init="model.medicalInsurance == null" 
+																ng-class="{'selected': model.medicalInsurance.length != 0 && model.medicalInsurance != null}">
+																<option value="" ng-disabled="!!model.medicalInsurance">Mi seguro es:</option>
+															</select>
+															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+														</div>														
+													</div>
+												</section>
+
+												<div class="page-number">
+													<p class="text-center">
+														<span>2</span>
+														<span>/</span>
+														<span>2</span>
+													</p>
+												</div>
+
+												<div class="actions">
+													<div class="button-group">
+														<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg" ng-click="navigateToPage(8)">
+															<span class="icomoon icon-arrow-slim-left"></span>
+														</button>
+														<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(1)">Continuar</button>
+													</div>
+													<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+												</div>
+
+												<section class="old-code">
 													<div class="old-code">
 														<h5>Familiar</h5>
 														<select ng-model="model.children" ng-options="item for item in yesNoList" ng-init="model.children == null" class="form-control form-control-lg theme-form">
@@ -1141,35 +1206,43 @@
 														</button>													
 													</div>
 
-													<h5>Salud</h5>
-													<h4>¿Cuento con seguro médico?</h4>
-													<select ng-model="model.medicalCoverage" ng-options="item for item in yesNoList" ng-init="model.medicalCoverage == null"
-													class="form-control form-control-lg theme-form">
-														<option value="" ng-disabled="!!model.medicalCoverage">¿Cuento con seguro médico?</option>
-													</select>
-
-													<h4>Mi seguro es:</h4>
-													<input type="text" class="form-control form-control-lg theme-form" placeholder="Mi seguro es" ng-model="s.medicalInsurance"
-													/>
-													<select ng-model="model.medicalInsurance" ng-options="item for item in medicalInsuranceList" ng-init="model.medicalInsurance == null"
-													class="form-control form-control-lg theme-form">
-														<option value="" ng-disabled="!!model.medicalInsurance">Mi seguro es:</option>
-													</select>
-
-													<div class="page-number">
-														<p class="text-center">
-															<span>2</span>
-															<span>/</span>
-															<span>2</span>
-														</p>
+													<div class="old-code">
+														<h5>Salud</h5>
+														<h4>¿Cuento con seguro médico?</h4>
+														<select ng-model="model.medicalCoverage" ng-options="item for item in yesNoList" ng-init="model.medicalCoverage == null"
+														class="form-control form-control-lg theme-form">
+															<option value="" ng-disabled="!!model.medicalCoverage">¿Cuento con seguro médico?</option>
+														</select>
 													</div>
 
-													<div class="button-group">
-														<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg" ng-click="navigateToPage(8)">
-															<span class="icomoon icon-arrow-slim-left"></span>
-														</button>
-														<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(1)">Continuar</button>
-														<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+													<div class="old-code">
+														<h4>Mi seguro es:</h4>
+														<input type="text" class="form-control form-control-lg theme-form" placeholder="Mi seguro es" ng-model="s.medicalInsurance"
+														/>
+														<select ng-model="model.medicalInsurance" ng-options="item for item in medicalInsuranceList" ng-init="model.medicalInsurance == null"
+														class="form-control form-control-lg theme-form">
+															<option value="" ng-disabled="!!model.medicalInsurance">Mi seguro es:</option>
+														</select>														
+													</div>
+
+													<div class="old-code">
+														<div class="page-number">
+															<p class="text-center">
+																<span>2</span>
+																<span>/</span>
+																<span>2</span>
+															</p>
+														</div>
+													</div>
+
+													<div class="old-code">
+														<div class="button-group">
+															<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg" ng-click="navigateToPage(8)">
+																<span class="icomoon icon-arrow-slim-left"></span>
+															</button>
+															<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(1)">Continuar</button>
+															<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+														</div>
 													</div>
 												</section>
 											</fieldset>
@@ -1180,7 +1253,7 @@
 						</div>
 					</div>
 
-					<div class="page active" ng-class="currentPage == 10 ? 'active' : ''">
+					<div class="page" ng-class="currentPage == 10 ? 'active' : ''">
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-xs-12">
