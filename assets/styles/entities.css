@@ -1984,15 +1984,29 @@
   }
   .incluso-app .bubble {
     display: block;
-    background-color: yellow;
-    border-radius: 15px 15px 10px 10px;
+    background-color: #B8CF33;
+    border-radius: 14px 14px 11px 11px;
     position: absolute;
     z-index: 1900;
-    margin-top: -14px;
+    margin-top: -1vh;
+    margin-left: 1.5vw;
+    cursor: pointer;
   }
-  .incluso-app .bubble .bubble-sm {
-    width: 6vw;
-    height: 3.5vh;
+  .incluso-app .bubble.bubble-sm {
+    width: 10vw;
+    height: 5vh;
+  }
+  .incluso-app .bubble .glyphicon-triangle-top {
+    position: absolute;
+    left: 2.5vw;
+    font-size: 4vw;
+    top: -0.1vh;
+    color: #B8CF33;
+  }
+  .incluso-app .bubble .number-alerts {
+    color: #000;
+    font-size: 3.5vw;
+    font-weight: 600;
   }
   .incluso-app .border-box {
     box-sizing: border-box;
