@@ -47,6 +47,11 @@
         var _getUserNotifications = function(userId,successCallback,errorCallback){
             _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback);
         };
+
+        var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
+            _postAsyncData(key,data, API_RESOURCE.format('forum'), successCallback, errorCallback);
+
+        };
         
         var _getCacheObject = function(key){
             return localStorage.getItem(key);
@@ -94,9 +99,11 @@
                 data: data,
                 headers: {'Content-Type': 'application/json'},
                 }).success(function(data, status, headers, config) {
+                console.log('success');
                     localStorage.setItem(key, JSON.stringify(data));
                     successCallback();
                 }).error(function(data, status, headers, config) {
+                console.log(data);
                     localStorage.setItem(key, JSON.stringify(data));
                     errorCallback();
             });
@@ -261,7 +268,8 @@
             PutAsyncActivity: _putAsyncActivityInfo,
             PutAsyncQuiz: _putAsyncQuiz,
             GetAsyncForumInfo: _getAsyncForumInfo,
-            GetUserNotification: _getUserNotifications
+            GetUserNotification: _getUserNotifications,
+            PostAsyncForumPost: _postAsyncForumPost
 
         };
     })();
