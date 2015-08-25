@@ -1651,12 +1651,12 @@
     width: auto;
     padding: 0;
     margin: 0 0 6vw 0;
-    color: #444d53;
+    color: #3c4448;
     font-size: 4vw;
     font-weight: bold;
     line-height: 4vw;
     text-align: left;
-    text-transform: none;
+    text-transform: uppercase;
   }
   .incluso-app .my-profile-form li {
     margin-top: 9vw;
@@ -1670,6 +1670,9 @@
     height: auto;
     padding: 0;
     margin: 12vw 0 0;
+  }
+  .incluso-app .my-profile-form > section h5 {
+    color: #444d53;
   }
   .incluso-app .my-profile-form > section:first-child,
   .incluso-app .my-profile-form > .checkbox + section {

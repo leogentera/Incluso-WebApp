@@ -862,7 +862,7 @@
 									<div class="panel-heading with-icons" ng-click="navigateToPage(1)">
 										<span class="icomoon icon-arrow-slim-left"></span>
 										<span class="icomoon icon-information"></span>
-										<h3 class="panel-title">Personas que admiras</h3>
+										<h3 class="panel-title">Mi personalidad</h3>
 									</div>
 									<div class="panel-body">
 										<fieldset class="my-profile-form">
@@ -878,20 +878,25 @@
 																	<span class="icomoon icon-cross"></span>
 																</button>
 															</h5>
+															<div class="form-group-control custom-caret-wrapper">
+																<select 
+																	class="form-control form-control-lg theme-form" 
+																	ng-model="model.inspirationalCharacters[$index].characterType" 
+																	ng-options="item for item in inspirationalCharactersList" 
+																	ng-init="model.inspirationalCharacters == null" 
+																	ng-class="{'selected': model.inspirationalCharacters[$index].characterType.length != 0 && model.inspirationalCharacters[$index].characterType != null}">
+																	<option value="" ng-disabled="!!model.inspirationalCharacters">Tipo de personaje</option>
+																</select>
+																<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+															</div>
 
-															<select 
-																class="form-control form-control-lg theme-form" 
-																ng-model="model.inspirationalCharacters[$index].characterType" 
-																ng-options="item for item in inspirationalCharactersList" 
-																ng-init="model.inspirationalCharacters == null">
-																<option value="" ng-disabled="!!model.inspirationalCharacters">Tipo de personaje</option>
-															</select>
-
-															<input 
-															type="text" 
-															class="form-control form-control-lg theme-form"
-															placeholder="Nombre Personaje"
-															ng-model="model.inspirationalCharacters[$index].characterName" />
+															<div class="form-group-control custom-caret-wrapper">
+																<input 
+																type="text" 
+																class="form-control form-control-lg theme-form"
+																placeholder="Nombre Personaje"
+																ng-model="model.inspirationalCharacters[$index].characterName" />
+															</div>
 														</div>
 													</li>
 												</ul>
@@ -908,13 +913,16 @@
 												</div>
 
 												<div class="actions">
-													<div class="button-group">
-														<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg" ng-click="navigateToPage(6)">
+													<div class="button-group page-controls">
+														<button type="button" class="btn btn-primary btn-lg control left" ng-disabled="isRegistered" ng-click="navigateToPage(6)">
 															<span class="icomoon icon-arrow-slim-left"></span>
 														</button>
-														<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(1)">Continuar</button>
-														<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+														<button type="button" class="btn btn-primary btn-lg btn-block action" ng-click="save()">Guardar</button>
+														<button type="button" class="btn btn-primary btn-lg control right" disabled>
+															<span class="icomoon icon-arrow-slim-right"></span>
+														</button>
 													</div>
+													<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
 												</div>
 											</section>
 										</fieldset>
@@ -930,105 +938,194 @@
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-xs-12">
-
 								<div class="panel panel-default panel-form">
-
 									<div class="panel-heading with-icons" ng-click="navigateToPage(1)">
 										<span class="icomoon icon-arrow-slim-left"></span>
 										<span class="icomoon icon-information"></span>
 										<h3 class="panel-title">Socioeconómicos</h3>
 									</div>
-
 									<div class="panel-body">
 										<fieldset class="my-profile-form">
 											<section>
-												<h5>Vivienda</h5>
-
-												<h4>Vivo con</h4>
-												<p class="form-group">
-													<select ng-model="model.iLiveWith" ng-options="item for item in iLiveWithList" ng-init="model.iLiveWith == null" class="form-control form-control-lg theme-form">
-														<option value="" ng-disabled="!!model.iLiveWith">País de nacimiento</option>
-													</select>
-												</p>
-
-										  <!--  
-										<input type="text" class="form-control form-control-lg theme-form" placeholder="Institución" ng-model="s.iLiveWith" />
-										<p class="form-group-control custom-placeholder-wrapper">
-										  <select name="" id="" class="form-control form-control-lg theme-form" ng-model="s.iLiveWith" ng-init="form.type='Vivo con'">
-											<option value="Vivo con">Vivo con</option>
-											<option value="Ambo padres">Ambo padres</option>
-											<option value="Padre">Padre</option>
-											<option value="Madre">Madre</option>
-											<option value="Tíos">Tíos</option>
-											<option value="Esposo(a)">Esposo(a)</option>
-											<option value="Esposo(a)">Abuelos</option>
-											<option value="Esposo(a)">Amigos</option>
-										  </select>
-										  <span class="custom-placeholder form-control-lg" ng-show="s.iLiveWith.lenght > 0">Vivo con</span>
-										</p>-->
-
-										<h5>Actividad</h5>
-
-										<h4>Mi actividad principal</h4>
-										<ul class="block-list">
-											<li ng-repeat="s in model.mainActivity">
+												<h4>Vivienda</h4>
 												<div class="form-group theme-form">
-													<h5>
-														<span>Actividad {{model.mainActivity.indexOf(s) + 1}}</span>
-														<button class="btn btn-circle" ng-click="deleteMainActivity($index);">
-															<span class="icomoon icon-cross"></span>
-														</button>
-													</h5>
-													<select ng-model="model.mainActivity[$index]" ng-options="item for item in mainActivityList" ng-init="model.mainActivity == null"
-													class="form-control form-control-lg theme-form">
-													<option value="" ng-disabled="!!model.mainActivity">Actividad</option>
-												</select>
-											</p>
-										</div>
-									</li>
-								</ul>
-								<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addMainActivity();">
-									<span class="icomoon icon-plus"></span>Agregar actividad...
-								</button>
+													<div class="form-group-control custom-caret-wrapper">
+														<select 
+															class="form-control form-control-lg theme-form" 
+															ng-model="model.iLiveWith" 
+															ng-options="item for item in iLiveWithList" 
+															ng-init="model.iLiveWith == null" 
+															ng-class="{'selected': model.iLiveWith.length != 0 && model.iLiveWith != null}">
+															<option value="" ng-disabled="!!model.iLiveWith">Vivo con</option>
+														</select>
+														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+													</div>
+												</div>
+											</section>
 
-								<h5>Actualmente estudio</h5>
-								<h4>Nivel</h4>
-								<select ng-model="model.level[$index]" ng-options="item for item in levelList" ng-init="model.level == null" class="form-control form-control-lg theme-form">
-									<option value="" ng-disabled="!!model.level">Nivel</option>
-								</select>
+											<section>
+												<h4>Mi actividad principal</h4>
+												<div class="form-group theme-form">
+													<div class="form-group-control custom-caret-wrapper">
+														<select 
+															class="form-control form-control-lg theme-form" 
+															ng-model="model.mainActivity[$index]" 
+															ng-options="item for item in mainActivityList" 
+															ng-init="model.mainActivity == null" 
+															ng-class="{'selected': model.mainActivity[$index].length != 0 && model.mainActivity[$index] != null}">
+															<option value="" ng-disabled="!!model.mainActivity">Actividad</option>
+														</select>
+														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+													</div>
+												</div>
+											</section>
 
-								<h4>Grado</h4>
-								<select ng-model="model.grade[$index]" ng-options="item for item in gradeList" ng-init="model.grade == null" class="form-control form-control-lg theme-form">
-									<option value="" ng-disabled="!!model.grade">Grado</option>
-								</select>
+											<section>
+												<h4>Actualmente estudio</h4>
+												<div class="form-group theme-form">
+													<div class="form-group-control custom-caret-wrapper">
+														<select 
+															class="form-control form-control-lg theme-form" 
+															ng-model="model.level[$index]" 
+															ng-options="item for item in levelList" 
+															ng-init="model.level == null" 
+															ng-class="{'selected': model.level[$index].length != 0 && model.level[$index] != null}">
+															<option value="" ng-disabled="!!model.level">Nivel</option>
+														</select>
+														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+													</div>
+													
+													<div class="form-group-control custom-caret-wrapper">
+														<select 
+															class="form-control form-control-lg theme-form" 
+															ng-model="model.grade[$index]" 
+															ng-options="item for item in gradeList" 
+															ng-init="model.grade == null" 
+															ng-class="{'selected': model.level[$index].length != 0 && model.level[$index] != null}">
+															<option value="" ng-disabled="!!model.grade">Grado</option>
+														</select>
+														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+													</div>
 
-								<h4>Periodo</h4>
-								<select ng-model="model.period[$index]" ng-options="item for item in periodList" ng-init="model.period == null" class="form-control form-control-lg theme-form">
-									<option value="" ng-disabled="!!model.period">Periodo</option>
-								</select>
+													<div class="form-group-control custom-caret-wrapper">
+														<select 
+															class="form-control form-control-lg theme-form" 
+															ng-model="model.period[$index]" 
+															ng-options="item for item in periodList" 
+															ng-init="model.period == null" 
+															ng-class="{'selected': model.period[$index].length != 0 && model.period[$index] != null}">
+															<option value="" ng-disabled="!!model.period">Periodo</option>
+														</select>
+														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+													</div>
+											</section>
 
-								<div class="page-number">
-									<p class="text-center">
-										<span>1</span>
-										<span>/</span>
-										<span>2</span>
-									</p>
+											<div class="page-number">
+												<p class="text-center">
+													<span>1</span>
+													<span>/</span>
+													<span>2</span>
+												</p>
+											</div>
+											
+											<div class="actions">
+												
+											</div>	
+
+
+											<section>
+												<div class="old-code">
+													<h5>Vivienda</h5>
+
+													<h4>Vivo con</h4>
+													<p class="form-group">
+														<select ng-model="model.iLiveWith" ng-options="item for item in iLiveWithList" ng-init="model.iLiveWith == null" class="form-control form-control-lg theme-form">
+															<option value="" ng-disabled="!!model.iLiveWith">País de nacimiento</option>
+														</select>
+													</p>
+
+													  <!--  
+													<input type="text" class="form-control form-control-lg theme-form" placeholder="Institución" ng-model="s.iLiveWith" />
+													<p class="form-group-control custom-placeholder-wrapper">
+													  <select name="" id="" class="form-control form-control-lg theme-form" ng-model="s.iLiveWith" ng-init="form.type='Vivo con'">
+														<option value="Vivo con">Vivo con</option>
+														<option value="Ambo padres">Ambo padres</option>
+														<option value="Padre">Padre</option>
+														<option value="Madre">Madre</option>
+														<option value="Tíos">Tíos</option>
+														<option value="Esposo(a)">Esposo(a)</option>
+														<option value="Esposo(a)">Abuelos</option>
+														<option value="Esposo(a)">Amigos</option>
+													  </select>
+													  <span class="custom-placeholder form-control-lg" ng-show="s.iLiveWith.lenght > 0">Vivo con</span>
+													</p>-->
+												</div>
+
+												<div class="old-code">
+													<h5>Actividad</h5>
+													<h4>Mi actividad principal</h4>
+													<ul class="block-list">
+														<li ng-repeat="s in model.mainActivity">
+															<div class="form-group theme-form">
+																<h5>
+																	<span>Actividad {{model.mainActivity.indexOf(s) + 1}}</span>
+																	<button class="btn btn-circle" ng-click="deleteMainActivity($index);">
+																		<span class="icomoon icon-cross"></span>
+																	</button>
+																</h5>
+																<select ng-model="model.mainActivity[$index]" ng-options="item for item in mainActivityList" ng-init="model.mainActivity == null"
+																class="form-control form-control-lg theme-form">
+																<option value="" ng-disabled="!!model.mainActivity">Actividad</option>
+															</select>
+																</p>
+															</div>
+														</li>
+													</ul>
+													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addMainActivity();">
+														<span class="icomoon icon-plus"></span>Agregar actividad...
+													</button>
+												</div>
+
+												<div class="old-code">
+													<h5>Actualmente estudio</h5>
+													<h4>Nivel</h4>
+													<select ng-model="model.level[$index]" ng-options="item for item in levelList" ng-init="model.level == null" class="form-control form-control-lg theme-form">
+														<option value="" ng-disabled="!!model.level">Nivel</option>
+													</select>
+
+													<h4>Grado</h4>
+													<select ng-model="model.grade[$index]" ng-options="item for item in gradeList" ng-init="model.grade == null" class="form-control form-control-lg theme-form">
+														<option value="" ng-disabled="!!model.grade">Grado</option>
+													</select>
+
+													<h4>Periodo</h4>
+													<select ng-model="model.period[$index]" ng-options="item for item in periodList" ng-init="model.period == null" class="form-control form-control-lg theme-form">
+														<option value="" ng-disabled="!!model.period">Periodo</option>
+													</select>
+												</div>
+
+												<div class="page-number">
+													<p class="text-center">
+														<span>1</span>
+														<span>/</span>
+														<span>2</span>
+													</p>
+												</div>
+
+												<div class="actions">
+													<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(9)">Continuar</button>
+													<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+												</div>
+											</section>
+
+										</fieldset>
+									</div>
 								</div>
 
-								<div class="actions">
-									<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(9)">Continuar</button>
-									<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
-								</div>
-
-							</section>
-						</fieldset>
+							</div>
+						</div>
 					</div>
 				</div>
-
-	</div>
-</div>
-</div>
-</div>
 
 <div class="page" ng-class="currentPage == 9 ? 'active' : ''">
 	<div class="container-fluid">
