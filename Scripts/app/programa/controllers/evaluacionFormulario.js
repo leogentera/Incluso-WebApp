@@ -16,6 +16,7 @@ angular
 		$rootScope.showFooter = true; 
 		$rootScope.showFooterRocks = false;
 		
+		$scope.isCollapsed = true;
 		$scope.showAddNewOption = true; 	
 
 		$scope.toggleAddNewOptionButton = function () {
