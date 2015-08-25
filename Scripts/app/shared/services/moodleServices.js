@@ -80,7 +80,6 @@
                 url: url, 
                 headers: {'Content-Type': 'application/json'},
                 }).success(function(data, status, headers, config) {
-                    localStorage.setItem(key, JSON.stringify(data));
                     createTree(data);
                     successCallback();
                 }).error(function(data, status, headers, config) {
@@ -134,6 +133,8 @@
         
         var createTree = function(activities) {
 
+            var activityManagers = [];
+
             if (activities.length > 0) {
 
                 //course
@@ -183,6 +184,10 @@
                             course.stages[i].challenges[j].activity_identifier = assign.activity_identifier;
                         }
 
+                        if (course.stages[i].challenges[j].activity_type == "ActivityManager") {
+                            activityManagers.push(course.stages[i].challenges[j]);
+                        }
+
                         course.stages[i].challenges[j]["activities"] = _.filter(activities,function(a) { 
                             return a.parentsection == course.stages[i].challenges[j].section && a.section != course.stages[i].challenges[j].section && a.activity_type == 'ActivityManager' 
                         });
@@ -201,6 +206,7 @@
 
                             if (course.stages[i].challenges[j].activities[k].activity_type == 'ActivityManager') {
 
+                                activityManagers.push(course.stages[i].challenges[j].activities[k]);
 
                                assign = _.find(activities,function(a) { 
                                     return a.parentsection == course.stages[i].challenges[j].activities[k].parentsection && 
@@ -232,9 +238,13 @@
                             }
 
                         }
+
                     }
                 }
-               
+
+            localStorage.setItem("course", JSON.stringify(course));
+            localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
+                
             }
         }        
         
