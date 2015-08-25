@@ -1349,7 +1349,7 @@
                 font-weight: bold;
                 line-height: 4vw;
                 text-align: left;
-                text-transform: capitalize;
+                text-transform: none;
             }
             li {
                 margin-top: 9vw;
@@ -1419,7 +1419,7 @@
                             color: @clr-white;
                             font-size: 2vw;
                             font-weight: 100;
-                            line-height: 5.1vw;
+                            line-height: 5.3vw;
                             vertical-align: top;
                         }
                     }                    
@@ -1469,9 +1469,15 @@
                     }
                 }
             }
-            .button-group .btn {
-                margin-top: 0;
-            }   
+            .button-group {
+                .btn {
+                    margin-top: 0;
+                }
+
+                & + .btn {
+                    margin-top: 0;
+                }
+            } 
         }
         /***********************************************************************/
 

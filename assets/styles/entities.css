@@ -868,7 +868,7 @@
   }
   .incluso-app .modalDialog > div {
     width: 100%;
-    position: relative;
+    position: absolute;
     margin: 0;
     padding: 2% 0;
     background: #fff;
@@ -1656,7 +1656,7 @@
     font-weight: bold;
     line-height: 4vw;
     text-align: left;
-    text-transform: capitalize;
+    text-transform: none;
   }
   .incluso-app .my-profile-form li {
     margin-top: 9vw;
@@ -1720,7 +1720,7 @@
     color: #ffffff;
     font-size: 2vw;
     font-weight: 100;
-    line-height: 5.1vw;
+    line-height: 5.3vw;
     vertical-align: top;
   }
   .incluso-app .my-profile-form .form-group h5 + .form-group-control .form-control {
@@ -1763,6 +1763,9 @@
     padding: 0.1vw 3vw;
   }
   .incluso-app .my-profile-form .button-group .btn {
+    margin-top: 0;
+  }
+  .incluso-app .my-profile-form .button-group + .btn {
     margin-top: 0;
   }
   .incluso-app .profile-dashboard {
