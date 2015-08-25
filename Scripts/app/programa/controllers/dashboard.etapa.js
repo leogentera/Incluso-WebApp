@@ -37,8 +37,7 @@ angular
             $scope.challengeName = "MIS RETOS";
             
             $scope.goToUrl = function(url) {
-                $location.path(url);
-                
+                $location.path(url);                
             }
             
             //El key "status" de los elementos del array "etapas" del objeto "logroEducativo" indica si la etapa ya se completó (1) o no se ha completado (9)
@@ -59,11 +58,11 @@ angular
                                                                     ]},
                                                                     
                                         { "idEtapa" : 2, "retos" : [    {"idReto": 7, "name" : "Reto 1", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] },
-                                                                        {"idReto": 8, "name" : "Reto 2", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ]},                                                                    
+                                                                        {"idReto": 8, "name" : "Reto 2", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ]}                                                                    
                                                                     ]},
                                                                     
                                         { "idEtapa" : 3, "retos" : [    {"idReto": 9, "name" : "Reto 1", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] },
-                                                                        {"idReto": 10, "name" : "Reto 1", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] },                                                                    
+                                                                        {"idReto": 10, "name" : "Reto 1", "icon" : "assets/images/img-rotator-01-lg.png", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] }                                                                    
                                                                     ]}
                                     ]
             };
