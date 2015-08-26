@@ -36,7 +36,7 @@
 			</section>
 
 			<section class="component current-satge">
-          <img  src="assets/images/challenges/img-cabina-soporte.svg" alt="estacion"/>
+          <img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
 				  <h3>- Estación: {{stage.sectionname}} -</h3>
           <a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firstTime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span></a>
 			</section>
