@@ -65,8 +65,17 @@ function syncCacheData (){
 }
 
 var _endActivity = function(currentUserId,currentActivityId, currentActivityType){
+        
+      var data = {
+        userId :  currentUserId,
+        activityId : currentActivityId,
+        activityType: currentActivityType                  
+      };
+  
+    moodleFactory.Services.PutAsyncActivity(userId,data,successCallback,errorCallback);
+}
 
-        function getChallengeByActivity_identifier(activity_identifier) {
+function getChallengeByActivity_identifier(activity_identifier) {
             var matchingChallenge = null;
             var breakAll = false;
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -86,23 +95,15 @@ var _endActivity = function(currentUserId,currentActivityId, currentActivityType
             return matchingChallenge;
         }
 
-        function getActivitiesByActivity_identifier(activity_identifier) {
-            var activitiesFound = null;
-            
-            var challenge = getChallengeByActivity_identifier(activity_identifier);
-            activitiesFound =challenge.activities;                
-          
-            return activitiesFound ;
-        }
+function getActivitiesByActivity_identifier(activity_identifier) {
+    var activitiesFound = null;
+    
+    var challenge = getChallengeByActivity_identifier(activity_identifier);
+    activitiesFound =challenge.activities;                
   
-      var data = {
-        userId :  currentUserId,
-        activityId : currentActivityId,
-        activityType: currentActivityType                  
-      };
-  
-    moodleFactory.Services.PutAsyncActivity(userId,data,successCallback,errorCallback);
+    return activitiesFound ;
 }
+
 
 syncCacheData();
 var logout = function($scope, $location){
