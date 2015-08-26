@@ -65,14 +65,15 @@ function syncCacheData (){
 }
 
 var _endActivity = function(activityModel){
-                    
-      var currentUserId = localStorage.getItem("userId");
+      var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+      var currentUserId = currentUser.userId;
+      var activityId = activityModel.coursemoduleid;
       var data = {
         userId :  currentUserId };
   
-      _createNotification(activityModel, userId);
+      //_createNotification(activityModel, userId);
       
-      moodleFactory.Services.PutAsyncActivity(activityId, data, activityModel,successCallback,errorCallback);      
+      moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
       
 }
 
