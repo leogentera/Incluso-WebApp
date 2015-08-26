@@ -454,3 +454,42 @@
   display: inline-block;
   vertical-align: middle;
 }
+.incluso-app .fuente-energia .message .panel-video {
+  display: block;
+  background-color: transparent;
+}
+.incluso-app .fuente-energia .message .panel-video .panel-heading {
+  padding: 3.3vw 2.6vw;
+  background-color: #0d0f14;
+  -webkit-border-radius: 3vw 3vw 0 0;
+  -moz-border-radius: 3vw 3vw 0 0;
+  border-radius: 3vw 3vw 0 0;
+  color: #bcd431;
+  cursor: pointer;
+}
+.incluso-app .fuente-energia .message .panel-video .panel-heading h3 {
+  margin: 0 auto;
+  text-align: left;
+}
+.incluso-app .fuente-energia .message .panel-video .panel-heading span {
+  display: inline-block;
+  vertical-align: top;
+  line-height: 6vw;
+}
+.incluso-app .fuente-energia .message .panel-video .panel-heading span:first-child {
+  font-size: 6vw;
+}
+.incluso-app .fuente-energia .message .panel-video .panel-heading span:first-child + span {
+  padding-left: 1vw;
+  font-size: 4.3vw;
+  /*line-height: 4vw;*/
+}
+.incluso-app .fuente-energia .message .panel-video .panel-heading .icon-arrow,
+.incluso-app .fuente-energia .message .panel-video .panel-heading .icon-arrow-up {
+  float: right;
+  font-size: 5vw;
+}
+.incluso-app .fuente-energia .message .panel-video .panel-body {
+  /*.clr-blueDark(background-color, 0.9);*/
+  background-color: rgba(13, 15, 20, 0.5);
+}
