@@ -815,6 +815,7 @@
     padding: 3% 5%;
     width: 49%;
     font-size: 80%;
+    cursor: pointer;
   }
   .incluso-app .wall .part .social div:nth-child(1) {
     border-right: 2px solid rgba(255, 255, 255, 0.08);
@@ -851,6 +852,7 @@
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     z-index: 99999;
+    /*opacity:0;*/
     -webkit-transition: opacity 400ms ease-in;
     -moz-transition: opacity 400ms ease-in;
     transition: opacity 400ms ease-in;
@@ -882,8 +884,17 @@
     display: flex;
     justify-content: space-between;
   }
-  .incluso-app .modalDialog > div .add input {
+  .incluso-app .modalDialog > div .add input,
+  .incluso-app .modalDialog > div .add textarea {
+    width: 87%;
+    padding: 0px 2vw;
     border: 0px solid transparent;
+    resize: none;
+    line-height: 1;
+  }
+  .incluso-app .modalDialog > div .add input:focus,
+  .incluso-app .modalDialog > div .add textarea:focus {
+    outline: none;
   }
   .incluso-app .modalDialog > div .add i {
     color: #9c9c9c;
@@ -1269,7 +1280,7 @@
     left: 0;
     position: absolute;
     right: 0;
-    top: -24%;
+    top: -23%;
   }
   .incluso-app .top-users .head,
   .incluso-app .top-users .body {
@@ -1920,6 +1931,9 @@
   .incluso-app .green-lantern-theme.notifications .nav-tabs .item a {
     color: #08B190;
   }
+  .incluso-app .green-lantern-theme.notifications .nav-tabs .item a:focus {
+    outline: none;
+  }
   .incluso-app .green-lantern-theme.notifications .nav-tabs .item.active {
     background-color: #08B190;
   }
@@ -1938,6 +1952,9 @@
     -webkit-border-radius: 0px 5px 5px 0px;
     -moz-border-radius: 0px 5px 5px 0px;
     border-radius: 0px 5px 5px 0px;
+  }
+  .incluso-app .green-lantern-theme.notifications .tab-content {
+    min-height: 40vh;
   }
   .incluso-app .collapse-media .panel {
     display: block;
@@ -1992,8 +2009,10 @@
     cursor: pointer;
   }
   .incluso-app .bubble.bubble-sm {
-    width: 10vw;
+    min-width: 9vw;
+    width: auto;
     height: 4.8vh;
+    padding: 0px 2vw;
   }
   .incluso-app .bubble .glyphicon-triangle-top {
     position: absolute;

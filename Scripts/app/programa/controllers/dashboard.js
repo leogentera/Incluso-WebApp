@@ -136,7 +136,7 @@
                                 
                 moodleFactory.Services.GetUserNotification($scope.user.id, getUserNotificationsCallback, errorCallback);
             }
-            
+
             function getUserNotificationsCallback(){
                 var notifications = JSON.parse(localStorage.getItem("notifications"));
             }
@@ -149,7 +149,7 @@
                 debugger;
                 var chat = localStorage.getItem('userChat');
             }
-            
+
             /* open terms and conditions modal */
             $scope.openModal = function (size) {
                 setTimeout(function(){
