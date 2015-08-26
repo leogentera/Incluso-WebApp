@@ -851,9 +851,11 @@
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     z-index: 99999;
+    opacity: 0;
     -webkit-transition: opacity 400ms ease-in;
     -moz-transition: opacity 400ms ease-in;
     transition: opacity 400ms ease-in;
+    pointer-events: none;
   }
   .incluso-app .modalDialog .txt-renglon {
     color: #ee4823;
@@ -1269,7 +1271,7 @@
     left: 0;
     position: absolute;
     right: 0;
-    top: -24%;
+    top: -23%;
   }
   .incluso-app .top-users .head,
   .incluso-app .top-users .body {
