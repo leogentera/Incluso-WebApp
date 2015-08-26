@@ -23,6 +23,8 @@ angular
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
             
+            _createNotification();
+            
             //
             /*
             var stage = JSON.parse(localStorage.getItem('stage'));

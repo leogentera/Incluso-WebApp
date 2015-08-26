@@ -73,7 +73,35 @@ var _endActivity = function(currentUserId,currentActivityId, currentActivityType
       };
   
     moodleFactory.Services.PutAsyncActivity(userId,data,successCallback,errorCallback);
+          
+    var dataUserNotifications = {
+            
+    }
+    
+          
 }
+
+var _createNotification = function(){
+  
+  var dataModelNotification = {
+      notificationid: 3,
+      timemodified : "08/25/2015",      
+      userid: 47,
+      already_read: 0
+  };
+  
+  moodleFactory.Services.PostUserNoitifications(47,dataModelNotification,successCallback,errorCallback);  
+}
+
+var successCallback =function(){  
+  
+}
+
+var errorCallback = function(data){
+  debugger;
+  
+}
+
 
 function getChallengeByActivity_identifier(activity_identifier) {
             var matchingChallenge = null;

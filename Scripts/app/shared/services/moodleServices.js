@@ -49,14 +49,17 @@
         var _getUserNotifications = function(userId,successCallback,errorCallback){
             _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback);
         };
+        
+        var _postUserNotifications = function(userId, data, successCallback, errorCallback){
+            _postAsyncData("notifications",data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+        };
 
         var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
             _postAsyncData(key,data, API_RESOURCE.format('forum'), successCallback, errorCallback);
-
         };
         
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
-            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
+            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification' ), successCallback, errorCallback);
         };
         
         var _getUserChat = function(userId, successCallback, errorCallback){
@@ -293,6 +296,7 @@
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
             PutUserNotificationRead: _putUserNotificationRead,
+            PostUserNoitifications : _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat
