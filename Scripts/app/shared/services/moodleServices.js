@@ -13,7 +13,8 @@
         
 
         var _getAsyncUserCourse = function(userId, successCallback, errorCallback){
-            _getAsyncData("usercourse", API_RESOURCE.format('usercourse/' + userId), successCallback, errorCallback);
+            //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
+            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback);
         };
 
         var _getAsyncAvatarInfo = function(userId, successCallback, errorCallback){
@@ -29,7 +30,7 @@
         };
 
         var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback){
-            _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + 'user/' + userId ), successCallback,errorCallback);
+            _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + '/user/' + userId ), successCallback,errorCallback);
         };
         
         var _getAsyncActivitiesInfo = function(activityId, successCallback, errorCallback){
@@ -37,7 +38,8 @@
         };
             
         var _getAsyncCourse = function(courseId, successCallback, errorCallback){
-            _getCourseAsyncData("course", API_RESOURCE.format('course/' + courseId), successCallback, errorCallback);
+            successCallback();
+            //_getCourseAsyncData("course", API_RESOURCE.format('course/' + courseId), successCallback, errorCallback);
         };
 
         var _putAsyncQuiz = function(activityId, data, successCallback, errorCallback){            
@@ -51,6 +53,10 @@
         var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
             _postAsyncData(key,data, API_RESOURCE.format('forum'), successCallback, errorCallback);
 
+        };
+        
+        var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
+            _putAsyncData("notifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
         };
         
         var _getCacheObject = function(key){
@@ -124,19 +130,22 @@
             });
         };
 
-        var _endActivity = function(userId,activityId){            
-             _httpFactory({
-                method: 'PUT',
-                url: "activity/" + activityId + "userId/" + userId,                
-                headers: {'Content-Type': 'application/json'},
-                }).success(function(data, status, headers, config) {
-                    localStorage.setItem(key, JSON.stringify(data));
-                    successCallback();
-                }).error(function(data, status, headers, config) {
-                    localStorage.setItem(key, JSON.stringify(data));
-                    errorCallback();
-            });
-        };
+        //var _endActivity = function(userId,activityId){            
+        //     _httpFactory({
+        //        method: 'PUT',
+        //        url: "activity/" + activityId + "userId/" + userId,                
+        //        headers: {'Content-Type': 'application/json'},
+        //        }).success(function(data, status, headers, config) {
+        //            localStorage.setItem(key, JSON.stringify(data));
+        //            successCallback();
+        //        }).error(function(data, status, headers, config) {
+        //            localStorage.setItem(key, JSON.stringify(data));
+        //            errorCallback();
+        //    });
+        //};
+        
+        
+        
         
         var createTree = function(activities) {
 
@@ -148,6 +157,9 @@
                 var course = {
                     coursename: activities[0].sectionname,
                     section: activities[0].section,
+                    courseid: activities[0].courseid,
+                    firsttime: activities[0].firsttime,
+                    globalProgress: 0,
                     stages: _.filter(activities,function(a) { 
                         return a.parentsection == activities[0].section && a.section != activities[0].section && a.activity_type == 'ActivityManager' 
                     })
@@ -157,7 +169,9 @@
 
                 //stages
                 for(i = 0; i < course.stages.length; i++) {
-                    console.log('stage:' + course.stages[i].sectionname);
+                    course.stages[i].stageProgress = 0;
+                    course.stages[i].stageStatus = course.stages[i].status;
+
                     course.stages[i]["challenges"] = _.filter(activities,function(a) { 
                         return a.parentsection == course.stages[i].section && a.section != course.stages[i].section && a.activity_type == 'ActivityManager' 
                     });
@@ -175,9 +189,10 @@
                     }
 
 
+
+
                     //challenges
                     for(j = 0; j < course.stages[i].challenges.length; j++) {
-                        console.log('challenge:' + course.stages[i].challenges[j].sectionname);
 
                        assign = _.find(activities,function(a) { 
                             return a.parentsection == course.stages[i].challenges[j].parentsection && 
@@ -232,7 +247,7 @@
                                 });
 
                                 childrenActivities =  _.filter(activities,function(a) { 
-                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager' 
+                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && a.activity_type != 'assign'
                                 });
 
                                 if (course.stages[i].challenges[j].activities[k]["activities"]) {
@@ -249,6 +264,7 @@
                     }
                 }
 
+            localStorage.setItem("usercourse", JSON.stringify(course));
             localStorage.setItem("course", JSON.stringify(course));
             localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
                 
@@ -269,6 +285,7 @@
             PutAsyncQuiz: _putAsyncQuiz,
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
+            PutUserNotificationRead: _putUserNotificationRead,
             PostAsyncForumPost: _postAsyncForumPost
 
         };

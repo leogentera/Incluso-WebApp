@@ -96,7 +96,7 @@ angular
                         break;
                 }
             }
-                        
+            
             
             $scope.showMore = function(type){                
                 switch(type){
@@ -131,9 +131,14 @@ angular
                 $location.path('/ProgramaDashboard');
             }
             
-            $scope.showAlertDetail = function (alertId) {
-                $scope.notifications[alertId -1 ].read = true ;
+            $scope.showAlertDetail = function (alertId) {                
+                debugger;
+                var userId = localStorage.getItem('userId');
+                var notificationId = (alertId - 1);
+                
+                $scope.notifications[alertId -1 ].read = true ;                
                 localStorage.setItem("notifications", JSON.stringify($scope.notifications));
+                _readNotification(userId,notificationId);
                 $scope.navigateTo('/AlertsDetail/' + alertId, 'Notificaciones', 'null', 'navbarorange');
             }                    
             

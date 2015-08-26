@@ -36,7 +36,7 @@
         <div id="openModal1" class="modalDialog" collapse="isTextCollapsed">
           <div>
             <a href="#close" title="Close" class="close"></a>
-            <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value="" ng-model="textToPost" /></div>
+            <div class="add"><i class="icomoon icon-edit"></i><textarea placeholder="Agregar texto..." ng-model="textToPost"></textarea></div>
             <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postTextToForum()">Compartir</button>
           </div>
         </div>
@@ -44,7 +44,7 @@
         <div id="openModal2" class="modalDialog" collapse="isLinkCollapsed">
           <div>
             <a href="#close" title="Close" class="close"></a>
-            <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar tu enlace..." value="" ng-model="linkToPost" /></div>
+            <div class="add"><i class="icomoon icon-edit"></i><textarea placeholder="Agregar tu enlace..." ng-model="linkToPost"></textarea></div>
 
             <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postLinkToForum()" >Compartir</button>
           </div>
@@ -53,7 +53,7 @@
         <div id="openModal3" class="modalDialog" collapse="isVideoCollapsed">
           <div>
             <a href="#close" title="Close" class="close"></a>
-        <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar ruta de tu peli..." value="" ng-model="videoToPost" /></div>
+        <div class="add"><i class="icomoon icon-edit"></i><textarea placeholder="Agregar ruta de tu peli..." ng-model="videoToPost"></textarea></div>
 
         <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postVideoToForum()" >Compartir</button>
           </div>
@@ -62,7 +62,7 @@
         <div id="openModal4" class="modalDialog" collapse="isAttachmentCollapsed">
           <div>
             <a href="#close" title="Close" class="close"></a>
-            <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Atachea algo..." value="" ng-model="attachmentToPost" /></div>
+            <div class="add"><i class="icomoon icon-edit"></i><textarea placeholder="Escribe algo..." ng-model="attachmentToPost"></textarea></div>
 
             <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postAttachmentToForum()" >Compartir</button>
           </div>
