@@ -54,6 +54,10 @@
             _postAsyncData(key,data, API_RESOURCE.format('forum'), successCallback, errorCallback);
 
         };
+
+        var _putAsyncFirstTimeInfo = function(userId, data, successCallback, errorCallback){            
+            _putAsyncData("usercourse", data, API_RESOURCE.format('usercourse/' + userId), successCallback, errorCallback);
+        };    
         
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
             _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
@@ -294,6 +298,7 @@
             GetUserNotification: _getUserNotifications,
             PutUserNotificationRead: _putUserNotificationRead,
             PostAsyncForumPost: _postAsyncForumPost,
+            PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat
 

@@ -62,9 +62,19 @@
                 logout($http, $scope, $location);
             };
 
-            $scope.navigateToStage = function(){                    
-                if ($scope.stage.firstTime) {
+            $scope.navigateToStage = function(){
+                var firstTimeStage = localStorage.getItem("firstTimeStage");
+
+                if (firstTimeStage == 1) {
                     $scope.openModal();
+                    $scope.stage.firstTime = 0;
+                    localStorage.setItem("firstTimeStage", 0);
+
+                    var dataModel = {
+                        stages: $scope.usercourse.stages
+                    };
+
+                    moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
                 }   
 
                 $location.path('/ProgramaDashboardEtapa/' + $scope.stage.id);
@@ -99,6 +109,10 @@
                     var uc = $scope.usercourse.stages[i];
                     localStorage.setItem("stage", JSON.stringify(uc));
                     $scope.stage = uc;
+
+                    if(i == 0 && uc.firsttime){
+                        localStorage.setItem("firstTimeStage", 1);
+                    }
                     
                     if(uc.stageStatus === 0){
                         break;
