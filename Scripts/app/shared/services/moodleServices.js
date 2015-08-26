@@ -180,7 +180,66 @@
                    errorCallback();
            });
         };
-        
+
+
+        var refreshProgress = function(usercourse)  {
+            var globalActivities = 0;
+            var globalCompletedActivities = 0;
+
+            if (usercourse.stages) {
+                for(i =0; i < usercourse.stages.length; i++) {
+                    //stages
+
+                    var stageActivities = 0;
+                    var stageCompletedActivities = 0;
+
+                    if (usercourse.stages[i].challenges) {
+                        for(j =0; j < usercourse.stages[i].challenges.length; j++) {
+                            //challenges
+
+                            if (usercourse.stages[i].challenges[j].activities) {
+                                for(k =0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
+                                    //activities
+
+
+                                    if (usercourse.stages[i].challenges[j].activities[k].activities) {
+                                        for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
+                                            if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
+                                            {
+                                                globalActivities++;
+                                                stageActivities++;
+
+                                                if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
+                                                    globalCompletedActivities++;
+                                                    stageCompletedActivities++;
+                                                }
+                                            }
+                                        }
+
+                                    } 
+                                    else
+                                    {
+                                        globalActivities++;
+                                        stageActivities++;
+
+                                        if (usercourse.stages[i].challenges[j].activities[k].status == 1) {
+                                            globalCompletedActivities++;
+                                            stageCompletedActivities++;
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    usercourse.stages[i].stageProgress = Math.round(100.0 * stageCompletedActivities / stageActivities, 0);
+                }
+            }
+            usercourse.globalProgress = Math.round(100.0 * globalCompletedActivities / globalActivities,0);
+
+            return usercourse;
+        }
+
          
         var createTree = function(activities) {
 
@@ -300,6 +359,8 @@
                     }
                 }
 
+
+            course = refreshProgress(course);
             localStorage.setItem("usercourse", JSON.stringify(course));
             localStorage.setItem("course", JSON.stringify(course));
             localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
