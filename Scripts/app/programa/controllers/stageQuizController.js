@@ -55,13 +55,7 @@ angular
                 $location.path('/ZonaDeVuelo/Dashboard');
             }
 
-            function successfullCallBack() {
 
-            }
-
-            function errorCallback() {
-
-            }
 
             $scope.addAbility = function () {
                 $scope.AnswersResult.answers[4].push(new String());
@@ -146,7 +140,7 @@ angular
                         }
                         break;
                     case 2:
-                        $scope.AnswersResult.answers[2].third = question.userAnswer.trim();
+                        $scope.AnswersResult.answers[2] = question.userAnswer.trim();
                         break;
                     case 3:
                         if (question.userAnswer.length > 0) {
@@ -160,7 +154,7 @@ angular
                         }
                         break;
                     case 4:
-                        if (question.userAnswer.length > 0) {
+                        if (question.userAnswer != null) {
                             var userAnswers = question.userAnswer.split(";");
                             for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
                                 var userAnswer = userAnswers[indexUserAnswers].trim();
@@ -214,11 +208,28 @@ angular
             
             $scope.AnswersResult = {
                 "userid": 0,//$scope.userprofile.id,
-                "answers": [null, [0, 0, 0, 0], null, null, []]
+                "answers": [null, [0, 0, 0, 0], '', null, []]
                 , "activityidnumber": 0//$scope.activity.coursemoduleid
                 , "like_status": 0
             };
 
+            function successfullCallBack(activity) {
+                if (activity != null) {
+                    $scope.activity = activity;
+                    for (var index = 0; index < activity.questions.length; index++) {
+                        var question = activity.questions[index];
+                        updateSelectedAnsers(index, question)
+                    }
+                }
+                else {
+                    $scope.showWarning = true;
+                    $scope.warningMessage = "El quiz no se puede acceder en este momento";
+                }
+            }
+
+            function errorCallback(data) {
+                var algo = data;
+            }
 
             function getDataAsync() {
 
@@ -245,37 +256,32 @@ angular
 
                 if (activityFinished) {
 
-                    var activity = null;
-                    var activity = moodleFactory.Services.GetAsyncActivity(111, successfullCallBack, errorCallback);
+                    moodleFactory.Services.GetAsyncActivityQuizInfo(activities[0].coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
+
+                    //test
 
                     // var activity = { "id": 44, "name": "Exploracion Inicial", "description": null, "activityType": "Quiz", "status": null, "stars": null, "dateIssued": null, "score": 8, "quizType": null, "grade": 10, "questions": [{ "id": 19, "question": "1. \u00bfAlguna vez has tenido un sue\u00f1o que no has sabido c\u00f3mo alcanzar?", "questionType": "multichoice", "answers": [{ "id": 60, "answer": "Si", "fraction": "1.0000000" }, { "id": 61, "answer": "No", "fraction": "1.0000000" }], "userAnswer": "No" }, { "id": 20, "question": "2. \u00bfQu\u00e9 de lo siguiente has intentado hacer para lograrlo? Puedes elegir m\u00e1s de una.", "questionType": "multichoice", "answers": [{ "id": 62, "answer": "Pedir ayuda a alguien", "fraction": "1.0000000" }, { "id": 63, "answer": "Investigar sobre el tema", "fraction": "0.0000000" }, { "id": 64, "answer": "Nada, porque me parece imposible", "fraction": "0.0000000" }, { "id": 65, "answer": "Trazar un plan de lo que necesito", "fraction": "0.0000000" }], "userAnswer": "Pedir ayuda a alguien; Investigar sobre el tema" }, { "id": 23, "question": "3. \u00bfQu\u00e9 persona exitosa que conoces te inspira?", "questionType": "shortanswer", "answers": [{ "id": 72, "answer": "*", "fraction": "1.0000000" }], "userAnswer": "Bill Gates" }, { "id": 24, "question": "4. \u00bfSabes cu\u00e1les son tus habilidades?", "questionType": "multichoice", "answers": [{ "id": 73, "answer": "Si", "fraction": "1.0000000" }, { "id": 74, "answer": "No", "fraction": "1.0000000" }, { "id": 75, "answer": "Mas o menos", "fraction": "1.0000000" }], "userAnswer": "Mas o menos" }, { "id": 25, "question": "5. Menciona tus principales habilidades", "questionType": "multichoice", "answers": [{ "id": 76, "answer": "Empat\u00eda", "fraction": "1.0000000" }, { "id": 77, "answer": "Creatividad", "fraction": "0.0000000" }, { "id": 78, "answer": "Liderazgo", "fraction": "0.0000000" }, { "id": 79, "answer": "Comunicaci\u00f3n", "fraction": "0.0000000" }, { "id": 80, "answer": "Negociaci\u00f3n", "fraction": "0.0000000" }, { "id": 81, "answer": "Trabajo en equipo", "fraction": "0.0000000" }, { "id": 82, "answer": "Innovaci\u00f3n", "fraction": "0.0000000" }, { "id": 83, "answer": "Iniciativa", "fraction": "0.0000000" }, { "id": 84, "answer": "Toma de decisiones", "fraction": "0.0000000" }, { "id": 85, "answer": "Planeaci\u00f3n", "fraction": "0.0000000" }, { "id": 86, "answer": "Organizaci\u00f3n", "fraction": "0.0000000" }], "userAnswer": "Organizaci\u00f3n; Toma de decisiones; Trabajo en equipo" }] };
                     
-                    if (activity != null) {
-                        for (var index = 0; index < activity.questions.length; index++) {
-                            var question = activity.questions[index];
-                            updateSelectedAnsers(index, question)
-                        }
-                    }
-                    else {
-                        $scope.showWarning = true;
-                        $scope.warningMessage = "El quiz no se puede acceder en este momento";
-                    }
-
-                    // if (!activity) {
-                    //     $location.path('/');
-                    //     return "";
+                    // if (activity != null) {
+                    //     for (var index = 0; index < activity.questions.length; index++) {
+                    //         var question = activity.questions[index];
+                    //         updateSelectedAnsers(index, question)
+                    //     }
                     // }
                     // else {
-                    //     return activity;
+                    //     $scope.showWarning = true;
+                    //     $scope.warningMessage = "El quiz no se puede acceder en este momento";
                     // }
+                    
+                    //fin test                 
                 }
                 else {
-                    return activities[0];
+                    $scope.activity = activities[0];
                 }
 
             }
 
-            $scope.activity = getDataAsync();
+            getDataAsync();
 
 
 
