@@ -57,10 +57,6 @@
         var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
             _postAsyncData(key,data, API_RESOURCE.format('forum'), successCallback, errorCallback);
         };
-
-        var _putAsyncFirstTimeInfo = function(userId, data, successCallback, errorCallback){            
-            _putAsyncData("usercourse", data, API_RESOURCE.format('usercourse/' + userId), successCallback, errorCallback);
-        };    
         
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
             _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification' ), successCallback, errorCallback);
@@ -169,6 +165,20 @@
                     errorCallback();
             });
         };
+
+
+        var _putAsyncFirstTimeInfo = function(userId, dataModel, successCallback, errorCallback){            
+            _httpFactory({
+                method: 'PUT',
+                url: API_RESOURCE.format('usercourse/' + userId),
+                data: dataModel,
+                headers: {'Content-Type': 'application/json'},
+                }).success(function(data, status, headers, config) {
+                    successCallback();
+                }).error(function(data, status, headers, config) {
+                    errorCallback();
+            });
+        };    
 
         var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
             _httpFactory({                

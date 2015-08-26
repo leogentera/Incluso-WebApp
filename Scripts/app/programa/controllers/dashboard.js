@@ -26,14 +26,6 @@
                 return "";
             }
 
-            console.log('loading usercourse');
-            $scope.usercourse = JSON.parse(moodleFactory.Services.GetCacheObject("usercourse"));
-            console.log('loading course');
-            $scope.course = JSON.parse(moodleFactory.Services.GetCacheObject("course"));
-            console.log('loading currentStage');
-            $scope.currentStage = JSON.parse(moodleFactory.Services.GetCacheObject("currentStage"));
-            console.log('loading stage');
-
             $rootScope.pageName = "Mision incluso"
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = true;
@@ -68,16 +60,16 @@
                 if (firstTimeStage == 1) {
                     $scope.openModal();
                     $scope.stage.firstTime = 0;
-                    localStorage.setItem("firstTimeStage", 0);
 
                     var dataModel = {
-                        stages: $scope.usercourse.stages
+                        firstTime: 0
                     };
 
                     moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
                 }   
 
-                $location.path('/ProgramaDashboardEtapa/' + $scope.stage.id);
+                localStorage.setItem("firstTimeStage", 0);
+                $location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
             };
 
             function getDataAsync() {
@@ -104,15 +96,15 @@
                                                         
             function getCurrentStage(){
                 var currentStage = 1;
+
+                if ($scope.usercourse.firsttime == 1 && localStorage.getItem("firstTimeStage") != 0) {
+                    localStorage.setItem("firstTimeStage", 1);
+                }
                 
                 for(var i = 0; i < $scope.usercourse.stages.length; i++) {
                     var uc = $scope.usercourse.stages[i];
                     localStorage.setItem("stage", JSON.stringify(uc));
                     $scope.stage = uc;
-
-                    if(i == 0 && uc.firsttime){
-                        localStorage.setItem("firstTimeStage", 1);
-                    }
                     
                     if(uc.stageStatus === 0){
                         break;
