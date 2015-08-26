@@ -64,22 +64,22 @@ function syncCacheData (){
 
 }
 
-var _endActivity = function(currentUserId,currentActivityId, currentActivityType){
-        
-      var data = {
-        userId :  currentUserId,
-        activityId : currentActivityId,
-        activityType: currentActivityType                  
-      };
-  
-    moodleFactory.Services.PutAsyncActivity(userId,data,successCallback,errorCallback);
-          
-    var dataUserNotifications = {
-            
-    }
-    
-          
-}
+//var _endActivity = function(currentUserId,currentActivityId, currentActivityType){
+//        
+//      var data = {
+//        userId :  currentUserId,
+//        activityId : currentActivityId,
+//        activityType: currentActivityType                  
+//      };
+//  
+//    moodleFactory.Services.PutAsyncActivity(userId,data,successCallback,errorCallback);
+//          
+//    var dataUserNotifications = {
+//            
+//    }
+//    
+//          
+//}
 
 var _createNotification = function(){
   
