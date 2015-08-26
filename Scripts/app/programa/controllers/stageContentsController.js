@@ -26,8 +26,8 @@ angular
             //$scope.$emit('HidePreloader'); //hide preloader            
             var starsNoMandatory = 0;
             var starsMandatory = 0;    
-            var getcoursemoduleids = [];
-            debugger;
+            var getcoursemoduleids = [];  
+      
             if(!activities){
               var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
               $scope.fuenteDeEnergia = _.find(activitymanagers,function(a) { 
@@ -37,11 +37,12 @@ angular
             }      
             else{
               $scope.fuenteDeEnergia = activities;
+              $scope.$emit('HidePreloader'); //hide preloader
             }                      
             $scope.statusObligatorios = 0;        
 
             function getDataAsync() {                                    
-              for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){                    
+              for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){                                
                  var activityCache = (JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
                   if(activityCache){                    
                     $scope.fuenteDeEnergia.activities[i] = activityCache;
@@ -86,8 +87,7 @@ angular
               for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {
               if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                 if(!$scope.fuenteDeEnergia.activities[i].status){
-                  $scope.fuenteDeEnergia.activities[i].status = true;   
-                  debugger;                
+                  $scope.fuenteDeEnergia.activities[i].status = true;                     
                   _endActivity($scope.fuenteDeEnergia.activities[i]);
                   if($scope.fuenteDeEnergia.activities[i].optional){                    
                     $scope.statusObligatorios+=1;    
@@ -95,7 +95,7 @@ angular
                     starsMandatory += 50;  
                     if($scope.statusObligatorios == 5){
                       $scope.fuenteDeEnergia.status = true;
-                      alert("Prueba: Ya has visto 5 elementos obligatorios");
+                      //alert("Prueba: Ya has visto 5 elementos obligatorios");
                       _endActivity($scope.fuenteDeEnergia);
                     }
                   }
