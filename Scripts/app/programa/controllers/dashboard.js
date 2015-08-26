@@ -55,11 +55,10 @@
             };
 
             $scope.navigateToStage = function(){
-                var firstTimeStage = localStorage.getItem("firstTimeStage");
-
-                if (firstTimeStage == 1) {
+                if ($scope.usercourse.firsttime == 1) {
                     $scope.openModal();
                     $scope.stage.firstTime = 0;
+                    $scope.usercourse.firsttime = 0;
 
                     var dataModel = {
                         firstTime: 0,
@@ -69,7 +68,6 @@
                     moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
                 }   
 
-                localStorage.setItem("firstTimeStage", 0);
                 $location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
             };
 
@@ -88,8 +86,13 @@
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = getCurrentStage();                
                     localStorage.setItem("currentStage", $scope.currentStage);
-                    $scope.$emit('HidePreloader'); //hide preloader
-                    $scope.$emit('scrollTop'); //- scroll
+
+                    moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseId, function(){
+                        $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+                        $scope.$emit('HidePreloader'); //hide preloader
+                        $scope.$emit('scrollTop'); //- scroll
+                    }, errorCallback);
+
                 }, errorCallback);
             }
 
@@ -101,10 +104,6 @@
                                                         
             function getCurrentStage(){
                 var currentStage = 1;
-
-                if ($scope.usercourse.firsttime == 1 && localStorage.getItem("firstTimeStage") != 0) {
-                    localStorage.setItem("firstTimeStage", 1);
-                }
                 
                 for(var i = 0; i < $scope.usercourse.stages.length; i++) {
                     var uc = $scope.usercourse.stages[i];
