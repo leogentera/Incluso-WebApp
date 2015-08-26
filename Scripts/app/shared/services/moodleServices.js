@@ -100,7 +100,7 @@
                 headers: {'Content-Type': 'application/json'},
                 }).success(function(data, status, headers, config) {
                     localStorage.setItem(key, JSON.stringify(data));
-                    successCallback(data);
+                    successCallback(data, key);
                 }).error(function(data, status, headers, config) {
                     errorCallback(data);
             });
