@@ -35,7 +35,7 @@ angular
 
 
             var challengesPaths = {
-                "Exploración Inicial" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial",
+                "Exploraci�n Inicial" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial",
                 "Cuarto de recursos" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia",
                 "Conócete" : "",
                 "Mis sueños" : "",
