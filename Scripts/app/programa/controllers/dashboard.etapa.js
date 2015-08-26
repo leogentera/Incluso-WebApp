@@ -33,8 +33,8 @@ angular
 
             $scope.isCollapsed = false;
 
-            $scope.theActivities = [    [{"name" : "Exploracion Inicial", "status" : 1, "link" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"}],
-                                        [{"name" : "Fuente de energía", "status" : 1, "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"}],
+            $scope.theActivities = [    [{"name" : "Exploracion Inicial", "status" : 0, "link" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"}],
+                                        [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"}],
                                         [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia"}, {"name" : "Reto múltiple", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple"}, {"name" : "Punto de encuentro", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64"}, {"name" : "Zona de contacto", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/ZonaDeContacto"}],
                                         [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia"}, {"name" : "Mis cualidades", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades"}, {"name" : "Mis gustos", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos"}, {"name" : "Sueña", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena"}, {"name" : "Punto de encuentro", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"}],
                                         [{"name" : "Cabina de soporte", "status" : 0, "link":"/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat"}],
