@@ -29,7 +29,7 @@
 
           <section class="wall">
             <div class="part" ng-repeat="activity in fuenteDeEnergia.activities">
-              <div ng-if="filter == activity.activity_type && activity.activityintro == '' || !filter || filter == activity.activityintro">
+              <div ng-if="filter == activity.activity_type && activity.activityintro == '' || !filter || filter == activity.activityintro || filter == 'Obligatorio' && activity.optional">
 
                 <div ng-if="activity.activity_type == 'url' && activity.activityintro == '' ">
                   <div class="type">
@@ -40,11 +40,11 @@
                       <span>Visita el sitio web!</span>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-show="activity.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="activity.optional"></i>
                     </div>
                     <div class="col-xs-1">
                       <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
-                      <i class="icomoon icon-edit" ng-hide="activity.status"></i>
+                      <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
                     </div>
                   </div>
                 </div>
@@ -58,11 +58,11 @@
                         <span>Video tutorial Incluso</span>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-show="activity.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="activity.optional"></i>
                     </div>
                     <div class="col-xs-1">
                       <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
-                      <i class="icomoon icon-edit" ng-hide="activity.status"></i>
+                      <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
                     </div>
                   </div>
                 </div>
@@ -76,11 +76,11 @@
                         <span>Texto</span>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-show="activity.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="activity.optional"></i>
                     </div>
                     <div class="col-xs-1">
                       <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
-                      <i class="icomoon icon-edit" ng-hide="activity.status"></i>
+                      <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
                     </div>
                   </div>
                 </div>
@@ -94,10 +94,10 @@
                       <span>Fotografía</span>
                     </div>        
                     <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-show="activity.mandatory"></i>
+                      <i class="icomoon icon-required" ng-show="activity.optional"></i>
                     </div>
                     <div class="col-xs-1">
-                      <i class="icomoon icon-edit" ng-hide="activity.status"></i>
+                      <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
                       <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
                     </div>
                   </div>      
@@ -114,7 +114,19 @@
                         <span ng-show="activity.status" ng-bind-html="activity.pageContent"></span>
 
                         <span ng-bind-html="activity.file.pageContent"></span>
-                        <a ng-if="activity.activityintro == 'video'" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>
+
+                        <section class="component video-gallery ng-scope"  ng-if="activity.activityintro == 'video'" ng-click="updateStatus(activity.groupid)">
+                          <div class="panel panel-video">
+                            <div class="stage perform">   
+                            <button class="icon icon-play" ></button>                       
+                              <figure class="player">
+                                      <a href={{activity.activityContent.url}} target="_blank">
+                                        <img src="assets/images/ptr-video-0001.jpg" alt="video" />
+                                      </a>
+                              </figure>
+                            </div>                        
+                          </div>
+                        </section>
                     </div>
                   </div>
                   <div class="interact hidden">

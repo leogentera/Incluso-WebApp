@@ -2,7 +2,6 @@
     namespace('moodleFactory');
 
     moodleFactory.Services = (function(){
-
         var _getAsyncProfile = function(userId, successCallback, errorCallback){
             _getAsyncData("profile", API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };
@@ -100,7 +99,7 @@
                 headers: {'Content-Type': 'application/json'},
                 }).success(function(data, status, headers, config) {
                     localStorage.setItem(key, JSON.stringify(data));
-                    successCallback(data);
+                    successCallback(data, key);
                 }).error(function(data, status, headers, config) {
                     errorCallback(data);
             });
