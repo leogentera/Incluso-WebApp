@@ -56,7 +56,15 @@
         };
         
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
-            _putAsyncData("notifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
+            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
+        };
+        
+        var _getUserChat = function(userId, successCallback, errorCallback){
+            _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId),successCallback,errorCallback);;
+        };
+        
+        var _putUserChat = function(userId, data, successCallback, errorCallback){
+            _putAsyncData("updateChat",data, API_RESOURCE.format('messaging/'+ userId),successCallback,errorCallback);          
         };
         
         var _getCacheObject = function(key){
@@ -144,9 +152,7 @@
         //    });
         //};
         
-        
-        
-        
+         
         var createTree = function(activities) {
 
             var activityManagers = [];
@@ -169,6 +175,7 @@
 
                 //stages
                 for(i = 0; i < course.stages.length; i++) {
+
                     course.stages[i].stageProgress = 0;
                     course.stages[i].stageStatus = course.stages[i].status;
 
@@ -286,7 +293,9 @@
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
             PutUserNotificationRead: _putUserNotificationRead,
-            PostAsyncForumPost: _postAsyncForumPost
+            PostAsyncForumPost: _postAsyncForumPost,
+            GetUserChat: _getUserChat,
+            PutUserChat: _putUserChat
 
         };
     })();

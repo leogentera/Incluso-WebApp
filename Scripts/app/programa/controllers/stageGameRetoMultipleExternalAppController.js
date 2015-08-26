@@ -42,6 +42,60 @@ angular
                               "respuestas":[
                                  {
                                     "Pregunta 1":"¿Nivel inteligencia?",
+                                    "respuesta":"3"
+                                 },
+                                 {
+                                    "Pregunta 2":"¿Me fue fácil completar el reto?",
+                                    "respuesta":"9"
+                                 },
+                                 {
+                                    "Pregunta 3":"¿Sé tocar algún instrumento?",
+                                    "respuesta":"6"
+                                 },
+                                 {
+                                    "Pregunta":"¿Te gustó la actividad?",
+                                    "respuesta":"Si"
+                                 }
+                              ]
+                           },
+                           {
+                              "userid":153,
+                              "actividad":"Reto múltiple",
+                              "sub_actividad":"Liguistica",
+                              "duracion":"5",
+                              "fecha_inicio":"2015-07-15 14:23:12",
+                              "fecha_fin":"2015-07-15  14:28:12",
+                              "estado":"15500",
+                              "respuestas":[
+                                 {
+                                    "Pregunta 1":"¿Nivel inteligencia?",
+                                    "respuesta":"3"
+                                 },
+                                 {
+                                    "Pregunta 2":"¿Me fue fácil completar el reto?",
+                                    "respuesta":"9"
+                                 },
+                                 {
+                                    "Pregunta 3":"¿Sé tocar algún instrumento?",
+                                    "respuesta":"6"
+                                 },
+                                 {
+                                    "Pregunta":"¿Te gustó la actividad?",
+                                    "respuesta":"Si"
+                                 }
+                              ]
+                           },
+                           {
+                              "userid":153,
+                              "actividad":"Reto múltiple",
+                              "sub_actividad":"Corporal",
+                              "duracion":"5",
+                              "fecha_inicio":"2015-07-15 14:23:12",
+                              "fecha_fin":"2015-07-15  14:28:12",
+                              "estado":"15500",
+                              "respuestas":[
+                                 {
+                                    "Pregunta 1":"¿Nivel inteligencia?",
                                     "respuesta":"1"
                                  },
                                  {
@@ -61,11 +115,110 @@ angular
                            {
                               "userid":153,
                               "actividad":"Reto múltiple",
-                              "sub_actividad":"Musical",
-                              "duracion":"3 ",
-                              "fecha_inicio":"2015-07-15  14:43:12",
-                              "fecha_fin":"2015-07-15  14:46:12",
-                              "nivel_de_reto":"1"
+                              "sub_actividad":"Espacial",
+                              "duracion":"5",
+                              "fecha_inicio":"2015-07-15 14:23:12",
+                              "fecha_fin":"2015-07-15  14:28:12",
+                              "estado":"15500",
+                              "respuestas":[
+                                 {
+                                    "Pregunta 1":"¿Nivel inteligencia?",
+                                    "respuesta":"1"
+                                 },
+                                 {
+                                    "Pregunta 2":"¿Me fue fácil completar el reto?",
+                                    "respuesta":"9"
+                                 },
+                                 {
+                                    "Pregunta 3":"¿Sé tocar algún instrumento?",
+                                    "respuesta":"6"
+                                 },
+                                 {
+                                    "Pregunta":"¿Te gustó la actividad?",
+                                    "respuesta":"Si"
+                                 }
+                              ]
+                           },
+                           {
+                              "userid":153,
+                              "actividad":"Reto múltiple",
+                              "sub_actividad":"Matemático",
+                              "duracion":"5",
+                              "fecha_inicio":"2015-07-15 14:23:12",
+                              "fecha_fin":"2015-07-15  14:28:12",
+                              "estado":"15500",
+                              "respuestas":[
+                                 {
+                                    "Pregunta 1":"¿Nivel inteligencia?",
+                                    "respuesta":"1"
+                                 },
+                                 {
+                                    "Pregunta 2":"¿Me fue fácil completar el reto?",
+                                    "respuesta":"9"
+                                 },
+                                 {
+                                    "Pregunta 3":"¿Sé tocar algún instrumento?",
+                                    "respuesta":"6"
+                                 },
+                                 {
+                                    "Pregunta":"¿Te gustó la actividad?",
+                                    "respuesta":"Si"
+                                 }
+                              ]
+                           },
+                           {
+                              "userid":153,
+                              "actividad":"Reto múltiple",
+                              "sub_actividad":"Intrapersonal",
+                              "duracion":"5",
+                              "fecha_inicio":"2015-07-15 14:23:12",
+                              "fecha_fin":"2015-07-15  14:28:12",
+                              "estado":"15500",
+                              "respuestas":[
+                                 {
+                                    "Pregunta 1":"¿Nivel inteligencia?",
+                                    "respuesta":"1"
+                                 },
+                                 {
+                                    "Pregunta 2":"¿Me fue fácil completar el reto?",
+                                    "respuesta":"9"
+                                 },
+                                 {
+                                    "Pregunta 3":"¿Sé tocar algún instrumento?",
+                                    "respuesta":"6"
+                                 },
+                                 {
+                                    "Pregunta":"¿Te gustó la actividad?",
+                                    "respuesta":"Si"
+                                 }
+                              ]
+                           },
+                           {
+                              "userid":153,
+                              "actividad":"Reto múltiple",
+                              "sub_actividad":"Interpersonal",
+                              "duracion":"5",
+                              "fecha_inicio":"2015-07-15 14:23:12",
+                              "fecha_fin":"2015-07-15  14:28:12",
+                              "estado":"15500",
+                              "respuestas":[
+                                 {
+                                    "Pregunta 1":"¿Nivel inteligencia?",
+                                    "respuesta":"2"
+                                 },
+                                 {
+                                    "Pregunta 2":"¿Me fue fácil completar el reto?",
+                                    "respuesta":"9"
+                                 },
+                                 {
+                                    "Pregunta 3":"¿Sé tocar algún instrumento?",
+                                    "respuesta":"6"
+                                 },
+                                 {
+                                    "Pregunta":"¿Te gustó la actividad?",
+                                    "respuesta":"Si"
+                                 }
+                              ]
                            },
                            {
                               "userid":153,
@@ -77,7 +230,7 @@ angular
                               "respuestas":[
                                  {
                                     "Pregunta 1":"¿Nivel inteligencia?",
-                                    "respuesta":"2"
+                                    "respuesta":"3"
                                  },
                                  {
                                     "Pregunta 2":"¿Me fue fácil completar el reto?",
@@ -108,7 +261,7 @@ angular
 
                         if (response[i].respuestas) {
 
-                            if (response[i].respuestas.length > 0 && response[i].respuestas[0].respuesta == "Si") {
+                            if (response[i].respuestas.length > 0 && response[i].respuestas[0].respuesta == "3") {
                               shield = response[i].sub_actividad;
                             }
 

@@ -133,10 +133,26 @@
 					return false;
 				}else{
 				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
+				//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
+				var countNotificationsUnread = _.filter(userNotifications, function(notif){
+                    return notif.timemodified != null;
+                });
+				
+				$rootScope.totalNotifications = countNotificationsUnread.length;
+				return  countNotificationsUnread > 0;
+				}
+			}
+			
+			$scope.showChatNotification = function(){
+				if ($scope.pageName == 'Notificaciones') {
+					return false;
+				}else{
+				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
 				var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
 				$rootScope.totalNotifications = countNotificationsUnread;
 				return  countNotificationsUnread > 0;
 				}
+				
 			}
 
             //// new menu behavior ////
