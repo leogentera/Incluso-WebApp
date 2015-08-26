@@ -1,39 +1,20 @@
 <div class="incluso-app step-dashboard" id="site-wrapper">
-  <div id="site-menu" >
-  </div>
   <div id="site-canvas">
-
-   <article class="blueprint">
-
-  <section>
-<div class="txt-renglon centered txt-bigger"></div> 
-<div class="subtitle">Foro Común</div>
-<div class="txt-renglon"> Participa en las siguientes discusiones.</div>  
-</section>
-
-<section class="">
-
-    <div id="item{{$index}}" ng-repeat="t in activity.discussions">
-      <div class="part"><span>{{t.name}}</span><a href="" ng-click="showComentarios(t.id)"><i class="icomoon icon-arrow-right-aligned fl-right"></i></a></div>
+     <article class="blueprint">
+      <section>
+        <div class="txt-renglon centered txt-bigger"></div> 
+        <div class="subtitle">Foro Común</div>
+        <div class="txt-renglon"> Participa en las siguientes discusiones.</div>  
+      </section>
+      <section class="">
+        <div id="item{{$index}}" ng-repeat="t in activity.discussions">
+          <div class="part"><span>{{t.name}}</span><a href="" ng-click="showComentarios(t.id)"><i class="icomoon icon-arrow-right-aligned fl-right"></i></a></div>
+        </div>
+      </section>
+      <section>
+        <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
+        <div class="txt-renglon centered txt-bigger"></div> 
+      </section>
+    </article>
     </div>
-
-    </section>
-    <section>
-    <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
-    <div class="txt-renglon centered txt-bigger"></div> 
-    </section>
-
-  </article>
-
-  <footer class="footer">
-    <ul class="block-list">
-      <li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
-      <li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
-    </ul>
-    <a href="#navBar" class="to-top"><i class="icomoon icon-double-arrow-up"></i><br/>SUBIR</a>
-  </footer>
-    </div>
-    </div>
-  <!-- html -->
-  <!-- scripts -->
-<script type="text/javascript" src="Scripts/scriptmenu.js"></script>
+</div>

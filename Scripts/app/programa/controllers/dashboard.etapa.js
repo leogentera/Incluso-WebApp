@@ -12,8 +12,9 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             /* $routeParams.stageId */
             _httpFactory = $http;
-
             $scope.Math = window.Math;
+            $scope.$emit('ShowPreloader'); //show preloader
+            
             $rootScope.pageName = "Estación: Conócete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
