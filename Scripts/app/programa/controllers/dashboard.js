@@ -130,7 +130,20 @@
             }
             
             function getUserChatCallback() {
-                var chat = localStorage.getItem('userChat');
+                var chat = JSON.parse(localStorage.getItem('userChat'));
+                
+                var userId = localStorage.getItem("userId");
+                
+                var chatAmount = _.countBy(chat,function(messages){
+                        return messages.senderid != userId;
+                    });
+                                                
+                if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
+                    localStorage.setItem('chatRead',"false");
+                }
+                localStorage.setItem('chatAmountRead',chatAmount.true);
+                
+                
             }
 
             /* open terms and conditions modal */

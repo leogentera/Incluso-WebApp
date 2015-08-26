@@ -26,8 +26,10 @@ angular
             //$scope.$emit('HidePreloader'); //hide preloader            
             var starsNoMandatory = 0;
             var starsMandatory = 0;    
-            var getcoursemoduleids = [];  
-      
+
+            
+            var getcoursemoduleids = [];
+
             if(!activities){
               var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
               $scope.fuenteDeEnergia = _.find(activitymanagers,function(a) { 

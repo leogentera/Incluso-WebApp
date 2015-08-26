@@ -51,7 +51,7 @@ angular
                     $scope.badgePage = $scope.totalBadgePages - 1;
                     $scope.normalBadgePage = $scope.badgePage + 1;
                 }
-            }
+            };
 
             $scope.model.modelState = {
                 isValid: null,
@@ -186,7 +186,7 @@ angular
                 if (day.length < 2) day = '0' + day;
                 var newBirthday = [month, day, year].join('/');
                 $scope.model.birthday = newBirthday;
-            }
+            };
 
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
@@ -203,16 +203,16 @@ angular
 
             $scope.edit = function () {
                 $location.path('/Perfil/Editar');
-            }
+            };
 
             $scope.index = function () {
                 $scope.navigateTo('Profile', 'Mi perfil', 'null', 'navbarblue')
                 //$location.path('/Perfil/Editar');
-            }
+            };
 
             $scope.navigateToDashboard = function () {
                 $location.path('/ProgramaDashboard');
-            }
+            };
 
             function validateModel() {
                 console.log('fetching editProfile errors list');
@@ -241,7 +241,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
                 
                 //phones
                 if ($scope.model.phones.length > 0) {
@@ -252,7 +252,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
                 
                 //socialNetworks               
                 if ($scope.model.socialNetworks.length > 0) {
@@ -263,7 +263,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
                 
                 //familiaCompartamos              
                 if ($scope.model.familiaCompartamos.length > 0) {
@@ -275,7 +275,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
                 
                 
                 //favoriteSports              
@@ -287,7 +287,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
                 
                 
                 //artisticActivities              
@@ -299,7 +299,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
                 
                 //hobbies              
                 if ($scope.model.hobbies.length > 0) {
@@ -310,7 +310,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
                 
                 //talents              
                 if ($scope.model.talents.length > 0) {
@@ -321,7 +321,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
                 
                 
                 //values              
@@ -333,7 +333,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
                 
                 //Habilitie              
                 if ($scope.model.habilities.length > 0) {
@@ -344,7 +344,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
                 
                 //inspirationalCharacters              
                 if ($scope.model.inspirationalCharacters.length > 0) {
@@ -355,7 +355,7 @@ angular
                             i = i - 1;
                         }
                     }
-                };
+                }
             };
 
             var saveUser = function () {
@@ -379,139 +379,140 @@ angular
                 } else {
                     $scope.$emit('scrollTop');
                 }
-            }
+            };
 
             $scope.addStudy = function () {
                 $scope.model.studies.push({});
-            }
+            };
             $scope.deleteStudy = function (index) {
                 $scope.model.studies.splice(index, 1);
-            }
+            };
 
             $scope.addPhone = function () {
                 $scope.model.phones.push(new String());
-            }
+            };
+
             $scope.deletePhone = function (index) {
                 $scope.model.phones.splice(index, 1);
-            }
+            };
 
             $scope.addFavoriteSports = function (index) {
                 $scope.model.favoriteSports.push(new String());
-            }
+            };
 
             $scope.deleteFavoriteSports = function (index) {
                 $scope.model.favoriteSports.splice(index, 1);
-            }
+            };
 
             $scope.addArtisticActivities = function (index) {
                 $scope.model.artisticActivities.push(new String());
-            }
+            };
 
             $scope.deleteArtisticActivities = function (index) {
                 $scope.model.artisticActivities.splice(index, 1);
-            }
+            };
 
             $scope.addHobbies = function (index) {
                 $scope.model.hobbies.push(new String());
-            }
+            };
 
             $scope.deleteHobbies = function (index) {
                 $scope.model.hobbies.splice(index, 1);
-            }
+            };
 
             $scope.addTalents = function (index) {
                 $scope.model.talents.push(new String());
-            }
+            };
 
             $scope.deleteTalents = function (index) {
                 $scope.model.talents.splice(index, 1);
-            }
+            };
 
             $scope.addValue = function (index) {
                 $scope.model.values.push(new String());
-            }
+            };
 
             $scope.deleteValue = function (index) {
                 $scope.model.values.splice(index, 1);
-            }
+            };
 
             $scope.addHabilitie = function (index) {
                 $scope.model.habilities.push(new String());
-            }
+            };
 
             $scope.deleteHabilitie = function (index) {
                 $scope.model.habilities.splice(index, 1);
-            }
+            };
 
             $scope.addInspirationalCharacter = function (index) {
                 $scope.model.inspirationalCharacters.push({});
-            }
+            };
 
             $scope.deleteInspirationalCharacter = function (index) {
                 $scope.model.inspirationalCharacters.splice(index, 1);
-            }
+            };
 
             $scope.addMainActivity = function (index) {
                 $scope.model.mainActivity.push(new String());
-            }
+            };
 
             $scope.deleteMainActivity = function (index) {
                 $scope.model.mainActivity.splice(index, 1);
-            }
+            };
 
             $scope.addMoneyIncome = function (index) {
                 $scope.model.moneyIncome.push(new String());
-            }
+            };
 
             $scope.deleteMoneyIncome = function (index) {
                 $scope.model.moneyIncome.splice(index, 1);
-            }
+            };
 
             $scope.addKnownDevice = function (index) {
                 $scope.model.knownDevices.push(new String());
-            }
+            };
 
             $scope.deleteKnownDevice = function (index) {
                 $scope.model.knownDevices.splice(index, 1);
-            }
+            };
 
             $scope.addKnOwnDevice = function (index) {
                 $scope.model.ownDevices.push(new String());
-            }
+            };
 
             $scope.deleteOwnDevice = function (index) {
                 $scope.model.ownDevices.splice(index, 1);
-            }
+            };
 
             $scope.addPhoneUsage = function (index) {
                 $scope.model.phoneUsage.push(new String());
-            }
+            };
 
             $scope.deletePhoneUsage = function (index) {
                 $scope.model.phoneUsage.splice(index, 1);
-            }
+            };
 
             $scope.addKindOfVideoGame = function (index) {
                 $scope.model.kindOfVideoGames.push(new String());
-            }
+            };
 
             $scope.deleteKindOfVideoGame = function (index) {
                 $scope.model.kindOfVideoGames.splice(index, 1);
-            }
+            };
 
             $scope.addFavoriteGame = function (index) {
                 $scope.model.favoriteGames.push(new String());
-            }
+            };
 
             $scope.deleteFavoriteGame = function (index) {
                 $scope.model.favoriteGames.splice(index, 1);
-            }
+            };
             $scope.addEmail = function () {
                 var existingEmail = $scope.model.email;
                 if (existingEmail) {
                     $scope.model.additionalEmails.push(new String());
                 }
-            }
+            };
 
             $scope.logout = function () {
                 logout($http, $scope, $location);
@@ -519,21 +520,21 @@ angular
 
             $scope.deleteAdditionalEmails = function (index) {
                 $scope.model.additionalEmails.splice(index, 1);
-            }
+            };
 
             $scope.addSocialNetwork = function () {
                 $scope.model.socialNetworks.push({});
-            }
+            };
             $scope.deleteSocialNetwork = function (index) {
                 $scope.model.socialNetworks.splice(index, 1);
-            }
+            };
 
             $scope.addFamiliaCompartamos = function () {
                 $scope.model.familiaCompartamos.push({});
-            }
+            };
             $scope.deleteFamiliaCompartamos = function (index) {
                 $scope.model.familiaCompartamos.splice(index, 1);
-            }
+            };
 
             $scope.avatar = function () {
                 $scope.avatarInfo[0].UserId = $scope.model.UserId;
@@ -543,7 +544,7 @@ angular
 
                 $scope.scrollToTop();
                 $location.path('/Juegos/Avatar');
-            }
+            };
 
             var $selects = $('select.form-control');
             $selects.change(function () {
