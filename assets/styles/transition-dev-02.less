@@ -238,12 +238,15 @@
             color: rgb(0,78,112);
             font-size: 5vw;
             position: absolute;
-            left: 0;
+            left: 1.5vw;
             top: auto;
-            bottom: 0;
+            bottom: -1px;
+            &::before {
+                content: "\e66a";
+            }
         }
         .container.chat .component .msg-container .msg.sent {
-            float: right;
+            float: right;            
         }
         .container.chat .component .msg-container .msg.sent .text {
             background: rgb(4,135,109);
@@ -259,10 +262,13 @@
             font-size: 5vw;
             display: block;
             top: auto;
-            bottom: 0;
+            bottom: -1px;
             color: rgb(4,135,109);
             position: absolute;
-            right: 0;
+            right: 1.5vw;
+            &::before {
+                content: "\e669";
+            }
         }
         .container.chat .component .typing-section {
             /*min-height: 6vh;
@@ -275,9 +281,10 @@
         .container.chat .component .typing-section textarea {
             float: none;
             display: inline-block;
-            width: 86.5vw;
+            width: 88vw;
+            height: 11vh;
             resize: none;            
-            padding: 0 2vw;
+            padding: 2vh 2vw 0;
             border-color: transparent;
             overflow-y: auto;
             font-size: 4.5vw;
@@ -301,16 +308,17 @@
             color: rgb(86,86,86);
         }
         .container.chat .component .typing-section .send-text {
-            width: 0; 
+            /*width: 0; 
             height: 0; 
             border-left: 20px solid rgb(237,72,35);
             border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent; 
+            border-bottom: 10px solid transparent; */
             float: none;
             display: inline-block;
             color: rgb(237,72,35);
             font-size: 7vw;
             vertical-align: middle;
+            cursor: pointer;
         }
 
         /* Fuente de energia */ 

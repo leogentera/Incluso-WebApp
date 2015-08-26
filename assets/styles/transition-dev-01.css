@@ -48,6 +48,11 @@ Parallel work file for UI Developer 01
 .incluso-app .evaluation .txt-renglon button.btn-add {
   padding: 4vw 1.7vw;
 }
+.incluso-app .evaluation .txt-renglon button .icon-plus {
+  padding-right: 0.5vw;
+  position: relative;
+  top: 1px;
+}
 .incluso-app .evaluation .part {
   margin: 1vh 5%;
   width: 90%;
@@ -85,7 +90,8 @@ Parallel work file for UI Developer 01
 }
 .incluso-app .evaluation .part button .icon-cross {
   font-size: 82%;
-  margin-left: 2px;
+  position: relative;
+  top: 1px;
 }
 .incluso-app .evaluation .controls .centered span {
   position: relative;
@@ -225,6 +231,7 @@ Parallel work file for UI Developer 01
   padding: 2.5vw 4.6vw;
   font-size: 5vw;
   line-height: 1.4;
+  cursor: pointer;
 }
 .incluso-app .evaluation #finalized .txt-renglon.panel > .panel-heading .icon-wrong-join {
   color: transparent;

@@ -26,14 +26,6 @@
                 return "";
             }
 
-            console.log('loading usercourse');
-            $scope.usercourse = JSON.parse(moodleFactory.Services.GetCacheObject("usercourse"));
-            console.log('loading course');
-            $scope.course = JSON.parse(moodleFactory.Services.GetCacheObject("course"));
-            console.log('loading currentStage');
-            $scope.currentStage = JSON.parse(moodleFactory.Services.GetCacheObject("currentStage"));
-            console.log('loading stage');
-
             $rootScope.pageName = "Mision incluso"
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = true;
@@ -62,12 +54,27 @@
                 logout($http, $scope, $location);
             };
 
-            $scope.navigateToStage = function(){                    
-                if ($scope.stage.firstTime) {
+            $scope.navigateToStage = function(){
+                var firstTimeStage = localStorage.getItem("firstTimeStage");
+
+                if (firstTimeStage == 1) {
                     $scope.openModal();
+                    $scope.stage.firstTime = 0;
+
+                    var dataModel = {
+                        firstTime: 0,
+                        courseId: $scope.usercourse.courseid
+                    };
+
+                    moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
                 }   
 
-                $location.path('/ProgramaDashboardEtapa/' + $scope.stage.id);
+                localStorage.setItem("firstTimeStage", 0);
+                $location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
+            };
+
+            $scope.playVideo = function(videoAddress, videoName){
+                playVideo(videoAddress, videoName);
             };
 
             function getDataAsync() {
@@ -94,6 +101,10 @@
                                                         
             function getCurrentStage(){
                 var currentStage = 1;
+
+                if ($scope.usercourse.firsttime == 1 && localStorage.getItem("firstTimeStage") != 0) {
+                    localStorage.setItem("firstTimeStage", 1);
+                }
                 
                 for(var i = 0; i < $scope.usercourse.stages.length; i++) {
                     var uc = $scope.usercourse.stages[i];
@@ -123,7 +134,20 @@
             }
             
             function getUserChatCallback() {
-                var chat = localStorage.getItem('userChat');
+                var chat = JSON.parse(localStorage.getItem('userChat'));
+                
+                var userId = localStorage.getItem("userId");
+                
+                var chatAmount = _.countBy(chat,function(messages){
+                        return messages.senderid != userId;
+                    });
+                                                
+                if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
+                    localStorage.setItem('chatRead',"false");
+                }
+                localStorage.setItem('chatAmountRead',chatAmount.true);
+                
+                
             }
 
             /* open terms and conditions modal */
