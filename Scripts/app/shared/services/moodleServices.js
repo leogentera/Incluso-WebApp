@@ -69,6 +69,16 @@
         var _putUserChat = function(userId, data, successCallback, errorCallback){
             _putAsyncData("updateChat",data, API_RESOURCE.format('messaging/'+ userId),successCallback,errorCallback);          
         };
+
+        var _assignStars = function(data, profile, token, successCallback,errorCallback){
+            
+            _putAsyncStars("profile", data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
+        };
+
+
+        var _putEndActivity = function(activityId, userId, data, token, successCallback,errorCallback){
+            _endActivity("activities", userId, data, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
+        };
         
         var _getCacheObject = function(key){
             return localStorage.getItem(key);
@@ -141,19 +151,36 @@
             });
         };
 
-        //var _endActivity = function(userId,activityId){            
-        //     _httpFactory({
-        //        method: 'PUT',
-        //        url: "activity/" + activityId + "userId/" + userId,                
-        //        headers: {'Content-Type': 'application/json'},
-        //        }).success(function(data, status, headers, config) {
-        //            localStorage.setItem(key, JSON.stringify(data));
-        //            successCallback();
-        //        }).error(function(data, status, headers, config) {
-        //            localStorage.setItem(key, JSON.stringify(data));
-        //            errorCallback();
-        //    });
-        //};
+        var _putAsyncStars = function(key, dataModel, profile, url, token, successCallback, errorCallback){
+            _httpFactory({
+                method: 'PUT',
+                url: url,
+                data: dataModel,
+                headers: {'Content-Type': 'application/json', 'Authorization': token},
+                }).success(function(data, status, headers, config) {
+                    localStorage.setItem(key, JSON.stringify(profile));
+                    successCallback();
+                }).error(function(data, status, headers, config) {
+                    localStorage.setItem(key, JSON.stringify(profile));
+                    errorCallback();
+            });
+        };
+
+        var _endActivity = function(key, userid, activity, url, token, successCallback, errorCallback){         
+            data={userid: userid};
+            _httpFactory({                
+               method: 'PUT',
+               url: url,        
+               data: data,       
+               headers: {'Content-Type': 'application/json', 'Authorization': token},
+               }).success(function(data, status, headers, config) {
+                   localStorage.setItem(key, JSON.stringify(activity));
+                   successCallback();
+               }).error(function(data, status, headers, config) {
+                   localStorage.setItem(key, JSON.stringify(activity));
+                   errorCallback();
+           });
+        };
         
          
         var createTree = function(activities) {
@@ -299,7 +326,9 @@
             PostUserNoitifications : _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
             GetUserChat: _getUserChat,
-            PutUserChat: _putUserChat
+            PutUserChat: _putUserChat,
+            PutStars: _assignStars,
+            PutEndActivity: _putEndActivity
 
         };
     })();
