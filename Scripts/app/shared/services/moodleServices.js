@@ -74,7 +74,7 @@
 
 
         var _putEndActivity = function(activityId, userId, data, token, successCallback,errorCallback){
-            _endActivity("activities", userId, data, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
+            _endActivity("activitiesCache", userId, data, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
         };
         
         var _getCacheObject = function(key){

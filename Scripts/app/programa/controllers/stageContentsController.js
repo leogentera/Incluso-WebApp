@@ -19,12 +19,13 @@ angular
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false; 
             $scope.userprofile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));                               
-            var activities = JSON.parse(moodleFactory.Services.GetCacheObject("activities"));            
+            var activities = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache"));            
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));            
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader            
             var starsNoMandatory = 0;
-            var starsMandatory = 0;            
+            var starsMandatory = 0;    
+            debugger;        
             if(!activities){
               var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
               $scope.fuenteDeEnergia = _.find(activitymanagers,function(a) { 
