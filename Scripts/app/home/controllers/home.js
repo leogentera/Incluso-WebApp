@@ -133,22 +133,29 @@
 					return false;
 				}else{
 				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
-				var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
-				$rootScope.totalNotifications = countNotificationsUnread;
-				return  countNotificationsUnread > 0;
+				//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
+				var countNotificationsUnread = _.filter(userNotifications, function(notif){
+                    return notif.timemodified != null;
+                });				
+				$rootScope.totalNotifications = countNotificationsUnread.length;
+				return  countNotificationsUnread.length > 0;
 				}
 			}
 			
-			$scope.showChatNotification = function(){
-				if ($scope.pageName == 'Notificaciones') {
+			$scope.showChatNotification = function(){				
+				if ($scope.pageName == 'Chat') {
 					return false;
 				}else{
-				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
-				var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
-				$rootScope.totalNotifications = countNotificationsUnread;
-				return  countNotificationsUnread > 0;
+					var userChat = JSON.parse(localStorage.getItem('userChat'));
+					var userId = localStorage.getItem('userId');
+					
+					var lastMessage = _.max(userChat,function(chat){
+							return chat.messagedate;
+						});
+					if (lastMessage.messagesenderid != userId) {						
+						return true;
+					}
 				}
-				
 			}
 
             //// new menu behavior ////

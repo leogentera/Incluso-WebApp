@@ -49,10 +49,13 @@
         var _getUserNotifications = function(userId,successCallback,errorCallback){
             _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback);
         };
+        
+        var _postUserNotifications = function(userId, data, successCallback, errorCallback){
+            _postAsyncData("notifications",data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+        };
 
         var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
             _postAsyncData(key,data, API_RESOURCE.format('forum'), successCallback, errorCallback);
-
         };
 
         var _putAsyncFirstTimeInfo = function(userId, data, successCallback, errorCallback){            
@@ -60,7 +63,7 @@
         };    
         
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
-            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
+            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification' ), successCallback, errorCallback);
         };
         
         var _getUserChat = function(userId, successCallback, errorCallback){
@@ -69,6 +72,16 @@
         
         var _putUserChat = function(userId, data, successCallback, errorCallback){
             _putAsyncData("updateChat",data, API_RESOURCE.format('messaging/'+ userId),successCallback,errorCallback);          
+        };
+
+        var _assignStars = function(data, profile, token, successCallback,errorCallback){
+            
+            _putAsyncStars("profile", data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
+        };
+
+        var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
+            _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
+
         };
         
         var _getCacheObject = function(key){
@@ -142,20 +155,95 @@
             });
         };
 
-        //var _endActivity = function(userId,activityId){            
-        //     _httpFactory({
-        //        method: 'PUT',
-        //        url: "activity/" + activityId + "userId/" + userId,                
-        //        headers: {'Content-Type': 'application/json'},
-        //        }).success(function(data, status, headers, config) {
-        //            localStorage.setItem(key, JSON.stringify(data));
-        //            successCallback();
-        //        }).error(function(data, status, headers, config) {
-        //            localStorage.setItem(key, JSON.stringify(data));
-        //            errorCallback();
-        //    });
-        //};
-        
+        var _putAsyncStars = function(key, dataModel, profile, url, token, successCallback, errorCallback){
+            _httpFactory({
+                method: 'PUT',
+                url: url,
+                data: dataModel,
+                headers: {'Content-Type': 'application/json', 'Authorization': token},
+                }).success(function(data, status, headers, config) {
+                    localStorage.setItem(key, JSON.stringify(profile));
+                    successCallback();
+                }).error(function(data, status, headers, config) {
+                    localStorage.setItem(key, JSON.stringify(profile));
+                    errorCallback();
+            });
+        };
+
+        var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
+            _httpFactory({                
+               method: 'PUT',
+               url: url,        
+               data: data,       
+               headers: {'Content-Type': 'application/json', 'Authorization': token},
+               }).success(function(data, status, headers, config) {
+                   localStorage.setItem(key, JSON.stringify(activityModel));
+                   successCallback();
+               }).error(function(data, status, headers, config) {
+                   localStorage.setItem(key, JSON.stringify(activityModel));
+                   errorCallback();
+           });
+        };
+
+
+        var refreshProgress = function(usercourse)  {
+            var globalActivities = 0;
+            var globalCompletedActivities = 0;
+
+            if (usercourse.stages) {
+                for(i =0; i < usercourse.stages.length; i++) {
+                    //stages
+
+                    var stageActivities = 0;
+                    var stageCompletedActivities = 0;
+
+                    if (usercourse.stages[i].challenges) {
+                        for(j =0; j < usercourse.stages[i].challenges.length; j++) {
+                            //challenges
+
+                            if (usercourse.stages[i].challenges[j].activities) {
+                                for(k =0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
+                                    //activities
+
+
+                                    if (usercourse.stages[i].challenges[j].activities[k].activities) {
+                                        for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
+                                            if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
+                                            {
+                                                globalActivities++;
+                                                stageActivities++;
+
+                                                if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
+                                                    globalCompletedActivities++;
+                                                    stageCompletedActivities++;
+                                                }
+                                            }
+                                        }
+
+                                    } 
+                                    else
+                                    {
+                                        globalActivities++;
+                                        stageActivities++;
+
+                                        if (usercourse.stages[i].challenges[j].activities[k].status == 1) {
+                                            globalCompletedActivities++;
+                                            stageCompletedActivities++;
+                                        }
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                    usercourse.stages[i].stageProgress = Math.round(100.0 * stageCompletedActivities / stageActivities, 0);
+                }
+            }
+            usercourse.globalProgress = Math.round(100.0 * globalCompletedActivities / globalActivities,0);
+
+            return usercourse;
+        }
+
          
         var createTree = function(activities) {
 
@@ -275,6 +363,8 @@
                     }
                 }
 
+
+            course = refreshProgress(course);
             localStorage.setItem("usercourse", JSON.stringify(course));
             localStorage.setItem("course", JSON.stringify(course));
             localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
@@ -297,10 +387,13 @@
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
             PutUserNotificationRead: _putUserNotificationRead,
+            PostUserNoitifications : _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
             PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
             GetUserChat: _getUserChat,
-            PutUserChat: _putUserChat
+            PutUserChat: _putUserChat,
+            PutStars: _assignStars,
+            PutEndActivity: _putEndActivity
 
         };
     })();

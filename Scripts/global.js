@@ -64,9 +64,61 @@ function syncCacheData (){
 
 }
 
-var _endActivity = function(currentUserId,currentActivityId, currentActivityType){
+var _endActivity = function(activityModel){
+                    
+      var currentUserId = localStorage.getItem("userId");
+      var data = {
+        userId :  currentUserId };
+  
+      _createNotification(activityModel, userId);
+      
+      moodleFactory.Services.PutAsyncActivity(activityId, data, activityModel,successCallback,errorCallback);      
+      
+}
 
-        function getChallengeByActivity_identifier(activity_identifier) {
+var _endActivityQuiz = function(activityModel){
+                    
+      var currentUserId = localStorage.getItem("userId");
+      var serviceParameters =  activityModel.answersResult;
+  
+      //_createNotification(activityModel.activity, activityModel.userId);
+      
+      moodleFactory.Services.PutEndActivity(activityModel.activity.coursemoduleid, serviceParameters, activityModel.activity,successCallback,errorCallback);      
+      
+}
+
+
+var _createNotification = function(activityModel, currentUserId){
+  
+  
+  //var activityId = acitivityModel.activityId;
+  
+  var notifications = JSON.parse(localStorage.getItem("notifications"));  
+  
+  for(var i= 0; i< notifications.length; i++){
+      if (notifications[i].activityidnumber == activityId) {
+          var dataModelNotification = {
+              notificationid: notifications[i].id,
+              timemodified : new Date(),      
+              userid: currentUserId ,
+              already_read: 0
+          };  
+          moodleFactory.Services.PostUserNoitifications(47,dataModelNotification,successCallback,errorCallback);          
+      }    
+  }  
+}
+
+var successCallback =function(data){  
+    console.log("global.js - successCallback - " + data);
+}
+
+var errorCallback = function(data){
+ console.log("global.js - errorCallback - " + data);
+  
+}
+
+
+function getChallengeByActivity_identifier(activity_identifier) {
             var matchingChallenge = null;
             var breakAll = false;
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -86,23 +138,15 @@ var _endActivity = function(currentUserId,currentActivityId, currentActivityType
             return matchingChallenge;
         }
 
-        function getActivitiesByActivity_identifier(activity_identifier) {
-            var activitiesFound = null;
-            
-            var challenge = getChallengeByActivity_identifier(activity_identifier);
-            activitiesFound =challenge.activities;                
-          
-            return activitiesFound ;
-        }
+function getActivitiesByActivity_identifier(activity_identifier) {
+    var activitiesFound = null;
+    
+    var challenge = getChallengeByActivity_identifier(activity_identifier);
+    activitiesFound =challenge.activities;                
   
-      var data = {
-        userId :  currentUserId,
-        activityId : currentActivityId,
-        activityType: currentActivityType                  
-      };
-  
-    moodleFactory.Services.PutAsyncActivity(userId,data,successCallback,errorCallback);
+    return activitiesFound ;
 }
+
 
 syncCacheData();
 var logout = function($scope, $location){
