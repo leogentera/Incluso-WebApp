@@ -26,7 +26,8 @@ angular
             //$scope.$emit('HidePreloader'); //hide preloader            
             var starsNoMandatory = 0;
             var starsMandatory = 0;    
-            var getcoursemoduleids = [];
+            var getcoursemoduleids = [];  
+      
             if(!activities){
               var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
               $scope.fuenteDeEnergia = _.find(activitymanagers,function(a) { 
@@ -36,17 +37,20 @@ angular
             }      
             else{
               $scope.fuenteDeEnergia = activities;
+              $scope.$emit('HidePreloader'); //hide preloader
             }                      
             $scope.statusObligatorios = 0;        
 
             function getDataAsync() {                                    
-              for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){                    
+              for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){                                
                  var activityCache = (JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
                   if(activityCache){                    
                     $scope.fuenteDeEnergia.activities[i] = activityCache;
                   }
-
-                  moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, errorCallback);                 
+                  else
+                  {
+                    moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, errorCallback);                 
+                  }                  
                  //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,successfullCallBack, errorCallback);
                  //(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));                 
               }                      
@@ -70,11 +74,11 @@ angular
             }*/
                         
             for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {              
-              if($scope.fuenteDeEnergia.activities[i].mandatory && $scope.fuenteDeEnergia.activities[i].status){                
+              if($scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){                
                 $scope.statusObligatorios+=1; 
                 starsMandatory += 50;               
               }
-              else if (!$scope.fuenteDeEnergia.activities[i].mandatory && $scope.fuenteDeEnergia.activities[i].status){
+              else if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){
                 starsNoMandatory += 50;
               }
             }
@@ -83,16 +87,15 @@ angular
               for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {
               if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                 if(!$scope.fuenteDeEnergia.activities[i].status){
-                  $scope.fuenteDeEnergia.activities[i].status = true;   
-                  debugger;                
+                  $scope.fuenteDeEnergia.activities[i].status = true;                     
                   _endActivity($scope.fuenteDeEnergia.activities[i]);
-                  if($scope.fuenteDeEnergia.activities[i].mandatory){                    
+                  if($scope.fuenteDeEnergia.activities[i].optional){                    
                     $scope.statusObligatorios+=1;    
                     assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid);
                     starsMandatory += 50;  
                     if($scope.statusObligatorios == 5){
                       $scope.fuenteDeEnergia.status = true;
-                      alert("Prueba: Ya has visto 5 elementos obligatorios");
+                      //alert("Prueba: Ya has visto 5 elementos obligatorios");
                       _endActivity($scope.fuenteDeEnergia);
                     }
                   }

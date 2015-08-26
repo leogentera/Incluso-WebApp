@@ -24,8 +24,9 @@ angular
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
             //$scope.activity = null;
+            $scope.like_status = 0;
 
-           
+
 
             $scope.finishActivity = function () {
                 //Activity completed
@@ -45,7 +46,8 @@ angular
 
                 $scope.AnswersResult.userid = $scope.userprofile.id
                 $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid
-                
+                $scope.AnswersResult.like_status = $scope.like_status;
+
                 _endActivityQuiz({ "activity": $scope.activity, "answersResult": $scope.AnswersResult, "userId": $scope.userprofile.id });
                 
                 //Update Activity Stars - Progres Service
@@ -62,15 +64,15 @@ angular
             }
 
             $scope.addAbility = function () {
-                $scope.AnswersResult.answers[4].fifth.push(new String());
+                $scope.AnswersResult.answers[4].push(new String());
             }
 
             $scope.deleteAbility = function (index) {
-                $scope.AnswersResult.answers[4].fifth.splice(index, 1);
+                $scope.AnswersResult.answers[4].splice(index, 1);
             }
 
             $scope.hideWarning = function () {
-                $scope.showWarning = true;
+                $scope.showWarning = false;
             }
 
             $scope.navigateToPage = function (pageNumber) {
@@ -83,18 +85,19 @@ angular
 
             $scope.validateAnsweredQuestions = function () {
 
-                var validationMenssage = "Asegurate de contestar todas las preguntas antes de guardar";
+                //var validationMenssage = "Asegurate de contestar todas las preguntas antes de guardar";
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
                 var theAnswersResult = $scope.AnswersResult;
 
-                if ($scope.AnswersResult.answers[0].first != null) {
-                    if ($scope.AnswersResult.answers[1].second[0] == true ||
-                        $scope.AnswersResult.answers[1].second[1] == true ||
-                        $scope.AnswersResult.answers[1].second[2] == true ||
-                        $scope.AnswersResult.answers[1].second[3] == true) {
-                        if ($scope.AnswersResult.answers[2].third != null) {
-                            if ($scope.AnswersResult.answers[3].fourth != null) {
-                                if ($scope.AnswersResult.answers[4].fifth.length != 0) {
+                if ($scope.AnswersResult.answers[0] != null) {
+                    if ($scope.AnswersResult.answers[1][0] == true ||
+                        $scope.AnswersResult.answers[1][1] == true ||
+                        $scope.AnswersResult.answers[1][2] == true ||
+                        $scope.AnswersResult.answers[1][3] == true) {
+                        if ($scope.AnswersResult.answers[2] != null) {
+                            if ($scope.AnswersResult.answers[3] != null) {
+                                if ($scope.AnswersResult.answers[4].length != 0) {
                                     $scope.navigateToPage(2);
                                 }
                                 else {
@@ -118,24 +121,14 @@ angular
                 }
             };
 
-
-
-            function successfullCallBack(data) {
-                var orto = '';
-            }
-
-            function errorCallback(data) {
-                var orto = '';
-            }
-
             function updateSelectedAnsers(questionIndex, question) {
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer == "Si") {
-                            $scope.AnswersResult.answers[0].first = 1;
+                            $scope.AnswersResult.answers[0] = 1;
                         }
                         else if (question.userAnswer == "No") {
-                            $scope.AnswersResult.answers[0].first = 0;
+                            $scope.AnswersResult.answers[0] = 0;
                         }
                         break;
                     case 1:
@@ -146,7 +139,7 @@ angular
                                 for (var index = 0; index < question.answers.length; index++) {
                                     var questionOption = question.answers[index];
                                     if (questionOption.answer.trim() == userAnswer) {
-                                        $scope.AnswersResult.answers[1].second[index] = true;
+                                        $scope.AnswersResult.answers[1][index] = true;
                                     }
                                 }
                             }
@@ -160,7 +153,7 @@ angular
                             for (var index = 0; index < question.answers.length; index++) {
                                 var questionOption = question.answers[index];
                                 if (questionOption.answer == question.userAnswer) {
-                                    $scope.AnswersResult.answers[3].fourth = index;
+                                    $scope.AnswersResult.answers[3] = index;
                                     break;
                                 }
                             }
@@ -174,7 +167,7 @@ angular
                                 for (var index = 0; index < question.answers.length; index++) {
                                     var questionOption = question.answers[index];
                                     if (questionOption.answer.trim() == userAnswer) {
-                                        $scope.AnswersResult.answers[4].fifth.push(userAnswer);
+                                        $scope.AnswersResult.answers[4].push(userAnswer);
                                     }
                                 }
                             }
@@ -188,37 +181,44 @@ angular
 
 
 
+            // $scope.AnswersResult = {
+            //     "userid": 0,//$scope.userprofile.id,
+            //     "answers": [
+            //         {
+            //             //"0": null
+            //             "first": null
+            //         },
+            //         {
+            //             "second": [
+            //                 '0', '0', '0', '0'
+            //                 // { "_0": 0 },
+            //                 // { "_1": 0 },
+            //                 // { "_2": 0 },
+            //                 // { "_3": 0 }
+            //             ]
+            //         },
+            //         {
+            //             "third": ''
+            //         }
+            //         ,
+            //         {
+            //             "fourth": null
+            //         },
+            //         {
+            //             "fifth": []
+            //         }
+            //     ]
+            //     , "activityidnumber": 0//$scope.activity.coursemoduleid
+            // };
+            // 
+            
             $scope.AnswersResult = {
                 "userid": 0,//$scope.userprofile.id,
-                "answers": [
-                    {
-                        //"0": null
-                        "first": null
-                    },
-                    {
-                        "second": [
-                            '0', '0', '0', '0'
-                            // { "_0": 0 },
-                            // { "_1": 0 },
-                            // { "_2": 0 },
-                            // { "_3": 0 }
-                        ]
-                    },
-                    {
-                        "third": ''
-                    }
-                    ,
-                    {
-                        "fourth": null
-                    },
-                    {
-                        "fifth": []
-                    }
-                ]
+                "answers": [null, [0, 0, 0, 0], null, null, []]
                 , "activityidnumber": 0//$scope.activity.coursemoduleid
+                , "like_status": 0
             };
-            
-            
+
 
             function getDataAsync() {
 
@@ -227,32 +227,47 @@ angular
                 $scope.coursemoduleid = activities[0].coursemoduleid;
 
                 $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
-                $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));                
+                $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                $scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/111"));
 
-                //Test purpose
-                activities[0].status = 0;
+                var activityFinished = false;
 
-                $scope.setReadOnly = activities[0].status == 1 ? true : false;
+                if (activities[0].status == 0) {
+                    if ($scope.activitieCache != null) {
+                        activityFinished = true;
+                    }
+                }
+                else {
+                    activityFinished = true;
+                }
 
-                if (activities[0].status == 1) {
-                    
+                $scope.setReadOnly = activityFinished;
+
+                if (activityFinished) {
+
                     var activity = null;
                     var activity = moodleFactory.Services.GetAsyncActivity(111, successfullCallBack, errorCallback);
 
                     // var activity = { "id": 44, "name": "Exploracion Inicial", "description": null, "activityType": "Quiz", "status": null, "stars": null, "dateIssued": null, "score": 8, "quizType": null, "grade": 10, "questions": [{ "id": 19, "question": "1. \u00bfAlguna vez has tenido un sue\u00f1o que no has sabido c\u00f3mo alcanzar?", "questionType": "multichoice", "answers": [{ "id": 60, "answer": "Si", "fraction": "1.0000000" }, { "id": 61, "answer": "No", "fraction": "1.0000000" }], "userAnswer": "No" }, { "id": 20, "question": "2. \u00bfQu\u00e9 de lo siguiente has intentado hacer para lograrlo? Puedes elegir m\u00e1s de una.", "questionType": "multichoice", "answers": [{ "id": 62, "answer": "Pedir ayuda a alguien", "fraction": "1.0000000" }, { "id": 63, "answer": "Investigar sobre el tema", "fraction": "0.0000000" }, { "id": 64, "answer": "Nada, porque me parece imposible", "fraction": "0.0000000" }, { "id": 65, "answer": "Trazar un plan de lo que necesito", "fraction": "0.0000000" }], "userAnswer": "Pedir ayuda a alguien; Investigar sobre el tema" }, { "id": 23, "question": "3. \u00bfQu\u00e9 persona exitosa que conoces te inspira?", "questionType": "shortanswer", "answers": [{ "id": 72, "answer": "*", "fraction": "1.0000000" }], "userAnswer": "Bill Gates" }, { "id": 24, "question": "4. \u00bfSabes cu\u00e1les son tus habilidades?", "questionType": "multichoice", "answers": [{ "id": 73, "answer": "Si", "fraction": "1.0000000" }, { "id": 74, "answer": "No", "fraction": "1.0000000" }, { "id": 75, "answer": "Mas o menos", "fraction": "1.0000000" }], "userAnswer": "Mas o menos" }, { "id": 25, "question": "5. Menciona tus principales habilidades", "questionType": "multichoice", "answers": [{ "id": 76, "answer": "Empat\u00eda", "fraction": "1.0000000" }, { "id": 77, "answer": "Creatividad", "fraction": "0.0000000" }, { "id": 78, "answer": "Liderazgo", "fraction": "0.0000000" }, { "id": 79, "answer": "Comunicaci\u00f3n", "fraction": "0.0000000" }, { "id": 80, "answer": "Negociaci\u00f3n", "fraction": "0.0000000" }, { "id": 81, "answer": "Trabajo en equipo", "fraction": "0.0000000" }, { "id": 82, "answer": "Innovaci\u00f3n", "fraction": "0.0000000" }, { "id": 83, "answer": "Iniciativa", "fraction": "0.0000000" }, { "id": 84, "answer": "Toma de decisiones", "fraction": "0.0000000" }, { "id": 85, "answer": "Planeaci\u00f3n", "fraction": "0.0000000" }, { "id": 86, "answer": "Organizaci\u00f3n", "fraction": "0.0000000" }], "userAnswer": "Organizaci\u00f3n; Toma de decisiones; Trabajo en equipo" }] };
-
-                    for (var index = 0; index < activity.questions.length; index++) {
-                        var question = activity.questions[index];
-                        updateSelectedAnsers(index, question)
-                    }
-
-                    if (!activity) {
-                        $location.path('/');
-                        return "";
+                    
+                    if (activity != null) {
+                        for (var index = 0; index < activity.questions.length; index++) {
+                            var question = activity.questions[index];
+                            updateSelectedAnsers(index, question)
+                        }
                     }
                     else {
-                        return activity;
+                        $scope.showWarning = true;
+                        $scope.warningMessage = "El quiz no se puede acceder en este momento";
                     }
+
+                    // if (!activity) {
+                    //     $location.path('/');
+                    //     return "";
+                    // }
+                    // else {
+                    //     return activity;
+                    // }
                 }
                 else {
                     return activities[0];

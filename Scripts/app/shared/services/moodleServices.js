@@ -2,7 +2,6 @@
     namespace('moodleFactory');
 
     moodleFactory.Services = (function(){
-
         var _getAsyncProfile = function(userId, successCallback, errorCallback){
             _getAsyncData("profile", API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };

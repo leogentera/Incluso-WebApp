@@ -90,24 +90,60 @@ var _endActivityQuiz = function(activityModel){
 
 
 var _createNotification = function(activityModel, currentUserId){
+    
+  var activityId = acitivityModel.coursemoduleid;  
+  var sectionId = activityModel.section;
+  currentUserId = localStorage.getItem("userId");
   
+  var notifications = JSON.parse(localStorage.getItem("notifications"));
+  var endTypeNotifications = _.where(notifications, {trigger : 2});  
   
-  //var activityId = acitivityModel.activityId;
-  
-  var notifications = JSON.parse(localStorage.getItem("notifications"));  
-  
-  for(var i= 0; i< notifications.length; i++){
-      if (notifications[i].activityidnumber == activityId) {
+  for(var i= 0; i< notifications.length; i++){      
+      if (notifications[i].activityidnumber && (activityId == notifications[i].activityidnumber)) {
           var dataModelNotification = {
               notificationid: notifications[i].id,
-              timemodified : new Date(),      
+              timemodified : new Date(),
               userid: currentUserId ,
               already_read: 0
-          };  
-          moodleFactory.Services.PostUserNoitifications(47,dataModelNotification,successCallback,errorCallback);          
-      }    
-  }  
+          };
+          moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);        
+      }else{
+        if (sectionId == notifications[i].sectionid){                    
+          var dataModelNotification = {
+              notificationid: notifications[i].id,
+              timemodified : new Date(),
+              userid: currentUserId ,
+              already_read: 0
+          };
+          moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);              
+        }      
+      }  
+  }
 }
+
+var _createMultipleActivitiesNotification = function(alertsId){
+  var notifications = JSON.parse(localStorage.getItem("notifications"));
+  var startTypeNotifications = _.where(notifications, {trigger : 1});
+  var alerts = alertsId.split(',');
+  var countAlertsConditionsMet = 0;
+  for(var i= 0; i< notifications.length; i++){
+    for(var j= 0; j< alerts.length;j++){
+      var activityId = alerts[j].id;
+      if (activityId == notifications[i].activityidnumber || activityId == notifications[i].sectionid) {
+        countAlertsConditionsMet ++;
+      }
+    }
+  }
+  if (countAlertsConditionsMet > 1){
+      var dataModelNotification = {
+          notificationid: notifications[i].id,
+          timemodified : new Date(),
+          userid: currentUserId ,
+          already_read: 0
+      };
+      moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
+  }
+} 
 
 var successCallback =function(data){  
     console.log("global.js - successCallback - " + data);
@@ -137,7 +173,7 @@ function getChallengeByActivity_identifier(activity_identifier) {
                  break;
             }
             return matchingChallenge;
-        }
+}
 
 function getActivitiesByActivity_identifier(activity_identifier) {
     var activitiesFound = null;
