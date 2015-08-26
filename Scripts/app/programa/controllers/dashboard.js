@@ -73,6 +73,10 @@
                 $location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
             };
 
+            $scope.playVideo = function(videoAddress, videoName){
+                playVideo(videoAddress, videoName);
+            };
+
             function getDataAsync() {
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback);
             }
