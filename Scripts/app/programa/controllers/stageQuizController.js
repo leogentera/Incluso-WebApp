@@ -20,6 +20,7 @@ angular
 
             $scope.currentPage = 1;
             $scope.setReadOnly = true;
+            $scope.showWarning = false;
 
             $scope.AnswersResult = {
                 "userid": 125,
@@ -64,6 +65,10 @@ angular
                 $scope.AnswersResult.answers[4].fifth.splice(index, 1);
             }
 
+            $scope.hideWarning = function () {
+                $scope.showWarning = true;
+            }
+
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
             };
@@ -78,13 +83,7 @@ angular
             $scope.cancel = function () {
                 $location.path('/ProgramaDashboard');
             };
-            // 
-            //             $scope.navigateToStage = function () {
-            //                 $scope.usercourse.stages[$scope.currentStageId].firstTime = 0;
-            //                 localStorage.setItem("usercourse", JSON.stringify($scope.usercourse));
-            //                 $location.path('/ProgramaDashboardEtapa/' + $scope.stage.id);
-            //             };
-            // 
+            
             $scope.validateAnsweredQuestions = function () {
 
                 var validationMenssage = "Asegurate de contestar todas las preguntas antes de guardar";
@@ -102,105 +101,25 @@ angular
                                     $scope.navigateToPage(2);
                                 }
                                 else {
-                                    alert(validationMenssage);
+                                    $scope.showWarning = true;
                                 }
                             }
                             else {
-                                alert(validationMenssage);
+                                $scope.showWarning = true;
                             }
                         }
                         else {
-                            alert(validationMenssage);
+                            $scope.showWarning = true;
                         }
                     }
                     else {
-                        alert(validationMenssage);
+                        $scope.showWarning = true;
                     }
                 }
                 else {
-                    alert(validationMenssage);
+                    $scope.showWarning = true;
                 }
-            };
-          
-            //             
-            // 
-            //             //$scope.scrollToTop();
-            //             //$scope.$emit('HidePreloader'); //hide preloader
-            //             
-            //             $scope.model = getDataAsync();
-            // 
-            //             $scope.activity = null;
-            // 
-            
-            //             function activityModuleid() {
-            // 
-            //                 var coursemoduleid = null;
-            //                 var activitiManger = JSON.parse(localStorage.getItem("activityManagers"));
-            // 
-            //                 for (var index = 0; index < activitiManger.length; index++) {
-            //                     var element = activitiManger[index];
-            // 
-            //                     if (element.activity_identifier == 3004) {
-            //                         for (var index = 0; index < element.activities.length; index++) {
-            //                             var activityChallenge = element.activities[index];
-            //                             if (activityChallenge.activity_identifier == "1001") {
-            //                                 coursemoduleid = activityChallenge.coursemoduleid;
-            //                                 break;
-            //                             }
-            //                         }
-            //                     }
-            //                 }
-            //                 return coursemoduleid;
-            //             }
-
-            //             function isActivityCompleted() {
-            //                 var isCompleted = 0;
-            //                 var exploracionFinalId = 37;
-            // 
-            //                 var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-            // 
-            //                 for (var index = 0; index < userCourse.stages.length; index++) {
-            //                     var stage = userCourse.stages[index];
-            //                     if (stage.id == exploracionFinalId) {
-            //                         isCompleted = stage.stageStatus;
-            //                         break;
-            //                     }
-            //                 }
-            //                 
-            //                 //Test purpose
-            //                 isCompleted = 0;
-            // 
-            //                 return isCompleted;
-            //             }
-
-            //             function getChallengeByActivity_identifier(activity_identifier) {
-            //                 var matchingChallenge = null;
-            //                 var breakAll = false;
-            //                 var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-            //                 for (var index = 0; index < userCourse.stages.length; index++) {
-            //                     var stage = userCourse.stages[index];
-            //                     for (var index = 0; index < stage.challenges.length; index++) {
-            //                         var challenge = stage.challenges[index];
-            //                         if (challenge.activity_identifier == activity_identifier) {
-            //                             matchingChallenge = challenge;
-            //                             breakAll = true;
-            //                             break;
-            //                         }
-            //                     }
-            //                     if(breakAll)
-            //                      break;
-            //                 }
-            //                 return matchingChallenge;
-            //             }
-            // 
-            //             function getActivitiesByActivity_identifier(activity_identifier) {
-            //                 var activitiesFound = null;
-            //                 
-            //                 var challenge = getChallengeByActivity_identifier(activity_identifier);
-            //                 activitiesFound =challenge.activities;                
-            //               
-            //                 return activitiesFound ;
-            //             }
+            };          
 
             function getDataAsync() {
 
@@ -208,11 +127,10 @@ angular
                 var activities = getActivitiesByActivity_identifier(3004);
 
                 //Test purpose
-                activities[0].status = 1;
+                activities[0].status = 0;
+                $scope.setReadOnly = activities[0].status == 1 ? true : false;
 
                 if (activities[0].status == 1) {
-
-                    $scope.setReadOnly = activities[0].status == 1 ? true : false;
                     
                     //var activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity" + 111));
                     //var activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity" + activities[0].coursemoduleid));
@@ -294,45 +212,51 @@ angular
             }
 
 
-            $scope.activity = getDataAsync();         
-            
-      
-            // 
-            //             $scope.openModal = function (size) {
-            // 
-            //                 if ($scope.firstTime == 1) {
-            //                     setTimeout(function () {
-            // 
-            //                         //         var modalInstance = $modal.open({
-            //                         //             animation: $scope.animationsEnabled,
-            //                         //             templateUrl: 'tutorialModal.html',
-            //                         //             controller: 'tutorialController',
-            //                         //             size: size,
-            //                         //             windowClass: 'user-help-modal'
-            //                         //         });
-            //                         //         console.log("modal open");
-            //                         //     }, 500);
-            //                         // }
-            // 
-            //                         var modalInstance = $modal.open({
-            //                             animation: $scope.animationsEnabled,
-            //                             templateUrl: 'OpeningStageModal.html',
-            //                             controller: 'OpeningStageController',
-            //                             size: size,
-            //                             windowClass: 'user-help-modal'
-            //                         });
-            //                         console.log("modal open");
-            //                     }, 500);
-            //                 }
-            // 
-            //             };
-            // 
-            //             $scope.openModal();
+            $scope.activity = getDataAsync();
+
+
+
+//             $scope.openModal = function (size) {
+// 
+//                 if (1 == 1) {
+//                     setTimeout(function () {
+// 
+//                 //         var modalInstance = $modal.open({
+//                 //             animation: $scope.animationsEnabled,
+//                 //             templateUrl: 'tutorialModal.html',
+//                 //             controller: 'tutorialController',
+//                 //             size: size,
+//                 //             windowClass: 'user-help-modal'
+//                 //         });
+//                 //         console.log("modal open");
+//                 //     }, 500);
+//                 // }
+//             
+//                     var modalInstance = $modal.open({
+//                         animation: $scope.animationsEnabled,
+//                         templateUrl: 'OpeningStageModal.html',
+//                         controller: 'OpeningStageController',
+//                         size: size,
+//                         windowClass: 'user-help-modal'
+//                     });
+//                     console.log("modal open");
+//                 }, 500);
+//                 }
+// 
+//             };
+// 
+//             $scope.openModal();
+
+
+
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
+    })
+    .controller('videoCollapsiblePanelController', function ($scope) {
+        $scope.isCollapsed = false;
     });
 
