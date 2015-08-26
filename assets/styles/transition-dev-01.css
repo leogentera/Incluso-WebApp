@@ -225,6 +225,7 @@ Parallel work file for UI Developer 01
   padding: 2.5vw 4.6vw;
   font-size: 5vw;
   line-height: 1.4;
+  cursor: pointer;
 }
 .incluso-app .evaluation #finalized .txt-renglon.panel > .panel-heading .icon-wrong-join {
   color: transparent;

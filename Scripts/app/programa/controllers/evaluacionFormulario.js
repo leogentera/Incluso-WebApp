@@ -15,8 +15,8 @@ angular
 		$rootScope.showToolbar = true;
 		$rootScope.showFooter = true; 
 		$rootScope.showFooterRocks = false;
+		$scope.$emit('HidePreloader');
 		
-		$scope.isCollapsed = true;
 		$scope.showAddNewOption = true; 	
 
 		$scope.toggleAddNewOptionButton = function () {
