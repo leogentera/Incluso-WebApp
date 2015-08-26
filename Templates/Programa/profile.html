@@ -619,12 +619,14 @@
                                                 </div>
 
                                                 <div class="pager">
-                                                    <div class="icomoon icon-arrow-bold-left" ng-click="changepage(-1)"></div>
+                                                    <button class="icomoon icon-arrow-bold-left" ng-click="changepage(-1)" ng-show="normalBadgePage > 1"></button>
+                                                    <button class="icomoon icon-arrow-bold-left" disabled ng-show="normalBadgePage == 1"></button>
                                                     <span>
                                                         <span ng-bind="normalBadgePage" class="actual-page"></span>/
                                                         <span ng-bind="totalBadgePages"></span>
                                                     </span>
-                                                    <div class="icomoon icon-arrow-bold-right" ng-click="changepage(1)"></div>
+                                                    <button class="icomoon icon-arrow-bold-right" ng-click="changepage(1)" ng-show="normalBadgePage < totalBadgePages"></button>
+                                                    <button class="icomoon icon-arrow-bold-right" ng-show="normalBadgePage == totalBadgePages"></button>
                                                 </div>
                                             </div>
                                         </div>
