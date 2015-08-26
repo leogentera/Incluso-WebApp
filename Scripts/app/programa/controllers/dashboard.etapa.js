@@ -17,7 +17,7 @@ angular
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
             
-            //$rootScope.pageName = "Estación: Conócete";
+            //$rootScope.pageName = "EstaciÃ³n: ConÃ³cete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
@@ -37,10 +37,10 @@ angular
             var challengesPaths = {
                 "Exploración Inicial" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial",
                 "Cuarto de recursos" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia",
-                "Conócete" : "",
-                "Mis sueños" : "",
+                "ConÃ³cete" : "",
+                "Mis sueÃ±os" : "",
                 "Cabina de soporte" : "",
-                "Exploración final" : ""
+                "ExploraciÃ³n final" : ""
             };
             
             $scope.goToUrl = function(url) {
@@ -49,12 +49,12 @@ angular
 
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
-            var totalDeEtapas = $scope.model.stages.length; //Número total de Etapas
+            var totalDeEtapas = $scope.model.stages.length; //NÃºmero total de Etapas
 
-            var totalDeRetos = 0;   //Número total de Retos, considetando todos los Retos de todas las Etapas
-            var totalDeActividades = 0; //Número total de Actividdes, considerando todos los Retos de todas las Etapas
+            var totalDeRetos = 0;   //NÃºmero total de Retos, considetando todos los Retos de todas las Etapas
+            var totalDeActividades = 0; //NÃºmero total de Actividdes, considerando todos los Retos de todas las Etapas
 
-            //Obtención del total de Retos sobre todas la Etapas (1, 2 y 3)
+            //ObtenciÃ³n del total de Retos sobre todas la Etapas (1, 2 y 3)
             for (var i = 0; i < totalDeEtapas; i++) {
                 totalDeRetos += $scope.model.stages[i].challenges.length;
             }
@@ -79,7 +79,7 @@ angular
             var avanceEnEtapaActual = 0;
 
 
-            //Cálculo del avance del usuario en la Etapa actual
+            //CÃ¡lculo del avance del usuario en la Etapa actual
             var totalActividadesEnEtapaActual = 0;
 
             var retosEnEtapaActual = $scope.model.stages[$scope.idEtapa].challenges.length;

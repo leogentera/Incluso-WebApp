@@ -35,6 +35,10 @@
         var _getAsyncActivitiesInfo = function(activityId, successCallback, errorCallback){
             _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), successCallback, errorCallback);
         };
+        
+        var _getAsyncActivityQuizInfo = function(activityId,userId, successCallback, errorCallback){
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId+'?userid='+userId), successCallback, errorCallback);
+        };
             
         var _getAsyncCourse = function(courseId, successCallback, errorCallback){
             successCallback();
@@ -399,7 +403,7 @@
             GetCacheJson: _getCacheJson,
             GetAsyncActivity: _getAsyncActivityInfo,
             GetAsyncActivities: _getAsyncActivitiesInfo,
-            PutAsyncActivity: _putAsyncActivityInfo,
+            GetAsyncActivityQuizInfo: _getAsyncActivityQuizInfo,
             PutAsyncQuiz: _putAsyncQuiz,
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
