@@ -21,7 +21,7 @@ angular
             $rootScope.showFooterRocks = false;
 
             $scope.scrollToTop();
-            $scope.$emit('HidePreloader'); //hide preloader
+            $scope.$emit('ShowPreloader'); //hide preloader
 
             $scope.forumModals = {
                 "isTextCollapsed":true,
@@ -177,6 +177,7 @@ angular
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.id == $routeParams.discussionId; });
                 var posts = $scope.discussion.posts[0].replies;
                 posts.forEach(createModalReferences);
+                $scope.$emit('HidePreloader'); //hide preloader
             }
 
             getDataAsync();
