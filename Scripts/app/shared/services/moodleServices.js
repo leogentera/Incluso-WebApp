@@ -144,9 +144,7 @@
         //    });
         //};
         
-        
-        
-        
+         
         var createTree = function(activities) {
 
             var activityManagers = [];
@@ -169,6 +167,7 @@
 
                 //stages
                 for(i = 0; i < course.stages.length; i++) {
+
                     course.stages[i].stageProgress = 0;
                     course.stages[i].stageStatus = course.stages[i].status;
 
