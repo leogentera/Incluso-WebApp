@@ -139,7 +139,6 @@
             function getUserNotificationsCallback(data){                
                 var notifications = JSON.parse(localStorage.getItem("notifications"));                
             }
-            
             /* open terms and conditions modal */
             $scope.openModal = function (size) {
                 setTimeout(function(){
