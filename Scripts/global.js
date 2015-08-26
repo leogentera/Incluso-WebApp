@@ -64,9 +64,15 @@ function syncCacheData (){
 
 }
 
-var _endActivity = function(userId,activityId){
+var _endActivity = function(currentUserId,currentActivityId, currentActivityType){
   
-    moodleFactory.Services.PutAsyncActivity(userId,activityId,successCallback,errorCallback);
+      var data = {
+        userId :  currentUserId,
+        activityId : currentActivityId,
+        activityType: currentActivityType                  
+      };
+  
+    moodleFactory.Services.PutAsyncActivity(userId,data,successCallback,errorCallback);
 }
 
 syncCacheData();

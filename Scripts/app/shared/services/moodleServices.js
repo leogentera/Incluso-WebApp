@@ -57,6 +57,14 @@
             _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/' + notificationId), successCallback, errorCallback);
         };
         
+        var _getUserChat = function(userId, successCallback, errorCallback){
+            _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId),successCallback,errorCallback);;
+        };
+        
+        var _putUserChat = function(userId, data, successCallback, errorCallback){
+            _putAsyncData("updateChat",data, API_RESOURCE.format('messaging/'+ userId),successCallback,errorCallback);          
+        };
+        
         var _getCacheObject = function(key){
             return localStorage.getItem(key);
         };
@@ -277,7 +285,9 @@
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
             PutUserNotificationRead: _putUserNotificationRead,
-            PostAsyncForumPost: _postAsyncForumPost
+            PostAsyncForumPost: _postAsyncForumPost,
+            GetUserChat: _getUserChat,
+            PutUserChat: _putUserChat
 
         };
     })();

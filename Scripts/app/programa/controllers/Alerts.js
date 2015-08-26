@@ -9,8 +9,8 @@ angular
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {                       
-                                    
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+              
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             
             //var activitiesperUser = _.filter(userCourse.stages, function(stages){
@@ -27,7 +27,7 @@ angular
             
             $scope.notifications = _.filter(userNotifications, function(notif){
                     return notif.timemodified != null;
-                });            
+                });
                                             
             var notificationsQuantityInitial = 6;
             
