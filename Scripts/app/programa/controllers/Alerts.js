@@ -109,12 +109,11 @@ angular
                 $location.path('/ProgramaDashboard');
             }
             
-            $scope.showAlertDetail = function (alertId) {                
-                debugger;
+            $scope.showAlertDetail = function (alertId) {
                 var userId = localStorage.getItem('userId');
                 var notificationId = (alertId - 1);
                 
-                $scope.notifications[alertId -1 ].read = true ;                
+                $scope.notifications[alertId -1 ].read = true ;
                 localStorage.setItem("notifications", JSON.stringify($scope.notifications));
                 _readNotification(userId,notificationId);
                 $scope.navigateTo('/AlertsDetail/' + alertId, 'Notificaciones', 'null', 'navbarorange');

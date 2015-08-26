@@ -165,6 +165,19 @@
             });
         };
 
+        var _putAsyncFirstTimeInfo = function(userId, dataModel, successCallback, errorCallback){            
+            _httpFactory({
+                method: 'PUT',
+                url: API_RESOURCE.format('usercourse/' + userId),
+                data: dataModel,
+                headers: {'Content-Type': 'application/json'},
+                }).success(function(data, status, headers, config) {
+                    successCallback();
+                }).error(function(data, status, headers, config) {
+                    errorCallback();
+            });
+        };    
+
         var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
             _httpFactory({                
                method: 'PUT',
@@ -358,12 +371,10 @@
                     }
                 }
 
-
             course = refreshProgress(course);
             localStorage.setItem("usercourse", JSON.stringify(course));
             localStorage.setItem("course", JSON.stringify(course));
             localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
-                
             }
         }        
         
@@ -384,6 +395,7 @@
             PutUserNotificationRead: _putUserNotificationRead,
             PostUserNoitifications : _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
+            PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat,
             PutStars: _assignStars,
