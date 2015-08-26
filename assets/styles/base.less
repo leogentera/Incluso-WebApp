@@ -244,16 +244,21 @@ body {
     #site-menu .nav > li{
         border-bottom: 2px solid rgba(255, 255, 255, 0.28);
         display: block;
-        margin-right: 6vw;
+        margin-right: 7vw;
         position: relative;
         padding: 1vw 0;
+        .submenu {
+            li {
+                font-size: 6vw;               
+            }
+        }
         & > i{
             padding: 3vw 1vw;
         }
         & > a{
             color: white;
             display: block;
-            font-size: 5vw;
+            font-size: 6vw;
             padding: 1.5vh 3vw;
             position: relative;
             width: 100%;
@@ -311,7 +316,12 @@ body {
     .btn {
         border: none;
         .border-radius-all(3px);
-        font-weight: 600;        
+        font-weight: 600;
+
+        &:hover,
+        &:active {
+            outline: none;
+        }
     }
     .btn-cnt{
         width:80%;
@@ -357,11 +367,9 @@ body {
     a.btn-transparent:hover {
         text-decoration: underline;
     }
-
     .btn-uppercase {
         text-transform: uppercase;
     }
-
     .btn-link {
         display: block;
         /*padding: 9px 3px;*/ padding: 1.8vw 0px;
@@ -375,7 +383,7 @@ body {
         text-decoration: none;
     }
     .btn-add {
-        border-style: dashed;
+        border-style: solid;
         border-color: @clr-blueTurquoise;
         .border-radius-all(1vw);
         background-color: transparent;
@@ -1724,7 +1732,7 @@ body {
     /****************************************************************************
      $footer
      Description: CSS class for a page wrapper with pages and buttons
-    ****************************************************************************/
+    ****************************************************************************/   
     .footer {
         display: none;
         background-image:url('../images/bg-footer-ship.gif');
@@ -1734,7 +1742,7 @@ body {
         padding: 20px 0 0;
         margin: 0;
         min-height: 180px;
-        box-shadow: 0 28px 10px -28px black inset;
+        /*box-shadow: 0 28px 10px -28px black inset;*/
         
         .block-list {
             padding-bottom: 50px;
@@ -1846,6 +1854,44 @@ body {
         }        
     }
     /***************************************************************************/
+
+    /***********************************************************************
+     00. $points
+     Description: CSS to represent the main footer for the application with
+     themes to overrides diferent views.
+    ************************************************************************/
+    .app-footer {
+        display: none;
+        padding: 6vw 0;
+        margin: 0;
+        border: none;
+        .box-shadow-reset();
+        background-color: @clr-gray-asphalt2;
+        background-image: url('@{url-images}/img-footer-texture.png');
+        background-position: center 10px;
+        background-repeat: no-repeat;
+        .background-size(80%, auto);
+        
+        .btn-back-to-top {
+            display: block;
+            padding: 5vw 0px 0px;
+        }
+        .block-list,
+        .btn-back-to-top {
+            margin-left: auto;
+            margin-right: auto;
+        } 
+        li:last-child {display: none;} 
+
+        /* by theme */
+        &.theme-rocks {
+            background-image: url("@{url-images}/bg-footer-rocks.png");
+            background-position: 50% 0;
+            .background-size(100%, auto);
+            .box-shadow-reset();
+        }
+    } 
+    /***********************************************************************/    
  
 
     /****************************************************************************

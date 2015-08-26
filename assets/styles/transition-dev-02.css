@@ -352,11 +352,15 @@
   color: #ffffff;
 }
 .incluso-app .fuente-energia .filter-section select {
-  font-size: 4vw;
+  font-size: 5vw;
+  font-weight: bold;
+  color: white;
   width: 92%;
   display: inline-block;
   vertical-align: middle;
   position: relative;
+  text-indent: 0 !important;
+  padding-left: 1.4vw;
 }
 .incluso-app .fuente-energia .filter-section .icon-arrow {
   font-size: 3vw;
@@ -373,14 +377,14 @@
   display: block;
 }
 .incluso-app .fuente-energia .wall .part .type {
-  padding: 2vw 1vw;
+  padding: 2vw 3.1vw 2vw 1vw;
   border-bottom: 2px solid rgba(255, 255, 255, 0.08);
 }
 .incluso-app .fuente-energia .wall .part .type * {
   float: none;
   display: table-cell;
   vertical-align: middle;
-  padding-right: 1px;
+  padding-right: 0.4vw;
 }
 .incluso-app .fuente-energia .wall .part .type i {
   color: #62767c;

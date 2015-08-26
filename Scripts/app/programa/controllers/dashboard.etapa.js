@@ -12,8 +12,9 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             /* $routeParams.stageId */
             _httpFactory = $http;
-
             $scope.Math = window.Math;
+            $scope.$emit('ShowPreloader'); //show preloader
+            
             $rootScope.pageName = "Estación: Conócete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
@@ -21,6 +22,8 @@ angular
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
+            
+            _createNotification();
             
             //
             /*
@@ -39,6 +42,8 @@ angular
             $scope.goToUrl = function(url) {
                 $location.path(url);                
             }
+                    
+                        
             
             //El key "status" de los elementos del array "etapas" del objeto "logroEducativo" indica si la etapa ya se completó (1) o no se ha completado (9)
             $scope.logroEducativo = {
