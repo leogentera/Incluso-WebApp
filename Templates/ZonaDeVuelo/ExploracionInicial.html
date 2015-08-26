@@ -96,7 +96,7 @@
                         </button>
                       </div>
                       <div class="add"><i class="icomoon icon-edit"></i>
-                        <input type="text" class="form-control form-control-lg theme-form" placeholder="Nueva habilidad" ng-model="AnswersResult.answers[4].fifth[$index]"
+                        <input type="text" name="opciones" class="form-control form-control-lg theme-form" placeholder="Nueva habilidad" ng-model="AnswersResult.answers[4].fifth[$index]"
                         ng-readonly="setReadOnly" />
                       </div>
 
@@ -141,16 +141,16 @@
             <section class="txt-renglon centered form ">
               ¿Que opinas de ésta actividad?
               <section class="txt-renglon txt-bigger clearfix ">
-                <div class="opinion ">
-                  <input id="like " type="radio " value="option1 " name="like ">
-                  <label for="like ">Me gusta</label>
-                </div>
-                <div class="opinion ">
-                  <input id="dislike " type="radio " value="option2 " name="like ">
-                  <label for="dislike ">No me gusta</label>
-                </div>
+                <!--<div class="opinion ">-->
+                <input id="like " type="radio " value="option1 " name="like ">
+                <label for="like ">Me gusta</label>
+                <!--</div>
+                <div class="opinion ">-->
+                <input id="dislike " type="radio " value="option2 " name="like ">
+                <label for="dislike ">No me gusta</label>
+                <!--</div>-->
               </section>
-              <button class="btn btn-primary btn-lg btn-cnt ">Terminar</button>
+              <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">Terminar</button>
             </section>
           </div>
         </div>
