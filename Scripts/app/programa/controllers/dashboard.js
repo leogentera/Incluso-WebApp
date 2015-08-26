@@ -56,6 +56,7 @@
             $(".navbar").removeClass("etapa-uno");
             getDataAsync();
             getUserNotifications();
+            getUserChat();
 
             $scope.logout = function(){
                 logout($http, $scope, $location);
@@ -112,10 +113,19 @@
             function getUserNotifications(){
                 moodleFactory.Services.GetUserNotification($scope.user.id, getUserNotificationsCallback, errorCallback);
             }
-            
-            function getUserNotificationsCallback(data){                
-                var notifications = JSON.parse(localStorage.getItem("notifications"));                
+
+            function getUserNotificationsCallback(){
+                var notifications = JSON.parse(localStorage.getItem("notifications"));
+            }            
+
+            function getUserChat() {
+                moodleFactory.Services.GetUserChat($scope.user.id,getUserChatCallback, errorCallback);                
             }
+            
+            function getUserChatCallback() {
+                var chat = localStorage.getItem('userChat');
+            }
+
             /* open terms and conditions modal */
             $scope.openModal = function (size) {
                 setTimeout(function(){
