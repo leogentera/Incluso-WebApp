@@ -68,12 +68,28 @@
 				<!--Pregunta tipo Lista Dinámica-->
 				<div>
 					<div class="txt-renglon txt-bigger">5. ¿Pregunta de Lista Dinámica?</div>
-					<section>
-						<div class="part"><span>Punto 1</span><i class="icomoon icon-edit fl-right"></i></div>
-						<div class="part"><span>Punto 2</span><i class="icomoon icon-edit fl-right"></i></div>
-						<div class="part"><span>Punto 3</span><i class="icomoon icon-edit fl-right"></i></div>
-					</section>
-					<div class="add"><i class="icomoon icon-edit"></i><input id="texto1" type="text" name="txtAbierto" placeholder="Nuevo punto"></div>
+					<ul class="block-list clearfix">
+						<li>
+							<section class="form txt-renglon part list clearfix">
+								<div class="form-group theme-form">
+									<div class="clearfix">
+										<span>Punto #</span>
+										<button class="btn btn-circle fl-right">
+											<i class="icomoon icon-cross white"></i>
+										</button>
+									</div>
+									<div class="add"><i class="icomoon icon-edit"></i>
+										<input type="text" class="form-control form-control-lg theme-form" placeholder="Punto 1">
+									</div>
+								</div>
+							</section>
+						</li>
+					</ul>
+					<div class="txt-renglon">
+						<button type="button" class="btn btn-lg btn-block btn-add">
+							<i class="icomoon icon-plus"></i>Agregar
+						</button>
+					</div>		
 				</div>
 			</div>
 			<section id="controls" class="controls">
