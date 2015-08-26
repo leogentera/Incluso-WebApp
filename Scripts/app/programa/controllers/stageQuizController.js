@@ -294,8 +294,10 @@ angular
                  });
                      console.log("modal open");                 
              };
+ 
+             $scope.openModal();
 
-            function addHeight () {
+             function addHeight () {
                 $scope.finalHeight = angular.element("#listaDinamica").height() + 125;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);              
             }
@@ -304,8 +306,6 @@ angular
                 $scope.finalHeight = angular.element("#listaDinamica").height() - 135;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);              
             }
- 
-             $scope.openModal();
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
