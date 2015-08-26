@@ -24,7 +24,7 @@ angular
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader            
             var starsNoMandatory = 0;
-            var starsMandatory = 0;
+            var starsMandatory = 0;            
             if(!activities){
               var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
               $scope.fuenteDeEnergia = _.find(activitymanagers,function(a) { 
@@ -205,13 +205,13 @@ angular
                 instanceType: 0,
                 date: getdate()
                 };
-              if(starsMandatory < 250 && isMandatory){
-                $scope.userprofile.stars += 50;                   
+              if(starsMandatory < 250 && isMandatory){                
+                $scope.userprofile.stars = parseInt($scope.userprofile.stars)+50;
                 moodleFactory.Services.PutStars(data,$scope.userprofile, currentUser.token,successfullCallBack, errorCallback);
                 //localStorage.setItem("profile", JSON.stringify($scope.userprofile)); 
               }
               else if(starsNoMandatory < 500){
-                $scope.userprofile.stars += 50;                   
+                $scope.userprofile.stars = parseInt($scope.userprofile.stars)+50;                  
                 moodleFactory.Services.PutStars(data,$scope.userprofile, currentUser.token,successfullCallBack, errorCallback);
               }                
             }
