@@ -64,6 +64,35 @@ function syncCacheData (){
 
 }
 
+function getChallengeByActivity_identifier(activity_identifier) {
+                var matchingChallenge = null;
+                var breakAll = false;
+                var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+                for (var index = 0; index < userCourse.stages.length; index++) {
+                    var stage = userCourse.stages[index];
+                    for (var index = 0; index < stage.challenges.length; index++) {
+                        var challenge = stage.challenges[index];
+                        if (challenge.activity_identifier == activity_identifier) {
+                            matchingChallenge = challenge;
+                            breakAll = true;
+                            break;
+                        }
+                    }
+                    if(breakAll)
+                     break;
+                }
+                return matchingChallenge;
+            }
+
+            function getActivitiesByActivity_identifier(activity_identifier) {
+                var activitiesFound = null;
+                
+                var challenge = getChallengeByActivity_identifier(activity_identifier);
+                activitiesFound =challenge.activities;                
+              
+                return activitiesFound ;
+            }
+
 var _endActivity = function(userId,activityId){
   
     moodleFactory.Services.PutAsyncActivity(userId,activityId,function(){

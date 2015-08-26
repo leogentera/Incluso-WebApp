@@ -12,6 +12,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
+            $scope.$emit('ShowPreloader'); //show preloader
             $rootScope.pageName = "Estación: Conócete"
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
@@ -19,8 +20,7 @@ angular
             $rootScope.showFooterRocks = false; 
 
             $scope.scrollToTop();
-            $scope.$emit('HidePreloader'); //hide preloader
-
+            
             $scope.activity = {
                    id:7,
                    name:"Foro",
@@ -345,6 +345,7 @@ angular
                 //$scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 64));
                //localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
+               $scope.$emit('HidePreloader'); //hide preloader
             }
 
             getDataAsync();

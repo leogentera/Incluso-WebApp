@@ -377,14 +377,14 @@
   display: block;
 }
 .incluso-app .fuente-energia .wall .part .type {
-  padding: 2vw 3.4vw 2vw 1vw;
+  padding: 2vw 3.1vw 2vw 1vw;
   border-bottom: 2px solid rgba(255, 255, 255, 0.08);
 }
 .incluso-app .fuente-energia .wall .part .type * {
   float: none;
   display: table-cell;
   vertical-align: middle;
-  padding-right: 1px;
+  padding-right: 0.4vw;
 }
 .incluso-app .fuente-energia .wall .part .type i {
   color: #62767c;
