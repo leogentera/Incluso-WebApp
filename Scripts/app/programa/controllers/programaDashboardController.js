@@ -20,7 +20,8 @@ angular
 
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
-
+            
+            
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
             }

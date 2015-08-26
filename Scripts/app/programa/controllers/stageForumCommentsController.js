@@ -13,7 +13,8 @@ angular
        '$filter',
        'MoodleIds',
        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $filter, MoodleIds) {
-
+          
+          $scope.$emit('ShowPreloader'); //show preloader
           $rootScope.pageName = "Estación: Conócete"
           $rootScope.navbarBlue = true;
           $rootScope.showToolbar = true;
@@ -21,7 +22,7 @@ angular
           $rootScope.showFooterRocks = false;
 
           $scope.scrollToTop();
-          $scope.$emit('HidePreloader'); //hide preloader
+          
 
           $scope.isTextCollapsed = true;
           $scope.collapseText = function(){
@@ -410,6 +411,8 @@ angular
              $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.id == $routeParams.discussionId; });
              var posts = $scope.discussion.posts[0].replies;
              console.log(posts);
+             $scope.$emit('HidePreloader'); //hide preloader
+
              posts.forEach(createModalReferences);
           }
 
