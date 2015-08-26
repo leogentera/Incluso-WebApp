@@ -76,6 +76,17 @@ var _endActivity = function(activityModel){
       
 }
 
+var _endActivityQuiz = function(activityModel){
+                    
+      var currentUserId = localStorage.getItem("userId");
+      var serviceParameters =  activityModel.answersResult;
+  
+      //_createNotification(activityModel.activity, activityModel.userId);
+      
+      moodleFactory.Services.PutEndActivity(activityModel.activity.coursemoduleid, serviceParameters, activityModel.activity,successCallback,errorCallback);      
+      
+}
+
 
 var _createNotification = function(activityModel, currentUserId){
   
@@ -97,12 +108,12 @@ var _createNotification = function(activityModel, currentUserId){
   }  
 }
 
-var successCallback =function(){  
-    
+var successCallback =function(data){  
+    console.log("global.js - successCallback - " + data);
 }
 
 var errorCallback = function(data){
-  debugger;
+ console.log("global.js - errorCallback - " + data);
   
 }
 

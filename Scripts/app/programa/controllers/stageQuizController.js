@@ -25,34 +25,7 @@ angular
             $scope.userprofile = null;
             //$scope.activity = null;
 
-            $scope.AnswersResult = {
-                "userid": 125,
-                "answers": [
-                    {
-                        //"0": null
-                        "first": null
-                    },
-                    {
-                        "second": [
-                            '0', '0', '0', '0'
-                            // { "_0": 0 },
-                            // { "_1": 0 },
-                            // { "_2": 0 },
-                            // { "_3": 0 }
-                        ]
-                    },
-                    {
-                        "third": ''
-                    }
-                    ,
-                    {
-                        "fourth": null
-                    },
-                    {
-                        "fifth": []
-                    }
-                ]
-            };
+           
 
             $scope.finishActivity = function () {
                 //Activity completed
@@ -71,7 +44,7 @@ angular
                 //moodleFactory.Services.PutAsyncQuizActivity($scope.userprofile.id, $scope.coursemoduleid,$scope.AnswersResult, successfullCallBack, errorCallback);
 
                 
-                _endActivityQuiz({"activity":$scope.activity,"data":$scope.AnswersResult,"userId":$scope.userprofile.id});
+                _endActivityQuiz({"activity":$scope.activity,"answersResult":$scope.AnswersResult,"userId":$scope.userprofile.id});
                 
                 //Update Activity Stars - Progres Service
                 
@@ -150,12 +123,11 @@ angular
                 $scope.coursemoduleid = activities[0].coursemoduleid;
 
                 $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
-                $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-
-                
+                $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));                
 
                 //Test purpose
-                activities[0].status = 0;
+                //activities[0].status = 0;
+                
                 $scope.setReadOnly = activities[0].status == 1 ? true : false;
 
                 if (activities[0].status == 1) {
@@ -246,6 +218,36 @@ angular
 
 
             $scope.activity = getDataAsync();
+            
+             $scope.AnswersResult = {
+                "userid": $scope.userprofile.id,
+                "answers": [
+                    {
+                        //"0": null
+                        "first": null
+                    },
+                    {
+                        "second": [
+                            '0', '0', '0', '0'
+                            // { "_0": 0 },
+                            // { "_1": 0 },
+                            // { "_2": 0 },
+                            // { "_3": 0 }
+                        ]
+                    },
+                    {
+                        "third": ''
+                    }
+                    ,
+                    {
+                        "fourth": null
+                    },
+                    {
+                        "fifth": []
+                    }
+                ]
+                ,"activityidnumber":$scope.activity.coursemoduleid
+            };
 
 
 
