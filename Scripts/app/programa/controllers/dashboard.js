@@ -62,7 +62,8 @@
                     $scope.stage.firstTime = 0;
 
                     var dataModel = {
-                        firstTime: 0
+                        firstTime: 0,
+                        courseId: $scope.usercourse.courseid
                     };
 
                     moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);

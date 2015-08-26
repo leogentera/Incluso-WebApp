@@ -165,7 +165,6 @@
             });
         };
 
-
         var _putAsyncFirstTimeInfo = function(userId, dataModel, successCallback, errorCallback){            
             _httpFactory({
                 method: 'PUT',
@@ -372,12 +371,10 @@
                     }
                 }
 
-
             course = refreshProgress(course);
             localStorage.setItem("usercourse", JSON.stringify(course));
             localStorage.setItem("course", JSON.stringify(course));
             localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
-                
             }
         }        
         
