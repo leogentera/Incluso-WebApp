@@ -116,8 +116,9 @@ var _createNotification = function(activityModel, currentUserId){
               already_read: 0
           };
           moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);              
-      }      
-  }  
+        }      
+      }  
+  }
 }
 
 var _createMultipleActivitiesNotification = function(alertsId){
@@ -142,7 +143,7 @@ var _createMultipleActivitiesNotification = function(alertsId){
       };
       moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
   }
-  
+} 
 
 var successCallback =function(data){  
     console.log("global.js - successCallback - " + data);
@@ -172,7 +173,7 @@ function getChallengeByActivity_identifier(activity_identifier) {
                  break;
             }
             return matchingChallenge;
-        }
+}
 
 function getActivitiesByActivity_identifier(activity_identifier) {
     var activitiesFound = null;
