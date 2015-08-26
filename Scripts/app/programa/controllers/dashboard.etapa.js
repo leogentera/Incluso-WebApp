@@ -42,6 +42,8 @@ angular
             $scope.goToUrl = function(url) {
                 $location.path(url);                
             }
+                    
+                        
             
             //El key "status" de los elementos del array "etapas" del objeto "logroEducativo" indica si la etapa ya se completó (1) o no se ha completado (9)
             $scope.logroEducativo = {

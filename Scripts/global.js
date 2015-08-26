@@ -64,37 +64,41 @@ function syncCacheData (){
 
 }
 
-//var _endActivity = function(currentUserId,currentActivityId, currentActivityType){
-//        
-//      var data = {
-//        userId :  currentUserId,
-//        activityId : currentActivityId,
-//        activityType: currentActivityType                  
-//      };
-//  
-//    moodleFactory.Services.PutAsyncActivity(userId,data,successCallback,errorCallback);
-//          
-//    var dataUserNotifications = {
-//            
-//    }
-//    
-//          
-//}
+var _endActivity = function(activityModel){
+                    
+      var currentUserId = localStorage.getItem("userId");
+      var data = {
+        userId :  currentUserId };
+  
+      _createNotification(activityModel, userId);
+      
+      moodleFactory.Services.PutAsyncActivity(activityId, data, activityModel,successCallback,errorCallback);      
+      
+}
 
-var _createNotification = function(){
+
+var _createNotification = function(activityModel, currentUserId){
   
-  var dataModelNotification = {
-      notificationid: 3,
-      timemodified : "08/25/2015",      
-      userid: 47,
-      already_read: 0
-  };
   
-  moodleFactory.Services.PostUserNoitifications(47,dataModelNotification,successCallback,errorCallback);  
+  //var activityId = acitivityModel.activityId;
+  
+  var notifications = JSON.parse(localStorage.getItem("notifications"));  
+  
+  for(var i= 0; i< notifications.length; i++){
+      if (notifications[i].activityidnumber == activityId) {
+          var dataModelNotification = {
+              notificationid: notifications[i].id,
+              timemodified : new Date(),      
+              userid: currentUserId ,
+              already_read: 0
+          };  
+          moodleFactory.Services.PostUserNoitifications(47,dataModelNotification,successCallback,errorCallback);          
+      }    
+  }  
 }
 
 var successCallback =function(){  
-  
+    
 }
 
 var errorCallback = function(data){

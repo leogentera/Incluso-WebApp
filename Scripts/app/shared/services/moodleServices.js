@@ -76,8 +76,8 @@
         };
 
 
-        var _putEndActivity = function(activityId, userId, data, token, successCallback,errorCallback){
-            _endActivity("activities", userId, data, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
+        var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
+            _endActivity("activities/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
         };
         
         var _getCacheObject = function(key){
@@ -166,18 +166,17 @@
             });
         };
 
-        var _endActivity = function(key, userid, activity, url, token, successCallback, errorCallback){         
-            data={userid: userid};
+        var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
             _httpFactory({                
                method: 'PUT',
                url: url,        
                data: data,       
                headers: {'Content-Type': 'application/json', 'Authorization': token},
                }).success(function(data, status, headers, config) {
-                   localStorage.setItem(key, JSON.stringify(activity));
+                   localStorage.setItem(key, JSON.stringify(activityModel));
                    successCallback();
                }).error(function(data, status, headers, config) {
-                   localStorage.setItem(key, JSON.stringify(activity));
+                   localStorage.setItem(key, JSON.stringify(activityModel));
                    errorCallback();
            });
         };
