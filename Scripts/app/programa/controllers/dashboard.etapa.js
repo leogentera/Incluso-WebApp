@@ -23,7 +23,7 @@ angular
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
         
-            $scope.activitiesCompletedInCurrentStage = [];                                
+            //$scope.activitiesCompletedInCurrentStage = [];
             //
             /*
             var stage = JSON.parse(localStorage.getItem('stage'));
