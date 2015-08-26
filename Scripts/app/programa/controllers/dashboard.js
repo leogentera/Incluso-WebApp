@@ -82,12 +82,12 @@
             function getDataAsyncCallback(){
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
 
-                moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseId, function(){
+                moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = getCurrentStage();                
                     localStorage.setItem("currentStage", $scope.currentStage);
 
-                    moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseId, function(){
+                    moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, function(){
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.$emit('scrollTop'); //- scroll
