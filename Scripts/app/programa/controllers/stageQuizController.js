@@ -92,7 +92,22 @@ angular
                         if ($scope.AnswersResult.answers[2] != null) {
                             if ($scope.AnswersResult.answers[3] != null) {
                                 if ($scope.AnswersResult.answers[4].length != 0) {
-                                    $scope.navigateToPage(2);
+                                    var lastQuestionValidation = true;
+                                    for (var a = 0; a < $scope.AnswersResult.answers[4].length; a++) {
+                                        var text = $scope.AnswersResult.answers[4][a];
+                                        if (text.trim() == '') {
+                                            lastQuestionValidation = false;
+                                            break;
+                                        }
+                                    }
+
+                                    if (lastQuestionValidation) {
+                                        $scope.showWarning = false;
+                                        $scope.navigateToPage(2);
+                                    }
+                                    else {
+                                        $scope.showWarning = true;
+                                    }
                                 }
                                 else {
                                     $scope.showWarning = true;
