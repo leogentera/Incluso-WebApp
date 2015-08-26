@@ -1,13 +1,13 @@
 <div class="incluso-app start-dashboard" id="site-wrapper">
 	<article>
 		<div class="container">
-        <h1 class="text-center">¡Bienvenido {{user.alias}}!</h1>
+        <h1 class="text-center">¡Bienvenido a la misión, {{user.alias}}!</h1>
 			<section class="component video-gallery" ng-controller="videoCollapsiblePanelController">
 				<div class="panel panel-video">
 					<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
 						<h3>
 							<span class="icomoon icon-video-file"></span>
-							<span>¿Qué es incluso?</span>
+							<span>La travesía en Incluso</span>
 							 <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
 							<span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
 						</h3>
@@ -27,7 +27,7 @@
 			</section>
 
 			<section class="component global-progress txt-renglon centered">
-				<h3>- Avance Global -</h3>
+				<h3>- Mi avance -</h3>
 				<div class="spinner">
 					<img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.ceil(usercourse.globalProgress)}}.png" alt="progress" />
 					<div class="circle"></div>
@@ -36,19 +36,19 @@
 			</section>
 
 			<section class="component current-satge">
-          <img  src="assets/oimages/estacion{{currentStage || 1}}.png" alt="estacion"/>
+          <img  src="assets/images/challenges/img-cabina-soporte.svg" alt="estacion"/>
 				  <h3>- Estación: {{stage.sectionname}} -</h3>
-          <a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firstTime == 1 ? "Iniciar Aventura" : "Continuar misión"}}</span></a>
+          <a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firstTime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span></a>
 			</section>
 
 			<section class="component my-badges">
-				<h3>- Mi Escudo -</h3>
+				<h3>- MI ESCUDO -</h3>
 				<!--<img src="assets/images/img-badges-blocked.png" alt="badges" />-->
 				<img src="assets/images/badges/{{user.shield ? 'img-' + user.shield + 'svg' : 'img-badge-placeholder.svg'}}" alt="badges" />
 			</section>
 
 			<section class="component top-users" style="width: 100vw">
-				<h3>- Usuarios top 3 -</h3>
+				<h3>- TOP 3 -</h3>
 				<tabset justified="true">
 					<tab>
 						<tab-heading>
