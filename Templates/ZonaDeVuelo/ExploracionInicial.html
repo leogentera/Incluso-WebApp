@@ -125,7 +125,7 @@
         </div>
 
         <div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
-          <div id="finalized ">
+          <div id="finalized">
             <section class="header-title ">
               <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
               <div class="subtitle centered min-pad ">"Exploración inicial"</div>
@@ -140,15 +140,15 @@
             </section>
             <section class="txt-renglon centered form ">
               ¿Que opinas de ésta actividad?
-              <section class="txt-renglon txt-bigger clearfix ">
-                <!--<div class="opinion ">-->
-                <input id="like " type="radio " value="option1 " name="like ">
-                <label for="like ">Me gusta</label>
-                <!--</div>
-                <div class="opinion ">-->
-                <input id="dislike " type="radio " value="option2 " name="like ">
-                <label for="dislike ">No me gusta</label>
-                <!--</div>-->
+              <section class="txt-renglon txt-bigger clearfix">
+                <div class="opinion">
+                <input id="like" type="radio" value="option1" name="like">
+                <label for="like">Me gusta</label>
+                </div>
+                <div class="opinion">
+                <input id="dislike" type="radio" value="option2" name="like">
+                <label for="dislike">No me gusta</label>
+                </div>
               </section>
               <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">Terminar</button>
             </section>
