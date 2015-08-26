@@ -45,6 +45,11 @@
             //_getCourseAsyncData("course", API_RESOURCE.format('course/' + courseId), successCallback, errorCallback);
         };
 
+        var _getAsyncLeaderboard = function(courseId, successCallback, errorCallback){
+            successCallback();
+            _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), successCallback, errorCallback);
+        };
+
         var _putAsyncQuiz = function(activityId, data, successCallback, errorCallback){            
             _putAsyncData("activity/" + activityId, data, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };    
@@ -411,6 +416,7 @@
             PostUserNoitifications : _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
             PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
+            GetAsyncLeaderboard: _getAsyncLeaderboard,
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat,
             PutStars: _assignStars,
