@@ -242,7 +242,7 @@
   color: #004e70;
   font-size: 5vw;
   position: absolute;
-  left: 0;
+  left: 1.5vw;
   top: auto;
   bottom: -1px;
 }
@@ -269,7 +269,7 @@
   bottom: -1px;
   color: #04876d;
   position: absolute;
-  right: 0;
+  right: 1.5vw;
 }
 .incluso-app .container.chat .component .msg-container .msg.sent .msg-icn::before {
   content: "\e669";
@@ -285,7 +285,7 @@
 .incluso-app .container.chat .component .typing-section textarea {
   float: none;
   display: inline-block;
-  width: 86.5vw;
+  width: 88vw;
   height: 11vh;
   resize: none;
   padding: 2vh 2vw 0;
