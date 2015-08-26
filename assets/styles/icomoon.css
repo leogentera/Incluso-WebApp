@@ -2,14 +2,15 @@
  LESS Utilities - variables and functions
 ****************************************************************************/
 /* Path vars */
+/* Placeholder default opacity */
 /* Color Palette */
 /* shape variables */
 /* parametric color functions */
 /* Custom Functions */
 @font-face {
   font-family: 'icomoon';
-  src: url('../fonts/icomoon.eot?2svj3j');
-  src: url('../fonts/icomoon.eot?#iefix2svj3j') format('embedded-opentype'), url('../fonts/icomoon.ttf?2svj3j') format('truetype'), url('../fonts/icomoon.woff?2svj3j') format('woff'), url('../fonts/icomoon.svg?2svj3j#icomoon') format('svg');
+  src: url('../fonts/icomoon.eot?j50r8q');
+  src: url('../fonts/icomoon.eot?#iefixj50r8q') format('embedded-opentype'), url('../fonts/icomoon.ttf?j50r8q') format('truetype'), url('../fonts/icomoon.woff?j50r8q') format('woff'), url('../fonts/icomoon.svg?j50r8q#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,6 +25,24 @@
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.icon-isosceles-bottom-left:before {
+  content: "\e669";
+}
+.icon-isosceles-bottom-right:before {
+  content: "\e66a";
+}
+.icon-send-arrow:before {
+  content: "\e66b";
+}
+.icon-compass:before {
+  content: "\e66c";
+}
+.icon-smartphone:before {
+  content: "\e66d";
+}
+.icon-wallet:before {
+  content: "\e66e";
 }
 .icon-logout:before {
   content: "\e666";
