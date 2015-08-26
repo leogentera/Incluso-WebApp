@@ -815,6 +815,7 @@
     padding: 3% 5%;
     width: 49%;
     font-size: 80%;
+    cursor: pointer;
   }
   .incluso-app .wall .part .social div:nth-child(1) {
     border-right: 2px solid rgba(255, 255, 255, 0.08);
@@ -851,11 +852,10 @@
     position: relative;
     font-family: Arial, Helvetica, sans-serif;
     z-index: 99999;
-    opacity: 0;
+    /*opacity:0;*/
     -webkit-transition: opacity 400ms ease-in;
     -moz-transition: opacity 400ms ease-in;
     transition: opacity 400ms ease-in;
-    pointer-events: none;
   }
   .incluso-app .modalDialog .txt-renglon {
     color: #ee4823;
@@ -884,8 +884,13 @@
     display: flex;
     justify-content: space-between;
   }
-  .incluso-app .modalDialog > div .add input {
+  .incluso-app .modalDialog > div .add input,
+  .incluso-app .modalDialog > div .add textarea {
+    width: 87%;
+    padding: 0px 2vw;
     border: 0px solid transparent;
+    resize: none;
+    line-height: 1;
   }
   .incluso-app .modalDialog > div .add i {
     color: #9c9c9c;
@@ -2012,8 +2017,10 @@
     cursor: pointer;
   }
   .incluso-app .bubble.bubble-sm {
-    width: 10vw;
+    min-width: 9vw;
+    width: auto;
     height: 4.8vh;
+    padding: 0px 2vw;
   }
   .incluso-app .bubble .glyphicon-triangle-top {
     position: absolute;

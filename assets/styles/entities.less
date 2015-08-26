@@ -409,6 +409,7 @@
                             padding: 3% 5%;
                             width: 49%;
                             font-size:80%;
+                            cursor: pointer;
                             &:nth-child(1){
                                 border-right: 2px solid rgba(255, 255, 255, 0.08);
                                 color:#E80D81;
@@ -448,11 +449,10 @@
                 position: relative;
                 font-family: Arial, Helvetica, sans-serif;
                 z-index: 99999;
-                opacity:0;
+                /*opacity:0;*/
                 -webkit-transition: opacity 400ms ease-in;
                 -moz-transition: opacity 400ms ease-in;
                 transition: opacity 400ms ease-in;
-                pointer-events: none;
                 .txt-renglon{
                     color: @clr-orangeLighter;
                 }
@@ -478,8 +478,13 @@
                         padding: 2% 0;    
                         display: flex;
                         justify-content: space-between;
-                        input{
+                        input,
+                        textarea {
+                            width: 87%;
+                            padding: 0px 2vw;
                             border: 0px solid transparent;
+                            resize: none;
+                            line-height: 1;
                         }
                         i{
                             color: #9c9c9c;
@@ -1760,8 +1765,10 @@
             margin-left: 1.5vw;
             cursor: pointer;
             &.bubble-sm {
-                width: 10vw;
+                min-width: 9vw;
+                width: auto;
                 height: 4.8vh;
+                padding: 0px 2vw;
             }
             .glyphicon-triangle-top {
                 position: absolute;
