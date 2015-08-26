@@ -17,9 +17,10 @@
               <div class="panel-body" collapse="isCollapsed">
                 <div class="stage perform">
                   <button class="icon icon-close"></button>
-                  <button class="icon icon-play" ng-click="playWelcome()"></button>
                   <figure class="player">
-                    <img src="assets/images/ptr-video-0001.jpg" ng-click="playWelcome()" alt="video" />
+                    <a href="assets/media/480x270.mp4" target="_blank">
+                      <img src="assets/images/ptr-video-0001.jpg" alt="video" />
+                    </a>
                   </figure>
                 </div>
               </div>
@@ -29,25 +30,19 @@
         <section class="component global-progress txt-renglon centered">
           <h3>- Avance Global -</h3>
           <div class="spinner">
-            <img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.ceil(usercourse.globalProgress)}}.png" alt="progress" /><div class="circle"></div><div class="text">{{usercourse == null ? 0 : usercourse.globalProgress}}%</div>
+            <img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.ceil(usercourse.globalProgress)}}.png" alt="progress" /><div class="circle"></div><div class="text">{{usercourse.globalProgress || 0}}%</div>
           </div>
         </section>
 
-        <section class="component current-satge">
-          <img  src="assets/images/estacion{{currentStage != null ? currentStage : 1}}.png" alt="estacion"/>
+        <section class="component current-stage">
+          <img  src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
           <h3>- Estación: {{stage.name}} -</h3>
           <a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firstTime == 1 ? "Iniciar Aventura" : "Continuar misión"}}</span></a>
         </section>
 
         <section class="component my-badges">
           <h3>- Mi Escudo -</h3>
-
-          <!--<img src="assets/images/img-badges-blocked.png" alt="badges" />-->
-          <img src="assets/images/escudos/{{user.shield == '' ? 'blocked' : user.shield}}.png" alt="badges" />
-
-          <!--<img src="assets/images/escudos/musical.png" alt="badges" />-->
-          <!--<img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.ceil(usercourse.globalProgress)}}.png" alt="badges" />-->
-
+          <img ng-src="assets/images/escudos/{{user.shield || 'blocked'}}.png" alt="badges" />
         </section>
 
         <section class="component top-users" style="width: 100vw">
@@ -58,8 +53,7 @@
                 <div class="user-container">
                   <div class="user-avatar">
                     <figure>
-                      <!--<img src="assets/images/img-avatar-dummy-01.png" alt="avatar" />-->
-                      <img src="assets/images/{{course.leaderboard[0].picture == null ? 'img-avatar-dummy-01.png' : course.leaderboard[0].picture }}" alt="avatar" />
+                      <img ng-src="assets/images/{{course.leaderboard[0] ? course.leaderboard[0].picture : 'img-avatar-dummy-01.png'}}" alt="avatar" />
                       <figcaption>1</figcaption>
                       <div class="arrow-up"></div>
                     </figure>
@@ -70,11 +64,11 @@
                 <div>
                   <p>
                     <label for="">1er. Lugar: </label>
-                    <span>{{course.leaderboard[0].alias != null ? course.leaderboard[0].alias : "Tu alias"}}</span>
+                    <span>{{course.leaderboard[0].alias || "Tu alias"}}</span>
                   </p>
                   <ul class="inline-list">
-                    <li class="points"><span>{{course.leaderboard[0] != null ? course.leaderboard[0].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-                    <li><span>{{course.leaderboard[0] != null ? course.leaderboard[0].progress : 0}}%</span></li>
+                    <li class="points"><span>{{course.leaderboard[0] ? course.leaderboard[0].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
+                    <li><span>{{course.leaderboard[0] ? course.leaderboard[0].progress : 0}}%</span></li>
                   </ul>
                 </div>
               </div>
@@ -85,8 +79,7 @@
                 <div class="user-container">
                   <div class="user-avatar">
                     <figure>
-                      <!--<img src="assets/images/img-avatar-dummy-02.png" alt="avatar" />-->
-                      <img src="assets/images/{{course.leaderboard[1].picture == null ? 'img-avatar-dummy-02.png' : course.leaderboard[1].picture }}" alt="avatar" />
+                      <img ng-src="assets/images/{{course.leaderboard[1] ? course.leaderboard[1].picture || 'img-avatar-dummy-02.png'}}" alt="avatar" />
                       <figcaption>2</figcaption>
                       <div class="arrow-up"></div>
                     </figure>
@@ -97,11 +90,11 @@
                 <div>
                   <p>
                     <label for="">2do. Lugar: </label>
-                    <span>{{course.leaderboard[1].alias != null ? course.leaderboard[1].alias : "Tu alias"}}</span>
+                    <span>{{course.leaderboard[1] ? course.leaderboard[1].alias : "Tu alias"}}</span>
                   </p>
                   <ul class="inline-list">
-                    <li class="points"><span>{{course.leaderboard[1] != null ? course.leaderboard[1].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-                    <li><span>{{course.leaderboard[1] != null ? course.leaderboard[1].progress : 0}}%</span></li>
+                    <li class="points"><span>{{course.leaderboard[1] ? course.leaderboard[1].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
+                    <li><span>{{course.leaderboard[1] ? course.leaderboard[1].progress : 0}}%</span></li>
                   </ul>
                 </div>
               </div>
@@ -112,8 +105,7 @@
                 <div class="user-container">
                   <div class="user-avatar">
                     <figure>
-                      <!--<img src="assets/images/img-avatar-dummy-03.png" alt="avatar" />-->
-                      <img src="assets/images/{{course.leaderboard[2].picture == null ? 'img-avatar-dummy-03.png' : course.leaderboard[2].picture }}" alt="avatar" />
+                      <img ng-src="assets/images/{{course.leaderboard[2] ? course.leaderboard[2].picture : 'img-avatar-dummy-03.png'}}" alt="avatar" />
                       <figcaption>3</figcaption>
                       <div class="arrow-up"></div>
                     </figure>
@@ -124,11 +116,11 @@
                 <div>
                   <p>
                     <label for="">3er. Lugar: </label>
-                    <span>{{course.leaderboard[2].alias != null ? course.leaderboard[2].alias : "Tu alias"}}</span>
+                    <span>{{course.leaderboard[2] ? course.leaderboard[2].alias : "Tu alias"}}</span>
                   </p>
                   <ul class="inline-list">
-                    <li class="points"><span>{{course.leaderboard[2] != null ? course.leaderboard[2].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-                    <li><span>{{course.leaderboard[2] != null ? course.leaderboard[2].progress : 0}}%</span></li>
+                    <li class="points"><span>{{course.leaderboard[2] ? course.leaderboard[2].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
+                    <li><span>{{course.leaderboard[2] ? course.leaderboard[2].progress : 0}}%</span></li>
                   </ul>
                 </div>
               </div>
@@ -141,8 +133,7 @@
                 <a href="">
                   <div class="user-avatar">
                     <figure class="user-avatar-">
-                      <!--<img src="assets/images/img-avatar-dummy-01.png" alt="avatar" />-->
-                      <img src="{{user.profileimageurlsmall == null || user.profileimageurlsmall == '' ? 'assets/images/img-avatar-dummy-01.png' : user.profileimageurlsmall }}" alt="avatar" />
+                      <img ng-src="assets/images/{{user.profileImgUrlSmall || 'img-avatar-dummy-01.png'}}" alt="avatar" />
                       <figcaption>{{user.place}}</figcaption>
                     </figure>
                   </div>

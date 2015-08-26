@@ -61,30 +61,13 @@
                 logout($http, $scope, $location);
             };
 
-            $scope.navigateToStage = function(){
-                localStorage.setItem("firstTimeStage",0);
-                $scope.openModal();
+            $scope.navigateToStage = function(){                    
+                if ($scope.stage.firstTime) {
+                    $scope.openModal();
+                }   
+
                 $location.path('/ProgramaDashboardEtapa/' + $scope.stage.id);
             };
-            
-             $scope.playWelcome = function(){                 
-                 var videoAddress = "assets/media";
-                 var videoName = "480x270.mp4";
-                cordova.exec(Success, Failure, "CallToAndroid", "PlayLocalVideo", [videoAddress,videoName]);
-            };
-            
-            function Success() {
-                
-            }
-            
-            function Failure() {
-                
-            }
-            
-
-            //$scope.navigateTo = function(url){
-              //  $location.path(url);
-            //};
 
             function getDataAsync() {
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback);
@@ -111,15 +94,10 @@
             function getCurrentStage(){
                 var currentStage = 1;
                 
-                for(var i = 0; i < $scope.usercourse.stages.length; i++){
+                for(var i = 0; i < $scope.usercourse.stages.length; i++) {
                     var uc = $scope.usercourse.stages[i];
-                    
                     localStorage.setItem("stage", JSON.stringify(uc));
                     $scope.stage = uc;
-                    var firstTimeStage = localStorage.getItem("firstTimeStage");
-                    if (firstTimeStage == 0) {
-                        $scope.stage.firstTime = 0;
-                    }
                     
                     if(uc.stageStatus === 0){
                         break;
@@ -134,7 +112,6 @@
             function getUserNotifications(){
                 moodleFactory.Services.GetUserNotification($scope.user.id, getUserNotificationsCallback, errorCallback);
             }
-            
             
             function getUserNotificationsCallback(data){                
                 var notifications = JSON.parse(localStorage.getItem("notifications"));                
@@ -153,10 +130,6 @@
                     console.log("modal open");
                 }, 1000);
             };
-           
-           
-           
-           
         }])
         .controller('tutorialController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
