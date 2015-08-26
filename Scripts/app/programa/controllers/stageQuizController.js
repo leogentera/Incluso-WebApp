@@ -22,14 +22,14 @@ angular
             $scope.setReadOnly = true;
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
-            $scope.userprofile = null;
+            //$scope.userprofile = null;
             //$scope.activity = null;
 
            
 
             $scope.finishActivity = function () {
                 //Activity completed
-                $scope.activity.status=1;
+                $scope.activity.status = 1;
                     
                 //Call stars - progress
                 
@@ -43,8 +43,10 @@ angular
                 //moodleFactory.Services.PutEndActivity($scope.coursemoduleid, $scope.userprofile.id, $scope.fuenteDeEnergia, $scope.currentUser.token, successfullCallBack, errorCallback);
                 //moodleFactory.Services.PutAsyncQuizActivity($scope.userprofile.id, $scope.coursemoduleid,$scope.AnswersResult, successfullCallBack, errorCallback);
 
+                $scope.AnswersResult.userid = $scope.userprofile.id
+                $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid
                 
-                _endActivityQuiz({"activity":$scope.activity,"answersResult":$scope.AnswersResult,"userId":$scope.userprofile.id});
+                _endActivityQuiz({ "activity": $scope.activity, "answersResult": $scope.AnswersResult, "userId": $scope.userprofile.id });
                 
                 //Update Activity Stars - Progres Service
                 
@@ -116,47 +118,14 @@ angular
                 }
             };
 
-            function getDataAsync() {
-
-                //var challenge = getChallengeByActivity_identifier(3004);
-                var activities = getActivitiesByActivity_identifier(3004);
-                $scope.coursemoduleid = activities[0].coursemoduleid;
-
-                $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
-                $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));                
-
-                //Test purpose
-                //activities[0].status = 0;
-                
-                $scope.setReadOnly = activities[0].status == 1 ? true : false;
-
-                if (activities[0].status == 1) {
-                    
-                    //var activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity" + 111));
-                    //var activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity" + activities[0].coursemoduleid));
-                    
-                    var activity = { "id": 44, "name": "Exploracion Inicial", "description": null, "activityType": "Quiz", "status": null, "stars": null, "dateIssued": null, "score": 8, "quizType": null, "grade": 10, "questions": [{ "id": 19, "question": "1. \u00bfAlguna vez has tenido un sue\u00f1o que no has sabido c\u00f3mo alcanzar?", "questionType": "multichoice", "answers": [{ "id": 60, "answer": "Si", "fraction": "1.0000000" }, { "id": 61, "answer": "No", "fraction": "1.0000000" }], "userAnswer": "No" }, { "id": 20, "question": "2. \u00bfQu\u00e9 de lo siguiente has intentado hacer para lograrlo? Puedes elegir m\u00e1s de una.", "questionType": "multichoice", "answers": [{ "id": 62, "answer": "Pedir ayuda a alguien", "fraction": "1.0000000" }, { "id": 63, "answer": "Investigar sobre el tema", "fraction": "0.0000000" }, { "id": 64, "answer": "Nada, porque me parece imposible", "fraction": "0.0000000" }, { "id": 65, "answer": "Trazar un plan de lo que necesito", "fraction": "0.0000000" }], "userAnswer": "Pedir ayuda a alguien; Investigar sobre el tema" }, { "id": 23, "question": "3. \u00bfQu\u00e9 persona exitosa que conoces te inspira?", "questionType": "shortanswer", "answers": [{ "id": 72, "answer": "*", "fraction": "1.0000000" }], "userAnswer": "Bill Gates" }, { "id": 24, "question": "4. \u00bfSabes cu\u00e1les son tus habilidades?", "questionType": "multichoice", "answers": [{ "id": 73, "answer": "Si", "fraction": "1.0000000" }, { "id": 74, "answer": "No", "fraction": "1.0000000" }, { "id": 75, "answer": "Mas o menos", "fraction": "1.0000000" }], "userAnswer": "Mas o menos" }, { "id": 25, "question": "5. Menciona tus principales habilidades", "questionType": "multichoice", "answers": [{ "id": 76, "answer": "Empat\u00eda", "fraction": "1.0000000" }, { "id": 77, "answer": "Creatividad", "fraction": "0.0000000" }, { "id": 78, "answer": "Liderazgo", "fraction": "0.0000000" }, { "id": 79, "answer": "Comunicaci\u00f3n", "fraction": "0.0000000" }, { "id": 80, "answer": "Negociaci\u00f3n", "fraction": "0.0000000" }, { "id": 81, "answer": "Trabajo en equipo", "fraction": "0.0000000" }, { "id": 82, "answer": "Innovaci\u00f3n", "fraction": "0.0000000" }, { "id": 83, "answer": "Iniciativa", "fraction": "0.0000000" }, { "id": 84, "answer": "Toma de decisiones", "fraction": "0.0000000" }, { "id": 85, "answer": "Planeaci\u00f3n", "fraction": "0.0000000" }, { "id": 86, "answer": "Organizaci\u00f3n", "fraction": "0.0000000" }], "userAnswer": "Organizaci\u00f3n; Toma de decisiones; Trabajo en equipo" }] };
 
 
+            function successfullCallBack(data) {
+                var orto = '';
+            }
 
-                    for (var index = 0; index < activity.questions.length; index++) {
-                        var question = activity.questions[index];
-                        updateSelectedAnsers(index, question)
-                    }
-
-
-                    if (!activity) {
-                        $location.path('/');
-                        return "";
-                    }
-                    else {
-                        return activity;
-                    }
-                }
-                else {
-                    return activities[0];
-                }
-
+            function errorCallback(data) {
+                var orto = '';
             }
 
             function updateSelectedAnsers(questionIndex, question) {
@@ -217,10 +186,10 @@ angular
             }
 
 
-            $scope.activity = getDataAsync();
-            
-             $scope.AnswersResult = {
-                "userid": $scope.userprofile.id,
+
+
+            $scope.AnswersResult = {
+                "userid": 0,//$scope.userprofile.id,
                 "answers": [
                     {
                         //"0": null
@@ -246,8 +215,52 @@ angular
                         "fifth": []
                     }
                 ]
-                ,"activityidnumber":$scope.activity.coursemoduleid
+                , "activityidnumber": 0//$scope.activity.coursemoduleid
             };
+            
+            
+
+            function getDataAsync() {
+
+                //var challenge = getChallengeByActivity_identifier(3004);
+                var activities = getActivitiesByActivity_identifier(3004);
+                $scope.coursemoduleid = activities[0].coursemoduleid;
+
+                $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
+                $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));                
+
+                //Test purpose
+                activities[0].status = 0;
+
+                $scope.setReadOnly = activities[0].status == 1 ? true : false;
+
+                if (activities[0].status == 1) {
+                    
+                    var activity = null;
+                    var activity = moodleFactory.Services.GetAsyncActivity(111, successfullCallBack, errorCallback);
+
+                    // var activity = { "id": 44, "name": "Exploracion Inicial", "description": null, "activityType": "Quiz", "status": null, "stars": null, "dateIssued": null, "score": 8, "quizType": null, "grade": 10, "questions": [{ "id": 19, "question": "1. \u00bfAlguna vez has tenido un sue\u00f1o que no has sabido c\u00f3mo alcanzar?", "questionType": "multichoice", "answers": [{ "id": 60, "answer": "Si", "fraction": "1.0000000" }, { "id": 61, "answer": "No", "fraction": "1.0000000" }], "userAnswer": "No" }, { "id": 20, "question": "2. \u00bfQu\u00e9 de lo siguiente has intentado hacer para lograrlo? Puedes elegir m\u00e1s de una.", "questionType": "multichoice", "answers": [{ "id": 62, "answer": "Pedir ayuda a alguien", "fraction": "1.0000000" }, { "id": 63, "answer": "Investigar sobre el tema", "fraction": "0.0000000" }, { "id": 64, "answer": "Nada, porque me parece imposible", "fraction": "0.0000000" }, { "id": 65, "answer": "Trazar un plan de lo que necesito", "fraction": "0.0000000" }], "userAnswer": "Pedir ayuda a alguien; Investigar sobre el tema" }, { "id": 23, "question": "3. \u00bfQu\u00e9 persona exitosa que conoces te inspira?", "questionType": "shortanswer", "answers": [{ "id": 72, "answer": "*", "fraction": "1.0000000" }], "userAnswer": "Bill Gates" }, { "id": 24, "question": "4. \u00bfSabes cu\u00e1les son tus habilidades?", "questionType": "multichoice", "answers": [{ "id": 73, "answer": "Si", "fraction": "1.0000000" }, { "id": 74, "answer": "No", "fraction": "1.0000000" }, { "id": 75, "answer": "Mas o menos", "fraction": "1.0000000" }], "userAnswer": "Mas o menos" }, { "id": 25, "question": "5. Menciona tus principales habilidades", "questionType": "multichoice", "answers": [{ "id": 76, "answer": "Empat\u00eda", "fraction": "1.0000000" }, { "id": 77, "answer": "Creatividad", "fraction": "0.0000000" }, { "id": 78, "answer": "Liderazgo", "fraction": "0.0000000" }, { "id": 79, "answer": "Comunicaci\u00f3n", "fraction": "0.0000000" }, { "id": 80, "answer": "Negociaci\u00f3n", "fraction": "0.0000000" }, { "id": 81, "answer": "Trabajo en equipo", "fraction": "0.0000000" }, { "id": 82, "answer": "Innovaci\u00f3n", "fraction": "0.0000000" }, { "id": 83, "answer": "Iniciativa", "fraction": "0.0000000" }, { "id": 84, "answer": "Toma de decisiones", "fraction": "0.0000000" }, { "id": 85, "answer": "Planeaci\u00f3n", "fraction": "0.0000000" }, { "id": 86, "answer": "Organizaci\u00f3n", "fraction": "0.0000000" }], "userAnswer": "Organizaci\u00f3n; Toma de decisiones; Trabajo en equipo" }] };
+
+                    for (var index = 0; index < activity.questions.length; index++) {
+                        var question = activity.questions[index];
+                        updateSelectedAnsers(index, question)
+                    }
+
+                    if (!activity) {
+                        $location.path('/');
+                        return "";
+                    }
+                    else {
+                        return activity;
+                    }
+                }
+                else {
+                    return activities[0];
+                }
+
+            }
+
+            $scope.activity = getDataAsync();
 
 
 
@@ -281,9 +294,6 @@ angular
             //             };
             // 
             //             $scope.openModal();
-
-
-
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
