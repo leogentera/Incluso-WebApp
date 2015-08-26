@@ -78,22 +78,33 @@ var _endActivity = function(activityModel){
 
 
 var _createNotification = function(activityModel, currentUserId){
+    
+  var activityId = acitivityModel.coursemoduleid;  
+  var sectionId = activityModel.section;
+  currentUserId = localStorage.getItem("userId");
   
+  var notifications = JSON.parse(localStorage.getItem("notifications"));
+  var endTypeNotifications = _.where(notifications, {trigger : 2});  
   
-  //var activityId = acitivityModel.activityId;
-  
-  var notifications = JSON.parse(localStorage.getItem("notifications"));  
-  
-  for(var i= 0; i< notifications.length; i++){
-      if (notifications[i].activityidnumber == activityId) {
+  for(var i= 0; i< notifications.length; i++){      
+      if (notifications[i].activityidnumber && (activityId == notifications[i].activityidnumber)) {
           var dataModelNotification = {
               notificationid: notifications[i].id,
-              timemodified : new Date(),      
+              timemodified : new Date(),
               userid: currentUserId ,
               already_read: 0
-          };  
-          moodleFactory.Services.PostUserNoitifications(47,dataModelNotification,successCallback,errorCallback);          
-      }    
+          };
+          moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);        
+      }else{
+        if (sectionId == notifications[i].activityidnumber){                    
+          var dataModelNotification = {
+              notificationid: notifications[i].id,
+              timemodified : new Date(),
+              userid: currentUserId ,
+              already_read: 0
+          };
+          moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);              
+      }      
   }  
 }
 
