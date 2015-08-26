@@ -36,7 +36,7 @@
 			</section>
 
 			<section class="component current-satge">
-          <img  src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
+          <img  src="assets/oimages/estacion{{currentStage || 1}}.png" alt="estacion"/>
 				  <h3>- Estación: {{stage.sectionname}} -</h3>
           <a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firstTime == 1 ? "Iniciar Aventura" : "Continuar misión"}}</span></a>
 			</section>
@@ -44,7 +44,7 @@
 			<section class="component my-badges">
 				<h3>- Mi Escudo -</h3>
 				<!--<img src="assets/images/img-badges-blocked.png" alt="badges" />-->
-				<img src="assets/images/escudos/{{user.shield == '' ? 'blocked' : user.shield}}.png" alt="badges" />
+				<img src="assets/images/badges/{{user.shield || ' img-badge-placeholder.svg'}}" alt="badges" />
 			</section>
 
 			<section class="component top-users" style="width: 100vw">

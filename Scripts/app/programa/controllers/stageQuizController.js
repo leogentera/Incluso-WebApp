@@ -17,7 +17,7 @@ angular
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-
+            $scope.$emit('HidePreloader'); //hide preloader
             $scope.currentPage = 1;
             $scope.setReadOnly = true;
             $scope.showWarning = false;
@@ -297,39 +297,18 @@ angular
             }
 
             getDataAsync();
-
-
-
-            //             $scope.openModal = function (size) {
-            // 
-            //                 if (1 == 1) {
-            //                     setTimeout(function () {
-            // 
-            //                 //         var modalInstance = $modal.open({
-            //                 //             animation: $scope.animationsEnabled,
-            //                 //             templateUrl: 'tutorialModal.html',
-            //                 //             controller: 'tutorialController',
-            //                 //             size: size,
-            //                 //             windowClass: 'user-help-modal'
-            //                 //         });
-            //                 //         console.log("modal open");
-            //                 //     }, 500);
-            //                 // }
-            //             
-            //                     var modalInstance = $modal.open({
-            //                         animation: $scope.animationsEnabled,
-            //                         templateUrl: 'OpeningStageModal.html',
-            //                         controller: 'OpeningStageController',
-            //                         size: size,
-            //                         windowClass: 'user-help-modal'
-            //                     });
-            //                     console.log("modal open");
-            //                 }, 500);
-            //                 }
-            // 
-            //             };
-            // 
-            //             $scope.openModal();
+             $scope.openModal = function (size) {                         
+                 var modalInstance = $modal.open({
+                     animation: $scope.animationsEnabled,
+                     templateUrl: 'OpeningStageModal.html',
+                     controller: 'OpeningStageController',
+                     size: size,
+                     windowClass: 'user-help-modal'
+                 });
+                     console.log("modal open");                 
+             };
+ 
+             $scope.openModal();
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {

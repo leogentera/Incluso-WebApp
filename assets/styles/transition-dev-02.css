@@ -482,7 +482,6 @@
 .incluso-app .fuente-energia .message .panel-video .panel-heading span:first-child + span {
   padding-left: 1vw;
   font-size: 4.3vw;
-  /*line-height: 4vw;*/
 }
 .incluso-app .fuente-energia .message .panel-video .panel-heading .icon-arrow,
 .incluso-app .fuente-energia .message .panel-video .panel-heading .icon-arrow-up {
@@ -490,6 +489,5 @@
   font-size: 5vw;
 }
 .incluso-app .fuente-energia .message .panel-video .panel-body {
-  /*.clr-blueDark(background-color, 0.9);*/
   background-color: rgba(13, 15, 20, 0.5);
 }
