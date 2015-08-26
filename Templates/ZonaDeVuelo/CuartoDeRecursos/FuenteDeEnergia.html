@@ -1,155 +1,150 @@
-<div class="incluso-app start-dashboard acerca-programa" id="site-wrapper">
-  <div id="site-canvas">
+<div class="incluso-app acerca-programa" id="site-wrapper">
+  <article class="blueprint">
+    <div class="fuente-energia">
+      <section>
+        <div class="title-section">
+          <div class="txt-renglon centered txt-bigger"></div> 
+          <div class="subtitle">Fuente de energía</div>
+          <span>Aquí podrás recargarte de información adicional</span>  
+        </div>
+      </section>
 
+      <section class="filter-section form">
+        <i class="icomoon icon-list"></i>
+        <select name="filter" class="form-control form-control-lg theme-default" ng-model="filter">
+          <option value="" disabled>Filtrar contenido por...</option>
+          <option value="">Ver Todo</option>
+          <option value="Obligatorio">Obligatorio</option> 
+          <option value="resource">Fotografías</option> 
+          <option value="video">Videos</option> 
+          <option value="page">Textos</option> 
+          <option value="Frases">Frases</option> 
+          <option value="url">Enlaces</option> 
+        </select>
+        <i class="icomoon icon-arrow"></i>
+      </section>
 
-      <article class="blueprint">
-        <div class="fuente-energia">
-          <section>
-            <div class="title-section">
-              <div class="txt-renglon centered txt-bigger"></div> 
-              <div class="subtitle">Fuente de energía</div>
-              <span>Aquí podrás recargarte de información adicional</span>  
-            </div>
-          </section>
+      <section class="wall">
+        <div class="part" ng-repeat="activity in fuenteDeEnergia.activities">
+          <div ng-if="filter == activity.activity_type && activity.activityintro == '' || !filter || filter == activity.activityintro || filter == 'Obligatorio' && activity.optional">
 
-          <section class="filter-section form">
-            <i class="icomoon icon-list"></i>
-            <select name="filter" class="form-control form-control-lg theme-default" ng-model="filter">
-              <option value="" disabled>Filtrar contenido por...</option>
-              <option value="">Ver Todo</option>
-              <option value="Obligatorio">Obligatorio</option> 
-              <option value="resource">Fotografías</option> 
-              <option value="video">Videos</option> 
-              <option value="page">Textos</option> 
-              <option value="Frases">Frases</option> 
-              <option value="url">Enlaces</option> 
-            </select>
-            <i class="icomoon icon-arrow"></i>
-          </section>
-
-          <section class="wall">
-            <div class="part" ng-repeat="activity in fuenteDeEnergia.activities">
-              <div ng-if="filter == activity.activity_type && activity.activityintro == '' || !filter || filter == activity.activityintro || filter == 'Obligatorio' && activity.optional">
-
-                <div ng-if="activity.activity_type == 'url' && activity.activityintro == '' ">
-                  <div class="type">
-                    <div class="col-xs-1 type-icon">
-                      <i class="icomoon icon-hyperlink"></i>
-                    </div>
-                    <div class="col-xs-9">
-                      <span>Visita el sitio web!</span>
-                    </div>
-                    <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-show="activity.optional"></i>
-                    </div>
-                    <div class="col-xs-1">
-                      <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
-                      <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
-                    </div>
-                  </div>
+            <div ng-if="activity.activity_type == 'url' && activity.activityintro == '' ">
+              <div class="type">
+                <div class="col-xs-1 type-icon">
+                  <i class="icomoon icon-hyperlink"></i>
                 </div>
-
-                <div ng-if="activity.activityintro == 'video' ">
-                  <div class="type">
-                    <div class="col-xs-1 type-icon">
-                      <i class="icomoon icon-video-file"></i>
-                    </div>
-                    <div class="col-xs-9">
-                        <span>Video tutorial Incluso</span>
-                    </div>
-                    <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-show="activity.optional"></i>
-                    </div>
-                    <div class="col-xs-1">
-                      <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
-                      <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
-                    </div>
-                  </div>
+                <div class="col-xs-9">
+                  <span>Visita el sitio web!</span>
                 </div>
-
-                <div ng-if="activity.activity_type == 'page'">
-                  <div class="type">
-                    <div class="col-xs-1 type-icon">
-                      <i class="icomoon icon-text"></i>
-                    </div>
-                    <div class="col-xs-9">
-                        <span>Texto</span>
-                    </div>
-                    <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-show="activity.optional"></i>
-                    </div>
-                    <div class="col-xs-1">
-                      <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
-                      <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
-                    </div>
-                  </div>
+                <div class="col-xs-1">
+                  <i class="icomoon icon-required" ng-show="activity.optional"></i>
                 </div>
-
-                <div ng-if="activity.activity_type == 'resource'">
-                  <div class="type">
-                    <div class="col-xs-1 type-icon">
-                      <i class="icomoon icon-camera"></i>
-                    </div>
-                    <div class="col-xs-9">   
-                      <span>Fotografía</span>
-                    </div>        
-                    <div class="col-xs-1">
-                      <i class="icomoon icon-required" ng-show="activity.optional"></i>
-                    </div>
-                    <div class="col-xs-1">
-                      <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
-                      <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
-                    </div>
-                  </div>      
-                </div>
-
-                <div class="detail">  
-                  <div>
-                    <div ng-if="activity.activity_type == 'resource'" class="image-container">
-                      <img ng-click="updateStatus(activity.groupid)" ng-src="{{activity.file.path}}" class="image-element">
-                    </div>
-                    <div class="message">
-                        <a ng-if="activity.activityintro == '' && activity.activity_type=='url'" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>
-                        <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'page' && !activity.status">Mostrar texto...</span>
-                        <span ng-show="activity.status" ng-bind-html="activity.pageContent"></span>
-
-                        <span ng-bind-html="activity.file.pageContent"></span>
-
-                        <section class="component video-gallery ng-scope"  ng-if="activity.activityintro == 'video'" ng-click="updateStatus(activity.groupid)">
-                          <div class="panel panel-video">
-                            <div class="stage perform">   
-                            <button class="icon icon-play" ></button>                       
-                              <figure class="player">
-                                      <a href={{activity.activityContent.url}} target="_blank">
-                                        <img src="assets/images/ptr-video-0001.jpg" alt="video" />
-                                      </a>
-                              </figure>
-                            </div>                        
-                          </div>
-                        </section>
-                    </div>
-                  </div>
-                  <div class="interact hidden">
-                    <div class="col-xs-6 like">
-                      <i class="icomoon icon-like"></i>
-                      <span>Me gusta</span>
-                    </div>
-                    <div class="col-xs-6 comment">
-                      <i class="icomoon icon-comment"></i>
-                      <span>Comentar</span>
-                    </div>
-                  </div>
+                <div class="col-xs-1">
+                  <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
+                  <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
                 </div>
               </div>
             </div>
-          </section>
 
-          <section>
-            <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
-            <div class="txt-renglon centered txt-bigger"></div> 
-          </section>
+            <div ng-if="activity.activityintro == 'video' ">
+              <div class="type">
+                <div class="col-xs-1 type-icon">
+                  <i class="icomoon icon-video-file"></i>
+                </div>
+                <div class="col-xs-9">
+                  <span>Video tutorial Incluso</span>
+                </div>
+                <div class="col-xs-1">
+                  <i class="icomoon icon-required" ng-show="activity.optional"></i>
+                </div>
+                <div class="col-xs-1">
+                  <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
+                  <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
+                </div>
+              </div>
+            </div>
+
+            <div ng-if="activity.activity_type == 'page'">
+              <div class="type">
+                <div class="col-xs-1 type-icon">
+                  <i class="icomoon icon-text"></i>
+                </div>
+                <div class="col-xs-9">
+                  <span>Texto</span>
+                </div>
+                <div class="col-xs-1">
+                  <i class="icomoon icon-required" ng-show="activity.optional"></i>
+                </div>
+                <div class="col-xs-1">
+                  <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
+                  <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
+                </div>
+              </div>
+            </div>
+
+            <div ng-if="activity.activity_type == 'resource'">
+              <div class="type">
+                <div class="col-xs-1 type-icon">
+                  <i class="icomoon icon-camera"></i>
+                </div>
+                <div class="col-xs-9">   
+                  <span>Fotografía</span>
+                </div>        
+                <div class="col-xs-1">
+                  <i class="icomoon icon-required" ng-show="activity.optional"></i>
+                </div>
+                <div class="col-xs-1">
+                  <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
+                  <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
+                </div>
+              </div>      
+            </div>
+
+            <div class="detail">  
+              <div>
+                <div ng-if="activity.activity_type == 'resource'" class="image-container">
+                  <img ng-click="updateStatus(activity.groupid)" ng-src="{{activity.file.path}}" class="image-element">
+                </div>
+                <div class="message">
+                  <a ng-if="activity.activityintro == '' && activity.activity_type=='url'" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>
+                  <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'page' && !activity.status">Mostrar texto...</span>
+                  <span ng-show="activity.status" ng-bind-html="activity.pageContent"></span>
+
+                  <span ng-bind-html="activity.file.pageContent"></span>
+
+                  <section class="component video-gallery ng-scope"  ng-if="activity.activityintro == 'video'" ng-click="updateStatus(activity.groupid)">
+                    <div class="panel panel-video">
+                      <div class="stage perform">   
+                        <button class="icon icon-play" ></button>                       
+                        <figure class="player">
+                          <a href={{activity.activityContent.url}} target="_blank">
+                            <img src="assets/images/ptr-video-0001.jpg" alt="video" />
+                          </a>
+                        </figure>
+                      </div>                        
+                    </div>
+                  </section>
+                </div>
+              </div>
+              <div class="interact hidden">
+                <div class="col-xs-6 like">
+                  <i class="icomoon icon-like"></i>
+                  <span>Me gusta</span>
+                </div>
+                <div class="col-xs-6 comment">
+                  <i class="icomoon icon-comment"></i>
+                  <span>Comentar</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </article>
+      </section>
 
-  </div>
+      <section>
+        <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
+        <div class="txt-renglon centered txt-bigger"></div> 
+      </section>
+    </div>
+  </article>
 </div>

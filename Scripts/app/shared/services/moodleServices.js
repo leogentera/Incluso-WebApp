@@ -35,6 +35,10 @@
         var _getAsyncActivitiesInfo = function(activityId, successCallback, errorCallback){
             _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), successCallback, errorCallback);
         };
+        
+        var _getAsyncActivityQuizInfo = function(activityId,userId, successCallback, errorCallback){
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId+'?userid='+userId), successCallback, errorCallback);
+        };
             
         var _getAsyncCourse = function(courseId, successCallback, errorCallback){
             successCallback();
@@ -199,9 +203,10 @@
         };
 
 
-        var refreshProgress = function(usercourse)  {
+        var refreshProgress = function(usercourse, user)  {
             var globalActivities = 0;
             var globalCompletedActivities = 0;
+            var globalPointsAchieved = 0;
 
             if (usercourse.stages) {
                 for(i =0; i < usercourse.stages.length; i++) {
@@ -218,7 +223,6 @@
                                 for(k =0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
                                     //activities
 
-
                                     if (usercourse.stages[i].challenges[j].activities[k].activities) {
                                         for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
                                             if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
@@ -229,10 +233,10 @@
                                                 if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
                                                     globalCompletedActivities++;
                                                     stageCompletedActivities++;
+                                                    globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].activities[l].points;
                                                 }
                                             }
                                         }
-
                                     } 
                                     else
                                     {
@@ -242,19 +246,26 @@
                                         if (usercourse.stages[i].challenges[j].activities[k].status == 1) {
                                             globalCompletedActivities++;
                                             stageCompletedActivities++;
+                                            globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].points;
                                         }
                                     }
 
                                 }
                             }
+                            if(usercourse.stages[i].challenges[j].status == 1){
+                                globalPointsAchieved += usercourse.stages[i].challenges[j].points;
+                            }
                         }
                     }
                     usercourse.stages[i].stageProgress = Math.round(100.0 * stageCompletedActivities / stageActivities, 0);
+                    if (usercourse.stages[i].status == 1) {
+                        globalPointsAchieved += usercourse.stages[i].points;
+                    }
                 }
             }
             usercourse.globalProgress = Math.round(100.0 * globalCompletedActivities / globalActivities,0);
-
-            return usercourse;
+            user.stars = globalPointsAchieved;
+            return { course: usercourse, user: user };
         }
 
          
@@ -376,10 +387,14 @@
                     }
                 }
 
-            course = refreshProgress(course);
-            localStorage.setItem("usercourse", JSON.stringify(course));
-            localStorage.setItem("course", JSON.stringify(course));
-            localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
+                var user = JSON.parse(localStorage.getItem("profile"));
+                var progress = refreshProgress(course, user);
+                course = progress.course;
+                user = progress.user;
+                localStorage.setItem("profile", JSON.stringify(user));
+                localStorage.setItem("usercourse", JSON.stringify(course));
+                localStorage.setItem("course", JSON.stringify(course));
+                localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
             }
         }        
         
@@ -393,7 +408,7 @@
             GetCacheJson: _getCacheJson,
             GetAsyncActivity: _getAsyncActivityInfo,
             GetAsyncActivities: _getAsyncActivitiesInfo,
-            PutAsyncActivity: _putAsyncActivityInfo,
+            GetAsyncActivityQuizInfo: _getAsyncActivityQuizInfo,
             PutAsyncQuiz: _putAsyncQuiz,
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
