@@ -27,6 +27,7 @@ angular
             var starsNoMandatory = 0;
             var starsMandatory = 0;    
             var getcoursemoduleids = [];
+            debugger;
             if(!activities){
               var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
               $scope.fuenteDeEnergia = _.find(activitymanagers,function(a) { 
@@ -45,8 +46,10 @@ angular
                   if(activityCache){                    
                     $scope.fuenteDeEnergia.activities[i] = activityCache;
                   }
-
-                  moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, errorCallback);                 
+                  else
+                  {
+                    moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, errorCallback);                 
+                  }                  
                  //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,successfullCallBack, errorCallback);
                  //(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));                 
               }                      
@@ -70,11 +73,11 @@ angular
             }*/
                         
             for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {              
-              if($scope.fuenteDeEnergia.activities[i].mandatory && $scope.fuenteDeEnergia.activities[i].status){                
+              if($scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){                
                 $scope.statusObligatorios+=1; 
                 starsMandatory += 50;               
               }
-              else if (!$scope.fuenteDeEnergia.activities[i].mandatory && $scope.fuenteDeEnergia.activities[i].status){
+              else if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){
                 starsNoMandatory += 50;
               }
             }
@@ -86,7 +89,7 @@ angular
                   $scope.fuenteDeEnergia.activities[i].status = true;   
                   debugger;                
                   _endActivity($scope.fuenteDeEnergia.activities[i]);
-                  if($scope.fuenteDeEnergia.activities[i].mandatory){                    
+                  if($scope.fuenteDeEnergia.activities[i].optional){                    
                     $scope.statusObligatorios+=1;    
                     assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid);
                     starsMandatory += 50;  

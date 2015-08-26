@@ -22,9 +22,8 @@ angular
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
-            
-            _createNotification();
-            
+        
+            $scope.activitiesCompletedInCurrentStage = [];                                
             //
             /*
             var stage = JSON.parse(localStorage.getItem('stage'));
@@ -138,11 +137,18 @@ angular
                 var numActividadesParcial = $scope.logroEducativo.retosPorEtapa[$scope.idEtapa].retos[j].actividades.length;     
                         
                 for (var k = 0; k < numActividadesParcial; k++) {
-                    avanceEnEtapaActual += $scope.logroEducativo.retosPorEtapa[$scope.idEtapa].retos[j].actividades[k].status;  
-                    totalActividadesEnEtapaActual++;             
-                }            
+                    avanceEnEtapaActual += $scope.logroEducativo.retosPorEtapa[$scope.idEtapa].retos[j].actividades[k].status;                    
+                    
+                    totalActividadesEnEtapaActual++;
+                    
+                    //if ($scope.logroEducativo.retosPorEtapa[$scope.idEtapa].retos[j].actividades[k].status == 1) {
+                    //    $scope.activitiesCompletedInCurrentStage.push($scope.logroEducativo.retosPorEtapa[$scope.idEtapa].retos[j].actividades[k].coursemoduleid);
+                    //}
+                }
               }       
            
+            //call method createMultipleActivitiesNotification;
+            //_createMultipleActivitiesNotification($scope.activitiesCompletedInCurrentStage)
             
             //$scope.avanceGlobal = Math.ceil(avanceGlobal*100/totalDeActividades);
             $scope.avanceEnEtapaActual = Math.ceil(avanceEnEtapaActual*100/totalActividadesEnEtapaActual);            
