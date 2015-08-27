@@ -14,8 +14,6 @@ angular
             _httpFactory = $http;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-
-            //$rootScope.pageName = "EstaciÃ³n: ConÃ³cete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
@@ -23,11 +21,6 @@ angular
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
 
-            //successChallengeCallback();            
-
-            
-            
-            //localStorage.setItem('closeStageModal','true');
             var closingStageModal = localStorage.getItem('closeStageModal');
             if (closingStageModal == 'true') {
                 openStageModal();
@@ -35,18 +28,7 @@ angular
             }        
             
             $scope.activitiesCompletedInCurrentStage = [];
-
             $scope.isCollapsed = false;
-
-            /*
-             $scope.theActivities = [    [{"name" : "Exploracion Inicial", "status" : 0, "link" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"}],
-             [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"}],
-             [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia"}, {"name" : "Reto múltiple", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple"}, {"name" : "Punto de encuentro", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64"}, {"name" : "Zona de contacto", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/ZonaDeContacto"}],
-             [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia"}, {"name" : "Mis cualidades", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades"}, {"name" : "Mis gustos", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos"}, {"name" : "Sueña", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena"}, {"name" : "Punto de encuentro", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"}],
-             [{"name" : "Cabina de soporte", "status" : 0, "link":"/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat"}],
-             [{"name" : "Exploración final", "status" : 0, "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"}]  ];
-             */
-
 
             var activitiesURLs = [
                 ["/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"],
@@ -61,14 +43,13 @@ angular
             };
 
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+            $scope.idEtapa = 0; //We are in Stage 1
+            $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
 
             var totalDeEtapas = $scope.model.stages.length; //Total amount of stages
-
-            var totalDeRetos = 0;   //Total number of challenges, along all possible stages
+            var totalDeRetos = 0; //Total number of challenges, along all possible stages
             var totalDeActividades = 0; //Total number of activities, along all challenges in all stages
-
-            //Getting total number of challenges along all stages (1, 2 y 3)
-            var i, j, k;
+            var i, j, k; //Getting total number of challenges along all stages (1, 2 y 3)
 
             for (i = 0; i < totalDeEtapas; i++) {
                 totalDeRetos += $scope.model.stages[i].challenges.length;
@@ -76,7 +57,6 @@ angular
 
             // Count of whole activities along all Stages
             for (i = 0; i < totalDeEtapas; i++) {
-
                 var numOfChallenges = $scope.model.stages[i].challenges.length;
 
                 for (j = 0; j < numOfChallenges; j++) {
@@ -84,14 +64,8 @@ angular
                 }
             }
 
-            $scope.idEtapa = 0;      //We are in Stage 1
-            $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
-
             var avanceEnEtapaActual = 0;
-
-            //Attainment of user in the current Stage
-            var totalActividadesEnEtapaActual = 0;
-
+            var totalActividadesEnEtapaActual = 0; //Attainment of user in the current Stage
             var retosEnEtapaActual = $scope.model.stages[$scope.idEtapa].challenges.length;
 
             for (j = 0; j < retosEnEtapaActual; j++) {
@@ -103,9 +77,7 @@ angular
                 }
             }
 
-            $scope.avanceEnEtapaActual = Math.ceil(avanceEnEtapaActual * 100 / totalActividadesEnEtapaActual);
-
-
+            $scope.avanceEnEtapaActual = 65;//Math.ceil(avanceEnEtapaActual * 100 / totalActividadesEnEtapaActual);
             $scope.retosIconos = {
                 "Exploración Inicial": "assets/images/challenges/stage-1/img-evaluacion inicial.svg",
                 "Cuarto de recursos": "assets/images/challenges/stage-1/img-cuarto-recursos.svg",
@@ -114,7 +86,6 @@ angular
                 "Cabina de soporte": "assets/images/challenges/stage-1/img-cabina-soporte.svg",
                 "Exploración final": "assets/images/challenges/stage-1/img-evaluacion final.svg"
             };
-
 
             $scope.playVideo = function (videoAddress, videoName) {
                 playVideo(videoAddress, videoName);
@@ -133,10 +104,9 @@ angular
                     console.log("modal open closing");
                     //}, 1000);
                 }
-        
         }])
-    .controller('closingStageController', function ($scope, $modalInstance) {
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-    });
+        .controller('closingStageController', function ($scope, $modalInstance) {
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        });
