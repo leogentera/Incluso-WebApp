@@ -17,7 +17,7 @@ angular
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-
+            $scope.$emit('HidePreloader'); //hide preloader
             $scope.currentPage = 1;
             $scope.setReadOnly = true;
             $scope.showWarning = false;
@@ -58,11 +58,13 @@ angular
 
 
             $scope.addAbility = function () {
-                $scope.AnswersResult.answers[4].push(new String());
+                addHeight ();
+                $scope.AnswersResult.answers[4].push(new String());                
             }
 
             $scope.deleteAbility = function (index) {
-                $scope.AnswersResult.answers[4].splice(index, 1);
+                removeHeight();
+                $scope.AnswersResult.answers[4].splice(index, 1);                
             }
 
             $scope.hideWarning = function () {
@@ -282,39 +284,28 @@ angular
             }
 
             getDataAsync();
+             $scope.openModal = function (size) {                         
+                 var modalInstance = $modal.open({
+                     animation: $scope.animationsEnabled,
+                     templateUrl: 'OpeningStageModal.html',
+                     controller: 'OpeningStageController',
+                     size: size,
+                     windowClass: 'user-help-modal'
+                 });
+                     console.log("modal open");                 
+             };
+ 
+             $scope.openModal();
 
+             function addHeight () {
+                $scope.finalHeight = angular.element("#listaDinamica").height() + 125;
+                angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);              
+            }
 
-
-            //             $scope.openModal = function (size) {
-            // 
-            //                 if (1 == 1) {
-            //                     setTimeout(function () {
-            // 
-            //                 //         var modalInstance = $modal.open({
-            //                 //             animation: $scope.animationsEnabled,
-            //                 //             templateUrl: 'tutorialModal.html',
-            //                 //             controller: 'tutorialController',
-            //                 //             size: size,
-            //                 //             windowClass: 'user-help-modal'
-            //                 //         });
-            //                 //         console.log("modal open");
-            //                 //     }, 500);
-            //                 // }
-            //             
-            //                     var modalInstance = $modal.open({
-            //                         animation: $scope.animationsEnabled,
-            //                         templateUrl: 'OpeningStageModal.html',
-            //                         controller: 'OpeningStageController',
-            //                         size: size,
-            //                         windowClass: 'user-help-modal'
-            //                     });
-            //                     console.log("modal open");
-            //                 }, 500);
-            //                 }
-            // 
-            //             };
-            // 
-            //             $scope.openModal();
+            function removeHeight () {
+                $scope.finalHeight = angular.element("#listaDinamica").height() - 135;
+                angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);              
+            }
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {

@@ -92,15 +92,18 @@
         <div id="owl-demo" class="owl-carousel">
 
           <div ng-repeat="reto in model.stages[idEtapa].challenges">
-            <div class="part" ng-repeat="actividad in reto.activities" ng-click="goToUrl(actividad.sectionname)">
+            <span ng-bind="$index"></span>
+            <div class="part" ng-repeat="actividad in theActivities[$index]" ng-click="goToUrl(actividad.link)">
               <i class="icomoon icon-checked-join" ng-show="actividad.status == 1"></i>
               <i class="icomoon icon-gauge" ng-show="actividad.status == 0"></i>
-              <span ng-bind="actividad.sectionname"></span>
+              <!--<span ng-bind="actividad.sectionname"></span>  -->
+              <span ng-bind="actividad.name"></span>
               <span>
                 <i class="icomoon icon-star fl-right"></i>
                 <i class="icomoon icon-play fl-right"></i>
-          </span>
+              </span>
             </div>
+
           </div>
           <!--
       <!-- Actividades para el Reto # 1  

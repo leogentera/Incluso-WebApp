@@ -69,7 +69,7 @@ var _endActivity = function(activityModel){
       var currentUserId = currentUser.userId;
       var activityId = activityModel.coursemoduleid;
       var data = {
-        userId :  currentUserId };
+        userid :  currentUserId };
   
       //_createNotification(activityModel, userId);
       
