@@ -42,10 +42,16 @@ angular
 
 
 
-            var activitiesFromService = {};
+            var activitiesURLs = [
+                                    ["/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"],
+                                    ["/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"],
+                                    [ "/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia", "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple", "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64", "/ZonaDeVuelo/Conocete/ZonaDeContacto"],
+                                    [ "/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia", "/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos", "/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades", "/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena", "/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"],
+                                    ["/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat"],
+                                    ["/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"]];
 
-            $scope.goToUrl = function(url) {
-                $location.path(url);
+            $scope.goToUrl = function(challenge, activity) {
+                $location.path(activitiesURLs[challenge][activity]);
             };
 
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));

@@ -93,7 +93,7 @@
 
           <div ng-repeat="challenge in model.stages[idEtapa].challenges">
 
-            <div class="part" ng-repeat="activity in challenge.activities" ng-click="goToUrl(actividad.link)">
+            <div class="part" ng-repeat="activity in challenge.activities" ng-click="goToUrl($parent.$index, $index)">
               <i class="icomoon icon-checked-join" ng-show="activity.status == 1"></i>
               <i class="icomoon icon-gauge" ng-show="activity.status == 0"></i>
 
