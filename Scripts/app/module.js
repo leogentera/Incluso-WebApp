@@ -358,7 +358,7 @@
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustos.html',
-            controller: 'stageuizController'
+            controller: 'stageQuizController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/Cierre', { 
@@ -368,7 +368,7 @@
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/Suena.html',
-            controller: 'stageuizController'
+            controller: 'stageQuizController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/Cierre', { 

@@ -207,7 +207,6 @@
            });
         };
 
-
         var refreshProgress = function(usercourse, user)  {
             var globalActivities = 0;
             var globalCompletedActivities = 0;
@@ -272,7 +271,6 @@
             user.stars = globalPointsAchieved;
             return { course: usercourse, user: user };
         }
-
          
         var createTree = function(activities) {
 

@@ -96,8 +96,7 @@ var _endChallenge = function(activityModel){
     
 }
 
-var successChallengeCallback = function(){
-    debugger;
+var successChallengeCallback = function(){    
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;    
     var currentStage = userCourse.stages[lastStageIndex];
@@ -109,7 +108,7 @@ var successChallengeCallback = function(){
     var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
     
     if (totalActivitiesByStage == totalActivitiesCompletedByStage) {
-      //show end of challenge robot.
+      localStorage.setItem("closeStageModal",'true');
     }
 }
 
@@ -179,34 +178,29 @@ var errorCallback = function(data){
   
 }
 
-
-function getChallengeByActivity_identifier(activity_identifier) {
-            var matchingChallenge = null;
+function getActivityByActivity_identifier(activity_identifier) {
+            var matchingActivity = null;
             var breakAll = false;
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
                 var stage = userCourse.stages[stageIndex];
                 for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
                     var challenge = stage.challenges[challengeIndex];
-                    if (challenge.activity_identifier == activity_identifier) {
-                        matchingChallenge = challenge;
+                    for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                      var activity = challenge.activities[activityIndex];
+                      if (activity.activity_identifier == activity_identifier) {
+                        matchingActivity = activity;
                         breakAll = true;
                         break;
+                        }
                     }
+                    if(breakAll)
+                     break;
                 }
                 if(breakAll)
                  break;
             }
-            return matchingChallenge;
-}
-
-function getActivitiesByActivity_identifier(activity_identifier) {
-    var activitiesFound = null;
-    
-    var challenge = getChallengeByActivity_identifier(activity_identifier);
-    activitiesFound =challenge.activities;                
-  
-    return activitiesFound ;
+            return matchingActivity;
 }
 
 
