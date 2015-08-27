@@ -96,8 +96,7 @@ var _endChallenge = function(activityModel){
     
 }
 
-var successChallengeCallback = function(){
-    debugger;
+var successChallengeCallback = function(){    
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;    
     var currentStage = userCourse.stages[lastStageIndex];
@@ -109,7 +108,7 @@ var successChallengeCallback = function(){
     var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
     
     if (totalActivitiesByStage == totalActivitiesCompletedByStage) {
-      //show end of challenge robot.
+      localStorage.setItem("closeStageModal",'true');
     }
 }
 

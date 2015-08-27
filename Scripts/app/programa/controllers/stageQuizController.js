@@ -12,7 +12,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
-            $rootScope.pageName = "Estación: Conócete"
+            $rootScope.pageName = "Estación: Conócete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
@@ -27,35 +27,38 @@ angular
             $scope.like_status = 0;
 
 
-
             $scope.finishActivity = function () {
                 //Activity completed
                 $scope.activity.status = 1;
-                    
+
                 //Call stars - progress
-                
+                //Update Activity Stars - Progres Service
+
                 //Llamar notificaciones
-                    
+
                 //Update Activity userAnswers Service
-                
+
                 //Update Activity Log Service
-                
+
                 //Update Activity finished Service
                 //moodleFactory.Services.PutEndActivity($scope.coursemoduleid, $scope.userprofile.id, $scope.fuenteDeEnergia, $scope.currentUser.token, successfullCallBack, errorCallback);
                 //moodleFactory.Services.PutAsyncQuizActivity($scope.userprofile.id, $scope.coursemoduleid,$scope.AnswersResult, successfullCallBack, errorCallback);
 
-                $scope.AnswersResult.userid = $scope.userprofile.id
-                $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid
+                $scope.AnswersResult.userid = $scope.userprofile.id;
+                $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
                 $scope.AnswersResult.like_status = $scope.like_status;
                 
                 //$scope.AnswersResult.answers = $scope.Suena_answers
 
-                _endActivityQuiz({ "activity": $scope.activity, "answersResult": $scope.AnswersResult, "userId": $scope.userprofile.id });
-                
-                //Update Activity Stars - Progres Service
-                
+                _endActivityQuiz({
+                    "activity": $scope.activity,
+                    "answersResult": $scope.AnswersResult,
+                    "userId": $scope.userprofile.id
+                });
                 $location.path('/ZonaDeVuelo/Dashboard');
-            }
+            };
+
+            
 
             $scope.addAbility = function () {
                 addHeight();
@@ -67,9 +70,32 @@ angular
                 $scope.AnswersResult.answers[4].splice(index, 1);
             }
 
+            $scope.dreamsLists = {
+                "userid": 0,//$scope.userprofile.id,
+                "answers": [[], [], []],
+                "activityidnumber": 0,//$scope.activity.coursemoduleid
+                "like_status": 0
+            };
+
+            $scope.addSueno1 = function () {//alert("addSueno1");
+                addHeight();
+                $scope.dreamsLists.answers[0].push(new String());
+            };
+
+            $scope.addSueno2 = function () {
+                alert("sueño 2");
+                addHeight();
+                $scope.dreamsLists.answers[1].push("");
+            };
+
+            $scope.addSueno3 = function () {
+                addHeight();
+                $scope.dreamsLists.answers[2].push("");
+            };
+
             $scope.hideWarning = function () {
                 $scope.showWarning = false;
-            }
+            };
 
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
@@ -83,8 +109,6 @@ angular
 
                 //var validationMenssage = "Asegurate de contestar todas las preguntas antes de guardar";
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-
-                var theAnswersResult = $scope.AnswersResult;
 
                 if ($scope.AnswersResult.answers[0] != null) {
                     if ($scope.AnswersResult.answers[1][0] == true ||
@@ -132,7 +156,7 @@ angular
                 }
             };
 
-            function updateSelectedAnsers(questionIndex, question) {
+            function updateSelectedAnswers(questionIndex, question) {
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer == "Si") {
@@ -189,40 +213,6 @@ angular
                 }
             }
 
-
-
-
-            // $scope.AnswersResult = {
-            //     "userid": 0,//$scope.userprofile.id,
-            //     "answers": [
-            //         {
-            //             //"0": null
-            //             "first": null
-            //         },
-            //         {
-            //             "second": [
-            //                 '0', '0', '0', '0'
-            //                 // { "_0": 0 },
-            //                 // { "_1": 0 },
-            //                 // { "_2": 0 },
-            //                 // { "_3": 0 }
-            //             ]
-            //         },
-            //         {
-            //             "third": ''
-            //         }
-            //         ,
-            //         {
-            //             "fourth": null
-            //         },
-            //         {
-            //             "fifth": []
-            //         }
-            //     ]
-            //     , "activityidnumber": 0//$scope.activity.coursemoduleid
-            // };
-            // 
-            
             $scope.AnswersResult = {
                 "userid": 0,//$scope.userprofile.id,
                 "answers": [null, [0, 0, 0, 0], '', null, []]
@@ -230,13 +220,13 @@ angular
                 , "like_status": 0
             };
 
+
             $scope.Suena_answers = [[], [], []];
 
 
 
-
             function errorCallback(data) {
-                var algo = data;
+                // var algo = data;
             }
 
             function getDataAsync() {
@@ -251,7 +241,7 @@ angular
                 
                 //fin test     
                 
-                var activity_identifier = $location.path().split("/")[3] == "zv_exploracionInicial" ? testActivity_identifier : $location.path().split("/")[3];  
+                var activity_identifier = $location.path().split("/")[3] == "zv_exploracionInicial" ? testActivity_identifier : $location.path().split("/")[3];
 
                 var activities = getActivityByActivity_identifier(activity_identifier);
 
@@ -302,13 +292,23 @@ angular
                 }
             }
 
+            //             function successfullCallBack(activity) {
+            //                 if (activity != null) {
+            //                     $scope.activity = activity;
+            //                     for (var index = 0; index < activity.questions.length; index++) {
+            //                         var question = activity.questions[index];
+            // 
+            //                         updateSelectedAnsers(index, question)
+            //                     }
+            //                 }
+            //             }
+            
             function successfullCallBack(activity) {
                 if (activity != null) {
                     $scope.activity = activity;
                     for (var index = 0; index < activity.questions.length; index++) {
                         var question = activity.questions[index];
-
-                        updateSelectedAnsers(index, question)
+                        updateSelectedAnswers(index, question)
                     }
                 }
                 else {
