@@ -29,8 +29,51 @@ angular
                 "isVideoCollapsed":true,
                 "isAttachmentCollapsed":true
             };
+
+
+            function getForumProgress(){
+               return JSON.parse(localStorage.getItem('currentForumsProgress')? localStorage.getItem('currentForumsProgress') : localStorage.setItem('currentForumsProgress')) ;
+            };
+            var testDataObeject = [
+                {'discussion':12, 'commentsCount':2}, {'discussionId':13, 'commentsCount':2}
+            ];
+            localStorage.setItem('currentForumsProgress', JSON.stringify(testDataObeject));
+
+            function updateForumProgress(discussionId){
+                console.log('Discussion Id on forum update: '+ discussionId);
+                var forumsCommentsCountCollection = getForumProgress();
+                console.log(forumsCommentsCountCollection);
+                var discussionId = discussionId;//$scope.discussion.posts[0].discussion;
+                var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussionId == discussionId; });
+                console.log(alreadyCommented);
+                alreadyCommented? alreadyCommented.commentsCount++ : forumsCommentsCountCollection.push({'discussionId':discussionId, 'commentsCount':1});
+                console.log(forumsCommentsCountCollection);
+                localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
+                console.log('Updated');
+            };
+            var endForumActivity = function(){
+                console.log('Finished forum acivity');
+            };
+
+            var checkForumProgress = function(){
+                var forumsCommentsCountCollection = getForumProgress();
+                var isActivityFinished = null;
+
+                for(var topicObjectIndex in forumsCommentsCountCollection){
+
+                    var topicObject =forumsCommentsCountCollection[topicObjectIndex] ;
+                    var isTopicFinished = topicObject.commentsCount >= 2;
+                    console.log('Topic Finished: ' + isTopicFinished);
+                    if(isActivityFinished === null && typeof isActivityFinished === "object") isActivityFinished = isTopicFinished;
+                    isActivityFinished = isActivityFinished && isTopicFinished;
+                    console.log('Activity Finished: ' + isActivityFinished);
+                };
+                if(isActivityFinished) endForumActivity();
+            };
+            checkForumProgress();
+
+
             var _uncollapse = function(element, elementsArray){
-                console.log('Uncollapsing....');
                 for(var key in elementsArray){
                     key==element? elementsArray[key] = !elementsArray[key] : elementsArray[key] = true;
                 };
@@ -56,15 +99,14 @@ angular
             $scope.isCommentModalCollapsed= [];
             $scope.replyText = null;
             $scope.replyToPost = function(that, parentId){
-                //alert("Posting " + that.replyText +" to paren: "+ parentId);
-                //alert($scope.discussion.posts[0].id);
                 var dataObejct = createPostDataObject(parentId, that.replyText, 1);
-                console.log(dataObejct);
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){alert('Success!!');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
                         getDataAsync();
+                        updateForumProgress(parentId);
+                        checkForumProgress();
                     },
                     function(){alert('Fail!!');
                         $scope.textToPost=null;
@@ -153,18 +195,6 @@ angular
                 alert("Posting ATTACHMENT in the forum " + $scope.attachmentToPost);
             };
 
-            var endForumActivity = function(){};
-
-            var checkActivityPrograess = function(){
-                //ForumProgress should already be in the LocalStorage
-                var forumsCommentsCount = localStorage.getItem('ForumProgress');
-                var isActivityFinished = null;
-
-                for(forum in forumsCommentsCount){
-                    forum['contributions'] >= 2 ? isActivityFinished = true : isActivityFinished = false;
-                };
-                isActivityFinished ? endForumActivity() : '';
-            };
 
 
             function getDataAsync() {
@@ -183,7 +213,6 @@ angular
 
             var createModalReferences = function(element, index, array){
                 $scope.isCommentModalCollapsed[element.id] = true;
-                console.log(element);
             };
 
             $scope.back = function () {
