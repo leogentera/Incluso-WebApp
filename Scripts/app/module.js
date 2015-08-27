@@ -65,7 +65,8 @@
         $http.get('Templates/Programa/TermsOfUse.html', { cache: $templateCache });
         $http.get('Templates/Programa/HelpAndSupport.html', { cache: $templateCache });
         $http.get('Templates/Programa/ClosingStage.html', { cache: $templateCache });
-        $http.get('Templates/Programa/evaluacionFormulario.html', { cache: $templateCache });
+        $http.get('Templates/Programa/evaluacion.html', { cache: $templateCache });
+        $http.get('Templates/Programa/formulario.html', { cache: $templateCache });
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
@@ -128,8 +129,13 @@
             controller: 'programaProfileController'
         });
 
-        $routeProvider.when('/evaluacionFormulario', {
-            templateUrl: 'Templates/Programa/evaluacionFormulario.html',
+        $routeProvider.when('/evaluacion', {
+            templateUrl: 'Templates/Programa/evaluacion.html',
+            controller: 'evaluacionFormulario'
+        });
+
+        $routeProvider.when('/formulario', {
+            templateUrl: 'Templates/Programa/formulario.html',
             controller: 'evaluacionFormulario'
         });
 
