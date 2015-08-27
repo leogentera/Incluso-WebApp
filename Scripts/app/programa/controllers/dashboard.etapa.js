@@ -67,8 +67,13 @@ angular
                 $location.path(url);
             };
 
+            //stageId = 1
+
+
+
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-            $scope.idEtapa = 0; //We are in Stage 1
+
+            $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
             $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
 
             var totalDeEtapas = $scope.model.stages.length; //Total amount of stages
