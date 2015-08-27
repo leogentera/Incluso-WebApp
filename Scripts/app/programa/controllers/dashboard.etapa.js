@@ -20,6 +20,13 @@ angular
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
+
+            var closingStageModal = localStorage.getItem('closeStageModal');
+            if (closingStageModal == 'true') {
+                openStageModal();
+                localStorage.setItem('closeStageModal', 'false');
+            }        
+            
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
 
@@ -83,20 +90,20 @@ angular
             $scope.playVideo = function (videoAddress, videoName) {
                 playVideo(videoAddress, videoName);
             };
-
-            $scope.openClosingStageModal = function (size) {
-                console.log("opening");
-                //setTimeout(function(){ 
-                var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'ClosingStage.html',
-                    controller: 'closingStageController',
-                    size: size,
-                    windowClass: 'closing-stage-modal user-help-modal'
-                });
-                console.log("modal open closing");
-                //}, 1000);
-            };
+        
+            function openStageModal(){
+                    console.log("opening");
+                    //setTimeout(function(){ 
+                    var modalInstance = $modal.open({
+                        animation: $scope.animationsEnabled,
+                        templateUrl: 'ClosingStage.html',
+                        controller: 'closingStageController',
+                        //size: size,
+                        windowClass: 'closing-stage-modal user-help-modal'
+                    });
+                    console.log("modal open closing");
+                    //}, 1000);
+                }
         }])
         .controller('closingStageController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
