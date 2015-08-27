@@ -55,91 +55,13 @@
                     <div class="pages">
                         <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
                             <section id="title">
-                                <div class="subtitle">Exploración inicial</div>
+                                <div class="subtitle">ExploraciÃ³n inicial</div>
                                 <div class="txt-renglon">Responde lo siguiente:</div>
                             </section>
                             <div id="owl" class="owl-carousel">
-                                <!--Pregunta tipo Si/No-->
-                                <div>
-                                    <div class="txt-renglon txt-bigger">1. ¿Alguna vez has tenido un sueño que no has
-                                        sabido
-                                        cómo alcanzar?
-                                    </div>
-                                    <section class="form txt-renglon txt-bigger part list">
-                                        <div class="tnf">
-                                            <input id="tru" type="radio" value="1" name="vf"
-                                                   ng-model="AnswersResult.answers[0]"
-                                                   ng-disabled="setReadOnly"/>
-                                            <label for="tru">Verdadero</label>
-                                            <input id="fols" type="radio" value="0" name="vf"
-                                                   ng-model="AnswersResult.answers[0]" ng-disabled="setReadOnly"/>
-                                            <label for="fols">Falso</label>
-                                        </div>
-                                    </section>
-                                </div>
-                                <!--Pregunta tipo Opción Multiple + Otro-->
-                                <div>
-                                    <div class="txt-renglon txt-bigger">2. ¿Qué de lo siguiente has intentado hacer para
-                                        lograrlo? Puedes elegir más de una.
-                                    </div>
-                                    <section class="form txt-renglon txt-bigger part list">
-                                        <input id="check1" type="checkbox" value="check1" name="check"
-                                               ng-model="AnswersResult.answers[1][0]" ng-disabled="setReadOnly"
-                                                />
-                                        <label for="check1">Pedir ayuda a alguien</label>
-                                        <input id="check2" type="checkbox" value="check1" name="check"
-                                               ng-model="AnswersResult.answers[1][1]" ng-disabled="setReadOnly"
-                                                />
-                                        <label for="check2">Investigar del tema</label>
-                                        <input id="check3" type="checkbox" value="check1" name="check"
-                                               ng-model="AnswersResult.answers[1][2]" ng-disabled="setReadOnly"
-                                                />
-                                        <label for="check3">Nada, porque parece imposible</label>
-                                        <input id="check4" type="checkbox" value="check1" name="check"
-                                               ng-model="AnswersResult.answers[1][3]" ng-disabled="setReadOnly"
-                                                />
-                                        <label for="check4">Trazar un plan de lo que necesito hacer</label>
 
-                                        <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                                        <label for="otros">Otros</label>-->
-                                    </section>
-                                    <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><i class="icomoon icon-edit"></i>
-                                      <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-                                    </div>-->
-                                </div>
-                                <!--Pregunta tipo Texto Abierto-->
-                                <div>
-                                    <div class="txt-renglon txt-bigger">3. ¿Qué persona exitosa que conoces te
-                                        inspira?
-                                    </div>
-                                    <section class="form txt-renglon txt-bigger part list">
-                                        <div class="add"><i class="icomoon icon-edit"></i>
-                                            <input id="texto1" type="text" name="txtAbierto"
-                                                   placeholder="Tu respuesta aquí..."
-                                                   ng-model="AnswersResult.answers[2]"
-                                                   ng-readonly="setReadOnly"/>
-                                        </div>
-                                    </section>
-                                </div>
-                                <!--Pregunta tipo Selección Simple-->
-                                <div>
-                                    <div class="txt-renglon txt-bigger">4. ¿Sabes cuáles son tus habilidades?</div>
-                                    <section class="form txt-renglon txt-bigger part list">
-                                        <input id="option1" type="radio" value="0" name="option"
-                                               ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
-                                                />
-                                        <label for="option1">Sí</label>
-                                        <input id="option2" type="radio" value="1" name="option"
-                                               ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
-                                                />
-                                        <label for="option2">No</label>
-                                        <input id="option3" type="radio" value="2" name="option"
-                                               ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
-                                                />
-                                        <label for="option3">Mas o menos</label>
-                                    </section>
-                                </div>
-                                <!--Pregunta tipo Lista Dinámica-->
+
+                                <!--Pregunta tipo Lista DinÃ¡mica-->
                                 <div id="listaDinamica">
                                     <div class="txt-renglon txt-bigger">5. Menciona tus principales habilidades</div>
 
@@ -200,8 +122,8 @@
                                 <section class="header-title ">
                                     <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad
                                     </div>
-                                    <div class="subtitle centered min-pad ">"Exploración inicial"</div>
-                                    <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
+                                    <div class="subtitle centered min-pad ">"ExploraciÃ³n inicial"</div>
+                                    <div class="txt-renglon centered txt-bigger min-pad ">Â¡Felicidades!</div>
                                 </section>
                                 <section class="centered txt-bigger ">
                                     <i class="icomoon icon-checked-join txt-bigger green-giant "></i>
@@ -213,7 +135,7 @@
                                     </div>
                                 </section>
                                 <section class="txt-renglon centered form ">
-                                    ¿Que opinas de ésta actividad?
+                                    Â¿Que opinas de Ã©sta actividad?
                                     <section class="txt-renglon txt-bigger clearfix">
                                         <div class="opinion">
                                             <input id="like" type="radio" value="1" name="like" ng-model="like_status">
@@ -245,12 +167,12 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <h3 class="subtitle text-center">Sueña</h3>
+                            <h3 class="subtitle text-center">SueÃ±a</h3>
 
                             <p class="txt-renglon centered">
-                                Realmente ¿conoces cuáles son tus sueños?
-                                Visualizarlos te permite trazar la mejor ruta para llegar a ellos y disfrutar lo que haces cada día.
-                                Existen diferentes tipos de sueños, cónocelos y dale rumbo a tu vida.
+                                Realmente Â¿conoces cuÃ¡les son tus sueÃ±os?
+                                Visualizarlos te permite trazar la mejor ruta para llegar a ellos y disfrutar lo que haces cada dÃ­a.
+                                Existen diferentes tipos de sueÃ±os, cÃ³nocelos y dale rumbo a tu vida.
                             </p>
 
                             <!-- <video controls poster="assets/images/ptr-video-0001.jpg" >
