@@ -67,6 +67,7 @@
         $http.get('Templates/Programa/ClosingStage.html', { cache: $templateCache });
         $http.get('Templates/Programa/evaluacion.html', { cache: $templateCache });
         $http.get('Templates/Programa/formulario.html', { cache: $templateCache });
+        $http.get('Templates/Programa/community.html', { cache: $templateCache });
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
@@ -228,6 +229,11 @@
         $routeProvider.when('/Juegos/Game', {
             templateUrl: 'Templates/Juegos/Game.html',
             controller: 'GameController'
+        });
+
+        $routeProvider.when('/Community', { 
+            templateUrl: 'Templates/Programa/community.html',
+            controller: 'programaComunidadController'
         });
        
         $routeProvider.when('/Alerts', { 
