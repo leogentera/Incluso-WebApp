@@ -352,7 +352,7 @@
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustos.html',
-            controller: 'stageuizController'
+            controller: 'stageQuizController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/Cierre', { 
