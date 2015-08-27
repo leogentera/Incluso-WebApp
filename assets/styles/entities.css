@@ -1283,6 +1283,9 @@
     right: 0;
     top: -23%;
   }
+  .incluso-app .top-users h3 {
+    padding-top: 1vw;
+  }
   .incluso-app .top-users .head,
   .incluso-app .top-users .body {
     padding: 0;
