@@ -63,16 +63,15 @@ angular
             $scope.addAbility = function () {
                 addHeight();
                 $scope.AnswersResult.answers[4].push(new String());
-            }
+            };
 
             $scope.deleteAbility = function (index) {
                 removeHeight();
                 $scope.AnswersResult.answers[4].splice(index, 1);
-            }
+            };
 
             $scope.dreamsLists = {"answers": [[], [], []]};
 
-            //$scope.Suena_answers = [[], [], []];
 
             $scope.addSueno1 = function () {
                 addHeight();
