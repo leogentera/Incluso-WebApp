@@ -88,6 +88,21 @@ angular
                 $scope.dreamsLists.answers[2].push("");
             };
 
+            $scope.deleteSueno1 = function (index) {
+                removeHeight();
+                $scope.dreamsLists.answers[0].splice(index, 1);
+            };
+
+            $scope.deleteSueno2 = function (index) {
+                removeHeight();
+                $scope.dreamsLists.answers[1].splice(index, 1);
+            };
+
+            $scope.deleteSueno3 = function (index) {
+                removeHeight();
+                $scope.dreamsLists.answers[2].splice(index, 1);
+            };
+
             $scope.hideWarning = function () {
                 $scope.showWarning = false;
             };
