@@ -55,42 +55,43 @@ angular
 
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
-            var totalDeEtapas = $scope.model.stages.length; //NÃºmero total de Etapas
+            var totalDeEtapas = $scope.model.stages.length; //Total amount of stages
 
-            var totalDeRetos = 0;   //NÃºmero total de Retos, considetando todos los Retos de todas las Etapas
-            var totalDeActividades = 0; //NÃºmero total de Actividdes, considerando todos los Retos de todas las Etapas
+            var totalDeRetos = 0;   //Total number of challenges, along all possible stages
+            var totalDeActividades = 0; //Total number of activities, along all challenges in all stages
 
-            //Obtención del total de Retos sobre todas la Etapas (1, 2 y 3)
-            for (var i = 0; i < totalDeEtapas; i++) {
+            //Getting total number of challenges along all stages (1, 2 y 3)
+            var i, j, k;
+
+            for (i = 0; i < totalDeEtapas; i++) {
                 totalDeRetos += $scope.model.stages[i].challenges.length;
             }
 
-            // Conteo del total de Actividades sobre todas las Etapas
-            for (var i = 0; i < totalDeEtapas; i++) {
+            // Count of whole activities along all Stages
+            for (i = 0; i < totalDeEtapas; i++) {
 
                 var numOfChallenges = $scope.model.stages[i].challenges.length;
 
-                for (var j = 0; j < numOfChallenges; j++) {
+                for (j = 0; j < numOfChallenges; j++) {
                     totalDeActividades += $scope.model.stages[i].challenges[j].activities.length;
                 }
             }
 
-            $scope.idEtapa = 0;      //Se identifica la etapa actual como la Etapa 1
+            $scope.idEtapa = 0;      //We are in Stage 1
             $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
 
             var avanceEnEtapaActual = 0;
 
-            //CÃ¡lculo del avance del usuario en la Etapa actual
+            //Attainment of user in the current Stage
             var totalActividadesEnEtapaActual = 0;
 
             var retosEnEtapaActual = $scope.model.stages[$scope.idEtapa].challenges.length;
 
-            for (var j = 0; j < retosEnEtapaActual; j++) {
+            for (j = 0; j < retosEnEtapaActual; j++) {
                 var numActividadesParcial = $scope.model.stages[$scope.idEtapa].challenges[j].activities.length;
 
-                for (var k = 0; k < numActividadesParcial; k++) {
+                for (k = 0; k < numActividadesParcial; k++) {
                     avanceEnEtapaActual += $scope.model.stages[$scope.idEtapa].challenges[j].activities[k].status;
-                    //alert("status " + $scope.model.stages[$scope.idEtapa].challenges[j].activities[k].status);
                     totalActividadesEnEtapaActual++;
                 }
             }
