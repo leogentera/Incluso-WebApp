@@ -223,7 +223,7 @@ angular
                 if (!$scope.editForm.firstname.$valid) { errors.push("Formato de nombre incorrecto."); }
                 if (!$scope.editForm.lastname.$valid) { errors.push("Formato de apellido paterno incorrecto."); }
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
-                if (!$scope.editForm.alias.$valid) { errors.push("Formato de alias incorrecto."); }
+                // if (!$scope.editForm.alias.$valid) { errors.push("Formato de alias incorrecto."); }
                 if (!$scope.editForm.date.$valid) { errors.push("Ingrese la fecha de nacimiento."); }
 
                 $scope.model.modelState.errorMessages = errors;

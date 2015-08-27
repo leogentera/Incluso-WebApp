@@ -10,7 +10,6 @@
             _putAsyncData("profile", data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };    
         
-
         var _getAsyncUserCourse = function(userId, successCallback, errorCallback){
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
             _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback);
@@ -87,6 +86,12 @@
             _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
 
         };
+        
+        var _putEndChallenges = function(activityId, data, activityModel, token, successCallback, errorCallback){
+            _endActivity("challengesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
+        };
+        
+        //activityId,data, activityModel, currentUser.token, successCallback, errorCallback);
         
         var _getCacheObject = function(key){
             return localStorage.getItem(key);
@@ -420,7 +425,8 @@
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat,
             PutStars: _assignStars,
-            PutEndActivity: _putEndActivity
+            PutEndActivity: _putEndActivity,
+            PutEndChallenges : _putEndChallenges
 
         };
     })();
