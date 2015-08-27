@@ -71,18 +71,18 @@
                                                 <div class="form-group theme-form">
 
                                                     <div class="clearfix">
-                                                        <span>Habilidad {{AnswersResult.answers[4].indexOf(ability) + 1}}</span>
+                                                        <span>Sueño {{dreamsLists.answers[0].indexOf(ability) + 1}}</span>
                                                         <button class="btn btn-circle fl-right"
-                                                                ng-click="deleteAbility($index);" ng-hide="setReadOnly">
+                                                                ng-click="deleteSueno1($index);" ng-hide="setReadOnly">
                                                             <i class="icomoon icon-cross white"></i>
                                                         </button>
                                                     </div>
                                                     <div class="add"><i class="icomoon icon-edit"></i>
                                                         <input type="text" name="opciones"
                                                                class="form-control form-control-lg theme-form"
-                                                               placeholder="Nueva habilidad"
-                                                               ng-model="AnswersResult.answers[4][$index]"
-                                                               ng-readonly="setReadOnly"/>
+                                                               placeholder="Nuevo sueño"
+                                                               ng-model="dreamsLists.answers[0][$index]"
+                                                               />
                                                     </div>
 
                                                 </div>
@@ -91,7 +91,7 @@
                                     </ul>
 
                                     <div class="txt-renglon">
-                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno1();" ng-hide="setReadOnly">
+                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno1();">
                                             <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
                                         </button>
                                     </div>
@@ -117,7 +117,7 @@
                                                         <input type="text" name="opciones"
                                                                class="form-control form-control-lg theme-form"
                                                                placeholder="Nueva habilidad"
-                                                               ng-model="AnswersResult.answers[4][$index]"
+                                                               ng-model="dreamsLists.answers[1][$index]"
                                                                ng-readonly="setReadOnly"/>
                                                     </div>
 
@@ -127,7 +127,7 @@
                                     </ul>
 
                                     <div class="txt-renglon">
-                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno2();" ng-hide="setReadOnly">
+                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno2();">
                                             <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
                                         </button>
                                     </div>
@@ -154,7 +154,7 @@
                                                         <input type="text" name="opciones"
                                                                class="form-control form-control-lg theme-form"
                                                                placeholder="Nueva habilidad"
-                                                               ng-model="AnswersResult.answers[4][$index]"
+                                                               ng-model="dreamsLists.answers[2][$index]"
                                                                ng-readonly="setReadOnly"/>
                                                     </div>
 
@@ -164,7 +164,7 @@
                                     </ul>
 
                                     <div class="txt-renglon">
-                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno3();" ng-hide="setReadOnly">
+                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno3();">
                                             <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
                                         </button>
                                     </div>

@@ -21,6 +21,19 @@ angular
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
 
+            $scope.openModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'OpeningStageModal.html',
+                    controller: 'OpeningStageController',
+                    size: size,
+                    windowClass: 'user-help-modal'
+                });
+                console.log("modal open");
+            };
+
+            $scope.openModal();
+
             var closingStageModal = localStorage.getItem('closeStageModal');
             if (closingStageModal == 'true') {
                 openStageModal();
