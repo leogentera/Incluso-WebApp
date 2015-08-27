@@ -41,7 +41,9 @@ angular
                                         [{"name" : "Exploración final", "status" : 0, "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"}]  ];
 
 
-            
+
+            var activitiesFromService = {};
+
             $scope.goToUrl = function(url) {
                 $location.path(url);
             };
