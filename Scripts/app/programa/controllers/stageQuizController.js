@@ -58,7 +58,7 @@ angular
                 $location.path('/ZonaDeVuelo/Dashboard');
             };
 
-            
+
 
             $scope.addAbility = function () {
                 addHeight();
@@ -70,7 +70,7 @@ angular
                 $scope.AnswersResult.answers[4].splice(index, 1);
             };
 
-            $scope.dreamsLists = {"answers": [[], [], []]};
+            $scope.dreamsLists = { "answers": [[], [], []] };
 
 
             $scope.addSueno1 = function () {
@@ -111,7 +111,7 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.cancel = function () {                
+            $scope.cancel = function () {
                 $location.path('/ZonaDeVuelo/Dashboard');
             };
 
@@ -230,6 +230,7 @@ angular
                 , "like_status": 0
             };
 
+            $scope.misCualidadesAnswers = [null, null, null];
 
             function errorCallback(data) {
                 // var algo = data;
@@ -240,10 +241,11 @@ angular
                 //test
                 
                 //activity_identifier - activityname
+                //1000 - Ninguno
                 //1001 - Exploracion Inicial
                 //1007 - Sueña
                 //1006 - Mis cualidades
-                var testActivity_identifier = 1001 //3004 - ???? /// Get activity_identifier from queryString
+                var testActivity_identifier = 1000 //3004 - ???? /// Get activity_identifier from queryString
                 
                 //fin test     
                 
@@ -294,6 +296,8 @@ angular
                     }
                     else {
                         $scope.activity = activities;
+                        $scope.warningMessage = "El quiz no se puede acceder en este momento";
+                        $scope.showWarning = true;                        
                     }
                 }
             }
@@ -346,6 +350,29 @@ angular
 
             $scope.openModal();
             getDataAsync();
+
+            $scope.validateMisSuenosAnsweredQuestions = function () {
+            }
+
+            $scope.validateMisCualidadesAnsweredQuestions = function () {
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                if (misCualidadesAnswers[0] != null) {
+                    if (misCualidadesAnswers[1] != null) {
+                        if (misCualidadesAnswers[2] != null) {
+                            $scope.navigateToPage(2);
+                        }
+                        else {
+                            $scope.showWarning = true;
+                        }
+                    }
+                    else {
+                        $scope.showWarning = true;
+                    }
+                }
+                else {
+                    $scope.showWarning = true;
+                }
+            }
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
