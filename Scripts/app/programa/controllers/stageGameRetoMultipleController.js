@@ -17,13 +17,13 @@ angular
 
             _httpFactory = $http;
             $rootScope.pageName = "Estación: Conócete"
+            $scope.$emit('ShowPreloader');
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false; 
 
             $scope.scrollToTop();
-            $scope.$emit('HidePreloader'); //hide preloader
 
             localStorage.setItem("retoMultipleActivities", null);
             //localStorage.setItem("activity/57", null);
@@ -63,6 +63,7 @@ angular
             function calculateStars() {
                var stars = 0;
                _.each($scope.retoMultipleActivities, function(activity) { stars = stars + activity.points; });
+               $scope.$emit('HidePreloader');
                return stars;
             }
 
@@ -87,7 +88,6 @@ angular
 
                     request.sub_actividades.push(subactivity);
                 }
-
                 return request;
 
             }
