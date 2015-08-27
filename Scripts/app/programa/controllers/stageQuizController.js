@@ -97,8 +97,8 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.cancel = function () {
-                $location.path('/ProgramaDashboard');
+            $scope.cancel = function () {                
+                $location.path('/ZonaDeVuelo/Dashboard');
             };
 
             $scope.validateAnsweredQuestions = function () {
