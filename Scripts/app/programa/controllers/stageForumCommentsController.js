@@ -31,17 +31,21 @@ angular
             };
 
 
-            function getForumProgress(){
-               return JSON.parse(localStorage.getItem('currentForumsProgress')? localStorage.getItem('currentForumsProgress') : localStorage.setItem('currentForumsProgress')) ;
+            function getForumsProgress(){
+                //TODO make this function ablailable trough a service so it can be used by forum controller as well as forum comments controller
+                var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : new Array();
+                console.log(forumsProgress);
+                return forumsProgress;
+
             };
-            var testDataObeject = [
-                {'discussion':12, 'commentsCount':2}, {'discussionId':13, 'commentsCount':2}
-            ];
-            localStorage.setItem('currentForumsProgress', JSON.stringify(testDataObeject));
+            //var testDataObeject = [
+            //    {'discussion':12, 'commentsCount':2}, {'discussionId':13, 'commentsCount':2}
+            //];
+            //localStorage.setItem('currentForumsProgress', JSON.stringify(testDataObeject));
 
             function updateForumProgress(discussionId){
                 console.log('Discussion Id on forum update: '+ discussionId);
-                var forumsCommentsCountCollection = getForumProgress();
+                var forumsCommentsCountCollection = getForumsProgress();
                 console.log(forumsCommentsCountCollection);
                 var discussionId = discussionId;//$scope.discussion.posts[0].discussion;
                 var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussionId == discussionId; });
@@ -50,13 +54,24 @@ angular
                 console.log(forumsCommentsCountCollection);
                 localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
                 console.log('Updated');
+
             };
             var endForumActivity = function(){
-                console.log('Finished forum acivity');
+                //TODO Implement check of status activity, if already finished OD NOT finish activity again
+                console.log('Finishing activity...');
+                var userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
+                var userId = {'userid':JSON.parse(localStorage.getItem('userId'))};
+                moodleFactory.Services.PutEndActivity(MoodleIds.forum, userId,'', userToken,
+                    function(response){
+                        alert('Acabas de completar la actividad de foros.');
+                    },
+                    function(){
+                        alert('Hubo un problema al registrar tus comentarios, por favor vuelve a intentarlo.');
+                    })
             };
 
             var checkForumProgress = function(){
-                var forumsCommentsCountCollection = getForumProgress();
+                var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
 
                 for(var topicObjectIndex in forumsCommentsCountCollection){
@@ -70,6 +85,7 @@ angular
                 };
                 if(isActivityFinished) endForumActivity();
             };
+            //TODO Remove this method call
             checkForumProgress();
 
 
@@ -98,14 +114,15 @@ angular
 
             $scope.isCommentModalCollapsed= [];
             $scope.replyText = null;
-            $scope.replyToPost = function(that, parentId){
+            $scope.replyToPost = function(that, parentId, topicId){
                 var dataObejct = createPostDataObject(parentId, that.replyText, 1);
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){alert('Success!!');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
                         getDataAsync();
-                        updateForumProgress(parentId);
+                        //updateForumProgress(parentId);
+                        updateForumProgress(topicId);
                         checkForumProgress();
                     },
                     function(){alert('Fail!!');
