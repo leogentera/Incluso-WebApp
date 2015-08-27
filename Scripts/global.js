@@ -88,6 +88,13 @@ var _endActivityQuiz = function(activityModel){
       
 }
 
+var _asignBadge = function(activityModel){
+    var activityId = activityModel.activityId;
+    var currentUser  = JSON.parse(localStorage("userId"));
+    
+    moodleFactory.Services.PutAsignBadges(activityId,data, activityModel, currentUser.token, successCallback, errorCallback);
+}
+
 
 var _createNotification = function(activityModel, currentUserId){
     
