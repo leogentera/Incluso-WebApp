@@ -77,20 +77,23 @@ angular
                 "like_status": 0
             };
 
-            $scope.addSueno1 = function () {//alert("addSueno1");
+            //$scope.Suena_answers = [[], [], []];
+
+            $scope.addSueno1 = function () {
+                alert("addSueno1");
                 addHeight();
-                $scope.dreamsLists.answers[0].push(new String());
+                $scope.dreamsLists.answers[0].push("X");
             };
 
             $scope.addSueno2 = function () {
-                alert("sueño 2");
+                alert("addSueno2");
                 addHeight();
-                $scope.dreamsLists.answers[1].push("");
+                $scope.dreamsLists.answers[1].push("x");
             };
 
             $scope.addSueno3 = function () {
                 addHeight();
-                $scope.dreamsLists.answers[2].push("");
+                $scope.dreamsLists.answers[2].push("x");
             };
 
             $scope.hideWarning = function () {
@@ -219,10 +222,6 @@ angular
                 , "activityidnumber": 0//$scope.activity.coursemoduleid
                 , "like_status": 0
             };
-
-
-            $scope.Suena_answers = [[], [], []];
-
 
 
             function errorCallback(data) {
