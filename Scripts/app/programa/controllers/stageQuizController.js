@@ -58,11 +58,13 @@ angular
 
 
             $scope.addAbility = function () {
-                $scope.AnswersResult.answers[4].push(new String());
+                addHeight ();
+                $scope.AnswersResult.answers[4].push(new String());                
             }
 
             $scope.deleteAbility = function (index) {
-                $scope.AnswersResult.answers[4].splice(index, 1);
+                removeHeight();
+                $scope.AnswersResult.answers[4].splice(index, 1);                
             }
 
             $scope.hideWarning = function () {
@@ -309,6 +311,16 @@ angular
              };
  
              $scope.openModal();
+
+             function addHeight () {
+                $scope.finalHeight = angular.element("#listaDinamica").height() + 125;
+                angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);              
+            }
+
+            function removeHeight () {
+                $scope.finalHeight = angular.element("#listaDinamica").height() - 135;
+                angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);              
+            }
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
