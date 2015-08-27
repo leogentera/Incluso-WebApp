@@ -64,7 +64,7 @@ angular
             };
 
             $scope.goToUrl2 = function (url) {
-                $location.path(activitiesURLs[challenge][activity]);
+                $location.path(url);
             };
 
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
