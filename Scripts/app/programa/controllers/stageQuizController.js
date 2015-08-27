@@ -12,7 +12,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
-            $rootScope.pageName = "Estación: Conócete"
+            $rootScope.pageName = "Estación: Conócete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
@@ -27,49 +27,75 @@ angular
             $scope.like_status = 0;
 
 
-
             $scope.finishActivity = function () {
                 //Activity completed
                 $scope.activity.status = 1;
-                    
+
                 //Call stars - progress
-                
+
                 //Llamar notificaciones
-                    
+
                 //Update Activity userAnswers Service
-                
+
                 //Update Activity Log Service
-                
+
                 //Update Activity finished Service
                 //moodleFactory.Services.PutEndActivity($scope.coursemoduleid, $scope.userprofile.id, $scope.fuenteDeEnergia, $scope.currentUser.token, successfullCallBack, errorCallback);
                 //moodleFactory.Services.PutAsyncQuizActivity($scope.userprofile.id, $scope.coursemoduleid,$scope.AnswersResult, successfullCallBack, errorCallback);
 
-                $scope.AnswersResult.userid = $scope.userprofile.id
-                $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid
+                $scope.AnswersResult.userid = $scope.userprofile.id;
+                $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
                 $scope.AnswersResult.like_status = $scope.like_status;
 
-                _endActivityQuiz({ "activity": $scope.activity, "answersResult": $scope.AnswersResult, "userId": $scope.userprofile.id });
-                
-                //Update Activity Stars - Progres Service
-                
-                $location.path('/ZonaDeVuelo/Dashboard');
-            }
+                _endActivityQuiz({
+                    "activity": $scope.activity,
+                    "answersResult": $scope.AnswersResult,
+                    "userId": $scope.userprofile.id
+                });
 
+                //Update Activity Stars - Progres Service
+
+                $location.path('/ZonaDeVuelo/Dashboard');
+            };
 
 
             $scope.addAbility = function () {
-                addHeight ();
-                $scope.AnswersResult.answers[4].push(new String());                
-            }
+                addHeight();
+                $scope.AnswersResult.answers[4].push(new String());
+            };
 
             $scope.deleteAbility = function (index) {
                 removeHeight();
-                $scope.AnswersResult.answers[4].splice(index, 1);                
-            }
+                $scope.AnswersResult.answers[4].splice(index, 1);
+            };
+
+
+            $scope.dreamsLists = {
+                "userid": 0,//$scope.userprofile.id,
+                "answers": [[], [], []],
+                "activityidnumber": 0,//$scope.activity.coursemoduleid
+                "like_status": 0
+            };
+
+            $scope.addSueno1 = function () {//alert("addSueno1");
+                addHeight();
+                $scope.dreamsLists.answers[0].push(new String());
+            };
+
+            $scope.addSueno2 = function () {
+                alert("sueño 2");
+                addHeight();
+                $scope.dreamsLists.answers[1].push("");
+            };
+
+            $scope.addSueno3 = function () {
+                addHeight();
+                $scope.dreamsLists.answers[2].push("");
+            };
 
             $scope.hideWarning = function () {
                 $scope.showWarning = false;
-            }
+            };
 
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
@@ -132,7 +158,7 @@ angular
                 }
             };
 
-            function updateSelectedAnsers(questionIndex, question) {
+            function updateSelectedAnswers(questionIndex, question) {
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer == "Si") {
@@ -190,39 +216,6 @@ angular
             }
 
 
-
-
-            // $scope.AnswersResult = {
-            //     "userid": 0,//$scope.userprofile.id,
-            //     "answers": [
-            //         {
-            //             //"0": null
-            //             "first": null
-            //         },
-            //         {
-            //             "second": [
-            //                 '0', '0', '0', '0'
-            //                 // { "_0": 0 },
-            //                 // { "_1": 0 },
-            //                 // { "_2": 0 },
-            //                 // { "_3": 0 }
-            //             ]
-            //         },
-            //         {
-            //             "third": ''
-            //         }
-            //         ,
-            //         {
-            //             "fourth": null
-            //         },
-            //         {
-            //             "fifth": []
-            //         }
-            //     ]
-            //     , "activityidnumber": 0//$scope.activity.coursemoduleid
-            // };
-            // 
-            
             $scope.AnswersResult = {
                 "userid": 0,//$scope.userprofile.id,
                 "answers": [null, [0, 0, 0, 0], '', null, []]
@@ -230,12 +223,13 @@ angular
                 , "like_status": 0
             };
 
+
             function successfullCallBack(activity) {
                 if (activity != null) {
                     $scope.activity = activity;
                     for (var index = 0; index < activity.questions.length; index++) {
                         var question = activity.questions[index];
-                        updateSelectedAnsers(index, question)
+                        updateSelectedAnswers(index, question)
                     }
                 }
                 else {
@@ -245,7 +239,7 @@ angular
             }
 
             function errorCallback(data) {
-                var algo = data;
+                // var algo = data;
             }
 
             function getDataAsync() {
@@ -278,7 +272,7 @@ angular
                     //test
 
                     // var activity = { "id": 44, "name": "Exploracion Inicial", "description": null, "activityType": "Quiz", "status": null, "stars": null, "dateIssued": null, "score": 8, "quizType": null, "grade": 10, "questions": [{ "id": 19, "question": "1. \u00bfAlguna vez has tenido un sue\u00f1o que no has sabido c\u00f3mo alcanzar?", "questionType": "multichoice", "answers": [{ "id": 60, "answer": "Si", "fraction": "1.0000000" }, { "id": 61, "answer": "No", "fraction": "1.0000000" }], "userAnswer": "No" }, { "id": 20, "question": "2. \u00bfQu\u00e9 de lo siguiente has intentado hacer para lograrlo? Puedes elegir m\u00e1s de una.", "questionType": "multichoice", "answers": [{ "id": 62, "answer": "Pedir ayuda a alguien", "fraction": "1.0000000" }, { "id": 63, "answer": "Investigar sobre el tema", "fraction": "0.0000000" }, { "id": 64, "answer": "Nada, porque me parece imposible", "fraction": "0.0000000" }, { "id": 65, "answer": "Trazar un plan de lo que necesito", "fraction": "0.0000000" }], "userAnswer": "Pedir ayuda a alguien; Investigar sobre el tema" }, { "id": 23, "question": "3. \u00bfQu\u00e9 persona exitosa que conoces te inspira?", "questionType": "shortanswer", "answers": [{ "id": 72, "answer": "*", "fraction": "1.0000000" }], "userAnswer": "Bill Gates" }, { "id": 24, "question": "4. \u00bfSabes cu\u00e1les son tus habilidades?", "questionType": "multichoice", "answers": [{ "id": 73, "answer": "Si", "fraction": "1.0000000" }, { "id": 74, "answer": "No", "fraction": "1.0000000" }, { "id": 75, "answer": "Mas o menos", "fraction": "1.0000000" }], "userAnswer": "Mas o menos" }, { "id": 25, "question": "5. Menciona tus principales habilidades", "questionType": "multichoice", "answers": [{ "id": 76, "answer": "Empat\u00eda", "fraction": "1.0000000" }, { "id": 77, "answer": "Creatividad", "fraction": "0.0000000" }, { "id": 78, "answer": "Liderazgo", "fraction": "0.0000000" }, { "id": 79, "answer": "Comunicaci\u00f3n", "fraction": "0.0000000" }, { "id": 80, "answer": "Negociaci\u00f3n", "fraction": "0.0000000" }, { "id": 81, "answer": "Trabajo en equipo", "fraction": "0.0000000" }, { "id": 82, "answer": "Innovaci\u00f3n", "fraction": "0.0000000" }, { "id": 83, "answer": "Iniciativa", "fraction": "0.0000000" }, { "id": 84, "answer": "Toma de decisiones", "fraction": "0.0000000" }, { "id": 85, "answer": "Planeaci\u00f3n", "fraction": "0.0000000" }, { "id": 86, "answer": "Organizaci\u00f3n", "fraction": "0.0000000" }], "userAnswer": "Organizaci\u00f3n; Toma de decisiones; Trabajo en equipo" }] };
-                    
+
                     // if (activity != null) {
                     //     for (var index = 0; index < activity.questions.length; index++) {
                     //         var question = activity.questions[index];
@@ -289,7 +283,7 @@ angular
                     //     $scope.showWarning = true;
                     //     $scope.warningMessage = "El quiz no se puede acceder en este momento";
                     // }
-                    
+
                     //fin test                 
                 }
                 else {
@@ -299,27 +293,27 @@ angular
             }
 
             getDataAsync();
-             $scope.openModal = function (size) {                         
-                 var modalInstance = $modal.open({
-                     animation: $scope.animationsEnabled,
-                     templateUrl: 'OpeningStageModal.html',
-                     controller: 'OpeningStageController',
-                     size: size,
-                     windowClass: 'user-help-modal'
-                 });
-                     console.log("modal open");                 
-             };
- 
-             $scope.openModal();
+            $scope.openModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'OpeningStageModal.html',
+                    controller: 'OpeningStageController',
+                    size: size,
+                    windowClass: 'user-help-modal'
+                });
+                console.log("modal open");
+            };
 
-             function addHeight () {
+            $scope.openModal();
+
+            function addHeight() {
                 $scope.finalHeight = angular.element("#listaDinamica").height() + 125;
-                angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);              
+                angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
-            function removeHeight () {
+            function removeHeight() {
                 $scope.finalHeight = angular.element("#listaDinamica").height() - 135;
-                angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);              
+                angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
         }])
