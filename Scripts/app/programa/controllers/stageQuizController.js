@@ -63,37 +63,44 @@ angular
             $scope.addAbility = function () {
                 addHeight();
                 $scope.AnswersResult.answers[4].push(new String());
-            }
+            };
 
             $scope.deleteAbility = function (index) {
                 removeHeight();
                 $scope.AnswersResult.answers[4].splice(index, 1);
-            }
-
-            $scope.dreamsLists = {
-                "userid": 0,//$scope.userprofile.id,
-                "answers": [[], [], []],
-                "activityidnumber": 0,//$scope.activity.coursemoduleid
-                "like_status": 0
             };
 
-            //$scope.Suena_answers = [[], [], []];
+            $scope.dreamsLists = {"answers": [[], [], []]};
+
 
             $scope.addSueno1 = function () {
-                alert("addSueno1");
                 addHeight();
-                $scope.dreamsLists.answers[0].push("X");
+                $scope.dreamsLists.answers[0].push("");
             };
 
             $scope.addSueno2 = function () {
-                alert("addSueno2");
                 addHeight();
-                $scope.dreamsLists.answers[1].push("x");
+                $scope.dreamsLists.answers[1].push("");
             };
 
             $scope.addSueno3 = function () {
                 addHeight();
-                $scope.dreamsLists.answers[2].push("x");
+                $scope.dreamsLists.answers[2].push("");
+            };
+
+            $scope.deleteSueno1 = function (index) {
+                removeHeight();
+                $scope.dreamsLists.answers[0].splice(index, 1);
+            };
+
+            $scope.deleteSueno2 = function (index) {
+                removeHeight();
+                $scope.dreamsLists.answers[1].splice(index, 1);
+            };
+
+            $scope.deleteSueno3 = function (index) {
+                removeHeight();
+                $scope.dreamsLists.answers[2].splice(index, 1);
             };
 
             $scope.hideWarning = function () {
