@@ -70,30 +70,23 @@ angular
                 $scope.AnswersResult.answers[4].splice(index, 1);
             }
 
-            $scope.dreamsLists = {
-                "userid": 0,//$scope.userprofile.id,
-                "answers": [[], [], []],
-                "activityidnumber": 0,//$scope.activity.coursemoduleid
-                "like_status": 0
-            };
+            $scope.dreamsLists = {"answers": [[], [], []]};
 
             //$scope.Suena_answers = [[], [], []];
 
             $scope.addSueno1 = function () {
-                alert("addSueno1");
                 addHeight();
-                $scope.dreamsLists.answers[0].push("X");
+                $scope.dreamsLists.answers[0].push("");
             };
 
             $scope.addSueno2 = function () {
-                alert("addSueno2");
                 addHeight();
-                $scope.dreamsLists.answers[1].push("x");
+                $scope.dreamsLists.answers[1].push("");
             };
 
             $scope.addSueno3 = function () {
                 addHeight();
-                $scope.dreamsLists.answers[2].push("x");
+                $scope.dreamsLists.answers[2].push("");
             };
 
             $scope.hideWarning = function () {

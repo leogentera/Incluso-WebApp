@@ -66,14 +66,14 @@
                                     <div class="txt-renglon txt-bigger">1. Los sueños de tener, se refieren a las cosas materiales, como una casa, un carro, un celular… todo lo que puedas comprar. Tener sueños como estos te ayudan a visualizar una meta a la cual llegar. Y tú ¿con qué sueñas? Registra tus sueños de tener.</div>
 
                                     <ul class="block-list clearfix">
-                                        <li ng-repeat="ability in AnswersResult.answers[4] track by $index">
+                                        <li ng-repeat="dream in dreamsLists.answers[0] track by $index">
                                             <section class="form txt-renglon part list clearfix">
                                                 <div class="form-group theme-form">
 
                                                     <div class="clearfix">
-                                                        <span>Sueño {{dreamsLists.answers[0].indexOf(ability) + 1}}</span>
+                                                        <span>Sueño {{$index + 1}}</span>
                                                         <button class="btn btn-circle fl-right"
-                                                                ng-click="deleteSueno1($index);" ng-hide="setReadOnly">
+                                                                ng-click="deleteSueno1($index)" ng-hide="setReadOnly">
                                                             <i class="icomoon icon-cross white"></i>
                                                         </button>
                                                     </div>
@@ -102,14 +102,14 @@
                                     <div class="txt-renglon txt-bigger">2. Los sueños de hacer, son los que te llevan a conocer e intentar cosas nuevas, es querer aprender de otros lugares, culturas o descubrir temas de interés propio. Tener sueños de este tipo te ayuda a enriquecer tu mente y espíritu. Y tú ¿con qué sueñas? Registra tus sueños de hacer.</div>
 
                                     <ul class="block-list clearfix">
-                                        <li ng-repeat="ability in AnswersResult.answers[4] track by $index">
+                                        <li ng-repeat="ability in dreamsLists.answers[1] track by $index">
                                             <section class="form txt-renglon part list clearfix">
                                                 <div class="form-group theme-form">
 
                                                     <div class="clearfix">
-                                                        <span>Habilidad {{AnswersResult.answers[4].indexOf(ability) + 1}}</span>
+                                                        <span>Sueño {{$index + 1}}</span>
                                                         <button class="btn btn-circle fl-right"
-                                                                ng-click="deleteAbility($index);" ng-hide="setReadOnly">
+                                                                ng-click="deleteSueno2($index)" ng-hide="setReadOnly">
                                                             <i class="icomoon icon-cross white"></i>
                                                         </button>
                                                     </div>
@@ -139,14 +139,14 @@
                                     <div class="txt-renglon txt-bigger">3. Los sueños de ser son unos de los más importantes, porque en ellos reflejas los valores que practicas. Estos sueños te ayudarán a elegir la persona que te gustaría llegar a ser para dejar huella. Y tú ¿con qué sueñas? Registra tus sueños de ser.</div>
 
                                     <ul class="block-list clearfix">
-                                        <li ng-repeat="ability in AnswersResult.answers[4] track by $index">
+                                        <li ng-repeat="ability in dreamsLists.answers[2] track by $index">
                                             <section class="form txt-renglon part list clearfix">
                                                 <div class="form-group theme-form">
 
                                                     <div class="clearfix">
-                                                        <span>Habilidad {{AnswersResult.answers[4].indexOf(ability) + 1}}</span>
+                                                        <span>Sueño {{$index + 1}}</span>
                                                         <button class="btn btn-circle fl-right"
-                                                                ng-click="deleteAbility($index);" ng-hide="setReadOnly">
+                                                                ng-click="deleteSueno3($index)" ng-hide="setReadOnly">
                                                             <i class="icomoon icon-cross white"></i>
                                                         </button>
                                                     </div>
