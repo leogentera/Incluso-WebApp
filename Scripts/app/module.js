@@ -65,7 +65,8 @@
         $http.get('Templates/Programa/TermsOfUse.html', { cache: $templateCache });
         $http.get('Templates/Programa/HelpAndSupport.html', { cache: $templateCache });
         $http.get('Templates/Programa/ClosingStage.html', { cache: $templateCache });
-        $http.get('Templates/Programa/evaluacionFormulario.html', { cache: $templateCache });
+        $http.get('Templates/Programa/evaluacion.html', { cache: $templateCache });
+        $http.get('Templates/Programa/formulario.html', { cache: $templateCache });
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
@@ -128,8 +129,13 @@
             controller: 'programaProfileController'
         });
 
-        $routeProvider.when('/evaluacionFormulario', {
-            templateUrl: 'Templates/Programa/evaluacionFormulario.html',
+        $routeProvider.when('/evaluacion', {
+            templateUrl: 'Templates/Programa/evaluacion.html',
+            controller: 'evaluacionFormulario'
+        });
+
+        $routeProvider.when('/formulario', {
+            templateUrl: 'Templates/Programa/formulario.html',
             controller: 'evaluacionFormulario'
         });
 
@@ -346,7 +352,7 @@
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustos.html',
-            controller: 'stageuizController'
+            controller: 'stageQuizController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/Cierre', { 
@@ -356,7 +362,7 @@
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/Suena.html',
-            controller: 'stageuizController'
+            controller: 'stageQuizController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/Cierre', { 
@@ -696,71 +702,6 @@
           restrict: 'E',
           scope: false,
           templateUrl: 'Templates/Shared/_preloader.html'
-        };
-    })
-    .directive("menu", function() {
-        return {
-            restrict: "E",
-            template: "<div class='sidebar' ng-class='{ show: visible, left: alignment === \"left\", right: alignment === \"right\" }' ng-transclude></div>",
-            transclude: true,
-            scope: {
-                visible: "=",
-                alignment: "@"
-            }
-        };
-    })    
-    .directive("menuItem", function() {
-         return {
-             restrict: "E",
-             template: "<div ng-click='navigateTo()' ng-transclude></div>",
-             transclude: true,
-             scope: {
-                 hash: "@",
-                 
-             },
-             link: function($scope, $location) {
-                
-                 $scope.navigateTo = function() {
-                    //console.log($location);
-                     window.location.hash = $scope.hash;
-                 }
-             }
-         };
-     })
-    .directive("submenu", function(){
-        return {
-            restrict: "E",
-            template: "<div class='submenu' ng-transclude></div>",
-            transclude: true,
-            scope: {
-
-            }
-        };
-    })
-    .directive("submenuItem", function(){
-        return {
-            restrict: "E",
-            template: "<div ng-click='navigateTo()' ng-transclude></div>",
-            transclude: true,
-            scope: {
-                 hash: "@",                 
-             },
-             link: function($scope, $location) {
-                
-                 $scope.navigateTo = function() {                    
-                     window.location.hash = $scope.hash;                     
-                }
-            }
-        };
-    })
-    .directive("submenuItemTitle", function(){
-        return {
-            restrict: "E",
-            template: "<h3 class='submenuTitle' ng-transclude></h3>",
-            transclude: true,
-            scope: {
-
-            }
         };
     });
      

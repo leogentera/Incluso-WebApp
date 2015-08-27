@@ -5,173 +5,130 @@ angular
         '$scope',
         '$location',
         '$routeParams',
-		'$timeout',
-		'$rootScope',
-		'$http',
+        '$timeout',
+        '$rootScope',
+        '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             /* $routeParams.stageId */
             _httpFactory = $http;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-            
-            $rootScope.pageName = "Estación: Conócete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
-        
-            $scope.activitiesCompletedInCurrentStage = [];                                
-            //
-            /*
-            var stage = JSON.parse(localStorage.getItem('stage'));
-            var userCourse = JSON.parse(localStorage.getItem('usercourse'));
-            
-            var id = stage.id;
-            
-            var etapa1 = userCourse.stages[0];
-            */
-            //var challenges = etapa1.
-            $scope.isCollapsed = false;
-            
-            $scope.challengeName = "MIS RETOS";
-            
-            $scope.goToUrl = function(url) {
-                $location.path(url);                
-            }
-                    
-                        
-            
-            //El key "status" de los elementos del array "etapas" del objeto "logroEducativo" indica si la etapa ya se completó (1) o no se ha completado (9)
-            $scope.logroEducativo = {
-                "userId" : 53,
-                
-                "etapas" : [{"idEtapa" : 0, "name" : "Zona de Vuelo", "status" : 0}, 
-                            {"idEtapa" : 1, "name" : "Zona de Navegación", "status" : 0}, 
-                            {"idEtapa" : 2, "name" : "Zona de Aterrizaje", "status" : 0}  ],                           
-                
-                
-                "retosPorEtapa" :  [    { "idEtapa" : 1, "retos" : [    {"idReto": 1, "name" : "Exploración inicial", "actividades" : [ {"id" : 1, "name" : "Exploracion inicial", "link": "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial", "status" : 1} ] },
-                                                                        {"idReto": 2, "name" : "Cuarto de recursos", "actividades" : [ {"id" : 1, "name" : "Fuente de energía", "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia",  "status" : 1} ] },
-                                                                        {"idReto": 3, "name" : "Conócete", "actividades" : [ {"id" : 1, "name" : "Fuente de energía", "link":"/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia", "status" : 0},  {"id" : 2, "name" : "Reto múltiple", "link":"/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple",  "status" : 0},  {"id" : 3, "name" : "Punto de encuentro", "link":"/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/zv_puntodeencuentro", "status" : 0},  {"id" : 4, "name" : "Zona de contacto", "link":"/ZonaDeVuelo/Conocete/ZonaDeContacto','Zona de contacto", "status" : 0} ]},
-                                                                        {"idReto": 4, "name" : "Mis sueños", "actividades" : [ {"id" : 1, "name" : "Fuente de energía", "link":"/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia", "status" : 0},  {"id" : 2, "name" : "Mis gustos", "link":"/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos", "status" : 0},  {"id" : 3, "name" : "Mis cualidades", "link":"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades", "status" : 0},  {"id" : 4, "name" : "Sueña", "link": "/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena", "status" : 0},  {"id" : 5, "name" : "Punto de encuentro", "link":"/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro", "status" : 0} ] },
-                                                                        {"idReto": 5, "name" : "Cabina de soporte", "actividades" : [ {"id" : 1, "name" : "Chat", "link":"/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat", "status" : 0} ]},
-                                                                        {"idReto": 6, "name" : "Exploración final", "actividades" : [ {"id" : 1, "name" : "Exploracion final", "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal", "status" : 0} ]  }
-                                                                    ]},
-                                                                    
-                                        { "idEtapa" : 2, "retos" : [    {"idReto": 7, "name" : "Reto 1", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] },
-                                                                        {"idReto": 8, "name" : "Reto 2", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ]}                                                                    
-                                                                    ]},
-                                                                    
-                                        { "idEtapa" : 3, "retos" : [    {"idReto": 9, "name" : "Reto 1", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] },
-                                                                        {"idReto": 10, "name" : "Reto 1", "actividades" : [ {"id" : 1, "name" : "Actividad X", "status" : 0} ] }                                                                    
-                                                                    ]}
-                                    ]
-            };
-            
-            $scope.retosIconos = {
-                1 : "assets/images/challenges/img-evaluacion inicial.svg",
-                2 : "assets/images/challenges/img-cuarto-recursos.svg",
-                3 : "assets/images/challenges/img-conocete.svg",
-                4 : "assets/images/challenges/img-mis-suenos.svg",
-                5 : "assets/images/challenges/img-cabina-soporte.svg",
-                6 : "assets/images/challenges/img-evaluacion final.svg",
-                7 : "assets/images/challenges/img-evaluacion inicial.svg",
-                8 : "assets/images/challenges/img-evaluacion inicial.svg",
-                9 : "assets/images/challenges/img-evaluacion inicial.svg",
-                10 : "assets/images/challenges/img-evaluacion inicial.svg"
-            };
-            
-            
-            
-                 
-              $scope.avanceGlobal = 0;  //Avance global del usuario, considerando todas las Actividdes de todos los Retos de todas las Etapas
-              var avanceEtapa = [0, 0, 0]; //Avance del usuario, considerando todas las Actividades de todos los Retos, por cada Etapa
-              
-              var totalDeEtapas = $scope.logroEducativo.etapas.length; //Número total de Etapas
-              var totalDeRetos = 0;   //Número total de Retos, considetando todos los Retos de todas las Etapas
-              var totalDeActividades = 0; //Número total de Actividdes, considerando todos los Retos de todas las Etapas
-              
-              //Obtención del total de Retos sobre todas la Etapas (1, 2 y 3)
-              for (var i = 0; i < totalDeEtapas; i++) {
-                totalDeRetos += $scope.logroEducativo.retosPorEtapa[i].retos.length;           
-              }
-              
-              // Conteo del total de Actividades sobre todas las Etapas
-              for (var i = 0; i < totalDeEtapas; i++) {
-                  
-                  var retos = $scope.logroEducativo.retosPorEtapa[i].retos.length;
-                  
-                  for (var j = 0; j < retos; j++) {
-                        totalDeActividades += $scope.logroEducativo.retosPorEtapa[i].retos[j].actividades.length;               
-                }                      
-              }
-              
-              
-              $scope.idEtapa = 0;      //Se identifica la etapa actual como la Etapa 1
-              $scope.nombreEtapaActual = $scope.logroEducativo.etapas[$scope.idEtapa].name;   //Se obtiene el nombre de la etapa actual a partir del objeto $scope.logroEducativo
-              
-              //Cálculo del avance global del usuario sobre todas las Actividades de todas las Etapas (1, 2, 3)
-              for (var i = 0; i < totalDeEtapas; i++) {
-                  
-                  var retosEnEtapa = $scope.logroEducativo.retosPorEtapa[i].retos.length;
-                  
-                  for (var j = 0; j < retosEnEtapa; j++) {
-                        var actividadesEnReto = $scope.logroEducativo.retosPorEtapa[i].retos[j].actividades.length;     
-                        
-                    for (var k = 0; k < actividadesEnReto; k++) {
-                        $scope.avanceGlobal += $scope.logroEducativo.retosPorEtapa[i].retos[j].actividades[k].status;               
-                    }            
-                 }                      
-              }
-              
-              //Cálculo del avance global del usuario en la Etapa actual              
-              var avanceEnEtapaActual = 0;
-              var totalActividadesEnEtapaActual = 0;
-              
-              var retosEnEtapaActual = $scope.logroEducativo.retosPorEtapa[$scope.idEtapa].retos.length;
-              
-              for (var j = 0; j < retosEnEtapaActual; j++) {
-                var numActividadesParcial = $scope.logroEducativo.retosPorEtapa[$scope.idEtapa].retos[j].actividades.length;     
-                        
-                for (var k = 0; k < numActividadesParcial; k++) {
-                    avanceEnEtapaActual += $scope.logroEducativo.retosPorEtapa[$scope.idEtapa].retos[j].actividades[k].status;                    
-                    
-                    totalActividadesEnEtapaActual++;
-                    
-                    //if ($scope.logroEducativo.retosPorEtapa[$scope.idEtapa].retos[j].actividades[k].status == 1) {
-                    //    $scope.activitiesCompletedInCurrentStage.push($scope.logroEducativo.retosPorEtapa[$scope.idEtapa].retos[j].actividades[k].coursemoduleid);
-                    //}
-                }
-              }       
-           
-            //call method createMultipleActivitiesNotification;
-            //_createMultipleActivitiesNotification($scope.activitiesCompletedInCurrentStage)
-            
-            //$scope.avanceGlobal = Math.ceil(avanceGlobal*100/totalDeActividades);
-            $scope.avanceEnEtapaActual = Math.ceil(avanceEnEtapaActual*100/totalActividadesEnEtapaActual);            
-          
-            
-            $scope.playVideo = function(videoAddress, videoName){
-                 playVideo(videoAddress, videoName);
+
+            $scope.openModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'OpeningStageModal.html',
+                    controller: 'OpeningStageController',
+                    size: size,
+                    windowClass: 'user-help-modal'
+                });
+                console.log("modal open");
             };
 
-            $scope.openClosingStageModal = function (size) {
-                console.log("opening");
-                //setTimeout(function(){ 
+            $scope.openModal();
+
+            var closingStageModal = localStorage.getItem('closeStageModal');
+            if (closingStageModal == 'true') {
+                openStageModal();
+                localStorage.setItem('closeStageModal', 'false');
+            }        
+            
+            $scope.activitiesCompletedInCurrentStage = [];
+            $scope.isCollapsed = false;
+
+            $scope.theActivities = [    [{"name" : "Exploracion Inicial", "status" : 0, "link" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"}],
+                [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"}],
+                [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia"}, {"name" : "Reto múltiple", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple"}, {"name" : "Punto de encuentro", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64"}, {"name" : "Zona de contacto", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/ZonaDeContacto"}],
+                [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia"}, {"name" : "Mis cualidades", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades"}, {"name" : "Mis gustos", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos"}, {"name" : "Sueña", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena"}, {"name" : "Punto de encuentro", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"}],
+                [{"name" : "Cabina de soporte", "status" : 0, "link":"/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat"}],
+                [{"name" : "Exploración final", "status" : 0, "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"}]  ];
+
+
+            var activitiesURLs = [
+                ["/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"],
+                ["/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"],
+                ["/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia", "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple", "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64", "/ZonaDeVuelo/Conocete/ZonaDeContacto"],
+                ["/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia", "/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos", "/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades", "/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena", "/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"],
+                ["/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat"],
+                ["/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"]];
+
+            $scope.goToUrl = function (challenge, activity) {
+                $location.path(activitiesURLs[challenge][activity]);
+            };
+
+            $scope.goToUrl2 = function (url) {
+                $location.path(url);
+            };
+
+            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+            $scope.idEtapa = 0; //We are in Stage 1
+            $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
+
+            var totalDeEtapas = $scope.model.stages.length; //Total amount of stages
+            var totalDeRetos = 0; //Total number of challenges, along all possible stages
+            var totalDeActividades = 0; //Total number of activities, along all challenges in all stages
+            var i, j, k; //Getting total number of challenges along all stages (1, 2 y 3)
+
+            for (i = 0; i < totalDeEtapas; i++) {
+                totalDeRetos += $scope.model.stages[i].challenges.length;
+            }
+
+            // Count of whole activities along all Stages
+            for (i = 0; i < totalDeEtapas; i++) {
+                var numOfChallenges = $scope.model.stages[i].challenges.length;
+
+                for (j = 0; j < numOfChallenges; j++) {
+                    totalDeActividades += $scope.model.stages[i].challenges[j].activities.length;
+                }
+            }
+
+            var avanceEnEtapaActual = 0;
+            var totalActividadesEnEtapaActual = 0; //Attainment of user in the current Stage
+            var retosEnEtapaActual = $scope.model.stages[$scope.idEtapa].challenges.length;
+
+            for (j = 0; j < retosEnEtapaActual; j++) {
+                var numActividadesParcial = $scope.model.stages[$scope.idEtapa].challenges[j].activities.length;
+
+                for (k = 0; k < numActividadesParcial; k++) {
+                    avanceEnEtapaActual += $scope.model.stages[$scope.idEtapa].challenges[j].activities[k].status;
+                    totalActividadesEnEtapaActual++;
+                }
+            }
+
+            $scope.avanceEnEtapaActual = 65;//Math.ceil(avanceEnEtapaActual * 100 / totalActividadesEnEtapaActual);
+            $scope.retosIconos = {
+                "Exploración Inicial": "assets/images/challenges/stage-1/img-evaluacion inicial.svg",
+                "Cuarto de recursos": "assets/images/challenges/stage-1/img-cuarto-recursos.svg",
+                "Conócete": "assets/images/challenges/stage-1/img-conocete.svg",
+                "Mis sueños": "assets/images/challenges/stage-1/img-mis-suenos.svg",
+                "Cabina de soporte": "assets/images/challenges/stage-1/img-cabina-soporte.svg",
+                "Exploración final": "assets/images/challenges/stage-1/img-evaluacion final.svg"
+            };
+
+            $scope.playVideo = function (videoAddress, videoName) {
+                playVideo(videoAddress, videoName);
+            };
+        
+            function openStageModal(){
+                    console.log("opening");
+                    //setTimeout(function(){ 
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
                         templateUrl: 'ClosingStage.html',
                         controller: 'closingStageController',
-                        size: size,
+                        //size: size,
                         windowClass: 'closing-stage-modal user-help-modal'
                     });
                     console.log("modal open closing");
-                //}, 1000);
-            };
-
+                    //}, 1000);
+                }
         }])
         .controller('closingStageController', function ($scope, $modalInstance) {
             $scope.cancel = function () {

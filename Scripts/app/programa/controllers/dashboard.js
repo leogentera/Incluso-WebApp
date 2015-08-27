@@ -18,21 +18,10 @@
             console.log('loading user'); 
             $scope.user = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
 
-            if (!$scope.user.shield) {
-                $scope.user.shield = "blocked";
-            }
             if (!$scope.user) {
                 $location.path('/');
                 return "";
             }
-
-            console.log('loading usercourse');
-            $scope.usercourse = JSON.parse(moodleFactory.Services.GetCacheObject("usercourse"));
-            console.log('loading course');
-            $scope.course = JSON.parse(moodleFactory.Services.GetCacheObject("course"));
-            console.log('loading currentStage');
-            $scope.currentStage = JSON.parse(moodleFactory.Services.GetCacheObject("currentStage"));
-            console.log('loading stage');
 
             $rootScope.pageName = "Mision incluso"
             $rootScope.navbarBlue = false;
@@ -62,12 +51,25 @@
                 logout($http, $scope, $location);
             };
 
-            $scope.navigateToStage = function(){                    
-                if ($scope.stage.firstTime) {
+            $scope.navigateToStage = function(){
+                if ($scope.usercourse.firsttime) {
                     $scope.openModal();
-                }   
+                    $scope.stage.firsttime = 0;
+                    $scope.usercourse.firsttime = 0;
 
-                $location.path('/ProgramaDashboardEtapa/' + $scope.stage.id);
+                    var dataModel = {
+                        firstTime: $scope.usercourse.firsttime,
+                        courseId: $scope.usercourse.courseid
+                    };
+
+                    moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
+                }
+
+                $location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
+            };
+
+            $scope.playVideo = function(videoAddress, videoName){
+                playVideo(videoAddress, videoName);
             };
 
             function getDataAsync() {
@@ -77,12 +79,17 @@
             function getDataAsyncCallback(){
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
 
-                moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseId, function(){
+                moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = getCurrentStage();                
                     localStorage.setItem("currentStage", $scope.currentStage);
-                    $scope.$emit('HidePreloader'); //hide preloader
-                    $scope.$emit('scrollTop'); //- scroll
+
+                    moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, function(){
+                        $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+                        $scope.$emit('HidePreloader'); //hide preloader
+                        $scope.$emit('scrollTop'); //- scroll
+                    }, errorCallback);
+
                 }, errorCallback);
             }
 
@@ -123,28 +130,39 @@
             }
             
             function getUserChatCallback() {
-                var chat = localStorage.getItem('userChat');
+                var chat = JSON.parse(localStorage.getItem('userChat'));
+                var userId = localStorage.getItem("userId");
+                
+                var chatAmount = _.countBy(chat,function(messages){
+                        return messages.senderid != userId;
+                    });
+                                                
+                if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
+                    localStorage.setItem('chatRead',"false");
+                }
+
+                localStorage.setItem('chatAmountRead',chatAmount.true);
             }
 
             /* open terms and conditions modal */
             $scope.openModal = function (size) {
-                setTimeout(function(){
+                setTimeout(function(){ 
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
                         templateUrl: 'tutorialModal.html',
-                        controller: 'tutorialController',
+                        controller: function ($scope, $modalInstance) {
+                            $scope.cancel = function () {
+                                $modalInstance.dismiss('cancel');
+                            };
+                        },
                         size: size,
                         windowClass: 'user-help-modal'
                     });
+
                     console.log("modal open");
-                }, 1000);
+                }, 500);
             };
         }])
-        .controller('tutorialController', function ($scope, $modalInstance) {
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-        })        
         .controller('videoCollapsiblePanelController', function ($scope) {
           $scope.isCollapsed = false;
         });

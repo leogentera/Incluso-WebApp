@@ -69,7 +69,7 @@ var _endActivity = function(activityModel){
       var currentUserId = currentUser.userId;
       var activityId = activityModel.coursemoduleid;
       var data = {
-        userId :  currentUserId };
+        userid :  currentUserId };
   
       //_createNotification(activityModel, userId);
       
@@ -86,6 +86,30 @@ var _endActivityQuiz = function(activityModel){
       
       moodleFactory.Services.PutEndActivity(activityModel.activity.coursemoduleid, serviceParameters, activityModel.activity,successCallback,errorCallback);      
       
+}
+
+var _endChallenge = function(activityModel){
+    var activityId = activityModel.activityId;
+    var currentUser  = JSON.parse(localStorage("userId"));
+    
+    moodleFactory.Services.PutEndChallenges(activityId,data, activityModel, currentUser.token, successChallengeCallback, errorCallback);    
+    
+}
+
+var successChallengeCallback = function(){    
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;    
+    var currentStage = userCourse.stages[lastStageIndex];
+       
+    var lastChallenge = _.where(currentStage.challenges,{status:1}).length;    
+    var currentChallenge = currentStage.challenges[lastChallenge];
+    
+    var totalActivitiesByStage = currentChallenge.activities.length;    
+    var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
+    
+    if (totalActivitiesByStage == totalActivitiesCompletedByStage) {
+      localStorage.setItem("closeStageModal",'true');
+    }
 }
 
 
@@ -154,34 +178,29 @@ var errorCallback = function(data){
   
 }
 
-
-function getChallengeByActivity_identifier(activity_identifier) {
-            var matchingChallenge = null;
+function getActivityByActivity_identifier(activity_identifier) {
+            var matchingActivity = null;
             var breakAll = false;
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-            for (var index = 0; index < userCourse.stages.length; index++) {
-                var stage = userCourse.stages[index];
-                for (var index = 0; index < stage.challenges.length; index++) {
-                    var challenge = stage.challenges[index];
-                    if (challenge.activity_identifier == activity_identifier) {
-                        matchingChallenge = challenge;
+            for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+                var stage = userCourse.stages[stageIndex];
+                for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+                    var challenge = stage.challenges[challengeIndex];
+                    for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                      var activity = challenge.activities[activityIndex];
+                      if (activity.activity_identifier == activity_identifier) {
+                        matchingActivity = activity;
                         breakAll = true;
                         break;
+                        }
                     }
+                    if(breakAll)
+                     break;
                 }
                 if(breakAll)
                  break;
             }
-            return matchingChallenge;
-}
-
-function getActivitiesByActivity_identifier(activity_identifier) {
-    var activitiesFound = null;
-    
-    var challenge = getChallengeByActivity_identifier(activity_identifier);
-    activitiesFound =challenge.activities;                
-  
-    return activitiesFound ;
+            return matchingActivity;
 }
 
 

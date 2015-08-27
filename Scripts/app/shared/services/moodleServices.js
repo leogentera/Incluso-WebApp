@@ -10,7 +10,6 @@
             _putAsyncData("profile", data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };    
         
-
         var _getAsyncUserCourse = function(userId, successCallback, errorCallback){
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
             _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback);
@@ -35,10 +34,19 @@
         var _getAsyncActivitiesInfo = function(activityId, successCallback, errorCallback){
             _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), successCallback, errorCallback);
         };
+        
+        var _getAsyncActivityQuizInfo = function(activityId,userId, successCallback, errorCallback){
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId+'?userid='+userId), successCallback, errorCallback);
+        };
             
         var _getAsyncCourse = function(courseId, successCallback, errorCallback){
             successCallback();
             //_getCourseAsyncData("course", API_RESOURCE.format('course/' + courseId), successCallback, errorCallback);
+        };
+
+        var _getAsyncLeaderboard = function(courseId, successCallback, errorCallback){
+            successCallback();
+            _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), successCallback, errorCallback);
         };
 
         var _putAsyncQuiz = function(activityId, data, successCallback, errorCallback){            
@@ -78,6 +86,12 @@
             _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
 
         };
+        
+        var _putEndChallenges = function(activityId, data, activityModel, token, successCallback, errorCallback){
+            _endActivity("challengesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
+        };
+        
+        //activityId,data, activityModel, currentUser.token, successCallback, errorCallback);
         
         var _getCacheObject = function(key){
             return localStorage.getItem(key);
@@ -165,6 +179,19 @@
             });
         };
 
+        var _putAsyncFirstTimeInfo = function(userId, dataModel, successCallback, errorCallback){            
+            _httpFactory({
+                method: 'PUT',
+                url: API_RESOURCE.format('usercourse/' + userId),
+                data: dataModel,
+                headers: {'Content-Type': 'application/json'},
+                }).success(function(data, status, headers, config) {
+                    successCallback();
+                }).error(function(data, status, headers, config) {
+                    errorCallback();
+            });
+        };    
+
         var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
             _httpFactory({                
                method: 'PUT',
@@ -180,10 +207,10 @@
            });
         };
 
-
-        var refreshProgress = function(usercourse)  {
+        var refreshProgress = function(usercourse, user)  {
             var globalActivities = 0;
             var globalCompletedActivities = 0;
+            var globalPointsAchieved = 0;
 
             if (usercourse.stages) {
                 for(i =0; i < usercourse.stages.length; i++) {
@@ -200,7 +227,6 @@
                                 for(k =0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
                                     //activities
 
-
                                     if (usercourse.stages[i].challenges[j].activities[k].activities) {
                                         for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
                                             if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
@@ -211,10 +237,10 @@
                                                 if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
                                                     globalCompletedActivities++;
                                                     stageCompletedActivities++;
+                                                    globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].activities[l].points;
                                                 }
                                             }
                                         }
-
                                     } 
                                     else
                                     {
@@ -224,21 +250,27 @@
                                         if (usercourse.stages[i].challenges[j].activities[k].status == 1) {
                                             globalCompletedActivities++;
                                             stageCompletedActivities++;
+                                            globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].points;
                                         }
                                     }
 
                                 }
                             }
+                            if(usercourse.stages[i].challenges[j].status == 1){
+                                globalPointsAchieved += usercourse.stages[i].challenges[j].points;
+                            }
                         }
                     }
                     usercourse.stages[i].stageProgress = Math.round(100.0 * stageCompletedActivities / stageActivities, 0);
+                    if (usercourse.stages[i].status == 1) {
+                        globalPointsAchieved += usercourse.stages[i].points;
+                    }
                 }
             }
             usercourse.globalProgress = Math.round(100.0 * globalCompletedActivities / globalActivities,0);
-
-            return usercourse;
+            user.stars = globalPointsAchieved;
+            return { course: usercourse, user: user };
         }
-
          
         var createTree = function(activities) {
 
@@ -279,6 +311,7 @@
                     if (assign) {
                         course.stages[i].coursemoduleid = assign.coursemoduleid;
                         course.stages[i].points = assign.points;
+                        course.stages[i].status = assign.status;
                         course.stages[i].activity_identifier = assign.activity_identifier;
                     }
 
@@ -297,6 +330,7 @@
                         if (assign) {
                             course.stages[i].challenges[j].coursemoduleid = assign.coursemoduleid;
                             course.stages[i].challenges[j].points = assign.points;
+                            course.stages[i].challenges[j].status = assign.status;
                             course.stages[i].challenges[j].activity_identifier = assign.activity_identifier;
                         }
 
@@ -334,6 +368,7 @@
                                     course.stages[i].challenges[j].activities[k].coursemoduleid = assign.coursemoduleid;
                                     course.stages[i].challenges[j].activities[k].points = assign.points;
                                     course.stages[i].challenges[j].activities[k].activity_identifier = assign.activity_identifier;
+                                    course.stages[i].challenges[j].activities[k].status = assign.status;
                                 }
 
                                 course.stages[i].challenges[j].activities[k]["activities"] = _.filter(activities,function(a) { 
@@ -358,12 +393,14 @@
                     }
                 }
 
-
-            course = refreshProgress(course);
-            localStorage.setItem("usercourse", JSON.stringify(course));
-            localStorage.setItem("course", JSON.stringify(course));
-            localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
-                
+                var user = JSON.parse(localStorage.getItem("profile"));
+                var progress = refreshProgress(course, user);
+                course = progress.course;
+                user = progress.user;
+                localStorage.setItem("profile", JSON.stringify(user));
+                localStorage.setItem("usercourse", JSON.stringify(course));
+                localStorage.setItem("course", JSON.stringify(course));
+                localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
             }
         }        
         
@@ -377,17 +414,20 @@
             GetCacheJson: _getCacheJson,
             GetAsyncActivity: _getAsyncActivityInfo,
             GetAsyncActivities: _getAsyncActivitiesInfo,
-            PutAsyncActivity: _putAsyncActivityInfo,
+            GetAsyncActivityQuizInfo: _getAsyncActivityQuizInfo,
             PutAsyncQuiz: _putAsyncQuiz,
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
             PutUserNotificationRead: _putUserNotificationRead,
             PostUserNoitifications : _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
+            PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
+            GetAsyncLeaderboard: _getAsyncLeaderboard,
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat,
             PutStars: _assignStars,
-            PutEndActivity: _putEndActivity
+            PutEndActivity: _putEndActivity,
+            PutEndChallenges : _putEndChallenges
 
         };
     })();

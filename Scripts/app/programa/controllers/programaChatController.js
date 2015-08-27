@@ -13,6 +13,9 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
             _httpFactory          
+                        
+
+            localStorage.setItem('chatRead',"true");
             
             $scope.senderId = localStorage.getItem('userId');
             
@@ -45,8 +48,7 @@ angular
                     
                 $scope.messages.push(newMessage);
                 $scope.currentMessage = "";
-                                
-               
+                                               
                 moodleFactory.Services.PutUserChat(userId, newMessage, getUserChatCallback, errorCallback);
                 
                 

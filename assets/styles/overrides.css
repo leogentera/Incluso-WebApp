@@ -228,7 +228,7 @@
 .incluso-app.start-dashboard > article .container {
   position: relative;
   background-attachment: scroll;
-  background-image: url('../images/bg-stars-02.png');
+  /*background-image: url('@{url-images}/bg-stars-02.png');*/
   -webkit-background-size: 100% auto;
   -moz-background-size: 100% auto;
   background-size: 100% auto;
@@ -313,6 +313,7 @@
 .incluso-app.start-dashboard .active .arrow-up {
   display: block;
   bottom: -69px;
+  bottom: -15vw;
 }
 .incluso-app.start-dashboard footer li:last-child {
   display: none;
