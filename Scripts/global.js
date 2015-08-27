@@ -92,7 +92,25 @@ var _endChallenge = function(activityModel){
     var activityId = activityModel.activityId;
     var currentUser  = JSON.parse(localStorage("userId"));
     
-    moodleFactory.Services.PutEndChallenges(activityId,data, activityModel, currentUser.token, successCallback, errorCallback);
+    moodleFactory.Services.PutEndChallenges(activityId,data, activityModel, currentUser.token, successChallengeCallback, errorCallback);    
+    
+}
+
+var successChallengeCallback = function(){
+    debugger;
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;    
+    var currentStage = userCourse.stages[lastStageIndex];
+       
+    var lastChallenge = _.where(currentStage.challenges,{status:1}).length;    
+    var currentChallenge = currentStage.challenges[lastChallenge];
+    
+    var totalActivitiesByStage = currentChallenge.activities.length;    
+    var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
+    
+    if (totalActivitiesByStage == totalActivitiesCompletedByStage) {
+      //show end of challenge robot.
+    }
 }
 
 
@@ -166,10 +184,10 @@ function getChallengeByActivity_identifier(activity_identifier) {
             var matchingChallenge = null;
             var breakAll = false;
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-            for (var index = 0; index < userCourse.stages.length; index++) {
-                var stage = userCourse.stages[index];
-                for (var index = 0; index < stage.challenges.length; index++) {
-                    var challenge = stage.challenges[index];
+            for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+                var stage = userCourse.stages[stageIndex];
+                for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+                    var challenge = stage.challenges[challengeIndex];
                     if (challenge.activity_identifier == activity_identifier) {
                         matchingChallenge = challenge;
                         breakAll = true;

@@ -23,7 +23,7 @@ angular
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
 
-//
+            successChallengeCallback();
             //_createNotification();
 
 
