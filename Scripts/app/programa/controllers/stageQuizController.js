@@ -158,7 +158,7 @@ angular
                 }
             };
 
-            function updateSelectedAnsers(questionIndex, question) {
+            function updateSelectedAnswers(questionIndex, question) {
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer == "Si") {
@@ -216,37 +216,6 @@ angular
             }
 
 
-            // $scope.AnswersResult = {
-            //     "userid": 0,//$scope.userprofile.id,
-            //     "answers": [
-            //         {
-            //             //"0": null
-            //             "first": null
-            //         },
-            //         {
-            //             "second": [
-            //                 '0', '0', '0', '0'
-            //                 // { "_0": 0 },
-            //                 // { "_1": 0 },
-            //                 // { "_2": 0 },
-            //                 // { "_3": 0 }
-            //             ]
-            //         },
-            //         {
-            //             "third": ''
-            //         }
-            //         ,
-            //         {
-            //             "fourth": null
-            //         },
-            //         {
-            //             "fifth": []
-            //         }
-            //     ]
-            //     , "activityidnumber": 0//$scope.activity.coursemoduleid
-            // };
-            // 
-
             $scope.AnswersResult = {
                 "userid": 0,//$scope.userprofile.id,
                 "answers": [null, [0, 0, 0, 0], '', null, []]
@@ -260,7 +229,7 @@ angular
                     $scope.activity = activity;
                     for (var index = 0; index < activity.questions.length; index++) {
                         var question = activity.questions[index];
-                        updateSelectedAnsers(index, question)
+                        updateSelectedAnswers(index, question)
                     }
                 }
                 else {
