@@ -313,6 +313,7 @@
                     if (assign) {
                         course.stages[i].coursemoduleid = assign.coursemoduleid;
                         course.stages[i].points = assign.points;
+                        course.stages[i].status = assign.status;
                         course.stages[i].activity_identifier = assign.activity_identifier;
                     }
 
@@ -368,6 +369,7 @@
                                     course.stages[i].challenges[j].activities[k].coursemoduleid = assign.coursemoduleid;
                                     course.stages[i].challenges[j].activities[k].points = assign.points;
                                     course.stages[i].challenges[j].activities[k].activity_identifier = assign.activity_identifier;
+                                    course.stages[i].challenges[j].activities[k].status = assign.status;
                                 }
 
                                 course.stages[i].challenges[j].activities[k]["activities"] = _.filter(activities,function(a) { 
