@@ -38,7 +38,7 @@
 			<section class="component current-satge">
           <img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
 				  <h3>- Estación: {{stage.sectionname}} -</h3>
-          <a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firstTime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span></a>
+          <a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firsttime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span></a>
 			</section>
 
 			<section class="component my-badges">
@@ -166,27 +166,20 @@
 			<div class="modal-robot robot-lg user-help">
 			  	<img src="assets/images/img-robot-lg.png" alt="robot" />
 			  	<div class="modal-header">
-					<button class="icon icon-close" ng-click="cancel()">
-					  <span class="icomoon icon-cross"></span>
-					</button>
+						<button class="icon icon-close" ng-click="cancel()">
+						  <span class="icomoon icon-cross"></span>
+						</button>
+				  	</div>
+				  	<div class="modal-body">
+						<h3 class="subtitle centered">Bienvenido a bordo</h3>
+						<p class="centered">
+						Soy Inclubot y seré tu compañero en este viaje. Para poder llegar a nuestro destino, tendrás que poner en acción todas tus habilidades y completar 
+						con éxito cada una de las misiones.
+						</p>
+						<p class="centered">
+						¡Comienza la aventura!
+						</p>
 			  	</div>
-			  	<div class="modal-body">
-					<h3 class="subtitle centered">Introducción Zona de Vuelo</h3>
-					<p class="centered">Hemos tenido una falla en el sistema y perdimos algunas piezas, la nave esta averiada. Haremos una parada en la estación Conocéte, recupera las piezas necesarias para echar a andar la nave y continuar el viaje. ¡Buena suerte!
-					</p>
-					<!--<p class="centered">¡Continúa con las estaciones Incluso y gana más estrellas! </p>-->
-					<!--<figure class="player">
-						<video controls  poster="assets/images/ptr-video-0001.jpg" > 
-						<source src="assets/media/TutorialTest2.mp4" type="video/mp4"> Ups! Parece que tu dispositivo no soporta video</video> 
-					</figure>-->
-			  	</div>
-			  	<!--<div class="modal-footer">
-					<div class="row">
-				  		<div class="col-xs-12">
-							<button type="button" class="btn btn-primary btn-lg btn-block">Continuar a mi Perfil</button>
-				  		</div>
-					</div>
-			  	</div> -->
 			</div>
 		</script> 
 	</article>

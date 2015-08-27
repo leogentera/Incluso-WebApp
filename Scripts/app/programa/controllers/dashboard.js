@@ -52,18 +52,18 @@
             };
 
             $scope.navigateToStage = function(){
-                if ($scope.usercourse.firsttime == 1) {
+                if ($scope.usercourse.firsttime) {
                     $scope.openModal();
-                    $scope.stage.firstTime = 0;
+                    $scope.stage.firsttime = 0;
                     $scope.usercourse.firsttime = 0;
 
                     var dataModel = {
-                        firstTime: 0,
+                        firstTime: $scope.usercourse.firsttime,
                         courseId: $scope.usercourse.courseid
                     };
 
                     moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
-                }   
+                }
 
                 $location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
             };
@@ -131,7 +131,6 @@
             
             function getUserChatCallback() {
                 var chat = JSON.parse(localStorage.getItem('userChat'));
-                
                 var userId = localStorage.getItem("userId");
                 
                 var chatAmount = _.countBy(chat,function(messages){
@@ -141,30 +140,29 @@
                 if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
                     localStorage.setItem('chatRead',"false");
                 }
+
                 localStorage.setItem('chatAmountRead',chatAmount.true);
-                
-                
             }
 
             /* open terms and conditions modal */
             $scope.openModal = function (size) {
-                setTimeout(function(){
+                setTimeout(function(){ 
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
                         templateUrl: 'tutorialModal.html',
-                        controller: 'tutorialController',
+                        controller: function ($scope, $modalInstance) {
+                            $scope.cancel = function () {
+                                $modalInstance.dismiss('cancel');
+                            };
+                        },
                         size: size,
                         windowClass: 'user-help-modal'
                     });
+
                     console.log("modal open");
-                }, 1000);
+                }, 500);
             };
         }])
-        .controller('tutorialController', function ($scope, $modalInstance) {
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-        })        
         .controller('videoCollapsiblePanelController', function ($scope) {
           $scope.isCollapsed = false;
         });
