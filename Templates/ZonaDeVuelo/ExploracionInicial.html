@@ -82,7 +82,7 @@
               <div class="txt-renglon txt-bigger">5. Menciona tus principales habilidades</div>
 
               <ul class="block-list clearfix">
-                <li ng-repeat="ability in AnswersResult.answers[4]">
+                <li ng-repeat="ability in AnswersResult.answers[4] track by $index">
                   <section class="form txt-renglon part list clearfix">
                     <div class="form-group theme-form">
 

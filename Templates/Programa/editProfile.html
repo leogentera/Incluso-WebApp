@@ -169,7 +169,7 @@
 														</div>
 													</div>								
 
-													<div class="form-group theme-form">
+													<!--<div class="form-group theme-form">
 														<div class="form-group-control">
 															<input 
 															type="text" 
@@ -178,7 +178,7 @@
 															placeholder="Alias" 
 															ng-model="model.alias" required />
 														</div>
-													</div>							
+													</div>-->
 
 													<div class="form-group theme-form">
 														<div class="form-group-control custom-caret-wrapper">
@@ -424,7 +424,7 @@
 												<section>
 													<h4>Teléfono</h4>
 													<ul class="block-list">
-														<li ng-repeat="p in model.phones">
+														<li ng-repeat="p in model.phones track by $index">
 															<div class="form-group theme-form">
 																<h5>
 																	<span>Teléfono {{model.phones.indexOf(p) + 1}}</span>

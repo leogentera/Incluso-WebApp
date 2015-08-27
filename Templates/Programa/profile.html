@@ -165,10 +165,10 @@
                                                                 <p ng-bind="model.mothername"></p>
                                                             </div>
 
-                                                            <div class="from-group">
+                                                            <!--<div class="from-group">
                                                                 <label>Alias</label>
                                                                 <p ng-bind="model.alias"></p>
-                                                            </div>
+                                                            </div>-->
 
                                                             <div class="from-group">
                                                                 <label>Sexo</label>
@@ -619,14 +619,14 @@
                                                 </div>
 
                                                 <div class="pager">
-                                                    <button class="icomoon icon-arrow-bold-left" ng-click="changepage(-1)" ng-show="normalBadgePage > 1"></button>
-                                                    <button class="icomoon icon-arrow-bold-left" disabled ng-show="normalBadgePage == 1"></button>
+                                                    <a class="icomoon icon-arrow-bold-left" ng-click="changepage(-1)" ng-show="normalBadgePage > 1"></a>
+                                                    <a class="disabled icomoon icon-arrow-bold-left" disabled="disabled" ng-show="normalBadgePage == 1"></a>
                                                     <span>
                                                         <span ng-bind="normalBadgePage" class="actual-page"></span>/
                                                         <span ng-bind="totalBadgePages"></span>
                                                     </span>
-                                                    <button class="icomoon icon-arrow-bold-right" ng-click="changepage(1)" ng-show="normalBadgePage < totalBadgePages"></button>
-                                                    <button class="icomoon icon-arrow-bold-right" ng-show="normalBadgePage == totalBadgePages"></button>
+                                                    <a class="icomoon icon-arrow-bold-right" ng-click="changepage(1)" ng-show="normalBadgePage < totalBadgePages"></a>
+                                                    <a class="disabled icomoon icon-arrow-bold-right" disabled="disabled" ng-show="normalBadgePage == totalBadgePages"></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -774,13 +774,14 @@
                                                             <span class="icomoon icon-share"></span>
 
                                                         </span>
-                                                            <span class="share-text">Compartir Insignia</span>
-                                                        </div>
-
-                                                        <button class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)" type="button">Regresar</button>
-                                                        <div class="txt-renglon centered txt-bigger"></div>
+                                                        <span class="share-text">Compartir Insignia</span>
                                                     </div>
                                                     -->
+
+                                                    <button class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)" type="button">Regresar</button>
+                                                    <div class="txt-renglon centered txt-bigger"></div>
+                                                </div>
+
                                                 </div>
                                             </div>
                                         </div>
