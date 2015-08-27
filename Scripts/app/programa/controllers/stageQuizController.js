@@ -53,23 +53,23 @@ angular
                 //Update Activity Stars - Progres Service
                 
                 $location.path('/ZonaDeVuelo/Dashboard');
-            }
+            };
 
 
 
             $scope.addAbility = function () {
                 addHeight ();
                 $scope.AnswersResult.answers[4].push(new String());                
-            }
+            };
 
             $scope.deleteAbility = function (index) {
                 removeHeight();
                 $scope.AnswersResult.answers[4].splice(index, 1);                
-            }
+            };
 
             $scope.hideWarning = function () {
                 $scope.showWarning = false;
-            }
+            };
 
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
@@ -245,7 +245,7 @@ angular
             }
 
             function errorCallback(data) {
-                var algo = data;
+               // var algo = data;
             }
 
             function getDataAsync() {

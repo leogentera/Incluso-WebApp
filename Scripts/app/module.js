@@ -362,7 +362,7 @@
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/Suena.html',
-            controller: 'stageuizController'
+            controller: 'stageQuizController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/Cierre', { 
