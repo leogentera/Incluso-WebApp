@@ -58,7 +58,7 @@ angular
                 $location.path('/ZonaDeVuelo/Dashboard');
             };
 
-            
+
 
             $scope.addAbility = function () {
                 addHeight();
@@ -104,7 +104,7 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.cancel = function () {                
+            $scope.cancel = function () {
                 $location.path('/ZonaDeVuelo/Dashboard');
             };
 
@@ -223,6 +223,7 @@ angular
                 , "like_status": 0
             };
 
+            $scope.misCualidadesAnswers = [null, null, null];
 
             function errorCallback(data) {
                 // var algo = data;
@@ -339,6 +340,29 @@ angular
 
             $scope.openModal();
             getDataAsync();
+            
+             $scope.validateMisSuenosAnsweredQuestions = function () {
+             }
+
+            $scope.validateMisCualidadesAnsweredQuestions = function () {
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                if (misCualidadesAnswers[0] != null) {
+                    if (misCualidadesAnswers[1] != null) {
+                        if (misCualidadesAnswers[2] != null) {
+                            $scope.navigateToPage(2);  
+                        }
+                        else {
+                            $scope.showWarning = true;
+                        }
+                    }
+                    else {
+                        $scope.showWarning = true;
+                    }
+                }
+                else {
+                    $scope.showWarning = true;
+                }
+            }
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
