@@ -87,8 +87,8 @@
 
         };
         
-        var _putAsignBadges = function(activityId, data, activityModel, token, successCallback, errorCallback){
-            _endActivity("badgesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
+        var _putEndChallenges = function(activityId, data, activityModel, token, successCallback, errorCallback){
+            _endActivity("challengesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
         };
         
         //activityId,data, activityModel, currentUser.token, successCallback, errorCallback);
@@ -426,7 +426,7 @@
             PutUserChat: _putUserChat,
             PutStars: _assignStars,
             PutEndActivity: _putEndActivity,
-            PutAsignBadges : _putAsignBadges
+            PutEndChallenges : _putEndChallenges
 
         };
     })();
