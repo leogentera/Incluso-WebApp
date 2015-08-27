@@ -188,6 +188,7 @@ Parallel work file for UI Developer 01
 }
 .incluso-app .evaluation #finalized .txt-renglon.pill .sm-pill .icon-star,
 .incluso-app .evaluation #finalized .txt-renglon.pill .green-pill .icon-star {
+  display: inline-block;
   font-size: 4.5vw;
   position: relative;
   top: 4.5px;
@@ -231,7 +232,6 @@ Parallel work file for UI Developer 01
   padding: 2.5vw 4.6vw;
   font-size: 5vw;
   line-height: 1.4;
-  cursor: pointer;
 }
 .incluso-app .evaluation #finalized .txt-renglon.panel > .panel-heading .icon-wrong-join {
   color: transparent;
