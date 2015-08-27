@@ -102,7 +102,7 @@ var successChallengeCallback = function(){
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;    
     var currentStage = userCourse.stages[lastStageIndex];
        
-    var lastChallenge = _.where(currentStage.challenge,{status:1}).length;    
+    var lastChallenge = _.where(currentStage.challenges,{status:1}).length;    
     var currentChallenge = currentStage.challenges[lastChallenge];
     
     var totalActivitiesByStage = currentChallenge.activities.length;    
