@@ -17,9 +17,7 @@
 							<button class="icon icon-close"></button>
 							<button class="icon icon-play" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"></button>
 							<figure class="player">
-								<!--<a href="assets/media/480x270.mp4" target="_blank">-->
 								<img ng-click="playVideo()" src="assets/media/thumb-bienvenida.jpg"></img>
-								<!--</a>-->
 							</figure>
 						</div>
 					</div>
@@ -36,14 +34,13 @@
 			</section>
 
 			<section class="component current-satge">
-          <img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
-				  <h3>- Estación: {{stage.sectionname}} -</h3>
-          <a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firsttime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span></a>
+				<img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
+				<h3>- Estación: {{stage.sectionname}} -</h3>
+				<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firsttime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span></a>
 			</section>
 
 			<section class="component my-badges">
 				<h3>- MI ESCUDO -</h3>
-				<!--<img src="assets/images/img-badges-blocked.png" alt="badges" />-->
 				<img src="assets/images/badges/{{user.shield ? 'img-' + user.shield + 'svg' : 'img-badge-placeholder.svg'}}" alt="badges"
 				/>
 			</section>
@@ -165,25 +162,19 @@
 				</figure>
 			</section>
 		</div>
-		<!-- /.container -->
 
 		<script type="text/ng-template" id="tutorialModal.html">
 			<div class="modal-robot robot-lg user-help">
 			  	<img src="assets/images/img-robot-lg.png" alt="robot" />
 			  	<div class="modal-header">
-						<button class="icon icon-close" ng-click="cancel()">
-						  <span class="icomoon icon-cross"></span>
-						</button>
-				  	</div>
-				  	<div class="modal-body">
-						<h3 class="subtitle centered">Bienvenido a bordo</h3>
-						<p class="centered">
-						Soy Inclubot y seré tu compañero en este viaje. Para poder llegar a nuestro destino, tendrás que poner en acción todas tus habilidades y completar 
-						con éxito cada una de las misiones.
-						</p>
-						<p class="centered">
-						¡Comienza la aventura!
-						</p>
+					<button class="icon icon-close" ng-click="cancel()">
+						<span class="icomoon icon-cross"></span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<h3 class="subtitle centered">Bienvenido a bordo</h3>
+					<p class="centered">Soy Inclubot y seré tu compañero en este viaje. Para poder llegar a nuestro destino, tendrás que poner en acción todas tus habilidades y completar con éxito cada una de las misiones.</p>
+					<p class="centered">¡Comienza la aventura!</p>
 			  	</div>
 			</div>
 		</script>
