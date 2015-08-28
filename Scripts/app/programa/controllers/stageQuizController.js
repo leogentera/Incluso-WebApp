@@ -42,7 +42,7 @@ angular
                 $scope.showWarning = false;
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
-
+                alert($scope.activityname);
                 switch ($scope.activityname) {
                     case "Mis cualidades":
                         $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
@@ -65,6 +65,7 @@ angular
                     "startingTime": $scope.startingTime,
                     "endingTime": new Date()
                 });
+
                 $location.path('/ZonaDeVuelo/Dashboard');
             };
 
@@ -312,6 +313,8 @@ angular
             }
 
             function successfullCallBack(activityAnswers) {
+                alert(activityAnswers.toString);
+
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
@@ -367,31 +370,36 @@ angular
             $scope.validateMisSuenosAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                 if ($scope.dreamsLists.answers.length != 0) {
+
                     var lastQuestionValidation = true;
+
                     for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
-                        var cont = $scope.dreamsLists.answers[a].length;
+                        var cont = $scope.dreamsLists.answers[a].length; alert("Pregunta " + a);
 
                         for (var b = 0; b < cont; b++) {
                             var text = $scope.dreamsLists.answers[a][b];
+
                             if (text.trim() == '') {
-                                lastQuestionValidation = false;
+                                lastQuestionValidation = false;alert("Pregunta vacía!");
                                 break;
                             }
                         }
+
+                        if (!lastQuestionValidation) {
+                            break;
+                        }
+
                     }
 
-                    if (lastQuestionValidation) {
+                    if (lastQuestionValidation) {alert("Todo bien!");
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
-                    }
-
-                    else {
+                    } else { alert("No todo bien...");
                         showWarningAndGoToTop();
                     }
-                }
 
-                else {
-                    showWarningAndGoToTop();
+                } else {
+                    showWarningAndGoToTop();alert("NADA");
                 }
 
             };
@@ -416,6 +424,7 @@ angular
                             }
                         }
                     }
+
                     if ($scope.misCualidadesAnswers.length == validatedAnswers) {
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
@@ -425,7 +434,7 @@ angular
                 } else {
                     showWarningAndGoToTop();
                 }
-            }
+            };
 
             $scope.validateMisGustosAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
@@ -442,12 +451,14 @@ angular
                             }
                         }
                     }
+
                     if ($scope.misGustosAnswers.length == validatedAnswers) {
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
                     } else {
                         showWarningAndGoToTop();
                     }
+
                 } else {
                     showWarningAndGoToTop();
                 }
