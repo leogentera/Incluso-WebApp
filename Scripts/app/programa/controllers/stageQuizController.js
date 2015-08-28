@@ -23,50 +23,47 @@ angular
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
-            //$scope.activity = null;
+            
             $scope.like_status = 0;
-
 
             $scope.finishActivity = function () {
                 //Activity completed
+                
                 $scope.activity.status = 1;
 
-                //Call stars - progress
-                //Update Activity Stars - Progres Service
-
                 //Llamar notificaciones
-
-                //Update Activity userAnswers Service
-
                 //Update Activity Log Service
-
-                //Update Activity finished Service
-                //moodleFactory.Services.PutEndActivity($scope.coursemoduleid, $scope.userprofile.id, $scope.fuenteDeEnergia, $scope.currentUser.token, successfullCallBack, errorCallback);
-                //moodleFactory.Services.PutAsyncQuizActivity($scope.userprofile.id, $scope.coursemoduleid,$scope.AnswersResult, successfullCallBack, errorCallback);
+                
+                updateUserStars($scope.activity_identifier);
 
                 $scope.AnswersResult.userid = $scope.userprofile.id;
                 $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
                 $scope.AnswersResult.like_status = $scope.like_status;
                 $scope.showWarning = false;
-                
+
+                var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
+
                 switch ($scope.activityname) {
                     case "Mis cualidades":
-                        $scope.AnswersResult = $scope.misCualidadesAnswers;
+                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
                         break;
                     case "Mis gustos":
-                        $scope.AnswersResult = $scope.misGustosAnswers;
+                        $scope.AnswersResult.answers = $scope.misGustosAnswers;
                         break;
                     case "Sueña":
-                        $scope.AnswersResult = $scope.dreamsLists;
+                        $scope.AnswersResult.answers = $scope.dreamsLists;
                         break;
                     default:
                         break;
                 }
 
                 _endActivityQuiz({
-                    "activity": $scope.activity,
+                    "usercourse": updatedActivityOnUsercourse,
+                    "coursemoduleid": $scope.activity.coursemoduleid,
                     "answersResult": $scope.AnswersResult,
-                    "userId": $scope.userprofile.id
+                    "userId": $scope.userprofile.id,
+                    "startingTime": $scope.startingTime,
+                    "endingTime": new Date()
                 });
                 $location.path('/ZonaDeVuelo/Dashboard');
             };
@@ -234,6 +231,40 @@ angular
                 }
             }
 
+            function updateMisCualidadesSelectedAnswers(currentQuestionIndex, question) {
+                if (question.userAnswer != null) {
+                    var userAnswers = cleanText(question.userAnswer);
+                    var userAnswersList = userAnswers.split(";");
+                    for (var answerOptionsIndex = 0; answerOptionsIndex < question.answers.length; answerOptionsIndex++) {
+                        var answerOption = question.answers[answerOptionsIndex];
+                        for (var userAnswersListIndex = 0; userAnswersListIndex < userAnswersList.length; userAnswersListIndex++) {
+                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]);
+                            if (answerOption.answer == userAnswer) {
+                                $scope.misCualidadesAnswers[currentQuestionIndex][answerOptionsIndex] = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            function updateMisGustosSelectedAnswers(question) {
+                var Ulises = "Update Code";
+            }
+
+            function updateMisSueñosSelectedAnswers(question) {
+                var Carlos = "Update Code";
+            }
+
+            function cleanText(userAnswer) {
+                var result = userAnswer.replace("\n", "");
+                result = userAnswer.replace("<br>", "");
+                result = userAnswer.replace("<p>", "");
+                result = userAnswer.replace("</p>", "");
+                return result;
+            }
+
+
             $scope.AnswersResult = {
                 "userid": 0,//$scope.userprofile.id,
                 "answers": [null, [0, 0, 0, 0], '', null, []]
@@ -241,8 +272,8 @@ angular
                 , "like_status": 0
             };
 
-            $scope.misCualidadesAnswers = [null, null, null];
-            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
 
             function errorCallback(data) {
                 // var algo = data;
@@ -250,98 +281,62 @@ angular
 
             function getDataAsync() {
 
-                //test
-                
-                //activity_identifier - activityname
-                //1000 - Ninguno
-                //1001 - Exploracion Inicial
-                //1007 - Sueña
-                //1006 - Mis cualidades
-                //1005 - Mis gustos
-                var testActivity_identifier = 1006; 
-                
-                //fin test     
-                
-                var activity_identifier = $location.path().split("/")[3] == "zv_exploracionInicial" ? testActivity_identifier : $location.path().split("/")[3];
+                $scope.startingTime = new Date();
 
-                var activities = getActivityByActivity_identifier(activity_identifier);
+                $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
-                if (activities != null) {
-                    $scope.coursemoduleid = activities.coursemoduleid;
-                    $scope.activityPoints = activities.points;
-                    $scope.activityname = activities.activityname;
+                var activity = getActivityByActivity_identifier($scope.activity_identifier);
+
+                if (activity != null) {
+                    $scope.coursemoduleid = activity.coursemoduleid;
+                    $scope.activityPoints = activity.points;
+                    $scope.activityname = activity.activityname;
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                    $scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/111"));
+                    $scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/" + $scope.coursemoduleid));
 
                     var activityFinished = false;
 
-
-                    if (activities.status != 0) {
-                        //if ($scope.activitieCache != null) {
+                    if (activity.status != 0) {
                         activityFinished = true;
-                        //}
                     }
-                    // else {
-                    //     activityFinished = true;
-                    // }
-
-                   
 
                     $scope.setReadOnly = activityFinished;
 
                     if (activityFinished) {
-
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
-
-                        //test
-
-                        // var activity = { "id": 44, "name": "Exploracion Inicial", "description": null, "activityType": "Quiz", "status": null, "stars": null, "dateIssued": null, "score": 8, "quizType": null, "grade": 10, "questions": [{ "id": 19, "question": "1. \u00bfAlguna vez has tenido un sue\u00f1o que no has sabido c\u00f3mo alcanzar?", "questionType": "multichoice", "answers": [{ "id": 60, "answer": "Si", "fraction": "1.0000000" }, { "id": 61, "answer": "No", "fraction": "1.0000000" }], "userAnswer": "No" }, { "id": 20, "question": "2. \u00bfQu\u00e9 de lo siguiente has intentado hacer para lograrlo? Puedes elegir m\u00e1s de una.", "questionType": "multichoice", "answers": [{ "id": 62, "answer": "Pedir ayuda a alguien", "fraction": "1.0000000" }, { "id": 63, "answer": "Investigar sobre el tema", "fraction": "0.0000000" }, { "id": 64, "answer": "Nada, porque me parece imposible", "fraction": "0.0000000" }, { "id": 65, "answer": "Trazar un plan de lo que necesito", "fraction": "0.0000000" }], "userAnswer": "Pedir ayuda a alguien; Investigar sobre el tema" }, { "id": 23, "question": "3. \u00bfQu\u00e9 persona exitosa que conoces te inspira?", "questionType": "shortanswer", "answers": [{ "id": 72, "answer": "*", "fraction": "1.0000000" }], "userAnswer": "Bill Gates" }, { "id": 24, "question": "4. \u00bfSabes cu\u00e1les son tus habilidades?", "questionType": "multichoice", "answers": [{ "id": 73, "answer": "Si", "fraction": "1.0000000" }, { "id": 74, "answer": "No", "fraction": "1.0000000" }, { "id": 75, "answer": "Mas o menos", "fraction": "1.0000000" }], "userAnswer": "Mas o menos" }, { "id": 25, "question": "5. Menciona tus principales habilidades", "questionType": "multichoice", "answers": [{ "id": 76, "answer": "Empat\u00eda", "fraction": "1.0000000" }, { "id": 77, "answer": "Creatividad", "fraction": "0.0000000" }, { "id": 78, "answer": "Liderazgo", "fraction": "0.0000000" }, { "id": 79, "answer": "Comunicaci\u00f3n", "fraction": "0.0000000" }, { "id": 80, "answer": "Negociaci\u00f3n", "fraction": "0.0000000" }, { "id": 81, "answer": "Trabajo en equipo", "fraction": "0.0000000" }, { "id": 82, "answer": "Innovaci\u00f3n", "fraction": "0.0000000" }, { "id": 83, "answer": "Iniciativa", "fraction": "0.0000000" }, { "id": 84, "answer": "Toma de decisiones", "fraction": "0.0000000" }, { "id": 85, "answer": "Planeaci\u00f3n", "fraction": "0.0000000" }, { "id": 86, "answer": "Organizaci\u00f3n", "fraction": "0.0000000" }], "userAnswer": "Organizaci\u00f3n; Toma de decisiones; Trabajo en equipo" }] };
-                    
-                        // if (activity != null) {
-                        //     for (var index = 0; index < activity.questions.length; index++) {
-                        //         var question = activity.questions[index];
-                        //         updateSelectedAnsers(index, question)
-                        //     }
-                        // }
-                        // else {
-                        //     $scope.showWarning = true;
-                        //     $scope.warningMessage = "El quiz no se puede acceder en este momento";
-                        // }
-                    
-                        //fin test                 
                     }
-                    // else {
-                    //     $scope.activity = activities;
-                    //     $scope.warningMessage = "El quiz no se puede acceder en este momento";
-                    //     $scope.showWarning = true;
-                    // }
+                    $scope.activity = activity;
                 }
             }
 
-            //             function successfullCallBack(activity) {
-            //                 if (activity != null) {
-            //                     $scope.activity = activity;
-            //                     for (var index = 0; index < activity.questions.length; index++) {
-            //                         var question = activity.questions[index];
-            // 
-            //                         updateSelectedAnsers(index, question)
-            //                     }
-            //                 }
-            //             }
-            
-            function successfullCallBack(activity) {
-                if (activity != null) {
-                    $scope.activity = activity;
-                    for (var index = 0; index < activity.questions.length; index++) {
-                        var question = activity.questions[index];
-                        updateSelectedAnswers(index, question)
+            function successfullCallBack(activityAnswers) {
+                if (activityAnswers != null) {
+                    // $scope.activity = activityAnswers;
+                    for (var index = 0; index < activityAnswers.questions.length; index++) {
+                        var question = activityAnswers.questions[index];
+                        switch ($scope.activityname) {
+                            case "Exploracion Inicial":
+                                updateSelectedAnswers(index, question)
+                                break;
+                            case "Mis cualidades":
+                                updateMisCualidadesSelectedAnswers(index, question);
+                                break;
+                            case "Mis gustos":
+                                updateMisGustosSelectedAnswers(pregunta);
+                                break;
+                            case "Sueña":
+                                updateMisSueñosSelectedAnswers(pregunta);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
                 else {
                     $scope.showWarning = true;
-                    $scope.warningMessage = "El quiz no se puede acceder en este momento";
+                    $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
                 }
             }
 
@@ -408,31 +403,37 @@ angular
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-                if ($scope.misCualidadesAnswers[0] != null) {
-                    if ($scope.misCualidadesAnswers[1] != null) {
-                        if ($scope.misCualidadesAnswers[2] != null) {
-                            $scope.navigateToPage(2);
-                        }
-                        else {
-                            showWarningAndGoToTop();
+                if ($scope.misCualidadesAnswers.length != 0) {
+                    var validatedAnswers = 0;
+                    for (var a = 0; a < $scope.misCualidadesAnswers.length; a++) {
+                        var cont = $scope.misCualidadesAnswers[a].length;
+
+                        for (var b = 0; b < cont; b++) {
+                            var checked = $scope.misCualidadesAnswers[a][b];
+                            if (checked) {
+                                validatedAnswers++;
+                                break;
+                            }
                         }
                     }
-                    else {
+                    if ($scope.misCualidadesAnswers.length == validatedAnswers) {
+                        $scope.showWarning = false;
+                        $scope.navigateToPage(2);
+                    } else {
                         showWarningAndGoToTop();
                     }
-                }
-                else {
+                } else {
                     showWarningAndGoToTop();
                 }
             }
 
-            $scope.validateMisGustosAnsweredQuestions = function () {                
+            $scope.validateMisGustosAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-                if ($scope.misGustosAnswers.length != 0) {                    
+                if ($scope.misGustosAnswers.length != 0) {
                     var validatedAnswers = 0;
                     for (var a = 0; a < $scope.misGustosAnswers.length; a++) {
                         var cont = $scope.misGustosAnswers[a].length;
-                        
+
                         for (var b = 0; b < cont; b++) {
                             var checked = $scope.misGustosAnswers[a][b];
                             if (checked) {
@@ -441,13 +442,13 @@ angular
                             }
                         }
                     }
-                     if ($scope.misGustosAnswers.length == validatedAnswers) {
+                    if ($scope.misGustosAnswers.length == validatedAnswers) {
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
-                    }else {
+                    } else {
                         showWarningAndGoToTop();
                     }
-                }else {
+                } else {
                     showWarningAndGoToTop();
                 }
             }
