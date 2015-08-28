@@ -23,12 +23,13 @@ angular
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
-            //$scope.activity = null;
+            
             $scope.like_status = 0;
 
 
             $scope.finishActivity = function () {
                 //Activity completed
+                debugger;
                 $scope.activity.status = 1;
 
                 //Call stars - progress
@@ -62,7 +63,7 @@ angular
                     default:
                         break;
                 }
-
+                debugger;
                 _endActivityQuiz({
                     "activity": $scope.activity,
                     "answersResult": $scope.AnswersResult,
@@ -249,7 +250,7 @@ angular
             }
 
             function getDataAsync() {
-
+                
                 //test
                 
                 //activity_identifier - activityname
@@ -258,27 +259,28 @@ angular
                 //1007 - Sueña
                 //1006 - Mis cualidades
                 //1005 - Mis gustos
-                var testActivity_identifier = 1006; 
+                var testActivity_identifier = 1005; 
                 
-                //fin test     
+                //fin test
+                //var activity_identifier = $location.path().split("/")[3] == "zv_exploracionInicial" ? testActivity_identifier : $location.path().split("/")[3];
                 
-                var activity_identifier = $location.path().split("/")[3] == "zv_exploracionInicial" ? testActivity_identifier : $location.path().split("/")[3];
+                var activity_identifier = testActivity_identifier;
 
-                var activities = getActivityByActivity_identifier(activity_identifier);
-
-                if (activities != null) {
-                    $scope.coursemoduleid = activities.coursemoduleid;
-                    $scope.activityPoints = activities.points;
-                    $scope.activityname = activities.activityname;
+                var activity = getActivityByActivity_identifier(activity_identifier);
+                
+                
+                if (activity != null) {
+                    $scope.coursemoduleid = activity.coursemoduleid;                    
+                    $scope.activityPoints = activity.points;
+                    $scope.activityname = activity.activityname;
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     $scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/111"));
 
                     var activityFinished = false;
-
-
-                    if (activities.status != 0) {
+                    
+                    if (activity.status != 0) {
                         //if ($scope.activitieCache != null) {
                         activityFinished = true;
                         //}
@@ -317,9 +319,12 @@ angular
                     //     $scope.warningMessage = "El quiz no se puede acceder en este momento";
                     //     $scope.showWarning = true;
                     // }
+                    $scope.activity = activity;
                 }
+                
             }
 
+            
             //             function successfullCallBack(activity) {
             //                 if (activity != null) {
             //                     $scope.activity = activity;
