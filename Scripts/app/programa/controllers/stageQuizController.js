@@ -29,7 +29,7 @@ angular
 
             $scope.finishActivity = function () {
                 //Activity completed
-                debugger;
+                
                 $scope.activity.status = 1;                
 
                 //Call stars - progress
@@ -48,7 +48,7 @@ angular
                 $scope.AnswersResult.userid = $scope.userprofile.id;
                 $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
                 $scope.AnswersResult.like_status = $scope.like_status;
-                $scope.showWarning = false;                
+                $scope.showWarning = false;
                 switch ($scope.activityname) {
                     case "Mis cualidades":
                         $scope.AnswersResult = $scope.misCualidadesAnswers;
@@ -62,8 +62,8 @@ angular
                     default:
                         break;
                 }
-                debugger;
-                                
+                
+
                 _endActivityQuiz({
                     "activity": $scope.activity,
                     "answersResult": $scope.AnswersResult,
@@ -244,8 +244,8 @@ angular
                 , "like_status": 0
             };
 
-            $scope.misCualidadesAnswers = [null, null, null];
-            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
 
             function errorCallback(data) {
                 // var algo = data;
@@ -261,7 +261,7 @@ angular
                 //1007 - Sueña
                 //1006 - Mis cualidades
                 //1005 - Mis gustos
-                var testActivity_identifier = 1005; 
+                var testActivity_identifier = 1005;
                 $scope.startingTime = new Date();
                 //fin test
                 //var activity_identifier = $location.path().split("/")[3] == "zv_exploracionInicial" ? testActivity_identifier : $location.path().split("/")[3];
@@ -269,10 +269,10 @@ angular
                 var activity_identifier = testActivity_identifier;
 
                 var activity = getActivityByActivity_identifier(activity_identifier);
-                
-                
+
+
                 if (activity != null) {
-                    $scope.coursemoduleid = activity.coursemoduleid;                    
+                    $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
                     $scope.activityname = activity.activityname;
 
@@ -281,7 +281,7 @@ angular
                     $scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/111"));
 
                     var activityFinished = false;
-                    
+
                     if (activity.status != 0) {
                         //if ($scope.activitieCache != null) {
                         activityFinished = true;
@@ -323,7 +323,7 @@ angular
                     // }
                     $scope.activity = activity;
                 }
-                
+
             }
 
             
@@ -415,31 +415,37 @@ angular
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-                if ($scope.misCualidadesAnswers[0] != null) {
-                    if ($scope.misCualidadesAnswers[1] != null) {
-                        if ($scope.misCualidadesAnswers[2] != null) {
-                            $scope.navigateToPage(2);
-                        }
-                        else {
-                            showWarningAndGoToTop();
+                if ($scope.misCualidadesAnswers.length != 0) {
+                    var validatedAnswers = 0;
+                    for (var a = 0; a < $scope.misCualidadesAnswers.length; a++) {
+                        var cont = $scope.misCualidadesAnswers[a].length;
+
+                        for (var b = 0; b < cont; b++) {
+                            var checked = $scope.misCualidadesAnswers[a][b];
+                            if (checked) {
+                                validatedAnswers++;
+                                break;
+                            }
                         }
                     }
-                    else {
+                    if ($scope.misCualidadesAnswers.length == validatedAnswers) {
+                        $scope.showWarning = false;
+                        $scope.navigateToPage(2);
+                    } else {
                         showWarningAndGoToTop();
                     }
-                }
-                else {
+                } else {
                     showWarningAndGoToTop();
                 }
             }
 
-            $scope.validateMisGustosAnsweredQuestions = function () {                
+            $scope.validateMisGustosAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-                if ($scope.misGustosAnswers.length != 0) {                    
+                if ($scope.misGustosAnswers.length != 0) {
                     var validatedAnswers = 0;
                     for (var a = 0; a < $scope.misGustosAnswers.length; a++) {
                         var cont = $scope.misGustosAnswers[a].length;
-                        
+
                         for (var b = 0; b < cont; b++) {
                             var checked = $scope.misGustosAnswers[a][b];
                             if (checked) {
@@ -448,13 +454,13 @@ angular
                             }
                         }
                     }
-                     if ($scope.misGustosAnswers.length == validatedAnswers) {
+                    if ($scope.misGustosAnswers.length == validatedAnswers) {
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
-                    }else {
+                    } else {
                         showWarningAndGoToTop();
                     }
-                }else {
+                } else {
                     showWarningAndGoToTop();
                 }
             }
