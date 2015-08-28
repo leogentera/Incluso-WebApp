@@ -140,7 +140,7 @@ angular
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                 var data = {
                     userid: currentUser.userId,
-                    datestarted: "2015:08:26 15:27:38",
+                    datestarted: getFormattedDate(),
                     moduleid: activity.coursemoduleid,
                     updatetype: 1
                 };
@@ -165,21 +165,37 @@ angular
                         console.log("modal open");
                     }
                 });
+
+                function getFormattedDate() {
+                    var date = new Date(),
+                        year = date.getFullYear(),
+                        month = formatValue(date.getMonth() + 1), // months are zero indexed
+                        day = formatValue(date.getDate()),
+                        hour = formatValue(date.getHours()),
+                        minute = formatValue(date.getMinutes()),
+                        second = formatValue(date.getSeconds());
+
+                    function formatValue(value) {
+                        return value >= 10 ? value : '0' + value;
+                    }
+
+                    return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
+                }
             };
         
             function openStageModal(){
-                    console.log("opening");
-                    //setTimeout(function(){ 
-                    var modalInstance = $modal.open({
-                        animation: $scope.animationsEnabled,
-                        templateUrl: 'ClosingStage.html',
-                        controller: 'closingStageController',
-                        //size: size,
-                        windowClass: 'closing-stage-modal user-help-modal'
-                    });
-                    console.log("modal open closing");
-                    //}, 1000);
-                };
+                console.log("opening");
+                //setTimeout(function(){ 
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'ClosingStage.html',
+                    controller: 'closingStageController',
+                    //size: size,
+                    windowClass: 'closing-stage-modal user-help-modal'
+                });
+                console.log("modal open closing");
+                //}, 1000);
+            };
         }])
         .controller('closingStageController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
