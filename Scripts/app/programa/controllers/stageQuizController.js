@@ -370,17 +370,17 @@ angular
                         }
                     }
 
-                    if (lastQuestionValidation) {alert("validated!");
+                    if (lastQuestionValidation) {
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
                     }
 
-                    else {alert("NO validated!");
+                    else {
                         $scope.showWarning = true;
                     }
                 }
 
-                else {alert("NO validated! array 0");
+                else {
                     $scope.showWarning = true;
                 }
 
