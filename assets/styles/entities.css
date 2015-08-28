@@ -1150,6 +1150,7 @@
   .incluso-app .user-avatar figure {
     overflow: hidden;
     background-color: transparent;
+    text-align: center;
     /*border: 10px solid transparent; */
   }
   .incluso-app .user-avatar img {
@@ -1803,13 +1804,15 @@
     min-height: inherit;
   }
   .incluso-app .profile-dashboard .user-avatar figcaption {
-    width: 9vw;
+    display: inline-block;
+    width: auto;
     height: 9vw;
-    margin: -6vw auto 0;
+    margin: -5.8vw auto 0;
     border: 0.3em solid #bcd431;
     box-sizing: content-box;
     font-size: 5.1vw;
     line-height: 9vw;
+    padding: 0 3vw;
   }
   .incluso-app .profile-dashboard > .row {
     padding: 0 5%;
