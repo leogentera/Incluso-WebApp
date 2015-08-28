@@ -1,3 +1,4 @@
+//TODO Implement likes. Service failing at this moment
 angular
     .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants'])
     .controller('stageForumCommentsController', [
@@ -34,24 +35,15 @@ angular
             function getForumsProgress(){
                 //TODO make this function ablailable trough a service so it can be used by forum controller as well as forum comments controller
                 var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : new Array();
-                console.log(forumsProgress);
                 return forumsProgress;
 
             };
-            //var testDataObeject = [
-            //    {'discussion':12, 'commentsCount':2}, {'discussionId':13, 'commentsCount':2}
-            //];
-            //localStorage.setItem('currentForumsProgress', JSON.stringify(testDataObeject));
 
             function updateForumProgress(discussionId){
-                console.log('Discussion Id on forum update: '+ discussionId);
                 var forumsCommentsCountCollection = getForumsProgress();
-                console.log(forumsCommentsCountCollection);
                 var discussionId = discussionId;//$scope.discussion.posts[0].discussion;
                 var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussionId == discussionId; });
-                console.log(alreadyCommented);
                 alreadyCommented? alreadyCommented.commentsCount++ : forumsCommentsCountCollection.push({'discussionId':discussionId, 'commentsCount':1});
-                console.log(forumsCommentsCountCollection);
                 localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
                 console.log('Updated');
 
@@ -75,15 +67,18 @@ angular
                 var isActivityFinished = null;
 
                 for(var topicObjectIndex in forumsCommentsCountCollection){
-
                     var topicObject =forumsCommentsCountCollection[topicObjectIndex] ;
                     var isTopicFinished = topicObject.commentsCount >= 2;
-                    console.log('Topic Finished: ' + isTopicFinished);
+
                     if(isActivityFinished === null && typeof isActivityFinished === "object") isActivityFinished = isTopicFinished;
                     isActivityFinished = isActivityFinished && isTopicFinished;
-                    console.log('Activity Finished: ' + isActivityFinished);
                 };
-                if(isActivityFinished) endForumActivity();
+
+                //Check for activity status
+               var activityFromTree = getActivityByActivity_identifier('1003');
+
+                if(isActivityFinished && activityFromTree.status == 0) endForumActivity();
+                getDataAsync();
             };
             //TODO Remove this method call
             checkForumProgress();
@@ -116,18 +111,21 @@ angular
             $scope.replyText = null;
             $scope.replyToPost = function(that, parentId, topicId){
                 var dataObejct = createPostDataObject(parentId, that.replyText, 1);
+                $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){alert('Success!!');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
-                        getDataAsync();
+                        getTopicDataAsync();
                         //updateForumProgress(parentId);
                         updateForumProgress(topicId);
                         checkForumProgress();
+
                     },
                     function(){alert('Fail!!');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
+                        $scope.$emit('HidePreloader');
                     });
             };
 
@@ -212,10 +210,9 @@ angular
                 alert("Posting ATTACHMENT in the forum " + $scope.attachmentToPost);
             };
 
-
-
-            function getDataAsync() {
+            function getTopicDataAsync() {
                 moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback);
+                $scope.$emit('HidePreloader');
             }
 
             function getActivityInfoCallback() {
@@ -227,7 +224,7 @@ angular
                 $scope.$emit('HidePreloader'); //hide preloader
             }
 
-            getDataAsync();
+            getTopicDataAsync();
 
             var createModalReferences = function(element, index, array){
                 $scope.isCommentModalCollapsed[element.id] = true;
@@ -240,6 +237,26 @@ angular
             $scope.testClick = function(){
                 alert("Testing clicks");
             };
+
+            function getDataAsync() {
+                moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback);
+            }
+
+                //TODO cambiar esta lógica, demasiados requests
+            function getDataAsyncCallback(){
+                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
+
+                moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
+                    $scope.course = JSON.parse(localStorage.getItem("course"));
+                    $scope.currentStage = JSON.parse(localStorage.getItem('currentStage')); //getCurrentStage();
+                    localStorage.setItem("currentStage", $scope.currentStage);
+                }, errorCallback);
+            }
+
+            function errorCallback(data){
+                $scope.$emit('HidePreloader'); //hide preloader
+                $scope.$emit('scrollTop'); //- scroll
+            }
 
         }]);
 
