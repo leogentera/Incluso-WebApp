@@ -153,19 +153,7 @@
             templateUrl: 'Templates/Programa/foro.html',
             controller: 'programaForoController'
         });
-
-        //Zona de navegacion
-        $routeProvider.when('/ZonaDeNavegacion/DashboardZonaNavegacion/:stageId', {
-            templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
-            controller: 'programaEtapaController'
-        });
-
-        //Zona de aterrizaje
-        $routeProvider.when('/ZonaDeAterrizaje/DashboardZonaAterrizaje', {
-            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html',
-            controller: 'programaEtapaController'
-        });
-
+    
         $routeProvider.when('/', {
             templateUrl: 'Templates/Public/Login.html',
             controller: 'publicLoginController'
@@ -419,6 +407,18 @@
         $routeProvider.when('/ZonaDeVuelo/Cierre/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Cierre.html',
             controller: 'programaEndController'
+        });
+
+        //Zona de navegacion
+        $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
+            controller: 'stageDashboardController'
+        });
+
+        //Zona de aterrizaje
+        $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html',
+            controller: 'stageDashboardController'
         });
 
         $routeProvider.otherwise({
