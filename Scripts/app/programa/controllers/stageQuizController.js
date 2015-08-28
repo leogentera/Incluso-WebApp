@@ -268,6 +268,22 @@ angular
 
             function updateMisSueñosSelectedAnswers(question) {
                 var Carlos = "Update Code";
+                alert("Carlos");
+                alert(question.toString());
+
+                if (question.userAnswer != null) {
+                    var userAnswers = cleanText(question.userAnswer);
+                    var userAnswersList = userAnswers.split(";");
+                    for (var answerOptionsIndex = 0; answerOptionsIndex < question.answers.length; answerOptionsIndex++) {
+                        var answerOption = question.answers[answerOptionsIndex];
+                        for (var userAnswersListIndex = 0; userAnswersListIndex < userAnswersList.length; userAnswersListIndex++) {
+                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]);
+                            if (answerOption.answer == userAnswer) {
+                                $scope.misGustosAnswers[currentQuestionIndex][answerOptionsIndex] = true;
+                            }
+                        }
+                    }
+                }
             }
 
             function cleanText(userAnswer) {
@@ -322,6 +338,7 @@ angular
                     if (activityFinished) {
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
+
                     $scope.activity = activity;
                 }
             }
