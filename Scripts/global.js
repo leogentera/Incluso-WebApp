@@ -88,11 +88,12 @@ var _endActivityQuiz = function(activityModel){
       //_createNotification(activityModel.activity, activityModel.userId);
       
       moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,successCallback,errorCallback);      
-      
+ 
+      _isChallengeCompleted(activityModel);     
 }
 
 
-var _isChallengeCompleted = function(){
+var _isChallengeCompleted = function(activityModel){
   
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;    
