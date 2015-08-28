@@ -11,7 +11,7 @@
     <div class="txt-renglon centered txt-bigger"></div>
     <div class="subtitle">Foro Común</div>
 
-    <div class="txt-renglon txt-bigger" ng-bind-html="p.message | linky"></div>
+    <div class="txt-renglon txt-bigger">{{discussion.message}}</div>  
   </section>
 
   <section class="txt-renglon centered collapse-media">
@@ -27,7 +27,7 @@
       <div class="panel-body" collapse="isCollapsed">
         <div class="stage perform">
           <figure class="player">
-              <img src="{{ discussion.image[0].fileurl + '?token=' + userToken }}" alt="{{ discussion.image[0].filename }}">
+              <img src="{{ discussion.image[0].fileurl }}" alt="{{ discussion.image[0].filename }}">
           </figure>
         </div>
       </div>
@@ -75,7 +75,8 @@
 <div id="openModal4" class="modalDialog" collapse="forumModals['isAttachmentCollapsed']">
   <div>
     <a href="#close" title="Close" class="close"></a>
-<div class="add"><i class="icomoon icon-edit"></i><form><input type="file" placeholder="Atachea algo..." value="Buscar" ng-model="attachmentToPost"  base-sixty-four-input maxsize="2000000" accept="image/*"></form></div>
+<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Atachea algo..." value="" ng-model="attachmentToPost" /></div>
+
 <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postAttachmentToForum()" >Compartir</button>
   </div>
 </div>
@@ -94,16 +95,9 @@
           <div>{{p.created | date: "dd MMMM yyyy"}}</div>
           </div>
         </div>
-        <div class="block">
-
-            <span ng-switch="p.posttype">
-                <span ng-switch-default>{{ p.message }}</span>
-                <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>
-                <span ng-switch-when="3"><a ng-href="{{p.message}}"><img src="assets/images/img-video-placeholder.svg" /> </a></span>
-                <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.attachments[0].fileurl + '?token=' + userToken}}"  /> </a></span>
-            </span>
-
-
+        <div class="block">  
+            {{p.message }}
+            <!--ng-bind-html="p.message | parseLinks" -->
             <div ng-repeat="attachment in p.attachments">
                 <a href="{{ attachmentsfileurl }}"><i class="icomoon icon-required"></i> {{ attachment.filename }} </a>
             </div>
