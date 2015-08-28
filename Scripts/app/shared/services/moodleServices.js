@@ -82,8 +82,13 @@
             _putAsyncStars("profile", data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
-        var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
-            _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
+//         var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
+//             _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
+// 
+//         };
+        
+        var _putEndActivity = function(activityId, data, userCourseModel, token, successCallback,errorCallback){
+            _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
 
         };
         
@@ -192,17 +197,32 @@
             });
         };    
 
-        var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
+        // var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
+        //     _httpFactory({                
+        //        method: 'PUT',
+        //        url: url,        
+        //        data: data,       
+        //        headers: {'Content-Type': 'application/json', 'Authorization': token},
+        //        }).success(function(data, status, headers, config) {
+        //            localStorage.setItem(key, JSON.stringify(activityModel));
+        //            successCallback();
+        //        }).error(function(data, status, headers, config) {
+        //            localStorage.setItem(key, JSON.stringify(activityModel));
+        //            errorCallback();
+        //    });
+        // };
+        
+        var _endActivity = function(key, data, userCourseModel, url, token, successCallback, errorCallback){
             _httpFactory({                
                method: 'PUT',
                url: url,        
                data: data,       
                headers: {'Content-Type': 'application/json', 'Authorization': token},
                }).success(function(data, status, headers, config) {
-                   localStorage.setItem(key, JSON.stringify(activityModel));
+                   localStorage.setItem(key, JSON.stringify(userCourseModel));
                    successCallback();
                }).error(function(data, status, headers, config) {
-                   localStorage.setItem(key, JSON.stringify(activityModel));
+                   localStorage.setItem(key, JSON.stringify(userCourseModel));
                    errorCallback();
            });
         };
