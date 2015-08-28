@@ -23,13 +23,14 @@ angular
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
-            //$scope.activity = null;
+            
             $scope.like_status = 0;
 
 
             $scope.finishActivity = function () {
                 //Activity completed
-                $scope.activity.status = 1;
+                
+                $scope.activity.status = 1;                
 
                 //Call stars - progress
                 //Update Activity Stars - Progres Service
@@ -48,7 +49,6 @@ angular
                 $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
                 $scope.AnswersResult.like_status = $scope.like_status;
                 $scope.showWarning = false;
-                
                 switch ($scope.activityname) {
                     case "Mis cualidades":
                         $scope.AnswersResult = $scope.misCualidadesAnswers;
@@ -62,11 +62,14 @@ angular
                     default:
                         break;
                 }
+                
 
                 _endActivityQuiz({
                     "activity": $scope.activity,
                     "answersResult": $scope.AnswersResult,
-                    "userId": $scope.userprofile.id
+                    "userId": $scope.userprofile.id,
+                    "startingTime": $scope.startingTime,
+                    "endingTime": new Date()
                 });
                 $location.path('/ZonaDeVuelo/Dashboard');
             };
@@ -241,15 +244,15 @@ angular
                 , "like_status": 0
             };
 
-            $scope.misCualidadesAnswers = [null, null, null];
-            $scope.misGustosAnswers = [null, null, null];
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
 
             function errorCallback(data) {
                 // var algo = data;
             }
 
             function getDataAsync() {
-
+                
                 //test
                 
                 //activity_identifier - activityname
@@ -258,18 +261,20 @@ angular
                 //1007 - Sueña
                 //1006 - Mis cualidades
                 //1005 - Mis gustos
-                var testActivity_identifier = 1006; 
+                var testActivity_identifier = 1005;
+                $scope.startingTime = new Date();
+                //fin test
+                //var activity_identifier = $location.path().split("/")[3] == "zv_exploracionInicial" ? testActivity_identifier : $location.path().split("/")[3];
                 
-                //fin test     
-                
-                var activity_identifier = $location.path().split("/")[3] == "zv_exploracionInicial" ? testActivity_identifier : $location.path().split("/")[3];
+                var activity_identifier = testActivity_identifier;
 
-                var activities = getActivityByActivity_identifier(activity_identifier);
+                var activity = getActivityByActivity_identifier(activity_identifier);
 
-                if (activities != null) {
-                    $scope.coursemoduleid = activities.coursemoduleid;
-                    $scope.activityPoints = activities.points;
-                    $scope.activityname = activities.activityname;
+
+                if (activity != null) {
+                    $scope.coursemoduleid = activity.coursemoduleid;
+                    $scope.activityPoints = activity.points;
+                    $scope.activityname = activity.activityname;
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -277,8 +282,7 @@ angular
 
                     var activityFinished = false;
 
-
-                    if (activities.status != 0) {
+                    if (activity.status != 0) {
                         //if ($scope.activitieCache != null) {
                         activityFinished = true;
                         //}
@@ -317,9 +321,12 @@ angular
                     //     $scope.warningMessage = "El quiz no se puede acceder en este momento";
                     //     $scope.showWarning = true;
                     // }
+                    $scope.activity = activity;
                 }
+
             }
 
+            
             //             function successfullCallBack(activity) {
             //                 if (activity != null) {
             //                     $scope.activity = activity;
@@ -408,26 +415,54 @@ angular
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-                if ($scope.misCualidadesAnswers[0] != null) {
-                    if ($scope.misCualidadesAnswers[1] != null) {
-                        if ($scope.misCualidadesAnswers[2] != null) {
-                            $scope.navigateToPage(2);
-                        }
-                        else {
-                            showWarningAndGoToTop();
+                if ($scope.misCualidadesAnswers.length != 0) {
+                    var validatedAnswers = 0;
+                    for (var a = 0; a < $scope.misCualidadesAnswers.length; a++) {
+                        var cont = $scope.misCualidadesAnswers[a].length;
+
+                        for (var b = 0; b < cont; b++) {
+                            var checked = $scope.misCualidadesAnswers[a][b];
+                            if (checked) {
+                                validatedAnswers++;
+                                break;
+                            }
                         }
                     }
-                    else {
+                    if ($scope.misCualidadesAnswers.length == validatedAnswers) {
+                        $scope.showWarning = false;
+                        $scope.navigateToPage(2);
+                    } else {
                         showWarningAndGoToTop();
                     }
-                }
-                else {
+                } else {
                     showWarningAndGoToTop();
                 }
             }
 
             $scope.validateMisGustosAnsweredQuestions = function () {
-                var validation = "Ulises Validation";
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                if ($scope.misGustosAnswers.length != 0) {
+                    var validatedAnswers = 0;
+                    for (var a = 0; a < $scope.misGustosAnswers.length; a++) {
+                        var cont = $scope.misGustosAnswers[a].length;
+
+                        for (var b = 0; b < cont; b++) {
+                            var checked = $scope.misGustosAnswers[a][b];
+                            if (checked) {
+                                validatedAnswers++;
+                                break;
+                            }
+                        }
+                    }
+                    if ($scope.misGustosAnswers.length == validatedAnswers) {
+                        $scope.showWarning = false;
+                        $scope.navigateToPage(2);
+                    } else {
+                        showWarningAndGoToTop();
+                    }
+                } else {
+                    showWarningAndGoToTop();
+                }
             }
 
         }])
