@@ -43,7 +43,6 @@ angular
                 $scope.showWarning = false;
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
-                alert($scope.activityname);
                 switch ($scope.activityname) {
                     case "Mis cualidades":
                         $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
@@ -267,7 +266,19 @@ angular
             }
 
             function updateMisSueñosSelectedAnswers(question) {
-                var Carlos = "Update Code";
+
+                if (question.userAnswer != null) {
+                    var userAnswers = question.userAnswer.split(";");
+                    for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
+                        var userAnswer = userAnswers[indexUserAnswers].trim();
+                        for (var index = 0; index < question.answers.length; index++) {
+                            var questionOption = question.answers[index];
+                            if (questionOption.answer.trim() == userAnswer) {
+                                dreamsLists.answers.push(userAnswer);
+                            }
+                        }
+                    }
+                }
             }
 
             function cleanText(userAnswer) {
@@ -320,17 +331,19 @@ angular
                     if (activityFinished) {
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
+
                     $scope.activity = activity;
                 }
             }
 
             function successfullCallBack(activityAnswers) {
-                alert(activityAnswers.toString);
 
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
+
                         var question = activityAnswers.questions[index];
+
                         switch ($scope.activityname) {
                             case "Exploracion Inicial":
                                 updateSelectedAnswers(index, question);
@@ -347,12 +360,16 @@ angular
                             default:
                                 break;
                         }
+
                     }
                 }
                 else {
                     $scope.showWarning = true;
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
                 }
+            }
+
+            function errorCallback() {
             }
 
             $scope.openModal = function (size) {
@@ -386,13 +403,13 @@ angular
                     var lastQuestionValidation = true;
 
                     for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
-                        var cont = $scope.dreamsLists.answers[a].length; alert("Pregunta " + a);
+                        var cont = $scope.dreamsLists.answers[a].length;
 
                         for (var b = 0; b < cont; b++) {
                             var text = $scope.dreamsLists.answers[a][b];
 
                             if (text.trim() == '') {
-                                lastQuestionValidation = false;alert("Pregunta vacía!");
+                                lastQuestionValidation = false;
                                 break;
                             }
                         }
@@ -403,15 +420,15 @@ angular
 
                     }
 
-                    if (lastQuestionValidation) {alert("Todo bien!");
+                    if (lastQuestionValidation) {
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
-                    } else { alert("No todo bien...");
+                    } else {
                         showWarningAndGoToTop();
                     }
 
                 } else {
-                    showWarningAndGoToTop();alert("NADA");
+                    showWarningAndGoToTop();
                 }
 
             };
