@@ -318,7 +318,7 @@ angular
                         var question = activityAnswers.questions[index];
                         switch ($scope.activityname) {
                             case "Exploracion Inicial":
-                                updateSelectedAnswers(index, question)
+                                updateSelectedAnswers(index, question);
                                 break;
                             case "Mis cualidades":
                                 updateMisCualidadesSelectedAnswers(index, question);
