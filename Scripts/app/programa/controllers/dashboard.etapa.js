@@ -92,7 +92,7 @@ angular
             };
 
             $scope.startActivity = function (activity) {
-
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                 // Temporary
                 activity = {
                     groupid:"10_-1_ActivityManager",
@@ -113,7 +113,30 @@ angular
                     activities:[]
                 };
 
-                moodleFactory.Services.PutStartActivity()
+                var data = {
+                    userId: currentUser.userId,
+                    datestarted: "",
+                    moduleid: activity.coursemoduleid,
+                    updatetype: 1
+                };
+
+                moodleFactory.Services.PutStartActivity(data, activity, currentUser.token function () {
+                    setTimeout(function() { 
+                        var modalInstance = $modal.open({
+                            animation: $scope.animationsEnabled,
+                            templateUrl: 'cabinaSoporteMsj.html',
+                            controller: function ($scope, $modalInstance) {
+                                $scope.cancel = function () {
+                                    $modalInstance.dismiss('cancel');
+                                };
+                            },
+                            size: size,
+                            windowClass: 'user-help-modal'
+                        });
+
+                        console.log("modal open");
+                    }, 500);
+                });
             }
         
             function openStageModal(){

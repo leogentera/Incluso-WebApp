@@ -207,12 +207,12 @@
            });
         };
 
-        var _startActivity = function(coursemoduleid, data, activityModel, token, successCallback, errorCallback){
+        var _startActivity = function(data, activityModel, token, successCallback, errorCallback){
             var key = 'challengesCourseCache/' + activityModel.activity_identifier;
 
             _httpFactory({                
                method: 'PUT',
-               url: API_RESOURCE.format('{{path}}/' + coursemoduleid),        
+               url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),        
                data: data,       
                headers: {'Content-Type': 'application/json', 'Authorization': token},
                }).success(function(data, status, headers, config) {
@@ -221,7 +221,7 @@
                }).error(function(data, status, headers, config) {
                    localStorage.setItem(key, JSON.stringify(activityModel));
                    errorCallback();
-           });
+            });
         };
 
         var refreshProgress = function(usercourse, user)  {
