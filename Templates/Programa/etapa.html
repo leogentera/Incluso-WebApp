@@ -67,7 +67,7 @@
             <section class="parts">
                 <div id="owl-demo" class="owl-carousel">
                     <div ng-repeat="challenge in model.stages[idEtapa].challenges">
-                      
+                      <!--
                       <div class="part" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $parent.$index, $index)">
                           <i class="icomoon icon-checked-join" ng-show="activity.status == 1"></i>
                           <i class="icomoon icon-gauge" ng-show="activity.status == 0"></i>
@@ -77,7 +77,7 @@
                               <i class="icomoon icon-play fl-right"></i>
                           </span>
                       </div>
-                      <!--
+                      -->
                       <div class="part" ng-repeat="actividad in theActivities[$index]" ng-click="goToUrl2(actividad.link)">
                           <i class="icomoon icon-checked-join" ng-show="actividad.status == 1"></i>
                           <i class="icomoon icon-gauge" ng-show="actividad.status == 0"></i>
@@ -87,7 +87,7 @@
                           <i class="icomoon icon-play fl-right"></i>
                       </span>
                       </div>
-                      -->
+                      
                     </div>
                 </div>
                 <div>
