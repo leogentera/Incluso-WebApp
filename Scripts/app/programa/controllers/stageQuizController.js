@@ -305,14 +305,12 @@ angular
             }
 
             function getDataAsync() {
-                
-                debugger;
+                                
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
-                var activity = getActivityByActivity_identifier($scope.activity_identifier);
-
+                var activity = getActivityByActivity_identifier($scope.activity_identifier);                
                 if (activity != null) {
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
@@ -320,7 +318,7 @@ angular
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                    $scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/" + $scope.coursemoduleid));
+                    //$scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/" + $scope.coursemoduleid));
 
                     var activityFinished = false;
 
