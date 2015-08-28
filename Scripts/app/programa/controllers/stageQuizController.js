@@ -19,7 +19,7 @@ angular
             $rootScope.showFooterRocks = false;
             $scope.$emit('HidePreloader'); //hide preloader
             $scope.currentPage = 1;
-            $scope.setReadOnly = true;
+            $scope.setReadOnly = false;
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
@@ -262,14 +262,17 @@ angular
 
                     var activityFinished = false;
 
+                    /*
                     if (activities.status == 0) {
-                        if ($scope.activitieCache != null) {
+                        //if ($scope.activitieCache != null) {
                             activityFinished = true;
-                        }
+                        //}
                     }
-                    else {
-                        activityFinished = true;
-                    }
+                    // else {
+                    //     activityFinished = true;
+                    // }
+
+                    */
 
                     $scope.setReadOnly = activityFinished;
 
@@ -352,7 +355,36 @@ angular
             getDataAsync();
 
             $scope.validateMisSuenosAnsweredQuestions = function () {
-            }
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                if ($scope.dreamsLists.answers.length != 0) {
+                    var lastQuestionValidation = true;
+                    for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
+                        var cont = $scope.dreamsLists.answers[a].length;
+
+                        for (var b = 0; b < cont; b++) {
+                            var text = $scope.dreamsLists.answers[a][b];
+                            if (text.trim() == '') {
+                                lastQuestionValidation = false;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (lastQuestionValidation) {
+                        $scope.showWarning = false;
+                        $scope.navigateToPage(2);
+                    }
+
+                    else {
+                        $scope.showWarning = true;
+                    }
+                }
+
+                else {
+                    $scope.showWarning = true;
+                }
+
+            };
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
