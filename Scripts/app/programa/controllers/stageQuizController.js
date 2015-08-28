@@ -12,6 +12,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
+            _httpFactory = $http;
             $rootScope.pageName = "Estación: Conócete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
@@ -248,8 +249,20 @@ angular
             }
 
 
-            function updateMisGustosSelectedAnswers(question) {
-                var Ulises = "Update Code";
+            function updateMisGustosSelectedAnswers(currentQuestionIndex,question) {                
+                if (question.userAnswer != null) {
+                    var userAnswers = cleanText(question.userAnswer);
+                    var userAnswersList = userAnswers.split(";");
+                    for (var answerOptionsIndex = 0; answerOptionsIndex < question.answers.length; answerOptionsIndex++) {
+                        var answerOption = question.answers[answerOptionsIndex];
+                        for (var userAnswersListIndex = 0; userAnswersListIndex < userAnswersList.length; userAnswersListIndex++) {
+                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]);
+                            if (answerOption.answer == userAnswer) {
+                                $scope.misGustosAnswers[currentQuestionIndex][answerOptionsIndex] = true;
+                            }
+                        }
+                    }
+                }
             }
 
             function updateMisSueñosSelectedAnswers(question) {
@@ -280,7 +293,8 @@ angular
             }
 
             function getDataAsync() {
-
+                
+                debugger;
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
@@ -324,10 +338,10 @@ angular
                                 updateMisCualidadesSelectedAnswers(index, question);
                                 break;
                             case "Mis gustos":
-                                updateMisGustosSelectedAnswers(pregunta);
+                                updateMisGustosSelectedAnswers(index, question);
                                 break;
                             case "Sueña":
-                                updateMisSueñosSelectedAnswers(pregunta);
+                                updateMisSueñosSelectedAnswers(question);
                                 break;
                             default:
                                 break;
