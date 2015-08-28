@@ -9,7 +9,10 @@
                     <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
                         <h3>
                             <span class="icomoon icon-video-file"></span>
+                            <!--
                             <span ng-bind="nombreEtapaActual"></span>
+                            -->
+                            <span>Zona de Vuelo</span>
                             <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
                             <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
                         </h3>
@@ -68,6 +71,8 @@
             <section class="parts">
                 <div id="owl-demo" class="owl-carousel">
                     <div ng-repeat="challenge in model.stages[idEtapa].challenges">
+
+                        <!--
                         <div class="part" ng-repeat="activity in challenge.activities" ng-click="goToUrl($parent.$index, $index)">
                             <i class="icomoon icon-checked-join" ng-show="activity.status == 1"></i>
                             <i class="icomoon icon-gauge" ng-show="activity.status == 0"></i>
@@ -77,7 +82,32 @@
                                 <i class="icomoon icon-play fl-right"></i>
                             </span>
                         </div>
+
+                        -->
+
+
+
+                        <div class="part" ng-repeat="actividad in theActivities[$index]" ng-click="goToUrl2(actividad.link)">
+                            <i class="icomoon icon-checked-join" ng-show="actividad.status == 1"></i>
+                            <i class="icomoon icon-gauge" ng-show="actividad.status == 0"></i>
+
+                            <span ng-bind="actividad.name"></span>
+                        <span>
+                            <i class="icomoon icon-star fl-right"></i>
+                            <i class="icomoon icon-play fl-right"></i>
+                        </span>
+                        </div>
+
+
                     </div>
+
+
+
+
+
+
+
+
 
                 </div>
                 <div>
@@ -142,6 +172,45 @@
               </div>
             </script>
         </article>
+        <!-- initial message -->
+        <script type="text/ng-template" id="OpeningStageModal.html">
+            <div class="modal-robot robot-lg closing-stage-modal user-help">
+                <img src="assets/images/img-robot.png">
+
+                <div class="modal-header">
+                    <button class="icon icon-close" ng-click="cancel()">
+                        <span class="icomoon icon-cross"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="subtitle text-center">Introducción Zona de Vuelo</h3>
+
+                    <p class="txt-renglon centered">
+                        Hemos tenido una falla en el sistema y perdimos algunas piezas, la nave esta averiada.
+                        Haremos una parada en la zona de vuelo, recupera las piezas necesarias para echar a andar
+                        la nave y continuar el viaje. ¡Buena suerte!
+                    </p>
+
+                    <!-- <video controls poster="assets/images/ptr-video-0001.jpg" >
+                          <source src="http://techslides.com/demos/sample-videos/small.webm" type="video/webm" />
+                          <source src="http://techslides.com/demos/sample-videos/small.ogv" type="video/ogg" />
+                          <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4" />
+                          <source src="http://techslides.com/demos/sample-videos/small.3gp" type="video/3gp" />
+                          Ups! Parece que tu dispositivo no soporta video
+                        </video> -->
+                </div>
+                <!--<div class="modal-footer">
+                      <div class="row">
+                         <div class="col-xs-12">
+                           <button class="btn btn-primary btn-lg btn-cnt" type="button">Continuar</button>
+                           <img src="assets/images/img-lines-ftr.png" class="centered">
+                         </div>
+                       </div>
+                     </div> -->
+
+            </div>
+
+        </script>
     </div>
 </div>
 
