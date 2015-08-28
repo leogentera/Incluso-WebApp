@@ -28,8 +28,8 @@
                     <li><a ng-click="playVideo('assets/media', 'TutorialTest2.mp4')"><i class="icomoon icon-video-file"></i> Acerca de Incluso</a></li>
                     <li><a ng-click="playVideo('assets/media', 'TutorialTest2.mp4')"><i class="icomoon icon-video-file"></i> Guía de uso </a></li>
                     <li>
-                        <i class="icomoon icon-arrow fl-right white pointer" ></i>
-                        <a class="menu-blue accsub" data-id="0"> <!-- ng-click="navigateTo('ProgramaDashboardEtapa', 'Zona de vuelo', 'sideToggle', 'navbarblue')">-->
+                        <i class="icomoon icon-arrow fl-right white pointer accsub" data-id="0"></i>
+                        <a class="menu-blue" ng-click="navigateTo('/ZonaDeVuelo/Dashboard/1', 'Zona de vuelo', 'sideToggle', 'navbarblue')">
                           <i class="icomoon icon-spaceship">
                               <span class="path1"></span>
                               <span class="path2"></span>
@@ -75,8 +75,8 @@
                         </div>
                     </li>
                     <li>
-                        <i class="icomoon icon-arrow fl-right white pointer" ></i>
-                        <a class="menu-green accsub" data-id="1" ng-click="navigateTo('/ZonaDeNavegacion/DashboardZonaNavegacion/1', 'Zona de navegación', 'sideToggle', 'navbargreen')">
+                        <i class="icomoon icon-arrow fl-right white pointer accsub" data-id="1"></i>
+                        <a class="menu-green" ng-click="navigateTo('/ZonaDeNavegacion/Dashboard/1', 'Zona de navegación', 'sideToggle', 'navbargreen')">
                           <i class="icomoon icon-asterodis">
                               <span class="path1"></span>
                               <span class="path2"></span>
@@ -85,6 +85,53 @@
                           Zona de navegacion
                         </a>
                         <!--<div class="submenu" id="sub1">
+                            <ul>
+                                <li>Exploración inicial</li> 
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial','Exploración inicial', 'sideToggle', 'navbarorange')">Exploración inicial</a></li>
+                            </ul>
+                            <ul>
+                              <li>Cuarto de recursos</li>
+                              <li><a ng-click="navigateTo('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia','Zona de Vuelo', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
+                            </ul>
+                            <ul>
+                                <li>Conócete</li>
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia','Descubre más', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple','Reto múltiple', 'sideToggle', 'navbarorange')">Reto múltiple </a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64','Punto de encuentro', 'sideToggle', 'navbarorange')">Punto de encuentro </a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/ZonaDeContacto','Zona de contacto', 'sideToggle', 'navbarorange')">Zona de contacto</a></li>
+                            </ul>
+                            
+                            <ul>
+                                <li>Mis sueños </li>
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia','Descubre más', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos','Mis gustos', 'sideToggle', 'navbarorange')">Mis gustos</a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades','Mis cualidades', 'sideToggle', 'navbarorange')">Mis Cualidades</a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena','Sueña', 'sideToggle', 'navbarorange')">Sueña</a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro','Punto de encuentro', 'sideToggle', 'navbarorange')">Punto de encuentro </a></li>
+                            </ul>
+                            <ul>
+                                <li>Cabina de soporte</li>
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat','Reto múltiple', 'sideToggle', 'navbarorange')">Chat</a></li>
+                                
+                                <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>
+                            </ul>
+                            <ul>
+                                <li>Exploración final</li> 
+                                <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal','Exploración final', 'sideToggle', 'navbarorange')">Exploración final</a></li>
+                            </ul>
+                        </div>-->
+                    </li>
+                    <li>
+                        <i class="icomoon icon-arrow fl-right white pointer accsub" data-id="2"></i>
+                        <a class="menu-pink" ng-click="navigateTo('/ZonaDeAterrizaje/Dashboard/2', 'Zona de aterrizaje', 'sideToggle', 'navbarpink')">
+                          <i class="icomoon icon-planet">
+                              <span class="path1"></span>
+                              <span class="path2"></span>
+                              <span class="path3"></span>        
+                          </i>    
+                          Zona de aterrizaje
+                        </a>
+                        <!--<div class="submenu" id="sub2">
                             <ul>
                                 <li>Exploración inicial</li> 
                                 <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial','Exploración inicial', 'sideToggle', 'navbarorange')">Exploración inicial</a></li>

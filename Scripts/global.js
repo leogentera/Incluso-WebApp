@@ -87,7 +87,7 @@ var _endActivityQuiz = function(activityModel){
   
       //_createNotification(activityModel.activity, activityModel.userId);
       
-      moodleFactory.Services.PutEndActivity(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,successCallback,errorCallback);      
+      moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,successCallback,errorCallback);      
       
 }
 
@@ -217,6 +217,7 @@ function getActivityByActivity_identifier(activity_identifier) {
 }
 
  function updateActivityStatus(activity_identifier) {
+              debugger;
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
                 for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {

@@ -27,7 +27,6 @@
 
             $scope.navigateTo = function(url,name,sideToggle,navbarColor){
 
-                console.log(url);
                 $location.path(url);
                 if(navbarColor == 'navbarorange'){
                     $rootScope.navbarOrange = true;
