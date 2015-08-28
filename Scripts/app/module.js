@@ -7,6 +7,7 @@
         'ui.bootstrap.tpls',
         'inlcuso.shared.mainNavigation',
         'incluso.home',
+        'naif.base64',
         // One module per controller. If we wanted to use one module for several controllers we would need to load dependencies of
         // one controller for all controllers in the module, and we would also need a variable to keep track of the modules:
         // http://zinkpulse.com/organizing-modules-in-angularjs/ and http://cliffmeyers.com/blog/2013/4/21/code-organization-angularjs-javascript
@@ -67,6 +68,7 @@
         $http.get('Templates/Programa/ClosingStage.html', { cache: $templateCache });
         $http.get('Templates/Programa/evaluacion.html', { cache: $templateCache });
         $http.get('Templates/Programa/formulario.html', { cache: $templateCache });
+        $http.get('Templates/Programa/community.html', { cache: $templateCache });
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
@@ -228,6 +230,11 @@
         $routeProvider.when('/Juegos/Game', {
             templateUrl: 'Templates/Juegos/Game.html',
             controller: 'GameController'
+        });
+
+        $routeProvider.when('/Community', { 
+            templateUrl: 'Templates/Programa/community.html',
+            controller: 'programaComunidadController'
         });
        
         $routeProvider.when('/Alerts', { 
