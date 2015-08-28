@@ -14,7 +14,31 @@ angular
             _httpFactory = $http;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-            $rootScope.navbarBlue = true;
+            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+            
+            ///////harcoded/////
+            localStorage.setItem("currentStage","1"); 
+            ////////////////////
+            
+            var currentStage = JSON.parse(localStorage.getItem("currentStage"));
+            //console.log(currentStage);
+            $scope.idEtapa = currentStage;      //We are in Stage 1
+            $rootScope.pageName = $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
+            $rootScope.navbarOrange = false;
+            $rootScope.navbarBlue = false;
+            $rootScope.navbarPink = false;
+            $rootScope.navbarGreen = false;
+            console.log($scope.idEtapa);
+            if($scope.idEtapa == 0)               //Zona de vuelo
+                $rootScope.navbarBlue = true;
+            if($scope.idEtapa == 1)               //Zona de navegacion
+                $rootScope.navbarGreen = true;
+            if($scope.idEtapa == 2)               //Zona de aterrizaje
+                $rootScope.navbarPink = true;
+                                                
+
+            //$rootScope.pageName = "EstaciÃ³n: ConÃ³cete";
+            
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
@@ -68,8 +92,6 @@ angular
             };
 
             //stageId = 1
-
-
 
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
@@ -167,7 +189,7 @@ angular
                         console.log("modal open");
                     }, 500);
                 });
-            }
+            };
         
             function openStageModal(){
                     console.log("opening");
@@ -181,7 +203,7 @@ angular
                     });
                     console.log("modal open closing");
                     //}, 1000);
-                }
+                };
         }])
         .controller('closingStageController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
