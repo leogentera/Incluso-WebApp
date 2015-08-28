@@ -82,12 +82,12 @@ var _endActivity = function(activityModel){
 
 var _endActivityQuiz = function(activityModel){
                     
-      var currentUserId = localStorage.getItem("userId");
+      //var currentUserId = localStorage.getItem("userId");
       var serviceParameters =  activityModel.answersResult;
   
       //_createNotification(activityModel.activity, activityModel.userId);
       
-      moodleFactory.Services.PutEndActivity(activityModel.activity.coursemoduleid, serviceParameters, activityModel.activity,successCallback,errorCallback);      
+      moodleFactory.Services.PutEndActivity(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,successCallback,errorCallback);      
       
 }
 
@@ -215,6 +215,58 @@ function getActivityByActivity_identifier(activity_identifier) {
             }
             return matchingActivity;
 }
+
+ function updateActivityStatus(activity_identifier) {
+                var breakAll = false;
+                var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
+                for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
+                    var stage = theUserCouerse.stages[stageIndex];
+                    for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+                        var challenge = stage.challenges[challengeIndex];
+                        for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                            var activity = challenge.activities[activityIndex];
+                            if (activity.activity_identifier == activity_identifier) {
+                                activity.status = 1;
+                                breakAll = true;
+                                break;
+                            }
+                        }
+                        if (breakAll)
+                            break;
+                    }
+                    if (breakAll)
+                        break;
+                }
+                var theUserCouerseUpdated = theUserCouerse;
+                return theUserCouerseUpdated;
+            }           
+            
+             
+ function updateUserStars (activity_identifier){
+   var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
+   var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+   var activity = getActivityByActivity_identifier(activity_identifier);
+   profile.stars = profile.stars+activity.points;   
+    var data={
+      userId: profile.id,
+      stars: activity.points,
+      instance: activity.coursemoduleid,
+      instanceType: 0,
+      date: getdate()
+   };
+   moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
+}
+
+function getdate(){
+              var currentdate = new Date(); 
+              var datetime = currentdate.getFullYear() + ":"
+                + (currentdate.getMonth()+1)  + ":" 
+                + currentdate.getDate() + " "  
+                + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds();
+                return datetime;
+            }
 
 
 syncCacheData();
