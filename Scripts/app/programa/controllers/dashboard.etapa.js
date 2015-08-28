@@ -67,31 +67,24 @@ angular
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
 
-            $scope.theActivities = [    [{"name" : "Exploracion Inicial", "status" : 0, "link" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"}],
+            /*$scope.theActivities = [    [{"name" : "Exploracion Inicial", "status" : 0, "link" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"}],
                 [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"}],
                 [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia"}, {"name" : "Reto múltiple", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple"}, {"name" : "Punto de encuentro", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64"}, {"name" : "Zona de contacto", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/ZonaDeContacto"}],
                 [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia"}, {"name" : "Mis cualidades", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades"}, {"name" : "Mis gustos", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos"}, {"name" : "Sueña", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena"}, {"name" : "Punto de encuentro", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"}],
                 [{"name" : "Cabina de soporte", "status" : 0, "link":"/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat"}],
-                [{"name" : "Exploración final", "status" : 0, "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"}]  ];
-
+                [{"name" : "Exploración final", "status" : 0, "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"}]  ];*/
 
             var activitiesURLs = [
                 ["/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"],
                 ["/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"],
                 ["/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia", "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple", "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64", "/ZonaDeVuelo/Conocete/ZonaDeContacto"],
                 ["/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia", "/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos", "/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades", "/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena", "/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"],
-                ["/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat"],
+                ["url_cabinadesoporte"],
                 ["/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"]];
 
-            $scope.goToUrl = function (challenge, activity) {
-                $location.path(activitiesURLs[challenge][activity]);
-            };
-
-            $scope.goToUrl2 = function (url) {
+            /*$scope.goToUrl2 = function (url) {
                 $location.path(url);
-            };
-
-            //stageId = 1
+            };*/
 
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
@@ -143,40 +136,24 @@ angular
                 playVideo(videoAddress, videoName);
             };
 
-            $scope.startActivity = function (activity) {
+            $scope.startActivity = function (activity, challenge, index) {
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                // Temporary
-                activity = {
-                    groupid:"10_-1_ActivityManager",
-                    parentsection:1,
-                    section:10,
-                    sectionname:"Cabina de soporte",
-                    activityname:"Cabina de soporte",
-                    activity_type:"ActivityManager",
-                    activityintro:"",
-                    coursemoduleid:68,
-                    points:400,
-                    activity_identifier:"1002",
-                    courseid:4,
-                    status:0,
-                    firsttime:0,
-                    last_status_update:null,
-                    optional:0,
-                    activities:[]
-                };
-
                 var data = {
-                    userId: currentUser.userId,
-                    datestarted: "",
+                    userid: currentUser.userId,
+                    datestarted: getFormattedDate(),
                     moduleid: activity.coursemoduleid,
                     updatetype: 1
                 };
 
-                moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function () {
-                    setTimeout(function() { 
+                moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function (size) {
+                    var url = activitiesURLs[challenge][index];
+
+                    if(url != 'url_cabinadesoporte') {
+                        $location.path(url);
+                    } else {
                         var modalInstance = $modal.open({
                             animation: $scope.animationsEnabled,
-                            templateUrl: 'cabinaSoporteMsj.html',
+                            templateUrl: 'CabinaSoporteMsj.html',
                             controller: function ($scope, $modalInstance) {
                                 $scope.cancel = function () {
                                     $modalInstance.dismiss('cancel');
@@ -185,25 +162,40 @@ angular
                             size: size,
                             windowClass: 'user-help-modal'
                         });
-
                         console.log("modal open");
-                    }, 500);
+                    }
                 });
+
+                function getFormattedDate() {
+                    var date = new Date(),
+                        year = date.getFullYear(),
+                        month = formatValue(date.getMonth() + 1), // months are zero indexed
+                        day = formatValue(date.getDate()),
+                        hour = formatValue(date.getHours()),
+                        minute = formatValue(date.getMinutes()),
+                        second = formatValue(date.getSeconds());
+
+                    function formatValue(value) {
+                        return value >= 10 ? value : '0' + value;
+                    }
+
+                    return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
+                }
             };
         
             function openStageModal(){
-                    console.log("opening");
-                    //setTimeout(function(){ 
-                    var modalInstance = $modal.open({
-                        animation: $scope.animationsEnabled,
-                        templateUrl: 'ClosingStage.html',
-                        controller: 'closingStageController',
-                        //size: size,
-                        windowClass: 'closing-stage-modal user-help-modal'
-                    });
-                    console.log("modal open closing");
-                    //}, 1000);
-                };
+                console.log("opening");
+                //setTimeout(function(){ 
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'ClosingStage.html',
+                    controller: 'closingStageController',
+                    //size: size,
+                    windowClass: 'closing-stage-modal user-help-modal'
+                });
+                console.log("modal open closing");
+                //}, 1000);
+            };
         }])
         .controller('closingStageController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
