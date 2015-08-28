@@ -12,6 +12,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
+            _httpFactory = $http;
             $rootScope.pageName = "Estación: Conócete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
@@ -42,7 +43,7 @@ angular
                 $scope.showWarning = false;
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
-
+                alert($scope.activityname);
                 switch ($scope.activityname) {
                     case "Mis cualidades":
                         $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
@@ -65,6 +66,7 @@ angular
                     "startingTime": $scope.startingTime,
                     "endingTime": new Date()
                 });
+
                 $location.path('/ZonaDeVuelo/Dashboard');
             };
 
@@ -248,8 +250,20 @@ angular
             }
 
 
-            function updateMisGustosSelectedAnswers(question) {
-                var Ulises = "Update Code";
+            function updateMisGustosSelectedAnswers(currentQuestionIndex,question) {                
+                if (question.userAnswer != null) {
+                    var userAnswers = cleanText(question.userAnswer);
+                    var userAnswersList = userAnswers.split(";");
+                    for (var answerOptionsIndex = 0; answerOptionsIndex < question.answers.length; answerOptionsIndex++) {
+                        var answerOption = question.answers[answerOptionsIndex];
+                        for (var userAnswersListIndex = 0; userAnswersListIndex < userAnswersList.length; userAnswersListIndex++) {
+                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]);
+                            if (answerOption.answer == userAnswer) {
+                                $scope.misGustosAnswers[currentQuestionIndex][answerOptionsIndex] = true;
+                            }
+                        }
+                    }
+                }
             }
 
             function updateMisSueñosSelectedAnswers(question) {
@@ -280,7 +294,8 @@ angular
             }
 
             function getDataAsync() {
-
+                
+                debugger;
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
@@ -312,22 +327,24 @@ angular
             }
 
             function successfullCallBack(activityAnswers) {
+                alert(activityAnswers.toString);
+
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
                         var question = activityAnswers.questions[index];
                         switch ($scope.activityname) {
                             case "Exploracion Inicial":
-                                updateSelectedAnswers(index, question)
+                                updateSelectedAnswers(index, question);
                                 break;
                             case "Mis cualidades":
                                 updateMisCualidadesSelectedAnswers(index, question);
                                 break;
                             case "Mis gustos":
-                                updateMisGustosSelectedAnswers(pregunta);
+                                updateMisGustosSelectedAnswers(index, question);
                                 break;
                             case "Sueña":
-                                updateMisSueñosSelectedAnswers(pregunta);
+                                updateMisSueñosSelectedAnswers(question);
                                 break;
                             default:
                                 break;
@@ -367,31 +384,36 @@ angular
             $scope.validateMisSuenosAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                 if ($scope.dreamsLists.answers.length != 0) {
+
                     var lastQuestionValidation = true;
+
                     for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
-                        var cont = $scope.dreamsLists.answers[a].length;
+                        var cont = $scope.dreamsLists.answers[a].length; alert("Pregunta " + a);
 
                         for (var b = 0; b < cont; b++) {
                             var text = $scope.dreamsLists.answers[a][b];
+
                             if (text.trim() == '') {
-                                lastQuestionValidation = false;
+                                lastQuestionValidation = false;alert("Pregunta vacía!");
                                 break;
                             }
                         }
+
+                        if (!lastQuestionValidation) {
+                            break;
+                        }
+
                     }
 
-                    if (lastQuestionValidation) {
+                    if (lastQuestionValidation) {alert("Todo bien!");
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
-                    }
-
-                    else {
+                    } else { alert("No todo bien...");
                         showWarningAndGoToTop();
                     }
-                }
 
-                else {
-                    showWarningAndGoToTop();
+                } else {
+                    showWarningAndGoToTop();alert("NADA");
                 }
 
             };
@@ -416,6 +438,7 @@ angular
                             }
                         }
                     }
+
                     if ($scope.misCualidadesAnswers.length == validatedAnswers) {
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
@@ -425,7 +448,7 @@ angular
                 } else {
                     showWarningAndGoToTop();
                 }
-            }
+            };
 
             $scope.validateMisGustosAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
@@ -442,12 +465,14 @@ angular
                             }
                         }
                     }
+
                     if ($scope.misGustosAnswers.length == validatedAnswers) {
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
                     } else {
                         showWarningAndGoToTop();
                     }
+
                 } else {
                     showWarningAndGoToTop();
                 }

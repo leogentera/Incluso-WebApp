@@ -374,7 +374,7 @@
                         });
 
                         var childrenActivities =  _.filter(activities,function(a) { 
-                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' ||  a.activityname != 'Chat')
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
                         });
 
                         for(k = 0; k < childrenActivities.length; k++) {
@@ -407,7 +407,7 @@
                                 });
 
                                 childrenActivities =  _.filter(activities,function(a) { 
-                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || a.activityname != 'Chat')
+                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
                                 });
 
                                 if (course.stages[i].challenges[j].activities[k]["activities"]) {

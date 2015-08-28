@@ -11,7 +11,6 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-
             _httpFactory = $http;
             var moduleid;
             var pagename;                    
