@@ -105,8 +105,7 @@ angular
               }
             }
 
-            $scope.updateStatus = function(contentId){   
-            debugger;                           
+            $scope.updateStatus = function(contentId){               
               for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {
               if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                 if(!$scope.fuenteDeEnergia.activities[i].status){
