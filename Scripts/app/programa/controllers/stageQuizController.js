@@ -324,8 +324,7 @@ angular
                 }
             }
 
-            function successfullCallBack(activityAnswers) {
-                alert(activityAnswers.toString);
+            function successfullCallBack(activityAnswers) {                
 
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
@@ -386,13 +385,13 @@ angular
                     var lastQuestionValidation = true;
 
                     for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
-                        var cont = $scope.dreamsLists.answers[a].length; alert("Pregunta " + a);
+                        var cont = $scope.dreamsLists.answers[a].length;
 
                         for (var b = 0; b < cont; b++) {
                             var text = $scope.dreamsLists.answers[a][b];
 
                             if (text.trim() == '') {
-                                lastQuestionValidation = false;alert("Pregunta vacía!");
+                                lastQuestionValidation = false;
                                 break;
                             }
                         }
@@ -403,15 +402,15 @@ angular
 
                     }
 
-                    if (lastQuestionValidation) {alert("Todo bien!");
+                    if (lastQuestionValidation) 
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
-                    } else { alert("No todo bien...");
+                    } else { 
                         showWarningAndGoToTop();
                     }
 
                 } else {
-                    showWarningAndGoToTop();alert("NADA");
+                    showWarningAndGoToTop();
                 }
 
             };
