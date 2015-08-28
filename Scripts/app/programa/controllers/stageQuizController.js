@@ -388,9 +388,9 @@ angular
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-                if (misCualidadesAnswers[0] != null) {
-                    if (misCualidadesAnswers[1] != null) {
-                        if (misCualidadesAnswers[2] != null) {
+                if ($scope.misCualidadesAnswers[0] != null) {
+                    if ($scope.misCualidadesAnswers[1] != null) {
+                        if ($scope.misCualidadesAnswers[2] != null) {
                             $scope.navigateToPage(2);
                         }
                         else {
@@ -404,6 +404,10 @@ angular
                 else {
                     $scope.showWarning = true;
                 }
+            }
+            
+            $scope.validateMisGustosAnsweredQuestions = function () {
+                var validation = "Ulises Validation";
             }
 
         }])
