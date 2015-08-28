@@ -7,6 +7,7 @@
         'ui.bootstrap.tpls',
         'inlcuso.shared.mainNavigation',
         'incluso.home',
+        'naif.base64',
         // One module per controller. If we wanted to use one module for several controllers we would need to load dependencies of
         // one controller for all controllers in the module, and we would also need a variable to keep track of the modules:
         // http://zinkpulse.com/organizing-modules-in-angularjs/ and http://cliffmeyers.com/blog/2013/4/21/code-organization-angularjs-javascript
@@ -18,7 +19,7 @@
         'incluso.programa.acercaPrograma',
         'incluso.juegos.avatar',
         'incluso.programa.dashboard',
-        'incluso.programa.dashboard.etapa',
+        //'incluso.programa.dashboard.etapa',
         'incluso.programa.profile',
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
@@ -52,7 +53,7 @@
         /*$http.get('Templates/Programa/Step.html', { cache: $templateCache });*/
         $http.get('Templates/Programa/profile.html', { cache: $templateCache });
         $http.get('Templates/Programa/editProfile.html', { cache: $templateCache });
-        $http.get('Templates/Programa/etapa.html', { cache: $templateCache });
+        //$http.get('Templates/Programa/etapa.html', { cache: $templateCache });
         $http.get('Templates/Programa/Tutorial.html', { cache: $templateCache });
         $http.get('Templates/Programa/acercaPrograma.html', { cache: $templateCache });  
         $http.get('Templates/Juegos/Avatar.html', { cache: $templateCache });
@@ -67,6 +68,7 @@
         $http.get('Templates/Programa/ClosingStage.html', { cache: $templateCache });
         $http.get('Templates/Programa/evaluacion.html', { cache: $templateCache });
         $http.get('Templates/Programa/formulario.html', { cache: $templateCache });
+        $http.get('Templates/Programa/community.html', { cache: $templateCache });
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
@@ -138,34 +140,23 @@
             templateUrl: 'Templates/Programa/formulario.html',
             controller: 'evaluacionFormulario'
         });
-
+        
         $routeProvider.when('/ProgramaDashboard', {
         	templateUrl: 'Templates/Programa/Dashboard.html',
         	controller: 'programaDashboardController'
         });
-
+        
+/*//////// old dashboard "etapa"///////////
         $routeProvider.when('/ProgramaDashboardEtapa/:stageId', {
             templateUrl: 'Templates/Programa/etapa.html',
             controller: 'programaEtapaController'
         });
-
+/////////////////////////////////////////*/
         $routeProvider.when('/Foro', {
             templateUrl: 'Templates/Programa/foro.html',
             controller: 'programaForoController'
         });
-
-        //Zona de navegacion
-        $routeProvider.when('/ZonaDeNavegacion/DashboardZonaNavegacion/:stageId', {
-            templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
-            controller: 'programaEtapaController'
-        });
-
-        //Zona de aterrizaje
-        $routeProvider.when('/ZonaDeAterrizaje/DashboardZonaAterrizaje', {
-            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html',
-            controller: 'programaEtapaController'
-        });
-
+    
         $routeProvider.when('/', {
             templateUrl: 'Templates/Public/Login.html',
             controller: 'publicLoginController'
@@ -240,6 +231,11 @@
             templateUrl: 'Templates/Juegos/Game.html',
             controller: 'GameController'
         });
+
+        $routeProvider.when('/Community', { 
+            templateUrl: 'Templates/Programa/community.html',
+            controller: 'programaComunidadController'
+        });
        
         $routeProvider.when('/Alerts', { 
             templateUrl: 'Templates/Programa/Alerts.html',
@@ -261,7 +257,7 @@
             controller: 'programaLeaderBoard'
         });        
 
-        $routeProvider.when('/ZonaDeVuelo/Dashboard', {
+        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId', {
             templateUrl: 'Templates/ZonaDeVuelo/dashboard.html',
             controller: 'stageDashboardController'
         });
@@ -419,6 +415,18 @@
         $routeProvider.when('/ZonaDeVuelo/Cierre/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Cierre.html',
             controller: 'programaEndController'
+        });
+
+        //Zona de navegacion
+        $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
+            controller: 'stageDashboardController'
+        });
+
+        //Zona de aterrizaje
+        $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html',
+            controller: 'stageDashboardController'
         });
 
         $routeProvider.otherwise({

@@ -82,22 +82,16 @@
             _putAsyncStars("profile", data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
-//         var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
-//             _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
-// 
-//         };
+         var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
+             _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
+ 
+         };
         
-        var _putEndActivity = function(activityId, data, userCourseModel, token, successCallback,errorCallback){
+        var _putEndActivityQuizes = function(activityId, data, userCourseModel, token, successCallback,errorCallback){
             _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
 
         };
-        
-        var _putEndChallenges = function(activityId, data, activityModel, token, successCallback, errorCallback){
-            _endActivity("challengesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
-        };
-        
-        //activityId,data, activityModel, currentUser.token, successCallback, errorCallback);
-        
+                                    
         var _getCacheObject = function(key){
             return localStorage.getItem(key);
         };
@@ -380,7 +374,7 @@
                         });
 
                         var childrenActivities =  _.filter(activities,function(a) { 
-                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' ||  a.activityname != 'Chat')
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
                         });
 
                         for(k = 0; k < childrenActivities.length; k++) {
@@ -413,7 +407,7 @@
                                 });
 
                                 childrenActivities =  _.filter(activities,function(a) { 
-                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || a.activityname != 'Chat')
+                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
                                 });
 
                                 if (course.stages[i].challenges[j].activities[k]["activities"]) {
@@ -465,7 +459,7 @@
             PutStars: _assignStars,
             PutStartActivity: _startActivity,
             PutEndActivity: _putEndActivity,
-            PutEndChallenges : _putEndChallenges
+            PutEndActivityQuizes: _putEndActivityQuizes            
 
         };
     })();

@@ -409,6 +409,7 @@ body.modal-open {
 }
 .incluso-app #site-menu .nav > li > i {
   padding: 3vw 1vw;
+  z-index: 10;
 }
 .incluso-app #site-menu .nav > li > a {
   color: white;
@@ -442,6 +443,9 @@ body.modal-open {
 }
 .incluso-app #site-menu .nav > li a.menu-pink {
   color: #e70e80;
+}
+.incluso-app #site-menu .nav > li a.menu-pink i span.path3 {
+  margin-left: -1vw;
 }
 .incluso-app #site-menu .nav > li .submenu {
   border-top: 2px solid rgba(255, 255, 255, 0.28);

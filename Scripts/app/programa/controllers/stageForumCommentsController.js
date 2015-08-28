@@ -1,6 +1,6 @@
 //TODO Implement likes. Service failing at this moment
 angular
-    .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants'])
+    .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants', 'naif.base64'])
     .controller('stageForumCommentsController', [
         '$q',
         '$scope',
@@ -20,6 +20,8 @@ angular
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+
+            $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
 
             $scope.scrollToTop();
             $scope.$emit('ShowPreloader'); //hide preloader
@@ -81,7 +83,7 @@ angular
                 getDataAsync();
             };
             //TODO Remove this method call
-            checkForumProgress();
+            //checkForumProgress();
 
 
             var _uncollapse = function(element, elementsArray){
@@ -146,17 +148,18 @@ angular
                     "posttype": 1,
                     "fileToUpload":""
                 };
-
+                $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
                         alert('Success!!');$scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
-                        getDataAsync();
+                        getTopicDataAsync();
                     },
                     function(){alert('Fail!!');
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
+                        $scope.$emit('HidePreloader');
                     });
 
             };
@@ -176,6 +179,7 @@ angular
                         alert('Success!!');
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
+                        getTopicDataAsync();
                     },
                     function(){
                         alert('Fail!!');
@@ -199,6 +203,7 @@ angular
                         alert('Success!!');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
+                        getTopicDataAsync();
                     },
                     function(){
                         alert('Fail!!');
@@ -207,7 +212,30 @@ angular
                     });
             };
             $scope.postAttachmentToForum = function(){
-                alert("Posting ATTACHMENT in the forum " + $scope.attachmentToPost);
+                console.log($scope.attachmentToPost);
+                var dataObject = {
+                    "userid":userId,
+                    "discussionid": $scope.discussion.posts[0].discussion,
+                    "parentid": $scope.discussion.posts[0].id,
+                    "message": '',
+                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "posttype": 4,
+                    "filecontent":$scope.attachmentToPost.base64,
+                    "filename": userId + $scope.attachmentToPost.filename
+                };
+                moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
+                    function(){
+                        alert('Success!!');
+                        $scope.videoToPost = null;
+                        $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
+                        getTopicDataAsync();
+                    },
+                    function(){
+                        alert('Fail!!');
+                        $scope.videoToPost = null;
+                        $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
+                    });
             };
 
             function getTopicDataAsync() {
