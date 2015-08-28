@@ -262,7 +262,7 @@ angular
 
                     var activityFinished = false;
 
-                    /*
+                    
                     if (activities.status == 0) {
                         //if ($scope.activitieCache != null) {
                             activityFinished = true;
@@ -272,7 +272,7 @@ angular
                     //     activityFinished = true;
                     // }
 
-                    */
+                   
 
                     $scope.setReadOnly = activityFinished;
 
