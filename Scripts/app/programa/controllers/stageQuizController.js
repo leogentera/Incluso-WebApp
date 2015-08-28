@@ -242,7 +242,7 @@ angular
             };
 
             $scope.misCualidadesAnswers = [null, null, null];
-            $scope.misGustosAnswers = [null, null, null];
+            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],[0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
 
             function errorCallback(data) {
                 // var algo = data;
@@ -426,8 +426,30 @@ angular
                 }
             }
 
-            $scope.validateMisGustosAnsweredQuestions = function () {
-                var validation = "Ulises Validation";
+            $scope.validateMisGustosAnsweredQuestions = function () {                
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                if ($scope.misGustosAnswers.length != 0) {                    
+                    var validatedAnswers = 0;
+                    for (var a = 0; a < $scope.misGustosAnswers.length; a++) {
+                        var cont = $scope.misGustosAnswers[a].length;
+                        
+                        for (var b = 0; b < cont; b++) {
+                            var checked = $scope.misGustosAnswers[a][b];
+                            if (checked) {
+                                validatedAnswers++;
+                                break;
+                            }
+                        }
+                    }
+                     if ($scope.misGustosAnswers.length == validatedAnswers) {
+                        $scope.showWarning = false;
+                        $scope.navigateToPage(2);
+                    }else {
+                        showWarningAndGoToTop();
+                    }
+                }else {
+                    showWarningAndGoToTop();
+                }
             }
 
         }])
