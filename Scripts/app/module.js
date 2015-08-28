@@ -18,7 +18,7 @@
         'incluso.programa.acercaPrograma',
         'incluso.juegos.avatar',
         'incluso.programa.dashboard',
-        'incluso.programa.dashboard.etapa',
+        //'incluso.programa.dashboard.etapa',
         'incluso.programa.profile',
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
@@ -52,7 +52,7 @@
         /*$http.get('Templates/Programa/Step.html', { cache: $templateCache });*/
         $http.get('Templates/Programa/profile.html', { cache: $templateCache });
         $http.get('Templates/Programa/editProfile.html', { cache: $templateCache });
-        $http.get('Templates/Programa/etapa.html', { cache: $templateCache });
+        //$http.get('Templates/Programa/etapa.html', { cache: $templateCache });
         $http.get('Templates/Programa/Tutorial.html', { cache: $templateCache });
         $http.get('Templates/Programa/acercaPrograma.html', { cache: $templateCache });  
         $http.get('Templates/Juegos/Avatar.html', { cache: $templateCache });
@@ -138,17 +138,18 @@
             templateUrl: 'Templates/Programa/formulario.html',
             controller: 'evaluacionFormulario'
         });
-
+        
         $routeProvider.when('/ProgramaDashboard', {
         	templateUrl: 'Templates/Programa/Dashboard.html',
         	controller: 'programaDashboardController'
         });
-
+        
+/*//////// old dashboard "etapa"///////////
         $routeProvider.when('/ProgramaDashboardEtapa/:stageId', {
             templateUrl: 'Templates/Programa/etapa.html',
             controller: 'programaEtapaController'
         });
-
+/////////////////////////////////////////*/
         $routeProvider.when('/Foro', {
             templateUrl: 'Templates/Programa/foro.html',
             controller: 'programaForoController'
@@ -249,7 +250,7 @@
             controller: 'programaLeaderBoard'
         });        
 
-        $routeProvider.when('/ZonaDeVuelo/Dashboard', {
+        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId', {
             templateUrl: 'Templates/ZonaDeVuelo/dashboard.html',
             controller: 'stageDashboardController'
         });
