@@ -15,11 +15,11 @@ angular
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-            
+
             ///////harcoded/////
-            localStorage.setItem("currentStage","1"); 
+            localStorage.setItem("currentStage", "1");
             ////////////////////
-            
+
             var currentStage = JSON.parse(localStorage.getItem("currentStage"));
             //console.log(currentStage);
             $scope.idEtapa = currentStage;      //We are in Stage 1
@@ -29,16 +29,16 @@ angular
             $rootScope.navbarPink = false;
             $rootScope.navbarGreen = false;
             console.log($scope.idEtapa);
-            if($scope.idEtapa == 0)               //Zona de vuelo
+            if ($scope.idEtapa == 0)               //Zona de vuelo
                 $rootScope.navbarBlue = true;
-            if($scope.idEtapa == 1)               //Zona de navegacion
+            if ($scope.idEtapa == 1)               //Zona de navegacion
                 $rootScope.navbarGreen = true;
-            if($scope.idEtapa == 2)               //Zona de aterrizaje
+            if ($scope.idEtapa == 2)               //Zona de aterrizaje
                 $rootScope.navbarPink = true;
-                                                
+
 
             //$rootScope.pageName = "EstaciÃ³n: ConÃ³cete";
-            
+
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
@@ -62,17 +62,17 @@ angular
             if (closingStageModal == 'true') {
                 openStageModal();
                 localStorage.setItem('closeStageModal', 'false');
-            }        
-            
+            }
+
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
 
-            /*$scope.theActivities = [    [{"name" : "Exploracion Inicial", "status" : 0, "link" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"}],
-                [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"}],
-                [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia"}, {"name" : "Reto múltiple", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple"}, {"name" : "Punto de encuentro", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64"}, {"name" : "Zona de contacto", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/ZonaDeContacto"}],
-                [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia"}, {"name" : "Mis cualidades", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades"}, {"name" : "Mis gustos", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos"}, {"name" : "Sueña", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena"}, {"name" : "Punto de encuentro", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"}],
-                [{"name" : "Cabina de soporte", "status" : 0, "link":"/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat"}],
-                [{"name" : "Exploración final", "status" : 0, "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"}]  ];*/
+            $scope.theActivities = [    [{"name" : "Exploracion Inicial", "status" : 0, "link" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"}],
+             [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"}],
+             [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia"}, {"name" : "Reto múltiple", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple"}, {"name" : "Punto de encuentro", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64"}, {"name" : "Zona de contacto", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/ZonaDeContacto"}],
+             [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia"}, {"name" : "Mis cualidades", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades"}, {"name" : "Mis gustos", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos"}, {"name" : "Sueña", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena"}, {"name" : "Punto de encuentro", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"}],
+             [{"name" : "Cabina de soporte", "status" : 0, "link":"/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat"}],
+             [{"name" : "Exploración final", "status" : 0, "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"}]  ];
 
             var activitiesURLs = [
                 ["/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"],
@@ -82,9 +82,9 @@ angular
                 ["url_cabinadesoporte"],
                 ["/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"]];
 
-            /*$scope.goToUrl2 = function (url) {
-                $location.path(url);
-            };*/
+            $scope.goToUrl2 = function (url) {
+             $location.path(url);
+             };
 
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
@@ -145,10 +145,11 @@ angular
                     updatetype: 1
                 };
 
+
                 moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function (size) {
                     var url = activitiesURLs[challenge][index];
 
-                    if(url != 'url_cabinadesoporte') {
+                    if (url != 'url_cabinadesoporte') {
                         $location.path(url);
                     } else {
                         var modalInstance = $modal.open({
@@ -182,8 +183,8 @@ angular
                     return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
                 }
             };
-        
-            function openStageModal(){
+
+            function openStageModal() {
                 console.log("opening");
                 //setTimeout(function(){ 
                 var modalInstance = $modal.open({
@@ -197,8 +198,8 @@ angular
                 //}, 1000);
             };
         }])
-        .controller('closingStageController', function ($scope, $modalInstance) {
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-        });
+    .controller('closingStageController', function ($scope, $modalInstance) {
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    });

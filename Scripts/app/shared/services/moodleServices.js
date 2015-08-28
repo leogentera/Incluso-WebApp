@@ -82,8 +82,13 @@
             _putAsyncStars("profile", data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
-        var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
-            _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
+//         var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
+//             _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
+// 
+//         };
+        
+        var _putEndActivity = function(activityId, data, userCourseModel, token, successCallback,errorCallback){
+            _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
 
         };
         
@@ -192,17 +197,32 @@
             });
         };    
 
-        var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
+        // var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
+        //     _httpFactory({                
+        //        method: 'PUT',
+        //        url: url,        
+        //        data: data,       
+        //        headers: {'Content-Type': 'application/json', 'Authorization': token},
+        //        }).success(function(data, status, headers, config) {
+        //            localStorage.setItem(key, JSON.stringify(activityModel));
+        //            successCallback();
+        //        }).error(function(data, status, headers, config) {
+        //            localStorage.setItem(key, JSON.stringify(activityModel));
+        //            errorCallback();
+        //    });
+        // };
+        
+        var _endActivity = function(key, data, userCourseModel, url, token, successCallback, errorCallback){
             _httpFactory({                
                method: 'PUT',
                url: url,        
                data: data,       
                headers: {'Content-Type': 'application/json', 'Authorization': token},
                }).success(function(data, status, headers, config) {
-                   localStorage.setItem(key, JSON.stringify(activityModel));
+                   localStorage.setItem(key, JSON.stringify(userCourseModel));
                    successCallback();
                }).error(function(data, status, headers, config) {
-                   localStorage.setItem(key, JSON.stringify(activityModel));
+                   localStorage.setItem(key, JSON.stringify(userCourseModel));
                    errorCallback();
            });
         };
@@ -322,7 +342,7 @@
                     assign = _.find(activities,function(a) { 
                         return a.parentsection == course.stages[i].parentsection && 
                             a.section == course.stages[i].section &&
-                            a.activity_type == 'assign' 
+                            a.activity_type == 'assign' && a.activityname != 'Chat'
                     });
 
                     if (assign) {
@@ -341,7 +361,7 @@
                        assign = _.find(activities,function(a) { 
                             return a.parentsection == course.stages[i].challenges[j].parentsection && 
                                 a.section == course.stages[i].challenges[j].section &&
-                                a.activity_type == 'assign' 
+                                a.activity_type == 'assign'  && a.activityname != 'Chat'
                         });
 
                         if (assign) {
@@ -360,7 +380,7 @@
                         });
 
                         var childrenActivities =  _.filter(activities,function(a) { 
-                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && a.activity_type != 'assign'
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' ||  a.activityname != 'Chat')
                         });
 
                         for(k = 0; k < childrenActivities.length; k++) {
@@ -378,7 +398,7 @@
                                assign = _.find(activities,function(a) { 
                                     return a.parentsection == course.stages[i].challenges[j].activities[k].parentsection && 
                                         a.section == course.stages[i].challenges[j].activities[k].section &&
-                                        a.activity_type == 'assign' 
+                                        a.activity_type == 'assign'  && a.activityname != 'Chat'
                                 });
 
                                 if (assign) {
@@ -393,7 +413,7 @@
                                 });
 
                                 childrenActivities =  _.filter(activities,function(a) { 
-                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && a.activity_type != 'assign'
+                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || a.activityname != 'Chat')
                                 });
 
                                 if (course.stages[i].challenges[j].activities[k]["activities"]) {
