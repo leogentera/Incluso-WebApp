@@ -191,7 +191,7 @@ var errorCallback = function(data){
   
 }
 
-function getActivityByActivity_identifier(activity_identifier) {
+function getActivityByActivity_identifier(activity_identifier) {          
             var matchingActivity = null;
             var breakAll = false;
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -216,8 +216,7 @@ function getActivityByActivity_identifier(activity_identifier) {
             return matchingActivity;
 }
 
- function updateActivityStatus(activity_identifier) {
-              debugger;
+ function updateActivityStatus(activity_identifier) {              
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
                 for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
