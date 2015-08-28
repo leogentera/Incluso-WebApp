@@ -1,0 +1,87 @@
+<div class="incluso-app start-dashboard acerca-programa" id="site-wrapper">
+
+  <div id="site-canvas">
+    <article class="blueprint">
+      <section>
+        <div class="txt-renglon centered txt-bigger"></div> 
+        <div class="subtitle">Descrubre más</div>
+        <div class="txt-renglon txt-bigger">¡Descúbre, diviértete y gana estrellas!</div>  
+      </section>     
+      <section class="txt-renglon distribuido">
+        <select name="filter" class="form-control form-control-lg theme-default" ng-model="filter">
+          <option value="" disabled>Filtrar contenido por...</option>
+          <option value="">Ver Todo</option>
+          <option value="Obligatorio">Obligatorio</option> 
+          <option value="file">Fotografías</option> 
+          <option value="video">Videos</option> 
+          <option value="page">Textos</option> 
+          <option value="Frases">Frases</option> 
+          <option value="url">Enlaces</option> 
+        </select>
+      </section>
+      <section class="wall">
+        <div class="part" ng-repeat="content in activities">
+          <div ng-if="filter == content.activityType || !filter || filter == 'Obligatorio' && content.mandatory">
+            <div ng-if="content.activityType == 'url'">
+              <div class="author"><img src="assets/images/link.svg">
+                <div>   
+                  Visita el sitio web!
+                </div>
+                <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                <i class="icomoon icon-edit" ng-hide="content.seen"></i>
+              </div>
+            </div>
+            <div ng-if="content.activityType == 'video' ">
+              <div class="author"><img src="assets/images/play.svg">
+                <div>   
+                  Video tutorial incluso
+                </div>
+                <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                <i class="icomoon icon-edit" ng-hide="content.seen"></i>
+              </div>
+            </div>
+            <div ng-if="content.activityType == 'page'">
+              <div class="author"><img src="assets/images/aa.svg">
+                <div>   
+                  Texto
+                </div>
+                <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                <i class="icomoon icon-edit" ng-hide="content.seen"></i>
+              </div>
+            </div>
+            <div ng-if="content.activityType == 'file'">
+              <div class="author"><img src="assets/images/clip.svg">
+                <div>   
+                  Fotografía
+                </div>        
+                <i class="icomoon icon-required" ng-if="content.mandatory"></i>
+                <i class="icomoon icon-checked-join" ng-if="content.seen"></i>
+                <i class="icomoon icon-edit" ng-hide="content.seen"></i>
+              </div>      
+            </div>
+            <div class="block">  
+            <img ng-click="updateStatus(content.id)" ng-src="{{content.file.path}}">
+            <div>
+                <a ng-hide="content.isVideo" ng-click="updateStatus(content.id)" href={{content.url}} target="_blank">{{content.url}}</a>
+                <p ng-click="updateStatus(content.id)">{{content.pageContent}}</p>
+                <a ng-show="content.isVideo" ng-click="updateStatus(content.id)" href={{content.url}} target="_blank">{{content.url}}</a>
+            </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section>
+      <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
+      <div class="txt-renglon centered txt-bigger"></div> 
+      </section>
+
+    </article>
+
+  </div>
+</div>
+  <!-- html -->
+
+

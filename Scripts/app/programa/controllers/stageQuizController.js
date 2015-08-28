@@ -262,17 +262,17 @@ angular
 
                     var activityFinished = false;
 
-                    /*
+
                     if (activities.status == 0) {
                         //if ($scope.activitieCache != null) {
-                            activityFinished = true;
+                        activityFinished = true;
                         //}
                     }
                     // else {
                     //     activityFinished = true;
                     // }
 
-                    */
+                   
 
                     $scope.setReadOnly = activityFinished;
 
@@ -300,7 +300,7 @@ angular
                     else {
                         $scope.activity = activities;
                         $scope.warningMessage = "El quiz no se puede acceder en este momento";
-                        $scope.showWarning = true;                        
+                        $scope.showWarning = true;
                     }
                 }
             }
@@ -386,24 +386,33 @@ angular
 
             };
 
+            function showWarningAndGoToTop() {
+                $scope.showWarning = true;
+                $scope.$emit('scrollTop');
+            }
+
             $scope.validateMisCualidadesAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-                if (misCualidadesAnswers[0] != null) {
-                    if (misCualidadesAnswers[1] != null) {
-                        if (misCualidadesAnswers[2] != null) {
+                if ($scope.misCualidadesAnswers[0] != null) {
+                    if ($scope.misCualidadesAnswers[1] != null) {
+                        if ($scope.misCualidadesAnswers[2] != null) {
                             $scope.navigateToPage(2);
                         }
                         else {
-                            $scope.showWarning = true;
+                            showWarningAndGoToTop();
                         }
                     }
                     else {
-                        $scope.showWarning = true;
+                        showWarningAndGoToTop();
                     }
                 }
                 else {
-                    $scope.showWarning = true;
+                    showWarningAndGoToTop();
                 }
+            }
+
+            $scope.validateMisGustosAnsweredQuestions = function () {
+                var validation = "Ulises Validation";
             }
 
         }])
