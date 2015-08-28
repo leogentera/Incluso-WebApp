@@ -30,7 +30,7 @@ angular
             $scope.finishActivity = function () {
                 //Activity completed
                 debugger;
-                $scope.activity.status = 1;
+                $scope.activity.status = 1;                
 
                 //Call stars - progress
                 //Update Activity Stars - Progres Service
@@ -48,8 +48,7 @@ angular
                 $scope.AnswersResult.userid = $scope.userprofile.id;
                 $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
                 $scope.AnswersResult.like_status = $scope.like_status;
-                $scope.showWarning = false;
-                
+                $scope.showWarning = false;                
                 switch ($scope.activityname) {
                     case "Mis cualidades":
                         $scope.AnswersResult = $scope.misCualidadesAnswers;
@@ -64,10 +63,13 @@ angular
                         break;
                 }
                 debugger;
+                                
                 _endActivityQuiz({
                     "activity": $scope.activity,
                     "answersResult": $scope.AnswersResult,
-                    "userId": $scope.userprofile.id
+                    "userId": $scope.userprofile.id,
+                    "startingTime": $scope.startingTime,
+                    "endingTime": new Date()
                 });
                 $location.path('/ZonaDeVuelo/Dashboard');
             };
@@ -260,7 +262,7 @@ angular
                 //1006 - Mis cualidades
                 //1005 - Mis gustos
                 var testActivity_identifier = 1005; 
-                
+                $scope.startingTime = new Date();
                 //fin test
                 //var activity_identifier = $location.path().split("/")[3] == "zv_exploracionInicial" ? testActivity_identifier : $location.path().split("/")[3];
                 
