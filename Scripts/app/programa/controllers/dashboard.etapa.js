@@ -14,9 +14,31 @@ angular
             _httpFactory = $http;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
+            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+            
+            ///////harcoded/////
+            localStorage.setItem("currentStage","1"); 
+            ////////////////////
+            
+            var currentStage = JSON.parse(localStorage.getItem("currentStage"));
+            //console.log(currentStage);
+            $scope.idEtapa = currentStage;      //We are in Stage 1
+            $rootScope.pageName = $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
+            $rootScope.navbarOrange = false;
+            $rootScope.navbarBlue = false;
+            $rootScope.navbarPink = false;
+            $rootScope.navbarGreen = false;
+            console.log($scope.idEtapa);
+            if($scope.idEtapa == 0)               //Zona de vuelo
+                $rootScope.navbarBlue = true;
+            if($scope.idEtapa == 1)               //Zona de navegacion
+                $rootScope.navbarGreen = true;
+            if($scope.idEtapa == 2)               //Zona de aterrizaje
+                $rootScope.navbarPink = true;
+                                                
 
             //$rootScope.pageName = "EstaciÃ³n: ConÃ³cete";
-            $rootScope.navbarBlue = true;
+            
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
@@ -53,8 +75,6 @@ angular
                 $location.path(activitiesURLs[challenge][activity]);
             };
 
-            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-
             var totalDeEtapas = $scope.model.stages.length; //Total amount of stages
 
             var totalDeRetos = 0;   //Total number of challenges, along all possible stages
@@ -75,11 +95,8 @@ angular
                 for (j = 0; j < numOfChallenges; j++) {
                     totalDeActividades += $scope.model.stages[i].challenges[j].activities.length;
                 }
-            }
-
-            $scope.idEtapa = 0;      //We are in Stage 1
-            $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
-
+            } 
+                        
             var avanceEnEtapaActual = 0;
 
             //Attainment of user in the current Stage

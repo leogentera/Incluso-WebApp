@@ -26,15 +26,34 @@
             };
 
             $scope.navigateTo = function(url,name,sideToggle,navbarColor){
+
+                console.log(url);
                 $location.path(url);
                 if(navbarColor == 'navbarorange'){
                     $rootScope.navbarOrange = true;
                     $rootScope.navbarBlue = false;
+                    $rootScope.navbarPink = false;
+                    $rootScope.navbarGreen = false;
                 }
                 if(navbarColor == 'navbarblue'){
                     $rootScope.navbarOrange = false;
                     $rootScope.navbarBlue = true;
+                    $rootScope.navbarPink = false;
+                    $rootScope.navbarGreen = false;
                 }
+                if(navbarColor == 'navbarpink'){
+                    $rootScope.navbarOrange = false;
+                    $rootScope.navbarBlue = false;
+                    $rootScope.navbarPink = true;
+                    $rootScope.navbarGreen = false;                                        
+                }
+                if(navbarColor == 'navbargreen'){
+                    $rootScope.navbarOrange = false;
+                    $rootScope.navbarBlue = false;
+                    $rootScope.navbarPink = false;
+                    $rootScope.navbarGreen = true;
+                }
+
 
                 $("#menuton span").text(name);
                 
