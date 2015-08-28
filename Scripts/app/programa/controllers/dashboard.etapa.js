@@ -14,7 +14,31 @@ angular
             _httpFactory = $http;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-            $rootScope.navbarBlue = true;
+            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+            
+            ///////harcoded/////
+            localStorage.setItem("currentStage","1"); 
+            ////////////////////
+            
+            var currentStage = JSON.parse(localStorage.getItem("currentStage"));
+            //console.log(currentStage);
+            $scope.idEtapa = currentStage;      //We are in Stage 1
+            $rootScope.pageName = $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
+            $rootScope.navbarOrange = false;
+            $rootScope.navbarBlue = false;
+            $rootScope.navbarPink = false;
+            $rootScope.navbarGreen = false;
+            console.log($scope.idEtapa);
+            if($scope.idEtapa == 0)               //Zona de vuelo
+                $rootScope.navbarBlue = true;
+            if($scope.idEtapa == 1)               //Zona de navegacion
+                $rootScope.navbarGreen = true;
+            if($scope.idEtapa == 2)               //Zona de aterrizaje
+                $rootScope.navbarPink = true;
+                                                
+
+            //$rootScope.pageName = "EstaciÃ³n: ConÃ³cete";
+            
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
@@ -67,8 +91,11 @@ angular
                 $location.path(url);
             };
 
+            //stageId = 1
+
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-            $scope.idEtapa = 0; //We are in Stage 1
+
+            $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
             $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
 
             var totalDeEtapas = $scope.model.stages.length; //Total amount of stages
@@ -102,7 +129,7 @@ angular
                 }
             }
 
-            $scope.avanceEnEtapaActual = 65;//Math.ceil(avanceEnEtapaActual * 100 / totalActividadesEnEtapaActual);
+            $scope.avanceEnEtapaActual = Math.ceil(avanceEnEtapaActual * 100 / totalActividadesEnEtapaActual);
             $scope.retosIconos = {
                 "Exploración Inicial": "assets/images/challenges/stage-1/img-evaluacion inicial.svg",
                 "Cuarto de recursos": "assets/images/challenges/stage-1/img-cuarto-recursos.svg",
@@ -114,6 +141,54 @@ angular
 
             $scope.playVideo = function (videoAddress, videoName) {
                 playVideo(videoAddress, videoName);
+            };
+
+            $scope.startActivity = function (activity) {
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                // Temporary
+                activity = {
+                    groupid:"10_-1_ActivityManager",
+                    parentsection:1,
+                    section:10,
+                    sectionname:"Cabina de soporte",
+                    activityname:"Cabina de soporte",
+                    activity_type:"ActivityManager",
+                    activityintro:"",
+                    coursemoduleid:68,
+                    points:400,
+                    activity_identifier:"1002",
+                    courseid:4,
+                    status:0,
+                    firsttime:0,
+                    last_status_update:null,
+                    optional:0,
+                    activities:[]
+                };
+
+                var data = {
+                    userId: currentUser.userId,
+                    datestarted: "",
+                    moduleid: activity.coursemoduleid,
+                    updatetype: 1
+                };
+
+                moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function () {
+                    setTimeout(function() { 
+                        var modalInstance = $modal.open({
+                            animation: $scope.animationsEnabled,
+                            templateUrl: 'cabinaSoporteMsj.html',
+                            controller: function ($scope, $modalInstance) {
+                                $scope.cancel = function () {
+                                    $modalInstance.dismiss('cancel');
+                                };
+                            },
+                            size: size,
+                            windowClass: 'user-help-modal'
+                        });
+
+                        console.log("modal open");
+                    }, 500);
+                });
             };
         
             function openStageModal(){
@@ -128,7 +203,7 @@ angular
                     });
                     console.log("modal open closing");
                     //}, 1000);
-                }
+                };
         }])
         .controller('closingStageController', function ($scope, $modalInstance) {
             $scope.cancel = function () {

@@ -55,7 +55,7 @@
                     <div class="pages">
                         <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
                             <section id="title">
-                                <div class="subtitle">Sueña</div>
+                                <div class="subtitle">Exploración inicial</div>
                                 <div class="txt-renglon">Responde lo siguiente:</div>
                             </section>
                             <div id="owl" class="owl-carousel">
@@ -63,62 +63,25 @@
 
                                 <!--Pregunta tipo Lista Dinámica-->
                                 <div id="listaDinamica">
-                                    <div class="txt-renglon txt-bigger">1. Los sueños de tener, se refieren a las cosas materiales, como una casa, un carro, un celular… todo lo que puedas comprar. Tener sueños como estos te ayudan a visualizar una meta a la cual llegar. Y tú ¿con qué sueñas? Registra tus sueños de tener.</div>
+                                    <div class="txt-renglon txt-bigger">5. Menciona tus principales habilidades</div>
 
                                     <ul class="block-list clearfix">
-                                        <li ng-repeat="dream in dreamsLists.answers[0] track by $index">
+                                        <li ng-repeat="ability in AnswersResult.answers[4] track by $index">
                                             <section class="form txt-renglon part list clearfix">
                                                 <div class="form-group theme-form">
 
                                                     <div class="clearfix">
-                                                        <span>Sueño {{$index + 1}}</span>
+                                                        <span>Habilidad {{AnswersResult.answers[4].indexOf(ability) + 1}}</span>
                                                         <button class="btn btn-circle fl-right"
-                                                                ng-click="deleteSueno1($index)" ng-hide="false">
+                                                                ng-click="deleteAbility($index);" ng-hide="setReadOnly">
                                                             <i class="icomoon icon-cross white"></i>
                                                         </button>
                                                     </div>
                                                     <div class="add"><i class="icomoon icon-edit"></i>
                                                         <input type="text" name="opciones"
                                                                class="form-control form-control-lg theme-form"
-                                                               placeholder="Nuevo sueño"
-                                                               ng-model="dreamsLists.answers[0][$index]"
-                                                               />
-                                                    </div>
-
-                                                </div>
-                                            </section>
-                                        </li>
-                                    </ul>
-
-                                    <div class="txt-renglon">
-                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno1();">
-                                            <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!--Pregunta tipo Lista Dinámica-->
-                                <div id="listaDinamica2">
-                                    <div class="txt-renglon txt-bigger">2. Los sueños de hacer, son los que te llevan a conocer e intentar cosas nuevas, es querer aprender de otros lugares, culturas o descubrir temas de interés propio. Tener sueños de este tipo te ayuda a enriquecer tu mente y espíritu. Y tú ¿con qué sueñas? Registra tus sueños de hacer.</div>
-
-                                    <ul class="block-list clearfix">
-                                        <li ng-repeat="ability in dreamsLists.answers[1] track by $index">
-                                            <section class="form txt-renglon part list clearfix">
-                                                <div class="form-group theme-form">
-
-                                                    <div class="clearfix">
-                                                        <span>Sueño {{$index + 1}}</span>
-                                                        <button class="btn btn-circle fl-right"
-                                                                ng-click="deleteSueno2($index)" ng-hide="false">
-                                                            <i class="icomoon icon-cross white"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="add">
-                                                        <i class="icomoon icon-edit"></i>
-                                                        <input type="text" name="opciones"
-                                                               class="form-control form-control-lg theme-form"
                                                                placeholder="Nueva habilidad"
-                                                               ng-model="dreamsLists.answers[1][$index]"
+                                                               ng-model="AnswersResult.answers[4][$index]"
                                                                ng-readonly="setReadOnly"/>
                                                     </div>
 
@@ -128,70 +91,33 @@
                                     </ul>
 
                                     <div class="txt-renglon">
-                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno2();">
-                                            <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
+                                        <button type="button" class="btn btn-lg btn-block btn-add"
+                                                ng-click="addAbility();"
+                                                ng-hide="setReadOnly">
+                                            <span class="icomoon icon-plus"></span>Agregar nueva habilidad...
                                         </button>
                                     </div>
                                 </div>
-
-
-                                <!--Pregunta tipo Lista Dinámica-->
-                                <div id="listaDinamica3">
-                                    <div class="txt-renglon txt-bigger">3. Los sueños de ser son unos de los más importantes, porque en ellos reflejas los valores que practicas. Estos sueños te ayudarán a elegir la persona que te gustaría llegar a ser para dejar huella. Y tú ¿con qué sueñas? Registra tus sueños de ser.</div>
-
-                                    <ul class="block-list clearfix">
-                                        <li ng-repeat="ability in dreamsLists.answers[2] track by $index">
-                                            <section class="form txt-renglon part list clearfix">
-                                                <div class="form-group theme-form">
-
-                                                    <div class="clearfix">
-                                                        <span>Sueño {{$index + 1}}</span>
-                                                        <button class="btn btn-circle fl-right"
-                                                                ng-click="deleteSueno3($index)" ng-hide="setReadOnly">
-                                                            <i class="icomoon icon-cross white"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="add"><i class="icomoon icon-edit"></i>
-                                                        <input type="text" name="opciones"
-                                                               class="form-control form-control-lg theme-form"
-                                                               placeholder="Nueva habilidad"
-                                                               ng-model="dreamsLists.answers[2][$index]"
-                                                               ng-readonly="setReadOnly"/>
-                                                    </div>
-
-                                                </div>
-                                            </section>
-                                        </li>
-                                    </ul>
-
-                                    <div class="txt-renglon">
-                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno3();">
-                                            <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
-                                        </button>
-                                    </div>
-                                </div>
-
-
                             </div>
 
                             <section id="controls" class="controls">
                                 <div class="paginate">
-                                    <a href="#" id="prev"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
-                                    <a href="#" id="next"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
+                                    <a href="#" id="prev"><i
+                                            class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
+                                    <a href="#" id="next"><i
+                                            class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
 
-                                    <div class="centered">
-                                        <span id="index" class="txt-bigger">1</span>
-                                        <span class="white txt-bigger">/3</span>
-                                    </div>
+                                    <div class="centered"><span id="index" class="txt-bigger">1/</span><span
+                                            class="white txt-bigger">5</span></div>
                                 </div>
                                 <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
-                                        ng-click="validateMisSuenosAnsweredQuestions()">Terminar
+                                        ng-click="validateAnsweredQuestions()">Terminar
                                 </button>
                                 <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                             </section>
                         </div>
 
-                        <div class="page" ng-class="currentPage==2 ? 'active' : '' ">
+                        <div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
                             <div id="finalized">
                                 <section class="header-title ">
                                     <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad
@@ -209,7 +135,7 @@
                                     </div>
                                 </section>
                                 <section class="txt-renglon centered form ">
-                                    ¿Qué opinas de ésta actividad?
+                                    ¿Que opinas de ésta actividad?
                                     <section class="txt-renglon txt-bigger clearfix">
                                         <div class="opinion">
                                             <input id="like" type="radio" value="1" name="like" ng-model="like_status">
@@ -227,11 +153,7 @@
                                 </section>
                             </div>
                         </div>
-
-
                     </div>
-
-
                     <img src="assets/images/img-lines-ftr.png " class="centered ">
                 </article>
                 <!-- initial message -->
@@ -297,20 +219,20 @@
                     $("#index").html(item + 1);
                 }
 
-                $("#next").click(function (ev) {
+                $("#next").click(function () {
                     owl.trigger('owl.next');
-                    ev.preventDefault();
+                    return false;
                 })
-                $("#prev").click(function (ev) {
+                $("#prev").click(function () {
                     owl.trigger('owl.prev');
-                    ev.preventDefault();
+                    return false;
                 })
-                $("#save").click(function (ev) {
+                $("#save").click(function () {
                     $(owl).hide("slow");
                     $("#controls").hide();
                     $("#taitel").hide();
                     $("#finalized").show("slow");
-                    ev.preventDefault();
+                    return false;
                 });
                 $(".acc").click(function () {
                     $(this).toggleClass('icon-arrow-down');
