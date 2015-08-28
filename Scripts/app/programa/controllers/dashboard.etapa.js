@@ -150,7 +150,7 @@ angular
                     updatetype: 1
                 };
 
-                moodleFactory.Services.PutStartActivity(data, activity, currentUser.token function () {
+                moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function () {
                     setTimeout(function() { 
                         var modalInstance = $modal.open({
                             animation: $scope.animationsEnabled,
