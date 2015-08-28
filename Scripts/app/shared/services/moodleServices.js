@@ -207,6 +207,23 @@
            });
         };
 
+        var _startActivity = function(data, activityModel, token, successCallback, errorCallback){
+            var key = 'challengesCourseCache/' + activityModel.activity_identifier;
+
+            _httpFactory({                
+               method: 'PUT',
+               url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),        
+               data: data,       
+               headers: {'Content-Type': 'application/json', 'Authorization': token},
+               }).success(function(data, status, headers, config) {
+                   localStorage.setItem(key, JSON.stringify(activityModel));
+                   successCallback();
+               }).error(function(data, status, headers, config) {
+                   localStorage.setItem(key, JSON.stringify(activityModel));
+                   errorCallback();
+            });
+        };
+
         var refreshProgress = function(usercourse, user)  {
             var globalActivities = 0;
             var globalCompletedActivities = 0;
@@ -426,6 +443,7 @@
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat,
             PutStars: _assignStars,
+            PutStartActivity: _startActivity,
             PutEndActivity: _putEndActivity,
             PutEndChallenges : _putEndChallenges
 

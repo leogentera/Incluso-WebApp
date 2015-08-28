@@ -75,6 +75,9 @@ var _endActivity = function(activityModel){
       
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
       
+      // end actual challenge when all its activities are completed;
+      _isChallengeCompleted();
+      
 }
 
 var _endActivityQuiz = function(activityModel){
@@ -88,15 +91,9 @@ var _endActivityQuiz = function(activityModel){
       
 }
 
-var _endChallenge = function(activityModel){
-    var activityId = activityModel.activityId;
-    var currentUser  = JSON.parse(localStorage("userId"));
-    
-    moodleFactory.Services.PutEndChallenges(activityId,data, activityModel, currentUser.token, successChallengeCallback, errorCallback);    
-    
-}
 
-var successChallengeCallback = function(){    
+var _isChallengeCompleted = function(){
+  
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;    
     var currentStage = userCourse.stages[lastStageIndex];
@@ -107,9 +104,25 @@ var successChallengeCallback = function(){
     var totalActivitiesByStage = currentChallenge.activities.length;    
     var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
     
+    
     if (totalActivitiesByStage == totalActivitiesCompletedByStage) {
-      localStorage.setItem("closeStageModal",'true');
+        var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+        var currentUserId = currentUser.userId;
+        var activityId = activityModel.coursemoduleid;
+        var data = {
+          userid :  currentUserId };
+          
+        var currentActivityModuleId = currentChallenge.coursemoduleid;
+        moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activityModel, currentUser.token, successEndChallengeCallback,errorCallback);
+        return true;
     }
+    else{
+      return false;
+    }
+}
+
+var successEndChallengeCallback = function(){
+  localStorage.setItem("closeStageModal",'true');
 }
 
 
