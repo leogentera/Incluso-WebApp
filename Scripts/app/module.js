@@ -155,6 +155,17 @@
             controller: 'programaForoController'
         });
 
+        //Zona de navegacion
+        $routeProvider.when('/ZonaDeNavegacion/DashboardZonaNavegacion/:stageId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
+            controller: 'programaEtapaController'
+        });
+
+        //Zona de aterrizaje
+        $routeProvider.when('/ZonaDeAterrizaje/DashboardZonaAterrizaje', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html',
+            controller: 'programaEtapaController'
+        });
 
         $routeProvider.when('/', {
             templateUrl: 'Templates/Public/Login.html',
