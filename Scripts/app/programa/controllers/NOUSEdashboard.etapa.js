@@ -119,6 +119,10 @@ angular
                 for (k = 0; k < numActividadesParcial; k++) {
                     avanceEnEtapaActual += $scope.model.stages[$scope.idEtapa].challenges[j].activities[k].status;
                     totalActividadesEnEtapaActual++;
+
+                    if ($scope.model.stages[$scope.idEtapa].challenges[j].activities[k].status > 0) {
+                        //alert($scope.model.stages[$scope.idEtapa].challenges[j].activities[k].activityname);
+                    }
                 }
             }
 
