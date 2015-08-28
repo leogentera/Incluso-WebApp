@@ -175,7 +175,6 @@ angular
             };
 
             function openStageModal() {
-                console.log("opening");
                 //setTimeout(function(){ 
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
@@ -184,7 +183,6 @@ angular
                     //size: size,
                     windowClass: 'closing-stage-modal user-help-modal'
                 });
-                console.log("modal open closing");
                 //}, 1000);
             };
         }])
