@@ -407,7 +407,7 @@ body.modal-open {
 .incluso-app #site-menu .nav > li .submenu li {
   font-size: 6vw;
 }
-.incluso-app #site-menu .nav > li > i {
+.incluso-app #site-menu .nav > li > span {
   padding: 3vw 1vw;
   z-index: 10;
 }
