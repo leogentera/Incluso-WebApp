@@ -58,7 +58,7 @@
         };
         
         var _postUserNotifications = function(userId, data, successCallback, errorCallback){
-            _postAsyncData("notifications",data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+            _postAsyncData("notifications/"+userId,data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
         var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
