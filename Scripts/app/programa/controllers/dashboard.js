@@ -23,10 +23,8 @@
                 return "";
             }
 
-            $rootScope.pageName = "Mision incluso"
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
-            $rootScope.showFooter = true; 
+            $scope.setToolbar($location.$$path,"Incluso");
+            $rootScope.showFooter = true;
             $rootScope.showFooterRocks = true; 
 
             try {

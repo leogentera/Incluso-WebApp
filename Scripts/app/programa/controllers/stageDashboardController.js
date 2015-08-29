@@ -28,8 +28,10 @@ angular
             if ($scope.idEtapa == 2)               //Zona de aterrizaje
                 $rootScope.navbarPink = true;*/
 
+            $scope.setToolbar($location.$$path,"");
 
-            $rootScope.showToolbar = true;
+
+
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
