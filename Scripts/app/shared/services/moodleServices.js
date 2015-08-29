@@ -6,10 +6,10 @@
             _getAsyncData("profile", API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };
 
-        var _putAsyncProfile = function(userId, data, successCallback, errorCallback){            
+        var _putAsyncProfile = function(userId, data, successCallback, errorCallback){
             _putAsyncData("profile", data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
-        };    
-        
+        };
+
         var _getAsyncUserCourse = function(userId, successCallback, errorCallback){
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
             _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback);
@@ -30,15 +30,15 @@
         var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback){
             _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + '/user/' + userId ), successCallback,errorCallback);
         };
-        
+
         var _getAsyncActivitiesInfo = function(activityId, successCallback, errorCallback){
             _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), successCallback, errorCallback);
         };
-        
+
         var _getAsyncActivityQuizInfo = function(activityId,userId, successCallback, errorCallback){
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId+'?userid='+userId), successCallback, errorCallback);
         };
-            
+
         var _getAsyncCourse = function(courseId, successCallback, errorCallback){
             successCallback();
             //_getCourseAsyncData("course", API_RESOURCE.format('course/' + courseId), successCallback, errorCallback);
@@ -49,14 +49,14 @@
             _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), successCallback, errorCallback);
         };
 
-        var _putAsyncQuiz = function(activityId, data, successCallback, errorCallback){            
+        var _putAsyncQuiz = function(activityId, data, successCallback, errorCallback){
             _putAsyncData("activity/" + activityId, data, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
-        };    
+        };
 
         var _getUserNotifications = function(userId,successCallback,errorCallback){
             _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback);
         };
-        
+
         var _postUserNotifications = function(userId, data, successCallback, errorCallback){
             _postAsyncData("notifications",data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
@@ -64,32 +64,36 @@
         var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
             _postAsyncData(key,data, API_RESOURCE.format('forum'), successCallback, errorCallback);
         };
-        
+
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
             _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification' ), successCallback, errorCallback);
         };
-        
+
         var _getUserChat = function(userId, successCallback, errorCallback){
             _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId),successCallback,errorCallback);;
         };
-        
+
         var _putUserChat = function(userId, data, successCallback, errorCallback){
-            _putAsyncData("updateChat",data, API_RESOURCE.format('messaging/'+ userId),successCallback,errorCallback);          
+            _putAsyncData("updateChat",data, API_RESOURCE.format('messaging/'+ userId),successCallback,errorCallback);
         };
 
         var _assignStars = function(data, profile, token, successCallback,errorCallback){
-            
+
             _putAsyncStars("profile", data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
          var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
-             _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
- 
-         };
-        
-        var _putEndActivityQuizes = function(activityId, data, userCourseModel, token, successCallback,errorCallback){
-            _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
+             _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
 
+         };
+
+        var _putEndActivityQuizes = function(activityId, data, userCourseModel, token, successCallback,errorCallback){
+            _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
+
+        };
+
+        var _putForumPostLikeNoCache = function(postId, data, successCallback, errorCallback){
+            _putDataNoCache(data, API_RESOURCE.format('forum/'+ postId),successCallback,errorCallback);
         };
                                     
         var _getCacheObject = function(key){
@@ -160,6 +164,21 @@
                 }).error(function(data, status, headers, config) {
                     localStorage.setItem(key, JSON.stringify(dataModel));
                     errorCallback();
+            });
+        };
+
+        var _putDataNoCache = function(data, url, successCallback, errorCallback){
+            _httpFactory({
+                method: 'PUT',
+                url: url,
+                data: data,
+                headers: {'Content-Type': 'application/json'},
+            }).success(function(data, status, headers, config) {
+                //localStorage.setItem(key, JSON.stringify(dataModel));
+                successCallback();
+            }).error(function(data, status, headers, config) {
+                //localStorage.setItem(key, JSON.stringify(dataModel));
+                errorCallback();
             });
         };
 
@@ -459,7 +478,8 @@
             PutStars: _assignStars,
             PutStartActivity: _startActivity,
             PutEndActivity: _putEndActivity,
-            PutEndActivityQuizes: _putEndActivityQuizes            
+            PutEndActivityQuizes: _putEndActivityQuizes,
+            PutForumPostLikeNoCache: _putForumPostLikeNoCache
 
         };
     })();
