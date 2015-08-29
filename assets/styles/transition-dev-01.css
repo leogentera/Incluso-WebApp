@@ -319,3 +319,21 @@ Parallel work file for UI Developer 01
   top: 5vw;
   right: 2vw;
 }
+.incluso-app .privacy-notice .component p,
+.incluso-app .use-terms .component p,
+.incluso-app .privacy-notice .component ul,
+.incluso-app .use-terms .component ul {
+  font-size: 1.1em;
+  text-align: justify;
+}
+.incluso-app .privacy-notice .component p .subtitle-green,
+.incluso-app .use-terms .component p .subtitle-green,
+.incluso-app .privacy-notice .component ul .subtitle-green,
+.incluso-app .use-terms .component ul .subtitle-green {
+  color: #bcd431;
+  font-size: 4.4vw;
+}
+.incluso-app .privacy-notice .component ul,
+.incluso-app .use-terms .component ul {
+  padding-left: 4.3vw;
+}
