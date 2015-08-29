@@ -141,6 +141,11 @@ angular
                                 windowClass: 'user-help-modal'
                             });
                             console.log("modal open");
+                                                        
+                            _createStartActivityNotification(activity.coursemoduleid);
+                            
+                        },function(){
+                            console.log('Error callback');    
                         });
                     }
                 }
