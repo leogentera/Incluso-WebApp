@@ -153,7 +153,9 @@ angular
             }
 
             $scope.back = function () {
-                $location.path('/ProgramaDashboard');
+              debugger;
+                var userCurrentStage = localStorage.getItem("currentStage");
+                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
             }
 
             function getdate(){
