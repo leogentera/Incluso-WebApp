@@ -16,20 +16,10 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
-            /*$rootScope.navbarOrange = false;
-            $rootScope.navbarBlue = false;
-            $rootScope.navbarPink = false;
-            $rootScope.navbarGreen = false;
-            
-            if ($scope.idEtapa == 0)               //Zona de vuelo
-                $rootScope.navbarBlue = true;
-            if ($scope.idEtapa == 1)               //Zona de navegacion
-                $rootScope.navbarGreen = true;
-            if ($scope.idEtapa == 2)               //Zona de aterrizaje
-                $rootScope.navbarPink = true;*/
+            $scope.setToolbar($location.$$path,"");
 
 
-            $rootScope.showToolbar = true;
+
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
@@ -43,7 +33,7 @@ angular
                     size: size,
                     windowClass: 'user-help-modal'
                 });
-                console.log("modal open");
+
             };
 
             $scope.openModal();
@@ -59,6 +49,7 @@ angular
             $scope.stages = _staticStages;
             $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
             $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
+            localStorage.setItem("userCurrentStage", $routeParams['stageId']);
 
             var totalDeEtapas = $scope.model.stages.length; //Total amount of stages
             var totalDeRetos = 0; //Total number of challenges, along all possible stages
