@@ -43,7 +43,7 @@ angular
                     size: size,
                     windowClass: 'user-help-modal'
                 });
-                console.log("modal open");
+
             };
 
             $scope.openModal();
