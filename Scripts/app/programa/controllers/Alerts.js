@@ -10,38 +10,25 @@ angular
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-              
-            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-            
-            //var activitiesperUser = _.filter(userCourse.stages, function(stages){
-            //    var st = stages;            
-            //    for(i=0; i< stages.challenges.length; i++){
-            //        var currentChallenge = stages.challenges[i];
-            //        for(j=0; j< currentChallenge.length; j++){                           
-            //               return _.where(currentChallenge[j].activity,{status: 0});
-            //        }                    
-            //    }
-            //});
-            
+                          
             var userNotifications = JSON.parse(localStorage.getItem("notifications"));
             
             $scope.notifications = _.filter(userNotifications, function(notif){
                     return notif.timemodified != null;
                 });
-                                            
+
+            //Quantity of notifications to show in an initial load
             var notificationsQuantityInitial = 6;
             
             $scope.notificationsQuantity = notificationsQuantityInitial;
             $scope.notificationsQuantityUnread = notificationsQuantityInitial;
             $scope.notificationsQuantityRead = notificationsQuantityInitial;
-            
-            $rootScope.pageName = "Notificaciones";
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
+
+            $scope.setToolbar($location.$$path,"Notificaciones");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
                                                 
-            //////// displaying notificacions as carousel ////////
+            ////// displaying notificacions as carousel ////////
             $scope.myInterval = 5000;
             $scope.noWrapSlides = false;
             var slides = $scope.slides = [];
@@ -107,35 +94,19 @@ angular
             
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
-            }
+            };
             
-            $scope.showAlertDetail = function (alertId) {
+            $scope.showAlertDetail = function (notificationId) {
                 var userId = localStorage.getItem('userId');
-                var notificationId = (alertId - 1);
+                debugger;                
                 
-                $scope.notifications[alertId -1 ].read = true ;
+                $scope.notifications[notificationId -1 ].read = true ;
                 localStorage.setItem("notifications", JSON.stringify($scope.notifications));
                 _readNotification(userId,notificationId);
-                $scope.navigateTo('/AlertsDetail/' + alertId, 'Notificaciones', 'null', 'navbarorange');
-            }                    
-            
-            $scope.navigateTo = function(url,name,sideToggle,navbarColor){
-                $location.path(url);
-                console.log(navbarColor);
-                if(navbarColor == 'navbarorange'){
-                    $rootScope.navbarOrange = true;
-                    $rootScope.navbarBlue = false;
-                }
-                if(navbarColor == 'navbarblue'){
-                    $rootScope.navbarOrange = false;
-                    $rootScope.navbarBlue = true;
-                }
 
-                $("#menuton span").text(name);
-                
-                if(sideToggle == "sideToggle")
-                    $rootScope.sidebar = !$rootScope.sidebar;
-            };
+                $scope.navigateTo('/AlertsDetail/' + notificationId, 'null');            
+            
+            }
             
         }
 ]);

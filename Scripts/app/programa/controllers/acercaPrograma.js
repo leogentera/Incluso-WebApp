@@ -10,10 +10,8 @@ angular
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-            $rootScope.pageName = "Mision incluso"
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
-            $rootScope.showFooter = true; 
+            $scope.setToolbar($location.$$path,"Incluso");
+            $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false; 
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
