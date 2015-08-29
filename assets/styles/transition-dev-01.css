@@ -144,8 +144,7 @@ Parallel work file for UI Developer 01
 }
 .incluso-app .evaluation .add textarea {
   resize: none;
-  max-height: 15vw;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .incluso-app .evaluation .add input,
 .incluso-app .evaluation .add textarea {
