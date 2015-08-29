@@ -1,14 +1,13 @@
-<div class="incluso-app step-dashboard" id="site-wrapper">
+<div class="incluso-app step-dashboard topics-forum" id="site-wrapper">
   <div id="site-canvas">
      <article class="blueprint">
       <section>
-        <div class="txt-renglon centered txt-bigger"></div> 
         <div class="subtitle">Foro Común</div>
-        <div class="txt-renglon"> Participa en las siguientes discusiones.</div>  
+        <div class="txt-renglon txt-bigger"> Participa en las siguientes discusiones.</div>  
       </section>
-      <section class="">
+      <section class="list txt-renglon">
         <div id="item{{$index}}" ng-repeat="t in activity.discussions">
-          <div class="part"><span>{{t.name}}</span><a href="" ng-click="showComentarios(t.id)"><i class="icomoon icon-arrow-right-aligned fl-right"></i></a></div>
+          <div class="part list-item"><span>{{t.name}}</span><a href="" ng-click="showComentarios(t.id)"><i class="icomoon icon-arrow-right-aligned fl-right"></i></a></div>
         </div>
       </section>
       <section>
