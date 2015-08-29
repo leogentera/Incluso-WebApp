@@ -1651,6 +1651,11 @@
          $list-item & $green-lantern-theme
          Description: CSS to represent look of a list of items with colors green and dark
         ************************************************************************/
+        .list {
+            .list-item {
+                margin: 0.7vh 0px;
+            }
+        }
         .list-item { 
                 display: inline-flex;  
                 position: relative;
@@ -1662,7 +1667,14 @@
                 justify-content: space-between;                
                 cursor: pointer;
                 color: white;
-                font-size: 120%;                                
+                font-size: 120%;    
+                background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
+                background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
+                background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );                            
                 .date{
                     color: rgba(255, 255, 255, 0.3);
                    font-size: 70%;
