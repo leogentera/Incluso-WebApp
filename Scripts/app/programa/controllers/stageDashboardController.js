@@ -17,9 +17,7 @@ angular
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
             $scope.setToolbar($location.$$path,"");
-
-
-
+            
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
@@ -69,7 +67,7 @@ angular
             }
 
             var avanceEnEtapaActual = 0;
-            var totalActividadesEnEtapaActual = 0; //Attainment of user in the current Stage
+            var totalActividadesEnEtapaActual = 0; //Attainment of user in the current Stage            
             var retosEnEtapaActual = $scope.model.stages[$scope.idEtapa].challenges.length;
 
             for (j = 0; j < retosEnEtapaActual; j++) {
@@ -103,7 +101,7 @@ angular
                 } else {
                     var startedActivityCabinaDeSoporte = $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started && !$scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status;
 
-                    // Start activity of 'cabina de soporte'
+                    // Start activity of 'cabina de soporte'                    
                     if (!startedActivityCabinaDeSoporte) {
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         var data = {
@@ -112,7 +110,11 @@ angular
                             moduleid: activity.coursemoduleid,
                             updatetype: 0
                         };
-
+                        
+                        //trigger activity type 1 is sent when the activity starts.
+                        var triggerActivity = 1;
+                        _createNotification(activity.coursemoduleid, triggerActivity);
+                        
                         moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function (size) {
                             $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started = 1;
                             $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].datestarted = data.datestarted;
@@ -131,6 +133,11 @@ angular
                                 windowClass: 'user-help-modal'
                             });
                             console.log("modal open");
+                                                        
+                            
+                            
+                        },function(){
+                            console.log('Error callback');    
                         });
                     }
                 }
@@ -141,15 +148,15 @@ angular
             };
 
             function openStageModal() {
-                //setTimeout(function(){ 
+                setTimeout(function(){ 
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'ClosingStage.html',
                     controller: 'closingStageController',
-                    //size: size,
+                    size: size,
                     windowClass: 'closing-stage-modal user-help-modal'
                 });
-                //}, 1000);
+                }, 1000);
             }
         }])
     .controller('closingStageController', function ($scope, $modalInstance) {
