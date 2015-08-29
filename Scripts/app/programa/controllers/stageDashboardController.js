@@ -118,7 +118,7 @@ angular
                         var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         var data = {
                             userid: currentUser.userId,
-                            datestarted: getFormattedDate(),
+                            datestarted: getdate(),
                             moduleid: activity.coursemoduleid,
                             updatetype: 0
                         };
@@ -143,22 +143,6 @@ angular
                             console.log("modal open");
                         });
                     }
-                }
-
-                function getFormattedDate() {
-                    var date = new Date(),
-                        year = date.getFullYear(),
-                        month = formatValue(date.getMonth() + 1), // months are zero indexed
-                        day = formatValue(date.getDate()),
-                        hour = formatValue(date.getHours()),
-                        minute = formatValue(date.getMinutes()),
-                        second = formatValue(date.getSeconds());
-
-                    function formatValue(value) {
-                        return value >= 10 ? value : '0' + value;
-                    }
-
-                    return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
                 }
             };
 
