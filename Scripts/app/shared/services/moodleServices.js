@@ -105,7 +105,13 @@
             }
         };
 
-        var _getAsyncData = function(key, url, successCallback, errorCallback){
+        var _getAsyncData = function(key, url, successCallback, errorCallback, forceRefresh){
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+                
+            if (returnValue) {
+                return returnValue;
+            }
+            
             _httpFactory({
                 method: 'GET',
                 url: url, 
