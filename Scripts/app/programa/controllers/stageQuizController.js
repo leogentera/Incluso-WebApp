@@ -56,7 +56,7 @@ angular
                         $scope.AnswersResult.answers = $scope.misCualidadesAnswers;alert($scope.misCualidadesAnswers);
                         break;
                     case "Mis gustos":
-                        $scope.AnswersResult.answers = $scope.misGustosAnswers;alert($scope.misGustosAnswers);
+                        $scope.AnswersResult.answers = $scope.misGustosAnswers;
                         break;
                     case "Sueña":
                         $scope.AnswersResult.answers = $scope.dreamsLists.answers;alert("Answers " + $scope.dreamsLists.answers);
@@ -320,7 +320,7 @@ angular
                 if (activity != null) {
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
-                    $scope.activityname = activity.activityname;alert($scope.activityname);
+                    $scope.activityname = activity.activityname;alert("Actividad: " + $scope.activityname);
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -343,7 +343,7 @@ angular
             }
 
 
-            function successfullCallBack(activityAnswers) {alert("Successful callback");
+            function successfullCallBack(activityAnswers) {
 
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
