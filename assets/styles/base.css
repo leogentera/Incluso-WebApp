@@ -1698,7 +1698,9 @@ body .disabled {
   text-align: center;
   letter-spacing: 1px;
 }
-.incluso-app .component p:not(.text-center) {
+.incluso-app .component p:not(.text-center),
+.incluso-app .component ul,
+.incluso-app .component ol {
   padding: 0;
   margin: 0 auto 15px;
   width: 93%;
@@ -1715,6 +1717,11 @@ body .disabled {
   display: block;
   padding: 0;
   margin: 0 auto;
+}
+.incluso-app .component ul,
+.incluso-app .component ol {
+  text-align: justify;
+  font-size: 1em;
 }
 .incluso-app .pages {
   display: block;

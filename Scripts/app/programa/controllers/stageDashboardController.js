@@ -21,7 +21,6 @@ angular
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
-            $scope.$emit('HidePreloader'); //hide preloader
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({

@@ -641,3 +641,7 @@ section.part.inbloq.text-left .actions {
 .holoproj .owl-wrapper .item img {
   width: 55%;
 }
+.topics-forum .txt-bigger {
+  font-size: 4.5vw;
+  font-weight: 500;
+}
