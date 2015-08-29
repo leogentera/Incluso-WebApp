@@ -654,10 +654,27 @@ section.part.inbloq{
 
 
 
-/////////////  ZonaDevuelo/Conocete/PuntoDeEncuentro/Topicos ////////////
+/////////////  ZonaDevuelo/Conocete/PuntoDeEncuentro ////////////
 .topics-forum {
     .txt-bigger {
         font-size: 4.5vw;
         font-weight: 500;
+    }
+}
+
+.comments-forum {
+    .arrow-up {
+        display: none;
+        position: absolute;
+        bottom:-63px; left: 52%;
+        margin-left:-20px;
+        .css-arrow-up(20px, @clr-white);
+    }
+    .active {
+        .arrow-up {
+            display:block;
+            bottom: -69px;
+            bottom: -15vw;
+        }
     }
 }

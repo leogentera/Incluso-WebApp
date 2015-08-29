@@ -645,3 +645,20 @@ section.part.inbloq.text-left .actions {
   font-size: 4.5vw;
   font-weight: 500;
 }
+.comments-forum .arrow-up {
+  display: none;
+  position: absolute;
+  bottom: -63px;
+  left: 52%;
+  margin-left: -20px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #ffffff;
+}
+.comments-forum .active .arrow-up {
+  display: block;
+  bottom: -69px;
+  bottom: -15vw;
+}
