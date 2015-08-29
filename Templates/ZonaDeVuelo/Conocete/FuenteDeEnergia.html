@@ -26,7 +26,7 @@
 
       <section class="wall">
         <div class="part" ng-repeat="activity in fuenteDeEnergia.activities">
-          <div ng-if="filter == activity.activity_type && activity.activityintro == '' || !filter || filter == activity.activityintro || filter == 'Obligatorio' && !activity.optional">
+          <div ng-if="filter == activity.activity_type && activity.activityintro != 'video' || !filter || filter == activity.activityintro || filter == 'Obligatorio' && !activity.optional">
 
             <div ng-if="activity.activity_type == 'url' && activity.activityintro != 'video' ">
               <div class="type">
@@ -118,7 +118,7 @@
                         <a href={{activity.activityContent.url}} target="_blank" class="icon icon-play" ></a>                       
                         <figure class="player">
                           <a href={{activity.activityContent.url}} target="_blank">
-                            <img src="assets/images/ptr-video-0001.jpg" alt="video" />
+                            <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />
                           </a>
                         </figure>
                       </div>                        

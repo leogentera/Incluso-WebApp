@@ -28,7 +28,9 @@
                     <li><a ng-click="playVideo('assets/media', 'TutorialTest2.mp4')"><i class="icomoon icon-video-file"></i> Acerca de Incluso</a></li>
                     <li><a ng-click="playVideo('assets/media', 'TutorialTest2.mp4')"><i class="icomoon icon-video-file"></i> Guía de uso </a></li>
                     <li>
-                        <i class="icomoon icon-arrow fl-right white pointer accsub" data-id="0"></i>
+                        <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="0"></i>-->
+                        <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="0" ng-show="!one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
+                        <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="0" ng-show="one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
                         <a class="menu-blue" ng-click="navigateTo('/ZonaDeVuelo/Dashboard/1', 'Zona de vuelo', 'sideToggle', 'navbarblue')">
                           <i class="icomoon icon-spaceship">
                               <span class="path1"></span>
@@ -75,7 +77,9 @@
                         </div>
                     </li>
                     <li>
-                        <i class="icomoon icon-arrow fl-right white pointer accsub" data-id="1"></i>
+                        <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="1"></i>-->
+                        <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="1" ng-show="!two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
+                        <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="1" ng-show="two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
                         <a class="menu-green" ng-click="navigateTo('/ZonaDeNavegacion/Dashboard/1', 'Zona de navegación', 'sideToggle', 'navbargreen')">
                           <i class="icomoon icon-asterodis">
                               <span class="path1"></span>
@@ -122,7 +126,9 @@
                         </div>-->
                     </li>
                     <li>
-                        <i class="icomoon icon-arrow fl-right white pointer accsub" data-id="2"></i>
+                        <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="2"></i>-->
+                         <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="1" ng-show="!three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
+                        <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="1" ng-show="three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
                         <a class="menu-pink" ng-click="navigateTo('/ZonaDeAterrizaje/Dashboard/2', 'Zona de aterrizaje', 'sideToggle', 'navbarpink')">
                           <i class="icomoon icon-planet">
                               <span class="path1"></span>
