@@ -434,6 +434,8 @@
                 localStorage.setItem("usercourse", JSON.stringify(course));
                 localStorage.setItem("course", JSON.stringify(course));
                 localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
+
+                debugger;
             }
         }        
         

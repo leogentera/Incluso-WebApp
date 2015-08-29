@@ -33,13 +33,13 @@ angular
 
             };
 
-            $scope.openModal();
+            //$scope.openModal();
 
             var closingStageModal = localStorage.getItem('closeStageModal');
-            if (closingStageModal == 'true') {
-                openStageModal();
-                localStorage.setItem('closeStageModal', 'false');
-            }
+            //if (closingStageModal == 'true') {
+            //    openStageModal();
+            //    localStorage.setItem('closeStageModal', 'false');
+            //}
 
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
@@ -88,6 +88,8 @@ angular
                 "Cabina de soporte": "assets/images/challenges/stage-1/img-cabina-soporte.svg",
                 "Exploración final": "assets/images/challenges/stage-1/img-evaluacion final.svg"
             };
+
+            $scope.$emit('HidePreloader'); //hide preloader            
 
             $scope.playVideo = function (videoAddress, videoName) {
                 playVideo(videoAddress, videoName);
@@ -144,7 +146,9 @@ angular
             };
 
             $scope.getCurrentStatusOfActivity = function (index, parentIndex) {
+                if ($scope.model.stages[$scope.idEtapa] && $scope.model.stages[$scope.idEtapa].challenges[parentIndex] && $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index])
                 return $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status;
+                else return 0
             };
 
             function openStageModal() {

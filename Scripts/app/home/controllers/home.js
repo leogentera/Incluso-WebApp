@@ -156,7 +156,6 @@
 				if ($scope.pageName == 'Notificaciones') {
 					return false;
 				}else{
-					debugger;
 				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
 				//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
 				var countNotificationsUnread = _.filter(userNotifications, function(notif){
