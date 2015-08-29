@@ -48,6 +48,7 @@ var _readNotification = function(currentUserId,currentNotificationId){
           userid:  currentUserId,
           notificationid: currentNotificationId};
   
+      debugger;
       moodleFactory.Services.PutUserNotificationRead(currentNotificationId,data,function(){
         //LocalStorage.setItem("notifications",data.notifications);
       },function(){

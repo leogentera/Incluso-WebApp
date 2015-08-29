@@ -109,14 +109,14 @@ angular
                 $location.path('/ProgramaDashboard');
             }
             
-            $scope.showAlertDetail = function (alertId) {
+            $scope.showAlertDetail = function (notificationId) {
                 var userId = localStorage.getItem('userId');
-                var notificationId = (alertId - 1);
+                debugger;                
                 
-                $scope.notifications[alertId -1 ].read = true ;
+                $scope.notifications[notificationId -1 ].read = true ;
                 localStorage.setItem("notifications", JSON.stringify($scope.notifications));
                 _readNotification(userId,notificationId);
-                $scope.navigateTo('/AlertsDetail/' + alertId, 'Notificaciones', 'null', 'navbarorange');
+                $scope.navigateTo('/AlertsDetail/' + notificationId, 'Notificaciones', 'null', 'navbarorange');
             }                    
             
             $scope.navigateTo = function(url,name,sideToggle,navbarColor){

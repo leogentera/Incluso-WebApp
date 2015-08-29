@@ -66,7 +66,7 @@
         };
         
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
-            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification' ), successCallback, errorCallback);
+            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/')+ notificationId, successCallback, errorCallback);
         };
         
         var _getUserChat = function(userId, successCallback, errorCallback){
