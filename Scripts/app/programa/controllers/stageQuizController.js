@@ -53,7 +53,7 @@ angular
 
                 switch ($scope.activityname) {
                     case "Mis cualidades":
-                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;console.log($scope.misCualidadesAnswers);
+                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
                         break;
                     case "Mis gustos":
                         $scope.AnswersResult.answers = $scope.misGustosAnswers;
@@ -78,12 +78,12 @@ angular
             };
 
             $scope.addAbility = function () {
-                addHeight();
+                addHeight("#listaDinamica");
                 $scope.AnswersResult.answers[4].push(new String());
             };
 
             $scope.deleteAbility = function (index) {
-                removeHeight();
+                removeHeight("#listaDinamica");
                 $scope.AnswersResult.answers[4].splice(index, 1);
             };
 
@@ -275,20 +275,18 @@ angular
                 }
             }
 
-            function updateMisSueñosSelectedAnswers(question) {
+            function updateMisSueñosSelectedAnswers(index, question) {
 
-                if (question.userAnswer != null) {console.log("update mis sueños: " + question.userAnswer);
-                    var userAnswers = question.userAnswer.split(";");
-                    for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
-                        var userAnswer = userAnswers[indexUserAnswers].trim();
-                        for (var index = 0; index < question.answers.length; index++) {
-                            var questionOption = question.answers[index];
-                            if (questionOption.answer.trim() == userAnswer) {
-                                dreamsLists.answers.push(userAnswer);
-                            }
-                        }
-                    }
+                console.log("Inside updateMisSueños: " + JSON.stringify(question));
+
+                var largo = question.answers.length;
+                var i;
+
+                for (i = 0; i < largo; i++) {
+                    dreamsLists.answers[index].push(question.answers[i]);
                 }
+
+                console.log(dreamsLists.answers[index]);
             }
 
             function cleanText(userAnswer) {
@@ -302,7 +300,7 @@ angular
 
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-            //$scope.misGustosAnswers =
+            $scope.misSuenosAnswers = [[], [], [], []];
 
 
             function errorCallback(data) {console.log("You entered the errorCallback");
@@ -346,7 +344,7 @@ angular
 
             function successfullCallBack(activityAnswers) {console.log("You entered successfullCallBack");
 
-                if (activityAnswers != null) {console.log(JSON.stringify(activityAnswers));
+                if (activityAnswers != null) {console.log("activityAnswers :" + JSON.stringify(activityAnswers));
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
@@ -363,7 +361,7 @@ angular
                                 updateMisGustosSelectedAnswers(index, question);
                                 break;
                             case "Sueña":
-                                updateMisSueñosSelectedAnswers(question);
+                                updateMisSueñosSelectedAnswers(index, question);
                                 break;
                             default:
                                 break;
