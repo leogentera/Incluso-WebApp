@@ -10,9 +10,7 @@ angular
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-            $rootScope.pageName = "Mis cualidades"
-            $rootScope.navbarorange = true;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"Mis habilidades");
             $rootScope.showFooter = true; 
            
 }]);

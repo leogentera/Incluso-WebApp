@@ -34,10 +34,8 @@ angular
             $scope.notificationsQuantity = notificationsQuantityInitial;
             $scope.notificationsQuantityUnread = notificationsQuantityInitial;
             $scope.notificationsQuantityRead = notificationsQuantityInitial;
-            
-            $rootScope.pageName = "Notificaciones";
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
+
+            $scope.setToolbar($location.$$path,"Notificaciones");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
                                                 
@@ -107,7 +105,7 @@ angular
             
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
-            }
+            };
             
             $scope.showAlertDetail = function (alertId) {
                 var userId = localStorage.getItem('userId');
@@ -116,26 +114,10 @@ angular
                 $scope.notifications[alertId -1 ].read = true ;
                 localStorage.setItem("notifications", JSON.stringify($scope.notifications));
                 _readNotification(userId,notificationId);
-                $scope.navigateTo('/AlertsDetail/' + alertId, 'Notificaciones', 'null', 'navbarorange');
-            }                    
-            
-            $scope.navigateTo = function(url,name,sideToggle,navbarColor){
-                $location.path(url);
-                console.log(navbarColor);
-                if(navbarColor == 'navbarorange'){
-                    $rootScope.navbarOrange = true;
-                    $rootScope.navbarBlue = false;
-                }
-                if(navbarColor == 'navbarblue'){
-                    $rootScope.navbarOrange = false;
-                    $rootScope.navbarBlue = true;
-                }
-
-                $("#menuton span").text(name);
-                
-                if(sideToggle == "sideToggle")
-                    $rootScope.sidebar = !$rootScope.sidebar;
+                $scope.navigateTo('/AlertsDetail/' + alertId, 'null');
             };
+            
+
             
         }
 ]);

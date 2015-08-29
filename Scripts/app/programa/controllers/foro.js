@@ -10,9 +10,7 @@
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-            $rootScope.pageName = "Estación: Conócete"
-            $rootScope.navbarBlue = true;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true; 
             
             $scope.back = function () {

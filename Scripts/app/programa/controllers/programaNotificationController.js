@@ -12,9 +12,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
-            $rootScope.pageName = "Notificaciones"
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"Notificaciones");
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false;
                                                 
