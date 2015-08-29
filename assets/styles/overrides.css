@@ -645,6 +645,9 @@ section.part.inbloq.text-left .actions {
   font-size: 4.5vw;
   font-weight: 500;
 }
+.comments-forum .icon-circle {
+  padding: 1vh 0px;
+}
 .comments-forum .arrow-up {
   display: none;
   position: absolute;
@@ -660,5 +663,5 @@ section.part.inbloq.text-left .actions {
 .comments-forum .active .arrow-up {
   display: block;
   bottom: -69px;
-  bottom: -15vw;
+  bottom: -9vw;
 }
