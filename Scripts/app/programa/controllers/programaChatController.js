@@ -19,10 +19,8 @@ angular
             $scope.senderId = localStorage.getItem('userId');
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
             $scope.currentMessage = "";
-            
-            $rootScope.pageName = "Chat";
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
+
+            $scope.setToolbar($location.$$path,"Cabina de Soporte");
             $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false; 
 

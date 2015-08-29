@@ -14,9 +14,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
             _httpFactory = $http;
-            $rootScope.pageName = "Estación: Conócete"
-            $rootScope.navbarBlue = true;
-            $rootScope.showToolbar = false;
+            $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false; 
 
