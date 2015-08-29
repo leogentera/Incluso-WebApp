@@ -411,7 +411,7 @@ body .disabled {
   font-size: 6vw;
 }
 .incluso-app #site-menu .nav > li > span {
-  padding: 3vw 1vw;
+  padding: 5vw 1vw;
   z-index: 10;
 }
 .incluso-app #site-menu .nav > li > a {
@@ -634,7 +634,7 @@ body .disabled {
 .incluso-app .btn-icon-aside .btn-icon {
   display: block;
   position: absolute;
-  top: -0.3em;
+  top: -0.15em;
   width: 11.6vw;
   height: 11.6vw;
   background-color: #bcd431;
@@ -648,7 +648,7 @@ body .disabled {
 .incluso-app .btn-icon-aside .icomoon {
   color: #1c374a;
   font-size: 5vw;
-  line-height: 9.6vw;
+  line-height: 9.3vw;
 }
 .incluso-app .btn-icon-aside > span {
   color: #ffffff;
@@ -664,6 +664,8 @@ body .disabled {
 }
 .incluso-app .btn-icon-aside.left > span {
   text-align: right;
+  font-size: 4.5vw;
+  line-height: 2.6;
 }
 .incluso-app .btn-icon-aside.left .btn-icon {
   left: 0;
