@@ -10,9 +10,7 @@ angular
 	'$http',
 	'$modal',
 	function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-		$rootScope.pageName = "Evaluación"
-		$rootScope.navbarBlue = true;
-		$rootScope.showToolbar = true;
+		$scope.setToolbar($location.$$path,"");
 		$rootScope.showFooter = true; 
 		$rootScope.showFooterRocks = false;
 		$scope.$emit('HidePreloader');

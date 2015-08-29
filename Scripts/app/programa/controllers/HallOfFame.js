@@ -10,9 +10,7 @@ angular
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-            $rootScope.pageName = "Salón de la fama"
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"Incluso");
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false; 
             $scope.back = function () {

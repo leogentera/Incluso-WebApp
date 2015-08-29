@@ -25,11 +25,8 @@
                 
             };
 
-            $scope.navigateTo = function(url,name,sideToggle,navbarColor){
-
+            $scope.navigateTo = function(url,sideToggle){
                 $location.path(url);
-
-
                 if(sideToggle == "sideToggle")
                     $rootScope.sidebar = !$rootScope.sidebar;
             };
