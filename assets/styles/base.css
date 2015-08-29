@@ -48,6 +48,9 @@ body.modal-open {
   position: fixed;
   x-index: 1;
 }
+body .disabled {
+  color: #62767C !important;
+}
 /****************************************************************************
      $menu 
      Description: CSS rules to make the off canvas without javascript.
@@ -407,7 +410,7 @@ body.modal-open {
 .incluso-app #site-menu .nav > li .submenu li {
   font-size: 6vw;
 }
-.incluso-app #site-menu .nav > li > i {
+.incluso-app #site-menu .nav > li > span {
   padding: 5vw 1vw;
   z-index: 10;
 }
@@ -1282,11 +1285,16 @@ body.modal-open {
   border: none;
 }
 .incluso-app .modal-theme-default .modal-body p,
-.incluso-app .modal-theme-default .modal-body ol li {
+.incluso-app .modal-theme-default .modal-body ol li,
+.incluso-app .modal-theme-default .modal-body ul li {
   height: auto;
   color: #ffffff;
   font-size: 5vw;
   text-align: justify;
+}
+.incluso-app .modal-theme-default .modal-body p > .subtitle-green {
+  font-size: 4.4vw;
+  color: #bcd431;
 }
 .incluso-app .modal-theme-default .modal-footer {
   border: none;
