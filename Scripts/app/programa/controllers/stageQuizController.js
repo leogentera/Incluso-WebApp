@@ -27,6 +27,13 @@ angular
             
             $scope.like_status = 0;
 
+            $scope.AnswersResult = {
+                "userid": 0,//$scope.userprofile.id,
+                "answers": [null, [0, 0, 0, 0], '', null, []],
+                "activityidnumber": 0,                         //$scope.activity.coursemoduleid
+                "like_status": 0
+            };
+
             $scope.finishActivity = function () {
                 //Activity completed
                 
@@ -43,15 +50,16 @@ angular
                 $scope.showWarning = false;
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
+
                 switch ($scope.activityname) {
                     case "Mis cualidades":
-                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
+                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;alert($scope.misCualidadesAnswers);
                         break;
                     case "Mis gustos":
-                        $scope.AnswersResult.answers = $scope.misGustosAnswers;
+                        $scope.AnswersResult.answers = $scope.misGustosAnswers;alert($scope.misGustosAnswers);
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists;
+                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;alert("Answers " + $scope.dreamsLists.answers);
                         break;
                     default:
                         break;
@@ -192,7 +200,7 @@ angular
                                 var userAnswer = userAnswers[indexUserAnswers].trim();
                                 for (var index = 0; index < question.answers.length; index++) {
                                     var questionOption = question.answers[index];
-                                    if (questionOption.answer.trim() == userAnswer) {
+                                    if (questionOption.answer.trim() == userAnswers) {
                                         $scope.AnswersResult.answers[1][index] = true;
                                     }
                                 }
@@ -267,7 +275,7 @@ angular
 
             function updateMisSueñosSelectedAnswers(question) {
 
-                if (question.userAnswer != null) {
+                if (question.userAnswer != null) {alert("update mis sueños: " + question.userAnswer);
                     var userAnswers = question.userAnswer.split(";");
                     for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
                         var userAnswer = userAnswers[indexUserAnswers].trim();
@@ -291,15 +299,10 @@ angular
             }
 
 
-            $scope.AnswersResult = {
-                "userid": 0,//$scope.userprofile.id,
-                "answers": [null, [0, 0, 0, 0], '', null, []]
-                , "activityidnumber": 0//$scope.activity.coursemoduleid
-                , "like_status": 0
-            };
-
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            //$scope.misGustosAnswers =
+
 
             function errorCallback(data) {
                 // var algo = data;
@@ -311,11 +314,13 @@ angular
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
-                var activity = getActivityByActivity_identifier($scope.activity_identifier);                
+                var activity = getActivityByActivity_identifier($scope.activity_identifier);
+                alert("activity from getDataAsync() " + JSON.stringify(activity));
+
                 if (activity != null) {
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
-                    $scope.activityname = activity.activityname;
+                    $scope.activityname = activity.activityname;alert($scope.activityname);
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -323,7 +328,7 @@ angular
 
                     var activityFinished = false;
 
-                    if (activity.status != 0) {
+                    if (activity.status != 0) {alert("Actividad YA finalizada");
                         activityFinished = true;
                     }
 
@@ -333,12 +338,12 @@ angular
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
 
-                    $scope.activity = activity;
+                    $scope.activity = activity;alert("activity object: " + JSON.stringify($scope.activity));
                 }
             }
 
 
-            function successfullCallBack(activityAnswers) {
+            function successfullCallBack(activityAnswers) {alert("Successful callback");
 
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
@@ -372,7 +377,7 @@ angular
             }
 
 
-            function errorCallback() {
+            function errorCallback() {alert("Unsuccessful callback");
             }
 
 
@@ -423,7 +428,7 @@ angular
 
                     }
 
-                    if (lastQuestionValidation) {
+                    if (lastQuestionValidation) {alert("Pasó la Validación " + $scope.dreamsLists.answers);
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
                     } else {
