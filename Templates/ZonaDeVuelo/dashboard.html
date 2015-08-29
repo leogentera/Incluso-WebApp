@@ -38,13 +38,12 @@
             </section>
 
             <section class="holoproj">
-                <h2 class="subtitle centered">- RETOS -</h3>
+                <h2 class="subtitle centered">- RETOS -</h2>
                 <div class="centered txt-title" ng-bind="challengeName"></div>
                 <div id="carousel-example-generic2" class="carousel">
-                    <div id="owl-demo2" class="owl-carousel">                        
-                        <div class="item visib" ng-repeat="reto in model.stages[idEtapa].challenges">
+                    <div id="owl-demo2" class="owl-carousel">
+                        <div class="item visib" ng-repeat="reto in stages[idEtapa].challenges">
                             <img ng-src="{{retosIconos[reto.sectionname]}}">
-
                             <div class="subtitle txt-renglon centered" ng-bind="reto.sectionname"></div>
                             <div class="txt-renglon challenge-description">Aquí falta poner la descripción</div>
                         </div>
@@ -70,27 +69,16 @@
             </section>
             <section class="parts activities">
                 <div id="owl-demo" class="owl-carousel">
-                    <div ng-repeat="challenge in model.stages[idEtapa].challenges">
-                      <!--
-                      <div class="part" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $parent.$index, $index)">
-                          <i class="icomoon icon-checked-join" ng-show="activity.status == 1"></i>
-                          <i class="icomoon icon-gauge" ng-show="activity.status == 0"></i>
+                    <div ng-repeat="challenge in stages[idEtapa].challenges">
+                      <div class="part" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
+                          <i class="icomoon icon-checked-join" ng-show="getCurrentStatusOfActivity($index, $parent.$index) == 1"></i>
+                          <i class="icomoon icon-gauge" ng-show="getCurrentStatusOfActivity($index, $parent.$index) == 0"></i>
                           <span ng-bind="activity.activityname"></span>
                           <span>
                               <i class="icomoon icon-star fl-right"></i>
                               <i class="icomoon icon-play fl-right"></i>
                           </span>
                       </div>
-                      -->
-                      <div class="part list-item" ng-repeat="actividad in theActivities[$index]" ng-click="goToUrl2(actividad.link)">
-                          <span class="icomoon icon-checked-join" ng-show="actividad.status == 1"></span>
-                          <span class="icomoon icon-gauge" ng-show="actividad.status == 0"></span>
-                          <div class="pull-left" ng-bind="actividad.name"></div>
-                          <span class="icomoon icon-star fl-right circle-star"></span>
-                          <span class="icomoon icon-play fl-right"></span>
-                          </span>
-                      </div>
-                      
                     </div>
                 </div>
                 <div>
