@@ -74,10 +74,7 @@ var _endActivity = function(activityModel){
       //_createNotification(activityModel, userId);
       
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
-      
-      // end actual challenge when all its activities are completed;
-      _isChallengeCompleted();
-      
+          
 }
 
 var _endActivityQuiz = function(activityModel){
@@ -87,33 +84,40 @@ var _endActivityQuiz = function(activityModel){
   
       //_createNotification(activityModel.activity, activityModel.userId);
       
-      moodleFactory.Services.PutEndActivity(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,successCallback,errorCallback);      
+      moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,successCallback,errorCallback);      
+ 
       
+      _isChallengeCompleted(activityModel.coursemoduleid);
 }
 
 
-var _isChallengeCompleted = function(){
-  
+var _isChallengeCompleted = function(activityId){     
+    
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;    
     var currentStage = userCourse.stages[lastStageIndex];
        
     var lastChallenge = _.where(currentStage.challenges,{status:1}).length;    
     var currentChallenge = currentStage.challenges[lastChallenge];
-    
-    var totalActivitiesByStage = currentChallenge.activities.length;    
+
+    for(var index = 0; index < currentChallenge.activities.length; index++){
+      debugger;
+        if (currentChallenge.activities[index].coursemoduleid == activityId) {
+          currentChallenge.activities[index].status = 1;
+        }
+    }
+    var totalActivitiesByStage = currentChallenge.activities.length;
     var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
     
     
     if (totalActivitiesByStage == totalActivitiesCompletedByStage) {
         var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-        var currentUserId = currentUser.userId;
-        var activityId = activityModel.coursemoduleid;
+        var currentUserId = currentUser.userId;        
         var data = {
           userid :  currentUserId };
           
         var currentActivityModuleId = currentChallenge.coursemoduleid;
-        moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activityModel, currentUser.token, successEndChallengeCallback,errorCallback);
+        moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, successEndChallengeCallback,errorCallback);
         return true;
     }
     else{
@@ -191,7 +195,7 @@ var errorCallback = function(data){
   
 }
 
-function getActivityByActivity_identifier(activity_identifier) {
+function getActivityByActivity_identifier(activity_identifier) {          
             var matchingActivity = null;
             var breakAll = false;
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -216,7 +220,7 @@ function getActivityByActivity_identifier(activity_identifier) {
             return matchingActivity;
 }
 
- function updateActivityStatus(activity_identifier) {
+ function updateActivityStatus(activity_identifier) {              
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
                 for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
@@ -296,7 +300,7 @@ var logout = function($scope, $location){
       localStorage.removeItem("course");
       localStorage.removeItem("stage");
       localStorage.removeItem("usercourse");
-      localStorage.removeItem("currentStage");
+      localStorage.removeItem("currentStage");      
       $location.path('/');
     };
     

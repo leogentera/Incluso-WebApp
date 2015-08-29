@@ -38,15 +38,14 @@
             </section>
 
             <section class="holoproj">
+                <h2 class="subtitle centered">- RETOS -</h3>
                 <div class="centered txt-title" ng-bind="challengeName"></div>
                 <div id="carousel-example-generic2" class="carousel">
-
                     <div id="owl-demo2" class="owl-carousel">
-
                         <div class="item visib" ng-repeat="reto in stages[idEtapa].challenges">
                             <img ng-src="{{retosIconos[reto.sectionname]}}">
-
-                            <div class="txt-renglon centered" ng-bind="reto.sectionname"></div>
+                            <div class="subtitle txt-renglon centered" ng-bind="reto.sectionname"></div>
+                            <div class="txt-renglon challenge-description">Aquí falta poner la descripción</div>
                         </div>
 
                     </div>
@@ -56,15 +55,19 @@
                     </a>
                     <a class="control" href="#" id="next">
                         <span class="icomoon icon-arrow-bold-right"></span>
-                    </a>
+                    </a>                    
                 </div>
 
                 <div class="light"><img src="assets/images/img-light-cone.png"></div>
+                <div class="centered paginate">
+                    <span id="index" class="txt-bigger">1/</span>
+                    <span class="white txt-bigger">6</span>
+                </div>
             </section>
 
-            <section class="jector">
+            <section class="jector">                
             </section>
-            <section class="parts">
+            <section class="parts activities">
                 <div id="owl-demo" class="owl-carousel">
                     <div ng-repeat="challenge in stages[idEtapa].challenges">
                       <div class="part" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
@@ -75,7 +78,7 @@
                               <i class="icomoon icon-star fl-right"></i>
                               <i class="icomoon icon-play fl-right"></i>
                           </span>
-                      </div> 
+                      </div>
                     </div>
                 </div>
                 <div>
@@ -89,6 +92,10 @@
 
                     <div class="circle"></div>
                     <div class="text">{{avanceEnEtapaActual}}%</div>
+                </div>
+                <div>
+                    <p class="title">Mi avance</p>
+                    <p>en la estación</p>
                 </div>
             </section>
             <section class="hangar-bay">

@@ -48,6 +48,9 @@ body.modal-open {
   position: fixed;
   x-index: 1;
 }
+body .disabled {
+  color: #62767C !important;
+}
 /****************************************************************************
      $menu 
      Description: CSS rules to make the off canvas without javascript.
@@ -407,8 +410,8 @@ body.modal-open {
 .incluso-app #site-menu .nav > li .submenu li {
   font-size: 6vw;
 }
-.incluso-app #site-menu .nav > li > i {
-  padding: 3vw 1vw;
+.incluso-app #site-menu .nav > li > span {
+  padding: 5vw 1vw;
   z-index: 10;
 }
 .incluso-app #site-menu .nav > li > a {
@@ -631,7 +634,7 @@ body.modal-open {
 .incluso-app .btn-icon-aside .btn-icon {
   display: block;
   position: absolute;
-  top: -0.3em;
+  top: -0.15em;
   width: 11.6vw;
   height: 11.6vw;
   background-color: #bcd431;
@@ -645,7 +648,7 @@ body.modal-open {
 .incluso-app .btn-icon-aside .icomoon {
   color: #1c374a;
   font-size: 5vw;
-  line-height: 9.6vw;
+  line-height: 9.3vw;
 }
 .incluso-app .btn-icon-aside > span {
   color: #ffffff;
@@ -661,6 +664,8 @@ body.modal-open {
 }
 .incluso-app .btn-icon-aside.left > span {
   text-align: right;
+  font-size: 4.5vw;
+  line-height: 2.6;
 }
 .incluso-app .btn-icon-aside.left .btn-icon {
   left: 0;
@@ -1280,11 +1285,16 @@ body.modal-open {
   border: none;
 }
 .incluso-app .modal-theme-default .modal-body p,
-.incluso-app .modal-theme-default .modal-body ol li {
+.incluso-app .modal-theme-default .modal-body ol li,
+.incluso-app .modal-theme-default .modal-body ul li {
   height: auto;
   color: #ffffff;
   font-size: 5vw;
   text-align: justify;
+}
+.incluso-app .modal-theme-default .modal-body p > .subtitle-green {
+  font-size: 4.4vw;
+  color: #bcd431;
 }
 .incluso-app .modal-theme-default .modal-footer {
   border: none;

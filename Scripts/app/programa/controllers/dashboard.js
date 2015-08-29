@@ -65,7 +65,8 @@
                     moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
                 }
 
-                $location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
+                //$location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
+                $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section);
             };
 
             $scope.playVideo = function(videoAddress, videoName){

@@ -34,7 +34,6 @@ Parallel work file for UI Developer 01
 }
 .incluso-app .evaluation .subtitle {
   padding-top: 60px;
-  text-transform: uppercase;
   font-weight: bold;
 }
 .incluso-app .evaluation .subtitle + .txt-renglon {
@@ -147,12 +146,10 @@ Parallel work file for UI Developer 01
   opacity: 1;
 }
 .incluso-app .evaluation .add input:-moz-placeholder {
-  /* Firefox 18- */
   color: white !important;
   opacity: 1;
 }
 .incluso-app .evaluation .add input::-moz-placeholder {
-  /* Firefox 19+ */
   color: white !important;
   opacity: 1;
 }
@@ -287,4 +284,38 @@ Parallel work file for UI Developer 01
 }
 .incluso-app .evaluation #finalized .question-parts {
   margin: 8vw 0;
+}
+.incluso-app .community .filter-section {
+  margin: 5%;
+  padding: 0;
+}
+.incluso-app .community .filter-section {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 0;
+  margin: 0 10vw;
+  position: relative;
+}
+.incluso-app .community .filter-section i {
+  font-size: 5vw;
+  display: inline-block;
+  vertical-align: middle;
+  color: #ffffff;
+}
+.incluso-app .community .filter-section select {
+  font-size: 5vw;
+  font-weight: bold;
+  color: white;
+  width: 92%;
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  text-indent: 0 !important;
+  padding-left: 1.4vw;
+}
+.incluso-app .community .filter-section .icon-arrow {
+  font-size: 3vw;
+  position: absolute;
+  top: 5vw;
+  right: 2vw;
 }

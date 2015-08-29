@@ -180,11 +180,23 @@
                 background-color: #24282A;
                 padding-top: 5px;
                 padding-bottom: 10px;
+                .spinner{
+                    display: inline-block;
+                    & + div {
+                        display: inline-block;
+                        vertical-align: middle;
+                        p {
+                            color: #FFF;
+                            text-transform: uppercase;
+                            font-weight: 600;
+                        }
+                    }
+                }
             }
             .spinner{    
                 max-width: 49%;
                 padding: 5% 9% 10%;
-                position: relative;
+                position: relative;                
                 .circle{
                     background-color: rgba(13, 15, 19, 0.55);
                     border-radius: 50%;
@@ -214,7 +226,7 @@
                     }
                     .loop(@i + 1);
                 }
-                .loop(@i);
+                .loop(@i);                
             }
             .holoproj{
                 background-image:url('@{url-images}/bg-holoproj-top.jpg');
@@ -232,6 +244,16 @@
                         width: 100%;
                     }
                 }
+                .challenge-description {
+                    margin-bottom: 10vh;
+                    padding: 0px;
+                }
+                .paginate {
+                    position: absolute;
+                    display: block;
+                    width: 100vw;
+                    margin: 18.5vh auto;                    
+                }
 
             }
             .jector{
@@ -239,7 +261,7 @@
                 background-size:cover;
                 background-color: #24282A;
                 background-position: 0 0;
-                padding-top: 60px;
+                padding-top: 12vh;                
             }
             .parts{
                 background-image:url('@{url-images}/bg-footer-ship.jpg');
@@ -247,6 +269,23 @@
                 background-size: cover;
                 border-top: 2px solid #2a2f32;
                 padding: 20px 0;
+            }
+            .activities {                
+                padding: 5vh 3.5%;
+                .list-item {
+                    span {
+                        padding-right: 1vw;
+                    }
+                    .circle-star {
+                        width: 10vw;
+                        margin-right: 2vw;
+                        padding: .5vh 2vw;
+                        border: 3px solid #E1E455;
+                        .border-radius(17px);                    
+                        font-size: 3vw;                    
+                    }
+                }
+                
             }
             .add{
                 border-bottom: 2px solid rgba(255, 255, 255, 0.3);
@@ -786,6 +825,7 @@
             figure {
                 overflow: hidden;
                 background-color: transparent;
+                text-align: center;
                 /*border: 10px solid transparent; */
             }            
             img {
@@ -1532,13 +1572,15 @@
                     min-height:inherit;
                 }
                 figcaption {
-                    width: 9vw;
+                    display: inline-block;
+                    width: auto;
                     height: 9vw;
-                    margin: -6vw auto 0;
+                    margin: -5.8vw auto 0;
                     border: 0.3em solid @clr-green;
                     box-sizing: content-box;
                     font-size: 5.1vw;
                     line-height: 9vw;
+                    padding: 0 3vw;                    
                 }
             } 
 
@@ -1606,24 +1648,71 @@
 
  
         /***********************************************************************
-         $green-lantern-theme
+         $list-item & $green-lantern-theme
          Description: CSS to represent look of a list of items with colors green and dark
         ************************************************************************/
+        .list-item { 
+                display: inline-flex;  
+                position: relative;
+                width: 100%;
+                margin: 2% 0px;
+                padding: 3% 5%;
+                z-index: 2;  
+                align-items: center;    
+                justify-content: space-between;                
+                cursor: pointer;
+                color: white;
+                font-size: 120%;                                
+                .date{
+                    color: rgba(255, 255, 255, 0.3);
+                   font-size: 70%;
+                }
+                .icomoon{
+                    color:@clr-greenLight;
+                    font-size:150%;
+                    padding-right: 5%;
+                }
+                .icon-checked-join{
+                    color:@clr-greenicon;
+                }
+                .icon-wrong{
+                    color:gray;
+                }
+                div{
+                    display: block;
+                    width: 100%;
+                    padding: 0px 3vw;
+                    font-size: 86%;
+
+                }
+                span{
+                    line-height: normal;
+                    display: inline-flex;   
+                }
+                &.showmore {
+                    div {
+                        color: #08B290;
+                    }
+                    .icomoon {
+                        color: #08B290;
+                    }
+                }
+         }
         .green-lantern-theme {
             padding: 0px;
-            .list-item { 
+            /*.list-item { 
                 display: inline-flex;  
                 width: 100%;
                 margin: 2% 0px;
                 padding: 3% 5%;
                 z-index: 2;  
                 align-items: center;    
-                justify-content: space-between;
-                background: #1f2733;
+                justify-content: space-between;                
                 cursor: pointer;
                 color: white;
                 font-size: 120%;                
                 position: relative;
+                background: #1f2733;
                 background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
                 background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
                 background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
@@ -1665,7 +1754,7 @@
                         color: #08B290;
                     }
                 }
-             }
+             }*/
             .highlight {
                 border: 1px solid #08B190;
             }

@@ -161,20 +161,23 @@
 			}
 			
 			$scope.showChatNotification = function(){
-				var readChatNotification = localStorage.getItem('chatRead');
-				
-				if ($scope.pageName == 'Chat' || readChatNotification == "true") {
+				var readChatNotification = localStorage.getItem('chatRead');				
+				if ($scope.pageName == 'Chat' || readChatNotification == "true" || readChatNotification == undefined) {
 					return false;
 				}else{
 					var userChat = JSON.parse(localStorage.getItem('userChat'));
-					var userId = localStorage.getItem('userId');
-					
-					var lastMessage = _.max(userChat,function(chat){
-						return chat.messagedate;
-					});
-					
-					if (lastMessage.messagesenderid != userId) {
-						return true;
+					if (userChat && userChat.length >= 1) {					
+						var userId = localStorage.getItem('userId');
+						
+						var lastMessage = _.max(userChat,function(chat){
+							return chat.messagedate;
+						});
+						
+						if (lastMessage.messagesenderid != userId) {
+							return true;
+						}
+					}else{
+						return false;						
 					}
 				}
 			}

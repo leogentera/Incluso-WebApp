@@ -11,7 +11,7 @@
     <div class="txt-renglon centered txt-bigger"></div>
     <div class="subtitle">Foro Común</div>
 
-    <div class="txt-renglon txt-bigger" ng-bind-html="p.message | linky"></div>
+    <div class="txt-renglon txt-bigger" ng-bind-html="discussion.message | linky"></div>
   </section>
 
   <section class="txt-renglon centered collapse-media">
@@ -104,9 +104,9 @@
             </span>
 
 
-            <div ng-repeat="attachment in p.attachments">
+            <!--<div ng-repeat="attachment in p.attachments">
                 <a href="{{ attachmentsfileurl }}"><i class="icomoon icon-required"></i> {{ attachment.filename }} </a>
-            </div>
+            </div>-->
           <div ng-show="p.likes" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto</div></div>
 
 
