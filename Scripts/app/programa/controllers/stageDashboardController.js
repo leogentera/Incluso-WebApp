@@ -73,8 +73,8 @@ angular
                 ["/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"]];
 
             $scope.goToUrl2 = function (url) {
-             $location.path(url);
-             };
+                $location.path(url);
+            };
 
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
