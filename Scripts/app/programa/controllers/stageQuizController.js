@@ -89,7 +89,6 @@ angular
 
             $scope.dreamsLists = { "answers": [[], [], []] };
 
-
             $scope.addSueno1 = function () {
                 addHeight();
                 $scope.dreamsLists.answers[0].push("");
@@ -128,7 +127,7 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.cancel = function () {
+            $scope.cancel = function () {alert("cancel");
                 $location.path('/ZonaDeVuelo/Dashboard');
             };
 
@@ -182,6 +181,7 @@ angular
                     showWarningAndGoToTop();
                 }
             };
+
 
             function updateSelectedAnswers(questionIndex, question) {
                 switch (questionIndex) {
@@ -239,6 +239,7 @@ angular
                         break;
                 }
             }
+
 
             function updateMisCualidadesSelectedAnswers(currentQuestionIndex, question) {
                 if (question.userAnswer != null) {
@@ -505,6 +506,7 @@ angular
     .controller('OpeningStageController', function ($scope, $modalInstance) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
+            $location.path("/ZonaDeVuelo/Dashboard");
         };
     })
     .controller('videoCollapsiblePanelController', function ($scope) {
