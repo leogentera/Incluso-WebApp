@@ -25,11 +25,8 @@
                 
             };
 
-            $scope.navigateTo = function(url,name,sideToggle,navbarColor){
-
+            $scope.navigateTo = function(url,sideToggle){
                 $location.path(url);
-
-
                 if(sideToggle == "sideToggle")
                     $rootScope.sidebar = !$rootScope.sidebar;
             };
@@ -162,7 +159,7 @@
 				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
 				//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
 				var countNotificationsUnread = _.filter(userNotifications, function(notif){
-                    return notif.timemodified != null;
+                    return (notif.timemodified != null && notif.read != true);
                 });				
 				$rootScope.totalNotifications = countNotificationsUnread.length;
 				return  countNotificationsUnread.length > 0;

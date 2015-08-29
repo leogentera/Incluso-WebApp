@@ -1,3 +1,4 @@
+//Controller for Suena.html
 angular
     .module('incluso.stage.quizcontroller', [])
     .controller('stageQuizController', [
@@ -32,6 +33,7 @@ angular
                 "like_status": 0
             };
 
+
             $scope.finishActivity = function () {
                 //Activity completed
                 
@@ -51,13 +53,13 @@ angular
 
                 switch ($scope.activityname) {
                     case "Mis cualidades":
-                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;alert($scope.misCualidadesAnswers);
+                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;console.log($scope.misCualidadesAnswers);
                         break;
                     case "Mis gustos":
                         $scope.AnswersResult.answers = $scope.misGustosAnswers;
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;alert("Answers " + $scope.dreamsLists.answers);
+                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;console.log("Answers " + $scope.dreamsLists.answers);
                         break;
                     default:
                         break;
@@ -88,32 +90,32 @@ angular
             $scope.dreamsLists = { "answers": [[], [], []] };
 
             $scope.addSueno1 = function () {
-                addHeight();
+                addHeight("#listaDinamica1");
                 $scope.dreamsLists.answers[0].push("");
             };
 
             $scope.addSueno2 = function () {
-                addHeight();
+                addHeight("#listaDinamica2");
                 $scope.dreamsLists.answers[1].push("");
             };
 
             $scope.addSueno3 = function () {
-                addHeight();
+                addHeight("#listaDinamica3");
                 $scope.dreamsLists.answers[2].push("");
             };
 
             $scope.deleteSueno1 = function (index) {
-                removeHeight();
+                removeHeight("#listaDinamica1");
                 $scope.dreamsLists.answers[0].splice(index, 1);
             };
 
             $scope.deleteSueno2 = function (index) {
-                removeHeight();
+                removeHeight("#listaDinamica2");
                 $scope.dreamsLists.answers[1].splice(index, 1);
             };
 
             $scope.deleteSueno3 = function (index) {
-                removeHeight();
+                removeHeight("#listaDinamica3");
                 $scope.dreamsLists.answers[2].splice(index, 1);
             };
 
@@ -275,7 +277,7 @@ angular
 
             function updateMisSueñosSelectedAnswers(question) {
 
-                if (question.userAnswer != null) {alert("update mis sueños: " + question.userAnswer);
+                if (question.userAnswer != null) {console.log("update mis sueños: " + question.userAnswer);
                     var userAnswers = question.userAnswer.split(";");
                     for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
                         var userAnswer = userAnswers[indexUserAnswers].trim();
@@ -287,7 +289,6 @@ angular
                         }
                     }
                 }
-
             }
 
             function cleanText(userAnswer) {
@@ -304,7 +305,7 @@ angular
             //$scope.misGustosAnswers =
 
 
-            function errorCallback(data) {
+            function errorCallback(data) {console.log("You entered the errorCallback");
                 // var algo = data;
             }
 
@@ -315,12 +316,12 @@ angular
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
-                alert("activity from getDataAsync() " + JSON.stringify(activity));
+                console.log("activity from getDataAsync() " + JSON.stringify(activity));
 
                 if (activity != null) {
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
-                    $scope.activityname = activity.activityname;alert("Actividad: " + $scope.activityname);
+                    $scope.activityname = activity.activityname;console.log("Actividad: " + $scope.activityname);
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -328,7 +329,7 @@ angular
 
                     var activityFinished = false;
 
-                    if (activity.status != 0) {alert("Actividad YA finalizada");
+                    if (activity.status != 0) {console.log("Actividad YA finalizada");
                         activityFinished = true;
                     }
 
@@ -338,14 +339,14 @@ angular
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
 
-                    $scope.activity = activity;alert("activity object: " + JSON.stringify($scope.activity));
+                    $scope.activity = activity;console.log("activity object: " + JSON.stringify($scope.activity));
                 }
             }
 
 
-            function successfullCallBack(activityAnswers) {
+            function successfullCallBack(activityAnswers) {console.log("You entered successfullCallBack");
 
-                if (activityAnswers != null) {
+                if (activityAnswers != null) {console.log(JSON.stringify(activityAnswers));
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
@@ -377,7 +378,7 @@ angular
             }
 
 
-            function errorCallback() {alert("Unsuccessful callback");
+            function errorCallback() {console.log("Unsuccessful callback");
             }
 
 
@@ -391,13 +392,13 @@ angular
                 });
             };
 
-            function addHeight() {
-                $scope.finalHeight = angular.element("#listaDinamica").height() + 125;
+            function addHeight(lista) {
+                $scope.finalHeight = angular.element(lista).height() + 125;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
-            function removeHeight() {
-                $scope.finalHeight = angular.element("#listaDinamica").height() - 135;
+            function removeHeight(lista) {
+                $scope.finalHeight = angular.element(lista).height() - 135;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 

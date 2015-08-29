@@ -58,7 +58,7 @@
         };
         
         var _postUserNotifications = function(userId, data, successCallback, errorCallback){
-            _postAsyncData("notifications",data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+            _postAsyncData("notifications/"+userId,data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
         var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
@@ -66,7 +66,7 @@
         };
         
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
-            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification' ), successCallback, errorCallback);
+            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/')+ notificationId, successCallback, errorCallback);
         };
         
         var _getUserChat = function(userId, successCallback, errorCallback){
@@ -105,7 +105,13 @@
             }
         };
 
-        var _getAsyncData = function(key, url, successCallback, errorCallback){
+        var _getAsyncData = function(key, url, successCallback, errorCallback, forceRefresh){
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+                
+            if (returnValue) {
+                return returnValue;
+            }
+            
             _httpFactory({
                 method: 'GET',
                 url: url, 
@@ -428,6 +434,8 @@
                 localStorage.setItem("usercourse", JSON.stringify(course));
                 localStorage.setItem("course", JSON.stringify(course));
                 localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
+
+                debugger;
             }
         }        
         

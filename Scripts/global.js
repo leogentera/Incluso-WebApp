@@ -70,23 +70,26 @@ var _endActivity = function(activityModel){
       var activityId = activityModel.coursemoduleid;
       var data = {
         userid :  currentUserId };
-  
-      //_createNotification(activityModel, userId);
-      
+        
+      //trigger activity type 2 is sent when the activity ends.
+      var triggerActivity = 2;
+      _createNotification(activityId, triggerActivity);
+        
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
           
 }
 
 var _endActivityQuiz = function(activityModel){
-                    
-      //var currentUserId = localStorage.getItem("userId");
+                          
       var serviceParameters =  activityModel.answersResult;
-  
-      //_createNotification(activityModel.activity, activityModel.userId);
+      var activityId = activityModel.coursemoduleid;
       
+      //trigger activity type 2 is sent when the activity ends.
+      var triggerActivity = 2;
+      _createNotification(activityId, triggerActivity);      
+            
       moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,successCallback,errorCallback);      
- 
-      
+       
       _isChallengeCompleted(activityModel.coursemoduleid);
 }
 
@@ -100,8 +103,7 @@ var _isChallengeCompleted = function(activityId){
     var lastChallenge = _.where(currentStage.challenges,{status:1}).length;    
     var currentChallenge = currentStage.challenges[lastChallenge];
 
-    for(var index = 0; index < currentChallenge.activities.length; index++){
-      debugger;
+    for(var index = 0; index < currentChallenge.activities.length; index++){      
         if (currentChallenge.activities[index].coursemoduleid == activityId) {
           currentChallenge.activities[index].status = 1;
         }
@@ -129,64 +131,33 @@ var successEndChallengeCallback = function(){
   localStorage.setItem("closeStageModal",'true');
 }
 
-
-var _createNotification = function(activityModel, currentUserId){
+var _createNotification = function(activityId, triggerActivity){
     
-  var activityId = acitivityModel.coursemoduleid;  
-  var sectionId = activityModel.section;
   currentUserId = localStorage.getItem("userId");
   
-  var notifications = JSON.parse(localStorage.getItem("notifications"));
-  var endTypeNotifications = _.where(notifications, {trigger : 2});  
-  
-  for(var i= 0; i< notifications.length; i++){      
-      if (notifications[i].activityidnumber && (activityId == notifications[i].activityidnumber)) {
-          var dataModelNotification = {
-              notificationid: notifications[i].id,
-              timemodified : new Date(),
-              userid: currentUserId ,
-              already_read: 0
-          };
-          moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);        
-      }else{
-        if (sectionId == notifications[i].sectionid){                    
-          var dataModelNotification = {
-              notificationid: notifications[i].id,
-              timemodified : new Date(),
-              userid: currentUserId ,
-              already_read: 0
-          };
-          moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);              
-        }      
-      }  
-  }
-}
-
-var _createMultipleActivitiesNotification = function(alertsId){
-  var notifications = JSON.parse(localStorage.getItem("notifications"));
-  var startTypeNotifications = _.where(notifications, {trigger : 1});
-  var alerts = alertsId.split(',');
-  var countAlertsConditionsMet = 0;
-  for(var i= 0; i< notifications.length; i++){
-    for(var j= 0; j< alerts.length;j++){
-      var activityId = alerts[j].id;
-      if (activityId == notifications[i].activityidnumber || activityId == notifications[i].sectionid) {
-        countAlertsConditionsMet ++;
-      }
+  var allNotifications = JSON.parse(localStorage.getItem("notifications"));
+  var notificationByActivity = _.find(allNotifications, function(notif){    
+    if (notif.trigger == triggerActivity && notif.activityidnumber == activityId) {
+      return true;
     }
-  }
-  if (countAlertsConditionsMet > 1){
+    return false;    
+  });
+  
+  if (notificationByActivity){
       var dataModelNotification = {
-          notificationid: notifications[i].id,
+          notificationid: notificationByActivity.id,
           timemodified : new Date(),
-          userid: currentUserId ,
+          userid: currentUserId,
           already_read: 0
       };
       moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
   }
-} 
+  else{
+    
+  }  
+}
 
-var successCallback =function(data){  
+var successCallback = function(data){  
     console.log("global.js - successCallback - " + data);
 }
 

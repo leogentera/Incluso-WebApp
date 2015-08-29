@@ -10,9 +10,7 @@ angular
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-            $rootScope.pageName = "Mis Gustos"
-            $rootScope.navbarorange = true;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"Mis gustos");
             $rootScope.showFooter = true; 
            
 }]);

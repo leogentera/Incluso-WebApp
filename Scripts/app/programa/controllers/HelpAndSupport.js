@@ -10,9 +10,7 @@ angular
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-            $rootScope.pageName = "Ayuda y soporte"
-            $rootScope.navbarblue = true;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"Incluso");
             $rootScope.showFooter = true; 
             $scope.$emit('HidePreloader');
            
