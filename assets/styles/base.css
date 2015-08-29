@@ -48,6 +48,9 @@ body.modal-open {
   position: fixed;
   x-index: 1;
 }
+body .disabled {
+  color: #62767C !important;
+}
 /****************************************************************************
      $menu 
      Description: CSS rules to make the off canvas without javascript.
