@@ -90,32 +90,32 @@ angular
             $scope.dreamsLists = { "answers": [[], [], []] };
 
             $scope.addSueno1 = function () {
-                addHeight();
+                addHeight("#listaDinamica1");
                 $scope.dreamsLists.answers[0].push("");
             };
 
             $scope.addSueno2 = function () {
-                addHeight();
+                addHeight("#listaDinamica2");
                 $scope.dreamsLists.answers[1].push("");
             };
 
             $scope.addSueno3 = function () {
-                addHeight();
+                addHeight("#listaDinamica3");
                 $scope.dreamsLists.answers[2].push("");
             };
 
             $scope.deleteSueno1 = function (index) {
-                removeHeight();
+                removeHeight("#listaDinamica1");
                 $scope.dreamsLists.answers[0].splice(index, 1);
             };
 
             $scope.deleteSueno2 = function (index) {
-                removeHeight();
+                removeHeight("#listaDinamica2");
                 $scope.dreamsLists.answers[1].splice(index, 1);
             };
 
             $scope.deleteSueno3 = function (index) {
-                removeHeight();
+                removeHeight("#listaDinamica3");
                 $scope.dreamsLists.answers[2].splice(index, 1);
             };
 
@@ -289,7 +289,6 @@ angular
                         }
                     }
                 }
-
             }
 
             function cleanText(userAnswer) {
@@ -306,7 +305,7 @@ angular
             //$scope.misGustosAnswers =
 
 
-            function errorCallback(data) {
+            function errorCallback(data) {console.log("You entered the errorCallback");
                 // var algo = data;
             }
 
@@ -345,9 +344,9 @@ angular
             }
 
 
-            function successfullCallBack(activityAnswers) {
+            function successfullCallBack(activityAnswers) {console.log("You entered successfullCallBack");
 
-                if (activityAnswers != null) {
+                if (activityAnswers != null) {console.log(JSON.stringify(activityAnswers));
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
@@ -393,13 +392,13 @@ angular
                 });
             };
 
-            function addHeight() {
-                $scope.finalHeight = angular.element("#listaDinamica").height() + 125;
+            function addHeight(lista) {
+                $scope.finalHeight = angular.element(lista).height() + 125;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
-            function removeHeight() {
-                $scope.finalHeight = angular.element("#listaDinamica").height() - 135;
+            function removeHeight(lista) {
+                $scope.finalHeight = angular.element(lista).height() - 135;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
