@@ -53,7 +53,9 @@ angular
                                 instance: currentActivity.coursemoduleid,
                                 instanceType: 0,
                                 date: getdate()
-                            }
+                            };
+
+                            moodleFactory.Services.PutStars(model, profile, currentUser.token);
                         });
                     }
                 }
