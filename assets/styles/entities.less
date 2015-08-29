@@ -22,7 +22,23 @@
 /* xs viewport */
 @media screen {
     .incluso-app {
-
+        /*********** add a circle around to any icon *********/
+        .icon-circle {
+                margin-right: 2vw;
+                padding: 3vh 4vw;
+                border: 5px solid #FFF;
+                .border-radius(50px);                    
+                font-size: 7vw;                    
+                color: #FFF;
+                &.active {
+                    background-color: #EF4924;
+                    border-color: #F16445; 
+                }
+                &:focus,
+                &:active {
+                    outline: none;
+                }
+        }
         /***********************************************************************
          01. $text n containers
          Description: CSS for most used parts

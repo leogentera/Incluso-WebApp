@@ -28,6 +28,7 @@
 /* xs viewport */
 @media screen {
   .incluso-app {
+    /*********** add a circle around to any icon *********/
     /***********************************************************************
          01. $text n containers
          Description: CSS for most used parts
@@ -141,6 +142,24 @@
          $bubble
          Description: CSS to represent look for generic bubble near to the element
         ************************************************************************/
+  }
+  .incluso-app .icon-circle {
+    margin-right: 2vw;
+    padding: 3vh 4vw;
+    border: 5px solid #FFF;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    font-size: 7vw;
+    color: #FFF;
+  }
+  .incluso-app .icon-circle.active {
+    background-color: #EF4924;
+    border-color: #F16445;
+  }
+  .incluso-app .icon-circle:focus,
+  .incluso-app .icon-circle:active {
+    outline: none;
   }
   .incluso-app .to-top {
     bottom: 20px;
