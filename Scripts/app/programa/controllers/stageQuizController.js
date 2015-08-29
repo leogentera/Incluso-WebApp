@@ -12,6 +12,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
+            _httpFactory = $http;
             $rootScope.pageName = "Estación: Conócete";
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
@@ -42,7 +43,6 @@ angular
                 $scope.showWarning = false;
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
-                alert($scope.activityname);
                 switch ($scope.activityname) {
                     case "Mis cualidades":
                         $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
@@ -249,12 +249,37 @@ angular
             }
 
 
-            function updateMisGustosSelectedAnswers(question) {
-                var Ulises = "Update Code";
+            function updateMisGustosSelectedAnswers(currentQuestionIndex,question) {                
+                if (question.userAnswer != null) {
+                    var userAnswers = cleanText(question.userAnswer);
+                    var userAnswersList = userAnswers.split(";");
+                    for (var answerOptionsIndex = 0; answerOptionsIndex < question.answers.length; answerOptionsIndex++) {
+                        var answerOption = question.answers[answerOptionsIndex];
+                        for (var userAnswersListIndex = 0; userAnswersListIndex < userAnswersList.length; userAnswersListIndex++) {
+                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]);
+                            if (answerOption.answer == userAnswer) {
+                                $scope.misGustosAnswers[currentQuestionIndex][answerOptionsIndex] = true;
+                            }
+                        }
+                    }
+                }
             }
 
             function updateMisSueñosSelectedAnswers(question) {
-                var Carlos = "Update Code";
+
+                if (question.userAnswer != null) {
+                    var userAnswers = question.userAnswer.split(";");
+                    for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
+                        var userAnswer = userAnswers[indexUserAnswers].trim();
+                        for (var index = 0; index < question.answers.length; index++) {
+                            var questionOption = question.answers[index];
+                            if (questionOption.answer.trim() == userAnswer) {
+                                dreamsLists.answers.push(userAnswer);
+                            }
+                        }
+                    }
+                }
+
             }
 
             function cleanText(userAnswer) {
@@ -281,13 +306,12 @@ angular
             }
 
             function getDataAsync() {
-
+                                
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
-                var activity = getActivityByActivity_identifier($scope.activity_identifier);
-
+                var activity = getActivityByActivity_identifier($scope.activity_identifier);                
                 if (activity != null) {
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
@@ -295,7 +319,7 @@ angular
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                    $scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/" + $scope.coursemoduleid));
+                    //$scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/" + $scope.coursemoduleid));
 
                     var activityFinished = false;
 
@@ -308,17 +332,20 @@ angular
                     if (activityFinished) {
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
+
                     $scope.activity = activity;
                 }
             }
 
+
             function successfullCallBack(activityAnswers) {
-                alert(activityAnswers.toString);
 
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
+
                         var question = activityAnswers.questions[index];
+
                         switch ($scope.activityname) {
                             case "Exploracion Inicial":
                                 updateSelectedAnswers(index, question);
@@ -327,14 +354,15 @@ angular
                                 updateMisCualidadesSelectedAnswers(index, question);
                                 break;
                             case "Mis gustos":
-                                updateMisGustosSelectedAnswers(pregunta);
+                                updateMisGustosSelectedAnswers(index, question);
                                 break;
                             case "Sueña":
-                                updateMisSueñosSelectedAnswers(pregunta);
+                                updateMisSueñosSelectedAnswers(question);
                                 break;
                             default:
                                 break;
                         }
+
                     }
                 }
                 else {
@@ -342,6 +370,11 @@ angular
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
                 }
             }
+
+
+            function errorCallback() {
+            }
+
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -351,7 +384,6 @@ angular
                     size: size,
                     windowClass: 'user-help-modal'
                 });
-                console.log("modal open");
             };
 
             function addHeight() {
@@ -374,13 +406,13 @@ angular
                     var lastQuestionValidation = true;
 
                     for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
-                        var cont = $scope.dreamsLists.answers[a].length; alert("Pregunta " + a);
+                        var cont = $scope.dreamsLists.answers[a].length;
 
                         for (var b = 0; b < cont; b++) {
                             var text = $scope.dreamsLists.answers[a][b];
 
                             if (text.trim() == '') {
-                                lastQuestionValidation = false;alert("Pregunta vacía!");
+                                lastQuestionValidation = false;
                                 break;
                             }
                         }
@@ -391,15 +423,15 @@ angular
 
                     }
 
-                    if (lastQuestionValidation) {alert("Todo bien!");
+                    if (lastQuestionValidation) {
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
-                    } else { alert("No todo bien...");
+                    } else {
                         showWarningAndGoToTop();
                     }
 
                 } else {
-                    showWarningAndGoToTop();alert("NADA");
+                    showWarningAndGoToTop();
                 }
 
             };

@@ -16,7 +16,8 @@ angular
             //$scope.scrollToTop();
             $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
             $scope.imageSrc =  "amarillo"; //$scope.avatarInfo[0]["color_cabello"];
-
+            $scope.file = null;
+            var user = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
             $scope.selectAvatarCabelloAmarillo = function() {
                 if ( $scope.avatarInfo != null) {
                     $scope.avatarInfo[0]["color_cabello"] = "amarillo";
@@ -64,5 +65,47 @@ angular
                     $location.path('/ProgramaDashboard');
                 }
             }
+
+            $scope.uploadAvatar = function(file) {
+                $http({
+                    method: 'POST',
+                    url: API_RESOURCE.format('avatar'),
+                    data: {
+                        userid: user.id,
+                        filecontent: file
+                    }
+                })
+                .success(function(){
+                    console.log('Foto guardada exitosamente!');
+                    $location.path('/ProgramaDashboard');
+                })
+                .error(function(){
+                    console.log('Error al subir la foto!');
+                    $location.path('/ProgramaDashboard');
+                });
+            }
             
-        }]);
+        }])
+        .directive('file', function(){
+            return {
+                scope: {
+                    file: '='
+                },
+                link: function(scope, el, attrs){
+                    el.bind('change', function(event){
+                        var files = event.target.files;
+                        if (files.length) {
+                          var r = new FileReader();
+                                r.onload = function(e) {
+                                    var contents = e.target.result;
+                                    scope.$apply(function () {
+                                        scope.file = btoa(contents)
+                                    });
+                                };
+                                r.readAsBinaryString(files[0]);
+                        } 
+                    });
+               }
+                
+            };
+        });
