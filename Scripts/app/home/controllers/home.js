@@ -25,39 +25,45 @@
                 
             };
 
-            $scope.navigateTo = function(url,name,sideToggle,navbarColor){
-
+            $scope.navigateTo = function(url,sideToggle){
                 $location.path(url);
-                if(navbarColor == 'navbarorange'){
-                    $rootScope.navbarOrange = true;
-                    $rootScope.navbarBlue = false;
-                    $rootScope.navbarPink = false;
-                    $rootScope.navbarGreen = false;
-                }
-                if(navbarColor == 'navbarblue'){
+                if(sideToggle == "sideToggle")
+                    $rootScope.sidebar = !$rootScope.sidebar;
+            };
+
+            $scope.setToolbar = function(url,name){
+                //Set toolbar color and text based on path
+                //Default/global is orange
+                $rootScope.showToolbar = true;
+                $rootScope.navbarOrange = true;
+                $rootScope.navbarBlue = false;
+                $rootScope.navbarPink = false;
+                $rootScope.navbarGreen = false;
+                $rootScope.pageName=name;
+                //Stage 1 is blue
+                if(url.indexOf("/ZonaDeVuelo")=== 0) {
                     $rootScope.navbarOrange = false;
                     $rootScope.navbarBlue = true;
                     $rootScope.navbarPink = false;
                     $rootScope.navbarGreen = false;
-                }
-                if(navbarColor == 'navbarpink'){
-                    $rootScope.navbarOrange = false;
-                    $rootScope.navbarBlue = false;
-                    $rootScope.navbarPink = true;
-                    $rootScope.navbarGreen = false;                                        
-                }
-                if(navbarColor == 'navbargreen'){
+                    $rootScope.pageName = "Zona de Vuelo";
+                    //$("#menuton span").text('Zona de Vuelo');
+                }//Stage 2 is green
+                if(url.indexOf("/ZonaDeNavegacion")=== 0){
                     $rootScope.navbarOrange = false;
                     $rootScope.navbarBlue = false;
                     $rootScope.navbarPink = false;
                     $rootScope.navbarGreen = true;
+                    $rootScope.pageName = "Zona de Navegación";
+                }//Stage 3 is pink
+                if(url.indexOf("/ZonaDeAterrizaje")=== 0){
+                    $rootScope.navbarOrange = false;
+                    $rootScope.navbarBlue = false;
+                    $rootScope.navbarPink = true;
+                    $rootScope.navbarGreen = false;
+                    $rootScope.pageName = "Zona de Aterrizaje";
                 }
 
-
-                $("#menuton span").text(name);
-                
-                if(sideToggle == "sideToggle")
-                    $rootScope.sidebar = !$rootScope.sidebar;
             };
 
             $scope.toolbarOptionActive = function (path) {
@@ -66,7 +72,7 @@
                     return "active disabled";
                 else
                     return "";
-            }
+            };
            
 			$scope.playVideo = function(videoAddress, videoName){
                  playVideo(videoAddress, videoName);
@@ -75,7 +81,7 @@
             $scope.scrollToTop = function(element){         
                 $location.hash(element);
                 $anchorScroll();      
-            }
+            };
             
             //*******************************************************************
             /*
@@ -129,7 +135,7 @@
                 $location.hash('top');
                 $anchorScroll();
                 console.log("scrolled to top");
-            } 
+            };
             $scope.$on('scrollTop', $scope.scrollTo);
 
             /* Preloader default callbacks and listeners */
@@ -153,7 +159,7 @@
 				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
 				//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
 				var countNotificationsUnread = _.filter(userNotifications, function(notif){
-                    return notif.timemodified != null;
+                    return (notif.timemodified != null && notif.read != true);
                 });				
 				$rootScope.totalNotifications = countNotificationsUnread.length;
 				return  countNotificationsUnread.length > 0;
@@ -161,20 +167,23 @@
 			}
 			
 			$scope.showChatNotification = function(){
-				var readChatNotification = localStorage.getItem('chatRead');
-				
-				if ($scope.pageName == 'Chat' || readChatNotification == "true") {
+				var readChatNotification = localStorage.getItem('chatRead');				
+				if ($scope.pageName == 'Chat' || readChatNotification == "true" || readChatNotification == undefined) {
 					return false;
 				}else{
 					var userChat = JSON.parse(localStorage.getItem('userChat'));
-					var userId = localStorage.getItem('userId');
-					
-					var lastMessage = _.max(userChat,function(chat){
-						return chat.messagedate;
-					});
-					
-					if (lastMessage.messagesenderid != userId) {
-						return true;
+					if (userChat && userChat.length >= 1) {					
+						var userId = localStorage.getItem('userId');
+						
+						var lastMessage = _.max(userChat,function(chat){
+							return chat.messagedate;
+						});
+						
+						if (lastMessage.messagesenderid != userId) {
+							return true;
+						}
+					}else{
+						return false;						
 					}
 				}
 			}

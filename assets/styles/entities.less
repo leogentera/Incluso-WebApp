@@ -22,7 +22,25 @@
 /* xs viewport */
 @media screen {
     .incluso-app {
-
+        /*********** add a circle around to any icon *********/
+        .icon-circle {
+                width: 25%;
+                margin-right: 2vw;
+                padding: 2vh 0px;
+                text-align: center;
+                border: 5px solid #FFF;
+                .border-radius(50px);                    
+                font-size: 7vw;                    
+                color: #FFF;
+                &.active {
+                    background-color: #EF4924;
+                    border-color: #F16445; 
+                }
+                &:focus,
+                &:active {
+                    outline: none;
+                }
+        }
         /***********************************************************************
          01. $text n containers
          Description: CSS for most used parts
@@ -120,6 +138,10 @@
                 justify-content: space-between;
                 a{
                     padding:.5%;
+                    &:focus,
+                    &:active {
+                        outline: none;
+                    }
                 }
             }
             .fl-left{
@@ -180,11 +202,23 @@
                 background-color: #24282A;
                 padding-top: 5px;
                 padding-bottom: 10px;
+                .spinner{
+                    display: inline-block;
+                    & + div {
+                        display: inline-block;
+                        vertical-align: middle;
+                        p {
+                            color: #FFF;
+                            text-transform: uppercase;
+                            font-weight: 600;
+                        }
+                    }
+                }
             }
             .spinner{    
                 max-width: 49%;
                 padding: 5% 9% 10%;
-                position: relative;
+                position: relative;                
                 .circle{
                     background-color: rgba(13, 15, 19, 0.55);
                     border-radius: 50%;
@@ -214,7 +248,7 @@
                     }
                     .loop(@i + 1);
                 }
-                .loop(@i);
+                .loop(@i);                
             }
             .holoproj{
                 background-image:url('@{url-images}/bg-holoproj-top.jpg');
@@ -232,6 +266,16 @@
                         width: 100%;
                     }
                 }
+                .challenge-description {
+                    margin-bottom: 10vh;
+                    padding: 0px;
+                }
+                .paginate {
+                    position: absolute;
+                    display: block;
+                    width: 100vw;
+                    margin: 18.5vh auto;                    
+                }
 
             }
             .jector{
@@ -239,7 +283,7 @@
                 background-size:cover;
                 background-color: #24282A;
                 background-position: 0 0;
-                padding-top: 60px;
+                padding-top: 12vh;                
             }
             .parts{
                 background-image:url('@{url-images}/bg-footer-ship.jpg');
@@ -247,6 +291,23 @@
                 background-size: cover;
                 border-top: 2px solid #2a2f32;
                 padding: 20px 0;
+            }
+            .activities {                
+                padding: 5vh 3.5%;
+                .list-item {
+                    span {
+                        padding-right: 1vw;
+                    }
+                    .circle-star {
+                        width: 10vw;
+                        margin-right: 2vw;
+                        padding: .5vh 2vw;
+                        border: 3px solid #E1E455;
+                        .border-radius(17px);                    
+                        font-size: 3vw;                    
+                    }
+                }
+                
             }
             .add{
                 border-bottom: 2px solid rgba(255, 255, 255, 0.3);
@@ -448,7 +509,7 @@
             .modalDialog {
                 position: relative;
                 min-height: 15vh;
-                font-family: Arial, Helvetica, sans-serif;
+                /*font-family: Arial, Helvetica, sans-serif;*/
                 z-index: 99999;
                 /*opacity:0;*/
                 -webkit-transition: opacity 400ms ease-in;
@@ -1609,24 +1670,83 @@
 
  
         /***********************************************************************
-         $green-lantern-theme
+         $list-item & $green-lantern-theme
          Description: CSS to represent look of a list of items with colors green and dark
         ************************************************************************/
+        .list {
+            .list-item {
+                margin: 0.7vh 0px;
+            }
+        }
+        .list-item { 
+                display: inline-flex;  
+                position: relative;
+                width: 100%;
+                margin: 2% 0px;
+                padding: 3% 5%;
+                z-index: 2;  
+                align-items: center;    
+                justify-content: space-between;                
+                cursor: pointer;
+                color: white;
+                font-size: 120%;    
+                background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
+                background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
+                background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );                            
+                .date{
+                    color: rgba(255, 255, 255, 0.3);
+                   font-size: 70%;
+                }
+                .icomoon{
+                    color:@clr-greenLight;
+                    font-size:150%;
+                    padding-right: 5%;
+                }
+                .icon-checked-join{
+                    color:@clr-greenicon;
+                }
+                .icon-wrong{
+                    color:gray;
+                }
+                div{
+                    display: block;
+                    width: 100%;
+                    padding: 0px 3vw;
+                    font-size: 86%;
+
+                }
+                span{
+                    line-height: normal;
+                    display: inline-flex;   
+                }
+                &.showmore {
+                    div {
+                        color: #08B290;
+                    }
+                    .icomoon {
+                        color: #08B290;
+                    }
+                }
+         }
         .green-lantern-theme {
             padding: 0px;
-            .list-item { 
+            /*.list-item { 
                 display: inline-flex;  
                 width: 100%;
                 margin: 2% 0px;
                 padding: 3% 5%;
                 z-index: 2;  
                 align-items: center;    
-                justify-content: space-between;
-                background: #1f2733;
+                justify-content: space-between;                
                 cursor: pointer;
                 color: white;
                 font-size: 120%;                
                 position: relative;
+                background: #1f2733;
                 background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
                 background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
                 background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
@@ -1668,7 +1788,7 @@
                         color: #08B290;
                     }
                 }
-             }
+             }*/
             .highlight {
                 border: 1px solid #08B190;
             }

@@ -14,9 +14,7 @@ angular
             _httpFactory = $http;
 
             $scope.currentPage = 1;
-            $rootScope.pageName = "Mi perfil"
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"Mi perfil");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.$emit('HidePreloader');
@@ -192,13 +190,13 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (badgeId, badgeName, badgeDateIssued, earnedTimes) {
+            $scope.showDetailBadge = function (badgeId, badgeName, badgeDateIssued, earnedTimes, status) {
                 $scope.currentPage = 10;
                 $scope.badgeId = badgeId;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
-                //$scope.status = status;
+                $scope.status = status;
             };
 
             $scope.edit = function () {
@@ -206,7 +204,7 @@ angular
             };
 
             $scope.index = function () {
-                $scope.navigateTo('Profile', 'Mi perfil', 'null', 'navbarblue')
+                $scope.navigateTo('Profile', 'null');
                 //$location.path('/Perfil/Editar');
             };
 

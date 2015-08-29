@@ -34,7 +34,6 @@ Parallel work file for UI Developer 01
 }
 .incluso-app .evaluation .subtitle {
   padding-top: 60px;
-  text-transform: uppercase;
   font-weight: bold;
 }
 .incluso-app .evaluation .subtitle + .txt-renglon {
@@ -45,9 +44,11 @@ Parallel work file for UI Developer 01
 .incluso-app .evaluation .txt-renglon.txt-bigger {
   font-size: 129%;
 }
+.incluso-app .evaluation .txt-renglon a.btn-add,
 .incluso-app .evaluation .txt-renglon button.btn-add {
   padding: 4vw 1.7vw;
 }
+.incluso-app .evaluation .txt-renglon a .icon-plus,
 .incluso-app .evaluation .txt-renglon button .icon-plus {
   padding-right: 0.5vw;
   position: relative;
@@ -72,7 +73,8 @@ Parallel work file for UI Developer 01
   font-size: 86% !important;
   padding-right: 0 !important;
 }
-.incluso-app .evaluation .part.list .add input {
+.incluso-app .evaluation .part.list .add input,
+.incluso-app .evaluation .part.list .add textarea {
   width: 89% !important;
   padding: 1px;
   display: inline-block;
@@ -88,6 +90,7 @@ Parallel work file for UI Developer 01
   font-size: 92% !important;
   padding-right: 0 !important;
 }
+.incluso-app .evaluation .part a .icon-cross,
 .incluso-app .evaluation .part button .icon-cross {
   font-size: 82%;
   position: relative;
@@ -135,26 +138,40 @@ Parallel work file for UI Developer 01
   font-size: 92%;
   padding-right: 3%;
 }
-.incluso-app .evaluation .add input {
+.incluso-app .evaluation .add .icon-edit {
+  position: relative;
+  bottom: 3.5vw;
+}
+.incluso-app .evaluation .add textarea {
+  resize: none;
+  max-height: 15vw;
+  overflow-y: scroll;
+}
+.incluso-app .evaluation .add input,
+.incluso-app .evaluation .add textarea {
   background: transparent;
   color: white;
   border: none;
   width: 90%;
   font-weight: normal;
 }
-.incluso-app .evaluation .add input::-webkit-input-placeholder {
+.incluso-app .evaluation .add input::-webkit-input-placeholder,
+.incluso-app .evaluation .add textarea::-webkit-input-placeholder {
   color: white !important;
   opacity: 1;
 }
-.incluso-app .evaluation .add input:-moz-placeholder {
+.incluso-app .evaluation .add input:-moz-placeholder,
+.incluso-app .evaluation .add textarea:-moz-placeholder {
   color: white !important;
   opacity: 1;
 }
-.incluso-app .evaluation .add input::-moz-placeholder {
+.incluso-app .evaluation .add input::-moz-placeholder,
+.incluso-app .evaluation .add textarea::-moz-placeholder {
   color: white !important;
   opacity: 1;
 }
-.incluso-app .evaluation .add input:-ms-input-placeholder {
+.incluso-app .evaluation .add input:-ms-input-placeholder,
+.incluso-app .evaluation .add textarea:-ms-input-placeholder {
   color: white !important;
   opacity: 1;
 }
@@ -178,7 +195,7 @@ Parallel work file for UI Developer 01
 .incluso-app .evaluation #finalized .txt-renglon.pill .sm-pill,
 .incluso-app .evaluation #finalized .txt-renglon.pill .green-pill {
   border-width: 2px;
-  font-size: 5.5vw;
+  font-size: 5.4vw;
   font-weight: bold;
   padding: 0.7vw 3vw 1vw;
   position: relative;
@@ -190,6 +207,11 @@ Parallel work file for UI Developer 01
   font-size: 4.5vw;
   position: relative;
   top: 4.5px;
+}
+.incluso-app .evaluation #finalized .txt-renglon.pill .sm-pill > span,
+.incluso-app .evaluation #finalized .txt-renglon.pill .green-pill > span {
+  display: inline-block;
+  width: auto;
 }
 .incluso-app .evaluation #finalized .txt-renglon.pill .green-pill {
   margin: -0.3vw -1vw;
@@ -319,4 +341,22 @@ Parallel work file for UI Developer 01
   position: absolute;
   top: 5vw;
   right: 2vw;
+}
+.incluso-app .privacy-notice .component p,
+.incluso-app .use-terms .component p,
+.incluso-app .privacy-notice .component ul,
+.incluso-app .use-terms .component ul {
+  font-size: 1.1em;
+  text-align: justify;
+}
+.incluso-app .privacy-notice .component p .subtitle-green,
+.incluso-app .use-terms .component p .subtitle-green,
+.incluso-app .privacy-notice .component ul .subtitle-green,
+.incluso-app .use-terms .component ul .subtitle-green {
+  color: #bcd431;
+  font-size: 4.4vw;
+}
+.incluso-app .privacy-notice .component ul,
+.incluso-app .use-terms .component ul {
+  padding-left: 4.3vw;
 }

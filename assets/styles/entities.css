@@ -28,6 +28,7 @@
 /* xs viewport */
 @media screen {
   .incluso-app {
+    /*********** add a circle around to any icon *********/
     /***********************************************************************
          01. $text n containers
          Description: CSS for most used parts
@@ -128,7 +129,7 @@
          Description: CSS to represent mobileangularui component for main layout
         ************************************************************************/
     /***********************************************************************
-         $green-lantern-theme
+         $list-item & $green-lantern-theme
          Description: CSS to represent look of a list of items with colors green and dark
         ************************************************************************/
     /***********************************************************************/
@@ -141,6 +142,26 @@
          $bubble
          Description: CSS to represent look for generic bubble near to the element
         ************************************************************************/
+  }
+  .incluso-app .icon-circle {
+    width: 25%;
+    margin-right: 2vw;
+    padding: 2vh 0px;
+    text-align: center;
+    border: 5px solid #FFF;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    border-radius: 50px;
+    font-size: 7vw;
+    color: #FFF;
+  }
+  .incluso-app .icon-circle.active {
+    background-color: #EF4924;
+    border-color: #F16445;
+  }
+  .incluso-app .icon-circle:focus,
+  .incluso-app .icon-circle:active {
+    outline: none;
   }
   .incluso-app .to-top {
     bottom: 20px;
@@ -236,6 +257,10 @@
   .incluso-app .distribuido a {
     padding: .5%;
   }
+  .incluso-app .distribuido a:focus,
+  .incluso-app .distribuido a:active {
+    outline: none;
+  }
   .incluso-app .fl-left {
     float: left;
   }
@@ -290,6 +315,18 @@
     background-color: #24282A;
     padding-top: 5px;
     padding-bottom: 10px;
+  }
+  .incluso-app .progreso .spinner {
+    display: inline-block;
+  }
+  .incluso-app .progreso .spinner + div {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .incluso-app .progreso .spinner + div p {
+    color: #FFF;
+    text-transform: uppercase;
+    font-weight: 600;
   }
   .incluso-app .spinner {
     max-width: 49%;
@@ -638,12 +675,22 @@
   .incluso-app .holoproj .light img {
     width: 100%;
   }
+  .incluso-app .holoproj .challenge-description {
+    margin-bottom: 10vh;
+    padding: 0px;
+  }
+  .incluso-app .holoproj .paginate {
+    position: absolute;
+    display: block;
+    width: 100vw;
+    margin: 18.5vh auto;
+  }
   .incluso-app .jector {
     background-image: url('../images/bg-holoproj-bot.jpg');
     background-size: cover;
     background-color: #24282A;
     background-position: 0 0;
-    padding-top: 60px;
+    padding-top: 12vh;
   }
   .incluso-app .parts {
     background-image: url('../images/bg-footer-ship.jpg');
@@ -651,6 +698,22 @@
     background-size: cover;
     border-top: 2px solid #2a2f32;
     padding: 20px 0;
+  }
+  .incluso-app .activities {
+    padding: 5vh 3.5%;
+  }
+  .incluso-app .activities .list-item span {
+    padding-right: 1vw;
+  }
+  .incluso-app .activities .list-item .circle-star {
+    width: 10vw;
+    margin-right: 2vw;
+    padding: .5vh 2vw;
+    border: 3px solid #E1E455;
+    -webkit-border-radius: 17px;
+    -moz-border-radius: 17px;
+    border-radius: 17px;
+    font-size: 3vw;
   }
   .incluso-app .add {
     border-bottom: 2px solid rgba(255, 255, 255, 0.3);
@@ -851,7 +914,7 @@
   .incluso-app .modalDialog {
     position: relative;
     min-height: 15vh;
-    font-family: Arial, Helvetica, sans-serif;
+    /*font-family: Arial, Helvetica, sans-serif;*/
     z-index: 99999;
     /*opacity:0;*/
     -webkit-transition: opacity 400ms ease-in;
@@ -1862,22 +1925,21 @@
   .incluso-app .app-body {
     height: auto;
   }
-  .incluso-app .green-lantern-theme {
-    padding: 0px;
+  .incluso-app .list .list-item {
+    margin: 0.7vh 0px;
   }
-  .incluso-app .green-lantern-theme .list-item {
+  .incluso-app .list-item {
     display: inline-flex;
+    position: relative;
     width: 100%;
     margin: 2% 0px;
     padding: 3% 5%;
     z-index: 2;
     align-items: center;
     justify-content: space-between;
-    background: #1f2733;
     cursor: pointer;
     color: white;
     font-size: 120%;
-    position: relative;
     background: -moz-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
     background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #1f2733), color-stop(100%, #141921));
     background: -webkit-radial-gradient(center, ellipse cover, #1f2733 0%, #141921 100%);
@@ -1886,36 +1948,94 @@
     background: radial-gradient(ellipse at center, #1f2733 0%, #141921 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1f2733', endColorstr='#141921', GradientType=1);
   }
-  .incluso-app .green-lantern-theme .list-item .date {
+  .incluso-app .list-item .date {
     color: rgba(255, 255, 255, 0.3);
     font-size: 70%;
   }
-  .incluso-app .green-lantern-theme .list-item .icomoon {
+  .incluso-app .list-item .icomoon {
     color: #e1e455;
     font-size: 150%;
     padding-right: 5%;
   }
-  .incluso-app .green-lantern-theme .list-item .icon-checked-join {
+  .incluso-app .list-item .icon-checked-join {
     color: #08b190;
   }
-  .incluso-app .green-lantern-theme .list-item .icon-wrong {
+  .incluso-app .list-item .icon-wrong {
     color: gray;
   }
-  .incluso-app .green-lantern-theme .list-item div {
+  .incluso-app .list-item div {
     display: block;
     width: 100%;
     padding: 0px 3vw;
     font-size: 86%;
   }
-  .incluso-app .green-lantern-theme .list-item span {
+  .incluso-app .list-item span {
     line-height: normal;
     display: inline-flex;
   }
-  .incluso-app .green-lantern-theme .list-item.showmore div {
+  .incluso-app .list-item.showmore div {
     color: #08B290;
   }
-  .incluso-app .green-lantern-theme .list-item.showmore .icomoon {
+  .incluso-app .list-item.showmore .icomoon {
     color: #08B290;
+  }
+  .incluso-app .green-lantern-theme {
+    padding: 0px;
+    /*.list-item { 
+                display: inline-flex;  
+                width: 100%;
+                margin: 2% 0px;
+                padding: 3% 5%;
+                z-index: 2;  
+                align-items: center;    
+                justify-content: space-between;                
+                cursor: pointer;
+                color: white;
+                font-size: 120%;                
+                position: relative;
+                background: #1f2733;
+                background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
+                background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
+                background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );
+                .date{
+                    color: rgba(255, 255, 255, 0.3);
+                   font-size: 70%;
+                }
+                .icomoon{
+                    color:@clr-greenLight;
+                    font-size:150%;
+                    padding-right: 5%;
+                }
+                .icon-checked-join{
+                    color:@clr-greenicon;
+                }
+                .icon-wrong{
+                    color:gray;
+                }
+                div{
+                    display: block;
+                    width: 100%;
+                    padding: 0px 3vw;
+                    font-size: 86%;
+
+                }
+                span{
+                    line-height: normal;
+                    display: inline-flex;   
+                }
+                &.showmore {
+                    div {
+                        color: #08B290;
+                    }
+                    .icomoon {
+                        color: #08B290;
+                    }
+                }
+             }*/
   }
   .incluso-app .green-lantern-theme .highlight {
     border: 1px solid #08B190;

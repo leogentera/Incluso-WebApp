@@ -40,6 +40,9 @@ body {
         position:fixed;
         x-index: 1;
     }
+    .disabled {
+        color: #62767C !important;
+    }
 }
     /****************************************************************************
      $menu 
@@ -253,7 +256,7 @@ body {
                 font-size: 6vw;               
             }
         }
-        & > i{
+        & > span {
             padding: 5vw 1vw;
             z-index: 10;
         }
@@ -1208,12 +1211,17 @@ body {
             height: 60vh;
             border:none;
 
-            p, ol li {
+            p, ol li, ul li {
                 height: auto;
                 color: @clr-white;
                 font-size: 5vw; 
                 text-align: justify;
-            }                
+            }
+
+            p > .subtitle-green {
+                font-size: 4.4vw;
+                color: #bcd431;
+            }
         }
         .modal-footer {
             border:none;
@@ -1667,7 +1675,8 @@ body {
             text-align: center;
             letter-spacing: 1px;
         }
-        p:not(.text-center) {
+        p:not(.text-center),
+        ul, ol {
             padding: 0;
             margin: 0 auto 15px;
             width: 93%;
@@ -1686,6 +1695,10 @@ body {
             margin:0 auto;
             // width:100%;
             // height: 100%;
+        }
+        ul, ol {
+            text-align: justify;
+            font-size: 1em;
         }
     }
     /***************************************************************************/

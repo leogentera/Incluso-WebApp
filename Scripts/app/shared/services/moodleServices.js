@@ -58,7 +58,7 @@
         };
 
         var _postUserNotifications = function(userId, data, successCallback, errorCallback){
-            _postAsyncData("notifications",data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+            _postAsyncData("notifications/"+userId,data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
         var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
@@ -66,7 +66,7 @@
         };
 
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
-            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification' ), successCallback, errorCallback);
+            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/')+ notificationId, successCallback, errorCallback);
         };
 
         var _getUserChat = function(userId, successCallback, errorCallback){
@@ -109,7 +109,13 @@
             }
         };
 
-        var _getAsyncData = function(key, url, successCallback, errorCallback){
+        var _getAsyncData = function(key, url, successCallback, errorCallback, forceRefresh){
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+                
+            if (returnValue) {
+                return returnValue;
+            }
+            
             _httpFactory({
                 method: 'GET',
                 url: url, 
@@ -241,18 +247,14 @@
         };
 
         var _startActivity = function(data, activityModel, token, successCallback, errorCallback){
-            var key = 'challengesCourseCache/' + activityModel.activity_identifier;
-
-            _httpFactory({                
+            _httpFactory({
                method: 'PUT',
                url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),        
                data: data,       
                headers: {'Content-Type': 'application/json', 'Authorization': token},
                }).success(function(data, status, headers, config) {
-                   localStorage.setItem(key, JSON.stringify(activityModel));
                    successCallback();
                }).error(function(data, status, headers, config) {
-                   localStorage.setItem(key, JSON.stringify(activityModel));
                    errorCallback();
             });
         };
@@ -451,6 +453,8 @@
                 localStorage.setItem("usercourse", JSON.stringify(course));
                 localStorage.setItem("course", JSON.stringify(course));
                 localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
+
+                debugger;
             }
         }        
         

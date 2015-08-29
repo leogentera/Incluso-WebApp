@@ -183,7 +183,7 @@
                                                             <div class="from-group">
                                                                 <label>Fecha de nacimiento</label>
                                                                 <p ng-bind="model.birthday" ng-init="model.birthday == 'MM/dd/yyyy'"></p>
-                                                                <p {{ng-bind="model.birthday" | date: "MM/dd/yyyy"}}></p>
+                                                                <!--p {{ng-bind="model.birthday" | date: "MM/dd/yyyy"}}></p-->
                                                             </div>
 
                                                             <div class="from-group">
@@ -612,7 +612,7 @@
                                                     />
                                                     
                                                     <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
-                                                    height="100px" ng-click="showDetailBadge('placeholder', badge.name, badge.dateIssued, badge.earned_times)" ng-show="badge.status == 'pending'"
+                                                    height="100px" ng-click="showDetailBadge('placeholder', badge.name, badge.dateIssued, badge.earned_times, badge.status)" ng-show="badge.status == 'pending'"
                                                     />
                                                     
                                                     <span class="badgename text-center" ng-bind="badge.name"></span>
@@ -767,9 +767,9 @@
                             <div class="col-xs-12">
                                 <div class="panel panel-default achievement-detail">
                                     <div class="panel-heading">
-                                        <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(1)"></span>
-                                        <span class="icomoon icon-information"></span>
-                                        <h3 class="panel-title">Mis Insignias</h3>
+                                        <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(6)"></span>
+                                        <span class="icomoon icon-badge"></span>
+                                        <h3 class="panel-title">Detalle de Insignia</h3>
                                     </div>
                                     <div class="panel-body">
 
@@ -798,9 +798,9 @@
                                                         </span>
                                                     </div>
                                                     <div class="earned-info">
-                                                        <span class="users">Tú y
+                                                        <span class="users"><span ng-show="status != 'pending'">Tú y</span>
                                                             <span ng-bind="earnedTimes"></span>
-                                                        </span>jóvenes han ganado esta insignia
+                                                        </span>jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span> ganado esta insignia
                                                     </div>
                                                     <!--
                                                     <div class="share-achievement">
