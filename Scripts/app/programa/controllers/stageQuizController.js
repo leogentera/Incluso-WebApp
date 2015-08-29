@@ -127,8 +127,9 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.cancel = function () {alert("cancel");
-                $location.path('/ZonaDeVuelo/Dashboard');
+            $scope.cancel = function () {
+                var userCurrentStage = localStorage.getItem("userCurrentStage");
+                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
             };
 
             $scope.validateAnsweredQuestions = function () {
@@ -414,12 +415,19 @@ angular
                     for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
                         var cont = $scope.dreamsLists.answers[a].length;
 
-                        for (var b = 0; b < cont; b++) {
-                            var text = $scope.dreamsLists.answers[a][b];
+                        if (cont == 0) {//Question withoud dreams
+                            lastQuestionValidation = false;
+                            break;
 
-                            if (text.trim() == '') {
-                                lastQuestionValidation = false;
-                                break;
+                        } else {
+
+                            for (var b = 0; b < cont; b++) {
+                                var text = $scope.dreamsLists.answers[a][b];
+
+                                if (text.trim() == '') {
+                                    lastQuestionValidation = false;
+                                    break;
+                                }
                             }
                         }
 
@@ -429,7 +437,7 @@ angular
 
                     }
 
-                    if (lastQuestionValidation) {alert("Pasó la Validación " + $scope.dreamsLists.answers);
+                    if (lastQuestionValidation) {
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
                     } else {
@@ -446,6 +454,21 @@ angular
                 $scope.showWarning = true;
                 $scope.$emit('scrollTop');
             }
+
+            $scope.answerIndex = 1;
+
+            $scope.addToAnswerIndex = function(delta) {
+                $scope.answerIndex += delta;
+
+                if ($scope.answerIndex >3) {
+                    $scope.answerIndex = 1;
+                }
+
+                if ($scope.answerIndex < 1) {
+                    $scope.answerIndex = 3;
+                }
+            };
+
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
@@ -506,7 +529,6 @@ angular
     .controller('OpeningStageController', function ($scope, $modalInstance) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
-            $location.path("/ZonaDeVuelo/Dashboard");
         };
     })
     .controller('videoCollapsiblePanelController', function ($scope) {

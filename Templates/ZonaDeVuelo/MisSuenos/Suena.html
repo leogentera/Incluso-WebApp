@@ -177,8 +177,8 @@
 
                             <section id="controls" class="controls">
                                 <div class="paginate">
-                                    <a href="#" id="prev"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
-                                    <a href="#" id="next"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
+                                    <a href="#" id="prev" ng-click="addToAnswerIndex(-1)"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
+                                    <a href="#" id="next" ng-click="addToAnswerIndex(1)"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
 
                                     <div class="centered">
                                         <span id="index" class="txt-bigger">1</span>
@@ -186,7 +186,7 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
-                                        ng-click="validateMisSuenosAnsweredQuestions()">Terminar
+                                        ng-click="validateMisSuenosAnsweredQuestions()" ng-show="answerIndex == 3">GUARDAR
                                 </button>
                                 <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                             </section>

@@ -59,6 +59,7 @@ angular
             $scope.stages = _staticStages;
             $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
             $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
+            localStorage.setItem("userCurrentStage", $routeParams['stageId']);
 
             var totalDeEtapas = $scope.model.stages.length; //Total amount of stages
             var totalDeRetos = 0; //Total number of challenges, along all possible stages
