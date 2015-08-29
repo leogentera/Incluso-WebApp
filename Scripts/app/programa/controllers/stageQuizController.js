@@ -279,6 +279,7 @@ angular
                         }
                     }
                 }
+
             }
 
             function cleanText(userAnswer) {
@@ -336,6 +337,7 @@ angular
                 }
             }
 
+
             function successfullCallBack(activityAnswers) {
 
                 if (activityAnswers != null) {
@@ -369,8 +371,10 @@ angular
                 }
             }
 
+
             function errorCallback() {
             }
+
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -380,7 +384,6 @@ angular
                     size: size,
                     windowClass: 'user-help-modal'
                 });
-                console.log("modal open");
             };
 
             function addHeight() {
