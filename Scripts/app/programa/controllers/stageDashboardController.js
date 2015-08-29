@@ -16,18 +16,6 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
-            /*$rootScope.navbarOrange = false;
-            $rootScope.navbarBlue = false;
-            $rootScope.navbarPink = false;
-            $rootScope.navbarGreen = false;
-            
-            if ($scope.idEtapa == 0)               //Zona de vuelo
-                $rootScope.navbarBlue = true;
-            if ($scope.idEtapa == 1)               //Zona de navegacion
-                $rootScope.navbarGreen = true;
-            if ($scope.idEtapa == 2)               //Zona de aterrizaje
-                $rootScope.navbarPink = true;*/
-
             $scope.setToolbar($location.$$path,"");
 
 

@@ -16,10 +16,9 @@ angular
             console.log('mis fortalezas');
 
             _httpFactory = $http;
-            $rootScope.pageName = "Estación: Conócete"
+
             $scope.$emit('ShowPreloader');
-            $rootScope.navbarBlue = true;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false; 
 
