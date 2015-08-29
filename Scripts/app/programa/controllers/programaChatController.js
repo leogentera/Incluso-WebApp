@@ -27,11 +27,11 @@ angular
             $rootScope.showFooterRocks = false; 
 
             if(_startedActivityCabinaDeSoporte) {
-                var activity = _startedActivityCabinaDeSoporte;
+                var isStarted = _startedActivityCabinaDeSoporte;
+                var currentActivity = _usercourse.stages[isStarted.$stage].challenges[isStarted.$parentIndex].activities[isStarted.$index];
 
-                if (!_usercourse.stages[activity.$stage].challenges[activity.$parentIndex].activities[activity.$index].status) {
-                    //var rawDate = "2015:08:28 07:34:12".split(/:|\s|:/);
-                    var rawDate = activity.$data.datestarted.split(/:|\s|:/);
+                if (!currentActivity.status) {
+                    var rawDate = isStarted.$data.datestarted.split(/:|\s|:/);
                     var dateStarted = new Date(rawDate[0], rawDate[1] - 1, rawDate[2], rawDate[3], rawDate[4], rawDate[5]);
                     var latestMessages =  _.filter($scope.messages, function(msg) { 
                         return msg.messagedate > dateStarted && msg.messagesenderid != $scope.senderId;
@@ -43,10 +43,19 @@ angular
                             userid: currentUser.userId,
                         };
 
-                        _usercourse.stages[activity.$stage].challenges[activity.$parentIndex].activities[activity.$index].status = 1;
-                        var courseModuleId = _usercourse.stages[activity.$stage].challenges[activity.$parentIndex].activities[activity.$index].coursemoduleid;
+                        // Update activity in usercourse
+                        _usercourse.stages[isStarted.$stage].challenges[isStarted.$parentIndex].activities[isStarted.$index].status = 1;
 
-                        moodleFactory.Services.PutStartActivity(courseModuleId, data, _usercourse, currentUser.token, function () {
+                        moodleFactory.Services.PutStartActivity(currentActivity.coursemoduleid, data, _usercourse, currentUser.token, function () {
+                            var profile = JSON.parse(localStorage.getItem("profile"));
+                            var model = {
+                                stars: currentActivity.points,
+                                instance: currentActivity.coursemoduleid,
+                                instanceType: 0,
+                                date: getdate()
+                            };
+
+                            moodleFactory.Services.PutStars(model, profile, currentUser.token);
                         });
                     }
                 }

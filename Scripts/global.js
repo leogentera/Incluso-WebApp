@@ -262,15 +262,15 @@ function getActivityByActivity_identifier(activity_identifier) {
 }
 
 function getdate(){
-              var currentdate = new Date(); 
-              var datetime = currentdate.getFullYear() + ":"
-                + (currentdate.getMonth()+1)  + ":" 
-                + currentdate.getDate() + " "  
-                + currentdate.getHours() + ":"  
-                + currentdate.getMinutes() + ":" 
-                + currentdate.getSeconds();
-                return datetime;
-            }
+  var currentdate = new Date(); 
+  var datetime = currentdate.getFullYear() + ":"
+    + (currentdate.getMonth()+1)  + ":" 
+    + currentdate.getDate() + " "  
+    + currentdate.getHours() + ":"  
+    + currentdate.getMinutes() + ":" 
+    + currentdate.getSeconds();
+    return datetime;
+}
 
 
 syncCacheData();
