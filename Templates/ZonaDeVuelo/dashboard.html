@@ -45,7 +45,7 @@
                         <div class="item visib" ng-repeat="reto in stages[idEtapa].challenges">
                             <img ng-src="{{retosIconos[reto.sectionname]}}">
                             <div class="subtitle centered text-uppercase" ng-bind="reto.sectionname"></div>
-                            <div class="txt-renglon challenge-description">Aquí falta poner la descripción</div>
+                            <div class="txt-renglon challenge-description" ng-bind="reto.activityintro"></div>
                         </div>
 
                     </div>
@@ -73,6 +73,7 @@
                       <div class="part" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
                           <i class="icomoon icon-checked-join" ng-show="getCurrentStatusOfActivity($index, $parent.$index) == 1"></i>
                           <i class="icomoon icon-gauge" ng-show="getCurrentStatusOfActivity($index, $parent.$index) == 0"></i>
+
                           <span ng-bind="activity.activityname"></span>
                           <span>
                               <i class="icomoon icon-star fl-right"></i>
