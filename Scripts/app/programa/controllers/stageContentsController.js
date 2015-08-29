@@ -153,7 +153,6 @@ angular
             }
 
             $scope.back = function () {
-              debugger;
                 var userCurrentStage = localStorage.getItem("currentStage");
                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
             }
