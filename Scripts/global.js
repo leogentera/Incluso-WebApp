@@ -162,28 +162,20 @@ var _createNotification = function(activityModel, currentUserId){
   }
 }
 
-var _createMultipleActivitiesNotification = function(alertsId){
+var _createStartActivityNotification = function(activityId){
+  debugger;
   var notifications = JSON.parse(localStorage.getItem("notifications"));
   var startTypeNotifications = _.where(notifications, {trigger : 1});
-  var alerts = alertsId.split(',');
-  var countAlertsConditionsMet = 0;
-  for(var i= 0; i< notifications.length; i++){
-    for(var j= 0; j< alerts.length;j++){
-      var activityId = alerts[j].id;
-      if (activityId == notifications[i].activityidnumber || activityId == notifications[i].sectionid) {
-        countAlertsConditionsMet ++;
-      }
-    }
-  }
-  if (countAlertsConditionsMet > 1){
-      var dataModelNotification = {
-          notificationid: notifications[i].id,
-          timemodified : new Date(),
-          userid: currentUserId ,
-          already_read: 0
-      };
-      moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
-  }
+  
+  var notificationid = _.where(notifications, {activityid: activityid});  
+  var currentUserId = JSON.parse(localStorage.getItem('userid'));
+  var dataModelNotification = {
+      notificationid: notificationid,
+      timemodified : new Date(),
+      userid: currentUserId,
+      already_read: 0
+  };
+  moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);  
 } 
 
 var successCallback =function(data){  
