@@ -16,20 +16,10 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
-            /*$rootScope.navbarOrange = false;
-            $rootScope.navbarBlue = false;
-            $rootScope.navbarPink = false;
-            $rootScope.navbarGreen = false;
-            
-            if ($scope.idEtapa == 0)               //Zona de vuelo
-                $rootScope.navbarBlue = true;
-            if ($scope.idEtapa == 1)               //Zona de navegacion
-                $rootScope.navbarGreen = true;
-            if ($scope.idEtapa == 2)               //Zona de aterrizaje
-                $rootScope.navbarPink = true;*/
+            $scope.setToolbar($location.$$path,"");
 
 
-            $rootScope.showToolbar = true;
+
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
@@ -43,7 +33,7 @@ angular
                     size: size,
                     windowClass: 'user-help-modal'
                 });
-                console.log("modal open");
+
             };
 
             $scope.openModal();
@@ -56,30 +46,10 @@ angular
 
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
-
-            $scope.theActivities = [    [{"name" : "Exploracion Inicial", "status" : 0, "link" : "/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"}],
-             [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"}],
-             [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia"}, {"name" : "Reto múltiple", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple"}, {"name" : "Punto de encuentro", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64"}, {"name" : "Zona de contacto", "status" : 0, "link" : "/ZonaDeVuelo/Conocete/ZonaDeContacto"}],
-             [{"name" : "Fuente de energía", "status" : 0, "link" : "/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia"}, {"name" : "Mis cualidades", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades"}, {"name" : "Mis gustos", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos"}, {"name" : "Sueña", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena"}, {"name" : "Punto de encuentro", "status" : 0, "link":"/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"}],
-             [{"name" : "Cabina de soporte", "status" : 0, "link":"/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat"}],
-             [{"name" : "Exploración final", "status" : 0, "link":"/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"}]  ];
-
-            var activitiesURLs = [
-                ["/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial"],
-                ["/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia"],
-                ["/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia", "/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple", "/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64", "/ZonaDeVuelo/Conocete/ZonaDeContacto"],
-                ["/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia", "/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos", "/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades", "/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena", "/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro"],
-                ["url_cabinadesoporte"],
-                ["/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal"]];
-
-            $scope.goToUrl2 = function (url) {
-             $location.path(url);
-             };
-
-            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-
+            $scope.stages = _staticStages;
             $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
             $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
+            localStorage.setItem("userCurrentStage", $routeParams['stageId']);
 
             var totalDeEtapas = $scope.model.stages.length; //Total amount of stages
             var totalDeRetos = 0; //Total number of challenges, along all possible stages
@@ -126,52 +96,49 @@ angular
                 playVideo(videoAddress, videoName);
             };
 
-            $scope.startActivity = function (activity, challenge, index) {
-                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                var data = {
-                    userid: currentUser.userId,
-                    datestarted: getFormattedDate(),
-                    moduleid: activity.coursemoduleid,
-                    updatetype: 1
-                };
+            $scope.startActivity = function (activity, index, parentIndex) {
+                var url = _.filter(_activityRoutes, function(x) { return x.id == activity.coursemoduleid })[0].url;
 
+                if (url) {
+                    $location.path(url);
+                } else {
+                    var startedActivityCabinaDeSoporte = $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started && !$scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status;
 
-                moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function (size) {
-                    var url = activitiesURLs[challenge][index];
+                    // Start activity of 'cabina de soporte'
+                    if (!startedActivityCabinaDeSoporte) {
+                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        var data = {
+                            userid: currentUser.userId,
+                            datestarted: getdate(),
+                            moduleid: activity.coursemoduleid,
+                            updatetype: 0
+                        };
 
-                    if (url != 'url_cabinadesoporte') {
-                        $location.path(url);
-                    } else {
-                        var modalInstance = $modal.open({
-                            animation: $scope.animationsEnabled,
-                            templateUrl: 'CabinaSoporteMsj.html',
-                            controller: function ($scope, $modalInstance) {
-                                $scope.cancel = function () {
-                                    $modalInstance.dismiss('cancel');
-                                };
-                            },
-                            size: size,
-                            windowClass: 'user-help-modal'
+                        moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function (size) {
+                            $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started = 1;
+                            $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].datestarted = data.datestarted;
+                            localStorage.setItem('usercourse', JSON.stringify($scope.model));
+                            localStorage.setItem('startedActivityCabinaDeSoporte', JSON.stringify({$stage: $scope.idEtapa, $index: index, $parentIndex: parentIndex, $data: data}));
+
+                            var modalInstance = $modal.open({
+                                animation: $scope.animationsEnabled,
+                                templateUrl: 'CabinaSoporteMsj.html',
+                                controller: function ($scope, $modalInstance) {
+                                    $scope.cancel = function () {
+                                        $modalInstance.dismiss('cancel');
+                                    };
+                                },
+                                size: size,
+                                windowClass: 'user-help-modal'
+                            });
+                            console.log("modal open");
                         });
-                        console.log("modal open");
                     }
-                });
-
-                function getFormattedDate() {
-                    var date = new Date(),
-                        year = date.getFullYear(),
-                        month = formatValue(date.getMonth() + 1), // months are zero indexed
-                        day = formatValue(date.getDate()),
-                        hour = formatValue(date.getHours()),
-                        minute = formatValue(date.getMinutes()),
-                        second = formatValue(date.getSeconds());
-
-                    function formatValue(value) {
-                        return value >= 10 ? value : '0' + value;
-                    }
-
-                    return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
                 }
+            };
+
+            $scope.getCurrentStatusOfActivity = function (index, parentIndex) {
+                return $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status;
             };
 
             function openStageModal() {
@@ -184,7 +151,7 @@ angular
                     windowClass: 'closing-stage-modal user-help-modal'
                 });
                 //}, 1000);
-            };
+            }
         }])
     .controller('closingStageController', function ($scope, $modalInstance) {
         $scope.cancel = function () {

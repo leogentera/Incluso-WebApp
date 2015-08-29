@@ -192,13 +192,13 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (badgeId, badgeName, badgeDateIssued, earnedTimes) {
+            $scope.showDetailBadge = function (badgeId, badgeName, badgeDateIssued, earnedTimes, status) {
                 $scope.currentPage = 10;
                 $scope.badgeId = badgeId;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
-                //$scope.status = status;
+                $scope.status = status;
             };
 
             $scope.edit = function () {
