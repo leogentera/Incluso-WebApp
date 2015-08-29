@@ -1,3 +1,4 @@
+//Controller for Suena.html
 angular
     .module('incluso.stage.quizcontroller', [])
     .controller('stageQuizController', [
@@ -32,6 +33,7 @@ angular
                 "like_status": 0
             };
 
+
             $scope.finishActivity = function () {
                 //Activity completed
                 
@@ -51,13 +53,13 @@ angular
 
                 switch ($scope.activityname) {
                     case "Mis cualidades":
-                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;alert($scope.misCualidadesAnswers);
+                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;console.log($scope.misCualidadesAnswers);
                         break;
                     case "Mis gustos":
                         $scope.AnswersResult.answers = $scope.misGustosAnswers;
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;alert("Answers " + $scope.dreamsLists.answers);
+                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;console.log("Answers " + $scope.dreamsLists.answers);
                         break;
                     default:
                         break;
@@ -275,7 +277,7 @@ angular
 
             function updateMisSueñosSelectedAnswers(question) {
 
-                if (question.userAnswer != null) {alert("update mis sueños: " + question.userAnswer);
+                if (question.userAnswer != null) {console.log("update mis sueños: " + question.userAnswer);
                     var userAnswers = question.userAnswer.split(";");
                     for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
                         var userAnswer = userAnswers[indexUserAnswers].trim();
@@ -315,12 +317,12 @@ angular
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
-                alert("activity from getDataAsync() " + JSON.stringify(activity));
+                console.log("activity from getDataAsync() " + JSON.stringify(activity));
 
                 if (activity != null) {
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
-                    $scope.activityname = activity.activityname;alert("Actividad: " + $scope.activityname);
+                    $scope.activityname = activity.activityname;console.log("Actividad: " + $scope.activityname);
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -328,7 +330,7 @@ angular
 
                     var activityFinished = false;
 
-                    if (activity.status != 0) {alert("Actividad YA finalizada");
+                    if (activity.status != 0) {console.log("Actividad YA finalizada");
                         activityFinished = true;
                     }
 
@@ -338,7 +340,7 @@ angular
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
 
-                    $scope.activity = activity;alert("activity object: " + JSON.stringify($scope.activity));
+                    $scope.activity = activity;console.log("activity object: " + JSON.stringify($scope.activity));
                 }
             }
 
@@ -377,7 +379,7 @@ angular
             }
 
 
-            function errorCallback() {alert("Unsuccessful callback");
+            function errorCallback() {console.log("Unsuccessful callback");
             }
 
 
