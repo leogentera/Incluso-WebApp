@@ -612,7 +612,7 @@
                                                     />
                                                     
                                                     <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
-                                                    height="100px" ng-click="showDetailBadge('placeholder', badge.name, badge.dateIssued, badge.earned_times)" ng-show="badge.status == 'pending'"
+                                                    height="100px" ng-click="showDetailBadge('placeholder', badge.name, badge.dateIssued, badge.earned_times, badge.status)" ng-show="badge.status == 'pending'"
                                                     />
                                                     
                                                     <span class="badgename text-center" ng-bind="badge.name"></span>
@@ -798,9 +798,9 @@
                                                         </span>
                                                     </div>
                                                     <div class="earned-info">
-                                                        <span class="users">Tú y
+                                                        <span class="users"><span ng-show="status != 'pending'">Tú y</span>
                                                             <span ng-bind="earnedTimes"></span>
-                                                        </span>jóvenes han ganado esta insignia
+                                                        </span>jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span> ganado esta insignia
                                                     </div>
                                                     <!--
                                                     <div class="share-achievement">

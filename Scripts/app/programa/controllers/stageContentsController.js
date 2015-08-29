@@ -25,10 +25,9 @@ angular
                 moduleid = 146;
                 break;
             }
-            $rootScope.pageName = "Zona de Vuelo";
+
             $scope.$emit('ShowPreloader'); //show preloader
-            $rootScope.navbarBlue = true;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false; 
             $scope.statusObligatorios = 0; 

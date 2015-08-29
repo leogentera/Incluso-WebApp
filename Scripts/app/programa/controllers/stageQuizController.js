@@ -13,9 +13,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
             _httpFactory = $http;
-            $rootScope.pageName = "Estación: Conócete";
-            $rootScope.navbarBlue = true;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.$emit('HidePreloader'); //hide preloader
@@ -26,6 +24,13 @@ angular
             //$scope.userprofile = null;
             
             $scope.like_status = 0;
+
+            $scope.AnswersResult = {
+                "userid": 0,//$scope.userprofile.id,
+                "answers": [null, [0, 0, 0, 0], '', null, []],
+                "activityidnumber": 0,                         //$scope.activity.coursemoduleid
+                "like_status": 0
+            };
 
             $scope.finishActivity = function () {
                 //Activity completed
@@ -43,15 +48,16 @@ angular
                 $scope.showWarning = false;
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
+
                 switch ($scope.activityname) {
                     case "Mis cualidades":
-                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
+                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;alert($scope.misCualidadesAnswers);
                         break;
                     case "Mis gustos":
                         $scope.AnswersResult.answers = $scope.misGustosAnswers;
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists;
+                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;alert("Answers " + $scope.dreamsLists.answers);
                         break;
                     default:
                         break;
@@ -80,7 +86,6 @@ angular
             };
 
             $scope.dreamsLists = { "answers": [[], [], []] };
-
 
             $scope.addSueno1 = function () {
                 addHeight();
@@ -121,7 +126,8 @@ angular
             };
 
             $scope.cancel = function () {
-                $location.path('/ZonaDeVuelo/Dashboard');
+                var userCurrentStage = localStorage.getItem("userCurrentStage");
+                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
             };
 
             $scope.validateAnsweredQuestions = function () {
@@ -175,6 +181,7 @@ angular
                 }
             };
 
+
             function updateSelectedAnswers(questionIndex, question) {
                 switch (questionIndex) {
                     case 0:
@@ -192,7 +199,7 @@ angular
                                 var userAnswer = userAnswers[indexUserAnswers].trim();
                                 for (var index = 0; index < question.answers.length; index++) {
                                     var questionOption = question.answers[index];
-                                    if (questionOption.answer.trim() == userAnswer) {
+                                    if (questionOption.answer.trim() == userAnswers) {
                                         $scope.AnswersResult.answers[1][index] = true;
                                     }
                                 }
@@ -232,6 +239,7 @@ angular
                 }
             }
 
+
             function updateMisCualidadesSelectedAnswers(currentQuestionIndex, question) {
                 if (question.userAnswer != null) {
                     var userAnswers = cleanText(question.userAnswer);
@@ -267,7 +275,7 @@ angular
 
             function updateMisSueñosSelectedAnswers(question) {
 
-                if (question.userAnswer != null) {
+                if (question.userAnswer != null) {alert("update mis sueños: " + question.userAnswer);
                     var userAnswers = question.userAnswer.split(";");
                     for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
                         var userAnswer = userAnswers[indexUserAnswers].trim();
@@ -291,15 +299,10 @@ angular
             }
 
 
-            $scope.AnswersResult = {
-                "userid": 0,//$scope.userprofile.id,
-                "answers": [null, [0, 0, 0, 0], '', null, []]
-                , "activityidnumber": 0//$scope.activity.coursemoduleid
-                , "like_status": 0
-            };
-
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            //$scope.misGustosAnswers =
+
 
             function errorCallback(data) {
                 // var algo = data;
@@ -311,11 +314,13 @@ angular
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
-                var activity = getActivityByActivity_identifier($scope.activity_identifier);                
+                var activity = getActivityByActivity_identifier($scope.activity_identifier);
+                alert("activity from getDataAsync() " + JSON.stringify(activity));
+
                 if (activity != null) {
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
-                    $scope.activityname = activity.activityname;
+                    $scope.activityname = activity.activityname;alert("Actividad: " + $scope.activityname);
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -323,7 +328,7 @@ angular
 
                     var activityFinished = false;
 
-                    if (activity.status != 0) {
+                    if (activity.status != 0) {alert("Actividad YA finalizada");
                         activityFinished = true;
                     }
 
@@ -333,7 +338,7 @@ angular
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
 
-                    $scope.activity = activity;
+                    $scope.activity = activity;alert("activity object: " + JSON.stringify($scope.activity));
                 }
             }
 
@@ -372,7 +377,7 @@ angular
             }
 
 
-            function errorCallback() {
+            function errorCallback() {alert("Unsuccessful callback");
             }
 
 
@@ -408,12 +413,19 @@ angular
                     for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
                         var cont = $scope.dreamsLists.answers[a].length;
 
-                        for (var b = 0; b < cont; b++) {
-                            var text = $scope.dreamsLists.answers[a][b];
+                        if (cont == 0) {//Question withoud dreams
+                            lastQuestionValidation = false;
+                            break;
 
-                            if (text.trim() == '') {
-                                lastQuestionValidation = false;
-                                break;
+                        } else {
+
+                            for (var b = 0; b < cont; b++) {
+                                var text = $scope.dreamsLists.answers[a][b];
+
+                                if (text.trim() == '') {
+                                    lastQuestionValidation = false;
+                                    break;
+                                }
                             }
                         }
 
@@ -440,6 +452,21 @@ angular
                 $scope.showWarning = true;
                 $scope.$emit('scrollTop');
             }
+
+            $scope.answerIndex = 1;
+
+            $scope.addToAnswerIndex = function(delta) {
+                $scope.answerIndex += delta;
+
+                if ($scope.answerIndex >3) {
+                    $scope.answerIndex = 1;
+                }
+
+                if ($scope.answerIndex < 1) {
+                    $scope.answerIndex = 3;
+                }
+            };
+
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
