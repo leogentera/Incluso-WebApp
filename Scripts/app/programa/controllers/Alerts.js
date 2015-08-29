@@ -10,25 +10,14 @@ angular
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-              
-            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-            
-            //var activitiesperUser = _.filter(userCourse.stages, function(stages){
-            //    var st = stages;            
-            //    for(i=0; i< stages.challenges.length; i++){
-            //        var currentChallenge = stages.challenges[i];
-            //        for(j=0; j< currentChallenge.length; j++){                           
-            //               return _.where(currentChallenge[j].activity,{status: 0});
-            //        }                    
-            //    }
-            //});
-            
+                          
             var userNotifications = JSON.parse(localStorage.getItem("notifications"));
             
             $scope.notifications = _.filter(userNotifications, function(notif){
                     return notif.timemodified != null;
                 });
-                                            
+
+            //Quantity of notifications to show in an initial load
             var notificationsQuantityInitial = 6;
             
             $scope.notificationsQuantity = notificationsQuantityInitial;
@@ -39,7 +28,7 @@ angular
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
                                                 
-            //////// displaying notificacions as carousel ////////
+            ////// displaying notificacions as carousel ////////
             $scope.myInterval = 5000;
             $scope.noWrapSlides = false;
             var slides = $scope.slides = [];
@@ -117,7 +106,7 @@ angular
 
                 $scope.navigateTo('/AlertsDetail/' + notificationId, 'null');            
             
-
+            }
             
         }
 ]);
