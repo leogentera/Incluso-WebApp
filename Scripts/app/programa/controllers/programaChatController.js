@@ -34,7 +34,7 @@ angular
                     var rawDate = isStarted.$data.datestarted.split(/:|\s|:/);
                     var dateStarted = new Date(rawDate[0], rawDate[1] - 1, rawDate[2], rawDate[3], rawDate[4], rawDate[5]);
                     var latestMessages =  _.filter($scope.messages, function(msg) { 
-                        return msg.messagedate > dateStarted && msg.messagesenderid != $scope.senderId;
+                        return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
                     });
 
                     if (latestMessages.length >= 2) {
@@ -46,7 +46,8 @@ angular
                         // Update activity in usercourse
                         _usercourse.stages[isStarted.$stage].challenges[isStarted.$parentIndex].activities[isStarted.$index].status = 1;
 
-                        moodleFactory.Services.PutStartActivity(currentActivity.coursemoduleid, data, _usercourse, currentUser.token, function () {
+                        moodleFactory.Services.PutEndActivity(currentActivity.coursemoduleid, data, currentActivity, currentUser.token, function () {
+                            localStorage.setItem('usercourse', JSON.stringify(_usercourse));
                             var profile = JSON.parse(localStorage.getItem("profile"));
                             var model = {
                                 stars: currentActivity.points,
