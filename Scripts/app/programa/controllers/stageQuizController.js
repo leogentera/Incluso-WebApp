@@ -15,7 +15,7 @@ angular
 
             _httpFactory = $http;
             _timeout = $timeout;
-            $scope.setToolbar($location.$$path,"");
+            $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.$emit('HidePreloader'); //hide preloader
@@ -24,7 +24,7 @@ angular
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
-            
+
             $scope.like_status = 0;
 
             $scope.AnswersResult = {
@@ -37,12 +37,12 @@ angular
 
             $scope.finishActivity = function () {
                 //Activity completed
-                
+
                 $scope.activity.status = 1;
 
                 //Llamar notificaciones
                 //Update Activity Log Service
-                
+
                 updateUserStars($scope.activity_identifier);
 
                 $scope.AnswersResult.userid = $scope.userprofile.id;
@@ -60,7 +60,8 @@ angular
                         $scope.AnswersResult.answers = $scope.misGustosAnswers;
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;console.log("Answers " + $scope.dreamsLists.answers);
+                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;
+                        console.log("Answers " + $scope.dreamsLists.answers);
                         break;
                     default:
                         break;
@@ -90,7 +91,7 @@ angular
                 $scope.AnswersResult.answers[4].splice(index, 1);
             };
 
-            $scope.dreamsLists = { "answers": [[], [], []] };
+            $scope.dreamsLists = {"answers": [[], [], []]};
 
             $scope.addSueno1 = function () {
                 addHeight("#listaDinamica1");
@@ -262,7 +263,7 @@ angular
             }
 
 
-            function updateMisGustosSelectedAnswers(currentQuestionIndex,question) {                
+            function updateMisGustosSelectedAnswers(currentQuestionIndex, question) {
                 if (question.userAnswer != null) {
                     var userAnswers = cleanText(question.userAnswer);
                     var userAnswersList = userAnswers.split(";");
@@ -310,12 +311,13 @@ angular
             $scope.misSuenosAnswers = [[], [], [], []];
 
 
-            function errorCallback(data) {console.log("You entered the errorCallback");
+            function errorCallback(data) {
+                console.log("You entered the errorCallback");
                 // var algo = data;
             }
 
             function getDataAsync() {
-                                
+
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
@@ -326,7 +328,8 @@ angular
                 if (activity != null) {
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
-                    $scope.activityname = activity.activityname;console.log("Actividad: " + $scope.activityname);
+                    $scope.activityname = activity.activityname;
+                    console.log("Actividad: " + $scope.activityname);
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -388,7 +391,8 @@ angular
             }
 
 
-            function errorCallback() {console.log("Unsuccessful callback");
+            function errorCallback() {
+                console.log("Unsuccessful callback");
             }
 
 
@@ -417,59 +421,58 @@ angular
 
             $scope.validateMisSuenosAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-                if ($scope.dreamsLists.answers.length != 0) {
 
-                    var lastQuestionValidation = true;
+                //var questionIsValid = false;
+                var validAnswers = 0;
 
-                    for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
-                        var cont = $scope.dreamsLists.answers[a].length;
+                for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
+                    var cont = $scope.dreamsLists.answers[a].length;
 
-                        if (cont == 0) {//Question withoud dreams
-                            lastQuestionValidation = false;
-                            break;
+                    if (cont > 0) {//Question with dreams
 
-                        } else {
+                        //Check if dreams are not empty strings or spaces
+                        var countNotEmptyAnswers = 0;
+                        for (var b = 0; b < cont; b++) {
+                            var text = $scope.dreamsLists.answers[a][b];
 
-                            for (var b = 0; b < cont; b++) {
-                                var text = $scope.dreamsLists.answers[a][b];
-
-                                if (text.trim() == '') {
-                                    lastQuestionValidation = false;
-                                    break;
-                                }
+                            if (text.trim() !== '') {
+                                countNotEmptyAnswers++;
                             }
                         }
 
-                        if (!lastQuestionValidation) {
-                            break;
+                        if (countNotEmptyAnswers > 0) {
+                            //questionIsValid = true;
+                            validAnswers++;
                         }
 
                     }
-
-                    if (lastQuestionValidation) {
-                        $scope.showWarning = false;
-                        $scope.navigateToPage(2);
-                    } else {
-                        showWarningAndGoToTop();
-                    }
-
-                } else {
-                    showWarningAndGoToTop();
                 }
 
+                if (validAnswers == 3) {
+                    console.log("Validado");
+                    $scope.showWarning = false;
+                    $scope.navigateToPage(2);
+                } else {
+                    console.log("NO Validado");
+                    showWarningAndGoToTop();
+                }
             };
+
 
             function showWarningAndGoToTop() {
                 $scope.showWarning = true;
-                $scope.$emit('scrollTop');
+                //$scope.$emit('scrollTop');
             }
+
+
+
 
             $scope.answerIndex = 1;
 
-            $scope.addToAnswerIndex = function(delta) {
+            $scope.addToAnswerIndex = function (delta) {
                 $scope.answerIndex += delta;
 
-                if ($scope.answerIndex >3) {
+                if ($scope.answerIndex > 3) {
                     $scope.answerIndex = 1;
                 }
 
