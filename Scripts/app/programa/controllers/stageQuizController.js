@@ -228,10 +228,11 @@ angular
             }
 
             function updateSelectedAnswers(questionIndex, question) {
-                debugger;
+                console.log("Question item: " + JSON.stringify(question));
+
                 switch (questionIndex) {
                     case 0:
-                        if (question.userAnswer == "Si") {
+                        if (question.userAnswer == "Si") {console.log("Primera es true");
                             $scope.AnswersResult.answers[0] = 1;
                         }
                         else if (question.userAnswer == "No") {
@@ -256,6 +257,7 @@ angular
                         $scope.AnswersResult.answers[2] = question.userAnswer.trim();
                         break;
                     case 3:
+                        /*
                         if (question.userAnswer.length > 0) {
                             for (var index = 0; index < question.answers.length; index++) {
                                 var questionOption = question.answers[index];
@@ -265,21 +267,48 @@ angular
                                 }
                             }
                         }
+                        */
+
+                        var userAnswer = cleanText(question.userAnswer);
+                        console.log(userAnswer);
+
+                        if (userAnswer == "Si") {
+                            $scope.AnswersResult.answers[3] = 2;
+                        }
+
+                        if (userAnswer == "No") {
+                            $scope.AnswersResult.answers[3] = 2;
+                        }
+
+                        if (userAnswer == "Mas o menos") {
+                            console.log("Más o menos");
+                            $scope.AnswersResult.answers[3] = 2;
+                        }
+
                         break;
+
                     case 4:
                         if (question.userAnswer != null) {
-                            var userAnswers = question.userAnswer.split(";");
-                            for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
-                                var userAnswer = userAnswers[indexUserAnswers].trim();
+                            var userAnswer = cleanText(question.userAnswer);
+                            console.log(userAnswer);
+                            var userAnswers = userAnswer.split(" ");
+                            var long = userAnswers.length;
+                            for (var i = 0; i < long; i++) {
+                                $scope.AnswersResult.answers[4].push(userAnswers[i]);
+                                /*
+                                var userAnswer = userAnswers[i].trim();
                                 for (var index = 0; index < question.answers.length; index++) {
                                     var questionOption = question.answers[index];
                                     if (questionOption.answer.trim() == userAnswer) {
                                         $scope.AnswersResult.answers[4].push(userAnswer);
                                     }
                                 }
+                                */
                             }
                         }
+
                         break;
+
                     default:
                         break;
                 }
@@ -414,7 +443,7 @@ angular
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
-
+                console.log("activity_identifier: " + $scope.activity_identifier);
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
                 console.log("activity: " + JSON.stringify(activity));
 
@@ -452,13 +481,14 @@ angular
                     console.log("activityAnswers :" + JSON.stringify(activityAnswers));
                     // $scope.activity = activityAnswers;
                     console.log("number Of Questions :" + activityAnswers.questions.length);
-                    debugger;
+                    console.log("Activity name :" + $scope.activityname);
+
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
                         var question = activityAnswers.questions[index];
 
                         switch ($scope.activityname) {
-                            case "Exploracion Inicial":
+                            case "Exploración inicial":
                                 updateSelectedAnswers(index, question);
                                 break;
                             case "Mis cualidades":
