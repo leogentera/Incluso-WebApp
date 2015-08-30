@@ -232,7 +232,7 @@
         //    });
         // };
         
-        var _endActivity = function(key, data, userCourseModel, url, token, successCallback, errorCallback){
+        var _endActivity = function(key, data, userCourseModel, url, token, successCallback, errorCallback){            
             _httpFactory({                
                method: 'PUT',
                url: url,        
