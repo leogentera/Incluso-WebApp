@@ -53,8 +53,8 @@ angular
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
             $scope.genderItems = ['Masculino', 'Femenino'];
-            $scope.countryItems = ['México', 'Guatemala', 'Costa Rica', 'Perú', 'Brasil'];
-            $scope.cityItems = ['México D.F.', 'Guadalajara', 'Monterrey', 'Villa hermosa'];
+            $scope.countryItems = ['México', 'OTRO'];
+            $scope.cityItems = ['México D.F', 'Estado de México', 'OTRO'];
             $scope.securityquestionItems = ['¿Dónde crecí?','Nombre de mi mejor amigo','Nombre de mi mascota','Personaje favorito','Banda musical favorita'];
             
             $scope.$emit('HidePreloader'); //- hide preloader
