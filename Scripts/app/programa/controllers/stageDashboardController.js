@@ -22,7 +22,7 @@ angular
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
-            $scope.currentChallenge = 1;
+
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -45,7 +45,6 @@ angular
 
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
-            $scope.stages = $scope.model.stages;
             $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
             $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
             localStorage.setItem("userCurrentStage", $routeParams['stageId']);
@@ -99,15 +98,15 @@ angular
                             updatetype: 0
                         };
                         
-                        //trigger activity type 1 is sent when the activity starts.
-                        var triggerActivity = 1;
-                        _createNotification(activity.coursemoduleid, triggerActivity);
-                        
                         moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function (size) {
                             $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started = 1;
                             $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].datestarted = data.datestarted;
                             localStorage.setItem('usercourse', JSON.stringify($scope.model));
                             localStorage.setItem('startedActivityCabinaDeSoporte', JSON.stringify({$stage: $scope.idEtapa, $index: index, $parentIndex: parentIndex, $data: data}));
+
+                            //trigger activity type 1 is sent when the activity starts.
+                            var triggerActivity = 1;
+                            _createNotification(activity.coursemoduleid, triggerActivity);
 
                             var modalInstance = $modal.open({
                                 animation: $scope.animationsEnabled,
@@ -121,9 +120,6 @@ angular
                                 windowClass: 'user-help-modal'
                             });
                             console.log("modal open");
-                                                        
-                            
-                            
                         },function(){
                             console.log('Error callback');    
                         });
@@ -131,10 +127,9 @@ angular
                 }
             };
 
-            $scope.getCurrentStatusOfActivity = function (index, parentIndex) {
-                if ($scope.model.stages[$scope.idEtapa] && $scope.model.stages[$scope.idEtapa].challenges[parentIndex] && $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index])
-                return $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status;
-                else return 0
+            $scope.getCurrentStatusOfActivity = function (coursemoduleid) {
+                var activity = _getActivityByCourseModuleId(coursemoduleid);
+                return activity.status;
             };
 
             function openStageModal() {
