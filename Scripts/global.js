@@ -233,17 +233,21 @@ function getActivityByActivity_identifier(activity_identifier) {
    moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
 }
 
-function getdate(){
-  var currentdate = new Date(); 
-  var datetime = currentdate.getFullYear() + ":"
-    + (currentdate.getMonth()+1)  + ":" 
-    + currentdate.getDate() + " "  
-    + currentdate.getHours() + ":"  
-    + currentdate.getMinutes() + ":" 
-    + currentdate.getSeconds();
-    return datetime;
-}
+function getdate() {
+    var date = new Date(),
+        year = date.getFullYear(),
+        month = formatValue(date.getMonth() + 1), // months are zero indexed
+        day = formatValue(date.getDate()),
+        hour = formatValue(date.getHours()),
+        minute = formatValue(date.getMinutes()),
+        second = formatValue(date.getSeconds());
 
+    function formatValue(value) {
+        return value >= 10 ? value : '0' + value;
+    }
+
+    return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
+}
 
 syncCacheData();
 var logout = function($scope, $location){

@@ -49,6 +49,7 @@ angular
                             localStorage.setItem('usercourse', JSON.stringify(_usercourse));
                             var profile = JSON.parse(localStorage.getItem("profile"));
                             var model = {
+                                userId: currentUser.userId,
                                 stars: currentActivity.points,
                                 instance: currentActivity.coursemoduleid,
                                 instanceType: 0,
