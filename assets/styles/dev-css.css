@@ -1,11 +1,12 @@
 /* dev time css */
 @import url('bootstrap.css') screen;
-@import url('icomoon.css') screen;
+/*@import url('icomoon.css') screen;
 @import url('play.css') screen;
-@import url('roboto.css') screen;
-@import url('base.css') screen;
+@import url('roboto.css') screen;*/
+/*@import url('base.css') screen;
 @import url('entities.css') screen;
 @import url('transition-dev-01.css') screen;
 @import url('transition-dev-02.css') screen;
 @import url('overrides.css') screen;
-@import url('performance-tuning.css') screen;
+@import url('performance-tuning.css') screen;*/
+@import url('css.css') screen;
