@@ -391,12 +391,12 @@ angular
             };
 
             function addHeight(lista) {
-                $scope.finalHeight = angular.element(lista).height() + 125;
+                $scope.finalHeight = angular.element(lista).height() + 177;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
             function removeHeight(lista) {
-                $scope.finalHeight = angular.element(lista).height() - 135;
+                $scope.finalHeight = angular.element(lista).height() - 172;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
