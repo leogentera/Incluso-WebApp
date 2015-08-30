@@ -22,40 +22,38 @@
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
-                                    <input id="tru0" type="radio" value="1" name="vf" ng-model="AnswersResult.answers[0]"
+                                    <input id="tru0" type="radio" value="2" name="vf" ng-model="AnswersResult.answers[0]"
                                            ng-disabled="setReadOnly"/>
                                     <label for="tru0">Verdadero</label>
-                                    <input id="fols0" type="radio" value="0" name="vf"
+                                    <input id="fols0" type="radio" value="1" name="vf"
                                            ng-model="AnswersResult.answers[0]" ng-disabled="setReadOnly"/>
                                     <label for="fols0">Falso</label>
                                 </div>
                             </section>
                         </div>
-                        <!--Pregunta tipo Opción Multiple + Otro-->
+                        <!--Pregunta tipo Si/No-->
                         <div>
                             <div class="txt-renglon txt-bigger">2. ¿Tener un carro y formar una familia es un sueño de ser?
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
-                                    <input id="tru1" type="radio" value="1" name="vf" ng-model="AnswersResult.answers[1]"
-                                           ng-disabled="setReadOnly"/>
+                                    <input id="tru1" type="radio" value="2" name="vf" ng-model="AnswersResult.answers[1]" ng-disabled="setReadOnly"/>
                                     <label for="tru1">Verdadero</label>
-                                    <input id="fols1" type="radio" value="0" name="vf"
-                                           ng-model="AnswersResult.answers[1]" ng-disabled="setReadOnly"/>
+
+                                    <input id="fols1" type="radio" value="1" name="vf" ng-model="AnswersResult.answers[1]" ng-disabled="setReadOnly"/>
                                     <label for="fols1">Falso</label>
                                 </div>
                             </section>
                         </div>
-                        <!--Pregunta tipo Texto Abierto-->
+                        <!--Pregunta tipo Si/No-->
                         <div>
                             <div class="txt-renglon txt-bigger">3. ¿Tus sueños son metas que van dirigiendo tu camino?</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
-                                    <input id="tru2" type="radio" value="1" name="vf" ng-model="AnswersResult.answers[2]"
-                                           ng-disabled="setReadOnly"/>
+                                    <input id="tru2" type="radio" value="1" name="vf" ng-model="AnswersResult.answers[2]" ng-disabled="setReadOnly"/>
                                     <label for="tru2">Verdadero</label>
-                                    <input id="fols2" type="radio" value="0" name="vf"
-                                           ng-model="AnswersResult.answers[2]" ng-disabled="setReadOnly"/>
+
+                                    <input id="fols2" type="radio" value="0" name="vf" ng-model="AnswersResult.answers[2]" ng-disabled="setReadOnly"/>
                                     <label for="fols2">Falso</label>
                                 </div>
                             </section>
@@ -69,29 +67,33 @@
                                        ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
                                         />
                                 <label for="option1">Es tu ejemplo a seguir y debes ser igual a él</label>
+
                                 <input id="option2" type="radio" value="1" name="option"
                                        ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
                                         />
                                 <label for="option2">Puedes aprender de su experiencia para alcanzar tus sueños</label>
+
                                 <input id="option3" type="radio" value="2" name="option"
                                        ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
                                         />
                                 <label for="option3">Puede enseñarte cómo ganar dinero más fácil</label>
                             </section>
                         </div>
-                        <!--Pregunta tipo Lista Dinámica-->
-                        <div id="listaDinamica">
+                        <!--Pregunta tipo Selección Simple-->
+                        <div>
                             <div class="txt-renglon txt-bigger">5. ¿Porqué es importante que tus sueños se relacionen con lo que te gusta y para lo que eres bueno?</div>
 
                             <section class="form txt-renglon txt-bigger part list">
                                 <input id="option4" type="radio" value="0" name="option"
                                        ng-model="AnswersResult.answers[4]" ng-disabled="setReadOnly"
-                                        />
+                                        />                                        
                                 <label for="option4">Porque aprovechas mejor tus talentos y difrutas lo que haces</label>
+
                                 <input id="option5" type="radio" value="1" name="option"
                                        ng-model="AnswersResult.answers[4]" ng-disabled="setReadOnly"
                                         />
                                 <label for="option5">Porque puedes ser más famoso y exitoso</label>
+
                                 <input id="option6" type="radio" value="2" name="option"
                                        ng-model="AnswersResult.answers[4]" ng-disabled="setReadOnly"
                                         />
@@ -162,10 +164,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h3 class="subtitle text-center">Exploración inicial</h3>
+                    <h3 class="subtitle text-center">Exploración final</h3>
 
                     <p class="txt-renglon centered">
-                        Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad
+                        Explora qué tanto descubriste en la zona de vuelo
                     </p>
 
                     <!-- <video controls poster="assets/images/ptr-video-0001.jpg" >

@@ -37,8 +37,7 @@ angular
 
 
             $scope.finishActivity = function () {
-                //Activity completed
-
+                //Activity completed                
                 $scope.activity.status = 1;
 
                 //Llamar notificaciones
@@ -66,15 +65,15 @@ angular
                         break;
                     default:
                         break;
-                }
-
+                }                
                 _endActivityQuiz({
                     "usercourse": updatedActivityOnUsercourse,
                     "coursemoduleid": $scope.activity.coursemoduleid,
                     "answersResult": $scope.AnswersResult,
                     "userId": $scope.userprofile.id,
                     "startingTime": $scope.startingTime,
-                    "endingTime": new Date()
+                    "endingTime": new Date(),
+                    "token" : $scope.currentUser.token
                 });
 
                 var currentStage = localStorage.getItem("currentStage");
@@ -224,6 +223,7 @@ angular
             }
 
             function updateSelectedAnswers(questionIndex, question) {
+                debugger;
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer == "Si") {
@@ -275,6 +275,60 @@ angular
                             }
                         }
                         break;
+                    default:
+                        break;
+                }
+            }
+
+            function updateSelectedAnswersFinal(questionIndex, question) {  
+            
+                switch (questionIndex) {
+                    case 0:
+                        if (question.userAnswer == "True") {
+                            $scope.AnswersResult.answers[0] = 2;
+                        }
+                        else if (question.userAnswer == "False") {
+                            $scope.AnswersResult.answers[0] = 1;
+                        }
+                        break;
+                    case 1:
+                        if (question.userAnswer == "True") {
+                            $scope.AnswersResult.answers[1] = 2;
+                        }
+                        else if (question.userAnswer == "False") {
+                            $scope.AnswersResult.answers[1] = 1;
+                        }
+                        break;
+                    case 2:
+                        if (question.userAnswer == "True") {
+                            $scope.AnswersResult.answers[2] = 1;
+                        }
+                        else if (question.userAnswer == "False") {
+                            $scope.AnswersResult.answers[2] = 0;
+                        }
+                        break;
+                    case 3:
+                        if (question.userAnswer == "Es tu ejemplo a seguir y debes ser igual a él\n") {
+                            $scope.AnswersResult.answers[3] = 0;
+                        }
+                        else if (question.userAnswer == "Puedes aprender de su experiencia para alcanzar tus sueños\n") {
+                            $scope.AnswersResult.answers[3] = 1;
+                        }
+                        else if (question.userAnswer == "Puede enseñarte cómo ganar dinero más fácil\n") {
+                            $scope.AnswersResult.answers[3] = 2;
+                        }
+                        break;  
+                    case 4:
+                        if (question.userAnswer == "Porque aprovechas mejor tus talentos y difrutas lo que haces\n") {
+                            $scope.AnswersResult.answers[4] = 0;
+                        }
+                        else if (question.userAnswer == "Porque puedes ser más famoso y exitoso\n") {
+                            $scope.AnswersResult.answers[4] = 1;
+                        }
+                        else if (question.userAnswer == "Porque debes hacer lo que quieras sin importar nada ni nadie\n") {
+                            $scope.AnswersResult.answers[4] = 2;
+                        }
+                        break;                        
                     default:
                         break;
                 }
@@ -359,8 +413,7 @@ angular
                 // var algo = data;
             }
 
-            function getDataAsync() {
-                debugger;
+            function getDataAsync() {                
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
@@ -369,10 +422,13 @@ angular
                 console.log("activity from getDataAsync(): " + JSON.stringify(activity));
 
                 if (activity != null) {
+                    if($scope.activity_identifier == 1009){
+                        $scope.AnswersResult.answers = [0,0,0,0,0];
+                    }
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
                     $scope.activityname = activity.activityname;
-                    console.log("Actividad: " + $scope.activityname);
+                    console.log("Actividad: " + $scope.activityname);                    
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -399,11 +455,12 @@ angular
 
             function successfullCallBack(activityAnswers) {
                 console.log("You entered successfullCallBack");
-
+                
                 if (activityAnswers != null) {
                     console.log("activityAnswers :" + JSON.stringify(activityAnswers));
                     // $scope.activity = activityAnswers;
                     console.log("number Of Questions :" + activityAnswers.questions.length);
+                    debugger;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
                         var question = activityAnswers.questions[index];
@@ -420,6 +477,9 @@ angular
                                 break;
                             case "Sueña":
                                 updateMisSueñosSelectedAnswers(index, question);
+                                break;
+                            case "Exploración final":
+                                updateSelectedAnswersFinal(index, question);
                                 break;
                             default:
                                 break;

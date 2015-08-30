@@ -88,9 +88,8 @@ var _endActivityQuiz = function(activityModel){
       
       //trigger activity type 2 is sent when the activity ends.
       var triggerActivity = 2;
-      _createNotification(activityId, triggerActivity);      
-            
-      moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,successCallback,errorCallback);      
+      _createNotification(activityId, triggerActivity);                  
+      moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,successCallback,errorCallback);      
        
       _isChallengeCompleted(activityModel.coursemoduleid);
 }
