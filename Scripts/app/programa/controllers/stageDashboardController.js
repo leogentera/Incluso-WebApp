@@ -22,7 +22,7 @@ angular
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
-            $scope.currentChallenge = 1;
+
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
