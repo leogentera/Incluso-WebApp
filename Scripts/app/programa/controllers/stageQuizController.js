@@ -36,10 +36,10 @@ angular
 
 
             $scope.finishActivity = function () {
-                //Activity completed                
-                $scope.activity.status = 1;
+                //Activity completed
 
-                //Llamar notificaciones
+                $scope.activity.status = 1;
+                
                 //Update Activity Log Service
 
                 updateUserStars($scope.activity_identifier);
@@ -47,9 +47,11 @@ angular
                 $scope.AnswersResult.userid = $scope.userprofile.id;
                 $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
                 $scope.AnswersResult.like_status = $scope.like_status;
+                $scope.AnswersResult.updatetype = 1;
                 $scope.showWarning = false;
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
+                console.log("theUserCouerseUpdated: " + JSON.stringify(updatedActivityOnUsercourse));
 
                 switch ($scope.activityname) {
                     case "Mis cualidades":
@@ -64,12 +66,16 @@ angular
                         break;
                     default:
                         break;
-                }                
+                }
+                
+                localStorage.setItem("userCourse", updatedActivityOnUsercourse);
+     
                 _endActivityQuiz({
                     "usercourse": updatedActivityOnUsercourse,
                     "coursemoduleid": $scope.activity.coursemoduleid,
                     "answersResult": $scope.AnswersResult,
                     "userId": $scope.userprofile.id,
+
                     "startingTime": $scope.startingTime,
                     "endingTime": new Date(),
                     "token" : $scope.currentUser.token
@@ -401,7 +407,7 @@ angular
             function errorCallback(data) {
                 console.log("You entered the errorCallback");
                 // var algo = data;
-            };
+            }
 
             function getDataAsync() {
 
