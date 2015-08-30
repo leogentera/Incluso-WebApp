@@ -404,7 +404,7 @@
                     assign = _.find(activities,function(a) { 
                         return a.parentsection == course.stages[i].parentsection && 
                             a.section == course.stages[i].section &&
-                            a.activity_type == 'assign' && a.activityname != 'Chat'
+                            a.activity_type == 'assign' && a.activityname != 'Cabina de soporte'
                     });
 
                     if (assign) {
@@ -423,7 +423,7 @@
                        assign = _.find(activities,function(a) { 
                             return a.parentsection == course.stages[i].challenges[j].parentsection && 
                                 a.section == course.stages[i].challenges[j].section &&
-                                a.activity_type == 'assign'  && a.activityname != 'Chat'
+                                a.activity_type == 'assign'  && a.activityname != 'Cabina de soporte'
                         });
 
                         if (assign) {
@@ -442,7 +442,7 @@
                         });
 
                         var childrenActivities =  _.filter(activities,function(a) { 
-                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Cabina de soporte'))
                         });
 
                         for(k = 0; k < childrenActivities.length; k++) {
@@ -460,7 +460,7 @@
                                assign = _.find(activities,function(a) { 
                                     return a.parentsection == course.stages[i].challenges[j].activities[k].parentsection && 
                                         a.section == course.stages[i].challenges[j].activities[k].section &&
-                                        a.activity_type == 'assign'  && a.activityname != 'Chat'
+                                        a.activity_type == 'assign'  && a.activityname != 'Cabina de soporte'
                                 });
 
                                 if (assign) {
@@ -475,7 +475,7 @@
                                 });
 
                                 childrenActivities =  _.filter(activities,function(a) { 
-                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
+                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Cabina de soporte'))
                                 });
 
                                 if (course.stages[i].challenges[j].activities[k]["activities"]) {
