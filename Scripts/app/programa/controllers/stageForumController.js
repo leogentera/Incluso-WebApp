@@ -75,7 +75,7 @@ angular
                     console.log("modal open");
                 }, 1000);
               
-              $location.path('/ZonaDeVuelo/Dashboard');
+              $location.path('/ZonaDeVuelo/Dashboard/1');
             }
 
         }]).controller('tutorialController', function ($scope, $modalInstance) {
