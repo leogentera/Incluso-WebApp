@@ -240,7 +240,7 @@
                headers: {'Content-Type': 'application/json', 'Authorization': token},
                }).success(function(data, status, headers, config) {
                    localStorage.setItem(key, JSON.stringify(userCourseModel));
-                   successCallback();
+                   successCallback(data);
                }).error(function(data, status, headers, config) {
                    localStorage.setItem(key, JSON.stringify(userCourseModel));
                    errorCallback();

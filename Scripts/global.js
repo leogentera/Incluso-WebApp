@@ -76,19 +76,6 @@ var _endActivity = function(activityModel){
           
 };
 
-var _endActivityQuiz = function(activityModel){
-      _isStageCompleted();
-      var serviceParameters =  activityModel.answersResult;
-      var activityId = activityModel.coursemoduleid;
-      
-      //trigger activity type 2 is sent when the activity ends.
-      var triggerActivity = 2;
-      _createNotification(activityId, triggerActivity);                  
-      moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,successCallback,errorCallback);      
-       
-      _isChallengeCompleted(activityModel.coursemoduleid);
-};
-
 //This function updates in localStorage the status of the stage when completed
 var _isStageCompleted = function(){
     
@@ -109,6 +96,7 @@ var _isStageCompleted = function(){
     }
   
 };
+
 
 var _isChallengeCompleted = function(activityId){
     

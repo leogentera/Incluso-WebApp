@@ -68,24 +68,36 @@ angular
                 
                 localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
      
-                _endActivityQuiz({
+                var activityModel = {
                     "usercourse": updatedActivityOnUsercourse,
                     "coursemoduleid": $scope.activity.coursemoduleid,
                     "answersResult": $scope.AnswersResult,
                     "userId": $scope.userprofile.id,
-
                     "startingTime": $scope.startingTime,
                     "endingTime": new Date(),
                     "token" : $scope.currentUser.token
-                });
-               
-               
-                var currentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage);
-  
-               
-            };
-
+                };
+                debugger;
+                _isStageCompleted();               
+                //trigger activity type 2 is sent when the activity ends.
+                var triggerActivity = 2;
+                _createNotification(activityModel.coursemoduleid, triggerActivity);
+                moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,
+                    _endActivitySuccessCallback,errorCallback);
+                
+            };        
+            
+            var _endActivitySuccessCallback = function(){
+                
+                var challengeCompleted = _isChallengeCompleted($scope.activity.coursemoduleid);
+                if (challengeCompleted) {
+                    //show Robot;
+                    var currentStage = localStorage.getItem("currentStage");
+                    $location.path('/ZonaDeVuelo/Dashboard/' + currentStage);
+                }
+            }
+            
+            
             $scope.addAbility = function () {
                 addHeight("#listaDinamica");
                 $scope.AnswersResult.answers[4].push(new String());
