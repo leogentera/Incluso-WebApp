@@ -26,7 +26,7 @@ angular
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
 
-            $scope.like_status = 0;
+            $scope.like_status = 1;
 
             $scope.AnswersResult = {
                 "userid": 0,//$scope.userprofile.id,
