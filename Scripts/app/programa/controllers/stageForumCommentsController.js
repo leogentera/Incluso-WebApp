@@ -129,9 +129,10 @@ angular
             $scope.replyText = null;
             $scope.replyToPost = function(that, parentId, topicId){
                 var dataObejct = createPostDataObject(parentId, that.replyText, 1);
-                //$scope.$emit('ShowPreloader');
+                $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
-                    function(){alert('Success!!');
+                    function(){
+                        alert('Tu cometario fue registrado.');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
                         getTopicDataAsync();
@@ -141,10 +142,10 @@ angular
                         checkForumProgress();
 
                     },
-                    function(){alert('Fail!!');
+                    function(){alert('Tu comentario no pudo ser registrado.');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
-                        //$scope.$emit('HidePreloader');
+                        $scope.$emit('HidePreloader');
                     });
             };
 
