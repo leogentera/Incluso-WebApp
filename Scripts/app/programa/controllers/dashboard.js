@@ -12,6 +12,7 @@
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             
             _httpFactory = $http;
+            _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
 

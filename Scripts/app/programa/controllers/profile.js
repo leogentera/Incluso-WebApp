@@ -11,6 +11,7 @@ angular
         '$http',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http) {
 
+            _timeout = $timeout;
             _httpFactory = $http;
 
             $scope.currentPage = 1;
