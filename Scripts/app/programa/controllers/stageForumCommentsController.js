@@ -1,4 +1,3 @@
-//TODO Implement likes. Service failing at this moment
 angular
     .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants', 'naif.base64'])
     .controller('stageForumCommentsController', [
@@ -15,16 +14,23 @@ angular
         'MoodleIds',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $filter, MoodleIds) {
 
+
+            _httpFactory = $http;
+            _timeout = $timeout;
+            //$scope.$emit('HidePreloader');
+            $scope.$emit('ShowPreloader'); //show preloader
             $rootScope.pageName = "Estación: Conócete"
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
+
+            $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
 
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
+            $scope.liked = null;
 
             $scope.scrollToTop();
-            $scope.$emit('ShowPreloader'); //hide preloader
 
             $scope.forumModals = {
                 "isTextCollapsed":true,
@@ -32,7 +38,18 @@ angular
                 "isVideoCollapsed":true,
                 "isAttachmentCollapsed":true
             };
-
+            $scope.clickLikeButton = function(postId){
+                console.log('Post id: ' + postId);
+                console.log('Like button clicked!!!');
+                var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
+                moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject,
+                    function(){
+                        console.log('Liked!!');
+                    },
+                    function(){
+                        console.log('Unlike =( !!');
+                    } );
+            };
 
             function getForumsProgress(){
                 //TODO make this function ablailable trough a service so it can be used by forum controller as well as forum comments controller
@@ -51,7 +68,7 @@ angular
 
             };
             var endForumActivity = function(){
-                //TODO Implement check of status activity, if already finished OD NOT finish activity again
+                //TODO Implement check of status activity, if already finished DO NOT finish activity again
                 console.log('Finishing activity...');
                 var userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
                 var userId = {'userid':JSON.parse(localStorage.getItem('userId'))};
@@ -113,7 +130,7 @@ angular
             $scope.replyText = null;
             $scope.replyToPost = function(that, parentId, topicId){
                 var dataObejct = createPostDataObject(parentId, that.replyText, 1);
-                $scope.$emit('ShowPreloader');
+                //$scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){alert('Success!!');
                         $scope.textToPost=null;
@@ -127,7 +144,7 @@ angular
                     function(){alert('Fail!!');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
-                        $scope.$emit('HidePreloader');
+                        //$scope.$emit('HidePreloader');
                     });
             };
 
@@ -148,7 +165,7 @@ angular
                     "posttype": 1,
                     "fileToUpload":""
                 };
-                $scope.$emit('ShowPreloader');
+                //$scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
                         alert('Success!!');$scope.textToPost='';
@@ -159,7 +176,7 @@ angular
                     function(){alert('Fail!!');
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
-                        $scope.$emit('HidePreloader');
+                        //$scope.$emit('HidePreloader');
                     });
 
             };
@@ -239,8 +256,8 @@ angular
             };
 
             function getTopicDataAsync() {
-                moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback);
-                $scope.$emit('HidePreloader');
+                moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback, null, true);
+                //$scope.$emit('HidePreloader');
             }
 
             function getActivityInfoCallback() {
@@ -267,7 +284,9 @@ angular
             };
 
             function getDataAsync() {
+                //$scope.$emit('ShowPreloader'); //show preloader
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback);
+                $scope.$emit('HidePreloader');
             }
 
                 //TODO cambiar esta lógica, demasiados requests
@@ -278,11 +297,12 @@ angular
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = JSON.parse(localStorage.getItem('currentStage')); //getCurrentStage();
                     localStorage.setItem("currentStage", $scope.currentStage);
+
                 }, errorCallback);
             }
 
             function errorCallback(data){
-                $scope.$emit('HidePreloader'); //hide preloader
+                //$scope.$emit('HidePreloader'); //hide preloader
                 $scope.$emit('scrollTop'); //- scroll
             }
 

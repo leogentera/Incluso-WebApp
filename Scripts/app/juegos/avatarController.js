@@ -16,7 +16,8 @@ angular
             //$scope.scrollToTop();
             $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
             $scope.imageSrc =  "amarillo"; //$scope.avatarInfo[0]["color_cabello"];
-
+            $scope.file = null;
+            var user = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
             $scope.selectAvatarCabelloAmarillo = function() {
                 if ( $scope.avatarInfo != null) {
                     $scope.avatarInfo[0]["color_cabello"] = "amarillo";
@@ -64,5 +65,50 @@ angular
                     $location.path('/ProgramaDashboard');
                 }
             }
+
+            $scope.encodeImageUri = function(imageUri, callback) {
+                var c = document.createElement('canvas');
+                var ctx = c.getContext("2d");
+                var img = new Image();
+                img.onload = function() {
+                    alert('loading avatar');
+                    c.width = this.width;
+                    c.height = this.height;
+                    ctx.drawImage(img, 0, 0);
+
+                    if(typeof callback === 'function'){
+                        var dataURL = c.toDataURL("image/jpeg");
+                        callback(dataURL.slice(22, dataURL.length));
+                    }
+                };
+                img.src = imageUri;
+            }
+
+            $scope.uploadAvatar = function(file) {
+                debugger;
+
+                $scope.encodeImageUri("assets/images/avatar.svg", function(b64) {
+                $http({
+                    method: 'POST',
+                    url: API_RESOURCE.format('avatar'),
+                    data: {
+                        userid: user.id,
+                            filecontent: b64
+                    }
+                })
+                .success(function(){
+                    console.log('Foto guardada exitosamente!');
+                    $location.path('/ProgramaDashboard');
+                })
+                .error(function(){
+                    console.log('Error al subir la foto!');
+                    $location.path('/ProgramaDashboard');
+                });
+            
+                    });
+               }
+                
+
+
             
         }]);

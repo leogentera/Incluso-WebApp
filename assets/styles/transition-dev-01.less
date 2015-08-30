@@ -33,7 +33,6 @@ Parallel work file for UI Developer 01
 
         .subtitle {            
             padding-top: 60px;
-            text-transform: uppercase;
             font-weight: bold;
 
             + .txt-renglon {
@@ -49,7 +48,7 @@ Parallel work file for UI Developer 01
                 font-size: 129%;                
             }
 
-            button {
+            a, button {
 
                 &.btn-add {
                     padding: 4vw 1.7vw;
@@ -85,7 +84,7 @@ Parallel work file for UI Developer 01
                         padding-right: 0 !important;
                     }                    
 
-                    input {
+                    input, textarea {
                         width: 89% !important;
                         padding: 1px;
                         display: inline-block;
@@ -108,7 +107,7 @@ Parallel work file for UI Developer 01
                 }  
             }
 
-            button {
+            a, button {
 
                 .icon-cross {
                     font-size: 82%;
@@ -178,9 +177,19 @@ Parallel work file for UI Developer 01
                 color: white;
                 font-size: 92%;
                 padding-right: 3%;
+            }        
+
+            .icon-edit {
+                position: relative;
+                top: -7vw;
             }
 
-            input {
+            textarea {
+                resize: none;
+                overflow-y: auto;
+            }
+
+            input, textarea {
                 background: transparent;
                 color: white;
                 border: none;
@@ -236,7 +245,7 @@ Parallel work file for UI Developer 01
                         .sm-pill,
                         .green-pill {
                             border-width: 2px;
-                            font-size: 5.5vw;
+                            font-size: 5.4vw;
                             font-weight: bold;
                             padding: 0.7vw 3vw 1vw;
                             position: relative;
@@ -247,6 +256,11 @@ Parallel work file for UI Developer 01
                                 font-size: 4.5vw;
                                 position: relative;
                                 top: 4.5px;
+                            }
+
+                            > span {
+                                display: inline-block;
+                                width: auto;
                             }
                         }
 
@@ -416,5 +430,37 @@ Parallel work file for UI Developer 01
         }
 
     } //community
+
+    .privacy-notice,
+    .use-terms {
+        
+        .component {
+
+            padding: 0 7.5%!important;
+
+            p, ul {
+                font-size: 1.1em;
+                text-align: left;
+                margin-right: 0;
+                margin-left: 0;               
+
+                .subtitle-green {
+                    color: #bcd431;
+                    font-size: 4.4vw; 
+                }
+
+            }
+
+            h3 {
+                text-transform: uppercase;
+            }            
+
+            ul {
+                padding-left: 4.3vw;
+            }
+
+        }
+
+    }
 
 }

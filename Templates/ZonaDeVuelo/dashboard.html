@@ -38,15 +38,14 @@
             </section>
 
             <section class="holoproj">
+                <h2 class="subtitle centered">- RETOS -</h2>
                 <div class="centered txt-title" ng-bind="challengeName"></div>
                 <div id="carousel-example-generic2" class="carousel">
-
                     <div id="owl-demo2" class="owl-carousel">
-
-                        <div class="item visib" ng-repeat="reto in model.stages[idEtapa].challenges">
+                        <div class="item visib" ng-repeat="reto in stages[idEtapa].challenges">
                             <img ng-src="{{retosIconos[reto.sectionname]}}">
-
-                            <div class="txt-renglon centered" ng-bind="reto.sectionname"></div>
+                            <div class="subtitle centered text-uppercase" ng-bind="reto.sectionname"></div>
+                            <div class="txt-renglon challenge-description" ng-bind="reto.activityintro"></div>
                         </div>
 
                     </div>
@@ -56,38 +55,31 @@
                     </a>
                     <a class="control" href="#" id="next">
                         <span class="icomoon icon-arrow-bold-right"></span>
-                    </a>
+                    </a>                    
                 </div>
 
                 <div class="light"><img src="assets/images/img-light-cone.png"></div>
+                <div class="centered paginate">
+                    <span id="index" class="txt-bigger">1/</span>
+                    <span class="white txt-bigger">{{stages[idEtapa].challenges.length}}</span>
+                </div>
             </section>
 
-            <section class="jector">
+            <section class="jector">                
             </section>
-            <section class="parts">
+            <section class="parts activities">
                 <div id="owl-demo" class="owl-carousel">
-                    <div ng-repeat="challenge in model.stages[idEtapa].challenges">
-                      <!--
-                      <div class="part" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $parent.$index, $index)">
-                          <i class="icomoon icon-checked-join" ng-show="activity.status == 1"></i>
-                          <i class="icomoon icon-gauge" ng-show="activity.status == 0"></i>
+                    <div ng-repeat="challenge in stages[idEtapa].challenges">
+                      <div class="part" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
+                          <i class="icomoon icon-checked-join" ng-show="getCurrentStatusOfActivity($index, $parent.$index) == 1"></i>
+                          <i class="icomoon icon-gauge" ng-show="getCurrentStatusOfActivity($index, $parent.$index) == 0"></i>
+
                           <span ng-bind="activity.activityname"></span>
                           <span>
                               <i class="icomoon icon-star fl-right"></i>
                               <i class="icomoon icon-play fl-right"></i>
                           </span>
                       </div>
-                      -->
-                      <div class="part" ng-repeat="actividad in theActivities[$index]" ng-click="goToUrl2(actividad.link)">
-                          <i class="icomoon icon-checked-join" ng-show="actividad.status == 1"></i>
-                          <i class="icomoon icon-gauge" ng-show="actividad.status == 0"></i>
-                          <span ng-bind="actividad.name"></span>
-                      <span>
-                          <i class="icomoon icon-star fl-right"></i>
-                          <i class="icomoon icon-play fl-right"></i>
-                      </span>
-                      </div>
-                      
                     </div>
                 </div>
                 <div>
@@ -101,6 +93,10 @@
 
                     <div class="circle"></div>
                     <div class="text">{{avanceEnEtapaActual}}%</div>
+                </div>
+                <div>
+                    <p class="title">Mi avance</p>
+                    <p>en la estación</p>
                 </div>
             </section>
             <section class="hangar-bay">
@@ -119,7 +115,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <h3 class="subtitle">Cierre Zona de Vuelo</h3>
+                        <h3 class="subtitle">Cierre zona de vuelo</h3>
 
                         <p class="txt-renglon centered">
                             ¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda,
@@ -158,7 +154,7 @@
         </script>
 
         <script type="text/ng-template" id="CabinaSoporteMsj.html">
-            <div class="modal-robot robot-lg closing-stage-modal user-help">
+            <div class="modal-robot robot-sm closing-stage-modal user-help">
                 <img src="assets/images/img-robot.png">
 
                 <div class="modal-header">
@@ -197,6 +193,8 @@
                 goToFirstSpeed: 2000,
                 singleItem: true,
                 autoHeight: true,
+                touchDrag:false,
+                transitionStyle:"fade",
                 afterMove: callback1
             });
 
@@ -210,29 +208,33 @@
                 goToFirstSpeed: 2000,
                 singleItem: true,
                 autoHeight: true,
+                touchDrag:false,
+                transitionStyle:"fade",
                 afterMove: callback2
             });
 
             function callback1(event) {
                 var item = this.currentItem;
                 owl.trigger("owl.goTo", item);
+                $("span#index").text((item+1)+"/");
             }
 
             function callback2(event) {
                 var item = this.currentItem;
                 owl2.trigger("owl.goTo", item);
+                $("span#index").text((item+1)+"/");
             }
 
             $("#next").click(function (ev) {
                 owl.trigger('owl.next');
                 ev.preventDefault();
 
-            })
+            });
 
             $("#prev").click(function (ev) {
                 owl.trigger('owl.prev');
                 ev.preventDefault();
-            })
+            });
         }, 1000);
     });
 </script>

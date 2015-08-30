@@ -2,94 +2,98 @@
     namespace('moodleFactory');
 
     moodleFactory.Services = (function(){
-        var _getAsyncProfile = function(userId, successCallback, errorCallback){
-            _getAsyncData("profile", API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
+        var _getAsyncProfile = function(userId, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("profile", API_RESOURCE.format('user/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
-        var _putAsyncProfile = function(userId, data, successCallback, errorCallback){            
+        var _putAsyncProfile = function(userId, data, successCallback, errorCallback, forceRefresh){            
             _putAsyncData("profile", data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
-        };    
-        
-        var _getAsyncUserCourse = function(userId, successCallback, errorCallback){
+        };
+
+        var _getAsyncUserCourse = function(userId, successCallback, errorCallback, forceRefresh){
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
             _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback);
         };
 
-        var _getAsyncAvatarInfo = function(userId, successCallback, errorCallback){
-            _getAsyncData("avatarInfo", API_RESOURCE.format('avatar/' + userId), successCallback, errorCallback);
+        var _getAsyncAvatarInfo = function(userId, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("avatarInfo", API_RESOURCE.format('avatar/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityInfo = function(activityId, successCallback, errorCallback){
-            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
+        var _getAsyncActivityInfo = function(activityId, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
         };
 
         var _getAsyncForumInfo = function(activityId, topicId, successCallback, errorCallback){
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId + '/' + topicId), successCallback, errorCallback);
         };
 
-        var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback){
+        var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback, forceRefresh){
             _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + '/user/' + userId ), successCallback,errorCallback);
         };
-        
-        var _getAsyncActivitiesInfo = function(activityId, successCallback, errorCallback){
-            _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), successCallback, errorCallback);
+
+        var _getAsyncActivitiesInfo = function(activityId, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), successCallback, errorCallback, forceRefresh);
         };
-        
-        var _getAsyncActivityQuizInfo = function(activityId,userId, successCallback, errorCallback){
-            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId+'?userid='+userId), successCallback, errorCallback);
+
+        var _getAsyncActivityQuizInfo = function(activityId,userId, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId+'?userid='+userId), successCallback, errorCallback, forceRefresh);
         };
-            
-        var _getAsyncCourse = function(courseId, successCallback, errorCallback){
+
+        var _getAsyncCourse = function(courseId, successCallback, errorCallback, forceRefresh){
             successCallback();
             //_getCourseAsyncData("course", API_RESOURCE.format('course/' + courseId), successCallback, errorCallback);
         };
 
-        var _getAsyncLeaderboard = function(courseId, successCallback, errorCallback){
+        var _getAsyncLeaderboard = function(courseId, successCallback, errorCallback, forceRefresh){
             successCallback();
-            _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), successCallback, errorCallback);
+            _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), successCallback, errorCallback, forceRefresh);
         };
 
-        var _putAsyncQuiz = function(activityId, data, successCallback, errorCallback){            
+        var _putAsyncQuiz = function(activityId, data, successCallback, errorCallback, forceRefresh){            
             _putAsyncData("activity/" + activityId, data, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
-        };    
-
-        var _getUserNotifications = function(userId,successCallback,errorCallback){
-            _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback);
-        };
-        
-        var _postUserNotifications = function(userId, data, successCallback, errorCallback){
-            _postAsyncData("notifications",data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
-        var _postAsyncForumPost = function(key, data, successCallback, errorCallback){
+        var _getUserNotifications = function(userId,successCallback,errorCallback, forceRefresh){
+            _getAsyncData("notifications", API_RESOURCE.format('notification/'+ userId),successCallback, errorCallback, forceRefresh);
+        };
+
+        var _postUserNotifications = function(userId, data, successCallback, errorCallback, forceRefresh){
+            _postAsyncData("notifications/"+userId,data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+        };
+
+        var _postAsyncForumPost = function(key, data, successCallback, errorCallback, forceRefresh){
             _postAsyncData(key,data, API_RESOURCE.format('forum'), successCallback, errorCallback);
         };
-        
-        var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback){
-            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification' ), successCallback, errorCallback);
-        };
-        
-        var _getUserChat = function(userId, successCallback, errorCallback){
-            _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId),successCallback,errorCallback);;
-        };
-        
-        var _putUserChat = function(userId, data, successCallback, errorCallback){
-            _putAsyncData("updateChat",data, API_RESOURCE.format('messaging/'+ userId),successCallback,errorCallback);          
+
+        var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback, forceRefresh){
+            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/')+ notificationId, successCallback, errorCallback);
         };
 
-        var _assignStars = function(data, profile, token, successCallback,errorCallback){
-            
+        var _getUserChat = function(userId, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId),successCallback,errorCallback, forceRefresh);
+        };
+
+        var _putUserChat = function(userId, data, successCallback, errorCallback, forceRefresh){
+            _putAsyncData("updateChat",data, API_RESOURCE.format('messaging/'+ userId),successCallback,errorCallback);
+        };
+
+        var _assignStars = function(data, profile, token, successCallback,errorCallback, forceRefresh){
+
             _putAsyncStars("profile", data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
-         var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
-             _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
- 
-         };
-        
-        var _putEndActivityQuizes = function(activityId, data, userCourseModel, token, successCallback,errorCallback){
-            _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);            
+         var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback, forceRefresh){
+             _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
 
+         };
+
+        var _putEndActivityQuizes = function(activityId, data, userCourseModel, token, successCallback,errorCallback, forceRefresh){
+            _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
+
+        };
+
+        var _putForumPostLikeNoCache = function(postId, data, successCallback, errorCallback){
+            _putDataNoCache(data, API_RESOURCE.format('forum/'+ postId),successCallback,errorCallback);
         };
                                     
         var _getCacheObject = function(key){
@@ -105,7 +109,14 @@
             }
         };
 
-        var _getAsyncData = function(key, url, successCallback, errorCallback){
+        var _getAsyncData = function(key, url, successCallback, errorCallback, forceRefresh){
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+                
+            if (returnValue) {
+                _timeout(function() { successCallback(returnValue, key)}, 1000);                
+                return returnValue;
+            }
+            
             _httpFactory({
                 method: 'GET',
                 url: url, 
@@ -160,6 +171,21 @@
                 }).error(function(data, status, headers, config) {
                     localStorage.setItem(key, JSON.stringify(dataModel));
                     errorCallback();
+            });
+        };
+
+        var _putDataNoCache = function(data, url, successCallback, errorCallback){
+            _httpFactory({
+                method: 'PUT',
+                url: url,
+                data: data,
+                headers: {'Content-Type': 'application/json'},
+            }).success(function(data, status, headers, config) {
+                //localStorage.setItem(key, JSON.stringify(dataModel));
+                successCallback();
+            }).error(function(data, status, headers, config) {
+                //localStorage.setItem(key, JSON.stringify(dataModel));
+                errorCallback();
             });
         };
 
@@ -222,18 +248,14 @@
         };
 
         var _startActivity = function(data, activityModel, token, successCallback, errorCallback){
-            var key = 'challengesCourseCache/' + activityModel.activity_identifier;
-
-            _httpFactory({                
+            _httpFactory({
                method: 'PUT',
                url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),        
                data: data,       
                headers: {'Content-Type': 'application/json', 'Authorization': token},
                }).success(function(data, status, headers, config) {
-                   localStorage.setItem(key, JSON.stringify(activityModel));
                    successCallback();
                }).error(function(data, status, headers, config) {
-                   localStorage.setItem(key, JSON.stringify(activityModel));
                    errorCallback();
             });
         };
@@ -432,6 +454,7 @@
                 localStorage.setItem("usercourse", JSON.stringify(course));
                 localStorage.setItem("course", JSON.stringify(course));
                 localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
+                
             }
         }        
         
@@ -459,7 +482,8 @@
             PutStars: _assignStars,
             PutStartActivity: _startActivity,
             PutEndActivity: _putEndActivity,
-            PutEndActivityQuizes: _putEndActivityQuizes            
+            PutEndActivityQuizes: _putEndActivityQuizes,
+            PutForumPostLikeNoCache: _putForumPostLikeNoCache
 
         };
     })();

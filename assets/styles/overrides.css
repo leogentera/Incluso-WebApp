@@ -213,8 +213,6 @@
         background-image: url("../images/bg-stars-02.png");
         background-size:contain;
     }*/
-  /* IMG  PERFORMANCE TESTING */
-  /*background-color: red !important;*/
   /* tabs */
 }
 .incluso-app.start-dashboard .navbar {
@@ -222,10 +220,7 @@
   border-color: #ee4823;
 }
 .incluso-app.start-dashboard > article {
-  /*background-image: url('@{url-images}/bg-stars-01.png');*/
-  /*background-image: url('@{url-images}/svg/bg-dashboard-sky.svg');*/
-  background-image: url('../images/bg-dashboard-full.gif');
-  /*background-image: url('@{url-images}/svg/bg-dashboard-full.svg');*/
+  background-image: url('../images/bg-stars-01.png');
   -webkit-background-size: 100% auto;
   -moz-background-size: 100% auto;
   background-size: 100% auto;
@@ -238,36 +233,6 @@
   -moz-background-size: 100% auto;
   background-size: 100% auto;
 }
-.incluso-app.start-dashboard * {
-  /*visibility: hidden;*/
-}
-.incluso-app.start-dashboard *:hover,
-.incluso-app.start-dashboard *:active {
-  border: none;
-  outline: none !important;
-}
-.incluso-app.start-dashboard .video-gallery .stage .icon-play {
-  background-image: none;
-}
-.incluso-app.start-dashboard .my-badges {
-  background: none;
-}
-.incluso-app.start-dashboard .my-badges::before {
-  background: none;
-}
-.incluso-app.start-dashboard .my-badges::after {
-  background: none;
-}
-.incluso-app.start-dashboard .top-users {
-  background: none;
-}
-.incluso-app.start-dashboard .top-users::before {
-  background: none;
-}
-.incluso-app.start-dashboard .ilustration {
-  background: none;
-  height: 84vw;
-}
 .incluso-app.start-dashboard h1 {
   display: block;
   padding: 0;
@@ -276,7 +241,6 @@
   font-family: Roboto, Arial;
   font-size: 1.4em;
   font-weight: 400;
-  text-transform: capitalize;
 }
 .incluso-app.start-dashboard .component {
   padding: 0 5%;
@@ -348,7 +312,7 @@
 .incluso-app.start-dashboard .active .arrow-up {
   display: block;
   bottom: -69px;
-  bottom: -15vw;
+  bottom: -10vw;
 }
 .incluso-app.start-dashboard footer li:last-child {
   display: none;
@@ -677,20 +641,27 @@ section.part.inbloq.text-left .actions {
 .holoproj .owl-wrapper .item img {
   width: 55%;
 }
-/* PERFORMANCE TESTING */
-.incluso-app .app-footer.theme-rocks {
-  /*background:none green;*/
-  /*.gradient-custom(none, green, green);*/
-  background-color: none;
-  background-image: url('../images/bg-dashboard-full.gif');
-  background-position: bottom center;
-  background-repeat: none;
+.topics-forum .txt-bigger {
+  font-size: 4.5vw;
+  font-weight: 500;
 }
-.incluso-app .app-preloader {
-  /*display: none  !important;
-        visibility: hidden !important;*/
+.comments-forum .icon-circle {
+  padding: 1vh 0px;
 }
-.incluso-app .app-preloader .spinner-circle {
-  -webkit-animation: rotateSpinner .6s infinite linear;
-  animation: rotateSpinner .6s infinite linear;
+.comments-forum .arrow-up {
+  display: none;
+  position: absolute;
+  bottom: -63px;
+  left: 52%;
+  margin-left: -20px;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid #ffffff;
+}
+.comments-forum .active .arrow-up {
+  display: block;
+  bottom: -69px;
+  bottom: -9vw;
 }

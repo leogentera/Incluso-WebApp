@@ -12,6 +12,7 @@
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             
             _httpFactory = $http;
+            _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
 
@@ -23,10 +24,8 @@
                 return "";
             }
 
-            $rootScope.pageName = "Mision incluso"
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
-            $rootScope.showFooter = true; 
+            $scope.setToolbar($location.$$path,"Incluso");
+            $rootScope.showFooter = true;
             $rootScope.showFooterRocks = true; 
 
             try {
@@ -65,7 +64,8 @@
                     moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
                 }
 
-                $location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
+                //$location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
+                $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section);
             };
 
             $scope.playVideo = function(videoAddress, videoName){

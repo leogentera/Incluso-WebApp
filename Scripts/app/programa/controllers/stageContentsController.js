@@ -11,6 +11,7 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            _timeout = $timeout;
             _httpFactory = $http;
             var moduleid;
             var pagename;                    
@@ -25,10 +26,9 @@ angular
                 moduleid = 146;
                 break;
             }
-            $rootScope.pageName = "Zona de Vuelo";
+
             $scope.$emit('ShowPreloader'); //show preloader
-            $rootScope.navbarBlue = true;
-            $rootScope.showToolbar = true;
+            $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false; 
             $scope.statusObligatorios = 0; 
@@ -154,7 +154,8 @@ angular
             }
 
             $scope.back = function () {
-                $location.path('/ProgramaDashboard');
+                var userCurrentStage = localStorage.getItem("currentStage");
+                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
             }
 
             function getdate(){

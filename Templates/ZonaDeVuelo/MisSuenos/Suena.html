@@ -62,7 +62,7 @@
 
 
                                 <!--Pregunta tipo Lista Dinámica-->
-                                <div id="listaDinamica">
+                                <div id="listaDinamica1">
                                     <div class="txt-renglon txt-bigger">1. Los sueños de tener, se refieren a las cosas materiales, como una casa, un carro, un celular… todo lo que puedas comprar. Tener sueños como estos te ayudan a visualizar una meta a la cual llegar. Y tú ¿con qué sueñas? Registra tus sueños de tener.</div>
 
                                     <ul class="block-list clearfix">
@@ -82,6 +82,7 @@
                                                                class="form-control form-control-lg theme-form"
                                                                placeholder="Nuevo sueño"
                                                                ng-model="dreamsLists.answers[0][$index]"
+                                                               ng-readonly="setReadOnly"
                                                                />
                                                     </div>
 
@@ -117,7 +118,7 @@
                                                         <i class="icomoon icon-edit"></i>
                                                         <input type="text" name="opciones"
                                                                class="form-control form-control-lg theme-form"
-                                                               placeholder="Nueva habilidad"
+                                                               placeholder="Nuevo sueño"
                                                                ng-model="dreamsLists.answers[1][$index]"
                                                                ng-readonly="setReadOnly"/>
                                                     </div>
@@ -154,7 +155,7 @@
                                                     <div class="add"><i class="icomoon icon-edit"></i>
                                                         <input type="text" name="opciones"
                                                                class="form-control form-control-lg theme-form"
-                                                               placeholder="Nueva habilidad"
+                                                               placeholder="Nuevo sueño"
                                                                ng-model="dreamsLists.answers[2][$index]"
                                                                ng-readonly="setReadOnly"/>
                                                     </div>
@@ -176,8 +177,8 @@
 
                             <section id="controls" class="controls">
                                 <div class="paginate">
-                                    <a href="#" id="prev"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
-                                    <a href="#" id="next"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
+                                    <a href="#" id="prev" ng-click="addToAnswerIndex(-1)"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
+                                    <a href="#" id="next" ng-click="addToAnswerIndex(1)"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
 
                                     <div class="centered">
                                         <span id="index" class="txt-bigger">1</span>
@@ -185,7 +186,7 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
-                                        ng-click="validateMisSuenosAnsweredQuestions()">Terminar
+                                        ng-click="validateMisSuenosAnsweredQuestions()" ng-show="answerIndex == 3">GUARDAR
                                 </button>
                                 <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                             </section>
@@ -193,19 +194,19 @@
 
                         <div class="page" ng-class="currentPage==2 ? 'active' : '' ">
                             <div id="finalized">
-                                <section class="header-title ">
-                                    <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad
-                                    </div>
-                                    <div class="subtitle centered min-pad ">"Exploración inicial"</div>
+                                <section class="header-title">
+                                    <div class="txt-renglon centered txt-bigger min-pad">Has completado la actividad</div>
+                                    <div class="subtitle centered min-pad">"Sueña"</div>
                                     <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
                                 </section>
-                                <section class="centered txt-bigger ">
-                                    <i class="icomoon icon-checked-join txt-bigger green-giant "></i>
+                                <section class="centered txt-bigger">
+                                    <i class="icomoon icon-checked-join txt-bigger green-giant"></i>
                                 </section>
                                 <section class="txt-renglon pill">
                                     <div class="fl-left">Estrellas ganadas:</div>
-                                    <div class="fl-right sm-pill"><span>240</span><i
-                                            class="icomoon icon-star fl-right"></i>
+                                    <div class="fl-right sm-pill">
+                                        <span>{{activityPoints}}</span>
+                                        <i class="icomoon icon-star fl-right"></i>
                                     </div>
                                 </section>
                                 <section class="txt-renglon centered form ">

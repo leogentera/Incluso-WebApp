@@ -40,6 +40,9 @@ body {
         position:fixed;
         x-index: 1;
     }
+    .disabled {
+        color: #62767C !important;
+    }
 }
     /****************************************************************************
      $menu 
@@ -253,8 +256,8 @@ body {
                 font-size: 6vw;               
             }
         }
-        & > i{
-            padding: 3vw 1vw;
+        & > span {
+            padding: 5vw 1vw;
             z-index: 10;
         }
         & > a{
@@ -458,7 +461,7 @@ body {
         .btn-icon {
             display: block;
             position: absolute;
-            top: -0.3em;
+            top: -0.15em;
             width: 11.6vw;
             height: 11.6vw;
             background-color: @clr-green;
@@ -469,7 +472,7 @@ body {
         .icomoon {
             color: @clr-blue;
             font-size: 5vw;
-            line-height: 9.6vw;
+            line-height: 9.3vw;
         }
         &>span {
             color: @clr-white;
@@ -486,6 +489,8 @@ body {
 
             &>span {
                 text-align: right;
+                font-size: 4.5vw;
+                line-height: 2.6;
             }
             .btn-icon {
                 left: 0;
@@ -1206,12 +1211,17 @@ body {
             height: 60vh;
             border:none;
 
-            p, ol li {
+            p, ol li, ul li {
                 height: auto;
                 color: @clr-white;
                 font-size: 5vw; 
                 text-align: justify;
-            }                
+            }
+
+            p > .subtitle-green {
+                font-size: 4.4vw;
+                color: #bcd431;
+            }
         }
         .modal-footer {
             border:none;
@@ -1665,7 +1675,8 @@ body {
             text-align: center;
             letter-spacing: 1px;
         }
-        p:not(.text-center) {
+        p:not(.text-center),
+        ul, ol {
             padding: 0;
             margin: 0 auto 15px;
             width: 93%;
@@ -1684,6 +1695,10 @@ body {
             margin:0 auto;
             // width:100%;
             // height: 100%;
+        }
+        ul, ol {
+            text-align: justify;
+            font-size: 1em;
         }
     }
     /***************************************************************************/

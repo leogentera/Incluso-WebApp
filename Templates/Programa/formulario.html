@@ -41,13 +41,19 @@
 						<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
 						<label for="otros">Otros</label>
 					</section>
-					<div id="agregar" class="add" ng-show="showAddNewOption==true"><i class="icomoon icon-edit"></i><input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..."></div>	
+					<div id="agregar" class="add" ng-show="showAddNewOption==true">
+						<i class="icomoon icon-edit"></i>
+						<textarea id="otrosCheck" row="2" name="txtAbierto" placeholder="Aquí escribe otros..."></textarea>
+					</div>	
 				</div>
 				<!--Pregunta tipo Texto Abierto-->
 				<div>
 					<div class="txt-renglon txt-bigger">3. ¿Pregunta de Texto Abierto?</div>
 					<section class="form txt-renglon txt-bigger part list">
-						<div class="add"><i class="icomoon icon-edit"></i><input id="texto1" type="text" name="txtAbierto" placeholder="Tu respuesta aquí..."></div>
+						<div class="add">
+							<i class="icomoon icon-edit"></i>
+							<textarea id="textoarea1" row="2" name="txtAbierto" placeholder="Tu respuesta aquí..."></textarea>
+						</div>
 					</section>					
 				</div>
 				<!--Pregunta tipo Selección Simple-->
@@ -76,7 +82,8 @@
 										</button>
 									</div>
 									<div class="add"><i class="icomoon icon-edit"></i>
-										<input type="text" class="form-control form-control-lg theme-form" placeholder="Punto 1">
+										<textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2" 
+										name="txtAbierto" placeholder="Punto 1"></textarea>
 									</div>
 								</div>
 							</section>

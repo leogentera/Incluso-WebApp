@@ -66,10 +66,9 @@
                         <div>
                             <div class="txt-renglon txt-bigger">3. ¿Qué persona exitosa que conoces te inspira?</div>
                             <section class="form txt-renglon txt-bigger part list">
-                                <div class="add"><i class="icomoon icon-edit"></i>
-                                    <input id="texto1" type="text" name="txtAbierto" placeholder="Tu respuesta aquí..."
-                                           ng-model="AnswersResult.answers[2]"
-                                           ng-readonly="setReadOnly"/>
+                                <div class="add">
+                                    <i class="icomoon icon-edit"></i>                                    
+                                    <textarea id="texto1" row="2" name="txtAbierto" placeholder="Tu respuesta aquí..." ng-model="AnswersResult.answers[2]" ng-readonly="setReadOnly"></textarea>
                                 </div>
                             </section>
                         </div>
@@ -108,11 +107,9 @@
                                                 </button>
                                             </div>
                                             <div class="add"><i class="icomoon icon-edit"></i>
-                                                <input type="text" name="opciones"
-                                                       class="form-control form-control-lg theme-form"
-                                                       placeholder="Nueva habilidad"
-                                                       ng-model="AnswersResult.answers[4][$index]"
-                                                       ng-readonly="setReadOnly"/>
+                                                <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2" 
+                                                name="txtAbierto" placeholder="Nueva habilidad" ng-model="AnswersResult.answers[4][$index]" 
+                                                ng-readonly="setReadOnly"></textarea>
                                             </div>
 
                                         </div>
@@ -156,7 +153,9 @@
                         </section>
                         <section class="txt-renglon pill">
                             <div class="fl-left">Estrellas ganadas:</div>
-                            <div class="fl-right sm-pill"><span>{{activityPoints}}</span><i class="icomoon icon-star fl-right"></i>
+                            <div class="fl-right sm-pill">
+                                <span>{{activityPoints}}</span>
+                                <i class="icomoon icon-star fl-right"></i>
                             </div>
                         </section>
                         <section class="txt-renglon centered form ">
