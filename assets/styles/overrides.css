@@ -213,6 +213,8 @@
         background-image: url("../images/bg-stars-02.png");
         background-size:contain;
     }*/
+  /* IMG  PERFORMANCE TESTING */
+  /*background-color: red !important;*/
   /* tabs */
 }
 .incluso-app.start-dashboard .navbar {
@@ -220,7 +222,10 @@
   border-color: #ee4823;
 }
 .incluso-app.start-dashboard > article {
-  background-image: url('../images/bg-stars-01.png');
+  /*background-image: url('@{url-images}/bg-stars-01.png');*/
+  /*background-image: url('@{url-images}/svg/bg-dashboard-sky.svg');*/
+  background-image: url('../images/bg-dashboard-full.gif');
+  /*background-image: url('@{url-images}/svg/bg-dashboard-full.svg');*/
   -webkit-background-size: 100% auto;
   -moz-background-size: 100% auto;
   background-size: 100% auto;
@@ -232,6 +237,36 @@
   -webkit-background-size: 100% auto;
   -moz-background-size: 100% auto;
   background-size: 100% auto;
+}
+.incluso-app.start-dashboard * {
+  /*visibility: hidden;*/
+}
+.incluso-app.start-dashboard *:hover,
+.incluso-app.start-dashboard *:active {
+  border: none;
+  outline: none !important;
+}
+.incluso-app.start-dashboard .video-gallery .stage .icon-play {
+  background-image: none;
+}
+.incluso-app.start-dashboard .my-badges {
+  background: none;
+}
+.incluso-app.start-dashboard .my-badges::before {
+  background: none;
+}
+.incluso-app.start-dashboard .my-badges::after {
+  background: none;
+}
+.incluso-app.start-dashboard .top-users {
+  background: none;
+}
+.incluso-app.start-dashboard .top-users::before {
+  background: none;
+}
+.incluso-app.start-dashboard .ilustration {
+  background: none;
+  height: 84vw;
 }
 .incluso-app.start-dashboard h1 {
   display: block;
@@ -641,4 +676,21 @@ section.part.inbloq.text-left .actions {
 }
 .holoproj .owl-wrapper .item img {
   width: 55%;
+}
+/* PERFORMANCE TESTING */
+.incluso-app .app-footer.theme-rocks {
+  /*background:none green;*/
+  /*.gradient-custom(none, green, green);*/
+  background-color: none;
+  background-image: url('../images/bg-dashboard-full.gif');
+  background-position: bottom center;
+  background-repeat: none;
+}
+.incluso-app .app-preloader {
+  /*display: none  !important;
+        visibility: hidden !important;*/
+}
+.incluso-app .app-preloader .spinner-circle {
+  -webkit-animation: rotateSpinner .6s infinite linear;
+  animation: rotateSpinner .6s infinite linear;
 }
