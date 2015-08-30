@@ -19,8 +19,7 @@ angular
             localStorage.setItem('chatRead', "true");
             var userId = localStorage.getItem('userId');            
             $scope.senderId = userId;
-            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-            debugger;
+            $scope.messages = JSON.parse(localStorage.getItem('userChat'));            
             $scope.currentMessage = "";
 
             $scope.setToolbar($location.$$path,"Cabina de Soporte");
@@ -76,9 +75,7 @@ angular
                     messagesenderid: $scope.senderId,                    
                     messagedate: new Date()
                 };
-                    
-                
-                debugger;
+                                            
                 $scope.messages.push(newMessage);
                 $scope.currentMessage = "";
                 var newMessages = JSON.stringify($scope.messages);                
