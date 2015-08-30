@@ -45,7 +45,7 @@ angular
 
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
-            $scope.stages = $scope.model.stages;
+            $scope.stages = _staticStages;
             $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
             $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
             localStorage.setItem("userCurrentStage", $routeParams['stageId']);
@@ -132,8 +132,20 @@ angular
             };
 
             $scope.getCurrentStatusOfActivity = function (index, parentIndex) {
-                if ($scope.model.stages[$scope.idEtapa] && $scope.model.stages[$scope.idEtapa].challenges[parentIndex] && $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index])
-                return $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status;
+                var stage = $scope.model.stages[$scope.idEtapa];
+
+                if (stage) {
+                    var challenge = stage.challenges[parentIndex];
+
+                    if (challenge) {
+                        var activity = challenge.activities[index];
+
+                        if (activity) {
+                            return activity.status;
+                        }
+                    }
+                }
+        
                 else return 0
             };
 
