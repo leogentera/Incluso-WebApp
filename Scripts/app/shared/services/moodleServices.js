@@ -114,6 +114,7 @@
                 
             if (returnValue) {
                 _timeout(function() { successCallback(returnValue, key)}, 1000);                
+                return returnValue;
             }
             
             _httpFactory({

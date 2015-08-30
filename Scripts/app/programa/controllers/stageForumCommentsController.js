@@ -256,7 +256,7 @@ angular
             };
 
             function getTopicDataAsync() {
-                moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback, null, true);
+                moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback, null);
                 //$scope.$emit('HidePreloader');
             }
 
