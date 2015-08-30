@@ -107,10 +107,10 @@
                             <a href="#" id="prev"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
                             <a href="#" id="next"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
                             <div class="centered">
-                              <span id="index" class="txt-bigger">1/</span><span class="white txt-bigger">3</span>
+                              <span id="index" class="txt-bigger">1/</span><span id="totalPages" class="white txt-bigger">3</span>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button" ng-click='validateMisGustosAnsweredQuestions()' ng-hide="setReadOnly">Terminar</button>
+                        <button class="btn btn-primary btn-lg btn-cnt" style="display:none" id="save" type="button" ng-click='validateMisGustosAnsweredQuestions()' >GUARDAR</button>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
                 </div>
@@ -141,7 +141,7 @@
                                     <label for="dislike">No me gusta</label>
                                 </div>
                             </section>
-                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">Terminar</button>
+                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">TERMINAR</button>
                         </section>
                     </div>
                 </div>
@@ -208,6 +208,14 @@
 
         $("#next").click(function () {
             owl.trigger('owl.next');
+            var numberOfPage = $('#index');
+            var totalPages = $('#totalPages');            
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {
+              $('#save').show();
+            }else{
+              $('#save').hide();
+            }            
+            
             return false;
         });
 
