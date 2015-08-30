@@ -1,336 +1,315 @@
-<!--
-<div class="incluso-app step-dashboard" id="site-wrapper">
-   <div id="site-canvas">
+<div id="site-wrapper" class="incluso-app step-dashboard">
+    <div class="alert alert-warning" role="alert" ng-show="showWarning2" ng-cloak>
+        <div class="alert-message" ng-click="hideWarning2()">
+            <div class="icomoon icon-warning"></div>
+            <!--<p>Reposnde todas las preguntas para poder continuar</p>-->
+            <p>{{warningMessage}}</p>
+        </div>
+    </div>
+
+    <div id="site-canvas">
+        <article class="blueprint evaluation">
+            <div class="pages">
+                <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
+                    <section id="title">
+                        <div class="subtitle">Sueña</div>
+                        <div class="txt-renglon">Responde lo siguiente:</div>
+                    </section>
+                    <div id="owl" class="owl-carousel">
 
 
-
-       <article class="blueprint">
-           <section>
-               <div class="subtitle">Mis sue&ntilde;os de tener</div>
-               <div class="txt-renglon">Tus sue&ntilde;os de tener pueden llevarte a continuar tus estudios, comenzar a
-                   trabajar o emprender un proyecto propio.<br/>Registra la lista de tus sue&ntilde;os de tener.
-               </div>
-           </section>
-           <section>
-               <div class="part"><span>Terminar mis estudios</span><i class="icomoon icon-edit fl-right"></i></div>
-               <div class="part"><span>Entrar a cursos de m&uacute;sica</span><i
-                       class="icomoon icon-edit fl-right"></i></div>
-               <div class="part"><span>Ser m&aacute;s responsable con el medio ambiente.</span><i
-                       class="icomoon icon-edit fl-right"></i></div>
-           </section>
-           <section class="controls">
-               <div class="add"><i class="icomoon icon-edit"></i><span>Nuevo Sue&ntilde;o...</span></div>
-               <div class="paginate">
-                   <i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i>
-                   <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
-
-                   <div class="centered"><span class="txt-bigger">3/</span><span class="blanco txt-bigger">3</span>
-                   </div>
-               </div>
-               <br/>
-
-               <br/>
-               <button class="btn btn-primary btn-lg btn-cnt" type="button">Guardar</button>
-               <div class="txt-renglon centered txt-bigger">Cancelar</div>
-           </section>
-
-           <img src="assets/images/img-lines-ftr.png" class="centered">
-
-       </article>
-
-       -->
-
-
-        <div id="site-wrapper" class="incluso-app step-dashboard">
-            <div class="alert alert-warning" role="alert" ng-show="showWarning" ng-cloak>
-                <div class="alert-message" ng-click="hideWarning">
-                    <div class="icomoon icon-warning"></div>
-                    <!--<p>Reposnde todas las preguntas para poder continuar</p>-->
-                    <p>{{warningMessage}}</p>
-                </div>
-            </div>
-
-            <div id="site-canvas">
-                <article class="blueprint evaluation">
-                    <div class="pages">
-                        <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
-                            <section id="title">
-                                <div class="subtitle">Sueña</div>
-                                <div class="txt-renglon">Responde lo siguiente:</div>
-                            </section>
-                            <div id="owl" class="owl-carousel">
-
-
-                                <!--Pregunta tipo Lista Dinámica-->
-                                <div id="listaDinamica1">
-                                    <div class="txt-renglon txt-bigger">1. Los sueños de tener, se refieren a las cosas materiales, como una casa, un carro, un celular… todo lo que puedas comprar. Tener sueños como estos te ayudan a visualizar una meta a la cual llegar. Y tú ¿con qué sueñas? Registra tus sueños de tener.</div>
-
-                                    <ul class="block-list clearfix">
-                                        <li ng-repeat="dream in dreamsLists.answers[0] track by $index">
-                                            <section class="form txt-renglon part list clearfix">
-                                                <div class="form-group theme-form">
-
-                                                    <div class="clearfix">
-                                                        <span>Sueño {{$index + 1}}</span>
-                                                        <button class="btn btn-circle fl-right"
-                                                                ng-click="deleteSueno1($index)" ng-hide="false">
-                                                            <i class="icomoon icon-cross white"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="add"><i class="icomoon icon-edit"></i>
-                                                        <input type="text" name="opciones"
-                                                               class="form-control form-control-lg theme-form"
-                                                               placeholder="Nuevo sueño"
-                                                               ng-model="dreamsLists.answers[0][$index]"
-                                                               ng-readonly="setReadOnly"
-                                                               />
-                                                    </div>
-
-                                                </div>
-                                            </section>
-                                        </li>
-                                    </ul>
-
-                                    <div class="txt-renglon">
-                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno1();">
-                                            <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!--Pregunta tipo Lista Dinámica-->
-                                <div id="listaDinamica2">
-                                    <div class="txt-renglon txt-bigger">2. Los sueños de hacer, son los que te llevan a conocer e intentar cosas nuevas, es querer aprender de otros lugares, culturas o descubrir temas de interés propio. Tener sueños de este tipo te ayuda a enriquecer tu mente y espíritu. Y tú ¿con qué sueñas? Registra tus sueños de hacer.</div>
-
-                                    <ul class="block-list clearfix">
-                                        <li ng-repeat="ability in dreamsLists.answers[1] track by $index">
-                                            <section class="form txt-renglon part list clearfix">
-                                                <div class="form-group theme-form">
-
-                                                    <div class="clearfix">
-                                                        <span>Sueño {{$index + 1}}</span>
-                                                        <button class="btn btn-circle fl-right"
-                                                                ng-click="deleteSueno2($index)" ng-hide="false">
-                                                            <i class="icomoon icon-cross white"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="add">
-                                                        <i class="icomoon icon-edit"></i>
-                                                        <input type="text" name="opciones"
-                                                               class="form-control form-control-lg theme-form"
-                                                               placeholder="Nuevo sueño"
-                                                               ng-model="dreamsLists.answers[1][$index]"
-                                                               ng-readonly="setReadOnly"/>
-                                                    </div>
-
-                                                </div>
-                                            </section>
-                                        </li>
-                                    </ul>
-
-                                    <div class="txt-renglon">
-                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno2();">
-                                            <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
-                                        </button>
-                                    </div>
-                                </div>
-
-
-                                <!--Pregunta tipo Lista Dinámica-->
-                                <div id="listaDinamica3">
-                                    <div class="txt-renglon txt-bigger">3. Los sueños de ser son unos de los más importantes, porque en ellos reflejas los valores que practicas. Estos sueños te ayudarán a elegir la persona que te gustaría llegar a ser para dejar huella. Y tú ¿con qué sueñas? Registra tus sueños de ser.</div>
-
-                                    <ul class="block-list clearfix">
-                                        <li ng-repeat="ability in dreamsLists.answers[2] track by $index">
-                                            <section class="form txt-renglon part list clearfix">
-                                                <div class="form-group theme-form">
-
-                                                    <div class="clearfix">
-                                                        <span>Sueño {{$index + 1}}</span>
-                                                        <button class="btn btn-circle fl-right"
-                                                                ng-click="deleteSueno3($index)" ng-hide="setReadOnly">
-                                                            <i class="icomoon icon-cross white"></i>
-                                                        </button>
-                                                    </div>
-                                                    <div class="add"><i class="icomoon icon-edit"></i>
-                                                        <input type="text" name="opciones"
-                                                               class="form-control form-control-lg theme-form"
-                                                               placeholder="Nuevo sueño"
-                                                               ng-model="dreamsLists.answers[2][$index]"
-                                                               ng-readonly="setReadOnly"/>
-                                                    </div>
-
-                                                </div>
-                                            </section>
-                                        </li>
-                                    </ul>
-
-                                    <div class="txt-renglon">
-                                        <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno3();">
-                                            <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
-                                        </button>
-                                    </div>
-                                </div>
-
-
+                        <!--Pregunta tipo Lista Dinámica-->
+                        <div id="listaDinamica1">
+                            <div class="txt-renglon txt-bigger">1. Los sueños de tener, se refieren a las cosas
+                                materiales, como una casa, un carro, un celular… todo lo que puedas comprar. Tener
+                                sueños como estos te ayudan a visualizar una meta a la cual llegar. Y tú ¿con qué
+                                sueñas? Registra tus sueños de tener.
                             </div>
 
-                            <section id="controls" class="controls">
-                                <div class="paginate">
-                                    <a href="#" id="prev" ng-click="addToAnswerIndex(-1)"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
-                                    <a href="#" id="next" ng-click="addToAnswerIndex(1)"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
+                            <ul class="block-list clearfix">
+                                <li ng-repeat="dream in dreamsLists.answers[0] track by $index">
+                                    <section class="form txt-renglon part list clearfix">
+                                        <div class="form-group theme-form">
 
-                                    <div class="centered">
-                                        <span id="index" class="txt-bigger">1</span>
-                                        <span class="white txt-bigger">/3</span>
-                                    </div>
-                                </div>
-                                <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
-                                        ng-click="validateMisSuenosAnsweredQuestions()" ng-show="answerIndex == 3">GUARDAR
-                                </button>
-                                <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
-                            </section>
-                        </div>
+                                            <div class="clearfix">
+                                                <span>Sueño {{$index + 1}}</span>
+                                                <button class="btn btn-circle fl-right"
+                                                        ng-click="deleteSueno1($index)" ng-hide="false">
+                                                    <i class="icomoon icon-cross white"></i>
+                                                </button>
+                                            </div>
+                                            <div class="add"><i class="icomoon icon-edit"></i>
+                                                <input type="text" name="opciones"
+                                                       class="form-control form-control-lg theme-form"
+                                                       placeholder="Nuevo sueño"
+                                                       ng-model="dreamsLists.answers[0][$index]"
+                                                       ng-readonly="setReadOnly"
+                                                        />
+                                            </div>
 
-                        <div class="page" ng-class="currentPage==2 ? 'active' : '' ">
-                            <div id="finalized">
-                                <section class="header-title">
-                                    <div class="txt-renglon centered txt-bigger min-pad">Has completado la actividad</div>
-                                    <div class="subtitle centered min-pad">"Sueña"</div>
-                                    <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
-                                </section>
-                                <section class="centered txt-bigger">
-                                    <i class="icomoon icon-checked-join txt-bigger green-giant"></i>
-                                </section>
-                                <section class="txt-renglon pill">
-                                    <div class="fl-left">Estrellas ganadas:</div>
-                                    <div class="fl-right sm-pill">
-                                        <span>{{activityPoints}}</span>
-                                        <i class="icomoon icon-star fl-right"></i>
-                                    </div>
-                                </section>
-                                <section class="txt-renglon centered form ">
-                                    ¿Qué opinas de ésta actividad?
-                                    <section class="txt-renglon txt-bigger clearfix">
-                                        <div class="opinion">
-                                            <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                                            <label for="like">Me gusta</label>
-                                        </div>
-                                        <div class="opinion">
-                                            <input id="dislike" type="radio" value="0" name="like"
-                                                   ng-model="like_status">
-                                            <label for="dislike">No me gusta</label>
                                         </div>
                                     </section>
-                                    <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">
-                                        Terminar
-                                    </button>
-                                </section>
+                                </li>
+                            </ul>
+
+                            <div class="txt-renglon">
+                                <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno1();">
+                                    <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
+                                </button>
+                            </div>
+                        </div>
+
+                        <!--Pregunta tipo Lista Dinámica-->
+                        <div id="listaDinamica2">
+                            <div class="txt-renglon txt-bigger">2. Los sueños de hacer, son los que te llevan a conocer
+                                e intentar cosas nuevas, es querer aprender de otros lugares, culturas o descubrir temas
+                                de interés propio. Tener sueños de este tipo te ayuda a enriquecer tu mente y espíritu.
+                                Y tú ¿con qué sueñas? Registra tus sueños de hacer.
+                            </div>
+
+                            <ul class="block-list clearfix">
+                                <li ng-repeat="ability in dreamsLists.answers[1] track by $index">
+                                    <section class="form txt-renglon part list clearfix">
+                                        <div class="form-group theme-form">
+
+                                            <div class="clearfix">
+                                                <span>Sueño {{$index + 1}}</span>
+                                                <button class="btn btn-circle fl-right"
+                                                        ng-click="deleteSueno2($index)" ng-hide="false">
+                                                    <i class="icomoon icon-cross white"></i>
+                                                </button>
+                                            </div>
+                                            <div class="add">
+                                                <i class="icomoon icon-edit"></i>
+                                                <input type="text" name="opciones"
+                                                       class="form-control form-control-lg theme-form"
+                                                       placeholder="Nuevo sueño"
+                                                       ng-model="dreamsLists.answers[1][$index]"
+                                                       ng-readonly="setReadOnly"/>
+                                            </div>
+
+                                        </div>
+                                    </section>
+                                </li>
+                            </ul>
+
+                            <div class="txt-renglon">
+                                <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno2();">
+                                    <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <!--Pregunta tipo Lista Dinámica-->
+                        <div id="listaDinamica3">
+                            <div class="txt-renglon txt-bigger">3. Los sueños de ser son unos de los más importantes,
+                                porque en ellos reflejas los valores que practicas. Estos sueños te ayudarán a elegir la
+                                persona que te gustaría llegar a ser para dejar huella. Y tú ¿con qué sueñas? Registra
+                                tus sueños de ser.
+                            </div>
+
+                            <ul class="block-list clearfix">
+                                <li ng-repeat="ability in dreamsLists.answers[2] track by $index">
+                                    <section class="form txt-renglon part list clearfix">
+                                        <div class="form-group theme-form">
+
+                                            <div class="clearfix">
+                                                <span>Sueño {{$index + 1}}</span>
+                                                <button class="btn btn-circle fl-right"
+                                                        ng-click="deleteSueno3($index)" ng-hide="setReadOnly">
+                                                    <i class="icomoon icon-cross white"></i>
+                                                </button>
+                                            </div>
+                                            <div class="add"><i class="icomoon icon-edit"></i>
+                                                <input type="text" name="opciones"
+                                                       class="form-control form-control-lg theme-form"
+                                                       placeholder="Nuevo sueño"
+                                                       ng-model="dreamsLists.answers[2][$index]"
+                                                       ng-readonly="setReadOnly"/>
+                                            </div>
+
+                                        </div>
+                                    </section>
+                                </li>
+                            </ul>
+
+                            <div class="txt-renglon">
+                                <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno3();">
+                                    <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
+                                </button>
                             </div>
                         </div>
 
 
                     </div>
 
+                    <section id="controls" class="controls">
+                        <div class="paginate">
+                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1)">
+                                <i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i>
+                            </a>
+                            <a href="#" id="next" ng-click="addToAnswerIndex(1)">
+                                <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
+                            </a>
 
-                    <img src="assets/images/img-lines-ftr.png " class="centered ">
-                </article>
-                <!-- initial message -->
-                <script type="text/ng-template" id="OpeningStageModal.html">
-                    <div class="modal-robot robot-lg closing-stage-modal user-help">
-                        <img src="assets/images/img-robot.png">
+                            <div class="centered">
+                                <span id="index" class="txt-bigger">1</span>
+                                <span class="white txt-bigger">/3</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
+                                ng-click="validateMisSuenosAnsweredQuestions()" ng-show="answerIndex == 3">GUARDAR
+                        </button>
+                        <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
+                    </section>
+                </div>
 
-                        <div class="modal-header">
-                            <button class="icon icon-close" ng-click="cancel()">
-                                <span class="icomoon icon-cross"></span>
+                <div class="page" ng-class="currentPage==2 ? 'active' : '' ">
+                    <div id="finalized">
+                        <section class="header-title">
+                            <div class="txt-renglon centered txt-bigger min-pad">Has completado la actividad</div>
+                            <div class="subtitle centered min-pad">"Sueña"</div>
+                            <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
+                        </section>
+                        <section class="centered txt-bigger">
+                            <i class="icomoon icon-checked-join txt-bigger green-giant"></i>
+                        </section>
+                        <section class="txt-renglon pill">
+                            <div class="fl-left">Estrellas ganadas:</div>
+                            <div class="fl-right sm-pill">
+                                <span>{{activityPoints}}</span>
+                                <i class="icomoon icon-star fl-right"></i>
+                            </div>
+                        </section>
+                        <section class="txt-renglon centered form ">
+                            ¿Qué opinas de ésta actividad?
+                            <section class="txt-renglon txt-bigger clearfix">
+                                <div class="opinion">
+                                    <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                                    <label for="like">Me gusta</label>
+                                </div>
+                                <div class="opinion">
+                                    <input id="dislike" type="radio" value="0" name="like"
+                                           ng-model="like_status">
+                                    <label for="dislike">No me gusta</label>
+                                </div>
+                            </section>
+                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">
+                                Terminar
                             </button>
-                        </div>
-                        <div class="modal-body">
-                            <h3 class="subtitle text-center">Sueña</h3>
-
-                            <p class="txt-renglon centered">
-                                Realmente ¿conoces cuáles son tus sueños?
-                                Visualizarlos te permite trazar la mejor ruta para llegar a ellos y disfrutar lo que haces cada día.
-                                Existen diferentes tipos de sueños, cónocelos y dale rumbo a tu vida.
-                            </p>
-
-                            <!-- <video controls poster="assets/images/ptr-video-0001.jpg" >
-                                  <source src="http://techslides.com/demos/sample-videos/small.webm" type="video/webm" />
-                                  <source src="http://techslides.com/demos/sample-videos/small.ogv" type="video/ogg" />
-                                  <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4" />
-                                  <source src="http://techslides.com/demos/sample-videos/small.3gp" type="video/3gp" />
-                                  Ups! Parece que tu dispositivo no soporta video
-                                </video> -->
-                        </div>
-                        <!--<div class="modal-footer">
-                              <div class="row">
-                                 <div class="col-xs-12">
-                                   <button class="btn btn-primary btn-lg btn-cnt" type="button">Continuar</button>
-                                   <img src="assets/images/img-lines-ftr.png" class="centered">
-                                 </div>
-                               </div>
-                             </div> -->
-
+                        </section>
                     </div>
+                </div>
 
-                </script>
+
             </div>
-        </div>
-
-        <!-- scripts -->
-        <script>
-            $(document).ready(function () {
-                var step = 0;
 
 
-                var owl = $("#owl");
-                owl.owlCarousel({
-                    navigation: false,
-                    pagination: false,
-                    paginationSpeed: 1000,
-                    goToFirstSpeed: 2000,
-                    singleItem: true,
-                    autoHeight: true,
-                    afterMove: callback
-                });
-                function callback(event) {
-                    var item = this.currentItem;
-                    $("#index").html(item + 1);
-                }
+            <img src="assets/images/img-lines-ftr.png " class="centered ">
+        </article>
+        <!-- initial message -->
+        <script type="text/ng-template" id="OpeningStageModal.html">
+            <div class="modal-robot robot-lg closing-stage-modal user-help">
+                <img src="assets/images/img-robot.png">
 
-                $("#next").click(function (ev) {
-                    owl.trigger('owl.next');
-                    ev.preventDefault();
-                })
-                $("#prev").click(function (ev) {
-                    owl.trigger('owl.prev');
-                    ev.preventDefault();
-                })
-                $("#save").click(function (ev) {
-                    $(owl).hide("slow");
-                    $("#controls").hide();
-                    $("#taitel").hide();
-                    $("#finalized").show("slow");
-                    ev.preventDefault();
-                });
-                $(".acc").click(function () {
-                    $(this).toggleClass('icon-arrow-down');
-                    $(this).toggleClass('icon-arrow-slim-right');
-                    var cual = $(this).attr('data-id');
-                    $('#ord' + cual).toggle();
+                <div class="modal-header">
+                    <button class="icon icon-close" ng-click="cancel()">
+                        <span class="icomoon icon-cross"></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="subtitle text-center">Sueña</h3>
 
-                });
-                $("#finalized").hide();
+                    <p class="txt-renglon centered">
+                        Realmente ¿conoces cuáles son tus sueños?
+                        Visualizarlos te permite trazar la mejor ruta para llegar a ellos y disfrutar lo que haces cada
+                        día.
+                        Existen diferentes tipos de sueños, cónocelos y dale rumbo a tu vida.
+                    </p>
 
-            });
+                    <!-- <video controls poster="assets/images/ptr-video-0001.jpg" >
+                          <source src="http://techslides.com/demos/sample-videos/small.webm" type="video/webm" />
+                          <source src="http://techslides.com/demos/sample-videos/small.ogv" type="video/ogg" />
+                          <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4" />
+                          <source src="http://techslides.com/demos/sample-videos/small.3gp" type="video/3gp" />
+                          Ups! Parece que tu dispositivo no soporta video
+                        </video> -->
+                </div>
+                <!--<div class="modal-footer">
+                      <div class="row">
+                         <div class="col-xs-12">
+                           <button class="btn btn-primary btn-lg btn-cnt" type="button">Continuar</button>
+                           <img src="assets/images/img-lines-ftr.png" class="centered">
+                         </div>
+                       </div>
+                     </div> -->
+
+            </div>
+
         </script>
-        <script type="text/javascript" src="../../Scripts/scriptmenu.js"></script>
-        <script src="../../Scripts/classie.js"></script>
-        <script src="../../Scripts/selectFx.js"></script>
-        <script>
-            (function () {
-                [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function (el) {
-                    new SelectFx(el);
-                });
-            })();
-        </script>
+    </div>
+</div>
+
+<!-- scripts -->
+<script>
+    $(document).ready(function () {
+        var step = 0;
+
+
+        var owl = $("#owl");
+        owl.owlCarousel({
+            navigation: false,
+            pagination: false,
+            paginationSpeed: 1000,
+            goToFirstSpeed: 2000,
+            singleItem: true,
+            autoHeight: true,
+            afterMove: callback
+        });
+        function callback(event) {
+            var item = this.currentItem;
+            $("#index").html(item + 1);
+        }
+
+        $("#next").click(function (ev) {
+            owl.trigger('owl.next');
+            ev.preventDefault();
+        });
+
+        $("#prev").click(function (ev) {
+            owl.trigger('owl.prev');
+            ev.preventDefault();
+        });
+
+        /*
+        $("#save").click(function (ev) {
+            $(owl).hide("slow");
+            $("#controls").hide();
+            $("#taitel").hide();
+            $("#finalized").show("slow");
+            ev.preventDefault();
+        });
+        $(".acc").click(function () {
+            $(this).toggleClass('icon-arrow-down');
+            $(this).toggleClass('icon-arrow-slim-right');
+            var cual = $(this).attr('data-id');
+            $('#ord' + cual).toggle();
+
+        });
+
+        $("#finalized").hide();
+        */
+
+    });
+</script>
+<script type="text/javascript" src="../../Scripts/scriptmenu.js"></script>
+<script src="../../Scripts/classie.js"></script>
+<script src="../../Scripts/selectFx.js"></script>
+<script>
+    (function () {
+        [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function (el) {
+            new SelectFx(el);
+        });
+    })();
+</script>
