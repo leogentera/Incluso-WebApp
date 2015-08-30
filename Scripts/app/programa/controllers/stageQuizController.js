@@ -50,6 +50,7 @@ angular
                 $scope.showWarning = false;
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
+                console.log("theUserCouerseUpdated: " + JSON.stringify(updatedActivityOnUsercourse));
 
                 switch ($scope.activityname) {
                     case "Mis cualidades":
