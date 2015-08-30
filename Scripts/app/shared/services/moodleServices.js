@@ -74,7 +74,7 @@
         };
 
         var _putUserChat = function(userId, data, successCallback, errorCallback){
-            _putAsyncData("updateChat",data, API_RESOURCE.format('messaging/'+ userId),successCallback,errorCallback);
+            _putAsyncData(null, data, API_RESOURCE.format('messaging/'+ userId),successCallback,errorCallback);
         };
 
         var _assignStars = function(data, profile, token, successCallback,errorCallback){
