@@ -193,6 +193,7 @@ angular
             };
 
             $scope.validateAnsweredQuestionsFinal = function () {
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                 if ($scope.AnswersResult.answers[0] != null) {
                     if ($scope.AnswersResult.answers[1] != null) {
                         if ($scope.AnswersResult.answers[2] != null) {
@@ -359,7 +360,7 @@ angular
             }
 
             function getDataAsync() {
-
+                debugger;
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
