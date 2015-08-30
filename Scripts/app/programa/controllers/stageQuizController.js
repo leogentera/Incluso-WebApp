@@ -22,6 +22,7 @@ angular
             $scope.currentPage = 1;
             $scope.setReadOnly = false;
             $scope.showWarning = false;
+            $scope.showWarning2 = false;
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
 
@@ -125,6 +126,10 @@ angular
 
             $scope.hideWarning = function () {
                 $scope.showWarning = false;
+            };
+
+            $scope.hideWarning2 = function () {
+                $scope.showWarning2 = false;
             };
 
             $scope.navigateToPage = function (pageNumber) {
@@ -450,24 +455,30 @@ angular
 
                 if (validAnswers == 3) {
                     console.log("Validado");
-                    $scope.showWarning = false;
+                    $scope.showWarning2 = false;
                     $scope.navigateToPage(2);
                 } else {
                     console.log("NO Validado");
-                    showWarningAndGoToTop();
+                    showWarningAndGoToTop2();
                 }
             };
 
 
             function showWarningAndGoToTop() {
                 $scope.showWarning = true;
-                //$scope.$emit('scrollTop');
+                $scope.$emit('scrollTop');
+            }
+
+            function showWarningAndGoToTop2() {
+                $scope.showWarning2 = true;
+                $scope.$emit('scrollTop');
             }
 
 
 
 
             $scope.answerIndex = 1;
+            $scope.answerIndex1 = 1;
 
             $scope.addToAnswerIndex = function (delta) {
                 $scope.answerIndex += delta;
@@ -478,6 +489,19 @@ angular
 
                 if ($scope.answerIndex < 1) {
                     $scope.answerIndex = 3;
+                }
+            };
+
+
+            $scope.addToAnswerIndex1 = function (delta) {
+                $scope.answerIndex1 += delta;
+
+                if ($scope.answerIndex1 > 5) {
+                    $scope.answerIndex1 = 1;
+                }
+
+                if ($scope.answerIndex1 < 1) {
+                    $scope.answerIndex1 = 5;
                 }
             };
 
