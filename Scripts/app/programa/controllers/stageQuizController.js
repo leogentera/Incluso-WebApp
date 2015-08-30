@@ -192,6 +192,35 @@ angular
                 }
             };
 
+            $scope.validateAnsweredQuestionsFinal = function () {
+                if ($scope.AnswersResult.answers[0] != null) {
+                    if ($scope.AnswersResult.answers[1] != null) {
+                        if ($scope.AnswersResult.answers[2] != null) {
+                            if ($scope.AnswersResult.answers[3] != null) {
+                                if ($scope.AnswersResult.answers[4] != null) {
+                                    $scope.showWarning = false;
+                                        $scope.navigateToPage(2);
+                                }
+                                else {
+                                    showWarningAndGoToTop();
+                                }
+                            }
+                            else {
+                                showWarningAndGoToTop();
+                            }
+                        }
+                        else {
+                            showWarningAndGoToTop();
+                        }
+                    }
+                    else {
+                        showWarningAndGoToTop();
+                    }
+                }
+                else {
+                    showWarningAndGoToTop();
+                }
+            }
 
             function updateSelectedAnswers(questionIndex, question) {
                 switch (questionIndex) {
