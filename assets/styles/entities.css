@@ -758,7 +758,7 @@
     font-size: 70%;
   }
   .incluso-app .part .icomoon {
-    color: #e1e455;
+    color: #08B190;
     font-size: 150%;
     padding-right: 5%;
   }
@@ -848,6 +848,9 @@
     padding: 3% 0;
     width: 90%;
   }
+  .incluso-app .wall .part > div:last-child {
+    border: 0px none;
+  }
   .incluso-app .wall .part .coment {
     display: inline-flex;
   }
@@ -878,13 +881,14 @@
     padding: 3% 5%;
     width: 49%;
     font-size: 80%;
+    color: #08B190;
     cursor: pointer;
   }
   .incluso-app .wall .part .social div:nth-child(1) {
     border-right: 2px solid rgba(255, 255, 255, 0.08);
     color: #E80D81;
   }
-  .incluso-app .wall .part .social div:nth-child(1) i {
+  .incluso-app .wall .part .social div:nth-child(1) span {
     color: #E80D81;
     margin: 0;
     padding: 0;
