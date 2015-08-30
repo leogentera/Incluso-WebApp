@@ -109,14 +109,14 @@ var _isStageCompleted = function(){
           var totalChallengesCompleted = _.where(currentStage.challenges,{status:1}).length;
           if (totalChallengesByStage == totalChallengesCompleted) {
               userCourse.stages[stageIndex].status = 1;
-              localStorage.setItem("userCourse",JSON.stringify(userCourse));
+              localStorage.setItem("usercourse",JSON.stringify(userCourse));
           }
         }
     }
   
 }
 
-var _isChallengeCompleted = function(activityId){     
+var _isChallengeCompleted = function(activityId){
     
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
@@ -154,7 +154,7 @@ var successEndChallengeCallback = function(){
 }
 
 var _createNotification = function(activityId, triggerActivity){
-    
+  
   currentUserId = localStorage.getItem("userId");
   
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
@@ -177,6 +177,39 @@ var _createNotification = function(activityId, triggerActivity){
   else{
     
   }  
+}
+
+var _coachNotification = function(){
+    
+  var startedActivityDate = new Date();    
+    
+  //ActivityChatID  
+  var activityChatId = 68;
+  var triggerActivity = 3;
+  var userChat = JSON.parse(localStorage.getItem("userChat"));
+  //pending validate if the activity is started
+  if (userChat.length > 0 ) {
+    var notifications = JSON.parse(localStorage.getItem("notifications"));
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    var userId = localStorage.getItem('userId');
+    var lastMessage = _.max(userChat,function(chat){
+        return chat.messagedate;
+    });
+    var lastMessageDate = moment.unix(lastMessage.messagedate).format("MM/DD/YYYY");
+    var twoDaysAfterLastMessage = new Date(lastMessageDate);
+    twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
+    
+    var today = new Date();
+    if (twoDaysAfterLastMessage < today) {
+      _createNotification(activityChatId,triggerActivity);
+    }else{
+      return false;
+    }
+  }else{
+    return false;
+  }
+  
 }
 
 var successCallback = function(data){  
