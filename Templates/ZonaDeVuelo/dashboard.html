@@ -42,7 +42,7 @@
                 <div class="centered txt-title" ng-bind="challengeName"></div>
                 <div id="carousel-example-generic2" class="carousel">
                     <div id="owl-demo2" class="owl-carousel">
-                        <div class="item visib" ng-repeat="reto in stages[idEtapa].challenges">
+                        <div class="item visib" ng-repeat="reto in model.stages[idEtapa].challenges">
                             <img ng-src="{{retosIconos[reto.sectionname]}}">
                             <div class="subtitle centered text-uppercase" ng-bind="reto.sectionname"></div>
                             <div class="txt-renglon challenge-description" ng-bind="reto.activityintro"></div>
@@ -61,7 +61,7 @@
                 <div class="light"><img src="assets/images/img-light-cone.png"></div>
                 <div class="centered paginate">
                     <span id="index" class="txt-bigger">1/</span>
-                    <span class="white txt-bigger">{{stages[idEtapa].challenges.length}}</span>
+                    <span class="white txt-bigger">{{model.stages[idEtapa].challenges.length}}</span>
                 </div>
             </section>
 
@@ -69,10 +69,10 @@
             </section>
             <section class="parts activities">
                 <div id="owl-demo" class="owl-carousel">
-                    <div ng-repeat="challenge in stages[idEtapa].challenges">
+                    <div ng-repeat="challenge in model.stages[idEtapa].challenges">
                       <div class="part" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
-                          <i class="icomoon icon-checked-join" ng-show="getCurrentStatusOfActivity($index, $parent.$index) == 1"></i>
-                          <i class="icomoon icon-gauge" ng-show="getCurrentStatusOfActivity($index, $parent.$index) == 0"></i>
+                          <i class="icomoon icon-checked-join" ng-show="getCurrentStatusOfActivity(activity.coursemoduleid) == 1"></i>
+                          <i class="icomoon icon-gauge" ng-show="getCurrentStatusOfActivity(activity.coursemoduleid) == 0"></i>
 
                           <span ng-bind="activity.activityname"></span>
                           <span>

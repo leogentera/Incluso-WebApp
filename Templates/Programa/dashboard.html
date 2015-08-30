@@ -2,6 +2,7 @@
 	<article>
 		<div class="container">
 			<h1 class="text-center">¡Bienvenido a la misión, {{user.alias}}!</h1>
+
 			<section class="component video-gallery" ng-controller="videoCollapsiblePanelController">
 				<div class="panel panel-video">
 					<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
@@ -15,9 +16,12 @@
 					<div class="panel-body" collapse="isCollapsed">
 						<div class="stage perform">
 							<button class="icon icon-close"></button>
-							<button class="icon icon-play" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"></button>
+							<!-- <button class="icon icon-play" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"></button> -->
+							<!-- <button class="icon icon-play"></button> -->
+							<!-- <a class="icon icon-play"></a> -->
+							<a class="icon icon-play" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"></a>
 							<figure class="player">
-								<img ng-click="playVideo()" src="assets/media/thumb-bienvenida.jpg">
+								<img ng-click="playVideo()" src="assets/media/thumb-bienvenida.jpg" />
 							</figure>
 						</div>
 					</div>
@@ -36,13 +40,12 @@
 			<section class="component current-satge">
 				<img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
 				<h3>- Estación: {{stage.sectionname}} -</h3>
-				<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{stage.firsttime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span></a>
+				<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{usercourse.firsttime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span></a>
 			</section>
 
 			<section class="component my-badges">
 				<h3>- MI ESCUDO -</h3>
-				<img src="assets/images/badges/{{user.shield ? 'img-' + user.shield + 'svg' : 'img-badge-placeholder.svg'}}" alt="badges"
-				/>
+				<img src="assets/images/badges/{{user.shield ? 'img-' + user.shield + 'svg' : 'img-badge-placeholder.svg'}}" alt="badges" />
 			</section>
 
 			<section class="component top-users" style="width: 100vw">
@@ -53,8 +56,8 @@
 							<div class="user-container">
 								<div class="user-avatar">
 									<figure>
-										<img ng-src="{{course.leaderboard[0] ? 'data:image/png;base64,' + course.leaderboard[0].profileimage : 'img-avatar-dummy-01.png'}}"
-										alt="avatar" />
+										<!-- <img ng-src="{{course.leaderboard[0] ? 'data:image/png;base64,' + course.leaderboard[0].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
+										<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
 										<figcaption>1</figcaption>
 										<div class="arrow-up"></div>
 									</figure>
@@ -79,8 +82,8 @@
 							<div class="user-container">
 								<div class="user-avatar">
 									<figure>
-										<img ng-src="{{course.leaderboard[1] ? 'data:image/png;base64,' + course.leaderboard[1].profileimage : 'img-avatar-dummy-02.png'}}"
-										alt="avatar" />
+										<!-- <img ng-src="{{course.leaderboard[1] ? 'data:image/png;base64,' + course.leaderboard[1].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
+										<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
 										<figcaption>2</figcaption>
 										<div class="arrow-up"></div>
 									</figure>
@@ -105,8 +108,8 @@
 							<div class="user-container">
 								<div class="user-avatar">
 									<figure>
-										<img ng-src="{{course.leaderboard[2] ? 'data:image/png;base64,' + course.leaderboard[2].profileimage : 'img-avatar-dummy-03.png'}}"
-										alt="avatar" />
+										<!-- <img ng-src="{{course.leaderboard[2] ? 'data:image/png;base64,' + course.leaderboard[2].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
+										<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
 										<figcaption>3</figcaption>
 										<div class="arrow-up"></div>
 									</figure>
@@ -134,7 +137,8 @@
 							<a href="">
 								<div class="user-avatar">
 									<figure class="user-avatar-">
-										<img ng-src="{{user.profileimageurlsmall || 'img-avatar-dummy-01.png'}}" alt="avatar" />
+										<!-- <img ng-src="{{user.profileimageurlsmall || 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
+										<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
 										<figcaption>{{user.rank}}</figcaption>
 									</figure>
 								</div>
@@ -158,7 +162,7 @@
 
 			<section class="ilustration">
 				<figure class="space-ship">
-					<img src="assets/images/img-ship-02.png" alt="La nave" />
+					<!-- <img src="assets/images/img-ship-02.png" alt="La nave" /> -->
 				</figure>
 			</section>
 		</div>
