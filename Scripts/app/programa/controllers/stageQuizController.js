@@ -50,7 +50,7 @@ angular
                 $scope.AnswersResult.updatetype = 1;
                 $scope.showWarning = false;
 
-                var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
+                var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);                
 
                 switch ($scope.activityname) {
                     case "Mis cualidades":
@@ -60,14 +60,13 @@ angular
                         $scope.AnswersResult.answers = $scope.misGustosAnswers;
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;
-                        console.log("Answers " + $scope.dreamsLists.answers);
+                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;                        
                         break;
                     default:
                         break;
                 }
                 
-                localStorage.setItem("userCourse", updatedActivityOnUsercourse);
+                localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
      
                 _endActivityQuiz({
                     "usercourse": updatedActivityOnUsercourse,
@@ -79,10 +78,12 @@ angular
                     "endingTime": new Date(),
                     "token" : $scope.currentUser.token
                 });
-
+               
+               
                 var currentStage = localStorage.getItem("currentStage");
-
                 $location.path('/ZonaDeVuelo/Dashboard/' + currentStage);
+  
+               
             };
 
             $scope.addAbility = function () {
@@ -227,7 +228,7 @@ angular
             }
 
             function updateSelectedAnswers(questionIndex, question) {
-                debugger;
+                
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer == "Si") {
@@ -255,6 +256,7 @@ angular
                         $scope.AnswersResult.answers[2] = question.userAnswer.trim();
                         break;
                     case 3:
+                        /*
                         if (question.userAnswer.length > 0) {
                             for (var index = 0; index < question.answers.length; index++) {
                                 var questionOption = question.answers[index];
@@ -264,21 +266,45 @@ angular
                                 }
                             }
                         }
+                        */
+
+                        var userAnswer = cleanText(question.userAnswer);                        
+
+                        if (userAnswer == "Si") {
+                            $scope.AnswersResult.answers[3] = 2;
+                        }
+
+                        if (userAnswer == "No") {
+                            $scope.AnswersResult.answers[3] = 2;
+                        }
+
+                        if (userAnswer == "Mas o menos") {                            
+                            $scope.AnswersResult.answers[3] = 2;
+                        }
+
                         break;
+
                     case 4:
                         if (question.userAnswer != null) {
-                            var userAnswers = question.userAnswer.split(";");
-                            for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
-                                var userAnswer = userAnswers[indexUserAnswers].trim();
+                            var userAnswer = cleanText(question.userAnswer);                            
+                            var userAnswers = userAnswer.split(" ");
+                            var long = userAnswers.length;
+                            for (var i = 0; i < long; i++) {
+                                $scope.AnswersResult.answers[4].push(userAnswers[i]);
+                                /*
+                                var userAnswer = userAnswers[i].trim();
                                 for (var index = 0; index < question.answers.length; index++) {
                                     var questionOption = question.answers[index];
                                     if (questionOption.answer.trim() == userAnswer) {
                                         $scope.AnswersResult.answers[4].push(userAnswer);
                                     }
                                 }
+                                */
                             }
                         }
+
                         break;
+
                     default:
                         break;
                 }
@@ -374,20 +400,15 @@ angular
 
             function updateMisSueñosSelectedAnswers(index, question) {
 
-                console.log("Inside updateMisSueños(): " + JSON.stringify(question));
-
                 var userAnswers = cleanText(question.userAnswer);
                 var userAnswersList = userAnswers.split(" ");
-                console.log("userAnswersList" + userAnswersList);
 
                 var largo = userAnswersList.length;
                 var i;
 
                 for (i = 0; i < largo; i++) {
                     $scope.dreamsLists.answers[index].push(userAnswersList[i]);
-                }
-
-                console.log($scope.dreamsLists.answers[index]);
+                }            
             }
 
             function cleanText(userAnswer) {   //NOTE: replace() is a chainable method.
@@ -402,20 +423,14 @@ angular
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misSuenosAnswers = [[], [], [], []];
 
-
-            function errorCallback(data) {
-                console.log("You entered the errorCallback");
-                // var algo = data;
-            };
+       
 
             function getDataAsync() {
 
                 $scope.startingTime = new Date();
 
-                $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
-
-                var activity = getActivityByActivity_identifier($scope.activity_identifier);
-                console.log("activity: " + JSON.stringify(activity));
+                $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];                
+                var activity = getActivityByActivity_identifier($scope.activity_identifier);                
 
                 if (activity != null) {
                     if($scope.activity_identifier == 1009){
@@ -423,8 +438,7 @@ angular
                     }
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
-                    $scope.activityname = activity.activityname;
-                    console.log("Actividad: " + $scope.activityname);                    
+                    $scope.activityname = activity.activityname;                            
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -432,8 +446,7 @@ angular
 
                     var activityFinished = false;
 
-                    if (activity.status != 0) {
-                        console.log("Actividad YA finalizada");
+                    if (activity.status != 0) {                        
                         activityFinished = true;
                         $scope.setReadOnly = true;
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
@@ -444,20 +457,15 @@ angular
             }
 
 
-            function successfullCallBack(activityAnswers) {
-                console.log("You entered successfullCallBack");
-                
-                if (activityAnswers != null) {
-                    console.log("activityAnswers :" + JSON.stringify(activityAnswers));
-                    // $scope.activity = activityAnswers;
-                    console.log("number Of Questions :" + activityAnswers.questions.length);
-                    debugger;
+            function successfullCallBack(activityAnswers) {                
+                if (activityAnswers != null) {                    
+                    // $scope.activity = activityAnswers;                    
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
                         var question = activityAnswers.questions[index];
 
                         switch ($scope.activityname) {
-                            case "Exploracion Inicial":
+                            case "Exploración inicial":
                                 updateSelectedAnswers(index, question);
                                 break;
                             case "Mis cualidades":
@@ -486,7 +494,7 @@ angular
 
 
             function errorCallback() {
-                console.log("Unsuccessful callback");
+                
             }
 
 
@@ -542,12 +550,10 @@ angular
                     }
                 }
 
-                if (validAnswers == 3) {
-                    console.log("Validado");
+                if (validAnswers == 3) {                    
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
-                } else {
-                    console.log("NO Validado");
+                } else {                    
                     showWarningAndGoToTop();
                 }
             };

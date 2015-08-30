@@ -133,8 +133,7 @@
             /* scroll to top function and listener */
             $scope.scrollTo = function(element) {
                 $location.hash('top');
-                $anchorScroll();
-                console.log("scrolled to top");
+                $anchorScroll();                
             };
             $scope.$on('scrollTop', $scope.scrollTo);
 

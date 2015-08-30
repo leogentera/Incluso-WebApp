@@ -11,12 +11,10 @@ var _timeout = null;
 
 var _IsOffline = function() {
   return false;
-}
+};
 
 var _syncAll = function(callback) {
   _syncCallback = callback;
-
-  console.log('is offline:' + _IsOffline());
 
   //check if the session is OnLine
   if (!_IsOffline()) {
@@ -24,8 +22,7 @@ var _syncAll = function(callback) {
   }
 };
 
-var allServicesCallback = function(){
-  console.log("allServicesCallback");
+var allServicesCallback = function(){  
   _syncCallback();
 };
 
@@ -49,12 +46,10 @@ var _readNotification = function(currentUserId,currentNotificationId){
           userid:  currentUserId,
           notificationid: currentNotificationId};
   
-      moodleFactory.Services.PutUserNotificationRead(currentNotificationId,data,function(){
-        //LocalStorage.setItem("notifications",data.notifications);
-      },function(){
-        //console.log(error on getting notifications data);
+      moodleFactory.Services.PutUserNotificationRead(currentNotificationId,data,function(){        
+      },function(){        
         });
-}
+};
 
 function syncCacheData (){
 
@@ -79,7 +74,7 @@ var _endActivity = function(activityModel){
         
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
           
-}
+};
 
 var _endActivityQuiz = function(activityModel){
       _isStageCompleted();
@@ -92,7 +87,7 @@ var _endActivityQuiz = function(activityModel){
       moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,successCallback,errorCallback);      
        
       _isChallengeCompleted(activityModel.coursemoduleid);
-}
+};
 
 //This function updates in localStorage the status of the stage when completed
 var _isStageCompleted = function(){
@@ -113,7 +108,7 @@ var _isStageCompleted = function(){
         }
     }
   
-}
+};
 
 var _isChallengeCompleted = function(activityId){
     
@@ -146,11 +141,11 @@ var _isChallengeCompleted = function(activityId){
     else{
       return false;
     }
-}
+};
 
 var successEndChallengeCallback = function(){
   localStorage.setItem("closeStageModal",'true');
-}
+};
 
 var _createNotification = function(activityId, triggerActivity){
   
@@ -176,7 +171,7 @@ var _createNotification = function(activityId, triggerActivity){
   else{
     
   }  
-}
+};
 
 var _coachNotification = function(){
     
@@ -211,14 +206,11 @@ var _coachNotification = function(){
   
 }
 
-var successCallback = function(data){  
-    console.log("global.js - successCallback - " + data);
-}
+var successCallback = function(data){
+};
 
 var errorCallback = function(data){
- console.log("global.js - errorCallback - " + data);
-  
-}
+};
 
 function getActivityByActivity_identifier(activity_identifier) {          
             var matchingActivity = null;
@@ -328,8 +320,7 @@ function getdate() {
 }
 
 syncCacheData();
-var logout = function($scope, $location){
-    console.log("Logout function ");
+var logout = function($scope, $location){    
     $scope.currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
       if(!_IsOffline()){
@@ -343,9 +334,7 @@ var logout = function($scope, $location){
                   userid: $scope.currentUser.userId,
                   action: "logout"})
           }
-        ).success(function(data, status, headers, config) {
-
-          console.log('successfully logout');
+        ).success(function(data, status, headers, config) {        
           }
         );
       }
