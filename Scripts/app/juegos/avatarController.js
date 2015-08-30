@@ -66,13 +66,34 @@ angular
                 }
             }
 
+            $scope.encodeImageUri = function(imageUri, callback) {
+                var c = document.createElement('canvas');
+                var ctx = c.getContext("2d");
+                var img = new Image();
+                img.onload = function() {
+                    alert('loading avatar');
+                    c.width = this.width;
+                    c.height = this.height;
+                    ctx.drawImage(img, 0, 0);
+
+                    if(typeof callback === 'function'){
+                        var dataURL = c.toDataURL("image/jpeg");
+                        callback(dataURL.slice(22, dataURL.length));
+                    }
+                };
+                img.src = imageUri;
+            }
+
             $scope.uploadAvatar = function(file) {
+                debugger;
+
+                $scope.encodeImageUri("assets/images/avatar.svg", function(b64) {
                 $http({
                     method: 'POST',
                     url: API_RESOURCE.format('avatar'),
                     data: {
                         userid: user.id,
-                        filecontent: file
+                            filecontent: b64
                     }
                 })
                 .success(function(){
@@ -83,29 +104,11 @@ angular
                     console.log('Error al subir la foto!');
                     $location.path('/ProgramaDashboard');
                 });
-            }
             
-        }])
-        .directive('file', function(){
-            return {
-                scope: {
-                    file: '='
-                },
-                link: function(scope, el, attrs){
-                    el.bind('change', function(event){
-                        var files = event.target.files;
-                        if (files.length) {
-                          var r = new FileReader();
-                                r.onload = function(e) {
-                                    var contents = e.target.result;
-                                    scope.$apply(function () {
-                                        scope.file = btoa(contents)
-                                    });
-                                };
-                                r.readAsBinaryString(files[0]);
-                        } 
                     });
                }
                 
-            };
-        });
+
+
+            
+        }]);

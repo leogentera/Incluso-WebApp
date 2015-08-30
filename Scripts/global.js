@@ -7,6 +7,7 @@ var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";
 var _courseId = 4;
 
 var _httpFactory = null;
+var _timeout = null;
 
 var _IsOffline = function() {
   return false;

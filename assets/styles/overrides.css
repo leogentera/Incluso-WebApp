@@ -312,7 +312,7 @@
 .incluso-app.start-dashboard .active .arrow-up {
   display: block;
   bottom: -69px;
-  bottom: -15vw;
+  bottom: -10vw;
 }
 .incluso-app.start-dashboard footer li:last-child {
   display: none;
@@ -637,6 +637,14 @@ section.part.inbloq.text-left .actions {
   background: -ms-radial-gradient(center, ellipse cover, rgba(31, 39, 51, 0.68) 3 0%, rgba(20, 25, 33, 0.68) 100%);
   background: radial-gradient(ellipse at center, rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='rgba(31, 39, 51, 0.68)', endColorstr='rgba(20, 25, 33, 0.68)', GradientType=1);
+}
+.tutorial .txt-renglon {
+  padding: 5vh 0px;
+  font-size: 5vw;
+}
+.tutorial .txt-renglon button {
+  font-size: 3.5vw;
+  font-weight: 500;
 }
 .holoproj .owl-wrapper .item img {
   width: 55%;

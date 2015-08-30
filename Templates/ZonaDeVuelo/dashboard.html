@@ -61,7 +61,7 @@
                 <div class="light"><img src="assets/images/img-light-cone.png"></div>
                 <div class="centered paginate">
                     <span id="index" class="txt-bigger">1/</span>
-                    <span class="white txt-bigger">6</span>
+                    <span class="white txt-bigger">{{stages[idEtapa].challenges.length}}</span>
                 </div>
             </section>
 
@@ -193,6 +193,8 @@
                 goToFirstSpeed: 2000,
                 singleItem: true,
                 autoHeight: true,
+                touchDrag:false,
+                transitionStyle:"fade",
                 afterMove: callback1
             });
 
@@ -206,29 +208,33 @@
                 goToFirstSpeed: 2000,
                 singleItem: true,
                 autoHeight: true,
+                touchDrag:false,
+                transitionStyle:"fade",
                 afterMove: callback2
             });
 
             function callback1(event) {
                 var item = this.currentItem;
                 owl.trigger("owl.goTo", item);
+                $("span#index").text((item+1)+"/");
             }
 
             function callback2(event) {
                 var item = this.currentItem;
                 owl2.trigger("owl.goTo", item);
+                $("span#index").text((item+1)+"/");
             }
 
             $("#next").click(function (ev) {
                 owl.trigger('owl.next');
                 ev.preventDefault();
 
-            })
+            });
 
             $("#prev").click(function (ev) {
                 owl.trigger('owl.prev');
                 ev.preventDefault();
-            })
+            });
         }, 1000);
     });
 </script>

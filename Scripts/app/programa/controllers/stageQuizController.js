@@ -14,6 +14,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
             _httpFactory = $http;
+            _timeout = $timeout;
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
@@ -74,7 +75,9 @@ angular
                     "endingTime": new Date()
                 });
 
-                $location.path('/ZonaDeVuelo/Dashboard');
+                var currentStage = localStorage.getItem("currentStage");
+
+                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage);
             };
 
             $scope.addAbility = function () {
@@ -277,23 +280,27 @@ angular
 
             function updateMisSueñosSelectedAnswers(index, question) {
 
-                console.log("Inside updateMisSueños: " + JSON.stringify(question));
+                console.log("Inside updateMisSueños(): " + JSON.stringify(question));
 
-                var largo = question.answers.length;
+                var userAnswers = cleanText(question.userAnswer);
+                var userAnswersList = userAnswers.split(" ");
+                console.log("userAnswersList" + userAnswersList);
+
+                var largo = userAnswersList.length;
                 var i;
 
                 for (i = 0; i < largo; i++) {
-                    dreamsLists.answers[index].push(question.answers[i]);
+                    $scope.dreamsLists.answers[index].push(userAnswersList[i]);
                 }
 
-                console.log(dreamsLists.answers[index]);
+                console.log($scope.dreamsLists.answers[index] + " ehh");
             }
 
             function cleanText(userAnswer) {
-                var result = userAnswer.replace("\n", "");
-                result = userAnswer.replace("<br>", "");
-                result = userAnswer.replace("<p>", "");
-                result = userAnswer.replace("</p>", "");
+                var result = userAnswer.replace(/\r?\n|\r/g, "y");
+                result = userAnswer.replace(/<br>/g, "");
+                result = userAnswer.replace(/<p>/g, "");
+                result = userAnswer.replace(/<\/p>/g, "");
                 return result;
             }
 
@@ -314,7 +321,7 @@ angular
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
-                console.log("activity from getDataAsync() " + JSON.stringify(activity));
+                console.log("activity from getDataAsync(): " + JSON.stringify(activity));
 
                 if (activity != null) {
                     $scope.coursemoduleid = activity.coursemoduleid;
@@ -327,25 +334,30 @@ angular
 
                     var activityFinished = false;
 
-                    if (activity.status != 0) {console.log("Actividad YA finalizada");
+                    if (activity.status != 0) {
+                        console.log("Actividad YA finalizada");
                         activityFinished = true;
+                        $scope.setReadOnly = activityFinished;
                     }
 
-                    $scope.setReadOnly = activityFinished;
 
                     if (activityFinished) {
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
 
-                    $scope.activity = activity;console.log("activity object: " + JSON.stringify($scope.activity));
+                    $scope.activity = activity;
+                    console.log("activity object: " + JSON.stringify($scope.activity));
                 }
             }
 
 
-            function successfullCallBack(activityAnswers) {console.log("You entered successfullCallBack");
+            function successfullCallBack(activityAnswers) {
+                console.log("You entered successfullCallBack");
 
-                if (activityAnswers != null) {console.log("activityAnswers :" + JSON.stringify(activityAnswers));
+                if (activityAnswers != null) {
+                    console.log("activityAnswers :" + JSON.stringify(activityAnswers));
                     // $scope.activity = activityAnswers;
+                    console.log("number Of Questions :" + activityAnswers.questions.length);
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
                         var question = activityAnswers.questions[index];

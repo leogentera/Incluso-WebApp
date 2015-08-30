@@ -11,6 +11,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             /* $routeParams.stageId */
+            _timeout = $timeout;
             _httpFactory = $http;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
@@ -21,6 +22,7 @@ angular
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
+            $scope.currentChallenge = 1;
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -48,24 +50,7 @@ angular
             $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
             localStorage.setItem("userCurrentStage", $routeParams['stageId']);
 
-            //var totalDeEtapas = $scope.model.stages.length; //Total amount of stages
-            //var totalDeRetos = 0; //Total number of challenges, along all possible stages
-            //var totalDeActividades = 0; //Total number of activities, along all challenges in all stages
-            //var i, j, k; //Getting total number of challenges along all stages (1, 2 y 3)
-            //
-            //for (i = 0; i < totalDeEtapas; i++) {
-            //    totalDeRetos += $scope.model.stages[i].challenges.length;
-            //}
-            //
-            //// Count of whole activities along all Stages
-            //for (i = 0; i < totalDeEtapas; i++) {
-            //    var numOfChallenges = $scope.model.stages[i].challenges.length;
-            //
-            //    for (j = 0; j < numOfChallenges; j++) {
-            //        totalDeActividades += $scope.model.stages[i].challenges[j].activities.length;
-            //    }
-            //}
-
+           //calculate user's stage progress
             var avanceEnEtapaActual = 0;
             var totalActividadesEnEtapaActual = 0; //Attainment of user in the current Stage            
             var retosEnEtapaActual = $scope.model.stages[$scope.idEtapa].challenges.length;
@@ -78,8 +63,9 @@ angular
                     totalActividadesEnEtapaActual++;
                 }
             }
-
             $scope.avanceEnEtapaActual = Math.ceil(avanceEnEtapaActual * 100 / totalActividadesEnEtapaActual);
+
+            //Load challenges images
             $scope.retosIconos = {
                 "Exploración inicial": "assets/images/challenges/stage-1/img-evaluacion inicial.svg",
                 "Cuarto de recursos": "assets/images/challenges/stage-1/img-cuarto-recursos.svg",

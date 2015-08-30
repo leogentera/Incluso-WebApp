@@ -15,6 +15,8 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $filter, MoodleIds) {
 
 
+            _httpFactory = $http;
+            _timeout = $timeout;
             //$scope.$emit('HidePreloader');
             $scope.$emit('ShowPreloader'); //show preloader
             $rootScope.pageName = "Estación: Conócete"
@@ -254,7 +256,7 @@ angular
             };
 
             function getTopicDataAsync() {
-                moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback);
+                moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback, null, true);
                 //$scope.$emit('HidePreloader');
             }
 
