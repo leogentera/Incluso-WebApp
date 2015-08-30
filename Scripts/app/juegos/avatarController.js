@@ -84,8 +84,7 @@ angular
                 img.src = imageUri;
             }
 
-            $scope.uploadAvatar = function(file) {
-                debugger;
+            $scope.uploadAvatar = function(file) {                
 
                 $scope.encodeImageUri("assets/images/avatar.svg", function(b64) {
                 $http({
