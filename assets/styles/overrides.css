@@ -653,10 +653,10 @@ section.part.inbloq.text-left .actions {
   font-size: 4.5vw;
   font-weight: 500;
 }
-.comments-forum .icon-circle {
+.incluso-app .app .comments-forum .icon-circle {
   padding: 1vh 0px;
 }
-.comments-forum .arrow-up {
+.incluso-app .app .comments-forum .arrow-up {
   display: none;
   position: absolute;
   bottom: -63px;
@@ -668,7 +668,7 @@ section.part.inbloq.text-left .actions {
   border-right: 20px solid transparent;
   border-bottom: 20px solid #ffffff;
 }
-.comments-forum .active .arrow-up {
+.incluso-app .app .comments-forum .active .arrow-up {
   display: block;
   bottom: -69px;
   bottom: -9vw;
