@@ -82,7 +82,7 @@
             _putAsyncStars("profile", data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
-         var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback, forceRefresh){
+         var _putEndActivity = function(activityId, data, activityModel, token, successCallback,errorCallback){
              _endActivity("activitiesCache/"+ activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
 
          };
@@ -232,7 +232,7 @@
         //    });
         // };
         
-        var _endActivity = function(key, data, userCourseModel, url, token, successCallback, errorCallback){
+        var _endActivity = function(key, data, userCourseModel, url, token, successCallback, errorCallback){            
             _httpFactory({                
                method: 'PUT',
                url: url,        

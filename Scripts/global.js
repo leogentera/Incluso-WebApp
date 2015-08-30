@@ -11,7 +11,7 @@ var _timeout = null;
 
 var _IsOffline = function() {
   return false;
-}
+};
 
 var _syncAll = function(callback) {
   _syncCallback = callback;
@@ -54,7 +54,7 @@ var _readNotification = function(currentUserId,currentNotificationId){
       },function(){
         //console.log(error on getting notifications data);
         });
-}
+};
 
 function syncCacheData (){
 
@@ -79,7 +79,7 @@ var _endActivity = function(activityModel){
         
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
           
-}
+};
 
 var _endActivityQuiz = function(activityModel){
       _isStageCompleted();
@@ -88,12 +88,11 @@ var _endActivityQuiz = function(activityModel){
       
       //trigger activity type 2 is sent when the activity ends.
       var triggerActivity = 2;
-      _createNotification(activityId, triggerActivity);      
-            
-      moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,successCallback,errorCallback);      
+      _createNotification(activityId, triggerActivity);                  
+      moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,successCallback,errorCallback);      
        
       _isChallengeCompleted(activityModel.coursemoduleid);
-}
+};
 
 //This function updates in localStorage the status of the stage when completed
 var _isStageCompleted = function(){
@@ -109,14 +108,14 @@ var _isStageCompleted = function(){
           var totalChallengesCompleted = _.where(currentStage.challenges,{status:1}).length;
           if (totalChallengesByStage == totalChallengesCompleted) {
               userCourse.stages[stageIndex].status = 1;
-              localStorage.setItem("userCourse",JSON.stringify(userCourse));
+              localStorage.setItem("usercourse",JSON.stringify(userCourse));
           }
         }
     }
   
-}
+};
 
-var _isChallengeCompleted = function(activityId){     
+var _isChallengeCompleted = function(activityId){
     
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
@@ -147,14 +146,14 @@ var _isChallengeCompleted = function(activityId){
     else{
       return false;
     }
-}
+};
 
 var successEndChallengeCallback = function(){
   localStorage.setItem("closeStageModal",'true');
-}
+};
 
 var _createNotification = function(activityId, triggerActivity){
-    
+  
   currentUserId = localStorage.getItem("userId");
   
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
@@ -177,16 +176,49 @@ var _createNotification = function(activityId, triggerActivity){
   else{
     
   }  
+};
+
+var _coachNotification = function(){
+    
+  var startedActivityDate = new Date();    
+    
+  //ActivityChatID  
+  var activityChatId = 68;
+  var triggerActivity = 3;
+  var userChat = JSON.parse(localStorage.getItem("userChat"));
+  //pending validate if the activity is started
+  if (userChat.length > 0 ) {
+    var notifications = JSON.parse(localStorage.getItem("notifications"));
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    var userId = localStorage.getItem('userId');
+    var lastMessage = _.max(userChat,function(chat){
+        return chat.messagedate;
+    });
+    var lastMessageDate = moment.unix(lastMessage.messagedate).format("MM/DD/YYYY");
+    var twoDaysAfterLastMessage = new Date(lastMessageDate);
+    twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
+    
+    var today = new Date();
+    if (twoDaysAfterLastMessage < today) {
+      _createNotification(activityChatId,triggerActivity);
+    }else{
+      return false;
+    }
+  }else{
+    return false;
+  }
+  
 }
 
 var successCallback = function(data){  
     console.log("global.js - successCallback - " + data);
-}
+};
 
 var errorCallback = function(data){
  console.log("global.js - errorCallback - " + data);
   
-}
+};
 
 function getActivityByActivity_identifier(activity_identifier) {          
             var matchingActivity = null;
@@ -402,7 +434,7 @@ var _staticStages = [
             "started": 0
           },
           {
-            "activityname": "Punto de encuentro",
+            "activityname": "Punto de Encuentro",
             "coursemoduleid": 64,
             "points": 100,
             "started": 0
@@ -678,7 +710,7 @@ var _activityRoutes = [
   { id: 149, url: '/ZonaDeVuelo/Conocete/ZonaDeContacto'},
   { id: 145, url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia'},
   { id: 139, url: '/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple'},
-  { id: 64, url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
+  { id: 151, url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
   { id: 114, url: '#'},
   { id: 146, url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia'},
   { id: 70, url: '/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos'},
