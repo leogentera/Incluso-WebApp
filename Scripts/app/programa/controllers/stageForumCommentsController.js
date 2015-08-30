@@ -16,9 +16,7 @@ angular
 
 
             _httpFactory = $http;
-            _timeout = $timeout;
-            //$scope.$emit('HidePreloader');
-            $scope.$emit('ShowPreloader'); //show preloader
+            $scope.$emit('ShowPreloader');
             $rootScope.pageName = "Estación: Conócete"
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
@@ -78,7 +76,8 @@ angular
                     },
                     function(){
                         alert('Hubo un problema al registrar tus comentarios, por favor vuelve a intentarlo.');
-                    })
+                    });
+
             };
 
             var checkForumProgress = function(){
@@ -138,6 +137,7 @@ angular
                         getTopicDataAsync();
                         //updateForumProgress(parentId);
                         updateForumProgress(topicId);
+                        debugger;
                         checkForumProgress();
 
                     },
@@ -165,18 +165,20 @@ angular
                     "posttype": 1,
                     "fileToUpload":""
                 };
-                //$scope.$emit('ShowPreloader');
+                $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Success!!');$scope.textToPost='';
+                        alert('Tu aportación fue registrada');
+                        $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         getTopicDataAsync();
                     },
-                    function(){alert('Fail!!');
+                    function(){
+                        alert('Fail!!');
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
-                        //$scope.$emit('HidePreloader');
+                        $scope.$emit('HidePreloader');
                     });
 
             };
@@ -191,17 +193,19 @@ angular
                     "posttype": 2,
                     "fileToUpload":""
                 };
+                $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Success!!');
+                        alert('Tu aportación fue registrada');
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                         getTopicDataAsync();
                     },
                     function(){
-                        alert('Fail!!');
+                        alert('Tu comenatrio no pudo ser registrado');
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
+                        $scope.$emit('HidePreloader');
                     });
             };
             $scope.postVideoToForum = function(){
@@ -215,17 +219,19 @@ angular
                     "posttype": 3,
                     "fileToUpload":""
                 };
+                $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Success!!');
+                        alert('Tu aportación fue registrada');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
                         getTopicDataAsync();
                     },
                     function(){
-                        alert('Fail!!');
+                        alert('Tu comenatrio no pudo ser registrado');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
+                        alert('Tu comenatrio no pudo ser registrado');
                     });
             };
             $scope.postAttachmentToForum = function(){
@@ -241,17 +247,19 @@ angular
                     "filecontent":$scope.attachmentToPost.base64,
                     "filename": userId + $scope.attachmentToPost.filename
                 };
+                $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Success!!');
-                        $scope.videoToPost = null;
+                        alert('Tu aportación fue registrada');
+                        $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                         getTopicDataAsync();
                     },
                     function(){
-                        alert('Fail!!');
+                        alert('Tu comenatrio no pudo ser registrado');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
+                        $scope.$emit('HidePreloader');
                     });
             };
 
@@ -264,9 +272,9 @@ angular
                 //$scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid + "/" + $routeParams.discussionId));
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.id == $routeParams.discussionId; });
-                var posts = $scope.discussion.posts[0].replies;
+                var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
                 posts.forEach(createModalReferences);
-                $scope.$emit('HidePreloader'); //hide preloader
+                $scope.$emit('HidePreloader');
             }
 
             getTopicDataAsync();
@@ -285,7 +293,7 @@ angular
 
             function getDataAsync() {
                 //$scope.$emit('ShowPreloader'); //show preloader
-                moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback);
+                moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback, true);
                 $scope.$emit('HidePreloader');
             }
 
