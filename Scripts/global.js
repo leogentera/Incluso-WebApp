@@ -11,7 +11,7 @@ var _timeout = null;
 
 var _IsOffline = function() {
   return false;
-}
+};
 
 var _syncAll = function(callback) {
   _syncCallback = callback;
@@ -54,7 +54,7 @@ var _readNotification = function(currentUserId,currentNotificationId){
       },function(){
         //console.log(error on getting notifications data);
         });
-}
+};
 
 function syncCacheData (){
 
@@ -79,7 +79,7 @@ var _endActivity = function(activityModel){
         
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
           
-}
+};
 
 var _endActivityQuiz = function(activityModel){
       _isStageCompleted();
@@ -92,7 +92,7 @@ var _endActivityQuiz = function(activityModel){
       moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,successCallback,errorCallback);      
        
       _isChallengeCompleted(activityModel.coursemoduleid);
-}
+};
 
 //This function updates in localStorage the status of the stage when completed
 var _isStageCompleted = function(){
@@ -113,7 +113,7 @@ var _isStageCompleted = function(){
         }
     }
   
-}
+};
 
 var _isChallengeCompleted = function(activityId){     
     
@@ -146,11 +146,11 @@ var _isChallengeCompleted = function(activityId){
     else{
       return false;
     }
-}
+};
 
 var successEndChallengeCallback = function(){
   localStorage.setItem("closeStageModal",'true');
-}
+};
 
 var _createNotification = function(activityId, triggerActivity){
     
@@ -176,16 +176,16 @@ var _createNotification = function(activityId, triggerActivity){
   else{
     
   }  
-}
+};
 
 var successCallback = function(data){  
     console.log("global.js - successCallback - " + data);
-}
+};
 
 var errorCallback = function(data){
  console.log("global.js - errorCallback - " + data);
   
-}
+};
 
 function getActivityByActivity_identifier(activity_identifier) {          
             var matchingActivity = null;

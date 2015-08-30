@@ -401,7 +401,7 @@ angular
             function errorCallback(data) {
                 console.log("You entered the errorCallback");
                 // var algo = data;
-            };
+            }
 
             function getDataAsync() {
 
