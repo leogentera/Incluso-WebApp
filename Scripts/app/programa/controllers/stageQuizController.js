@@ -149,13 +149,13 @@ angular
 
                 //var validationMenssage = "Asegurate de contestar todas las preguntas antes de guardar";
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-
+                
                 if ($scope.AnswersResult.answers[0] != null) {
                     if ($scope.AnswersResult.answers[1][0] == true ||
                         $scope.AnswersResult.answers[1][1] == true ||
                         $scope.AnswersResult.answers[1][2] == true ||
                         $scope.AnswersResult.answers[1][3] == true) {
-                        if ($scope.AnswersResult.answers[2] != null) {
+                        if ($scope.AnswersResult.answers[2] != null && $scope.AnswersResult.answers[2] != "") {
                             if ($scope.AnswersResult.answers[3] != null) {
                                 if ($scope.AnswersResult.answers[4].length != 0) {
                                     var lastQuestionValidation = true;
