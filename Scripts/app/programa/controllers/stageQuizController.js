@@ -293,7 +293,7 @@ angular
                     $scope.dreamsLists.answers[index].push(userAnswersList[i]);
                 }
 
-                console.log($scope.dreamsLists.answers[index]);
+                console.log($scope.dreamsLists.answers[index] + " ehh");
             }
 
             function cleanText(userAnswer) {

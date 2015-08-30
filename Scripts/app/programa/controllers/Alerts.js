@@ -97,8 +97,7 @@ angular
             };
             
             $scope.showAlertDetail = function (notificationId) {
-                var userId = localStorage.getItem('userId');
-                debugger;                
+                var userId = localStorage.getItem('userId');                
                 
                 for(var indexNotification = 0; indexNotification < $scope.notifications.length; indexNotification ++){                    
                     if ($scope.notifications[indexNotification].id == notificationId) {
