@@ -56,8 +56,10 @@
                     $scope.openModal();
                     //Update firsttime value
                     $scope.updateProgramFirstTime();
-                }
 
+
+                }
+                //redirect user to stage 1 dashboard after closing modal
                 $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section);
             };
 
@@ -159,12 +161,12 @@
                 localStorage.setItem('chatAmountRead',chatAmount.true);
             }
 
-            /* open terms and conditions modal */
+            //Open Welcome Message modal
             $scope.openModal = function (size) {
                 setTimeout(function(){ 
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
-                        templateUrl: 'tutorialModal.html',
+                        templateUrl: 'programWelcome.html',
                         controller: function ($scope, $modalInstance) {
                             $scope.cancel = function () {
                                 $modalInstance.dismiss('cancel');

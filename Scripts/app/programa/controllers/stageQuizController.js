@@ -26,7 +26,7 @@ angular
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
 
-            $scope.like_status = 0;
+            $scope.like_status = 1;
 
             $scope.AnswersResult = {
                 "userid": 0,//$scope.userprofile.id,
@@ -288,7 +288,7 @@ angular
 
                 console.log("Inside updateMisSueños(): " + JSON.stringify(question));
 
-                var userAnswers = cleanText(question.userAnswer);
+                var userAnswers = cleanText2(question.userAnswer);
                 var userAnswersList = userAnswers.split(" ");
                 console.log("userAnswersList" + userAnswersList);
 
@@ -299,14 +299,22 @@ angular
                     $scope.dreamsLists.answers[index].push(userAnswersList[i]);
                 }
 
-                console.log($scope.dreamsLists.answers[index] + " ehh");
+                console.log($scope.dreamsLists.answers[index]);
             }
 
-            function cleanText(userAnswer) {
-                var result = userAnswer.replace(/\r?\n|\r/g, "y");
-                result = userAnswer.replace(/<br>/g, "");
-                result = userAnswer.replace(/<p>/g, "");
-                result = userAnswer.replace(/<\/p>/g, "");
+            function cleanText(userAnswer) {   //NOTE: replace() is a chainable method.
+                var result = userAnswer.replace(/\r?\n|\r/g, "")
+                .replace(/<br>/g, "")
+                .replace(/<p>/g, "")
+                .replace(/<\/p>/g, "");
+                return result;
+            }
+
+            function cleanText2(userAnswer) {
+                var result = userAnswer.replace(/\r?\n|\r/g, "")
+                    .replace(/<br>/g, "")
+                    .replace(/<p>/g, "")
+                    .replace(/<\/p>/g, "");
                 return result;
             }
 
