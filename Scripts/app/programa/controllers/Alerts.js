@@ -100,7 +100,15 @@ angular
                 var userId = localStorage.getItem('userId');
                 debugger;                
                 
-                $scope.notifications[notificationId -1 ].read = true ;
+                for(var indexNotification = 0; indexNotification < $scope.notifications.length; indexNotification ++){                    
+                    if ($scope.notifications[indexNotification].id == notificationId) {
+                        $scope.notifications[indexNotification].read = true;
+                    }else{
+                        
+                    }                    
+                }
+                
+                
                 localStorage.setItem("notifications", JSON.stringify($scope.notifications));
                 _readNotification(userId,notificationId);
 
