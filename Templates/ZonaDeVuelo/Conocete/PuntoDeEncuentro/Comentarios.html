@@ -88,7 +88,7 @@
                   <!--<div ng-repeat="attachment in p.attachments">
                       <a href="{{ attachmentsfileurl }}"><i class="icomoon icon-required"></i> {{ attachment.filename }} </a>
                   </div>-->
-                <div ng-show="p.likes" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
+                <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
                 </div>
             </div>
             <div id="item{{$index}}" ng-repeat="r in p.replies">
