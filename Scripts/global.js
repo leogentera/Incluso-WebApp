@@ -402,7 +402,7 @@ var _staticStages = [
             "started": 0
           },
           {
-            "activityname": "Punto de encuentro",
+            "activityname": "Punto de Encuentro",
             "coursemoduleid": 64,
             "points": 100,
             "started": 0
@@ -678,7 +678,7 @@ var _activityRoutes = [
   { id: 149, url: '/ZonaDeVuelo/Conocete/ZonaDeContacto'},
   { id: 145, url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia'},
   { id: 139, url: '/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple'},
-  { id: 64, url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
+  { id: 151, url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
   { id: 114, url: '#'},
   { id: 146, url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia'},
   { id: 70, url: '/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos'},
