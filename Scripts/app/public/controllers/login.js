@@ -13,6 +13,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
+            _timeout = $timeout;
             _httpFactory = $http;
             //$scope.PreloaderModalInstance = null;
             //$scope.scrollToTop();

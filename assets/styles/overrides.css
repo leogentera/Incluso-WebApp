@@ -312,7 +312,7 @@
 .incluso-app.start-dashboard .active .arrow-up {
   display: block;
   bottom: -69px;
-  bottom: -15vw;
+  bottom: -10vw;
 }
 .incluso-app.start-dashboard footer li:last-child {
   display: none;

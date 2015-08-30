@@ -15,6 +15,7 @@ angular
 
             console.log('mis fortalezas');
 
+            _timeout = $timeout;
             _httpFactory = $http;
 
             $scope.$emit('ShowPreloader');
