@@ -92,7 +92,7 @@
             <span ng-switch="p.posttype">
                 <span ng-switch-default>{{ p.message }}</span>
                 <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>
-                <span ng-switch-when="3"><a ng-href="{{p.message}}"><img src="assets/images/img-video-placeholder.svg" /> </a></span>
+                <span ng-switch-when="3"><a ng-href="{{p.message}}"><img src="assets/images/img-video-placeholder.svg" alt="Ver video">Ver video</a></span>
                 <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.attachments[0].fileurl + '?token=' + userToken}}"  /> </a></span>
             </span>
 
