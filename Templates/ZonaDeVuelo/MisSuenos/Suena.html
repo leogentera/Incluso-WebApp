@@ -34,17 +34,16 @@
                                             <div class="clearfix">
                                                 <span>Sueño {{$index + 1}}</span>
                                                 <button class="btn btn-circle fl-right"
-                                                        ng-click="deleteSueno1($index)" ng-hide="false">
+                                                        ng-click="deleteSueno1($index)" ng-hide="setReadOnly">
                                                     <i class="icomoon icon-cross white"></i>
                                                 </button>
                                             </div>
-                                            <div class="add"><i class="icomoon icon-edit"></i>
-                                                <input type="text" name="opciones"
-                                                       class="form-control form-control-lg theme-form"
-                                                       placeholder="Nuevo sueño"
-                                                       ng-model="dreamsLists.answers[0][$index]"
-                                                       ng-readonly="setReadOnly"
-                                                        />
+                                            <div class="add">
+                                                <i class="icomoon icon-edit"></i>
+                                                <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2"
+                                                          name="opciones" placeholder="Nuevo sueño" ng-model="dreamsLists.answers[0][$index]"
+                                                          ng-readonly="setReadOnly">
+                                                </textarea>
                                             </div>
 
                                         </div>
@@ -75,17 +74,16 @@
                                             <div class="clearfix">
                                                 <span>Sueño {{$index + 1}}</span>
                                                 <button class="btn btn-circle fl-right"
-                                                        ng-click="deleteSueno2($index)" ng-hide="false">
+                                                        ng-click="deleteSueno2($index)" ng-hide="setReadOnly">
                                                     <i class="icomoon icon-cross white"></i>
                                                 </button>
                                             </div>
                                             <div class="add">
                                                 <i class="icomoon icon-edit"></i>
-                                                <input type="text" name="opciones"
-                                                       class="form-control form-control-lg theme-form"
-                                                       placeholder="Nuevo sueño"
-                                                       ng-model="dreamsLists.answers[1][$index]"
-                                                       ng-readonly="setReadOnly"/>
+                                                <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2"
+                                                          name="opciones" placeholder="Nuevo sueño" ng-model="dreamsLists.answers[1][$index]"
+                                                          ng-readonly="setReadOnly">
+                                                </textarea>
                                             </div>
 
                                         </div>
@@ -122,11 +120,10 @@
                                                 </button>
                                             </div>
                                             <div class="add"><i class="icomoon icon-edit"></i>
-                                                <input type="text" name="opciones"
-                                                       class="form-control form-control-lg theme-form"
-                                                       placeholder="Nuevo sueño"
-                                                       ng-model="dreamsLists.answers[2][$index]"
-                                                       ng-readonly="setReadOnly"/>
+                                                <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2"
+                                                          name="opciones" placeholder="Nuevo sueño" ng-model="dreamsLists.answers[2][$index]"
+                                                          ng-readonly="setReadOnly">
+                                                </textarea>
                                             </div>
 
                                         </div>
