@@ -92,7 +92,8 @@
             <span ng-switch="p.posttype">
                 <span ng-switch-default>{{ p.message }}</span>
                 <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>
-                <span ng-switch-when="3"><a ng-href="{{p.message}}"><img src="assets/images/img-video-placeholder.svg" alt="Ver video">Ver video</a></span>
+                <!--<span ng-switch-when="3"><a ng-href="{{p.message}}"><img src="assets/images/img-video-placeholder.svg" alt="Ver video">Ver video</a></span>-->
+                <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
                 <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.attachments[0].fileurl + '?token=' + userToken}}"  /> </a></span>
             </span>
 
@@ -111,10 +112,10 @@
             </div>
           </div>
 
-        <div class="vermas" ng-show="false">
+        <!--<div class="vermas" ng-show="false">
         Ver más comentarios
         <i class="icomoon icon-plus"></i>
-        </div>
+        </div>-->
         <div class="social">
         <div ng-hide="p.liked == 1" ng-click="clickLikeButton(p.id)"><i class="icomoon icon-required"></i> Me gusta
         </div>
