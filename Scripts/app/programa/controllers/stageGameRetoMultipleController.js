@@ -39,14 +39,17 @@ angular
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
             console.log('mis fortalezas 2');
+            var stars = 0;
+            debugger;
 
             if (!$scope.retoMultipleActivities) {
                $scope.retoMultipleActivities = [];
-               var retosMultipleChallenge = _.find($scope.activities, function(a) { return a.coursemoduleid == '139'});
+               var retosMultipleChallenge = _.find($scope.activities, function(a) { return a.activity_identifier == $routeParams.moodleid});
                if (retosMultipleChallenge) {
                   retoMultipleArray = retosMultipleChallenge.activities;
                   for(i = 0; i < retosMultipleChallenge.activities.length; i++)
                   {
+                    stars = stars + retosMultipleChallenge.activities[i].points;
                     var activity = moodleFactory.Services.GetCacheJson("activity/" + retosMultipleChallenge.activities[i].coursemoduleid);
                     if (activity) {
                         $scope.retoMultipleActivities.push(activity);
@@ -58,16 +61,8 @@ angular
                }
             }
 
-
-
-            function calculateStars() {
-               var stars = 0;
-               _.each($scope.retoMultipleActivities, function(activity) { stars = stars + activity.points; });
-               $scope.$emit('HidePreloader');
-               return stars;
-            }
-
-            $scope.stars = calculateStars();
+            $scope.stars = stars;
+            $scope.$emit('HidePreloader');
 
             function createRequest() {
 

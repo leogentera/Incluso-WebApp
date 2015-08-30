@@ -22,7 +22,6 @@ angular
             $scope.currentPage = 1;
             $scope.setReadOnly = false;
             $scope.showWarning = false;
-            $scope.showWarning2 = false;
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
 
@@ -38,7 +37,7 @@ angular
 
             $scope.finishActivity = function () {
                 //Activity completed
-                
+
                 $scope.activity.status = 1;
                 
                 //Update Activity Log Service
@@ -69,14 +68,16 @@ angular
                 }
                 
                 localStorage.setItem("userCourse", updatedActivityOnUsercourse);
-                
+     
                 _endActivityQuiz({
                     "usercourse": updatedActivityOnUsercourse,
                     "coursemoduleid": $scope.activity.coursemoduleid,
                     "answersResult": $scope.AnswersResult,
                     "userId": $scope.userprofile.id,
-                    "startingTime": $scope.startingTime,                    
-                    "endingTime": new Date()
+
+                    "startingTime": $scope.startingTime,
+                    "endingTime": new Date(),
+                    "token" : $scope.currentUser.token
                 });
 
                 var currentStage = localStorage.getItem("currentStage");
@@ -131,7 +132,7 @@ angular
             };
 
             $scope.hideWarning2 = function () {
-                $scope.showWarning2 = false;
+                $scope.showWarning = false;
             };
 
             $scope.navigateToPage = function (pageNumber) {
@@ -194,8 +195,39 @@ angular
                 }
             };
 
+            $scope.validateAnsweredQuestionsFinal = function () {
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                if ($scope.AnswersResult.answers[0] != null) {
+                    if ($scope.AnswersResult.answers[1] != null) {
+                        if ($scope.AnswersResult.answers[2] != null) {
+                            if ($scope.AnswersResult.answers[3] != null) {
+                                if ($scope.AnswersResult.answers[4] != null) {
+                                    $scope.showWarning = false;
+                                        $scope.navigateToPage(2);
+                                }
+                                else {
+                                    showWarningAndGoToTop();
+                                }
+                            }
+                            else {
+                                showWarningAndGoToTop();
+                            }
+                        }
+                        else {
+                            showWarningAndGoToTop();
+                        }
+                    }
+                    else {
+                        showWarningAndGoToTop();
+                    }
+                }
+                else {
+                    showWarningAndGoToTop();
+                }
+            }
 
             function updateSelectedAnswers(questionIndex, question) {
+                debugger;
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer == "Si") {
@@ -252,6 +284,60 @@ angular
                 }
             }
 
+            function updateSelectedAnswersFinal(questionIndex, question) {  
+            
+                switch (questionIndex) {
+                    case 0:
+                        if (question.userAnswer == "True") {
+                            $scope.AnswersResult.answers[0] = 2;
+                        }
+                        else if (question.userAnswer == "False") {
+                            $scope.AnswersResult.answers[0] = 1;
+                        }
+                        break;
+                    case 1:
+                        if (question.userAnswer == "True") {
+                            $scope.AnswersResult.answers[1] = 2;
+                        }
+                        else if (question.userAnswer == "False") {
+                            $scope.AnswersResult.answers[1] = 1;
+                        }
+                        break;
+                    case 2:
+                        if (question.userAnswer == "True") {
+                            $scope.AnswersResult.answers[2] = 1;
+                        }
+                        else if (question.userAnswer == "False") {
+                            $scope.AnswersResult.answers[2] = 0;
+                        }
+                        break;
+                    case 3:
+                        if (question.userAnswer == "Es tu ejemplo a seguir y debes ser igual a él\n") {
+                            $scope.AnswersResult.answers[3] = 0;
+                        }
+                        else if (question.userAnswer == "Puedes aprender de su experiencia para alcanzar tus sueños\n") {
+                            $scope.AnswersResult.answers[3] = 1;
+                        }
+                        else if (question.userAnswer == "Puede enseñarte cómo ganar dinero más fácil\n") {
+                            $scope.AnswersResult.answers[3] = 2;
+                        }
+                        break;  
+                    case 4:
+                        if (question.userAnswer == "Porque aprovechas mejor tus talentos y difrutas lo que haces\n") {
+                            $scope.AnswersResult.answers[4] = 0;
+                        }
+                        else if (question.userAnswer == "Porque puedes ser más famoso y exitoso\n") {
+                            $scope.AnswersResult.answers[4] = 1;
+                        }
+                        else if (question.userAnswer == "Porque debes hacer lo que quieras sin importar nada ni nadie\n") {
+                            $scope.AnswersResult.answers[4] = 2;
+                        }
+                        break;                        
+                    default:
+                        break;
+                }
+            }
+
 
             function updateMisCualidadesSelectedAnswers(currentQuestionIndex, question) {
                 if (question.userAnswer != null) {
@@ -290,7 +376,7 @@ angular
 
                 console.log("Inside updateMisSueños(): " + JSON.stringify(question));
 
-                var userAnswers = cleanText2(question.userAnswer);
+                var userAnswers = cleanText(question.userAnswer);
                 var userAnswersList = userAnswers.split(" ");
                 console.log("userAnswersList" + userAnswersList);
 
@@ -312,15 +398,6 @@ angular
                 return result;
             }
 
-            function cleanText2(userAnswer) {
-                var result = userAnswer.replace(/\r?\n|\r/g, "")
-                    .replace(/<br>/g, "")
-                    .replace(/<p>/g, "")
-                    .replace(/<\/p>/g, "");
-                return result;
-            }
-
-
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misSuenosAnswers = [[], [], [], []];
@@ -329,7 +406,7 @@ angular
             function errorCallback(data) {
                 console.log("You entered the errorCallback");
                 // var algo = data;
-            }
+            };
 
             function getDataAsync() {
 
@@ -338,13 +415,16 @@ angular
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
-                console.log("activity from getDataAsync(): " + JSON.stringify(activity));
+                console.log("activity: " + JSON.stringify(activity));
 
                 if (activity != null) {
+                    if($scope.activity_identifier == 1009){
+                        $scope.AnswersResult.answers = [0,0,0,0,0];
+                    }
                     $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
                     $scope.activityname = activity.activityname;
-                    console.log("Actividad: " + $scope.activityname);
+                    console.log("Actividad: " + $scope.activityname);                    
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -355,27 +435,23 @@ angular
                     if (activity.status != 0) {
                         console.log("Actividad YA finalizada");
                         activityFinished = true;
-                        $scope.setReadOnly = activityFinished;
-                    }
-
-
-                    if (activityFinished) {
+                        $scope.setReadOnly = true;
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
 
                     $scope.activity = activity;
-                    console.log("activity object: " + JSON.stringify($scope.activity));
                 }
             }
 
 
             function successfullCallBack(activityAnswers) {
                 console.log("You entered successfullCallBack");
-
+                
                 if (activityAnswers != null) {
                     console.log("activityAnswers :" + JSON.stringify(activityAnswers));
                     // $scope.activity = activityAnswers;
                     console.log("number Of Questions :" + activityAnswers.questions.length);
+                    debugger;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
                         var question = activityAnswers.questions[index];
@@ -392,6 +468,9 @@ angular
                                 break;
                             case "Sueña":
                                 updateMisSueñosSelectedAnswers(index, question);
+                                break;
+                            case "Exploración final":
+                                updateSelectedAnswersFinal(index, question);
                                 break;
                             default:
                                 break;
@@ -465,11 +544,11 @@ angular
 
                 if (validAnswers == 3) {
                     console.log("Validado");
-                    $scope.showWarning2 = false;
+                    $scope.showWarning = false;
                     $scope.navigateToPage(2);
                 } else {
                     console.log("NO Validado");
-                    showWarningAndGoToTop2();
+                    showWarningAndGoToTop();
                 }
             };
 
@@ -478,13 +557,6 @@ angular
                 $scope.showWarning = true;
                 $scope.$emit('scrollTop');
             }
-
-            function showWarningAndGoToTop2() {
-                $scope.showWarning2 = true;
-                $scope.$emit('scrollTop');
-            }
-
-
 
 
             $scope.answerIndex = 1;
