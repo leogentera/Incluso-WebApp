@@ -20,7 +20,7 @@
           <div class="panel-body" collapse="isCollapsed">
             <div class="stage perform">
               <figure class="player">
-                  <img src="{{ discussion.image[0].fileurl + '?token=' + userToken }}" alt="{{ discussion.image[0].filename }}">
+                  <img src="{{ discussion.fileurl + '?token=' + userToken }}" alt="{{ discussion.filename }}">
               </figure>
             </div>
           </div>
@@ -73,17 +73,17 @@
         <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies">
           <div class="part">
             <div class="author"><img src="assets/images/avatar.svg">
-              <div>{{p.postAutor}} <span>publicó:</span>
+              <div>{{p.post_author}} <span>publicó:</span>
               <div>{{p.created | date: "dd MMMM yyyy"}}</div>
               </div>
             </div>
             <div class="block">
-              <span ng-switch="p.posttype">
+              <span ng-switch="p.post_type">
                 <span ng-switch-default>{{ p.message }}</span>
                 <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>
                 <!--<span ng-switch-when="3"><a ng-href="{{p.message}}"><img src="assets/images/img-video-placeholder.svg" alt="Ver video">Ver video</a></span>-->
                 <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
-                <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.attachments[0].fileurl + '?token=' + userToken}}"  /> </a></span>
+                <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  /> </a></span>
               </span>
                   <!--<div ng-repeat="attachment in p.attachments">
                       <a href="{{ attachmentsfileurl }}"><i class="icomoon icon-required"></i> {{ attachment.filename }} </a>
@@ -93,7 +93,7 @@
             </div>
             <div id="item{{$index}}" ng-repeat="r in p.replies">
               <div class="coment block"><img src="assets/images/avatar.svg">
-                <div>{{r.postAutor}} <span>publicó:</span>   <div>{{r.message}}</div>
+                <div>{{r.post_author}} <span>publicó:</span>   <div>{{r.message}}</div>
                 </div>
               </div>
             </div>

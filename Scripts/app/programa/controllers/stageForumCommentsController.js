@@ -286,24 +286,24 @@ angular
             };
 
             function getTopicDataAsync() {
-                moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback, null, true);
+                moodleFactory.Services.GetAsyncForumInfo(64, getActivityInfoCallback, null, true);
                 //$scope.$emit('HidePreloader');
             }
+
+            var createModalReferences = function(element, index, array){
+                $scope.isCommentModalCollapsed[element.id] = true;
+            };
 
             function getActivityInfoCallback() {
                 //$scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid + "/" + $routeParams.discussionId));
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
-                $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.id == $routeParams.discussionId; });
+                $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion_id == $routeParams.discussionId; });
                 var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
                 posts.forEach(createModalReferences);
                 $scope.$emit('HidePreloader');
             }
 
             getTopicDataAsync();
-
-            var createModalReferences = function(element, index, array){
-                $scope.isCommentModalCollapsed[element.id] = true;
-            };
 
             $scope.back = function () {
                 $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/'+ MoodleIds.forum);
