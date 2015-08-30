@@ -303,8 +303,6 @@
                     }
                 }
             }
-            debugger;
-
             return forum;
         }
 
