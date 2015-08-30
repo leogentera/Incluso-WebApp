@@ -46,7 +46,7 @@ angular
             function getDataAsync() {
                 console.log('Getting forum data');
                //TODO Use MoodleIds forum id from the global app constants
-                moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback, '');
+                moodleFactory.Services.GetAsyncForumInfo(64, getActivityInfoCallback, '');
 //                moodleFactory.Services.GetAsyncActivity($routeParams.moodleid, getActivityInfoCallback);
             }
 

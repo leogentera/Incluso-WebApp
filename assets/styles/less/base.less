@@ -1912,6 +1912,7 @@ body {
         padding: 6vw 0;
         margin: 0;
         border: none;
+        text-align: center;
         .box-shadow-reset();
         background-color: @clr-gray-asphalt2;
         background-image: url('@{url-images}/img-footer-texture.png');
@@ -1920,14 +1921,19 @@ body {
         .background-size(80%, auto);
         
         .btn-back-to-top {
-            display: block;
+            display: inline-block;
             padding: 5vw 0px 0px;
         }
         .block-list,
         .btn-back-to-top {
             margin-left: auto;
             margin-right: auto;
-        } 
+        }
+        li {                       
+            a{
+                display: inline-block;
+            }
+        }        
         li:last-child {display: none;} 
 
         /* by theme */
