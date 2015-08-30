@@ -101,10 +101,10 @@
 
                                             <div class="clearfix">
                                                 <span>Habilidad {{AnswersResult.answers[4].indexOf(ability) + 1}}</span>
-                                                <button class="btn btn-circle fl-right"
+                                                <a class="btn btn-circle fl-right"
                                                         ng-click="deleteAbility($index);" ng-hide="setReadOnly">
                                                     <i class="icomoon icon-cross white"></i>
-                                                </button>
+                                                </a>
                                             </div>
                                             <div class="add"><i class="icomoon icon-edit"></i>
                                                 <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2" 
@@ -118,10 +118,10 @@
                             </ul>
 
                             <div class="txt-renglon">
-                                <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addAbility();"
+                                <a href="" class="btn btn-lg btn-block btn-add" ng-click="addAbility();"
                                         ng-hide="setReadOnly">
                                     <span class="icomoon icon-plus"></span>Agregar nueva habilidad...
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -138,9 +138,9 @@
                             <div class="centered"><span id="index" class="txt-bigger">1/</span><span
                                     class="white txt-bigger">5</span></div>
                         </div>
-                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
+                        <a class="btn btn-primary btn-lg btn-cnt" id="save" href=""
                                 ng-click="validateAnsweredQuestions()" ng-show="answerIndex1 == 5">Guardar
-                        </button>
+                        </a>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
                 </div>
@@ -174,8 +174,7 @@
                                     <label for="dislike">No me gusta</label>
                                 </div>
                             </section>
-                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" >TERMINAR
-                            </button>
+                            <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" >TERMINAR</a>
                         </section>
                     </div>
                 </div>
@@ -188,9 +187,9 @@
                 <img src="assets/images/img-robot.png">
 
                 <div class="modal-header">
-                    <button class="icon icon-close" ng-click="cancel()">
+                    <a class="icon icon-close btn btn-circle" ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
-                    </button>
+                    </a>
                 </div>
                 <div class="modal-body">
                     <h3 class="subtitle text-center">Exploración inicial</h3>
@@ -210,7 +209,7 @@
                 <!--<div class="modal-footer">
                       <div class="row">
                          <div class="col-xs-12">
-                           <button class="btn btn-primary btn-lg btn-cnt" type="button">Continuar</button>
+                           <a class="btn btn-primary btn-lg btn-cnt">Continuar</a>
                            <img src="assets/images/img-lines-ftr.png" class="centered">
                          </div>
                        </div>
