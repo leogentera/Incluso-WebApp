@@ -126,12 +126,17 @@
 
                     <section id="controls" class="controls">
                         <div class="paginate">
-                            <a href="#" id="prev"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
-                            <a href="#" id="next"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
+                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1)">
+                                <i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i>
+                            </a>
+                            <a href="#" id="next" ng-click="addToAnswerIndex(1)">
+                                <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
+                            </a>
 
                             <div class="centered"><span id="index" class="txt-bigger">1/</span><span class="white txt-bigger">3</span></div>
                         </div>
-                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button" ng-click="validateMisCualidadesAnsweredQuestions()" ng-show="!setReadOnly">Terminar
+                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
+                                ng-click="validateMisCualidadesAnsweredQuestions()" ng-show="!setReadOnly && answerIndex == 3">Guardar
                         </button>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
@@ -156,11 +161,11 @@
                             ¿Que opinas de ésta actividad?
                             <section class="txt-renglon txt-bigger clearfix">
                                 <div class="opinion">
-                                    <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                                    <input id="like" type="radio" value="0" name="like" ng-model="like_status">
                                     <label for="like">Me gusta</label>
                                 </div>
                                 <div class="opinion">
-                                    <input id="dislike" type="radio" value="0" name="dislike" ng-model="like_status">
+                                    <input id="dislike" type="radio" value="1" name="dislike" ng-model="like_status">
                                     <label for="dislike">No me gusta</label>
                                 </div>
                             </section>

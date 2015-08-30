@@ -17,20 +17,21 @@
             $scope.$emit('ShowPreloader'); //show preloader
 
             console.log('loading user'); 
-            $scope.user = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
+            $scope.user = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));//load profile from local storage
 
             if (!$scope.user) {
                 $location.path('/');
                 return "";
             }
 
-            $scope.setToolbar($location.$$path,"Incluso");
+            $scope.setToolbar($location.$$path,"Incluso"); //set global toolbar properties
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = true; 
 
             try {
+                //Get stage from local storage
                 if(moodleFactory.Services.GetCacheObject("stage")){
-                    $scope.stage = JSON.parse(moodleFactory.Services.GetCacheObject("stage"));                
+                    $scope.stage = JSON.parse(moodleFactory.Services.GetCacheObject("stage"));
                 }else{                
                     $scope.stage = {};
                 }
@@ -53,32 +54,48 @@
             $scope.navigateToStage = function(){
                 if ($scope.usercourse.firsttime) {
                     $scope.openModal();
-                    $scope.stage.firsttime = 0;
-                    $scope.usercourse.firsttime = 0;
+                    //Update firsttime value
+                    $scope.updateProgramFirstTime();
 
-                    var dataModel = {
-                        firstTime: $scope.usercourse.firsttime,
-                        courseId: $scope.usercourse.courseid
-                    };
 
-                    moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
                 }
-
-                //$location.path('/ProgramaDashboardEtapa/' + $scope.stage.section);
+                //redirect user to stage 1 dashboard after closing modal
                 $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section);
+            };
+
+            //Updates firsttime flag for program in model, localstorage and server
+            $scope.updateProgramFirstTime = function() {
+                //Update model
+                $scope.usercourse.firsttime = 0;
+                //Update local storage
+                var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+                if(userCourse!={}) {
+                    userCourse.firsttime = 0;
+                    localStorage.setItem("usercourse",JSON.stringify(userCourse));
+                }
+                //Update back-end
+                var dataModel = {
+                    firstTime: $scope.usercourse.firsttime,
+                    courseId: $scope.usercourse.courseid
+                };
+
+                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
             };
 
             $scope.playVideo = function(videoAddress, videoName){
                 playVideo(videoAddress, videoName);
             };
 
+            //Loads UserCourse data from server
             function getDataAsync() {
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback);
             }
 
+            //Callback function for UserCourse call
             function getDataAsyncCallback(){
+                //Load UserCourse structure into model
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-
+                //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = getCurrentStage();                
@@ -144,12 +161,12 @@
                 localStorage.setItem('chatAmountRead',chatAmount.true);
             }
 
-            /* open terms and conditions modal */
+            //Open Welcome Message modal
             $scope.openModal = function (size) {
                 setTimeout(function(){ 
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
-                        templateUrl: 'tutorialModal.html',
+                        templateUrl: 'programWelcome.html',
                         controller: function ($scope, $modalInstance) {
                             $scope.cancel = function () {
                                 $modalInstance.dismiss('cancel');

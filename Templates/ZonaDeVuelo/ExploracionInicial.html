@@ -1,6 +1,6 @@
 <div id="site-wrapper" class="incluso-app step-dashboard">
     <div class="alert alert-warning" role="alert" ng-show="showWarning" ng-cloak>
-        <div class="alert-message" ng-click="hideWarning">
+        <div class="alert-message" ng-click="hideWarning()">
             <div class="icomoon icon-warning"></div>
             <!--<p>Reposnde todas las preguntas para poder continuar</p>-->
             <p>{{warningMessage}}</p>
@@ -128,14 +128,18 @@
 
                     <section id="controls" class="controls">
                         <div class="paginate">
-                            <a href="#" id="prev"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
-                            <a href="#" id="next"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
+                            <a href="#" id="prev" ng-click="addToAnswerIndex1(-1)">
+                                <i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i>
+                            </a>
+                            <a href="#" id="next" ng-click="addToAnswerIndex1(1)">
+                                <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
+                            </a>
 
                             <div class="centered"><span id="index" class="txt-bigger">1/</span><span
                                     class="white txt-bigger">5</span></div>
                         </div>
                         <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
-                                ng-click="validateAnsweredQuestions()">Terminar
+                                ng-click="validateAnsweredQuestions()" ng-show="answerIndex1 == 5">Guardar
                         </button>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
@@ -170,7 +174,8 @@
                                     <label for="dislike">No me gusta</label>
                                 </div>
                             </section>
-                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">Terminar</button>
+                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" >TERMINAR
+                            </button>
                         </section>
                     </div>
                 </div>

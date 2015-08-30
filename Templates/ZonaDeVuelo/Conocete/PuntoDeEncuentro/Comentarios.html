@@ -3,7 +3,7 @@
     <article class="blueprint">
       <section>
         <div class="txt-renglon centered txt-bigger"></div>
-        <div class="subtitle">Foro Común</div>
+    <div class="subtitle">Punto de encuentro</div>
 
         <div class="txt-renglon txt-bigger" ng-bind-html="discussion.message | linky"></div>
       </section>
@@ -12,7 +12,7 @@
           <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
             <h3>
               <span class="icomoon icon-camera"></span>
-              <span>Fotografía de foro</span>
+          <span>FOTOGRAFÍA DEL FORO</span>
               <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
               <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
             </h3>
@@ -81,7 +81,8 @@
               <span ng-switch="p.posttype">
                 <span ng-switch-default>{{ p.message }}</span>
                 <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>
-                <span ng-switch-when="3"><a ng-href="{{p.message}}"><img src="assets/images/img-video-placeholder.svg" alt="Ver video">Ver video</a></span>
+                <!--<span ng-switch-when="3"><a ng-href="{{p.message}}"><img src="assets/images/img-video-placeholder.svg" alt="Ver video">Ver video</a></span>-->
+                <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
                 <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.attachments[0].fileurl + '?token=' + userToken}}"  /> </a></span>
               </span>
                   <!--<div ng-repeat="attachment in p.attachments">
@@ -96,10 +97,10 @@
                 </div>
               </div>
             </div>
-            <div class="vermas" ng-show="false">
-              Ver más comentarios
-              <i class="icomoon icon-plus"></i>
-            </div>
+        <!--<div class="vermas" ng-show="false">
+        Ver más comentarios
+        <i class="icomoon icon-plus"></i>
+        </div>-->
             <div class="social">
               <div ng-hide="p.liked == 1" ng-click="clickLikeButton(p.id)">
                 <span class="icomoon icon-like"></span> Me gusta

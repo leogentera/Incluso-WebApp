@@ -119,7 +119,7 @@ var _isStageCompleted = function(){
 var _isChallengeCompleted = function(activityId){     
     
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-    var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;    
+    var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
     var currentStage = userCourse.stages[lastStageIndex];
        
     var lastChallenge = _.where(currentStage.challenges,{status:1}).length;    
@@ -213,6 +213,31 @@ function getActivityByActivity_identifier(activity_identifier) {
             return matchingActivity;
 }
 
+function _getActivityByCourseModuleId(coursemoduleid) {          
+            var matchingActivity = null;
+            var breakAll = false;
+            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+            for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+                var stage = userCourse.stages[stageIndex];
+                for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+                    var challenge = stage.challenges[challengeIndex];
+                    for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                      var activity = challenge.activities[activityIndex];
+                      if (activity.coursemoduleid == coursemoduleid) {
+                        matchingActivity = activity;
+                        breakAll = true;
+                        break;
+                        }
+                    }
+                    if(breakAll)
+                     break;
+                }
+                if(breakAll)
+                 break;
+            }
+            return matchingActivity;
+}
+
  function updateActivityStatus(activity_identifier) {              
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
@@ -254,17 +279,21 @@ function getActivityByActivity_identifier(activity_identifier) {
    moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
 }
 
-function getdate(){
-  var currentdate = new Date(); 
-  var datetime = currentdate.getFullYear() + ":"
-    + (currentdate.getMonth()+1)  + ":" 
-    + currentdate.getDate() + " "  
-    + currentdate.getHours() + ":"  
-    + currentdate.getMinutes() + ":" 
-    + currentdate.getSeconds();
-    return datetime;
-}
+function getdate() {
+    var date = new Date(),
+        year = date.getFullYear(),
+        month = formatValue(date.getMonth() + 1), // months are zero indexed
+        day = formatValue(date.getDate()),
+        hour = formatValue(date.getHours()),
+        minute = formatValue(date.getMinutes()),
+        second = formatValue(date.getSeconds());
 
+    function formatValue(value) {
+        return value >= 10 ? value : '0' + value;
+    }
+
+    return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
+}
 
 syncCacheData();
 var logout = function($scope, $location){
@@ -318,7 +347,7 @@ var _staticStages = [
     "sectionname": "Zona de Vuelo",
     "challenges": [
       {
-        "sectionname": "Exploración Inicial",
+        "sectionname": "Exploración inicial",
         "activities": [
           {
             "activityname": "Exploración Inicial",
