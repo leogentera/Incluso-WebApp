@@ -22,7 +22,6 @@ angular
             $scope.currentPage = 1;
             $scope.setReadOnly = false;
             $scope.showWarning = false;
-            $scope.showWarning2 = false;
             $scope.coursemoduleid = 0;
             //$scope.userprofile = null;
 
@@ -129,7 +128,7 @@ angular
             };
 
             $scope.hideWarning2 = function () {
-                $scope.showWarning2 = false;
+                $scope.showWarning = false;
             };
 
             $scope.navigateToPage = function (pageNumber) {
@@ -318,7 +317,7 @@ angular
 
                 console.log("Inside updateMisSueños(): " + JSON.stringify(question));
 
-                var userAnswers = cleanText2(question.userAnswer);
+                var userAnswers = cleanText(question.userAnswer);
                 var userAnswersList = userAnswers.split(" ");
                 console.log("userAnswersList" + userAnswersList);
 
@@ -340,15 +339,6 @@ angular
                 return result;
             }
 
-            function cleanText2(userAnswer) {
-                var result = userAnswer.replace(/\r?\n|\r/g, "")
-                    .replace(/<br>/g, "")
-                    .replace(/<p>/g, "")
-                    .replace(/<\/p>/g, "");
-                return result;
-            }
-
-
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misSuenosAnswers = [[], [], [], []];
@@ -360,13 +350,13 @@ angular
             }
 
             function getDataAsync() {
-                debugger;
+
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
-                console.log("activity from getDataAsync(): " + JSON.stringify(activity));
+                console.log("activity: " + JSON.stringify(activity));
 
                 if (activity != null) {
                     $scope.coursemoduleid = activity.coursemoduleid;
@@ -383,16 +373,11 @@ angular
                     if (activity.status != 0) {
                         console.log("Actividad YA finalizada");
                         activityFinished = true;
-                        $scope.setReadOnly = activityFinished;
-                    }
-
-
-                    if (activityFinished) {
+                        $scope.setReadOnly = true;
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
 
                     $scope.activity = activity;
-                    console.log("activity object: " + JSON.stringify($scope.activity));
                 }
             }
 
@@ -493,11 +478,11 @@ angular
 
                 if (validAnswers == 3) {
                     console.log("Validado");
-                    $scope.showWarning2 = false;
+                    $scope.showWarning = false;
                     $scope.navigateToPage(2);
                 } else {
                     console.log("NO Validado");
-                    showWarningAndGoToTop2();
+                    showWarningAndGoToTop();
                 }
             };
 
@@ -506,13 +491,6 @@ angular
                 $scope.showWarning = true;
                 $scope.$emit('scrollTop');
             }
-
-            function showWarningAndGoToTop2() {
-                $scope.showWarning2 = true;
-                $scope.$emit('scrollTop');
-            }
-
-
 
 
             $scope.answerIndex = 1;
