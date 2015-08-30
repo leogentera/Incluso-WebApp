@@ -16,16 +16,13 @@ var _IsOffline = function() {
 var _syncAll = function(callback) {
   _syncCallback = callback;
 
-  console.log('is offline:' + _IsOffline());
-
   //check if the session is OnLine
   if (!_IsOffline()) {
     moodleFactory.Services.GetAsyncProfile(_getItem("userId"), allServicesCallback);
   }
 };
 
-var allServicesCallback = function(){
-  console.log("allServicesCallback");
+var allServicesCallback = function(){  
   _syncCallback();
 };
 
@@ -49,10 +46,8 @@ var _readNotification = function(currentUserId,currentNotificationId){
           userid:  currentUserId,
           notificationid: currentNotificationId};
   
-      moodleFactory.Services.PutUserNotificationRead(currentNotificationId,data,function(){
-        //LocalStorage.setItem("notifications",data.notifications);
-      },function(){
-        //console.log(error on getting notifications data);
+      moodleFactory.Services.PutUserNotificationRead(currentNotificationId,data,function(){        
+      },function(){        
         });
 };
 
@@ -211,13 +206,10 @@ var _coachNotification = function(){
   
 }
 
-var successCallback = function(data){  
-    console.log("global.js - successCallback - " + data);
+var successCallback = function(data){
 };
 
 var errorCallback = function(data){
- console.log("global.js - errorCallback - " + data);
-  
 };
 
 function getActivityByActivity_identifier(activity_identifier) {          
@@ -328,8 +320,7 @@ function getdate() {
 }
 
 syncCacheData();
-var logout = function($scope, $location){
-    console.log("Logout function ");
+var logout = function($scope, $location){    
     $scope.currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
       if(!_IsOffline()){
@@ -343,9 +334,7 @@ var logout = function($scope, $location){
                   userid: $scope.currentUser.userId,
                   action: "logout"})
           }
-        ).success(function(data, status, headers, config) {
-
-          console.log('successfully logout');
+        ).success(function(data, status, headers, config) {        
           }
         );
       }

@@ -550,12 +550,10 @@ angular
                     }
                 }
 
-                if (validAnswers == 3) {
-                    console.log("Validado");
+                if (validAnswers == 3) {                    
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
-                } else {
-                    console.log("NO Validado");
+                } else {                    
                     showWarningAndGoToTop();
                 }
             };
