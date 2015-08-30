@@ -7,6 +7,7 @@ var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";
 var _courseId = 4;
 
 var _httpFactory = null;
+var _timeout = null;
 
 var _IsOffline = function() {
   return false;
@@ -64,7 +65,8 @@ function syncCacheData (){
 
 }
 
-var _endActivity = function(activityModel){
+var _endActivity = function(activityModel){      
+      _isStageCompleted();
       var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
       var currentUserId = currentUser.userId;
       var activityId = activityModel.coursemoduleid;
@@ -80,7 +82,7 @@ var _endActivity = function(activityModel){
 }
 
 var _endActivityQuiz = function(activityModel){
-                          
+      _isStageCompleted();
       var serviceParameters =  activityModel.answersResult;
       var activityId = activityModel.coursemoduleid;
       
@@ -93,6 +95,26 @@ var _endActivityQuiz = function(activityModel){
       _isChallengeCompleted(activityModel.coursemoduleid);
 }
 
+//This function updates in localStorage the status of the stage when completed
+var _isStageCompleted = function(){
+    
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    for(var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++){
+        var currentStage = userCourse.stages[stageIndex];
+        if (currentStage.status == 1) {
+          break;
+        }else{
+          var totalChallengesByStage = currentStage.challenges.length;
+          var totalChallengesCompleted = _.where(currentStage.challenges,{status:1}).length;
+          if (totalChallengesByStage == totalChallengesCompleted) {
+              userCourse.stages[stageIndex].status = 1;
+              localStorage.setItem("userCourse",JSON.stringify(userCourse));
+          }
+        }
+    }
+  
+}
 
 var _isChallengeCompleted = function(activityId){     
     
@@ -271,7 +293,9 @@ var logout = function($scope, $location){
       localStorage.removeItem("course");
       localStorage.removeItem("stage");
       localStorage.removeItem("usercourse");
-      localStorage.removeItem("currentStage");      
+      localStorage.removeItem("currentStage");
+      localStorage.removeItem("notifications");
+      localStorage.removeItem("userChat")
       $location.path('/');
     };
     

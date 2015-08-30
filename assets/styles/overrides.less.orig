@@ -173,6 +173,7 @@
 	background-attachment: scroll;
 	background-position: center -23px;
 	background-repeat: no-repeat;
+    .gradient-sky();
 
     /*
     background: #14181d;
@@ -211,6 +212,47 @@
             .background-size(100%, auto);
         }
     }
+
+    /* IMG  PERFORMANCE TESTING */
+    /*background-color: red !important;*/
+
+    & * {
+        /*visibility: hidden;*/
+
+        &:hover,
+        &:active {
+            border:none;
+            outline: none !important;
+        }
+    }
+
+    .video-gallery .stage .icon-play {
+        background-image: none;
+    }
+
+    .my-badges {
+        background: none;
+
+        &::before {
+            background: none;
+        }
+        &::after {
+            background: none;
+        }        
+    }
+    .top-users {
+        background: none;
+
+        &::before {
+            background:none;
+        }
+    }
+    .ilustration {
+        background:none;
+        height: 84vw;
+    }
+
+
 
     h1 { 
         display: block;
@@ -641,17 +683,7 @@ section.part.inbloq{
     }
 }
 
-////////////////// tutorial /////////////////////
-.tutorial {
-    .txt-renglon{
-        padding: 5vh 0px;
-        font-size: 5vw;
-        button {
-            font-size: 3.5vw;
-            font-weight: 500;
-        }
-    }
-}
+
 
 //////////////// carousel stage /////////////////
 .holoproj { 
@@ -664,6 +696,26 @@ section.part.inbloq{
     }
 }
 
+    /* PERFORMANCE TESTING */
+    .incluso-app .app-footer.theme-rocks {
+        /*background:none green;*/
+        /*.gradient-custom(none, green, green);*/
+        background-color:none;
+        background-image: url('@{url-images}/bg-dashboard-full.gif');
+        background-position: bottom center;
+        background-repeat: none;
+
+
+    }
+    .incluso-app .app-preloader {
+        /*display: none  !important;
+        visibility: hidden !important;*/
+
+        .spinner-circle {
+            -webkit-animation: rotateSpinner .6s infinite linear;
+            animation: rotateSpinner .6s infinite linear;
+        }
+    }
 .comments-forum {
     .icon-circle {
         padding: 1vh 0px;

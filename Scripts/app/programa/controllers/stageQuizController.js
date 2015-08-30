@@ -14,6 +14,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
             _httpFactory = $http;
+            _timeout = $timeout;
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
@@ -292,7 +293,7 @@ angular
                     $scope.dreamsLists.answers[index].push(userAnswersList[i]);
                 }
 
-                console.log($scope.dreamsLists.answers[index]);
+                console.log($scope.dreamsLists.answers[index] + " ehh");
             }
 
             function cleanText(userAnswer) {

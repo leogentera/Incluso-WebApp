@@ -12,12 +12,14 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
+            _timeout = $timeout;
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
             var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
             localStorage.setItem('chatRead', "true");
-            $scope.senderId = localStorage.getItem('userId');
-            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+            var userId = localStorage.getItem('userId');            
+            $scope.senderId = userId;
+            $scope.messages = JSON.parse(localStorage.getItem('userChat'));            
             $scope.currentMessage = "";
 
             $scope.setToolbar($location.$$path,"Cabina de Soporte");
@@ -73,9 +75,11 @@ angular
                     messagesenderid: $scope.senderId,                    
                     messagedate: new Date()
                 };
-                    
+                                            
                 $scope.messages.push(newMessage);
                 $scope.currentMessage = "";
+                var newMessages = JSON.stringify($scope.messages);                
+                localStorage.setItem('userChat',newMessages);
                                                
                 moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback); 
             }
