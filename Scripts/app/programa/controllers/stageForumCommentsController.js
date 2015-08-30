@@ -66,7 +66,7 @@ angular
 
             };
             var endForumActivity = function(){
-                //TODO Implement check of status activity, if already finished DO NOT finish activity again
+
                 console.log('Finishing activity...');
                 var userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
                 var userId = {'userid':JSON.parse(localStorage.getItem('userId'))};
@@ -77,7 +77,23 @@ angular
                     function(){
                         alert('Hubo un problema al registrar tus comentarios, por favor vuelve a intentarlo.');
                     });
+                assignStars(100);
+            };
 
+            var assignStars = function(numStars){
+                //TODO get moduleId (context) from course JSON object
+                var userId = JSON.parse(localStorage.getItem('userId'));
+
+                var data={
+                    userId: userId,
+                    stars: numStars,
+                    instance: 64,
+                    instanceType: 0,
+                    date: getdate()
+                };
+                moodleFactory.Services.PutStars(data,null, $scope.userToken,successfullCallBack, errorCallback);
+                function successfullCallBack(){};
+                function errorCallback(){};
             };
 
             var checkForumProgress = function(){
@@ -93,10 +109,14 @@ angular
                 };
 
                 //Check for activity status
-               var activityFromTree = getActivityByActivity_identifier('1003');
+               var activityFromTree = getActivityByActivity_identifier('1010');
 
                 if(isActivityFinished && activityFromTree.status == 0) endForumActivity();
                 getDataAsync();
+            };
+
+            var addPointsToUser = function(){
+
             };
             //TODO Remove this method call
             //checkForumProgress();
@@ -136,11 +156,12 @@ angular
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
                         getTopicDataAsync();
+                        $scope.$emit('ShowPreloader');
                         //updateForumProgress(parentId);
                         updateForumProgress(topicId);
                         debugger;
                         checkForumProgress();
-
+                        //$scope.$emit('HidePreloader');
                     },
                     function(){alert('Tu comentario no pudo ser registrado.');
                         $scope.textToPost=null;
