@@ -11,6 +11,7 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            _httpFactory = $http;
 
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"");
@@ -43,8 +44,9 @@ angular
            }
 
             function getDataAsync() {
+                console.log('Getting forum data');
                //TODO Use MoodleIds forum id from the global app constants
-                moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback);
+                moodleFactory.Services.GetAsyncActivity(64, getActivityInfoCallback, '', true);
 //                moodleFactory.Services.GetAsyncActivity($routeParams.moodleid, getActivityInfoCallback);
             }
 

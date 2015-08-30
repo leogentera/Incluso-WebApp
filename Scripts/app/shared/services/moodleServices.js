@@ -19,8 +19,8 @@
             _getAsyncData("avatarInfo", API_RESOURCE.format('avatar/' + userId), successCallback, errorCallback);
         };
 
-        var _getAsyncActivityInfo = function(activityId, successCallback, errorCallback){
-            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
+        var _getAsyncActivityInfo = function(activityId, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
         };
 
         var _getAsyncForumInfo = function(activityId, topicId, successCallback, errorCallback){
