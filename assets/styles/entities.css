@@ -143,7 +143,7 @@
          Description: CSS to represent look for generic bubble near to the element
         ************************************************************************/
   }
-  .incluso-app .icon-circle {
+  .incluso-app .app .icon-circle {
     width: 25%;
     margin-right: 2vw;
     padding: 2vh 0px;
@@ -155,12 +155,12 @@
     font-size: 7vw;
     color: #FFF;
   }
-  .incluso-app .icon-circle.active {
+  .incluso-app .app .icon-circle.active {
     background-color: #EF4924;
     border-color: #F16445;
   }
-  .incluso-app .icon-circle:focus,
-  .incluso-app .icon-circle:active {
+  .incluso-app .app .icon-circle:focus,
+  .incluso-app .app .icon-circle:active {
     outline: none;
   }
   .incluso-app .to-top {
@@ -1274,7 +1274,7 @@
     position: relative;
     padding: 6vw 0px;
     margin: 60px auto 0;
-    margin-top: 12vw;
+    margin-top: 8.5vw;
     /*width: 370px; */
     width: auto;
     height: auto;

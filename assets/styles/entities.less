@@ -23,23 +23,25 @@
 @media screen {
     .incluso-app {
         /*********** add a circle around to any icon *********/
-        .icon-circle {
-                width: 25%;
-                margin-right: 2vw;
-                padding: 2vh 0px;
-                text-align: center;
-                border: 5px solid #FFF;
-                .border-radius(50px);                    
-                font-size: 7vw;                    
-                color: #FFF;
-                &.active {
-                    background-color: #EF4924;
-                    border-color: #F16445; 
-                }
-                &:focus,
-                &:active {
-                    outline: none;
-                }
+        .app {
+            .icon-circle {
+                    width: 25%;
+                    margin-right: 2vw;
+                    padding: 2vh 0px;
+                    text-align: center;
+                    border: 5px solid #FFF;
+                    .border-radius(50px);                    
+                    font-size: 7vw;                    
+                    color: #FFF;
+                    &.active {
+                        background-color: #EF4924;
+                        border-color: #F16445; 
+                    }
+                    &:focus,
+                    &:active {
+                        outline: none;
+                    }
+            }
         }
         /***********************************************************************
          01. $text n containers
@@ -917,7 +919,7 @@
             position: relative;
             padding: 6vw 0px;
             margin: 60px auto 0;
-            margin-top: 12vw;
+            margin-top: 8.5vw;
             /*width: 370px; */
             width: auto;
             height: auto;
