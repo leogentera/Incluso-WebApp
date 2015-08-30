@@ -1,4 +1,4 @@
-<div class="incluso-app" ng-app>
+<div class="incluso-app tutorial" ng-app>
   <article>
     <section>
       <form action="" class="container-fluid" name="registerForm" ng-show="!isRegistered">
@@ -6,40 +6,33 @@
           <div class="col-xs-12">
             <h3 class="subtitle centered text-uppercase" ng-class="main-title">Guía de uso</div>
           </div>
-        </div>
+        
         <div class="pages">
           <div class="page" data-page="1" ng-class="currentPage === 1 ? 'active' : ''">
-          <div class="video-gallery">
-            <div class="stage perform">
-              <button class="icon icon-play" ng-click="playVideo('assets/media', 'video-tutorial.mp4')"></button>
-              <figure class="player">
-                <img src="assets/media/thumb-tutorial.jpg" ng-click="playVideo()" />
-              </figure>
-            </div>
-          </div>
-            <section>
-              <div>
-              <p></p>
-              </div>
-            </section>
-            <div class="row">
-              <div class="col-xs-12">
-                <div class="page-number">
-                  <p class="text-center">
-                    <a class="disabled"><span class="icomoon icon-arrow-bold-left"></span></a>
-                    <span>1</span>
-                    <span>/</span>
-                    <span class="total-number">2</span>
-                    <a ng-click="navigateToPage(2)"><span class="icomoon icon-arrow-bold-right"></span></a>
-                  </p>
+            <div class="video-gallery">
+                <div class="stage perform">
+                  <button class="icon icon-play" ng-click="playVideo('assets/media', 'video-tutorial.mp4')"></button>
+                  <figure class="player">
+                    <img src="assets/media/thumb-tutorial.jpg" ng-click="playVideo()" />
+                  </figure>
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-xs-12">
-                <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="navigateToPage(2)">Continuar</button>
+              <div class="row">
+                <div class="col-xs-12">
+                  <div class="page-number">
+                    <p class="text-center">
+                      <a class="disabled"><span class="icomoon icon-arrow-bold-left"></span></a>
+                      <span>1</span>
+                      <span>/</span>
+                      <span class="total-number">2</span>
+                      <a ng-click="navigateToPage(2)"><span class="icomoon icon-arrow-bold-right"></span></a>
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
+              <div class="txt-renglon">                
+                <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="navigateToPage(2)">Continuar</button>                
+              </div>
           </div>
           <div class="page" data-page="2" ng-class="currentPage === 2 ? 'active' : ''">
             <section>
@@ -66,12 +59,8 @@
                 </div>
               </div> 
             </section>
-            <section class="container-fluid">
-              <div class="row">
-                <div class="col-xs-12">
-                  <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="avatar()">Obtén incluso interactivo</button>
-                </div>
-              </div> 
+            <section class="txt-renglon">
+              <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="avatar()">Descargar incluso interactivo</button>
             </section>
           </div>
         </div>
