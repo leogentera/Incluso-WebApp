@@ -67,7 +67,7 @@ angular
                         break;
                 }
                 
-                localStorage.setItem("userCourse", updatedActivityOnUsercourse);
+                localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
      
                 _endActivityQuiz({
                     "usercourse": updatedActivityOnUsercourse,
@@ -79,10 +79,12 @@ angular
                     "endingTime": new Date(),
                     "token" : $scope.currentUser.token
                 });
-
+               
+               
                 var currentStage = localStorage.getItem("currentStage");
-
                 $location.path('/ZonaDeVuelo/Dashboard/' + currentStage);
+  
+               
             };
 
             $scope.addAbility = function () {
@@ -226,8 +228,7 @@ angular
                 }
             }
 
-            function updateSelectedAnswers(questionIndex, question) {
-                debugger;
+            function updateSelectedAnswers(questionIndex, question) {                
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer == "Si") {
@@ -450,8 +451,7 @@ angular
                 if (activityAnswers != null) {
                     console.log("activityAnswers :" + JSON.stringify(activityAnswers));
                     // $scope.activity = activityAnswers;
-                    console.log("number Of Questions :" + activityAnswers.questions.length);
-                    debugger;
+                    console.log("number Of Questions :" + activityAnswers.questions.length);                    
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
                         var question = activityAnswers.questions[index];
