@@ -12,6 +12,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
+            _timeout = $timeout;
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
             var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));

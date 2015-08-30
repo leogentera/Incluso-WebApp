@@ -11,6 +11,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             /* $routeParams.stageId */
+            _timeout = $timeout;
             _httpFactory = $http;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
