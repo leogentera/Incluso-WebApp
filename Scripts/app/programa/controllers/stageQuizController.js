@@ -23,12 +23,11 @@ angular
             $scope.setReadOnly = false;
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
-            //$scope.userprofile = null;
 
             $scope.like_status = 1;
 
             $scope.AnswersResult = {
-                "userid": 0,//$scope.userprofile.id,
+                "userid": 0,
                 "answers": [null, [0, 0, 0, 0], '', null, []],
                 "activityidnumber": 0,                         //$scope.activity.coursemoduleid
                 "like_status": 0

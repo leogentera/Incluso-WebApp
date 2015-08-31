@@ -86,6 +86,7 @@ angular
             var stageProgressBuffer = 0;
             var stageTotalActivities = 0; //Attainment of user in the current Stage
             var stageChallengesCount = $scope.thisStage.challenges.length;
+            $scope.activityStatus = {};
             var i, j,k;
             for (i = 0; i < stageChallengesCount; i++) {
                 var challenge = $scope.thisStage.challenges[i];
@@ -94,6 +95,7 @@ angular
                     var activity = challenge.activities[j];
                     stageProgressBuffer += activity.status;
                     stageTotalActivities++;
+                    $scope.activityStatus[activity.coursemoduleid] = activity.status;
                     if(activity.activities) {
                         var subActivitiesCount = activity.activities.length;
                         for (k = 0; k < subActivitiesCount; k++) {
@@ -129,7 +131,27 @@ angular
                 playVideo(videoAddress, videoName);
             };
 
+            $scope.canStartActivity = function(activity){
+                if(!activity.status) {
+                    var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
+                        return x.id == activity.coursemoduleid;
+                    });
+                    if (activityDependenciesRecord[0]) {
+                        var activityDependencies = activityDependenciesRecord[0].dependsOn;
+                        var dependenciesCount = activityDependencies.length;
+                        for (var i = 0; i < dependenciesCount; i++) {
+                            if (!$scope.activityStatus[activityDependencies[i]]) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+
+            };
+
             $scope.startActivity = function (activity, index, parentIndex) {
+                if(!$scope.canStartActivity(activity)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.coursemoduleid })[0].url;
 
                 if (url) {

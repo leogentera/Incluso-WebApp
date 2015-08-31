@@ -179,12 +179,13 @@
 
             }
             .blueprint{
-                background-image:url('@{url-images}/bg-stage-1-theme-sm.gif');
+                background-image:url('@{url-images}/bg-stage-1-theme-spaceship.gif'), url('@{url-images}/bg-stage-1-theme-bottom.gif'), url('@{url-images}/bg-stage-1-theme-pattern.gif');
                 background-color: #112845;
-                background-position: -1px 0px;
-                background-repeat: no-repeat;
+                background-position: -1px 0px, -1px bottom, -1px top;
+                background-repeat: no-repeat, no-repeat, repeat-y;
                 background-size: 100% auto;
                 border-bottom: 10px solid #24282a;
+                padding-bottom: 14vw;
             }
             .starway{
                 background: #1f2733;
@@ -644,7 +645,7 @@
 
 
         /***********************************************************************
-         01. $video-gallery
+         $video-gallery
          Description: CSS for video gallery component
         ************************************************************************/
         .video-gallery {
@@ -682,17 +683,29 @@
                     left: 50%; top: 50%;
                     padding: 0;
                     margin: -41px 0 0 -41px;
-                    width: 82px;
-                    height: 82px;
-                    border: none;
+                    width: 26vw;
+                    height: 26vw;
                     background-color: transparent;
-                    background-image: url('@{url-images}/icn-video-play.png');
+                    .clr-orange(background-color, 0.9);
+                    background-image: none;
                     background-position: center center;
+                    border:6pt solid @clr-white;
+                    .border-radius-circle();
+                    text-align: center;
 
                     &:before {
                         display:none;
                         content:none;
                     }
+
+                    & > span {
+                        padding-left: 3vw;
+                        color: @clr-white;
+                        font-size: 16vw;
+                        line-height: 20vw;
+                        vertical-align: top;
+                    }
+
                 }                 
             }
             .stage.perform {
@@ -707,6 +720,7 @@
                 margin: 0 auto;
                 width: inherit; 
                 height: inherit;
+                min-height: 41vw;
                 border:6px solid @clr-black;
                 .border-radius(6px);
             }
@@ -716,6 +730,88 @@
                 height: 180px;
                 margin: 0 auto;
             }
+        }
+        /***********************************************************************/
+
+
+        /***********************************************************************
+         $video-player
+         Description: CSS for a video placeholder with button to play video
+        ************************************************************************/   
+        .video-player {
+            display: block;
+            padding: 0;
+            margin:0 auto;
+            margin-top: 10px;
+
+            .stage {
+                display: block;
+                position: relative;
+                padding: 0;
+                margin: 0 auto;
+                width: 97%;
+                height: auto;
+
+                .icon {
+                    display: block;
+                    position: absolute;
+                    z-index: 2;
+                }
+                .icon-close {
+                    display: none;
+                    right: -22px; top: -22px;
+                    padding: 0;
+                    margin: 0;
+                    width: 46px;
+                    height: 46px;
+                    border: 5px solid @clr-black;
+                    .border-radius-circle ();
+                    background-color:@clr-orange;
+                    background-image: url('@{url-images}/ics-gentera.png');
+                    background-position: center -127px;
+                    background-repeat: no-repeat;
+                }
+                .icon-play {
+                    display: block;
+                    left: 50%; top: 50%;
+                    padding: 0;
+                    margin: -13vw 0 0 -13vw;
+                    width: 26vw;
+                    height: 26vw;
+                    background-color: transparent;
+                    .clr-orange(background-color, 0.9);
+                    background-image: none;
+                    background-position: center center;
+                    border:6pt solid @clr-white;
+                    .border-radius-circle();
+                    text-align: center;
+
+                    &:before {
+                        display:none;
+                        content:none;
+                    }
+
+                    & > span {
+                        padding-left: 3vw;
+                        color: @clr-white;
+                        font-size: 16vw;
+                        line-height: 20vw;
+                        vertical-align: top;
+                    }
+                }
+                .poster {
+                    display: block;
+                    position: relative;
+                    overflow: hidden;
+                    padding:0;
+                    margin: 0 auto;
+                    width: inherit; 
+                    height: inherit;
+                    min-height: 41vw;
+                    border:6px solid @clr-black;
+                    .border-radius(6px);                    
+                }
+            }            
         }
         /***********************************************************************/
 
