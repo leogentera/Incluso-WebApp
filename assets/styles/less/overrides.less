@@ -401,15 +401,65 @@
         background-color: @clr-bluenav;
         border-color: @clr-bluenav;
     }
-    .video-gallery{
+    .video-gallery {
         margin: 0;
-        padding: 20px;
-        background-image: url('@{url-images}/bg-video-lg.jpg');
-        background-color: #2A2E31;
-        background-position: 0 0;
+        padding: 6vw;
+        padding-bottom: 8vw;
+        background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
+        background-color: transparent none;
+        background-position: left top;
         background-repeat: no-repeat;
-        background-size: contain;        
+        .background-size(100%, auto);
     }
+    .showcase-carousel {
+        height: 102vh;
+        margin: 0;
+        padding:0;
+        background-color: transparent none;
+        background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
+        background-position: left -300px;
+        background-repeat: no-repeat;
+        .background-size(100%, auto);
+
+        h3 {
+            height: auto;
+            min-height:17vw;
+            margin:0 auto;            
+            padding: 6vw 0;
+            font-weight: bold;
+            text-transform: uppercase;
+
+            &:before {
+                content:"\2014";
+                padding-right:1vw;
+            }
+            &:after {
+                content:"\2014";
+                padding-left:1vw;
+            }            
+        }
+
+        .carousel {
+            height: auto;
+
+            .owl-item img {
+                height: auto;
+                width: 52%;
+            }
+        }
+        .page-number {
+            margin-top: 22vw;
+        }
+    }
+    .activities {
+        border:none;
+        background-color: transparent none;
+        background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
+        background-position: left -707px;
+        background-repeat: no-repeat;  
+        .background-size(100%, auto);          
+    }
+
     .carousel{
         .control{
             position:absolute;
