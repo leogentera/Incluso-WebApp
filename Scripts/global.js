@@ -9,6 +9,58 @@ var _courseId = 4;
 var _httpFactory = null;
 var _timeout = null;
 
+var _activityDependencies = [
+    {
+        id:112,
+        dependsOn:[150]
+    },
+    {
+        id:145,
+        dependsOn:[150]
+    },
+    {
+        id:139,
+        dependsOn:[150]
+    },
+    {
+        id:151,
+        dependsOn:[150]
+    },
+    {
+        id:149,
+        dependsOn:[150,139]
+    },
+    {
+        id:146,
+        dependsOn:[150]
+    },
+    {
+        id:71,
+        dependsOn:[150]
+    },
+    {
+        id:70,
+        dependsOn:[150]
+    },
+    {
+        id:72,
+        dependsOn:[150]
+    },
+    {
+        id:73,
+        dependsOn:[150]
+    },
+    {
+        id:68,
+        dependsOn:[150,112,145,139,151,149,146,71,70,72,73,68]
+    },
+    {
+        id:100,
+        dependsOn:[150,68]
+    }
+
+];
+
 var _IsOffline = function() {
   return false;
 };

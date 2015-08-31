@@ -1,7 +1,5 @@
 <div class="incluso-app step-dashboard" id="site-wrapper">
 
-
-    <div id="site-canvas">
         <article>
             <section class="component video-gallery collapse-media">
                 <div class="panel panel-video">
@@ -14,25 +12,26 @@
                         </h3>
                     </div>
                     <div class="panel-body" collapse="isCollapsed">
-                        <div class="stage perform">
-                            <button class="icon icon-close"></button>
-                            <button class="icon icon-play"
-                                    ng-click="playVideo('assets/media', 'DANIEL VILLAGRAN 1.mp4')"></button>
-                            <figure class="player">
-                                <img src="assets/media/thumb-zona-de-vuelo.jpg"
-                                     ng-click="playVideo('assets/media', 'DANIEL VILLAGRAN 1.mp4')" alt="video"/>
+                        <div class="video-player">
+                            <div class="stage">
+                                <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-zona-de-vuelo.mp4')">
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </a>
+                                <figure class="poster">
+                                    <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />
+                                </figure>
+                            </div>
+                        </div>
 
+                        <div class="stage perform" style="display:none;">
+                            <a class="icon icon-close"></a>
+                            <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-zona-de-vuelo.mp4')">
+                                <span class="glyphicon glyphicon-play"></span>
+                            </a>
+                            <figure class="player">
+                                <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />
                             </figure>
                         </div>
-                        <figure class="player">
-                            <video poster="assets/images/ptr-video-0001.jpg" id="myVideo">
-                                <source src="http://techslides.com/demos/sample-videos/small.webm" type="video/webm"/>
-                                <source src="http://techslides.com/demos/sample-videos/small.ogv" type="video/ogg"/>
-                                <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4"/>
-                                <source src="http://techslides.com/demos/sample-videos/small.3gp" type="video/3gp"/>
-                                Ups! Parece que tu dispositivo no soporta video
-                            </video>
-                        </figure>
                     </div>
                 </div>
             </section>
@@ -70,9 +69,9 @@
             <section class="parts activities">
                 <div id="owl-demo" class="owl-carousel">
                     <div ng-repeat="challenge in model.stages[idEtapa].challenges">
-                      <div class="part" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
-                          <i class="icomoon icon-checked-join" ng-show="getCurrentStatusOfActivity(activity.coursemoduleid) == 1"></i>
-                          <i class="icomoon icon-gauge" ng-show="getCurrentStatusOfActivity(activity.coursemoduleid) == 0"></i>
+                      <div class="part" ng-repeat="activity in challenge.activities" ng-click="canStartActivity(activity, $index, $parent.$index)">
+                          <i class="icomoon icon-checked-join" ng-show="activity.status == 1"></i>
+                          <i class="icomoon icon-gauge" ng-show="activity.status == 0"></i>
 
                           <span ng-bind="activity.activityname"></span>
                           <span>
@@ -169,7 +168,7 @@
                 </div>
             </div>
         </script>
-</div>
+
 </div>
 
 <script>
