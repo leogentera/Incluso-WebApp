@@ -16,15 +16,21 @@ angular
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-
             $scope.setToolbar($location.$$path,"");
             
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
 
+            $scope.activitiesCompletedInCurrentStage = [];
+            $scope.isCollapsed = false;
+            $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
+            $scope.thisStage = $scope.model.stages[$scope.idEtapa];
+            $scope.nombreEtapaActual = $scope.thisStage.sectionname;
+            localStorage.setItem("userCurrentStage", $routeParams['stageId']);
 
-            $scope.openModal = function (size) {
+            //Opens stage welcome message if first time visit
+            $scope.openModal_StageFirstTime = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'OpeningStageModal.html',
@@ -35,7 +41,38 @@ angular
 
             };
 
-            //$scope.openModal();
+            //Updated stage first time flag in scope, local storage and server
+            $scope.updateStageFirstTime = function(){
+                //Update model
+                $scope.thisStage.firsttime = 0;
+                $scope.model.stages[$scope.idEtapa].firsttime = 0;
+                //Update local storage
+                var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+                if(userCourse!={}) {
+                    userCourse.stages[$scope.idEtapa].firsttime = 0;
+                    localStorage.setItem("usercourse",JSON.stringify(userCourse));
+                }
+                //Update back-end
+                var dataModel = {
+                    stages: [
+                        {
+                            firstTime:0,
+                            section:$scope.thisStage.section
+                        }
+                    ]
+                };
+
+                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
+
+            };
+
+            if($scope.thisStage.firsttime)
+            {
+                $scope.openModal_StageFirstTime();
+                $scope.updateStageFirstTime();
+            }
+
+
 
             var closingStageModal = localStorage.getItem('closeStageModal');
             //if (closingStageModal == 'true') {
@@ -43,11 +80,7 @@ angular
             //    localStorage.setItem('closeStageModal', 'false');
             //}
 
-            $scope.activitiesCompletedInCurrentStage = [];
-            $scope.isCollapsed = false;
-            $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
-            $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
-            localStorage.setItem("userCurrentStage", $routeParams['stageId']);
+
 
            //calculate user's stage progress
             var avanceEnEtapaActual = 0;
