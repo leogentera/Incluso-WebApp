@@ -182,12 +182,17 @@
         }
 
         /* Chat */  
-        .container.chat .component {
+        .chat {
+            .starway {
+                padding-bottom: 10vh;
+            }
+        }
+        .chat .component {
             padding: 0;
             margin: 0;
             position: relative;
         }
-        .container.chat .component .container-shadow {
+        .chat .component .container-shadow {
             height: 1vw;
             position: absolute;
             top: 0;
@@ -197,14 +202,14 @@
             background: rgb(0,0,0);
             opacity: 0.3;
         }
-        .container.chat .component .msg-container {
+        .chat .component .msg-container {
             padding: 5vw 2%;
             display: block;
             min-height: 70vh;
             max-height: 74vh;
             overflow-y: auto;
         }
-        .container.chat .component .msg-container .msg {
+        .chat .component .msg-container .msg {
             display: block;
             margin: 0 0 4vw 0;
             position: relative;
@@ -212,28 +217,28 @@
             float: left;
 
         }
-        .container.chat .component .msg-container .msg .text span {
+        .chat .component .msg-container .msg .text span {
             width: 100%;
             color: rgb(256,256,256);
             font-family: Play;
             font-size: 4vw;
             display: block;
         }
-        .container.chat .component .msg-container .msg .text .date {
+        .chat .component .msg-container .msg .text .date {
             color: rgb(255,255,255);
             font-size: 3.5vw;
             text-align: right;
             opacity: 0.5;
             margin: 2vw 0 0;
         }
-        .container.chat .component .msg-container .msg.received .text {
+        .chat .component .msg-container .msg.received .text {
             background: rgb(0,78,112);
             border-radius: 4vw 4vw 4vw 0;
             padding: 1vw 4vw;
-            width: 92vw;
+            width: 65vw;
             margin-left: 20px;
         }
-        .container.chat .component .msg-container .msg.received .msg-icn {
+        .chat .component .msg-container .msg.received .msg-icn {
             display: block;
             color: rgb(0,78,112);
             font-size: 5vw;
@@ -245,20 +250,20 @@
                 content: "\e66a";
             }
         }
-        .container.chat .component .msg-container .msg.sent {
+        .chat .component .msg-container .msg.sent {
             float: right;            
         }
-        .container.chat .component .msg-container .msg.sent .text {
+        .chat .component .msg-container .msg.sent .text {
             background: rgb(4,135,109);
             color: rgb(4,135,109);
             font-size: 5vw;
             border-radius: 4vw 4vw 0 4vw;
             padding: 1vw 4vw;
-            width: 92vw;
+            width: 65vw;
             margin-right: 20px;
             float: right;
         }
-        .container.chat .component .msg-container .msg.sent .msg-icn {
+        .chat .component .msg-container .msg.sent .msg-icn {
             font-size: 5vw;
             display: block;
             top: auto;
@@ -270,18 +275,18 @@
                 content: "\e669";
             }
         }
-        .container.chat .component .typing-section {
+        .chat .component .typing-section {
             /*min-height: 6vh;
             max-height: 20vh;*/
             height: auto;
             background: rgb(256,256,256);
             padding: 2vw 0;
         }
-        .container.chat .component .typing-section input[type="text"],
-        .container.chat .component .typing-section textarea {
+        .chat .component .typing-section input[type="text"],
+        .chat .component .typing-section textarea {
             float: none;
             display: inline-block;
-            width: 88vw;
+            width: 88%;
             height: 11vh;
             resize: none;            
             padding: 2vh 2vw 0;
@@ -295,19 +300,19 @@
             }
         }
 
-        .container.chat .component .typing-section input[type="text"]::-webkit-input-placeholder {
+        .chat .component .typing-section input[type="text"]::-webkit-input-placeholder {
             color: rgb(86,86,86);
         }
-        .container.chat .component .typing-section input[type="text"]:-moz-placeholder {
+        .chat .component .typing-section input[type="text"]:-moz-placeholder {
             color: rgb(86,86,86);
         }
-        .container.chat .component .typing-section input[type="text"]::-moz-placeholder {
+        .chat .component .typing-section input[type="text"]::-moz-placeholder {
             color: rgb(86,86,86);
         }
-        .container.chat .component .typing-section input[type="text"]:-ms-input-placeholder {  
+        .chat .component .typing-section input[type="text"]:-ms-input-placeholder {  
             color: rgb(86,86,86);
         }
-        .container.chat .component .typing-section .send-text {
+        .chat .component .typing-section .send-text {
             /*width: 0; 
             height: 0; 
             border-left: 20px solid rgb(237,72,35);
