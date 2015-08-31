@@ -26,11 +26,39 @@
                 </div>                
             </section>
 
-            <section class="component">
-                <h3>- Retos -</h3>
+            <section class="component showcase-carousel pages">
+                <h3>Retos</h3>
+                <div id="carousel-example-generic2" class="carousel">
+                    <div id="owl-demo2" class="owl-carousel">
+                        <div class="item visib" ng-repeat="reto in model.stages[idEtapa].challenges">
+                            <img ng-src="{{retosIconos[reto.sectionname]}}">
+                            <div class="subtitle centered text-uppercase" ng-bind="reto.sectionname"></div>
+                            <div class="txt-renglon challenge-description" ng-bind="reto.activityintro"></div>
+                        </div>
+
+                    </div>
+
+                    <a class="control" href="#" id="prev">
+                        <span class="icomoon icon-arrow-bold-left"></span>
+                    </a>
+                    <a class="control" href="#" id="next">
+                        <span class="icomoon icon-arrow-bold-right"></span>
+                    </a>                    
+                </div>
+                <!-- <div class="centered paginate">
+                    <span id="index" class="txt-bigger">1/</span>
+                    <span class="white txt-bigger">{{model.stages[idEtapa].challenges.length}}</span>
+                </div> -->
+                <div class="page-number">
+                    <p class="text-center">
+                        <span>1</span>
+                        <span>/</span>
+                        <span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
+                    </p>                    
+                </div>                                                
             </section>
 
-            <section class="holoproj">
+<!--             <section class="holoproj">
                 <h2 class="subtitle centered">- RETOS -</h2>
                 <div class="centered txt-title" ng-bind="challengeName"></div>
                 <div id="carousel-example-generic2" class="carousel">
@@ -56,10 +84,10 @@
                     <span id="index" class="txt-bigger">1/</span>
                     <span class="white txt-bigger">{{model.stages[idEtapa].challenges.length}}</span>
                 </div>
-            </section>
+            </section> -->
 
-            <section class="jector">                
-            </section>
+            <!-- <section class="jector">                
+            </section> -->
             <section class="parts activities">
                 <div id="owl-demo" class="owl-carousel">
                     <div ng-repeat="challenge in model.stages[idEtapa].challenges">
@@ -75,9 +103,9 @@
                       </div>
                     </div>
                 </div>
-                <div>
+                <!-- <div>
                   <img src="assets/images/img-consoles.png">
-                </div>
+                </div> -->
             </section>
             <section class="progreso">
                 <div class="spinner">
@@ -197,11 +225,12 @@
             owl2.owlCarousel({
                 navigation: false,
                 pagination: false,
-                paginationSpeed: 1000,
+                //paginationSpeed: 1000,
                 goToFirstSpeed: 2000,
                 singleItem: true,
                 autoHeight: true,
                 touchDrag:false,
+                mouseDrag:false,
                 transitionStyle:"fade",
                 afterMove: callback1
             });
@@ -212,11 +241,12 @@
             owl.owlCarousel({
                 navigation: false,
                 pagination: false,
-                paginationSpeed: 1000,
+                //paginationSpeed: 1000,
                 goToFirstSpeed: 2000,
                 singleItem: true,
                 autoHeight: true,
                 touchDrag:false,
+                mouseDrag:false,
                 transitionStyle:"fade",
                 afterMove: callback2
             });
