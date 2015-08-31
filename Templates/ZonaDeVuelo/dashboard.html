@@ -1,5 +1,4 @@
-<div class="incluso-app step-dashboard" id="site-wrapper">
-
+<div class="incluso-app step-dashboard" id="site-wrapper">        
         <article>
             <section class="component video-gallery">
                 <div class="panel panel-video">
@@ -58,7 +57,7 @@
             <section class="parts activities">
                 <div id="owl-demo" class="owl-carousel">
                     <div ng-repeat="challenge in model.stages[idEtapa].challenges">
-                      <div class="part" ng-class="canStartActivity(activity.coursemoduleid)?'part':'part disabled'" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
+                      <div ng-class="canStartActivity(activity.coursemoduleid)?'part':'part disabled'" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
                           <i class="icomoon icon-checked-join" ng-show="activity.status == 1"></i>
                           <i class="icomoon icon-gauge" ng-show="activity.status == 0"></i>
 
@@ -139,24 +138,21 @@
                 </div>
             </div>
         </script>
-
         <script type="text/ng-template" id="ClosingChallengeModal.html">
-            <div class="modal-robot robot-lg closing-stage-modal user-help">
+            <div class="modal-robot robot-lg closing-stage-modal user-help" >
                 <img src="assets/images/img-robot-lg.svg">
-
                 <div class="modal-header">
                     <button class="icon icon-close" ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h3 class="subtitle text-center">Cerrar Etapa Introducción</h3>
-                    <p class="txt-renglon centered">
-                        Mensaje cerrar etapa introducción
-                    </p>
+                    <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                    <p class="txt-renglon centered">{{actualMessage.message}}</p>
                 </div>
             </div>
         </script>
+      
 
         <script type="text/ng-template" id="CabinaSoporteMsj.html">
             <div class="modal-robot robot-sm closing-stage-modal user-help">

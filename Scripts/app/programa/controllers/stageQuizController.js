@@ -248,7 +248,34 @@ angular
                             $scope.AnswersResult.answers[0] = 0;
                         }
                         break;
+
                     case 1:
+                        console.log("Question.userAnswer: " + JSON.stringify(question.userAnswer));
+
+                        var userAnswersList = question.userAnswer.split(";");
+
+                        userAnswersList.forEach(function (answer) {
+                            var cleanAnswer = cleanText(answer).trim();
+
+                            if (cleanAnswer == "Pedir ayuda a alguien") {
+                                $scope.AnswersResult.answers[1][0] = true;
+                            }
+
+                            if (cleanAnswer == "Investigar sobre el tema") {
+                                $scope.AnswersResult.answers[1][1] = true;
+                            }
+
+                            if (cleanAnswer == "Nada, porque parece imposible") {
+                                $scope.AnswersResult.answers[1][2] = true;
+                            }
+
+                            if (cleanAnswer == "Trazar un plan de lo que necesito hacer") {
+                                $scope.AnswersResult.answers[1][3] = true;
+                            }
+                        });
+
+                        /*
+
                         if (question.userAnswer.length > 0) {
                             var userAnswers = question.userAnswer.split(";");
                             for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
@@ -261,6 +288,8 @@ angular
                                 }
                             }
                         }
+                        */
+
                         break;
                     case 2:
                         $scope.AnswersResult.answers[2] = question.userAnswer.trim();
@@ -277,15 +306,15 @@ angular
                             }
                         }
                         */
-
+                        console.log("Question.userAnswer: " + JSON.stringify(question.userAnswer));
                         var userAnswer = cleanText(question.userAnswer);                        
 
                         if (userAnswer == "Si") {
-                            $scope.AnswersResult.answers[3] = 2;
+                            $scope.AnswersResult.answers[3] = 0;
                         }
 
                         if (userAnswer == "No") {
-                            $scope.AnswersResult.answers[3] = 2;
+                            $scope.AnswersResult.answers[3] = 1;
                         }
 
                         if (userAnswer == "Mas o menos") {                            
@@ -385,7 +414,6 @@ angular
                     //userAnswersList = ["Cantar", "Hacer manualidades"]
                     for (var answerOptionsIndex = 0; answerOptionsIndex < question.answers.length; answerOptionsIndex++) {
                         var answerOption = question.answers[answerOptionsIndex]; //JS array of literal objects
-
 
                         for (var userAnswersListIndex = 0; userAnswersListIndex < userAnswersList.length; userAnswersListIndex++) {
                             var userAnswer = cleanText(userAnswersList[userAnswersListIndex]).trim();

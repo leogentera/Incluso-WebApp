@@ -501,11 +501,34 @@
                 user = progress.user;
                 localStorage.setItem("profile", JSON.stringify(user));
                 localStorage.setItem("usercourse", JSON.stringify(course));
+                loadActivityStatus();
                 localStorage.setItem("course", JSON.stringify(course));
                 localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
                 
             }
-        }        
+        };
+        var loadActivityStatus = function() {
+            var usercourse = JSON.parse(localStorage.getItem("usercourse"));
+            var activityStatus = {};
+            var stagesCount = usercourse.stages.length;
+            var i, j, k;
+            for (i = 0; i < stagesCount; i++) {
+                var stage = usercourse.stages[i];
+                var challengeCount = stage.challenges.length;
+                for (j = 0; j < challengeCount; j++) {
+                    var challenge = stage.challenges[j];
+                    var challengeActivitiesCount = challenge.activities.length;
+                    for (k = 0; k < challengeActivitiesCount; k++) {
+                        var activity = challenge.activities[k];
+                        activityStatus[activity.coursemoduleid] = activity.status;
+                    }
+
+                }
+            }
+            localStorage.setItem("activityStatus",JSON.stringify(activityStatus));
+            _activityStatus = activityStatus;
+            console.log("Loaded activityStatus");
+        };
         
         return {
             GetAsyncProfile: _getAsyncProfile,
