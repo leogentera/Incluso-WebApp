@@ -77,24 +77,21 @@ angular
                     "endingTime": new Date(),
                     "token" : $scope.currentUser.token
                 };
-                debugger;
-                _isStageCompleted();               
+                                
                 //trigger activity type 2 is sent when the activity ends.
                 var triggerActivity = 2;
+                
                 _createNotification(activityModel.coursemoduleid, triggerActivity);
+                
                 moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,
                     _endActivitySuccessCallback,errorCallback);
                 
+                var currentStage = localStorage.getItem("currentStage");
+                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage); 
             };        
             
             var _endActivitySuccessCallback = function(){
                 
-                var challengeCompleted = _isChallengeCompleted($scope.activity.coursemoduleid);
-                if (challengeCompleted) {
-                    //show Robot;
-                    var currentStage = localStorage.getItem("currentStage");
-                    $location.path('/ZonaDeVuelo/Dashboard/' + currentStage);
-                }
             }
             
             
@@ -510,15 +507,15 @@ angular
             }
 
 
-            $scope.openModal = function (size) {
-                var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'OpeningStageModal.html',
-                    controller: 'OpeningStageController',
-                    size: size,
-                    windowClass: 'user-help-modal'
-                });
-            };
+            //$scope.openModal = function (size) {
+            //    var modalInstance = $modal.open({
+            //        animation: $scope.animationsEnabled,
+            //        templateUrl: 'OpeningStageModal.html',
+            //        controller: 'OpeningStageController',
+            //        size: size,
+            //        windowClass: 'user-help-modal'
+            //    });
+            //};
 
             function addHeight(lista) {
                 $scope.finalHeight = angular.element(lista).height() + 177;
@@ -530,7 +527,7 @@ angular
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
-            $scope.openModal();
+            //$scope.openModal();
             getDataAsync();
 
             $scope.validateMisSuenosAnsweredQuestions = function () {
@@ -660,6 +657,7 @@ angular
                     showWarningAndGoToTop();
                 }
             }
+                               
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
