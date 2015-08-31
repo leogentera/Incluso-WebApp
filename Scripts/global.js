@@ -181,27 +181,27 @@ var _isChallengeCompleted = function(){
 var _createNotification = function(activityId, triggerActivity){
   
   currentUserId = localStorage.getItem("userId");
-  
+  var currentDate = new Date();
+  var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
+  var formattedDate = currentMonth + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
-  var notificationByActivity = _.find(allNotifications, function(notif){    
-    if (notif.trigger == triggerActivity && notif.activityidnumber == activityId) {
-      return true;
-    }
-    return false;    
-  });
-  
-  if (notificationByActivity){
-      var dataModelNotification = {
-          notificationid: notificationByActivity.id,
-          timemodified : new Date(),
-          userid: currentUserId,
-          already_read: 0
-      };
-      moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
+ 
+  for(var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++ ){
+      var currentNotification = allNotifications[indexNotifications];
+      if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId){
+          allNotifications[indexNotifications].timemodified = formattedDate;
+          debugger;
+          localStorage.setItem("notifications",JSON.stringify(allNotifications));
+          var dataModelNotification = {
+              notificationid: notificationByActivity.id,
+              timemodified : formattedDate,
+              userid: currentUserId,
+              already_read: 0
+              };              
+          moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
+      }else{        
+      }
   }
-  else{
-    
-  }  
 };
 
 var _coachNotification = function(){
