@@ -124,20 +124,33 @@ var updateActivityStatusDictionary = function(activityId){
     _activityStatus[activityId] =1;
 };
 
-var _endActivity = function(activityModel){      
-      _isStageCompleted();
-      var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-      var currentUserId = currentUser.userId;
-      var activityId = activityModel.coursemoduleid;
-      var data = {
-        userid :  currentUserId };
+var _endActivity = function(activityModel){
         
       //trigger activity type 2 is sent when the activity ends.
       var triggerActivity = 2;
-      _createNotification(activityId, triggerActivity);
-    // update activity status dictionary used for blocking activity links
-    updateActivityStatusDictionary(activityModel.coursemoduleid);
-      moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
+      
+      if (activityModel.activityType == "Quiz"){    
+        _createNotification(activityModel.coursemoduleid, triggerActivity);
+        
+        moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,
+        successCallback,errorCallback);
+        
+      }else{
+        
+        _isStageCompleted();
+        var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+        var currentUserId = currentUser.userId;
+        var activityId = activityModel.coursemoduleid;
+        var data = {
+          userid :  currentUserId };
+                  
+        _createNotification(activityId, triggerActivity);
+        // update activity status dictionary used for blocking activity links
+        updateActivityStatusDictionary(activityModel.coursemoduleid);
+        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);
+      }
+      
+      
           
 };
 
