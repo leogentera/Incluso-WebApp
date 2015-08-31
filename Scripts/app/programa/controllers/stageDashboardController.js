@@ -16,15 +16,21 @@ angular
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-
             $scope.setToolbar($location.$$path,"");
             
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.scrollToTop();
 
+            $scope.activitiesCompletedInCurrentStage = [];
+            $scope.isCollapsed = false;
+            $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
+            $scope.thisStage = $scope.model.stages[$scope.idEtapa];
+            $scope.nombreEtapaActual = $scope.thisStage.sectionname;
+            localStorage.setItem("userCurrentStage", $routeParams['stageId']);
 
-            $scope.openModal = function (size) {
+            //Opens stage welcome message if first time visit
+            $scope.openModal_StageFirstTime = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'OpeningStageModal.html',
@@ -35,7 +41,38 @@ angular
 
             };
 
-            //$scope.openModal();
+            //Updated stage first time flag in scope, local storage and server
+            $scope.updateStageFirstTime = function(){
+                //Update model
+                $scope.thisStage.firsttime = 0;
+                $scope.model.stages[$scope.idEtapa].firsttime = 0;
+                //Update local storage
+                var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+                if(userCourse!={}) {
+                    userCourse.stages[$scope.idEtapa].firsttime = 0;
+                    localStorage.setItem("usercourse",JSON.stringify(userCourse));
+                }
+                //Update back-end
+                var dataModel = {
+                    stages: [
+                        {
+                            firstTime:0,
+                            section:$scope.thisStage.section
+                        }
+                    ]
+                };
+
+                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
+
+            };
+
+            if($scope.thisStage.firsttime)
+            {
+                $scope.openModal_StageFirstTime();
+                $scope.updateStageFirstTime();
+            }
+
+
 
             var closingStageModal = localStorage.getItem('closeStageModal');
             //if (closingStageModal == 'true') {
@@ -43,26 +80,31 @@ angular
             //    localStorage.setItem('closeStageModal', 'false');
             //}
 
-            $scope.activitiesCompletedInCurrentStage = [];
-            $scope.isCollapsed = false;
-            $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
-            $scope.nombreEtapaActual = $scope.model.stages[$scope.idEtapa].sectionname;
-            localStorage.setItem("userCurrentStage", $routeParams['stageId']);
+
 
            //calculate user's stage progress
-            var avanceEnEtapaActual = 0;
-            var totalActividadesEnEtapaActual = 0; //Attainment of user in the current Stage            
-            var retosEnEtapaActual = $scope.model.stages[$scope.idEtapa].challenges.length;
-
-            for (j = 0; j < retosEnEtapaActual; j++) {
-                var numActividadesParcial = $scope.model.stages[$scope.idEtapa].challenges[j].activities.length;
-
-                for (k = 0; k < numActividadesParcial; k++) {
-                    avanceEnEtapaActual += $scope.model.stages[$scope.idEtapa].challenges[j].activities[k].status;
-                    totalActividadesEnEtapaActual++;
+            var stageProgressBuffer = 0;
+            var stageTotalActivities = 0; //Attainment of user in the current Stage
+            var stageChallengesCount = $scope.thisStage.challenges.length;
+            var i, j,k;
+            for (i = 0; i < stageChallengesCount; i++) {
+                var challenge = $scope.thisStage.challenges[i];
+                var challengeActivitiesCount = challenge.activities.length;
+                for (j = 0; j < challengeActivitiesCount; j++) {
+                    var activity = challenge.activities[j];
+                    stageProgressBuffer += activity.status;
+                    stageTotalActivities++;
+                    if(activity.activities) {
+                        var subActivitiesCount = activity.activities.length;
+                        for (k = 0; k < subActivitiesCount; k++) {
+                            var subActivity = activity.activities[k];
+                            stageProgressBuffer += subActivity.status;
+                            stageTotalActivities++;
+                        }
+                    }
                 }
             }
-            $scope.avanceEnEtapaActual = Math.ceil(avanceEnEtapaActual * 100 / totalActividadesEnEtapaActual);
+            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
 
             //Load challenges images
             $scope.retosIconos = {

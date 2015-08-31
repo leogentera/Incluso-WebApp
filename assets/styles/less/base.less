@@ -1276,9 +1276,11 @@ body {
                 text-align: center;
             }
             .modal-body {
-                padding: 5vh 4vw;
+                padding: 4vw;
                 -webkit-overflow-scrolling: touch;
-
+                .subtitle {
+                    margin: 0px;
+                }
                 p, ol li {
                     color: @clr-white;
                     font-size: 4.2vw;
@@ -1298,8 +1300,17 @@ body {
                 .border-radius-circle();
             }
 
-            &.robot-lg {
+            &.robot-lg,
+            &.robot-sm {
                 margin-top: 50vw;
+            }
+
+            &.robot-sm {
+                img {
+                    left: 35vw;
+                    margin-top: 12vh;
+                    width: auto;
+                }
             }
         }
     }
