@@ -574,33 +574,33 @@ angular
             }
 
 
-            $scope.answerIndex = 1;
-            $scope.answerIndex1 = 1;
-
-            $scope.addToAnswerIndex = function (delta) {
-                $scope.answerIndex += delta;
-
-                if ($scope.answerIndex > 3) {
-                    $scope.answerIndex = 1;
-                }
-
-                if ($scope.answerIndex < 1) {
-                    $scope.answerIndex = 3;
-                }
-            };
-
-
-            $scope.addToAnswerIndex1 = function (delta) {
-                $scope.answerIndex1 += delta;
-
-                if ($scope.answerIndex1 > 5) {
-                    $scope.answerIndex1 = 1;
-                }
-
-                if ($scope.answerIndex1 < 1) {
-                    $scope.answerIndex1 = 5;
-                }
-            };
+            //$scope.answerIndex = 1;
+            //$scope.answerIndex1 = 1;
+            //
+            //$scope.addToAnswerIndex = function (delta) {
+            //    $scope.answerIndex += delta;
+            //
+            //    if ($scope.answerIndex > 3) {
+            //        $scope.answerIndex = 1;
+            //    }
+            //
+            //    if ($scope.answerIndex < 1) {
+            //        $scope.answerIndex = 3;
+            //    }
+            //};
+            //
+            //
+            //$scope.addToAnswerIndex1 = function (delta) {
+            //    $scope.answerIndex1 += delta;
+            //
+            //    if ($scope.answerIndex1 > 5) {
+            //        $scope.answerIndex1 = 1;
+            //    }
+            //
+            //    if ($scope.answerIndex1 < 1) {
+            //        $scope.answerIndex1 = 5;
+            //    }
+            //};
 
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {

@@ -135,12 +135,9 @@
                                 <span class="icomoon icon-arrow-bold-right txt-bigger fl-right"></span>
                             </a>
 
-                            <div class="centered"><span id="index" class="txt-bigger">1/</span><span
-                                    class="white txt-bigger">5</span></div>
+                            <div class="centered"><span id="index" class="txt-bigger">1/</span><span id="totalPages" class="white txt-bigger">5</span></div>
                         </div>
-                        <a class="btn btn-primary btn-lg btn-cnt" id="save" href=""
-                                ng-click="validateAnsweredQuestions()" ng-show="answerIndex1 == 5">Guardar
-                        </a>
+                        <a class="btn btn-primary btn-lg btn-cnt" style="display:none" id="save" href="" ng-hide="setReadOnly" ng-click="validateAnsweredQuestions()">Guardar</a>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
                 </div>
@@ -235,11 +232,25 @@
 
         $("#next").click(function () {            
             owl.trigger('owl.next');
+            var numberOfPage = $('#index');
+            var totalPages = $('#totalPages');
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
+              $('#save').show();
+            }else{              
+              $('#save').hide();
+            }
             return false;
         });
 
         $("#prev").click(function () {
             owl.trigger('owl.prev');
+            var numberOfPage = $('#index');
+            var totalPages = $('#totalPages');
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
+              $('#save').show();
+            }else{              
+              $('#save').hide();
+            }
             return false;
         });
 
