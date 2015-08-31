@@ -91,7 +91,7 @@ angular
             
             var _endActivitySuccessCallback = function(){
                 
-            }
+            };
             
             
             $scope.addAbility = function () {
@@ -408,15 +408,23 @@ angular
 
             function updateMisSueñosSelectedAnswers(index, question) {
 
-                var userAnswers = cleanText(question.userAnswer);
-                var userAnswersList = userAnswers.split(" ");
+                var userAnswersList = question.userAnswer.split("\n");
 
+                //var userAnswers = cleanText(question.userAnswer);
+                //var userAnswersList = userAnswers.split(" ");
+
+                userAnswersList.forEach(function (answer) {
+                    var cleanAnswer = cleanText(answer);
+                    $scope.dreamsLists.answers[index].push(cleanAnswer);
+                });
+                /*
                 var largo = userAnswersList.length;
                 var i;
 
                 for (i = 0; i < largo; i++) {
                     $scope.dreamsLists.answers[index].push(userAnswersList[i]);
-                }            
+                }
+                       */
             }
 
             function cleanText(userAnswer) {   //NOTE: replace() is a chainable method.
@@ -459,8 +467,10 @@ angular
                         $scope.setReadOnly = true;
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
                     }
-
+                    console.log("setReadOnly: " + $scope.setReadOnly);
                     $scope.activity = activity;
+                    $scope.activityFinished = activityFinished;
+                    console.log("activityFinished: " + $scope.activityFinished);
                 }
             }
 
