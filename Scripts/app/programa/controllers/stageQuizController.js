@@ -379,21 +379,23 @@ angular
                 if (question.userAnswer != null) {
                     console.log(JSON.stringify(question));
                     var userAnswers = cleanText(question.userAnswer);
+                    console.log("userAnswers: " + userAnswers);
                     var userAnswersList = userAnswers.split(";");
+
                     //userAnswersList = ["Cantar", "Hacer manualidades"]
                     for (var answerOptionsIndex = 0; answerOptionsIndex < question.answers.length; answerOptionsIndex++) {
-                        var answerOption = question.answers[answerOptionsIndex];
+                        var answerOption = question.answers[answerOptionsIndex]; //JS array of literal objects
 
 
                         for (var userAnswersListIndex = 0; userAnswersListIndex < userAnswersList.length; userAnswersListIndex++) {
-                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]);
+                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]).trim();
                             if (answerOption.answer == userAnswer) {
                                 $scope.misCualidadesAnswers[currentQuestionIndex][answerOptionsIndex] = true;
                             }
                         }
                     }
 
-                    console.log("$scope.misCualidadesAnswers: " + $scope.misCualidadesAnswers);
+                    console.log("$scope.misCualidadesAnswers: " + $scope.misCualidadesAnswers[currentQuestionIndex]);
                 }
             }
 
@@ -641,6 +643,7 @@ angular
                     }
 
                     if ($scope.misCualidadesAnswers.length == validatedAnswers) {
+                        console.log("Answers ARE Valid");
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
                     } else {
