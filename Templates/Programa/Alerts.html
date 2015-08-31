@@ -1,17 +1,7 @@
 
 <div class="incluso-app notif-dashboard" id="site-wrapper">
- 
-  <div id="site-canvas">
 
     <article class="starway">
-
-      <!--<div class="txt-renglon">
-          <div id="controller" class="owl-carousel">
-            <div class="item"><span>Todas</span></div>
-            <div class="item"><span>No Leídas</span></div>
-            <div class="item"><span>Leídas</span></div>
-          </div>
-      </div>-->
         <tabset class="notifications txt-renglon green-lantern-theme">          
           <tab heading="Todas" class="item">    
             <ul class="green-lantern-theme">              
@@ -59,42 +49,12 @@
               </ul>
           </tab>
         </tabset>
-	  <div><img src="assets/images/img-lines-ftr.png"></div>
     </article>  
-  </div>
+
 </div>
     
-    <script>
-
-
-    $(document).ready(function() {
-     
-      var carousel = $("#carousel");
-      var controller = $("#controller");
-     
-      carousel.owlCarousel({
-        singleItem : true,
-        slideSpeed : 1000,
-        navigation: false,
-        pagination:false,
-        afterAction : syncPosition,
-        responsiveRefreshRate : 200,
-        autoHeight : true,
-      });
-     
-      controller.owlCarousel({
-        items : 3,
-        itemsDesktop      : [1199,3],
-        itemsDesktopSmall     : [979,3],
-        itemsTablet       : [768,3],
-        itemsMobile       : [479,3],
-        pagination:false,
-        responsiveRefreshRate : 100,
-        afterInit : function(el){
-          el.find(".owl-item").eq(0).addClass("synced");
-        }
-      });
-     
+  <script>
+    $(document).ready(function() {           
       function syncPosition(el){
         var current = this.currentItem;
         $("#controller")
@@ -136,12 +96,8 @@
           controller.trigger("owl.goTo", controllervisible[1])
         } else if(num === controllervisible[0]){
           controller.trigger("owl.goTo", num-1)
-        }
-        
-      }
-     
+        }      
+      }     
     });
-
-
-    </script>
+  </script>
   

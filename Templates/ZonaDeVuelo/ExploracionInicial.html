@@ -58,7 +58,7 @@
                                 <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
                                 <label for="otros">Otros</label>-->
                             </section>
-                            <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><i class="icomoon icon-edit"></i>
+                            <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
                               <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
                             </div>-->
                         </div>
@@ -67,7 +67,7 @@
                             <div class="txt-renglon txt-bigger">3. ¿Qué persona exitosa que conoces te inspira?</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="add">
-                                    <i class="icomoon icon-edit"></i>                                    
+                                    <span class="icomoon icon-edit"></span> 
                                     <textarea id="texto1" row="2" name="txtAbierto" placeholder="Tu respuesta aquí..." ng-model="AnswersResult.answers[2]" ng-readonly="setReadOnly"></textarea>
                                 </div>
                             </section>
@@ -103,10 +103,10 @@
                                                 <span>Habilidad {{AnswersResult.answers[4].indexOf(ability) + 1}}</span>
                                                 <a class="btn btn-circle fl-right"
                                                         ng-click="deleteAbility($index);" ng-hide="setReadOnly">
-                                                    <i class="icomoon icon-cross white"></i>
+                                                    <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
-                                            <div class="add"><i class="icomoon icon-edit"></i>
+                                            <div class="add"><span class="icomoon icon-edit"></span>
                                                 <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2" 
                                                 name="txtAbierto" placeholder="Nueva habilidad" ng-model="AnswersResult.answers[4][$index]" 
                                                 ng-readonly="setReadOnly">
@@ -129,18 +129,15 @@
                     <section id="controls" class="controls">
                         <div class="paginate">
                             <a href="#" id="prev" ng-click="addToAnswerIndex1(-1)">
-                                <i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i>
+                                <span class="icomoon icon-arrow-bold-left txt-bigger fl-left"></span>
                             </a>
                             <a href="#" id="next" ng-click="addToAnswerIndex1(1)">
-                                <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
+                                <span class="icomoon icon-arrow-bold-right txt-bigger fl-right"></span>
                             </a>
 
-                            <div class="centered"><span id="index" class="txt-bigger">1/</span><span
-                                    class="white txt-bigger">5</span></div>
+                            <div class="centered"><span id="index" class="txt-bigger">1/</span><span id="totalPages" class="white txt-bigger">5</span></div>
                         </div>
-                        <a class="btn btn-primary btn-lg btn-cnt" id="save" href=""
-                                ng-click="validateAnsweredQuestions()" ng-show="answerIndex1 == 5">Guardar
-                        </a>
+                        <a class="btn btn-primary btn-lg btn-cnt" style="display:none" id="save" href="" ng-hide="setReadOnly" ng-click="validateAnsweredQuestions()">Guardar</a>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
                 </div>
@@ -153,13 +150,13 @@
                             <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
                         </section>
                         <section class="centered txt-bigger ">
-                            <i class="icomoon icon-checked-join txt-bigger green-giant "></i>
+                            <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
                         </section>
                         <section class="txt-renglon pill">
                             <div class="fl-left">Estrellas ganadas:</div>
                             <div class="fl-right sm-pill">
                                 <span>{{activityPoints}}</span>
-                                <i class="icomoon icon-star fl-right"></i>
+                                <span class="icomoon icon-star fl-right"></span>
                             </div>
                         </section>
                         <section class="txt-renglon centered form ">
@@ -179,7 +176,6 @@
                     </div>
                 </div>
             </div>
-            <img src="assets/images/img-lines-ftr.png " class="centered ">
         </article>
         <!-- initial message -->
         <script type="text/ng-template" id="OpeningStageModal.html">
@@ -218,7 +214,6 @@
         owl.owlCarousel({
             navigation: false,
             pagination: false,
-            //paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
             autoHeight: true,
@@ -235,23 +230,27 @@
 
         $("#next").click(function () {            
             owl.trigger('owl.next');
+            var numberOfPage = $('#index');
+            var totalPages = $('#totalPages');
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
+              $('#save').show();
+            }else{              
+              $('#save').hide();
+            }
             return false;
         });
 
         $("#prev").click(function () {
             owl.trigger('owl.prev');
+            var numberOfPage = $('#index');
+            var totalPages = $('#totalPages');
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
+              $('#save').show();
+            }else{              
+              $('#save').hide();
+            }
             return false;
         });
-
-        // $("#save").click(function(){
-        //   $(owl).hide("slow ");
-        // 	$("#controls ").hide();
-        // 	$("#title ").hide();
-        // 	$("#finalized ").show("slow ");
-        // 	return false;
-        // });
-
-        //$("#finalized ").hide();
 
     });
 

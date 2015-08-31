@@ -39,8 +39,7 @@ angular
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
             console.log('mis fortalezas 2');
-            var stars = 0;
-            debugger;
+            var stars = 0;            
 
             if (!$scope.retoMultipleActivities) {
                $scope.retoMultipleActivities = [];
@@ -89,10 +88,9 @@ angular
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-                
-                cordova.exec(successGame, successGame, "CallToAndroid", "openApp", [r]);
-                //localStorage.setItem("tmpRetoMultipleRequest", JSON.stringify(r));
-                //$location.path('/ZonaDeVuelo/Conocete/RetoMultipleExternalApp');
+                //cordova.exec(successGame, successGame, "CallToAndroid", "openApp", [r]);
+                localStorage.setItem("tmpRetoMultipleRequest", JSON.stringify(r));
+                $location.path('/ZonaDeVuelo/Conocete/RetoMultipleExternalApp');
             }
             
             var successGame = function (data){
