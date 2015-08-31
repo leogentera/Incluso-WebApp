@@ -179,12 +179,13 @@
 
             }
             .blueprint{
-                background-image:url('@{url-images}/bg-stage-1-theme-sm.gif');
+                background-image:url('@{url-images}/bg-stage-1-theme-spaceship.gif'), url('@{url-images}/bg-stage-1-theme-bottom.gif'), url('@{url-images}/bg-stage-1-theme-pattern.gif');
                 background-color: #112845;
-                background-position: -1px 0px;
-                background-repeat: no-repeat;
+                background-position: -1px 0px, -1px bottom, -1px top;
+                background-repeat: no-repeat, no-repeat, repeat-y;
                 background-size: 100% auto;
                 border-bottom: 10px solid #24282a;
+                padding-bottom: 14vw;
             }
             .starway{
                 background: #1f2733;
