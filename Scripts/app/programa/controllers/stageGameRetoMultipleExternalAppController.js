@@ -353,7 +353,7 @@ angular
                     //$scope.saveUser();
                     $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');
                 } else {
-                    $location.path('/ZonaDeVuelo/Conocete/ProgramaDashboard');
+                    $location.path('/ZonaDeVuelo/Dashboard/1');
                 }
             }
 
