@@ -1,7 +1,7 @@
 <div class="incluso-app start-dashboard" id="site-wrapper">
 	<article>
 		<div class="container">
-			<h1 class="text-center">¡Bienvenido a la misión, {{user.alias}}!</h1>
+			<h1 class="text-center">¡<span ng-show="{{user.gender == 'Masculino'}}">Bienvenido</span><span ng-show="{{user.gender == 'Femenino'}}">Bienvenida</span> a la misión, {{user.alias}}!</h1>
 
 			<section class="component video-gallery" ng-controller="videoCollapsiblePanelController">
 				<div class="panel panel-video">
@@ -39,7 +39,7 @@
 
 			<section class="component current-satge">
 				<img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
-				<h3>- Estación: {{stage.sectionname}} -</h3>
+				<h3>- {{stage.sectionname}} -</h3>
 				<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{usercourse.firsttime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span></a>
 			</section>
 

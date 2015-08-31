@@ -185,7 +185,7 @@
                 background-repeat: no-repeat, no-repeat, repeat-y;
                 background-size: 100% auto;
                 border-bottom: 10px solid #24282a;
-                padding-bottom: 17.5vw;
+                padding-bottom: 20.5vw;
             }
             .starway{
                 background: #1f2733;
@@ -196,8 +196,11 @@
                 background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
                 background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );                
-                background-image:url('@{url-images}/bg-stars-02.png');
+                background-image:url('@{url-images}/bg-notifications-bottom.gif'), url('@{url-images}/bg-notifications-sky.gif');
+                background-position: -1px bottom;
+                background-repeat: no-repeat, repeat-y;
                 background-size: 100% auto;
+                padding-bottom: 16vw;
             }
             .progreso{
                 background-image:url('@{url-images}/bg-progress-spinn.jpg');
@@ -870,6 +873,7 @@
 
             h3 {
                 margin-bottom: 6px;
+                text-transform: uppercase;
             }
             .btn {
                 display: block;
@@ -1029,8 +1033,7 @@
             p {
                 padding:0;
                 margin:0 auto;
-                color: @clr-white;
-                font-family: Roboto, Sans-serif, Arial;
+                color: @clr-white;                
                 font-size: 1.2em; /*18px;*/
                 font-weight: 500;
                 line-height: 1.4;
@@ -1040,13 +1043,13 @@
                 padding: 0;
                 margin: 0;
                 color: @clr-blueLight;
-                font-weight: inherit;
+                font-weight: bold;
             }
             span {
                 padding: 0;
                 margin: 0;                    
                 color: inherit;
-                font-weight: 700;
+                font-weight: bold;
             } 
             .inline-list {
                 margin-top: 10px;
@@ -1900,7 +1903,8 @@
 
             &.notifications {
                 .nav-tabs {
-                    margin: 4vh 0px;                    
+                    margin: 0 0 4vh;
+                    padding-top: 4vh;
                     .item {
                         width: 26.5vw;
                         padding: 1.5vh 0;
@@ -1922,7 +1926,7 @@
                         }                        
                     }
                     &.item:first-child {
-                        border-radius: 5px 0px 0px 5px;
+                        .border-radius(5px 0px 0px 5px);
                     }
                     li:first-child {
                         .border-radius(5px,0px,0px,5px);
