@@ -728,7 +728,7 @@ var _activityRoutes = [
   { id: 150, url: '/ZonaDeVuelo/ExploracionInicial/1001'},
   { id: 112, url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia'},
   { id: 113, url: '#'},
-  { id: 149, url: '/ZonaDeVuelo/Conocete/ZonaDeContacto'},
+  { id: 149, url: '/ZonaDeVuelo/Conocete/ZonaDeContacto/149'},
   { id: 145, url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia'},
   { id: 139, url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
   { id: 151, url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
