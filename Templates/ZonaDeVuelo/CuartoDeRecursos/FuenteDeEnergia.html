@@ -1,4 +1,4 @@
-<div class="incluso-app acerca-programa" id="site-wrapper">
+<div class="incluso-app acerca-programa">
   <article class="blueprint">
     <div class="fuente-energia">
       <section>
@@ -10,7 +10,7 @@
       </section>
 
       <section class="filter-section form">
-        <i class="icomoon icon-list"></i>
+        <span class="icomoon icon-list"></span>
         <select name="filter" class="form-control form-control-lg theme-default" ng-model="filter">
           <option value="" disabled>Filtrar contenido por...</option>
           <option value="">Ver Todo</option>
@@ -21,7 +21,7 @@
           <option value="Frases">Frases</option> 
           <option value="url">Enlaces</option> 
         </select>
-        <i class="icomoon icon-arrow"></i>
+        <span class="icomoon icon-arrow"></span>
       </section>
 
       <section class="wall">
@@ -31,17 +31,17 @@
             <div ng-if="activity.activity_type == 'url' && activity.activityintro != 'video' ">
               <div class="type">
                 <div class="col-xs-1 type-icon">
-                  <i class="icomoon icon-hyperlink"></i>
+                  <span class="icomoon icon-hyperlink"></span>
                 </div>
                 <div class="col-xs-9">
                   <span>{{activity.activityContent.name}}</span>
                 </div>
                 <div class="col-xs-1">
-                  <i class="icomoon icon-required" ng-hide="activity.optional"></i>
+                  <span class="icomoon icon-required" ng-hide="activity.optional"></span>
                 </div>
                 <div class="col-xs-1">
-                  <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
-                  <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
+                  <span class="icomoon icon-checked-join" ng-show="activity.status"></span>
+                  <span class="icomoon icon-gauge" ng-hide="activity.status"></span>
                 </div>
               </div>
             </div>
@@ -49,17 +49,17 @@
             <div ng-if="activity.activityintro == 'video' ">
               <div class="type">
                 <div class="col-xs-1 type-icon">
-                  <i class="icomoon icon-video-file"></i>
+                  <span class="icomoon icon-video-file"></span>
                 </div>
                 <div class="col-xs-9">
                   <span>{{activity.activityContent.name}}</span>
                 </div>
                 <div class="col-xs-1">
-                  <i class="icomoon icon-required" ng-hide="activity.optional"></i>
+                  <span class="icomoon icon-required" ng-hide="activity.optional"></span>
                 </div>
                 <div class="col-xs-1">
-                  <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
-                  <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
+                  <span class="icomoon icon-checked-join" ng-show="activity.status"></span>
+                  <span class="icomoon icon-gauge" ng-hide="activity.status"></span>
                 </div>
               </div>
             </div>
@@ -67,17 +67,17 @@
             <div ng-if="activity.activity_type == 'page'">
               <div class="type">
                 <div class="col-xs-1 type-icon">
-                  <i class="icomoon icon-text"></i>
+                  <span class="icomoon icon-text"></span>
                 </div>
                 <div class="col-xs-9">
                   <span>{{activity.activityContent.name}}</span>
                 </div>
                 <div class="col-xs-1">
-                  <i class="icomoon icon-required" ng-hide="activity.optional"></i>
+                  <span class="icomoon icon-required" ng-hide="activity.optional"></span>
                 </div>
                 <div class="col-xs-1">
-                  <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
-                  <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
+                  <span class="icomoon icon-checked-join" ng-show="activity.status"></span>
+                  <span class="icomoon icon-gauge" ng-hide="activity.status"></span>
                 </div>
               </div>
             </div>
@@ -85,17 +85,17 @@
             <div ng-if="activity.activity_type == 'resource'">
               <div class="type">
                 <div class="col-xs-1 type-icon">
-                  <i class="icomoon icon-camera"></i>
+                  <span class="icomoon icon-camera"></span>
                 </div>
                 <div class="col-xs-9">   
                   <span>{{activity.activityContent.name}}</span>
                 </div>        
                 <div class="col-xs-1">
-                  <i class="icomoon icon-required" ng-hide="activity.optional"></i>
+                  <span class="icomoon icon-required" ng-hide="activity.optional"></span>
                 </div>
                 <div class="col-xs-1">
-                  <i class="icomoon icon-gauge" ng-hide="activity.status"></i>
-                  <i class="icomoon icon-checked-join" ng-show="activity.status"></i>
+                  <span class="icomoon icon-gauge" ng-hide="activity.status"></span>
+                  <span class="icomoon icon-checked-join" ng-show="activity.status"></span>
                 </div>
               </div>      
             </div>
@@ -128,11 +128,11 @@
               </div>
               <div class="interact hidden">
                 <div class="col-xs-6 like">
-                  <i class="icomoon icon-like"></i>
+                  <span class="icomoon icon-like"></span>
                   <span>Me gusta</span>
                 </div>
                 <div class="col-xs-6 comment">
-                  <i class="icomoon icon-comment"></i>
+                  <span class="icomoon icon-comment"></span>
                   <span>Comentar</span>
                 </div>
               </div>
