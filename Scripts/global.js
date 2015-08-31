@@ -9,7 +9,7 @@ var _courseId = 4;
 var _httpFactory = null;
 var _timeout = null;
 
-var _activityStatus = {};
+var _activityStatus = null;
 
 var _activityDependencies = [
     {
@@ -125,7 +125,13 @@ var _endActivity = function(activityModel){
       //trigger activity type 2 is sent when the activity ends.
       var triggerActivity = 2;
       _createNotification(activityId, triggerActivity);
-    _activityStatus[activityModel.coursemoduleid] =1; // update activity status dictionary used for blocking activities
+    // update activity status dictionary used for blocking activity links
+    var activityStatus = moodleFactory.Services.GetCacheObject("activityStatus");
+    if(activityStatus){
+        activityStatus[activityModel.coursemoduleid] = 1;
+    }
+    localStorage.setItem("activityStatus",JSON.stringify(activityStatus));
+    _activityStatus[activityModel.coursemoduleid] =1;
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
           
 };
