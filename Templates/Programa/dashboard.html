@@ -1,7 +1,7 @@
 <div class="incluso-app start-dashboard" id="site-wrapper">
 	<article>
 		<div class="container">
-			<h1 class="text-center">¡Bienvenido a la misión, {{user.alias}}!</h1>
+			<h1 class="text-center">¡<span ng-show="{{user.gender == 'Masculino'}}">Bienvenido</span><span ng-show="{{user.gender == 'Femenino'}}">Bienvenida</span> a la misión, {{user.alias}}!</h1>
 
 			<section class="component video-gallery" ng-controller="videoCollapsiblePanelController">
 				<div class="panel panel-video">
