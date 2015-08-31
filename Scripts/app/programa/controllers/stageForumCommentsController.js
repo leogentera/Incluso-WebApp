@@ -291,7 +291,7 @@ angular
             }
 
             var createModalReferences = function(element, index, array){
-                $scope.isCommentModalCollapsed[element.id] = true;
+                $scope.isCommentModalCollapsed[element.post_id] = true;
             };
 
             function getActivityInfoCallback() {

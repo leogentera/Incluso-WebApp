@@ -102,25 +102,25 @@
         <i class="icomoon icon-plus"></i>
         </div>-->
             <div class="social">
-              <div ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.id)">
+              <div ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
                 <span class="icomoon icon-like"></span> Me gusta
               </div>
-              <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.id)">
+              <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
                 <span class="icomoon icon-like"></span> Ya no me gusta
               </div>
-              <div ng-click="isCommentModalCollapsed[p.id] = !isCommentModalCollapsed[p.id]">
+              <div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">
                 <span class="icomoon icon-comment"></span> Comentar
               </div>
             </div>
 
           </div>
           <section class="modales">
-              <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.id]">
+              <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">
                   <div>
                       <a href="#close" title="Close" class="close"></a>
                       <div class="add" ><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..."  ng-model="replyText" /></div>
 
-                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.id, p.parent)" >Compartir</a>
+                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent)" >Compartir</a>
                   </div>
               </div>
            </section>
