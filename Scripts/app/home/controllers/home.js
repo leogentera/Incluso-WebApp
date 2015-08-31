@@ -203,7 +203,7 @@
                     var challengeActivitiesCount = challenge.activities.length;
                     for (k = 0; k < challengeActivitiesCount; k++) {
                         var activity = challenge.activities[k];
-                        console.log(activity.coursemoduleid+" - "+activity.activityname);
+                        console.log(activity.coursemoduleid+" - "+activity.activity_identifier+" - "+activity.activityname);
                         _activityStatus[activity.coursemoduleid] = activity.status;
                     }
 
