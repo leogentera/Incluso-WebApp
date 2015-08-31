@@ -114,6 +114,16 @@ function syncCacheData (){
 
 }
 
+//Update activity status for activity blocking binding
+var updateActivityStatusDictionary = function(activityId){
+    var activityStatus = moodleFactory.Services.GetCacheObject("activityStatus");
+    if(activityStatus){
+        activityStatus[activityId] = 1;
+    }
+    localStorage.setItem("activityStatus",JSON.stringify(activityStatus));
+    _activityStatus[activityId] =1;
+};
+
 var _endActivity = function(activityModel){      
       _isStageCompleted();
       var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -126,12 +136,7 @@ var _endActivity = function(activityModel){
       var triggerActivity = 2;
       _createNotification(activityId, triggerActivity);
     // update activity status dictionary used for blocking activity links
-    var activityStatus = moodleFactory.Services.GetCacheObject("activityStatus");
-    if(activityStatus){
-        activityStatus[activityModel.coursemoduleid] = 1;
-    }
-    localStorage.setItem("activityStatus",JSON.stringify(activityStatus));
-    _activityStatus[activityModel.coursemoduleid] =1;
+    updateActivityStatusDictionary(activityModel.coursemoduleid);
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
           
 };
@@ -301,7 +306,10 @@ function _getActivityByCourseModuleId(coursemoduleid) {
             return matchingActivity;
 }
 
- function updateActivityStatus(activity_identifier) {              
+ function updateActivityStatus(activity_identifier) {
+                //Update activity status for activity blocking binding
+                updateActivityStatusDictionary(activity_identifier);
+                //Update activity status in usercourse
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
                 for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
@@ -324,9 +332,10 @@ function _getActivityByCourseModuleId(coursemoduleid) {
                 }
                 var theUserCouerseUpdated = theUserCouerse;
                 return theUserCouerseUpdated;
-            }           
-            
-             
+            }
+
+
+
  function updateUserStars (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
