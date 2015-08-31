@@ -16,7 +16,9 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true; 
-            $rootScope.showFooterRocks = false; 
+            $rootScope.showFooterRocks = false;
+
+            $scope.moodleId = $routeParams.moodleid;
 
             $scope.scrollToTop();
 
@@ -56,8 +58,16 @@ angular
 
             getDataAsync();
 
-            $scope.showComentarios = function (discussionId) {
-              $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.moodleid + "/" + discussionId);
+            $scope.showComentarios = function (discussionId, moodleId) {
+              switch (moodleId){
+                  case "64":
+                      $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.moodleid + "/" + discussionId);
+                      break;
+                  case "73":
+                      $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/" + $routeParams.moodleid + "/" + discussionId);
+                      break;
+              }
+
             }
 
             $scope.back = function (size) {
