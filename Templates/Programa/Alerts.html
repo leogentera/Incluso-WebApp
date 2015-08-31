@@ -1,13 +1,14 @@
-
 <div class="incluso-app notif-dashboard" id="site-wrapper">
-
     <article class="starway">
         <tabset class="notifications txt-renglon green-lantern-theme">          
           <tab heading="Todas" class="item">    
             <ul class="green-lantern-theme">              
               <li class="{{notif.read == true ? 'list-item rounded-item' : 'rounded-item list-item highlight'}}" ng-repeat="notif in notifications | orderBy: '-timemodified'" ng-show="qty('All')" ng-click="showAlertDetail(notif.id)">
                 <span class="icomoon icon-antena pull-left no-padding pink"></span>
-                <div class="pull-left"><div class="date">{{notif.timemodified | date: 'fullDate'}}</div>{{ notif.name }}</div>
+                <div class="pull-left">
+                  <span class="date">{{notif.timemodified | date: 'fullDate'}}</span>
+                  <span>{{ notif.name }}</span>
+                </div>
                 <span class="{{notif.read == true ? 'icomoon icon-checked-join pull-right no-padding green' : 'icomoon icon-gauge pull-right no-padding gray'}}"></span>
               </li>
               <li class="list-item rounded-item showmore" ng-show="showLoadMoreBar('All')">
@@ -22,7 +23,10 @@
             <ul class="green-lantern-theme">
               <li class="list-item rounded-item highlight" ng-repeat="notif in notifications | orderBy: '-timemodified' | filter: {read:false}" ng-click="showAlertDetail(notif.id)" ng-show="qty('UnRead')">
                 <span class="icomoon icon-antena pull-left no-padding pink"></span>
-                <div class="pull-left"><div class="date">{{notif.timemodified | date: 'fullDate'}}</div>{{ notif.name }}</div>
+                <div class="pull-left">
+                  <span class="date">{{notif.timemodified | date: 'fullDate'}}</span>
+                  <span>{{ notif.name }}</span>
+                </div>
                 <span class="icomoon icon-gauge fl-right no-padding gray"></span>
               </li>
               <li class="list-item rounded-item showmore" ng-show="showLoadMoreBar('Unread')">
@@ -36,16 +40,17 @@
           <tab heading="Leídas" class="item">
               <ul class="green-lantern-theme">
                 <li class="list-item rounded-item highlight" ng-repeat="notif in notifications | orderBy: '-timemodified' | filter: {read:true} " ng-click="showAlertDetail(notif.id)" ng-show="qty('Read')">
-				  <span class="icomoon icon-antena pull-left no-padding pink"></span>
-                  <div class="pull-left"><div class="date">{{notif.timemodified | date: 'fullDate'}}</div>{{ notif.name }}</div>
-				  <span class="icomoon icon-checked-join pull-right no-padding green"></span>
-				</li>
+				          <span class="icomoon icon-antena pull-left no-padding pink"></span>
+                  <div class="pull-left">
+                    <span class="date">{{notif.timemodified | date: 'fullDate'}}</span>
+                    <span>{{ notif.name }}</span>
+                  </div>
+        				  <span class="icomoon icon-checked-join pull-right no-padding green"></span>
+        				</li>
                 <li class="list-item rounded-item showmore" ng-show="showLoadMoreBar('Read')">
-				  <span class="icomoon  icon-show-more fl-right"></span>
-				  <div ng-click="showMore('Read')"> 
-					Mostrar más notificaciones...
-				  </div>
-				</li>
+        				  <span class="icomoon  icon-show-more fl-right"></span>
+        				  <div ng-click="showMore('Read')">Mostrar más notificaciones...</div>
+				        </li>
               </ul>
           </tab>
         </tabset>

@@ -42,37 +42,37 @@
                         <div class="submenu" id="sub0">
                             <ul>
                                 <li>Exploración inicial</li> 
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionInicial/1001', 'sideToggle')">Exploración inicial</a></li>
+                                <li><a ng-class="canStartActivity(150)" ng-click="navigateTo('/ZonaDeVuelo/ExploracionInicial/1001', 'sideToggle',150)">Exploración inicial</a></li>
                             </ul>
                             <ul>
                               <li>Cuarto de recursos</li>
-                              <li><a ng-click="navigateTo('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia', 'sideToggle')">Fuente de energía</a></li>
+                              <li><a ng-class="canStartActivity(112)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia', 'sideToggle',112)">Fuente de energía</a></li>
                             </ul>
                             <ul>
                                 <li>Conócete</li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia', 'sideToggle')">Fuente de energía</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/RetoMultiple/1039', 'sideToggle')">Reto múltiple </a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64', 'sideToggle')">Punto de encuentro </a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/ZonaDeContacto', 'sideToggle')">Zona de contacto</a></li>
+                                <li><a ng-class="canStartActivity(145)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia', 'sideToggle',145)">Fuente de energía</a></li>
+                                <li><a ng-class="canStartActivity(139)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/RetoMultiple/1039', 'sideToggle',139)">Reto múltiple </a></li>
+                                <li><a ng-class="canStartActivity(151)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64', 'sideToggle',151)">Punto de encuentro </a></li>
+                                <li><a ng-class="canStartActivity(149)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/ZonaDeContacto', 'sideToggle',149)">Zona de contacto</a></li>
                             </ul>
                             
                             <ul>
                                 <li>Mis sueños </li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia', 'sideToggle')">Fuente de energía</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisCualidades/1005', 'sideToggle')">Mis Cualidades</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisGustos/1006', 'sideToggle')">Mis gustos</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/Suena/1007', 'sideToggle')">Sueña</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro', 'sideToggle')">Punto de encuentro </a></li>
+                                <li><a ng-class="canStartActivity(146)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia', 'sideToggle',146)">Fuente de energía</a></li>
+                                <li><a ng-class="canStartActivity(71)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisCualidades/1005', 'sideToggle',71)">Mis cualidades</a></li>
+                                <li><a ng-class="canStartActivity(70)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisGustos/1006', 'sideToggle',70)">Mis gustos</a></li>
+                                <li><a ng-class="canStartActivity(72)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/Suena/1007', 'sideToggle',72)">Sueña</a></li>
+                                <li><a ng-class="canStartActivity(73)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro', 'sideToggle',73)">Punto de encuentro </a></li>
                             </ul>
                             <ul>
                                 <li>Cabina de soporte</li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat', 'sideToggle')">Chat</a></li>
+                                <li><a ng-class="canStartActivity(68)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat', 'sideToggle',68)">Cabina de soporte</a></li>
                                 
                                 <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>-->
                             </ul>
                             <ul>
                                 <li>Exploración final</li> 
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionFinal/1009', 'sideToggle')">Exploración final</a></li>
+                                <li><a ng-class="canStartActivity(100)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/ExploracionFinal/1009', 'sideToggle',100)">Exploración final</a></li>
                             </ul>
                         </div>
                     </li>
