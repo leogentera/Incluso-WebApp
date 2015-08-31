@@ -725,22 +725,21 @@ var _staticStages = [
 ];
 
 var _activityRoutes = [
-  { id: 140, url: '/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial'},
-  { id: 150, url: '/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial'},
+  { id: 150, url: '/ZonaDeVuelo/ExploracionInicial/1001'},
   { id: 112, url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia'},
   { id: 113, url: '#'},
   { id: 149, url: '/ZonaDeVuelo/Conocete/ZonaDeContacto'},
   { id: 145, url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia'},
-  { id: 139, url: '/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple'},
+  { id: 139, url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
   { id: 151, url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
   { id: 114, url: '#'},
   { id: 146, url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia'},
-  { id: 70, url: '/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos'},
-  { id: 71, url: '"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades"'},
-  { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena'},
-  { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro'},
+  { id: 70, url: '/ZonaDeVuelo/MisSuenos/MisGustos/1006'},
+  { id: 71, url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
+  { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
+  { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
   { id: 115, url: '#'},
   { id: 116, url: ''}, // Empty for cabina de soporte
-  { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal'}
+  { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
