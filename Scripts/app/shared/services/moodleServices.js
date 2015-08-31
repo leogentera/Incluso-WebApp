@@ -23,8 +23,8 @@
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncForumInfo = function(activityId, topicId, successCallback, errorCallback){
-            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId + '/' + topicId), successCallback, errorCallback);
+        var _getAsyncForumInfo = function(activityId, successCallback, errorCallback){
+            _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };
 
         var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback, forceRefresh){
@@ -39,9 +39,12 @@
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId+'?userid='+userId), successCallback, errorCallback, forceRefresh);
         };
 
+        var _getAsyncActivityForumInfo = function(activityId, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
+        };
+
         var _getAsyncCourse = function(courseId, successCallback, errorCallback, forceRefresh){
             successCallback();
-            //_getCourseAsyncData("course", API_RESOURCE.format('course/' + courseId), successCallback, errorCallback);
         };
 
         var _getAsyncLeaderboard = function(courseId, successCallback, errorCallback, forceRefresh){
@@ -124,6 +127,22 @@
                 }).success(function(data, status, headers, config) {
                     localStorage.setItem(key, JSON.stringify(data));
                     successCallback(data, key);
+                }).error(function(data, status, headers, config) {
+                    errorCallback(data);
+            });
+        };
+
+
+        var _getForumAsyncData = function(key, url, successCallback, errorCallback){
+
+            _httpFactory({
+                method: 'GET',
+                url: url, 
+                headers: {'Content-Type': 'application/json'},
+                }).success(function(data, status, headers, config) {
+                  var forum = createForumTree(data);
+                  localStorage.setItem(key, JSON.stringify(forum));
+                  successCallback();
                 }).error(function(data, status, headers, config) {
                     errorCallback(data);
             });
@@ -260,6 +279,33 @@
             });
         };
 
+        var createForumTree = function(posts) {
+
+            var forum = {
+                activityType: "forum"
+            };
+
+            forum["discussions"] = _.filter(posts, function(p) { return p.post_parent == "0"} );
+
+            if (forum["discussions"]) {
+                for(i = 0; i < forum["discussions"].length; i++) {
+                    forum["discussions"][i]["posts"] = [];
+                    forum["discussions"][i]["posts"].push({ 
+                      replies: _.filter(posts, function(p) { return p.post_parent == forum.discussions[i].post_id } ),
+                    });
+
+                    for(j = 0; j < forum["discussions"][i]["posts"][0].replies.length; j++) {
+                        var reply = forum["discussions"][i]["posts"][0].replies;
+                        if (reply && reply.has_attachment == "1") {
+                          reply["attachments"] = [];
+                          reply["attachments"].push({ filename: reply.filename, fileurl: reply.fileurl, mimetype: reply.mimetype});
+                        }
+                    }
+                }
+            }
+            return forum;
+        }
+
         var refreshProgress = function(usercourse, user)  {
             var globalActivities = 0;
             var globalCompletedActivities = 0;
@@ -358,7 +404,7 @@
                     assign = _.find(activities,function(a) { 
                         return a.parentsection == course.stages[i].parentsection && 
                             a.section == course.stages[i].section &&
-                            a.activity_type == 'assign' && a.activityname != 'Chat'
+                            a.activity_type == 'assign' && a.activityname != 'Cabina de soporte'
                     });
 
                     if (assign) {
@@ -377,7 +423,7 @@
                        assign = _.find(activities,function(a) { 
                             return a.parentsection == course.stages[i].challenges[j].parentsection && 
                                 a.section == course.stages[i].challenges[j].section &&
-                                a.activity_type == 'assign'  && a.activityname != 'Chat'
+                                a.activity_type == 'assign'  && a.activityname != 'Cabina de soporte'
                         });
 
                         if (assign) {
@@ -396,7 +442,7 @@
                         });
 
                         var childrenActivities =  _.filter(activities,function(a) { 
-                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Cabina de soporte'))
                         });
 
                         for(k = 0; k < childrenActivities.length; k++) {
@@ -414,7 +460,7 @@
                                assign = _.find(activities,function(a) { 
                                     return a.parentsection == course.stages[i].challenges[j].activities[k].parentsection && 
                                         a.section == course.stages[i].challenges[j].activities[k].section &&
-                                        a.activity_type == 'assign'  && a.activityname != 'Chat'
+                                        a.activity_type == 'assign'  && a.activityname != 'Cabina de soporte'
                                 });
 
                                 if (assign) {
@@ -429,7 +475,7 @@
                                 });
 
                                 childrenActivities =  _.filter(activities,function(a) { 
-                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
+                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Cabina de soporte'))
                                 });
 
                                 if (course.stages[i].challenges[j].activities[k]["activities"]) {

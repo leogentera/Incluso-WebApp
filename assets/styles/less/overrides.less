@@ -566,6 +566,8 @@
 }
 section.part.inbloq{
     display: inline-block;
+    width: 90%;
+    margin: 2vh 5%;
     div{
         width:100%;
         text-align: justify;
@@ -573,9 +575,29 @@ section.part.inbloq{
     &.text-left {
     div {
         text-align: left;
+
+        &.notif-title {
+            font-weight: 600;
+            position: relative;
+
+            span{
+                &.icomoon {
+                    font-size: 12vw;
+                    color: #bcd431;
+                    padding-right: 3%;
+                }
+                &.alert-name {
+                    position: absolute;
+                    bottom: 0;
+                } 
+            }                
+        }         
     }
     .actions {
         margin-top: 10vh;
+    }
+    hr {
+        margin-top: 10px;
     }
 }
 
@@ -584,6 +606,13 @@ section.part.inbloq{
 
 .incluso-app {
     .old-code {display:none !important;}
+}
+
+
+
+//////////////// owl plugin ///////////////////////////
+.owl-carousel .owl-wrapper-outer.autoHeight {
+    transition: none;
 }
 
 

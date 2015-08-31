@@ -1,4 +1,4 @@
-<div id="site-wrapper" class="incluso-app step-dashboard">
+<div class="incluso-app">
     <div class="alert alert-warning" role="alert" ng-show="showWarning" ng-cloak>
         <div class="alert-message" ng-click="hideWarning()">
             <div class="icomoon icon-warning"></div>
@@ -7,7 +7,7 @@
         </div>
     </div>
 
-    <div id="site-canvas">
+
         <article class="blueprint evaluation">
             <div class="pages">
                 <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
@@ -119,8 +119,7 @@
                             </ul>
 
                             <div class="txt-renglon">
-                                <a href="" class="btn btn-lg btn-block btn-add" ng-click="addAbility();"
-                                        ng-hide="setReadOnly">
+                                <a href="" class="btn btn-lg btn-block btn-add" ng-click="addAbility();" ng-hide="setReadOnly">
                                     <span class="icomoon icon-plus"></span>Agregar nueva habilidad...
                                 </a>
                             </div>
@@ -185,7 +184,7 @@
         <!-- initial message -->
         <script type="text/ng-template" id="OpeningStageModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help">
-                <img src="assets/images/img-robot.png">
+                <img src="assets/images/img-robot-lg.svg">
 
                 <div class="modal-header">
                     <a class="icon icon-close btn btn-circle" ng-click="cancel()">
@@ -206,20 +205,11 @@
                           <source src="http://techslides.com/demos/sample-videos/small.3gp" type="video/3gp" />
                           Ups! Parece que tu dispositivo no soporta video
                         </video> -->
-                </div>
-                <!--<div class="modal-footer">
-                      <div class="row">
-                         <div class="col-xs-12">
-                           <a class="btn btn-primary btn-lg btn-cnt">Continuar</a>
-                           <img src="assets/images/img-lines-ftr.png" class="centered">
-                         </div>
-                       </div>
-                     </div> -->
-
+                </div>               
             </div>
 
         </script>
-    </div>
+    
 </div>
 
 <script>
@@ -228,10 +218,13 @@
         owl.owlCarousel({
             navigation: false,
             pagination: false,
-            paginationSpeed: 1000,
+            //paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
             autoHeight: true,
+            mouseDrag: false,
+            touchDrag: false,
+            transitionStyle: "fade",
             afterMove: callback
         });
 
