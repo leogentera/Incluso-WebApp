@@ -9,6 +9,8 @@ var _courseId = 4;
 var _httpFactory = null;
 var _timeout = null;
 
+var _activityStatus = {};
+
 var _activityDependencies = [
     {
         id:112,
@@ -123,7 +125,7 @@ var _endActivity = function(activityModel){
       //trigger activity type 2 is sent when the activity ends.
       var triggerActivity = 2;
       _createNotification(activityId, triggerActivity);
-        
+    _activityStatus[activityModel.coursemoduleid] =1; // update activity status dictionary used for blocking activities
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
           
 };
