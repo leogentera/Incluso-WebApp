@@ -62,8 +62,6 @@ angular
                 var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussionId == discussionId; });
                 alreadyCommented? alreadyCommented.commentsCount++ : forumsCommentsCountCollection.push({'discussionId':discussionId, 'commentsCount':1});
                 localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
-                console.log('Updated');
-
             };
             var endForumActivity = function(){
 
@@ -131,10 +129,11 @@ angular
                 _uncollapse(element, $scope.forumModals);
             };
 
-            var createPostDataObject = function( parentId, message, postType){
+            var createReplyDataObject = function( parentId, message, postType){
+                var userId = localStorage.getItem("userId");
                 var dataObject= {
                     "userid":userId,
-                    "discussionid": $scope.discussion.posts[0].discussion,
+                    "discussionid": $scope.discussion.discussion_id,
                     "parentid": parentId,
                     "message": message,
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
@@ -148,7 +147,7 @@ angular
             $scope.isCommentModalCollapsed= [];
             $scope.replyText = null;
             $scope.replyToPost = function(that, parentId, topicId){
-                var dataObejct = createPostDataObject(parentId, that.replyText, 1);
+                var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){
@@ -159,7 +158,6 @@ angular
                         $scope.$emit('ShowPreloader');
                         //updateForumProgress(parentId);
                         updateForumProgress(topicId);
-                        debugger;
                         checkForumProgress();
                         //$scope.$emit('HidePreloader');
                     },
