@@ -181,11 +181,11 @@
             .blueprint{
                 background-image:url('@{url-images}/bg-stage-1-theme-spaceship.gif'), url('@{url-images}/bg-stage-1-theme-bottom.gif'), url('@{url-images}/bg-stage-1-theme-pattern.gif');
                 background-color: #112845;
-                background-position: -1px 0px, -1px bottom, -1px top;
+                background-position: -1px top, -1px bottom, -1px top;
                 background-repeat: no-repeat, no-repeat, repeat-y;
                 background-size: 100% auto;
                 border-bottom: 10px solid #24282a;
-                padding-bottom: 14vw;
+                padding-bottom: 20.5vw;
             }
             .starway{
                 background: #1f2733;
@@ -645,7 +645,7 @@
 
 
         /***********************************************************************
-         01. $video-gallery
+         $video-gallery
          Description: CSS for video gallery component
         ************************************************************************/
         .video-gallery {
@@ -731,6 +731,13 @@
                 margin: 0 auto;
             }
         }
+        /***********************************************************************/
+
+
+        /***********************************************************************
+         $video-player
+         Description: CSS for a video placeholder with button to play video
+        ************************************************************************/   
         .video-player {
             display: block;
             padding: 0;

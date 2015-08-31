@@ -209,10 +209,10 @@
         $("#next").click(function () {
             owl.trigger('owl.next');
             var numberOfPage = $('#index');
-            var totalPages = $('#totalPages');            
-            if (numberOfPage.text().substring(0,1) == totalPages.text()) {
+            var totalPages = $('#totalPages');
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
               $('#save').show();
-            }else{
+            }else{              
               $('#save').hide();
             }            
             
@@ -221,6 +221,15 @@
 
         $("#prev").click(function () {
             owl.trigger('owl.prev');
+            var numberOfPage = $('#index');
+            var totalPages = $('#totalPages');            
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
+              $('#save').show();              
+            }else{              
+              $('#save').hide();
+            }
+            
+            
             return false;
         });
 

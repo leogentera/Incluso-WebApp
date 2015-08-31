@@ -39,8 +39,7 @@ angular
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
             console.log('mis fortalezas 2');
-            var stars = 0;
-            debugger;
+            var stars = 0;            
 
             if (!$scope.retoMultipleActivities) {
                $scope.retoMultipleActivities = [];

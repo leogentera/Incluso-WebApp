@@ -128,19 +128,6 @@ var _endActivity = function(activityModel){
           
 };
 
-var _endActivityQuiz = function(activityModel){
-      _isStageCompleted();
-      var serviceParameters =  activityModel.answersResult;
-      var activityId = activityModel.coursemoduleid;
-      
-      //trigger activity type 2 is sent when the activity ends.
-      var triggerActivity = 2;
-      _createNotification(activityId, triggerActivity);                  
-      moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,successCallback,errorCallback);      
-       
-      _isChallengeCompleted(activityModel.coursemoduleid);
-};
-
 //This function updates in localStorage the status of the stage when completed
 var _isStageCompleted = function(){
     
@@ -162,41 +149,33 @@ var _isStageCompleted = function(){
   
 };
 
-var _isChallengeCompleted = function(activityId){
-    
-    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+var _isChallengeCompleted = function(){
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));      
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
     var currentStage = userCourse.stages[lastStageIndex];
-       
-    var lastChallenge = _.where(currentStage.challenges,{status:1}).length;    
-    var currentChallenge = currentStage.challenges[lastChallenge];
-
-    for(var index = 0; index < currentChallenge.activities.length; index++){      
-        if (currentChallenge.activities[index].coursemoduleid == activityId) {
-          currentChallenge.activities[index].status = 1;
+    
+    for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex ++){
+        var currentChallenge = currentStage.challenges[challengeIndex];
+        if(currentChallenge.status == 0){        
+          var totalActivitiesByStage = currentChallenge.activities.length;
+          var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
+          if (totalActivitiesByStage == totalActivitiesCompletedByStage){
+              
+              userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
+              localStorage.setItem("usercourse", JSON.stringify(userCourse));              
+              var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+              var currentUserId = currentUser.userId;
+              var data = { userid :  currentUserId };          
+              var currentActivityModuleId = currentChallenge.coursemoduleid;              
+              moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, function(){},errorCallback);
+              return true;
+          }else{
+            return false;
+          }
+        }else{
+          return false;
         }
     }
-    var totalActivitiesByStage = currentChallenge.activities.length;
-    var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
-    
-    
-    if (totalActivitiesByStage == totalActivitiesCompletedByStage) {
-        var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-        var currentUserId = currentUser.userId;        
-        var data = {
-          userid :  currentUserId };
-          
-        var currentActivityModuleId = currentChallenge.coursemoduleid;
-        moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, successEndChallengeCallback,errorCallback);
-        return true;
-    }
-    else{
-      return false;
-    }
-};
-
-var successEndChallengeCallback = function(){
-  localStorage.setItem("closeStageModal",'true');
 };
 
 var _createNotification = function(activityId, triggerActivity){
