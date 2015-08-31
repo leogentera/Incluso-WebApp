@@ -40,6 +40,17 @@ angular
                 });
 
             };
+            
+            $scope.openModal_CloseChallenge = function (size) {                
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'ClosingChallengeModal.html',
+                    controller: 'closingStageController',
+                    size: size,
+                    windowClass: 'closing-stage-modal user-help-modal'
+                });
+            }
+            
 
             //Updated stage first time flag in scope, local storage and server
             $scope.updateStageFirstTime = function(){
@@ -66,21 +77,10 @@ angular
 
             };
 
-            if($scope.thisStage.firsttime)
-            {
+            if($scope.thisStage.firsttime){                
                 $scope.openModal_StageFirstTime();
                 $scope.updateStageFirstTime();
             }
-
-
-
-            var closingStageModal = localStorage.getItem('closeStageModal');
-            //if (closingStageModal == 'true') {
-            //    openStageModal();
-            //    localStorage.setItem('closeStageModal', 'false');
-            //}
-
-
 
            //calculate user's stage progress
             var stageProgressBuffer = 0;
@@ -106,8 +106,15 @@ angular
                     }
                 }
             }
-            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
-
+            
+            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);            
+            var challengeCompleted = _isChallengeCompleted();
+            
+            if(challengeCompleted){                
+                //openModal_CloseChallenge();
+                $scope.openModal_CloseChallenge();
+            }
+            
             //Load challenges images
             $scope.retosIconos = {
                 "Exploración inicial": "assets/images/challenges/stage-1/img-evaluacion inicial.svg",
@@ -161,7 +168,7 @@ angular
                             moduleid: activity.coursemoduleid,
                             updatetype: 0
                         };
-                        
+                                                
                         moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function (size) {
                             $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started = 1;
                             $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].datestarted = data.datestarted;
@@ -195,21 +202,9 @@ angular
                 var activity = _getActivityByCourseModuleId(coursemoduleid);
                 return activity.status;
             };
-
-            function openStageModal() {
-                setTimeout(function(){ 
-                var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'ClosingStage.html',
-                    controller: 'closingStageController',
-                    size: size,
-                    windowClass: 'closing-stage-modal user-help-modal'
-                });
-                }, 1000);
-            }
-        }])
-    .controller('closingStageController', function ($scope, $modalInstance) {
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
+            
+        }]).controller('closingStageController', function ($scope, $modalInstance) {
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
     });

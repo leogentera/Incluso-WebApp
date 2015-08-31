@@ -67,24 +67,33 @@ angular
                 
                 localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
      
-                _endActivityQuiz({
+                var activityModel = {
                     "usercourse": updatedActivityOnUsercourse,
                     "coursemoduleid": $scope.activity.coursemoduleid,
                     "answersResult": $scope.AnswersResult,
                     "userId": $scope.userprofile.id,
-
                     "startingTime": $scope.startingTime,
                     "endingTime": new Date(),
                     "token" : $scope.currentUser.token
-                });
-               
-               
+                };
+                                
+                //trigger activity type 2 is sent when the activity ends.
+                var triggerActivity = 2;
+                
+                _createNotification(activityModel.coursemoduleid, triggerActivity);
+                
+                moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,
+                    _endActivitySuccessCallback,errorCallback);
+                
                 var currentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage);
-  
-               
-            };
-
+                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage); 
+            };        
+            
+            var _endActivitySuccessCallback = function(){
+                
+            }
+            
+            
             $scope.addAbility = function () {
                 addHeight("#listaDinamica");
                 $scope.AnswersResult.answers[4].push(new String());
@@ -148,13 +157,13 @@ angular
 
                 //var validationMenssage = "Asegurate de contestar todas las preguntas antes de guardar";
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-
+                
                 if ($scope.AnswersResult.answers[0] != null) {
                     if ($scope.AnswersResult.answers[1][0] == true ||
                         $scope.AnswersResult.answers[1][1] == true ||
                         $scope.AnswersResult.answers[1][2] == true ||
                         $scope.AnswersResult.answers[1][3] == true) {
-                        if ($scope.AnswersResult.answers[2] != null) {
+                        if ($scope.AnswersResult.answers[2] != null && $scope.AnswersResult.answers[2] != "") {
                             if ($scope.AnswersResult.answers[3] != null) {
                                 if ($scope.AnswersResult.answers[4].length != 0) {
                                     var lastQuestionValidation = true;
@@ -497,15 +506,15 @@ angular
             }
 
 
-            $scope.openModal = function (size) {
-                var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'OpeningStageModal.html',
-                    controller: 'OpeningStageController',
-                    size: size,
-                    windowClass: 'user-help-modal'
-                });
-            };
+            //$scope.openModal = function (size) {
+            //    var modalInstance = $modal.open({
+            //        animation: $scope.animationsEnabled,
+            //        templateUrl: 'OpeningStageModal.html',
+            //        controller: 'OpeningStageController',
+            //        size: size,
+            //        windowClass: 'user-help-modal'
+            //    });
+            //};
 
             function addHeight(lista) {
                 $scope.finalHeight = angular.element(lista).height() + 177;
@@ -517,7 +526,7 @@ angular
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
-            $scope.openModal();
+            //$scope.openModal();
             getDataAsync();
 
             $scope.validateMisSuenosAnsweredQuestions = function () {
@@ -564,33 +573,33 @@ angular
             }
 
 
-            $scope.answerIndex = 1;
-            $scope.answerIndex1 = 1;
-
-            $scope.addToAnswerIndex = function (delta) {
-                $scope.answerIndex += delta;
-
-                if ($scope.answerIndex > 3) {
-                    $scope.answerIndex = 1;
-                }
-
-                if ($scope.answerIndex < 1) {
-                    $scope.answerIndex = 3;
-                }
-            };
-
-
-            $scope.addToAnswerIndex1 = function (delta) {
-                $scope.answerIndex1 += delta;
-
-                if ($scope.answerIndex1 > 5) {
-                    $scope.answerIndex1 = 1;
-                }
-
-                if ($scope.answerIndex1 < 1) {
-                    $scope.answerIndex1 = 5;
-                }
-            };
+            //$scope.answerIndex = 1;
+            //$scope.answerIndex1 = 1;
+            //
+            //$scope.addToAnswerIndex = function (delta) {
+            //    $scope.answerIndex += delta;
+            //
+            //    if ($scope.answerIndex > 3) {
+            //        $scope.answerIndex = 1;
+            //    }
+            //
+            //    if ($scope.answerIndex < 1) {
+            //        $scope.answerIndex = 3;
+            //    }
+            //};
+            //
+            //
+            //$scope.addToAnswerIndex1 = function (delta) {
+            //    $scope.answerIndex1 += delta;
+            //
+            //    if ($scope.answerIndex1 > 5) {
+            //        $scope.answerIndex1 = 1;
+            //    }
+            //
+            //    if ($scope.answerIndex1 < 1) {
+            //        $scope.answerIndex1 = 5;
+            //    }
+            //};
 
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {
@@ -647,6 +656,7 @@ angular
                     showWarningAndGoToTop();
                 }
             }
+                               
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
