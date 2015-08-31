@@ -170,7 +170,7 @@ var _isChallengeCompleted = function(){
               var data = { userid :  currentUserId };          
               var currentActivityModuleId = currentChallenge.coursemoduleid;              
               moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, function(){},errorCallback);
-              return true;
+              return currentActivityModuleId;
           }else{
             return false;
           }
