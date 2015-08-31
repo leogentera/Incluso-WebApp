@@ -45,13 +45,11 @@ angular
 
             function getDataAsync() {
                 console.log('Getting forum data');
-               //TODO Use MoodleIds forum id from the global app constants
-                moodleFactory.Services.GetAsyncForumInfo(64, getActivityInfoCallback, '');
-//                moodleFactory.Services.GetAsyncActivity($routeParams.moodleid, getActivityInfoCallback);
+                moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, '');
             }
 
             function getActivityInfoCallback() {
-               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 64));
+               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
                getForumsProgress();
                $scope.$emit('HidePreloader'); //hide preloader
             }
