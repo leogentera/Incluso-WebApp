@@ -9,7 +9,7 @@ var _courseId = 4;
 var _httpFactory = null;
 var _timeout = null;
 
-var _activityStatus = {};
+var _activityStatus = null;
 
 var _activityDependencies = [
     {
@@ -114,6 +114,16 @@ function syncCacheData (){
 
 }
 
+//Update activity status for activity blocking binding
+var updateActivityStatusDictionary = function(activityId){
+    var activityStatus = moodleFactory.Services.GetCacheObject("activityStatus");
+    if(activityStatus){
+        activityStatus[activityId] = 1;
+    }
+    localStorage.setItem("activityStatus",JSON.stringify(activityStatus));
+    _activityStatus[activityId] =1;
+};
+
 var _endActivity = function(activityModel){      
       _isStageCompleted();
       var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -125,7 +135,8 @@ var _endActivity = function(activityModel){
       //trigger activity type 2 is sent when the activity ends.
       var triggerActivity = 2;
       _createNotification(activityId, triggerActivity);
-    _activityStatus[activityModel.coursemoduleid] =1; // update activity status dictionary used for blocking activities
+    // update activity status dictionary used for blocking activity links
+    updateActivityStatusDictionary(activityModel.coursemoduleid);
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
           
 };
@@ -295,7 +306,10 @@ function _getActivityByCourseModuleId(coursemoduleid) {
             return matchingActivity;
 }
 
- function updateActivityStatus(activity_identifier) {              
+ function updateActivityStatus(activity_identifier) {
+                //Update activity status for activity blocking binding
+                updateActivityStatusDictionary(activity_identifier);
+                //Update activity status in usercourse
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
                 for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
@@ -318,9 +332,10 @@ function _getActivityByCourseModuleId(coursemoduleid) {
                 }
                 var theUserCouerseUpdated = theUserCouerse;
                 return theUserCouerseUpdated;
-            }           
-            
-             
+            }
+
+
+
  function updateUserStars (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
