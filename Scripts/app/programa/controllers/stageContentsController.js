@@ -59,8 +59,7 @@ angular
               $scope.$emit('HidePreloader'); //hide preloader
             }                                        
 
-            function getDataAsync() {       
-            debugger;                                           
+            function getDataAsync() {                                                             
               for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){                                                
                  var activityCache = (JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
                   if(activityCache){                      
@@ -114,7 +113,7 @@ angular
               if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                 if(!$scope.fuenteDeEnergia.activities[i].status){
                   $scope.fuenteDeEnergia.activities[i].status = true;  
-                  debugger;                 
+                                   
                   var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
                   localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
                   _endActivity($scope.fuenteDeEnergia);

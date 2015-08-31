@@ -202,8 +202,7 @@ var _createNotification = function(activityId, triggerActivity){
   for(var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++ ){
       var currentNotification = allNotifications[indexNotifications];
       if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId){
-          allNotifications[indexNotifications].timemodified = formattedDate;
-          debugger;
+          allNotifications[indexNotifications].timemodified = formattedDate;        
           localStorage.setItem("notifications",JSON.stringify(allNotifications));
           var dataModelNotification = {
               notificationid: allNotifications[indexNotifications].id,
@@ -358,7 +357,6 @@ function updateSubActivityStatus(coursemoduleid) {
                 //Update activity status for activity blocking binding
                 updateActivityStatusDictionary(activity_identifier);
                 //Update activity status in usercourse
-                debugger;
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
                 for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
