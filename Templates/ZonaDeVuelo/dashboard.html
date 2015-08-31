@@ -48,7 +48,7 @@
 
                 <div class="page-number">
                     <p class="text-center">
-                        <span>1</span>
+                        <span id="index">1</span>
                         <span>/</span>
                         <span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
                     </p>                    
@@ -222,13 +222,13 @@
                 function callback1(event) {
                     var item = this.currentItem;
                     owl.trigger("owl.goTo", item);
-                    $("span#index").text((item+1)+"/");
+                    $("span#index").text((item+1));
                 }
 
                 function callback2(event) {
                     var item = this.currentItem;
                     owl2.trigger("owl.goTo", item);
-                    $("span#index").text((item+1)+"/");
+                    $("span#index").text((item+1));
                 }
 
                 $("#next").click(function (ev) {

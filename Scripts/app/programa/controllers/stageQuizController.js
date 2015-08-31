@@ -64,9 +64,11 @@ angular
                     default:
                         break;
                 }
-                
+                //Update local storage and activities status array
                 localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
-     
+                _activityStatus[$scope.activity.coursemoduleid]=1;
+
+                //Update quiz on server
                 var activityModel = {
                     "usercourse": updatedActivityOnUsercourse,
                     "coursemoduleid": $scope.activity.coursemoduleid,
