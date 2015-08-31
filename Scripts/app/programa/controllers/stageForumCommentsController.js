@@ -87,7 +87,7 @@ angular
                 var data={
                     userId: userId,
                     stars: numStars,
-                    instance: 64,
+                    instance: $routeParams.moodleid,
                     instanceType: 0,
                     date: getdate()
                 };
@@ -286,7 +286,7 @@ angular
             };
 
             function getTopicDataAsync() {
-                moodleFactory.Services.GetAsyncForumInfo(64, getActivityInfoCallback, null, true);
+                moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
                 //$scope.$emit('HidePreloader');
             }
 
