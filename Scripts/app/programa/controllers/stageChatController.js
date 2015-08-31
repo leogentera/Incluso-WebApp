@@ -21,7 +21,8 @@ angular
             var index = 0;
             var parentIndex = 4;
             var activity = $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index];
-            $scope.goChat = function () {        
+            $scope.goChat = function () {     
+            debugger;   
                 var startedActivityCabinaDeSoporte = $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started || $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status;
                 // Start activity of 'cabina de soporte'                    
                 if (!startedActivityCabinaDeSoporte) {

@@ -331,10 +331,47 @@ function _getActivityByCourseModuleId(coursemoduleid) {
             return matchingActivity;
 }
 
+function updateSubActivityStatus(coursemoduleid) {
+                //Update activity status for activity blocking binding
+                //updateActivityStatusDictionary(coursemoduleid);
+                //Update activity status in usercourse                
+                var breakAll = false;
+                var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
+                for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
+                    var stage = theUserCouerse.stages[stageIndex];
+                    for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+                        var challenge = stage.challenges[challengeIndex];
+                        for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                            var activity = challenge.activities[activityIndex];
+                            if(activity.activities){
+                              console.log(activity.activities.length);
+                              for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++)
+                              {
+                                var subactivity = activity.activities[subactivityIndex];
+                                if (subactivity.coursemoduleid == coursemoduleid) {
+                                  subactivity.status = 1;
+                                  breakAll = true;
+                                  break;
+                                }
+                              } 
+                            }
+                                                       
+                        }
+                        if (breakAll)
+                            break;
+                    }
+                    if (breakAll)
+                        break;
+                }
+                var theUserCouerseUpdated = theUserCouerse;
+                return theUserCouerseUpdated;
+            }
+
  function updateActivityStatus(activity_identifier) {
                 //Update activity status for activity blocking binding
                 updateActivityStatusDictionary(activity_identifier);
                 //Update activity status in usercourse
+                debugger;
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
                 for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
@@ -779,7 +816,7 @@ var _activityRoutes = [
   { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
   { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
   { id: 115, url: '#'},
-  { id: 116, url: ''}, // Empty for cabina de soporte
+  { id: 68, url: '/ZonaDeVuelo/ExploracionFinal/zv_cabinadesoporte_chat'}, 
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
