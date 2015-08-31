@@ -959,9 +959,9 @@
             img {
                 display: block;
                 padding: 0; 
-                margin: 0; 
+                margin: 0 auto; 
                 border:none; 
-                max-width:100%;     
+                max-width:85%;     
                 border-radius:50%;          
             }
             figcaption {
@@ -1021,7 +1021,7 @@
         .user-data {
             display: block;
             position: relative;
-            padding: 6vw 0px;
+            padding: 5vw 0px;
             margin: 60px auto 0;
             margin-top: 8.5vw;
             /*width: 370px; */
@@ -1038,18 +1038,21 @@
                 font-weight: 500;
                 line-height: 1.4;
                 text-transform: capitalize;
+                margin-bottom: -1vw!important;
             }
             label {
                 padding: 0;
                 margin: 0;
                 color: @clr-blueLight;
                 font-weight: bold;
+                font-size: 5vw;
             }
             span {
                 padding: 0;
                 margin: 0;                    
                 color: inherit;
-                font-weight: bold;
+                font-weight: bold; 
+                font-size: 5vw;               
             } 
             .inline-list {
                 margin-top: 10px;
@@ -1084,7 +1087,7 @@
          Description: CSS to represent the tabbed list of top users and current
         ************************************************************************/ 
         .top-users {
-            margin-top: 25vw;
+            margin-top: 37vw;
             margin-bottom:0;
             background: #1e2e2e;
             // &:before{
@@ -1102,6 +1105,7 @@
 
             h3 {
                 padding-top: 1vw;
+                margin-bottom: 5vw;
             }
 
             .head,
@@ -1133,7 +1137,7 @@
             .current-user {
                 /*width: 370px;*/
                 padding: 0;
-                margin: 8vw auto 0;
+                margin: 5vw auto 0;
 
                 a {
                     display: block;
@@ -1143,9 +1147,13 @@
                 }
                 .user-data {
                     margin-top: 0;
-                    padding: 2vw 0;
+                    padding: 0 0 2vw;
                     height: auto;
                     background-color: transparent;
+
+                    p {
+                        margin-bottom: 4vw;
+                    }
                 }
             }
             [data-content-id] {
