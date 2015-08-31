@@ -543,14 +543,24 @@
         .owl-wrapper {height: auto;}
     }
     .progreso {
+        height: 64vw;
+        padding-top: 20vw;
+        padding-bottom: 117vw;
         border:none;
         background-color: transparent none;
         background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
-        background-position: left -707px;
+        //bg-stage-1-dashboard-progress
+        background-position: left -320vw;
         background-repeat: no-repeat; 
         .background-size(100%, auto); 
 
-        background: none;
+        //background: none;
+
+        .spinner {
+            max-width: 49%;
+            padding: 5% 9% 10%;
+            position: relative;
+        }
     }
 
     // .carousel{
