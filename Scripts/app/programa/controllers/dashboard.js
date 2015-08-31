@@ -142,8 +142,8 @@
                 var notifications = JSON.parse(localStorage.getItem("notifications"));
             }            
 
-            function getUserChat() {
-                moodleFactory.Services.GetUserChat($scope.user.id,getUserChatCallback, errorCallback);                
+            function getUserChat() {                
+                moodleFactory.Services.GetUserChat($scope.user.id,getUserChatCallback, errorCallback, true);                
             }
             
             function getUserChatCallback() {
