@@ -143,45 +143,6 @@ angular
 
                 if (url) {
                     $location.path(url);
-                } else {
-                    var startedActivityCabinaDeSoporte = $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started && !$scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status;
-
-                    // Start activity of 'cabina de soporte'                    
-                    if (!startedActivityCabinaDeSoporte) {
-                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        var data = {
-                            userid: currentUser.userId,
-                            datestarted: getdate(),
-                            moduleid: activity.coursemoduleid,
-                            updatetype: 0
-                        };
-                                                
-                        moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function (size) {
-                            $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started = 1;
-                            $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].datestarted = data.datestarted;
-                            localStorage.setItem('usercourse', JSON.stringify($scope.model));
-                            localStorage.setItem('startedActivityCabinaDeSoporte', JSON.stringify({$stage: $scope.idEtapa, $index: index, $parentIndex: parentIndex, $data: data}));
-
-                            //trigger activity type 1 is sent when the activity starts.
-                            var triggerActivity = 1;
-                            _createNotification(activity.coursemoduleid, triggerActivity);
-
-                            var modalInstance = $modal.open({
-                                animation: $scope.animationsEnabled,
-                                templateUrl: 'CabinaSoporteMsj.html',
-                                controller: function ($scope, $modalInstance) {
-                                    $scope.cancel = function () {
-                                        $modalInstance.dismiss('cancel');
-                                    };
-                                },
-                                size: size,
-                                windowClass: 'user-help-modal'
-                            });
-                            console.log("modal open");
-                        },function(){
-                            console.log('Error callback');    
-                        });
-                    }
                 }
             };
 
