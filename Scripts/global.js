@@ -195,7 +195,7 @@ var _createNotification = function(activityId, triggerActivity){
           debugger;
           localStorage.setItem("notifications",JSON.stringify(allNotifications));
           var dataModelNotification = {
-              notificationid: notificationByActivity.id,
+              notificationid: allNotifications[indexNotifications].id,
               timemodified : formattedDate,
               userid: currentUserId,
               already_read: 0
@@ -244,6 +244,18 @@ var successCallback = function(data){
 
 var errorCallback = function(data){
 };
+
+var _notificationExists = function(){
+  
+    var userNotifications = JSON.parse(localStorage.getItem('notifications'));
+    //var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
+    var countNotificationsUnread = _.filter(userNotifications, function(notif){
+        return (notif.timemodified != null && notif.read != true);
+    });				
+    var totalNotifications = countNotificationsUnread.length;
+    return  totalNotifications;
+  
+}
 
 function getActivityByActivity_identifier(activity_identifier) {          
             var matchingActivity = null;
