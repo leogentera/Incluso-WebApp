@@ -377,17 +377,25 @@ angular
 
             function updateMisCualidadesSelectedAnswers(currentQuestionIndex, question) {
                 if (question.userAnswer != null) {
+                    console.log(JSON.stringify(question));
                     var userAnswers = cleanText(question.userAnswer);
+                    console.log("userAnswers: " + userAnswers);
                     var userAnswersList = userAnswers.split(";");
+
+                    //userAnswersList = ["Cantar", "Hacer manualidades"]
                     for (var answerOptionsIndex = 0; answerOptionsIndex < question.answers.length; answerOptionsIndex++) {
-                        var answerOption = question.answers[answerOptionsIndex];
+                        var answerOption = question.answers[answerOptionsIndex]; //JS array of literal objects
+
+
                         for (var userAnswersListIndex = 0; userAnswersListIndex < userAnswersList.length; userAnswersListIndex++) {
-                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]);
+                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]).trim();
                             if (answerOption.answer == userAnswer) {
                                 $scope.misCualidadesAnswers[currentQuestionIndex][answerOptionsIndex] = true;
                             }
                         }
                     }
+
+                    console.log("$scope.misCualidadesAnswers: " + $scope.misCualidadesAnswers[currentQuestionIndex]);
                 }
             }
 
@@ -437,7 +445,7 @@ angular
                 return result;
             }
 
-            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misSuenosAnswers = [[], [], [], []];
 
@@ -448,23 +456,26 @@ angular
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];                
-                var activity = getActivityByActivity_identifier($scope.activity_identifier);                
+                var activity = getActivityByActivity_identifier($scope.activity_identifier);
+                console.log("The activity ID is: \n" + $scope.activity_identifier);
+                console.log("The activity data is: \n" + JSON.stringify(activity));
 
                 if (activity != null) {
+
                     if($scope.activity_identifier == 1009){
                         $scope.AnswersResult.answers = [0,0,0,0,0];
                     }
-                    $scope.coursemoduleid = activity.coursemoduleid;
-                    $scope.activityPoints = activity.points;
-                    $scope.activityname = activity.activityname;                            
+                    $scope.coursemoduleid = activity.coursemoduleid;    console.log("coursemoduleid: " + activity.coursemoduleid);
+                    $scope.activityPoints = activity.points;            console.log("points: " + activity.points);
+                    $scope.activityname = activity.activityname;        console.log("activityname: " + activity.activityname);
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     //$scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/" + $scope.coursemoduleid));
 
                     var activityFinished = false;
-
-                    if (activity.status != 0) {                        
+                    console.log("userprofile: " + $scope.userprofile.id);
+                    if (activity.status != 0) {
                         activityFinished = true;
                         $scope.setReadOnly = true;
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback);
@@ -503,9 +514,9 @@ angular
                             default:
                                 break;
                         }
-
                     }
                 }
+
                 else {
                     $scope.showWarning = true;
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
@@ -585,20 +596,21 @@ angular
             }
 
 
-            //$scope.answerIndex = 1;
+            $scope.answerIndex = 1;
             //$scope.answerIndex1 = 1;
-            //
-            //$scope.addToAnswerIndex = function (delta) {
-            //    $scope.answerIndex += delta;
-            //
-            //    if ($scope.answerIndex > 3) {
-            //        $scope.answerIndex = 1;
-            //    }
-            //
-            //    if ($scope.answerIndex < 1) {
-            //        $scope.answerIndex = 3;
-            //    }
-            //};
+
+            $scope.addToAnswerIndex = function (delta, maxPages) {
+
+                $scope.answerIndex = parseInt($('span#index').text());
+
+                if ($scope.answerIndex > maxPages) {
+                    $scope.answerIndex = 1;
+                }
+
+                if ($scope.answerIndex < 1) {
+                    $scope.answerIndex = maxPages;
+                }
+            };
             //
             //
             //$scope.addToAnswerIndex1 = function (delta) {
@@ -631,6 +643,7 @@ angular
                     }
 
                     if ($scope.misCualidadesAnswers.length == validatedAnswers) {
+                        console.log("Answers ARE Valid");
                         $scope.showWarning = false;
                         $scope.navigateToPage(2);
                     } else {
