@@ -79,7 +79,7 @@
                     courseId: $scope.usercourse.courseid
                 };
 
-                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel);
+                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel,function(){},function(){});
             };
 
             $scope.playVideo = function(videoAddress, videoName){

@@ -14,15 +14,15 @@
 						</h3>
 					</div>
 					<div class="panel-body" collapse="isCollapsed">
-						<div class="stage perform">
-							<button class="icon icon-close"></button>
-							<!-- <button class="icon icon-play" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"></button> -->
-							<!-- <button class="icon icon-play"></button> -->
-							<!-- <a class="icon icon-play"></a> -->
-							<a class="icon icon-play" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"></a>
-							<figure class="player">
-								<img ng-click="playVideo()" src="assets/media/thumb-bienvenida.jpg" />
-							</figure>
+						<div class="video-player">
+							<div class="stage">
+								<a class="icon icon-play" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')">
+									<span class="glyphicon glyphicon-play"></span>
+								</a>
+								<figure class="poster">
+									<img src="assets/media/thumb-bienvenida.jpg" alt="video" />
+								</figure>
+							</div>
 						</div>
 					</div>
 				</div>
