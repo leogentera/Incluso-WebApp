@@ -27,7 +27,6 @@
       <section class="wall">
         <div class="part" ng-repeat="activity in fuenteDeEnergia.activities">
           <div ng-if="filter == activity.activity_type && activity.activityintro != 'video' || !filter || filter == activity.activityintro || filter == 'Obligatorio' && !activity.optional">
-
             <div ng-if="activity.activity_type == 'url' && activity.activityintro != 'video' ">
               <div class="type">
                 <div class="col-xs-1 type-icon">
@@ -45,7 +44,6 @@
                 </div>
               </div>
             </div>
-
             <div ng-if="activity.activityintro == 'video' ">
               <div class="type">
                 <div class="col-xs-1 type-icon">
@@ -63,7 +61,6 @@
                 </div>
               </div>
             </div>
-
             <div ng-if="activity.activity_type == 'page'">
               <div class="type">
                 <div class="col-xs-1 type-icon">
@@ -81,7 +78,6 @@
                 </div>
               </div>
             </div>
-
             <div ng-if="activity.activity_type == 'resource'">
               <div class="type">
                 <div class="col-xs-1 type-icon">
@@ -99,7 +95,6 @@
                 </div>
               </div>      
             </div>
-
             <div class="detail">  
               <div>
                 <div ng-if="activity.activity_type == 'resource'" class="image-container">
@@ -109,9 +104,7 @@
                   <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>
                   <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'page' && !activity.status">Mostrar texto...</span>
                   <span ng-show="activity.status" ng-bind-html="activity.pageContent"></span>
-
                   <span ng-bind-html="activity.file.pageContent"></span>
-
                   <section class="component video-gallery ng-scope"  ng-if="activity.activityintro == 'video'" ng-click="updateStatus(activity.groupid)">
                     <div class="panel panel-video">
                       <div class="stage perform">   
@@ -142,7 +135,7 @@
       </section>
 
       <section>
-        <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
+        <a class="btn btn-primary btn-lg btn-cnt" ng-click="back()">Regresar</a>
         <div class="txt-renglon centered txt-bigger"></div> 
       </section>
     </div>
