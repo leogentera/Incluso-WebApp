@@ -295,11 +295,14 @@
                     });
 
                     for(j = 0; j < forum["discussions"][i]["posts"][0].replies.length; j++) {
-                        var reply = forum["discussions"][i]["posts"][0].replies;
+                        var reply = forum["discussions"][i]["posts"][0].replies[j];
                         if (reply && reply.has_attachment == "1") {
                           reply["attachments"] = [];
                           reply["attachments"].push({ filename: reply.filename, fileurl: reply.fileurl, mimetype: reply.mimetype});
                         }
+                        reply["replies"] = _.filter(posts, function (p) {
+                                return p.post_parent == reply.post_id;
+                            });
                     }
                 }
             }

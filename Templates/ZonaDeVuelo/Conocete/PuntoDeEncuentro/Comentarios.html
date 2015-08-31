@@ -102,10 +102,10 @@
         <i class="icomoon icon-plus"></i>
         </div>-->
             <div class="social">
-              <div ng-hide="p.liked == 1" ng-click="clickLikeButton(p.id)">
+              <div ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.id)">
                 <span class="icomoon icon-like"></span> Me gusta
               </div>
-              <div ng-hide="!p.liked == 1" ng-click="clickLikeButton(p.id)">
+              <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.id)">
                 <span class="icomoon icon-like"></span> Ya no me gusta
               </div>
               <div ng-click="isCommentModalCollapsed[p.id] = !isCommentModalCollapsed[p.id]">
