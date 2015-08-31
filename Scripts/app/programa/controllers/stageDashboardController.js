@@ -124,26 +124,27 @@ angular
                 playVideo(videoAddress, videoName);
             };
 
-            $scope.canStartActivity = function(activity,index,parentIndex){
+            $scope.canStartActivity = function(activity){
                 if(!activity.status) {
                     var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
-                        return x.id == activity.coursemoduleid
+                        return x.id == activity.coursemoduleid;
                     });
                     if (activityDependenciesRecord[0]) {
                         var activityDependencies = activityDependenciesRecord[0].dependsOn;
                         var dependenciesCount = activityDependencies.length;
                         for (var i = 0; i < dependenciesCount; i++) {
                             if (!$scope.activityStatus[activityDependencies[i]]) {
-                                console.log("Cannot start activity yet");
                                 return false;
                             }
                         }
                     }
                 }
-                $scope.startActivity(activity,index,parentIndex);
+                return true;
+
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
+                if(!$scope.canStartActivity(activity)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.coursemoduleid })[0].url;
 
                 if (url) {
