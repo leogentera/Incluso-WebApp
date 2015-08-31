@@ -60,7 +60,11 @@
 
 <!--                 <div class="page-number">
                     <p class="text-center">
+<<<<<<< HEAD
+                        <span>{{model.stages[idEtapa].challenges.indexOf(reto) + 1}}</span>
+=======
                         <span id="index">1</span>
+>>>>>>> origin/1.1
                         <span>/</span>
                         <span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
                     </p>                    

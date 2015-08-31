@@ -6,11 +6,12 @@
         '$location',
         '$anchorScroll',
         '$window',
+        '$http',
         '$modal',
-        function ($rootScope, $scope, $location, $anchorScroll, $window, $modal ) {
+        function ($rootScope, $scope, $location, $anchorScroll, $window, $http,$modal ) {
         	// http://stackoverflow.com/questions/15033195/showing-spinner-gif-during-http-request-in-angular
 			// To handle page reloads		
-			
+			_httpFactory = $http;
         	if ($location.$$path.split('/')[1]) {
         		$scope.loading = true;
         	} else {
@@ -154,18 +155,15 @@
 
 
 			$scope.showNotification = function(){
-				
 				if ($scope.pageName == 'Notificaciones') {
 					return false;
 				}else{
-				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
-				//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
-				var countNotificationsUnread = _.filter(userNotifications, function(notif){
-                    return (notif.timemodified != null && notif.read != true);
-                });				
-				$rootScope.totalNotifications = countNotificationsUnread.length;
-				return  countNotificationsUnread.length > 0;
-				}
+					var totalNotifications = _notificationExists();
+					if(totalNotifications>= 1){
+						$rootScope.totalNotifications = totalNotifications;
+						return true;
+					}else {return false;}
+				}				
 			}
 			
 			$scope.showChatNotification = function(){
@@ -190,29 +188,14 @@
 				}
 			};
 
-            //Load activity status dictionary
-            _activityStatus = {};
-            var usercourse = moodleFactory.Services.GetCacheJson("usercourse");
-            var stagesCount = usercourse.stages.length;
-            var i, j,k;
-            for (i = 0; i < stagesCount; i++) {
-                var stage = usercourse.stages[i];
-                var challengeCount = stage.challenges.length;
-                for (j = 0; j <challengeCount ; j++) {
-                    var challenge = stage.challenges[j];
-                    var challengeActivitiesCount = challenge.activities.length;
-                    for (k = 0; k < challengeActivitiesCount; k++) {
-                        var activity = challenge.activities[k];
-                        console.log(activity.coursemoduleid+" - "+activity.activityname);
-                        _activityStatus[activity.coursemoduleid] = activity.status;
-                    }
 
-                }
-            }
+
 
             //Helps defining if activity can be started
             $scope.canStartActivity = function(activityId){
-
+                if(!_activityStatus) {
+                    _activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
+                }
                 if(!_activityStatus[activityId]) {
                     var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
                         return x.id == activityId;

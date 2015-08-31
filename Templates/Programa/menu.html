@@ -8,7 +8,7 @@
                     <div id="navBar" class="navbar" ng-class="{'navbar-blue': navbarBlue, 'navbar-orange': navbarOrange}">
                       <ul ng-click="sideToggle()">
                         <li>
-                          <i class="icomoon icon-cross white"></i>
+                          <span class="icomoon icon-cross white"></span>
                         </li>
                         <li>
                           <a class="navbar-heading"> Menu</a>
@@ -24,25 +24,25 @@
                     </div>
                   </nav>
                   <ul class="nav" ng-controller="menuController">
-                    <li><a ng-click="navigateTo('ProgramaDashboard', 'sideToggle')"><i class="icomoon icon-home"></i> Inicio</a></li>
-                    <li><a ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"><i class="icomoon icon-video-file"></i> Acerca de Incluso</a></li>
-                    <li><a ng-click="playVideo('assets/media', 'video-tutorial.mp4')"><i class="icomoon icon-video-file"></i> Guía de uso </a></li>
+                    <li><a ng-click="navigateTo('ProgramaDashboard', 'sideToggle')"><span class="icomoon icon-home"></span> Inicio</a></li>
+                    <li><a ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"><span class="icomoon icon-video-file"></span> Acerca de Incluso</a></li>
+                    <li><a ng-click="playVideo('assets/media', 'video-tutorial.mp4')"><span class="icomoon icon-video-file"></span> Guía de uso </a></li>
                     <li>
                         <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="0"></i>-->
                         <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="0" ng-show="!one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
                         <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="0" ng-show="one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
                         <a class="menu-blue" ng-click="navigateTo('/ZonaDeVuelo/Dashboard/1','sideToggle')">
-                          <i class="icomoon icon-spaceship">
+                          <span class="icomoon icon-spaceship">
                               <span class="path1"></span>
                               <span class="path2"></span>
                               <span class="path3"></span>        
-                          </i>
+                          </span>
                           Zona de Vuelo
                         </a>
                         <div class="submenu" id="sub0">
                             <ul>
                                 <li>Exploración inicial</li> 
-                                <li><a ng-class="canStartActivity(150)" ng-click="navigateTo('/ZonaDeVuelo/ExploracionInicial/1001', 'sideToggle',150)">Exploración inicial</a></li>
+                                <li><a ng-class="canStartActivity(150)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/ExploracionInicial/1001', 'sideToggle',150)">Exploración inicial</a></li>
                             </ul>
                             <ul>
                               <li>Cuarto de recursos</li>
@@ -53,7 +53,7 @@
                                 <li><a ng-class="canStartActivity(145)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia', 'sideToggle',145)">Fuente de energía</a></li>
                                 <li><a ng-class="canStartActivity(139)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/RetoMultiple/1039', 'sideToggle',139)">Reto múltiple </a></li>
                                 <li><a ng-class="canStartActivity(151)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64', 'sideToggle',151)">Punto de encuentro </a></li>
-                                <li><a ng-class="canStartActivity(149)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/ZonaDeContacto', 'sideToggle',149)">Zona de contacto</a></li>
+                                <li><a ng-class="canStartActivity(149)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/ZonaDeContacto/149', 'sideToggle',149)">Zona de contacto</a></li>
                             </ul>
                             
                             <ul>
@@ -62,7 +62,7 @@
                                 <li><a ng-class="canStartActivity(71)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisCualidades/1005', 'sideToggle',71)">Mis cualidades</a></li>
                                 <li><a ng-class="canStartActivity(70)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisGustos/1006', 'sideToggle',70)">Mis gustos</a></li>
                                 <li><a ng-class="canStartActivity(72)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/Suena/1007', 'sideToggle',72)">Sueña</a></li>
-                                <li><a ng-class="canStartActivity(73)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro', 'sideToggle',73)">Punto de encuentro </a></li>
+                                <li><a ng-class="canStartActivity(73)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73', 'sideToggle',73)">Punto de encuentro </a></li>
                             </ul>
                             <ul>
                                 <li>Cabina de soporte</li>
@@ -81,11 +81,11 @@
                         <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="1" ng-show="!two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
                         <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="1" ng-show="two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
                         <a class="menu-green" ng-click="navigateTo('/ZonaDeNavegacion/Dashboard/1', 'sideToggle')">
-                          <i class="icomoon icon-asterodis">
+                          <span class="icomoon icon-asterodis">
                               <span class="path1"></span>
                               <span class="path2"></span>
                               <span class="path3"></span>        
-                          </i>    
+                          </span>    
                           Zona de navegacion
                         </a>
                         <!--<div class="submenu" id="sub1">
@@ -130,11 +130,11 @@
                          <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="1" ng-show="!three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
                         <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="1" ng-show="three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
                         <a class="menu-pink" ng-click="navigateTo('/ZonaDeAterrizaje/Dashboard/2', 'sideToggle')">
-                          <i class="icomoon icon-planet">
+                          <span class="icomoon icon-planet">
                               <span class="path1"></span>
                               <span class="path2"></span>
                               <span class="path3"></span>        
-                          </i>    
+                          </span>    
                           Zona de aterrizaje
                         </a>
                         <!--<div class="submenu" id="sub2">
@@ -174,17 +174,17 @@
                             </ul>
                         </div>-->
                     </li>
-                    <li class="hidden"><a class="menu-green" ng-href="#"><i class="icomoon icon-asterodis"></i>Zona de Navegación</a></li>
-                    <li class="hidden"><a class="menu-pink" ng-href="#"><i class="icomoon icon-planet"></i>Zona de Aterrizaje</a></li>                    
-                    <li><a ng-click="navigateTo('HallOfFame', 'sideToggle')"><i class="icomoon icon-cup"></i> Salón de la fama</a></li>
-                    <li class="hidden"><a><i class="icomoon icon-racing-flag "></i> Recuerdos Incluso</a></li>
-                    <li class="hidden"><a><i class="icomoon icon-loop"></i> Seguimiento</a></li>
-                    <li class="hidden"><a><i class="icomoon icon-document"></i> Certificación</a></li>                    
-                    <li class="hidden"><a><i class="icomoon icon-lifesaver"></i> Preguntas frecuentes</a></li>
-                    <li><a ng-click="navigateTo('PrivacyNotice', 'sideToggle')"><i class="icomoon icon-privacy"></i> Aviso de privacidad</a></li>
-                    <li><a ng-click="navigateTo('TermsOfUse', 'sideToggle')"><i class="icomoon icon-books"></i> Condiciones de uso</a></li>
+                    <li class="hidden"><a class="menu-green" ng-href="#"><span class="icomoon icon-asterodis"></span>Zona de Navegación</a></li>
+                    <li class="hidden"><a class="menu-pink" ng-href="#"><span class="icomoon icon-planet"></span>Zona de Aterrizaje</a></li>                    
+                    <li><a ng-click="navigateTo('HallOfFame', 'sideToggle')"><span class="icomoon icon-cup"></span> Salón de la fama</a></li>
+                    <li class="hidden"><a><span class="icomoon icon-racing-flag "></span> Recuerdos Incluso</a></li>
+                    <li class="hidden"><a><span class="icomoon icon-loop"></span> Seguimiento</a></li>
+                    <li class="hidden"><a><span class="icomoon icon-document"></span> Certificación</a></li>                    
+                    <li class="hidden"><a><span class="icomoon icon-lifesaver"></span> Preguntas frecuentes</a></li>
+                    <li><a ng-click="navigateTo('PrivacyNotice', 'sideToggle')"><span class="icomoon icon-privacy"></span> Aviso de privacidad</a></li>
+                    <li><a ng-click="navigateTo('TermsOfUse', 'sideToggle')"><span class="icomoon icon-books"></span> Condiciones de uso</a></li>
                     <li class="separate"></li>                    
-                    <li><a ng-click="logout()"><i class="icomoon icon-logout"></i> Salir</a></li>
+                    <li><a ng-click="logout()"><span class="icomoon icon-logout"></span> Salir</a></li>
                   </ul>
                 </div>
             </div>

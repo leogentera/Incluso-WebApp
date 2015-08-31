@@ -9,7 +9,7 @@ var _courseId = 4;
 var _httpFactory = null;
 var _timeout = null;
 
-var _activityStatus = {};
+var _activityStatus = null;
 
 var _activityDependencies = [
     {
@@ -114,6 +114,16 @@ function syncCacheData (){
 
 }
 
+//Update activity status for activity blocking binding
+var updateActivityStatusDictionary = function(activityId){
+    var activityStatus = moodleFactory.Services.GetCacheObject("activityStatus");
+    if(activityStatus){
+        activityStatus[activityId] = 1;
+    }
+    localStorage.setItem("activityStatus",JSON.stringify(activityStatus));
+    _activityStatus[activityId] =1;
+};
+
 var _endActivity = function(activityModel){      
       _isStageCompleted();
       var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -125,7 +135,8 @@ var _endActivity = function(activityModel){
       //trigger activity type 2 is sent when the activity ends.
       var triggerActivity = 2;
       _createNotification(activityId, triggerActivity);
-    _activityStatus[activityModel.coursemoduleid] =1; // update activity status dictionary used for blocking activities
+    // update activity status dictionary used for blocking activity links
+    updateActivityStatusDictionary(activityModel.coursemoduleid);
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
           
 };
@@ -170,7 +181,7 @@ var _isChallengeCompleted = function(){
               var data = { userid :  currentUserId };          
               var currentActivityModuleId = currentChallenge.coursemoduleid;              
               moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, function(){},errorCallback);
-              return true;
+              return currentActivityModuleId;
           }else{
             return false;
           }
@@ -183,27 +194,27 @@ var _isChallengeCompleted = function(){
 var _createNotification = function(activityId, triggerActivity){
   
   currentUserId = localStorage.getItem("userId");
-  
+  var currentDate = new Date();
+  var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
+  var formattedDate = currentMonth + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
-  var notificationByActivity = _.find(allNotifications, function(notif){    
-    if (notif.trigger == triggerActivity && notif.activityidnumber == activityId) {
-      return true;
-    }
-    return false;    
-  });
-  
-  if (notificationByActivity){
-      var dataModelNotification = {
-          notificationid: notificationByActivity.id,
-          timemodified : new Date(),
-          userid: currentUserId,
-          already_read: 0
-      };
-      moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
+ 
+  for(var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++ ){
+      var currentNotification = allNotifications[indexNotifications];
+      if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId){
+          allNotifications[indexNotifications].timemodified = formattedDate;
+          debugger;
+          localStorage.setItem("notifications",JSON.stringify(allNotifications));
+          var dataModelNotification = {
+              notificationid: allNotifications[indexNotifications].id,
+              timemodified : formattedDate,
+              userid: currentUserId,
+              already_read: 0
+              };              
+          moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
+      }else{        
+      }
   }
-  else{
-    
-  }  
 };
 
 var _coachNotification = function(){
@@ -244,6 +255,18 @@ var successCallback = function(data){
 
 var errorCallback = function(data){
 };
+
+var _notificationExists = function(){
+  
+    var userNotifications = JSON.parse(localStorage.getItem('notifications'));
+    //var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
+    var countNotificationsUnread = _.filter(userNotifications, function(notif){
+        return (notif.timemodified != null && notif.read != true);
+    });				
+    var totalNotifications = countNotificationsUnread.length;
+    return  totalNotifications;
+  
+}
 
 function getActivityByActivity_identifier(activity_identifier) {          
             var matchingActivity = null;
@@ -295,7 +318,10 @@ function _getActivityByCourseModuleId(coursemoduleid) {
             return matchingActivity;
 }
 
- function updateActivityStatus(activity_identifier) {              
+ function updateActivityStatus(activity_identifier) {
+                //Update activity status for activity blocking binding
+                updateActivityStatusDictionary(activity_identifier);
+                //Update activity status in usercourse
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
                 for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
@@ -318,9 +344,10 @@ function _getActivityByCourseModuleId(coursemoduleid) {
                 }
                 var theUserCouerseUpdated = theUserCouerse;
                 return theUserCouerseUpdated;
-            }           
-            
-             
+            }
+
+
+
  function updateUserStars (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -725,22 +752,21 @@ var _staticStages = [
 ];
 
 var _activityRoutes = [
-  { id: 140, url: '/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial'},
-  { id: 150, url: '/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial'},
+  { id: 150, url: '/ZonaDeVuelo/ExploracionInicial/1001'},
   { id: 112, url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia'},
   { id: 113, url: '#'},
-  { id: 149, url: '/ZonaDeVuelo/Conocete/ZonaDeContacto'},
+  { id: 149, url: '/ZonaDeVuelo/Conocete/ZonaDeContacto/149'},
   { id: 145, url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia'},
-  { id: 139, url: '/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple'},
+  { id: 139, url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
   { id: 151, url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
   { id: 114, url: '#'},
   { id: 146, url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia'},
-  { id: 70, url: '/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos'},
-  { id: 71, url: '"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades"'},
-  { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena'},
-  { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro'},
+  { id: 70, url: '/ZonaDeVuelo/MisSuenos/MisGustos/1006'},
+  { id: 71, url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
+  { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
+  { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
   { id: 115, url: '#'},
   { id: 116, url: ''}, // Empty for cabina de soporte
-  { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal'}
+  { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
