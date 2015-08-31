@@ -45,10 +45,7 @@
                         <span class="icomoon icon-arrow-bold-right"></span>
                     </a>                    
                 </div>
-                <!-- <div class="centered paginate">
-                    <span id="index" class="txt-bigger">1/</span>
-                    <span class="white txt-bigger">{{model.stages[idEtapa].challenges.length}}</span>
-                </div> -->
+
                 <div class="page-number">
                     <p class="text-center">
                         <span>1</span>
@@ -58,36 +55,6 @@
                 </div>                                                
             </section>
 
-<!--             <section class="holoproj">
-                <h2 class="subtitle centered">- RETOS -</h2>
-                <div class="centered txt-title" ng-bind="challengeName"></div>
-                <div id="carousel-example-generic2" class="carousel">
-                    <div id="owl-demo2" class="owl-carousel">
-                        <div class="item visib" ng-repeat="reto in model.stages[idEtapa].challenges">
-                            <img ng-src="{{retosIconos[reto.sectionname]}}">
-                            <div class="subtitle centered text-uppercase" ng-bind="reto.sectionname"></div>
-                            <div class="txt-renglon challenge-description" ng-bind="reto.activityintro"></div>
-                        </div>
-
-                    </div>
-
-                    <a class="control" href="#" id="prev">
-                        <span class="icomoon icon-arrow-bold-left"></span>
-                    </a>
-                    <a class="control" href="#" id="next">
-                        <span class="icomoon icon-arrow-bold-right"></span>
-                    </a>                    
-                </div>
-
-                <div class="light"><img src="assets/images/img-light-cone.png"></div>
-                <div class="centered paginate">
-                    <span id="index" class="txt-bigger">1/</span>
-                    <span class="white txt-bigger">{{model.stages[idEtapa].challenges.length}}</span>
-                </div>
-            </section> -->
-
-            <!-- <section class="jector">                
-            </section> -->
             <section class="parts activities">
                 <div id="owl-demo" class="owl-carousel">
                     <div ng-repeat="challenge in model.stages[idEtapa].challenges">
@@ -107,10 +74,11 @@
                   <img src="assets/images/img-consoles.png">
                 </div> -->
             </section>
+
             <section class="progreso">
                 <div class="spinner">
                     <span ng-bind="puntosObtenidos"></span>
-                    <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png">
+                    <!-- <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png"> --> <img src="" alt="">
 
                     <div class="circle"></div>
                     <div class="text">{{stageProgress}}%</div>
@@ -120,16 +88,16 @@
                     <p>en la zona</p>
                 </div>
             </section>
+
             <section class="hangar-bay">
                 <div id="ship">
-                    <img src="assets/images/img-ship-01.png"/>
+                    <!-- <img src="assets/images/img-ship-01.png"/> -->
                 </div>
             </section>
 
             <script type="text/ng-template" id="ClosingStage.html">
                 <div class="modal-robot robot-lg closing-stage-modal user-help">
                     <img src="assets/images/img-robot-sm.svg">
-
                     <div class="modal-header">
                         <button class="icon icon-close" ng-click="cancel()">
                             <span class="icomoon icon-cross"></span>
@@ -148,11 +116,10 @@
                             ¡Ahora tu aventura ya tiene un rumbo!
                         </p>
                     </div>
-
                 </div>
             </script>
         </article>
-        <!-- initial message -->
+
         <script type="text/ng-template" id="OpeningStageModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help">
                 <img src="assets/images/img-robot-lg.svg">
@@ -172,6 +139,7 @@
                 </div>
             </div>
         </script>
+
         <script type="text/ng-template" id="ClosingChallengeModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help">
                 <img src="assets/images/img-robot-lg.svg">
@@ -219,60 +187,60 @@
         setTimeout(function () {
             var hits = 1;
 
-            //Carrusel de retos
-            var owl2 = $("#owl-demo2");
+                //Carrusel de retos
+                var owl2 = $("#owl-demo2");
 
-            owl2.owlCarousel({
-                navigation: false,
-                pagination: false,
-                //paginationSpeed: 1000,
-                goToFirstSpeed: 2000,
-                singleItem: true,
-                autoHeight: true,
-                touchDrag:false,
-                mouseDrag:false,
-                transitionStyle:"fade",
-                afterMove: callback1
-            });
+                owl2.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    //paginationSpeed: 1000,
+                    goToFirstSpeed: 2000,
+                    singleItem: true,
+                    autoHeight: true,
+                    touchDrag:false,
+                    mouseDrag:false,
+                    transitionStyle:"fade",
+                    afterMove: callback1
+                });
 
-            //Carrusel de Actividades
-            var owl = $("#owl-demo");
+                //Carrusel de Actividades
+                var owl = $("#owl-demo");
 
-            owl.owlCarousel({
-                navigation: false,
-                pagination: false,
-                //paginationSpeed: 1000,
-                goToFirstSpeed: 2000,
-                singleItem: true,
-                autoHeight: true,
-                touchDrag:false,
-                mouseDrag:false,
-                transitionStyle:"fade",
-                afterMove: callback2
-            });
+                owl.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    //paginationSpeed: 1000,
+                    goToFirstSpeed: 2000,
+                    singleItem: true,
+                    autoHeight: true,
+                    touchDrag:false,
+                    mouseDrag:false,
+                    transitionStyle:"fade",
+                    afterMove: callback2
+                });
 
-            function callback1(event) {
-                var item = this.currentItem;
-                owl.trigger("owl.goTo", item);
-                $("span#index").text((item+1)+"/");
-            }
+                function callback1(event) {
+                    var item = this.currentItem;
+                    owl.trigger("owl.goTo", item);
+                    $("span#index").text((item+1)+"/");
+                }
 
-            function callback2(event) {
-                var item = this.currentItem;
-                owl2.trigger("owl.goTo", item);
-                $("span#index").text((item+1)+"/");
-            }
+                function callback2(event) {
+                    var item = this.currentItem;
+                    owl2.trigger("owl.goTo", item);
+                    $("span#index").text((item+1)+"/");
+                }
 
-            $("#next").click(function (ev) {
-                owl.trigger('owl.next');
-                ev.preventDefault();
+                $("#next").click(function (ev) {
+                    owl.trigger('owl.next');
+                    ev.preventDefault();
 
-            });
+                });
 
-            $("#prev").click(function (ev) {
-                owl.trigger('owl.prev');
-                ev.preventDefault();
-            });
-        }, 1000);
+                $("#prev").click(function (ev) {
+                    owl.trigger('owl.prev');
+                    ev.preventDefault();
+                });
+            }, 1000);
     });
 </script>
