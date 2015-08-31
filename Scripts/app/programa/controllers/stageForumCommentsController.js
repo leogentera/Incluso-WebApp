@@ -62,8 +62,6 @@ angular
                 var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussionId == discussionId; });
                 alreadyCommented? alreadyCommented.commentsCount++ : forumsCommentsCountCollection.push({'discussionId':discussionId, 'commentsCount':1});
                 localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
-                console.log('Updated');
-
             };
             var endForumActivity = function(){
 
@@ -87,7 +85,7 @@ angular
                 var data={
                     userId: userId,
                     stars: numStars,
-                    instance: 64,
+                    instance: $routeParams.moodleid,
                     instanceType: 0,
                     date: getdate()
                 };
@@ -114,7 +112,7 @@ angular
                 if(isActivityFinished && activityFromTree.status == 0) endForumActivity();
                 getDataAsync();
             };
-
+            //TODO implement adding points to user
             var addPointsToUser = function(){
 
             };
@@ -131,10 +129,11 @@ angular
                 _uncollapse(element, $scope.forumModals);
             };
 
-            var createPostDataObject = function( parentId, message, postType){
+            var createReplyDataObject = function( parentId, message, postType){
+                var userId = localStorage.getItem("userId");
                 var dataObject= {
                     "userid":userId,
-                    "discussionid": $scope.discussion.posts[0].discussion,
+                    "discussionid": $scope.discussion.discussion_id,
                     "parentid": parentId,
                     "message": message,
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
@@ -148,7 +147,7 @@ angular
             $scope.isCommentModalCollapsed= [];
             $scope.replyText = null;
             $scope.replyToPost = function(that, parentId, topicId){
-                var dataObejct = createPostDataObject(parentId, that.replyText, 1);
+                var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){
@@ -159,7 +158,6 @@ angular
                         $scope.$emit('ShowPreloader');
                         //updateForumProgress(parentId);
                         updateForumProgress(topicId);
-                        debugger;
                         checkForumProgress();
                         //$scope.$emit('HidePreloader');
                     },
@@ -175,18 +173,23 @@ angular
             $scope.videoToPost = null;
             $scope.attachmentToPost = null;
 
-            var userId = localStorage.getItem("userId");
-            $scope.postTextToForum = function(){
+            var createPostDataObject = function(message, postType, attachment){
+                var userId = localStorage.getItem("userId");
                 var dataObject = {
                     "userid":userId,
-                    "discussionid": $scope.discussion.posts[0].discussion,
-                    "parentid": $scope.discussion.posts[0].id,
-                    "message": $scope.textToPost,
+                    "discussionid": $scope.discussion.discussion_id,
+                    "parentid": $scope.discussion.post_id,
+                    "message": message,
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "posttype": 1,
-                    "fileToUpload":""
+                    "posttype": postType,
+                    "fileToUpload": attachment? attachment.base64 : null,
                 };
+                return dataObject;
+            };
+
+            $scope.postTextToForum = function(){
+                var dataObject = createPostDataObject($scope.textToPost, 1, null);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
@@ -202,19 +205,9 @@ angular
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         $scope.$emit('HidePreloader');
                     });
-
             };
             $scope.postLinkToForum = function(){
-                var dataObject = {
-                    "userid":userId,
-                    "discussionid": $scope.discussion.posts[0].discussion,
-                    "parentid": $scope.discussion.posts[0].id,
-                    "message": $scope.linkToPost,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "posttype": 2,
-                    "fileToUpload":""
-                };
+                var dataObject = createPostDataObject($scope.linkToPost, 2, null);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
@@ -231,16 +224,7 @@ angular
                     });
             };
             $scope.postVideoToForum = function(){
-                var dataObject = {
-                    "userid":userId,
-                    "discussionid": $scope.discussion.posts[0].discussion,
-                    "parentid": $scope.discussion.posts[0].id,
-                    "message": $scope.videoToPost,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "posttype": 3,
-                    "fileToUpload":""
-                };
+                var dataObject = createPostDataObject($scope.videoToPost, 3, null);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
@@ -257,11 +241,11 @@ angular
                     });
             };
             $scope.postAttachmentToForum = function(){
-                console.log($scope.attachmentToPost);
+                var userId = localStorage.getItem("userId");
                 var dataObject = {
                     "userid":userId,
-                    "discussionid": $scope.discussion.posts[0].discussion,
-                    "parentid": $scope.discussion.posts[0].id,
+                    "discussionid": $scope.discussion.discussion_id,
+                    "parentid": $scope.discussion.post_id,
                     "message": '',
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
@@ -269,6 +253,7 @@ angular
                     "filecontent":$scope.attachmentToPost.base64,
                     "filename": userId + $scope.attachmentToPost.filename
                 };
+
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
@@ -286,12 +271,12 @@ angular
             };
 
             function getTopicDataAsync() {
-                moodleFactory.Services.GetAsyncForumInfo(64, getActivityInfoCallback, null, true);
+                moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
                 //$scope.$emit('HidePreloader');
             }
 
             var createModalReferences = function(element, index, array){
-                $scope.isCommentModalCollapsed[element.id] = true;
+                $scope.isCommentModalCollapsed[element.post_id] = true;
             };
 
             function getActivityInfoCallback() {
@@ -309,12 +294,7 @@ angular
                 $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/'+ MoodleIds.forum);
             };
 
-            $scope.testClick = function(){
-                alert("Testing clicks");
-            };
-
             function getDataAsync() {
-                //$scope.$emit('ShowPreloader'); //show preloader
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback, true);
                 $scope.$emit('HidePreloader');
             }
@@ -322,7 +302,6 @@ angular
                 //TODO cambiar esta lógica, demasiados requests
             function getDataAsyncCallback(){
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = JSON.parse(localStorage.getItem('currentStage')); //getCurrentStage();
@@ -332,9 +311,8 @@ angular
             }
 
             function errorCallback(data){
-                //$scope.$emit('HidePreloader'); //hide preloader
-                $scope.$emit('scrollTop'); //- scroll
-            }
 
+                $scope.$emit('scrollTop');
+            }
         }]);
 
