@@ -83,19 +83,28 @@ angular
 
 
            //calculate user's stage progress
-            var avanceEnEtapaActual = 0;
-            var totalActividadesEnEtapaActual = 0; //Attainment of user in the current Stage            
-            var retosEnEtapaActual = $scope.model.stages[$scope.idEtapa].challenges.length;
-
-            for (j = 0; j < retosEnEtapaActual; j++) {
-                var numActividadesParcial = $scope.model.stages[$scope.idEtapa].challenges[j].activities.length;
-
-                for (k = 0; k < numActividadesParcial; k++) {
-                    avanceEnEtapaActual += $scope.model.stages[$scope.idEtapa].challenges[j].activities[k].status;
-                    totalActividadesEnEtapaActual++;
+            var stageProgressBuffer = 0;
+            var stageTotalActivities = 0; //Attainment of user in the current Stage
+            var stageChallengesCount = $scope.thisStage.challenges.length;
+            var i, j,k;
+            for (i = 0; i < stageChallengesCount; i++) {
+                var challenge = $scope.thisStage.challenges[i];
+                var challengeActivitiesCount = challenge.activities.length;
+                for (j = 0; j < challengeActivitiesCount; j++) {
+                    var activity = challenge.activities[j];
+                    stageProgressBuffer += activity.status;
+                    stageTotalActivities++;
+                    if(activity.activities) {
+                        var subActivitiesCount = activity.activities.length;
+                        for (k = 0; k < subActivitiesCount; k++) {
+                            var subActivity = activity.activities[k];
+                            stageProgressBuffer += subActivity.status;
+                            stageTotalActivities++;
+                        }
+                    }
                 }
             }
-            $scope.avanceEnEtapaActual = Math.ceil(avanceEnEtapaActual * 100 / totalActividadesEnEtapaActual);
+            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
 
             //Load challenges images
             $scope.retosIconos = {
