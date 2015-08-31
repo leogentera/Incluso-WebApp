@@ -150,14 +150,11 @@
                                 <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
                             </a>
 
-                            <div class="centered">
-                                <span id="index" class="txt-bigger">1</span>
-                                <span class="white txt-bigger">/3</span>
+                            <div class="centered">                                
+                                <span id="index" class="txt-bigger">1/</span><span id="totalPages" class="white txt-bigger">3</span>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
-                                ng-click="validateMisSuenosAnsweredQuestions()" ng-show="answerIndex == 3">GUARDAR
-                        </button>
+                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button" style="display:none" ng-hide="setReadOnly" ng-click="validateMisSuenosAnsweredQuestions()" >GUARDAR</button>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
                 </div>
@@ -267,17 +264,32 @@
         });
         function callback(event) {
             var item = this.currentItem;
-            $("#index").html(item + 1);
+            $("#index").html(item + 1 + '/');
         }
+        
 
-        $("#next").click(function (ev) {
+        $("#next").click(function () {
             owl.trigger('owl.next');
-            ev.preventDefault();
+            var numberOfPage = $('#index');
+            var totalPages = $('#totalPages');            
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
+              $('#save').show();              
+            }else{              
+              $('#save').hide();
+            }
+            return false;
         });
 
-        $("#prev").click(function (ev) {
+        $("#prev").click(function () {
             owl.trigger('owl.prev');
-            ev.preventDefault();
+            var numberOfPage = $('#index');
+            var totalPages = $('#totalPages');            
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
+              $('#save').show();              
+            }else{              
+              $('#save').hide();
+            }
+            return false;
         });
 
         /*

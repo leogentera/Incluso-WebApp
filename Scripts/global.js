@@ -9,6 +9,60 @@ var _courseId = 4;
 var _httpFactory = null;
 var _timeout = null;
 
+var _activityStatus = {};
+
+var _activityDependencies = [
+    {
+        id:112,
+        dependsOn:[150]
+    },
+    {
+        id:145,
+        dependsOn:[150]
+    },
+    {
+        id:139,
+        dependsOn:[150]
+    },
+    {
+        id:151,
+        dependsOn:[150]
+    },
+    {
+        id:149,
+        dependsOn:[150,139]
+    },
+    {
+        id:146,
+        dependsOn:[150]
+    },
+    {
+        id:71,
+        dependsOn:[150]
+    },
+    {
+        id:70,
+        dependsOn:[150]
+    },
+    {
+        id:72,
+        dependsOn:[150]
+    },
+    {
+        id:73,
+        dependsOn:[150]
+    },
+    {
+        id:68,
+        dependsOn:[150,112,145,139,151,149,146,71,70,72,73,68]
+    },
+    {
+        id:100,
+        dependsOn:[150,68]
+    }
+
+];
+
 var _IsOffline = function() {
   return false;
 };
@@ -16,16 +70,13 @@ var _IsOffline = function() {
 var _syncAll = function(callback) {
   _syncCallback = callback;
 
-  console.log('is offline:' + _IsOffline());
-
   //check if the session is OnLine
   if (!_IsOffline()) {
     moodleFactory.Services.GetAsyncProfile(_getItem("userId"), allServicesCallback);
   }
 };
 
-var allServicesCallback = function(){
-  console.log("allServicesCallback");
+var allServicesCallback = function(){  
   _syncCallback();
 };
 
@@ -49,10 +100,8 @@ var _readNotification = function(currentUserId,currentNotificationId){
           userid:  currentUserId,
           notificationid: currentNotificationId};
   
-      moodleFactory.Services.PutUserNotificationRead(currentNotificationId,data,function(){
-        //LocalStorage.setItem("notifications",data.notifications);
-      },function(){
-        //console.log(error on getting notifications data);
+      moodleFactory.Services.PutUserNotificationRead(currentNotificationId,data,function(){        
+      },function(){        
         });
 };
 
@@ -76,22 +125,9 @@ var _endActivity = function(activityModel){
       //trigger activity type 2 is sent when the activity ends.
       var triggerActivity = 2;
       _createNotification(activityId, triggerActivity);
-        
+    _activityStatus[activityModel.coursemoduleid] =1; // update activity status dictionary used for blocking activities
       moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
           
-};
-
-var _endActivityQuiz = function(activityModel){
-      _isStageCompleted();
-      var serviceParameters =  activityModel.answersResult;
-      var activityId = activityModel.coursemoduleid;
-      
-      //trigger activity type 2 is sent when the activity ends.
-      var triggerActivity = 2;
-      _createNotification(activityId, triggerActivity);                  
-      moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,successCallback,errorCallback);      
-       
-      _isChallengeCompleted(activityModel.coursemoduleid);
 };
 
 //This function updates in localStorage the status of the stage when completed
@@ -115,41 +151,33 @@ var _isStageCompleted = function(){
   
 };
 
-var _isChallengeCompleted = function(activityId){
-    
-    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+var _isChallengeCompleted = function(){
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));      
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
     var currentStage = userCourse.stages[lastStageIndex];
-       
-    var lastChallenge = _.where(currentStage.challenges,{status:1}).length;    
-    var currentChallenge = currentStage.challenges[lastChallenge];
-
-    for(var index = 0; index < currentChallenge.activities.length; index++){      
-        if (currentChallenge.activities[index].coursemoduleid == activityId) {
-          currentChallenge.activities[index].status = 1;
+    
+    for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex ++){
+        var currentChallenge = currentStage.challenges[challengeIndex];
+        if(currentChallenge.status == 0){        
+          var totalActivitiesByStage = currentChallenge.activities.length;
+          var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
+          if (totalActivitiesByStage == totalActivitiesCompletedByStage){
+              
+              userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
+              localStorage.setItem("usercourse", JSON.stringify(userCourse));              
+              var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+              var currentUserId = currentUser.userId;
+              var data = { userid :  currentUserId };          
+              var currentActivityModuleId = currentChallenge.coursemoduleid;              
+              moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, function(){},errorCallback);
+              return true;
+          }else{
+            return false;
+          }
+        }else{
+          return false;
         }
     }
-    var totalActivitiesByStage = currentChallenge.activities.length;
-    var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
-    
-    
-    if (totalActivitiesByStage == totalActivitiesCompletedByStage) {
-        var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-        var currentUserId = currentUser.userId;        
-        var data = {
-          userid :  currentUserId };
-          
-        var currentActivityModuleId = currentChallenge.coursemoduleid;
-        moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, successEndChallengeCallback,errorCallback);
-        return true;
-    }
-    else{
-      return false;
-    }
-};
-
-var successEndChallengeCallback = function(){
-  localStorage.setItem("closeStageModal",'true');
 };
 
 var _createNotification = function(activityId, triggerActivity){
@@ -211,13 +239,10 @@ var _coachNotification = function(){
   
 }
 
-var successCallback = function(data){  
-    console.log("global.js - successCallback - " + data);
+var successCallback = function(data){
 };
 
 var errorCallback = function(data){
- console.log("global.js - errorCallback - " + data);
-  
 };
 
 function getActivityByActivity_identifier(activity_identifier) {          
@@ -328,8 +353,7 @@ function getdate() {
 }
 
 syncCacheData();
-var logout = function($scope, $location){
-    console.log("Logout function ");
+var logout = function($scope, $location){    
     $scope.currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
       if(!_IsOffline()){
@@ -343,9 +367,7 @@ var logout = function($scope, $location){
                   userid: $scope.currentUser.userId,
                   action: "logout"})
           }
-        ).success(function(data, status, headers, config) {
-
-          console.log('successfully logout');
+        ).success(function(data, status, headers, config) {        
           }
         );
       }
@@ -703,22 +725,21 @@ var _staticStages = [
 ];
 
 var _activityRoutes = [
-  { id: 140, url: '/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial'},
-  { id: 150, url: '/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial'},
+  { id: 150, url: '/ZonaDeVuelo/ExploracionInicial/1001'},
   { id: 112, url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia'},
   { id: 113, url: '#'},
   { id: 149, url: '/ZonaDeVuelo/Conocete/ZonaDeContacto'},
   { id: 145, url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia'},
-  { id: 139, url: '/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple'},
+  { id: 139, url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
   { id: 151, url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
   { id: 114, url: '#'},
   { id: 146, url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia'},
-  { id: 70, url: '/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos'},
-  { id: 71, url: '"/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades"'},
-  { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena'},
-  { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro'},
+  { id: 70, url: '/ZonaDeVuelo/MisSuenos/MisGustos/1006'},
+  { id: 71, url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
+  { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
+  { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
   { id: 115, url: '#'},
   { id: 116, url: ''}, // Empty for cabina de soporte
-  { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal'}
+  { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];

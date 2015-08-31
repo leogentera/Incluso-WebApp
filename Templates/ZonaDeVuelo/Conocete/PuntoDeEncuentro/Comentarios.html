@@ -20,7 +20,7 @@
           <div class="panel-body" collapse="isCollapsed">
             <div class="stage perform">
               <figure class="player">
-                  <img src="{{ discussion.image[0].fileurl + '?token=' + userToken }}" alt="{{ discussion.image[0].filename }}">
+                  <img src="{{ discussion.fileurl + '?token=' + userToken }}" alt="{{ discussion.filename }}">
               </figure>
             </div>
           </div>
@@ -73,27 +73,27 @@
         <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies">
           <div class="part">
             <div class="author"><img src="assets/images/avatar.svg">
-              <div>{{p.postAutor}} <span>publicó:</span>
+              <div>{{p.post_author}} <span>publicó:</span>
               <div>{{p.created | date: "dd MMMM yyyy"}}</div>
               </div>
             </div>
             <div class="block">
-              <span ng-switch="p.posttype">
+              <span ng-switch="p.post_type">
                 <span ng-switch-default>{{ p.message }}</span>
                 <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>
                 <!--<span ng-switch-when="3"><a ng-href="{{p.message}}"><img src="assets/images/img-video-placeholder.svg" alt="Ver video">Ver video</a></span>-->
                 <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
-                <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.attachments[0].fileurl + '?token=' + userToken}}"  /> </a></span>
+                <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  /> </a></span>
               </span>
                   <!--<div ng-repeat="attachment in p.attachments">
                       <a href="{{ attachmentsfileurl }}"><i class="icomoon icon-required"></i> {{ attachment.filename }} </a>
                   </div>-->
-                <div ng-show="p.likes" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
+                <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
                 </div>
             </div>
             <div id="item{{$index}}" ng-repeat="r in p.replies">
               <div class="coment block"><img src="assets/images/avatar.svg">
-                <div>{{r.postAutor}} <span>publicó:</span>   <div>{{r.message}}</div>
+                <div>{{r.post_author}} <span>publicó:</span>   <div>{{r.message}}</div>
                 </div>
               </div>
             </div>
@@ -102,25 +102,25 @@
         <i class="icomoon icon-plus"></i>
         </div>-->
             <div class="social">
-              <div ng-hide="p.liked == 1" ng-click="clickLikeButton(p.id)">
+              <div ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
                 <span class="icomoon icon-like"></span> Me gusta
               </div>
-              <div ng-hide="!p.liked == 1" ng-click="clickLikeButton(p.id)">
+              <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
                 <span class="icomoon icon-like"></span> Ya no me gusta
               </div>
-              <div ng-click="isCommentModalCollapsed[p.id] = !isCommentModalCollapsed[p.id]">
+              <div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">
                 <span class="icomoon icon-comment"></span> Comentar
               </div>
             </div>
 
           </div>
           <section class="modales">
-              <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.id]">
+              <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">
                   <div>
                       <a href="#close" title="Close" class="close"></a>
                       <div class="add" ><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..."  ng-model="replyText" /></div>
 
-                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.id, p.parent)" >Compartir</a>
+                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent)" >Compartir</a>
                   </div>
               </div>
            </section>
@@ -128,7 +128,6 @@
 
         <section>
           <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
-          <div class="txt-renglon centered txt-bigger"></div> 
         </section>
       </section>
     </article>

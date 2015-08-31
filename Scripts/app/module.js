@@ -382,9 +382,9 @@
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios', { 
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/:moodleid/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html',
-            controller: 'stageForumController'
+            controller: 'stageForumCommentsController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MensajeDeCierre', { 

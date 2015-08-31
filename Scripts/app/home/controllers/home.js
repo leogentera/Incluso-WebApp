@@ -25,7 +25,10 @@
                 
             };
 
-            $scope.navigateTo = function(url,sideToggle){
+            $scope.navigateTo = function(url,sideToggle,activityId){
+                if(false && activityId!= undefined && activityId > 0 && !$scope.canStartActivity(activityId)) {
+                    return false;
+                }
                 $location.path(url);
                 if(sideToggle == "sideToggle")
                     $rootScope.sidebar = !$rootScope.sidebar;
@@ -133,8 +136,7 @@
             /* scroll to top function and listener */
             $scope.scrollTo = function(element) {
                 $location.hash('top');
-                $anchorScroll();
-                console.log("scrolled to top");
+                $anchorScroll();                
             };
             $scope.$on('scrollTop', $scope.scrollTo);
 
@@ -186,7 +188,47 @@
 						return false;						
 					}
 				}
-			}
+			};
+
+            //Load activity status dictionary
+            _activityStatus = {};
+            var usercourse = moodleFactory.Services.GetCacheJson("usercourse");
+            var stagesCount = usercourse.stages.length;
+            var i, j,k;
+            for (i = 0; i < stagesCount; i++) {
+                var stage = usercourse.stages[i];
+                var challengeCount = stage.challenges.length;
+                for (j = 0; j <challengeCount ; j++) {
+                    var challenge = stage.challenges[j];
+                    var challengeActivitiesCount = challenge.activities.length;
+                    for (k = 0; k < challengeActivitiesCount; k++) {
+                        var activity = challenge.activities[k];
+                        console.log(activity.coursemoduleid+" - "+activity.activity_identifier+" - "+activity.activityname);
+                        _activityStatus[activity.coursemoduleid] = activity.status;
+                    }
+
+                }
+            }
+
+            //Helps defining if activity can be started
+            $scope.canStartActivity = function(activityId){
+
+                if(!_activityStatus[activityId]) {
+                    var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
+                        return x.id == activityId;
+                    });
+                    if (activityDependenciesRecord[0]) {
+                        var activityDependencies = activityDependenciesRecord[0].dependsOn;
+                        var dependenciesCount = activityDependencies.length;
+                        for (var i = 0; i < dependenciesCount; i++) {
+                            if (!_activityStatus[activityDependencies[i]]) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            };
 
             //// new menu behavior ////
             $scope.leftVisible = false;

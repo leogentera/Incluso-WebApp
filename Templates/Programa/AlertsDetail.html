@@ -1,16 +1,14 @@
-
-  <div class="incluso-app notif-dashboard" id="site-wrapper">      
-      <div id="site-canvas">
-          <article class="starway">
-              <section class="part inbloq text-left">
-                  <div><i class="icomoon 	icon-earned-stars fl-left txt-bigger"></i>{{notification.name}}</div><hr>
-                  <div>{{notification.description}}</div>                  
-                  <p class="actions">
-                    <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('Alerts','null')"><span>Regresar</a>
-                  </p>
-              </section>
-              <div><img src="assets/images/img-lines-ftr.png"></div>	
-          </article>
-         
+<div class="incluso-app notif-dashboard" id="site-wrapper">      
+  <article class="starway">
+    <section class="part inbloq text-left">
+      <div class="notif-title">
+        <span class="icomoon icon-earned-stars fl-left txt-bigger"></span><span class="alert-name">{{notification.name}}</span>
       </div>
+      <hr>
+      <div>{{notification.description}}</div>                  
+      <p class="actions">
+        <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('Alerts','null')"><span>Regresar</a>
+      </p>
+    </section>
+  </article>
 </div>

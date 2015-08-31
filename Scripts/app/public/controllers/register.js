@@ -181,8 +181,7 @@ angular
                             errorMessage = "Se ha producido un error, contactate al administrador."
                         }
 
-                        $scope.registerModel.modelState.errorMessages = [errorMessage];
-                        console.log('data' + errorMessage);
+                        $scope.registerModel.modelState.errorMessages = [errorMessage];                        
                         
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.$emit('scrollTop'); //- scroll
@@ -212,8 +211,7 @@ angular
             }
             
 
-            function validateModel(){
-                console.log('fetching errors list'); //- debug
+            function validateModel(){                
                 var errors = [];
                 var datePickerValue =  $("input[name=birthday]").val();
                 dpValue = moment(datePickerValue).format("MM/DD/YYYY");
