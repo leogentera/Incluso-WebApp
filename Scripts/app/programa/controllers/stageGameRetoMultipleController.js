@@ -89,10 +89,9 @@ angular
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-                
-                cordova.exec(successGame, successGame, "CallToAndroid", "openApp", [r]);
-                //localStorage.setItem("tmpRetoMultipleRequest", JSON.stringify(r));
-                //$location.path('/ZonaDeVuelo/Conocete/RetoMultipleExternalApp');
+                //cordova.exec(successGame, successGame, "CallToAndroid", "openApp", [r]);
+                localStorage.setItem("tmpRetoMultipleRequest", JSON.stringify(r));
+                $location.path('/ZonaDeVuelo/Conocete/RetoMultipleExternalApp');
             }
             
             var successGame = function (data){
