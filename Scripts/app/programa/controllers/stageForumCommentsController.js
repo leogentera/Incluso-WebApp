@@ -114,7 +114,7 @@ angular
                 if(isActivityFinished && activityFromTree.status == 0) endForumActivity();
                 getDataAsync();
             };
-
+            //TODO implement adding points to user
             var addPointsToUser = function(){
 
             };
@@ -175,18 +175,23 @@ angular
             $scope.videoToPost = null;
             $scope.attachmentToPost = null;
 
-            var userId = localStorage.getItem("userId");
-            $scope.postTextToForum = function(){
+            var createPostDataObject = function(message, postType, attachment){
+                var userId = localStorage.getItem("userId");
                 var dataObject = {
                     "userid":userId,
-                    "discussionid": $scope.discussion.posts[0].discussion,
-                    "parentid": $scope.discussion.posts[0].id,
-                    "message": $scope.textToPost,
+                    "discussionid": $scope.discussion.discussion_id,
+                    "parentid": $scope.discussion.post_id,
+                    "message": message,
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "posttype": 1,
-                    "fileToUpload":""
+                    "posttype": postType,
+                    "fileToUpload": attachment? attachment.base64 : null,
                 };
+                return dataObject;
+            };
+
+            $scope.postTextToForum = function(){
+                var dataObject = createPostDataObject($scope.textToPost, 1, null);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
@@ -202,19 +207,9 @@ angular
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         $scope.$emit('HidePreloader');
                     });
-
             };
             $scope.postLinkToForum = function(){
-                var dataObject = {
-                    "userid":userId,
-                    "discussionid": $scope.discussion.posts[0].discussion,
-                    "parentid": $scope.discussion.posts[0].id,
-                    "message": $scope.linkToPost,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "posttype": 2,
-                    "fileToUpload":""
-                };
+                var dataObject = createPostDataObject($scope.linkToPost, 2, null);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
@@ -231,16 +226,7 @@ angular
                     });
             };
             $scope.postVideoToForum = function(){
-                var dataObject = {
-                    "userid":userId,
-                    "discussionid": $scope.discussion.posts[0].discussion,
-                    "parentid": $scope.discussion.posts[0].id,
-                    "message": $scope.videoToPost,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "posttype": 3,
-                    "fileToUpload":""
-                };
+                var dataObject = createPostDataObject($scope.videoToPost, 3, null);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
@@ -257,11 +243,11 @@ angular
                     });
             };
             $scope.postAttachmentToForum = function(){
-                console.log($scope.attachmentToPost);
+                var userId = localStorage.getItem("userId");
                 var dataObject = {
                     "userid":userId,
-                    "discussionid": $scope.discussion.posts[0].discussion,
-                    "parentid": $scope.discussion.posts[0].id,
+                    "discussionid": $scope.discussion.discussion_id,
+                    "parentid": $scope.discussion.post_id,
                     "message": '',
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
@@ -269,6 +255,7 @@ angular
                     "filecontent":$scope.attachmentToPost.base64,
                     "filename": userId + $scope.attachmentToPost.filename
                 };
+
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
@@ -309,12 +296,7 @@ angular
                 $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/'+ MoodleIds.forum);
             };
 
-            $scope.testClick = function(){
-                alert("Testing clicks");
-            };
-
             function getDataAsync() {
-                //$scope.$emit('ShowPreloader'); //show preloader
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback, true);
                 $scope.$emit('HidePreloader');
             }
@@ -322,7 +304,6 @@ angular
                 //TODO cambiar esta lógica, demasiados requests
             function getDataAsyncCallback(){
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = JSON.parse(localStorage.getItem('currentStage')); //getCurrentStage();
@@ -332,9 +313,8 @@ angular
             }
 
             function errorCallback(data){
-                //$scope.$emit('HidePreloader'); //hide preloader
-                $scope.$emit('scrollTop'); //- scroll
-            }
 
+                $scope.$emit('scrollTop');
+            }
         }]);
 
