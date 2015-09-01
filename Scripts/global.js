@@ -225,6 +225,7 @@ var _createNotification = function(activityId, triggerActivity){
   currentUserId = localStorage.getItem("userId");
   var currentDate = new Date();
   var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
+  var currentDay = (currentDate.getDay() < 10) ? ("0" + currentDate.getDay()) : currentDate.getDay();
   var formattedDate = currentMonth + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
  
@@ -246,36 +247,27 @@ var _createNotification = function(activityId, triggerActivity){
 };
 
 var _coachNotification = function(){
-    
-  var startedActivityDate = new Date();    
-    
-  //ActivityChatID  
-  var activityChatId = 68;
-  var triggerActivity = 3;
-  var userChat = JSON.parse(localStorage.getItem("userChat"));
-  //pending validate if the activity is started
-  if (userChat.length > 0 ) {
-    var notifications = JSON.parse(localStorage.getItem("notifications"));
-    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-    
-    var userId = localStorage.getItem('userId');
-    var lastMessage = _.max(userChat,function(chat){
-        return chat.messagedate;
-    });
-    var lastMessageDate = moment.unix(lastMessage.messagedate).format("MM/DD/YYYY");
-    var twoDaysAfterLastMessage = new Date(lastMessageDate);
-    twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
-    
-    var today = new Date();
-    if (twoDaysAfterLastMessage < today) {
-      _createNotification(activityChatId,triggerActivity);
-    }else{
-      return false;
-    }
-  }else{
-    return false;
-  }
+                      
+  var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+  var activityChatStarted = userCourse.stages[0].challenges[4].activities[0].started;  
+  if (activityChatStarted){
+      var activityDateStarted = userCourse.stages[0].challenges[4].activities[0].datestarted;      
+      var activityChatId = 68;
+      var triggerActivity = 3;      
+      var notifications = JSON.parse(localStorage.getItem("notifications"));
+      var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+      
+      var userId = localStorage.getItem('userId');
+      var twoDaysAfterLastMessage = new Date(activityDateStarted);
+      twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
   
+      var today = new Date();
+      if (twoDaysAfterLastMessage < today){
+        _createNotification(activityChatId,triggerActivity);
+      }else{
+        return false;
+      }
+  }
 }
 
 var successCallback = function(data){
