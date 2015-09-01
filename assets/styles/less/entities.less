@@ -982,11 +982,11 @@
                 text-align: center;
                 position:relative;
             }
-            button {
+            .btn {
                 display: block;
                 position: absolute;
                 top:41%;
-                /*right: -50px;*/   right: -32%; 
+                right: -32%; 
                 padding:5px;
                 margin:0;
                 background:none transparent;
@@ -995,7 +995,7 @@
 
                 .icomoon {
                     color: @clr-green;
-                    /*font-size: 28px;*/ font-size: 6vw;
+                    font-size: 6vw;
                     font-weight: bold;
                 }
             }
@@ -1706,9 +1706,12 @@
                 height: auto;
                 min-height: 33.3vw;
                 margin-top: 3vw;
-
+                
+                figure {
+                    min-height: inherit;
+                }
                 img {
-                    min-height:inherit;
+                    min-height: 28.3vw;
                 }
                 figcaption {
                     display: inline-block;
@@ -1741,19 +1744,28 @@
          $terms-and-conditions
          Description: CSS to represent modal for terms and conditionss
         ************************************************************************/
-        .modal.terms-and-conditions {
-            .modal-dialog {
-                margin-top:15vh;
+            .terms-and-conditions {
+                .modal-theme-default {
+                    height: 100vh;
+                    /*background: #000 none repeat scroll 0% 0%;*/
+                }
+                .modal-dialog {
+                    margin: 0px 3vh; 
+                    padding-top:15vh;
+                    .modal-title {
+                        padding: 3.6vw 0px;
+                    }
+                }
+
+                .modal-body {
+                    height: 50vh;
+                    padding-top: 0;
+                    overflow-x: hidden;
+                }
+                .modal-footer {
+                    display: none;
+                }
             }
-            .modal-body {
-                height: 50vh;
-                padding-top: 0;
-                overflow-x: hidden;
-            }
-            .modal-footer {
-                display: none;
-            }
-        }
         /***********************************************************************/
 
         

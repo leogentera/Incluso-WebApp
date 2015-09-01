@@ -76,7 +76,7 @@ angular
                           "fecha_inicio": "2015-07-15 14:23:12",
                           "fecha_fin": "2015-07-15  14:28:12",
                           "puntaje_interno": "15500",
-                          "nivel_inteligencia ": "1", //1: Bajo, 2: Medio, 3:Alto
+                          "nivel_inteligencia": "1", //1: Bajo, 2: Medio, 3:Alto
                           "preguntas":[
                              {"pregunta" : "¿Me fue fácil completar el reto?" , "respuesta" : "9"}, //Escala del 1 al 10
                              {"pregunta" : "¿Disfruté este reto?", "respuesta" : "1"}, // Escala del 1 al 10
@@ -90,7 +90,7 @@ angular
                           "fecha_inicio": "2015-07-15 14:23:12",
                           "fecha_fin": "2015-07-15  14:28:12",
                           "puntaje_interno": "15500",
-                          "nivel_inteligencia ": "2", //1: Bajo, 2: Medio, 3:Alto
+                          "nivel_inteligencia": "2", //1: Bajo, 2: Medio, 3:Alto
                           "preguntas":[
                              {"pregunta" : "¿Me fue fácil completar el reto?" , "respuesta" : "9"}, //Escala del 1 al 10
                              {"pregunta" : "¿Disfruté este reto?", "respuesta" : "1"}, // Escala del 1 al 10
@@ -104,7 +104,7 @@ angular
                           "fecha_inicio": "2015-07-15 14:23:12",
                           "fecha_fin": "2015-07-15  14:28:12",
                           "puntaje_interno": "15500",
-                          "nivel_inteligencia": "2", //1: Bajo, 2: Medio, 3:Alto
+                          "nivel_inteligencia": "3", //1: Bajo, 2: Medio, 3:Alto
                           "preguntas":[
                              {"pregunta" : "¿Me fue fácil completar el reto?" , "respuesta" : "9"}, //Escala del 1 al 10
                              {"pregunta" : "¿Disfruté este reto?", "respuesta" : "1"}, // Escala del 1 al 10
@@ -146,7 +146,7 @@ angular
                           "fecha_inicio": "2015-07-15 14:23:12",
                           "fecha_fin": "2015-07-15  14:28:12",
                           "puntaje_interno": "15500",
-                          "nivel_inteligencia": "3", //1: Bajo, 2: Medio, 3:Alto
+                          "nivel_inteligencia": "1", //1: Bajo, 2: Medio, 3:Alto
                           "preguntas":[
                              {"pregunta" : "¿Me fue fácil completar el reto?" , "respuesta" : "9"}, //Escala del 1 al 10
                              {"pregunta" : "¿Disfruté este reto?", "respuesta" : "1"}, // Escala del 1 al 10
@@ -156,7 +156,7 @@ angular
                        }    
                     ]  
                   }
-                  
+
                 var shield = "";
                 var quizzesRequests = [];
 
@@ -172,20 +172,22 @@ angular
                   var logEntry = {
                     "userid": $scope.user.id,
                     "answers": [],
-                    "activityid": ""
+                    "coursemoduleid": ""
                   };
                   var activity = _.find($scope.retoMultipleActivities, function(a){ return a.name == response.resultado[i].subactividad; });
                   if (activity) {
+                    activity.score = response.resultado[i].nivel_inteligencia;
                     var questionAnswers = _.countBy(activity.questions, function(q){
                       return q.userAnswer && q.userAnswer != '' ? 'answered' : 'unanswered';
                     });
-                    for(var j = 0; j < response.resultado[i].preguntas.length; j++){
+                    for(var j = 0; j < response.resultado[i].preguntas.length - 1; j++){
                       if (activity.questions[j]) {
                           activity.questions[j]["userAnswer"] = response.resultado[i].preguntas[j].respuesta;
                           logEntry.answers.push(response.resultado[i].preguntas[j].respuesta);
                       }
                     }
-                  logEntry.activityid = activity.id;
+                  logEntry.coursemoduleid = activity.coursemoduleid;
+                  logEntry.answers.push(activity.score);
                   quizzesRequests.push(logEntry);
                 }
               }
@@ -196,6 +198,7 @@ angular
                   $scope.profile["shield"] = shield;
                   localStorage.setItem("profile", JSON.stringify($scope.profile));
                 }
+
 
                 var completedActivities = _.countBy($scope.retoMultipleActivities, function(a) {
                     if (a.questions) {
@@ -210,19 +213,26 @@ angular
                     }
                 });
 
+
                 $scope.IsComplete = $scope.retoMultipleActivities && 
                                     completedActivities.completed && 
                                     $scope.retoMultipleActivities && 
                                     completedActivities.completed >= $scope.retoMultipleActivities.length;
 
                 //save response
-                for(i = 0; i < logEntry.answers.length; i++){
-                  console.log("saving quiz");
-                  console.log(logEntry[i]);
-                  //$scope.retoMultipleActivities[i].status = 1;
-                  $scope.saveQuiz($scope.retoMultipleActivities[i], quizesRequests[i].answers)
-                }
-                 localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
+//                for(i = 0; i < quizzesRequests.length; i++){
+//                  console.log("saving quiz");
+//                  var userActivity = _getActivityByCourseModuleId(quizzesRequests[i].coursemoduleid);  
+//                  $scope.saveQuiz(userActivity, quizzesRequests[i])
+//                }
+
+                var parentActivityIdentifier = localStorage.getItem("retoMultipleActivitiesParent");
+                var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier);
+                parentActivity.status = 1;
+                _endActivity(parentActivity);
+
+                //localStorage.setItem("usercourse", JSON.stringify(usercourse));
+                localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
             }
 
             var updateActivitiesStatus = function(){
@@ -257,7 +267,6 @@ angular
                 requestCallback();
                 if ($scope.IsComplete) {
                     //$scope.saveUser();
-                    updateActivitiesStatus();
                     $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');
                 } else {
                     $location.path('/ZonaDeVuelo/Dashboard/1');
@@ -265,16 +274,22 @@ angular
             }
 
             $scope.saveQuiz = function(activity, quiz) {
-              //answer results = activitynumber answers like_status update_type user_id
 
-              var results = {
-                activityidnumber: activity.id,
-                answers: quiz,
-                like_status: 1,
-                updatetype: 1,
-                userid: $scope.user.id
-              }
-              moodleFactory.Services.PutEndActivityQuizes(activity.id, results, activity, currentUser.token, function(data){console.log('success')}, function(data){console.log('error')});
+              //Update quiz on server
+              var activityModel = {
+                  "usercourse": activity,
+                  "coursemoduleid": activity.coursemoduleid,
+                  "answersResult": quiz.answers,
+                  "userId": currentUser.id,
+                  "startingTime": new Date(),
+                  "endingTime": new Date(),
+                  "token": currentUser.token,
+                  "activityType": "Quiz"
+              };             
+
+            //_endActivity(activityModel);
+
+              //moodleFactory.Services.PutEndActivityQuizes(activity.coursemoduleid, results, activity, currentUser.token, function(data){console.log('success')}, function(data){console.log('error')});
               /*
               var activityModel = {
                     "usercourse": updatedActivityOnUsercourse,

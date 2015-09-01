@@ -56,8 +56,6 @@
                     $scope.openModal();
                     //Update firsttime value
                     $scope.updateProgramFirstTime();
-
-
                 }
                 //redirect user to stage 1 dashboard after closing modal
                 $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section);
@@ -173,7 +171,7 @@
                             };
                         },
                         size: size,
-                        windowClass: 'user-help-modal'
+                        windowClass: 'user-help-modal dashboard-programa'
                     });
 
                     console.log("modal open");

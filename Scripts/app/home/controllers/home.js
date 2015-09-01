@@ -71,11 +71,20 @@
             };
 
             $scope.toolbarOptionActive = function (path) {
-                //console.log($location.path().substr(0, path.length + 1));
-                if($location.path().substr(0, path.length) === path)
-                    return "active disabled";
-                else
-                    return "";
+                if(path.constructor === Array){
+                    classdisable = "";
+                    for(i= 0; i < path.length; i++){
+                        if($location.path() === path[i]){
+                            classdisable = "active disabled";
+                        }
+                    }
+                    return classdisable;
+                }else{
+                    if($location.path().substr(0, path.length) === path)
+                        return "active disabled";
+                    else
+                        return "";
+                }
             };
            
 			$scope.playVideo = function(videoAddress, videoName){
@@ -155,15 +164,18 @@
 
 
 			$scope.showNotification = function(){
+				
 				if ($scope.pageName == 'Notificaciones') {
 					return false;
 				}else{
-					var totalNotifications = _notificationExists();
-					if(totalNotifications>= 1){
-						$rootScope.totalNotifications = totalNotifications;
-						return true;
-					}else {return false;}
-				}				
+				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
+				//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
+				var countNotificationsUnread = _.filter(userNotifications, function(notif){
+                    return (notif.timemodified != null && notif.read != true);
+                });				
+				$rootScope.totalNotifications = countNotificationsUnread.length;
+				return  countNotificationsUnread.length > 0;
+				}
 			}
 			
 			$scope.showChatNotification = function(){
@@ -196,7 +208,7 @@
                 if(!_activityStatus) {
                     _activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
                 }
-                if(!_activityStatus[activityId]) {
+                if(_activityStatus && !_activityStatus[activityId]) {
                     var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
                         return x.id == activityId;
                     });

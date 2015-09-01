@@ -1,3 +1,4 @@
+//TODO remove this module
 (function(){
     var module = angular.module('GlobalAppConstants', []);
 

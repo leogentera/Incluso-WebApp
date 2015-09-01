@@ -1,26 +1,53 @@
+<div class="modal-open">
+   <div class="pages">     
+      <div class="page" ng-class="currentPage== 1 ? 'active' : '' ">
+        <div class="user-help-modal chat">
+          <div class="modal-robot robot-sm user-help">
+            <img src="assets/images/img-robot-sm.svg">
+            <div class="modal-body">
+                <h3 class="subtitle text-center">Cabina de Soporte</h3>
+                <p class="txt-renglon centered">
+                  Has iniciado esta actividad. En breve recibirás instrucciones de la torre de control.
+                </p>
+                <div class="txt-renglon">
+                  <button type="button" ng-click="goChat()" class="btn btn-primary btn-lg btn-cnt">Ir al chat</button>    
+                </div>
 
-<div class="incluso-app step-dashboard" id="site-wrapper">
-  <div id="site-menu" >
-<!--#include file="menu.html" -->
-  </div>
-  <div id="site-canvas">
-
-
-  <article class="blueprint">
-
-    <div class="modal-robot robot-sm closing-stage-modal user-help">
-        <img src="assets/images/img-robot-sm.svg">
-
-        <div class="modal-body">
-            <h3 class="subtitle text-center">Cabina de Soporte</h3>
-            <p class="txt-renglon centered">
-              Has iniciado esta actividad. En breve recibirás instrucciones de la torre de control.
-            </p>
+            </div>
+          </div>
         </div>
-    </div>
-    <button type="button" ng-click="goChat()" class="btn btn-primary btn-lg btn-cnt">Ir al chat</button>    
-  </article>
+      </div>
 
-  
-  </div>
+      <!-- activity closing  -->
+      <div class="page blueprint close-activity" ng-class="currentPage == 2 ? 'active' : ''">
+        <div id="finalized">
+            <section class="header-title">
+                <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
+                <div class="subtitle centered min-pad ">"Cabina de soporte"</div>
+                <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
+            </section>
+            <section class="centered txt-bigger">
+                <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
+            </section>
+            <section class="txt-renglon pill">
+                <div class="fl-left">Estrellas ganadas:</div>
+                <div class="fl-right sm-pill"><span>{{activityPoints}}</span><span class="icomoon icon-star fl-right"></span></div>
+            </section>
+            <section class="txt-renglon centered form ">
+                ¿Que opinas de ésta actividad?
+                <section class="txt-renglon txt-bigger clearfix">
+                    <div class="opinion">
+                        <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                        <label for="like">Me gusta</label>
+                    </div>
+                    <div class="opinion">
+                        <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                        <label for="dislike">No me gusta</label>
+                    </div>
+                </section>
+                <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">TERMINAR</a>
+            </section>
+          </div>
+      </div>
+    </div>
 </div>
