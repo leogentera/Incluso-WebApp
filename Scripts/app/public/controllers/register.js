@@ -112,13 +112,13 @@ angular
 
                         //succesful credentials
                         _syncAll(function() {
-                            console.log('came back from redirecting...');
                             $timeout(
                                 function() {
                                     //console.log('redirecting..');
                                     //$location.path('/ProgramaDashboard');
-                                    console.log('redirecting to tutorial..');
                                     $location.path('/Tutorial');
+                                    //HCG 01//sep/2015 hidepreloader added
+                                    $scope.$emit('HidePreloader');
                                 },1000);
                         });
 
@@ -170,7 +170,9 @@ angular
 
                         console.log('successfully register');
                         $scope.$emit('scrollTop'); //- scroll
+                        
                         $scope.autologin();
+                        
 
                     }).error(function(data, status, headers, config) {
                         var errorMessage;
