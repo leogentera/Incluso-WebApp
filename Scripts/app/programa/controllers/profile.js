@@ -104,7 +104,6 @@ angular
                     return "";
                 }
                 initFields(m);
-                $scope.$emit('HidePreloader');
                 console.log("usuario completo");
 
                 return m;
@@ -142,6 +141,7 @@ angular
                         "imagen_recortada": "",
                     }];
                 }
+                $scope.$emit('HidePreloader');
             }
 
             function formatDate(date) {

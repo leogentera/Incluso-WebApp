@@ -982,11 +982,11 @@
                 text-align: center;
                 position:relative;
             }
-            button {
+            .btn {
                 display: block;
                 position: absolute;
                 top:41%;
-                /*right: -50px;*/   right: -32%; 
+                right: -32%; 
                 padding:5px;
                 margin:0;
                 background:none transparent;
@@ -995,7 +995,7 @@
 
                 .icomoon {
                     color: @clr-green;
-                    /*font-size: 28px;*/ font-size: 6vw;
+                    font-size: 6vw;
                     font-weight: bold;
                 }
             }
@@ -1706,9 +1706,12 @@
                 height: auto;
                 min-height: 33.3vw;
                 margin-top: 3vw;
-
+                
+                figure {
+                    min-height: inherit;
+                }
                 img {
-                    min-height:inherit;
+                    min-height: 28.3vw;
                 }
                 figcaption {
                     display: inline-block;
