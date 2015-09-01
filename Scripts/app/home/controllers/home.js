@@ -164,15 +164,18 @@
 
 
 			$scope.showNotification = function(){
+				
 				if ($scope.pageName == 'Notificaciones') {
 					return false;
 				}else{
-					var totalNotifications = _notificationExists();
-					if(totalNotifications>= 1){
-						$rootScope.totalNotifications = totalNotifications;
-						return true;
-					}else {return false;}
-				}				
+				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
+				//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
+				var countNotificationsUnread = _.filter(userNotifications, function(notif){
+                    return (notif.timemodified != null && notif.read != true);
+                });				
+				$rootScope.totalNotifications = countNotificationsUnread.length;
+				return  countNotificationsUnread.length > 0;
+				}
 			}
 			
 			$scope.showChatNotification = function(){
@@ -205,7 +208,7 @@
                 if(!_activityStatus) {
                     _activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
                 }
-                if(!_activityStatus[activityId]) {
+                if(_activityStatus && !_activityStatus[activityId]) {
                     var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
                         return x.id == activityId;
                     });
