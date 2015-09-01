@@ -17,13 +17,18 @@ angular
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.idEtapa = 0;
             $scope.scrollToTop();
-            $scope.$emit('HidePreloader'); //hide preloader        
+            $scope.$emit('HidePreloader'); //hide preloader  
+            $scope.currentPage = 1;      
             var index = 0;
             var parentIndex = 4;
             var activity = $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index];
-
+            $scope.activityPoints = activity.points;
             var cabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
 
+            $scope.navigateToPage = function (pageNumber) {
+                $scope.currentPage = pageNumber;
+            };
+            
              var startedActivityCabinaDeSoporte = ($scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started || $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status) && cabinaDeSoporte;
             // Start activity of 'cabina de soporte'                    
             if (!startedActivityCabinaDeSoporte) {
@@ -50,10 +55,13 @@ angular
                     console.log('Error callback');    
                 });
             }
-                
+
             $scope.goChat = function () {                                
             $location.path('/Chat');
             }
-        
-            
+
+            if($scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status){
+                $scope.navigateToPage(2);
+            }
+                    
         }]);
