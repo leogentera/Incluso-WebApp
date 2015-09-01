@@ -106,7 +106,7 @@
                     </section>
                 </div>
                 
-                <div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
+                <!--<div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
                     <div id="finalized">
                         <section class="header-title ">
                             <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
@@ -138,9 +138,9 @@
                             <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" >TERMINAR</a>
                         </section>
                     </div>
-                </div>
+                </div>-->
 
-                <!--<div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
+                <div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
                     <div id="finalized">
                         <section class="header-title ">
                             <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
@@ -156,16 +156,17 @@
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question1.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question1.isCollapsed = !question1.isCollapsed">
                                         <i class="pull-left icomoon icon-wrong-join" ng-class="{'active': true}"></i> 1. ¿Podemos desarrollar y
+                                        <i class="fl-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[0].badAnswer}"></i> 1. ¿Podemos desarrollar y
                                         fortalecer habilidades en las que no somos tan buenos?
                                         <i class="pull-right icomoon icon-arrow-up" ng-show="question1.isCollapsed"></i>
                                     </div>
                                     <div id="results1" class="panel-body" collapse="!question1.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': true}">
-                                                <i class="pull-left icomoon icon-wrong" ng-show="true"></i>Verdadero
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[0].trueOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[0].trueOptionWrong"></i>Verdadero
                                             </li>
-                                            <li ng-class="{'failed clearfix': false}">
-                                                <i class="pull-left icomoon icon-wrong" ng-show="false"></i>Falso
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[0].falseOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[0].falseOptionWrong"></i>Falso
                                             </li>
                                         </ul>
                                     </div>
@@ -174,17 +175,17 @@
                             <div id="question2">
                                 <div class="txt-renglon panel collapsed" ng-class="{'collapsed': question2.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question2.isCollapsed = !question2.isCollapsed">
-                                        <i class="pull-left icomoon icon-wrong-join " ng-class="{'active': false}"></i> 2. ¿Tener un carro y formar
+                                        <i class="fl-left icomoon icon-wrong-join "  ng-class="{'active': exploracionFinalresult[1].badAnswer}"></i> 2. ¿Tener un carro y formar
                                         una familia es un sueño de ser?
                                         <i class="pull-right icomoon icon-arrow-up" ng-show="question2.isCollapsed"></i>
                                     </div>
                                     <div id="results2" class="panel-body" collapse="!question2.isCollapsed">
                                         <ul>
-                                            <li class="failed clearfix">
-                                                <i class="pull-left icomoon icon-wrong"></i>Verdadero
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].trueOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[1].trueOptionWrong"></i>Verdadero
                                             </li>
-                                            <li class="failed clearfix">
-                                                <i class="pull-left icomoon icon-wrong"></i>Falso
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].falseOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[1].falseOptionWrong"></i>Falso
                                             </li>
                                         </ul>
                                     </div>
@@ -193,17 +194,17 @@
                             <div id="question3">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question3.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question3.isCollapsed = !question3.isCollapsed">
-                                        <i class="pull-left icomoon icon-wrong-join active"></i> 3. ¿Tus sueños son metas que
+                                        <i class="fl-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[2].badAnswer}"></i> 3. ¿Tus sueños son metas que
                                         van dirigiendo tu camino?
                                         <i class="pull-right icomoon icon-arrow-up" ng-show="question3.isCollapsed"></i>
                                     </div>
                                     <div id="results3" class="panel-body" collapse="!question3.isCollapsed">
                                         <ul>
-                                            <li class="failed clearfix">
-                                                <i class="pull-left icomoon icon-wrong"></i>Verdadero
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].trueOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[2].trueOptionWrong"></i>Verdadero
                                             </li>
-                                            <li class="failed clearfix">
-                                                <i class="pull-left icomoon icon-wrong"></i>Falso
+                                           <li ng-class="{'failed clearfix': exploracionFinalresult[2].falseOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[2].falseOptionWrong"></i>Falso
                                             </li>
                                         </ul>
                                     </div>
@@ -212,22 +213,22 @@
                             <div id="question4">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question4.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question4.isCollapsed = !question4.isCollapsed">
-                                        <i class="pull-left icomoon icon-wrong-join active"></i>4. Es importante tener una
+                                        <i class="fl-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[3].badAnswer}"></i>4. Es importante tener una
                                         persona que te inspire porque:
                                         <i class="pull-right icomoon icon-arrow-up" ng-show="question4.isCollapsed"></i>
                                     </div>
                                     <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
                                         <ul>
                                             <li class="failed clearfix">
-                                                <i class="pull-left icomoon icon-wrong"></i>Es tu ejemplo a seguir y debes
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].firstOptionWrong"></i>Es tu ejemplo a seguir y debes
                                                 ser igual a él
                                             </li>
                                             <li class="failed clearfix">
-                                                <i class="pull-left icomoon icon-wrong"></i>Puedes aprender de su experiencia
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].secondOptionWrong"></i>Puedes aprender de su experiencia
                                                 para alcanzar tus sueños
                                             </li>
                                             <li class="failed clearfix">
-                                                <i class="pull-left icomoon icon-wrong"></i>Puede enseñarte cómo ganar dinero
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].thirdOptionWrong"></i>Puede enseñarte cómo ganar dinero
                                                 más fácil
                                             </li>
                                         </ul>
@@ -237,22 +238,22 @@
                             <div id="question5">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question5.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question5.isCollapsed = !question5.isCollapsed">
-                                        <i class="pull-left icomoon icon-wrong-join active"></i>5. ¿Porqué es importante que
+                                        <i class="fl-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[4].badAnswer}"></i>5. ¿Porqué es importante que
                                         tus sueños se relacionen con lo que te gusta y para lo que eres bueno?
                                         <i class="pull-right icomoon icon-arrow-up" ng-show="question5.isCollapsed"></i>
                                     </div>
                                     <div id="results4" class="panel-body" collapse="!question5.isCollapsed">
                                         <ul>
                                             <li class="failed clearfix">
-                                                <i class="pull-left icomoon icon-wrong"></i>Porque aprovechas mejor tus talentos
+                                                <i class="fl-left icomoon icon-wrong"  ng-show="exploracionFinalresult[4].firstOptionWrong"></i>Porque aprovechas mejor tus talentos
                                                 y difrutas lo que haces
                                             </li>
                                             <li class="failed clearfix">
-                                                <i class="pull-left icomoon icon-wrong"></i>Porque puedes ser más famoso y
+                                                <i class="fl-left icomoon icon-wrong"  ng-show="exploracionFinalresult[4].secondOptionWrong"></i>Porque puedes ser más famoso y
                                                 exitoso
                                             </li>
                                             <li class="failed clearfix">
-                                                <i class="pull-left icomoon icon-wrong"></i>Porque debes hacer lo que quieras
+                                                <i class="fl-left icomoon icon-wrong"  ng-show="exploracionFinalresult[4].thirdOptionWrong"></i>Porque debes hacer lo que quieras
                                                 sin importar nada ni nadie
                                             </li>
                                         </ul>
@@ -283,7 +284,7 @@
                             <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">Terminar</button>
                         </section>
                     </div>
-                </div>-->
+                </div>
             </div>
             <img src="assets/images/img-lines-ftr.png " class="centered ">
         </article>

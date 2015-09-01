@@ -23,6 +23,7 @@ angular
 
             
             $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
+            console.log("Total number of badges: " + $scope.totalBadges);
             $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
             $scope.badgePage = 0;
             $scope.normalBadgePage = $scope.badgePage + 1;
@@ -41,7 +42,7 @@ angular
                         elem.filename = "default_placeholder.svg";
                     }
 
-                    console.log(elem.status + " -> " + elem.filename);
+                    console.log(elem.status + " -> " + elem.filename + " " + JSON.stringify(elem));
                     $scope.wholeBadgesPages[i].push(elem);
                 }
             }
@@ -106,8 +107,9 @@ angular
                 }
 
                 return filename;
-
             }
+
+
 
             $scope.changepage = function (delta) {
                 $scope.badgePage += delta;
@@ -175,7 +177,6 @@ angular
                     return "";
                 }
                 initFields(m);
-                console.log("usuario completo");
 
                 return m;
             }
@@ -265,13 +266,13 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, status) {
+            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes) {
                 $scope.currentPage = 10;
                 $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
-                $scope.status = status;
+                //$scope.status = status;
             };
 
 
