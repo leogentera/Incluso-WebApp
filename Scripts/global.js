@@ -133,9 +133,9 @@ var _endActivity = function(activityModel){
         var activityId = activityModel.coursemoduleid;
         //create notification
         _createNotification(activityId, triggerActivity);
-        //complete stage        
-        //update badge status
-        //_updateBadgeStatus(activityId);
+        //complete stage
+        _updateBadgeStatus(activityId);
+        
       if (activityModel.activityType == "Quiz"){
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse,activityModel.token,
         successCallback,errorCallback);        
@@ -210,24 +210,28 @@ var _isChallengeCompleted = function(){
     
 };
 
-/*
+
 
 var _updateBadgeStatus = function(coursemoduleid){    
     var profile = JSON.parse(localStorage.getItem("profile"));
     var badges = profile.badges;
     
-    var badge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
-    if (badge) {
+    var currentBadge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
+    debugger;
+    if (currentBadge) {
       for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
-        if (badges[indexBadge].id == badge.badgeId) {
+        if (badges[indexBadge].id == currentBadge.badgeId) {
           profile.badges[indexBadge].status = "won";
+          localStorage.setItem("profile",JSON.stringify(profile));
         }else{
           break;
         }
       }
+    }else{
+      
     }
 };
-*/
+
 
 
 var _createNotification = function(activityId, triggerActivity){
