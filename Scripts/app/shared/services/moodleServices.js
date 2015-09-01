@@ -23,8 +23,8 @@
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncForumInfo = function(activityId, successCallback, errorCallback, forceRefresh){
-            _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncForumInfo = function(activityId, token, successCallback, errorCallback, forceRefresh){
+            _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback, forceRefresh){
@@ -133,7 +133,7 @@
         };
 
 
-        var _getForumAsyncData = function(key, url, successCallback, errorCallback, forceRefresh){
+        var _getForumAsyncData = function(key, url, token, successCallback, errorCallback, forceRefresh){
 
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
                 
@@ -145,7 +145,7 @@
             _httpFactory({
                 method: 'GET',
                 url: url, 
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json', 'Authorization': token},
                 }).success(function(data, status, headers, config) {
                   var forum = createForumTree(data);
                   localStorage.setItem(key, JSON.stringify(forum));

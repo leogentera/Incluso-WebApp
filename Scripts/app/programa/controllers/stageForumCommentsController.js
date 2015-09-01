@@ -189,8 +189,7 @@ angular
 
             $scope.isCommentModalCollapsed= [];
             $scope.replyText = null;
-            $scope.replyToPost = function(that, parentId, topicId){
-                debugger;
+            $scope.replyToPost = function(that, parentId, topicId){                
                 var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
@@ -335,7 +334,7 @@ angular
                 $scope.isCommentModalCollapsed[element.post_id] = true;
             };
 
-            var refreshTopicData = function(){
+            var refreshTopicData = function(){                
                 moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
             };
 

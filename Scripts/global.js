@@ -216,8 +216,7 @@ var _updateBadgeStatus = function(coursemoduleid){
     var profile = JSON.parse(localStorage.getItem("profile"));
     var badges = profile.badges;
     
-    var currentBadge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
-    debugger;
+    var currentBadge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});    
     if (currentBadge) {
       for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
         if (badges[indexBadge].id == currentBadge.badgeId) {
