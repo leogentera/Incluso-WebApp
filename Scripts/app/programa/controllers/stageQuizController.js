@@ -428,8 +428,8 @@ angular
                     for (var answerOptionsIndex = 0; answerOptionsIndex < question.answers.length; answerOptionsIndex++) {
                         var answerOption = question.answers[answerOptionsIndex];
                         for (var userAnswersListIndex = 0; userAnswersListIndex < userAnswersList.length; userAnswersListIndex++) {
-                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]);
-                            if (answerOption.answer == userAnswer) {
+                            var userAnswer = cleanText(userAnswersList[userAnswersListIndex]).trim();
+                            if (answerOption.answer.trim() == userAnswer) {
                                 $scope.misGustosAnswers[currentQuestionIndex][answerOptionsIndex] = true;
                             }
                         }
@@ -437,14 +437,19 @@ angular
                 }
             }
 
-
-
             function updateMisSueñosSelectedAnswers(index, question) {
                 var userAnswersList = question.userAnswer.split(";");
                 userAnswersList.forEach(function (answer) {
                     var cleanAnswer = cleanText(answer);
                     $scope.dreamsLists.answers[index].push(cleanAnswer);
                 });
+                
+                if(index == 0)
+                {                    
+                    var qty = userAnswersList.length;
+                    addHeightConsulta("#listaDinamica",qty);
+                }
+                
             }
 
             function updateExploracionFinalSelectedAnswersFinal(index, question) {
@@ -583,6 +588,11 @@ angular
             //        windowClass: 'user-help-modal'
             //    });
             //};
+            
+            function addHeightConsulta(lista,elementQty) {
+                $scope.finalHeight = angular.element(lista).height() + (250 *(elementQty));
+                angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
+            }
 
             function addHeight(lista) {
                 $scope.finalHeight = angular.element(lista).height() + 177;
