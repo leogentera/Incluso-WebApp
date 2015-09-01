@@ -274,8 +274,6 @@ angular
                 //$scope.status = status;
             };
 
-
-
             $scope.edit = function () {
                 $location.path('/Perfil/Editar');
             };
@@ -474,7 +472,11 @@ angular
                 }
             };
 
-            function deleteRepeatedValues() {
+            $scope.clean = function() {
+              deleteRepeatedValues();
+            };
+
+            var deleteRepeatedValues = function() {
 
                 $scope.model.phones = $scope.model.phones.filter(function(item, pos) {
                     return $scope.model.phones.indexOf(item) == pos;
@@ -509,7 +511,7 @@ angular
                 });
 
 
-            }
+            };
 
             $scope.addStudy = function () {
                 $scope.model.studies.push({});
