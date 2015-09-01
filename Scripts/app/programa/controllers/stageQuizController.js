@@ -76,23 +76,15 @@ angular
                     "userId": $scope.userprofile.id,
                     "startingTime": $scope.startingTime,
                     "endingTime": new Date(),
-                    "token": $scope.currentUser.token
+
+                    "token": $scope.currentUser.token,
+                    "activityType": "Quiz"
                 };
                                 
-                //trigger activity type 2 is sent when the activity ends.
-                var triggerActivity = 2;
-
-                _createNotification(activityModel.coursemoduleid, triggerActivity);
-
-                moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse, activityModel.token,
-                    _endActivitySuccessCallback, errorCallback);
+                _endActivity(activityModel);
 
                 var currentStage = localStorage.getItem("currentStage");
                 $location.path('/ZonaDeVuelo/Dashboard/' + currentStage);
-            };
-
-            var _endActivitySuccessCallback = function () {
-
             };
 
 

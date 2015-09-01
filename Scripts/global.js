@@ -124,20 +124,33 @@ var updateActivityStatusDictionary = function(activityId){
     _activityStatus[activityId] =1;
 };
 
-var _endActivity = function(activityModel){      
-      _isStageCompleted();
-      var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-      var currentUserId = currentUser.userId;
-      var activityId = activityModel.coursemoduleid;
-      var data = {
-        userid :  currentUserId };
+var _endActivity = function(activityModel){
         
       //trigger activity type 2 is sent when the activity ends.
       var triggerActivity = 2;
-      _createNotification(activityId, triggerActivity);
-    // update activity status dictionary used for blocking activity links
-    updateActivityStatusDictionary(activityModel.coursemoduleid);
-      moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
+      
+      if (activityModel.activityType == "Quiz"){    
+        _createNotification(activityModel.coursemoduleid, triggerActivity);
+        
+        moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,
+        successCallback,errorCallback);
+        
+      }else{
+        
+        _isStageCompleted();
+        var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+        var currentUserId = currentUser.userId;
+        var activityId = activityModel.coursemoduleid;
+        var data = {
+          userid :  currentUserId };
+                  
+        _createNotification(activityId, triggerActivity);
+        // update activity status dictionary used for blocking activity links
+        updateActivityStatusDictionary(activityModel.coursemoduleid);
+        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);
+      }
+      
+      
           
 };
 
@@ -202,8 +215,7 @@ var _createNotification = function(activityId, triggerActivity){
   for(var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++ ){
       var currentNotification = allNotifications[indexNotifications];
       if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId){
-          allNotifications[indexNotifications].timemodified = formattedDate;
-          debugger;
+          allNotifications[indexNotifications].timemodified = formattedDate;        
           localStorage.setItem("notifications",JSON.stringify(allNotifications));
           var dataModelNotification = {
               notificationid: allNotifications[indexNotifications].id,
@@ -317,6 +329,42 @@ function _getActivityByCourseModuleId(coursemoduleid) {
             }
             return matchingActivity;
 }
+
+function updateSubActivityStatus(coursemoduleid) {
+                //Update activity status for activity blocking binding
+                //updateActivityStatusDictionary(coursemoduleid);
+                //Update activity status in usercourse                
+                var breakAll = false;
+                var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
+                for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
+                    var stage = theUserCouerse.stages[stageIndex];
+                    for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+                        var challenge = stage.challenges[challengeIndex];
+                        for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                            var activity = challenge.activities[activityIndex];
+                            if(activity.activities){
+                              console.log(activity.activities.length);
+                              for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++)
+                              {
+                                var subactivity = activity.activities[subactivityIndex];
+                                if (subactivity.coursemoduleid == coursemoduleid) {
+                                  subactivity.status = 1;
+                                  breakAll = true;
+                                  break;
+                                }
+                              } 
+                            }
+                                                       
+                        }
+                        if (breakAll)
+                            break;
+                    }
+                    if (breakAll)
+                        break;
+                }
+                var theUserCouerseUpdated = theUserCouerse;
+                return theUserCouerseUpdated;
+            }
 
  function updateActivityStatus(activity_identifier) {
                 //Update activity status for activity blocking binding
@@ -766,7 +814,7 @@ var _activityRoutes = [
   { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
   { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
   { id: 115, url: '#'},
-  { id: 116, url: ''}, // Empty for cabina de soporte
+  { id: 68, url: '/ZonaDeVuelo/ExploracionFinal/zv_cabinadesoporte_chat'}, 
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
