@@ -32,7 +32,7 @@ angular
             //Opens stage welcome message if first time visit
             $scope.openModal_StageFirstTime = function (size) {
                 var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
+                    animation: false,//$scope.animationsEnabled,
                     templateUrl: 'OpeningStageModal.html',
                     controller: 'OpeningStageController',
                     size: size,
