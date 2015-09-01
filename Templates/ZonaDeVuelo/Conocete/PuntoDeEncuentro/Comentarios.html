@@ -3,16 +3,16 @@
     <article class="blueprint">
       <section>
         <div class="txt-renglon centered txt-bigger"></div>
-    <div class="subtitle">Punto de encuentro</div>
+    <div class="subtitle">{{discussion.discussion_name}}</div>
 
         <div class="txt-renglon txt-bigger" ng-bind-html="discussion.message | linky"></div>
       </section>
-      <section class="txt-renglon centered collapse-media">
+      <section class="txt-renglon centered collapse-media" ng-show="(discussion.fileurl && (discussion.fileurl.length > 0))">
         <div class="panel">
           <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
             <h3>
               <span class="icomoon icon-camera"></span>
-          <span>FOTOGRAFÍA DEL FORO</span>
+          <span>{{ discussion.filename }}</span>
               <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
               <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
             </h3>
@@ -72,7 +72,7 @@
       <section class="wall">
         <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies">
           <div class="part">
-            <div class="author"><img src="assets/images/avatar.svg">
+            <div class="author"><img ng-src="{{p.picture_post_author + '?token=' + userToken}}">
               <div>{{p.post_author}} <span>publicó:</span>
               <div>{{p.created | date: "dd MMMM yyyy"}}</div>
               </div>
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div id="item{{$index}}" ng-repeat="r in p.replies">
-              <div class="coment block"><img src="assets/images/avatar.svg">
+              <div class="coment block"><img ng-src="{{r.picture_post_author + '?token=' + userToken}}">
                 <div>{{r.post_author}} <span>publicó:</span>   <div>{{r.message}}</div>
                 </div>
               </div>

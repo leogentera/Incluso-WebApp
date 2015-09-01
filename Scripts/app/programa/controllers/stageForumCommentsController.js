@@ -20,7 +20,7 @@ angular
             $rootScope.pageName = "Estación: Conócete"
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
-
+            
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
@@ -36,9 +36,22 @@ angular
                 "isVideoCollapsed":true,
                 "isAttachmentCollapsed":true
             };
+
+            var profile = JSON.parse(localStorage.getItem("profile"));
             $scope.clickLikeButton = function(postId){
                 console.log('Post id: ' + postId);
-                console.log('Like button clicked!!!');
+                console.log('Like button clicked!!!');                
+                var post = _.find($scope.discussion.posts[0].replies, function(a){
+                    return a.post_id == postId
+                }) ;
+                if(post.liked == 0){
+                    post.liked = 1;
+                    post.likes = parseInt(post.likes) + 1;
+                }
+                else{
+                    post.liked = 0;
+                    post.likes = parseInt(post.likes) - 1;
+                }                
                 var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
                 moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject,
                     function(){
@@ -130,7 +143,8 @@ angular
             };
 
             var createReplyDataObject = function( parentId, message, postType){
-                var userId = localStorage.getItem("userId");
+                var userId = localStorage.getItem("userId");    
+                debugger;            
                 var dataObject= {
                     "userid":userId,
                     "discussionid": $scope.discussion.discussion_id,
@@ -183,7 +197,7 @@ angular
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "posttype": postType,
-                    "fileToUpload": attachment? attachment.base64 : null,
+                    "fileToUpload": attachment? attachment.base64 : null
                 };
                 return dataObject;
             };
@@ -251,7 +265,8 @@ angular
                     "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "posttype": 4,
                     "filecontent":$scope.attachmentToPost.base64,
-                    "filename": userId + $scope.attachmentToPost.filename
+                    "filename": userId + $scope.attachmentToPost.filename,
+                    "picture_post_author": profile.profileimageurlsmall
                 };
 
                 $scope.$emit('ShowPreloader');

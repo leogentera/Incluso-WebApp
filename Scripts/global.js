@@ -205,6 +205,7 @@ var _isChallengeCompleted = function(){
     }
 };
 
+<<<<<<< HEAD
 
 var _updateBadgeStatus = function(coursemoduleid){    
     var profile = JSON.parse(localStorage.getItem("profile"));
@@ -221,6 +222,25 @@ var _updateBadgeStatus = function(coursemoduleid){
       }
     }
 };
+=======
+//
+//var _updateBadgeStatus = function(coursemoduleid){    
+//    var profile = JSON.parse(localStorage.getItem("profile"));
+//    var badges = profile.badges;
+//    
+//    var badge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
+//    debugger;
+//    if (badge) {
+//      for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
+//        if (badges[indexBadge].id == badge.badgeId) {
+//          profile.badges[indexBadge].status = "won";
+//        }else{
+//          break;
+//        }
+//      }
+//    }
+//}
+>>>>>>> c3eeb5ab3394b24eb8cd75219ef3b0ada8f9a4e3
 
 var _createNotification = function(activityId, triggerActivity){
   
@@ -248,6 +268,7 @@ var _createNotification = function(activityId, triggerActivity){
   }
 };
 
+<<<<<<< HEAD
 var _coachNotification = function() {
 
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -270,6 +291,31 @@ var _coachNotification = function() {
     }
 };
 
+=======
+var _coachNotification = function(){
+                      
+  var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+  var activityChatStarted = userCourse.stages[0].challenges[4].activities[0].started;  
+  if (activityChatStarted){
+      var activityDateStarted = userCourse.stages[0].challenges[4].activities[0].datestarted;      
+      var activityChatId = 68;
+      var triggerActivity = 3;      
+      var notifications = JSON.parse(localStorage.getItem("notifications"));      
+      
+      var userId = localStorage.getItem('userId');
+      var twoDaysAfterLastMessage = new Date();
+      //var twoDaysAfterLastMessage = new Date(activityDateStarted);
+      //twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
+  
+      var today = new Date();
+      if (twoDaysAfterLastMessage < today){
+        _createNotification(activityChatId,triggerActivity);
+      }else{
+        return false;
+      }
+  }
+}
+>>>>>>> c3eeb5ab3394b24eb8cd75219ef3b0ada8f9a4e3
 
 var successCallback = function(data){
 };
