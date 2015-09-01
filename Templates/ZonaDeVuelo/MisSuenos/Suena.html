@@ -1,4 +1,4 @@
-<div id="site-wrapper" class="incluso-app step-dashboard">
+<div class="incluso-app">
     <div class="alert alert-warning" role="alert" ng-show="showWarning" ng-cloak>
         <div class="alert-message" ng-click="hideWarning2()">
             <div class="icomoon icon-warning"></div>
@@ -7,7 +7,6 @@
         </div>
     </div>
 
-    <div id="site-canvas">
         <article class="blueprint evaluation">
             <div class="pages">
                 <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
@@ -33,13 +32,13 @@
 
                                             <div class="clearfix">
                                                 <span>Sueño {{$index + 1}}</span>
-                                                <button class="btn btn-circle fl-right"
+                                                <a class="btn btn-circle pull-right"
                                                         ng-click="deleteSueno1($index)" ng-hide="setReadOnly">
-                                                    <i class="icomoon icon-cross white"></i>
-                                                </button>
+                                                    <span class="icomoon icon-cross white"></i>
+                                                </a>
                                             </div>
                                             <div class="add">
-                                                <i class="icomoon icon-edit"></i>
+                                                <span class="icomoon icon-edit"></span>
                                                 <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nuevo sueño" ng-model="dreamsLists.answers[0][$index]"
                                                           ng-readonly="setReadOnly">
@@ -52,9 +51,9 @@
                             </ul>
 
                             <div class="txt-renglon" ng-show="!activityFinished">
-                                <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno1();">
+                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno1();">
                                     <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -73,13 +72,13 @@
 
                                             <div class="clearfix">
                                                 <span>Sueño {{$index + 1}}</span>
-                                                <button class="btn btn-circle fl-right"
+                                                <a class="btn btn-circle pull-right"
                                                         ng-click="deleteSueno2($index)" ng-hide="setReadOnly">
-                                                    <i class="icomoon icon-cross white"></i>
-                                                </button>
+                                                    <span class="icomoon icon-cross white"></span>
+                                                </a>
                                             </div>
                                             <div class="add">
-                                                <i class="icomoon icon-edit"></i>
+                                                <span class="icomoon icon-edit"></span>
                                                 <textarea id="textoarea2" class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nuevo sueño" ng-model="dreamsLists.answers[1][$index]"
                                                           ng-readonly="setReadOnly">
@@ -92,9 +91,9 @@
                             </ul>
 
                             <div class="txt-renglon" ng-show="!activityFinished">
-                                <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno2();">
+                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno2();">
                                     <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -114,12 +113,12 @@
 
                                             <div class="clearfix">
                                                 <span>Sueño {{$index + 1}}</span>
-                                                <button class="btn btn-circle fl-right"
+                                                <a class="btn btn-circle pull-right"
                                                         ng-click="deleteSueno3($index)" ng-hide="setReadOnly">
-                                                    <i class="icomoon icon-cross white"></i>
-                                                </button>
+                                                    <span class="icomoon icon-cross white"></span>
+                                                </a>
                                             </div>
-                                            <div class="add"><i class="icomoon icon-edit"></i>
+                                            <div class="add"><span class="icomoon icon-edit"></span>
                                                 <textarea id="textoarea3" class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nuevo sueño" ng-model="dreamsLists.answers[2][$index]"
                                                           ng-readonly="setReadOnly">
@@ -132,9 +131,9 @@
                             </ul>
 
                             <div class="txt-renglon" ng-show="!activityFinished">
-                                <button type="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno3();">
+                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno3();">
                                     <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
-                                </button>
+                                </a>
                             </div>
                         </div>
 
@@ -144,17 +143,17 @@
                     <section id="controls" class="controls">
                         <div class="paginate">
                             <a href="#" id="prev" ng-click="addToAnswerIndex(-1)">
-                                <i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i>
+                                <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
                             </a>
                             <a href="#" id="next" ng-click="addToAnswerIndex(1)">
-                                <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
+                                <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
                             </a>
 
                             <div class="centered">                                
                                 <span id="index" class="txt-bigger">1/</span><span id="totalPages" class="white txt-bigger">3</span>
                             </div>
                         </div>
-                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button" style="display:none" ng-hide="setReadOnly" ng-click="validateMisSuenosAnsweredQuestions()" >GUARDAR</button>
+                        <a class="btn btn-primary btn-lg btn-cnt" id="save" role="button" style="display:none" ng-hide="setReadOnly" ng-click="validateMisSuenosAnsweredQuestions()" >GUARDAR</a>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
                 </div>
@@ -164,16 +163,16 @@
                         <section class="header-title">
                             <div class="txt-renglon centered txt-bigger min-pad">Has completado la actividad</div>
                             <div class="subtitle centered min-pad">"Sueña"</div>
-                            <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
+                            <div class="txt-renglon centered txt-bigger min-pad">¡Felicidades!</div>
                         </section>
                         <section class="centered txt-bigger">
-                            <i class="icomoon icon-checked-join txt-bigger green-giant"></i>
+                            <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
                         </section>
                         <section class="txt-renglon pill">
-                            <div class="fl-left">Estrellas ganadas:</div>
-                            <div class="fl-right sm-pill">
-                                <span>{{activityPoints}}</span>
-                                <i class="icomoon icon-star fl-right"></i>
+                            <div class="pull-left">Estrellas ganadas:</div>
+                            <div class="pull-right sm-pill">
+                                <span class="pull-left">{{activityPoints}}</span>
+                                <span class="icomoon icon-star pull-right"></span>
                             </div>
                         </section>
                         <section class="txt-renglon centered form ">
@@ -190,28 +189,23 @@
                                     <label for="dislike">No me gusta</label>
                                 </div>
                             </section>
-                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">
+                            <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">
                                 Terminar
-                            </button>
+                            </a>
                         </section>
                     </div>
                 </div>
-
-
-            </div>
-
-
-            <img src="assets/images/img-lines-ftr.png " class="centered ">
+            </div>            
         </article>
         <!-- initial message -->
         <script type="text/ng-template" id="OpeningStageModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help">
-                <img src="assets/images/img-robot.png">
+                <img src="assets/images/img-robot-lg.svg">
 
                 <div class="modal-header">
-                    <button class="icon icon-close" ng-click="cancel()">
+                    <a class="icon icon-close btn btn-circle" ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
-                    </button>
+                    </a>
                 </div>
                 <div class="modal-body">
                     <h3 class="subtitle text-center">Sueña</h3>
@@ -240,23 +234,21 @@
             </div>
 
         </script>
-    </div>
 </div>
 
 <!-- scripts -->
 <script>
     $(document).ready(function () {
-        var step = 0;
-
-
         var owl = $("#owl");
         owl.owlCarousel({
             navigation: false,
             pagination: false,
-            paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
             autoHeight: true,
+            mouseDrag: false,
+            touchDrag: false,
+            transitionStyle: "fade",
             afterMove: callback
         });
         function callback(event) {
