@@ -134,6 +134,15 @@ angular
                 "Exploración final": "assets/images/challenges/stage-1/img-evaluacion final.svg"
             };
 
+            $scope.challengeDescription= {
+                "Exploración inicial": "Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad",
+                "Cuarto de recursos": "Descubre más y métele velocidad a tus sueños",
+                "Conócete": "Juega y descubre tus inteligencias",
+                "Mis sueños": "Cada sueño en su lugar",
+                "Cabina de soporte": "Contacta a tu coach",
+                "Exploración final": "Explora qué tanto descubriste en la Zona de Vuelo"
+            };
+
             $scope.$emit('HidePreloader'); //hide preloader
 
             $scope.playVideo = function (videoAddress, videoName) {
