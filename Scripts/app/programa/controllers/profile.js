@@ -95,9 +95,7 @@ angular
             getAge();
 
             function getDataAsync() {
-
-                $scope.$emit('HidePreloader');
-                console.log("usuario completo");
+                
                 moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
                 var m = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
 
@@ -106,6 +104,8 @@ angular
                     return "";
                 }
                 initFields(m);
+                $scope.$emit('HidePreloader');
+                console.log("usuario completo");
 
                 return m;
             }
