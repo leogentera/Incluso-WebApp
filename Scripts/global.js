@@ -126,33 +126,29 @@ var updateActivityStatusDictionary = function(activityId){
 
 var _endActivity = function(activityModel){
         
-      //trigger activity type 2 is sent when the activity ends.
-      var triggerActivity = 2;
-      
-      if (activityModel.activityType == "Quiz"){    
-        _createNotification(activityModel.coursemoduleid, triggerActivity);
-        
-        moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,
-        successCallback,errorCallback);
-        
-      }else{
-        
-        _isStageCompleted();
+        //trigger activity type 2 is sent when the activity ends.
+        var triggerActivity = 2;
         var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
         var currentUserId = currentUser.userId;
         var activityId = activityModel.coursemoduleid;
-        var data = {
-          userid :  currentUserId };
-                  
+        //create notification
         _createNotification(activityId, triggerActivity);
+        //complete stage
+        _isStageCompleted();
+        //update badge status
+        _updateBadgeStatus(activityId);
+      if (activityModel.activityType == "Quiz"){
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse,activityModel.token,
+        successCallback,errorCallback);        
+      }else{            
+        var data = {userid :  currentUserId };
+        
         // update activity status dictionary used for blocking activity links
-        updateActivityStatusDictionary(activityModel.coursemoduleid);
-        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);
-      }
-      
-      
-          
+        updateActivityStatusDictionary(activityId);
+        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback, errorCallback);
+      }                  
 };
+
 
 //This function updates in localStorage the status of the stage when completed
 var _isStageCompleted = function(){
@@ -187,11 +183,14 @@ var _isChallengeCompleted = function(){
           var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
           if (totalActivitiesByStage == totalActivitiesCompletedByStage){
               
+              //updateBadge
+              _updateBadgeStatus(currentChallenge.coursemoduleid);
+              
               userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
               localStorage.setItem("usercourse", JSON.stringify(userCourse));              
               var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
               var currentUserId = currentUser.userId;
-              var data = { userid :  currentUserId };          
+              var data = { userid :  currentUserId };
               var currentActivityModuleId = currentChallenge.coursemoduleid;              
               moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, function(){},errorCallback);
               return currentActivityModuleId;
@@ -203,6 +202,21 @@ var _isChallengeCompleted = function(){
         }
     }
 };
+
+
+var _updateBadgeStatus = function(coursemoduleid){    
+    var profile = JSON.parse(localStorage.getItem("profile"));
+    var badges = profile.badges;
+    
+    var badge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
+    for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
+      if (badges[indexBadge].id == badge.badgeId) {
+        profile.badges[indexBadge].status = "won";
+      }else{
+        break;
+      }
+    }
+}
 
 var _createNotification = function(activityId, triggerActivity){
   
@@ -798,6 +812,31 @@ var _staticStages = [
     ]
   }
 ];
+
+var _badgesPerChallenge = [
+  {
+    badgeId: 6,
+    badgeName: "Combustible",
+    challengeId: 112},
+  {
+    badgeId: 7,
+    badgeName: "Turbina C0N0-CT",
+    challengeId: 114},
+  {
+    badgeId: 8,
+    badgeName: "Ala Ctu-3000",
+    challengeId: 115},
+  {
+    badgeId: 2,
+    badgeName: "Combustible",
+    challengeId: ""},
+  {
+    badgeId: 3,
+    badgeName: "Turbina C0N0-CT",
+    challengeId: ""}
+];
+
+
 
 var _activityRoutes = [
   { id: 150, url: '/ZonaDeVuelo/ExploracionInicial/1001'},
