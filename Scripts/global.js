@@ -218,7 +218,7 @@ var _updateBadgeStatus = function(coursemoduleid){
         }
       }
     }
-}
+};
 
 var _createNotification = function(activityId, triggerActivity){
   
@@ -276,7 +276,7 @@ var _coachNotification = function(){
     return false;
   }
   
-}
+};
 
 var successCallback = function(data){
 };
@@ -294,7 +294,7 @@ var _notificationExists = function(){
     var totalNotifications = countNotificationsUnread.length;
     return  totalNotifications;
   
-}
+};
 
 function getActivityByActivity_identifier(activity_identifier) {          
             var matchingActivity = null;
@@ -469,7 +469,7 @@ var logout = function($scope, $location){
       localStorage.removeItem("usercourse");
       localStorage.removeItem("currentStage");
       localStorage.removeItem("notifications");
-      localStorage.removeItem("userChat")
+      localStorage.removeItem("userChat");
       $location.path('/');
     };
     

@@ -633,19 +633,6 @@ angular
                     $scope.answerIndex = maxPages;
                 }
             };
-            //
-            //
-            //$scope.addToAnswerIndex1 = function (delta) {
-            //    $scope.answerIndex1 += delta;
-            //
-            //    if ($scope.answerIndex1 > 5) {
-            //        $scope.answerIndex1 = 1;
-            //    }
-            //
-            //    if ($scope.answerIndex1 < 1) {
-            //        $scope.answerIndex1 = 5;
-            //    }
-            //};
 
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {
