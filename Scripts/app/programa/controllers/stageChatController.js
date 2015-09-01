@@ -13,15 +13,21 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {        
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = false; 
+            $rootScope.showFooterRocks = false;            
+            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+            $scope.model = userCourse;
+
             $rootScope.showFooterRocks = false; 
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
+
             $scope.idEtapa = 0;
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader  
             $scope.currentPage = 1;      
             var index = 0;
             var parentIndex = 4;
+
             var activity = $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index];
             $scope.activityPoints = activity.points;
             var cabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));

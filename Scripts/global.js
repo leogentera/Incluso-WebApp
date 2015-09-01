@@ -817,25 +817,26 @@ var _staticStages = [
 
 var _badgesPerChallenge = [
   {
-    badgeId: 6,
-    badgeName: "Combustible",
-    challengeId: 112},
-  {
-    badgeId: 7,
-    badgeName: "Turbina C0N0-CT",
-    challengeId: 114},
-  {
-    badgeId: 8,
-    badgeName: "Ala Ctu-3000",
-    challengeId: 115},
-  {
     badgeId: 2,
     badgeName: "Combustible",
-    challengeId: ""},
+    challengeId: 113
+  },
+
   {
     badgeId: 3,
     badgeName: "Turbina C0N0-CT",
-    challengeId: ""}
+    challengeId: 114
+  },
+  {
+    badgeId: 4,
+    badgeName: "Ala Ctu-3000",
+    challengeId: 115
+  },
+  {
+    badgeId: 5,
+    badgeName: "Combustible",
+    challengeId: 68
+  }
 ];
 
 

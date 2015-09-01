@@ -208,7 +208,7 @@
                 if(!_activityStatus) {
                     _activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
                 }
-                if(!_activityStatus[activityId]) {
+                if(_activityStatus && !_activityStatus[activityId]) {
                     var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
                         return x.id == activityId;
                     });
