@@ -27,6 +27,7 @@ angular
 
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
+            $scope.moodleId = $routeParams.moodleid;
 
             $scope.scrollToTop();
 
@@ -50,7 +51,6 @@ angular
             };
 
             function getForumsProgress(){
-                //TODO make this function ablailable trough a service so it can be used by forum controller as well as forum comments controller
                 var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : new Array();
                 return forumsProgress;
 
@@ -58,28 +58,29 @@ angular
 
             function updateForumProgress(discussionId){
                 var forumsCommentsCountCollection = getForumsProgress();
-                var discussionId = discussionId;//$scope.discussion.posts[0].discussion;
-                var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussionId == discussionId; });
-                alreadyCommented? alreadyCommented.commentsCount++ : forumsCommentsCountCollection.push({'discussionId':discussionId, 'commentsCount':1});
+                var discussionId = discussionId;
+                var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussion_id == discussionId; });
+                //FIXME Currently getting discussion, need to get topics
+                alreadyCommented? alreadyCommented.replies_counter++ : forumsCommentsCountCollection.push({'discussion_id':discussionId, 'replies_counter':1});
                 localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
             };
             var endForumActivity = function(){
-
+                //TODO verify which activities are related with assigments and finish them too
                 console.log('Finishing activity...');
                 var userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
                 var userId = {'userid':JSON.parse(localStorage.getItem('userId'))};
-                moodleFactory.Services.PutEndActivity(MoodleIds.forum, userId,'', userToken,
+                moodleFactory.Services.PutEndActivity($routeParams.moodleid, userId,'', userToken,
                     function(response){
                         alert('Acabas de completar la actividad de foros.');
                     },
                     function(){
                         alert('Hubo un problema al registrar tus comentarios, por favor vuelve a intentarlo.');
                     });
-                assignStars(100);
+                updateActivityStatus($routeParams.moodleid);
+                //assignStars(100);
             };
 
             var assignStars = function(numStars){
-                //TODO get moduleId (context) from course JSON object
                 var userId = JSON.parse(localStorage.getItem('userId'));
 
                 var data={
@@ -102,12 +103,25 @@ angular
                     var topicObject =forumsCommentsCountCollection[topicObjectIndex] ;
                     var isTopicFinished = topicObject.commentsCount >= 2;
 
-                    if(isActivityFinished === null && typeof isActivityFinished === "object") isActivityFinished = isTopicFinished;
+                    //if(isActivityFinished === null && typeof isActivityFinished === "object") isActivityFinished = isTopicFinished;
+                    isActivityFinished = isTopicFinished;
                     isActivityFinished = isActivityFinished && isTopicFinished;
                 };
 
                 //Check for activity status
-               var activityFromTree = getActivityByActivity_identifier('1010');
+                var activity_identifier = null;
+                if($scope.moodleId == 64){
+                    activity_identifier = 1010;
+                } else if($scope.moodleId == 73){
+                    activity_identifier = 1008;
+                }
+               var activityFromTree = getActivityByActivity_identifier(activity_identifier);
+
+                //Forum 64 (conocete - punto de encuentro) does not bring the forum activity, it brings the discussion,
+                // we need go one level down deeper to get the activity
+                if(activity_identifier == 1010){
+                    activityFromTree = activityFromTree.activities[0];
+                }
 
                 if(isActivityFinished && activityFromTree.status == 0) endForumActivity();
                 getDataAsync();
@@ -116,7 +130,7 @@ angular
             var addPointsToUser = function(){
 
             };
-            //TODO Remove this method call
+            //TODO Check if this call is needed
             //checkForumProgress();
 
 
@@ -291,7 +305,15 @@ angular
             getTopicDataAsync();
 
             $scope.back = function () {
-                $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/'+ MoodleIds.forum);
+
+                switch ($routeParams.moodleid) {
+                    case "64":
+                        $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/' + $routeParams.moodleid);
+                        break;
+                    case "73":
+                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
+                }
             };
 
             function getDataAsync() {
