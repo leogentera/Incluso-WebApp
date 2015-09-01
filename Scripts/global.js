@@ -133,8 +133,7 @@ var _endActivity = function(activityModel){
         var activityId = activityModel.coursemoduleid;
         //create notification
         _createNotification(activityId, triggerActivity);
-        //complete stage
-        _isStageCompleted();
+        //complete stage        
         //update badge status
         _updateBadgeStatus(activityId);
       if (activityModel.activityType == "Quiz"){
@@ -165,6 +164,9 @@ var _isStageCompleted = function(){
           if (totalChallengesByStage == totalChallengesCompleted) {
               userCourse.stages[stageIndex].status = 1;
               localStorage.setItem("usercourse",JSON.stringify(userCourse));
+              return true;
+          }else{
+              return false;
           }
         }
     }
@@ -254,8 +256,7 @@ var _coachNotification = function(){
       var activityDateStarted = userCourse.stages[0].challenges[4].activities[0].datestarted;      
       var activityChatId = 68;
       var triggerActivity = 3;      
-      var notifications = JSON.parse(localStorage.getItem("notifications"));
-      var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+      var notifications = JSON.parse(localStorage.getItem("notifications"));      
       
       var userId = localStorage.getItem('userId');
       var twoDaysAfterLastMessage = new Date(activityDateStarted);
