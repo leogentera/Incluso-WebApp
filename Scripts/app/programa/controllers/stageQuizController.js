@@ -438,7 +438,7 @@ angular
 
             function updateMisSueñosSelectedAnswers(index, question) {
 
-                var userAnswersList = question.userAnswer.split("\n");
+                var userAnswersList = question.userAnswer.split(";");
 
                 //var userAnswers = cleanText(question.userAnswer);
                 //var userAnswersList = userAnswers.split(" ");
