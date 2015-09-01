@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div id="item{{$index}}" ng-repeat="r in p.replies">
-              <div class="coment block"><img ng-src="r.picture_post_author + '?token=' + userToken">
+              <div class="coment block"><img ng-src="{{r.picture_post_author + '?token=' + userToken}}">
                 <div>{{r.post_author}} <span>publicó:</span>   <div>{{r.message}}</div>
                 </div>
               </div>

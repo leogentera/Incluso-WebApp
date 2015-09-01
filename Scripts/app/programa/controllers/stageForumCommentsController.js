@@ -40,7 +40,18 @@ angular
             var profile = JSON.parse(localStorage.getItem("profile"));
             $scope.clickLikeButton = function(postId){
                 console.log('Post id: ' + postId);
-                console.log('Like button clicked!!!');
+                console.log('Like button clicked!!!');                
+                var post = _.find($scope.discussion.posts[0].replies, function(a){
+                    return a.post_id == postId
+                }) ;
+                if(post.liked == 0){
+                    post.liked = 1;
+                    post.likes = parseInt(post.likes) + 1;
+                }
+                else{
+                    post.liked = 0;
+                    post.likes = parseInt(post.likes) - 1;
+                }                
                 var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
                 moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject,
                     function(){
