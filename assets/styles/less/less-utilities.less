@@ -214,6 +214,16 @@
 	background-image: url('@{url-images}/@{img-name}'),         linear-gradient(to bottom,  @top-color 0%, @bottom-color 92%); /* W3C */
 }
 
+.gradient(@top-color, @bottom-color) {
+	background-color: @bottom-color;
+	background-image:     -moz-linear-gradient(top,  @top-color 0%, @bottom-color 92%); 
+	background-image:  	     -webkit-gradient(linear, left top, left bottom, color-stop(0%,@top-color), color-stop(92%,@bottom-color));
+	background-image:  -webkit-linear-gradient(top,  @top-color 0%, @bottom-color 92%); 
+	background-image:       -o-linear-gradient(top,  @top-color 0%, @bottom-color 92%); 
+	background-image:      -ms-linear-gradient(top,  @top-color 0%, @bottom-color 92%); 
+	background-image:          linear-gradient(to bottom,  @top-color 0%, @bottom-color 92%);
+}
+
 .background-size(@w, @h) {
 	-webkit-background-size: @w @h;
 	   -moz-background-size: @w @h;
