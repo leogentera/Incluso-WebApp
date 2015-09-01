@@ -13,13 +13,14 @@ angular
 
             _timeout = $timeout;
             _httpFactory = $http;
-
+            $scope.$emit('ShowPreloader');
+            console.log("cargando usuario");
             $scope.currentPage = 1;
             $scope.setToolbar($location.$$path,"Mi perfil");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            $scope.$emit('HidePreloader');
             $scope.model = getDataAsync();
+
             
             $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
             $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
@@ -95,6 +96,8 @@ angular
 
             function getDataAsync() {
 
+                $scope.$emit('HidePreloader');
+                console.log("usuario completo");
                 moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
                 var m = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
 

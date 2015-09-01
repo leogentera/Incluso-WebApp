@@ -26,14 +26,14 @@ angular
             $scope.scrollToTop();
 
             localStorage.setItem("retoMultipleActivities", null);
-            //localStorage.setItem("activity/57", null);
-            //localStorage.setItem("activity/58", null);
-            //localStorage.setItem("activity/59", null);
-            //localStorage.setItem("activity/60", null);
-            //localStorage.setItem("activity/61", null);
-            //localStorage.setItem("activity/62", null);
-            //localStorage.setItem("activity/105", null);
-            //localStorage.setItem("activity/106", null);
+            // localStorage.setItem("activity/57", null);
+            // localStorage.setItem("activity/58", null);
+            // localStorage.setItem("activity/59", null);
+            // localStorage.setItem("activity/60", null);
+            // localStorage.setItem("activity/61", null);
+            // localStorage.setItem("activity/62", null);
+            // localStorage.setItem("activity/105", null);
+            // localStorage.setItem("activity/106", null);
 
             $scope.user = moodleFactory.Services.GetCacheJson("profile");
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
@@ -57,6 +57,7 @@ angular
                     }
                   }
                   localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
+                  localStorage.setItem("retoMultipleActivitiesParent", $routeParams.moodleid);
                }
             }
 
@@ -402,7 +403,7 @@ angular
                                     completedActivities.completed && 
                                     $scope.retoMultipleActivities && 
                                     completedActivities.completed >= $scope.retoMultipleActivities.length;
-
+                                    
                 //save response
                 for(i = 0; i < quizesRequests.length; i++){
                   console.log("saving quiz");

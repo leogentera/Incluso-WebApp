@@ -38,8 +38,7 @@
                                 <img ng-src="{{retosIconos[reto.sectionname]}}" alt="{{reto.sectionname}}" />
                             </figure>
                             <h4 class="item-title" ng-bind="reto.sectionname"></h4>
-                            <p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : '' "></p>
-                            <!-- <p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : 'Cada sueño en su lugar' "></p> -->
+                            <p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : 'Cada sueño en su lugar' "></p>
 
                             <div class="page-number">
                                 <p class="text-center">
@@ -61,7 +60,11 @@
 
 <!--                 <div class="page-number">
                     <p class="text-center">
+<<<<<<< HEAD
+                        <span>{{model.stages[idEtapa].challenges.indexOf(reto) + 1}}</span>
+=======
                         <span id="index">1</span>
+>>>>>>> origin/1.1
                         <span>/</span>
                         <span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
                     </p>                    
@@ -91,7 +94,7 @@
             <section class="progreso">
                 <div class="spinner">
                     <span ng-bind="puntosObtenidos"></span>
-                    <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png"> <!-- <img src="" alt=""> -->
+                    <!-- <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png"> --> <img src="" alt="">
 
                     <div class="circle"></div>
                     <div class="text">{{stageProgress}}%</div>
@@ -102,19 +105,19 @@
                 </div>
             </section>
 
-            <!-- <section class="hangar-bay">
+            <section class="hangar-bay">
                 <div id="ship">
-                    <img src="assets/images/img-ship-01.png"/>
+                    <!-- <img src="assets/images/img-ship-01.png"/> -->
                 </div>
-            </section> -->
+            </section>
 
             <script type="text/ng-template" id="ClosingStage.html">
                 <div class="modal-robot robot-lg closing-stage-modal user-help">
                     <img src="assets/images/img-robot-sm.svg">
                     <div class="modal-header">
-                        <a class="icon icon-close" ng-click="cancel()">
+                        <button class="icon icon-close" ng-click="cancel()">
                             <span class="icomoon icon-cross"></span>
-                        </a>
+                        </button>
                     </div>
                     <div class="modal-body">
                         <h3 class="subtitle">Cierre zona de vuelo</h3>
@@ -156,9 +159,9 @@
             <div class="modal-robot robot-lg closing-stage-modal user-help" >
                 <img src="assets/images/img-robot-lg.svg">
                 <div class="modal-header">
-                    <a class="icon icon-close" ng-click="cancel()">
+                    <button class="icon icon-close" ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
-                    </a>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
@@ -173,9 +176,9 @@
                 <img src="assets/images/img-robot-sm.svg">
 
                 <div class="modal-header">
-                    <a class="icon icon-close" ng-click="cancel()">
+                    <button class="icon icon-close" ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
-                    </a>
+                    </button>
                 </div>
                 <div class="modal-body">
                     <h3 class="subtitle text-center">Cabina de Soporte</h3>
