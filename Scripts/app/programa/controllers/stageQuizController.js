@@ -443,13 +443,12 @@ angular
                     var cleanAnswer = cleanText(answer);
                     $scope.dreamsLists.answers[index].push(cleanAnswer);
                 });
-                
-                if(index == 0)
-                {                    
+
+                if (index == 0) {
                     var qty = userAnswersList.length;
-                    addHeightConsulta("#listaDinamica",qty);
+                    addHeightConsulta("#listaDinamica", qty);
                 }
-                
+
             }
 
             function updateExploracionFinalSelectedAnswersFinal(index, question) {
@@ -481,8 +480,8 @@ angular
             //     return result;
             // }
             
-            function cleanText(userAnswer) {   
-                
+            function cleanText(userAnswer) {
+
                 var result = userAnswer.replace("\r", "");
                 result = userAnswer.replace("<br>", "");
                 result = userAnswer.replace("<p>", "");
@@ -589,8 +588,8 @@ angular
             //    });
             //};
             
-            function addHeightConsulta(lista,elementQty) {
-                $scope.finalHeight = angular.element(lista).height() + (250 *(elementQty));
+            function addHeightConsulta(lista, elementQty) {
+                $scope.finalHeight = angular.element(lista).height() + (250 * (elementQty));
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
@@ -739,7 +738,7 @@ angular
                 }
 
                 if (validAnswers) {
-                    //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
+                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
 
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
@@ -757,22 +756,26 @@ angular
                         { "badAnswer": false, "firstOptionWrong": false, "secondOptionWrong": false, "thirdOptionWrong": false },
                         { "badAnswer": false, "firstOptionWrong": false, "secondOptionWrong": false, "thirdOptionWrong": false }
                     ];
-
+                    var _mathFloor = 0;
                     for (var index = 0; index < partialActivityAnswers.questions.length; index++) {
                         var question = partialActivityAnswers.questions[index];
                         for (var answerIndex = 0; answerIndex < question.answers.length; answerIndex++) {
                             var questionAnswer = question.answers[answerIndex];
                             if (index == 0 || index == 1 || index == 2) {
-                                var questionAnswerToLower = questionAnswer.answer.toLowerCase();
-                                var questionAnswerToBoolean = Boolean(questionAnswerToLower);
-                                var questionAnswerToNumber = Number(questionAnswerToBoolean);
+                                var questionAnswerAnswer = questionAnswer.answer.toLowerCase().trim() == "true" ? 1 : 0;
                                 var selectedAnswer = Number($scope.exploracionFinal[index]);
-                                if (questionAnswerToNumber == selectedAnswer) {
-                                    var _mathFloor = Math.floor(questionAnswer.fraction);
+                                if (questionAnswerAnswer == selectedAnswer) {
+                                    _mathFloor = Math.floor(questionAnswer.fraction);
                                     if (_mathFloor != 1) {
                                         $scope.exploracionFinalresult[index].badAnswer = true;
-                                        $scope.exploracionFinalresult[index].trueOptionWrong = true;
+                                        if (questionAnswerAnswer == 0) {
+                                            $scope.exploracionFinalresult[index].falseOptionWrong = true;
+                                        }
+                                        else {
+                                            $scope.exploracionFinalresult[index].trueOptionWrong = true;
+                                        }
                                     }
+                                    else { }
                                 }
                             }
                             else if (index == 3 || index == 4) {
@@ -782,7 +785,15 @@ angular
                                     }
                                     else {
                                         $scope.exploracionFinalresult[index].badAnswer = true;
-                                        $scope.exploracionFinalresult[index].firstOptionWrong = true;
+                                        if (answerIndex == 0) {
+                                            $scope.exploracionFinalresult[index].firstOptionWrong = true;
+                                        }
+                                        else if (answerIndex == 1) {
+                                            $scope.exploracionFinalresult[index].secondOptionWrong = true;
+                                        }
+                                        else {
+                                            $scope.exploracionFinalresult[index].thirdOptionWrong = true;
+                                        }
                                         break;
                                     }
                                 }

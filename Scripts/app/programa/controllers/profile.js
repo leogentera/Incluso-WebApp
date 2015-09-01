@@ -23,6 +23,7 @@ angular
 
             
             $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
+            console.log("Total number of badges: " + $scope.totalBadges);
             $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
             $scope.badgePage = 0;
             $scope.normalBadgePage = $scope.badgePage + 1;
@@ -34,8 +35,14 @@ angular
                 $scope.wholeBadgesPages[i] = [];
                 for (var j = 0; j < top; j++) {
                     var elem = copyBadges.shift(); //extracts first element of remaining array
-                    elem.filename = getFileName(elem.id);
-                    console.log(elem.filename);
+
+                    if (elem.status == "won") {
+                        elem.filename = getFileName(elem.id);
+                    } else {
+                        elem.filename = "default_placeholder.svg";
+                    }
+
+                    console.log(elem.status + " -> " + elem.filename + " " + JSON.stringify(elem));
                     $scope.wholeBadgesPages[i].push(elem);
                 }
             }
@@ -95,16 +102,14 @@ angular
                     case 18:
                         filename = "turbo.svg";
                         break;
-                    case "placeholder":
-                        filename = "default_placeholder.svg";
-                        break;
                     default:
                         filename = "default_placeholder.svg";
                 }
 
                 return filename;
-
             }
+
+
 
             $scope.changepage = function (delta) {
                 $scope.badgePage += delta;
@@ -172,7 +177,6 @@ angular
                     return "";
                 }
                 initFields(m);
-                console.log("usuario completo");
 
                 return m;
             }
@@ -262,13 +266,13 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, status) {
+            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes) {
                 $scope.currentPage = 10;
                 $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
-                $scope.status = status;
+                //$scope.status = status;
             };
 
 
