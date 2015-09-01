@@ -259,8 +259,9 @@ var _coachNotification = function(){
       var notifications = JSON.parse(localStorage.getItem("notifications"));      
       
       var userId = localStorage.getItem('userId');
-      var twoDaysAfterLastMessage = new Date(activityDateStarted);
-      twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
+      var twoDaysAfterLastMessage = new Date();
+      //var twoDaysAfterLastMessage = new Date(activityDateStarted);
+      //twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
   
       var today = new Date();
       if (twoDaysAfterLastMessage < today){
