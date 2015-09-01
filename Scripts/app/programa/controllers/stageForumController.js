@@ -12,32 +12,41 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _httpFactory = $http;
+            _timeout = $timeout;
             $scope.moodleId = $routeParams.moodleid;
+            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
-             var redirectOnShield = function (){
-                var logicForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/' + 147;
-                var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + 148;
+             var redirectOnShield = function () {
+                 var logicForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/' + 147;
+                 var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + 148;
 
-                var shields = [
-                    {name: 'musical' , category:'artistico'},
-                    {name:'interpersonal' , category: 'artistico'},
-                    {name:'naturalista' , category: 'logico'},
-                    {name:'intrapersonal' , category: 'logico'},
-                    {name:'corporal' , category: 'artistico'},
-                    {name:'espacial' , category: 'artistico'},
-                    {name:'matematica' , category: 'logico'},
-                    {name:'liguistica' , category: 'logico'},
-                ];
-                var shield = JSON.parse(localStorage.getItem('shield')) ;
-                shield ? shield = shield.shield : shield = null;
-                var shieldCategory = shield ? _.find(shields, function(s){ return s.name == shield }).category : $location.path('/');
-                return shieldCategory == "logico" ?  $location.path(logicForumTopicsUrl) : $location.path(artisticForumTopicsUrl);
-                 if(shieldCategory == "logico"){
-                     $scope.moodleId = 147;
-                     $location.path(logicForumTopicsUrl);
-                 } else {
-                     $scope.moodleId = 148;
-                     $location.path(artisticForumTopicsUrl);
+                 var shields = [
+                     {name: 'musical', category: 'artistico'},
+                     {name: 'interpersonal', category: 'artistico'},
+                     {name: 'naturalista', category: 'logico'},
+                     {name: 'intrapersonal', category: 'logico'},
+                     {name: 'corporal', category: 'artistico'},
+                     {name: 'espacial', category: 'artistico'},
+                     {name: 'matematica', category: 'logico'},
+                     {name: 'liguistica', category: 'logico'},
+                 ];
+                 debugger;
+                 var shield = JSON.parse(localStorage.getItem('profile')).shield;
+                 //shield ? shield = shield.shield : shield = null;
+                 if (shield != '') {
+
+                     var shieldCategory = _.find(shields, function (s) {
+                         return s.name == shield
+                     }).category;
+                     //return shieldCategory == "logico" ?  $location.path(logicForumTopicsUrl) : $location.path(artisticForumTopicsUrl);
+
+                     if (shieldCategory == "logico") {
+                         $scope.moodleId = 147;
+                         $location.path(logicForumTopicsUrl);
+                     } else if (shieldCategory == "artistico") {
+                         $scope.moodleId = 148;
+                         $location.path(artisticForumTopicsUrl);
+                     }
                  }
             };
             if($routeParams.moodleid == 149) redirectOnShield();
@@ -75,7 +84,7 @@ angular
 
             function getDataAsync() {
                 console.log('Getting forum data');
-                $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, ''):'';
+                $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, currentUser.token, getActivityInfoCallback, ''):'';
             }
 
             function getActivityInfoCallback() {

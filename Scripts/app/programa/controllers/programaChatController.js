@@ -20,7 +20,7 @@ angular
             var userId = localStorage.getItem('userId');            
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-            //setInterval(getMessages,10000);                    
+            var interval = setInterval(getMessages,60000);                    
             $scope.currentMessage = "";
 
             $scope.setToolbar($location.$$path,"Cabina de Soporte");
@@ -51,7 +51,10 @@ angular
                 }
             }            
 
-            function getMessages(){                                            
+            function getMessages(){           
+                 if($location.$$path != "/Chat"){
+                    clearInterval(interval);
+                 }
                 moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                
             }
 
