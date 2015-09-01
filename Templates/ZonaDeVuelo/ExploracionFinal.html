@@ -218,15 +218,15 @@
                                     </div>
                                     <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
                                         <ul>
-                                            <li class="failed clearfix">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].firstOptionWrong}">
                                                 <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].firstOptionWrong"></i>Es tu ejemplo a seguir y debes
                                                 ser igual a él
                                             </li>
-                                            <li class="failed clearfix">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].secondOptionWrong}">
                                                 <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].secondOptionWrong"></i>Puedes aprender de su experiencia
                                                 para alcanzar tus sueños
                                             </li>
-                                            <li class="failed clearfix">
+                                           <li ng-class="{'failed clearfix': exploracionFinalresult[3].thirdOptionWrong}">
                                                 <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].thirdOptionWrong"></i>Puede enseñarte cómo ganar dinero
                                                 más fácil
                                             </li>
@@ -243,15 +243,15 @@
                                     </div>
                                     <div id="results4" class="panel-body" collapse="!question5.isCollapsed">
                                         <ul>
-                                            <li class="failed clearfix">
+                                             <li ng-class="{'failed clearfix': exploracionFinalresult[4].firstOptionWrong}">
                                                 <i class="fl-left icomoon icon-wrong"  ng-show="exploracionFinalresult[4].firstOptionWrong"></i>Porque aprovechas mejor tus talentos
                                                 y difrutas lo que haces
                                             </li>
-                                            <li class="failed clearfix">
+                                             <li ng-class="{'failed clearfix': exploracionFinalresult[4].secondOptionWrong}">
                                                 <i class="fl-left icomoon icon-wrong"  ng-show="exploracionFinalresult[4].secondOptionWrong"></i>Porque puedes ser más famoso y
                                                 exitoso
                                             </li>
-                                            <li class="failed clearfix">
+                                             <li ng-class="{'failed clearfix': exploracionFinalresult[4].thirdOptionWrong}">
                                                 <i class="fl-left icomoon icon-wrong"  ng-show="exploracionFinalresult[4].thirdOptionWrong"></i>Porque debes hacer lo que quieras
                                                 sin importar nada ni nadie
                                             </li>
