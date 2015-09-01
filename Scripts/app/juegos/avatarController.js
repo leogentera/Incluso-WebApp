@@ -20,7 +20,6 @@ angular
             $rootScope.showFooter = false;
             $rootScope.showFooterRocks = false;
             var user = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
-            $scope.$emit('HidePreloader'); //hide preloader
             $scope.selectAvatarCabelloAmarillo = function() {
                 if ( $scope.avatarInfo != null) {
                     $scope.avatarInfo[0]["color_cabello"] = "amarillo";
