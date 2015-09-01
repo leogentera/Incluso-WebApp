@@ -402,6 +402,7 @@
                 var assign = null;
 
                 //stages
+
                 for(i = 0; i < course.stages.length; i++) {
 
                     course.stages[i].stageProgress = 0;
@@ -421,9 +422,9 @@
                         course.stages[i].coursemoduleid = assign.coursemoduleid;
                         course.stages[i].points = assign.points;
                         course.stages[i].status = assign.status;
+                        course.stages[i].activityintro = assign.activityintro;
                         course.stages[i].activity_identifier = assign.activity_identifier;
                     }
-
 
 
 
@@ -439,6 +440,7 @@
                         if (assign) {
                             course.stages[i].challenges[j].coursemoduleid = assign.coursemoduleid;
                             course.stages[i].challenges[j].points = assign.points;
+                            course.stages[i].challenges[j].activityintro = assign.activityintro;
                             course.stages[i].challenges[j].status = assign.status;
                             course.stages[i].challenges[j].activity_identifier = assign.activity_identifier;
                         }
@@ -478,6 +480,7 @@
                                     course.stages[i].challenges[j].activities[k].points = assign.points;
                                     course.stages[i].challenges[j].activities[k].activity_identifier = assign.activity_identifier;
                                     course.stages[i].challenges[j].activities[k].status = assign.status;
+                                    course.stages[i].challenges[j].activities[k].activityintro = assign.activityintro;
                                 }
 
                                 course.stages[i].challenges[j].activities[k]["activities"] = _.filter(activities,function(a) { 
