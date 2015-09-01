@@ -34,7 +34,7 @@ angular
             $scope.statusObligatorios = 0; 
             var waitPreloader = 0;
             var hidePreloader = 0;
-            $scope.userprofile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));                               
+            var profile;                            
             var activities = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + moduleid));            
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));            
             $scope.token = currentUser.token;
@@ -134,15 +134,7 @@ angular
                   if(!$scope.fuenteDeEnergia.activities[i].optional){                    
                     $scope.statusObligatorios+=1;    
                     assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid);
-                    starsMandatory += 50;  
-                    if($scope.statusObligatorios == 5){
-                      $scope.fuenteDeEnergia.status = true;
-                      //alert("Prueba: Ya has visto 5 elementos obligatorios");
-                      var updatedActivityOnUsercourse = updateActivityStatus($scope.fuenteDeEnergia.activity_identifier);  //actualizar arbol
-                      localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
-                      _endActivity($scope.fuenteDeEnergia);
-                      _isChallengeCompleted();
-                    }
+                    starsMandatory += 50;                      
                   }
                   else{
                     assingStars(false, $scope.fuenteDeEnergia.activities[i].coursemoduleid);
@@ -155,21 +147,23 @@ angular
             }
 
             function assingStars(isMandatory, coursemoduleid){
+              profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));              
               var data={
-                userId: $scope.userprofile.id,
+                userId: profile.id,
                 stars: 50,
                 instance: coursemoduleid,
                 instanceType: 0,
                 date: getdate()
                 };
+                console.log("Updating Stars");
               if(starsMandatory < 250 && isMandatory){                
-                $scope.userprofile.stars = parseInt($scope.userprofile.stars)+50;
-                moodleFactory.Services.PutStars(data,$scope.userprofile, $scope.token,successfullCallBack, errorCallback);
-                //localStorage.setItem("profile", JSON.stringify($scope.userprofile)); 
+                profile.stars = parseInt(profile.stars)+50;
+                moodleFactory.Services.PutStars(data,profile, $scope.token,successfullCallBack, errorCallback);
+                //localStorage.setItem("profile", JSON.stringify(profile)); 
               }
               else if(starsNoMandatory < 500){
-                $scope.userprofile.stars = parseInt($scope.userprofile.stars)+50;                  
-                moodleFactory.Services.PutStars(data,$scope.userprofile, $scope.token,successfullCallBack, errorCallback);
+                profile.stars = parseInt(profile.stars)+50;                  
+                moodleFactory.Services.PutStars(data,profile, $scope.token,successfullCallBack, errorCallback);
               }                
             }
 
@@ -194,7 +188,14 @@ angular
             }
 
             function successfullCallBack(){
-
+              if($scope.statusObligatorios == 5){
+                $scope.fuenteDeEnergia.status = true;
+                //alert("Prueba: Ya has visto 5 elementos obligatorios");
+                var updatedActivityOnUsercourse = updateActivityStatus($scope.fuenteDeEnergia.activity_identifier);  //actualizar arbol
+                localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
+                _endActivity($scope.fuenteDeEnergia);
+                _isChallengeCompleted();
+              }
             }
 
             function errorCallback(){
