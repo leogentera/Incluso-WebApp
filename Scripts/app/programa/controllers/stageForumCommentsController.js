@@ -16,6 +16,7 @@ angular
 
 
             _httpFactory = $http;
+            _timeout = $timeout;
             $scope.$emit('ShowPreloader');
             $rootScope.pageName = "Estación: Conócete"
             $rootScope.navbarBlue = true;
@@ -346,8 +347,8 @@ angular
                 $scope.isCommentModalCollapsed[element.post_id] = true;
             };
 
-            var refreshTopicData = function(){                
-                moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
+            var refreshTopicData = function(){   
+                moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, $scope.userToken, getActivityInfoCallback, null, true);
             };
 
             function getActivityInfoCallback(data) {
