@@ -101,7 +101,7 @@
 
                                             <div class="clearfix">
                                                 <span>Habilidad {{AnswersResult.answers[4].indexOf(ability) + 1}}</span>
-                                                <a class="btn btn-circle fl-right"
+                                                <a class="btn btn-circle pull-right"
                                                         ng-click="deleteAbility($index);" ng-hide="setReadOnly">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
@@ -129,10 +129,10 @@
                     <section id="controls" class="controls">
                         <div class="paginate">
                             <a href="#" id="prev" ng-click="addToAnswerIndex1(-1)">
-                                <span class="icomoon icon-arrow-bold-left txt-bigger fl-left"></span>
+                                <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
                             </a>
                             <a href="#" id="next" ng-click="addToAnswerIndex1(1)">
-                                <span class="icomoon icon-arrow-bold-right txt-bigger fl-right"></span>
+                                <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
                             </a>
 
                             <div class="centered"><span id="index" class="txt-bigger">1/</span><span id="totalPages" class="white txt-bigger">5</span></div>
@@ -142,7 +142,7 @@
                     </section>
                 </div>
 
-                <div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
+                <div class="page" ng-class="currentPage==2 ? 'active' : '' ">
                     <div id="finalized">
                         <section class="header-title ">
                             <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
@@ -153,10 +153,10 @@
                             <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
                         </section>
                         <section class="txt-renglon pill">
-                            <div class="fl-left">Estrellas ganadas:</div>
-                            <div class="fl-right sm-pill">
-                                <span>{{activityPoints}}</span>
-                                <span class="icomoon icon-star fl-right"></span>
+                            <div class="pull-left">Estrellas ganadas:</div>
+                            <div class="pull-right sm-pill">
+                                <span class="pull-left">{{activityPoints}}</span>
+                                <span class="icomoon icon-star pull-right"></span>
                             </div>
                         </section>
                         <section class="txt-renglon centered form ">
