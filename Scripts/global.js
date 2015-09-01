@@ -133,9 +133,9 @@ var _endActivity = function(activityModel){
         var activityId = activityModel.coursemoduleid;
         //create notification
         _createNotification(activityId, triggerActivity);
-        //complete stage        
-        //update badge status
-        //_updateBadgeStatus(activityId);
+        //complete stage
+        _updateBadgeStatus(activityId);
+        
       if (activityModel.activityType == "Quiz"){
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse,activityModel.token,
         successCallback,errorCallback);        
@@ -187,7 +187,7 @@ var _isChallengeCompleted = function(){
           if (totalActivitiesByStage == totalActivitiesCompletedByStage){
               
               //updateBadge
-              //_updateBadgeStatus(currentChallenge.coursemoduleid);
+              _updateBadgeStatus(currentChallenge.coursemoduleid);
               
               userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
               localStorage.setItem("usercourse", JSON.stringify(userCourse));              
@@ -210,24 +210,27 @@ var _isChallengeCompleted = function(){
     
 };
 
-/*
 
-var _updateBadgeStatus = function(coursemoduleid){    
+
+var _updateBadgeStatus = function(coursemoduleid){
     var profile = JSON.parse(localStorage.getItem("profile"));
     var badges = profile.badges;
     
-    var badge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
-    if (badge) {
+    var currentBadge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
+    debugger;
+    if (currentBadge) {
       for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
-        if (badges[indexBadge].id == badge.badgeId) {
+        if (badges[indexBadge].id == currentBadge.badgeId) {
           profile.badges[indexBadge].status = "won";
+          localStorage.setItem("profile",JSON.stringify(profile));
         }else{
-          break;
+          //This else statement is set to avoid errors on execution flows
         }
       }
+    }else{//This else statement is set to avoid errors on execution flows
     }
 };
-*/
+
 
 
 var _createNotification = function(activityId, triggerActivity){
