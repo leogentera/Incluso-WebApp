@@ -57,15 +57,7 @@
                     <a class="control next" href="#" id="next">
                         <span class="icomoon icon-arrow-bold-right"></span>
                     </a>                    
-                </div>
-
-<!--                 <div class="page-number">
-                    <p class="text-center">
-                        <span id="index">1</span>
-                        <span>/</span>
-                        <span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
-                    </p>                    
-                </div>    -->                                             
+                </div>                                          
             </section>
 
             <section class="parts activities">
@@ -91,7 +83,7 @@
             <section class="progreso">
                 <div class="spinner">
                     <span ng-bind="puntosObtenidos"></span>
-                    <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png"> <!-- <img src="" alt=""> -->
+                    <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png" /> <!-- <img src="" alt=""> -->
 
                     <div class="circle"></div>
                     <div class="text">{{stageProgress}}%</div>
@@ -102,10 +94,14 @@
                 </div>
             </section>
 
-            <!-- <section class="hangar-bay">
-                <div id="ship">
-                    <img src="assets/images/img-ship-01.png"/>
+<!--             <section class="component my-progress">
+                <h3>- Mi avance global -</h3>
+                <div class="progress">
+                    <label>0%</label>
                 </div>
+                <figure class="stage">
+                    <img src="assets/images/img-progress-stage-start.png" alt="">
+                </figure>  
             </section> -->
 
             <script type="text/ng-template" id="ClosingStage.html">
