@@ -72,7 +72,7 @@
       <section class="wall">
         <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies">
           <div class="part">
-            <div class="author"><img ng-src="{{p.picture_post_author + '?token=' + userToken}}">
+            <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}"> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1">
               <div>{{p.post_author}} <span>publicó:</span>
               <div>{{p.created | date: "dd MMMM yyyy"}}</div>
               </div>
@@ -92,7 +92,7 @@
                 </div>
             </div>
             <div id="item{{$index}}" ng-repeat="r in p.replies">
-              <div class="coment block"><img ng-src="{{r.picture_post_author + '?token=' + userToken}}">
+              <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}"> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1">
                 <div>{{r.post_author}} <span>publicó:</span>   <div>{{r.message}}</div>
                 </div>
               </div>
