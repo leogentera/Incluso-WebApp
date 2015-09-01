@@ -23,8 +23,8 @@
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncForumInfo = function(activityId, successCallback, errorCallback){
-            _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
+        var _getAsyncForumInfo = function(activityId, successCallback, errorCallback, forceRefresh){
+            _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback, forceRefresh){
@@ -133,7 +133,14 @@
         };
 
 
-        var _getForumAsyncData = function(key, url, successCallback, errorCallback){
+        var _getForumAsyncData = function(key, url, successCallback, errorCallback, forceRefresh){
+
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+                
+            if (returnValue) {
+                _timeout(function() { successCallback(returnValue, key)}, 1000);                
+                return returnValue;
+            }
 
             _httpFactory({
                 method: 'GET',
