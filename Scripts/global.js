@@ -248,26 +248,27 @@ var _createNotification = function(activityId, triggerActivity){
   }
 };
 
-var _coachNotification = function(){
-                      
-  var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-  var activityChatStarted = userCourse.stages[0].challenges[4].activities[0].started;  
-  if (activityChatStarted){
-      var activityDateStarted = userCourse.stages[0].challenges[4].activities[0].datestarted;      
-      var activityChatId = 68;
-      var triggerActivity = 3;      
+var _coachNotification = function() {
 
-      var twoDaysAfterLastMessage = new Date(activityDateStarted);
-      twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    var activityChatStarted = userCourse.stages[0].challenges[4].activities[0].started;
+    if (activityChatStarted) {
+        var activityDateStarted = userCourse.stages[0].challenges[4].activities[0].datestarted;
+        var activityChatId = 68;
+        var triggerActivity = 3;
 
-      var today = new Date();
+        var twoDaysAfterLastMessage = new Date(activityDateStarted);
+        twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate() + 2);
 
-      if (twoDaysAfterLastMessage < today){
-        _createNotification(activityChatId, triggerActivity);
-      } else {
-        return false;
-      }
-  }
+        var today = new Date();
+
+        if (twoDaysAfterLastMessage < today) {
+            _createNotification(activityChatId, triggerActivity);
+        } else {
+            return false;
+        }
+    }
+}
 
 
 var successCallback = function(data){
