@@ -114,10 +114,10 @@ angular
 
                 switch (id) {
                     case 2:
-                        description = "Para obtener más combustible visita 'Fuente de energía' zona de vuelo  recárgate de conocimiento y ve a toda velocidad  ";
+                        description = "Para obtener más combustible visita 'Fuente de energía' Zona de vuelo. Recárgate de conocimiento y ve a toda velocidad  ";
                         break;
                     case 3:
-                        description = "Para obtener esta pieza  visita 'Reto múltiple' y convierte tus habilidades en energía que te impulsen día a día";
+                        description = "Para obtener esta pieza visita 'Reto múltiple' y convierte tus habilidades en energía que te impulsen día a día";
                         break;
                     case 4:
                         description = "Para obtener esta pieza visita la sección 'Cada sueño en su lugar' y mantén en alto tus ideas";
@@ -193,7 +193,7 @@ angular
                 errorMessages: []
             };
 
-            $rootScope.pageName = "Mi perfil"
+            $rootScope.pageName = "Mi perfil";
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
