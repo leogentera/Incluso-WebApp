@@ -181,10 +181,12 @@ angular
                         alert('Tu cometario fue registrado.');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
-                        getTopicDataAsync();
-                        $scope.$emit('ShowPreloader');
+                        //getTopicDataAsync();
+                        refreshTopicData();
+
                         //updateForumProgress(parentId);
                         updateForumProgress(topicId);
+                        $scope.$emit('ShowPreloader');
                         checkForumProgress();
                         //$scope.$emit('HidePreloader');
                     },
@@ -224,7 +226,8 @@ angular
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
-                        getTopicDataAsync();
+                        //getTopicDataAsync();
+                        refreshTopicData();
                     },
                     function(){
                         alert('Fail!!');
@@ -241,7 +244,8 @@ angular
                         alert('Tu aportación fue registrada');
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
-                        getTopicDataAsync();
+                        //getTopicDataAsync();
+                        refreshTopicData();
                     },
                     function(){
                         alert('Tu comenatrio no pudo ser registrado');
@@ -258,7 +262,8 @@ angular
                         alert('Tu aportación fue registrada');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
-                        getTopicDataAsync();
+                        //getTopicDataAsync();
+                        refreshTopicData();
                     },
                     function(){
                         alert('Tu comenatrio no pudo ser registrado');
@@ -288,7 +293,8 @@ angular
                         alert('Tu aportación fue registrada');
                         $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
-                        getTopicDataAsync();
+                        //getTopicDataAsync();
+                        refreshTopicData();
                     },
                     function(){
                         alert('Tu comenatrio no pudo ser registrado');
@@ -299,12 +305,21 @@ angular
             };
 
             function getTopicDataAsync() {
-                moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
+                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
+                $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion_id == $routeParams.discussionId; });
+                var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
+                posts.forEach(createModalReferences);
+                $scope.$emit('HidePreloader');
+                //moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
                 //$scope.$emit('HidePreloader');
             }
 
             var createModalReferences = function(element, index, array){
                 $scope.isCommentModalCollapsed[element.post_id] = true;
+            };
+
+            var refreshTopicData = function(){
+                moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
             };
 
             function getActivityInfoCallback(data) {
