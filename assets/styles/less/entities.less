@@ -652,7 +652,7 @@
          Description: CSS for video gallery component
         ************************************************************************/
         .video-gallery {
-            margin-top: 10px;
+            margin: 2.5vw 0;
 
             .stage {
                 display: block;
@@ -785,7 +785,7 @@
                     .clr-orange(background-color, 0.9);
                     background-image: none;
                     background-position: center center;
-                    border:6pt solid @clr-white;
+                    border:0.6em solid @clr-white;
                     .border-radius-circle();
                     text-align: center;
 
@@ -797,7 +797,7 @@
                     & > span {
                         padding-left: 3vw;
                         color: @clr-white;
-                        font-size: 16vw;
+                        font-size: 16vw;  font-size: 3.5em;
                         line-height: 20vw;
                         vertical-align: top;
                     }
@@ -869,7 +869,9 @@
          Description: CSS for video gallery component
         ************************************************************************/   
         .current-satge {
-            margin-top: 26px;
+            margin-bottom: 0;
+            margin-top: 6.5vw;
+            padding-bottom: 0 !important;
 
             h3 {
                 margin-bottom: 6px;
@@ -877,7 +879,7 @@
             }
             .btn {
                 display: block;
-                margin: 32px auto;
+                margin: 32px auto 0;
             }
         }
         /***********************************************************************/ 
@@ -889,7 +891,8 @@
         ************************************************************************/  
         .my-badges {
             z-index: 9;
-            margin-top: 147px;
+            padding-top: 29vw!important;
+            margin-top: 0;
             background: #335565;
             background: -moz-linear-gradient(top,  #335565 0%, #2c4c5b 100%);
             background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#335565), color-stop(100%,#2c4c5b));
@@ -898,29 +901,29 @@
             background: -ms-linear-gradient(top,  #335565 0%,#2c4c5b 100%);
             background: linear-gradient(to bottom,  #335565 0%,#2c4c5b 100%);
             filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#335565', endColorstr='#2c4c5b',GradientType=0 );
-            &:before{
-                background-color: transparent;
-                background-image: url("@{url-images}/bg-badges-pre.png");
-                background-position: 0 100%;
-                background-size: cover;
-                content: " ";
-                height: 54%;
-                left: 0;
-                position: absolute;
-                right: 0;
-                top: -54%;
-            }
-            &:after{
-                background-color: transparent;
-                background-image: url("@{url-images}/bg-badges-post.png");
-                background-size: cover;
-                content: " ";
-                height: 54%;
-                left: 0;
-                position: absolute;
-                right: 0;
-                bottom: -53.5%;
-            }
+            // &:before{
+            //     background-color: transparent;
+            //     background-image: url("@{url-images}/bg-badges-pre.png");
+            //     background-position: 0 100%;
+            //     background-size: cover;
+            //     content: " ";
+            //     height: 54%;
+            //     left: 0;
+            //     position: absolute;
+            //     right: 0;
+            //     top: -54%;
+            // }
+            // &:after{
+            //     background-color: transparent;
+            //     background-image: url("@{url-images}/bg-badges-post.png");
+            //     background-size: cover;
+            //     content: " ";
+            //     height: 54%;
+            //     left: 0;
+            //     position: absolute;
+            //     right: 0;
+            //     bottom: -53.5%;
+            // }
             h3 {
                 margin-bottom: 15px;
             }
@@ -959,9 +962,9 @@
             img {
                 display: block;
                 padding: 0; 
-                margin: 0; 
+                margin: 0 auto; 
                 border:none; 
-                max-width:100%;     
+                max-width:85%;     
                 border-radius:50%;          
             }
             figcaption {
@@ -979,11 +982,11 @@
                 text-align: center;
                 position:relative;
             }
-            button {
+            .btn {
                 display: block;
                 position: absolute;
                 top:41%;
-                /*right: -50px;*/   right: -32%; 
+                right: -32%; 
                 padding:5px;
                 margin:0;
                 background:none transparent;
@@ -992,7 +995,7 @@
 
                 .icomoon {
                     color: @clr-green;
-                    /*font-size: 28px;*/ font-size: 6vw;
+                    font-size: 6vw;
                     font-weight: bold;
                 }
             }
@@ -1021,7 +1024,7 @@
         .user-data {
             display: block;
             position: relative;
-            padding: 6vw 0px;
+            padding: 5vw 0px;
             margin: 60px auto 0;
             margin-top: 8.5vw;
             /*width: 370px; */
@@ -1038,18 +1041,21 @@
                 font-weight: 500;
                 line-height: 1.4;
                 text-transform: capitalize;
+                margin-bottom: -1vw!important;
             }
             label {
                 padding: 0;
                 margin: 0;
                 color: @clr-blueLight;
                 font-weight: bold;
+                font-size: 5vw;
             }
             span {
                 padding: 0;
                 margin: 0;                    
                 color: inherit;
-                font-weight: bold;
+                font-weight: bold; 
+                font-size: 5vw;               
             } 
             .inline-list {
                 margin-top: 10px;
@@ -1084,24 +1090,25 @@
          Description: CSS to represent the tabbed list of top users and current
         ************************************************************************/ 
         .top-users {
-            margin-top: 164px;
+            margin-top: 37vw;
             margin-bottom:0;
             background: #1e2e2e;
-            &:before{
-                background-color: transparent;
-                background-image: url("@{url-images}/bg-topusers-pre.png");
-                background-position: 50% 0;
-                background-size: contain;
-                content: " ";
-                height: 24%;
-                left: 0;
-                position: absolute;
-                right: 0;
-                top: -23%;
-            }
+            // &:before{
+            //     background-color: transparent;
+            //     background-image: url("@{url-images}/bg-topusers-pre.png");
+            //     background-position: 50% 0;
+            //     background-size: contain;
+            //     content: " ";
+            //     height: 24%;
+            //     left: 0;
+            //     position: absolute;
+            //     right: 0;
+            //     top: -23%;
+            // }
 
             h3 {
                 padding-top: 1vw;
+                margin-bottom: 5vw;
             }
 
             .head,
@@ -1133,7 +1140,7 @@
             .current-user {
                 /*width: 370px;*/
                 padding: 0;
-                margin: 40px auto 0;
+                margin: 5vw auto 0;
 
                 a {
                     display: block;
@@ -1142,9 +1149,14 @@
                     width: auto;
                 }
                 .user-data {
-                    margin-top: 8px;
+                    margin-top: 0;
+                    padding: 0 0 2vw;
                     height: auto;
                     background-color: transparent;
+
+                    p {
+                        margin-bottom: 4vw;
+                    }
                 }
             }
             [data-content-id] {
@@ -1207,11 +1219,11 @@
          Description: CSS to represent an area to place a graphic illustration
         ************************************************************************/
         .ilustration {
-            background-color: #1e2e2e;
+            /*background-color: #1e2e2e;
             background-image: url("@{url-images}/bg-ilustration-launchpad.png");
             background-position: 0 100%;
             background-repeat: no-repeat;
-            background-size: cover;
+            background-size: cover;*/
             .space-ship{
                 padding: 26% 16% 7.5%;
             }
@@ -1694,9 +1706,12 @@
                 height: auto;
                 min-height: 33.3vw;
                 margin-top: 3vw;
-
+                
+                figure {
+                    min-height: inherit;
+                }
                 img {
-                    min-height:inherit;
+                    min-height: 28.3vw;
                 }
                 figcaption {
                     display: inline-block;
@@ -1729,18 +1744,28 @@
          $terms-and-conditions
          Description: CSS to represent modal for terms and conditionss
         ************************************************************************/
-        .modal.terms-and-conditions {
-            .modal-dialog {
-                margin-top:15vh;
+            .terms-and-conditions {
+                .modal-theme-default {
+                    height: 100vh;
+                    /*background: #000 none repeat scroll 0% 0%;*/
+                }
+                .modal-dialog {
+                    margin: 0px 3vh; 
+                    padding-top:15vh;
+                    .modal-title {
+                        padding: 3.6vw 0px;
+                    }
+                }
+
+                .modal-body {
+                    height: 50vh;
+                    padding-top: 0;
+                    overflow-x: hidden;
+                }
+                .modal-footer {
+                    display: none;
+                }
             }
-            .modal-body {
-                height: 50vh;
-                padding-top: 0;
-            }
-            .modal-footer {
-                display: none;
-            }
-        }
         /***********************************************************************/
 
         

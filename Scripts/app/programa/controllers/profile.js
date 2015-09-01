@@ -13,13 +13,14 @@ angular
 
             _timeout = $timeout;
             _httpFactory = $http;
-
+            $scope.$emit('ShowPreloader');
+            console.log("cargando usuario");
             $scope.currentPage = 1;
             $scope.setToolbar($location.$$path,"Mi perfil");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            $scope.$emit('HidePreloader');
             $scope.model = getDataAsync();
+
             
             $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
             $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
@@ -33,8 +34,76 @@ angular
                 $scope.wholeBadgesPages[i] = [];
                 for (var j = 0; j < top; j++) {
                     var elem = copyBadges.shift(); //extracts first element of remaining array
+                    elem.filename = getFileName(elem.id);
+                    console.log(elem.filename);
                     $scope.wholeBadgesPages[i].push(elem);
                 }
+            }
+
+            function getFileName(id) {
+                filename = "";
+
+                switch (id) {
+                    case 2:
+                        filename = "combustible.svg";
+                        break;
+                    case 3:
+                        filename = "turbina.svg";
+                        break;
+                    case 4:
+                        filename = "ala.svg";
+                        break;
+                    case 5:
+                        filename = "sistNavegacion.svg";
+                        break;
+                    case 6:
+                        filename = "propulsor.svg";
+                        break;
+                    case 7:
+                        filename = "misiles.svg";
+                        break;
+                    case 8:
+                        filename = "escudo.svg";
+                        break;
+                    case 9:
+                        filename = "radar.svg";
+                        break;
+                    case 10:
+                        filename = "tanqueoxigeno.svg";
+                        break;
+                    case 11:
+                        filename = "sondaEspacial.svg";
+                        break;
+                    case 12:
+                        filename = "foro_interplanetario";
+                        break;
+                    case 13:
+                        filename = "IDintergalactica.svg";
+                        break;
+                    case 14:
+                        filename = "participacion_electrica.svg";
+                        break;
+                    case 15:
+                        filename = "corazon_digital.svg";
+                        break;
+                    case 16:
+                        filename = "casco.svg";
+                        break;
+                    case 17:
+                        filename = "radioComunicacion.svg";
+                        break;
+                    case 18:
+                        filename = "turbo.svg";
+                        break;
+                    case "placeholder":
+                        filename = "default_placeholder.svg";
+                        break;
+                    default:
+                        filename = "default_placeholder.svg";
+                }
+
+                return filename;
+
             }
 
             $scope.changepage = function (delta) {
@@ -68,8 +137,8 @@ angular
             $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
             /*unir1*/ $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
             $scope.educationStatusList = ['Terminada', 'En proceso', 'Inconclusa'];
-            $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'Universidad', 'FutbolSoccer', 'Basquetbol', 'ArtesMarciales', 'Yoga', 'Natación', 'FutbolAmericano', 'Basebol', 'Carreras'];
-            $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografia', 'Graffiti', 'DisenoDigital', 'Artesanias', 'Teatro', 'Modelado', 'Dibujo'];
+            $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'FutbolSoccer', 'Basquetbol', 'ArtesMarciales', 'Yoga', 'Natación', 'FutbolAmericano', 'Basebol', 'Carreras'];
+            $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografia', 'Graffiti', 'Diseño Gráfico', 'Artesanias', 'Teatro', 'Modelado', 'Dibujo'];
             $scope.hobbiesList = ['Ir a fiestas', 'Leer', 'Pasar tiempo con amigos', 'Cocinar', 'Jugar videojuegos', 'Visitar museos', 'Ver películas/series', 'Ver televisión', 'Modelado', 'Pasar tiempo en redes sociales'];
             $scope.talentsList = ['Cantar', 'Llevar ritmos', 'Bailar', 'Hablar frente a otros', 'Dibujar', 'Hacer amigos', 'Hacer operaciones matemáticas', 'Aprender cosas rápido', 'Ubicar lugares', 'Memorizar', 'Hacer manualidades'];
             $scope.valuesList = ['Tolerancia', 'Respeto', 'Honestidad', 'Responsabilidad', 'Confiabilidad', 'Solidaridad', 'Igualdad', 'Lealtad', 'Amistad', 'Generosidad', 'Esfuerzo'];
@@ -94,7 +163,7 @@ angular
             getAge();
 
             function getDataAsync() {
-
+                
                 moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
                 var m = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
 
@@ -103,6 +172,7 @@ angular
                     return "";
                 }
                 initFields(m);
+                console.log("usuario completo");
 
                 return m;
             }
@@ -139,6 +209,7 @@ angular
                         "imagen_recortada": "",
                     }];
                 }
+                $scope.$emit('HidePreloader');
             }
 
             function formatDate(date) {
@@ -191,14 +262,16 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (badgeId, badgeName, badgeDateIssued, earnedTimes, status) {
+            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, status) {
                 $scope.currentPage = 10;
-                $scope.badgeId = badgeId;
+                $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
                 $scope.status = status;
             };
+
+
 
             $scope.edit = function () {
                 $location.path('/Perfil/Editar');

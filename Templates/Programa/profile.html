@@ -12,9 +12,9 @@
                         <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive" />
                         <figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption>
                     </figure>
-                    <button type="button" id="editProfile" ng-click="avatar()">
+                    <a id="editProfile" ng-click="avatar()" class="btn">
                         <span class="icomoon icon-edit"></span>
-                    </button>
+                    </a>
                 </div>
             </div>
             <div>
@@ -27,19 +27,19 @@
                     </p>
                 </div>
                 <div class="profile-settings">
-                    <button class="btn btn-icon-aside left" ng-click="edit();">
+                    <a class="btn btn-icon-aside left" ng-click="edit();">
                         <div class="btn-icon">
                             <span class="icomoon icon-settings"></span>
                         </div>
                         <span for="">Editar</span>
-                    </button>
+                    </a>
 
-                    <button class="btn btn-icon-aside right">
+                    <a class="btn btn-icon-aside right">
                         <div class="btn-icon">
                             <span class="icomoon icon-lock"></span>
                         </div>
                         <span for="">Privacidad</span>
-                    </button>
+                    </a>
                 </div>
             </div>
         </section>
@@ -607,12 +607,12 @@
                                             <div class="row">
 
                                                 <div ng-repeat="badge in wholeBadgesPages[badgePage]" class="badge-item text-center">
-                                                    <img class="badgesviews" ng-src="assets/images/insignias/{{badge.id}}.svg" alt="" class="img-responsive" width="100px"
-                                                    height="100px" ng-click="showDetailBadge(badge.id, badge.name, badge.dateIssued, badge.earned_times)" ng-show="badge.status != 'pending'"
+                                                    <img class="badgesviews" ng-src="assets/images/badges/{{badge.filename}}" alt="" class="img-responsive" width="100px"
+                                                    height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times)" ng-show="badge.status != 'pending'"
                                                     />
                                                     
-                                                    <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
-                                                    height="100px" ng-click="showDetailBadge('placeholder', badge.name, badge.dateIssued, badge.earned_times, badge.status)" ng-show="badge.status == 'pending'"
+                                                    <img class="badgesviews" ng-src="assets/images/badges/default_placeholder.svg" alt="" class="img-responsive" width="100px"
+                                                    height="100px" ng-click="showDetailBadge('default_placeholder.svg', badge.name, badge.dateIssued, badge.earned_times, badge.status)" ng-show="badge.status == 'pending'"
                                                     />
                                                     
                                                     <span class="badgename text-center" ng-bind="badge.name"></span>
@@ -782,7 +782,7 @@
                                                         <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px" height="100px"
                                                         />
                                                         -->
-                                                        <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px"
+                                                        <img class="badgesviews" ng-src="assets/images/badges/{{fileName}}" alt="" class="img-responsive" width="100px"
                                                         height="100px" />
                                                         <!--
                                                         <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
@@ -812,7 +812,7 @@
                                                     </div>
                                                     -->
 
-                                                    <button class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)" type="button">Regresar</button>
+                                                    <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>
                                                     <div class="txt-renglon centered txt-bigger"></div>
                                                 </div>
 

@@ -56,8 +56,6 @@
                     $scope.openModal();
                     //Update firsttime value
                     $scope.updateProgramFirstTime();
-
-
                 }
                 //redirect user to stage 1 dashboard after closing modal
                 $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section);
@@ -142,8 +140,8 @@
                 var notifications = JSON.parse(localStorage.getItem("notifications"));
             }            
 
-            function getUserChat() {
-                moodleFactory.Services.GetUserChat($scope.user.id,getUserChatCallback, errorCallback);                
+            function getUserChat() {                
+                moodleFactory.Services.GetUserChat($scope.user.id,getUserChatCallback, errorCallback, true);                
             }
             
             function getUserChatCallback() {
@@ -173,7 +171,7 @@
                             };
                         },
                         size: size,
-                        windowClass: 'user-help-modal'
+                        windowClass: 'user-help-modal dashboard-programa'
                     });
 
                     console.log("modal open");

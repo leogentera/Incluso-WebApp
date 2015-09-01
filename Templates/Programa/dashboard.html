@@ -1,89 +1,97 @@
 <div class="incluso-app start-dashboard" id="site-wrapper">
 	<article>
 		<div class="container">
-			<h1 class="text-center">¡<span ng-show="{{user.gender == 'Masculino'}}">Bienvenido</span><span ng-show="{{user.gender == 'Femenino'}}">Bienvenida</span> a la misión, {{user.alias}}!</h1>
+			<div class="dash-top">
+				<h1 class="text-center">
+					¡<span ng-show="{{user.gender == 'Masculino'}}">Bienvenido</span><span ng-show="{{user.gender == 'Femenino'}}">Bienvenida</span> 
+					a la misión, {{user.alias}}!
+				</h1>
 
-			<section class="component video-gallery" ng-controller="videoCollapsiblePanelController">
-				<div class="panel panel-video">
-					<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
-						<h3>
-							<span class="icomoon icon-video-file"></span>
-							<span>La travesía en Incluso</span>
-							 <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
-							<span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
-						</h3>
-					</div>
-					<div class="panel-body" collapse="isCollapsed">
-						<div class="video-player">
-							<div class="stage">
-								<a class="icon icon-play" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')">
-									<span class="glyphicon glyphicon-play"></span>
-								</a>
-								<figure class="poster">
-									<img src="assets/media/thumb-bienvenida.jpg" alt="video" />
-								</figure>
-							</div>
+				<section class="component video-gallery" ng-controller="videoCollapsiblePanelController">
+					<div class="panel panel-video">
+						<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
+							<h3>
+								<span class="icomoon icon-video-file"></span>
+								<span>La travesía en Incluso</span>
+								<span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
+								<span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
+							</h3>
 						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="component global-progress txt-renglon centered">
-				<h3>- Mi avance -</h3>
-				<div class="spinner">
-					<img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.ceil(usercourse.globalProgress)}}.png" alt="progress" />
-					<div class="circle"></div>
-					<div class="text">{{usercourse.globalProgress || 0}}%</div>
-				</div>
-			</section>
-
-			<section class="component current-satge">
-				<img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
-				<h3>- {{stage.sectionname}} -</h3>
-				<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()"><span>{{usercourse.firsttime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span></a>
-			</section>
-
-			<section class="component my-badges">
-				<h3>- MI ESCUDO -</h3>
-				<img src="assets/images/badges/{{user.shield ? 'img-' + user.shield + '.svg' : 'img-badge-placeholder.svg'}}" alt="badges" />
-			</section>
-
-			<section class="component top-users" style="width: 100vw">
-				<h3>- TOP 3 -</h3>
-				<tabset justified="true">
-					<tab>
-						<tab-heading>
-							<div class="user-container">
-								<div class="user-avatar">
-									<figure>
-										<!-- <img ng-src="{{course.leaderboard[0] ? 'data:image/png;base64,' + course.leaderboard[0].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
-										<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
-										<figcaption>1</figcaption>
-										<div class="arrow-up"></div>
+						<div class="panel-body" collapse="isCollapsed">
+							<div class="video-player">
+								<div class="stage">
+									<a class="icon icon-play" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')">
+										<span class="glyphicon glyphicon-play"></span>
+									</a>
+									<figure class="poster">
+										<img src="assets/media/thumb-bienvenida.jpg" alt="video" />
 									</figure>
 								</div>
 							</div>
-						</tab-heading>
-						<div class="user-data">
-							<div>
-								<p>
-									<label for="">1er. Lugar: </label>
-									<span>{{course.leaderboard[0] ? course.leaderboard[0].alias : ""}}</span>
-								</p>
-								<ul class="inline-list">
-									<li class="points"><span>{{course.leaderboard[0] ? course.leaderboard[0].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-									<li><span>{{course.leaderboard[0] ? course.leaderboard[0].progress : 0}}%</span></li>
-								</ul>
-							</div>
 						</div>
-					</tab>
-					<tab>
+					</div>
+				</section>
+
+				<section class="component global-progress txt-renglon centered">
+					<h3>- Mi avance -</h3>
+					<div class="spinner">
+						<img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.ceil(usercourse.globalProgress)}}.png" alt="progress" />
+						<div class="circle"></div>
+						<div class="text">{{usercourse.globalProgress || 0}}%</div>
+					</div>
+				</section>
+
+				<section class="component current-satge">
+					<img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
+					<h3>- {{stage.sectionname}} -</h3>
+					<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()">
+						<span>{{usercourse.firsttime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span>
+					</a>
+				</section>
+				
+			</div>
+
+			<div class="dash-bottom">
+				<section class="component my-badges">
+					<h3>- MI ESCUDO -</h3>
+					<img src="assets/images/badges/{{user.shield ? 'img-' + user.shield + '.svg' : 'img-badge-placeholder.svg'}}" alt="badges" />
+				</section>
+				<section class="component top-users" style="width: 100vw">
+					<h3>- TOP 3 -</h3>
+					<tabset justified="true">
+						<tab>
+							<tab-heading>
+								<div class="user-container">
+									<div class="user-avatar">
+										<figure>
+											<img ng-src="{{course.leaderboard[0] ? 'data:image/png;base64,' + course.leaderboard[0].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" />
+											<!--<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />-->
+											<figcaption>1</figcaption>
+											<div class="arrow-up"></div>
+										</figure>
+									</div>
+								</div>
+							</tab-heading>
+							<div class="user-data">
+								<div>
+									<p>
+										<label for="">1er. Lugar: </label>
+										<span>{{course.leaderboard[0] ? course.leaderboard[0].alias : ""}}</span>
+									</p>
+									<ul class="inline-list">
+										<li class="points"><span>{{course.leaderboard[0] ? course.leaderboard[0].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
+										<li><span>{{course.leaderboard[0] ? course.leaderboard[0].progress : 0}}%</span></li>
+									</ul>
+								</div>
+							</div>
+						</tab>
+						<tab>
 						<tab-heading>
 							<div class="user-container">
 								<div class="user-avatar">
 									<figure>
-										<!-- <img ng-src="{{course.leaderboard[1] ? 'data:image/png;base64,' + course.leaderboard[1].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
-										<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
+										<img ng-src="{{course.leaderboard[1] ? 'data:image/png;base64,' + course.leaderboard[1].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" />
+										<!--<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />-->
 										<figcaption>2</figcaption>
 										<div class="arrow-up"></div>
 									</figure>
@@ -102,84 +110,87 @@
 								</ul>
 							</div>
 						</div>
-					</tab>
-					<tab>
-						<tab-heading>
-							<div class="user-container">
-								<div class="user-avatar">
-									<figure>
-										<!-- <img ng-src="{{course.leaderboard[2] ? 'data:image/png;base64,' + course.leaderboard[2].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
-										<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
-										<figcaption>3</figcaption>
-										<div class="arrow-up"></div>
-									</figure>
+						</tab>
+						<tab>
+							<tab-heading>
+								<div class="user-container">
+									<div class="user-avatar">
+										<figure>
+											<img ng-src="{{course.leaderboard[2] ? 'data:image/png;base64,' + course.leaderboard[2].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" />
+											<!--<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />-->
+											<figcaption>3</figcaption>
+											<div class="arrow-up"></div>
+										</figure>
+									</div>
+								</div>
+							</tab-heading>
+							<div class="user-data">
+								<div>
+									<p>
+										<label for="">3er. Lugar: </label>
+										<span>{{course.leaderboard[2] ? course.leaderboard[2].alias : ""}}</span>
+									</p>
+									<ul class="inline-list">
+										<li class="points"><span>{{course.leaderboard[2] ? course.leaderboard[2].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
+										<li><span>{{course.leaderboard[2] ? course.leaderboard[2].progress : 0}}%</span></li>
+									</ul>
 								</div>
 							</div>
-						</tab-heading>
+						</tab>
+					</tabset>
+
+					<div class="current-user">
+						<div class="row">
+							<div class="col-xs-4 col-xs-offset-4">
+								<a href="">
+									<div class="user-avatar">
+										<figure class="user-avatar-">
+											<!-- <img ng-src="{{user.profileimageurlsmall || 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
+											<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
+											<figcaption>{{user.rank}}</figcaption>
+										</figure>
+									</div>
+								</a>
+							</div>
+						</div>
+
 						<div class="user-data">
 							<div>
 								<p>
-									<label for="">3er. Lugar: </label>
-									<span>{{course.leaderboard[2] ? course.leaderboard[2].alias : ""}}</span>
+									<span>Mi puntuación actual</span>
 								</p>
 								<ul class="inline-list">
-									<li class="points"><span>{{course.leaderboard[2] ? course.leaderboard[2].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-									<li><span>{{course.leaderboard[2] ? course.leaderboard[2].progress : 0}}%</span></li>
+									<li class="points"><span>{{user.stars}}</span> <i class="icomoon icon-star"></i></li>
+									<li><span>{{usercourse.globalProgress}}%</span></li>
 								</ul>
 							</div>
 						</div>
-					</tab>
-				</tabset>
-
-				<div class="current-user">
-					<div class="row">
-						<div class="col-xs-4 col-xs-offset-4">
-							<a href="">
-								<div class="user-avatar">
-									<figure class="user-avatar-">
-										<!-- <img ng-src="{{user.profileimageurlsmall || 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
-										<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
-										<figcaption>{{user.rank}}</figcaption>
-									</figure>
-								</div>
-							</a>
-						</div>
 					</div>
+				</section>
 
-					<div class="user-data">
-						<div>
-							<p>
-								<span>Mi puntuación actual</span>
-							</p>
-							<ul class="inline-list">
-								<li class="points"><span>{{user.stars}}</span> <i class="icomoon icon-star"></i></li>
-								<li><span>{{usercourse.globalProgress}}%</span></li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</section>
-
-			<section class="ilustration">
-				<figure class="space-ship">
-					<!-- <img src="assets/images/img-ship-02.png" alt="La nave" /> -->
-				</figure>
-			</section>
+				<section class="ilustration">
+					<figure class="space-ship">
+						<!-- <img src="assets/images/img-ship-02.png" alt="La nave" /> -->
+					</figure>
+				</section>
+			</div>
 		</div>
+
 
 		<script type="text/ng-template" id="programWelcome.html">
 			<div class="modal-robot robot-lg user-help">
-			  	<img src="assets/images/img-robot-lg.png" alt="robot" />
-			  	<div class="modal-header">
+				<img src="assets/images/img-robot-lg.png" alt="robot" />
+				<div class="modal-header">
 					<button class="icon icon-close" ng-click="cancel()">
 						<span class="icomoon icon-cross"></span>
 					</button>
 				</div>
 				<div class="modal-body">
 					<h3 class="subtitle centered">Bienvenido a bordo</h3>
-					<p class="centered">Soy Inclubot y seré tu compañero en este viaje. Para poder llegar a nuestro destino, tendrás que poner en acción todas tus habilidades y completar con éxito cada una de las misiones.</p>
+					<p class="centered">Soy Inclubot y seré tu compañero en este viaje. Para poder llegar a nuestro destino, tendrás que poner en acción todas tus habilidades 
+					y completar con éxito cada una de las misiones.</p>
 					<p class="centered">¡Comienza la aventura!</p>
-			  	</div>
+				</div>
 			</div>
 		</script>
 	</article>

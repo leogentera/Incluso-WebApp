@@ -199,7 +199,7 @@
     & > article{
         /*background-image: url('@{url-images}/bg-stars-01.png');*/
         /*background-image: url('@{url-images}/svg/bg-dashboard-sky.svg');*/
-        background-image: url('@{url-images}/bg-dashboard-full.gif');
+        /*background-image: url('@{url-images}/bg-dashboard-full.gif');*/
         /*background-image: url('@{url-images}/svg/bg-dashboard-full.svg');*/
         
         .background-size(100%, auto);
@@ -209,6 +209,17 @@
             background-attachment: scroll;
             /*background-image: url('@{url-images}/bg-stars-02.png');*/
             .background-size(100%, auto);
+            .dash-top {                
+                height: auto; 
+                background-image: url('@{url-images}/bg-dashboard-full.gif');
+                background-position: center 0%;
+                background-size: 100% auto;
+            }
+            .dash-bottom {
+                background-image: url('@{url-images}/bg-dashboard-full.gif');
+                background-position: center 80.6%;
+                background-size: 100% auto;
+            }
         }
     }
 
@@ -224,7 +235,7 @@
         padding: 0 5%;
     }
     .container{
-        padding:0;
+        padding:0;        
     }
     .user-avatar {
         figure {border: 0px solid transparent;}
@@ -244,7 +255,7 @@
         }
     }
     .global-progress {
-        margin-top: 50px;
+        margin-top: 12.5vw;
     }
     .current-satge {
         h3 {
@@ -318,11 +329,15 @@
 
 /* Profile Dashboard */
 .incluso-app.profile {   
+    /*.gradient-sky ();*/
+    .list-group {
+        margin:0 auto;
+        width: auto;
+    }
     .navbar{     
         background-color: @clr-orangeLighter;
         border-color: @clr-orangeLighter;
     }
-    .gradient-sky ();
 
     footer {
         padding-bottom: 30px;
@@ -370,7 +385,7 @@
 .incluso-app.edit-profile {
     .list-group {
         margin:0 auto;
-        /*width: 92%;*/
+        width: auto;
     }
     .panel {
         margin:0 auto;
@@ -397,35 +412,40 @@
 
 /* Step dashboard*/
 .incluso-app.step-dashboard {
-    background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
-    background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
-    background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
-    background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
-    background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );                
-   
+    background:none;
+
     .navbar{     
         background-color: @clr-bluenav;
         border-color: @clr-bluenav;
     }
     .video-gallery {
+        max-height: 94vw;
         margin: 0;
         padding: 6vw;
-        padding-bottom: 8vw;
         background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
         background-color: transparent none;
         background-position: left top;
         background-repeat: no-repeat;
         .background-size(100%, auto);
+
+        .panel-video {
+            margin:0;
+
+            .panel-body {
+                margin-bottom: 12vw;
+            }
+            .video-player {
+                margin:0 auto;
+            }
+        }
     }
     .showcase-carousel {
-        height: 102vh;
+        height: 126vw;
         margin: 0;
         padding:0;
         background-color: transparent none;
         background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
-        background-position: left -300px;
+        background-position: left -94vw;
         background-repeat: no-repeat;
         .background-size(100%, auto);
 
@@ -454,35 +474,101 @@
                 height: auto;
                 width: 52%;
             }
+
+            .item-image {
+                display: block;
+                width: 60vw;
+                height: auto;
+                padding: 0;
+                margin:0 auto;
+                overflow: hidden;
+
+                img {
+                    width: 53vw;
+                    height: auto;
+                    margin-top: -6vw;
+                }
+            }
+
+            .item-title {
+                width: auto;
+                margin:3vw 0 0;
+                padding: 0;
+                min-height: 6vw;
+                
+                color:@clr-green;
+                font-size: 1.5em;
+                font-weight: bold;
+                line-height: 1em;
+                text-align: center;
+                text-transform: uppercase;
+            }
+
+            .item-description {
+                width: auto;
+                margin:3vw 0 0;
+                padding: 0;
+                min-height: 6vw;
+
+                color:@clr-white;
+                font-size: 1.1em;
+                font-weight: bold;
+                line-height: 1.1em;
+                text-align: center;
+                text-transform: none;                
+            }
+
+            .control {
+                position:absolute;
+                top: 12%;
+                font-size: 300%;
+                color:@clr-greenicon;
+                text-decoration: none;
+
+                &.back {left:6vw;}
+                &.next {right:6vw;}
+            }
+
+
         }
         .page-number {
-            margin-top: 22vw;
+            margin-top: 37.2vw;
         }
     }
     .activities {
         border:none;
-        background-color: transparent none;
-        background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
-        background-position: left -707px;
+        background-color: transparent none; //#4C5458
+        background-color: @clr-footer;
+        background-image: url('@{url-images}/bg-stage-1-dashboard-texture.gif');
+        background-position: left top;
         background-repeat: no-repeat;  
-        .background-size(100%, auto);          
+        .background-size(100vw, auto);
+        
+        .owl-wrapper-outer {height: auto;}
+        .owl-wrapper {height: auto;}
+    }
+    .progreso {
+        height: 64vw;
+        padding-top: 20vw;
+        padding-bottom: 117vw;
+        border:none;
+        background-color: transparent;
+        background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
+        background-position: left -320vw;
+        background-repeat: no-repeat; 
+        .background-size(100%, auto); 
+
+        .spinner {
+            max-width: 49%;
+            padding: 5% 9% 10%;
+            position: relative;
+
+            //visibility: hidden;
+        }
+
+        .my-progress {}
     }
 
-    .carousel{
-        .control{
-            position:absolute;
-            top:27%;
-            font-size: 300%;
-            color:@clr-greenicon;
-            text-decoration: none;
-        }
-        #prev{
-            left:3%;
-        }
-        #next{
-            right:3%;
-        }
-    }
     footer.footer{
         background-image: url('@{url-images}/img-footer-texture-lg.png');
         background-color: #24292B;
@@ -782,6 +868,55 @@ section.part.inbloq{
                 }
             }
             
+        }
+    }
+}
+
+
+///////////////////////  modals rendered to page level ///////////////////////////
+.incluso-app{
+    .modal-open {
+        .sidebar-left {
+            display: none;
+        }
+        .app {
+            display: none;
+        }
+        .modal-backdrop{
+            display: none;
+        }
+        .terms-and-conditions,
+        .dashboard-stage-intro,
+        .closing-stage-modal,
+        .dashboard-programa {
+            &.in {
+                position: relative;
+                height: 100vh;
+            }
+        }
+        .chat {
+            width: 90%;
+            margin: 0px auto;
+            .robot-sm{
+                margin-top: 16vh;
+                img {
+                    left: 40vw;
+                    margin-top: 0px;
+                }
+                .modal-body {
+                    padding: 5vh 4vw;
+                }
+            }
+        }
+        .dashboard-stage-intro {
+            img {
+
+            }
+        }
+        .close-activity {
+            .header-title {
+                padding-top: 4vh;
+            }
         }
     }
 }

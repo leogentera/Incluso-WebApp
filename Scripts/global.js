@@ -9,7 +9,7 @@ var _courseId = 4;
 var _httpFactory = null;
 var _timeout = null;
 
-var _activityStatus = {};
+var _activityStatus = null;
 
 var _activityDependencies = [
     {
@@ -114,21 +114,40 @@ function syncCacheData (){
 
 }
 
-var _endActivity = function(activityModel){      
-      _isStageCompleted();
-      var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-      var currentUserId = currentUser.userId;
-      var activityId = activityModel.coursemoduleid;
-      var data = {
-        userid :  currentUserId };
-        
-      //trigger activity type 2 is sent when the activity ends.
-      var triggerActivity = 2;
-      _createNotification(activityId, triggerActivity);
-    _activityStatus[activityModel.coursemoduleid] =1; // update activity status dictionary used for blocking activities
-      moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback,errorCallback);      
-          
+//Update activity status for activity blocking binding
+var updateActivityStatusDictionary = function(activityId){
+    var activityStatus = moodleFactory.Services.GetCacheObject("activityStatus");
+    if(activityStatus){
+        activityStatus[activityId] = 1;
+    }
+    localStorage.setItem("activityStatus",JSON.stringify(activityStatus));
+    _activityStatus[activityId] =1;
 };
+
+var _endActivity = function(activityModel){
+        
+        //trigger activity type 2 is sent when the activity ends.
+        var triggerActivity = 2;
+        var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+        var currentUserId = currentUser.userId;
+        var activityId = activityModel.coursemoduleid;
+        //create notification
+        _createNotification(activityId, triggerActivity);
+        //complete stage        
+        //update badge status
+        _updateBadgeStatus(activityId);
+      if (activityModel.activityType == "Quiz"){
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse,activityModel.token,
+        successCallback,errorCallback);        
+      }else{            
+        var data = {userid :  currentUserId };
+        
+        // update activity status dictionary used for blocking activity links
+        updateActivityStatusDictionary(activityId);
+        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback, errorCallback);
+      }                  
+};
+
 
 //This function updates in localStorage the status of the stage when completed
 var _isStageCompleted = function(){
@@ -145,6 +164,9 @@ var _isStageCompleted = function(){
           if (totalChallengesByStage == totalChallengesCompleted) {
               userCourse.stages[stageIndex].status = 1;
               localStorage.setItem("usercourse",JSON.stringify(userCourse));
+              return true;
+          }else{
+              return false;
           }
         }
     }
@@ -156,21 +178,24 @@ var _isChallengeCompleted = function(){
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
     var currentStage = userCourse.stages[lastStageIndex];
     
-    for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex ++){
+    for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++){
         var currentChallenge = currentStage.challenges[challengeIndex];
         if(currentChallenge.status == 0){        
           var totalActivitiesByStage = currentChallenge.activities.length;
           var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
           if (totalActivitiesByStage == totalActivitiesCompletedByStage){
               
+              //updateBadge
+              _updateBadgeStatus(currentChallenge.coursemoduleid);
+              
               userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
               localStorage.setItem("usercourse", JSON.stringify(userCourse));              
               var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
               var currentUserId = currentUser.userId;
-              var data = { userid :  currentUserId };          
+              var data = { userid :  currentUserId };
               var currentActivityModuleId = currentChallenge.coursemoduleid;              
               moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, function(){},errorCallback);
-              return true;
+              return currentActivityModuleId;
           }else{
             return false;
           }
@@ -180,69 +205,93 @@ var _isChallengeCompleted = function(){
     }
 };
 
+/*
+
+var _updateBadgeStatus = function(coursemoduleid){    
+    var profile = JSON.parse(localStorage.getItem("profile"));
+    var badges = profile.badges;
+    
+    var badge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
+    if (badge) {
+      for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
+        if (badges[indexBadge].id == badge.badgeId) {
+          profile.badges[indexBadge].status = "won";
+        }else{
+          break;
+        }
+      }
+    }
+};
+*/
+
+
 var _createNotification = function(activityId, triggerActivity){
   
   currentUserId = localStorage.getItem("userId");
-  
+  var currentDate = new Date();
+  var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
+  var currentDay = (currentDate.getDay() < 10) ? ("0" + currentDate.getDay()) : currentDate.getDay();
+  var formattedDate = currentMonth + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
-  var notificationByActivity = _.find(allNotifications, function(notif){    
-    if (notif.trigger == triggerActivity && notif.activityidnumber == activityId) {
-      return true;
-    }
-    return false;    
-  });
-  
-  if (notificationByActivity){
-      var dataModelNotification = {
-          notificationid: notificationByActivity.id,
-          timemodified : new Date(),
-          userid: currentUserId,
-          already_read: 0
-      };
-      moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
+ 
+  for(var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++ ){
+      var currentNotification = allNotifications[indexNotifications];
+      if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId){
+          allNotifications[indexNotifications].timemodified = formattedDate;        
+          localStorage.setItem("notifications",JSON.stringify(allNotifications));
+          var dataModelNotification = {
+              notificationid: allNotifications[indexNotifications].id,
+              timemodified : formattedDate,
+              userid: currentUserId,
+              already_read: 0
+              };              
+          moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
+      }else{        
+      }
   }
-  else{
-    
-  }  
 };
 
+
 var _coachNotification = function(){
-    
-  var startedActivityDate = new Date();    
-    
-  //ActivityChatID  
-  var activityChatId = 68;
-  var triggerActivity = 3;
-  var userChat = JSON.parse(localStorage.getItem("userChat"));
-  //pending validate if the activity is started
-  if (userChat.length > 0 ) {
-    var notifications = JSON.parse(localStorage.getItem("notifications"));
-    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-    
-    var userId = localStorage.getItem('userId');
-    var lastMessage = _.max(userChat,function(chat){
-        return chat.messagedate;
-    });
-    var lastMessageDate = moment.unix(lastMessage.messagedate).format("MM/DD/YYYY");
-    var twoDaysAfterLastMessage = new Date(lastMessageDate);
-    twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
-    
-    var today = new Date();
-    if (twoDaysAfterLastMessage < today) {
-      _createNotification(activityChatId,triggerActivity);
-    }else{
-      return false;
-    }
-  }else{
-    return false;
-  }
+                      
+  var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+  var activityChatStarted = userCourse.stages[0].challenges[4].activities[0].started;  
+  if (activityChatStarted){
+      var activityDateStarted = userCourse.stages[0].challenges[4].activities[0].datestarted;      
+      var activityChatId = 68;
+      var triggerActivity = 3;      
+      var notifications = JSON.parse(localStorage.getItem("notifications"));      
+      
+      var userId = localStorage.getItem('userId');
+      var twoDaysAfterLastMessage = new Date();
+      //var twoDaysAfterLastMessage = new Date(activityDateStarted);
+      //twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
   
-}
+      var today = new Date();
+      if (twoDaysAfterLastMessage < today){
+        _createNotification(activityChatId,triggerActivity);
+      }else{
+        return false;
+      }
+  }
+};
 
 var successCallback = function(data){
 };
 
 var errorCallback = function(data){
+};
+
+var _notificationExists = function(){
+  
+    var userNotifications = JSON.parse(localStorage.getItem('notifications'));
+    //var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
+    var countNotificationsUnread = _.filter(userNotifications, function(notif){
+        return (notif.timemodified != null && notif.read != true);
+    });				
+    var totalNotifications = countNotificationsUnread.length;
+    return  totalNotifications;
+  
 };
 
 function getActivityByActivity_identifier(activity_identifier) {          
@@ -295,7 +344,46 @@ function _getActivityByCourseModuleId(coursemoduleid) {
             return matchingActivity;
 }
 
- function updateActivityStatus(activity_identifier) {              
+function updateSubActivityStatus(coursemoduleid) {
+                //Update activity status for activity blocking binding
+                //updateActivityStatusDictionary(coursemoduleid);
+                //Update activity status in usercourse                
+                var breakAll = false;
+                var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
+                for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
+                    var stage = theUserCouerse.stages[stageIndex];
+                    for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+                        var challenge = stage.challenges[challengeIndex];
+                        for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                            var activity = challenge.activities[activityIndex];
+                            if(activity.activities){
+                              console.log(activity.activities.length);
+                              for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++)
+                              {
+                                var subactivity = activity.activities[subactivityIndex];
+                                if (subactivity.coursemoduleid == coursemoduleid) {
+                                  subactivity.status = 1;
+                                  breakAll = true;
+                                  break;
+                                }
+                              } 
+                            }
+                                                       
+                        }
+                        if (breakAll)
+                            break;
+                    }
+                    if (breakAll)
+                        break;
+                }
+                var theUserCouerseUpdated = theUserCouerse;
+                return theUserCouerseUpdated;
+            }
+
+ function updateActivityStatus(activity_identifier) {
+                //Update activity status for activity blocking binding
+                updateActivityStatusDictionary(activity_identifier);
+                //Update activity status in usercourse
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
                 for (var stageIndex = 0; stageIndex < theUserCouerse.stages.length; stageIndex++) {
@@ -318,9 +406,10 @@ function _getActivityByCourseModuleId(coursemoduleid) {
                 }
                 var theUserCouerseUpdated = theUserCouerse;
                 return theUserCouerseUpdated;
-            }           
-            
-             
+            }
+
+
+
  function updateUserStars (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -378,7 +467,7 @@ var logout = function($scope, $location){
       localStorage.removeItem("usercourse");
       localStorage.removeItem("currentStage");
       localStorage.removeItem("notifications");
-      localStorage.removeItem("userChat")
+      localStorage.removeItem("userChat");
       $location.path('/');
     };
     
@@ -724,6 +813,32 @@ var _staticStages = [
   }
 ];
 
+var _badgesPerChallenge = [
+  {
+    badgeId: 2,
+    badgeName: "Combustible",
+    challengeId: 113
+  },
+
+  {
+    badgeId: 3,
+    badgeName: "Turbina C0N0-CT",
+    challengeId: 114
+  },
+  {
+    badgeId: 4,
+    badgeName: "Ala Ctu-3000",
+    challengeId: 115
+  },
+  {
+    badgeId: 5,
+    badgeName: "Combustible",
+    challengeId: 68
+  }
+];
+
+
+
 var _activityRoutes = [
   { id: 150, url: '/ZonaDeVuelo/ExploracionInicial/1001'},
   { id: 112, url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia'},
@@ -739,7 +854,7 @@ var _activityRoutes = [
   { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
   { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
   { id: 115, url: '#'},
-  { id: 116, url: ''}, // Empty for cabina de soporte
+  { id: 68, url: '/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat'}, 
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];

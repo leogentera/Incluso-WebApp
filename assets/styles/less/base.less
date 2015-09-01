@@ -1961,6 +1961,7 @@ body {
     }
     /***************************************************************************/
 
+
     /***********************************************************************
      00. $points
      Description: CSS to represent the main footer for the application with
@@ -1988,19 +1989,27 @@ body {
             margin-left: auto;
             margin-right: auto;
         }
-        li {                       
+        li {    
+            display: block;                               
+            &:first-child {
+                display: none;
+            }
+            &:last-child a {
+                padding-bottom: 0;
+            } 
             a{
                 display: inline-block;
-            }
+            }           
         }        
-        li:last-child {display: none;} 
-
+        
         /* by theme */
         &.theme-rocks {
-            background-image: url("@{url-images}/bg-footer-rocks.png");
+            background-image: url("@{url-images}/bg-dashboard-full.gif");
             background-position: 50% 0;
             .background-size(100%, auto);
             .box-shadow-reset();
+            min-height: 57vw;
+            padding: 19vw 0 4vw;
         }
     } 
     /***********************************************************************/    
