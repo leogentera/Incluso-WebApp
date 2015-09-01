@@ -408,14 +408,14 @@
 
 /* Step dashboard*/
 .incluso-app.step-dashboard {
-    background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
-    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
-    background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
-    background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
-    background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
-    background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );                
-   
+    // background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
+    // background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
+    // background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+    // background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+    // background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+    // background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
+    background:none;
+
     .navbar{     
         background-color: @clr-bluenav;
         border-color: @clr-bluenav;
@@ -531,6 +531,8 @@
                 &.back {left:6vw;}
                 &.next {right:6vw;}
             }
+
+
         }
         .page-number {
             margin-top: 37.2vw;
@@ -538,11 +540,14 @@
     }
     .activities {
         border:none;
-        background-color: transparent none;
-        background-image: url('@{url-images}/bg-stage-1-dashboard-pattern.gif');
-        background-position: left -707px;
-        background-repeat: repeat-y;  
-        .background-size(100%, auto);
+        background-color: transparent none; //#4C5458
+        background-color: @clr-footer;
+        background-image: url('@{url-images}/bg-stage-1-dashboard-texture.gif');
+        //background-image: none;
+        background-position: left top;
+        background-repeat: no-repeat;  
+        .background-size(100vw, auto);
+        //.gradient(#4C5458, #4C5458);
 
         // background: none;
         
@@ -556,35 +561,21 @@
         border:none;
         background-color: transparent none;
         background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
-        //bg-stage-1-dashboard-progress
         background-position: left -320vw;
         background-repeat: no-repeat; 
         .background-size(100%, auto); 
-
-        //background: none;
 
         .spinner {
             max-width: 49%;
             padding: 5% 9% 10%;
             position: relative;
+
+            //visibility: hidden;
         }
+
+        .my-progress {}
     }
 
-    // .carousel{
-    //     .control{
-    //         position:absolute;
-    //         top:27%;
-    //         font-size: 300%;
-    //         color:@clr-greenicon;
-    //         text-decoration: none;
-    //     }
-    //     #prev{
-    //         left:3%;
-    //     }
-    //     #next{
-    //         right:3%;
-    //     }
-    // }
     footer.footer{
         background-image: url('@{url-images}/img-footer-texture-lg.png');
         background-color: #24292B;
