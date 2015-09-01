@@ -415,7 +415,52 @@ function updateSubActivityStatus(coursemoduleid) {
                 return theUserCouerseUpdated;
             }
 
+function updateAllActivityStatuses(parentActivity){
+  var breakAll = false;
+  var theUserCourse = JSON.parse(localStorage.getItem("usercourse"));
+  for (var stageIndex = 0; stageIndex < theUserCourse.stages.length; stageIndex++) {
+      var stage = theUserCourse.stages[stageIndex];
+      for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+          var challenge = stage.challenges[challengeIndex];
+          for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+              var activity = challenge.activities[activityIndex];
+              if(activity.activities && activity.activity_identifier == parentActivity.activity_identifier){
+                for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++)
+                {
+                  var subactivity = activity.activities[subactivityIndex];
+                  subactivity.status = 1;
+                } 
+                breakAll = true;
+                break;
+              }                         
+          }
+          if (breakAll)
+              break;
+      }
+      if (breakAll)
+          break;
+  }
+  var theUserCourseUpdated = theUserCourse;
+  return theUserCourseUpdated;
+}
 
+function updateAllSubactivityStars (parentActivity){
+   var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
+   var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+   var stars = 0;
+   for(var i=0; i < parentActivity.activities.length; i++){
+      stars += parentActivity.activities[i].points;
+   }
+   profile.stars += stars + parentActivity.points;   
+    var data = {
+      userId: profile.id,
+      stars: stars + parentActivity.points,
+      instance: parentActivity.coursemoduleid,
+      instanceType: 0,
+      date: getdate()
+   };
+   moodleFactory.Services.PutStars(data, profile, currentUser.token, successCallback, errorCallback);
+}
 
  function updateUserStars (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
