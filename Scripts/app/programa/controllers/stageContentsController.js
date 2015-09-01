@@ -134,6 +134,7 @@ angular
                       var updatedActivityOnUsercourse = updateActivityStatus($scope.fuenteDeEnergia.activity_identifier);  //actualizar arbol
                       localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
                       _endActivity($scope.fuenteDeEnergia);
+                      _isChallengeCompleted();
                     }
                   }
                   else{
