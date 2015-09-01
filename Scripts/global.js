@@ -821,6 +821,7 @@ var _badgesPerChallenge = [
     badgeName: "Combustible",
     challengeId: 113
   },
+
   {
     badgeId: 3,
     badgeName: "Turbina C0N0-CT",
