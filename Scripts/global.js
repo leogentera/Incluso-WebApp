@@ -187,7 +187,7 @@ var _isChallengeCompleted = function(){
           if (totalActivitiesByStage == totalActivitiesCompletedByStage){
               
               //updateBadge
-              //_updateBadgeStatus(currentChallenge.coursemoduleid);
+              _updateBadgeStatus(currentChallenge.coursemoduleid);
               
               userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
               localStorage.setItem("usercourse", JSON.stringify(userCourse));              
@@ -212,7 +212,7 @@ var _isChallengeCompleted = function(){
 
 
 
-var _updateBadgeStatus = function(coursemoduleid){    
+var _updateBadgeStatus = function(coursemoduleid){
     var profile = JSON.parse(localStorage.getItem("profile"));
     var badges = profile.badges;
     
@@ -224,11 +224,10 @@ var _updateBadgeStatus = function(coursemoduleid){
           profile.badges[indexBadge].status = "won";
           localStorage.setItem("profile",JSON.stringify(profile));
         }else{
-          break;
+          //This else statement is set to avoid errors on execution flows
         }
       }
-    }else{
-      
+    }else{//This else statement is set to avoid errors on execution flows
     }
 };
 
