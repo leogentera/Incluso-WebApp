@@ -211,7 +211,7 @@ angular
                         $scope.isCommentModalCollapsed[parentId] = true;
                         //getTopicDataAsync();
                         refreshTopicData();
-
+                        debugger;
                         //updateForumProgress(parentId);
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         updateForumProgress(topicId);
