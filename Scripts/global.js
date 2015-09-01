@@ -268,7 +268,7 @@ var _coachNotification = function() {
             return false;
         }
     }
-}
+};
 
 
 var successCallback = function(data){
