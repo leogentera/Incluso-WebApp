@@ -19,28 +19,45 @@ angular
             localStorage.setItem('chatRead', "true");
             var userId = localStorage.getItem('userId');            
             $scope.senderId = userId;
-            $scope.messages = JSON.parse(localStorage.getItem('userChat'));            
+            $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+            //setInterval(getMessages,10000);                    
             $scope.currentMessage = "";
 
             $scope.setToolbar($location.$$path,"Cabina de Soporte");
             $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false; 
 
-            if(_startedActivityCabinaDeSoporte) {
-                var isStarted = _startedActivityCabinaDeSoporte;
-                var currentActivity = _usercourse.stages[isStarted.$stage].challenges[isStarted.$parentIndex].activities[isStarted.$index];
+            validateCabinaDeSoporte();
 
-                if (!currentActivity.status) {
-                    var rawDate = isStarted.$data.datestarted.split(/:|\s|:/);
-                    var dateStarted = new Date(rawDate[0], rawDate[1] - 1, rawDate[2], rawDate[3], rawDate[4], rawDate[5]);
-                    var latestMessages =  _.filter($scope.messages, function(msg) { 
-                        return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
-                    });
+            function validateCabinaDeSoporte(){
+                var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
+                if(!finishCabinaSoporte){
+                    if(_startedActivityCabinaDeSoporte) {
+                    var isStarted = _startedActivityCabinaDeSoporte;
+                    var currentActivity = _usercourse.stages[isStarted.$stage].challenges[isStarted.$parentIndex].activities[isStarted.$index];
 
-                    if (latestMessages.length >= 2) {    
-                        localStorage.setItem('finishCabinaSoporte', 'true');
-                    }
+                        if (!currentActivity.status) {
+                            var rawDate = isStarted.$data.datestarted.split(/:|\s|:/);
+                            var dateStarted = new Date(rawDate[0], rawDate[1] - 1, rawDate[2], rawDate[3], rawDate[4], rawDate[5]);
+                            var latestMessages =  _.filter($scope.messages, function(msg) { 
+                                return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
+                            });
+
+                            if (latestMessages.length >= 2) {    
+                                localStorage.setItem('finishCabinaSoporte', 'true');
+                            }
+                        }   
+                    }                
                 }
+            }            
+
+            function getMessages(){                                            
+                moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                
+            }
+
+            function getUserRefreshChatCallback() {                
+                $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+                validateCabinaDeSoporte();
             }
 
             $scope.scrollToTop();

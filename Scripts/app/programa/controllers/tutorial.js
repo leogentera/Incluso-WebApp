@@ -13,7 +13,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
             $scope.scrollToTop();
-
+$scope.$emit('HidePreloader');
             /* Models */
             //$scope.hasSeenTutorial = moodleFactory.Services.GetCacheObject("HasSeenTutorial");
             //$scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
