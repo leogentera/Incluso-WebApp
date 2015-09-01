@@ -205,22 +205,23 @@ var _isChallengeCompleted = function(){
     }
 };
 
-
-var _updateBadgeStatus = function(coursemoduleid){    
-    var profile = JSON.parse(localStorage.getItem("profile"));
-    var badges = profile.badges;
-    
-    var badge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
-    if (badge) {
-      for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
-        if (badges[indexBadge].id == badge.badgeId) {
-          profile.badges[indexBadge].status = "won";
-        }else{
-          break;
-        }
-      }
-    }
-}
+//
+//var _updateBadgeStatus = function(coursemoduleid){    
+//    var profile = JSON.parse(localStorage.getItem("profile"));
+//    var badges = profile.badges;
+//    
+//    var badge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
+//    debugger;
+//    if (badge) {
+//      for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
+//        if (badges[indexBadge].id == badge.badgeId) {
+//          profile.badges[indexBadge].status = "won";
+//        }else{
+//          break;
+//        }
+//      }
+//    }
+//}
 
 var _createNotification = function(activityId, triggerActivity){
   
