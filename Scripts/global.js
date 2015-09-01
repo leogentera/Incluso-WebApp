@@ -135,7 +135,7 @@ var _endActivity = function(activityModel){
         _createNotification(activityId, triggerActivity);
         //complete stage        
         //update badge status
-        _updateBadgeStatus(activityId);
+        //_updateBadgeStatus(activityId);
       if (activityModel.activityType == "Quiz"){
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse,activityModel.token,
         successCallback,errorCallback);        
@@ -174,6 +174,7 @@ var _isStageCompleted = function(){
 };
 
 var _isChallengeCompleted = function(){
+    var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));      
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
     var currentStage = userCourse.stages[lastStageIndex];
@@ -186,7 +187,7 @@ var _isChallengeCompleted = function(){
           if (totalActivitiesByStage == totalActivitiesCompletedByStage){
               
               //updateBadge
-              _updateBadgeStatus(currentChallenge.coursemoduleid);
+              //_updateBadgeStatus(currentChallenge.coursemoduleid);
               
               userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
               localStorage.setItem("usercourse", JSON.stringify(userCourse));              
@@ -195,14 +196,18 @@ var _isChallengeCompleted = function(){
               var data = { userid :  currentUserId };
               var currentActivityModuleId = currentChallenge.coursemoduleid;              
               moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, function(){},errorCallback);
-              return currentActivityModuleId;
+              success = currentActivityModuleId;
+              return success
           }else{
-            return false;
+            success = 0;
+            ;
           }
         }else{
-          return false;
+          success = 0;
         }
     }
+    return success;
+    
 };
 
 /*
@@ -246,7 +251,7 @@ var _createNotification = function(activityId, triggerActivity){
               already_read: 0
               };              
           moodleFactory.Services.PostUserNoitifications(currentUserId,dataModelNotification,successCallback,errorCallback);
-      }else{        
+      }else{
       }
   }
 };
