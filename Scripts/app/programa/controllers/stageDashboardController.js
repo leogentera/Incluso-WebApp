@@ -36,7 +36,7 @@ angular
                     templateUrl: 'OpeningStageModal.html',
                     controller: 'OpeningStageController',
                     size: size,
-                    windowClass: 'user-help-modal'
+                    windowClass: 'user-help-modal dashboard-stage-intro'
                 });
 
             };
