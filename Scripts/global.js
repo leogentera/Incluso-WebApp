@@ -260,28 +260,49 @@ var _createNotification = function(activityId, triggerActivity){
 
 
 var _coachNotification = function(){
-                      
-  var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-  var activityChatStarted = userCourse.stages[0].challenges[4].activities[0].started;  
-  if (activityChatStarted){
-      var activityDateStarted = userCourse.stages[0].challenges[4].activities[0].datestarted;      
-      var activityChatId = 68;
-      var triggerActivity = 3;      
-      var notifications = JSON.parse(localStorage.getItem("notifications"));      
-      
-      var userId = localStorage.getItem('userId');
-      var twoDaysAfterLastMessage = new Date();
-      //var twoDaysAfterLastMessage = new Date(activityDateStarted);
-      //twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
+  //Luis
+  var notifications = JSON.parse(localStorage.getItem("notifications"));
+  var userId = localStorage.getItem('userId');
+  var notificationCoach = _.find(notifications,function(notif){
+      if(notif.id == 4){
+        return notif;
+        }else{}
+    });                                
   
-      var today = new Date();
-      if (twoDaysAfterLastMessage < today){
-        _createNotification(activityChatId,triggerActivity);
-      }else{
-        return false;
-      }
-  }
+  if (!notificationCoach.timemodified) {
+    //var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    //var activityChatStarted = userCourse.stages[0].challenges[4].activities[0].started;
+    var activityId = 68;
+    var activity = _getActivityByCourseModuleId(activityId);
+    if ((activity) && (activity.datestarted)){      
+      //trigger activity type 3 is sent when the user has more than two days of not sending messages to the coach
+      var triggerActivity = 3;
+      var chatUser = JSON.parse(localStorage.getItem("userChat"));
+            //var formattedLastMessageDate = moment.unix(lastMessageDate).format("MM/DD/YYYY")            
+      if (chatUser.length > 0){      
+        var lastMessageDate = _.max(chatUser,function(chat){
+            if (chat.messagesenderid == userId) {
+              return chat.messagedate;
+            }
+        });
+        //pending implement logic to calculate two days after the day last user message was sent
+        //var twoDaysAfterLastMessage = lastMessageDate + 2;
+        var today = new Date();
+        if(twoDaysAfterLastMessage < today){
+          _createNotification(activityChatId,triggerActivity);
+        }else{return false;}
+      }          
+    }      
+  }  
 };
+                
+      
+      
+
+
+
+
+
 
 var successCallback = function(data){
 };
@@ -415,7 +436,52 @@ function updateSubActivityStatus(coursemoduleid) {
                 return theUserCouerseUpdated;
             }
 
+function updateAllActivityStatuses(parentActivity){
+  var breakAll = false;
+  var theUserCourse = JSON.parse(localStorage.getItem("usercourse"));
+  for (var stageIndex = 0; stageIndex < theUserCourse.stages.length; stageIndex++) {
+      var stage = theUserCourse.stages[stageIndex];
+      for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+          var challenge = stage.challenges[challengeIndex];
+          for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+              var activity = challenge.activities[activityIndex];
+              if(activity.activities && activity.activity_identifier == parentActivity.activity_identifier){
+                for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++)
+                {
+                  var subactivity = activity.activities[subactivityIndex];
+                  subactivity.status = 1;
+                } 
+                breakAll = true;
+                break;
+              }                         
+          }
+          if (breakAll)
+              break;
+      }
+      if (breakAll)
+          break;
+  }
+  var theUserCourseUpdated = theUserCourse;
+  return theUserCourseUpdated;
+}
 
+function updateAllSubactivityStars (parentActivity){
+   var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
+   var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+   var stars = 0;
+   for(var i=0; i < parentActivity.activities.length; i++){
+      stars += parentActivity.activities[i].points;
+   }
+   profile.stars += stars + parentActivity.points;   
+    var data = {
+      userId: profile.id,
+      stars: stars + parentActivity.points,
+      instance: parentActivity.coursemoduleid,
+      instanceType: 0,
+      date: getdate()
+   };
+   moodleFactory.Services.PutStars(data, profile, currentUser.token, successCallback, errorCallback);
+}
 
  function updateUserStars (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
