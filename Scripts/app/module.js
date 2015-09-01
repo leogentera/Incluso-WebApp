@@ -49,6 +49,7 @@
         $http.get('Templates/Public/RecoverPassword.html', { cache: $templateCache });
         $http.get('Templates/Public/RecoverPasswordEmail.html', { cache: $templateCache });
         $http.get('Templates/Public/Register.html', { cache: $templateCache });
+        $http.get('Templates/Public/TermsConditions.html', { cache: $templateCache });
         $http.get('Templates/Programa/Dashboard.html', { cache: $templateCache });
         /*$http.get('Templates/Programa/Step.html', { cache: $templateCache });*/
         $http.get('Templates/Programa/profile.html', { cache: $templateCache });
@@ -179,6 +180,11 @@
 
         $routeProvider.when('/Register', {
             templateUrl: 'Templates/Public/Register.html',
+            controller: 'publicRegisterController'
+        });
+
+        $routeProvider.when('/TermsConditions', {
+            templateUrl: 'Templates/Public/TermsConditions.html',
             controller: 'publicRegisterController'
         });
 

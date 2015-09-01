@@ -49,6 +49,7 @@ angular
             /* Helpers */
             var isConfirmedPasswordValid = false;
             $scope.currentPage = 1;
+            console.log($rootScope.showPage);
             $scope.isRegistered = false;
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
@@ -69,7 +70,13 @@ angular
             $scope.$watch("registerModel.modelState.errorMessages", function(newValue, oldValue){
                 $scope.registerModel.modelState.isValid = (newValue.length === 0);
             });                        
-                                
+            
+            $scope.closeTermsConditions = function (){
+                    $location.path('/Register');                   
+                    $rootScope.showPage = 2;
+                    $scope.$emit('scrollTop'); 
+                    //console.log($rootScope.showPage);
+            }
             
             $scope.register = function() {
                 console.log('register');
@@ -139,7 +146,7 @@ angular
             }
 
             $scope.navigateToPage = function(pageNumber){
-                $scope.currentPage = pageNumber;
+                $scope.currentPage = $rootScope.showPage = pageNumber;
                 $scope.$emit('scrollTop'); //- scroll
             };
 

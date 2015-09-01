@@ -1730,19 +1730,28 @@
          $terms-and-conditions
          Description: CSS to represent modal for terms and conditionss
         ************************************************************************/
-        .modal.terms-and-conditions {
-            .modal-dialog {
-                margin-top:15vh;
+            .terms-and-conditions {
+                .modal-theme-default {
+                    height: 100vh;
+                    /*background: #000 none repeat scroll 0% 0%;*/
+                }
+                .modal-dialog {
+                    margin: 0px 3vh; 
+                    padding-top:15vh;
+                    .modal-title {
+                        padding: 3.6vw 0px;
+                    }
+                }
+
+                .modal-body {
+                    height: 50vh;
+                    padding-top: 0;
+                    overflow-x: hidden;
+                }
+                .modal-footer {
+                    display: none;
+                }
             }
-            .modal-body {
-                height: 50vh;
-                padding-top: 0;
-                overflow-x: hidden;
-            }
-            .modal-footer {
-                display: none;
-            }
-        }
         /***********************************************************************/
 
         

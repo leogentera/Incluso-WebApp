@@ -170,7 +170,7 @@
         </div>
         <div class="pages">
 
-          <div class="page" data-page="1" ng-class="currentPage === 1 ? 'active' : ''">
+          <div class="page" data-page="1" ng-class="showPage == 2 ? '' : currentPage === 1 ? 'active' : '' ">
             <div class="row">
               <div class="col-xs-12">
                 <div class="form-group">
@@ -314,11 +314,9 @@
                 <a role="button" class="btn btn-default btn-transparent btn-lg btn-block" ng-click="login()">Cancelar</a>
               </div> 
             </div>          
-
           </div>   
 
-          <div class="page" data-page="2" ng-class="currentPage === 2 ? 'active' : ''">
-
+          <div class="page" data-page="2" ng-class="currentPage === 2 ? 'active' : '' || showPage === 2 ? 'active' : ''">
             <div class="row">
               <div class="col-xs-12">
                 <div class="form-group">
@@ -394,7 +392,8 @@
                   <div class="checkbox checkbox-custom">
                     <label>
                       <input type="checkbox" ng-disabled="isRegistered" name="termsAndConditions" ng-model="registerModel.termsAndConditions" /> 
-                      <span><a href="" ng-click="openModal()">Acepto los términos y condiciones</a></span>
+                      <span><a href="" ng-click="navigateTo('/TermsConditions', null, null, null)">Acepto los términos y condiciones</a></span>
+                      <a ng-click="openModal()">X</a>
                     </label>
                   </div>
               </div>
@@ -425,8 +424,142 @@
                 <a role="button" ng-disabled="isRegistered" ng-click="login()" class="btn btn-default btn-transparent btn-lg btn-block">Cancelar</a>
               </div>       
             </div>          
-
           </div> 
+
+          <!--<div class="page" data-page="3" ng-class="currentPage === 2 ? 'active' : '' || showPage === 2 ? 'active' : ''">
+            <article class="modal-theme-default">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                        <h3 class="modal-title"> &mdash; Términos y Condiciones &mdash; </h3>
+                        <a role="button" class="icon icon-close btn btn-circle" ng-click="closeTermsConditions()">
+                          <span class="icomoon icon-cross"></span>
+                        </a>
+                      </div>
+                      <div class="modal-body">
+                        <p>Todos los elementos que conforman el contenido de esta aplicación, identificado por el
+                              nombre de “Misión Incluso”, incluyendo de manera enunciativa más no limitativa, los
+                              nombres comerciales, marcas u otros signos distintivos que figuren en la misma son
+                              propiedad de Gentera, S.A.B. y se encuentran protegidos bajo las leyes de Propiedad
+                              Industrial. Los derechos de Propiedad Intelectual sobre los contenidos, diseño gráfico,
+                              estructura, elementos audiovisuales y demás elementos de este sitio web son
+                              propiedad exclusivamente de Gentera, S.A.B., quedando expresamente prohibido su
+                              reenvío, transmisión, modificación, reproducción, distribución, comercialización o
+                              cualquier otro tipo de explotación comercial en términos de las leyes aplicables sin el
+                              previo consentimiento y autorización expresa para ello, por parte del titular de los
+                              derechos patrimoniales mencionado previamente.</p>
+                              <p>En virtud de lo anterior, salvo el uso que se llegue a dar para fines personales o
+                              privados, a los cuales se encuentra autorizado el usuario, cualquier uso distinto que se
+                              dé a cualquiera de los elementos de propiedad intelectual e industrial mencionados en
+                              el párrafo previo constituirá en sí mismo una infracción a los derechos de propiedad
+                              intelectual e industrial por lo que el titular de los mismos, podrá proceder civil e incluso
+                              penalmente de acuerdo a las leyes aplicables.</p>
+                              <p><span class="subtitle-green">Aviso de Privacidad Integral Misión Incluso</span><br/>
+                              Con fundamento en la Ley de Protección de Datos Personales en Posesión de Particulares (en 
+                              adelante la “Ley”) le informamos que Incluso Estudia, Trabaja, Emprende, (en adelante “Incluso”), 
+                              empresa perteneciente a GENTERA, S.A.B. DE C.V., con domicilio en Insurgentes Sur número 1458 
+                              piso 11 Colonia Actipan, Delegación Benito Juárez, C.P. 03230, México, D.F., actúa como Responsable 
+                              de sus datos personales.</p>
+                              <p>¿Para qué fines utilizaremos sus datos?<br>Los datos personales que recabamos, serán utilizados 
+                              paras las siguientes finalidades:</p>
+                              <ul>
+                                <li>Brindar a los adscritos al programa capacitación sobre el uso de dispositivo móvil, redes sociales 
+                                y plataforma&#59;</li>
+                                <li>Brindar a los adscritos al programa los conocimientos teóricos y metodológicos sobre el modelo pedagógico&#59;</li>
+                                <li>Brindar apoyo y seguimiento a los adscritos al programa a través de redes sociales y/o medios tecnológicos&#59;</li>
+                                <li>Realizar un diagnóstico de las necesidades e inquietudes de los adscritos al programa sobre temas de emprendimiento e 
+                                inclusión productiva en la sociedad&#59;</li>
+                                <li>Apoyar a los adscritos al programa para definir sueños propios a partir del reconocimiento de sus intereses, habilidades 
+                                e inteligencias predominantes para un mejor aprovechamiento de sus recursos personales&#59;</li>
+                                <li>Apoyar a los adscritos al programa a que se planteen un proyecto de vida aprovechando sus recursos personales y los de otros, 
+                                poniendo en práctica competencias sociales como colaboración, comunicación y toma de decisiones&#59;</li>
+                                <li>Apoyar a los adscritos al programa para desarrollar una actitud emprendedora que les permita emprender un proyecto con impacto 
+                                social considerando principios de negocios y educación financiera&#59;</li>
+                                <li>Entregar un reconocimiento a los adscritos al programa por finalizar el programa&#59;</li>
+                                <li>Realizar encuentas y/o estudios que nos permitan conocer sus necesidades y preferencias para estar en posibilidad de desarrollar 
+                                programas o beneficios que se adecuen a estas&#59; y</li>
+                                <li>Análisis y estadísticas sobre los adscritos al programa.</li>              
+                              </ul>
+                              <p>De manera adicional y como finalidades secundarias, utilizaremos su información personal para las siguientes finalidades que no son 
+                              necesarias para el servicio solicitado, pero que nos permite brindarle un mejor servicio como cliente:</p>
+                              <ul>
+                                <li>Realizar encuentas sobre la calidad en el servicio&#59;</li>
+                                <li>Ofrecerle o enviarle promociones, publicidad de Banco Compartamos y de las empresas que forman parte de GENTERA&#59;</li>
+                                <li>Conocer sus necesidades y preferencias para estar en posibilidad de ofrecerle productos que se adecuen a estas&#59;</li>
+                                <li>Elaborar estudios de mercadotecnia, segmentación de mercado, estadísticos&#59; e</li>
+                                <li>Invitarlo a participar en nuestros eventos, concursos o sorteos, y en caso de resultar ganador, contactarlo para la entrega del premio.</li>
+                              </ul>
+                              <p>En caso de que no desee que sus datos personales sean tratados para los fines adicionales señalados en el presente aviso desde este momento usted 
+                              lo puede solicitar ingresando a la aplicación Misión Incluso por medio del menú superior en la opción “perfil” donde podrás seleccionar si aceptas o 
+                              no las finalidades secundarias. La negativa para el uso de sus datos personales sobre las finalidades secundarias, no podrá ser un motivo para que le 
+                              neguemos los productos y/o servicios que solicita o contrate con nosotros.</p>
+                              <p>¿Qué datos personales utilizaremos para estos fines?</p>
+                              <p>Para llevar a cabo las finalidades descritas en el presente aviso de privacidad, utilizaremos los siguientes datos personales:</p>
+                              <ul>
+                                <li>Datos Personales: Nombre completo, Nivel de estudios, Institución educativa, domicilio completo, teléfono, redes sociales, nombre completo 
+                                de cliente compartamos (familiar), gustos, pasatiempos, geolocalización, información del dispositivo móvil del usuario (marca, modelo y versión 
+                                sistema operativo), tiempo de navegación en la plataforma.</li>
+                              </ul>
+                              <p>Además de los datos personales para las finalidades descritas en el presente aviso de privacidad, confirmamos que no utilizaremos datos personales 
+                              considerados como sensibles. El tratamiento de su información personal y financiera se realizará con base en los principios de licitud, calidad, 
+                              consentimiento, información, finalidad, lealtad, proporcionalidad y responsabilidad consagrados en la Ley.</p>
+                              <p>¿Con quién compartimos su información personal y para qué fines?</p>
+                              <p>Le informamos que Incluso podrá transferir sus datos personales a terceros cuando: (i) esté prevista en una Ley o Tratado; (ii) sea efectuada a 
+                              sociedades controladoras, subsidiarias o afiliadas bajo el control común de GENTERA; (iii) sea necesaria o legalmente exigida para la salvaguarda de 
+                              un interés público, o para la procuración o administración de justicia; y (iv) sea precisa para el reconocimiento, ejercicio o defensa de un derecho 
+                              en un proceso judicial.</p>
+                              <p>¿Cómo puede acceder, rectificar o cancelar sus datos personales, u oponerse a su uso?</p>
+                              <p>Usted tiene derecho a conocer qué datos personales tenemos de usted, para qué los utilizamos y las condiciones del uso que les damos (Acceso). Asimismo, 
+                              es su derecho solicitar la corrección de su información personal en caso de que esté desactualizada, sea inexacta o incompleta (Rectificación); que la 
+                              eliminemos de nuestros registros o bases de datos cuando considere que la misma no está siendo utilizada conforme a los principios, deberes y obligaciones 
+                              previstas en la normativa (Cancelación); así como oponerse al uso de sus datos personales para fines específicos (Oposición). Estos derechos se conocen como 
+                              derechos ARCO. Para el ejercicio de cualquiera de los derechos ARCO, y para la revocación de su consentimiento al tratamiento de sus Datos Personales, deberá 
+                              llenar debidamente el formulario que ponemos a su disposición en las siguientes modalidades, a través de nuestra página de internet http://www.incluso.com.mx; 
+                              y por medio de un escrito dirigido a la Gerencia de Privacidad de la Información a la siguiente dirección: Insurgentes Sur número 1458 piso 7, Colonia Actipan, 
+                              Delegación Benito Juárez, C.P. 03230, México, D.F.. </p>
+                              <p>Para aclarar dudas sobre el procedimiento y requisitos para el ejercicio de los derechos ARCO, y para la revocación de su consentimiento al tratamiento de 
+                              sus Datos Personales, usted podrá llamar al siguiente número telefónico 01 (55) 5276-7250, extensión 7658; ingresar a nuestro sitio de Internet 
+                              http://www.incluso.com.mx en la sección Privacidad, o bien, puede ponerse en contacto con nuestra área de Privacidad de la Información, quien dará trámite a las 
+                              solicitudes para el ejercicio de estos derechos, y atenderá cualquier duda que pudiera tener respecto al tratamiento de su información. Los datos de contacto 
+                              son los siguientes:</p>
+                              <ul>
+                                <li>Nombre de la Persona: Oficial de Privacidad de la Información</li>
+                                <li>Domicilio: Insurgentes Sur número 1458 piso 7, Colonia Actipan, Delegación Benito Juárez, C.P. 03230, México, D.F.,</li>
+                                <li>Número telefónico: 01 (55) 5276-7250, extensión 7658</li>
+                                <li>Correo electrónico: oficialdeprivacidad@gentera.com.mx</li>
+                              </ul>
+                              <p>La revocación del consentimiento sobre el tratamiento de sus datos será atendida en un periodo de 5 días hábiles, posterior a la recepción de su solicitud.</p>
+                              <p>¿Cómo puede limitar el uso o divulgación de su información personal?</p>
+                              <p>Con objeto de que usted pueda limitar el uso y divulgación de su información personal, le ofrecemos los siguientes medios:</p>
+                              <ul>
+                                <li>Inscribir su registro en el listado de exclusión de Banco Compartamos “Exclusión de Promoción y Publicidad”, a fin de que sus datos personales no sean 
+                                tratados para fines mercadotécnicos, publicitarios o de prospección comercial por nuestra parte llamando al número telefónico 01800 2209000 opción 0, o bien, 
+                                enviar un correo electrónico a la siguiente dirección: oficialdeprivacidad@gentera.com.mx,</li>
+                                <li>Usted podrá inscribirse a través de la página de Internet de la Comisión Nacional para la Protección y Defensa de los Usuarios de Servicios Financieros 
+                                (Condusef) cuya dirección es http://www.condusef.gob.mx en el Registro Público de Usuarios (REUS), padrón que contiene información de los usuarios del sistema financiero que no desean ser molestados con publicidad y promociones por parte de las instituciones financieras en sus prácticas de mercadotecnia, publicidad 
+                                y prospección comercial,</li>
+                                <li>Usted podrá inscribirse a través de la página de Internet de la Procuraduría Federal del Consumidor (PROFECO) cuya dirección es http://profeco.gob.mx en 
+                                el Registro Público para Evitar Publicidad (REPEP), padrón que contiene información de los consumidores que no desean ser molestados con publicidad no deseada 
+                                y que su información no sea utilizada con fines mercadotécnicos o publicitarios.</li>
+                              </ul>
+                              <p>El uso de tecnologías de rastreo en nuestro portal de Internet</p>
+                              <p>Le informamos que en nuestra aplicación utilizaremos tecnologías a través de las cuales es posible monitorear su comportamiento como usuario de la aplicación, 
+                              así como brindarle un mejor servicio y experiencia de usuario adscrito al programa.</p>
+                              <p>Los datos personales que obtenemos de estas tecnologías de rastreo son los siguientes: Fecha de inicio y fin de sesión, tiempo de duración en la sesión, 
+                              navegador, datos del navegador, secciones visitadas, número de veces que se visitó la página, mismos que utilizamos para conocer el tiempo que dedica el 
+                              adscrito al programa a las actividades de la plataforma, conocer qué tipo de software y hardware es el más común usado para ingresar a la página web y conocer 
+                              la afluencia de los usuarios a través de las secciones de la página.</p>
+                              <p>¿Cómo puede conocer los cambios a este aviso de privacidad?</p>
+                              <p>El presente aviso de privacidad puede sufrir modificaciones, cambios o actualizaciones derivadas de nuevos requerimientos legales; por los cambios en nuestros 
+                              productos o servicios que ofrecemos; de nuestras prácticas de privacidad; de cambios en nuestro modelo de negocio. Nos comprometemos a mantenerlo informado 
+                              sobre los cambios que pueda sufrir el presente aviso de privacidad, a través de nuestro sitio de internet http://www.incluso.com.mx</p>
+                              <p>Para conocer las empresas que forman parte de GENTERA usted puede ingresar al sitio de internet http://www.gentera.com.mx</p>
+                      </div>
+                  </div>
+                </div>
+            </article>
+          </div>-->
+
         </div> 
       </form>      
     </section>
