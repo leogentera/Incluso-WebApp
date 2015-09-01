@@ -301,6 +301,22 @@ angular
                 // if (!$scope.editForm.alias.$valid) { errors.push("Formato de alias incorrecto."); }
                 if (!$scope.editForm.date.$valid) { errors.push("Ingrese la fecha de nacimiento."); }
 
+                //Validation of the $scope.model.familiaCompartamos array
+                var arrayForIdClients = [];
+
+                $scope.model.familiaCompartamos.forEach(function(elem){
+                    arrayForIdClients.push(elem.idClient);
+                });
+
+                var filteredIdClient = arrayForIdClients.filter(function(item, pos) {
+                    return arrayForIdClients.indexOf(item) == pos;
+                });
+
+                if (arrayForIdClients.length != filteredIdClient.length) {
+                    //Repeated idClients
+                    errors.push("El número de cliente Compartamos debe ser único.");
+                }
+
                 $scope.model.modelState.errorMessages = errors;
 
                 return (errors.length === 0);
@@ -446,8 +462,10 @@ angular
             };
 
             $scope.save = function () {
-                var validationResult = validateModel();
-                //validationResult = true;
+                var validationResult = validateModel();  //Valid if validateModel() returns true
+
+                deleteRepeatedValues();
+
                 if (validationResult) {
                     $scope.$emit('ShowPreloader');
                     saveUser();
@@ -455,6 +473,43 @@ angular
                     $scope.$emit('scrollTop');
                 }
             };
+
+            function deleteRepeatedValues() {
+
+                $scope.model.phones = $scope.model.phones.filter(function(item, pos) {
+                    return $scope.model.phones.indexOf(item) == pos;
+                });
+
+                $scope.model.socialNetworks = $scope.model.socialNetworks.filter(function(item, pos) {
+                    return $scope.model.socialNetworks.indexOf(item) == pos;
+                });
+
+                $scope.model.favoriteSports = $scope.model.favoriteSports.filter(function(item, pos) {
+                    return $scope.model.favoriteSports.indexOf(item) == pos;
+                });
+
+                $scope.model.artisticActivities = $scope.model.artisticActivities.filter(function(item, pos) {
+                    return $scope.model.artisticActivities.indexOf(item) == pos;
+                });
+
+                $scope.model.hobbies = $scope.model.hobbies.filter(function(item, pos) {
+                    return $scope.model.hobbies.indexOf(item) == pos;
+                });
+
+                $scope.model.talents = $scope.model.talents.filter(function(item, pos) {
+                    return $scope.model.talents.indexOf(item) == pos;
+                });
+
+                $scope.model.values = $scope.model.values.filter(function(item, pos) {
+                    return $scope.model.values.indexOf(item) == pos;
+                });
+
+                $scope.model.habilities = $scope.model.habilities.filter(function(item, pos) {
+                    return $scope.model.habilities.indexOf(item) == pos;
+                });
+
+
+            }
 
             $scope.addStudy = function () {
                 $scope.model.studies.push({});
