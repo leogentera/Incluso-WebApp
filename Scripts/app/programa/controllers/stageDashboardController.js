@@ -110,12 +110,15 @@ angular
             $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);            
             var challengeCompleted = _isChallengeCompleted();
             
-            if(challengeCompleted){
+            
+            var challengeExploracionInicial = 140;
+            var challengeExploracionFinal = 152;
+            if(challengeCompleted && challengeCompleted != challengeExploracionInicial && challengeCompleted != challengeExploracionFinal){
               localStorage.setItem("challengeMessageId",challengeCompleted);
               $scope.openModal_CloseChallenge();
             }else{
               localStorage.setItem("challengeMessageId",0);
-            }            
+            }
             //localStorage.setItem("challengeMessageId",113);
             //$scope.openModal_CloseChallenge();
             
@@ -129,15 +132,15 @@ angular
                 "Exploración final": "assets/images/challenges/stage-1/img-evaluacion final.svg"
             };
 
-            $scope.$emit('HidePreloader'); //hide preloader            
+            $scope.$emit('HidePreloader'); //hide preloader
 
             $scope.playVideo = function (videoAddress, videoName) {
                 playVideo(videoAddress, videoName);
             };
 
-
-
+            
             $scope.startActivity = function (activity, index, parentIndex) {
+
                 if(!$scope.canStartActivity(activity.coursemoduleid)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.coursemoduleid })[0].url;
 

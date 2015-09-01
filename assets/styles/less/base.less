@@ -1990,18 +1990,21 @@ body {
             margin-right: auto;
         }
         li {    
-            display: none;                               
+            display: block;                               
             &:first-child {
-                display: inline-block;
+                display: none;
             }
             &:last-child a {
                 padding-bottom: 0;
-            }            
+            } 
+            a{
+                display: inline-block;
+            }           
         }        
         
         /* by theme */
         &.theme-rocks {
-            background-image: url("@{url-images}/bg-footer-rocks.png");
+            background-image: url("@{url-images}/bg-dashboard-full.gif");
             background-position: 50% 0;
             .background-size(100%, auto);
             .box-shadow-reset();
