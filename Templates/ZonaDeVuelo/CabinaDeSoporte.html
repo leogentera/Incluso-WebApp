@@ -37,7 +37,21 @@
                 <div class="fl-left">Estrellas ganadas:</div>
                 <div class="fl-right sm-pill"><span>{{activityPoints}}</span><span class="icomoon icon-star fl-right"></span>
                 </div>
-            </section>            
+            </section>
+            <section class="txt-renglon centered form ">
+                ¿Que opinas de ésta actividad?
+                <section class="txt-renglon txt-bigger clearfix">
+                    <div class="opinion">
+                        <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                        <label for="like">Me gusta</label>
+                    </div>
+                    <div class="opinion">
+                        <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                        <label for="dislike">No me gusta</label>
+                    </div>
+                </section>
+                <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">TERMINAR</a>
+            </section>
         </div>
     </div>  
   </div>
