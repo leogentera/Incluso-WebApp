@@ -34,8 +34,14 @@ angular
                 $scope.wholeBadgesPages[i] = [];
                 for (var j = 0; j < top; j++) {
                     var elem = copyBadges.shift(); //extracts first element of remaining array
-                    elem.filename = getFileName(elem.id);
-                    console.log(elem.filename);
+
+                    if (elem.status == "won") {
+                        elem.filename = getFileName(elem.id);
+                    } else {
+                        elem.filename = "default_placeholder.svg";
+                    }
+
+                    console.log(elem.status + " -> " + elem.filename);
                     $scope.wholeBadgesPages[i].push(elem);
                 }
             }
@@ -94,9 +100,6 @@ angular
                         break;
                     case 18:
                         filename = "turbo.svg";
-                        break;
-                    case "placeholder":
-                        filename = "default_placeholder.svg";
                         break;
                     default:
                         filename = "default_placeholder.svg";

@@ -473,9 +473,21 @@ var logout = function($scope, $location){
       localStorage.removeItem("currentStage");
       localStorage.removeItem("notifications");
       localStorage.removeItem("userChat");
+      ClearLocalStorage("activity");
+      ClearLocalStorage("activitiesCache");
       $location.path('/');
     };
-    
+      
+      function ClearLocalStorage(startsWith) {
+          var myLength = startsWith.length;
+
+          Object.keys(localStorage).forEach(function(key){ 
+                  if (key.substring(0,myLength) == startsWith) {
+                      localStorage.removeItem(key); 
+                  } 
+              }); 
+      }
+
       playVideo = function(videoAddress, videoName){                 
                  //var videoAddress = "assets/media";
                  //var videoName = "TutorialTest2.mp4";
