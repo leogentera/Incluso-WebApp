@@ -108,32 +108,39 @@ angular
             };
 
             var checkForumProgress = function(){
+
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
+//
+//                for(var topicObjectIndex in forumsCommentsCountCollection){
+//                    var topicObject =forumsCommentsCountCollection[topicObjectIndex] ;
+//                    var isTopicFinished = topicObject.replies_counter >= 2;
+//
+//                    //if(isActivityFinished === null && typeof isActivityFinished === "object") isActivityFinished = isTopicFinished;
+//                    isActivityFinished = isTopicFinished;
+//                    isActivityFinished = isActivityFinished && isTopicFinished;
+//                };
 
-                for(var topicObjectIndex in forumsCommentsCountCollection){
-                    var topicObject =forumsCommentsCountCollection[topicObjectIndex] ;
-                    var isTopicFinished = topicObject.replies_counter >= 2;
-
-                    //if(isActivityFinished === null && typeof isActivityFinished === "object") isActivityFinished = isTopicFinished;
-                    isActivityFinished = isTopicFinished;
-                    isActivityFinished = isActivityFinished && isTopicFinished;
-                };
+                var numberOfDiscussionsWithMoreThan2Replies = _.filter($scope.activity.discussions, function(d) { return d.replies >= 2});
+                isActivityFinished = numberOfDiscussionsWithMoreThan2Replies.length == $scope.activity.discussions.length;
 
                 //Check for activity status
                 var activity_identifier = null;
                 var moodleid;
-                if($scope.moodleId == 1156){
+                if($scope.moodleId == 151){
+                    activity_identifier = 1010;
+                    moodleid = 64;
+                } else if($scope.moodleId == 64){
                     activity_identifier = 1010;
                     moodleid = 64;
                 } else if($scope.moodleId == 73){
                     activity_identifier = 1008;
                     moodleid = 73;
                 } else if($scope.moodleId == 147){
-                    activity_identifier = 1050;
+                    activity_identifier = 1049;
                     moodleid = 147;
                 } else if($scope.moodleId == 148){
-                    activity_identifier = 1051;
+                    activity_identifier = 1049;
                     moodleid = 148;
                 }
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
@@ -144,11 +151,15 @@ angular
                     activityFromTree = activityFromTree.activities[0];
                 }
 
-                if(isActivityFinished && activityFromTree.status == 0) {
+                if(activity_identifier == 1049){
+                    activityFromTree = _.find(activityFromTree.activities, function(a) {return a.coursemoduleid == moodleid});
+                }
+
+                if(isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     endForumActivity(moodleid);
                 }
 
-                if (activityFromTree.coursemooodleid != moodleid) {
+                if (isActivityFinished && activityFromTree && activityFromTree.coursemoduleid != moodleid) {
                     endForumActivity(activityFromTree.coursemooodleid );   //end parent actvitiy too
                 }
 
@@ -189,8 +200,7 @@ angular
 
             $scope.isCommentModalCollapsed= [];
             $scope.replyText = null;
-            $scope.replyToPost = function(that, parentId, topicId){
-                debugger;
+            $scope.replyToPost = function(that, parentId, topicId){                
                 var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
@@ -202,6 +212,7 @@ angular
                         refreshTopicData();
 
                         //updateForumProgress(parentId);
+                        $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         updateForumProgress(topicId);
                         $scope.$emit('ShowPreloader');
                         checkForumProgress();
@@ -335,7 +346,7 @@ angular
                 $scope.isCommentModalCollapsed[element.post_id] = true;
             };
 
-            var refreshTopicData = function(){
+            var refreshTopicData = function(){                
                 moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
             };
 
