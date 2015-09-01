@@ -14,7 +14,7 @@ angular
             _httpFactory = $http;
             $scope.moodleId = $routeParams.moodleid;
 
-             function redirectOnShield(){
+             var redirectOnShield = function (){
                 var logicForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/' + 147;
                 var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + 148;
 
@@ -87,6 +87,7 @@ angular
             getDataAsync();
 
             $scope.showComentarios = function (discussionId, moodleId) {
+
               switch (moodleId){
                   case "64":
                       $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.moodleid + "/" + discussionId);
