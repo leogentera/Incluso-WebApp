@@ -40,14 +40,15 @@ angular
                         elem.filename = getFileName(elem.id);
                     } else {
                         elem.filename = "default_placeholder.svg";
+                        elem.description = getDescription(elem.id);
                     }
-
+                    console.log(elem.id + " " + elem.status + "  " + elem.description);
                     $scope.wholeBadgesPages[i].push(elem);
                 }
             }
 
             function getFileName(id) {
-                filename = "";
+                var filename = "";
 
                 switch (id) {
                     case 2:
@@ -72,10 +73,10 @@ angular
                         filename = "escudo.svg";
                         break;
                     case 9:
-                        filename = "radar.svg";
+                        filename = "combustible.svg"; //radar.svg
                         break;
                     case 10:
-                        filename = "tanqueoxigeno.svg";
+                        filename = "turbina.svg"; //tanqueoxigeno
                         break;
                     case 11:
                         filename = "sondaEspacial.svg";
@@ -106,6 +107,68 @@ angular
                 }
 
                 return filename;
+            }
+
+            function getDescription(id) {
+                var description = "";
+
+                switch (id) {
+                    case 2:
+                        description = "Para obtener más combustible visita 'Fuente de energía' zona de vuelo  recárgate de conocimiento y ve a toda velocidad  ";
+                        break;
+                    case 3:
+                        description = "Para obtener esta pieza  visita 'Reto múltiple' y convierte tus habilidades en energía que te impulsen día a día";
+                        break;
+                    case 4:
+                        description = "Para obtener esta pieza visita la sección 'Cada sueño en su lugar' y mantén en alto tus ideas";
+                        break;
+                    case 5:
+                        description = "Para obtener esta pieza visita 'Cabina de soporte' y dirige la nave por el rumbo correcto";
+                        break;
+                    case 6:
+                        description = "Para obtener esta pieza visita la sección 'Fuente de energía' zona de navegación  y define la trayectoria de tu  viaje ";
+                        break;
+                    case 7:
+                        description = "Para obtener esta pieza visita la sección 'Tus ideas', toma impulso y llega más lejos";
+                        break;
+                    case 8:
+                        description = "Para obtener esta pieza visita la sección 'Mapa de vida' y ponle fecha limite a tu sueños";
+                        break;
+                    case 9:
+                        description = "Para obtener esta pieza visita 'Cabina de soporte zona de navegación' y mantén la dirección exacta";
+                        break;
+                    case 10:
+                        description = "Para obtener esta pieza visita 'Fuente de energía' zona de aterrizaje y oxigena tu mente con más información";
+                        break;
+                    case 11:
+                        description = "Para obtener esta pieza visita la sección 'Mapa del emprendedor' y encuentra nuevas formas de guiar tu proyecto";
+                        break;
+                    case 12:
+                        description = "Has públicas tus ideas y gana la insignia 'Foro interplanetario'";
+                        break;
+                    case 13:
+                        description = "Completa los datos de tu perfil y gana la insignia 'ID intergaláctica' así todos querrán saber más de ti";
+                        break;
+                    case 14:
+                        description = "Contagia de energía, participa activamente en este viaje y gana la insignia 'Participación eléctrica'";
+                        break;
+                    case 15:
+                        description = "Consigue 30 likes en foro o comunidad y vuélvete el 'Corazón digital' de incluso";
+                        break;
+                    case 16:
+                        description = "Para obtener esta pieza visita la sección 'Dinero en movimiento' y dale a tus finanzas un giro de 360°";
+                        break;
+                    case 17:
+                        description = "Para obtener esta pieza  visita la sección 'Cabina de soporte zona de aterrizaje' y no pierdas contacto";
+                        break;
+                    case 18:
+                        description = "Para obtener esta pieza visita la sección 'Tú eliges' y decide el rumbo de tu viaje";
+                        break;
+                    default:
+                        description = "";
+                }
+
+                return description;
             }
 
 
@@ -265,16 +328,14 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes) {
+            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description) {
                 $scope.currentPage = 10;
                 $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
-                //$scope.status = status;
+                $scope.description = description;
             };
-
-
 
             $scope.edit = function () {
                 $location.path('/Perfil/Editar');
@@ -300,6 +361,22 @@ angular
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
                 // if (!$scope.editForm.alias.$valid) { errors.push("Formato de alias incorrecto."); }
                 if (!$scope.editForm.date.$valid) { errors.push("Ingrese la fecha de nacimiento."); }
+
+                //Validation of the $scope.model.familiaCompartamos array
+                var arrayForIdClients = [];
+
+                $scope.model.familiaCompartamos.forEach(function(elem){
+                    arrayForIdClients.push(elem.idClient);
+                });
+
+                var filteredIdClient = arrayForIdClients.filter(function(item, pos) {
+                    return arrayForIdClients.indexOf(item) == pos;
+                });
+
+                if (arrayForIdClients.length != filteredIdClient.length) {
+                    //Repeated idClients
+                    errors.push("El número de cliente Compartamos debe ser único.");
+                }
 
                 $scope.model.modelState.errorMessages = errors;
 
@@ -446,14 +523,57 @@ angular
             };
 
             $scope.save = function () {
-                var validationResult = validateModel();
-                //validationResult = true;
+                var validationResult = validateModel();  //Valid if validateModel() returns true
+
+                deleteRepeatedValues();
+
                 if (validationResult) {
                     $scope.$emit('ShowPreloader');
                     saveUser();
                 } else {
                     $scope.$emit('scrollTop');
                 }
+            };
+
+            $scope.clean = function() {
+              deleteRepeatedValues();
+            };
+
+            var deleteRepeatedValues = function() {
+
+                $scope.model.phones = $scope.model.phones.filter(function(item, pos) {
+                    return $scope.model.phones.indexOf(item) == pos;
+                });
+
+                $scope.model.socialNetworks = $scope.model.socialNetworks.filter(function(item, pos) {
+                    return $scope.model.socialNetworks.indexOf(item) == pos;
+                });
+
+                $scope.model.favoriteSports = $scope.model.favoriteSports.filter(function(item, pos) {
+                    return $scope.model.favoriteSports.indexOf(item) == pos;
+                });
+
+                $scope.model.artisticActivities = $scope.model.artisticActivities.filter(function(item, pos) {
+                    return $scope.model.artisticActivities.indexOf(item) == pos;
+                });
+
+                $scope.model.hobbies = $scope.model.hobbies.filter(function(item, pos) {
+                    return $scope.model.hobbies.indexOf(item) == pos;
+                });
+
+                $scope.model.talents = $scope.model.talents.filter(function(item, pos) {
+                    return $scope.model.talents.indexOf(item) == pos;
+                });
+
+                $scope.model.values = $scope.model.values.filter(function(item, pos) {
+                    return $scope.model.values.indexOf(item) == pos;
+                });
+
+                $scope.model.habilities = $scope.model.habilities.filter(function(item, pos) {
+                    return $scope.model.habilities.indexOf(item) == pos;
+                });
+
+
             };
 
             $scope.addStudy = function () {

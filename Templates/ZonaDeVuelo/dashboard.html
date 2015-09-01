@@ -38,7 +38,7 @@
                                 <img ng-src="{{retosIconos[reto.sectionname]}}" alt="{{reto.sectionname}}" />
                             </figure>
                             <h4 class="item-title" ng-bind="reto.sectionname"></h4>
-                            <p class="item-description" ng-bind="challengeDescription[reto.sectionname]"></p>
+                            <p class="item-description" ng-bind="reto.activityintro"></p>
                             <!-- <p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : 'Cada sueño en su lugar' "></p> -->
 
                             <div class="page-number">
@@ -111,13 +111,11 @@
                 </div>
                 <div class="modal-body">
                     <h3 class="subtitle">Cierre zona de vuelo</h3>
-
                     <p class="txt-renglon centered">
                         ¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda,
                         los sueños son el motor principal
                         de tu nave
                     </p>
-
                     <p class="txt-renglon centered">
                         ¡Ahora tu aventura ya tiene un rumbo!
                     </p>
@@ -159,6 +157,7 @@
                 </div>
             </div>
         </script>
+
         <script type="text/ng-template" id="ClosingStageModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help" >
                 <img src="assets/images/img-robot-lg.svg">
