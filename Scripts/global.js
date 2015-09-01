@@ -261,28 +261,49 @@ var _createNotification = function(activityId, triggerActivity){
 
 
 var _coachNotification = function(){
-                      
-  var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-  var activityChatStarted = userCourse.stages[0].challenges[4].activities[0].started;  
-  if (activityChatStarted){
-      var activityDateStarted = userCourse.stages[0].challenges[4].activities[0].datestarted;      
-      var activityChatId = 68;
-      var triggerActivity = 3;      
-      var notifications = JSON.parse(localStorage.getItem("notifications"));      
-      
-      var userId = localStorage.getItem('userId');
-      var twoDaysAfterLastMessage = new Date();
-      //var twoDaysAfterLastMessage = new Date(activityDateStarted);
-      //twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
+  //Luis
+  var notifications = JSON.parse(localStorage.getItem("notifications"));
+  var userId = localStorage.getItem('userId');
+  var notificationCoach = _.find(notifications,function(notif){
+      if(notif.id == 4){
+        return notif;
+        }else{}
+    });                                
   
-      var today = new Date();
-      if (twoDaysAfterLastMessage < today){
-        _createNotification(activityChatId,triggerActivity);
-      }else{
-        return false;
-      }
-  }
+  if (!notificationCoach.timemodified) {
+    //var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    //var activityChatStarted = userCourse.stages[0].challenges[4].activities[0].started;
+    var activityId = 68;
+    var activity = _getActivityByCourseModuleId(activityId);
+    if ((activity) && (activity.datestarted)){      
+      //trigger activity type 3 is sent when the user has more than two days of not sending messages to the coach
+      var triggerActivity = 3;
+      var chatUser = JSON.parse(localStorage.getItem("userChat"));
+            //var formattedLastMessageDate = moment.unix(lastMessageDate).format("MM/DD/YYYY")            
+      if (chatUser.length > 0){      
+        var lastMessageDate = _.max(chatUser,function(chat){
+            if (chat.messagesenderid == userId) {
+              return chat.messagedate;
+            }
+        });
+        //pending implement logic to calculate two days after the day last user message was sent
+        //var twoDaysAfterLastMessage = lastMessageDate + 2;
+        var today = new Date();
+        if(twoDaysAfterLastMessage < today){
+          _createNotification(activityChatId,triggerActivity);
+        }else{return false;}
+      }          
+    }      
+  }  
 };
+                
+      
+      
+
+
+
+
+
 
 var successCallback = function(data){
 };
