@@ -14,6 +14,9 @@
                     <section id="title">
                         <div class="subtitle">Exploración final</div>
                         <div class="txt-renglon">Responde lo siguiente:</div>
+                        <spin class="txt-renglon">                            
+                        </spin>
+                        <!--<div class="txt-renglon">exploracionFinal: {{exploracionFinal}}</div>-->
                     </section>
                     <div id="owl" class="owl-carousel">
                         <!--Pregunta tipo Si/No-->
@@ -22,11 +25,9 @@
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
-                                    <input id="tru0" type="radio" value="2" name="vf" ng-model="AnswersResult.answers[0]"
-                                           ng-disabled="setReadOnly"/>
+                                    <input id="tru0" type="radio" value="1" ng-model='exploracionFinal[0]' ng-disabled="setReadOnly" />
                                     <label for="tru0">Verdadero</label>
-                                    <input id="fols0" type="radio" value="1" name="vf"
-                                           ng-model="AnswersResult.answers[0]" ng-disabled="setReadOnly"/>
+                                    <input id="fols0" type="radio" value="0" ng-model='exploracionFinal[0]' ng-disabled="setReadOnly" />
                                     <label for="fols0">Falso</label>
                                 </div>
                             </section>
@@ -37,10 +38,10 @@
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
-                                    <input id="tru1" type="radio" value="2" name="vf" ng-model="AnswersResult.answers[1]" ng-disabled="setReadOnly"/>
+                                    <input id="tru1" type="radio" value="1" ng-model='exploracionFinal[1]' ng-disabled="setReadOnly" />
                                     <label for="tru1">Verdadero</label>
 
-                                    <input id="fols1" type="radio" value="1" name="vf" ng-model="AnswersResult.answers[1]" ng-disabled="setReadOnly"/>
+                                    <input id="fols1" type="radio" value="0" ng-model='exploracionFinal[1]' ng-disabled="setReadOnly" />
                                     <label for="fols1">Falso</label>
                                 </div>
                             </section>
@@ -50,10 +51,10 @@
                             <div class="txt-renglon txt-bigger">3. ¿Tus sueños son metas que van dirigiendo tu camino?</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
-                                    <input id="tru2" type="radio" value="1" name="vf" ng-model="AnswersResult.answers[2]" ng-disabled="setReadOnly"/>
+                                    <input id="tru2" type="radio" value="1" name="vf" ng-model="exploracionFinal[2]" ng-disabled="setReadOnly" />
                                     <label for="tru2">Verdadero</label>
 
-                                    <input id="fols2" type="radio" value="0" name="vf" ng-model="AnswersResult.answers[2]" ng-disabled="setReadOnly"/>
+                                    <input id="fols2" type="radio" value="0" name="vf" ng-model="exploracionFinal[2]" ng-disabled="setReadOnly" />
                                     <label for="fols2">Falso</label>
                                 </div>
                             </section>
@@ -63,56 +64,44 @@
                         <div>
                             <div class="txt-renglon txt-bigger">4. Es importante tener una persona que te inspire porque:</div>
                             <section class="form txt-renglon txt-bigger part list">
-                                <input id="option1" type="radio" value="0" name="option"
-                                       ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
-                                        />
+                                <input id="option1" type="radio" value="0" ng-model="exploracionFinal[3]" ng-disabled="setReadOnly" />
                                 <label for="option1">Es tu ejemplo a seguir y debes ser igual a él</label>
 
-                                <input id="option2" type="radio" value="1" name="option"
-                                       ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
-                                        />
+                                <input id="option2" type="radio" value="1" ng-model="exploracionFinal[3]" ng-disabled="setReadOnly" />
                                 <label for="option2">Puedes aprender de su experiencia para alcanzar tus sueños</label>
 
-                                <input id="option3" type="radio" value="2" name="option"
-                                       ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
-                                        />
+                                <input id="option3" type="radio" value="2" ng-model="exploracionFinal[3]" ng-disabled="setReadOnly" />
                                 <label for="option3">Puede enseñarte cómo ganar dinero más fácil</label>
                             </section>
                         </div>
                         <!--Pregunta tipo Selección Simple-->
                         <div>
-                            <div class="txt-renglon txt-bigger">5. ¿Porqué es importante que tus sueños se relacionen con lo que te gusta y para lo que eres bueno?</div>
+                            <div class="txt-renglon txt-bigger">5. ¿Porqué es importante que tus sueños se relacionen con lo que te gusta y para lo que eres
+                                bueno?
+                            </div>
 
                             <section class="form txt-renglon txt-bigger part list">
-                                <input id="option4" type="radio" value="0" name="option"
-                                       ng-model="AnswersResult.answers[4]" ng-disabled="setReadOnly"
-                                        />                                        
+                                <input id="option4" type="radio" value="0" ng-model="exploracionFinal[4]" ng-disabled="setReadOnly" />
                                 <label for="option4">Porque aprovechas mejor tus talentos y difrutas lo que haces</label>
 
-                                <input id="option5" type="radio" value="1" name="option"
-                                       ng-model="AnswersResult.answers[4]" ng-disabled="setReadOnly"
-                                        />
+                                <input id="option5" type="radio" value="1" ng-model="exploracionFinal[4]" ng-disabled="setReadOnly" />
                                 <label for="option5">Porque puedes ser más famoso y exitoso</label>
 
-                                <input id="option6" type="radio" value="2" name="option"
-                                       ng-model="AnswersResult.answers[4]" ng-disabled="setReadOnly"
-                                        />
+                                <input id="option6" type="radio" value="2" ng-model="exploracionFinal[4]" ng-disabled="setReadOnly" />
                                 <label for="option6">Porque debes hacer lo que quieras sin importar nada ni nadie</label>
-                            </section>                          
+                            </section>
                         </div>
                     </div>
 
                     <section id="controls" class="controls">
                         <div class="paginate">
-                            <a href="#" id="prev"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
-                            <a href="#" id="next"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
-
-                            <div class="centered"><span id="index" class="txt-bigger">1/</span><span
-                                    class="white txt-bigger">5</span></div>
+                            <a href="#" id="prev"><span class="icomoon icon-arrow-bold-left txt-bigger fl-left"></span></a>
+                            <a href="#" id="next"><span class="icomoon icon-arrow-bold-right txt-bigger fl-right"></span></a>
+                            <div class="centered">
+                                <span id="index" class="txt-bigger">1/</span><span id="totalPages" class="white txt-bigger">5</span>
+                            </div>
                         </div>
-                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
-                                ng-click="validateAnsweredQuestionsFinal()">Terminar
-                        </button>
+                        <a class="btn btn-primary btn-lg btn-cnt" style="display:none" id="save" ng-hide="setReadOnly" ng-click='validateExploracionFinalAnsweredQuestions()'>GUARDAR</a>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
                 </div>
@@ -124,9 +113,120 @@
                             <div class="subtitle centered min-pad ">"Exploración final"</div>
                             <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
                         </section>
-                        <section class="centered txt-bigger ">
-                            <i class="icomoon icon-checked-join txt-bigger green-giant "></i>
+                        <section class="txt-renglon pill">
+                            <div class="fl-left">Mi puntuación</div>
+                            <div class="fl-right green-pill"><span>80</span><span class="white">/100</span></div>
                         </section>
+                        <section class="question-parts">
+                            <div id="question1">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question1.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question1.isCollapsed = !question1.isCollapsed">
+                                        <i class="fl-left icomoon icon-wrong-join" ng-class="{'active': true}"></i> 1. ¿Podemos desarrollar y
+                                        fortalecer habilidades en las que no somos tan buenos?
+                                        <i class="fl-right icomoon icon-arrow-up" ng-show="question1.isCollapsed"></i>
+                                    </div>
+                                    <div id="results1" class="panel-body" collapse="!question1.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': true}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="true"></i>Verdadero
+                                            </li>
+                                            <li ng-class="{'failed clearfix': false}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="false"></i>Falso
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="question2">
+                                <div class="txt-renglon panel collapsed" ng-class="{'collapsed': question2.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question2.isCollapsed = !question2.isCollapsed">
+                                        <i class="fl-left icomoon icon-wrong-join " ng-class="{'active': false}"></i> 2. ¿Tener un carro y formar
+                                        una familia es un sueño de ser?
+                                        <i class="fl-right icomoon icon-arrow-up" ng-show="question2.isCollapsed"></i>
+                                    </div>
+                                    <div id="results2" class="panel-body" collapse="!question2.isCollapsed">
+                                        <ul>
+                                            <li class="failed clearfix">
+                                                <i class="fl-left icomoon icon-wrong"></i>Verdadero
+                                            </li>
+                                            <li class="failed clearfix">
+                                                <i class="fl-left icomoon icon-wrong"></i>Falso
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="question3">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question3.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question3.isCollapsed = !question3.isCollapsed">
+                                        <i class="fl-left icomoon icon-wrong-join active"></i> 3. ¿Tus sueños son metas que
+                                        van dirigiendo tu camino?
+                                        <i class="fl-right icomoon icon-arrow-up" ng-show="question3.isCollapsed"></i>
+                                    </div>
+                                    <div id="results3" class="panel-body" collapse="!question3.isCollapsed">
+                                        <ul>
+                                            <li class="failed clearfix">
+                                                <i class="fl-left icomoon icon-wrong"></i>Verdadero
+                                            </li>
+                                            <li class="failed clearfix">
+                                                <i class="fl-left icomoon icon-wrong"></i>Falso
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="question4">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question4.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question4.isCollapsed = !question4.isCollapsed">
+                                        <i class="fl-left icomoon icon-wrong-join active"></i>4. Es importante tener una
+                                        persona que te inspire porque:
+                                        <i class="fl-right icomoon icon-arrow-up" ng-show="question4.isCollapsed"></i>
+                                    </div>
+                                    <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
+                                        <ul>
+                                            <li class="failed clearfix">
+                                                <i class="fl-left icomoon icon-wrong"></i>Es tu ejemplo a seguir y debes
+                                                ser igual a él
+                                            </li>
+                                            <li class="failed clearfix">
+                                                <i class="fl-left icomoon icon-wrong"></i>Puedes aprender de su experiencia
+                                                para alcanzar tus sueños
+                                            </li>
+                                            <li class="failed clearfix">
+                                                <i class="fl-left icomoon icon-wrong"></i>Puede enseñarte cómo ganar dinero
+                                                más fácil
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="question5">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question5.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question5.isCollapsed = !question5.isCollapsed">
+                                        <i class="fl-left icomoon icon-wrong-join active"></i>5. ¿Porqué es importante que
+                                        tus sueños se relacionen con lo que te gusta y para lo que eres bueno?
+                                        <i class="fl-right icomoon icon-arrow-up" ng-show="question5.isCollapsed"></i>
+                                    </div>
+                                    <div id="results4" class="panel-body" collapse="!question5.isCollapsed">
+                                        <ul>
+                                            <li class="failed clearfix">
+                                                <i class="fl-left icomoon icon-wrong"></i>Porque aprovechas mejor tus talentos
+                                                y difrutas lo que haces
+                                            </li>
+                                            <li class="failed clearfix">
+                                                <i class="fl-left icomoon icon-wrong"></i>Porque puedes ser más famoso y
+                                                exitoso
+                                            </li>
+                                            <li class="failed clearfix">
+                                                <i class="fl-left icomoon icon-wrong"></i>Porque debes hacer lo que quieras
+                                                sin importar nada ni nadie
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        Estrellas a ganar: <span>{{activityPoints}}</span>
                         <section class="txt-renglon pill">
                             <div class="fl-left">Estrellas ganadas:</div>
                             <div class="fl-right sm-pill">
@@ -156,37 +256,18 @@
         <!-- initial message -->
         <script type="text/ng-template" id="OpeningStageModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help">
-                <img src="assets/images/img-robot.png">
-
+                <img src="assets/images/img-robot-lg.svg">
                 <div class="modal-header">
-                    <button class="icon icon-close" ng-click="cancel()">
+                    <a class="icon icon-close btn btn-circle" ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
-                    </button>
+                    </a>
                 </div>
                 <div class="modal-body">
-                    <h3 class="subtitle text-center">Exploración final</h3>
-
+                    <h3 class="subtitle text-center">Exploración inicial</h3>
                     <p class="txt-renglon centered">
                         Explora qué tanto descubriste en la zona de vuelo
                     </p>
-
-                    <!-- <video controls poster="assets/images/ptr-video-0001.jpg" >
-                          <source src="http://techslides.com/demos/sample-videos/small.webm" type="video/webm" />
-                          <source src="http://techslides.com/demos/sample-videos/small.ogv" type="video/ogg" />
-                          <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4" />
-                          <source src="http://techslides.com/demos/sample-videos/small.3gp" type="video/3gp" />
-                          Ups! Parece que tu dispositivo no soporta video
-                        </video> -->
                 </div>
-                <!--<div class="modal-footer">
-                      <div class="row">
-                         <div class="col-xs-12">
-                           <button class="btn btn-primary btn-lg btn-cnt" type="button">Continuar</button>
-                           <img src="assets/images/img-lines-ftr.png" class="centered">
-                         </div>
-                       </div>
-                     </div> -->
-
             </div>
 
         </script>
@@ -199,10 +280,12 @@
         owl.owlCarousel({
             navigation: false,
             pagination: false,
-            paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
             autoHeight: true,
+            mouseDrag: false,
+            touchDrag: false,
+            transitionStyle: "fade",
             afterMove: callback
         });
 
@@ -213,23 +296,27 @@
 
         $("#next").click(function () {            
             owl.trigger('owl.next');
+            var numberOfPage = $('#index');
+            var totalPages = $('#totalPages');
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
+              $('#save').show();
+            }else{              
+              $('#save').hide();
+            }
             return false;
         });
 
         $("#prev").click(function () {
             owl.trigger('owl.prev');
+            var numberOfPage = $('#index');
+            var totalPages = $('#totalPages');
+            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
+              $('#save').show();
+            }else{              
+              $('#save').hide();
+            }
             return false;
         });
-
-        // $("#save").click(function(){
-        //   $(owl).hide("slow ");
-        //  $("#controls ").hide();
-        //  $("#title ").hide();
-        //  $("#finalized ").show("slow ");
-        //  return false;
-        // });
-
-        //$("#finalized ").hide();
 
     });
 

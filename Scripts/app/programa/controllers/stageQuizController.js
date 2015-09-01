@@ -61,6 +61,9 @@ angular
                     case "Sueña":
                         $scope.AnswersResult.answers = $scope.dreamsLists.answers;
                         break;
+                    case "Exploración final":
+                        $scope.AnswersResult.answers = $scope.exploracionFinal;
+                        break;
                     default:
                         break;
                 }
@@ -80,7 +83,7 @@ angular
                     "token": $scope.currentUser.token,
                     "activityType": "Quiz"
                 };
-                                
+
                 _endActivity(activityModel);
 
                 var currentStage = localStorage.getItem("currentStage");
@@ -97,8 +100,6 @@ angular
                 removeHeight("#listaDinamica");
                 $scope.AnswersResult.answers[4].splice(index, 1);
             };
-
-            $scope.dreamsLists = { "answers": [[], [], []] };
 
             $scope.addSueno1 = function () {
                 addHeight("#listaDinamica1");
@@ -319,7 +320,7 @@ angular
                     case 4:
                         if (question.userAnswer != null) {
                             var userAnswers = cleanText(question.userAnswer);
-                            var userAnswerArray = userAnswers.split("|");
+                            var userAnswerArray = userAnswers.split(";");
                             for (var i = 0; i < userAnswerArray.length; i++) {
                                 $scope.AnswersResult.answers[4].push(userAnswerArray[i]);
                                 /*
@@ -438,7 +439,7 @@ angular
 
             function updateMisSueñosSelectedAnswers(index, question) {
 
-                var userAnswersList = question.userAnswer.split("\n");
+                var userAnswersList = question.userAnswer.split(";");
 
                 //var userAnswers = cleanText(question.userAnswer);
                 //var userAnswersList = userAnswers.split(" ");
@@ -457,6 +458,27 @@ angular
                        */
             }
 
+            function updateExploracionFinalSelectedAnswersFinal(index, question) {
+                var userAnswer = cleanText(question.userAnswer).trim();
+
+                for (var answerIndex = 0; answerIndex < question.answers.length; answerIndex++) {
+                    var answerOption = question.answers[answerIndex];
+                    var cleanAnswer = cleanText(answerOption.answer).trim();
+                    if (cleanAnswer == userAnswer) {
+
+                        if (index == 0 || index == 1 || index == 2) {
+                            answerIndex = answerIndex == 0 ? 1 : 0;
+                            $scope.exploracionFinal[index] = answerIndex;
+                            break;
+                        }
+                        if (index == 3 || index == 4) {
+                            $scope.exploracionFinal[index] = answerIndex;
+                            break;
+                        }
+                    }
+                }
+            }
+
             // function cleanText(userAnswer) {   //NOTE: replace() is a chainable method.
             //     var result = userAnswer.replace(/\r?\n|\r/g, "")
             //     .replace(/<br>/g, "")
@@ -465,13 +487,14 @@ angular
             //     return result;
             // }
             
-            function cleanText(userAnswer) {   //NOTE: replace() is a chainable method.
+            function cleanText(userAnswer) {   
                 
                 var result = userAnswer.replace("\r", "");
-                result = userAnswer.replace("<br>", "")
-                result = userAnswer.replace("<p>", "")
-                result = userAnswer.replace("</p>", "")
-                result = userAnswer.replace("\n", "|")
+                result = userAnswer.replace("<br>", "");
+                result = userAnswer.replace("<p>", "");
+                result = userAnswer.replace("</p>", "");
+                result = userAnswer.replace("\n", "");
+                result = userAnswer.replace("\r", "");
 
                 return result;
             }
@@ -479,7 +502,9 @@ angular
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misSuenosAnswers = [[], [], [], []];
+            $scope.dreamsLists = { "answers": [[], [], []] };
 
+            $scope.exploracionFinal = ["", "", "", "", ""];
 
 
             function getDataAsync() {
@@ -540,7 +565,7 @@ angular
                                 updateMisSueñosSelectedAnswers(index, question);
                                 break;
                             case "Exploración final":
-                                updateSelectedAnswersFinal(index, question);
+                                updateExploracionFinalSelectedAnswersFinal(index, question);
                                 break;
                             default:
                                 break;
@@ -713,6 +738,96 @@ angular
                 }
             }
 
+            $scope.validateExploracionFinalAnsweredQuestions = function () {
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+
+                var validAnswers = true;
+
+                for (var index = 0; index < $scope.exploracionFinal.length; index++) {
+                    var element = $scope.exploracionFinal[index];
+                    if (element == "") {
+                        validAnswers = false;
+                        showWarningAndGoToTop();
+                        break;
+                    }
+                }
+
+                if (validAnswers) {
+                    //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
+
+                    $scope.showWarning = false;
+                    $scope.navigateToPage(2);
+                }
+            };
+
+            function partialSuccessfullCallBack(partialActivityAnswers) {
+                if (partialActivityAnswers != null) {
+
+                    $scope.exploracionFinalresult =
+                    [
+                        { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                        { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                        { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                        { "badAnswer": false, "firstOptionWrong": false, "secondOptionWrong": false, "thirdOptionWrong": false },
+                        { "badAnswer": false, "firstOptionWrong": false, "secondOptionWrong": false, "thirdOptionWrong": false }
+                    ];
+
+                    for (var index = 0; index < partialActivityAnswers.questions.length; index++) {
+                        var question = partialActivityAnswers.questions[index];
+                        for (var answerIndex = 0; answerIndex < question.answers.length; answerIndex++) {
+                            var questionAnswer = question.answers[answerIndex];
+                            if (index == 0 || index == 1 || index == 2) {
+                                var questionAnswerToLower = questionAnswer.answer.toLowerCase();
+                                var questionAnswerToBoolean = Boolean(questionAnswerToLower);
+                                var questionAnswerToNumber = Number(questionAnswerToBoolean);
+                                var selectedAnswer = Number($scope.exploracionFinal[index]);
+                                if (questionAnswerToNumber == selectedAnswer) {
+                                    var _mathFloor = Math.floor(questionAnswer.fraction);
+                                    if (_mathFloor != 1) {
+                                        $scope.exploracionFinalresult[index].badAnswer = true;
+                                        $scope.exploracionFinalresult[index].trueOptionWrong = true;
+                                    }
+                                }
+                            }
+                            else if (index == 3 || index == 4) {
+                                if (answerIndex == $scope.exploracionFinal[index]) {
+                                    if (Math.floor(questionAnswer.fraction) == 1) {
+
+                                    }
+                                    else {
+                                        $scope.exploracionFinalresult[index].badAnswer = true;
+                                        $scope.exploracionFinalresult[index].firstOptionWrong = true;
+                                        break;
+                                    }
+                                }
+                                //                                 else {
+                                //                                     $scope.exploracionFinalresult[index].badAnswer = true;
+                                // 
+                                //                                     if (answerIndex == 0) {
+                                //                                         $scope.exploracionFinalresult[index].firstOptionWrong = true;
+                                //                                         break;
+                                //                                     }
+                                //                                     else if (answerIndex == 1) {
+                                //                                         $scope.exploracionFinalresult[index].secondOptionWrong = true;
+                                //                                         break;
+                                //                                     }
+                                //                                     else {
+                                //                                         $scope.exploracionFinalresult[index].thirdOptionWrong = true;
+                                //                                     }
+                                //                                 }
+                            }
+                        }
+                    }
+                }
+                else {
+                    $scope.showWarning = true;
+                    $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
+                }
+            }
+
+
+            function partialErrorCallback(partialActivityAnswers) {
+            }
 
         }])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
