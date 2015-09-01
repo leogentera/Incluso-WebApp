@@ -19,19 +19,22 @@
       </div>
 
       <!-- activity closing  -->
-      <div class="page blueprint close-activity" ng-class="currentPage == 2 ? 'active' : ''">
+      <div class="page blueprint evaluation" ng-class="currentPage == 2 ? 'active' : ''">
         <div id="finalized">
             <section class="header-title">
                 <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
                 <div class="subtitle centered min-pad ">"Cabina de soporte"</div>
                 <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
             </section>
-            <section class="centered txt-bigger">
+            <section class="centered txt-bigger ">
                 <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
             </section>
             <section class="txt-renglon pill">
                 <div class="pull-left">Estrellas ganadas:</div>
-                <div class="pull-right sm-pill"><span class="pull-left">{{activityPoints}}</span><span class="icomoon icon-star pull-right"></span></div>
+                <div class="pull-right sm-pill">
+                  <span class="pull-left">{{activityPoints}}</span>
+                  <span class="icomoon icon-star pull-right"></span>
+                </div>
             </section>
             <section class="txt-renglon centered form ">
                 ¿Que opinas de ésta actividad?
