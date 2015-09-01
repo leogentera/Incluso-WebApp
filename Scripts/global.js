@@ -256,24 +256,19 @@ var _coachNotification = function(){
       var activityDateStarted = userCourse.stages[0].challenges[4].activities[0].datestarted;      
       var activityChatId = 68;
       var triggerActivity = 3;      
-      var notifications = JSON.parse(localStorage.getItem("notifications"));      
-      
-      var userId = localStorage.getItem('userId');
+
       var twoDaysAfterLastMessage = new Date(activityDateStarted);
       twoDaysAfterLastMessage.setDate(twoDaysAfterLastMessage.getDate()+2);
-  
-<<<<<<< HEAD
-};
-=======
+
       var today = new Date();
+
       if (twoDaysAfterLastMessage < today){
-        _createNotification(activityChatId,triggerActivity);
-      }else{
+        _createNotification(activityChatId, triggerActivity);
+      } else {
         return false;
       }
   }
-}
->>>>>>> 871146c90acb66475c075d8b94a1c2c207e262af
+
 
 var successCallback = function(data){
 };
