@@ -42,7 +42,6 @@ angular
                         elem.filename = "default_placeholder.svg";
                     }
 
-                    console.log(elem.status + " -> " + elem.filename + " " + JSON.stringify(elem));
                     $scope.wholeBadgesPages[i].push(elem);
                 }
             }
