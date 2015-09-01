@@ -853,7 +853,7 @@ var _activityRoutes = [
   { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
   { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
   { id: 115, url: '#'},
-  { id: 68, url: '/ZonaDeVuelo/ExploracionFinal/zv_cabinadesoporte_chat'}, 
+  { id: 68, url: '/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat'}, 
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
