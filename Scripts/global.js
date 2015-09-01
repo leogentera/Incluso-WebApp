@@ -209,11 +209,13 @@ var _updateBadgeStatus = function(coursemoduleid){
     var badges = profile.badges;
     
     var badge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
-    for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
-      if (badges[indexBadge].id == badge.badgeId) {
-        profile.badges[indexBadge].status = "won";
-      }else{
-        break;
+    if (badge) {
+      for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
+        if (badges[indexBadge].id == badge.badgeId) {
+          profile.badges[indexBadge].status = "won";
+        }else{
+          break;
+        }
       }
     }
 }

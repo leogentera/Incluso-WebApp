@@ -104,7 +104,7 @@ angular
                           "fecha_inicio": "2015-07-15 14:23:12",
                           "fecha_fin": "2015-07-15  14:28:12",
                           "puntaje_interno": "15500",
-                          "nivel_inteligencia": "2", //1: Bajo, 2: Medio, 3:Alto
+                          "nivel_inteligencia": "3", //1: Bajo, 2: Medio, 3:Alto
                           "preguntas":[
                              {"pregunta" : "¿Me fue fácil completar el reto?" , "respuesta" : "9"}, //Escala del 1 al 10
                              {"pregunta" : "¿Disfruté este reto?", "respuesta" : "1"}, // Escala del 1 al 10
@@ -146,7 +146,7 @@ angular
                           "fecha_inicio": "2015-07-15 14:23:12",
                           "fecha_fin": "2015-07-15  14:28:12",
                           "puntaje_interno": "15500",
-                          "nivel_inteligencia": "3", //1: Bajo, 2: Medio, 3:Alto
+                          "nivel_inteligencia": "1", //1: Bajo, 2: Medio, 3:Alto
                           "preguntas":[
                              {"pregunta" : "¿Me fue fácil completar el reto?" , "respuesta" : "9"}, //Escala del 1 al 10
                              {"pregunta" : "¿Disfruté este reto?", "respuesta" : "1"}, // Escala del 1 al 10
@@ -156,7 +156,7 @@ angular
                        }    
                     ]  
                   }
-                  
+
                 var shield = "";
                 var quizzesRequests = [];
 
@@ -176,6 +176,7 @@ angular
                   };
                   var activity = _.find($scope.retoMultipleActivities, function(a){ return a.name == response.resultado[i].subactividad; });
                   if (activity) {
+                    activity.score = response.resultado[i].nivel_inteligencia;
                     var questionAnswers = _.countBy(activity.questions, function(q){
                       return q.userAnswer && q.userAnswer != '' ? 'answered' : 'unanswered';
                     });
@@ -220,8 +221,12 @@ angular
                   console.log("saving quiz");
                   console.log(logEntry[i]);
                   //$scope.retoMultipleActivities[i].status = 1;
-                  $scope.saveQuiz($scope.retoMultipleActivities[i], quizesRequests[i].answers)
+                  //$scope.saveQuiz($scope.retoMultipleActivities[i], quizesRequests[i].answers)
                 }
+
+                var parentActivity = _getActivityByCourseModuleId(139);
+                _endActivity(parentActivity);
+
                  localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
             }
 
