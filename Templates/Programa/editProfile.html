@@ -427,7 +427,8 @@
 														<li ng-repeat="p in model.phones track by $index">
 															<div class="form-group theme-form">
 																<h5>
-																	<span>Teléfono {{model.phones.indexOf(p) + 1}}</span>
+																	<!-- <span>Teléfono {{model.phones.indexOf(p) + 1}}</span>  -->
+																	<span>Teléfono {{$index + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deletePhone($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
@@ -450,7 +451,8 @@
 														<li ng-repeat="sn in model.socialNetworks">
 															<div class="form-group theme-form">
 																<h5>
-																	<span>Red Social {{model.socialNetworks.indexOf(sn) + 1}}</span>
+																	<!-- <span>Red Social {{model.socialNetworks.indexOf(sn) + 1}}</span> -->
+																	<span>Red Social {{$index + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deleteSocialNetwork($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
@@ -462,7 +464,7 @@
 																		ng-options="item for item in socialNetworksList" 
 																		ng-init="model.socialNetwork == null" 
 																		ng-class="{'selected': model.socialNetworks[$index].socialNetwork.length != 0 && model.socialNetworks[$index].socialNetwork != null}">
-																		<option value="" ng-disabled="!!model.socialNetwork">Red social</option>
+																		<option value="" ng-disabled="!!model.socialNetwork">Nombre de usuario</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 																</div>
@@ -523,7 +525,8 @@
 						  								<li ng-repeat="fc in model.familiaCompartamos">
 						  									<div class="form-group theme-form">
 						  										<h5>
-						  											<span>Familiar Compartamos {{model.familiaCompartamos.indexOf(fc) + 1}}</span>
+						  											<!-- <span>Familiar Compartamos {{model.familiaCompartamos.indexOf(fc) + 1}}</span>  -->
+																	<span>Familiar Compartamos {{$index + 1}}</span>
 						  											<button class="btn btn-circle" ng-click="deleteFamiliaCompartamos($index);">
 						  												<span class="icomoon icon-cross"></span>
 						  											</button>
@@ -602,7 +605,8 @@
 														<li ng-repeat="sn in model.favoriteSports track by $index">
 															<div class="form-group theme-form">
 																<h5>
-																	<span>Deporte {{model.favoriteSports.indexOf(sn) + 1}}</span>
+																	<!-- <span>Deporte {{model.favoriteSports.indexOf(sn) + 1}}</span> -->
+																	<span>Deporte {{$index + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deleteFavoriteSports($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
@@ -632,7 +636,8 @@
 														<li ng-repeat="s in model.artisticActivities">
 															<div class="form-group theme-form">
 																<h5>
-																	<span>Actividad {{model.artisticActivities.indexOf(s) + 1}}</span>
+																	<!-- <span>Actividad {{model.artisticActivities.indexOf(s) + 1}}</span> -->
+																	<span>Actividad {{$index + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deleteArtisticActivities($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
@@ -662,7 +667,8 @@
 														<li ng-repeat="s in model.hobbies">
 															<div class="form-group theme-form">
 																<h5>
-																	<span>Hobbie {{model.hobbies.indexOf(s) + 1}}</span>
+																	<!-- <span>Hobbie {{model.hobbies.indexOf(s) + 1}}</span> -->
+																	<span>Hobbie {{$index + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deleteHobbies($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
@@ -739,7 +745,8 @@
 														<li ng-repeat="s in model.talents">
 															<div class="form-group theme-form">
 																<h5>
-																	<span>Talento {{model.talents.indexOf(s) + 1}}</span>
+																	<!-- <span>Talento {{model.talents.indexOf(s) + 1}}</span> -->
+																	<span>Talento {{$index + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deleteTalents($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
@@ -769,7 +776,8 @@
 														<li ng-repeat="s in model.values">
 															<div class="form-group theme-form">
 																<h5>
-																	<span>Valor {{model.values.indexOf(s) + 1}}</span>
+																	<!-- <span>Valor {{model.values.indexOf(s) + 1}}</span>  -->
+																	<span>Valor {{$index + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deleteValue($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
@@ -799,7 +807,8 @@
 														<li ng-repeat="s in model.habilities">
 															<div class="form-group theme-form">
 																<h5>
-																	<span>Habilidad {{model.habilities.indexOf(s) + 1}}</span>
+																	<!-- <span>Habilidad {{model.habilities.indexOf(s) + 1}}</span> -->
+																	<span>Habilidad {{$index + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deleteHabilitie($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
@@ -872,6 +881,7 @@
 														<li ng-repeat="p in model.inspirationalCharacters">
 															<div class="form-group theme-form">
 																<h5>
+																	<!-- <span>Personaje {{model.inspirationalCharacters.indexOf(p) + 1}}</span> -->
 																	<span>Personaje {{model.inspirationalCharacters.indexOf(p) + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deleteInspirationalCharacter($index);">
 																		<span class="icomoon icon-cross"></span>

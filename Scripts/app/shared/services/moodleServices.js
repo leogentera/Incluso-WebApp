@@ -23,8 +23,8 @@
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncForumInfo = function(activityId, successCallback, errorCallback){
-            _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
+        var _getAsyncForumInfo = function(activityId, token, successCallback, errorCallback, forceRefresh){
+            _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncActivityInfo = function(activityId, successCallback,errorCallback, forceRefresh){
@@ -133,12 +133,19 @@
         };
 
 
-        var _getForumAsyncData = function(key, url, successCallback, errorCallback){
+        var _getForumAsyncData = function(key, url, token, successCallback, errorCallback, forceRefresh){
+
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+                
+            if (returnValue) {
+                _timeout(function() { successCallback(returnValue, key)}, 1000);                
+                return returnValue;
+            }
 
             _httpFactory({
                 method: 'GET',
                 url: url, 
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json', 'Authorization': token},
                 }).success(function(data, status, headers, config) {
                   var forum = createForumTree(data);
                   localStorage.setItem(key, JSON.stringify(forum));
@@ -395,6 +402,7 @@
                 var assign = null;
 
                 //stages
+
                 for(i = 0; i < course.stages.length; i++) {
 
                     course.stages[i].stageProgress = 0;
@@ -414,9 +422,9 @@
                         course.stages[i].coursemoduleid = assign.coursemoduleid;
                         course.stages[i].points = assign.points;
                         course.stages[i].status = assign.status;
+                        course.stages[i].activityintro = assign.activityintro;
                         course.stages[i].activity_identifier = assign.activity_identifier;
                     }
-
 
 
 
@@ -432,6 +440,7 @@
                         if (assign) {
                             course.stages[i].challenges[j].coursemoduleid = assign.coursemoduleid;
                             course.stages[i].challenges[j].points = assign.points;
+                            course.stages[i].challenges[j].activityintro = assign.activityintro;
                             course.stages[i].challenges[j].status = assign.status;
                             course.stages[i].challenges[j].activity_identifier = assign.activity_identifier;
                         }
@@ -471,6 +480,7 @@
                                     course.stages[i].challenges[j].activities[k].points = assign.points;
                                     course.stages[i].challenges[j].activities[k].activity_identifier = assign.activity_identifier;
                                     course.stages[i].challenges[j].activities[k].status = assign.status;
+                                    course.stages[i].challenges[j].activities[k].activityintro = assign.activityintro;
                                 }
 
                                 course.stages[i].challenges[j].activities[k]["activities"] = _.filter(activities,function(a) { 

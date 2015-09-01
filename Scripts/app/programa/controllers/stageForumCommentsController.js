@@ -76,19 +76,19 @@ angular
                 alreadyCommented? alreadyCommented.replies_counter++ : forumsCommentsCountCollection.push({'discussion_id':discussionId, 'replies_counter':1});
                 localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
             };
-            var endForumActivity = function(){
+            var endForumActivity = function(moodleid){
                 //TODO verify which activities are related with assigments and finish them too
                 console.log('Finishing activity...');
                 var userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
                 var userId = {'userid':JSON.parse(localStorage.getItem('userId'))};
-                moodleFactory.Services.PutEndActivity($routeParams.moodleid, userId,'', userToken,
+                moodleFactory.Services.PutEndActivity(moodleid, userId,'', userToken,
                     function(response){
                         alert('Acabas de completar la actividad de foros.');
                     },
                     function(){
                         alert('Hubo un problema al registrar tus comentarios, por favor vuelve a intentarlo.');
                     });
-                updateActivityStatus($routeParams.moodleid);
+                updateActivityStatus(moodleid);
                 //assignStars(100);
             };
 
@@ -108,24 +108,40 @@ angular
             };
 
             var checkForumProgress = function(){
+
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
+//
+//                for(var topicObjectIndex in forumsCommentsCountCollection){
+//                    var topicObject =forumsCommentsCountCollection[topicObjectIndex] ;
+//                    var isTopicFinished = topicObject.replies_counter >= 2;
+//
+//                    //if(isActivityFinished === null && typeof isActivityFinished === "object") isActivityFinished = isTopicFinished;
+//                    isActivityFinished = isTopicFinished;
+//                    isActivityFinished = isActivityFinished && isTopicFinished;
+//                };
 
-                for(var topicObjectIndex in forumsCommentsCountCollection){
-                    var topicObject =forumsCommentsCountCollection[topicObjectIndex] ;
-                    var isTopicFinished = topicObject.replies_counter >= 2;
-
-                    //if(isActivityFinished === null && typeof isActivityFinished === "object") isActivityFinished = isTopicFinished;
-                    isActivityFinished = isTopicFinished;
-                    isActivityFinished = isActivityFinished && isTopicFinished;
-                };
+                var numberOfDiscussionsWithMoreThan2Replies = _.filter($scope.activity.discussions, function(d) { return d.replies >= 2});
+                isActivityFinished = numberOfDiscussionsWithMoreThan2Replies.length == $scope.activity.discussions.length;
 
                 //Check for activity status
                 var activity_identifier = null;
-                if($scope.moodleId == 64){
+                var moodleid;
+                if($scope.moodleId == 151){
                     activity_identifier = 1010;
+                    moodleid = 64;
+                } else if($scope.moodleId == 64){
+                    activity_identifier = 1010;
+                    moodleid = 64;
                 } else if($scope.moodleId == 73){
                     activity_identifier = 1008;
+                    moodleid = 73;
+                } else if($scope.moodleId == 147){
+                    activity_identifier = 1049;
+                    moodleid = 147;
+                } else if($scope.moodleId == 148){
+                    activity_identifier = 1049;
+                    moodleid = 148;
                 }
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
 
@@ -135,7 +151,18 @@ angular
                     activityFromTree = activityFromTree.activities[0];
                 }
 
-                if(isActivityFinished && activityFromTree.status == 0) endForumActivity();
+                if(activity_identifier == 1049){
+                    activityFromTree = _.find(activityFromTree.activities, function(a) {return a.coursemoduleid == moodleid});
+                }
+
+                if(isActivityFinished && activityFromTree && activityFromTree.status == 0) {
+                    endForumActivity(moodleid);
+                }
+
+                if (isActivityFinished && activityFromTree && activityFromTree.coursemoduleid != moodleid) {
+                    endForumActivity(activityFromTree.coursemooodleid );   //end parent actvitiy too
+                }
+
                 getDataAsync();
             };
             //TODO implement adding points to user
@@ -173,18 +200,21 @@ angular
 
             $scope.isCommentModalCollapsed= [];
             $scope.replyText = null;
-            $scope.replyToPost = function(that, parentId, topicId){
+            $scope.replyToPost = function(that, parentId, topicId){                
                 var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){
-                        alert('Tu cometario fue registrado.');
+                        //alert('Tu cometario fue registrado.');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
-                        getTopicDataAsync();
-                        $scope.$emit('ShowPreloader');
+                        //getTopicDataAsync();
+                        refreshTopicData();
+
                         //updateForumProgress(parentId);
+                        $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         updateForumProgress(topicId);
+                        $scope.$emit('ShowPreloader');
                         checkForumProgress();
                         //$scope.$emit('HidePreloader');
                     },
@@ -224,7 +254,8 @@ angular
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
-                        getTopicDataAsync();
+                        //getTopicDataAsync();
+                        refreshTopicData();
                     },
                     function(){
                         alert('Fail!!');
@@ -241,7 +272,8 @@ angular
                         alert('Tu aportación fue registrada');
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
-                        getTopicDataAsync();
+                        //getTopicDataAsync();
+                        refreshTopicData();
                     },
                     function(){
                         alert('Tu comenatrio no pudo ser registrado');
@@ -258,7 +290,8 @@ angular
                         alert('Tu aportación fue registrada');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
-                        getTopicDataAsync();
+                        //getTopicDataAsync();
+                        refreshTopicData();
                     },
                     function(){
                         alert('Tu comenatrio no pudo ser registrado');
@@ -288,7 +321,8 @@ angular
                         alert('Tu aportación fue registrada');
                         $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
-                        getTopicDataAsync();
+                        //getTopicDataAsync();
+                        refreshTopicData();
                     },
                     function(){
                         alert('Tu comenatrio no pudo ser registrado');
@@ -299,12 +333,21 @@ angular
             };
 
             function getTopicDataAsync() {
-                moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
+                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
+                $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion_id == $routeParams.discussionId; });
+                var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
+                posts.forEach(createModalReferences);
+                $scope.$emit('HidePreloader');
+                //moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
                 //$scope.$emit('HidePreloader');
             }
 
             var createModalReferences = function(element, index, array){
                 $scope.isCommentModalCollapsed[element.post_id] = true;
+            };
+
+            var refreshTopicData = function(){                
+                moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
             };
 
             function getActivityInfoCallback(data) {

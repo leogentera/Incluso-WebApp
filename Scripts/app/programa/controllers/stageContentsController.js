@@ -73,7 +73,7 @@ angular
                   else
                   {
                     waitPreloader += 1;
-                    moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, errorCallback);                 
+                    moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);                 
                   }  
                 }
                                  
@@ -99,6 +99,13 @@ angular
                     $scope.$emit('HidePreloader'); //hide preloader
                   }                  
                 }
+
+              function getActivityErrorCallback(){
+                hidePreloader += 1;
+                if(waitPreloader == hidePreloader){
+                    $scope.$emit('HidePreloader'); //hide preloader
+                  }  
+              }
 
             /*function getActivityInfoCallback() {
                 $scope.activities.push(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 80)));
@@ -134,6 +141,7 @@ angular
                       var updatedActivityOnUsercourse = updateActivityStatus($scope.fuenteDeEnergia.activity_identifier);  //actualizar arbol
                       localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
                       _endActivity($scope.fuenteDeEnergia);
+                      _isChallengeCompleted();
                     }
                   }
                   else{

@@ -608,12 +608,12 @@
 
                                                 <div ng-repeat="badge in wholeBadgesPages[badgePage]" class="badge-item text-center">
                                                     <img class="badgesviews" ng-src="assets/images/badges/{{badge.filename}}" alt="" class="img-responsive" width="100px"
-                                                    height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times)" ng-show="badge.status != 'pending'"
-                                                    />
-                                                    
+                                                    height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times)" />                                              />
+                                                    <!--
                                                     <img class="badgesviews" ng-src="assets/images/badges/default_placeholder.svg" alt="" class="img-responsive" width="100px"
                                                     height="100px" ng-click="showDetailBadge('default_placeholder.svg', badge.name, badge.dateIssued, badge.earned_times, badge.status)" ng-show="badge.status == 'pending'"
                                                     />
+                                                    -->
                                                     
                                                     <span class="badgename text-center" ng-bind="badge.name"></span>
                                                 </div>
@@ -694,7 +694,6 @@
                                                             </li>
                                                         </ul>
                                                         <hr />
-                                                        </ul>
 
                                                         <h5>Sueños Tener</h5>
                                                         <ul class="block-list" ng-repeat="dh in model.dreamsToHave">
@@ -703,7 +702,6 @@
                                                             </li>
                                                         </ul>
                                                         <hr />
-                                                        </ul>
 
                                                         <h5>Sueños Hacer</h5>
                                                         <ul class="block-list" ng-repeat="dd in model.dreamsToDo">
@@ -712,7 +710,6 @@
                                                             </li>
                                                         </ul>
                                                         <hr />
-                                                        </ul>
                                                         <br />
                                                     </div>
                                                 </div>
