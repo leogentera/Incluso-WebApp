@@ -12,6 +12,35 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _httpFactory = $http;
+            $scope.moodleId = $routeParams.moodleid;
+
+             function redirectOnShield(){
+                var logicForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/' + 147;
+                var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + 148;
+
+                var shields = [
+                    {name: 'musical' , category:'artistico'},
+                    {name:'interpersonal' , category: 'artistico'},
+                    {name:'naturalista' , category: 'logico'},
+                    {name:'intrapersonal' , category: 'logico'},
+                    {name:'corporal' , category: 'artistico'},
+                    {name:'espacial' , category: 'artistico'},
+                    {name:'matematica' , category: 'logico'},
+                    {name:'liguistica' , category: 'logico'},
+                ];
+                var shield = JSON.parse(localStorage.getItem('shield')) ;
+                shield ? shield = shield.shield : shield = null;
+                var shieldCategory = shield ? _.find(shields, function(s){ return s.name == shield }).category : $location.path('/');
+                return shieldCategory == "logico" ?  $location.path(logicForumTopicsUrl) : $location.path(artisticForumTopicsUrl);
+                 if(shieldCategory == "logico"){
+                     $scope.moodleId = 147;
+                     $location.path(logicForumTopicsUrl);
+                 } else {
+                     $scope.moodleId = 148;
+                     $location.path(artisticForumTopicsUrl);
+                 }
+            };
+            if($routeParams.moodleid == 149) redirectOnShield();
 
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"");
@@ -24,30 +53,29 @@ angular
 
            $scope.activity = "Here is a value";
            function getForumsProgress(){
-              //TODO make this function ablailable trough a service so it can be used by forum controller as well as forum comments controller
               var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : setForumsList();
               console.log(forumsProgress);
               return forumsProgress;
 
            };
-           function setForumsList(){
-              var discussionsCollection = new Array();
-               var discussions = $scope.activity.discussions;
-              for(var discussionId in discussions){
-                 var postsCollection = discussions[discussionId].posts[0].replies;
-                 for(var postCollectionId in postsCollection){
-                    var topic = _.find(discussionsCollection, function(discussion){ return discussion.discussionId == postsCollection[postCollectionId].parent;});
-                     //topic? topic.commentsCount++ :  discussionsCollection.push({'discussionId':postsCollection[postCollectionId].parent , 'commentsCount':0});
-                     topic? '' :  discussionsCollection.push({'discussionId':postsCollection[postCollectionId].parent , 'commentsCount':0});
-                 }
-              }
-              console.log(discussionsCollection);
-              localStorage.setItem('currentForumsProgress', JSON.stringify(discussionsCollection));
-           }
+            function setForumsList(){
+                var discussionsCollection = [];
+                var discussions = $scope.activity.discussions;
+
+                for(var i=0 ; i< discussions.length; i++ ){
+                    var currentDiscussion = discussions[i];
+
+                    var topic = _.where(discussionsCollection, function(d){ return d.discussion_id == currentDiscussion.post_id});
+                    if(!topic.length>0){
+                        discussionsCollection.push({"discussion_id":currentDiscussion.post_id, "replies_counter":0});
+                    } else {}
+                }
+                localStorage.setItem('currentForumsProgress', JSON.stringify(discussionsCollection));
+            }
 
             function getDataAsync() {
                 console.log('Getting forum data');
-                moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, '');
+                $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, ''):'';
             }
 
             function getActivityInfoCallback() {
@@ -65,6 +93,12 @@ angular
                       break;
                   case "73":
                       $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/" + $routeParams.moodleid + "/" + discussionId);
+                      break;
+                  case "147":
+                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                      break;
+                  case "148":
+                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $scope.moodleId + "/" + discussionId);
                       break;
               }
 

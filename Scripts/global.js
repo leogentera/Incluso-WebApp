@@ -179,7 +179,7 @@ var _isChallengeCompleted = function(){
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
     var currentStage = userCourse.stages[lastStageIndex];
     
-    for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex ++){
+    for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++){
         var currentChallenge = currentStage.challenges[challengeIndex];
         if(currentChallenge.status == 0){        
           var totalActivitiesByStage = currentChallenge.activities.length;
@@ -210,23 +210,25 @@ var _isChallengeCompleted = function(){
     
 };
 
-//
-//var _updateBadgeStatus = function(coursemoduleid){    
-//    var profile = JSON.parse(localStorage.getItem("profile"));
-//    var badges = profile.badges;
-//    
-//    var badge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
-//    debugger;
-//    if (badge) {
-//      for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
-//        if (badges[indexBadge].id == badge.badgeId) {
-//          profile.badges[indexBadge].status = "won";
-//        }else{
-//          break;
-//        }
-//      }
-//    }
-//}
+/*
+
+var _updateBadgeStatus = function(coursemoduleid){    
+    var profile = JSON.parse(localStorage.getItem("profile"));
+    var badges = profile.badges;
+    
+    var badge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});
+    if (badge) {
+      for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
+        if (badges[indexBadge].id == badge.badgeId) {
+          profile.badges[indexBadge].status = "won";
+        }else{
+          break;
+        }
+      }
+    }
+};
+*/
+
 
 var _createNotification = function(activityId, triggerActivity){
   
@@ -254,6 +256,7 @@ var _createNotification = function(activityId, triggerActivity){
   }
 };
 
+
 var _coachNotification = function(){
                       
   var userCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -276,7 +279,7 @@ var _coachNotification = function(){
         return false;
       }
   }
-}
+};
 
 var successCallback = function(data){
 };
@@ -294,7 +297,7 @@ var _notificationExists = function(){
     var totalNotifications = countNotificationsUnread.length;
     return  totalNotifications;
   
-}
+};
 
 function getActivityByActivity_identifier(activity_identifier) {          
             var matchingActivity = null;
@@ -469,7 +472,7 @@ var logout = function($scope, $location){
       localStorage.removeItem("usercourse");
       localStorage.removeItem("currentStage");
       localStorage.removeItem("notifications");
-      localStorage.removeItem("userChat")
+      localStorage.removeItem("userChat");
       $location.path('/');
     };
     

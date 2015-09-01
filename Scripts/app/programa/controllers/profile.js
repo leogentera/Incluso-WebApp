@@ -34,8 +34,76 @@ angular
                 $scope.wholeBadgesPages[i] = [];
                 for (var j = 0; j < top; j++) {
                     var elem = copyBadges.shift(); //extracts first element of remaining array
+                    elem.filename = getFileName(elem.id);
+                    console.log(elem.filename);
                     $scope.wholeBadgesPages[i].push(elem);
                 }
+            }
+
+            function getFileName(id) {
+                filename = "";
+
+                switch (id) {
+                    case 2:
+                        filename = "combustible.svg";
+                        break;
+                    case 3:
+                        filename = "turbina.svg";
+                        break;
+                    case 4:
+                        filename = "ala.svg";
+                        break;
+                    case 5:
+                        filename = "sistNavegacion.svg";
+                        break;
+                    case 6:
+                        filename = "propulsor.svg";
+                        break;
+                    case 7:
+                        filename = "misiles.svg";
+                        break;
+                    case 8:
+                        filename = "escudo.svg";
+                        break;
+                    case 9:
+                        filename = "radar.svg";
+                        break;
+                    case 10:
+                        filename = "tanqueoxigeno.svg";
+                        break;
+                    case 11:
+                        filename = "sondaEspacial.svg";
+                        break;
+                    case 12:
+                        filename = "foro_interplanetario";
+                        break;
+                    case 13:
+                        filename = "IDintergalactica.svg";
+                        break;
+                    case 14:
+                        filename = "participacion_electrica.svg";
+                        break;
+                    case 15:
+                        filename = "corazon_digital.svg";
+                        break;
+                    case 16:
+                        filename = "casco.svg";
+                        break;
+                    case 17:
+                        filename = "radioComunicacion.svg";
+                        break;
+                    case 18:
+                        filename = "turbo.svg";
+                        break;
+                    case "placeholder":
+                        filename = "default_placeholder.svg";
+                        break;
+                    default:
+                        filename = "default_placeholder.svg";
+                }
+
+                return filename;
+
             }
 
             $scope.changepage = function (delta) {
@@ -194,14 +262,16 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (badgeId, badgeName, badgeDateIssued, earnedTimes, status) {
+            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, status) {
                 $scope.currentPage = 10;
-                $scope.badgeId = badgeId;
+                $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
                 $scope.status = status;
             };
+
+
 
             $scope.edit = function () {
                 $location.path('/Perfil/Editar');

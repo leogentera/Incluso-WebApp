@@ -312,19 +312,38 @@
             controller: 'stageForumCommentsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/:moodleid', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html',
-            controller: 'stageDashboardController'  //this may need to be change to another type of controller
+            //templateUrl: function(params){
+            //    var logicForumTopicsUrl = 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html';
+            //    var artisticForumTopicsUrl = 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.htm';
+            //    //Listado de escudos
+            //    var shields = [
+            //        {name: 'musical' , category:'artistico'},
+            //        {name:'interpersonal' , category: 'artistico'},
+            //        {name:'naturalista' , category: 'logico'},
+            //        {name:'intrapersonal' , category: 'logico'},
+            //        {name:'corporal' , category: 'artistico'},
+            //        {name:'espacial' , category: 'artistico'},
+            //        {name:'matematica' , category: 'logico'},
+            //        {name:'liguistica' , category: 'logico'},
+            //    ];
+            //    var shield = JSON.parse(localStorage.getItem('shield')) ;
+            //    shield ? shield = shield.shield : shield = null;
+            //    var shieldCategory = shield ? _.find(shields, function(s){ return s.name == shield }).category : 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html';
+            //    return shieldCategory == "logico" ? logicForumTopicsUrl : artisticForumTopicsUrl;
+            //},
+            controller: 'stageForumController' //'stageDashboardController'  //this may need to be change to another type of controller
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/:moodleid/:discussionId', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/:moodleid', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html',
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/:moodleid/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html',
-            controller: 'stageForumController'
+            controller: 'stageForumCommentsController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/:moodleid', { 
@@ -332,9 +351,9 @@
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/:moodleid/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html',
-            controller: 'stageForumController'
+            controller: 'stageForumCommentsController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/Conocete/MensajeDeCierre', { 
