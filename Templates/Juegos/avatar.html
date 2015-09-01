@@ -1,15 +1,29 @@
 <div class="incluso-app" ng-app>
   <article>
     <section>
-        <h3 class="subtitle centered">Alias: {{avatarInfo[0].alias}}</h3>
-        <h3 class="subtitle centered">Estrellas: {{avatarInfo[0].estrellas}}</h3>
-        <img id="avatarControl" src="assets/images/avatar/create_avatar_cabello_{{imageSrc}}.jpg">
-          <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="selectAvatarCabelloAmarillo()">Cabello Amarillo</button><br/>
-          <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="selectAvatarCabelloRojo()">Cabello Rojo</button><br/>
-          <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="selectAvatarCabelloVerde()">Cabello Verde</button><br/>
-          <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="selectAvatarCabelloCafe()">Cabello Cafe</button><br/>
-          <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="selectAvatar()">Escoger</button><br/>
-          <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="uploadAvatar(file)">Subir Imagen</button>
+        <span class="subtitle centered">Alias: {{avatarInfo[0].alias}}</span>
+        <span class="subtitle centered">Estrellas: {{avatarInfo[0].estrellas}}</span>        
+        <img id="avatarControl" src="assets/images/avatar/create_avatar_cabello_{{imageSrc}}.jpg" alt="avatar" />      
+        <div class="txt-renglon">          
+            <p>
+              <a class="btn btn-primary btn-lg btn-block" ng-click="selectAvatarCabelloAmarillo()">Cabello Amarillo</a>
+            </p>
+            <p>
+              <a class="btn btn-primary btn-lg btn-block" ng-click="selectAvatarCabelloRojo()">Cabello Rojo</a>
+            </p>
+            <p>
+              <a class="btn btn-primary btn-lg btn-block" ng-click="selectAvatarCabelloVerde()">Cabello Verde</a>
+            </p>
+            <p>
+              <a class="btn btn-primary btn-lg btn-block" ng-click="selectAvatarCabelloCafe()">Cabello Cafe</a>
+            </p>
+            <p>
+              <a class="btn btn-primary btn-lg btn-block" ng-click="selectAvatar()">Escoger</a>
+            </p>
+            <p>
+              <a class="btn btn-primary btn-lg btn-block" ng-click="uploadAvatar(file)">Subir Imagen</a>
+            </p>          
+        </div>
     </section>
   </article>
 </div>
