@@ -28,7 +28,7 @@ angular
 
             if(_startedActivityCabinaDeSoporte) {
                 var isStarted = _startedActivityCabinaDeSoporte;
-                var currentActivity = _usercourse.stagitges[isStarted.$stage].challenges[isStarted.$parentIndex].activities[isStarted.$index];
+                var currentActivity = _usercourse.stages[isStarted.$stage].challenges[isStarted.$parentIndex].activities[isStarted.$index];
 
                 if (!currentActivity.status) {
                     var rawDate = isStarted.$data.datestarted.split(/:|\s|:/);
@@ -37,28 +37,8 @@ angular
                         return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
                     });
 
-                    if (latestMessages.length >= 2) {
-                        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        var data = {
-                            userid: currentUser.userId,
-                        };
-
-                        // Update activity in usercourse
-                        _usercourse.stages[isStarted.$stage].challenges[isStarted.$parentIndex].activities[isStarted.$index].status = 1;
-
-                        moodleFactory.Services.PutEndActivity(currentActivity.coursemoduleid, data, currentActivity, currentUser.token, function () {
-                            localStorage.setItem('usercourse', JSON.stringify(_usercourse));
-                            var profile = JSON.parse(localStorage.getItem("profile"));
-                            var model = {
-                                userId: currentUser.userId,
-                                stars: currentActivity.points,
-                                instance: currentActivity.coursemoduleid,
-                                instanceType: 0,
-                                date: getdate()
-                            };
-
-                            moodleFactory.Services.PutStars(model, profile, currentUser.token);
-                        });
+                    if (latestMessages.length >= 2) {    
+                        localStorage.setItem('finishCabinaSoporte', 'true');
                     }
                 }
             }
