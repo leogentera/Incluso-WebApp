@@ -28,7 +28,7 @@ angular
              $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3"});
 
             $scope.back = function () {
-                $location.path('/ProgramaDashboard');
+                $location.path('/ZonaDeVuelo/Dashboard/1');
             }
 
         }]);

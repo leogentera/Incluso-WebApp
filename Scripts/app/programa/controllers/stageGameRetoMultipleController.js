@@ -55,6 +55,7 @@ angular
                     } else {
                         moodleFactory.Services.GetAsyncActivity(retosMultipleChallenge.activities[i].coursemoduleid, function(data) {$scope.retoMultipleActivities.push(data)});
                     }
+                    $scope.retoMultipleActivities[$scope.retoMultipleActivities.length - 1]["coursemoduleid"] = retosMultipleChallenge.activities[i].coursemoduleid;
                   }
                   localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
                   localStorage.setItem("retoMultipleActivitiesParent", $routeParams.moodleid);
