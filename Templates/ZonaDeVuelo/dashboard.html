@@ -146,7 +146,7 @@
         </script>
 
         <script type="text/ng-template" id="ClosingChallengeModal.html">
-            <div class="modal-robot robot-lg closing-stage-modal user-help" >
+            <div class="modal-robot robot-sm closing-stage-modal user-help" >
                 <img src="assets/images/img-robot-lg.svg">
                 <div class="modal-header">
                     <a class="icon icon-close" ng-click="cancel()">
@@ -156,6 +156,20 @@
                 <div class="modal-body">
                     <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
                     <p class="txt-renglon centered">{{actualMessage.message}}</p>
+                </div>
+            </div>
+        </script>
+        <script type="text/ng-template" id="ClosingStageModal.html">
+            <div class="modal-robot robot-lg closing-stage-modal user-help" >
+                <img src="assets/images/img-robot-lg.svg">
+                <div class="modal-header">
+                    <a class="icon icon-close" ng-click="cancel()">
+                        <span class="icomoon icon-cross"></span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <h3 class="subtitle text-center">{{robotMessages.title}}</h3>
+                    <p class="txt-renglon centered">{{robotMessages.message}}</p>
                 </div>
             </div>
         </script>
