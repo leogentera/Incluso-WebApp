@@ -42,7 +42,7 @@ angular
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                 var data = {
                     userid: currentUser.userId,
-                    datestarted: getdate(),
+                    datestarted: new Date(),
                     moduleid: activity.coursemoduleid,
                     updatetype: 0
                 };
@@ -92,7 +92,7 @@ angular
                         stars: activity.points,
                         instance: activity.coursemoduleid,
                         instanceType: 0,
-                        date: getdate()
+                        date: new Date()
                     };
 
                     moodleFactory.Services.PutStars(model, profile, currentUser.token, successfullCallBack, errorCallback);
