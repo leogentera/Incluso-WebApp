@@ -57,15 +57,7 @@
                     <a class="control next" href="#" id="next">
                         <span class="icomoon icon-arrow-bold-right"></span>
                     </a>                    
-                </div>
-
-<!--                 <div class="page-number">
-                    <p class="text-center">
-                        <span id="index">1</span>
-                        <span>/</span>
-                        <span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
-                    </p>                    
-                </div>    -->                                             
+                </div>                                          
             </section>
 
             <section class="parts activities">
@@ -91,7 +83,7 @@
             <section class="progreso">
                 <div class="spinner">
                     <span ng-bind="puntosObtenidos"></span>
-                    <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png"> <!-- <img src="" alt=""> -->
+                    <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png" /> <!-- <img src="" alt=""> -->
 
                     <div class="circle"></div>
                     <div class="text">{{stageProgress}}%</div>
@@ -102,36 +94,40 @@
                 </div>
             </section>
 
-            <!-- <section class="hangar-bay">
-                <div id="ship">
-                    <img src="assets/images/img-ship-01.png"/>
+            <!--<section class="component my-progress">
+                <h3>- Mi avance global -</h3>
+                <div class="progress">
+                    <label>0%</label>
                 </div>
+                <figure class="stage">
+                    <img src="assets/images/img-progress-stage-start.png" alt="">
+                </figure>  
             </section> -->
-
-            <script type="text/ng-template" id="ClosingStage.html">
-                <div class="modal-robot robot-lg closing-stage-modal user-help">
-                    <img src="assets/images/img-robot-sm.svg">
-                    <div class="modal-header">
-                        <a class="icon icon-close" ng-click="cancel()">
-                            <span class="icomoon icon-cross"></span>
-                        </a>
-                    </div>
-                    <div class="modal-body">
-                        <h3 class="subtitle">Cierre zona de vuelo</h3>
-
-                        <p class="txt-renglon centered">
-                            ¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda,
-                            los sueños son el motor principal
-                            de tu nave
-                        </p>
-
-                        <p class="txt-renglon centered">
-                            ¡Ahora tu aventura ya tiene un rumbo!
-                        </p>
-                    </div>
-                </div>
-            </script>
         </article>
+
+        <script type="text/ng-template" id="ClosingStage.html">
+            <div class="modal-robot robot-lg closing-stage-modal user-help">
+                <img src="assets/images/img-robot-sm.svg">
+                <div class="modal-header">
+                    <a class="icon icon-close" ng-click="cancel()">
+                        <span class="icomoon icon-cross"></span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <h3 class="subtitle">Cierre zona de vuelo</h3>
+
+                    <p class="txt-renglon centered">
+                        ¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda,
+                        los sueños son el motor principal
+                        de tu nave
+                    </p>
+
+                    <p class="txt-renglon centered">
+                        ¡Ahora tu aventura ya tiene un rumbo!
+                    </p>
+                </div>
+            </div>
+        </script>        
 
         <script type="text/ng-template" id="OpeningStageModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help">
@@ -152,6 +148,7 @@
                 </div>
             </div>
         </script>
+
         <script type="text/ng-template" id="ClosingChallengeModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help" >
                 <img src="assets/images/img-robot-lg.svg">
@@ -167,7 +164,6 @@
             </div>
         </script>
       
-
         <script type="text/ng-template" id="CabinaSoporteMsj.html">
             <div class="modal-robot robot-sm closing-stage-modal user-help">
                 <img src="assets/images/img-robot-sm.svg">
@@ -185,7 +181,6 @@
                 </div>
             </div>
         </script>
-
 </div>
 
 <script>
