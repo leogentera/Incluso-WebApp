@@ -71,11 +71,20 @@
             };
 
             $scope.toolbarOptionActive = function (path) {
-                //console.log($location.path().substr(0, path.length + 1));
-                if($location.path().substr(0, path.length) === path)
-                    return "active disabled";
-                else
-                    return "";
+                if(path.constructor === Array){
+                    classdisable = "";
+                    for(i= 0; i < path.length; i++){
+                        if($location.path() === path[i]){
+                            classdisable = "active disabled";
+                        }
+                    }
+                    return classdisable;
+                }else{
+                    if($location.path().substr(0, path.length) === path)
+                        return "active disabled";
+                    else
+                        return "";
+                }
             };
            
 			$scope.playVideo = function(videoAddress, videoName){
