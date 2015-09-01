@@ -73,7 +73,6 @@ angular
                 var forumsCommentsCountCollection = getForumsProgress();
                 var discussionId = discussionId;
                 var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussion_id == discussionId; });
-                //FIXME Currently getting discussion, need to get topics
                 alreadyCommented? alreadyCommented.replies_counter++ : forumsCommentsCountCollection.push({'discussion_id':discussionId, 'replies_counter':1});
                 localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
             };
@@ -114,7 +113,7 @@ angular
 
                 for(var topicObjectIndex in forumsCommentsCountCollection){
                     var topicObject =forumsCommentsCountCollection[topicObjectIndex] ;
-                    var isTopicFinished = topicObject.commentsCount >= 2;
+                    var isTopicFinished = topicObject.replies_counter >= 2;
 
                     //if(isActivityFinished === null && typeof isActivityFinished === "object") isActivityFinished = isTopicFinished;
                     isActivityFinished = isTopicFinished;
@@ -158,7 +157,7 @@ angular
 
             var createReplyDataObject = function( parentId, message, postType){
                 var userId = localStorage.getItem("userId");    
-                debugger;            
+
                 var dataObject= {
                     "userid":userId,
                     "discussionid": $scope.discussion.discussion_id,
@@ -308,7 +307,7 @@ angular
                 $scope.isCommentModalCollapsed[element.post_id] = true;
             };
 
-            function getActivityInfoCallback() {
+            function getActivityInfoCallback(data) {
                 //$scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid + "/" + $routeParams.discussionId));
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion_id == $routeParams.discussionId; });

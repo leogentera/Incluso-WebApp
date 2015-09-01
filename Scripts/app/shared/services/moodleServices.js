@@ -142,7 +142,7 @@
                 }).success(function(data, status, headers, config) {
                   var forum = createForumTree(data);
                   localStorage.setItem(key, JSON.stringify(forum));
-                  successCallback();
+                  successCallback(data);
                 }).error(function(data, status, headers, config) {
                     errorCallback(data);
             });
