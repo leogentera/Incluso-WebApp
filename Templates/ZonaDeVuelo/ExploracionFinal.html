@@ -14,7 +14,7 @@
                     <section id="title">
                         <div class="subtitle">Exploración final</div>
                         <div class="txt-renglon">Responde lo siguiente:</div>
-                        <spin class="txt-renglon">                            
+                        <spin class="txt-renglon">
                         </spin>
                         <!--<div class="txt-renglon">exploracionFinal: {{exploracionFinal}}</div>-->
                     </section>
@@ -105,7 +105,7 @@
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
                 </div>
-                
+
                 <!--<div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
                     <div id="finalized">
                         <section class="header-title ">
@@ -155,9 +155,10 @@
                             <div id="question1">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question1.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question1.isCollapsed = !question1.isCollapsed">
-                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': true}"></span> 1. ¿Podemos desarrollar y
-                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[0].badAnswer}"></span> 1. ¿Podemos desarrollar y
-                                        fortalecer habilidades en las que no somos tan buenos?
+                                        <!--<span class="pull-left icomoon icon-wrong-join" ng-class="{'active': true}"></span>1.
+                                        ¿Podemos desarrollar y-->
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[0].badAnswer}">                                            
+                                        </span>1. ¿Podemos desarrollar y fortalecer habilidades en las que no somos tan buenos?
                                         <span class="pull-right icomoon icon-arrow-up" ng-show="question1.isCollapsed"></span>
                                     </div>
                                     <div id="results1" class="panel-body" collapse="!question1.isCollapsed">
@@ -175,8 +176,8 @@
                             <div id="question2">
                                 <div class="txt-renglon panel collapsed" ng-class="{'collapsed': question2.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question2.isCollapsed = !question2.isCollapsed">
-                                        <span class="pull-left icomoon icon-wrong-join "  ng-class="{'active': exploracionFinalresult[1].badAnswer}"></span> 2. ¿Tener un carro y formar
-                                        una familia es un sueño de ser?
+                                        <span class="pull-left icomoon icon-wrong-join " ng-class="{'active': exploracionFinalresult[1].badAnswer}"></span>2.
+                                        ¿Tener un carro y formar una familia es un sueño de ser?
                                         <span class="pull-right icomoon icon-arrow-up" ng-show="question2.isCollapsed"></span>
                                     </div>
                                     <div id="results2" class="panel-body" collapse="!question2.isCollapsed">
@@ -194,8 +195,8 @@
                             <div id="question3">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question3.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question3.isCollapsed = !question3.isCollapsed">
-                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[2].badAnswer}"></span> 3. ¿Tus sueños son metas que
-                                        van dirigiendo tu camino?
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[2].badAnswer}"></span>3.
+                                        ¿Tus sueños son metas que van dirigiendo tu camino?
                                         <span class="pull-right icomoon icon-arrow-up" ng-show="question3.isCollapsed"></span>
                                     </div>
                                     <div id="results3" class="panel-body" collapse="!question3.isCollapsed">
@@ -203,7 +204,7 @@
                                             <li ng-class="{'failed clearfix': exploracionFinalresult[2].trueOptionWrong}">
                                                 <span class="pull-left icomoon icon-wrong" ng-show="exploracionFinalresult[2].trueOptionWrong"></span>Verdadero
                                             </li>
-                                           <li ng-class="{'failed clearfix': exploracionFinalresult[2].falseOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].falseOptionWrong}">
                                                 <span class="pull-left icomoon icon-wrong" ng-show="exploracionFinalresult[2].falseOptionWrong"></span>Falso
                                             </li>
                                         </ul>
@@ -213,23 +214,23 @@
                             <div id="question4">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question4.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question4.isCollapsed = !question4.isCollapsed">
-                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[3].badAnswer}"></span>4. Es importante tener una
-                                        persona que te inspire porque:
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[3].badAnswer}"></span>4.
+                                        Es importante tener una persona que te inspire porque:
                                         <span class="pull-right icomoon icon-arrow-up" ng-show="question4.isCollapsed"></span>
                                     </div>
                                     <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
                                         <ul>
-                                            <li class="failed clearfix">
-                                                <span class="pull-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].firstOptionWrong"></span>Es tu ejemplo a seguir y debes
-                                                ser igual a él
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].firstOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].firstOptionWrong"></i>Es
+                                                tu ejemplo a seguir y debes ser igual a él
                                             </li>
-                                            <li class="failed clearfix">
-                                                <span class="pull-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].secondOptionWrong"></span>Puedes aprender de su experiencia
-                                                para alcanzar tus sueños
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].secondOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].secondOptionWrong"></i>Puedes
+                                                aprender de su experiencia para alcanzar tus sueños
                                             </li>
-                                            <li class="failed clearfix">
-                                                <span class="pull-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].thirdOptionWrong"></span>Puede enseñarte cómo ganar dinero
-                                                más fácil
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].thirdOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[3].thirdOptionWrong"></i>Puede
+                                                enseñarte cómo ganar dinero más fácil
                                             </li>
                                         </ul>
                                     </div>
@@ -238,32 +239,32 @@
                             <div id="question5">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question5.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question5.isCollapsed = !question5.isCollapsed">
-                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[4].badAnswer}"></span>5. ¿Porqué es importante que
-                                        tus sueños se relacionen con lo que te gusta y para lo que eres bueno?
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': exploracionFinalresult[4].badAnswer}"></span>5.
+                                        ¿Porqué es importante que tus sueños se relacionen con lo que te gusta y para lo
+                                        que eres bueno?
                                         <span class="pull-right icomoon icon-arrow-up" ng-show="question5.isCollapsed"></span>
                                     </div>
                                     <div id="results4" class="panel-body" collapse="!question5.isCollapsed">
                                         <ul>
-                                            <li class="failed clearfix">
-                                                <span class="pull-left icomoon icon-wrong"  ng-show="exploracionFinalresult[4].firstOptionWrong"></span>Porque aprovechas mejor tus talentos
-                                                y difrutas lo que haces
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[4].firstOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[4].firstOptionWrong"></i>Porque
+                                                aprovechas mejor tus talentos y difrutas lo que haces
                                             </li>
-                                            <li class="failed clearfix">
-                                                <span class="pull-left icomoon icon-wrong"  ng-show="exploracionFinalresult[4].secondOptionWrong"></span>Porque puedes ser más famoso y
-                                                exitoso
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[4].secondOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[4].secondOptionWrong"></i>Porque
+                                                puedes ser más famoso y exitoso
                                             </li>
-                                            <li class="failed clearfix">
-                                                <span class="pull-left icomoon icon-wrong"  ng-show="exploracionFinalresult[4].thirdOptionWrong"></span>Porque debes hacer lo que quieras
-                                                sin importar nada ni nadie
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[4].thirdOptionWrong}">
+                                                <i class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult[4].thirdOptionWrong"></i>Porque
+                                                debes hacer lo que quieras sin importar nada ni nadie
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </section>
-                        <section class="txt-renglon centered txt-bigger">
-                            Estrellas a ganar: <span>{{activityPoints}}</span>
-                        </section>                        
+                        <section class="txt-renglon centered txt-bigger">                            
+                        </section>
                         <section class="txt-renglon pill">
                             <div class="pull-left">Estrellas ganadas:</div>
                             <div class="pull-right sm-pill">
@@ -287,7 +288,7 @@
                         </section>
                     </div>
                 </div>
-            </div>            
+            </div>
         </article>
         <!-- initial message -->
         <script type="text/ng-template" id="OpeningStageModal.html">
