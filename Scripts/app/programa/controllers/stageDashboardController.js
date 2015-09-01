@@ -32,11 +32,11 @@ angular
             //Opens stage welcome message if first time visit
             $scope.openModal_StageFirstTime = function (size) {
                 var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
+                    animation: false,//$scope.animationsEnabled,
                     templateUrl: 'OpeningStageModal.html',
                     controller: 'OpeningStageController',
                     size: size,
-                    windowClass: 'user-help-modal'
+                    windowClass: 'user-help-modal dashboard-stage-intro'
                 });
 
             };
@@ -46,11 +46,21 @@ angular
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'ClosingChallengeModal.html',
+                    controller: 'closingChallengeController',
+                    size: size,
+                    windowClass: 'closing-stage-modal user-help-modal'                    
+                });
+            };
+            
+            $scope.openModal_CloseStage = function (size) {                
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'ClosingStageModal.html',
                     controller: 'closingStageController',
                     size: size,
                     windowClass: 'closing-stage-modal user-help-modal'                    
                 });
-            }
+            };
             
 
             //Updated stage first time flag in scope, local storage and server
@@ -108,8 +118,7 @@ angular
             }
             
             $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);            
-            var challengeCompleted = _isChallengeCompleted();
-                        
+            var challengeCompleted = _isChallengeCompleted();            
             _coachNotification();
                                     
             //Exclude challenges initial and final from showing modal robot
@@ -119,8 +128,15 @@ angular
               localStorage.setItem("challengeMessageId",challengeCompleted);
               $scope.openModal_CloseChallenge();
             }else{
-              localStorage.setItem("challengeMessageId",0);
+                localStorage.setItem("challengeMessageId",0);
             }
+                        
+            var stageCompleted = _isStageCompleted();
+            
+            if (stageCompleted) {
+                $scope.openModal_CloseStage();
+            }
+            
             //localStorage.setItem("challengeMessageId",113);
             //$scope.openModal_CloseChallenge();
             
@@ -165,7 +181,7 @@ angular
                 return activity.status;
             };
             
-        }]).controller('closingStageController', function ($scope, $modalInstance) {
+        }]).controller('closingChallengeController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
@@ -195,4 +211,13 @@ angular
              
              $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});             
              
-    });
+            }).controller('closingStageController', function ($scope, $modalInstance) {
+                    $scope.cancel = function () {
+                        $modalInstance.dismiss('cancel');
+                    };
+                    
+                    $scope.robotMessages = {
+                        title: "Cierre Zona de Vuelo",
+                        message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
+                    };
+                });

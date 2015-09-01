@@ -329,11 +329,15 @@
 
 /* Profile Dashboard */
 .incluso-app.profile {   
+    /*.gradient-sky ();*/
+    .list-group {
+        margin:0 auto;
+        width: auto;
+    }
     .navbar{     
         background-color: @clr-orangeLighter;
         border-color: @clr-orangeLighter;
     }
-    .gradient-sky ();
 
     footer {
         padding-bottom: 30px;
@@ -381,7 +385,7 @@
 .incluso-app.edit-profile {
     .list-group {
         margin:0 auto;
-        /*width: 92%;*/
+        width: auto;
     }
     .panel {
         margin:0 auto;
@@ -881,7 +885,10 @@ section.part.inbloq{
         .modal-backdrop{
             display: none;
         }
-        .terms-and-conditions {
+        .terms-and-conditions,
+        .dashboard-stage-intro,
+        .closing-stage-modal,
+        .dashboard-programa {
             &.in {
                 position: relative;
                 height: 100vh;
@@ -899,6 +906,11 @@ section.part.inbloq{
                 .modal-body {
                     padding: 5vh 4vw;
                 }
+            }
+        }
+        .dashboard-stage-intro {
+            img {
+
             }
         }
         .close-activity {
