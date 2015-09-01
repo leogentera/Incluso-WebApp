@@ -608,7 +608,7 @@
 
                                                 <div ng-repeat="badge in wholeBadgesPages[badgePage]" class="badge-item text-center">
                                                     <img class="badgesviews" ng-src="assets/images/badges/{{badge.filename}}" alt="" class="img-responsive" width="100px"
-                                                    height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times)" />                                              />
+                                                    height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times, badge.description)" />                                              />
                                                     <!--
                                                     <img class="badgesviews" ng-src="assets/images/badges/default_placeholder.svg" alt="" class="img-responsive" width="100px"
                                                     height="100px" ng-click="showDetailBadge('default_placeholder.svg', badge.name, badge.dateIssued, badge.earned_times, badge.status)" ng-show="badge.status == 'pending'"
@@ -790,9 +790,7 @@
                                                         <div class="badgedate" ng-bind="badgeDateIssued"></div>
                                                     </div>
                                                     <div class="achievement-description">
-                                                        <span>
-                                                            Cumpliste con los retos de la seccion de "Mis Sueños" y asi obtuviste la Turbina CONO-CT para colocarla en tu nave espacial y estar mas cerca del despegue de tu aventura.
-                                                        </span>
+                                                        <span ng-bind="description"></span>
                                                     </div>
                                                     <div class="earned-info">
                                                         <span class="users"><span ng-show="status != 'pending'">Tú y</span>
