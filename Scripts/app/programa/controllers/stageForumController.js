@@ -12,7 +12,9 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _httpFactory = $http;
+            _timeout = $timeout;
             $scope.moodleId = $routeParams.moodleid;
+            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
              var redirectOnShield = function (){
                 var logicForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/' + 147;
@@ -75,7 +77,7 @@ angular
 
             function getDataAsync() {
                 console.log('Getting forum data');
-                $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, ''):'';
+                $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, currentUser.token, getActivityInfoCallback, ''):'';
             }
 
             function getActivityInfoCallback() {
