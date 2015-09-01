@@ -72,7 +72,7 @@
       <section class="wall">
         <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies">
           <div class="part">
-            <div class="author"><img src="assets/images/avatar.svg">
+            <div class="author"><img src="{{p.picture_post_author + '?token=' + userToken}}">
               <div>{{p.post_author}} <span>publicó:</span>
                 <div>{{p.created | date: "dd MMMM yyyy"}}</div>
               </div>
@@ -92,7 +92,7 @@
               </div>
             </div>
             <div id="item{{$index}}" ng-repeat="r in p.replies">
-              <div class="coment block"><img src="assets/images/avatar.svg">
+              <div class="coment block"><img src="{{r.picture_post_author + '?token=' + userToken}}">
                 <div>{{r.post_author}} <span>publicó:</span>   <div>{{r.message}}</div>
                 </div>
               </div>
