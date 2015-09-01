@@ -165,7 +165,7 @@
 															name="mothername" 
 															class="form-control form-control-lg theme-form" 
 															placeholder="Apellido materno" 
-															ng-model="model.mothername"required />
+															ng-model="model.mothername" required />
 														</div>
 													</div>								
 
@@ -638,7 +638,7 @@
 																<h5>
 																	<!-- <span>Actividad {{model.artisticActivities.indexOf(s) + 1}}</span> -->
 																	<span>Actividad {{$index + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteArtisticActivities($index);">
+																	<button class="btn btn-circle" ng-click="deleteArtisticActivities($index)">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
@@ -656,7 +656,7 @@
 															</div>
 														</li>
 													</ul>
-													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addArtisticActivities();">
+													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addArtisticActivities()">
 														<span class="icomoon icon-plus"></span>Agregar actividad...
 													</button>
 												</section>
@@ -1026,6 +1026,7 @@
 																<option value="" ng-disabled="!!model.period">Periodo</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+														</div>
 														</div>
 												</section>
 

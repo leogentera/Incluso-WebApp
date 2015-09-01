@@ -107,6 +107,12 @@ angular
                         _setId(data.id);
 
                         $scope.$emit('HidePreloader'); //hide preloader
+                        console.log('Preparing preloader');
+                        $timeout(
+                            function() {
+                            $scope.$emit('ShowPreloader'); //Show preloader
+                            console.log('Preloader working...');
+                            }, 500);
 
                         console.log('preparing for syncAll');
 

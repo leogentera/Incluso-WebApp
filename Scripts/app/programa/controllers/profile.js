@@ -40,14 +40,15 @@ angular
                         elem.filename = getFileName(elem.id);
                     } else {
                         elem.filename = "default_placeholder.svg";
+                        elem.description = getDescription(elem.id);
                     }
-
+                    console.log(elem.id + " " + elem.status + "  " + elem.description);
                     $scope.wholeBadgesPages[i].push(elem);
                 }
             }
 
             function getFileName(id) {
-                filename = "";
+                var filename = "";
 
                 switch (id) {
                     case 2:
@@ -72,10 +73,10 @@ angular
                         filename = "escudo.svg";
                         break;
                     case 9:
-                        filename = "radar.svg";
+                        filename = "combustible.svg"; //radar.svg
                         break;
                     case 10:
-                        filename = "tanqueoxigeno.svg";
+                        filename = "turbina.svg"; //tanqueoxigeno
                         break;
                     case 11:
                         filename = "sondaEspacial.svg";
@@ -106,6 +107,68 @@ angular
                 }
 
                 return filename;
+            }
+
+            function getDescription(id) {
+                var description = "";
+
+                switch (id) {
+                    case 2:
+                        description = "Para obtener más combustible visita 'Fuente de energía' zona de vuelo  recárgate de conocimiento y ve a toda velocidad  ";
+                        break;
+                    case 3:
+                        description = "Para obtener esta pieza  visita 'Reto múltiple' y convierte tus habilidades en energía que te impulsen día a día";
+                        break;
+                    case 4:
+                        description = "Para obtener esta pieza visita la sección 'Cada sueño en su lugar' y mantén en alto tus ideas";
+                        break;
+                    case 5:
+                        description = "Para obtener esta pieza visita 'Cabina de soporte' y dirige la nave por el rumbo correcto";
+                        break;
+                    case 6:
+                        description = "Para obtener esta pieza visita la sección 'Fuente de energía' zona de navegación  y define la trayectoria de tu  viaje ";
+                        break;
+                    case 7:
+                        description = "Para obtener esta pieza visita la sección 'Tus ideas', toma impulso y llega más lejos";
+                        break;
+                    case 8:
+                        description = "Para obtener esta pieza visita la sección 'Mapa de vida' y ponle fecha limite a tu sueños";
+                        break;
+                    case 9:
+                        description = "Para obtener esta pieza visita 'Cabina de soporte zona de navegación' y mantén la dirección exacta";
+                        break;
+                    case 10:
+                        description = "Para obtener esta pieza visita 'Fuente de energía' zona de aterrizaje y oxigena tu mente con más información";
+                        break;
+                    case 11:
+                        description = "Para obtener esta pieza visita la sección 'Mapa del emprendedor' y encuentra nuevas formas de guiar tu proyecto";
+                        break;
+                    case 12:
+                        description = "Has públicas tus ideas y gana la insignia 'Foro interplanetario'";
+                        break;
+                    case 13:
+                        description = "Completa los datos de tu perfil y gana la insignia 'ID intergaláctica' así todos querrán saber más de ti";
+                        break;
+                    case 14:
+                        description = "Contagia de energía, participa activamente en este viaje y gana la insignia 'Participación eléctrica'";
+                        break;
+                    case 15:
+                        description = "Consigue 30 likes en foro o comunidad y vuélvete el 'Corazón digital' de incluso";
+                        break;
+                    case 16:
+                        description = "Para obtener esta pieza visita la sección 'Dinero en movimiento' y dale a tus finanzas un giro de 360°";
+                        break;
+                    case 17:
+                        description = "Para obtener esta pieza  visita la sección 'Cabina de soporte zona de aterrizaje' y no pierdas contacto";
+                        break;
+                    case 18:
+                        description = "Para obtener esta pieza visita la sección 'Tú eliges' y decide el rumbo de tu viaje";
+                        break;
+                    default:
+                        description = "";
+                }
+
+                return description;
             }
 
 
@@ -265,16 +328,14 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes) {
+            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description) {
                 $scope.currentPage = 10;
                 $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
-                //$scope.status = status;
+                $scope.description = description;
             };
-
-
 
             $scope.edit = function () {
                 $location.path('/Perfil/Editar');
@@ -474,7 +535,11 @@ angular
                 }
             };
 
-            function deleteRepeatedValues() {
+            $scope.clean = function() {
+              deleteRepeatedValues();
+            };
+
+            var deleteRepeatedValues = function() {
 
                 $scope.model.phones = $scope.model.phones.filter(function(item, pos) {
                     return $scope.model.phones.indexOf(item) == pos;
@@ -509,7 +574,7 @@ angular
                 });
 
 
-            }
+            };
 
             $scope.addStudy = function () {
                 $scope.model.studies.push({});
