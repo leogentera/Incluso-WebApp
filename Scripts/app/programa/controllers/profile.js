@@ -19,6 +19,7 @@ angular
             $scope.setToolbar($location.$$path,"Mi perfil");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $scope.status = "";
             $scope.model = getDataAsync();
 
             
@@ -41,9 +42,8 @@ angular
                         elem.description = getDescription(elem.id);
                     } else {
                         elem.filename = "default_placeholder.svg";
-
                     }
-                    console.log(elem.id + " " + elem.status + "  " + elem.description);
+
                     $scope.wholeBadgesPages[i].push(elem);
                 }
             }
@@ -171,7 +171,6 @@ angular
 
                 return description;
             }
-
 
 
             $scope.changepage = function (delta) {
@@ -329,13 +328,14 @@ angular
                 $scope.currentPage = pageNumber;
             };
 
-            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description) {
+            $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description, status) {
                 $scope.currentPage = 10;
                 $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
                 $scope.badgeDateIssued = badgeDateIssued;
                 $scope.earnedTimes = earnedTimes;
                 $scope.description = description;
+                $scope.status = status;
             };
 
             $scope.edit = function () {
