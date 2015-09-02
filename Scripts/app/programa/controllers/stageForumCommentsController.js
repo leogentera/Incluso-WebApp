@@ -41,8 +41,6 @@ angular
 
             var profile = JSON.parse(localStorage.getItem("profile"));
             $scope.clickLikeButton = function(postId){
-                console.log('Post id: ' + postId);
-                console.log('Like button clicked!!!');                
                 var post = _.find($scope.discussion.posts[0].replies, function(a){
                     return a.post_id == postId
                 }) ;
@@ -57,10 +55,10 @@ angular
                 var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
                 moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject,
                     function(){
-                        console.log('Liked!!');
+
                     },
                     function(){
-                        console.log('Unlike =( !!');
+
                     } );
             };
 
@@ -76,21 +74,6 @@ angular
                 var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussion_id == discussionId; });
                 alreadyCommented? alreadyCommented.replies_counter++ : forumsCommentsCountCollection.push({'discussion_id':discussionId, 'replies_counter':1});
                 localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
-            };
-            var endForumActivity = function(moodleid){
-                //TODO verify which activities are related with assigments and finish them too
-                console.log('Finishing activity...');
-                var userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
-                var userId = {'userid':JSON.parse(localStorage.getItem('userId'))};
-                moodleFactory.Services.PutEndActivity(moodleid, userId,'', userToken,
-                    function(response){
-                        alert('Acabas de completar la actividad de foros.');
-                    },
-                    function(){
-                        alert('Hubo un problema al registrar tus comentarios, por favor vuelve a intentarlo.');
-                    });
-                updateActivityStatus(moodleid);
-                //assignStars(100);
             };
 
             var assignStars = function(numStars){
@@ -108,19 +91,10 @@ angular
                 function errorCallback(){};
             };
 
-            var checkForumProgress = function(){
+            var checkForumProgress = function(callback){
 
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
-//
-//                for(var topicObjectIndex in forumsCommentsCountCollection){
-//                    var topicObject =forumsCommentsCountCollection[topicObjectIndex] ;
-//                    var isTopicFinished = topicObject.replies_counter >= 2;
-//
-//                    //if(isActivityFinished === null && typeof isActivityFinished === "object") isActivityFinished = isTopicFinished;
-//                    isActivityFinished = isTopicFinished;
-//                    isActivityFinished = isActivityFinished && isTopicFinished;
-//                };
 
                 var numberOfDiscussionsWithMoreThan2Replies = _.filter($scope.activity.discussions, function(d) { return d.replies >= 2});
                 isActivityFinished = numberOfDiscussionsWithMoreThan2Replies.length == $scope.activity.discussions.length;
@@ -143,28 +117,18 @@ angular
                 } else if($scope.moodleId == 148){
                     activity_identifier = 1049;
                     moodleid = 148;
+
                 }
+
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
 
-                //Forum 64 (conocete - punto de encuentro) does not bring the forum activity, it brings the discussion,
-                // we need go one level down deeper to get the activity
-                if(activity_identifier == 1010){
-                    activityFromTree = activityFromTree.activities[0];
+                if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
+                    $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);                    
+                } else {
+                   callback();
+                   // getDataAsync();
                 }
 
-                if(activity_identifier == 1049){
-                    activityFromTree = _.find(activityFromTree.activities, function(a) {return a.coursemoduleid == moodleid});
-                }
-
-                if(isActivityFinished && activityFromTree && activityFromTree.status == 0) {
-                    endForumActivity(moodleid);
-                }
-
-                if (isActivityFinished && activityFromTree && activityFromTree.coursemoduleid != moodleid) {
-                    endForumActivity(activityFromTree.coursemooodleid );   //end parent actvitiy too
-                }
-
-                getDataAsync();
             };
             //TODO implement adding points to user
             var addPointsToUser = function(){
@@ -206,20 +170,14 @@ angular
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){
-                        //alert('Tu cometario fue registrado.');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
-                        //getTopicDataAsync();
-                        refreshTopicData();
-
-                        //updateForumProgress(parentId);
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         updateForumProgress(topicId);
                         $scope.$emit('ShowPreloader');
-                        checkForumProgress();
-                        //$scope.$emit('HidePreloader');
+                        checkForumProgress(refreshTopicData);
                     },
-                    function(){alert('Tu comentario no pudo ser registrado.');
+                    function(){
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
                         $scope.$emit('HidePreloader');
@@ -251,7 +209,6 @@ angular
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Tu aportación fue registrada');
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
@@ -259,7 +216,6 @@ angular
                         refreshTopicData();
                     },
                     function(){
-                        alert('Fail!!');
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         $scope.$emit('HidePreloader');
@@ -270,14 +226,12 @@ angular
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Tu aportación fue registrada');
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                         //getTopicDataAsync();
                         refreshTopicData();
                     },
                     function(){
-                        alert('Tu comenatrio no pudo ser registrado');
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                         $scope.$emit('HidePreloader');
@@ -288,17 +242,14 @@ angular
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Tu aportación fue registrada');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
                         //getTopicDataAsync();
                         refreshTopicData();
                     },
                     function(){
-                        alert('Tu comenatrio no pudo ser registrado');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
-                        alert('Tu comenatrio no pudo ser registrado');
                     });
             };
             $scope.postAttachmentToForum = function(){
@@ -319,14 +270,12 @@ angular
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Tu aportación fue registrada');
                         $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                         //getTopicDataAsync();
                         refreshTopicData();
                     },
                     function(){
-                        alert('Tu comenatrio no pudo ser registrado');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                         $scope.$emit('HidePreloader');
@@ -339,8 +288,6 @@ angular
                 var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
                 posts.forEach(createModalReferences);
                 $scope.$emit('HidePreloader');
-                //moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
-                //$scope.$emit('HidePreloader');
             }
 
             var createModalReferences = function(element, index, array){
@@ -352,7 +299,6 @@ angular
             };
 
             function getActivityInfoCallback(data) {
-                //$scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid + "/" + $routeParams.discussionId));
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion_id == $routeParams.discussionId; });
                 var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
@@ -370,6 +316,9 @@ angular
                         break;
                     case "73":
                         $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
+                    default:
+                        $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/" + $routeParams.moodleid);
                         break;
                 }
             };
