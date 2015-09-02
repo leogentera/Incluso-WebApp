@@ -1,21 +1,24 @@
-<div class="incluso-app step-dashboard topics-forum" id="site-wrapper">
-  <div id="site-canvas">
-    <article class="blueprint">
-      <section>
-        <div class="subtitle">Punto de encuentro</div>
-        <div class="txt-renglon txt-bigger"> ¡Haz públicas tus ideas! <br>
-          Deja que conozcan tus ideas, toma los retos y comenta a los demás.
+<div class="incluso-app step-dashboard topics-forum">
+  <article class="blueprint">
+    <section>
+      <div class="subtitle">Punto de encuentro</div>
+      <div class="txt-renglon txt-bigger"> ¡Haz públicas tus ideas! <br>
+        Deja que conozcan tus ideas, toma los retos y comenta a los demás.
+      </div>
+    </section>
+    <section class="list txt-renglon">
+      <div id="item{{$index}}" ng-repeat="t in activity.discussions">
+        <div class="part list-item">
+          <span>{{t.discussion_name}}</span>
+          <a href="" ng-click="showComentarios(t.discussion_id, moodleId)">
+            <span class="icomoon icon-arrow-right-aligned fl-right"></span>
+          </a>
         </div>
-      </section>
-      <section class="list txt-renglon">
-        <div id="item{{$index}}" ng-repeat="t in activity.discussions">
-          <div class="part list-item"><span>{{t.discussion_name}}</span><a href="" ng-click="showComentarios(t.discussion_id, moodleId)"><i class="icomoon icon-arrow-right-aligned fl-right"></i></a></div>
-        </div>
-      </section>
-      <section>
-        <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
-        <div class="txt-renglon centered txt-bigger"></div>
-      </section>
-    </article>
-  </div>
+      </div>
+    </section>
+    <section>
+      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
+      <div class="txt-renglon centered txt-bigger"></div>
+    </section>
+  </article>
 </div>
