@@ -30,23 +30,27 @@ angular
                      {name: 'matematica', category: 'logico'},
                      {name: 'liguistica', category: 'logico'},
                  ];
-                 debugger;
+
                  var shield = JSON.parse(localStorage.getItem('profile')).shield;
                  //shield ? shield = shield.shield : shield = null;
-                 if (shield != '') {
+                 if (shield && shield != '') {
 
                      var shieldCategory = _.find(shields, function (s) {
-                         return s.name == shield
-                     }).category;
+                         return s.name == shield.toLowerCase()
+                     });
                      //return shieldCategory == "logico" ?  $location.path(logicForumTopicsUrl) : $location.path(artisticForumTopicsUrl);
-
-                     if (shieldCategory == "logico") {
-                         $scope.moodleId = 147;
-                         $location.path(logicForumTopicsUrl);
-                     } else if (shieldCategory == "artistico") {
-                         $scope.moodleId = 148;
-                         $location.path(artisticForumTopicsUrl);
+                     if (shieldCategory) {
+                       if (shieldCategory.category == "logico") {
+                           $scope.moodleId = 147;
+                           $location.path(logicForumTopicsUrl);
+                       } else if (shieldCategory.category == "artistico") {
+                           $scope.moodleId = 148;
+                           $location.path(artisticForumTopicsUrl);
+                       }
                      }
+                 } else {
+                  var userCurrentStage = localStorage.getItem("currentStage");
+                    $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
                  }
             };
 

@@ -336,6 +336,9 @@ angular
                     case "73":
                         $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.moodleid);
                         break;
+                    default:
+                        $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/" + $routeParams.moodleid);
+                        break;
                 }
             };
 
