@@ -28,6 +28,8 @@ angular
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
             localStorage.setItem("userCurrentStage", $routeParams['stageId']);
+
+
                                 
             //Opens stage welcome message if first time visit
             $scope.openModal_StageFirstTime = function (size) {
@@ -38,8 +40,9 @@ angular
                     size: size,
                     windowClass: 'user-help-modal dashboard-stage-intro'
                 });
-
             };
+
+            $scope.openModal_StageFirstTime();
             
             
             $scope.openModal_CloseChallenge = function (size) {                
@@ -88,9 +91,13 @@ angular
 
             };
 
-            if($scope.thisStage.firsttime){                
-                $scope.openModal_StageFirstTime();
+            if($scope.thisStage.firsttime){
+                //$scope.openModal_StageFirstTime();
                 $scope.updateStageFirstTime();
+            }
+
+            if($scope.thisStage.firsttime == 0){
+                //$scope.openModal_StageFirstTime();
             }
 
            //calculate user's stage progress
