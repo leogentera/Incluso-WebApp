@@ -113,14 +113,14 @@ angular
                     var activity = challenge.activities[j];
                     stageProgressBuffer += activity.status;
                     stageTotalActivities++;
-                    if(activity.activities) {
+                    /*if(activity.activities) {
                         var subActivitiesCount = activity.activities.length;
                         for (k = 0; k < subActivitiesCount; k++) {
                             var subActivity = activity.activities[k];
                             stageProgressBuffer += subActivity.status;
                             stageTotalActivities++;
                         }
-                    }
+                    }*/
                 }
             }
             
