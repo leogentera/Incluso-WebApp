@@ -1,38 +1,37 @@
 <div class="incluso-app profile" id="site-wrapper">
     <article>
         <section class="component profile-dashboard">
-                <div class="user-avatar">
-                    <figure>
-                        <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive" />
-                        <figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption>
-                    </figure>
-                    <a id="editProfile" ng-click="avatar()" class="btn">
-                        <span class="icomoon icon-edit"></span>
-                    </a>
-                </div>
-                <div class="profile-data">
-                    <h4 class="user-name" ng-bind="model.alias"></h4>
-                    <!-- <h4 class="user-name">leonardo garza r.</h4> -->
-                    <p class="user-points">
-                        <span ng-bind="model.stars"></span>
-                        <span class="icomoon icon-star"></span>
-                    </p>
-                </div>
-                <div class="profile-settings">
-                    <a class="btn btn-icon-aside left" ng-click="edit();">
-                        <div class="btn-icon">
-                            <span class="icomoon icon-settings"></span>
-                        </div>
-                        <span for="">Editar</span>
-                    </a>
+            <div class="user-avatar">
+                <figure>
+                    <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive" />
+                    <figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption>
+                </figure>
+                <a id="editProfile" ng-click="avatar()" class="btn">
+                    <span class="icomoon icon-edit"></span>
+                </a>
+            </div>
+            <div class="profile-data">
+                <h4 class="user-name" ng-bind="model.alias"></h4>
+                <p class="user-points">
+                    <span ng-bind="model.stars"></span>
+                    <span class="icomoon icon-star"></span>
+                </p>
+            </div>
+            <div class="profile-settings">
+                <a class="btn btn-icon-aside left" ng-click="edit();">
+                    <div class="btn-icon">
+                        <span class="icomoon icon-settings"></span>
+                    </div>
+                    <span for="">Editar</span>
+                </a>
 
-                    <a class="btn btn-icon-aside right">
-                        <div class="btn-icon">
-                            <span class="icomoon icon-lock"></span>
-                        </div>
-                        <span for="">Privacidad</span>
-                    </a>
-                </div>
+                <a class="btn btn-icon-aside right">
+                    <div class="btn-icon">
+                        <span class="icomoon icon-lock"></span>
+                    </div>
+                    <span for="">Privacidad</span>
+                </a>
+            </div>
         </section>
         <section class="component profile-options">
             <div class="pages">
