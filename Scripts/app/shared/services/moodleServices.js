@@ -396,7 +396,8 @@
                     globalProgress: 0,
                     stages: _.filter(activities,function(a) { 
                         return a.parentsection == activities[0].section && a.section != activities[0].section && a.activity_type == 'ActivityManager' 
-                    })
+                    }),
+                    activities: _.filter(activities, function (a) { return a.activity_type == 'assign' && a.parentsection == 0})
                 };
 
                 var assign = null;
