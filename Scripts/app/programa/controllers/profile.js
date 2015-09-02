@@ -551,6 +551,15 @@ angular
                     function (data) {
                         console.log('Save profile successful...');
                         $scope.index();
+                        //add stars
+                        // var data={
+                        //     userId: profile.id,
+                        //     stars: 50,
+                        //     instance: coursemoduleid,
+                        //     instanceType: 0,
+                        //     date: getdate()
+                        //     };                            
+                        // moodleFactory.Services.PutStars(data,profile, $scope.token,function(){});
                     },
                     function (date) {
                         console.log('Save profile fail...');
@@ -777,5 +786,20 @@ angular
                 $elem = $(this);
                 $elem.addClass('changed');
             });
+
+            function getdate(){
+              var currentdate = new Date(); 
+              var datetime = currentdate.getFullYear() + ":"
+                + addZeroBefore((currentdate.getMonth()+1))  + ":" 
+                + addZeroBefore(currentdate.getDate()) + " "  
+                + addZeroBefore(currentdate.getHours()) + ":"  
+                + addZeroBefore(currentdate.getMinutes()) + ":" 
+                + addZeroBefore(currentdate.getSeconds());
+                return datetime;
+            }
+
+            function addZeroBefore(n) {
+              return (n < 10 ? '0' : '') + n;
+            }
 
         }]);

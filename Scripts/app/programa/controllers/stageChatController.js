@@ -42,7 +42,7 @@ angular
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                 var data = {
                     userid: currentUser.userId,
-                    datestarted: new Date(),
+                    datestarted: getdate(),
                     moduleid: activity.coursemoduleid,
                     updatetype: 0
                 };
@@ -109,4 +109,19 @@ angular
             function errorCallback(){
 
             }    
+
+            function getdate(){
+              var currentdate = new Date(); 
+              var datetime = currentdate.getFullYear() + ":"
+                + addZeroBefore((currentdate.getMonth()+1))  + ":" 
+                + addZeroBefore(currentdate.getDate()) + " "  
+                + addZeroBefore(currentdate.getHours()) + ":"  
+                + addZeroBefore(currentdate.getMinutes()) + ":" 
+                + addZeroBefore(currentdate.getSeconds());
+                return datetime;
+            }
+
+            function addZeroBefore(n) {
+              return (n < 10 ? '0' : '') + n;
+            }
         }]);
