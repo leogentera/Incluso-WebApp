@@ -502,7 +502,11 @@
                 font-weight: bold;
                 line-height: 1.1em;
                 text-align: center;
-                text-transform: none;                
+                text-transform: none; 
+
+                /*quick fix to avoid pushing layout on large text cases*/
+                height: 6vw;
+                overflow: visible;
             }
 
             .control {
@@ -525,7 +529,7 @@
     .activities {
         border:none;
         background-color: transparent none; //#4C5458
-        background-color: @clr-footer;
+        background-color: #4C5458;
         background-image: url('@{url-images}/bg-stage-1-dashboard-texture.gif');
         background-position: left top;
         background-repeat: no-repeat;  
