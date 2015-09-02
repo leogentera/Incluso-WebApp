@@ -219,10 +219,10 @@ angular
                                     completedActivities.completed && 
                                     $scope.retoMultipleActivities && 
                                     completedActivities.completed >= $scope.retoMultipleActivities.length &&
-                                    completedActivities > 1;
+                                    completedActivities.completed > 1;
 
                 //save response
-
+                
                 if ($scope.IsComplete) {
                   var parentActivityIdentifier = localStorage.getItem("retoMultipleActivitiesParent");
                   var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier);

@@ -54,7 +54,7 @@ var _activityDependencies = [
     },
     {
         id:68,
-        dependsOn:[150,112,145,139,151,149,146,71,70,72,73,68]
+        dependsOn:[150,112,145,139,151,149,146,71,70,72,73]
     },
     {
         id:100,
@@ -238,7 +238,7 @@ var _createNotification = function(activityId, triggerActivity){
   var currentDate = new Date();
   var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
   var currentDay = (currentDate.getDay() < 10) ? ("0" + currentDate.getDay()) : currentDate.getDay();
-  var formattedDate = currentMonth + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
+  var formattedDate = currentMonth + "/" + currentDay + "/" + currentDate.getFullYear();
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
  
   for(var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++ ){
@@ -269,7 +269,7 @@ var _coachNotification = function(){
         }else{}
     });                                
   
-  if (!notificationCoach.timemodified) {  
+  if (notificationCoach && !notificationCoach.timemodified) {
     var activityId = 68;
     var activity = _getActivityByCourseModuleId(activityId);
     if ((activity) ){     
@@ -315,16 +315,16 @@ var _notificationExists = function(){
     //var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
     var countNotificationsUnread = _.filter(userNotifications, function(notif){
         return (notif.timemodified != null && notif.read != true);
-    });				
+    });       
     var totalNotifications = countNotificationsUnread.length;
     return  totalNotifications;
   
 };
 
-function getActivityByActivity_identifier(activity_identifier) {          
+function getActivityByActivity_identifier(activity_identifier, usercourse) {          
             var matchingActivity = null;
             var breakAll = false;
-            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+            var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
             for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
                 var stage = userCourse.stages[stageIndex];
                 for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {

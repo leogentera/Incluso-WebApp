@@ -14,6 +14,7 @@ angular
             _httpFactory = $http;
             _timeout = $timeout;
            
+             var userCourse = JSON.parse(localStorage.getItem('usercourse'));
              var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
              var activityFromTree;
              if (parentActivity.activities && parentActivity.activities.length) {
@@ -22,12 +23,27 @@ angular
                 activityFromTree = parentActivity
              }
 
+
+
              $scope.activityPoints = activityFromTree.points;
              $scope.activityname = activityFromTree.activityname;
+             $scope.like_status = 1;
 
             $scope.$emit('HidePreloader');
 
             var endForumActivity = function(moodleid){
+
+               var parentActivity = getActivityByActivity_identifier($routeParams.moodleid, userCourse);
+               var activities = parentActivity.activities;
+
+               parentActivity.status = 1;
+               if (activities) {
+                 for(var i = 0; i < activities.length; i++) {
+                    activities[i].status = 1;
+                 }
+               }
+               localStorage.setItem('usercourse', JSON.stringify(userCourse));
+
 
                 console.log('Finishing activity...');
                 var like_status = $scope.like_status;
@@ -42,7 +58,13 @@ angular
 
                 var userCurrentStage = localStorage.getItem("currentStage");
 
-                moodleFactory.Services.PutEndActivity(moodleid, data, activityFromTree, userToken,
+               if (activities) {
+                 for(var i = 0; i < activities.length; i++) {
+                  moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {});
+                 }
+               }
+
+                moodleFactory.Services.PutEndActivity(moodleid, data, parentActivity, userToken,
                     function(response){
                           var profile = JSON.parse(localStorage.getItem("profile"));
                           var model = {
@@ -54,13 +76,13 @@ angular
                           };
 
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
+                            updateActivityStatus(moodleid);
                             $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
                           }, errorCallback);
                     },
                     function(){
                       $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);                
                     });
-                updateActivityStatus(moodleid);
 
             };
 

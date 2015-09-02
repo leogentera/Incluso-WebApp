@@ -27,7 +27,7 @@
             };
 
             $scope.navigateTo = function(url,sideToggle,activityId){
-                if(false && activityId!= undefined && activityId > 0 && !$scope.canStartActivity(activityId)) {
+                if(activityId!= undefined && activityId > 0 && !$scope.canStartActivity(activityId)) {
                     return false;
                 }
                 $location.path(url);

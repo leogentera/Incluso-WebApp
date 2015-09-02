@@ -29,11 +29,7 @@
                 <h3>Retos</h3>
                 <div id="carousel-example-generic2" class="carousel">
                     <div id="owl-demo2" class="owl-carousel">
-                        <div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">
-                            <!-- <img ng-src="{{retosIconos[reto.sectionname]}}" />
-                            <div class="subtitle centered text-uppercase" ng-bind="reto.sectionname"></div>
-                            <div class="txt-renglon challenge-description" ng-bind="reto.activityintro"></div> -->
-
+                        <div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">                            
                             <figure class="item-image">
                                 <img ng-src="{{retosIconos[reto.sectionname]}}" alt="{{reto.sectionname}}" />
                             </figure>
@@ -64,12 +60,12 @@
                 <div id="owl-demo" class="owl-carousel">
                     <div ng-repeat="challenge in model.stages[idEtapa].challenges">
                       <div ng-class="canStartActivity(activity.coursemoduleid)?'part':'part disabled'" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
-                          <i class="icomoon icon-checked-join" ng-show="activity.status == 1"></i>
-                          <i class="icomoon icon-gauge" ng-show="activity.status == 0"></i>
+                          <span class="icomoon icon-checked-join" ng-show="activity.status == 1"></span>
+                          <span class="icomoon icon-gauge" ng-show="activity.status == 0"></span>
                           <span ng-bind="activity.activityname"></span>
                           <span>
-                              <i class="icomoon icon-star fl-right"></i>
-                              <i class="icomoon icon-play fl-right"></i>
+                              <span class="icomoon icon-star fl-right"></span>
+                              <span class="icomoon icon-play fl-right"></span>
                           </span>
                       </div>
                     </div>
@@ -79,7 +75,7 @@
             <section class="progreso">
                 <div class="spinner">
                     <span ng-bind="puntosObtenidos"></span>
-                    <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png" /> <!-- <img src="" alt=""> -->
+                    <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png" alt="progress" /> <!-- <img src="" alt=""> -->
 
                     <div class="circle"></div>
                     <div class="text">{{stageProgress}}%</div>
@@ -90,20 +86,11 @@
                 </div>
             </section>
 
-            <!--<section class="component my-progress">
-                <h3>- Mi avance global -</h3>
-                <div class="progress">
-                    <label>0%</label>
-                </div>
-                <figure class="stage">
-                    <img src="assets/images/img-progress-stage-start.png" alt="">
-                </figure>  
-            </section> -->
         </article>
 
         <script type="text/ng-template" id="ClosingStage.html">
-            <div class="modal-robot robot-lg closing-stage-modal user-help">
-                <img src="assets/images/img-robot-sm.svg">
+            <div class="modal-robot robot-sm closing-stage-modal user-help">
+                <img src="assets/images/img-robot-sm.svg" alt="robot" />
                 <div class="modal-header">
                     <a class="icon icon-close btn btn-circle" ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
@@ -125,7 +112,7 @@
 
         <script type="text/ng-template" id="OpeningStageModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help">
-                <img src="assets/images/img-robot-lg.svg">
+                <img src="assets/images/img-robot-lg.svg" alt="robot" />
 
                 <div class="modal-header">
                     <a class="icon icon-close btn btn-circle" ng-click="cancel()">
@@ -145,9 +132,9 @@
 
         <script type="text/ng-template" id="ClosingChallengeModal.html">
             <div class="modal-robot robot-sm closing-stage-modal user-help" >
-                <img src="assets/images/img-robot-lg.svg">
+                <img src="assets/images/img-robot-sm.svg" alt="robot" />
                 <div class="modal-header">
-                    <a class="icon icon-close" ng-click="cancel()">
+                    <a class="icon icon-close btn btn-circle" ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
                     </a>
                 </div>
@@ -160,9 +147,9 @@
 
         <script type="text/ng-template" id="ClosingStageModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help" >
-                <img src="assets/images/img-robot-lg.svg">
+                <img src="assets/images/img-robot-lg.svg" alt="robot" />
                 <div class="modal-header">
-                    <a class="icon icon-close" ng-click="cancel()">
+                    <a class="icon icon-close btn btn-circle" ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
                     </a>
                 </div>
@@ -176,10 +163,10 @@
       
         <script type="text/ng-template" id="CabinaSoporteMsj.html">
             <div class="modal-robot robot-sm closing-stage-modal user-help">
-                <img src="assets/images/img-robot-sm.svg">
+                <img src="assets/images/img-robot-sm.svg" alt="robot" />
 
                 <div class="modal-header">
-                    <a class="icon icon-close" ng-click="cancel()">
+                    <a class="icon icon-close btn btn-circle" ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
                     </a>
                 </div>

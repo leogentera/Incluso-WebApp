@@ -61,7 +61,7 @@
         };
 
         var _postUserNotifications = function(userId, data, successCallback, errorCallback, forceRefresh){
-            _postAsyncData("notifications/"+userId,data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+            _postAsyncData(null,data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
         var _postAsyncForumPost = function(key, data, successCallback, errorCallback, forceRefresh){
@@ -69,7 +69,7 @@
         };
 
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback, forceRefresh){
-            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/')+ notificationId, successCallback, errorCallback);
+            _putAsyncData(null, data, API_RESOURCE.format('notification/')+ notificationId, successCallback, errorCallback);
         };
 
         var _getUserChat = function(userId, successCallback, errorCallback, forceRefresh){
