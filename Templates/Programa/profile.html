@@ -794,9 +794,12 @@
                                                         <span ng-bind="description"></span>
                                                     </div>
                                                     <div class="earned-info">
-                                                        <span class="users"><span ng-show="status == 'won'">Tú y</span>
-                                                            <span ng-bind="earnedTimes"></span>
-                                                        </span>jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span> ganado esta insignia
+                                                        <span class="users">
+                                                            <span  ng-show="earnedTimes > 0">
+                                                                <span ng-show="status == 'won'">Tú y</span>
+                                                                <span ng-bind="earnedTimes"></span>
+                                                            jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span>
+                                                            </span><span  ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
                                                     </div>
                                                     <!--
                                                     <div class="share-achievement">
