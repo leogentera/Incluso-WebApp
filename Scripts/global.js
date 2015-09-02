@@ -269,7 +269,7 @@ var _coachNotification = function(){
         }else{}
     });                                
   
-  if (!notificationCoach.timemodified) {  
+  if (notificationCoach && !notificationCoach.timemodified) {
     var activityId = 68;
     var activity = _getActivityByCourseModuleId(activityId);
     if ((activity) ){     
