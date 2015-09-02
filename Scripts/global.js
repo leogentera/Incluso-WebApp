@@ -315,16 +315,16 @@ var _notificationExists = function(){
     //var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
     var countNotificationsUnread = _.filter(userNotifications, function(notif){
         return (notif.timemodified != null && notif.read != true);
-    });				
+    });       
     var totalNotifications = countNotificationsUnread.length;
     return  totalNotifications;
   
 };
 
-function getActivityByActivity_identifier(activity_identifier) {          
+function getActivityByActivity_identifier(activity_identifier, usercourse) {          
             var matchingActivity = null;
             var breakAll = false;
-            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+            var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
             for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
                 var stage = userCourse.stages[stageIndex];
                 for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {

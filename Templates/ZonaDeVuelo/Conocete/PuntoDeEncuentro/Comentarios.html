@@ -1,5 +1,5 @@
 <div class="incluso-app step-dashboard comments-forum">
-  <article class="blueprint">
+  <article class="blueprint forum">
     <section>
       <div class="txt-renglon centered txt-bigger"></div>
       <div class="subtitle">{{discussion.discussion_name}}</div>
@@ -87,7 +87,7 @@
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies">
             <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
-              <div>{{r.post_author}} <span>publicó:</span>   <div>{{r.message}}</div>
+              <div>{{r.post_author}} <span>comentó:</span>   <div>{{r.message}}</div>
               </div>
             </div>
           </div>
