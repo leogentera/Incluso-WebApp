@@ -238,7 +238,7 @@ var _createNotification = function(activityId, triggerActivity){
   var currentDate = new Date();
   var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
   var currentDay = (currentDate.getDay() < 10) ? ("0" + currentDate.getDay()) : currentDate.getDay();
-  var formattedDate = currentMonth + "/" + currentDate.getDate() + "/" + currentDate.getFullYear();
+  var formattedDate = currentMonth + "/" + currentDay + "/" + currentDate.getFullYear();
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
  
   for(var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++ ){

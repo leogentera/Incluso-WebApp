@@ -69,14 +69,16 @@ angular
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
             };
-            var currentDate = new Date();
-            var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);            
-            var formattedDate = currentMonth + "/" + currentDate.getDate() + "/" + currentDate.getFullYear()            
+            //var currentDate = new Date();
+            //var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
+            //var currentDay = currentDate.getDate() < 10 ? ("0" + currentDate.getDate) : currentDate.getDate();
+            //var formattedDate = currentMonth + "/" + currentDay+ "/" + currentDate.getFullYear();
+            //
             $scope.sendMessage = function() {
                 var newMessage = {
                     messagetext: $scope.currentMessage,
                     messagesenderid: $scope.senderId,                    
-                    messagedate: formattedDate
+                    messagedate: new Date()
                 };
                                             
                 $scope.messages.push(newMessage);
