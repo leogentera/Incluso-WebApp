@@ -124,7 +124,7 @@ angular
 
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
 
-                if (isActivityFinished && activityFromTree) { // && activityFromTree.status == 0) {
+                if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);                    
                 } else {
                    callback();
@@ -172,19 +172,14 @@ angular
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){
-                        //alert('Tu cometario fue registrado.');
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
-                        //getTopicDataAsync();
-
-                        //updateForumProgress(parentId);
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         updateForumProgress(topicId);
                         $scope.$emit('ShowPreloader');
                         checkForumProgress(refreshTopicData);
-                        //$scope.$emit('HidePreloader');
                     },
-                    function(){alert('Tu comentario no pudo ser registrado.');
+                    function(){
                         $scope.textToPost=null;
                         $scope.isCommentModalCollapsed[parentId] = true;
                         $scope.$emit('HidePreloader');
@@ -216,7 +211,6 @@ angular
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Tu aportación fue registrada');
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
@@ -224,7 +218,6 @@ angular
                         refreshTopicData();
                     },
                     function(){
-                        alert('Fail!!');
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         $scope.$emit('HidePreloader');
@@ -235,14 +228,12 @@ angular
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Tu aportación fue registrada');
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                         //getTopicDataAsync();
                         refreshTopicData();
                     },
                     function(){
-                        alert('Tu comenatrio no pudo ser registrado');
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                         $scope.$emit('HidePreloader');
@@ -253,17 +244,14 @@ angular
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Tu aportación fue registrada');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
                         //getTopicDataAsync();
                         refreshTopicData();
                     },
                     function(){
-                        alert('Tu comenatrio no pudo ser registrado');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
-                        alert('Tu comenatrio no pudo ser registrado');
                     });
             };
             $scope.postAttachmentToForum = function(){
@@ -284,14 +272,12 @@ angular
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
-                        alert('Tu aportación fue registrada');
                         $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                         //getTopicDataAsync();
                         refreshTopicData();
                     },
                     function(){
-                        alert('Tu comenatrio no pudo ser registrado');
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                         $scope.$emit('HidePreloader');
@@ -304,8 +290,6 @@ angular
                 var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
                 posts.forEach(createModalReferences);
                 $scope.$emit('HidePreloader');
-                //moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, getActivityInfoCallback, null, true);
-                //$scope.$emit('HidePreloader');
             }
 
             var createModalReferences = function(element, index, array){
@@ -317,7 +301,6 @@ angular
             };
 
             function getActivityInfoCallback(data) {
-                //$scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid + "/" + $routeParams.discussionId));
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion_id == $routeParams.discussionId; });
                 var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
@@ -335,6 +318,9 @@ angular
                         break;
                     case "73":
                         $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
+                    default:
+                        $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/" + $routeParams.moodleid);
                         break;
                 }
             };
