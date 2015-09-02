@@ -246,7 +246,7 @@ angular
             $scope.saveAndContinue = function () {
                 requestCallback();
                 if ($scope.IsComplete) {
-                    //$scope.saveUser();
+                    $scope.saveUser();
                     $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');
                 } else {
                     $location.path('/ZonaDeVuelo/Dashboard/1');

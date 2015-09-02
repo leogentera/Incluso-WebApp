@@ -786,7 +786,7 @@
                     width: 26vw;
                     height: 26vw;
                     background-color: transparent;
-                    .clr-orange(background-color, 0.9);
+                    .clr-black(background-color, 0.6);
                     background-image: none;
                     background-position: center center;
                     border:0.6em solid @clr-white;
@@ -991,7 +991,8 @@
                 position: absolute;
                 top:41%;
                 right: -32%; 
-                padding:5px;
+                //padding:5px; 
+                padding: 1vw;
                 margin:0;
                 background:none transparent;
                 border:none;
@@ -1267,13 +1268,14 @@
          Description: CSS to represent profile data section related to avatar
         ************************************************************************/
         .profile-data {
-            height: 228px; height: 72vw;
-            margin-top: 24px;
+            height: 228px; height: 72vw;  height: 53vw;
+            margin-top: 24px; margin-top: 9vw;
             font-weight: bold;
             text-align: center;
 
             background-attachment: scroll;
-            background-image:url('@{url-images}/img-profile-spaceship-dashboard-middle.png');
+            // background-image:url('@{url-images}/img-profile-spaceship-dashboard-middle.png');
+            background-image:none;
             background-position: center bottom;
             background-repeat: no-repeat;    
             .background-size(100%, auto);
@@ -1311,7 +1313,8 @@
             height: 32vw;
 
             background-attachment: scroll;
-            background-image:url('@{url-images}/img-profile-spaceship-dashboard-settings.png');
+            //background-image:url('@{url-images}/img-profile-spaceship-dashboard-settings.png');
+            background-image:none;
             background-position: center top;
             background-repeat: no-repeat;
             .background-size(100%, auto);
@@ -1424,10 +1427,12 @@
             height: auto;
             min-height: 120vw;
             background-attachment: scroll;
-            background-position: center 0;
+            //background-position: center 0;
+            background-position: center -159vw;
             background-repeat: no-repeat;
-            background-color: @clr-gray-asphalt2;
-            background-image: url('@{url-images}/img-profile-spaceship-dashboard-bottom.png');
+            background-color: @clr-gray-asphalt;
+            //background-image: url('@{url-images}/img-profile-spaceship-dashboard-bottom.png');
+            background-image: url('@{url-images}/bg-profile-full.gif');
             /*.gradient-custom('img-profile-spaceship-dashboard-bottom.png', @clr-gray-asphalt, @clr-gray-asphalt2);*/
             .background-size(100%, auto); 
 
@@ -1696,20 +1701,38 @@
         ************************************************************************/
         .profile-dashboard {
             width: 100vw;
+            height: 159vw;
             margin:0;
             background-attachment: scroll;
-            background-color: @clr-black;
-            background-image:url('@{url-images}/bg-xs-profile-sky.jpg');
-            background-position: center -98px;
-            background-position: center -18vw;
+            // background-color: @clr-black;
+            // background-image:url('@{url-images}/bg-xs-profile-sky.jpg');
+            // background-position: center -98px;
+            // background-position: center -18vw;
+            // background-repeat: no-repeat;
+            // .background-size(auto, 100%);
+
+            background-color: transparent;
+            // background-image:url('@{url-images}/bg-profile-sky.gif');
+            background-image: url('@{url-images}/bg-profile-full.gif');
+            background-position: center top;
             background-repeat: no-repeat;
-            .background-size(auto, 100%);
+            .background-size(100%, auto);
+
+            & > .component {
+                margin: 0;
+                padding:0;
+                padding-top:30vw;
+            }
 
             .user-avatar {
                 width: 33.3vw;
                 height: auto;
-                min-height: 33.3vw;
-                margin-top: 3vw;
+                // min-height: 33.3vw;
+                // margin-top: 3vw;
+
+                margin: 0 auto;
+                padding:0;
+                padding-top:30vw;                
                 
                 figure {
                     min-height: inherit;
@@ -1727,6 +1750,9 @@
                     font-size: 5.1vw;
                     line-height: 9vw;
                     padding: 0 3vw;                    
+                }
+                .btn {
+                    top: 60%;
                 }
             } 
 
@@ -1748,28 +1774,28 @@
          $terms-and-conditions
          Description: CSS to represent modal for terms and conditionss
         ************************************************************************/
-            .terms-and-conditions {
-                .modal-theme-default {
-                    height: 100vh;
-                    /*background: #000 none repeat scroll 0% 0%;*/
-                }
-                .modal-dialog {
-                    margin: 0px 3vh; 
-                    padding-top:15vh;
-                    .modal-title {
-                        padding: 3.6vw 0px;
-                    }
-                }
-
-                .modal-body {
-                    height: 50vh;
-                    padding-top: 0;
-                    overflow-x: hidden;
-                }
-                .modal-footer {
-                    display: none;
+        .terms-and-conditions {
+            .modal-theme-default {
+                height: 100vh;
+                /*background: #000 none repeat scroll 0% 0%;*/
+            }
+            .modal-dialog {
+                margin: 0px 3vh; 
+                padding-top:15vh;
+                .modal-title {
+                    padding: 3.6vw 0px;
                 }
             }
+
+            .modal-body {
+                height: 50vh;
+                padding-top: 0;
+                overflow-x: hidden;
+            }
+            .modal-footer {
+                display: none;
+            }
+        }
         /***********************************************************************/
 
         

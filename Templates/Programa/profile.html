@@ -1,12 +1,12 @@
 <div class="incluso-app profile" id="site-wrapper">
     <article>
         <section class="component profile-dashboard">
-            <div>
-                <figure>
+            <!-- <div>
+                <figure style="visibility:hidden">
                     <img src="assets/images/img-profile-spaceship-dashboard-top.png" alt="" />
                 </figure>
-            </div>
-            <div>
+            </div> -->
+            <!-- <div class="component"> -->
                 <div class="user-avatar">
                     <figure>
                         <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive" />
@@ -16,8 +16,8 @@
                         <span class="icomoon icon-edit"></span>
                     </a>
                 </div>
-            </div>
-            <div>
+            <!-- </div> -->
+            <!-- <div> -->
                 <div class="profile-data">
                     <h4 class="user-name" ng-bind="model.alias"></h4>
                     <!-- <h4 class="user-name">leonardo garza r.</h4> -->
@@ -41,7 +41,7 @@
                         <span for="">Privacidad</span>
                     </a>
                 </div>
-            </div>
+            <!-- </div> -->
         </section>
         <section class="component profile-options">
             <div class="pages">
@@ -794,7 +794,7 @@
                                                         <span ng-bind="description"></span>
                                                     </div>
                                                     <div class="earned-info">
-                                                        <span class="users"><span ng-show="status != 'pending'">Tú y</span>
+                                                        <span class="users"><span ng-show="status == 'won'">Tú y</span>
                                                             <span ng-bind="earnedTimes"></span>
                                                         </span>jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span> ganado esta insignia
                                                     </div>

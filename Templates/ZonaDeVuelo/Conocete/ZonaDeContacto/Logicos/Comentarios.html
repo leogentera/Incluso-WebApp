@@ -20,14 +20,13 @@
           <div class="panel-body" collapse="isCollapsed">
             <div class="stage perform">
               <figure class="player">
-                <img src="{{ discussion.fileurl + '?token=' + userToken }}" alt="{{ discussion.filename }}">
+                <img src="{{ discussion.fileurl + '?token=' + userToken }}" alt="{{ discussion.filename }}" alt="discussion" />
               </figure>
             </div>
           </div>
         </div>
       </section>
       <section class="txt-renglon distribuido">
-        <!--<a href="" ng-click="collapseText()"><img src="assets/images/aa.svg"></a> -->
         <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isTextCollapsed')" ng-class="{'active': !forumModals['isTextCollapsed']}">
           <span class="icomoon icon-text text-bigger"></span>
           <span class="arrow-up"></span>
@@ -45,19 +44,19 @@
       <section class="modales">
         <div id="openModal1" class="modalDialog" collapse="forumModals['isTextCollapsed']">
           <div>
-            <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value="" ng-model="textToPost" /></div>
+            <div class="add"><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar texto..." value="" ng-model="textToPost" /></div>
             <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
           </div>
         </div>
         <div id="openModal2" class="modalDialog" collapse="forumModals['isLinkCollapsed']">
           <div>
-            <div class="add"><i class="icomoon icon-edit"></i><input type="url" placeholder="Agregar tu enlace..." value="" ng-model="linkToPost" /></div>
+            <div class="add"><span class="icomoon icon-edit"></span><input type="url" placeholder="Agregar tu enlace..." value="" ng-model="linkToPost" /></div>
             <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postLinkToForum()" >Compartir</a>
           </div>
         </div>
         <div id="openModal3" class="modalDialog" collapse="forumModals['isVideoCollapsed']">
           <div>
-            <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar ruta de tu peli..." value="" ng-model="videoToPost" /></div>
+            <div class="add"><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar ruta de tu peli..." value="" ng-model="videoToPost" /></div>
             <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postVideoToForum()" >Compartir</a>
           </div>
         </div>
@@ -72,7 +71,7 @@
       <section class="wall">
         <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies">
           <div class="part">
-            <div class="author"><img src="assets/images/avatar.svg">
+            <div class="author"><img src="assets/images/avatar.svg" alt="author" />
               <div>{{p.post_author}} <span>publicó:</span>
                 <div>{{p.created | date: "dd MMMM yyyy"}}</div>
               </div>
@@ -81,26 +80,18 @@
               <span ng-switch="p.post_type">
                 <span ng-switch-default>{{ p.message }}</span>
                 <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>
-                <!--<span ng-switch-when="3"><a ng-href="{{p.message}}"><img src="assets/images/img-video-placeholder.svg" alt="Ver video">Ver video</a></span>-->
                 <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
-                <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  /> </a></span>
-              </span>
-              <!--<div ng-repeat="attachment in p.attachments">
-                  <a href="{{ attachmentsfileurl }}"><i class="icomoon icon-required"></i> {{ attachment.filename }} </a>
-              </div>-->
+                <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}" alt="user" /> </a></span>
+              </span>              
               <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
               </div>
             </div>
             <div id="item{{$index}}" ng-repeat="r in p.replies">
-              <div class="coment block"><img src="assets/images/avatar.svg">
+              <div class="coment block"><img src="assets/images/avatar.svg" alt="post" />
                 <div>{{r.post_author}} <span>publicó:</span>   <div>{{r.message}}</div>
                 </div>
               </div>
-            </div>
-            <!--<div class="vermas" ng-show="false">
-            Ver más comentarios
-            <i class="icomoon icon-plus"></i>
-            </div>-->
+            </div>            
             <div class="social">
               <div ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
                 <span class="icomoon icon-like"></span> Me gusta
@@ -118,7 +109,7 @@
             <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">
               <div>
                 <a href="#close" title="Close" class="close"></a>
-                <div class="add" ><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..."  ng-model="replyText" /></div>
+                <div class="add" ><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar texto..."  ng-model="replyText" /></div>
 
                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent)" >Compartir</a>
               </div>

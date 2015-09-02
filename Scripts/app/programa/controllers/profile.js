@@ -38,9 +38,10 @@ angular
 
                     if (elem.status == "won") {
                         elem.filename = getFileName(elem.id);
+                        elem.description = getDescription(elem.id);
                     } else {
                         elem.filename = "default_placeholder.svg";
-                        elem.description = getDescription(elem.id);
+
                     }
                     console.log(elem.id + " " + elem.status + "  " + elem.description);
                     $scope.wholeBadgesPages[i].push(elem);
@@ -114,55 +115,55 @@ angular
 
                 switch (id) {
                     case 2:
-                        description = "Para obtener más combustible visita 'Fuente de energía' zona de vuelo  recárgate de conocimiento y ve a toda velocidad  ";
+                        description = "Has ganado el suficiente 'combustible' para seguir la aventura. ¡Buen  viaje!";
                         break;
                     case 3:
-                        description = "Para obtener esta pieza  visita 'Reto múltiple' y convierte tus habilidades en energía que te impulsen día a día";
+                        description = "Has recuperado la 'Turbina C0N0-CT' ahora tienes un elemento más para lograr la misión";
                         break;
                     case 4:
-                        description = "Para obtener esta pieza visita la sección 'Cada sueño en su lugar' y mantén en alto tus ideas";
+                        description = "Has recuperado la 'Turbina Ala Ctu-3000' ¡Continua el viaje!";
                         break;
                     case 5:
-                        description = "Para obtener esta pieza visita 'Cabina de soporte' y dirige la nave por el rumbo correcto";
+                        description = "Has encontrado el 'Sistema de navegación' ¡No te detengas!";
                         break;
                     case 6:
-                        description = "Para obtener esta pieza visita la sección 'Fuente de energía' zona de navegación  y define la trayectoria de tu  viaje ";
+                        description = "Has recuperado el 'Propulsor' ¡Ahora, ve por más!";
                         break;
                     case 7:
-                        description = "Para obtener esta pieza visita la sección 'Tus ideas', toma impulso y llega más lejos";
+                        description = "Recuperaste los 'Misiles' ¡Bien hecho!";
                         break;
                     case 8:
-                        description = "Para obtener esta pieza visita la sección 'Mapa de vida' y ponle fecha limite a tu sueños";
+                        description = "El 'Campo de fuerza' es tuyo. ¡Lograste un reto más!";
                         break;
                     case 9:
-                        description = "Para obtener esta pieza visita 'Cabina de soporte zona de navegación' y mantén la dirección exacta";
+                        description = "Has obtenido el 'Radar' ¡Continua la aventura!";
                         break;
                     case 10:
-                        description = "Para obtener esta pieza visita 'Fuente de energía' zona de aterrizaje y oxigena tu mente con más información";
+                        description = "Lograste obtener el 'Tanque de oxígeno' ¡No te rindas!";
                         break;
                     case 11:
-                        description = "Para obtener esta pieza visita la sección 'Mapa del emprendedor' y encuentra nuevas formas de guiar tu proyecto";
+                        description = "Es tuya la 'Sonda espacial' ¡Sigue así!";
                         break;
                     case 12:
-                        description = "Has públicas tus ideas y gana la insignia 'Foro interplanetario'";
+                        description = "Por participar activamente, has ganado la insignia 'Foro interplanetario'";
                         break;
                     case 13:
-                        description = "Completa los datos de tu perfil y gana la insignia 'ID intergaláctica' así todos querrán saber más de ti";
+                        description = "Por completar tu Perfil has ganado la insignia 'ID Intergaláctica'";
                         break;
                     case 14:
-                        description = "Contagia de energía, participa activamente en este viaje y gana la insignia 'Participación eléctrica'";
+                        description = "Por aportar activamente en la comunidad Incluso has ganado la insignia 'Participación eléctrica'";
                         break;
                     case 15:
-                        description = "Consigue 30 likes en foro o comunidad y vuélvete el 'Corazón digital' de incluso";
+                        description = "Por obtener 30 likes en Foro o Comunidad has ganado la insignia 'Corazón digital'";
                         break;
                     case 16:
-                        description = "Para obtener esta pieza visita la sección 'Dinero en movimiento' y dale a tus finanzas un giro de 360°";
+                        description = "Has ganado el 'Casco'. Ahora, ¡Ve por más!";
                         break;
                     case 17:
-                        description = "Para obtener esta pieza  visita la sección 'Cabina de soporte zona de aterrizaje' y no pierdas contacto";
+                        description = "Has ganado el 'Radio de comunicación'. ¡Nunca te des por vencido!";
                         break;
                     case 18:
-                        description = "Para obtener esta pieza visita la sección 'Tú eliges' y decide el rumbo de tu viaje";
+                        description = "Ya es tuyo el 'Turbo' ¡No te rindas!";
                         break;
                     default:
                         description = "";
@@ -193,7 +194,7 @@ angular
                 errorMessages: []
             };
 
-            $rootScope.pageName = "Mi perfil"
+            $rootScope.pageName = "Mi perfil";
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
