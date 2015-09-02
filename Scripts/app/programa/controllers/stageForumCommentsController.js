@@ -92,7 +92,7 @@ angular
             };
 
             var checkForumProgress = function(callback){
-
+                debugger;
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
 
