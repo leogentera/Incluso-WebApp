@@ -10,7 +10,6 @@
         <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-desktop.min.css" />
         <link href="assets/styles/dev-css.css" rel='stylesheet' type='text/css' />
         <link href="assets/styles/jquery-ui.css" rel="stylesheet" type="text/css">
-
         <style>
             body:after {
                 /*content: url(assets/images/bg-sm-public-page.jpg)
@@ -65,18 +64,6 @@
                 display: none;
             }
             [ng-cloak]{display: none !important; height:0;}
-            @media screen {
-                div#img-cache {
-                    position: absolute;
-                    left: -9999px;
-                    top:  -9999px;
-                }
-                div#img-cache img {display: block;}
-            }
-            @media print {
-                div#img-cache,
-                div#img-cache img {display: none; visibility: hidden;}
-            }
         </style>           
     </head>
 
@@ -106,14 +93,6 @@
             </div>
             <footer-component></footer-component>
         </div><!-- ~ .app -->
-
-        <div id="img-cache">
-            <img width="1" height="1" src="assets/images/bg-sm-public-page.jpg"  />
-            <img width="1" height="1" src="assets/images/bg-footer.gif.png"  />
-            <img width="1" height="1" src="assets/images/bg-dashboard-full.gif"  />
-            <img width="1" height="1" src="assets/images/bg-stage-1-dashboard.gif"  />
-            <img width="1" height="1" src="assets/images/bg-stage-1-dashboard-pattern.gif"  />
-        </div>
  
         <script src="Scripts/jquery-2.1.4.min.js"></script>
         <script src="Scripts/Plugins/jquery-ui.js"></script>
