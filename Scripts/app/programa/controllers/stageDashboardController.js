@@ -220,4 +220,8 @@ angular
                         title: "Cierre Zona de Vuelo",
                         message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
                     };
+                    
+                    $scope.goToDashboard = function(){
+                        location.path('/');
+                    }
                 });
