@@ -26,6 +26,7 @@
         'incluso.programa.leaderboard',        
 
         'incluso.stage.dashboardcontroller',
+        'incluso.stage.forumclosecontroller',
         'incluso.stage.forumcontroller',
         'incluso.stage.forumcommentscontroller',
         'incluso.stage.contentscontroller',
@@ -302,11 +303,16 @@
             controller: 'stageGameRetoMultipleResultsController'
         });
     
+        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:moodleid', { 
+            templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
+            controller: 'stageForumCloseController'
+        });
+    
         $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
-    
+
         $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', { 
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
