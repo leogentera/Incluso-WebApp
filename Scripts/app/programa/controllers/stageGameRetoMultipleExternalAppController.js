@@ -31,6 +31,7 @@ angular
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var startingTime = new Date();
 
+
             function requestCallback() {
                   var response = {
                     "userid": 196,
@@ -217,30 +218,34 @@ angular
                 $scope.IsComplete = $scope.retoMultipleActivities && 
                                     completedActivities.completed && 
                                     $scope.retoMultipleActivities && 
-                                    completedActivities.completed >= $scope.retoMultipleActivities.length;
+                                    completedActivities.completed >= $scope.retoMultipleActivities.length &&
+                                    completedActivities > 1;
 
                 //save response
 
-                var parentActivityIdentifier = localStorage.getItem("retoMultipleActivitiesParent");
-                var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier);
-                parentActivity.status = 1;
-                _endActivity(parentActivity);
+                if ($scope.IsComplete) {
+                  var parentActivityIdentifier = localStorage.getItem("retoMultipleActivitiesParent");
+                  var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier);
+                  parentActivity.status = 1;
+                  _endActivity(parentActivity);
 
-                //localStorage.setItem("usercourse", JSON.stringify(usercourse));
-                localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
-                
-                if (parentActivity.activities) {
-                  //Updates all the subactivities' status
-                  var userCourseUpdated = updateAllActivityStatuses(parentActivity);
-                  //Posts the stars of activity and subactivities
-                  updateAllSubactivityStars(parentActivity);
+                  //localStorage.setItem("usercourse", JSON.stringify(usercourse));
+                  localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
+                  
+                  if (parentActivity.activities) {
+                    //Updates all the subactivities' status
+                    var userCourseUpdated = updateAllActivityStatuses(parentActivity);
+                    //Posts the stars of activity and subactivities
+                    updateAllSubactivityStars(parentActivity);
+                  }
+
+                  for(i = 0; i < quizzesRequests.length; i++){
+                    console.log("saving quiz");
+                    var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
+                    $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated)
+                  }
                 }
 
-                for(i = 0; i < quizzesRequests.length; i++){
-                  console.log("saving quiz");
-                  var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                  $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated)
-                }
             }
 
             $scope.saveAndContinue = function () {
