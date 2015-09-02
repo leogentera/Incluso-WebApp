@@ -454,12 +454,12 @@
 																		ng-options="item for item in socialNetworksList" 
 																		ng-init="model.socialNetwork == null" 
 																		ng-class="{'selected': model.socialNetworks[$index].socialNetwork.length != 0 && model.socialNetworks[$index].socialNetwork != null}">
-																		<option value="" ng-disabled="!!model.socialNetwork">Nombre de usuario</option>
+																		<option value="" ng-disabled="!!model.socialNetwork">Nombre de Red social</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 																</div>
 																<div class="form-group-control">
-																	<input type="text" class="form-control form-control-lg theme-form" placeholder="Nombre Red social" ng-model="model.socialNetworks[$index].socialNetworkId" />
+																	<input type="text" class="form-control form-control-lg theme-form" placeholder="Nombre de usuario" ng-model="model.socialNetworks[$index].socialNetworkId" />
 																</div>
 															</div>
 														</li>
@@ -623,7 +623,7 @@
 												<section>
 													<h4>Actividades artísticas</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.artisticActivities">
+														<li ng-repeat="s in model.artisticActivities track by $index">
 															<div class="form-group theme-form">
 																<h5>
 																	<!-- <span>Actividad {{model.artisticActivities.indexOf(s) + 1}}</span> -->
@@ -654,7 +654,7 @@
 												<section>
 													<h4>Hobbies</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.hobbies">
+														<li ng-repeat="s in model.hobbies track by $index">
 															<div class="form-group theme-form">
 																<h5>
 																	<!-- <span>Hobbie {{model.hobbies.indexOf(s) + 1}}</span> -->
@@ -732,7 +732,7 @@
 												<section>
 													<h4>Talentos</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.talents">
+														<li ng-repeat="s in model.talents track by $index">
 															<div class="form-group theme-form">
 																<h5>
 																	<!-- <span>Talento {{model.talents.indexOf(s) + 1}}</span> -->
@@ -763,7 +763,7 @@
 												<section>
 													<h4>Valores</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.values">
+														<li ng-repeat="s in model.values track by $index">
 															<div class="form-group theme-form">
 																<h5>
 																	<!-- <span>Valor {{model.values.indexOf(s) + 1}}</span>  -->
@@ -794,7 +794,7 @@
 												<section>
 													<h4>Habilidades</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.habilities">
+														<li ng-repeat="s in model.habilities track by $index">
 															<div class="form-group theme-form">
 																<h5>
 																	<!-- <span>Habilidad {{model.habilities.indexOf(s) + 1}}</span> -->
