@@ -124,7 +124,7 @@ angular
 
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
 
-                if (isActivityFinished && activityFromTree) { // && activityFromTree.status == 0) {
+                if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);                    
                 } else {
                    callback();
