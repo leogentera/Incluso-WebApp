@@ -12,23 +12,15 @@
 
 	<article>
 		<section class="component profile-dashboard">
-			<div>
-				<figure>
-					<img src="assets/images/img-profile-spaceship-dashboard-top.png" alt="" />
-				</figure>
-			</div>
-			<div>
 				<div class="user-avatar">
 					<figure>
 						<img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive" />
 						<figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption>
 					</figure>
-					<button type="button" id="editProfile" ng-click="avatar()">
+					<a type="button" id="editProfile" ng-click="avatar()" class="btn">
 						<span class="icomoon icon-edit"></span>
-					</button>
+					</a>
 				</div>
-			</div>
-			<div>
 				<div class="profile-data">
 					<h4 class="user-name" ng-bind="model.alias"></h4>
 					<p class="user-points">
@@ -37,23 +29,21 @@
 					</p>
 				</div>
 				<div class="profile-settings">
-					<button class="btn btn-icon-aside left active" ng-click="save();">
+					<a class="btn btn-icon-aside left active" ng-click="save();">
 						<div class="btn-icon">
 							<span class="icomoon icon-settings"></span>
 						</div>
 						<span for="">Guardar</span>
-					</button>
+					</a>
 
-					<button class="btn btn-icon-aside right">
+					<a class="btn btn-icon-aside right">
 						<div class="btn-icon">
 							<span class="icomoon icon-lock"></span>
 						</div>
 						<span for="">Privacidad</span>
-					</button>
+					</a>
 				</div>
-			</div>
 		</section>
-
 		<section class="component profile-options">
 			<form action="" name="editForm">
 				<div class="pages">
