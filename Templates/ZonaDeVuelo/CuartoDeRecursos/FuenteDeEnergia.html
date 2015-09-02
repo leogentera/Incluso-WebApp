@@ -105,20 +105,22 @@
                   <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'page' && !activity.status">Mostrar texto...</span>
                   <span ng-show="activity.status" ng-bind-html="activity.pageContent"></span>
                   <span ng-bind-html="activity.file.pageContent"></span>
-                  <section class="component video-gallery ng-scope"  ng-if="activity.activityintro == 'video'" ng-click="updateStatus(activity.groupid)">
+
+                  <section class="component ng-scope"  ng-if="activity.activityintro == 'video'" ng-click="updateStatus(activity.groupid)">
                     <div class="panel panel-video">
-                      <div class="stage perform">   
-                        <a href={{activity.activityContent.url}} target="_blank" class="icon icon-play" >
-                          <span class="glyphicon glyphicon-play"></span>
-                        </a>                       
-                        <figure class="player">
-                          <a href={{activity.activityContent.url}} target="_blank">
-                            <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />
-                          </a>
-                        </figure>
-                      </div>                        
+                        <div class="video-player">
+                            <div class="stage">
+                                <a class="icon icon-play" href={{activity.activityContent.url}} target="_blank">
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </a>
+                                <figure class="poster">
+                                    <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />
+                                </figure>
+                            </div>
+                        </div>
                     </div>
                   </section>
+
                 </div>
               </div>
               <div class="interact hidden">
