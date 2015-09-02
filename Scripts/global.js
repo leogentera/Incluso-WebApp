@@ -181,14 +181,13 @@ var _isChallengeCompleted = function(){
     
     for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++){
         var currentChallenge = currentStage.challenges[challengeIndex];
-        if(currentChallenge.status == 0){        
+        if(currentChallenge.status == 0){
+          _updateBadgeStatus(currentChallenge.coursemoduleid);
           var totalActivitiesByStage = currentChallenge.activities.length;
           var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
           if (totalActivitiesByStage == totalActivitiesCompletedByStage){
               
               //updateBadge
-              _updateBadgeStatus(currentChallenge.coursemoduleid);
-              
               userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
               localStorage.setItem("usercourse", JSON.stringify(userCourse));              
               var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
