@@ -482,14 +482,14 @@ function updateAllSubactivityStars (parentActivity){
    moodleFactory.Services.PutStars(data, profile, currentUser.token, successCallback, errorCallback);
 }
 
- function updateUserStars (activity_identifier){
+ function updateUserStars (activity_identifier, extraPoints){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getActivityByActivity_identifier(activity_identifier);
-   profile.stars = profile.stars+activity.points;   
+   profile.stars = profile.stars+activity.points + Number(extraPoints);
     var data={
       userId: profile.id,
-      stars: activity.points,
+      stars: activity.points + Number(extraPoints),
       instance: activity.coursemoduleid,
       instanceType: 0,
       date: getdate()
