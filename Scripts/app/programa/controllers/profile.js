@@ -74,16 +74,16 @@ angular
                         filename = "escudo.svg";
                         break;
                     case 9:
-                        filename = "combustible.svg"; //radar.svg
+                        filename = "radar.svg";
                         break;
                     case 10:
-                        filename = "turbina.svg"; //tanqueoxigeno
+                        filename = "tanqueoxigeno.svg";
                         break;
                     case 11:
                         filename = "sondaEspacial.svg";
                         break;
                     case 12:
-                        filename = "foro_interplanetario";
+                        filename = "foro_interplanetario.svg";
                         break;
                     case 13:
                         filename = "IDintergalactica.svg";
