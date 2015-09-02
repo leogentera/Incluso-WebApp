@@ -10,7 +10,7 @@
       </section>
 
       <section class="filter-section form">
-        <i class="icomoon icon-list"></i>
+        <span class="icomoon icon-list"></span>
         <select name="filter" class="form-control form-control-lg theme-default" ng-model="filter">
           <option value="" disabled>Filtrar contenido por...</option>
           <option value="">Ver Todo</option>
@@ -21,7 +21,7 @@
           <option value="Frases">Frases</option> 
           <option value="url">Enlaces</option> 
         </select>
-        <i class="icomoon icon-arrow"></i>
+        <span class="icomoon icon-arrow"></span>
       </section>
 
       <section class="wall">
@@ -115,7 +115,9 @@
                   <section class="component video-gallery ng-scope"  ng-if="activity.activityintro == 'video'" ng-click="updateStatus(activity.groupid)">
                     <div class="panel panel-video">
                       <div class="stage perform">   
-                        <a href={{activity.activityContent.url}} target="_blank" class="icon icon-play" ></a>                       
+                        <a href={{activity.activityContent.url}} target="_blank" class="icon icon-play">
+                          <span class="glyphicon glyphicon-play"></span>
+                        </a>                       
                         <figure class="player">
                           <a href={{activity.activityContent.url}} target="_blank">
                             <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />

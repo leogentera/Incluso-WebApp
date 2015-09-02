@@ -30,6 +30,7 @@ angular
             validateCabinaDeSoporte();
 
             function validateCabinaDeSoporte(){
+                debugger;
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
