@@ -24,7 +24,6 @@ angular
 
 
             $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
-            console.log("Total number of badges: " + $scope.totalBadges);
             $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
             $scope.badgePage = 0;
             $scope.normalBadgePage = $scope.badgePage + 1;
@@ -204,13 +203,13 @@ angular
             $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
             /*unir1*/ $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
             $scope.educationStatusList = ['Terminada', 'En proceso', 'Inconclusa'];
-            $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'FutbolSoccer', 'Basquetbol', 'ArtesMarciales', 'Yoga', 'Natación', 'FutbolAmericano', 'Basebol', 'Carreras'];
-            $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografia', 'Graffiti', 'Diseño Gráfico', 'Artesanias', 'Teatro', 'Modelado', 'Dibujo'];
+            $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'Fútbol Soccer', 'Basquetbol', 'Artes Marciales', 'Yoga', 'Natación', 'Futbol Americano', 'Basebol', 'Carreras'];
+            $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografia', 'Graffiti', 'Diseño Gráfico', 'Artesanías', 'Teatro', 'Modelado', 'Dibujo'];
             $scope.hobbiesList = ['Ir a fiestas', 'Leer', 'Pasar tiempo con amigos', 'Cocinar', 'Jugar videojuegos', 'Visitar museos', 'Ver películas/series', 'Ver televisión', 'Modelado', 'Pasar tiempo en redes sociales'];
             $scope.talentsList = ['Cantar', 'Llevar ritmos', 'Bailar', 'Hablar frente a otros', 'Dibujar', 'Hacer amigos', 'Hacer operaciones matemáticas', 'Aprender cosas rápido', 'Ubicar lugares', 'Memorizar', 'Hacer manualidades'];
             $scope.valuesList = ['Tolerancia', 'Respeto', 'Honestidad', 'Responsabilidad', 'Confiabilidad', 'Solidaridad', 'Igualdad', 'Lealtad', 'Amistad', 'Generosidad', 'Esfuerzo'];
             $scope.habilitiesList = ['Empatía', 'Creatividad', 'Liderazgo', 'Comunicación', 'Negociación', 'Trabajo en equipo', 'Innovación', 'Iniciativa', 'Toma de decisiones', 'Planeación', 'Organización'];
-            $scope.iLiveWithList = ['Ambo padres', 'Padre', 'Madre', 'Tíos', 'Esposo(a)', 'Abuelos', 'Amigos'];
+            $scope.iLiveWithList = ['Ambos padres', 'Padre', 'Madre', 'Tíos', 'Esposo(a)', 'Abuelos', 'Amigos'];
             $scope.mainActivityList = ['Estudias', 'Trabajas', 'Ni estudias ni trabajas'];
             /*unir1*/$scope.levelList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
             $scope.gradeList = ['1er', '2do', '3ro', '4to', '5to', '6to'];
@@ -366,8 +365,10 @@ angular
                 //Validation of the $scope.model.familiaCompartamos array
                 var arrayForIdClients = [];
 
+
                 $scope.model.familiaCompartamos.forEach(function (elem) {
-                    arrayForIdClients.push(elem.idClient);
+                    arrayForIdClients.push(elem.idClient.toLowerCase());
+
                 });
 
                 var filteredIdClient = arrayForIdClients.filter(function (item, pos) {
@@ -377,6 +378,41 @@ angular
                 if (arrayForIdClients.length != filteredIdClient.length) {
                     //Repeated idClients
                     errors.push("El número de cliente Compartamos debe ser único.");
+                }
+
+                //Validation of the $scope.model.socialNetworks array
+                var arrayForUsername = [];
+
+                $scope.model.socialNetworks.forEach(function (elem) {
+                    arrayForUsername.push(elem.socialNetwork.toLowerCase());
+                });
+
+                var filteredUsernames = arrayForUsername.filter(function (item, pos) {
+                    return arrayForUsername.indexOf(item) == pos;
+                });
+
+                if (arrayForUsername.length != filteredUsernames.length) {
+                    //Repeated names for Social network
+                    console.log("Repeated Social NetWork");
+                    errors.push("Nombre de Red social está repetido.");
+                }
+
+
+                //Validation of the $scope.model.studies array
+                var arrayForLevel = [];
+
+                $scope.model.studies.forEach(function (elem) {
+                    arrayForLevel.push(elem.school.toLowerCase());
+                });
+
+                var filteredLevel = arrayForLevel.filter(function (item, pos) {
+                    return arrayForLevel.indexOf(item) == pos;
+                });
+
+                if (arrayForLevel.length != filteredLevel.length) {
+                    //Repeated names for Social network
+                    console.log("Repeated Level of Studies");
+                    errors.push("El nivel de estudios está repetido.");
                 }
 
                 $scope.model.modelState.errorMessages = errors;
@@ -518,6 +554,15 @@ angular
                         ValidatePointsPolicy();
                         console.log('Save profile successful...');
                         $scope.index();
+                        //add stars
+                        // var data={
+                        //     userId: profile.id,
+                        //     stars: 50,
+                        //     instance: coursemoduleid,
+                        //     instanceType: 0,
+                        //     date: getdate()
+                        //     };                            
+                        // moodleFactory.Services.PutStars(data,profile, $scope.token,function(){});
                     },
                     function (date) {
                         console.log('Save profile fail...');
@@ -639,35 +684,30 @@ angular
                     return $scope.model.phones.indexOf(item) == pos;
                 });
 
-                $scope.model.socialNetworks = $scope.model.socialNetworks.filter(function (item, pos) {
-                    return $scope.model.socialNetworks.indexOf(item) == pos;
-                });
-
                 $scope.model.favoriteSports = $scope.model.favoriteSports.filter(function (item, pos) {
-                    return $scope.model.favoriteSports.indexOf(item) == pos;
+                    return item.trim().length > 0 && $scope.model.favoriteSports.indexOf(item) == pos;
                 });
 
                 $scope.model.artisticActivities = $scope.model.artisticActivities.filter(function (item, pos) {
-                    return $scope.model.artisticActivities.indexOf(item) == pos;
+                    return item.trim().length > 0 && $scope.model.artisticActivities.indexOf(item) == pos;
                 });
 
                 $scope.model.hobbies = $scope.model.hobbies.filter(function (item, pos) {
-                    return $scope.model.hobbies.indexOf(item) == pos;
+                    return item.trim().length > 0 && $scope.model.hobbies.indexOf(item) == pos;
                 });
 
                 $scope.model.talents = $scope.model.talents.filter(function (item, pos) {
-                    return $scope.model.talents.indexOf(item) == pos;
+                    return item.trim().length > 0 && $scope.model.talents.indexOf(item) == pos;
                 });
 
                 $scope.model.values = $scope.model.values.filter(function (item, pos) {
-                    return $scope.model.values.indexOf(item) == pos;
+                    return item.trim().length > 0 && $scope.model.values.indexOf(item) == pos;
                 });
 
                 $scope.model.habilities = $scope.model.habilities.filter(function (item, pos) {
-                    return $scope.model.habilities.indexOf(item) == pos;
+                    return item.trim().length > 0 && $scope.model.habilities.indexOf(item) == pos;
+
                 });
-
-
             };
 
             $scope.addStudy = function () {
@@ -851,5 +891,20 @@ angular
                 $elem = $(this);
                 $elem.addClass('changed');
             });
+
+            function getdate() {
+                var currentdate = new Date();
+                var datetime = currentdate.getFullYear() + ":"
+                    + addZeroBefore((currentdate.getMonth() + 1)) + ":"
+                    + addZeroBefore(currentdate.getDate()) + " "
+                    + addZeroBefore(currentdate.getHours()) + ":"
+                    + addZeroBefore(currentdate.getMinutes()) + ":"
+                    + addZeroBefore(currentdate.getSeconds());
+                return datetime;
+            }
+
+            function addZeroBefore(n) {
+                return (n < 10 ? '0' : '') + n;
+            }
 
         }]);
