@@ -10,10 +10,12 @@
         <div class="pages">
           <div class="page" data-page="1" ng-class="currentPage === 1 ? 'active' : ''">
             <div class="video-gallery">
-                <div class="stage perform">
-                  <button class="icon icon-play" ng-click="playVideo('assets/media', 'video-tutorial.mp4')"></button>
-                  <figure class="player">
-                    <img src="assets/media/thumb-tutorial.jpg" ng-click="playVideo()" />
+                <div class="stage">
+                  <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-tutorial.mp4')">
+                    <span class="glyphicon glyphicon-play"></span>
+                  </a>
+                  <figure class="poster">
+                    <img src="assets/media/thumb-tutorial.jpg" />
                   </figure>
                 </div>
               </div>
