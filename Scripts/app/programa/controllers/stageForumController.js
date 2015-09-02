@@ -30,26 +30,33 @@ angular
                      {name: 'matematica', category: 'logico'},
                      {name: 'liguistica', category: 'logico'},
                  ];
-                 debugger;
+
                  var shield = JSON.parse(localStorage.getItem('profile')).shield;
                  //shield ? shield = shield.shield : shield = null;
-                 if (shield != '') {
+                 if (shield && shield != '') {
 
                      var shieldCategory = _.find(shields, function (s) {
-                         return s.name == shield
-                     }).category;
+                         return s.name == shield.toLowerCase()
+                     });
                      //return shieldCategory == "logico" ?  $location.path(logicForumTopicsUrl) : $location.path(artisticForumTopicsUrl);
-
-                     if (shieldCategory == "logico") {
-                         $scope.moodleId = 147;
-                         $location.path(logicForumTopicsUrl);
-                     } else if (shieldCategory == "artistico") {
-                         $scope.moodleId = 148;
-                         $location.path(artisticForumTopicsUrl);
+                     if (shieldCategory) {
+                       if (shieldCategory.category == "logico") {
+                           $scope.moodleId = 147;
+                           $location.path(logicForumTopicsUrl);
+                       } else if (shieldCategory.category == "artistico") {
+                           $scope.moodleId = 148;
+                           $location.path(artisticForumTopicsUrl);
+                       }
                      }
+                 } else {
+                  var userCurrentStage = localStorage.getItem("currentStage");
+                    $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
                  }
             };
-            if($routeParams.moodleid == 149) redirectOnShield();
+
+            if($routeParams.moodleid == 149) {
+              redirectOnShield();
+            }
 
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"");
@@ -63,7 +70,6 @@ angular
            $scope.activity = "Here is a value";
            function getForumsProgress(){
               var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : setForumsList();
-              console.log(forumsProgress);
               return forumsProgress;
 
            };
@@ -83,7 +89,6 @@ angular
             }
 
             function getDataAsync() {
-                console.log('Getting forum data');
                 $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, currentUser.token, getActivityInfoCallback, ''):'';
             }
 
@@ -124,7 +129,6 @@ angular
                         size: size,
                         windowClass: 'user-help-modal'
                     });
-                    console.log("modal open");
                 }, 1000);
               
               $location.path('/ZonaDeVuelo/Dashboard/1');
