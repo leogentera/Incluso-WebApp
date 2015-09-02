@@ -58,9 +58,17 @@ angular
               $scope.fuenteDeEnergia = activities;
               getDataAsync();
               $scope.$emit('HidePreloader'); //hide preloader
-            }                                        
+            }        
 
-            function getDataAsync() {                                                             
+            $scope.navigateToPage = function (pageNumber) {
+                $scope.currentPage = pageNumber;
+            }                                
+
+            function getDataAsync() {    
+              if(!$scope.fuenteDeEnergia.status){
+                $scope.currentPage = 2;
+              }
+              
               for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){   
                 var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)); 
                 if(activityCache){
@@ -200,11 +208,7 @@ angular
             function successEndFuente(){
               $scope.$emit('HidePreloader'); //hide preloader
               $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
-            }
-
-            $scope.navigateToPage = function (pageNumber) {
-                $scope.currentPage = pageNumber;
-            }
+            }          
 
             $scope.finishActivity = function(){   
                 $scope.$emit('ShowPreloader'); //show preloader           
