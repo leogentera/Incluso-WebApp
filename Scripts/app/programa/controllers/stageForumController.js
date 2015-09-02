@@ -49,7 +49,10 @@ angular
                      }
                  }
             };
-            if($routeParams.moodleid == 149) redirectOnShield();
+
+            if($routeParams.moodleid == 149) {
+              redirectOnShield();
+            }
 
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"");
