@@ -24,7 +24,7 @@
                 return "";
             }
 
-            $scope.setToolbar($location.$$path,"Incluso"); //set global toolbar properties
+            $scope.setToolbar($location.$$path,"Misión Incluso"); //set global toolbar properties
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = true; 
 
