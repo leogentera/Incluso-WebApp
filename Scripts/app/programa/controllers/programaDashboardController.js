@@ -12,7 +12,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
-            $scope.setToolbar($location.$$path,"Incluso");
+            $scope.setToolbar($location.$$path,"Misión Incluso");
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false; 
 

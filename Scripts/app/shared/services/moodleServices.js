@@ -336,7 +336,7 @@
                                 for(k =0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
                                     //activities
 
-                                    if (usercourse.stages[i].challenges[j].activities[k].activities) {
+                                    /*if (usercourse.stages[i].challenges[j].activities[k].activities) {
                                         for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
                                             if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
                                             {
@@ -352,7 +352,7 @@
                                         }
                                     } 
                                     else
-                                    {
+                                    {*/
                                         globalActivities++;
                                         stageActivities++;
 
@@ -361,7 +361,7 @@
                                             stageCompletedActivities++;
                                             globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].points;
                                         }
-                                    }
+                                    //}
 
                                 }
                             }
