@@ -220,11 +220,6 @@ angular
                                     completedActivities.completed >= $scope.retoMultipleActivities.length;
 
                 //save response
-//                for(i = 0; i < quizzesRequests.length; i++){
-//                  console.log("saving quiz");
-//                  var userActivity = _getActivityByCourseModuleId(quizzesRequests[i].coursemoduleid);  
-//                  $scope.saveQuiz(userActivity, quizzesRequests[i])
-//                }
 
                 var parentActivityIdentifier = localStorage.getItem("retoMultipleActivitiesParent");
                 var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier);
@@ -233,92 +228,51 @@ angular
 
                 //localStorage.setItem("usercourse", JSON.stringify(usercourse));
                 localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
-            }
-
-            var updateActivitiesStatus = function(){
-             /* var starsAchieved = 0;
-              var currentActivity = _getActivityByCourseModuleId(retoMultipleActivitiesParent);
-              if (currentActivity.status == 0) {
-                currentActivity.status = 1;
-                starsAchieved += parseInt(currentActivity.points);
-                _endActivity(currentActivity);
-                for (var i = 0; i < $scope.retoMultipleActivities.length; i++) {
-                  //currentActivity.activities[i].status = 1;
-                  //$scope.retoMultipleActivities[i].status = 1;
-                  //_endActivity(currentActivity.activities[i]);
-                  starsAchieved += parseInt(currentActivity.activities[i].points);
-                }
-                if (starsAchieved > 0) {
-                  $scope.user.stars = (isNaN(starsAchieved) ? 0 : starsAchieved) + parseInt($scope.user.stars); 
-                  var data = {
-                    userId: $scope.user.id,
-                    stars: starsAchieved,
-                    instance: retoMultipleActivitiesParent,
-                    instanceType: 0,
-                    date: getDate()
-                  };
-                  moodleFactory.Services.PutStars(data, $scope.user, currentUser.token, successfulCallback, errorCallback);
+                
+                if (parentActivity.activities) {
+                  //Updates all the subactivities' status
+                  var userCourseUpdated = updateAllActivityStatuses(parentActivity);
+                  //Posts the stars of activity and subactivities
+                  updateAllSubactivityStars(parentActivity);
                 }
 
-              }*/
+                for(i = 0; i < quizzesRequests.length; i++){
+                  console.log("saving quiz");
+                  var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
+                  $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated)
+                }
             }
 
             $scope.saveAndContinue = function () {
                 requestCallback();
                 if ($scope.IsComplete) {
-                    //$scope.saveUser();
+                    $scope.saveUser();
                     $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');
                 } else {
                     $location.path('/ZonaDeVuelo/Dashboard/1');
                 }
             }
 
-            $scope.saveQuiz = function(activity, quiz) {
-
+            $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
               //Update quiz on server
+              var results = {
+                "userid": currentUser.userId,
+                "activityidnumber": activity.coursemoduleid,
+                "like_status": "1",
+                "updatetype": "1",
+                "answers": quiz.answers
+              };
               var activityModel = {
-                  "usercourse": activity,
+                  "usercourse": userCourseUpdated,
                   "coursemoduleid": activity.coursemoduleid,
-                  "answersResult": quiz.answers,
-                  "userId": currentUser.id,
-                  "startingTime": new Date(),
+                  "answersResult": results,
+                  "userId": currentUser.userId,
+                  "startingTime": startingTime,
                   "endingTime": new Date(),
                   "token": currentUser.token,
                   "activityType": "Quiz"
               };             
-
-            //_endActivity(activityModel);
-
-              //moodleFactory.Services.PutEndActivityQuizes(activity.coursemoduleid, results, activity, currentUser.token, function(data){console.log('success')}, function(data){console.log('error')});
-              /*
-              var activityModel = {
-                    "usercourse": updatedActivityOnUsercourse,
-                    "coursemoduleid": $scope.activity.coursemoduleid,
-                    "answersResult": $scope.AnswersResult,
-                    "userId": $scope.userprofile.id,
-                    "startingTime": $scope.startingTime,
-                    "endingTime": new Date(),
-                    "token" : $scope.currentUser.token
-              };
-              moodleFactory.Services.PutEndActivityQuizes(activityModel.coursemoduleid, activityModel.answersResult, activityModel.usercourse,activityModel.token,_endActivitySuccessCallback,errorCallback);
-
-              _putAsyncData
-              _endActivityQuiz({
-                  "usercourse": activity,
-                  "coursemoduleid": activity.id,
-                  "answersResult": quiz,
-                  "userId": $scope.user.id,
-                  "startingTime": startingTime,
-                  "endingTime": new Date()
-              });
-                moodleFactory.Services.PutAsyncQuiz(activityId, quiz,
-
-                    function (data) {
-                        console.log('Save profile successful...');
-                    },
-                    function (date) {
-                        console.log('Save profile fail...');
-                    });*/
+              _endActivity(activityModel);
             }
 
             $scope.saveUser = function () {

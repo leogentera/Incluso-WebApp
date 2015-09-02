@@ -161,7 +161,6 @@
 
             //Open Welcome Message modal
             $scope.openModal = function (size) {
-                setTimeout(function(){ 
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
                         templateUrl: 'programWelcome.html',
@@ -173,9 +172,6 @@
                         size: size,
                         windowClass: 'user-help-modal dashboard-programa'
                     });
-
-                    console.log("modal open");
-                }, 500);
             };
         }])
         .controller('videoCollapsiblePanelController', function ($scope) {
