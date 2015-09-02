@@ -24,7 +24,6 @@ angular
 
             
             $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
-            console.log("Total number of badges: " + $scope.totalBadges);
             $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
             $scope.badgePage = 0;
             $scope.normalBadgePage = $scope.badgePage + 1;
@@ -367,7 +366,7 @@ angular
                 var arrayForIdClients = [];
 
                 $scope.model.familiaCompartamos.forEach(function(elem){
-                    arrayForIdClients.push(elem.idClient);
+                    arrayForIdClients.push(elem.idClient.toLowerCase());
                 });
 
                 var filteredIdClient = arrayForIdClients.filter(function(item, pos) {
@@ -377,6 +376,22 @@ angular
                 if (arrayForIdClients.length != filteredIdClient.length) {
                     //Repeated idClients
                     errors.push("El número de cliente Compartamos debe ser único.");
+                }
+
+                //Validation of the $scope.model.socialNetworks array
+                var arrayForUsername = [];
+
+                $scope.model.socialNetworks.forEach(function(elem){
+                    arrayForUsername.push(elem.socialNetwork.toLowerCase());
+                });
+
+                var filteredUsernames = arrayForUsername.filter(function(item, pos) {
+                    return arrayForUsername.indexOf(item) == pos;
+                });
+
+                if (arrayForUsername.length != filteredUsernames.length) {
+                    //Repeated names for Social network
+                    errors.push("Nombre de Red social está repetido.");
                 }
 
                 $scope.model.modelState.errorMessages = errors;
@@ -546,12 +561,8 @@ angular
                     return $scope.model.phones.indexOf(item) == pos;
                 });
 
-                $scope.model.socialNetworks = $scope.model.socialNetworks.filter(function(item, pos) {
-                    return $scope.model.socialNetworks.indexOf(item) == pos;
-                });
-
                 $scope.model.favoriteSports = $scope.model.favoriteSports.filter(function(item, pos) {
-                    return $scope.model.favoriteSports.indexOf(item) == pos;
+                    return $scope.model.favoriteSports.indexOf(item.toLowerCase()) == pos;
                 });
 
                 $scope.model.artisticActivities = $scope.model.artisticActivities.filter(function(item, pos) {
