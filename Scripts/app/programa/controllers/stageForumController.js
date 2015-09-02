@@ -70,7 +70,6 @@ angular
            $scope.activity = "Here is a value";
            function getForumsProgress(){
               var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : setForumsList();
-              console.log(forumsProgress);
               return forumsProgress;
 
            };
@@ -90,7 +89,6 @@ angular
             }
 
             function getDataAsync() {
-                console.log('Getting forum data');
                 $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, currentUser.token, getActivityInfoCallback, ''):'';
             }
 
@@ -131,7 +129,6 @@ angular
                         size: size,
                         windowClass: 'user-help-modal'
                     });
-                    console.log("modal open");
                 }, 1000);
               
               $location.path('/ZonaDeVuelo/Dashboard/1');
