@@ -235,20 +235,20 @@ var _updateBadgeStatus = function(coursemoduleid){
 var _createNotification = function(activityId, triggerActivity){
   
   currentUserId = localStorage.getItem("userId");
-  var currentDate = new Date();
-  var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
-  var currentDay = (currentDate.getDay() < 10) ? ("0" + currentDate.getDay()) : currentDate.getDay();
-  var formattedDate = currentMonth + "/" + currentDay + "/" + currentDate.getFullYear();
+  //var currentDate = new Date();
+  //var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
+  //var currentDay = (currentDate.getDay() < 10) ? ("0" + currentDate.getDay()) : currentDate.getDay();
+  //var formattedDate = currentMonth + "/" + currentDay + "/" + currentDate.getFullYear();
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
  
   for(var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++ ){
       var currentNotification = allNotifications[indexNotifications];
       if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId){
-          allNotifications[indexNotifications].timemodified = formattedDate;        
+          allNotifications[indexNotifications].timemodified = new Date();
           localStorage.setItem("notifications",JSON.stringify(allNotifications));
           var dataModelNotification = {
               notificationid: allNotifications[indexNotifications].id,
-              timemodified : formattedDate,
+              timemodified : new Date(),
               userid: currentUserId,
               already_read: 0
               };              

@@ -63,7 +63,7 @@ angular
                 });
             }
 
-            $scope.goChat = function () {                                
+            $scope.goChat = function () {
                 $location.path('/Chat');
             }
 
