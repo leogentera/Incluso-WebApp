@@ -22,6 +22,16 @@ angular
             $scope.status = "";
             $scope.model = getDataAsync();
 
+            /////// privacy settings initial switches [boolean]/////////
+            $scope.generalInfo = true;
+            $scope.schoolarship = false;
+            $scope.address = false;
+            $scope.phone = true;
+            $scope.socialNet = true;
+            $scope.family = false;
+            //$scope.generalInfo = true;
+            //$scope.generalInfo = false;
+
             
             $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
             console.log("Total number of badges: " + $scope.totalBadges);

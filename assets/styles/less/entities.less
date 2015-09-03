@@ -1343,7 +1343,7 @@
                 &.btn-icon-aside {
                     width: 36vw;
 
-                    &.right {display:none;}
+                    /*&.right {display:none;}*/
                 }
             }
             & > .container {
@@ -1355,7 +1355,7 @@
                 background-position: center 0;
                 background-repeat: no-repeat;
                 .background-size(100%, auto);
-            }              
+            }    
         }
         /***********************************************************************/ 
 
@@ -1783,6 +1783,55 @@
         }
         /***********************************************************************/
 
+         /***********************************************************************
+         $privacy-settings
+         Description: CSS to represent privady settings look and feel
+        ************************************************************************/
+        .privacy-settings {
+            .form-content-list{
+                margin: 5vh 0px 0px;
+                ul{
+                    li{
+                        display: inline-block;
+                        width: 100%;
+                        margin: 0px;
+                        padding: 2vh 0px;
+                        border-top: 2px solid #CCC;
+                        &:last-child {
+                            border-bottom: 2px solid #CCC;
+                        }
+                        & > div {
+                            margin: 0px;
+                            padding: 0px;
+                            label {
+                                margin: 0px;
+                                font-size: 6vw;
+                                font-weight: 400;
+                                color: @clr-gray-platinum;
+                            }                            
+                            &+ div {
+                                padding: 3vh 0px;
+                            }
+                        }
+                    }
+                }
+                .form-group-control{
+                    .type-show{
+                        display: block;
+                        color: @clr-blueTurquoise;
+                        font-size: 5vw;
+                        font-weight: 600;
+                        line-height: 3vh;
+                        &.private {
+                            color: @clr-orangeMed;
+                        }
+                    }
+                }
+            }
+            .actions {
+                margin-top: 4vh;
+            }
+        }
 
         /***********************************************************************
          $terms-and-conditions
