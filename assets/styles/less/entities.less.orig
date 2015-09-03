@@ -1349,7 +1349,11 @@
                 &.btn-icon-aside {
                     width: 36vw;
 
+<<<<<<< HEAD
                     &.right {/*display:none;*/}
+=======
+                    /*&.right {display:none;}*/
+>>>>>>> 2cac662638053b54034979019164724f1eee2afa
                 }
             }
             & > .container {
