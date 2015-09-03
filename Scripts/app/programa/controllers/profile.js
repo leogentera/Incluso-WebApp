@@ -640,6 +640,7 @@ angular
                         }
                     }
                 }
+            }
 
                 function closeAssigments(usercourse) {
                     var terminoAssigment = 1;
