@@ -16,12 +16,20 @@ angular
             $scope.$emit('ShowPreloader');
             console.log("cargando usuario");
             $scope.currentPage = 1;
-            $scope.setToolbar($location.$$path, "Mi perfil");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.status = "";
             $scope.model = getDataAsync();
 
+            /////// privacy settings initial switches [boolean]/////////
+            $scope.generalInfo = true;
+            $scope.schoolarship = false;
+            $scope.address = false;
+            $scope.phone = true;
+            $scope.socialNet = true;
+            $scope.family = false;
+            //$scope.generalInfo = true;
+            //$scope.generalInfo = false;
 
             $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
             $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);

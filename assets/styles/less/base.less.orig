@@ -510,6 +510,11 @@ body {
 
             &>span {
                 text-align: right;
+<<<<<<< HEAD
+=======
+                font-size: 4.2vw;
+                line-height: 2.6;
+>>>>>>> 2cac662638053b54034979019164724f1eee2afa
             }
             .btn-icon {
                 left: -1vw;
@@ -523,6 +528,8 @@ body {
 
             &>span {
                 text-align: left;
+                font-size: 4.2vw;
+                line-height: 2.6;
             }
             .btn-icon {
                 right: 0;                        
