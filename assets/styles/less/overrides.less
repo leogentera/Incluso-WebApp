@@ -779,15 +779,17 @@ section.part.inbloq{
 
 ///////////////// results-challenge ///////////////////
 .results-challenge {
-    .collapse-media {        
+    .collapse-media {
         .panel {
             width: 95%;
             margin: auto;
             padding: .5vh 0px;
+            font-weight: normal;
             .panel-heading {
-                background-color: #0A9648;
-                color: #FFF;
+                background-color: #0d0f14;
+                color: #FFF;                
                 .icon-checked-join {
+                    display: none;
                     margin-right: 2vw;
                     font-size: 6vw;
                     vertical-align: top;
@@ -828,6 +830,19 @@ section.part.inbloq{
                     background: -ms-radial-gradient(center, ellipse cover,  rgba(31, 39, 51, 0.68)3 0%,rgba(20, 25, 33, 0.68) 100%);
                     background: radial-gradient(ellipse at center,  rgba(31, 39, 51, 0.68) 0%,rgba(20, 25, 33, 0.68) 100%);
                     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(31, 39, 51, 0.68)', endColorstr='rgba(20, 25, 33, 0.68)',GradientType=1 );
+                    padding: 6vw 5vw;
+            }
+        }
+        &#item0 {
+            .panel {
+                .panel-heading {                   
+                    background: none!important;
+                     background-color: #0A9648!important;
+
+                    .icon-checked-join {
+                        display: inline!important;
+                    }
+                }
             }        
         }
     }
