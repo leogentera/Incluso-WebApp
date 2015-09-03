@@ -1312,9 +1312,7 @@
             z-index: 2;
             margin:0;
             height: 32vw;
-
             background-attachment: scroll;
-            //background-image:url('@{url-images}/img-profile-spaceship-dashboard-settings.png');
             background-image:none;
             background-position: center top;
             background-repeat: no-repeat;
@@ -1330,7 +1328,7 @@
                 &.btn-icon-aside {
                     width: 36vw;
 
-                    &.right {display:none;}
+                    &.right {/*display:none;*/}
                 }
             }
             & > .container {
@@ -1426,15 +1424,12 @@
             margin:0;
             padding: 12vw 0 6vw;
             height: auto;
-            min-height: 120vw;
+            min-height: 121vw;
             background-attachment: scroll;
-            //background-position: center 0;
             background-position: center -159vw;
             background-repeat: no-repeat;
             background-color: @clr-gray-asphalt;
-            //background-image: url('@{url-images}/img-profile-spaceship-dashboard-bottom.png');
             background-image: url('@{url-images}/bg-profile-full.gif');
-            /*.gradient-custom('img-profile-spaceship-dashboard-bottom.png', @clr-gray-asphalt, @clr-gray-asphalt2);*/
             .background-size(100%, auto); 
 
             .list-group {

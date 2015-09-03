@@ -471,23 +471,61 @@ body {
             display: block;
             position: absolute;
             top: -0.15em;
-            width: 11.6vw;
-            height: 11.6vw;
+            //width: 11.6vw;
+            //height: 11.6vw;
             background-color: @clr-green;
-            border: 0.42em solid @clr-gray;
-            .border-radius(32px);  /* + */
+            //border: 0.42em solid @clr-gray;
+            //border: 0.3em solid @clr-gray-asphalt2;
+            border: 0.3em solid @clr-gray-platinum;
+            //.border-radius(12vw);  /* + */
+            .border-radius(3em);
             text-align: center;
+
+            width: 12vw;
+            height: 12vw;
+            top: -1vw;
+
+            background-color: rgb(128, 152, 160);
+            border: medium none;
+            .border-radius(6em);            
+
         }
         .icomoon {
             color: @clr-blue;
-            font-size: 5vw;
-            line-height: 9.3vw;
+            //font-size: 5vw;
+            //line-height: 9.3vw;
+
+            display: block;
+            height: 10vw; 
+            width: auto;
+            font-size: 5.9vw;
+            //line-height: 10vw; 
+            //line-height: 10.1vw;
+            text-align: center;
+
+            background-color: rgb(188, 212, 49);
+            //border-radius: 3em;
+            width: 10vw;
+            height: 10vw;
+            margin: 1vw auto;
+            font-size: 6.6vw;
+            line-height: 10.8vw;
+            .border-radius(6em);  
         }
         &>span {
             color: @clr-white;
             font-size: 3.3vw;
             font-weight: 700;
             line-height: 1;
+
+            display: block;
+            height: inherit;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+
+            font-size: 4vw;
+            line-height: 10vw;
         }
 
         &.left {
@@ -498,11 +536,15 @@ body {
 
             &>span {
                 text-align: right;
-                font-size: 4.5vw;
-                line-height: 2.6;
+                //font-size: 4.5vw;
+                //line-height: 2.6;
+
+
             }
             .btn-icon {
-                left: 0;
+                //left: 0; 
+
+                left: -1vw;
             }
         }
         &.right {
@@ -520,9 +562,10 @@ body {
         }
         &.active {
             .btn-icon {
-                background-color: @clr-orange;
+                //background-color: @clr-orange;
                 .icomoon {
                     color: @clr-white;
+                    background-color: @clr-orange;
                 }
             }
         }
@@ -1970,15 +2013,14 @@ body {
         display: none;
         padding: 6vw 0;
         margin: 0;
+        min-height: 35vw;
         border: none;
         text-align: center;
-        //.box-shadow-reset();
-        background-color: @clr-gray-asphalt2;
         background-color: @clr-footer;
-        background-image: url('@{url-images}/img-footer-texture.png');
-        background-position: center 10px;
+        background-image: url('@{url-images}/bg-footer.gif');
+        background-position: center top;
         background-repeat: no-repeat;
-        .background-size(80%, auto);
+        .background-size(100%, auto);
         
         .btn-back-to-top {
             display: inline-block;
@@ -2004,12 +2046,12 @@ body {
         
         /* by theme */
         &.theme-rocks {
+            min-height: 57vw;
+            padding: 19vw 0 4vw;            
             background-image: url("@{url-images}/bg-dashboard-full.gif");
             background-position: 50% 0;
             .background-size(100%, auto);
             .box-shadow-reset();
-            min-height: 57vw;
-            padding: 19vw 0 4vw;
         }
     } 
     /***********************************************************************/    
