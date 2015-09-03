@@ -102,8 +102,7 @@ angular
             }
             
             var successGame = function (data){
-               alert("Success");
-               var shield = "";
+                var shield = "";
                 var quizzesRequests = [];
 
                 //Shield of highest score
@@ -136,21 +135,13 @@ angular
                       }
                       logEntry.quiz_answered = ( data.resultado[i].preguntas[j].respuesta != "" && logEntry.quiz_answered);
                     }
-                  logEntry.coursemoduleid = activity.coursemoduleid;
-                  logEntry.like_status = (data.resultado[i].preguntas[4].respuesta == "No" ? 0 : 1 );
-                  logEntry.startingTime = data.resultado[i].fecha_inicio;
-                  logEntry.endingTime = data.resultado[i].fecha_fin;
-                  quizzesRequests.push(logEntry);
+                    logEntry.coursemoduleid = activity.coursemoduleid;
+                    logEntry.like_status = (data.resultado[i].preguntas[4].respuesta == "No" ? 0 : 1 );
+                    logEntry.startingTime = data.resultado[i].fecha_inicio;
+                    logEntry.endingTime = data.resultado[i].fecha_fin;
+                    quizzesRequests.push(logEntry);
+                  }
                 }
-              }
-
-                if (shield != "" && $scope.profile) {
-
-                  //update profile
-                  $scope.profile["shield"] = shield;
-                  localStorage.setItem("profile", JSON.stringify($scope.profile));
-                }
-
 
                 var completedActivities = _.countBy($scope.retoMultipleActivities, function(a) {
                     if (a.questions) {
@@ -176,11 +167,19 @@ angular
                 var parentActivityIdentifier = $routeParams.moodleid;
                 var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier);
                 var subactivitiesCompleted = [];
-                //if (parentActivity.status == 0) {
+                var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
+                if (parentActivity.status == 0) {
+                  if (shield != "" && $scope.profile) {
+                    //update profile
+                    $scope.profile["shield"] = shield;
+                    localStorage.setItem("profile", JSON.stringify($scope.profile));
+                    $scope.saveUser();
+                  }
+
                   if ($scope.IsComplete) {
                     _endActivity(parentActivity);
-                    localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
                   }
+
                   if (parentActivity.activities) {
                     //Searches for the quizzes completed
                     _.each(quizzesRequests, function(q){
@@ -191,18 +190,20 @@ angular
                     //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     //Updates the statuses of the subactivities completed
-                    var userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
+                    userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
                   }
-                  for(i = 0; i < quizzesRequests.length; i++){
-                    if (quizzesRequests[i].quiz_answered) {
-                      var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                      $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
-                      subactivitiesCompleted.push(quizzesRequests[i].coursemoduleid);
-                    }
+                }
+
+                for(i = 0; i < quizzesRequests.length; i++){
+                  if (quizzesRequests[i].quiz_answered) {
+                    var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
+                    $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
                   }
-                //}
+                }
+
+                localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
+                
                 if ($scope.IsComplete) {
-                    $scope.saveUser();
                     //Only shows the results if all of the quizzes are answered
                     $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
                 } else {
@@ -231,8 +232,7 @@ angular
               _endActivity(activityModel);
             }
 
-             $scope.saveUser = function () {
-
+            $scope.saveUser = function () {
                 moodleFactory.Services.PutAsyncProfile(_getItem("userId"), $scope.profile,
                 function (data) {
                     console.log('Save profile successful...');
