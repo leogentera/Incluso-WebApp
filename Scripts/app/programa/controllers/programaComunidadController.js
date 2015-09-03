@@ -16,7 +16,11 @@ angular
 
             _httpFactory = $http;
             _timeout = $timeout;
-            $scope.$emit('HidePreloader');
+            $scope.$emit('ShowPreloader');
+            $timeout(
+                function() {
+                    $scope.$emit('HidePreloader'); //Poner esta linea cuando en la función de callback al cargarse la página.
+            }, 3000);
             $rootScope.pageName = "Comunidad"
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = true;
