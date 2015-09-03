@@ -77,6 +77,25 @@ angular
 
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
                             updateActivityStatus(moodleid);
+                              var activity_identifier = null;
+                              if(moodleId == 151){
+                                  activity_identifier = 1010;
+                                  moodleid = 64;
+                              } else if(moodleId == 64){
+                                  activity_identifier = 1010;
+                                  moodleid = 64;
+                              } else if(moodleId == 73){
+                                  activity_identifier = 1008;
+                                  moodleid = 73;
+                              } else if(moodleId == 147){
+                                  activity_identifier = 1049;
+                                  moodleid = 147;
+                              } else if(moodleId == 148){
+                                  activity_identifier = 1049;
+                                  moodleid = 148;
+
+                              }
+                              updateUserStars(activity_identifier);
                             $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
                           }, errorCallback);
                     },

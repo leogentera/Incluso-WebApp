@@ -92,7 +92,7 @@ angular
             };
 
             var checkForumProgress = function(callback){
-
+                debugger;
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
 
@@ -121,6 +121,21 @@ angular
                 }
 
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
+
+                if(activityFromTree.status == 1){
+
+                    var commentsCounterCollection = getForumsProgress();
+                    var totalCommentsCounter = 0;
+                    for(var i = 0 ; i < commentsCounterCollection.length ; i++){
+                        totalCommentsCounter += Number(commentsCounterCollection[i].replies_counter);
+                    }
+                    var totalTopics = commentsCounterCollection.length;
+                    var extraPoints = totalCommentsCounter - (totalTopics * 2);
+                    extraPoints > 10? extraPoints = 10 : '';
+                    var totalExtraPoints = 100 + (extraPoints*50);
+
+                    updateUserStars(activity_identifier, totalExtraPoints );
+                }else{}
 
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);                    
