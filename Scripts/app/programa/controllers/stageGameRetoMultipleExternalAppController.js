@@ -20,7 +20,6 @@ angular
             $rootScope.showFooterRocks = false; 
 
             $scope.scrollToTop();
-            $scope.$emit('HidePreloader'); //hide preloader
             $scope.user = moodleFactory.Services.GetCacheJson("profile");
             $scope.activities = moodleFactory.Services.GetCacheJson("activities");
             $scope.profile = moodleFactory.Services.GetCacheJson("profile");
@@ -110,27 +109,27 @@ angular
                 var parentActivityIdentifier = localStorage.getItem("retoMultipleActivitiesParent");
                 var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier);
                 var subactivitiesCompleted = [];
-                if ($scope.IsComplete && parentActivity.status == 0) {
-                  //Updates the status of the parent activity and finishes it
-                  //parentActivity.status = 1;
-                  _endActivity(parentActivity);
-                  
-                  //localStorage.setItem("usercourse", JSON.stringify(usercourse));
-                  localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
-                }
-                if (parentActivity.activities) {
-                  //Searches for the quizzes completed
-                  _.each(quizzesRequests, function(q){
-                    if(q.quiz_answered){
-                      subactivitiesCompleted.push(q.coursemoduleid);
-                    }
-                  });
-                  //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
-                  updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
-                  //Updates the statuses of the subactivities completed
-                  var userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
-                }
                 if (parentActivity.status == 0) {
+                  if ($scope.IsComplete) {
+                    //Updates the status of the parent activity and finishes it
+                    //parentActivity.status = 1;
+                    _endActivity(parentActivity);
+                    
+                    //localStorage.setItem("usercourse", JSON.stringify(usercourse));
+                    localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
+                  }
+                  if (parentActivity.activities) {
+                    //Searches for the quizzes completed
+                    _.each(quizzesRequests, function(q){
+                      if(q.quiz_answered){
+                        subactivitiesCompleted.push(q.coursemoduleid);
+                      }
+                    });
+                    //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
+                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
+                    //Updates the statuses of the subactivities completed
+                    var userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
+                  }
                   for(i = 0; i < quizzesRequests.length; i++){
                     if (quizzesRequests[i].quiz_answered) {
                       var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
@@ -157,20 +156,17 @@ angular
               //Update quiz on server
               var results = {
                 "userid": currentUser.userId,
-                "activityidnumber": activity.coursemoduleid,
-                "like_status": quiz.like_status,
-                "updatetype": "1",
                 "answers": quiz.answers,
-                "startingTime": quiz.startingTime,
-                "endingTime": quiz.endingTime
+                "like_status": quiz.like_status,
+                "activityidnumber": activity.coursemoduleid,
+                "dateStart": quiz.startingTime,
+                "dateEnd": quiz.endingTime
               };
               var activityModel = {
                 "usercourse": userCourseUpdated,
                 "coursemoduleid": activity.coursemoduleid,
                 "answersResult": results,
                 "userId": quiz.userid,
-                "startingTime": quiz.startingTime,
-                "endingTime": quiz.endingTime,
                 "token": currentUser.token,
                 "activityType": "Quiz"
               };             
