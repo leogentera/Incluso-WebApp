@@ -23,7 +23,8 @@
         'incluso.programa.profile',
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
-        'incluso.programa.leaderboard',        
+        'incluso.programa.leaderboard',
+        'incluso.programa.comunidad',        
 
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
@@ -152,12 +153,6 @@
         	controller: 'programaDashboardController'
         });
         
-/*//////// old dashboard "etapa"///////////
-        $routeProvider.when('/ProgramaDashboardEtapa/:stageId', {
-            templateUrl: 'Templates/Programa/etapa.html',
-            controller: 'programaEtapaController'
-        });
-/////////////////////////////////////////*/
         $routeProvider.when('/Foro', {
             templateUrl: 'Templates/Programa/foro.html',
             controller: 'programaForoController'
