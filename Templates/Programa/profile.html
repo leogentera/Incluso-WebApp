@@ -87,9 +87,10 @@
                                         </a>
                                     </li>
 
-                                    <li class="list-group-item no-badge" ng-click="navigateToPage(7)" ng-show="model.recomendedBachelorDegrees.length > 0">
+                                    <!--<li class="list-group-item no-badge" ng-click="navigateToPage(7)" ng-show="model.recomendedBachelorDegrees.length > 0">-->
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(7)">
                                         <a href="">
-                                            <span class="icomoon icon-compass"></span>
+                                            <span class="icomoon icon-user"></span>
                                             <span>Mis Habilidades</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
@@ -121,6 +122,7 @@
                 </div>
                 <!--  End of page -->
 
+                <!-- ////////// Mi informacion /////////// -->
                 <div class="page" ng-class="currentPage == 2 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
@@ -289,6 +291,7 @@
                 </div>
                 <!--  End of page -->
 
+                <!-- ////////// Mi personalidad /////////// -->
                 <div class="page" ng-class="currentPage == 3 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
@@ -395,6 +398,7 @@
                 </div>
                 <!--  End of page -->
 
+                <!-- ////////// Socioeconomicos /////////// -->
                 <div class="page" ng-class="currentPage == 4 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
@@ -493,6 +497,7 @@
                 </div>
                 <!--  End of page -->
 
+                <!-- ////////// Uso tecnologia /////////// -->
                 <div class="page" ng-class="currentPage == 5 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
@@ -581,15 +586,16 @@
                 </div>
                 <!--  End of page -->
 
+                <!-- ////////// Mis logros /////////// -->
                 <div class="page" ng-class="currentPage == 6 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="panel panel-default achievements">
-                                    <div class="panel-heading">
-                                        <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(1)"></span>
+                                    <div class="panel-heading" ng-click="navigateToPage(1)">
+                                        <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-badge"></span>
-                                        <h3 class="panel-title" style="cursor:pointer;">Mis Logros</h3>
+                                        <h3 class="panel-title">Mis Logros</h3>
                                     </div>
                                     <div class="panel-body">
 
@@ -629,15 +635,16 @@
                 </div>
                 <!--  End of page -->
 
-                <div class="page" ng-class="currentPage == 7 ? 'active' : ''">
+                <!-- ////////// Mis habilidades /////////// -->
+                <div class="page my-habilities" ng-class="currentPage == 7 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
 
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(1)"></span>
-                                        <span class="icomoon icon-compass"></span>
+                                    <div class="panel-heading" ng-click="navigateToPage(1)">
+                                        <span class="icomoon icon-arrow-slim-left"></span>
+                                        <span class="icomoon icon-user"></span>
                                         <h3 class="panel-title">Mis habilidades</h3>
                                     </div>
                                     <div class="panel-body">
@@ -645,9 +652,23 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <ul class="block-list" ng-repeat="b in model.recomendedBachelorDegrees">
+                                                        <!--<ul class="block-list" ng-repeat="b in model.recomendedBachelorDegrees">
                                                             <li>
                                                                 <p ng-bind="b"></p>
+                                                            </li>
+                                                        </ul>-->
+                                                        <ul class="block-list">
+                                                            <li class="profile-info-asset">
+                                                                <h4>Musical</h4>
+                                                                    <p>
+                                                                        Si en clase de ciencias, mate y biología haces ritmos con tus plumas en vez de apuntar, el ipod es tu mejor compañia y cantas a todo pulmon en la ducha.
+                                                                    </p>
+                                                            </li>
+                                                            <li class="profile-info-asset">
+                                                                <h4>Interpersonal</h4>
+                                                                    <p>
+                                                                        Si en tu escuela eres el mejor amigo de todos, el que pide todos los permisos a los papás de tus amigos y todos recurren a ti para que escuches y aconsejes sus truenes.
+                                                                    </p>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -668,8 +689,8 @@
                             <div class="col-xs-12">
 
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(1)"></span>
+                                    <div class="panel-heading" ng-click="navigateToPage(1)">
+                                        <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-workman"></span>
                                         <h3 class="panel-title">Mis Áreas de Oportunidad</h3>
                                     </div>

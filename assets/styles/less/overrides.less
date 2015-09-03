@@ -779,31 +779,39 @@ section.part.inbloq{
 
 ///////////////// results-challenge ///////////////////
 .results-challenge {
-    .collapse-media {        
+    .collapse-media {
         .panel {
             width: 95%;
             margin: auto;
             padding: .5vh 0px;
+            font-weight: normal;
             .panel-heading {
-                background-color: #0A9648;
-                color: #FFF;
+                background-color: #0d0f14;
+                color: #FFF; 
+                border-radius: 1.5vw 1.5vw 0 0;               
                 .icon-checked-join {
+                    display: none;
                     margin-right: 2vw;
                     font-size: 6vw;
-                    vertical-align: top;
+                    vertical-align: baseline;
+                    position: relative;
+                    top: 0.8vw;
                 }
                 div{
                     float: right;
-                    width: 25vw;
+                    width: auto;
+                    min-width: 18.5vw;
                     text-align: center;
                     vertical-align: baseline;
                     span:first-child {
-                        padding-right: 2vw;
+                        padding-right: 2.5vw;
                         border-right: 1px solid #B9E4F9;
                         font-size: 4.8vw;                         
                     }
                     span.icomoon {
-                            padding-left: 2vw;
+                            padding-left: 2.5vw;
+                            position: relative;
+                            top: 1.3vw;
                     }
                 }
             }
@@ -811,7 +819,7 @@ section.part.inbloq{
                 width: 100% !important;
             }
             &.collapsed .panel-heading {
-                
+                border-radius: 1.5vw;
                 background: -moz-radial-gradient(center, ellipse cover,  rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
                     background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(31, 39, 51, 0.68)), color-stop(100%,rgba(20, 25, 33, 0.68)));
                     background: -webkit-radial-gradient(center, ellipse cover,  rgba(31, 39, 51, 0.68) 0%,rgba(20, 25, 33, 0.68) 100%);
@@ -828,6 +836,19 @@ section.part.inbloq{
                     background: -ms-radial-gradient(center, ellipse cover,  rgba(31, 39, 51, 0.68)3 0%,rgba(20, 25, 33, 0.68) 100%);
                     background: radial-gradient(ellipse at center,  rgba(31, 39, 51, 0.68) 0%,rgba(20, 25, 33, 0.68) 100%);
                     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgba(31, 39, 51, 0.68)', endColorstr='rgba(20, 25, 33, 0.68)',GradientType=1 );
+                    padding: 6vw 5vw;
+            }
+        }
+        &#item0 {
+            .panel {
+                .panel-heading {                   
+                    background: none!important;
+                     background-color: #0A9648!important;
+
+                    .icon-checked-join {
+                        display: inline!important;
+                    }
+                }
             }        
         }
     }
@@ -966,6 +987,28 @@ section.part.inbloq{
         }
         .actions {
             margin: 7vh 0px 0px;
+        }
+    }
+}
+
+///////////////// my-habilities ///////////////////////////
+.profile-options {
+    .page {
+        .panel {
+            .panel-heading{
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+///////////////// my-habilities ///////////////////////////
+.my-habilities {
+    .my-profile-information {
+        .profile-info-asset {
+            h4 {
+                color: @clr-blueTurquoise !important;
+            }
         }
     }
 }

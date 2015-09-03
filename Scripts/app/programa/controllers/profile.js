@@ -28,9 +28,8 @@ angular
             $scope.phone = true;
             $scope.socialNet = true;
             $scope.family = false;
-            //$scope.generalInfo = true;
-            //$scope.generalInfo = false;
-
+            /////////////////////////////////////////////////////////////
+            
             $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
             $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
             $scope.badgePage = 0;

@@ -174,6 +174,8 @@
                         windowClass: 'user-help-modal dashboard-programa'
                     });
             };
+
+            //$scope.openModal();   //To open the modal no matter the value of 'firsttime'
         }])
         .controller('videoCollapsiblePanelController', function ($scope) {
           $scope.isCollapsed = false;
