@@ -927,9 +927,18 @@ angular
                 }
 
                 uploadAvatar = function(avatarInfo) {                
+                    console.log('uploading avatar');
+                    alert('uploading avatar');
+
                     var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen;
 
+                    console.log('encoding avatar 2');
+                    alert('encoding avatar 2');
+
                     encodeImageUri(pathimagen, function(b64) {
+
+                        console.log('image encoded');
+                        alert('image encoded');
 
                         avatarInfo["userid"] = user.id;
                         avatarInfo["filecontent"] = b64;
@@ -940,6 +949,10 @@ angular
                             data: avatarInfo
                         })
                         .success(function(){
+
+                    console.log('image uploaded');
+                    alert('image uploaded');
+
                             console.log('Foto guardada exitosamente!');
                             $location.path('/ProgramaDashboard');
                         })
@@ -971,6 +984,13 @@ angular
                 };
 
                 function SuccessAvatar(data) {
+                    console.log('back from game');
+                    alert('back from game');
+
+
+                    console.log('callback from game');
+                    alert('callback from game');
+
                     //the next fields should match the database in moodle
                     $scope.avatarInfo = [{
                         "userid": data.userid,
@@ -991,8 +1011,20 @@ angular
                         "escudo" : $scope.model.shield
 
                     }];
+
+                    console.log('callback from game 2');
+                    alert('callback from game 2');
+
                     uploadAvatar($scope.avatarInfo);
+
+                    console.log('after upload');
+                    alert('after upload');
+
                     localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
+
+                    console.log('after local storage');
+                    alert('after local storage');
+
                 }
             
                 function FailureAvatar(data) {
