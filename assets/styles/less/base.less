@@ -209,17 +209,21 @@ body {
 
 
     /****************************************************************************
-     $anchor-top
-     Description: CSS styles to represent a hidden anchor used to scroll to top
-    ****************************************************************************/  
-    .anchor-top {
+     $anchor-scroll
+     Description: CSS rules for a re-usable anchor element to scroll to it.
+    ****************************************************************************/ 
+    .anchor-scroll {
         display:block;
         visibility:hidden;
         width:0;
         height:0;
         padding:0;
         margin:0;
-    }
+
+        &.floated {
+            float: left;
+        }
+    }    
     /***************************************************************************/ 
 
 
