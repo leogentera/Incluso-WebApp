@@ -23,7 +23,8 @@
         'incluso.programa.profile',
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
-        'incluso.programa.leaderboard',        
+        'incluso.programa.leaderboard',
+        'incluso.programa.comunidad',        
 
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
