@@ -908,15 +908,132 @@ angular
                     $scope.model.familiaCompartamos.splice(index, 1);
                 };
 
+                encodeImageUri = function(imageUri, callback) {
+                    var c = document.createElement('canvas');
+                    var ctx = c.getContext("2d");
+                    var img = new Image();
+                    img.onload = function() {
+                        alert('loading avatar');
+                        c.width = this.width;
+                        c.height = this.height;
+                        ctx.drawImage(img, 0, 0);
+
+                        if(typeof callback === 'function'){
+                            var dataURL = c.toDataURL("image/jpeg");
+                            callback(dataURL.slice(22, dataURL.length));
+                        }
+                    };
+                    img.src = imageUri;
+                }
+
+                uploadAvatar = function(avatarInfo) {                
+                    console.log('uploading avatar');
+                    alert('uploading avatar');
+
+                    var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen;
+
+                    console.log('encoding avatar 2');
+                    alert('encoding avatar 2');
+
+                    encodeImageUri(pathimagen, function(b64) {
+
+                        console.log('image encoded');
+                        alert('image encoded');
+
+                        avatarInfo["userid"] = $scope.model.id;
+                        avatarInfo["filecontent"] = b64;
+
+                        $http({
+                            method: 'POST',
+                            url: API_RESOURCE.format('avatar'),
+                            data: avatarInfo
+                        })
+                        .success(function(){
+
+                    console.log('image uploaded');
+                    alert('image uploaded');
+
+                            console.log('Foto guardada exitosamente!');
+                            $location.path('/ProgramaDashboard');
+                        })
+                        .error(function(){
+
+                    console.log('failed upload');
+                    alert('failed upload');
+
+                            console.log('Error al subir la foto!');
+                            $location.path('/ProgramaDashboard');
+                        });
+                    });
+                }
+
                 $scope.avatar = function () {
-                    $scope.avatarInfo[0].UserId = $scope.model.UserId;
-                    $scope.avatarInfo[0].Alias = $scope.model.username;
-                    $scope.avatarInfo[0].Estrellas = $scope.model.stars;
+                    //the next fields should match the integration document shared with the game app
+                    var avatarInfoForGameIntegration = {
+                        "userid": $scope.model.id,
+                        "alias": $scope.model.username,
+                        "actividad": "Mi Avatar",
+                        "estrellas": "100",
+                        "pathimagen": "",
+                        "genero": "",
+                        "rostro": "",
+                        "color_de_piel": "",
+                        "estilo_cabello": "",
+                        "color_cabello": "",
+                        "traje_color_principal": "",
+                        "traje_color_secundario": "",
+                        "escudo": ""
+                    };    
+                    cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                };
+
+                function SuccessAvatar(data) {
+                    console.log('back from game');
+                    alert('back from game');
+
+
+                    console.log('callback from game');
+                    alert('callback from game');
+
+                    //the next fields should match the database in moodle
+                    $scope.avatarInfo = [{
+                        "userid": data.userid,
+                        "aplicacion": data.actividad,
+                        "genero": data.genero,
+                        "rostro": data.rostro,
+                        "color_de_piel": data.color_de_piel,
+                        "estilo_cabello": data.estilo_cabello,
+                        "color_cabello": data.color_cabello,
+                        "traje_color_principal": data.traje_color_principal,
+                        "traje_color_secundario": data.traje_color_secundario,
+                        "imagen_recortada": data.imagen_recortada,
+                        "ultima_modificacion": data.fecha_modificacion,
+                        "Te_gusto_la_actividad": data.Te_gusto_la_actividad,
+                        "pathimagen": data.pathimagen,
+                        "estrellas": "100",
+                        "alias": $scope.model.username,
+                        "escudo" : $scope.model.shield
+
+                    }];
+
+                    console.log('callback from game 2');
+                    alert('callback from game 2');
+
+                    uploadAvatar($scope.avatarInfo);
+
+                    console.log('after upload');
+                    alert('after upload');
+
                     localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
 
-                    $scope.scrollToTop();
-                    $location.path('/Juegos/Avatar');
-                };
+                    console.log('after local storage');
+                    alert('after local storage');
+
+                }
+            
+                function FailureAvatar(data) {
+                    console.log("Couldn't retrieve avatar");
+                }
 
                 var $selects = $('select.form-control');
                 $selects.change(function () {
