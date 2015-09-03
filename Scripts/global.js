@@ -515,6 +515,31 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
 }
 
+function updateUserStarsUsingExternalActivity (courseModuleid){
+   var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
+   var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+   var activity = function getExtActivityByCoursemoduleid(courseModuleid){     
+     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+     for (var activityIndex = 0; activityIndex < userCourse.activities.length; activityIndex++) {
+       var extActivity = userCourse.activities[activityIndex];
+        if(extActivity.coursemoduleid = courseModuleid){
+          return extActivity;
+        }
+     }
+   }
+   
+   profile.stars = profile.stars + activity.points ;
+    var data={
+       userId: profile.id,
+       stars: activity.points ,
+       instance: activity.coursemoduleid,
+       instanceType: 0,
+       date: getdate()
+   }    
+   
+   moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
+}
+
 function getdate() {
     var date = new Date(),
         year = date.getFullYear(),
