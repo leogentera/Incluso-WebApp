@@ -23,7 +23,7 @@
 									<a class="icon icon-play" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')">
 										<span class="glyphicon glyphicon-play"></span>
 									</a>
-									<figure class="poster">
+									<figure class="poster" ng-click="playVideo('assets/media', 'video-bienvenida.mp4')">
 										<img src="assets/media/thumb-bienvenida.jpg" alt="video" />
 									</figure>
 								</div>
@@ -146,7 +146,8 @@
 									<div class="user-avatar">
 										<figure class="user-avatar-">
 											<!-- <img ng-src="{{user.profileimageurlsmall || 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
-											<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
+											<!-- <img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" /> -->
+											<img ng-src="{{user.profileimageurl}}" alt="avatar"/>
 											<figcaption>{{user.rank}}</figcaption>
 										</figure>
 									</div>

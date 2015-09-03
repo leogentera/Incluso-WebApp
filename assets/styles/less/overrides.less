@@ -751,6 +751,32 @@ section.part.inbloq{
 }
 
 
+///////////////// switch-handle [switch slider toggle] ///////////////////////
+.switch {
+    width: 17vw;
+    height: 2.5vh;
+    background-color: rgba(142, 170, 179, 0.5);
+    border: 1px solid #CCC;
+    &.active {
+        background-color: rgba(142, 170, 179, 0.5);
+        border: 1px solid rgba(142, 170, 179, 0.5);
+        .switch-handle {
+            background-color: #08B290;
+            border: 1px solid #08B290;
+        }
+    }
+    .switch-handle {        
+        left: -1vw;
+        top: -1.2vh;
+        width: 8vw;
+        height: 4.5vh;
+        background-color: @clr-gray-platinum;
+        border: 1px solid #CCC;
+    }
+}
+
+
+
 ///////////////// results-challenge ///////////////////
 .results-challenge {
     .collapse-media {        
