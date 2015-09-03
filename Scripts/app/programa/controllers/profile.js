@@ -940,13 +940,13 @@ angular
                         console.log('image encoded');
                         alert('image encoded');
 
-                        avatarInfo["userid"] = $scope.model.id;
-                        avatarInfo["filecontent"] = b64;
+                        //avatarInfo["userid"] = $scope.model.id;
+                        avatarInfo[0]["filecontent"] = b64;
 
                         $http({
                             method: 'POST',
                             url: API_RESOURCE.format('avatar'),
-                            data: avatarInfo
+                            data: avatarInfo[0]
                         })
                         .success(function(){
 
