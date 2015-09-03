@@ -927,16 +927,17 @@ angular
                 }
 
                 uploadAvatar = function(avatarInfo) {                
-                    var pathimagen = avatarInfo[0].pathimagen + "/avatar.svg";
-                    /*"assets/images/avatar.svg"*/
+                    var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen;
+
                     encodeImageUri(pathimagen, function(b64) {
+
+                        avatarInfo["userid"] = user.id;
+                        avatarInfo["filecontent"] = b64;
+
                         $http({
                             method: 'POST',
                             url: API_RESOURCE.format('avatar'),
-                            data: {
-                                userid: user.id,
-                                filecontent: b64
-                            }
+                            data: avatarInfo
                         })
                         .success(function(){
                             console.log('Foto guardada exitosamente!');
@@ -950,19 +951,12 @@ angular
                 }
 
                 $scope.avatar = function () {
-                    /*$scope.avatarInfo[0].UserId = $scope.model.id;
-                    $scope.avatarInfo[0].Alias = $scope.model.username;
-                    $scope.avatarInfo[0].Estrellas = $scope.model.stars;
-                    localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
-
-                    $scope.scrollToTop();
-                    $location.path('/Juegos/Avatar');
-                    $location.path('/ProgramaDashboard');*/
+                    //the next fields should match the integration document shared with the game app
                     var avatarInfoForGameIntegration = {
                         "userid": $scope.model.id,
                         "alias": $scope.model.username,
                         "actividad": "Mi Avatar",
-                        "estrellas": $scope.model.stars,
+                        "estrellas": "100",
                         "pathimagen": "",
                         "genero": "",
                         "rostro": "",
@@ -975,10 +969,12 @@ angular
                     };    
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 };
+
                 function SuccessAvatar(data) {
+                    //the next fields should match the database in moodle
                     $scope.avatarInfo = [{
                         "userid": data.userid,
-                        "actividad": data.actividad,
+                        "aplicacion": data.actividad,
                         "genero": data.genero,
                         "rostro": data.rostro,
                         "color_de_piel": data.color_de_piel,
@@ -987,9 +983,13 @@ angular
                         "traje_color_principal": data.traje_color_principal,
                         "traje_color_secundario": data.traje_color_secundario,
                         "imagen_recortada": data.imagen_recortada,
-                        "fecha_modificacion": data.fecha_modificacion,
+                        "ultima_modificacion": data.fecha_modificacion,
                         "Te_gusto_la_actividad": data.Te_gusto_la_actividad,
-                        "pathimagen": data.pathimagen
+                        "pathimagen": data.pathimagen,
+                        "estrellas": "100",
+                        "alias": $scope.model.username,
+                        "escudo" : $scope.model.shield
+
                     }];
                     uploadAvatar($scope.avatarInfo);
                     localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
