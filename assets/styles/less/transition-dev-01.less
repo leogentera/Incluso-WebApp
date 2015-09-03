@@ -487,39 +487,40 @@ Parallel work file for UI Developer 01
         }       
 
         .filter-section {
-            margin: 5%;
-            padding: 0;
-        }
-        .filter-section {
+            color: white;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding: 0;
-            margin: 0 10vw;
+            margin: 0 5vw;
             position: relative;
-        }
-        .filter-section i {
-            font-size: 5vw;
-            display: inline-block;
-            vertical-align: middle;
-            color: rgb(256,256,256);
-        }
-        .filter-section select {
-            font-size: 5vw;
-            font-weight: bold;
-            color: white;
-            width: 92%;
-            display: inline-block;
-            vertical-align: middle;
-            position: relative;
-            text-indent: 0 !important;
-            padding-left: 1.4vw;
-        }
-        .filter-section .icon-arrow {
-            font-size: 3vw;
-            position: absolute;
-            top: 5vw;
-            right: 2vw;
-        }
+
+            span {
+                font-size: 5vw;
+                display: inline-block;
+                vertical-align: middle;
+                color: rgb(256,256,256);
+            }
+
+            select {
+                font-size: 5vw;
+                font-weight: bold;
+                color: white;
+                width: 92%;
+                display: inline-block;
+                vertical-align: middle;
+                position: relative;
+                text-indent: 0 !important;
+                padding-left: 1.4vw;
+            }
+
+            .icon-arrow {
+                font-size: 3vw;
+                position: absolute;
+                top: 6vw;
+                right: 2vw;
+            }
+
+        }       
 
     } //community, forum
 
@@ -529,22 +530,33 @@ Parallel work file for UI Developer 01
         .wall {
 
             .part {
+               
+                .vermas {}                
 
                 .social {
 
                     div {
                         padding: 3% 2%;
                         width: 32.5%;
-                        color: #08b190;
+                        font-weight: bold;                       
+                        
+                        span {
+                            color: #08b190;
+                            font-size: 5vw;
+                            padding: 0;
+                        }
 
                         &:nth-child(3){
                             border-right: 2px solid rgba(255, 255, 255, 0.08);
                         }
 
-                        &:nth-child(4){
+                        &:last-child{
                             color: #dc300a;
+
+                            span {
+                                color: #dc300a;
+                            }
                         }
-                        
                     }
                 }
             }
