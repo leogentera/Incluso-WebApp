@@ -940,7 +940,7 @@ angular
                         console.log('image encoded');
                         alert('image encoded');
 
-                        avatarInfo["userid"] = user.id;
+                        avatarInfo["userid"] = $scope.model.id;
                         avatarInfo["filecontent"] = b64;
 
                         $http({
@@ -957,6 +957,10 @@ angular
                             $location.path('/ProgramaDashboard');
                         })
                         .error(function(){
+
+                    console.log('failed upload');
+                    alert('failed upload');
+
                             console.log('Error al subir la foto!');
                             $location.path('/ProgramaDashboard');
                         });
