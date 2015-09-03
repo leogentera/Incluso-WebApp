@@ -53,10 +53,14 @@ angular
                     if (activity) {
                         $scope.retoMultipleActivities.push(activity);
                     } else {
-                        moodleFactory.Services.GetAsyncActivity(retosMultipleChallenge.activities[i].coursemoduleid, function(data) {$scope.retoMultipleActivities.push(data)});
+                        moodleFactory.Services.GetAsyncActivity(retosMultipleChallenge.activities[i].coursemoduleid, function(data) {
+                          $scope.retoMultipleActivities.push(data);
+                          $scope.$emit('HidePreloader');
+                        });
                     }
                     if ($scope.retoMultipleActivities.length > 0) {
                       $scope.retoMultipleActivities[$scope.retoMultipleActivities.length - 1]["coursemoduleid"] = retosMultipleChallenge.activities[i].coursemoduleid;
+                      $scope.$emit('HidePreloader');
                     }
                   }
                   localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
@@ -65,7 +69,6 @@ angular
             }
 
             $scope.stars = stars;
-            $scope.$emit('HidePreloader');
 
             function createRequest() {
 
