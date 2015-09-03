@@ -64,7 +64,7 @@ angular
                 validateCabinaDeSoporte();
             }
 
-            $scope.scrollToTop();
+            $scope.scrollToTop('anchor-bottom');
             $scope.$emit('HidePreloader'); //hide preloader    
             
             $scope.back = function () {
@@ -86,16 +86,17 @@ angular
                 $scope.currentMessage = "";
                 var newMessages = JSON.stringify($scope.messages);                
                 localStorage.setItem('userChat',newMessages);
+                $scope.scrollToTop('anchor-bottom');
                                                
                 moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback); 
             }
             
             function getUserChatCallback() {
-
+                $scope.scrollToTop('anchor-bottom');
             }
             
-            function errorCallback() {                        
-                        
+            function errorCallback() { 
+                $scope.scrollToTop('anchor-bottom');
             }
-            
-        }]);
+        }
+    ]);
