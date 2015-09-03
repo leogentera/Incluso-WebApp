@@ -61,7 +61,7 @@
         };
 
         var _postUserNotifications = function(userId, data, successCallback, errorCallback, forceRefresh){
-            _postAsyncData("notifications/"+userId,data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+            _postAsyncData(null,data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
         var _postAsyncForumPost = function(key, data, successCallback, errorCallback, forceRefresh){
@@ -69,7 +69,7 @@
         };
 
         var _putUserNotificationRead = function(notificationId, data, successCallback,errorCallback, forceRefresh){
-            _putAsyncData("updateNotifications", data, API_RESOURCE.format('notification/')+ notificationId, successCallback, errorCallback);
+            _putAsyncData(null, data, API_RESOURCE.format('notification/')+ notificationId, successCallback, errorCallback);
         };
 
         var _getUserChat = function(userId, successCallback, errorCallback, forceRefresh){
@@ -336,7 +336,7 @@
                                 for(k =0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
                                     //activities
 
-                                    if (usercourse.stages[i].challenges[j].activities[k].activities) {
+                                    /*if (usercourse.stages[i].challenges[j].activities[k].activities) {
                                         for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
                                             if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
                                             {
@@ -352,7 +352,7 @@
                                         }
                                     } 
                                     else
-                                    {
+                                    {*/
                                         globalActivities++;
                                         stageActivities++;
 
@@ -361,7 +361,7 @@
                                             stageCompletedActivities++;
                                             globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].points;
                                         }
-                                    }
+                                    //}
 
                                 }
                             }
@@ -396,7 +396,8 @@
                     globalProgress: 0,
                     stages: _.filter(activities,function(a) { 
                         return a.parentsection == activities[0].section && a.section != activities[0].section && a.activity_type == 'ActivityManager' 
-                    })
+                    }),
+                    activities: _.filter(activities, function (a) { return a.activity_type == 'assign' && a.parentsection == 0})
                 };
 
                 var assign = null;

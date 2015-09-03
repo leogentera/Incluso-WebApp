@@ -578,15 +578,17 @@ angular
             }
 
 
-            //$scope.openModal = function (size) {
-            //    var modalInstance = $modal.open({
-            //        animation: $scope.animationsEnabled,
-            //        templateUrl: 'OpeningStageModal.html',
-            //        controller: 'OpeningStageController',
-            //        size: size,
-            //        windowClass: 'user-help-modal'
-            //    });
-            //};
+            $scope.openModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'openingStageModal.html',
+                    controller: 'OpeningStageController',
+                    size: size,
+                    windowClass: 'user-help-modal'
+                });
+            };
+
+            $scope.openModal();
             
             function addHeightConsulta(lista, elementQty) {
                 $scope.finalHeight = angular.element(lista).height() + (250 * (elementQty));

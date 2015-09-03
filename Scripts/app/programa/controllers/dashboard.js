@@ -24,7 +24,7 @@
                 return "";
             }
 
-            $scope.setToolbar($location.$$path,"Incluso"); //set global toolbar properties
+            $scope.setToolbar($location.$$path,"Misión Incluso"); //set global toolbar properties
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = true; 
 
@@ -52,7 +52,8 @@
             };
 
             $scope.navigateToStage = function(){
-                if ($scope.usercourse.firsttime) {
+                //Check if first time with course
+                if ($scope.usercourse.firsttime) { // 1 (true) : it is first time; 0 : it is not firsttime
                     $scope.openModal();
                     //Update firsttime value
                     $scope.updateProgramFirstTime();
@@ -77,7 +78,7 @@
                     courseId: $scope.usercourse.courseid
                 };
 
-                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel,function(){},function(){});
+                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function(){}, function(){});
             };
 
             $scope.playVideo = function(videoAddress, videoName){

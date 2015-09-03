@@ -89,7 +89,7 @@ angular
             }
 
             function getDataAsync() {
-                $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, currentUser.token, getActivityInfoCallback, ''):'';
+                $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, currentUser.token, getActivityInfoCallback, '', true):'';
             }
 
             function getActivityInfoCallback() {
