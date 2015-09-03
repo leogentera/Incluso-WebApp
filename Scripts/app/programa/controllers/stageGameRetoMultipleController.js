@@ -78,8 +78,7 @@ angular
                 var request = {
                             "userid  ": $scope.user.id,
                             "alias": $scope.user.username,
-                            "actividad": "Multi",
-                            "estado": "",
+                            "actividad": "Reto múltiple",
                             "sub_actividades": []
                         };
 
