@@ -215,6 +215,7 @@ angular
             function FailureAvatar(data) {
                 console.log("Couldn't retrieve avatar");
                 alert("Couldn't retrieve avatar");
+                $location.path('/ProgramaDashboard');
             }
             //function SuccessAvatar(data) {
             //        $scope.avatarInfo = [{
