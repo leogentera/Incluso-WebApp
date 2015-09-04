@@ -1,21 +1,80 @@
-<div class="incluso-app start-dashboard acerca-programa" id="site-wrapper">
+<div class="incluso-app hall-of-fame" id="site-wrapper">
 	<article>
-		<section class="showcase owl-carousel"></section>
+		<section class="showcase-carousel">
+			<div class="owl-carousel-" id="top-users-statistics">
+				<div class="item">
+					<!-- <div class="showcase"> -->
+						<div class="user-stats by-stars component">
+							<h3>Top 5: <span>Estrellas</span></h3>
+							<div class="user-avatar">
+								<figure>
+									<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+								</figure>
+							</div>
+							<div class="user-data">
+								<p class="user-name">Mis estrellas</p>
+								<p class="user-points">
+				                    <span>0</span>
+				                    <span class="icomoon icon-star"></span>
+				                </p>
+							</div>
+						</div>
+					<!-- </div> -->
+				</div>
+				<div class="item"></div>
+				<div class="item"></div>
+				<div class="item"></div>
+
+				<a class="control back" href="#" id="prev">
+					<span class="icomoon icon-arrow-bold-left"></span>
+				</a>
+				<a class="control next" href="#" id="next">
+					<span class="icomoon icon-arrow-bold-right"></span>
+				</a>
+			</div>
+		</section>
+
 		<section class="block-list">
 			
 		</section>
 		<section class="component">
-			<h3 ng-class="main-title">Salón de la fama</h3>
-			div
+			<h3>Salón de la fama</h3>
+			<div></div>
 		</section>
 	</article>
 	
-  
+	<!-- <div id="carousel-example-generic2" class="carousel">
+		<div id="owl-demo2" class="owl-carousel">
+			<div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">                            
+				<figure class="item-image">
+					<img ng-src="{{retosIconos[reto.sectionname]}}" alt="{{reto.sectionname}}" />
+				</figure>
+				<h4 class="item-title" ng-bind="reto.sectionname"></h4>
+				<p class="item-description" ng-bind="reto.activityintro"></p>
+				<p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : 'Cada sueño en su lugar' "></p>
 
-  <div id="site-menu" >
+				<div class="page-number">
+					<p class="text-center">
+						<span>{{model.stages[idEtapa].challenges.indexOf(reto) + 1}}</span>
+						<span>/</span>
+						<span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
+					</p>                    
+				</div>                               
+			</div>
+		</div>
 
-  </div>
-  <div id="site-canvas">
+		<a class="control back" href="#" id="prev">
+			<span class="icomoon icon-arrow-bold-left"></span>
+		</a>
+		<a class="control next" href="#" id="next">
+			<span class="icomoon icon-arrow-bold-right"></span>
+		</a>                    
+	</div> -->
+
+  <!-- <div id="site-menu" >
+
+  </div> -->
+<!--   <div id="site-canvas">
 
 	<article>
 	  <div class="container">
@@ -26,11 +85,78 @@
 
 			  <p>Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. </p> 
 		</section>
-		
-	  </div> <!-- /.container -->
+		s
+	  </div> 
 
 	</article>
 
   </div>
+ -->
 </div>
   
+// <script>
+//     $(document).ready(function () {
+//         function myController($scope) {
+//             $scope.challengeName = "MIS RETOS";
+//         }
+
+//         setTimeout(function () {
+//             var hits = 1;
+
+//                 //Carrusel de retos
+//                 var owl2 = $("#owl-demo2");
+
+//                 owl2.owlCarousel({
+//                     navigation: false,
+//                     pagination: false,
+//                     //paginationSpeed: 1000,
+//                     goToFirstSpeed: 2000,
+//                     singleItem: true,
+//                     autoHeight: true,
+//                     touchDrag:false,
+//                     mouseDrag:false,
+//                     transitionStyle:"fade",
+//                     afterMove: callback1
+//                 });
+
+//                 //Carrusel de Actividades
+//                 var owl = $("#owl-demo");
+
+//                 owl.owlCarousel({
+//                     navigation: false,
+//                     pagination: false,
+//                     //paginationSpeed: 1000,
+//                     goToFirstSpeed: 2000,
+//                     singleItem: true,
+//                     autoHeight: true,
+//                     touchDrag:false,
+//                     mouseDrag:false,
+//                     transitionStyle:"fade",
+//                     afterMove: callback2
+//                 });
+
+//                 function callback1(event) {
+//                     var item = this.currentItem;
+//                     owl.trigger("owl.goTo", item);
+//                     $("span#index").text((item+1));
+//                 }
+
+//                 function callback2(event) {
+//                     var item = this.currentItem;
+//                     owl2.trigger("owl.goTo", item);
+//                     $("span#index").text((item+1));
+//                 }
+
+//                 $("#next").click(function (ev) {
+//                     owl.trigger('owl.next');
+//                     ev.preventDefault();
+
+//                 });
+
+//                 $("#prev").click(function (ev) {
+//                     owl.trigger('owl.prev');
+//                     ev.preventDefault();
+//                 });
+//             }, 1000);
+//     });
+// </script>
