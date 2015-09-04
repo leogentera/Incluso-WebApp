@@ -26,11 +26,22 @@ angular
 
             $scope.like_status = 1;
 
-            $scope.AnswersResult = {
+            $scope.AnswersResult = { //For storing responses in "Exploración Inicial"
                 "userid": 0,
-                "answers": [null, [0, 0, 0, 0], '', null, []],
+                "answers": [null, [0, 0, 0, 0, 0], '', null, []],
                 "activityidnumber": 0,                         //$scope.activity.coursemoduleid
                 "like_status": 0
+            };
+
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misSuenosAnswers = [[], [], [], []];
+            $scope.dreamsLists = { "answers": [[], [], []] };
+
+            $scope.exploracionFinal = ["", "", "", "", ""];
+
+            $scope.show1 = function() {
+              console.log($scope.AnswersResult.answers[0]);
             };
 
 
@@ -50,19 +61,19 @@ angular
                 $scope.showWarning = false;
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
-
+                console.log($scope.activityname);
                 switch ($scope.activityname) {
                     case "Mis cualidades":
-                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
+                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;console.log("Mis cualidades");
                         break;
                     case "Mis gustos":
-                        $scope.AnswersResult.answers = $scope.misGustosAnswers;
+                        $scope.AnswersResult.answers = $scope.misGustosAnswers;console.log("Mis gustos");
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;
+                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;console.log("Sueña");
                         break;
                     case "Exploración final":
-                        $scope.AnswersResult.answers = $scope.exploracionFinal;
+                        $scope.AnswersResult.answers = $scope.exploracionFinal;console.log("Exploración final");
                         break;
                     default:
                         break;
@@ -79,10 +90,11 @@ angular
                     "userId": $scope.userprofile.id,
                     "startingTime": $scope.startingTime,
                     "endingTime": new Date(),
-
                     "token": $scope.currentUser.token,
                     "activityType": "Quiz"
                 };
+
+                console.log("activityModel = " + JSON.stringify(activityModel));
 
                 _endActivity(activityModel);
 
@@ -159,12 +171,15 @@ angular
                         $scope.AnswersResult.answers[1][2] == true ||
                         $scope.AnswersResult.answers[1][3] == true) {
                         if ($scope.AnswersResult.answers[2] != null && $scope.AnswersResult.answers[2] != "") {
+                            $scope.AnswersResult.answers[2] = $scope.AnswersResult.answers[2].replace(/\r?\n|\r/g, " ").trim();
                             if ($scope.AnswersResult.answers[3] != null) {
                                 if ($scope.AnswersResult.answers[4].length != 0) {
                                     var lastQuestionValidation = true;
                                     for (var a = 0; a < $scope.AnswersResult.answers[4].length; a++) {
-                                        var text = $scope.AnswersResult.answers[4][a];
-                                        if (text.trim() == '') {
+                                        var text = $scope.AnswersResult.answers[4][a].replace(/\r?\n|\r/g, " ").trim();
+                                        $scope.AnswersResult.answers[4][a] = text;
+
+                                        if (text == '') {
                                             lastQuestionValidation = false;
                                             break;
                                         }
@@ -228,17 +243,17 @@ angular
                 else {
                     showWarningAndGoToTop();
                 }
-            }
+            };
 
-            function updateSelectedAnswers(questionIndex, question) {
+            function updateSelectedAnswers(questionIndex, question) {//For "Exploración Inicial" only
 
                 switch (questionIndex) {
                     case 0:
-                        if (question.userAnswer == "Si") {
-                            $scope.AnswersResult.answers[0] = 1;
-                        }
-                        else if (question.userAnswer == "No") {
+                        if (question.userAnswer != "No") {console.log("question.userAnswer = " + question.userAnswer);
                             $scope.AnswersResult.answers[0] = 0;
+                        }
+                        else if (question.userAnswer == "No") {console.log("question.userAnswer = " + question.userAnswer);
+                            $scope.AnswersResult.answers[0] = 1;
                         }
                         break;
 
@@ -440,8 +455,8 @@ angular
             function updateMisSueñosSelectedAnswers(index, question) {
                 var userAnswersList = question.userAnswer.split(";");
                 userAnswersList.forEach(function (answer) {
-                    var cleanAnswer = cleanText(answer);
-                    $scope.dreamsLists.answers[index].push(cleanAnswer);
+                    //var cleanAnswer = cleanText2(answer);
+                    $scope.dreamsLists.answers[index].push(answer);
                 });
 
                 if (index == 0) {
@@ -492,12 +507,7 @@ angular
                 return result;
             }
 
-            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-            $scope.misSuenosAnswers = [[], [], [], []];
-            $scope.dreamsLists = { "answers": [[], [], []] };
 
-            $scope.exploracionFinal = ["", "", "", "", ""];
 
 
             function getDataAsync() {
@@ -623,8 +633,14 @@ angular
                         var countNotEmptyAnswers = 0;
                         for (var b = 0; b < cont; b++) {
                             var text = $scope.dreamsLists.answers[a][b];
+                            console.log(text);
 
-                            if (text.trim() !== '') {
+                            //Correction for the '\n' reserved character
+                            text = text.replace(/\r?\n|\r/g, " ").trim();
+                            $scope.dreamsLists.answers[a][b] = text;
+                            console.log(text);
+
+                            if (text !== '') {
                                 countNotEmptyAnswers++;
                             }
                         }
@@ -633,7 +649,6 @@ angular
                             //questionIsValid = true;
                             validAnswers++;
                         }
-
                     }
                 }
 
