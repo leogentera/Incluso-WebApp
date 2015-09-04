@@ -1015,16 +1015,63 @@ section.part.inbloq{
 
 /* Hall of fame */
 .incluso-app.hall-of-fame {
+        display: block;
+        width:auto;
+        height: auto;
+        padding:0;
+        margin:0;
 
     .showcase {
-        h3 {}
-        .user-avatar {}
+        display: block;
+        width:auto;
+        height: auto;
+        padding:0;
+        margin:0;
+
+        .user-avatar {
+            width:33.3vw;
+        }
         .user-data {}
     } 
+
+    .component {
+
+    }
     
     .user-stats {
-        .user-avatar {}
-        .user-data {}
+        display: block;
+        width:auto;
+        height: auto;
+        padding:0;
+        margin:0;
+        text-align: center;
+
+        h3 {
+            margin:0;
+            padding-top: 12vw;
+            padding-bottom: 3vw;
+            text-transform: uppercase;
+
+            span {
+                color:@clr-white;
+            }
+        }
+        .user-avatar {
+            width:50vw;
+            max-width:50vw;
+        }
+        .user-points {
+            display: inline-block;
+            width: auto;
+            padding: 0.222vw 2.5vw;
+        }
+        .user-data {
+            margin: 0 auto; 
+            
+            span {
+                font-size: 5vw;
+            }
+        }
 
         
 
