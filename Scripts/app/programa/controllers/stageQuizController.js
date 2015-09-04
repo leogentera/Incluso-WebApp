@@ -90,10 +90,11 @@ angular
                     "userId": $scope.userprofile.id,
                     "startingTime": $scope.startingTime,
                     "endingTime": new Date(),
-
                     "token": $scope.currentUser.token,
                     "activityType": "Quiz"
                 };
+
+                console.log("activityModel = " + JSON.stringify(activityModel));
 
                 _endActivity(activityModel);
 
@@ -170,12 +171,15 @@ angular
                         $scope.AnswersResult.answers[1][2] == true ||
                         $scope.AnswersResult.answers[1][3] == true) {
                         if ($scope.AnswersResult.answers[2] != null && $scope.AnswersResult.answers[2] != "") {
+                            $scope.AnswersResult.answers[2] = $scope.AnswersResult.answers[2].replace(/\r?\n|\r/g, " ").trim();
                             if ($scope.AnswersResult.answers[3] != null) {
                                 if ($scope.AnswersResult.answers[4].length != 0) {
                                     var lastQuestionValidation = true;
                                     for (var a = 0; a < $scope.AnswersResult.answers[4].length; a++) {
-                                        var text = $scope.AnswersResult.answers[4][a];
-                                        if (text.trim() == '') {
+                                        var text = $scope.AnswersResult.answers[4][a].replace(/\r?\n|\r/g, " ").trim();
+                                        $scope.AnswersResult.answers[4][a] = text;
+
+                                        if (text == '') {
                                             lastQuestionValidation = false;
                                             break;
                                         }
@@ -241,15 +245,15 @@ angular
                 }
             };
 
-            function updateSelectedAnswers(questionIndex, question) {
+            function updateSelectedAnswers(questionIndex, question) {//For "Exploración Inicial" only
 
                 switch (questionIndex) {
                     case 0:
-                        if (question.userAnswer != "No") {
-                            $scope.AnswersResult.answers[0] = 1;
-                        }
-                        else if (question.userAnswer == "No") {
+                        if (question.userAnswer != "No") {console.log("question.userAnswer = " + question.userAnswer);
                             $scope.AnswersResult.answers[0] = 0;
+                        }
+                        else if (question.userAnswer == "No") {console.log("question.userAnswer = " + question.userAnswer);
+                            $scope.AnswersResult.answers[0] = 1;
                         }
                         break;
 
@@ -451,8 +455,8 @@ angular
             function updateMisSueñosSelectedAnswers(index, question) {
                 var userAnswersList = question.userAnswer.split(";");
                 userAnswersList.forEach(function (answer) {
-                    var cleanAnswer = cleanText(answer);
-                    $scope.dreamsLists.answers[index].push(cleanAnswer);
+                    //var cleanAnswer = cleanText2(answer);
+                    $scope.dreamsLists.answers[index].push(answer);
                 });
 
                 if (index == 0) {
@@ -629,8 +633,14 @@ angular
                         var countNotEmptyAnswers = 0;
                         for (var b = 0; b < cont; b++) {
                             var text = $scope.dreamsLists.answers[a][b];
+                            console.log(text);
 
-                            if (text.trim() !== '') {
+                            //Correction for the '\n' reserved character
+                            text = text.replace(/\r?\n|\r/g, " ").trim();
+                            $scope.dreamsLists.answers[a][b] = text;
+                            console.log(text);
+
+                            if (text !== '') {
                                 countNotEmptyAnswers++;
                             }
                         }
@@ -639,7 +649,6 @@ angular
                             //questionIsValid = true;
                             validAnswers++;
                         }
-
                     }
                 }
 
