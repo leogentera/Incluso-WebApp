@@ -33,7 +33,7 @@ angular
                 "like_status": 0
             };
 
-            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misSuenosAnswers = [[], [], [], []];
             $scope.dreamsLists = { "answers": [[], [], []] };
@@ -42,6 +42,16 @@ angular
 
             $scope.show1 = function() {
               console.log($scope.AnswersResult.answers[0]);
+            };
+
+            $scope.addCaptureField = function() {
+                //addHeight("#owl-carousel");
+                console.log($scope.misCualidadesAnswers[0][11]);
+                console.log($scope.misCualidadesAnswers[0][12]);
+                console.log($scope.misCualidadesAnswers[1][11]);
+                console.log($scope.misCualidadesAnswers[1][12]);
+                console.log($scope.misCualidadesAnswers[2][11]);
+                console.log($scope.misCualidadesAnswers[2][12]);
             };
 
 
@@ -64,16 +74,16 @@ angular
                 console.log($scope.activityname);
                 switch ($scope.activityname) {
                     case "Mis cualidades":
-                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;console.log("Mis cualidades");
+                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
                         break;
                     case "Mis gustos":
-                        $scope.AnswersResult.answers = $scope.misGustosAnswers;console.log("Mis gustos");
+                        $scope.AnswersResult.answers = $scope.misGustosAnswers;
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;console.log("Sueña");
+                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;
                         break;
                     case "Exploración final":
-                        $scope.AnswersResult.answers = $scope.exploracionFinal;console.log("Exploración final");
+                        $scope.AnswersResult.answers = $scope.exploracionFinal;
                         break;
                     default:
                         break;
