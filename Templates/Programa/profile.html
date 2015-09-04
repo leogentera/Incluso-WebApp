@@ -87,6 +87,7 @@
                                         </a>
                                     </li>
 
+                                    <!-- Mis habilidades -->
                                     <!--<li class="list-group-item no-badge" ng-click="navigateToPage(7)" ng-show="model.recomendedBachelorDegrees.length > 0">-->
                                     <li class="list-group-item no-badge" ng-click="navigateToPage(7)">
                                         <a href="">
@@ -97,7 +98,9 @@
                                         </a>
                                     </li>
 
-                                    <li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">
+                                    <!-- Mis areas de oportunidad -->
+                                    <!--<li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">-->
+                                        <li class="list-group-item no-badge" ng-click="navigateToPage(8)">
                                         <a href="">
                                             <span class="icomoon icon-workman"></span>
                                             <span>Mis Áreas de Oportunidad</span>
@@ -106,7 +109,8 @@
                                         </a>
                                     </li>
 
-                                    <li class="list-group-item no-badge" ng-click="navigateToPage(9)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">
+                                    <!--<li class="list-group-item no-badge" ng-click="navigateToPage(9)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">-->
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(9)">
                                         <a href="">
                                             <span class="icomoon icon-rocket"></span>
                                             <span>Elige el Rumbo</span>
@@ -636,7 +640,7 @@
                 <!--  End of page -->
 
                 <!-- ////////// Mis habilidades /////////// -->
-                <div class="page my-habilities" ng-class="currentPage == 7 ? 'active' : ''">
+                <div class="page my-abilities" ng-class="currentPage == 7 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
@@ -683,7 +687,7 @@
                 </div>
                 <!--  End of page -->
 
-                <div class="page" ng-class="currentPage == 8 ? 'active' : ''">
+                <div class="page my-abilities" ng-class="currentPage == 8 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
@@ -699,7 +703,7 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <h5>Sueños Ser</h5>
+                                                        <!-- <h4>Sueños Ser</h5>
                                                         <ul class="block-list" ng-repeat="db in model.dreamsToBe">
                                                             <li>
                                                                 <p ng-bind="db"></p>
@@ -707,7 +711,7 @@
                                                         </ul>
                                                         <hr />
 
-                                                        <h5>Sueños Tener</h5>
+                                                        <h4>Sueños Tener</h5>
                                                         <ul class="block-list" ng-repeat="dh in model.dreamsToHave">
                                                             <li>
                                                                 <p ng-bind="dh"></p>
@@ -715,14 +719,28 @@
                                                         </ul>
                                                         <hr />
 
-                                                        <h5>Sueños Hacer</h5>
+                                                        <h4>Sueños Hacer</h5>
                                                         <ul class="block-list" ng-repeat="dd in model.dreamsToDo">
                                                             <li>
                                                                 <p ng-bind="dd"></p>
                                                             </li>
                                                         </ul>
                                                         <hr />
-                                                        <br />
+                                                        <br />-->
+                                                        <ul class="block-list">
+                                                            <li class="profile-info-asset">
+                                                                <h4>Interpersonal</h4>
+                                                                    <p>
+                                                                        Si en clase de filosofía, eres el unico despierto, preguntas el por qué de las cosas, frecuentemente escuchas a tus amigos decirte no me regañes y antes de tomar una decisión evaluas las consecuencias.
+                                                                    </p>
+                                                            </li>
+                                                            <li class="profile-info-asset">
+                                                                <h4>Interpersonal</h4>
+                                                                    <p>
+                                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+                                                                    </p>
+                                                            </li>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
@@ -736,14 +754,14 @@
                 </div>
                 <!--  End of page -->
 
-                <div class="page" ng-class="currentPage == 9 ? 'active' : ''">
+                <div class="page careers" ng-class="currentPage == 9 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
 
                                 <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(1)"></span>
+                                    <div class="panel-heading" ng-click="navigateToPage(1)">
+                                        <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-rocket"></span>
                                         <h3 class="panel-title">Carreras Afines</h3>
                                     </div>
@@ -752,9 +770,20 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <ul class="block-list" ng-repeat="b in model.recomendedBachelorDegrees">
+                                                        <!--<ul class="block-list" ng-repeat="b in model.recomendedBachelorDegrees">
                                                             <li>
                                                                 <p ng-bind="b"></p>
+                                                            </li>
+                                                        </ul>-->
+                                                         <ul class="block-list">
+                                                            <li class="profile-info-asset">
+                                                                <p>Biólogo</p>
+                                                            </li>
+                                                            <li class="profile-info-asset">
+                                                                <p>Nutriólogo</p>
+                                                            </li>
+                                                            <li class="profile-info-asset">
+                                                                <p>Agrónomo</p>
                                                             </li>
                                                         </ul>
                                                     </div>
