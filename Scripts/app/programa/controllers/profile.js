@@ -19,40 +19,84 @@ angular
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.status = "";
-            $scope.model = getDataAsync();
+            getDataAsync(function() {
 
-            /////// privacy settings initial switches [boolean]/////////
-            $scope.generalInfo = true;
-            $scope.schoolarship = false;
-            $scope.address = false;
-            $scope.phone = true;
-            $scope.socialNet = true;
-            $scope.family = false;
-            /////////////////////////////////////////////////////////////
-            
-            $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
-            $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
-            $scope.badgePage = 0;
-            $scope.normalBadgePage = $scope.badgePage + 1;
-            $scope.wholeBadgesPages = [];
-            var copyBadges = $scope.model.badges.slice();  //Deep copy of the $scope.model.badges array
-            
-            for (var i = 0; i < $scope.totalBadgePages; i++) {
-                var top = Math.min(12, $scope.totalBadges - 12 * i);
-                $scope.wholeBadgesPages[i] = [];
-                for (var j = 0; j < top; j++) {
-                    var elem = copyBadges.shift(); //extracts first element of remaining array
+                /////// privacy settings initial switches [boolean]/////////
+                $scope.generalInfo = true;
+                $scope.schoolarship = false;
+                $scope.address = false;
+                $scope.phone = true;
+                $scope.socialNet = true;
+                $scope.family = false;
+                /////////////////////////////////////////////////////////////
+                
+                $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
+                $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
+                $scope.badgePage = 0;
+                $scope.normalBadgePage = $scope.badgePage + 1;
+                $scope.wholeBadgesPages = [];
+                var copyBadges = $scope.model.badges.slice();  //Deep copy of the $scope.model.badges array
+                
+                for (var i = 0; i < $scope.totalBadgePages; i++) {
+                    var top = Math.min(12, $scope.totalBadges - 12 * i);
+                    $scope.wholeBadgesPages[i] = [];
+                    for (var j = 0; j < top; j++) {
+                        var elem = copyBadges.shift(); //extracts first element of remaining array
 
-                    if (elem.status == "won") {
-                        elem.filename = getFileName(elem.id);
-                        elem.description = getDescription(elem.id);
-                    } else {
-                        elem.filename = "default_placeholder.svg";
+                        if (elem.status == "won") {
+                            elem.filename = getFileName(elem.id);
+                            elem.description = getDescription(elem.id);
+                        } else {
+                            elem.filename = "default_placeholder.svg";
+                        }
+
+                        $scope.wholeBadgesPages[i].push(elem);
                     }
-
-                    $scope.wholeBadgesPages[i].push(elem);
                 }
-            }
+
+                $scope.model.modelState = {
+                    isValid: null,
+                    errorMessages: []
+                };
+
+                $rootScope.pageName = "Mi perfil";
+                $rootScope.navbarBlue = false;
+                $rootScope.showToolbar = true;
+                $rootScope.showFooter = true;
+                $scope.genderItems = ['Masculino', 'Femenino'];
+                $scope.countryItems = ['México', 'Guatemala', 'Costa Rica', 'Perú', 'Brasil'];
+                $scope.cityItems = ['México D.F.', 'Guadalajara', 'Monterrey', 'Villa hermosa'];
+                $scope.stateItems = ['Distrito Federal', 'Coahuila', 'Jalisco', 'México', 'Nuevo León'];
+                $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
+                /*unir1*/ $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
+                $scope.educationStatusList = ['Terminada', 'En proceso', 'Inconclusa'];
+                $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'Fútbol Soccer', 'Basquetbol', 'Artes Marciales', 'Yoga', 'Natación', 'Futbol Americano', 'Basebol', 'Carreras'];
+                $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografia', 'Graffiti', 'Diseño Gráfico', 'Artesanías', 'Teatro', 'Modelado', 'Dibujo'];
+                $scope.hobbiesList = ['Ir a fiestas', 'Leer', 'Pasar tiempo con amigos', 'Cocinar', 'Jugar videojuegos', 'Visitar museos', 'Ver películas/series', 'Ver televisión', 'Modelado', 'Pasar tiempo en redes sociales'];
+                $scope.talentsList = ['Cantar', 'Llevar ritmos', 'Bailar', 'Hablar frente a otros', 'Dibujar', 'Hacer amigos', 'Hacer operaciones matemáticas', 'Aprender cosas rápido', 'Ubicar lugares', 'Memorizar', 'Hacer manualidades'];
+                $scope.valuesList = ['Tolerancia', 'Respeto', 'Honestidad', 'Responsabilidad', 'Confiabilidad', 'Solidaridad', 'Igualdad', 'Lealtad', 'Amistad', 'Generosidad', 'Esfuerzo'];
+                $scope.habilitiesList = ['Empatía', 'Creatividad', 'Liderazgo', 'Comunicación', 'Negociación', 'Trabajo en equipo', 'Innovación', 'Iniciativa', 'Toma de decisiones', 'Planeación', 'Organización'];
+                $scope.iLiveWithList = ['Ambos padres', 'Padre', 'Madre', 'Tíos', 'Esposo(a)', 'Abuelos', 'Amigos'];
+                $scope.mainActivityList = ['Estudias', 'Trabajas', 'Ni estudias ni trabajas'];
+                /*unir1*/$scope.levelList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
+                $scope.gradeList = ['1er', '2do', '3ro', '4to', '5to', '6to'];
+                $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
+                $scope.yesNoList = ['Si', 'No'];
+                $scope.moneyIncomeList = ['Padres', 'Trabajo'];
+                $scope.medicalInsuranceList = ['IMSS', 'Privado', 'Seguro Popular'];
+                $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora'];
+                $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
+                $scope.videoGamesFrecuencyList = ['Diario', '3 veces a la semana', '1 vez a la semana', '1 o 2 veces al mes', 'Nunca'];
+                $scope.kindOfVideoGamesList = ['Acción', 'Deportes', 'Violencia', 'Aventura', 'Reto', 'Estrategia', 'Educativos', 'Peleas'];
+                $scope.socialNetworksList = ['Facebook', 'Instagram', 'Twitter'];
+                $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política'];
+                $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)'];
+
+                $scope.birthdate_Dateformat = formatDate($scope.model.birthday);
+                getAge();
+
+            });
+
 
             function getFileName(id) {
                 var filename = "";
@@ -194,59 +238,24 @@ angular
                 }
             };
 
-            $scope.model.modelState = {
-                isValid: null,
-                errorMessages: []
-            };
+           
 
-            $rootScope.pageName = "Mi perfil";
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
-            $rootScope.showFooter = true;
-            $scope.genderItems = ['Masculino', 'Femenino'];
-            $scope.countryItems = ['México', 'Guatemala', 'Costa Rica', 'Perú', 'Brasil'];
-            $scope.cityItems = ['México D.F.', 'Guadalajara', 'Monterrey', 'Villa hermosa'];
-            $scope.stateItems = ['Distrito Federal', 'Coahuila', 'Jalisco', 'México', 'Nuevo León'];
-            $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
-            /*unir1*/ $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
-            $scope.educationStatusList = ['Terminada', 'En proceso', 'Inconclusa'];
-            $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'Fútbol Soccer', 'Basquetbol', 'Artes Marciales', 'Yoga', 'Natación', 'Futbol Americano', 'Basebol', 'Carreras'];
-            $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografia', 'Graffiti', 'Diseño Gráfico', 'Artesanías', 'Teatro', 'Modelado', 'Dibujo'];
-            $scope.hobbiesList = ['Ir a fiestas', 'Leer', 'Pasar tiempo con amigos', 'Cocinar', 'Jugar videojuegos', 'Visitar museos', 'Ver películas/series', 'Ver televisión', 'Modelado', 'Pasar tiempo en redes sociales'];
-            $scope.talentsList = ['Cantar', 'Llevar ritmos', 'Bailar', 'Hablar frente a otros', 'Dibujar', 'Hacer amigos', 'Hacer operaciones matemáticas', 'Aprender cosas rápido', 'Ubicar lugares', 'Memorizar', 'Hacer manualidades'];
-            $scope.valuesList = ['Tolerancia', 'Respeto', 'Honestidad', 'Responsabilidad', 'Confiabilidad', 'Solidaridad', 'Igualdad', 'Lealtad', 'Amistad', 'Generosidad', 'Esfuerzo'];
-            $scope.habilitiesList = ['Empatía', 'Creatividad', 'Liderazgo', 'Comunicación', 'Negociación', 'Trabajo en equipo', 'Innovación', 'Iniciativa', 'Toma de decisiones', 'Planeación', 'Organización'];
-            $scope.iLiveWithList = ['Ambos padres', 'Padre', 'Madre', 'Tíos', 'Esposo(a)', 'Abuelos', 'Amigos'];
-            $scope.mainActivityList = ['Estudias', 'Trabajas', 'Ni estudias ni trabajas'];
-            /*unir1*/$scope.levelList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
-            $scope.gradeList = ['1er', '2do', '3ro', '4to', '5to', '6to'];
-            $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
-            $scope.yesNoList = ['Si', 'No'];
-            $scope.moneyIncomeList = ['Padres', 'Trabajo'];
-            $scope.medicalInsuranceList = ['IMSS', 'Privado', 'Seguro Popular'];
-            $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora'];
-            $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
-            $scope.videoGamesFrecuencyList = ['Diario', '3 veces a la semana', '1 vez a la semana', '1 o 2 veces al mes', 'Nunca'];
-            $scope.kindOfVideoGamesList = ['Acción', 'Deportes', 'Violencia', 'Aventura', 'Reto', 'Estrategia', 'Educativos', 'Peleas'];
-            $scope.socialNetworksList = ['Facebook', 'Instagram', 'Twitter'];
-            $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política'];
-            $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)'];
+            function getDataAsync(callback) {
 
-            $scope.birthdate_Dateformat = formatDate($scope.model.birthday);
-            getAge();
+                moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {
 
-            function getDataAsync() {
+                    $scope.model = moodleFactory.Services.GetCacheJson("profile");
+                    callback();
 
-                moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
-                var m = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
+                    moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
 
-                if (!m) {
-                    $location.path('/');
-                    return "";
-                }
-                initFields(m);
+                    if (!$scope.model) {
+                        $location.path('/');
+                        return "";
+                    }
 
-                return m;
+                    initFields($scope.model);
+                });
             }
 
             function initFields(m) {

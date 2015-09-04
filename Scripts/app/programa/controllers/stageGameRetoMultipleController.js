@@ -57,12 +57,11 @@ angular
                     } else {
                         moodleFactory.Services.GetAsyncActivity(retosMultipleChallenge.activities[i].coursemoduleid, function(data) {
                           $scope.retoMultipleActivities.push(data);
-                          $scope.$emit('HidePreloader');
+                          assignCourseModuleId(true, data);
                         });
                     }
                     if ($scope.retoMultipleActivities.length > 0) {
-                      $scope.retoMultipleActivities[$scope.retoMultipleActivities.length - 1]["coursemoduleid"] = retosMultipleChallenge.activities[i].coursemoduleid;
-                      $scope.$emit('HidePreloader');
+                      assignCourseModuleId(false, retosMultipleChallenge.activities[i]);
                     }
                   }
                   localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
@@ -71,6 +70,12 @@ angular
             }
 
             $scope.stars = stars;
+
+            function assignCourseModuleId(asyncRequest, data){
+              $scope.retoMultipleActivities[$scope.retoMultipleActivities.length - 1]["coursemoduleid"] = 
+              ( asyncRequest ? _.find(retosMultipleChallenge.activities, function(r){ return r.activityname == data.name }).coursemoduleid : data.coursemoduleid);
+              $scope.$emit('HidePreloader');
+            }
 
             function createRequest() {
 
@@ -97,7 +102,7 @@ angular
             $scope.downloadGame = function () {
                 var r = createRequest();
                 cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
-                localStorage.setItem("tmpRetoMultipleRequest", JSON.stringify(r));
+                //localStorage.setItem("tmpRetoMultipleRequest", JSON.stringify(r));
                 //$location.path('/ZonaDeVuelo/Conocete/RetoMultipleExternalApp');
             }
             
@@ -243,7 +248,8 @@ angular
             };
                 
             var failureGame = function (data){
-               alert("Fail");
+              alert("Fail");
+              $location.path('/ProgramaDashboard');
             }
 
             $scope.back = function () {

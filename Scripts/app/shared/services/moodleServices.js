@@ -73,6 +73,7 @@
         };
 
         var _getUserChat = function(userId, successCallback, errorCallback, forceRefresh){
+            successCallback();
             _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId),successCallback,errorCallback, forceRefresh);
         };
 
@@ -155,7 +156,14 @@
             });
         };
 
-        var _getCourseAsyncData = function(key, url, successCallback, errorCallback){
+        var _getCourseAsyncData = function(key, url, successCallback, errorCallback, forceRefresh){
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+                
+            if (returnValue) {
+                _timeout(function() { successCallback(returnValue, key)}, 1000);                
+                return returnValue;
+            }
+
             _httpFactory({
                 method: 'GET',
                 url: url, 
@@ -216,6 +224,10 @@
         };
 
         var _putAsyncStars = function(key, dataModel, profile, url, token, successCallback, errorCallback){
+
+            //avoid sending null stars
+            dataModel["stars"] = dataModel.stars ? dataModel.stars : 0;
+
             _httpFactory({
                 method: 'PUT',
                 url: url,
@@ -377,7 +389,9 @@
                 }
             }
             usercourse.globalProgress = Math.round(100.0 * globalCompletedActivities / globalActivities,0);
-            user.stars = globalPointsAchieved;
+            if (user){
+                user.stars = globalPointsAchieved;
+            }
             return { course: usercourse, user: user };
         }
          
