@@ -171,11 +171,13 @@ angular
                         $scope.AnswersResult.answers[1][2] == true ||
                         $scope.AnswersResult.answers[1][3] == true) {
                         if ($scope.AnswersResult.answers[2] != null && $scope.AnswersResult.answers[2] != "") {
+                            //Solving for the '\n' character
                             $scope.AnswersResult.answers[2] = $scope.AnswersResult.answers[2].replace(/\r?\n|\r/g, " ").trim();
                             if ($scope.AnswersResult.answers[3] != null) {
                                 if ($scope.AnswersResult.answers[4].length != 0) {
                                     var lastQuestionValidation = true;
                                     for (var a = 0; a < $scope.AnswersResult.answers[4].length; a++) {
+                                        //Solving for the '\n' character
                                         var text = $scope.AnswersResult.answers[4][a].replace(/\r?\n|\r/g, " ").trim();
                                         $scope.AnswersResult.answers[4][a] = text;
 
@@ -368,6 +370,7 @@ angular
                             $scope.AnswersResult.answers[0] = 1;
                         }
                         break;
+
                     case 1:
                         if (question.userAnswer == "True") {
                             $scope.AnswersResult.answers[1] = 2;
@@ -376,6 +379,7 @@ angular
                             $scope.AnswersResult.answers[1] = 1;
                         }
                         break;
+
                     case 2:
                         if (question.userAnswer == "True") {
                             $scope.AnswersResult.answers[2] = 1;
@@ -384,6 +388,7 @@ angular
                             $scope.AnswersResult.answers[2] = 0;
                         }
                         break;
+
                     case 3:
                         if (question.userAnswer == "Es tu ejemplo a seguir y debes ser igual a él\n") {
                             $scope.AnswersResult.answers[3] = 0;
@@ -395,6 +400,7 @@ angular
                             $scope.AnswersResult.answers[3] = 2;
                         }
                         break;
+
                     case 4:
                         if (question.userAnswer == "Porque aprovechas mejor tus talentos y difrutas lo que haces\n") {
                             $scope.AnswersResult.answers[4] = 0;
@@ -406,6 +412,7 @@ angular
                             $scope.AnswersResult.answers[4] = 2;
                         }
                         break;
+
                     default:
                         break;
                 }
