@@ -26,11 +26,22 @@ angular
 
             $scope.like_status = 1;
 
-            $scope.AnswersResult = {
+            $scope.AnswersResult = { //For storing responses in "Exploración Inicial"
                 "userid": 0,
-                "answers": [null, [0, 0, 0, 0], '', null, []],
+                "answers": [null, [0, 0, 0, 0, 0], '', null, []],
                 "activityidnumber": 0,                         //$scope.activity.coursemoduleid
                 "like_status": 0
+            };
+
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misSuenosAnswers = [[], [], [], []];
+            $scope.dreamsLists = { "answers": [[], [], []] };
+
+            $scope.exploracionFinal = ["", "", "", "", ""];
+
+            $scope.show1 = function() {
+              console.log($scope.AnswersResult.answers[0]);
             };
 
 
@@ -50,19 +61,19 @@ angular
                 $scope.showWarning = false;
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
-
+                console.log($scope.activityname);
                 switch ($scope.activityname) {
                     case "Mis cualidades":
-                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
+                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;console.log("Mis cualidades");
                         break;
                     case "Mis gustos":
-                        $scope.AnswersResult.answers = $scope.misGustosAnswers;
+                        $scope.AnswersResult.answers = $scope.misGustosAnswers;console.log("Mis gustos");
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;
+                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;console.log("Sueña");
                         break;
                     case "Exploración final":
-                        $scope.AnswersResult.answers = $scope.exploracionFinal;
+                        $scope.AnswersResult.answers = $scope.exploracionFinal;console.log("Exploración final");
                         break;
                     default:
                         break;
@@ -228,13 +239,13 @@ angular
                 else {
                     showWarningAndGoToTop();
                 }
-            }
+            };
 
             function updateSelectedAnswers(questionIndex, question) {
 
                 switch (questionIndex) {
                     case 0:
-                        if (question.userAnswer == "Si") {
+                        if (question.userAnswer != "No") {
                             $scope.AnswersResult.answers[0] = 1;
                         }
                         else if (question.userAnswer == "No") {
@@ -492,12 +503,7 @@ angular
                 return result;
             }
 
-            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-            $scope.misSuenosAnswers = [[], [], [], []];
-            $scope.dreamsLists = { "answers": [[], [], []] };
 
-            $scope.exploracionFinal = ["", "", "", "", ""];
 
 
             function getDataAsync() {
