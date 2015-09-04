@@ -199,7 +199,6 @@ var _isChallengeCompleted = function(){
               return success
           }else{
             success = 0;
-            ;
           }
         }else{
           success = 0;

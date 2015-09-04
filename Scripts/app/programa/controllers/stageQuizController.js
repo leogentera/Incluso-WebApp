@@ -33,10 +33,9 @@ angular
                 "like_status": 0
             };
 
-            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""]];
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""]];
             $scope.misSuenosAnswers = [[], [], [], []];
-            $scope.dreamsLists = { "answers": [[], [], []] };
 
             $scope.exploracionFinal = ["", "", "", "", ""];
 
@@ -61,7 +60,6 @@ angular
                 $scope.activity.status = 1;
                 
                 //Update Activity Log Service
-
                 updateUserStars($scope.activity_identifier);
 
                 $scope.AnswersResult.userid = $scope.userprofile.id;
@@ -80,7 +78,7 @@ angular
                         $scope.AnswersResult.answers = $scope.misGustosAnswers;
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;
+                        $scope.AnswersResult.answers = $scope.misSuenosAnswers;
                         break;
                     case "Exploración final":
                         $scope.AnswersResult.answers = $scope.exploracionFinal;
@@ -88,6 +86,9 @@ angular
                     default:
                         break;
                 }
+
+                console.log($scope.AnswersResult.answers);
+
                 //Update local storage and activities status array
                 localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
                 _activityStatus[$scope.activity.coursemoduleid] = 1;
@@ -123,34 +124,34 @@ angular
                 $scope.AnswersResult.answers[4].splice(index, 1);
             };
 
-            $scope.addSueno1 = function () {
+            $scope.addSueno1 = function () {alert("sueño 1");
                 addHeight("#listaDinamica1");
-                $scope.dreamsLists.answers[0].push("");
+                $scope.misSuenosAnswers[0].push("");
             };
 
             $scope.addSueno2 = function () {
                 addHeight("#listaDinamica2");
-                $scope.dreamsLists.answers[1].push("");
+                $scope.misSuenosAnswers[1].push("");
             };
 
             $scope.addSueno3 = function () {
                 addHeight("#listaDinamica3");
-                $scope.dreamsLists.answers[2].push("");
+                $scope.misSuenosAnswers[2].push("");
             };
 
             $scope.deleteSueno1 = function (index) {
                 removeHeight("#listaDinamica1");
-                $scope.dreamsLists.answers[0].splice(index, 1);
+                $scope.misSuenosAnswers[0].splice(index, 1);
             };
 
             $scope.deleteSueno2 = function (index) {
                 removeHeight("#listaDinamica2");
-                $scope.dreamsLists.answers[1].splice(index, 1);
+                $scope.misSuenosAnswers[1].splice(index, 1);
             };
 
             $scope.deleteSueno3 = function (index) {
                 removeHeight("#listaDinamica3");
-                $scope.dreamsLists.answers[2].splice(index, 1);
+                $scope.misSuenosAnswers[2].splice(index, 1);
             };
 
             $scope.hideWarning = function () {
@@ -473,7 +474,7 @@ angular
                 var userAnswersList = question.userAnswer.split(";");
                 userAnswersList.forEach(function (answer) {
                     //var cleanAnswer = cleanText2(answer);
-                    $scope.dreamsLists.answers[index].push(answer);
+                    $scope.misSuenosAnswers[index].push(answer);
                 });
 
                 if (index == 0) {
@@ -533,8 +534,9 @@ angular
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
-                //console.log("The activity ID is: \n" + $scope.activity_identifier);
-                //console.log("The activity data is: \n" + JSON.stringify(activity));
+                console.log("The activity ID is: \n" + $scope.activity_identifier);
+                console.log("The activity data is: \n" + JSON.stringify(activity));
+                console.log("The activity status is: " + activity.status);
 
                 if (activity != null) {
 
@@ -550,7 +552,7 @@ angular
                     //$scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/" + $scope.coursemoduleid));
 
                     var activityFinished = false;
-                    //console.log("userprofile: " + $scope.userprofile.id);
+                    console.log("userprofile: " + $scope.userprofile.id);
                     if (activity.status != 0) {
                         activityFinished = true;
                         $scope.setReadOnly = true;
@@ -641,20 +643,20 @@ angular
                 //var questionIsValid = false;
                 var validAnswers = 0;
 
-                for (var a = 0; a < $scope.dreamsLists.answers.length; a++) {
-                    var cont = $scope.dreamsLists.answers[a].length;
+                for (var a = 0; a < $scope.misSuenosAnswers.length; a++) {
+                    var cont = $scope.misSuenosAnswers[a].length;
 
                     if (cont > 0) {//Question with dreams
 
                         //Check if dreams are not empty strings or spaces
                         var countNotEmptyAnswers = 0;
                         for (var b = 0; b < cont; b++) {
-                            var text = $scope.dreamsLists.answers[a][b];
+                            var text = $scope.misSuenosAnswers[a][b];
                             console.log(text);
 
                             //Correction for the '\n' reserved character
                             text = text.replace(/\r?\n|\r/g, " ").trim();
-                            $scope.dreamsLists.answers[a][b] = text;
+                            $scope.misSuenosAnswers[a][b] = text;
                             console.log(text);
 
                             if (text !== '') {
