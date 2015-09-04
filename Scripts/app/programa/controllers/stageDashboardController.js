@@ -169,7 +169,7 @@ angular
 
             
             $scope.startActivity = function (activity, index, parentIndex) {
-
+                debugger;
                 if(!$scope.canStartActivity(activity.coursemoduleid)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.coursemoduleid })[0].url;
 
@@ -213,7 +213,7 @@ angular
              
              $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});             
              
-            }).controller('closingStageController', function ($scope, $modalInstance) {
+            }).controller('closingStageController', function ($scope, $modalInstance,$location) {
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
@@ -223,7 +223,7 @@ angular
                         message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
                     };
                     
-                    $scope.goToDashboard = function(){
-                        location.path('/');
-                    }
+                    $scope.navigateToDashboard = function () {
+                        $location.path('/ProgramaDashboard');
+                    };
                 });

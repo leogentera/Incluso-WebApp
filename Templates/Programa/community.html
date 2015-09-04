@@ -6,7 +6,7 @@
     </section>
     <section class="filter-section form">
         <span class="icomoon icon-list"></span>
-        <select name="filter" class="form-control form-control-lg theme-default"> <--!ng-model="filter"-->
+        <select name="filter" class="form-control form-control-lg theme-default" ng-model="filter"> 
           <option value="" disabled>Filtrar contenido por...</option>
           <option value="">Ver Todo</option>
           <option value="relevancia">Relevancia</option> 
@@ -91,22 +91,24 @@
             <div>Me gustó mucho tu foto :)</div>
           </div>
         </div>
-        <div class="vermas">
-          <span class="icomoon icon-show-more"></span>
-          Mostrar más comentarios...
+        <div class="coment block">
+          <div class="vermas">
+            <span class="icomoon icon-show-more"></span>
+            Mostrar más comentarios...
+          </div>
         </div>
         <div class="social">
           <div><span class="icomoon icon-like"></span> Me gusta</div>
           <div class="hidden"><span class="icomoon icon-like"></span> Ya no me gusta</div>
-          <div><span class="icomoon icon-comment"></span> Comenta</div>
-          <div><span class="icomoon icon-pin"></span> Reportar</div>
+          <div><span class="icomoon icon-comment"></span> Comentar</div>
+          <div><span class="icomoon icon-pinch"></span> Reportar</div>
         </div>        
       </div>
       <section class="modales">
         <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
           <div>
             <a href="#close" title="Close" class="close"></a>
-            <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."></textarea></div>
+            <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."></textarea></div>
             <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
           </div>
         </div>
@@ -123,7 +125,7 @@
           Maecenas sed diam eget risus varius blandit sit amet non manga.<br>
           Maecenas faucibus mollis interdum.<br>Duis mollis, est non commodo luctus,
           nisi erat porttitor ligula amet.
-          <div>A <span class="green">12</span> jóvenes les gusta esto</div>
+          <div class="popularity">A <span class="green">12</span> jóvenes les gusta esto</div>
         </div>
         <div class="coment block">
           <img src="assets/images/img-avatar-dummy-02.png">
@@ -133,10 +135,20 @@
         </div>
         <div class="social">
           <div><span class="icomoon icon-like"></span> Me gusta</div>
-          <div><span class="icomoon icon-comment"></span> Comenta</div>
-          <div><span class="icomoon icon-required"></span> Reportar</div>
+          <div class="hidden"><span class="icomoon icon-like"></span> Ya no me gusta</div>
+          <div><span class="icomoon icon-comment"></span> Comentar</div>
+          <div><span class="icomoon icon-pinch"></span> Reportar</div>
         </div>
       </div>
+      <section class="modales">
+        <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
+          <div>
+            <a href="#close" title="Close" class="close"></a>
+            <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."></textarea></div>
+            <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
+          </div>
+        </div>
+      </section>
 
       <div class="part">
         <div class="author">
@@ -146,18 +158,26 @@
           </div>
         </div>
         <div class="block">
-          <i class="icomoon icon-hyperlink green"></i>
+          <span class="icomoon icon-hyperlink green"></span>
           <span>http://www.incluso.com.mx</span>
-          <div>A <span class="green">tí y a 98</span> jóvenes les gusta esto</div>
+          <div class="popularity">A <span class="green">tí y a 98</span> jóvenes les gusta esto</div>
         </div>
         <div class="social">
-          <div class="social">
-            <div><span class="icomoon icon-like"></span> Me gusta</div>
-            <div><span class="icomoon icon-comment"></span> Comenta</div>
-            <div><span class="icomoon icon-required"></span> Reportar</div>
-        </div>
+          <div><span class="icomoon icon-like"></span> Me gusta</div>
+          <div class="hidden"><span class="icomoon icon-like"></span> Ya no me gusta</div>
+          <div><span class="icomoon icon-comment"></span> Comentar</div>
+          <div><span class="icomoon icon-pinch"></span> Reportar</div>
         </div>
       </div>
+      <section class="modales">
+        <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
+          <div>
+            <a href="#close" title="Close" class="close"></a>
+            <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."></textarea></div>
+            <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
+          </div>
+        </div>
+      </section>
 
       <div class="part">
         <div class="author">
@@ -173,16 +193,31 @@
         </div>
         <div class="social">
           <div><span class="icomoon icon-like"></span> Me gusta</div>
-          <div><span class="icomoon icon-comment"></span> Comenta</div>
-          <div><span class="icomoon icon-required"></span> Reportar</div>
+          <div class="hidden"><span class="icomoon icon-like"></span> Ya no me gusta</div>
+          <div><span class="icomoon icon-comment"></span> Comentar</div>
+          <div><span class="icomoon icon-pinch"></span> Reportar</div>
         </div>      
       </div>
+      <section class="modales">
+        <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
+          <div>
+            <a href="#close" title="Close" class="close"></a>
+            <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."></textarea></div>
+            <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
+          </div>
+        </div>
+      </section>
+
+      <section>
+      <a class="btn btn-showmore btn-lg" role="button">
+        <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
+      </a>
     </section>
+    <br>
     <section>
-      <button class="btn btn-default btn-lg btn-cnt" type="button">
-        <span class="icomoon icon-show-more"></span>
-        <span>Mostrar más publicaciones...</span>
-      </button>
+      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
     </section>
+
+    </section>    
   </article>
 </div>
