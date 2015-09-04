@@ -258,6 +258,11 @@
             controller: 'programaLeaderBoard'
         });        
 
+        $routeProvider.when('/CompartirExperiencia', { 
+            templateUrl: 'Templates/Programa/experienceshare.html',
+            controller: 'AlertsController'
+        });  
+
         $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId', {
             templateUrl: 'Templates/ZonaDeVuelo/dashboard.html',
             controller: 'stageDashboardController'

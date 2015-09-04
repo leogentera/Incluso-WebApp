@@ -13,7 +13,8 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
             $scope.scrollToTop();
-$scope.$emit('HidePreloader');
+            $scope.model = getDataAsync();
+            $scope.$emit('ShowPreloader');
             /* Models */
             //$scope.hasSeenTutorial = moodleFactory.Services.GetCacheObject("HasSeenTutorial");
             //$scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
@@ -64,28 +65,40 @@ $scope.$emit('HidePreloader');
                 }];
             //}
 
-            //function getAvatarInfoCallback(){
+            function getDataAsync() {
 
-            //    $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
+                moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
+                var m = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
 
-            //    if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
-            //        $scope.avatarInfo = [{
-            //            "userid": "",//$scope.user.UserId,
-            //            "alias": "", //$scope.user.username,
-            //            "aplicacion": "Mi Avatar",
-            //            "estrellas": 0,//$scope.user.stars,
-            //            "PathImagen": "Android/data/<app-id>/images",
-            //            "color_cabello": "amarillo",
-            //            "estilo_cabello": "",
-            //            "traje_color_principal": "",
-            //            "traje_color_secundario": "",
-            //            "rostro": "",
-            //            "color_de_piel": "",
-            //            "escudo:": "",
-            //            "imagen_recortada": "",
-            //        }];             
-            //    }
-            //}
+                if (!m) {
+                    $location.path('/');
+                    return "";
+                }
+
+                return m;
+            }
+
+            function getAvatarInfoCallback(){
+               $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
+               if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
+                   $scope.avatarInfo = [{
+                       "userid": "",//$scope.user.UserId,
+                       "alias": "", //$scope.user.username,
+                       "aplicacion": "Mi Avatar",
+                       "estrellas": 0,//$scope.user.stars,
+                       "PathImagen": "Android/data/<app-id>/images",
+                       "color_cabello": "amarillo",
+                       "estilo_cabello": "",
+                       "traje_color_principal": "",
+                       "traje_color_secundario": "",
+                       "rostro": "",
+                       "color_de_piel": "",
+                       "escudo:": "",
+                       "imagen_recortada": "",
+                   }];             
+               }
+               $scope.$emit('HidePreloader');
+            }
 
             //function errorCallback(data){
             //    console.log(data);
@@ -111,7 +124,7 @@ $scope.$emit('HidePreloader');
                 var ctx = c.getContext("2d");
                 var img = new Image();
                 img.onload = function() {
-                    alert('loading avatar');
+                    //alert('loading avatar');
                     c.width = this.width;
                     c.height = this.height;
                     ctx.drawImage(img, 0, 0);
@@ -125,16 +138,13 @@ $scope.$emit('HidePreloader');
             }
 
             uploadAvatar = function(avatarInfo) {                
-                var pathimagen = avatarInfo[0].pathimagen + "/avatar.svg";
-                /*"assets/images/avatar.svg"*/
+                var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen;
                 encodeImageUri(pathimagen, function(b64) {
+                    avatarInfo[0]["filecontent"] = b64;
                     $http({
                         method: 'POST',
                         url: API_RESOURCE.format('avatar'),
-                        data: {
-                            userid: user.id,
-                            filecontent: b64
-                        }
+                        data: avatarInfo[0]
                     })
                     .success(function(){
                         console.log('Foto guardada exitosamente!');
@@ -156,11 +166,13 @@ $scope.$emit('HidePreloader');
                 //localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
                 //$scope.scrollToTop();         
                 //$location.path('/Juegos/Avatar');
+
+                //the next fields should match the integration document shared with the game app
                 var avatarInfoForGameIntegration = {
                     "userid": $scope.model.id,
                     "alias": $scope.model.username,
                     "actividad": "Mi Avatar",
-                    "estrellas": $scope.model.stars,
+                    "estrellas": "100",
                     "pathimagen": "",
                     "genero": "",
                     "rostro": "",
@@ -177,7 +189,7 @@ $scope.$emit('HidePreloader');
             function SuccessAvatar(data) {
                 $scope.avatarInfo = [{
                     "userid": data.userid,
-                    "actividad": data.actividad,
+                    "aplicacion": data.actividad,
                     "genero": data.genero,
                     "rostro": data.rostro,
                     "color_de_piel": data.color_de_piel,
@@ -186,9 +198,12 @@ $scope.$emit('HidePreloader');
                     "traje_color_principal": data.traje_color_principal,
                     "traje_color_secundario": data.traje_color_secundario,
                     "imagen_recortada": data.imagen_recortada,
-                    "fecha_modificacion": data.fecha_modificacion,
+                    "ultima_modificacion": data.fecha_modificacion,
                     "Te_gusto_la_actividad": data.Te_gusto_la_actividad,
-                    "pathimagen": data.pathimagen
+                    "pathimagen": data.pathimagen,
+                    "estrellas": "100",
+                    "alias": $scope.model.username,
+                    "escudo" : $scope.model.shield
                 }];
                 uploadAvatar($scope.avatarInfo);
                 localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
