@@ -58,17 +58,15 @@ angular
               $scope.fuenteDeEnergia = activities;
               getDataAsync();
               $scope.$emit('HidePreloader'); //hide preloader
-            }        
+            }     
+
+            checkProgress();
 
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
             }                                
 
-            function getDataAsync() {    
-              if(!$scope.fuenteDeEnergia.status){
-                $scope.currentPage = 2;
-              }
-              
+            function getDataAsync() {                            
               for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){   
                 var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)); 
                 if(activityCache){
@@ -120,16 +118,20 @@ angular
                 $scope.activities.push(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 80)));
                        
             }*/
-                        
-            for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {              
-              if(!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){                
-                $scope.statusObligatorios+=1; 
-                starsMandatory += 50;               
-              }
-              else if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){
-                starsNoMandatory += 50;
-              }
-            }
+             function checkProgress(){
+              for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {              
+                if(!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){                
+                  $scope.statusObligatorios+=1; 
+                  starsMandatory += 50;               
+                }
+                else if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){
+                  starsNoMandatory += 50;
+                }
+              }              
+              if($scope.statusObligatorios >= 5 && $scope.fuenteDeEnergia.status == 0){
+                $scope.currentPage = 2 ;
+              } 
+             }                   
 
             $scope.updateStatus = function(contentId){               
               for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {
@@ -144,7 +146,7 @@ angular
                     $scope.statusObligatorios+=1;    
                     assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid);
                     starsMandatory += 50;    
-                    if($scope.statusObligatorios == 5){
+                    if($scope.statusObligatorios >= 5 && !$scope.fuenteDeEnergia.status){
                       $scope.navigateToPage(2);
                     }                  
                   }
