@@ -91,8 +91,7 @@ angular
                 function errorCallback(){};
             };
 
-            var checkForumProgress = function(callback){
-                debugger;
+            var checkForumProgress = function(callback){                
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
 
