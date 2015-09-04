@@ -285,16 +285,18 @@ angular
             }
 
             function formatDate(date) {
+
+                var userBirthDate;
                 if (date != "NaN/NaN/NaN" && date != "") {
                     var splitDate = date.split("/");
 
                     //             var userBirthDate = new Date(splitDate[2], splitDate[0], splitDate[1]); 
                     //             var userBirthDate = new Date(splitDate[2], splitDate[0]-1, splitDate[1]);
 
-                    var userBirthDate = new Date(splitDate[2], splitDate[0] - 1, splitDate[1]);
+                    userBirthDate = new Date(splitDate[2], splitDate[0] - 1, splitDate[1]);
                 }
                 else {
-                    var userBirthDate = null;
+                    userBirthDate = null;
                 }
 
                 return userBirthDate;
