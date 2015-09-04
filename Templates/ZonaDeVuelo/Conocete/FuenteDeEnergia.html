@@ -108,11 +108,11 @@
                       <span ng-show="activity.status" ng-bind-html="activity.pageContent"></span>
                       <span ng-bind-html="activity.file.pageContent"></span>
 
-                      <section class="component ng-scope"  ng-if="activity.activityintro == 'video'" ng-click="updateStatus(activity.groupid)">
+                      <section class="component ng-scope"  ng-if="activity.activityintro == 'video'" >
                         <div class="panel panel-video">
                             <div class="video-player">
                                 <div class="stage">
-                                    <a class="icon icon-play" href={{activity.activityContent.url}} target="_blank">
+                                    <a class="icon icon-play" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">
                                         <span class="glyphicon glyphicon-play"></span>
                                     </a>
                                     <figure class="poster">
