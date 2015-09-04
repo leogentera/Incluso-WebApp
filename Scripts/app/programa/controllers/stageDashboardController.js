@@ -170,8 +170,7 @@ angular
             };
 
             
-            $scope.startActivity = function (activity, index, parentIndex) {
-                debugger;
+            $scope.startActivity = function (activity, index, parentIndex) {                
                 if(!$scope.canStartActivity(activity.coursemoduleid)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.coursemoduleid })[0].url;
 

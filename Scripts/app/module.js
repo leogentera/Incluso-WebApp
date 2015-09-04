@@ -71,13 +71,14 @@
         $http.get('Templates/Programa/evaluacion.html', { cache: $templateCache });
         $http.get('Templates/Programa/formulario.html', { cache: $templateCache });
         $http.get('Templates/Programa/community.html', { cache: $templateCache });
+        $http.get('Templates/Programa/sharingexperience.html', { cache: $templateCache });  
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
         $http.get('Templates/Programa/Dashboard.html', { cache: $templateCache });  
         $http.get('Templates/Chat/index.html', { cache: $templateCache });  
 
-        $http.get('Templates/Leaderboard/index.html', { cache: $templateCache });  
+        $http.get('Templates/Leaderboard/index.html', { cache: $templateCache });          
         $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionInicial.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: $templateCache });  
@@ -248,6 +249,11 @@
             controller: 'programaNotificationController'
         });
             
+       $routeProvider.when('/SharingExperience', { 
+            templateUrl: 'Templates/Programa/sharingexperience.html',
+            controller: 'AlertsController'          //to do: add corresponding controller 
+        });  
+
         $routeProvider.when('/Chat', { 
             templateUrl: 'Templates/Chat/index.html',
             controller: 'programaChatController'
@@ -257,12 +263,7 @@
             templateUrl: 'Templates/Leaderboard/index.html',
             controller: 'programaLeaderBoard'
         });        
-
-        $routeProvider.when('/CompartirExperiencia', { 
-            templateUrl: 'Templates/Programa/experienceshare.html',
-            controller: 'AlertsController'
-        });  
-
+     
         $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId', {
             templateUrl: 'Templates/ZonaDeVuelo/dashboard.html',
             controller: 'stageDashboardController'
