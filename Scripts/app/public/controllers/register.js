@@ -56,6 +56,7 @@ angular
             $scope.countryItems = ['México', 'OTRO'];
             $scope.cityItems = ['México D.F', 'Estado de México', 'OTRO'];
             $scope.securityquestionItems = ['¿Dónde crecí?','Nombre de mi mejor amigo','Nombre de mi mascota','Personaje favorito','Banda musical favorita'];
+            $scope.showPlaceHolder = true;
             
             $scope.$emit('HidePreloader'); //- hide preloader
 
@@ -68,7 +69,9 @@ angular
             });
             $scope.$watch("registerModel.modelState.errorMessages", function(newValue, oldValue){
                 $scope.registerModel.modelState.isValid = (newValue.length === 0);
-            });                        
+            });           
+               
+               
                                 
             
             $scope.register = function() {
@@ -148,7 +151,26 @@ angular
                 $scope.currentPage = pageNumber;
                 $scope.$emit('scrollTop'); //- scroll
             };
-
+            //
+            //ng-hide="registerModel.birthday.length != 0"
+            $scope.showPlaceHolderBirthday = function(){                
+                var bd = $("input[name='birthday']").val();                
+                if(bd){
+                    $scope.showPlaceHolder = false;                    
+                }else{
+                    $scope.showPlaceHolder = true;                    
+                }
+            };
+            
+            //$scope.showBirthdayLabel = function(){
+            //    debugger;
+            //    if(!$scope.registerModel.birthday){
+            //        $('#labelBirthday').removeClass('custom-placeholder form-control-lg ng-hide').addClass('custom-placeholder form-control-lg');                    
+            //    }else{
+            //        $('#labelBirthday').removeClass('custom-placeholder form-control-lg').addClass('custom-placeholder form-control-lg ng-hide');
+            //    }
+            //};
+            
             var registerUser = function(){
                 
                 $http({

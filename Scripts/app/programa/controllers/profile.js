@@ -908,15 +908,98 @@ angular
                     $scope.model.familiaCompartamos.splice(index, 1);
                 };
 
+                encodeImageUri = function(imageUri, callback) {
+                    var c = document.createElement('canvas');
+                    var ctx = c.getContext("2d");
+                    var img = new Image();
+                    img.onload = function() {
+                        //alert('loading avatar');
+                        c.width = this.width;
+                        c.height = this.height;
+                        ctx.drawImage(img, 0, 0);
+
+                        if(typeof callback === 'function'){
+                            var dataURL = c.toDataURL("image/jpeg");
+                            callback(dataURL.slice(22, dataURL.length));
+                        }
+                    };
+                    img.src = imageUri;
+                }
+
+                uploadAvatar = function(avatarInfo) {       
+                    var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen;
+
+                    encodeImageUri(pathimagen, function(b64) {
+
+                        //avatarInfo["userid"] = $scope.model.id;
+                        avatarInfo[0]["filecontent"] = b64;
+
+                        $http({
+                            method: 'POST',
+                            url: API_RESOURCE.format('avatar'),
+                            data: avatarInfo[0]
+                        })
+                        .success(function(){
+                            console.log('Foto guardada exitosamente!');
+                            $location.path('/ProgramaDashboard');
+                        })
+                        .error(function(){
+                            console.log('Error al subir la foto!');
+                            $location.path('/ProgramaDashboard');
+                        });
+                    });
+                }
+
                 $scope.avatar = function () {
-                    $scope.avatarInfo[0].UserId = $scope.model.UserId;
-                    $scope.avatarInfo[0].Alias = $scope.model.username;
-                    $scope.avatarInfo[0].Estrellas = $scope.model.stars;
+                    //the next fields should match the integration document shared with the game app
+                    var avatarInfoForGameIntegration = {
+                        "userid": $scope.model.id,
+                        "alias": $scope.model.username,
+                        "actividad": "Mi Avatar",
+                        "estrellas": "100",
+                        "pathimagen": "",
+                        "genero": "",
+                        "rostro": "",
+                        "color_de_piel": "",
+                        "estilo_cabello": "",
+                        "color_cabello": "",
+                        "traje_color_principal": "",
+                        "traje_color_secundario": "",
+                        "escudo": ""
+                    };    
+                    cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                };
+
+                function SuccessAvatar(data) {
+                    //the next fields should match the database in moodle
+                    $scope.avatarInfo = [{
+                        "userid": data.userid,
+                        "aplicacion": data.actividad,
+                        "genero": data.genero,
+                        "rostro": data.rostro,
+                        "color_de_piel": data.color_de_piel,
+                        "estilo_cabello": data.estilo_cabello,
+                        "color_cabello": data.color_cabello,
+                        "traje_color_principal": data.traje_color_principal,
+                        "traje_color_secundario": data.traje_color_secundario,
+                        "imagen_recortada": data.imagen_recortada,
+                        "ultima_modificacion": data.fecha_modificacion,
+                        "Te_gusto_la_actividad": data.Te_gusto_la_actividad,
+                        "pathimagen": data.pathimagen,
+                        "estrellas": "100",
+                        "alias": $scope.model.username,
+                        "escudo" : $scope.model.shield
+
+                    }];
+
+                    uploadAvatar($scope.avatarInfo);
                     localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
 
-                    $scope.scrollToTop();
-                    $location.path('/Juegos/Avatar');
-                };
+                }
+            
+                function FailureAvatar(data) {
+                    console.log("Couldn't retrieve avatar");
+                }
 
                 var $selects = $('select.form-control');
                 $selects.change(function () {

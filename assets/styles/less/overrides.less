@@ -787,12 +787,15 @@ section.part.inbloq{
             font-weight: normal;
             .panel-heading {
                 background-color: #0d0f14;
-                color: #FFF;                
+                color: #FFF; 
+                border-radius: 1.5vw 1.5vw 0 0;               
                 .icon-checked-join {
                     display: none;
                     margin-right: 2vw;
                     font-size: 6vw;
-                    vertical-align: top;
+                    vertical-align: baseline;
+                    position: relative;
+                    top: 0.8vw;
                 }
                 div{
                     float: right;
@@ -807,6 +810,8 @@ section.part.inbloq{
                     }
                     span.icomoon {
                             padding-left: 2.5vw;
+                            position: relative;
+                            top: 1.3vw;
                     }
                 }
             }
@@ -814,7 +819,7 @@ section.part.inbloq{
                 width: 100% !important;
             }
             &.collapsed .panel-heading {
-                
+                border-radius: 1.5vw;
                 background: -moz-radial-gradient(center, ellipse cover,  rgba(31, 39, 51, 0.68) 0%, rgba(20, 25, 33, 0.68) 100%);
                     background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(31, 39, 51, 0.68)), color-stop(100%,rgba(20, 25, 33, 0.68)));
                     background: -webkit-radial-gradient(center, ellipse cover,  rgba(31, 39, 51, 0.68) 0%,rgba(20, 25, 33, 0.68) 100%);
@@ -1005,5 +1010,29 @@ section.part.inbloq{
                 color: @clr-blueTurquoise !important;
             }
         }
+    }
+}
+
+/* Hall of fame */
+.incluso-app.hall-of-fame {
+
+    .showcase {
+        h3 {}
+        .user-avatar {}
+        .user-data {}
+    } 
+    
+    .user-stats {
+        .user-avatar {}
+        .user-data {}
+
+        
+
+        &.by-progress {}
+        &.by-stars {}
+        &.by-publications {}
+        &.by-badges {}
+
+
     }
 }
