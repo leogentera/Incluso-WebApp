@@ -287,16 +287,18 @@ angular
             }
 
             function formatDate(date) {
+
+                var userBirthDate;
                 if (date != "NaN/NaN/NaN" && date != "") {
                     var splitDate = date.split("/");
 
                     //             var userBirthDate = new Date(splitDate[2], splitDate[0], splitDate[1]); 
                     //             var userBirthDate = new Date(splitDate[2], splitDate[0]-1, splitDate[1]);
 
-                    var userBirthDate = new Date(splitDate[2], splitDate[0] - 1, splitDate[1]);
+                    userBirthDate = new Date(splitDate[2], splitDate[0] - 1, splitDate[1]);
                 }
                 else {
-                    var userBirthDate = null;
+                    userBirthDate = null;
                 }
 
                 return userBirthDate;
@@ -373,8 +375,8 @@ angular
                 if (!$scope.editForm.date.$valid) { errors.push("Ingrese la fecha de nacimiento."); }
 
                 //Validation of the $scope.model.familiaCompartamos array
+                //  a) Avoiding two persons having the same "Número de Cliente Compartamos"
                 var arrayForIdClients = [];
-
 
                 $scope.model.familiaCompartamos.forEach(function (elem) {
                     arrayForIdClients.push(elem.idClient.toLowerCase());
@@ -388,6 +390,23 @@ angular
                 if (arrayForIdClients.length != filteredIdClient.length) {
                     //Repeated idClients
                     errors.push("El número de cliente Compartamos debe ser único.");
+                }
+
+                //  b) Avoiding two persons having the same "Parentesco"
+                var arrayForParentesco = [];
+
+                $scope.model.familiaCompartamos.forEach(function (elem) {
+                    arrayForParentesco.push(elem.relationship.toLowerCase());
+
+                });
+
+                var filteredArray = arrayForParentesco.filter(function (item, pos) {
+                    return arrayForParentesco.indexOf(item) == pos;
+                });
+
+                if (arrayForParentesco.length != filteredArray.length) {
+                    //Repeated idClients
+                    errors.push("El parentesco está repetido.");
                 }
 
                 //Validation of the $scope.model.socialNetworks array

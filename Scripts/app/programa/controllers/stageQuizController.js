@@ -33,8 +33,8 @@ angular
                 "like_status": 0
             };
 
-            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""]];
+            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""]];
             $scope.misSuenosAnswers = [[], [], [], []];
             $scope.dreamsLists = { "answers": [[], [], []] };
 
@@ -42,6 +42,16 @@ angular
 
             $scope.show1 = function() {
               console.log($scope.AnswersResult.answers[0]);
+            };
+
+            $scope.addCaptureField = function() {
+                //addHeight("#owl-carousel");
+                console.log($scope.misCualidadesAnswers[0][11]);
+                console.log($scope.misCualidadesAnswers[0][12]);
+                console.log($scope.misCualidadesAnswers[1][11]);
+                console.log($scope.misCualidadesAnswers[1][12]);
+                console.log($scope.misCualidadesAnswers[2][11]);
+                console.log($scope.misCualidadesAnswers[2][12]);
             };
 
 
@@ -64,16 +74,16 @@ angular
                 console.log($scope.activityname);
                 switch ($scope.activityname) {
                     case "Mis cualidades":
-                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;console.log("Mis cualidades");
+                        $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
                         break;
                     case "Mis gustos":
-                        $scope.AnswersResult.answers = $scope.misGustosAnswers;console.log("Mis gustos");
+                        $scope.AnswersResult.answers = $scope.misGustosAnswers;
                         break;
                     case "Sueña":
-                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;console.log("Sueña");
+                        $scope.AnswersResult.answers = $scope.dreamsLists.answers;
                         break;
                     case "Exploración final":
-                        $scope.AnswersResult.answers = $scope.exploracionFinal;console.log("Exploración final");
+                        $scope.AnswersResult.answers = $scope.exploracionFinal;
                         break;
                     default:
                         break;
@@ -171,11 +181,13 @@ angular
                         $scope.AnswersResult.answers[1][2] == true ||
                         $scope.AnswersResult.answers[1][3] == true) {
                         if ($scope.AnswersResult.answers[2] != null && $scope.AnswersResult.answers[2] != "") {
+                            //Solving for the '\n' character
                             $scope.AnswersResult.answers[2] = $scope.AnswersResult.answers[2].replace(/\r?\n|\r/g, " ").trim();
                             if ($scope.AnswersResult.answers[3] != null) {
                                 if ($scope.AnswersResult.answers[4].length != 0) {
                                     var lastQuestionValidation = true;
                                     for (var a = 0; a < $scope.AnswersResult.answers[4].length; a++) {
+                                        //Solving for the '\n' character
                                         var text = $scope.AnswersResult.answers[4][a].replace(/\r?\n|\r/g, " ").trim();
                                         $scope.AnswersResult.answers[4][a] = text;
 
@@ -368,6 +380,7 @@ angular
                             $scope.AnswersResult.answers[0] = 1;
                         }
                         break;
+
                     case 1:
                         if (question.userAnswer == "True") {
                             $scope.AnswersResult.answers[1] = 2;
@@ -376,6 +389,7 @@ angular
                             $scope.AnswersResult.answers[1] = 1;
                         }
                         break;
+
                     case 2:
                         if (question.userAnswer == "True") {
                             $scope.AnswersResult.answers[2] = 1;
@@ -384,6 +398,7 @@ angular
                             $scope.AnswersResult.answers[2] = 0;
                         }
                         break;
+
                     case 3:
                         if (question.userAnswer == "Es tu ejemplo a seguir y debes ser igual a él\n") {
                             $scope.AnswersResult.answers[3] = 0;
@@ -395,6 +410,7 @@ angular
                             $scope.AnswersResult.answers[3] = 2;
                         }
                         break;
+
                     case 4:
                         if (question.userAnswer == "Porque aprovechas mejor tus talentos y difrutas lo que haces\n") {
                             $scope.AnswersResult.answers[4] = 0;
@@ -406,6 +422,7 @@ angular
                             $scope.AnswersResult.answers[4] = 2;
                         }
                         break;
+
                     default:
                         break;
                 }

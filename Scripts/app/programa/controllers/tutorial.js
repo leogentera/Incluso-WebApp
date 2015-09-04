@@ -148,10 +148,12 @@ angular
                     })
                     .success(function(){
                         console.log('Foto guardada exitosamente!');
+                        alert("Success saving avatar");
                         $location.path('/ProgramaDashboard');
                     })
                     .error(function(){
                         console.log('Error al subir la foto!');
+                        alert("Fail saving avatar");
                         $location.path('/ProgramaDashboard');
                     });
                 });
@@ -187,6 +189,7 @@ angular
             };
             
             function SuccessAvatar(data) {
+                alert("Success receiving avatar");
                 $scope.avatarInfo = [{
                     "userid": data.userid,
                     "aplicacion": data.actividad,
@@ -211,6 +214,7 @@ angular
         
             function FailureAvatar(data) {
                 console.log("Couldn't retrieve avatar");
+                alert("Couldn't retrieve avatar");
             }
             //function SuccessAvatar(data) {
             //        $scope.avatarInfo = [{

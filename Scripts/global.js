@@ -460,7 +460,7 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
               }
               for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++){
                 var subactivity = activity.activities[subactivityIndex];
-                for(var subactivityCourseModuleId = 0; subactivityCourseModuleId < subactivitiesCourseModuleId.length; i++){
+                for(var subactivityCourseModuleId = 0; subactivityCourseModuleId < subactivitiesCourseModuleId.length; subactivitiesCourseModuleId++){
                   if (subactivity.coursemoduleid == subactivitiesCourseModuleId[subactivityCourseModuleId] && subactivity.status == 0){
                     subactivity.status = 1;
                     breakAll = true;

@@ -181,7 +181,8 @@ angular
               }                
             }
 
-            $scope.back = function () {                
+            $scope.back = function () {   
+            var userCurrentStage = localStorage.getItem("currentStage");              
                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
             }
 
@@ -208,6 +209,7 @@ angular
             }
 
             function successEndFuente(){
+              var userCurrentStage = localStorage.getItem("currentStage"); 
               $scope.$emit('HidePreloader'); //hide preloader
               $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
             }          
