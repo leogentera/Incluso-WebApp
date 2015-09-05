@@ -368,14 +368,38 @@ angular
                 $location.path('/ProgramaDashboard');
             };
 
+            function calculate_age()
+            {
+                var dpValue = $scope.model.birthday;
+                var birth_month = dpValue.substring(0,2);
+                var birth_day = dpValue.substring(3,5);
+                var birth_year = dpValue.substring(6,10);
+                today_date = new Date();
+                today_year = today_date.getFullYear();
+                today_month = today_date.getMonth();
+                today_day = today_date.getDate();
+                age = today_year - birth_year;
+            
+                if ( today_month < (birth_month - 1))
+                {
+                    age--;
+                }
+                if (((birth_month - 1) == today_month) && (today_day < birth_day))
+                {
+                    age--;
+                }
+                return age;
+            }
+            
+            
             function validateModel() {
                 console.log('fetching editProfile errors list');
                 var errors = [];
 
                 validateEmptyItemsOnLists();
                 
-                debugger;        
-                if($scope.model.age < 13){ errors.push("Debes ser mayor de 13 aÃ±os para poder registrarte."); }
+                var age = calculate_age();                
+                if(age < 13){ errors.push("Debes ser mayor de 13 aÃ±os para poder registrarte."); }
                 if (!$scope.editForm.firstname.$valid) { errors.push("Formato de nombre incorrecto."); }
                 if (!$scope.editForm.lastname.$valid) { errors.push("Formato de apellido paterno incorrecto."); }
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
