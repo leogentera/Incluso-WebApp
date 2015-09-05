@@ -106,7 +106,6 @@ angular
                             //save token for further requests and autologin
                             $scope.currentUserModel = data;
                             $scope.currentUserModel.userId = data.id;
-                            $scope.currentUserModel.gender = "Masculino";
 
                             localStorage.setItem("CurrentUser", JSON.stringify($scope.currentUserModel));
 
@@ -167,6 +166,7 @@ angular
                 var userFacebook = JSON.parse(data);
 
                 //save token for further requests and autologin
+                $scope.currentUserModel = userFacebook;
                 $scope.currentUserModel.token = userFacebook.token;
                 $scope.currentUserModel.userId = userFacebook.id;
 
