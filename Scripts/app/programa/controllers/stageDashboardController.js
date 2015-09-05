@@ -65,7 +65,11 @@ angular
                     afterMove: callback2
                 });    
 
+                this.currentItem = $scope.idReto;
                 owl.trigger("owl.goTo", $scope.idReto);
+                    $("span#index").text(($scope.idReto+1));  
+
+                owl2.trigger("owl.goTo", $scope.idReto);
                     $("span#index").text(($scope.idReto+1));            
 
                 function callback1(event) {
