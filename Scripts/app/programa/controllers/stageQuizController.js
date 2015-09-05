@@ -259,7 +259,7 @@ angular
             };
 
             function updateSelectedAnswers(questionIndex, question) {//For "Exploración Inicial" only
-
+                console.log("Question = " + JSON.stringify(question));
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer != "No") {console.log("question.userAnswer = " + question.userAnswer);
