@@ -234,6 +234,8 @@ angular
 
             $scope.birthdate_Dateformat = formatDate($scope.model.birthday);
             getAge();
+            
+            
 
             function getDataAsync() {
 
@@ -319,6 +321,28 @@ angular
                 }
             }
 
+             //function calculate_age()
+             //   {                
+             //       var birth_month = dpValue.substring(0,2);
+             //       var birth_day = dpValue.substring(3,5);
+             //       var birth_year = dpValue.substring(6,10);
+             //       today_date = new Date();
+             //       today_year = today_date.getFullYear();
+             //       today_month = today_date.getMonth();
+             //       today_day = today_date.getDate();
+             //       age = today_year - birth_year;
+             //   
+             //       if ( today_month < (birth_month - 1))
+             //       {
+             //           age--;
+             //       }
+             //       if (((birth_month - 1) == today_month) && (today_day < birth_day))
+             //       {
+             //           age--;
+             //       }
+             //       return age;
+             //   }
+            
             $scope.birthdayChanged = function (dateValue) {
                 var algo = dateValue;
                 var d = new Date($scope.birthdate_Dateformat),
@@ -365,6 +389,9 @@ angular
 
                 validateEmptyItemsOnLists();
 
+                var age = $scope.model.age;
+                debugger;
+                if(age < 13){ errors.push("Debes ser mayor de 13 años para poder registrarte."); }
                 if (!$scope.editForm.firstname.$valid) { errors.push("Formato de nombre incorrecto."); }
                 if (!$scope.editForm.lastname.$valid) { errors.push("Formato de apellido paterno incorrecto."); }
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
@@ -1036,7 +1063,8 @@ angular
                         + addZeroBefore(currentdate.getSeconds());
                     return datetime;
                 }
-
+                                            
+                                            
                 function addZeroBefore(n) {
                     return (n < 10 ? '0' : '') + n;
                 }

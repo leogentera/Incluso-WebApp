@@ -161,16 +161,7 @@ angular
                     $scope.showPlaceHolder = true;                    
                 }
             };
-            
-            //$scope.showBirthdayLabel = function(){
-            //    debugger;
-            //    if(!$scope.registerModel.birthday){
-            //        $('#labelBirthday').removeClass('custom-placeholder form-control-lg ng-hide').addClass('custom-placeholder form-control-lg');                    
-            //    }else{
-            //        $('#labelBirthday').removeClass('custom-placeholder form-control-lg').addClass('custom-placeholder form-control-lg ng-hide');
-            //    }
-            //};
-            
+                        
             var registerUser = function(){
                 
                 $http({
