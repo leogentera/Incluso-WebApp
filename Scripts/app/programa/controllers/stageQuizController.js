@@ -59,6 +59,7 @@ angular
                 $scope.activity.status = 1;
                 
                 //Update Activity Log Service
+                console.log("For update stars. activity_identifier = " + $scope.activity_identifier);
                 updateUserStars($scope.activity_identifier);
 
                 $scope.AnswersResult.userid = $scope.userprofile.id;
@@ -69,6 +70,7 @@ angular
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
                 console.log($scope.activityname);
+
                 switch ($scope.activityname) {
                     case "Mis cualidades":
                         $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
@@ -86,7 +88,7 @@ angular
                         break;
                 }
 
-                console.log($scope.AnswersResult.answers);
+                console.log($scope.AnswersResult.answers); //This is an array that contains the encoded answers
 
                 //Update local storage and activities status array
                 localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
@@ -167,7 +169,6 @@ angular
 
             $scope.cancel = function () {
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
-                //var currentChallenge = 2;
                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
             };
 
