@@ -264,7 +264,7 @@
             controller: 'programaLeaderBoard'
         });        
      
-        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId', {
+        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId/:challengue', {
             templateUrl: 'Templates/ZonaDeVuelo/dashboard.html',
             controller: 'stageDashboardController'
         });
