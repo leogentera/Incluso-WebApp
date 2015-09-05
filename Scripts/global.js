@@ -527,11 +527,11 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
 }
 
-function updateUserStarsUsingExternalActivity (courseModuleid){
+function updateUserStarsUsingExternalActivity (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-   var activity = getExtActivityByCoursemoduleid(courseModuleid);   
-   profile.stars += activity.points ;
+   var activity = getExtActivityByActivity_identifier(activity_identifier);   
+   profile.stars = Number(profile.stars) +  Number(activity.points);
     var data={
        userId: profile.id,
        stars: activity.points ,
@@ -543,11 +543,11 @@ function updateUserStarsUsingExternalActivity (courseModuleid){
    moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
 }
 
-function getExtActivityByCoursemoduleid(courseModuleid){     
+function getExtActivityByActivity_identifier(activity_identifier){     
      var userCourse = JSON.parse(localStorage.getItem("usercourse"));
      for (var activityIndex = 0; activityIndex < userCourse.activities.length; activityIndex++) {
        var extActivity = userCourse.activities[activityIndex];
-        if(extActivity.coursemoduleid = courseModuleid){
+        if(extActivity.activity_identifier = activity_identifier){
           return extActivity;
         }
      }
