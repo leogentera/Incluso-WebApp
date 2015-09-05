@@ -27,7 +27,9 @@ angular
             $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false; 
 
-            validateCabinaDeSoporte();
+            moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                
+            //validateCabinaDeSoporte();
+
 
             function validateCabinaDeSoporte(){                           
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
