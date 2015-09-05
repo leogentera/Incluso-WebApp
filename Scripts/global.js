@@ -135,7 +135,15 @@ var _endActivity = function(activityModel){
       if (activityModel.activityType == "Quiz"){
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse,activityModel.token,
         successCallback,errorCallback);        
-      }else{            
+      }
+      else if(activityModel.activityType == "Assign")
+      {
+        var data = {userid :  currentUserId };
+        
+        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse,activityModel.token,
+        successCallback,errorCallback);
+      }
+      else{            
         var data = {userid :  currentUserId };
         
         // update activity status dictionary used for blocking activity links
@@ -519,20 +527,11 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
 }
 
-function updateUserStarsUsingExternalActivity (courseModuleid){
+function updateUserStarsUsingExternalActivity (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-   var activity = function getExtActivityByCoursemoduleid(courseModuleid){     
-     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-     for (var activityIndex = 0; activityIndex < userCourse.activities.length; activityIndex++) {
-       var extActivity = userCourse.activities[activityIndex];
-        if(extActivity.coursemoduleid = courseModuleid){
-          return extActivity;
-        }
-     }
-   }
-   
-   profile.stars = profile.stars + activity.points ;
+   var activity = getExtActivityByActivity_identifier(activity_identifier);   
+   profile.stars = Number(profile.stars) +  Number(activity.points);
     var data={
        userId: profile.id,
        stars: activity.points ,
@@ -543,6 +542,16 @@ function updateUserStarsUsingExternalActivity (courseModuleid){
    
    moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
 }
+
+function getExtActivityByActivity_identifier(activity_identifier){     
+     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+     for (var activityIndex = 0; activityIndex < userCourse.activities.length; activityIndex++) {
+       var extActivity = userCourse.activities[activityIndex];
+        if(extActivity.activity_identifier = activity_identifier){
+          return extActivity;
+        }
+     }
+   }
 
 function getdate() {
     var date = new Date(),
