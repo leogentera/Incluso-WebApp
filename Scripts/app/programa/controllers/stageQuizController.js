@@ -109,9 +109,8 @@ angular
                 console.log("activityModel = " + JSON.stringify(activityModel));
 
                 _endActivity(activityModel);
-                var currentChallenge = 1;
                 var currentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + currentChallenge);
+                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + $scope.currentChallenge);
             };
 
 
@@ -125,7 +124,7 @@ angular
                 $scope.AnswersResult.answers[4].splice(index, 1);
             };
 
-            $scope.addSueno1 = function () {alert("sueño 1");
+            $scope.addSueno1 = function () {
                 addHeight("#listaDinamica1");
                 $scope.misSuenosAnswers[0].push("");
             };
@@ -564,9 +563,10 @@ angular
 
                 if (activity != null) {
 
-                    if ($scope.activity_identifier == 1009) {
+                    if ($scope.activity_identifier == '1009') {
                         $scope.AnswersResult.answers = [0, 0, 0, 0, 0];
                     }
+
                     $scope.coursemoduleid = activity.coursemoduleid;    //console.log("coursemoduleid: " + activity.coursemoduleid);
                     $scope.activityPoints = activity.points;            //console.log("points: " + activity.points);
                     $scope.activityname = activity.activityname;        //console.log("activityname: " + activity.activityname);
@@ -711,7 +711,6 @@ angular
 
 
             $scope.answerIndex = 1;
-            //$scope.answerIndex1 = 1;
 
             $scope.addToAnswerIndex = function (delta, maxPages) {
 

@@ -133,7 +133,7 @@ var _endActivity = function(activityModel){
         _updateBadgeStatus(activityId);
         
       if (activityModel.activityType == "Quiz"){
-        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse,activityModel.token,
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token,
         successCallback,errorCallback);        
       }
       else if(activityModel.activityType == "Assign")
