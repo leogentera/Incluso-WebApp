@@ -507,6 +507,7 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getActivityByActivity_identifier(activity_identifier);
+     extraPoints?'' : extraPoints = 0;
    profile.stars = profile.stars+activity.points + Number(extraPoints);
     var data={
       userId: profile.id,
