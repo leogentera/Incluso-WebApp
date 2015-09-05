@@ -543,9 +543,9 @@ function updateUserStarsUsingExternalActivity (activity_identifier){
        instance: activity.coursemoduleid,
        instanceType: 0,
        date: getdate()
-   }    
+   };
    
-   moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
+   moodleFactory.Services.PutStars(data,profile, currentUser.token, successCallback, errorCallback);
 }
 
 function getExtActivityByActivity_identifier(activity_identifier){     

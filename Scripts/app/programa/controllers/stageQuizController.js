@@ -576,7 +576,7 @@ angular
                     //$scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/" + $scope.coursemoduleid));
 
                     var activityFinished = false;
-                    console.log("userprofile: " + $scope.userprofile.id);
+                    console.log("userprofile: " + $scope.userprofile.id + ", activity status: " + activity.status);
                     if (activity.status != 0) {
                         activityFinished = true;
                         $scope.setReadOnly = true;
@@ -585,12 +585,11 @@ angular
                     //console.log("setReadOnly: " + $scope.setReadOnly);
                     $scope.activity = activity;
                     $scope.activityFinished = activityFinished;
-                    //console.log("activityFinished: " + $scope.activityFinished);
                 }
             }
 
 
-            function successfullCallBack(activityAnswers) {
+            function successfullCallBack(activityAnswers) {alert("Succes");
                 if (activityAnswers != null) {                    
                     // $scope.activity = activityAnswers;                    
                     for (var index = 0; index < activityAnswers.questions.length; index++) {

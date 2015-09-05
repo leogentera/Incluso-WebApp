@@ -124,7 +124,7 @@
             _httpFactory({
                 method: 'GET',
                 url: url, 
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json'}
                 }).success(function(data, status, headers, config) {
                     localStorage.setItem(key, JSON.stringify(data));
                     successCallback(data, key);
