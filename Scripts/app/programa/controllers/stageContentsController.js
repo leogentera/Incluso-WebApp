@@ -162,7 +162,7 @@ angular
                 break;
                 }
               }
-            }
+            };
 
             function assingStars(isMandatory, coursemoduleid){
               profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));              
@@ -188,7 +188,7 @@ angular
             $scope.back = function () {   
             var userCurrentStage = localStorage.getItem("currentStage");              
                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + currentChallenge);
-            }
+            };
 
             function getdate(){
               var currentdate = new Date(); 

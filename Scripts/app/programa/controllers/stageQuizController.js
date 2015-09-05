@@ -36,7 +36,6 @@ angular
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ""]];
             $scope.misSuenosAnswers = [[], [], [], []];
-
             $scope.exploracionFinal = ["", "", "", "", ""];
 
             $scope.show1 = function() {
@@ -108,9 +107,9 @@ angular
                 console.log("activityModel = " + JSON.stringify(activityModel));
 
                 _endActivity(activityModel);
-
+                var currentChallenge = 1;
                 var currentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage);
+                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + currentChallenge);
             };
 
 
@@ -168,7 +167,8 @@ angular
 
             $scope.cancel = function () {
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
+                //var currentChallenge = 2;
+                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
             };
 
             $scope.validateAnsweredQuestions = function () {
@@ -533,6 +533,29 @@ angular
                 $scope.startingTime = new Date();
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
+
+                switch ($scope.activity_identifier) {
+
+                    case "1001":
+                        $scope.currentChallenge = 0; //Exploración Inicial
+                        break;
+                    case "1005":
+                        $scope.currentChallenge = 3;  //Mis Cualidades
+                        break;
+                    case "1006":
+                        $scope.currentChallenge = 3;  //Mis Gustos
+                        break;
+                    case "1007":
+                        $scope.currentChallenge = 3; //Sueña
+                        break;
+                    case "1009":
+                        $scope.currentChallenge = 5; //Exploración Final
+                        break;
+                    default:
+                        $scope.currentChallenge = 0; //Default
+
+                }
+
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
                 console.log("The activity ID is: \n" + $scope.activity_identifier);
                 console.log("The activity data is: \n" + JSON.stringify(activity));
