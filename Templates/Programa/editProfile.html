@@ -352,12 +352,11 @@
 
 												<section>
 													<h4>Teléfono</h4>
-													<span>Telefonos: {{model.phones}}</span>
 													<ul class="block-list">
 														<li ng-repeat="p in model.phones track by $index">
 															<div class="form-group theme-form">
 																<h5>
-																	<span>Teléfono {{model.phones.indexOf(p) + 1}}</span>
+																	<span>Teléfono {{$index + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deletePhone(p);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>

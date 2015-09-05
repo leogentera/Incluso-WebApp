@@ -101,6 +101,7 @@ angular
                         console.log('successfully logged in');
 
                         //save token for further requests and autologin
+                        $scope.currentUserModel = data;
                         $scope.currentUserModel.token = data.token;
                         $scope.currentUserModel.userId = data.id;
 

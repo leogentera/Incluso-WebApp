@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-base.min.css" />
         <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-desktop.min.css" />
         <link href="assets/styles/dev-css.css" rel='stylesheet' type='text/css' />
-        <link href="assets/styles/jquery-ui.css" rel="stylesheet" type="text/css">
+        <link href="assets/styles/jquery-ui.css" rel="stylesheet" type="text/css" />
         <style>
             [ng-cloak]{display: none !important; height:0;}
             @media screen {
@@ -24,7 +24,7 @@
                 div#img-cache,
                 div#img-cache img {display: none; visibility: hidden;}
             }
-        </style>           
+        </style> 
     </head>
 
     <body ng-controller="homeCtrl" class="incluso-app ng-scope has-sidebar-left" ng-class="{'sidebar-left-active': sidebar}">
@@ -38,7 +38,7 @@
         
         <!-- app wrapper -->
         <div class="app">
-            <a class="anchor-top" id="top"></a>
+            <a class="anchor-scroll" id="top"></a>
             
             <!-- toolbar for private views -->
             <toolbar-component></toolbar-component>
@@ -156,6 +156,5 @@
         <script src="Scripts/app/programa/controllers/tutorial.js"></script>
         <script src="Scripts/app/juegos/avatarController.js"></script>
 
-        <!-- <script src="Scripts/cordova.js"></script>  -->
     </body>
 </html>

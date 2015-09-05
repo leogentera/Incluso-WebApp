@@ -9,7 +9,7 @@ angular
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {            
             /* $routeParams.stageId */
             _timeout = $timeout;
             _httpFactory = $http;
@@ -25,10 +25,73 @@ angular
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
             $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
+            $scope.idReto = $routeParams['challengue'];
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
-            localStorage.setItem("userCurrentStage", $routeParams['stageId']);
-                                
+            localStorage.setItem("userCurrentStage", $routeParams['stageId']);   
+            
+            setTimeout(function () {            
+            var hits = 1;
+
+                //Carrusel de retos
+                var owl2 = $("#owl-demo2");
+
+                owl2.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    //paginationSpeed: 1000,
+                    goToFirstSpeed: 2000,
+                    singleItem: true,
+                    autoHeight: true,
+                    touchDrag:false,
+                    mouseDrag:false,
+                    transitionStyle:"fade",
+                    afterMove: callback1
+                });
+
+                //Carrusel de Actividades
+                var owl = $("#owl-demo");
+
+                owl.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    //paginationSpeed: 1000,
+                    goToFirstSpeed: 2000,
+                    singleItem: true,
+                    autoHeight: true,
+                    touchDrag:false,
+                    mouseDrag:false,
+                    transitionStyle:"fade",
+                    afterMove: callback2
+                });    
+
+                owl.trigger("owl.goTo", $scope.idReto);
+                    $("span#index").text(($scope.idReto+1));            
+
+                function callback1(event) {
+                    var item = this.currentItem;
+                    owl.trigger("owl.goTo", item);
+                    $("span#index").text((item+1));
+                }
+
+                function callback2(event) {
+                    var item = this.currentItem;
+                    owl2.trigger("owl.goTo", item);
+                    $("span#index").text((item+1));
+                }
+
+                $("#next").click(function (ev) {
+                    owl.trigger('owl.next');
+                    ev.preventDefault();
+
+                });
+
+                $("#prev").click(function (ev) {
+                    owl.trigger('owl.prev');
+                    ev.preventDefault();
+                });
+            }, 1000);         
+
             //Opens stage welcome message if first time visit
             $scope.openModal_StageFirstTime = function (size) {
                 var modalInstance = $modal.open({

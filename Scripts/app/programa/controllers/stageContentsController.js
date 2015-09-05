@@ -14,16 +14,20 @@ angular
             _timeout = $timeout;
             _httpFactory = $http;
             var moduleid;
-            var pagename;                    
+            var pagename;      
+            var currentChallenge;              
             switch($routeParams.moodleid){
               case 'zv_cuartoderecursos_fuentedeenergia':
                 moduleid = 112;
+                currentChallenge = 1;
                 break;
               case 'zv_conocete_fuentedeenergia':
                 moduleid = 145;
+                currentChallenge = 2;
                 break;
               case 'zv_missuenos_fuentedeenergia':
                 moduleid = 146;
+                currentChallenge = 3;
                 break;
             }
 
@@ -127,7 +131,7 @@ angular
                 else if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){
                   starsNoMandatory += 50;
                 }
-              }              
+              }               
               if($scope.statusObligatorios >= 5 && $scope.fuenteDeEnergia.status == 0){
                 $scope.currentPage = 2 ;
               } 
@@ -158,7 +162,7 @@ angular
                 break;
                 }
               }
-            }
+            };
 
             function assingStars(isMandatory, coursemoduleid){
               profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));              
@@ -183,8 +187,8 @@ angular
 
             $scope.back = function () {   
             var userCurrentStage = localStorage.getItem("currentStage");              
-                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
-            }
+                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + currentChallenge);
+            };
 
             function getdate(){
               var currentdate = new Date(); 
@@ -211,7 +215,7 @@ angular
             function successEndFuente(){
               var userCurrentStage = localStorage.getItem("currentStage"); 
               $scope.$emit('HidePreloader'); //hide preloader
-              $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
+              $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + currentChallenge);
             }          
 
             $scope.finishActivity = function(){   
@@ -228,7 +232,7 @@ angular
                 _updateBadgeStatus(activityId);
                 var like_status = $scope.like_status;
                 var data = {userid :  currentUserId, like_status: like_status };
-                
+                $scope.fuenteDeEnergia.status = 1;
                 // update activity status dictionary used for blocking activity links
                 updateActivityStatusDictionary(activityId);
                 _isChallengeCompleted();    

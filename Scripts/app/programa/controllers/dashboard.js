@@ -10,16 +10,16 @@
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-            
+
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
 
             console.log('loading user'); 
-            $scope.user = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));//load profile from local storage
+            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load profile from local storage
 
-            if (!$scope.user) {
+            if (!_getItem("userId")) {
                 $location.path('/');
                 return "";
             }
@@ -44,8 +44,6 @@
 
             $(".navbar").removeClass("etapa-uno");
             getDataAsync();
-            getUserNotifications();
-            getUserChat();
 
             $scope.logout = function(){
                 logout($http, $scope, $location);
@@ -59,7 +57,7 @@
                     $scope.updateProgramFirstTime();
                 }
                 //redirect user to stage 1 dashboard after closing modal
-                $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section);
+                $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section + '/0');
             };
 
             //Updates firsttime flag for program in model, localstorage and server
@@ -94,6 +92,13 @@
             function getDataAsyncCallback(){
                 //Load UserCourse structure into model
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
+
+                $scope.$emit('HidePreloader'); //hide preloader
+
+                getUserNotifications(function() { getUserChat(); });
+                
+
+
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
                     $scope.course = JSON.parse(localStorage.getItem("course"));
@@ -104,6 +109,7 @@
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.$emit('scrollTop'); //- scroll
+                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {}, function() {});
                     }, errorCallback);
 
                 }, errorCallback);
@@ -133,32 +139,28 @@
                 return currentStage;
             }
 
-            function getUserNotifications(){
-                moodleFactory.Services.GetUserNotification($scope.user.id, getUserNotificationsCallback, errorCallback);
+            function getUserNotifications(callback){
+                moodleFactory.Services.GetUserNotification(_getItem("userId"), callback, errorCallback);
             }
 
-            function getUserNotificationsCallback(){
-                var notifications = JSON.parse(localStorage.getItem("notifications"));
-            }            
+            function getUserChat(callback) {                
+                moodleFactory.Services.GetUserChat(_getItem("userId"),function() {
+                    if (callback) callback();
+                    var chat = JSON.parse(localStorage.getItem('userChat'));
+                    var userId = localStorage.getItem("userId");
+                    
+                    var chatAmount = _.countBy(chat,function(messages){
+                            return messages.senderid != userId;
+                        });
+                                                    
+                    if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
+                        localStorage.setItem('chatRead',"false");
+                    }
 
-            function getUserChat() {                
-                moodleFactory.Services.GetUserChat($scope.user.id,getUserChatCallback, errorCallback, true);                
+                    localStorage.setItem('chatAmountRead',chatAmount.true);
+                }, errorCallback, false);                
             }
             
-            function getUserChatCallback() {
-                var chat = JSON.parse(localStorage.getItem('userChat'));
-                var userId = localStorage.getItem("userId");
-                
-                var chatAmount = _.countBy(chat,function(messages){
-                        return messages.senderid != userId;
-                    });
-                                                
-                if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
-                    localStorage.setItem('chatRead',"false");
-                }
-
-                localStorage.setItem('chatAmountRead',chatAmount.true);
-            }
 
             //Open Welcome Message modal
             $scope.openModal = function (size) {
