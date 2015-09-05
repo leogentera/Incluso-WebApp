@@ -942,7 +942,6 @@ angular
                 var ctx = c.getContext("2d");
                 var img = new Image();
                 img.onload = function () {
-                    //alert('loading avatar');
                     c.width = this.width;
                     c.height = this.height;
                     ctx.drawImage(img, 0, 0);
@@ -957,12 +956,8 @@ angular
 
             uploadAvatar = function (avatarInfo) {
                 var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen;
-
                 encodeImageUri(pathimagen, function (b64) {
-
-                    //avatarInfo["userid"] = $scope.model.id;
                     avatarInfo[0]["filecontent"] = b64;
-
                     $http({
                         method: 'POST',
                         url: API_RESOURCE.format('avatar'),
@@ -987,16 +982,19 @@ angular
                     "actividad": "Mi Avatar",
                     "estrellas": "100",
                     "pathimagen": "",
-                    "genero": "",
-                    "rostro": "",
-                    "color_de_piel": "",
-                    "estilo_cabello": "",
-                    "color_cabello": "",
-                    "traje_color_principal": "",
-                    "traje_color_secundario": "",
+                    "genero": $scope.avatarInfo.genero,
+                    "rostro": $scope.avatarInfo.rostro,
+                    "color_de_piel": $scope.avatarInfo.color_de_piel,
+                    "estilo_cabello": $scope.avatarInfo.estilo_cabello,
+                    "color_cabello": $scope.avatarInfo.color_cabello,
+                    "traje_color_principal": $scope.avatarInfo.traje_color_principal,
+                    "traje_color_secundario": $scope.avatarInfo.traje_color_secundario,
                     "escudo": ""
                 };
-                cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                //cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                SuccessAvatar(
+                    {"userid":153,"actividad":"Mi Avatar","alias": $scope.model.username, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/03/2015 08:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
+                );
             };
 
             function SuccessAvatar(data) {
@@ -1018,12 +1016,9 @@ angular
                     "estrellas": "100",
                     "alias": $scope.model.username,
                     "escudo": $scope.model.shield
-
                 }];
-
                 uploadAvatar($scope.avatarInfo);
                 localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
-
             }
 
             function FailureAvatar(data) {

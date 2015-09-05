@@ -57,7 +57,7 @@
                     $scope.updateProgramFirstTime();
                 }
                 //redirect user to stage 1 dashboard after closing modal
-                $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section);
+                $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section + '/0');
             };
 
             //Updates firsttime flag for program in model, localstorage and server
