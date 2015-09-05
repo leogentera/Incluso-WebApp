@@ -148,14 +148,14 @@ angular
                   _endActivity($scope.fuenteDeEnergia.activities[i]);
                   if(!$scope.fuenteDeEnergia.activities[i].optional){                    
                     $scope.statusObligatorios+=1;    
-                    assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid);
+                    assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
                     starsMandatory += 50;    
                     if($scope.statusObligatorios >= 5 && !$scope.fuenteDeEnergia.status){
                       $scope.navigateToPage(2);
                     }                  
                   }
                   else{
-                    assingStars(false, $scope.fuenteDeEnergia.activities[i].coursemoduleid);
+                    assingStars(false, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
                     starsNoMandatory+=50;  
                   }                
                 }
@@ -164,23 +164,24 @@ angular
               }
             };
 
-            function assingStars(isMandatory, coursemoduleid){
+            function assingStars(isMandatory, coursemoduleid, stars){
               profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));              
               var data={
                 userId: profile.id,
-                stars: 50,
+                stars: stars,
                 instance: coursemoduleid,
                 instanceType: 0,
                 date: getdate()
                 };
                 console.log("Updating Stars");
               if(starsMandatory < 250 && isMandatory){                
-                profile.stars = parseInt(profile.stars)+50;
-                moodleFactory.Services.PutStars(data,profile, $scope.token,successfullCallBack, errorCallback);
-                //localStorage.setItem("profile", JSON.stringify(profile)); 
+                profile.stars = parseInt(profile.stars)+stars;
+                //localStorage.setItem('profile', JSON.stringify(profile));
+                moodleFactory.Services.PutStars(data,profile, $scope.token,successfullCallBack, errorCallback);                
               }
               else if(starsNoMandatory < 500){
-                profile.stars = parseInt(profile.stars)+50;                  
+                profile.stars = parseInt(profile.stars)+stars;              
+                //localStorage.setItem('profile', JSON.stringify(profile));    
                 moodleFactory.Services.PutStars(data,profile, $scope.token,successfullCallBack, errorCallback);
               }                
             }
