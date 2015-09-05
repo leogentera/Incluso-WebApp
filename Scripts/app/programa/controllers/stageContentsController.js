@@ -127,7 +127,7 @@ angular
                 else if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){
                   starsNoMandatory += 50;
                 }
-              }              
+              }               
               if($scope.statusObligatorios >= 5 && $scope.fuenteDeEnergia.status == 0){
                 $scope.currentPage = 2 ;
               } 
@@ -228,7 +228,7 @@ angular
                 _updateBadgeStatus(activityId);
                 var like_status = $scope.like_status;
                 var data = {userid :  currentUserId, like_status: like_status };
-                
+                $scope.fuenteDeEnergia.status = 1;
                 // update activity status dictionary used for blocking activity links
                 updateActivityStatusDictionary(activityId);
                 _isChallengeCompleted();    

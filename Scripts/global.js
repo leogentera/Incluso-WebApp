@@ -68,12 +68,8 @@ var _IsOffline = function() {
 };
 
 var _syncAll = function(callback) {
-  _syncCallback = callback;
-
-  //check if the session is OnLine
-  if (!_IsOffline()) {
-    moodleFactory.Services.GetAsyncProfile(_getItem("userId"), allServicesCallback);
-  }
+    callback();
+//    moodleFactory.Services.GetAsyncProfile(_getItem("userId"), allServicesCallback);
 };
 
 var allServicesCallback = function(){  
@@ -182,7 +178,9 @@ var _isChallengeCompleted = function(){
     for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++){
         var currentChallenge = currentStage.challenges[challengeIndex];
         if(currentChallenge.status == 0){
-          _updateBadgeStatus(currentChallenge.coursemoduleid);
+          _updateBadgeStatus(currentChallenge.coursemoduleid, function() {
+
+
           var totalActivitiesByStage = currentChallenge.activities.length;
           var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
           if (totalActivitiesByStage == totalActivitiesCompletedByStage){
@@ -199,8 +197,11 @@ var _isChallengeCompleted = function(){
               return success
           }else{
             success = 0;
-            ;
           }
+          });
+
+
+
         }else{
           success = 0;
         }
@@ -211,10 +212,11 @@ var _isChallengeCompleted = function(){
 
 
 
-var _updateBadgeStatus = function(coursemoduleid){
-    var profile = JSON.parse(localStorage.getItem("profile"));
+var _updateBadgeStatus = function(coursemoduleid, callback){
+    moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {
+      if (callback) callback();
+      var profile = moodleFactory.Services.GetCacheJson("profile");
     var badges = profile.badges;
-    
     var currentBadge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});    
     if (currentBadge) {
       for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
@@ -227,6 +229,7 @@ var _updateBadgeStatus = function(coursemoduleid){
       }
     }else{//This else statement is set to avoid errors on execution flows
     }
+    });
 };
 
 
@@ -452,7 +455,7 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
               }
               for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++){
                 var subactivity = activity.activities[subactivityIndex];
-                for(var subactivityCourseModuleId = 0; subactivityCourseModuleId < subactivitiesCourseModuleId.length; i++){
+                for(var subactivityCourseModuleId = 0; subactivityCourseModuleId < subactivitiesCourseModuleId.length; subactivitiesCourseModuleId++){
                   if (subactivity.coursemoduleid == subactivitiesCourseModuleId[subactivityCourseModuleId] && subactivity.status == 0){
                     subactivity.status = 1;
                     breakAll = true;
@@ -504,6 +507,7 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getActivityByActivity_identifier(activity_identifier);
+     extraPoints?'' : extraPoints = 0;
    profile.stars = profile.stars+activity.points + Number(extraPoints);
     var data={
       userId: profile.id,
@@ -583,6 +587,7 @@ var logout = function($scope, $location){
       localStorage.removeItem("currentStage");
       localStorage.removeItem("notifications");
       localStorage.removeItem("userChat");
+      localStorage.removeItem("leaderboard");
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
       $location.path('/');
