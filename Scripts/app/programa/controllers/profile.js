@@ -399,7 +399,7 @@ angular
                 validateEmptyItemsOnLists();
                 
                 var age = calculate_age();                
-                if(age < 13){ errors.push("Debes ser mayor de 13 aÃ±os para poder registrarte."); }
+                if(age < 13){ errors.push("Debes ser mayor de 13 años para poder registrarte."); }
                 if (!$scope.editForm.firstname.$valid) { errors.push("Formato de nombre incorrecto."); }
                 if (!$scope.editForm.lastname.$valid) { errors.push("Formato de apellido paterno incorrecto."); }
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
