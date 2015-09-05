@@ -64,8 +64,15 @@
 								<div class="user-container">
 									<div class="user-avatar">
 										<figure>
-											<img ng-src="{{course.leaderboard[0] ? 'data:image/png;base64,' + course.leaderboard[0].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" />
-											<!--<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />-->
+											<!--
+											<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />
+											<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACMAAAAjCAYAAAAe2bNZAAACwklEQVRYCe2WP2hVMRSHi4iIiDg4iWPp5ODgICIOUkREREREOoiDiIh0cHIQwUHEoYOIdJAOIiIinToUh04OjiJFHB1EHEREShER0e/Tl0demuTe98dB6YHfTc45Obm/nJucm7GxdfmPM7CZte0HF8FNMNNpL9EeBFvAX5e9vOEB+Ax+VrCC7zE4AEYuu5hxHvwANRI53yIx42AkcpRZPoHci9razNTpYdmcZYLvQxIJhM3q9KCEzMioiMSEpvol5B7JfZp32K+D56C2f17hvwWWQSASWj/ZBGgtbtYQHLdPohk82lfACXAYHAeXOy3Nb7nNM44P/SXsG/4MqT89vqVVP6qHrvFexRIIpO3kmtEZg3UkDQy6vn7kGINDbNouNE1kZS0VtFV8O5smyPifYUuJqH8D2zPjuyb3QS5QW+NKurP0ds6hluY0c0XxX1MKvFuMqjtqC3RPFcWfXonM/WJU3VEjc68WOpOQ+YL+BrwG8bFGbS0efePFWxAvdg69KGlmvjLyJVjutPuKkXmHteQhsAiKlMwstqJ4H4mZp30r8O5idK9DIjdAOkesX+sN6dW8GMWD477ZMVPCFR0CuaO5DbvV2Cobx+f6jiuKN7QVkAs0K562j5H/FP1UnmLIxac268yONDjVvaGlgUG/g88y7inwdPkpXIDZsL8VnAFhfK21GDaKV8XSJF4ppoErkoBiqiW4qdM/SVuKj+3VgsccXVmkFwemfX+k/jY2gkHIvCDOTLaScUaV9k4gpn8QMh6APa1YRIO8s5auEhL6ALyEuUfOAxdgeT8CanEX8A8k7o/SxKv4XOV74F5S99PZD9lLW2+JQ8kU0U2fLH1pqkt64Iyk7CcwLIH0JW10N2vfeyQlkOru/kmwACxYNSL6rSMe39anhrEDib8BX+SGtQDOgVngv8aj3lhZGbMu/2YGfgE44cBIfxkmGQAAAABJRU5ErkJggg==" />
+
+											-->
+
+											<img ng-src="{{course.leaderboard[0].profileimageurl ? 'data:image/png;base64,' + course.leaderboard[0].profileimageurl : 'assets/images/svg/img-avatar-placeholder.svg'}}" alt="avatar" />
+
+
 											<figcaption>1</figcaption>
 											<div class="arrow-up"></div>
 										</figure>
@@ -90,7 +97,7 @@
 							<div class="user-container">
 								<div class="user-avatar">
 									<figure>
-										<img ng-src="{{course.leaderboard[1] ? 'data:image/png;base64,' + course.leaderboard[1].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" />
+										<img ng-src="{{course.leaderboard[1].profileimageurl ? 'data:image/png;base64,' + course.leaderboard[1].profileimageurl : 'assets/images/svg/img-avatar-placeholder.svg'}}" alt="avatar" />
 										<!--<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />-->
 										<figcaption>2</figcaption>
 										<div class="arrow-up"></div>
@@ -116,7 +123,7 @@
 								<div class="user-container">
 									<div class="user-avatar">
 										<figure>
-											<img ng-src="{{course.leaderboard[2] ? 'data:image/png;base64,' + course.leaderboard[2].profileimage : 'svg/img-avatar-placeholder.svg'}}" alt="avatar" />
+											<img ng-src="{{course.leaderboard[2].profileimageurl ? 'data:image/png;base64,' + course.leaderboard[2].profileimageurl : 'assets/images/svg/img-avatar-placeholder.svg'}}" alt="avatar" />
 											<!--<img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" />-->
 											<figcaption>3</figcaption>
 											<div class="arrow-up"></div>
