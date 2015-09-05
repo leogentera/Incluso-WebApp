@@ -109,7 +109,6 @@ angular
                     })
                     .success(function(){
                         console.log('Foto guardada exitosamente!');
-                        alert("Success saving avatar");
                         $location.path('/ProgramaDashboard');
                     })
                     .error(function(){
@@ -135,10 +134,10 @@ angular
                     "traje_color_secundario": $scope.avatarInfo.traje_color_secundario,
                     "escudo": ""
                 };    
-//                cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
-                SuccessAvatar(
-                    {"userid":153,"actividad":"Mi Avatar","alias": $scope.model.username, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/03/2015 08:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
-                );
+                cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+//                SuccessAvatar(
+//                    {"userid":153,"actividad":"Mi Avatar","alias": $scope.model.username, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/03/2015 08:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
+//                );
             };
             
             function SuccessAvatar(data) {
@@ -166,7 +165,6 @@ angular
         
             function FailureAvatar(data) {
                 console.log("Couldn't retrieve avatar");
-                alert("Couldn't retrieve avatar");
                 $location.path('/ProgramaDashboard');
             }
 
