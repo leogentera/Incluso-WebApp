@@ -16,7 +16,7 @@ angular
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
             var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
-            localStorage.setItem('chatRead', "true");
+            _setLocalStorageItem('chatRead', "true");
             var userId = localStorage.getItem('userId');            
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
@@ -32,6 +32,7 @@ angular
 
 
             function validateCabinaDeSoporte(){ 
+                $scope.scrollToTop('anchor-bottom');                       
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
@@ -46,7 +47,7 @@ angular
                             });
 
                             if (latestMessages.length >= 2) {    
-                                localStorage.setItem('finishCabinaSoporte', 'true');
+                                _setLocalStorageItem('finishCabinaSoporte', 'true');
                             }
                         }   
                     }                
@@ -57,13 +58,17 @@ angular
                  if($location.$$path != "/Chat"){
                     clearInterval(interval);
                  }
-                moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                
+                moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
             }
 
             function getUserRefreshChatCallback() {                
                 $scope.messages = JSON.parse(localStorage.getItem('userChat'));
                 $anchorScroll();
-                validateCabinaDeSoporte();
+                validateCabinaDeSoporte();                
+
+                setTimeout(function() {
+                    $scope.scrollToTop('anchor-bottom');
+                }, 1000);                
             }   
             
             $scope.back = function () {
@@ -72,25 +77,28 @@ angular
             };
 
             $scope.sendMessage = function() {
+                if($scope.currentMessage.trim() != ""){
+                    debugger;
                 triggerAndroidKeyboardHide();
  
-                var newMessage = {
+                    var newMessage = {
                     messagetext: $scope.currentMessage,
                     messagesenderid: $scope.senderId,                    
                     messagedate: new Date()
-                };
+                    };
                 
                 /* time out to avoid android lag on fully hiding keyboard */
                 $timeout(function() {
                     $scope.messages.push(newMessage);
                     $scope.currentMessage = "";
                     var newMessages = JSON.stringify($scope.messages);                
-                    localStorage.setItem('userChat',newMessages);
+                    _setLocalStorageItem('userChat',newMessages);
                     $anchorScroll();
-                                          
-                    moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback); 
+                                                   
+                    moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
                 }, 1000);
-            }
+                }                
+            };
             
             function getUserChatCallback() {
                 $anchorScroll();

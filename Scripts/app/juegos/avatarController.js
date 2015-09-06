@@ -61,7 +61,7 @@ angular
 
             $scope.selectAvatar= function() {
                 if ( $scope.avatarInfo != null) {
-                    localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
+                    _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
                     $location.path('/ProgramaDashboard');
                 } else {
                     $location.path('/ProgramaDashboard');
@@ -98,11 +98,9 @@ angular
                     }
                 })
                 .success(function(){
-                    console.log('Foto guardada exitosamente!');
                     $location.path('/ProgramaDashboard');
                 })
                 .error(function(){
-                    console.log('Error al subir la foto!');
                     $location.path('/ProgramaDashboard');
                 });
             

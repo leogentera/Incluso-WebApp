@@ -144,7 +144,7 @@ angular
                   $scope.fuenteDeEnergia.activities[i].status = true;  
                                    
                   var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
-                  localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
+                  _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
                   _endActivity($scope.fuenteDeEnergia.activities[i]);
                   if(!$scope.fuenteDeEnergia.activities[i].optional){                    
                     $scope.statusObligatorios+=1;    
@@ -176,12 +176,12 @@ angular
                 console.log("Updating Stars");
               if(starsMandatory < 250 && isMandatory){                
                 profile.stars = parseInt(profile.stars)+stars;
-                //localStorage.setItem('profile', JSON.stringify(profile));
+                //_setLocalStorageJsonItem('profile', profile);
                 moodleFactory.Services.PutStars(data,profile, $scope.token,successfullCallBack, errorCallback);                
               }
               else if(starsNoMandatory < 500){
                 profile.stars = parseInt(profile.stars)+stars;              
-                //localStorage.setItem('profile', JSON.stringify(profile));    
+                //_setLocalStorageJsonItem('profile', profile);    
                 moodleFactory.Services.PutStars(data,profile, $scope.token,successfullCallBack, errorCallback);
               }                
             }
@@ -222,7 +222,7 @@ angular
             $scope.finishActivity = function(){   
                 $scope.$emit('ShowPreloader'); //show preloader           
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.fuenteDeEnergia.activity_identifier);  //actualizar arbol
-                localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));                
+                _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);                
                  //trigger activity type 2 is sent when the activity ends.
                 var triggerActivity = 2;                
                 var currentUserId = currentUser.userId;
