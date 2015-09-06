@@ -78,19 +78,21 @@ angular
             //var formattedDate = currentMonth + "/" + currentDay+ "/" + currentDate.getFullYear();
             //
             $scope.sendMessage = function() {
-                var newMessage = {
+                if($scope.currentMessage.trim() != ""){
+                    var newMessage = {
                     messagetext: $scope.currentMessage,
                     messagesenderid: $scope.senderId,                    
                     messagedate: new Date()
-                };
-                                            
-                $scope.messages.push(newMessage);
-                $scope.currentMessage = "";
-                var newMessages = JSON.stringify($scope.messages);                
-                localStorage.setItem('userChat',newMessages);
-                $scope.scrollToTop('anchor-bottom');
-                                               
-                moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback); 
+                    };
+                                                
+                    $scope.messages.push(newMessage);
+                    $scope.currentMessage = "";
+                    var newMessages = JSON.stringify($scope.messages);                
+                    localStorage.setItem('userChat',newMessages);
+                    $scope.scrollToTop('anchor-bottom');
+                                                   
+                    moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
+                }                
             }
             
             function getUserChatCallback() {
