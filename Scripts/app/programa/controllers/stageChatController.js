@@ -48,8 +48,8 @@ angular
                 
                 $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started = 1;
                 $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].datestarted = data.datestarted; 
-                localStorage.setItem('startedActivityCabinaDeSoporte', JSON.stringify({$stage: $scope.idEtapa, $index: index, $parentIndex: parentIndex, $data: data}));                    
-                localStorage.setItem('usercourse', JSON.stringify($scope.model));
+                _setLocalStorageJsonItem('startedActivityCabinaDeSoporte', {$stage: $scope.idEtapa, $index: index, $parentIndex: parentIndex, $data: data});                    
+                _setLocalStorageJsonItem('usercourse', $scope.model);
 
                 moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function (size) {                                            
 
@@ -91,7 +91,7 @@ angular
                 $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status = 1;
 
                 moodleFactory.Services.PutEndActivity(activity.coursemoduleid, data, activity, currentUser.token, function () {
-                    localStorage.setItem('usercourse', JSON.stringify($scope.model));
+                    _setLocalStorageJsonItem('usercourse', $scope.model);
                     var profile = JSON.parse(localStorage.getItem("profile"));
                     var model = {
                         userId: currentUser.userId,

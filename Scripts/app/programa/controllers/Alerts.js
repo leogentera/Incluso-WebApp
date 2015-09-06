@@ -108,7 +108,7 @@ angular
                 }
                 
                 
-                localStorage.setItem("notifications", JSON.stringify($scope.notifications));
+                _setLocalStorageJsonItem("notifications", $scope.notifications);
                 _readNotification(userId,notificationId);
 
                 $scope.navigateTo('/AlertsDetail/' + notificationId, 'null');            

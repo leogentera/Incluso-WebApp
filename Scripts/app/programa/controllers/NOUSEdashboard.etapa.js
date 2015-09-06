@@ -18,7 +18,7 @@ angular
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
             ///////harcoded/////
-            localStorage.setItem("currentStage", "1");
+            _setLocalStorageItem("currentStage", "1");
             ////////////////////
 
             var currentStage = JSON.parse(localStorage.getItem("currentStage"));
@@ -62,7 +62,7 @@ angular
             var closingStageModal = localStorage.getItem('closeStageModal');
             if (closingStageModal == 'true') {
                 openStageModal();
-                localStorage.setItem('closeStageModal', 'false');
+                _setLocalStorageItem('closeStageModal', 'false');
             }
 
             $scope.activitiesCompletedInCurrentStage = [];

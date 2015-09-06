@@ -61,7 +61,7 @@ angular
 
             $scope.selectAvatar= function() {
                 if ( $scope.avatarInfo != null) {
-                    localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
+                    _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
                     $location.path('/ProgramaDashboard');
                 } else {
                     $location.path('/ProgramaDashboard');
