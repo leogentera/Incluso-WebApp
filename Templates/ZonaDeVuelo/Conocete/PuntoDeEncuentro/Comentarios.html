@@ -43,7 +43,7 @@
     <section class="modales">
       <div id="openModal1" class="modalDialog" collapse="forumModals['isTextCollapsed']">
         <div>    
-          <div class="add"><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar texto..." value="" ng-model="textToPost" /></div>
+          <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
           <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
         </div>
       </div>
@@ -82,7 +82,7 @@
               <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
               <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>
             </span>              
-            <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
+            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies">
@@ -109,7 +109,7 @@
             <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">
                 <div>
                     <a href="#close" title="Close" class="close"></a>
-                    <div class="add" ><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar texto..."  ng-model="replyText" /></div>
+                    <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
 
                     <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent)" >Compartir</a>
                 </div>

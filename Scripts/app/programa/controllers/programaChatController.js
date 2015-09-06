@@ -27,9 +27,11 @@ angular
             $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false; 
 
-            validateCabinaDeSoporte();
+            moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                
+            //validateCabinaDeSoporte();
 
-            function validateCabinaDeSoporte(){
+
+            function validateCabinaDeSoporte(){                           
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
@@ -63,36 +65,40 @@ angular
                 validateCabinaDeSoporte();
             }
 
-            $scope.scrollToTop();
+            $scope.scrollToTop('anchor-bottom');
             $scope.$emit('HidePreloader'); //hide preloader    
             
             $scope.back = function () {
-                $location.path('/ProgramaDashboard');
+                var userCurrentStage = localStorage.getItem("currentStage");              
+                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4');
             };
-            var currentDate = new Date();
-            var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);            
-            var formattedDate = currentMonth + "/" + currentDate.getDate() + "/" + currentDate.getFullYear()            
+            //var currentDate = new Date();
+            //var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
+            //var currentDay = currentDate.getDate() < 10 ? ("0" + currentDate.getDate) : currentDate.getDate();
+            //var formattedDate = currentMonth + "/" + currentDay+ "/" + currentDate.getFullYear();
+            //
             $scope.sendMessage = function() {
                 var newMessage = {
                     messagetext: $scope.currentMessage,
                     messagesenderid: $scope.senderId,                    
-                    messagedate: formattedDate
+                    messagedate: new Date()
                 };
                                             
                 $scope.messages.push(newMessage);
                 $scope.currentMessage = "";
                 var newMessages = JSON.stringify($scope.messages);                
                 localStorage.setItem('userChat',newMessages);
+                $scope.scrollToTop('anchor-bottom');
                                                
                 moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback); 
             }
             
             function getUserChatCallback() {
-
+                $scope.scrollToTop('anchor-bottom');
             }
             
-            function errorCallback() {                        
-                        
+            function errorCallback() { 
+                $scope.scrollToTop('anchor-bottom');
             }
-            
-        }]);
+        }
+    ]);

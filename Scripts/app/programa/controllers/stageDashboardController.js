@@ -9,7 +9,7 @@ angular
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {            
             /* $routeParams.stageId */
             _timeout = $timeout;
             _httpFactory = $http;
@@ -25,10 +25,77 @@ angular
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
             $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
+            $scope.idReto = $routeParams['challengue'];
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
-            localStorage.setItem("userCurrentStage", $routeParams['stageId']);
-                                
+            localStorage.setItem("userCurrentStage", $routeParams['stageId']);   
+            
+            setTimeout(function () {            
+            var hits = 1;
+
+                //Carrusel de retos
+                var owl2 = $("#owl-demo2");
+
+                owl2.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    //paginationSpeed: 1000,
+                    goToFirstSpeed: 2000,
+                    singleItem: true,
+                    autoHeight: true,
+                    touchDrag:false,
+                    mouseDrag:false,
+                    transitionStyle:"fade",
+                    afterMove: callback1
+                });
+
+                //Carrusel de Actividades
+                var owl = $("#owl-demo");
+
+                owl.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    //paginationSpeed: 1000,
+                    goToFirstSpeed: 2000,
+                    singleItem: true,
+                    autoHeight: true,
+                    touchDrag:false,
+                    mouseDrag:false,
+                    transitionStyle:"fade",
+                    afterMove: callback2
+                });    
+
+                this.currentItem = $scope.idReto;
+                owl.trigger("owl.goTo", $scope.idReto);
+                    $("span#index").text(($scope.idReto+1));  
+
+                owl2.trigger("owl.goTo", $scope.idReto);
+                    $("span#index").text(($scope.idReto+1));            
+
+                function callback1(event) {
+                    var item = this.currentItem;
+                    owl.trigger("owl.goTo", item);
+                    $("span#index").text((item+1));
+                }
+
+                function callback2(event) {
+                    var item = this.currentItem;
+                    owl2.trigger("owl.goTo", item);
+                    $("span#index").text((item+1));
+                }
+
+                $("#next").click(function (ev) {
+                    owl.trigger('owl.next');
+                    ev.preventDefault();
+
+                });
+
+                $("#prev").click(function (ev) {
+                    owl.trigger('owl.prev');
+                    ev.preventDefault();
+                });
+            }, 1000);         
+
             //Opens stage welcome message if first time visit
             $scope.openModal_StageFirstTime = function (size) {
                 var modalInstance = $modal.open({
@@ -38,8 +105,9 @@ angular
                     size: size,
                     windowClass: 'user-help-modal dashboard-stage-intro'
                 });
-
             };
+
+            //$scope.openModal_StageFirstTime();
             
             
             $scope.openModal_CloseChallenge = function (size) {                
@@ -88,10 +156,11 @@ angular
 
             };
 
-            if($scope.thisStage.firsttime){                
+            if($scope.thisStage.firsttime){
                 $scope.openModal_StageFirstTime();
                 $scope.updateStageFirstTime();
             }
+
 
            //calculate user's stage progress
             var stageProgressBuffer = 0;
@@ -106,14 +175,14 @@ angular
                     var activity = challenge.activities[j];
                     stageProgressBuffer += activity.status;
                     stageTotalActivities++;
-                    if(activity.activities) {
+                    /*if(activity.activities) {
                         var subActivitiesCount = activity.activities.length;
                         for (k = 0; k < subActivitiesCount; k++) {
                             var subActivity = activity.activities[k];
                             stageProgressBuffer += subActivity.status;
                             stageTotalActivities++;
                         }
-                    }
+                    }*/
                 }
             }
             
@@ -131,9 +200,11 @@ angular
                 localStorage.setItem("challengeMessageId",0);
             }
                         
+                        
+            var robotEndStageShown = localStorage.getItem('robotEndStorageShown');            
             var stageCompleted = _isStageCompleted();
             
-            if (stageCompleted) {
+            if (stageCompleted && !robotEndStageShown) {
                 $scope.openModal_CloseStage();
             }
             
@@ -166,8 +237,7 @@ angular
             };
 
             
-            $scope.startActivity = function (activity, index, parentIndex) {
-
+            $scope.startActivity = function (activity, index, parentIndex) {                
                 if(!$scope.canStartActivity(activity.coursemoduleid)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.coursemoduleid })[0].url;
 
@@ -211,7 +281,7 @@ angular
              
              $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});             
              
-            }).controller('closingStageController', function ($scope, $modalInstance) {
+            }).controller('closingStageController', function ($scope, $modalInstance,$location) {
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
@@ -220,4 +290,10 @@ angular
                         title: "Cierre Zona de Vuelo",
                         message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
                     };
+                    
+                    $scope.navigateToDashboard = function () {                        
+                        $modalInstance.dismiss('cancel');
+                        $location.path('/ProgramaDashboard');
+                    };
+                    localStorage.setItem('robotEndStorageShown',true);
                 });

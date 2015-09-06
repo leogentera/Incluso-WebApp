@@ -16,7 +16,7 @@
                                 <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-zona-de-vuelo.mp4')">
                                     <span class="glyphicon glyphicon-play"></span>
                                 </a>
-                                <figure class="poster">
+                                <figure class="poster" ng-click="playVideo('assets/media', 'video-zona-de-vuelo.mp4')">
                                     <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />
                                 </figure>
                             </div>
@@ -62,9 +62,9 @@
                       <div ng-class="canStartActivity(activity.coursemoduleid)?'part':'part disabled'" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
                           <span class="icomoon icon-checked-join" ng-show="activity.status == 1"></span>
                           <span class="icomoon icon-gauge" ng-show="activity.status == 0"></span>
-                          <span ng-bind="activity.activityname"></span>
+                          <span class="activity-name" ng-bind="activity.activityname"></span>
                           <span>
-                              <span class="icomoon icon-star fl-right"></span>
+                              <span class="icomoon icon-star btn-circle fl-right"></span>
                               <span class="icomoon icon-play fl-right"></span>
                           </span>
                       </div>
@@ -111,8 +111,8 @@
         </script>        
 
         <script type="text/ng-template" id="OpeningStageModal.html">
-            <div class="modal-robot robot-lg closing-stage-modal user-help">
-                <img src="assets/images/img-robot-lg.svg" alt="robot" />
+            <div class="modal-robot robot-sm closing-stage-modal user-help">
+                <img class='robot-sm' src="assets/images/img-robot-sm.svg" alt="robot" />
 
                 <div class="modal-header">
                     <a class="icon icon-close btn btn-circle" ng-click="cancel()">
@@ -129,6 +129,7 @@
                 </div>
             </div>
         </script>
+
 
         <script type="text/ng-template" id="ClosingChallengeModal.html">
             <div class="modal-robot robot-sm closing-stage-modal user-help" >
@@ -157,7 +158,7 @@
                     <h3 class="subtitle text-center">{{robotMessages.title}}</h3>
                     <p class="txt-renglon centered">{{robotMessages.message}}</p>
                 </div>
-                <a class="btn btn-primary btn-lg btn-cnt" id="continuar" style="margin-bottom: 30px;" ng-click="goToDashboard()">CONTINUAR</a>
+                <a class="btn btn-primary btn-lg btn-cnt" id="continuar" style="margin-bottom: 30px;" ng-click="navigateToDashboard()">CONTINUAR</a>
             </div>
         </script>
       
@@ -185,64 +186,6 @@
         function myController($scope) {
             $scope.challengeName = "MIS RETOS";
         }
-
-        setTimeout(function () {
-            var hits = 1;
-
-                //Carrusel de retos
-                var owl2 = $("#owl-demo2");
-
-                owl2.owlCarousel({
-                    navigation: false,
-                    pagination: false,
-                    //paginationSpeed: 1000,
-                    goToFirstSpeed: 2000,
-                    singleItem: true,
-                    autoHeight: true,
-                    touchDrag:false,
-                    mouseDrag:false,
-                    transitionStyle:"fade",
-                    afterMove: callback1
-                });
-
-                //Carrusel de Actividades
-                var owl = $("#owl-demo");
-
-                owl.owlCarousel({
-                    navigation: false,
-                    pagination: false,
-                    //paginationSpeed: 1000,
-                    goToFirstSpeed: 2000,
-                    singleItem: true,
-                    autoHeight: true,
-                    touchDrag:false,
-                    mouseDrag:false,
-                    transitionStyle:"fade",
-                    afterMove: callback2
-                });
-
-                function callback1(event) {
-                    var item = this.currentItem;
-                    owl.trigger("owl.goTo", item);
-                    $("span#index").text((item+1));
-                }
-
-                function callback2(event) {
-                    var item = this.currentItem;
-                    owl2.trigger("owl.goTo", item);
-                    $("span#index").text((item+1));
-                }
-
-                $("#next").click(function (ev) {
-                    owl.trigger('owl.next');
-                    ev.preventDefault();
-
-                });
-
-                $("#prev").click(function (ev) {
-                    owl.trigger('owl.prev');
-                    ev.preventDefault();
-                });
-            }, 1000);
+        
     });
 </script>

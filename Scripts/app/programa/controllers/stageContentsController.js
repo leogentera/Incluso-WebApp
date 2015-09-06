@@ -14,19 +14,24 @@ angular
             _timeout = $timeout;
             _httpFactory = $http;
             var moduleid;
-            var pagename;                    
+            var pagename;      
+            var currentChallenge;              
             switch($routeParams.moodleid){
               case 'zv_cuartoderecursos_fuentedeenergia':
                 moduleid = 112;
+                currentChallenge = 1;
                 break;
               case 'zv_conocete_fuentedeenergia':
                 moduleid = 145;
+                currentChallenge = 2;
                 break;
               case 'zv_missuenos_fuentedeenergia':
                 moduleid = 146;
+                currentChallenge = 3;
                 break;
             }
 
+            $scope.currentPage = 1;  
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true; 
@@ -42,9 +47,9 @@ angular
             //$scope.$emit('HidePreloader'); //hide preloader            
             var starsNoMandatory = 0;
             var starsMandatory = 0;    
-
-            
+            var userCurrentStage = localStorage.getItem("currentStage");            
             var getcoursemoduleids = [];
+            $scope.like_status = 1;
 
             if(!activities){
               var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
@@ -57,9 +62,15 @@ angular
               $scope.fuenteDeEnergia = activities;
               getDataAsync();
               $scope.$emit('HidePreloader'); //hide preloader
-            }                                        
+            }     
 
-            function getDataAsync() {                                                             
+            checkProgress();
+
+            $scope.navigateToPage = function (pageNumber) {
+                $scope.currentPage = pageNumber;
+            }                                
+
+            function getDataAsync() {                            
               for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){   
                 var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)); 
                 if(activityCache){
@@ -111,16 +122,20 @@ angular
                 $scope.activities.push(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 80)));
                        
             }*/
-                        
-            for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {              
-              if(!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){                
-                $scope.statusObligatorios+=1; 
-                starsMandatory += 50;               
-              }
-              else if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){
-                starsNoMandatory += 50;
-              }
-            }
+             function checkProgress(){
+              for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {              
+                if(!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){                
+                  $scope.statusObligatorios+=1; 
+                  starsMandatory += 50;               
+                }
+                else if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){
+                  starsNoMandatory += 50;
+                }
+              }               
+              if($scope.statusObligatorios >= 5 && $scope.fuenteDeEnergia.status == 0){
+                $scope.currentPage = 2 ;
+              } 
+             }                   
 
             $scope.updateStatus = function(contentId){               
               for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {
@@ -133,44 +148,48 @@ angular
                   _endActivity($scope.fuenteDeEnergia.activities[i]);
                   if(!$scope.fuenteDeEnergia.activities[i].optional){                    
                     $scope.statusObligatorios+=1;    
-                    assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid);
-                    starsMandatory += 50;                      
+                    assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
+                    starsMandatory += 50;    
+                    if($scope.statusObligatorios >= 5 && !$scope.fuenteDeEnergia.status){
+                      $scope.navigateToPage(2);
+                    }                  
                   }
                   else{
-                    assingStars(false, $scope.fuenteDeEnergia.activities[i].coursemoduleid);
+                    assingStars(false, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
                     starsNoMandatory+=50;  
                   }                
                 }
                 break;
                 }
               }
-            }
+            };
 
-            function assingStars(isMandatory, coursemoduleid){
+            function assingStars(isMandatory, coursemoduleid, stars){
               profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));              
               var data={
                 userId: profile.id,
-                stars: 50,
+                stars: stars,
                 instance: coursemoduleid,
                 instanceType: 0,
                 date: getdate()
                 };
                 console.log("Updating Stars");
               if(starsMandatory < 250 && isMandatory){                
-                profile.stars = parseInt(profile.stars)+50;
-                moodleFactory.Services.PutStars(data,profile, $scope.token,successfullCallBack, errorCallback);
-                //localStorage.setItem("profile", JSON.stringify(profile)); 
+                profile.stars = parseInt(profile.stars)+stars;
+                //localStorage.setItem('profile', JSON.stringify(profile));
+                moodleFactory.Services.PutStars(data,profile, $scope.token,successfullCallBack, errorCallback);                
               }
               else if(starsNoMandatory < 500){
-                profile.stars = parseInt(profile.stars)+50;                  
+                profile.stars = parseInt(profile.stars)+stars;              
+                //localStorage.setItem('profile', JSON.stringify(profile));    
                 moodleFactory.Services.PutStars(data,profile, $scope.token,successfullCallBack, errorCallback);
               }                
             }
 
-            $scope.back = function () {
-                var userCurrentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
-            }
+            $scope.back = function () {   
+            var userCurrentStage = localStorage.getItem("currentStage");              
+                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + currentChallenge);
+            };
 
             function getdate(){
               var currentdate = new Date(); 
@@ -187,18 +206,37 @@ angular
               return (n < 10 ? '0' : '') + n;
             }
 
-            function successfullCallBack(){
-              if($scope.statusObligatorios == 5){
-                $scope.fuenteDeEnergia.status = true;
-                //alert("Prueba: Ya has visto 5 elementos obligatorios");
-                var updatedActivityOnUsercourse = updateActivityStatus($scope.fuenteDeEnergia.activity_identifier);  //actualizar arbol
-                localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
-                _endActivity($scope.fuenteDeEnergia);
-                _isChallengeCompleted();
-              }
+            function successfullCallBack(){              
             }
 
             function errorCallback(){
 
             }
+
+            function successEndFuente(){
+              var userCurrentStage = localStorage.getItem("currentStage"); 
+              $scope.$emit('HidePreloader'); //hide preloader
+              $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + currentChallenge);
+            }          
+
+            $scope.finishActivity = function(){   
+                $scope.$emit('ShowPreloader'); //show preloader           
+                var updatedActivityOnUsercourse = updateActivityStatus($scope.fuenteDeEnergia.activity_identifier);  //actualizar arbol
+                localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));                
+                 //trigger activity type 2 is sent when the activity ends.
+                var triggerActivity = 2;                
+                var currentUserId = currentUser.userId;
+                var activityId = $scope.fuenteDeEnergia.coursemoduleid;
+                //create notification
+                _createNotification(activityId, triggerActivity);
+                //complete stage
+                _updateBadgeStatus(activityId);
+                var like_status = $scope.like_status;
+                var data = {userid :  currentUserId, like_status: like_status };
+                $scope.fuenteDeEnergia.status = 1;
+                // update activity status dictionary used for blocking activity links
+                updateActivityStatusDictionary(activityId);
+                _isChallengeCompleted();    
+                moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token,successEndFuente, function(){$scope.$emit('HidePreloader');});                                                                    
+            }            
         }]);

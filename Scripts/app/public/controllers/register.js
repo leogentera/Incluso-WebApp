@@ -56,6 +56,7 @@ angular
             $scope.countryItems = ['México', 'OTRO'];
             $scope.cityItems = ['México D.F', 'Estado de México', 'OTRO'];
             $scope.securityquestionItems = ['¿Dónde crecí?','Nombre de mi mejor amigo','Nombre de mi mascota','Personaje favorito','Banda musical favorita'];
+            $scope.showPlaceHolder = true;
             
             $scope.$emit('HidePreloader'); //- hide preloader
 
@@ -68,7 +69,9 @@ angular
             });
             $scope.$watch("registerModel.modelState.errorMessages", function(newValue, oldValue){
                 $scope.registerModel.modelState.isValid = (newValue.length === 0);
-            });                        
+            });           
+               
+               
                                 
             
             $scope.register = function() {
@@ -98,6 +101,7 @@ angular
                         console.log('successfully logged in');
 
                         //save token for further requests and autologin
+                        $scope.currentUserModel = data;
                         $scope.currentUserModel.token = data.token;
                         $scope.currentUserModel.userId = data.id;
 
@@ -148,7 +152,17 @@ angular
                 $scope.currentPage = pageNumber;
                 $scope.$emit('scrollTop'); //- scroll
             };
-
+            //
+            //ng-hide="registerModel.birthday.length != 0"
+            $scope.showPlaceHolderBirthday = function(){                
+                var bd = $("input[name='birthday']").val();                
+                if(bd){
+                    $scope.showPlaceHolder = false;                    
+                }else{
+                    $scope.showPlaceHolder = true;                    
+                }
+            };
+                        
             var registerUser = function(){
                 
                 $http({

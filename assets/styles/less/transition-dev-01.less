@@ -385,7 +385,8 @@ Parallel work file for UI Developer 01
         }
     } //evaluation
 
-    .community, .forum {
+    .community, 
+    .forum {
 
         .txt-renglon {
             width: 90%;
@@ -397,78 +398,216 @@ Parallel work file for UI Developer 01
             margin: 2vh 5%;
 
             .author {
+                font-weight: bold;
+
+                img {
+                    min-width: 15.5vw;
+                }
 
                 div {
+                    max-width: 80%;
+                    word-wrap: break-word;
+
+                    span {
+                        font-size: 4vw;
+                        font-weight: normal;
+                        padding-left: 1vw;
+                    }
+
                     div {
-                        font-size: 3.5vw;
-                        font-weight: bold;
+                        font-size: 3.5vw;                        
                     }
                 }
             }
+
+            .block {
+                .green {
+                     color: #e1e455 !important;
+                }
+
+                img {
+                    min-width: 15.5vw;
+                }
+
+                .popularity {
+                     font-size: 3.5vw;
+                     font-weight: bold;
+                     padding: 1vh 0;
+                }
+
+                &.coment {
+                    .vermas{                       
+                        background-color: rgba(13, 15, 20, 1);
+                        border: none;
+                        color: #08b190;                        
+                        width: 100%;
+                        font-size: 4.5vw;
+                        font-weight: bold;
+                        margin: 0 2%;
+                        padding: 3vw;
+                        text-align: left;
+
+                        * {
+                            color: #08b190;
+                        }
+
+                        span {
+                            font-size: 7vw;
+                            padding-right: 2vw;
+                            vertical-align: middle;
+                        }
+                    }
+                }
+            }
+
+            div {
+
+                > div.coment {
+
+                    div {
+                        font-weight: bold;
+                        font-size: 85%;
+                        max-width: 75%;
+                        word-wrap: break-word;
+                        
+                        span,
+                        > div {
+                            font-weight: normal;
+                        }
+
+                        > div {
+                            font-size: 120%;
+                            max-width: 100%;
+                        }
+                    }
+                }
+            }
+
+            .social {
+
+                div:nth-child(2){
+                    border-right: 2px solid rgba(255, 255, 255, 0.08);
+                }
+            }
+
         }
 
         .icon-circle {
-            padding: 2vh 0 !important;
-        }
+            padding: 2.3vh 0 1.5vh !important;
 
-        .block {
-            .green {
-                 color: #e1e455 !important;
-            }
-
-            img {
-                min-width: 15.5vw;
+            > .icomoon {
+                font-size: 8.5vw;
+                position: relative;
+                top: 2px;
             }
         }
 
-        .social div:nth-child(2) {
-            border-right: 2px solid rgba(255, 255, 255, 0.08);
+        .modalDialog > div {
+            padding: 4% 0 7%;
         }
 
         .subtitle {
-            padding: 5%;
-        }
-
-
-        .txt-bigger {            
-        }        
+            padding: 5% 5% 0;
+        }       
 
         .filter-section {
-            margin: 5%;
-            padding: 0;
-        }
-        .filter-section {
+            color: white;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding: 0;
-            margin: 0 10vw;
+            margin: 0 5vw;
             position: relative;
-        }
-        .filter-section i {
-            font-size: 5vw;
-            display: inline-block;
-            vertical-align: middle;
-            color: rgb(256,256,256);
-        }
-        .filter-section select {
-            font-size: 5vw;
-            font-weight: bold;
-            color: white;
-            width: 92%;
-            display: inline-block;
-            vertical-align: middle;
-            position: relative;
-            text-indent: 0 !important;
-            padding-left: 1.4vw;
-        }
-        .filter-section .icon-arrow {
-            font-size: 3vw;
-            position: absolute;
-            top: 5vw;
-            right: 2vw;
-        }
 
-    } //community
+            span {
+                font-size: 5vw;
+                display: inline-block;
+                vertical-align: middle;
+                color: rgb(256,256,256);
+            }
+
+            select {
+                font-size: 5vw;
+                font-weight: bold;
+                color: white;
+                width: 92%;
+                display: inline-block;
+                vertical-align: middle;
+                position: relative;
+                text-indent: 0 !important;
+                padding-left: 1.4vw;
+            }
+
+            .icon-arrow {
+                font-size: 3vw;
+                position: absolute;
+                top: 6vw;
+                right: 2vw;
+            }
+
+        }       
+
+    } //community, forum
+
+    /*Aplican sólo a Comunidad*/
+    .community {
+
+        .wall {
+
+            .part {
+               
+                .vermas {}                
+
+                .social {
+
+                    div {
+                        padding: 3% 2%;
+                        width: 32.5%;
+                        font-weight: bold;                       
+                        
+                        span {
+                            color: #08b190;
+                            font-size: 5vw;
+                            padding: 0;
+                        }
+
+                        &:nth-child(3){
+                            border-right: 2px solid rgba(255, 255, 255, 0.08);
+                        }
+
+                        &:last-child{
+                            color: #dc300a;
+
+                            span {
+                                color: #dc300a;
+                            }
+                        }
+                    }
+                }
+            }
+
+            section {
+                a {
+                    width: 90%;
+                    margin: 0 5vw;
+
+                    &.btn-showmore {
+                        background-color: rgba(13, 15, 20, 0.5);
+                        color: #08b190;
+                        font-size: 4vw;
+                        padding: 4vw;
+                        text-align: left;
+
+                        span {
+                            font-size: 7vw;
+                            padding-right: 2vw;
+                            vertical-align: middle;
+                        }
+                    }
+
+                }
+            }
+        }
+    }
 
     .privacy-notice,
     .use-terms {

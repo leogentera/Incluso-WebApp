@@ -23,7 +23,8 @@
         'incluso.programa.profile',
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
-        'incluso.programa.leaderboard',        
+        'incluso.programa.leaderboard',
+        'incluso.programa.comunidad',        
 
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
@@ -70,13 +71,14 @@
         $http.get('Templates/Programa/evaluacion.html', { cache: $templateCache });
         $http.get('Templates/Programa/formulario.html', { cache: $templateCache });
         $http.get('Templates/Programa/community.html', { cache: $templateCache });
+        $http.get('Templates/Programa/sharingexperience.html', { cache: $templateCache });  
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
         $http.get('Templates/Programa/Dashboard.html', { cache: $templateCache });  
         $http.get('Templates/Chat/index.html', { cache: $templateCache });  
 
-        $http.get('Templates/Leaderboard/index.html', { cache: $templateCache });  
+        $http.get('Templates/Leaderboard/index.html', { cache: $templateCache });          
         $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionInicial.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: $templateCache });  
@@ -132,6 +134,11 @@
             controller: 'programaProfileController'
         });
 
+        $routeProvider.when('/Perfil/ConfigurarPrivacidad', {
+            templateUrl: 'Templates/Programa/privacySettings.html',
+            controller: 'programaProfileController'
+        });
+
         $routeProvider.when('/evaluacion', {
             templateUrl: 'Templates/Programa/evaluacion.html',
             controller: 'evaluacionFormulario'
@@ -147,12 +154,6 @@
         	controller: 'programaDashboardController'
         });
         
-/*//////// old dashboard "etapa"///////////
-        $routeProvider.when('/ProgramaDashboardEtapa/:stageId', {
-            templateUrl: 'Templates/Programa/etapa.html',
-            controller: 'programaEtapaController'
-        });
-/////////////////////////////////////////*/
         $routeProvider.when('/Foro', {
             templateUrl: 'Templates/Programa/foro.html',
             controller: 'programaForoController'
@@ -248,6 +249,11 @@
             controller: 'programaNotificationController'
         });
             
+       $routeProvider.when('/SharingExperience', { 
+            templateUrl: 'Templates/Programa/sharingexperience.html',
+            controller: 'AlertsController'          //to do: add corresponding controller 
+        });  
+
         $routeProvider.when('/Chat', { 
             templateUrl: 'Templates/Chat/index.html',
             controller: 'programaChatController'
@@ -257,8 +263,8 @@
             templateUrl: 'Templates/Leaderboard/index.html',
             controller: 'programaLeaderBoard'
         });        
-
-        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId', {
+     
+        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId/:challengue', {
             templateUrl: 'Templates/ZonaDeVuelo/dashboard.html',
             controller: 'stageDashboardController'
         });
@@ -747,5 +753,108 @@
           scope: false,
           templateUrl: 'Templates/Shared/_preloader.html'
         };
-    });
+    })
+    .directive('uiSwitch', ['$injector', function($injector) {
+        var $drag = $injector.has('$drag') && $injector.get('$drag');
+
+        return {
+          restrict: 'EA',
+          scope: {
+            model: '=ngModel',
+            changeExpr: '@ngChange'
+          },
+          link: function(scope, elem, attrs) {
+            elem.addClass('switch');
+            
+            var disabled = attrs.disabled || elem.attr('disabled');
+
+            var unwatchDisabled = scope.$watch(
+              function() { 
+                return attrs.disabled || elem.attr('disabled'); 
+              },
+              function(value) {
+                if (!value || value === 'false' || value === '0') {
+                  disabled = false;
+                } else {
+                  disabled = true;
+                }
+              }
+            );
+
+            var handle = angular.element('<div class="switch-handle"></div>');
+            elem.append(handle);
+
+            if (scope.model) {
+              elem.addClass('active');
+            }
+            elem.addClass('switch-transition-enabled');
+
+            var unwatch = scope.$watch('model', function(value) {
+              if (value) {
+                elem.addClass('active');
+              } else {
+                elem.removeClass('active');
+              }
+            });
+            
+            var isEnabled = function() {
+              return !disabled;
+            };
+
+            var setModel = function(value) {
+              if (isEnabled() && value !== scope.model) {
+                scope.model = value;
+                scope.$apply();
+                if (scope.changeExpr !== null && scope.changeExpr !== undefined) {
+                  scope.$parent.$eval(scope.changeExpr);
+                }
+              }
+            };
+
+            var clickCb = function() {
+              setModel(!scope.model);
+            };
+
+            elem.on('click tap', clickCb);
+
+            var unbind = angular.noop;
+
+            if ($drag) {
+              unbind = $drag.bind(handle, {
+                transform: $drag.TRANSLATE_INSIDE(elem),
+                start: function() {
+                  elem.off('click tap', clickCb);
+                },
+                cancel: function() {
+                  handle.removeAttr('style');
+                  elem.off('click tap', clickCb);
+                  elem.on('click tap', clickCb);
+                },
+                end: function() {
+                  var rh = handle[0].getBoundingClientRect();
+                  var re = elem[0].getBoundingClientRect();
+                  if (rh.left - re.left < rh.width / 3) {
+                    setModel(false);
+                    handle.removeAttr('style');
+                  } else if (re.right - rh.right < rh.width / 3) {
+                    setModel(true);
+                    handle.removeAttr('style');
+                  } else {
+                    handle.removeAttr('style');
+                  }
+                  elem.on('click tap', clickCb);
+                }
+              });  
+            }
+
+            elem.on('$destroy', function() {
+              unbind();
+              unwatchDisabled();
+              unwatch();
+              isEnabled = setModel = unbind = unwatch = unwatchDisabled = clickCb = null;
+            });
+          }
+        };
+      }]);
+
      

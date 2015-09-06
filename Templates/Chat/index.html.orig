@@ -1,0 +1,40 @@
+<div class="incluso-app chat">
+<<<<<<< HEAD
+	<article class="starway">
+		<section class="component">
+			<div class="msg-container">
+				<div class="{{msge.messagesenderid == senderId ? 'msg sent' : 'msg received'}}" ng-repeat="msge in messages">
+					<div class="msg-icn icomoon"></div>
+					<div class="text">
+						<span>{{msge.messagetext}}<span>
+						<span class="date">{{msge.messagedate | date:'fullDate'}} {{msge.messagedate | date:'mediumTime'}}</span>
+					</div>
+				</div>
+				<a class="anchor-scroll floated" id="anchor-bottom"></a>
+			</div>
+			<div class="typing-section col-xs-12">
+				<textarea class="col-xs-10" placeholder="Escribe tu mensaje aquí..." ng-model="currentMessage"></textarea>
+				<a class="send-text icomoon icon-send-arrow" ng-click="sendMessage(); scrollToBottom();"></a>
+			</div>
+		</section>
+	</article>
+=======
+  <article class="starway">     
+    <section class="component">
+      <div class="msg-container" >
+        <div class="{{msge.messagesenderid == senderId ? 'msg sent' : 'msg received'}}" ng-repeat="msge in messages">
+          <div class="msg-icn icomoon"></div>
+          <div class="text">
+            <span>{{msge.messagetext}}</span>
+            <span class="date">{{msge.messagedate | date:'fullDate'}} {{msge.messagedate | date:'mediumTime'}}</span>
+          </div>
+        </div> 
+      </div>                
+      <div class="typing-section col-xs-12">              
+        <textarea type="text" placeholder="Escribe tu mensaje aquí..." ng-model="currentMessage" class="col-xs-10" />
+        <a class="send-text icomoon icon-send-arrow" ng-click="sendMessage()"></a>
+      </div>
+    </section>  
+  </article>
+>>>>>>> f97425f3598bf69b26de74746e33b57c2d65d663
+</div>

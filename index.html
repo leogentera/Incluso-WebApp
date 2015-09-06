@@ -9,62 +9,22 @@
         <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-base.min.css" />
         <link rel="stylesheet" href="assets/styles/angular/mobile-angular-ui-desktop.min.css" />
         <link href="assets/styles/dev-css.css" rel='stylesheet' type='text/css' />
-        <link href="assets/styles/jquery-ui.css" rel="stylesheet" type="text/css">
+        <link href="assets/styles/jquery-ui.css" rel="stylesheet" type="text/css" />
         <style>
-            body:after {
-                /*content: url(assets/images/bg-sm-public-page.jpg)
-                url(assets/images/img-ship-02.png)
-                url(assets/images/bg-topusers-pre.png)
-                url(assets/images/bg-badges-pre.png)
-                url(assets/images/bg-badges-post.png)
-                url(assets/images/bg-stars-01.png)
-                url(assets/images/ptr-video-0001.jpg)
-                url(assets/images/bg-ilustration-launchpad.png)
-                url(assets/images/bg-stars-02.png)
-                url(assets/images/bg-stars-01.png)
-                url(assets/images/bg-xs-profile-sky.jpg)
-                url(assets/images/img-profile-spaceship-dashboard-top.png)
-                url(assets/images/img-profile-spaceship-dashboard-middle.png)
-                url(assets/images/img-profile-spaceship-dashboard-bottom.png)
-                url(assets/images/img-profile-spaceship-dashboard-settings.png)
-                url(assets/images/img-user-sample-photo.jpg)*/
-                content: 
-                    url(assets/images/bg-sm-public-page.jpg)
-                    url(assets/images/bg-xs-profile-sky.jpg)
-                    url(assets/images/img-profile-spaceship-dashboard-top.png)
-                    url(assets/images/img-profile-spaceship-dashboard-middle.png)
-                    url(assets/images/img-profile-spaceship-dashboard-bottom.png)
-                    url(assets/images/img-profile-spaceship-dashboard-settings.png)
-                    url(assets/images/bg-footer.gif)
-                    url(assets/images/bg-dashboard-full.gif)
-                    url(assets/images/bg-stage-1-dashboard.gif)
-                    url(assets/images/bg-stage-1-dashboard-pattern.gif)
-                    url(assets/images/bg-stage-1-theme-bottom.gif)
-                    url(assets/images/bg-stage-1-theme-pattern.gif)
-                    url(assets/images/bg-stage-1-theme-spaceship.gif)
-                    url(assets/images/bg-notifications-sky.gif)
-                    url(assets/images/bg-notifications-bottom.gif)
-                    url(assets/media/thumb-bienvenida.jpg)
-                    url(assets/media/thumb-tutorial.jpg)
-                    url(assets/media/thumb-zona-de-aterrizaje.jpg)
-                    url(assets/media/thumb-zona-de-navegacion.jpg)
-                    url(assets/media/thumb-zona-de-vuelo.jpg)
-                    url(assets/challenges/stage-1/img-cabina-soporte.svg)
-                    url(assets/challenges/stage-1/img-conocete.svg)
-                    url(assets/challenges/stage-1/img-cuarto-recursos.svg)
-                    url(assets/challenges/stage-1/img-evaluacion final.svg)
-                    url(assets/challenges/stage-1/img-evaluacion inicial.svg)
-                    url(assets/challenges/stage-1/img-mis-suenos.svg)
-                    url(assets/images/bg-xs-profile-sky.jpg)
-                    url(assets/images/img-profile-spaceship-dashboard-top.png)
-                    url(assets/images/img-profile-spaceship-dashboard-middle.png)
-                    url(assets/images/img-profile-spaceship-dashboard-bottom.png)
-                    url(assets/images/img-profile-spaceship-dashboard-settings.png);
-
-                display: none;
-            }
             [ng-cloak]{display: none !important; height:0;}
-        </style>           
+            @media screen {
+                div#img-cache {
+                    position: absolute;
+                    left: -9999px;
+                    top:  -9999px;
+                }
+                div#img-cache img {display: block;}
+            }
+            @media print {
+                div#img-cache,
+                div#img-cache img {display: none; visibility: hidden;}
+            }
+        </style> 
     </head>
 
     <body ng-controller="homeCtrl" class="incluso-app ng-scope has-sidebar-left" ng-class="{'sidebar-left-active': sidebar}">
@@ -78,13 +38,11 @@
         
         <!-- app wrapper -->
         <div class="app">
-            <a class="anchor-top" id="top"></a>
+            <a class="anchor-scroll" id="top"></a>
             
             <!-- toolbar for private views -->
             <toolbar-component></toolbar-component>
             
-            
-
             <!-- App Body -->
             <div class="app-body" ng-click="sideToggle('outside')">
                 <div class="app-content">                                                            
@@ -93,6 +51,33 @@
             </div>
             <footer-component></footer-component>
         </div><!-- ~ .app -->
+
+        <div id="img-cache">
+            <img width="1" height="1" src="assets/images/bg-sm-public-page.jpg" />
+            <img width="1" height="1" src="assets/images/bg-dashboard-full.gif" />
+            <img width="1" height="1" src="assets/images/bg-footer.gif" />
+
+            <img width="1" height="1" src="assets/images/bg-stage-1-dashboard.gif" />
+            <img width="1" height="1" src="assets/images/bg-stage-1-dashboard-pattern.gif" />
+            <img width="1" height="1" src="assets/images/bg-stage-1-theme-bottom.gif" />
+            <img width="1" height="1" src="assets/images/bg-stage-1-theme-pattern.gif" />
+            <img width="1" height="1" src="assets/images/bg-stage-1-theme-spaceship.gif" />
+
+            <img width="1" height="1" src="assets/challenges/stage-1/img-cabina-soporte.svg" />
+            <img width="1" height="1" src="assets/challenges/stage-1/img-conocete.svg" />
+            <img width="1" height="1" src="assets/challenges/stage-1/img-cuarto-recursos.svg" />
+            <img width="1" height="1" src="assets/challenges/stage-1/img-evaluacion inicial.svg" />
+            <img width="1" height="1" src="assets/challenges/stage-1/img-evaluacion final.svg" />
+            <img width="1" height="1" src="assets/challenges/stage-1/img-mis-suenos.svg" />
+
+            <img width="1" height="1" src="assets/images/bg-notifications-sky.gif" />
+            <img width="1" height="1" src="assets/images/bg-notifications-bottom.gif" />
+
+            <img width="1" height="1" src="assets/media/thumb-bienvenida.jpg" />
+            <img width="1" height="1" src="assets/media/thumb-tutorial.jpg" />
+            <img width="1" height="1" src="assets/media/thumb-zona-de-aterrizaje.jpg" />
+            <img width="1" height="1" src="assets/media/thumb-zona-de-vuelo.jpg" />
+        </div>
  
         <script src="Scripts/jquery-2.1.4.min.js"></script>
         <script src="Scripts/Plugins/jquery-ui.js"></script>

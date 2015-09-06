@@ -98,11 +98,9 @@ angular
                     }
                 })
                 .success(function(){
-                    console.log('Foto guardada exitosamente!');
                     $location.path('/ProgramaDashboard');
                 })
                 .error(function(){
-                    console.log('Error al subir la foto!');
                     $location.path('/ProgramaDashboard');
                 });
             

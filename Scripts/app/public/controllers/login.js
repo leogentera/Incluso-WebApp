@@ -104,7 +104,7 @@ angular
                             console.log('successfully logged in');
 
                             //save token for further requests and autologin
-                            $scope.currentUserModel.token = data.token;
+                            $scope.currentUserModel = data;
                             $scope.currentUserModel.userId = data.id;
 
                             localStorage.setItem("CurrentUser", JSON.stringify($scope.currentUserModel));
@@ -166,6 +166,7 @@ angular
                 var userFacebook = JSON.parse(data);
 
                 //save token for further requests and autologin
+                $scope.currentUserModel = userFacebook;
                 $scope.currentUserModel.token = userFacebook.token;
                 $scope.currentUserModel.userId = userFacebook.id;
 
@@ -218,20 +219,6 @@ angular
                 return (errors.length === 0);
             }
 
-            function keepUserInformation(userId) {
-                $http(
-                {
-                    method: 'GET',
-                    url: API_RESOURCE.format("userprofile/" + userId),
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                }
-                ).success(function (data, status, headers, config) {
-                    localStorage.setItem("profile", JSON.stringify(data));
-                }).error(function (data, status, headers, config) {
-
-                });
-            }
-
             $scope.loadCredentials();
-            // $location.path('/ProgramaDashboardEtapa/' + 1); 
+
         }]);

@@ -232,9 +232,9 @@
                     </p>                    
                     
                     <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
-                      <input type="date" ng-model="registerModel.birthday" name="birthday" class="form-control form-control-lg theme-default" aria-describedby="birthDateAddOn" minlength="10" maxlength="10" required />
-                      <span class="custom-placeholder form-control-lg" ng-hide="registerModel.birthday.length !== 0">Fecha de nacimiento</span>
-                    </p>
+                      <input type="date" ng-model="registerModel.birthday" name="birthday" ng-focus="showPlaceHolderBirthday()" class="form-control form-control-lg theme-default" aria-describedby="birthDateAddOn" minlength="10" maxlength="10" required />
+                      <span class="{{showPlaceHolder == true ? 'custom-placeholder form-control-lg show' : 'custom-placeholder form-control-lg hidden'}}" >Fecha de nacimiento</span>                      
+                    </p>                    
                   </div>
                 </div>
               </div>
@@ -326,7 +326,7 @@
                     <p class="input-group-addon" id="emailAddOn">
                       <span class="icomoon icon-envelope"></span>                      
                     </p>
-                    <input type="email" ng-disabled="isRegistered" ng-model="registerModel.email" name="email" class="form-control form-control-lg theme-default" placeholder="Correo" aria-describedby="emailAddOn" required/>
+                    <input type="text" ng-disabled="isRegistered" ng-model="registerModel.email" name="email" class="form-control form-control-lg theme-default" placeholder="Correo" aria-describedby="emailAddOn" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required/>
                   </div>
                 </div>
               </div>

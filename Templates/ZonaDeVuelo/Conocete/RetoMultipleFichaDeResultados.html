@@ -6,13 +6,13 @@
         <h4>Escudo</h4>
         <img src="assets/images/badges/img-{{profile.shield}}.svg" class="centered" />
       </section>  
-      <section class="txt-renglon up-line">
+      <section class="txt-renglon up-line section-title">
         <h4>Fortalezas</h4>
       </section>
-      <div id="item{{index}}" class="collapse-media" ng-repeat="a in fortalezas">
+      <div id="item{{index}}" class="collapse-media" ng-repeat="a in fortalezas track by $index">
         <div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}" >      
           <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">        
-            <i class="icomoon icon-checked-join white"></i>{{a.name}}
+            <span class="icomoon icon-checked-join white"></span>{{a.name}}
             <div>
               <span>{{a.calificacion}}</span> 
               <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
@@ -25,15 +25,15 @@
         </div>                    
       </div>
 
-      <section class="txt-renglon up-line">
+      <section class="txt-renglon up-line section-title no-border">
         <h4>Inteligencias a fortalecer</h4>
       </section>
 
-      <div id="item{{index}}" class="collapse-media" ng-repeat="a in aFortalecer">
+      <div id="item{{index}}" class="collapse-media" ng-repeat="a in aFortalecer track by $index">
 
         <div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}" >
           <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">          
-            <i class="icomoon icon-checked-join white"></i>{{a.name}} 
+            <span class="icomoon icon-checked-join white"></span>{{a.name}} 
             <div>
               <span>{{a.calificacion}}</span> 
               <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>

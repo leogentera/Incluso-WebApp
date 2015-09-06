@@ -20,90 +20,129 @@
                         <div>                          
                             <div class="txt-renglon txt-bigger">1. De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo para el siguiente reto.</div>
                             <section class="form txt-renglon txt-bigger part list">
-                                <input id="check1" type="checkbox" value="0" name="check" ng-model='misGustosAnswers[0][0]' ng-disabled="setReadOnly"/>
-                                  <label for="check1">Ciclismo</label>
-                                <input id="check2" type="checkbox" value="1" name="check" ng-model='misGustosAnswers[0][1]' ng-disabled="setReadOnly"/>
-                                  <label for="check2">Patinaje/skateboarding</label>
-                                <input id="check3" type="checkbox" value="2" name="check" ng-model='misGustosAnswers[0][2]' ng-disabled="setReadOnly"/>
-                                  <label for="check3">Futbol soccer</label>
-                                <input id="check4" type="checkbox" value="3" name="check" ng-model='misGustosAnswers[0][3]' ng-disabled="setReadOnly"/>
-                                  <label for="check4">Basquetbol</label>
-                                <input id="check5" type="checkbox" value="4" name="check" ng-model='misGustosAnswers[0][4]' ng-disabled="setReadOnly"/>
-                                  <label for="check5">Artes marciales</label>
-                                <input id="check6" type="checkbox" value="5" name="check" ng-model='misGustosAnswers[0][5]' ng-disabled="setReadOnly"/>
-                                  <label for="check6">Yoga</label>
-                                <input id="check7" type="checkbox" value="6" name="check" ng-model='misGustosAnswers[0][6]' ng-disabled="setReadOnly"/>
-                                  <label for="check7">Natación</label>
-                                <input id="check8" type="checkbox" value="7" name="check" ng-model='misGustosAnswers[0][7]' ng-disabled="setReadOnly"/>
-                                  <label for="check8">Futbol americano</label>
-                                <input id="check9" type="checkbox" value="8" name="check" ng-model='misGustosAnswers[0][8]' ng-disabled="setReadOnly"/>
-                                  <label for="check9">Basebol</label>
-                                <input id="check10" type="checkbox" value="9" name="check" ng-model='misGustosAnswers[0][9]' ng-disabled="setReadOnly"/>
-                                  <label for="check10">Carreras</label>                                                               
+                                <input id="q1r0" type="checkbox" value="0" name="check" ng-model='misGustosAnswers[0][0]' />
+                                  <label for="q1r0">Ciclismo</label>
+                                <input id="q1r1" type="checkbox" value="1" name="check" ng-model='misGustosAnswers[0][1]' />
+                                  <label for="q1r1">Patinaje/skateboarding</label>
+                                <input id="q1r2" type="checkbox" value="2" name="check" ng-model='misGustosAnswers[0][2]' />
+                                  <label for="q1r2">Futbol soccer</label>
+                                <input id="q1r3" type="checkbox" value="3" name="check" ng-model='misGustosAnswers[0][3]' />
+                                  <label for="q1r3">Basquetbol</label>
+                                <input id="q1r4" type="checkbox" value="4" name="check" ng-model='misGustosAnswers[0][4]' />
+                                  <label for="q1r4">Artes marciales</label>
+                                <input id="q1r5" type="checkbox" value="5" name="check" ng-model='misGustosAnswers[0][5]' />
+                                  <label for="q1r5">Yoga</label>
+                                <input id="q1r6" type="checkbox" value="6" name="check" ng-model='misGustosAnswers[0][6]' />
+                                  <label for="q1r6">Natación</label>
+                                <input id="q1r7" type="checkbox" value="7" name="check" ng-model='misGustosAnswers[0][7]' />
+                                  <label for="q1r7">Futbol americano</label>
+                                <input id="q1r8" type="checkbox" value="8" name="check" ng-model='misGustosAnswers[0][8]' />
+                                  <label for="q1r8">Basebol</label>
+                                <input id="q1r9" type="checkbox" value="9" name="check" ng-model='misGustosAnswers[0][9]' />
+                                  <label for="q1r9">Carreras</label>
+                                <input id="q1r10" type="checkbox" value="10" name="check" ng-model='misGustosAnswers[0][10]' />
+                                <label for="q1r10">Otro</label>
+                                <div class="form-group theme-form" ng-show="misGustosAnswers[0][10]">
+                                    <div class="add">
+                                        <span class="icomoon icon-edit"></span>
+                                        <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2"
+                                                  name="opciones" placeholder="¿Cuál?" ng-model="misGustosAnswers[0][11]">
+                                        </textarea>
+                                    </div>
+                                </div>
                             </section>
                         </div>
                       <!--Pregunta tipo Opción Multiple + Otro-->
                         <div>
                           <div class="txt-renglon txt-bigger">2. De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo para el siguiente reto</div>
                           <section class="form txt-renglon txt-bigger part list">
-                              <input id="check11" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][0]' ng-disabled="setReadOnly"/>
-                                <label for="check11">Pintura</label>
-                              <input id="check12" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][1]' ng-disabled="setReadOnly"/>
-                                <label for="check12">Música</label>
-                              <input id="check13" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][2]' ng-disabled="setReadOnly"/>
-                                <label for="check13">Danza</label>
-                              <input id="check14" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][3]' ng-disabled="setReadOnly"/>
-                                <label for="check14">Fotografía</label>
-                              <input id="check15" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][4]' ng-disabled="setReadOnly"/>
-                                <label for="check15">Graffiti</label>
-                              <input id="check16" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][5]' ng-disabled="setReadOnly"/>
-                                <label for="check16">Diseño digital</label>
-                              <input id="check17" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][6]' ng-disabled="setReadOnly"/>
-                                <label for="check17">Artesanías</label>
-                              <input id="check18" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][7]' ng-disabled="setReadOnly"/>
-                                <label for="check18">Teatro</label>
-                              <input id="check19" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][8]' ng-disabled="setReadOnly"/>
-                                <label for="check19">Modelado</label>
-                              <input id="check20" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][9]' ng-disabled="setReadOnly"/>
-                                <label for="check20">Dibujo</label>                                                             
+                              <input id="q2r0" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][0]' />
+                                <label for="q2r0">Pintura</label>
+                              <input id="q2r1" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][1]' />
+                                <label for="q2r1">Música</label>
+                              <input id="q2r2" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][2]' />
+                                <label for="q2r2">Danza</label>
+                              <input id="q2r3" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][3]' />
+                                <label for="q2r3">Fotografía</label>
+                              <input id="q2r4" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][4]' />
+                                <label for="q2r4">Graffiti</label>
+                              <input id="q2r5" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][5]' />
+                                <label for="q2r5">Diseño digital</label>
+                              <input id="q2r6" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][6]' />
+                                <label for="q2r6">Artesanías</label>
+                              <input id="q2r7" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][7]' />
+                                <label for="q2r7">Teatro</label>
+                              <input id="q2r8" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][8]' />
+                                <label for="q2r8">Modelado</label>
+                              <input id="q2r9" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][9]' />
+                                <label for="q2r9">Dibujo</label>
+                              <input id="q2r10" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][10]' />
+                              <label for="q2r10">Otro</label>
+                              <div class="form-group theme-form" ng-show="misGustosAnswers[1][10]">
+                                  <div class="add">
+                                      <span class="icomoon icon-edit"></span>
+                                        <textarea id="textoarea2" class="form-control form-control-lg theme-form" row="2"
+                                                  name="opciones" placeholder="¿Cuál?" ng-model="misGustosAnswers[1][11]">
+                                        </textarea>
+                                  </div>
+                              </div>
                           </section>
                         </div>
                         <!--Pregunta tipo Opción Multiple + Otro-->
                         <div>
                           <div class="txt-renglon txt-bigger">3. De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo para el siguiente reto</div>
                           <section class="form txt-renglon txt-bigger part list">
-                              <input id="check21" type="checkbox" value="0" name="check" ng-model='misGustosAnswers[2][0]' ng-disabled="setReadOnly"/>
-                                <label for="check21">Ir a fiestas</label>
-                              <input id="check22" type="checkbox" value="1" name="check" ng-model='misGustosAnswers[2][1]' ng-disabled="setReadOnly"/>
-                                <label for="check22">Leer</label>
-                              <input id="check23" type="checkbox" value="2" name="check" ng-model='misGustosAnswers[2][2]' ng-disabled="setReadOnly"/>
-                                <label for="check23">Pasar tiempo con amigos</label>
-                              <input id="check24" type="checkbox" value="3" name="check" ng-model='misGustosAnswers[2][3]' ng-disabled="setReadOnly"/>
-                                <label for="check24">Cocinar</label>
-                              <input id="check25" type="checkbox" value="4" name="check" ng-model='misGustosAnswers[2][4]' ng-disabled="setReadOnly"/>
-                                <label for="check25">Jugar videojuegos</label>
-                              <input id="check26" type="checkbox" value="5" name="check" ng-model='misGustosAnswers[2][5]' ng-disabled="setReadOnly"/>
-                                <label for="check26">Visitar museos</label>
-                              <input id="check27" type="checkbox" value="6" name="check" ng-model='misGustosAnswers[2][6]' ng-disabled="setReadOnly"/>
-                                <label for="check27">Ver películas/series</label>
-                              <input id="check28" type="checkbox" value="7" name="check" ng-model='misGustosAnswers[2][7]' ng-disabled="setReadOnly"/>
-                                <label for="check28">Ver televisión</label>
-                              <input id="check29" type="checkbox" value="8" name="check" ng-model='misGustosAnswers[2][8]' ng-disabled="setReadOnly"/>
-                                <label for="check29">Pasar tiempo en redes sociales</label>
-                              <input id="check30" type="checkbox" value="9" name="check" ng-model='misGustosAnswers[2][9]' ng-disabled="setReadOnly"/>
-                                <label for="check30">Escuchar música</label>                                                              
+                              <input id="q3r0" type="checkbox" value="0" name="check" ng-model='misGustosAnswers[2][0]' />
+                                <label for="q3r0">Ir a fiestas</label>
+                              <input id="q3r1" type="checkbox" value="1" name="check" ng-model='misGustosAnswers[2][1]' />
+                                <label for="q3r1">Leer</label>
+                              <input id="q3r2" type="checkbox" value="2" name="check" ng-model='misGustosAnswers[2][2]' />
+                                <label for="q3r2">Pasar tiempo con amigos</label>
+                              <input id="q3r3" type="checkbox" value="3" name="check" ng-model='misGustosAnswers[2][3]' />
+                                <label for="q3r3">Cocinar</label>
+                              <input id="q3r4" type="checkbox" value="4" name="check" ng-model='misGustosAnswers[2][4]' />
+                                <label for="q3r4">Jugar videojuegos</label>
+                              <input id="q3r5" type="checkbox" value="5" name="check" ng-model='misGustosAnswers[2][5]' />
+                                <label for="q3r5">Visitar museos</label>
+                              <input id="q3r6" type="checkbox" value="6" name="check" ng-model='misGustosAnswers[2][6]' />
+                                <label for="q3r6">Ver películas/series</label>
+                              <input id="q3r7" type="checkbox" value="7" name="check" ng-model='misGustosAnswers[2][7]' />
+                                <label for="q3r7">Ver televisión</label>
+                              <input id="q3r8" type="checkbox" value="8" name="check" ng-model='misGustosAnswers[2][8]' />
+                                <label for="q3r8">Pasar tiempo en redes sociales</label>
+                              <input id="q3r9" type="checkbox" value="9" name="check" ng-model='misGustosAnswers[2][9]' />
+                                <label for="q3r9">Escuchar música</label>
+                              <input id="q3r10" type="checkbox" value="10" name="check" ng-model='misGustosAnswers[2][10]' />
+                              <label for="q3r10">Otro</label>
+                              <div class="form-group theme-form" ng-show="misGustosAnswers[2][10]">
+                                  <div class="add">
+                                      <span class="icomoon icon-edit"></span>
+                                        <textarea id="textoarea3" class="form-control form-control-lg theme-form" row="2"
+                                                  name="opciones" placeholder="¿Cuál?" ng-model="misGustosAnswers[2][11]">
+                                        </textarea>
+                                  </div>
+                              </div>
                           </section>
                         </div>
                     </div>
                     <section id="controls" class="controls">
                         <div class="paginate">
-                            <a href="#" id="prev"><span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span></a>
-                            <a href="#" id="next"><span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span></a>
+                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 3)">
+                                <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
+                            </a>
+                            <a href="#" id="next" ng-click="addToAnswerIndex(1, 3)">
+                                <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
+                            </a>
                             <div class="centered">
-                              <span id="index" class="txt-bigger">1/</span><span id="totalPages" class="white txt-bigger">3</span>
+                              <span id="index" class="txt-bigger">1/</span><span class="white txt-bigger">3</span>
                             </div>
                         </div>
-                        <a class="btn btn-primary btn-lg btn-cnt" style="display:none" id="save" ng-hide="setReadOnly" ng-click='validateMisGustosAnsweredQuestions()' >GUARDAR</a>
+                        <a class="btn btn-primary btn-lg btn-cnt"
+                           id="save"
+                           ng-click="validateMisGustosAnsweredQuestions()"
+                           ng-show="answerIndex == 3">
+                            GUARDAR
+                        </a>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
                 </div>
@@ -141,12 +180,12 @@
             </div>
         </article>
         <!-- initial message -->
-        <script type="text/ng-template" id="OpeningStageModal.html">
+        <script type="text/ng-template" id="openingStageModal.html">
             <div class="modal-robot robot-lg closing-stage-modal user-help">
                 <img src="assets/images/img-robot-lg.svg">
 
                 <div class="modal-header">
-                    <a class="icon icon-close btn btn-circle">
+                    <a class="icon icon-close btn btn-circle"  ng-click="cancel()">
                         <span class="icomoon icon-cross"></span>
                     </a>
                 </div>
@@ -154,7 +193,7 @@
                     <h3 class="subtitle text-center">Mis gustos</h3>
 
                     <p class="txt-renglon centered">
-                        Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad
+                        Reconocer tus gustos y preferencias te ayudará a definir tus sueños. Responder ¿qué disfrutas hacer? puede llevarte a imaginar qué te gustaría hacer en un futuro.
                     </p>
                 </div>                
             </div>
@@ -181,21 +220,26 @@
             $("#index").html(item + 1 + '/');
         }
 
-        $("#next").click(function () {
+
+
+        $("#next").click(function (evt) {
             owl.trigger('owl.next');
-            var numberOfPage = $('#index');
-            var totalPages = $('#totalPages');
+            //var numberOfPage = $('#index');
+            //var totalPages = $('#totalPages');
+            /*
             if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
               $('#save').show();
             }else{              
               $('#save').hide();
-            }            
+            }
+                       */
             
-            return false;
+            evt.preventDefault();
         });
 
-        $("#prev").click(function () {
+        $("#prev").click(function (evt) {
             owl.trigger('owl.prev');
+            /*
             var numberOfPage = $('#index');
             var totalPages = $('#totalPages');            
             if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
@@ -203,9 +247,10 @@
             }else{              
               $('#save').hide();
             }
-            
-            
-            return false;
+            */
+
+
+            evt.preventDefault();
         });
     });
 
