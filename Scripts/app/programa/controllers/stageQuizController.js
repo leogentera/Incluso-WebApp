@@ -38,18 +38,8 @@ angular
             $scope.misSuenosAnswers = [[], [], [], []];
             $scope.exploracionFinal = ["", "", "", "", ""];
 
-            $scope.show1 = function () {
-                console.log($scope.AnswersResult.answers[0]);
-            };
-
             $scope.addCaptureField = function () {
                 //addHeight("#owl-carousel");
-                console.log($scope.misCualidadesAnswers[0][11]);
-                console.log($scope.misCualidadesAnswers[0][12]);
-                console.log($scope.misCualidadesAnswers[1][11]);
-                console.log($scope.misCualidadesAnswers[1][12]);
-                console.log($scope.misCualidadesAnswers[2][11]);
-                console.log($scope.misCualidadesAnswers[2][12]);
             };
 
 
@@ -614,8 +604,12 @@ angular
                         }
 
                         $scope.coursemoduleid = activity.coursemoduleid;    //console.log("coursemoduleid: " + activity.coursemoduleid);
-                        $scope.activityPoints = activity.points;            //console.log("points: " + activity.points);
+                        $scope.activityPoints = activity.points;            console.log("points: " + activity.points);
                         $scope.activityname = activity.activityname;        //console.log("activityname: " + activity.activityname);
+
+                        if (activity.activity_identifier == '1001') {//INC-1826: Not assign Stars to "Exploración Inicial" activity
+                            $scope.activityPoints = 0;
+                        }
 
                         $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                         $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
