@@ -589,7 +589,7 @@ angular
             }
 
 
-            function successfullCallBack(activityAnswers) {alert("Succes");
+            function successfullCallBack(activityAnswers) {
                 if (activityAnswers != null) {                    
                     // $scope.activity = activityAnswers;                    
                     for (var index = 0; index < activityAnswers.questions.length; index++) {

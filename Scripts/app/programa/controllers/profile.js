@@ -19,6 +19,7 @@ angular
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.status = "";
+
             getDataAsync(function () {
 
                 /////// privacy settings initial switches [boolean]/////////
@@ -245,9 +246,11 @@ angular
                 moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function () {
 
                     $scope.model = moodleFactory.Services.GetCacheJson("profile");
+                    //moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {}, function() {}, true);
                     callback();
 
                     moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
+                    moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function(){}, function() {}, true);
 
                     if (!$scope.model) {
                         $location.path('/');
@@ -255,7 +258,7 @@ angular
                     }
 
                     initFields($scope.model);
-                });
+                }, true);
             }
 
             function initFields(m) {
@@ -978,7 +981,7 @@ angular
                     }
                 };
                 img.src = imageUri;
-            }
+            };
 
             uploadAvatar = function (avatarInfo) {
                 var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen;
@@ -998,7 +1001,7 @@ angular
                             $location.path('/ProgramaDashboard');
                         });
                 });
-            }
+            };
 
             $scope.avatar = function () {
                 //the next fields should match the integration document shared with the game app
