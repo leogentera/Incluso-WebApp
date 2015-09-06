@@ -386,7 +386,6 @@ function updateSubActivityStatus(coursemoduleid) {
                         for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                             var activity = challenge.activities[activityIndex];
                             if(activity.activities){
-                              console.log(activity.activities.length);
                               for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++)
                               {
                                 var subactivity = activity.activities[subactivityIndex];
@@ -510,7 +509,7 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
      extraPoints ? '' : extraPoints = 0;
      profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
      
-     if (activity_identifier == '1009') {
+     if (activity_identifier == '1009' || activity_identifier == '1001') {
          activity.points = 0;
      }
      
