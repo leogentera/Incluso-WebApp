@@ -116,7 +116,7 @@ angular
 
             $scope.addAbility = function () {
                 addHeight("#listaDinamica");
-                $scope.AnswersResult.answers[4].push(new String());
+                $scope.AnswersResult.answers[4].push('');console.log($scope.AnswersResult.answers[4]);
             };
 
             $scope.deleteAbility = function (index) {
@@ -347,23 +347,15 @@ angular
                         case 2:
 
                             if (question.userAnswer != null) {
-                                var userAnswers = cleanText(question.userAnswer);
-                                var userAnswerArray = userAnswers.split(";");
-                                for (var i = 0; i < userAnswerArray.length; i++) {
-                                    $scope.AnswersResult.answers[2].push(userAnswerArray[i]);
-                                    /*
-                                     var userAnswer = userAnswers[i].trim();
-                                     for (var index = 0; index < question.answers.length; index++) {
-                                     var questionOption = question.answers[index];
-                                     if (questionOption.answer.trim() == userAnswer) {
-                                     $scope.AnswersResult.answers[4].push(userAnswer);
-                                     }
-                                     }
-                                     */
+                                var userAnswers = question.userAnswer.split('\n');
+
+                                console.log(userAnswers);
+
+                                for (var index = 0; index < userAnswers.length; index++) {
+                                    var myAnswer = userAnswers[index];
+                                    $scope.AnswersResult.answers[2].push(myAnswer);
                                 }
                             }
-
-
                             //$scope.AnswersResult.answers[2] = question.userAnswer.trim();
                             break;
                         case 3:
@@ -397,22 +389,27 @@ angular
                             break;
 
                         case 4:
+
+                            if (question.userAnswer != null) {
+                                console.log("userAnswer : " + question.userAnswer);
+                                var userAnswers = question.userAnswer.split(';');
+
+                                console.log("To render : " + userAnswers);
+
+                                for (var index = 0; index < userAnswers.length; index++) {
+                                    var myAnswer = userAnswers[index];
+                                    $scope.AnswersResult.answers[4].push(myAnswer);
+                                }
+                            }
+                            /*
                             if (question.userAnswer != null) {
                                 var userAnswers = cleanText(question.userAnswer);
                                 var userAnswerArray = userAnswers.split(";");
                                 for (var i = 0; i < userAnswerArray.length; i++) {
                                     $scope.AnswersResult.answers[4].push(userAnswerArray[i]);
-                                    /*
-                                     var userAnswer = userAnswers[i].trim();
-                                     for (var index = 0; index < question.answers.length; index++) {
-                                     var questionOption = question.answers[index];
-                                     if (questionOption.answer.trim() == userAnswer) {
-                                     $scope.AnswersResult.answers[4].push(userAnswer);
-                                     }
-                                     }
-                                     */
                                 }
                             }
+                            */
 
                             break;
 
