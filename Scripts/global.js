@@ -196,7 +196,7 @@ var _isChallengeCompleted = function(){
     for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++){
         var currentChallenge = currentStage.challenges[challengeIndex];
         if(currentChallenge.status == 0){
-          _updateBadgeStatus(currentChallenge.coursemoduleid, function() {
+          _updateBadgeStatus(currentChallenge.coursemoduleid);
 
 
           var totalActivitiesByStage = currentChallenge.activities.length;
@@ -216,10 +216,6 @@ var _isChallengeCompleted = function(){
           }else{
             success = 0;
           }
-          });
-
-
-
         }else{
           success = 0;
         }
@@ -293,7 +289,7 @@ var _coachNotification = function(){
       
       var triggerActivity = 3;
       var chatUser = JSON.parse(localStorage.getItem("userChat"));                        
-      if (chatUser.length > 0){      
+      if (chatUser && chatUser.length > 0){      
         var lastChat = _.max(chatUser,function(chat){
           if (chat.messagesenderid == userId) {
               return chat.messagedate;
