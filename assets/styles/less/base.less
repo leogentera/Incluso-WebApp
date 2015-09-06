@@ -1526,6 +1526,7 @@ body {
         min-height: 0;
         height: 13vw;
         border:none;
+        .border-radius-reset();
 
         &.show {display: block;}
         &.navbar-absolute-top {
@@ -1534,7 +1535,7 @@ body {
 
         .navbar-toggle {
             border-color:transparent;
-
+            .border-radius-reset();
             padding: 0px;
             height: 13vw;
             width: 9vw;
@@ -1719,6 +1720,12 @@ body {
 
             .navbar-toggle {
                 width: 12vw;
+                .clr-black(background-color, 0.2);
+
+                &:hover,
+                &:active {
+                    .clr-black(background-color, 0.2);
+                }
 
                 .icomoon {
                     font-size: 5vw;
@@ -1726,6 +1733,7 @@ body {
             }
             .navbar-assets {
                 margin-left:12vw;
+                .clr-black(background-color, 0.2);
                 //font-size:inherit;
 
                 .navbar-heading {
@@ -1739,7 +1747,7 @@ body {
 
 
     /****************************************************************************
-     $panel
+     $panels
      Description: CSS override to bootstrap's panel class.
     ****************************************************************************/
     .panel {
