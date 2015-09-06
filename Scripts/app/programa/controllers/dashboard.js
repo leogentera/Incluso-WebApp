@@ -16,8 +16,10 @@
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
 
-            console.log('loading user'); 
+            console.log('loading user');
+            moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {}, function() {}, true);
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load profile from local storage
+            console.log("Scope user = " + JSON.stringify($scope.user));
 
             if (!_getItem("userId")) {
                 $location.path('/');
@@ -96,8 +98,6 @@
                 $scope.$emit('HidePreloader'); //hide preloader
 
                 getUserNotifications(function() { getUserChat(); });
-                
-
 
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
@@ -109,7 +109,7 @@
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.$emit('scrollTop'); //- scroll
-                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {}, function() {});
+                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {}, function() {}, true);
                     }, errorCallback);
 
                 }, errorCallback);

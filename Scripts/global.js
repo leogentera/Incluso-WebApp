@@ -133,8 +133,7 @@ var _endActivity = function(activityModel){
         _updateBadgeStatus(activityId);
         
       if (activityModel.activityType == "Quiz"){
-        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse,activityModel.token,
-        successCallback,errorCallback);        
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successCallback, errorCallback);
       }
       else if(activityModel.activityType == "Assign")
       {
@@ -516,8 +515,14 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getActivityByActivity_identifier(activity_identifier);
      extraPoints ? '' : extraPoints = 0;
-     console.log("Number(profile.stars)("+Number(profile.stars) +") + Number(activity.points)("+ Number(activity.points)+") + Number(extraPoints)("+  Number(extraPoints)+")");
-   profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+     profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+     
+     if (activity_identifier == '1009') {
+         activity.points = 0;
+     }
+     
+     profile.stars = profile.stars + activity.points + Number(extraPoints);
+
     var data={
       userId: profile.id,
       stars: Number(activity.points) + Number(extraPoints),
@@ -539,9 +544,9 @@ function updateUserStarsUsingExternalActivity (activity_identifier){
        instance: activity.coursemoduleid,
        instanceType: 0,
        date: getdate()
-   }    
+   };
    
-   moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
+   moodleFactory.Services.PutStars(data,profile, currentUser.token, successCallback, errorCallback);
 }
 
 function getExtActivityByActivity_identifier(activity_identifier){     
