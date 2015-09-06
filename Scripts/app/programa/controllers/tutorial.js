@@ -136,6 +136,8 @@ angular
                     "escudo": ""
                 };   
 
+                $scope.$emit('ShowPreloader');
+
                 try {
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch(e) {
