@@ -91,8 +91,7 @@ angular
                 function errorCallback(){};
             };
 
-            var checkForumProgress = function(callback){
-                debugger;
+            var checkForumProgress = function(callback){                
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
 
@@ -228,6 +227,7 @@ angular
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         //getTopicDataAsync();
+                        updateForumProgress($scope.discussion.post_id);
                         refreshTopicData();
                     },
                     function(){
@@ -243,7 +243,7 @@ angular
                     function(){
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
-                        //getTopicDataAsync();
+                        updateForumProgress($scope.discussion.post_id);
                         refreshTopicData();
                     },
                     function(){
@@ -259,7 +259,7 @@ angular
                     function(){
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
-                        //getTopicDataAsync();
+                        updateForumProgress($scope.discussion.post_id);
                         refreshTopicData();
                     },
                     function(){
@@ -287,7 +287,7 @@ angular
                     function(){
                         $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
-                        //getTopicDataAsync();
+                        updateForumProgress($scope.discussion.post_id);
                         refreshTopicData();
                     },
                     function(){

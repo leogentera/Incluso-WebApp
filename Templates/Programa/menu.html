@@ -31,7 +31,7 @@
                         <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="0"></i>-->
                         <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="0" ng-show="!one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
                         <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="0" ng-show="one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
-                        <a class="menu-blue" ng-click="navigateTo('/ZonaDeVuelo/Dashboard/1','sideToggle')">
+                        <a class="menu-blue" ng-click="navigateTo('/ZonaDeVuelo/Dashboard/1/0','sideToggle')">
                           <span class="icomoon icon-spaceship">
                               <span class="path1"></span>
                               <span class="path2"></span>
@@ -66,7 +66,7 @@
                             </ul>
                             <ul>
                                 <li>Cabina de soporte</li>
-                                <li><a ng-class="canStartActivity(68)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat', 'sideToggle',68)">Cabina de soporte</a></li>
+                                <li><a ng-class="canStartActivity(68)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat', 'sideToggle',68)">Chat</a></li>
                                 
                                 <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>-->
                             </ul>
@@ -173,7 +173,7 @@
                                 <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal','Exploración final', 'sideToggle', 'navbarorange')">Exploración final</a></li>
                             </ul>
                         </div>-->
-                    </li>
+                    </li>                    
                     <li class="hidden"><a class="menu-green" ng-href="#"><span class="icomoon icon-asterodis"></span>Zona de Navegación</a></li>
                     <li class="hidden"><a class="menu-pink" ng-href="#"><span class="icomoon icon-planet"></span>Zona de Aterrizaje</a></li>                    
                     <li class="hidden"><a ng-click="navigateTo('HallOfFame', 'sideToggle')"><span class="icomoon icon-cup"></span> Salón de la fama</a></li>
@@ -183,6 +183,7 @@
                     <li class="hidden"><a><span class="icomoon icon-lifesaver"></span> Preguntas frecuentes</a></li>
                     <li><a ng-click="navigateTo('PrivacyNotice', 'sideToggle')"><span class="icomoon icon-privacy"></span> Aviso de privacidad</a></li>
                     <li><a ng-click="navigateTo('TermsOfUse', 'sideToggle')"><span class="icomoon icon-books"></span> Condiciones de uso</a></li>
+                    <li class=""><a class="" ng-click="navigateTo('SharingExperience', 'sideToggle')">Compartir experiencia</a></li>
                     <li class="separate"></li>                    
                     <li><a ng-click="logout()"><span class="icomoon icon-logout"></span> Salir</a></li>
                   </ul>

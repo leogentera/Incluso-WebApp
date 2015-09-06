@@ -101,6 +101,7 @@ angular
                         console.log('successfully logged in');
 
                         //save token for further requests and autologin
+                        $scope.currentUserModel = data;
                         $scope.currentUserModel.token = data.token;
                         $scope.currentUserModel.userId = data.id;
 
@@ -161,16 +162,7 @@ angular
                     $scope.showPlaceHolder = true;                    
                 }
             };
-            
-            //$scope.showBirthdayLabel = function(){
-            //    debugger;
-            //    if(!$scope.registerModel.birthday){
-            //        $('#labelBirthday').removeClass('custom-placeholder form-control-lg ng-hide').addClass('custom-placeholder form-control-lg');                    
-            //    }else{
-            //        $('#labelBirthday').removeClass('custom-placeholder form-control-lg').addClass('custom-placeholder form-control-lg ng-hide');
-            //    }
-            //};
-            
+                        
             var registerUser = function(){
                 
                 $http({

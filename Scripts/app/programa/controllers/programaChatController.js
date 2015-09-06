@@ -27,10 +27,11 @@ angular
             $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false; 
 
-            validateCabinaDeSoporte();
+            moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                
+            //validateCabinaDeSoporte();
 
-            function validateCabinaDeSoporte(){
-                debugger;
+
+            function validateCabinaDeSoporte(){                           
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
@@ -68,7 +69,8 @@ angular
             $scope.$emit('HidePreloader'); //hide preloader    
             
             $scope.back = function () {
-                $location.path('/ProgramaDashboard');
+                var userCurrentStage = localStorage.getItem("currentStage");              
+                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4');
             };
             //var currentDate = new Date();
             //var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);

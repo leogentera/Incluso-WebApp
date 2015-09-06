@@ -352,12 +352,11 @@
 
 												<section>
 													<h4>Teléfono</h4>
-													<span>Telefonos: {{model.phones}}</span>
 													<ul class="block-list">
 														<li ng-repeat="p in model.phones track by $index">
 															<div class="form-group theme-form">
 																<h5>
-																	<span>Teléfono {{model.phones.indexOf(p) + 1}}</span>
+																	<span>Teléfono {{$index + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deletePhone(p);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
@@ -389,14 +388,20 @@
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
 
-																	<select class="form-control form-control-lg theme-form" ng-model="model.socialNetworks[$index].socialNetwork" ng-options="item for item in socialNetworksList"
-																	ng-init="model.socialNetwork == null" ng-class="{'selected': model.socialNetworks[$index].socialNetwork.length != 0 && model.socialNetworks[$index].socialNetwork != null}">
-																		<option value="" ng-disabled="!!model.socialNetwork">Nombre de usuario</option>
+																	<select class="form-control form-control-lg theme-form"
+																			ng-model="model.socialNetworks[$index].socialNetwork"
+																			ng-options="item for item in socialNetworksList"
+																			ng-init="model.socialNetwork == null"
+																			ng-class="{'selected': model.socialNetworks[$index].socialNetwork.length != 0 && model.socialNetworks[$index].socialNetwork != null}">
+																		<option value="" ng-disabled="!!model.socialNetwork">Red social</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 																</div>
 																<div class="form-group-control">
-																	<input type="text" class="form-control form-control-lg theme-form" placeholder="Nombre de usuario" ng-model="model.socialNetworks[$index].socialNetworkId"
+																	<input type="text"
+																		   class="form-control form-control-lg theme-form"
+																		   placeholder="Nombre de usuario"
+																		   ng-model="model.socialNetworks[$index].socialNetworkId"
 																	/>
 																</div>
 															</div>

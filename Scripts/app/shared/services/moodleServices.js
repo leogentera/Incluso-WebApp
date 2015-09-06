@@ -73,6 +73,7 @@
         };
 
         var _getUserChat = function(userId, successCallback, errorCallback, forceRefresh){
+            successCallback();
             _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId),successCallback,errorCallback, forceRefresh);
         };
 
@@ -123,7 +124,7 @@
             _httpFactory({
                 method: 'GET',
                 url: url, 
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json'}
                 }).success(function(data, status, headers, config) {
                     localStorage.setItem(key, JSON.stringify(data));
                     successCallback(data, key);
@@ -155,7 +156,14 @@
             });
         };
 
-        var _getCourseAsyncData = function(key, url, successCallback, errorCallback){
+        var _getCourseAsyncData = function(key, url, successCallback, errorCallback, forceRefresh){
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+                
+            if (returnValue) {
+                _timeout(function() { successCallback(returnValue, key)}, 1000);                
+                return returnValue;
+            }
+
             _httpFactory({
                 method: 'GET',
                 url: url, 
@@ -216,6 +224,10 @@
         };
 
         var _putAsyncStars = function(key, dataModel, profile, url, token, successCallback, errorCallback){
+
+            //avoid sending null stars
+            dataModel["stars"] = dataModel.stars ? dataModel.stars : 0;
+
             _httpFactory({
                 method: 'PUT',
                 url: url,
@@ -258,7 +270,7 @@
         //    });
         // };
         
-        var _endActivity = function(key, data, userCourseModel, url, token, successCallback, errorCallback){            
+        var _endActivity = function(key, data, userCourseModel, url, token, successCallback, errorCallback){
             _httpFactory({                
                method: 'PUT',
                url: url,        
@@ -342,7 +354,6 @@
                                             {
                                                 globalActivities++;
                                                 stageActivities++;
-
                                                 if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
                                                     globalCompletedActivities++;
                                                     stageCompletedActivities++;
@@ -377,7 +388,9 @@
                 }
             }
             usercourse.globalProgress = Math.round(100.0 * globalCompletedActivities / globalActivities,0);
-            user.stars = globalPointsAchieved;
+            if (user){
+                user.stars = globalPointsAchieved;
+            }
             return { course: usercourse, user: user };
         }
          
@@ -415,7 +428,7 @@
                     assign = _.find(activities,function(a) { 
                         return a.parentsection == course.stages[i].parentsection && 
                             a.section == course.stages[i].section &&
-                            a.activity_type == 'assign' && a.activityname != 'Cabina de soporte'
+                            a.activity_type == 'assign' && a.activityname != 'Chat'
                     });
 
                     if (assign) {
@@ -435,7 +448,7 @@
                        assign = _.find(activities,function(a) { 
                             return a.parentsection == course.stages[i].challenges[j].parentsection && 
                                 a.section == course.stages[i].challenges[j].section &&
-                                a.activity_type == 'assign'  && a.activityname != 'Cabina de soporte'
+                                a.activity_type == 'assign'  && a.activityname != 'Chat'
                         });
 
                         if (assign) {
@@ -455,7 +468,7 @@
                         });
 
                         var childrenActivities =  _.filter(activities,function(a) { 
-                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Cabina de soporte'))
+                            return a.section == course.stages[i].challenges[j].section && a.activity_type != 'ActivityManager' && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
                         });
 
                         for(k = 0; k < childrenActivities.length; k++) {
@@ -473,7 +486,7 @@
                                assign = _.find(activities,function(a) { 
                                     return a.parentsection == course.stages[i].challenges[j].activities[k].parentsection && 
                                         a.section == course.stages[i].challenges[j].activities[k].section &&
-                                        a.activity_type == 'assign'  && a.activityname != 'Cabina de soporte'
+                                        a.activity_type == 'assign'  && a.activityname != 'Chat'
                                 });
 
                                 if (assign) {
@@ -489,7 +502,7 @@
                                 });
 
                                 childrenActivities =  _.filter(activities,function(a) { 
-                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Cabina de soporte'))
+                                    return a.section ==  course.stages[i].challenges[j].activities[k].section && a.activity_type != 'ActivityManager'  && (a.activity_type != 'assign' || (a.activity_type == 'assign' && a.activityname == 'Chat'))
                                 });
 
                                 if (course.stages[i].challenges[j].activities[k]["activities"]) {

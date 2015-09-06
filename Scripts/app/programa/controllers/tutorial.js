@@ -12,63 +12,37 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
+            _timeout = $timeout;
             $scope.scrollToTop();
             $scope.model = getDataAsync();
             $scope.$emit('ShowPreloader');
-            /* Models */
-            //$scope.hasSeenTutorial = moodleFactory.Services.GetCacheObject("HasSeenTutorial");
-            //$scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
-            //$scope.user = moodleFactory.Services.GetCacheJson("profile");
-
-            /* Helpers */
             $scope.currentPage = 1;
             $scope.loading = false;
-
-            //$scope.avatarInfo = [{
-            //    "userid": "",//$scope.user.UserId,
-            //    "alias": "", //$scope.user.username,
-            //    "aplicacion": "Mi Avatar",
-            //    "estrellas": 0,//$scope.user.stars,
-            //    "PathImagen": "Android/data/<app-id>/images",
-            //    "color_cabello": "amarillo",
-            //    "estilo_cabello": "",
-            //    "traje_color_principal": "",
-            //    "traje_color_secundario": "",
-            //    "rostro": "",
-            //    "color_de_piel": "",
-            //    "escudo:": "",
-            //    "imagen_recortada": "",
-            //}];
-
-            console.log($scope.showFooter);
-
             $rootScope.pageName = "Guia de uso"
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false; 
-            //function getDataAsync() {
-            //    //moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
-                $scope.avatarInfo = [{
-                    "userid": "",//$scope.user.UserId,
-                    "alias": "", //$scope.user.username,
-                    "aplicacion": "Mi Avatar",
-                    "estrellas": 0,//$scope.user.stars,
-                    "PathImagen": "Android/data/<app-id>/images",
-                    "color_cabello": "amarillo",
-                    "estilo_cabello": "",
-                    "traje_color_principal": "",
-                    "traje_color_secundario": "",
-                    "rostro": "",
-                    "color_de_piel": "",
-                    "escudo:": "",
-                    "imagen_recortada": "",
-                }];
-            //}
+
+            $scope.avatarInfo = [{
+                "userid": "",//$scope.user.UserId,
+                "alias": "", //$scope.user.username,
+                "aplicacion": "Mi Avatar",
+                "estrellas": 0,//$scope.user.stars,
+                "PathImagen": "Android/data/<app-id>/images",
+                "color_cabello": "amarillo",
+                "estilo_cabello": "",
+                "traje_color_principal": "",
+                "traje_color_secundario": "",
+                "rostro": "",
+                "color_de_piel": "",
+                "escudo:": "",
+                "imagen_recortada": "",
+            }];
 
             function getDataAsync() {
 
                 moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
-                var m = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
+                var m = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
                 if (!m) {
                     $location.path('/');
@@ -100,20 +74,8 @@ angular
                $scope.$emit('HidePreloader');
             }
 
-            //function errorCallback(data){
-            //    console.log(data);
-            //}  
-
-
-            //$scope.continue = function() {
-			//	$scope.hasSeenTutorial = true;
-            //    localStorage.setItem("HasSeenTutorial", "true");
-            //    $scope.scrollToTop();
-            //    $location.path('/Perfil');
-
-            //}
             
-              $scope.playVideo = function(videoAddress, videoName){                 
+          $scope.playVideo = function(videoAddress, videoName){                 
                  //var videoAddress = "assets/media";
                  //var videoName = "TutorialTest2.mp4";
                 playVideo(videoAddress, videoName);
@@ -124,7 +86,6 @@ angular
                 var ctx = c.getContext("2d");
                 var img = new Image();
                 img.onload = function() {
-                    //alert('loading avatar');
                     c.width = this.width;
                     c.height = this.height;
                     ctx.drawImage(img, 0, 0);
@@ -158,32 +119,32 @@ angular
             }
             
             $scope.avatar = function () {
-                //if ($scope.user != null) {
-                //    $scope.avatarInfo[0].UserId = $scope.user.UserId;
-                //    $scope.avatarInfo[0].Alias = $scope.user.username;
-                //    $scope.avatarInfo[0].Estrellas = $scope.user.stars;
-                //}
-                //localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
-                //$scope.scrollToTop();         
-                //$location.path('/Juegos/Avatar');
 
-                //the next fields should match the integration document shared with the game app
                 var avatarInfoForGameIntegration = {
                     "userid": $scope.model.id,
                     "alias": $scope.model.username,
                     "actividad": "Mi Avatar",
                     "estrellas": "100",
                     "pathimagen": "",
-                    "genero": "",
-                    "rostro": "",
-                    "color_de_piel": "",
-                    "estilo_cabello": "",
-                    "color_cabello": "",
-                    "traje_color_principal": "",
-                    "traje_color_secundario": "",
+                    "genero": $scope.avatarInfo[0].imagen_recortada,
+                    "rostro": $scope.avatarInfo[0].rostro,
+                    "color_de_piel": $scope.avatarInfo[0].color_de_piel,
+                    "estilo_cabello": $scope.avatarInfo[0].estilo_cabello,
+                    "color_cabello": $scope.avatarInfo[0].color_cabello,
+                    "traje_color_principal": $scope.avatarInfo[0].traje_color_principal,
+                    "traje_color_secundario": $scope.avatarInfo[0].traje_color_secundario,
                     "escudo": ""
-                };    
-                cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                };   
+
+                $scope.$emit('ShowPreloader');
+
+                try {
+                    cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                } catch(e) {
+                    SuccessAvatar(
+                        {"userid":$scope.model.id,"actividad":"Mi Avatar","alias": $scope.model.username, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/05/2015 09:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
+                    );
+                }
             };
             
             function SuccessAvatar(data) {
@@ -197,7 +158,7 @@ angular
                     "color_cabello": data.color_cabello,
                     "traje_color_principal": data.traje_color_principal,
                     "traje_color_secundario": data.traje_color_secundario,
-                    "imagen_recortada": data.imagen_recortada,
+                    "imagen_recortada": data.genero,
                     "ultima_modificacion": data.fecha_modificacion,
                     "Te_gusto_la_actividad": data.Te_gusto_la_actividad,
                     "pathimagen": data.pathimagen,
@@ -211,29 +172,8 @@ angular
         
             function FailureAvatar(data) {
                 console.log("Couldn't retrieve avatar");
+                $location.path('/ProgramaDashboard');
             }
-            //function SuccessAvatar(data) {
-            //        $scope.avatarInfo = [{
-            //            "userid": data["UserId"],
-            //            "alias": data["Alias"],
-            //            "aplicacion": data["Aplicacion"],
-            //            "estrellas": data["Estrellas"],
-            //            "PathImagen": "Android/data/<app-id>/images",
-            //            "color_cabello": data["Color Cabello"],
-            //            "estilo_cabello": data["Estilo Cabello"],
-            //            "traje_color_principal": data["Traje color principal"],
-            //            "traje_color_secundario": data["Traje color secundario"],
-            //            "rostro": data["Rostro"],
-            //            "color_de_piel": data["Color de piel"],
-            //            "escudo:": data["Escudo"],
-            //            "imagen_recortada": data["Imagen Recortada"],
-            //        }]; 
-
-            //      localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
-            //}
-            
-            //function FailureAvatar() {
-            //}
 
             $scope.navigateToPage = function(pageNumber){
                 $scope.currentPage = pageNumber;
