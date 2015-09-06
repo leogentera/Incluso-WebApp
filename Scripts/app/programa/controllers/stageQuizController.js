@@ -106,7 +106,7 @@ angular
                     "activityType": "Quiz"
                 };
 
-                console.log("activityModel = " + JSON.stringify(activityModel));
+                //console.log("activityModel = " + JSON.stringify(activityModel));
 
                 _endActivity(activityModel);
                 var currentChallenge = 1;
@@ -798,7 +798,8 @@ angular
                 }
 
                 if (validAnswers) {
-                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
+                    //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
+                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBack, partialErrorCallback, true);
 
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
