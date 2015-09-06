@@ -51,25 +51,31 @@
     <ul class="navbar-tools">
       <li ng-class="toolbarOptionActive('/Community')">
         <a ng-click="navigateTo('Community', 'Comunidad', 'null', 'navbarblue')">
-          <!-- <span class="icon"></span> -->
           <span class="icomoon icon-community"></span>
         </a>
       </li>
       <li ng-class="toolbarOptionActive('/Alerts')">
         <a ng-click="navigateTo('Alerts', 'Notificaciones', 'null', 'navbarorange')">
-          <!-- <span class="icon"></span> -->
           <span class="icomoon icon-broadcast"></span>
         </a>
+        <div class="bubble bubble-sm" ng-show="showNotification()">
+          <p class="number-alerts">{{totalNotifications}}
+            <span class="glyphicon glyphicon-triangle-top"></span>
+          </p>
+        </div>
       </li>
       <li ng-class="toolbarOptionActive('/Chat')">
         <a ng-click="navigateTo('/Chat', 'Cabina de soporte', 'null', 'navbarorange')">
-          <!-- <span class="icon"></span> -->
           <span class="icomoon icon-headset"></span>
         </a>
+        <div class="bubble bubble-sm" ng-show="showChatNotification()">
+          <p class="number-alerts">...
+            <span class="glyphicon glyphicon-triangle-top"></span>
+          </p>
+        </div>        
       </li>
       <li ng-class="toolbarOptionActive(['/Profile','/Perfil/Editar', '/Juegos/Avatar'])">
         <a ng-click="navigateTo('Profile', 'Mi perfil', 'null', 'navbarblue')">
-          <!-- <span class="icon"></span> -->
           <span class="icomoon icon-profile"></span>
         </a>
       </li>                 
