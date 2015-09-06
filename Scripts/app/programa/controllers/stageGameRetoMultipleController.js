@@ -13,8 +13,6 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
-            console.log('mis fortalezas');
-
             _timeout = $timeout;
             _httpFactory = $http;
 
