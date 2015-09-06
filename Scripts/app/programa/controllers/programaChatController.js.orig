@@ -31,8 +31,12 @@ angular
             $scope.$emit('HidePreloader'); //hide preloader
 
 
-            function validateCabinaDeSoporte(){
+<<<<<<< HEAD
+            function validateCabinaDeSoporte(){ 
+=======
+            function validateCabinaDeSoporte(){      
                 $scope.scrollToTop('anchor-bottom');                       
+>>>>>>> origin/1.1
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
@@ -54,22 +58,30 @@ angular
                 }
             }            
 
-            function getMessages(){
+            function getMessages(){           
                  if($location.$$path != "/Chat"){
                     clearInterval(interval);
                  }
                 moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
             }
 
-            function getUserRefreshChatCallback() {
+            function getUserRefreshChatCallback() {                
                 $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+<<<<<<< HEAD
                 $anchorScroll();
                 validateCabinaDeSoporte();
+            }   
+=======
+                validateCabinaDeSoporte();                
 
                 setTimeout(function() {
-                    $anchorScroll();
+                    $scope.scrollToTop('anchor-bottom');
                 }, 1000);                
-            }   
+            }
+
+            $scope.scrollToTop('anchor-bottom');
+            $scope.$emit('HidePreloader'); //hide preloader    
+>>>>>>> origin/1.1
             
             $scope.back = function () {
                 var userCurrentStage = localStorage.getItem("currentStage");              
@@ -77,28 +89,45 @@ angular
             };
 
             $scope.sendMessage = function() {
+<<<<<<< HEAD
+                triggerAndroidKeyboardHide();
+ 
+                var newMessage = {
+                    messagetext: $scope.currentMessage,
+                    messagesenderid: $scope.senderId,                    
+                    messagedate: new Date()
+                };
+                
+                /* time out to avoid android lag on fully hiding keyboard */
+                $timeout(function() {
+                    $scope.messages.push(newMessage);
+                    $scope.currentMessage = "";
+                    var newMessages = JSON.stringify($scope.messages);                
+                    localStorage.setItem('userChat',newMessages);
+                    $anchorScroll();
+                                          
+                    moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback); 
+                }, 1000);
+            }
+=======
                 if($scope.currentMessage.trim() != ""){
                     debugger;
-                    triggerAndroidKeyboardHide();
- 
                     var newMessage = {
                     messagetext: $scope.currentMessage,
                     messagesenderid: $scope.senderId,                    
                     messagedate: new Date()
                     };
-                
-                    /* time out to avoid android lag on fully hiding keyboard */
-                    $timeout(function() {
-                        $scope.messages.push(newMessage);
-                        $scope.currentMessage = "";
-                        var newMessages = JSON.stringify($scope.messages);                
-                        _setLocalStorageItem('userChat',newMessages);
-                        $anchorScroll();
-                                                       
-                        moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
-                    }, 1000);
+                                                
+                    $scope.messages.push(newMessage);
+                    $scope.currentMessage = "";
+                    var newMessages = JSON.stringify($scope.messages);                
+                    _setLocalStorageItem('userChat',newMessages);
+                    $scope.scrollToTop('anchor-bottom');
+                                                   
+                    moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
                 }                
             };
+>>>>>>> origin/1.1
             
             function getUserChatCallback() {
                 $anchorScroll();
