@@ -42,7 +42,7 @@ angular
                     activities[i].status = 1;
                  }
                }
-               localStorage.setItem('usercourse', JSON.stringify(userCourse));
+               _setLocalStorageJsonItem('usercourse', userCourse);
 
 
                 console.log('Finishing activity...');

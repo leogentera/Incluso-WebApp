@@ -83,7 +83,8 @@ var _setToken = function(token) {
 };
 
 var _setId = function(userId) {
-  localStorage.setItem("userId", userId);
+  _setLocalStorageItem("userId", userId);
+
 };
 
 var _getItem = function(key) {
@@ -101,12 +102,15 @@ var _readNotification = function(currentUserId,currentNotificationId){
         });
 };
 
-function syncCacheData (){
+var _setLocalStorageItem = function(key, value) {
+    localStorage.setItem(key, value);
+}
 
-    //localStorage.setItem("profile", JSON.stringify(dummyProfile));
-    //localStorage.setItem("user", JSON.stringify(User));
-    //localStorage.setItem("course", JSON.stringify(Course));
-    //localStorage.setItem("usercourse", JSON.stringify(UserCourse));
+var _setLocalStorageJsonItem = function(key, object) {
+    localStorage.setItem(key, JSON.stringify(object));
+}
+
+function syncCacheData (){
 
 }
 
@@ -116,7 +120,7 @@ var updateActivityStatusDictionary = function(activityId){
     if(activityStatus){
         activityStatus[activityId] = 1;
     }
-    localStorage.setItem("activityStatus",JSON.stringify(activityStatus));
+    _setLocalStorageJsonItem("activityStatus",activityStatus);
     _activityStatus[activityId] =1;
 };
 
@@ -166,7 +170,7 @@ var _isStageCompleted = function(){
           var totalChallengesCompleted = _.where(currentStage.challenges,{status:1}).length;
           if (totalChallengesByStage == totalChallengesCompleted) {
               userCourse.stages[stageIndex].status = 1;
-              localStorage.setItem("usercourse",JSON.stringify(userCourse));
+              _setLocalStorageJsonItem("usercourse",userCourse);
               return true;
           }else{
               return false;
@@ -194,7 +198,7 @@ var _isChallengeCompleted = function(){
               
               //updateBadge
               userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
-              localStorage.setItem("usercourse", JSON.stringify(userCourse));              
+              _setLocalStorageJsonItem("usercourse", userCourse);
               var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
               var currentUserId = currentUser.userId;
               var data = { userid :  currentUserId };
@@ -229,7 +233,7 @@ var _updateBadgeStatus = function(coursemoduleid, callback){
       for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
         if (badges[indexBadge].id == currentBadge.badgeId) {
           profile.badges[indexBadge].status = "won";
-          localStorage.setItem("profile",JSON.stringify(profile));
+          _setLocalStorageJsonItem("profile",profile);
         }else{
           //This else statement is set to avoid errors on execution flows
         }
@@ -251,7 +255,7 @@ var _createNotification = function(activityId, triggerActivity){
       var currentNotification = allNotifications[indexNotifications];
       if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId){
           allNotifications[indexNotifications].timemodified = new Date();
-          localStorage.setItem("notifications",JSON.stringify(allNotifications));
+          _setLocalStorageJsonItem("notifications",allNotifications);
           var dataModelNotification = {
               notificationid: allNotifications[indexNotifications].id,
               timemodified : new Date(),

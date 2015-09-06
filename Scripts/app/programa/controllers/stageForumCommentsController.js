@@ -73,7 +73,7 @@ angular
                 var discussionId = discussionId;
                 var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussion_id == discussionId; });
                 alreadyCommented? alreadyCommented.replies_counter++ : forumsCommentsCountCollection.push({'discussion_id':discussionId, 'replies_counter':1});
-                localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
+                _setLocalStorageJsonItem('currentForumsProgress', forumsCommentsCountCollection);
             };
 
             var assignStars = function(numStars){
@@ -349,7 +349,7 @@ angular
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = JSON.parse(localStorage.getItem('currentStage')); //getCurrentStage();
-                    localStorage.setItem("currentStage", $scope.currentStage);
+                    _setLocalStorageItem("currentStage", $scope.currentStage);
 
                 }, errorCallback);
             }

@@ -25,7 +25,7 @@ angular
 
             $scope.scrollToTop();
 
-            localStorage.setItem("retoMultipleActivities", null);
+            _setLocalStorageItem("retoMultipleActivities", null);
 
             $scope.user = moodleFactory.Services.GetCacheJson("profile");
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
@@ -56,8 +56,8 @@ angular
                       assignCourseModuleId(false, retosMultipleChallenge.activities[i]);
                     }
                   }
-                  localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
-//                  localStorage.setItem("retoMultipleActivitiesParent", $routeParams.moodleid);
+                  _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
+//                  _setLocalStorageItem("retoMultipleActivitiesParent", $routeParams.moodleid);
                }
             }
 
@@ -183,7 +183,7 @@ angular
                   if (shield != "" && $scope.profile) {
                     //update profile
                     $scope.profile["shield"] = shield;
-                    localStorage.setItem("profile", JSON.stringify($scope.profile));
+                    _setLocalStorageJsonItem("profile", $scope.profile);
                     $scope.saveUser();
                   }
 
@@ -212,7 +212,7 @@ angular
                   }
                 }
 
-                localStorage.setItem("retoMultipleActivities", JSON.stringify($scope.retoMultipleActivities));
+                _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
                 
                 if ($scope.IsComplete) {
                     //Only shows the results if all of the quizzes are answered

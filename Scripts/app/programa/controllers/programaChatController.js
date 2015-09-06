@@ -16,7 +16,7 @@ angular
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
             var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
-            localStorage.setItem('chatRead', "true");
+            _setLocalStorageItem('chatRead', "true");
             var userId = localStorage.getItem('userId');            
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
@@ -47,7 +47,7 @@ angular
                             });
 
                             if (latestMessages.length >= 2) {    
-                                localStorage.setItem('finishCabinaSoporte', 'true');
+                                _setLocalStorageItem('finishCabinaSoporte', 'true');
                             }
                         }   
                     }                
@@ -94,7 +94,7 @@ angular
                     $scope.messages.push(newMessage);
                     $scope.currentMessage = "";
                     var newMessages = JSON.stringify($scope.messages);                
-                    localStorage.setItem('userChat',newMessages);
+                    _setLocalStorageItem('userChat',newMessages);
                     $scope.scrollToTop('anchor-bottom');
                                                    
                     moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
