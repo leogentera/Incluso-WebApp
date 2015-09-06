@@ -973,7 +973,6 @@ angular
             uploadAvatar = function (avatarInfo) {
                 var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                 encodeImageUri(pathimagen, function (b64) {
-                    alert('after encode');
                     avatarInfo[0]["filecontent"] = b64;
                     $http({
                         method: 'POST',
@@ -981,12 +980,10 @@ angular
                         data: avatarInfo[0]
                     })
                         .success(function () {
-                            alert('after real upload');
                             console.log('Foto guardada exitosamente!');
                             $location.path('/ProgramaDashboard');
                         })
                         .error(function () {
-                            alert('fail upload');
                             console.log('Error al subir la foto!');
                             $location.path('/ProgramaDashboard');
                         });
@@ -1039,7 +1036,6 @@ angular
             };
 
             function SuccessAvatar(data) {
-                alert('back');
                 //the next fields should match the database in moodle
                 $scope.avatarInfo = [{
                     "userid": data.userid,
@@ -1059,9 +1055,7 @@ angular
                     "alias": $scope.model.username,
                     "escudo": $scope.model.shield
                 }];
-                alert('uploading');
                 uploadAvatar($scope.avatarInfo);
-                alert('after upload');
                 localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
             }
 
