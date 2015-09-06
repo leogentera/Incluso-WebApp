@@ -31,7 +31,7 @@ angular
             $scope.$emit('HidePreloader'); //hide preloader
 
 
-            function validateCabinaDeSoporte(){ 
+            function validateCabinaDeSoporte(){
                 $scope.scrollToTop('anchor-bottom');                       
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
@@ -54,20 +54,20 @@ angular
                 }
             }            
 
-            function getMessages(){           
+            function getMessages(){
                  if($location.$$path != "/Chat"){
                     clearInterval(interval);
                  }
                 moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
             }
 
-            function getUserRefreshChatCallback() {                
+            function getUserRefreshChatCallback() {
                 $scope.messages = JSON.parse(localStorage.getItem('userChat'));
                 $anchorScroll();
-                validateCabinaDeSoporte();                
+                validateCabinaDeSoporte();
 
                 setTimeout(function() {
-                    $scope.scrollToTop('anchor-bottom');
+                    $anchorScroll();
                 }, 1000);                
             }   
             
@@ -79,7 +79,7 @@ angular
             $scope.sendMessage = function() {
                 if($scope.currentMessage.trim() != ""){
                     debugger;
-                triggerAndroidKeyboardHide();
+                    triggerAndroidKeyboardHide();
  
                     var newMessage = {
                     messagetext: $scope.currentMessage,
@@ -87,16 +87,16 @@ angular
                     messagedate: new Date()
                     };
                 
-                /* time out to avoid android lag on fully hiding keyboard */
-                $timeout(function() {
-                    $scope.messages.push(newMessage);
-                    $scope.currentMessage = "";
-                    var newMessages = JSON.stringify($scope.messages);                
-                    _setLocalStorageItem('userChat',newMessages);
-                    $anchorScroll();
-                                                   
-                    moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
-                }, 1000);
+                    /* time out to avoid android lag on fully hiding keyboard */
+                    $timeout(function() {
+                        $scope.messages.push(newMessage);
+                        $scope.currentMessage = "";
+                        var newMessages = JSON.stringify($scope.messages);                
+                        _setLocalStorageItem('userChat',newMessages);
+                        $anchorScroll();
+                                                       
+                        moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
+                    }, 1000);
                 }                
             };
             
