@@ -64,10 +64,9 @@ angular
 
             $scope.goChat = function () {
                 $location.path('/Chat');
-            }
+            };
 
-            if(finishCabinaSoporte){
-                debugger;
+            if(finishCabinaSoporte){                
                 if($scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status == 1){
                     $location.path('/Chat');
                 }
@@ -107,7 +106,7 @@ angular
                     $scope.$emit('HidePreloader'); //hide preloader  
                 });
                 }
-            }
+            };
                 
             function successfullCallBack(){
                 //trigger activity type 2 is sent when the activity ends.
