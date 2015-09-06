@@ -17,8 +17,8 @@
             $scope.$emit('ShowPreloader'); //show preloader
 
             console.log('loading user');
-            moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {}, function() {}, true);
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load profile from local storage
+            $scope.user.profileimageurl = $scope.user.profileimageurl + "?rnd=" + new Date().getTime();
             console.log("Scope user = " + JSON.stringify($scope.user));
 
             if (!_getItem("userId")) {
@@ -109,7 +109,7 @@
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.$emit('scrollTop'); //- scroll
-                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {}, function() {}, true);
+                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {}, function() {});
                     }, errorCallback);
 
                 }, errorCallback);
@@ -175,7 +175,7 @@
                         size: size,
                         windowClass: 'user-help-modal dashboard-programa'
                     });
-            };
+            }
 
             //$scope.openModal();   //To open the modal no matter the value of 'firsttime'
         }])
