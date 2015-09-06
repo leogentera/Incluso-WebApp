@@ -28,7 +28,7 @@ angular
             $scope.idReto = $routeParams['challengue'];
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
-            localStorage.setItem("userCurrentStage", $routeParams['stageId']);   
+            _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);   
             
             setTimeout(function () {            
             var hits = 1;
@@ -140,7 +140,7 @@ angular
                 var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
                 if(userCourse!={}) {
                     userCourse.stages[$scope.idEtapa].firsttime = 0;
-                    localStorage.setItem("usercourse",JSON.stringify(userCourse));
+                    _setLocalStorageJsonItem("usercourse",userCourse);
                 }
                 //Update back-end
                 var dataModel = {
@@ -194,10 +194,10 @@ angular
             var challengeExploracionInicial = 140;
             var challengeExploracionFinal = 152;
             if(challengeCompleted && challengeCompleted != challengeExploracionInicial && challengeCompleted != challengeExploracionFinal){
-              localStorage.setItem("challengeMessageId",challengeCompleted);
+              _setLocalStorageItem("challengeMessageId",challengeCompleted);
               $scope.openModal_CloseChallenge();
             }else{
-                localStorage.setItem("challengeMessageId",0);
+                _setLocalStorageItem("challengeMessageId",0);
             }
                         
                         
@@ -208,7 +208,7 @@ angular
                 $scope.openModal_CloseStage();
             }
             
-            //localStorage.setItem("challengeMessageId",113);
+            //_setLocalStorageItem("challengeMessageId",113);
             //$scope.openModal_CloseChallenge();
             
             //Load challenges images
@@ -295,5 +295,5 @@ angular
                         $modalInstance.dismiss('cancel');
                         $location.path('/ProgramaDashboard');
                     };
-                    localStorage.setItem('robotEndStorageShown',true);
+                    _setLocalStorageItem('robotEndStorageShown',true);
                 });

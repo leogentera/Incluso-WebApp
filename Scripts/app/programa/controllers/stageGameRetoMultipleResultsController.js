@@ -23,13 +23,13 @@ angular
 
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
             $scope.profile = moodleFactory.Services.GetCacheJson("profile");
-
+           
             $scope.fortalezas = _.filter($scope.retoMultipleActivities, function(a){ return a.score == "3"});
             $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3"});
             $scope.$emit('HidePreloader');
 
             $scope.back = function () {
-                $location.path('/ZonaDeVuelo/Dashboard/1');
+                $location.path('/ZonaDeVuelo/Dashboard/1/1');
             }
 
         }]);

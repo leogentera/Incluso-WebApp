@@ -107,7 +107,7 @@ angular
                             $scope.currentUserModel = data;
                             $scope.currentUserModel.userId = data.id;
 
-                            localStorage.setItem("CurrentUser", JSON.stringify($scope.currentUserModel));
+                            _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
 
                             _setToken(data.token);
                             _setId(data.id);
@@ -126,7 +126,7 @@ angular
                             });
 
                             if ($scope.userCredentialsModel.rememberCredentials) {
-                                localStorage.setItem("Credentials", JSON.stringify($scope.userCredentialsModel));
+                                _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
                             } else {
                                 localStorage.removeItem("Credentials");
                             }
@@ -170,7 +170,7 @@ angular
                 $scope.currentUserModel.token = userFacebook.token;
                 $scope.currentUserModel.userId = userFacebook.id;
 
-                localStorage.setItem("CurrentUser", JSON.stringify($scope.currentUserModel));
+                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
 
                 _setToken(userFacebook.token);
                 _setId(userFacebook.id);
@@ -189,7 +189,7 @@ angular
                 });
 
                 if ($scope.userCredentialsModel.rememberCredentials) {
-                    localStorage.setItem("Credentials", JSON.stringify($scope.userCredentialsModel));
+                    _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
                 } else {
                     localStorage.removeItem("Credentials");
                 }

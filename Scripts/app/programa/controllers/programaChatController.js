@@ -16,7 +16,7 @@ angular
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
             var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
-            localStorage.setItem('chatRead', "true");
+            _setLocalStorageItem('chatRead', "true");
             var userId = localStorage.getItem('userId');            
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
@@ -31,7 +31,8 @@ angular
             //validateCabinaDeSoporte();
 
 
-            function validateCabinaDeSoporte(){                           
+            function validateCabinaDeSoporte(){      
+                $scope.scrollToTop('anchor-bottom');                       
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
@@ -46,7 +47,7 @@ angular
                             });
 
                             if (latestMessages.length >= 2) {    
-                                localStorage.setItem('finishCabinaSoporte', 'true');
+                                _setLocalStorageItem('finishCabinaSoporte', 'true');
                             }
                         }   
                     }                
@@ -57,12 +58,16 @@ angular
                  if($location.$$path != "/Chat"){
                     clearInterval(interval);
                  }
-                moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                
+                moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
             }
 
             function getUserRefreshChatCallback() {                
                 $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-                validateCabinaDeSoporte();
+                validateCabinaDeSoporte();                
+
+                setTimeout(function() {
+                    $scope.scrollToTop('anchor-bottom');
+                }, 1000);                
             }
 
             $scope.scrollToTop('anchor-bottom');
@@ -78,20 +83,23 @@ angular
             //var formattedDate = currentMonth + "/" + currentDay+ "/" + currentDate.getFullYear();
             //
             $scope.sendMessage = function() {
-                var newMessage = {
+                if($scope.currentMessage.trim() != ""){
+                    debugger;
+                    var newMessage = {
                     messagetext: $scope.currentMessage,
                     messagesenderid: $scope.senderId,                    
                     messagedate: new Date()
-                };
-                                            
-                $scope.messages.push(newMessage);
-                $scope.currentMessage = "";
-                var newMessages = JSON.stringify($scope.messages);                
-                localStorage.setItem('userChat',newMessages);
-                $scope.scrollToTop('anchor-bottom');
-                                               
-                moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback); 
-            }
+                    };
+                                                
+                    $scope.messages.push(newMessage);
+                    $scope.currentMessage = "";
+                    var newMessages = JSON.stringify($scope.messages);                
+                    _setLocalStorageItem('userChat',newMessages);
+                    $scope.scrollToTop('anchor-bottom');
+                                                   
+                    moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
+                }                
+            };
             
             function getUserChatCallback() {
                 $scope.scrollToTop('anchor-bottom');
