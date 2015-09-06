@@ -11,7 +11,7 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-
+            $scope.$emit('ShowPreloader'); 
             _timeout = $timeout;
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
@@ -22,16 +22,16 @@ angular
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
             var interval = setInterval(getMessages,60000);                    
             $scope.currentMessage = "";
-
             $scope.setToolbar($location.$$path,"Cabina de Soporte");
             $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false; 
+            $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
 
-            moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                
-            //validateCabinaDeSoporte();
+            moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);             
+            $scope.$emit('HidePreloader'); //hide preloader
 
 
-            function validateCabinaDeSoporte(){                           
+            function validateCabinaDeSoporte(){ 
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
@@ -62,43 +62,47 @@ angular
 
             function getUserRefreshChatCallback() {                
                 $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+                $anchorScroll();
                 validateCabinaDeSoporte();
-            }
-
-            $scope.scrollToTop('anchor-bottom');
-            $scope.$emit('HidePreloader'); //hide preloader    
+            }   
             
             $scope.back = function () {
                 var userCurrentStage = localStorage.getItem("currentStage");              
                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4');
             };
-            //var currentDate = new Date();
-            //var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
-            //var currentDay = currentDate.getDate() < 10 ? ("0" + currentDate.getDate) : currentDate.getDate();
-            //var formattedDate = currentMonth + "/" + currentDay+ "/" + currentDate.getFullYear();
-            //
+
             $scope.sendMessage = function() {
+                triggerAndroidKeyboardHide();
+ 
                 var newMessage = {
                     messagetext: $scope.currentMessage,
                     messagesenderid: $scope.senderId,                    
                     messagedate: new Date()
                 };
-                                            
-                $scope.messages.push(newMessage);
-                $scope.currentMessage = "";
-                var newMessages = JSON.stringify($scope.messages);                
-                localStorage.setItem('userChat',newMessages);
-                $scope.scrollToTop('anchor-bottom');
-                                               
-                moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback); 
+                
+                /* time out to avoid android lag on fully hiding keyboard */
+                $timeout(function() {
+                    $scope.messages.push(newMessage);
+                    $scope.currentMessage = "";
+                    var newMessages = JSON.stringify($scope.messages);                
+                    localStorage.setItem('userChat',newMessages);
+                    $anchorScroll();
+                                          
+                    moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback); 
+                }, 1000);
             }
             
             function getUserChatCallback() {
-                $scope.scrollToTop('anchor-bottom');
+                $anchorScroll();
             }
             
             function errorCallback() { 
-                $scope.scrollToTop('anchor-bottom');
+                $anchorScroll();
+            }
+
+            function triggerAndroidKeyboardHide() {
+                angular.element('#chatMessages').trigger('tap');
+                $anchorScroll();
             }
         }
     ]);
