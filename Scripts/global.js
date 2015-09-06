@@ -390,7 +390,6 @@ function updateSubActivityStatus(coursemoduleid) {
                         for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                             var activity = challenge.activities[activityIndex];
                             if(activity.activities){
-                              console.log(activity.activities.length);
                               for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++)
                               {
                                 var subactivity = activity.activities[subactivityIndex];
