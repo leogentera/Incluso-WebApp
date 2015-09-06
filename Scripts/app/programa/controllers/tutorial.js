@@ -167,7 +167,7 @@ angular
                     "escudo" : $scope.model.shield
                 }];
                 uploadAvatar($scope.avatarInfo);
-                localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
+                _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
             }
         
             function FailureAvatar(data) {

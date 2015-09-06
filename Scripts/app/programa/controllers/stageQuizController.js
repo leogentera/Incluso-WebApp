@@ -81,7 +81,7 @@ angular
                 console.log($scope.AnswersResult.answers); //This is an array that contains the encoded answers
 
                 //Update local storage and activities status array
-                localStorage.setItem("usercourse", JSON.stringify(updatedActivityOnUsercourse));
+                _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
                 _activityStatus[$scope.activity.coursemoduleid] = 1;
 
                 //Update quiz on server

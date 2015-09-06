@@ -85,7 +85,7 @@ angular
                         discussionsCollection.push({"discussion_id":currentDiscussion.post_id, "replies_counter":0});
                     } else {}
                 }
-                localStorage.setItem('currentForumsProgress', JSON.stringify(discussionsCollection));
+                _setLocalStorageJsonItem('currentForumsProgress', discussionsCollection);
             }
 
             function getDataAsync() {
