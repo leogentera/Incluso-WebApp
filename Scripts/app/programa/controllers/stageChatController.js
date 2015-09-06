@@ -23,7 +23,7 @@ angular
 
             $scope.idEtapa = 0;
             $scope.scrollToTop();            
-            $scope.currentPage = 1;      
+            $scope.currentPage = 1;
             var index = 0;
             var parentIndex = 4;
 
@@ -67,7 +67,14 @@ angular
             }
 
             if(finishCabinaSoporte){
-                $scope.navigateToPage(2);
+                debugger;
+                if($scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status == 1){
+                    $location.path('/Chat');
+                }
+                else{
+                    $scope.navigateToPage(2);
+                }    
+                $scope.$emit('HidePreloader');            
             }
 
             $scope.finishActivity = function () {
