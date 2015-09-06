@@ -184,11 +184,11 @@ angular
                     //update profile
                     $scope.profile["shield"] = shield;
                     localStorage.setItem("profile", JSON.stringify($scope.profile));
-                    //$scope.saveUser();
+                    $scope.saveUser();
                   }
 
                   if ($scope.IsComplete) {
-                    //_endActivity(parentActivity);
+                    _endActivity(parentActivity);
                   }
 
                   if (parentActivity.activities) {
@@ -199,16 +199,16 @@ angular
                       }
                     });
                     //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
-                    //updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
+                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     //Updates the statuses of the subactivities completed
-                   // userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
+                    userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
                   }
                 }
 
                 for(i = 0; i < quizzesRequests.length; i++){
                   if (quizzesRequests[i].quiz_answered) {
                     var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                   // $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
+                    $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
                   }
                 }
 
