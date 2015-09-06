@@ -1345,179 +1345,318 @@ body {
      $navbar
      Description: CSS overrides to bootstrap's navbar class and descendants.
     ****************************************************************************/
+    // .navbar {
+    //     position: relative;
+    //     height: 10vh;
+    //     margin-bottom: 0;
+    //     border-radius: 0px;
+    //     background-color: #EE4823;
+    //     border-color: rgba(0, 0, 0, 0.2);/*#EE4823;*/
+    //     /*overflow: hidden;*/
+
+    //     .icomoon {
+    //         font-size: 5.5vw;
+    //         line-height: 1;
+    //         vertical-align: bottom;
+    //     }   
+    //     span {
+    //         font-size: 6.2vw;
+    //         line-height: 1vw;
+    //     }
+    //     &.etapa-uno {
+    //         background-color: #138BCB;
+    //         border-color: #138BCB;
+    //     }     
+    //     ul {
+    //         margin:  0px;
+    //         padding: 3vw;
+    //         line-height: 7vw;
+    //         li {
+    //             display: inline-block;
+    //             width: 8.7vw;
+    //             /*margin-right: 1vw;*/
+    //             line-height: 6vw;
+    //             a{
+    //                 font-size: 6vw;
+    //                 color: #FFF;
+    //             }
+    //         }
+    //     }    
+    // }
+
+    // .navbar-absolute-top {
+    //     display: none;
+    // }
+
+    // .navbar.navbar-orange {
+    //     background-color: #EE4823;
+    //     border-color: rgba(0, 0, 0, 0.2);
+    //     -webkit-transition: all 700ms ease;
+    //         -moz-transition: all 700ms ease;
+    //         -o-transition: all 700ms ease;
+    //         transition: all 700ms ease;
+    // }
+
+    // .navbar.navbar-blue {
+    //     background-color: #158CCD;
+    //     border-color: rgba(0, 0, 0, 0.2);
+    //     -webkit-transition: all 700ms ease;
+    //         -moz-transition: all 700ms ease;
+    //         -o-transition: all 700ms ease;
+    //         transition: all 700ms ease;
+    // }
+
+    // .navbar.navbar-pink {
+    //     background-color: #E70E80;
+    //     border-color: rgba(0, 0, 0, 0.2);
+    //     -webkit-transition: all 700ms ease;
+    //         -moz-transition: all 700ms ease;
+    //         -o-transition: all 700ms ease;
+    //         transition: all 700ms ease;
+    // }
+
+    // .navbar.navbar-green {
+    //     background-color: #68BC45;
+    //     border-color: rgba(0, 0, 0, 0.2);
+    //     -webkit-transition: all 700ms ease;
+    //         -moz-transition: all 700ms ease;
+    //         -o-transition: all 700ms ease;
+    //         transition: all 700ms ease;
+    // }
+
+
+    // .step-dashboard{   
+    //     .navbar{     
+    //     background-color: @clr-bluenav;
+    //     border-color: @clr-bluenav;
+    //     }
+    // }
+    // .navbar-default {}
+    // .navbar-default .navbar-toggle {}
+
+    // .navbar-welcome {
+    //     background-color: @clr-orange;
+    //     border-color: @clr-orange;
+    // }
+    // .navbar-welcome .navbar-toggle,.navbar-step .navbar-toggle  {border-color: transparent;}
+    // .navbar-welcome .navbar-toggle .icon-bar,.navbar-step .navbar-toggle .icon-bar {background-color: @clr-white;}
+    // .navbar-step {background-color: @clr-bluenav;}
+    // .navbar-header {}
+    // .navbar-assets {
+    //     display: block;
+    //     position: static;
+    //     padding: 0; 
+    //     margin: 0 2vw;
+    //     height: 12vw; 
+    //     width: 95vw;
+
+    //     .sidebar-toggle {
+    //         width: 50vw;
+    //         padding: 0px 1vw;
+    //         text-align: left;
+    //         line-height: inherit;
+    //     }
+    //     .navbar-heading {
+    //         display: inline-block;
+    //         overflow: hidden;
+    //         /*float: left;*/
+    //         margin: 0;
+    //         width: 48vw;
+    //         max-width:48vw;
+    //         color: @clr-white;
+    //         font-family: 'Play';   
+    //         font-size: 4vw;
+    //         font-weight: bold;
+    //         /*line-height: 14vw;*/
+    //         text-overflow:ellipsis;
+    //         white-space: nowrap;
+    //         text-transform: none;
+    //         a{
+    //             color: @clr-white;            
+    //         }
+    //     }
+    //     .btn-group {
+    //         width: 44vw;
+    //         padding-top: 3vh;
+    //     }
+    //     .navbar-tools {
+    //         display: inline-block;
+    //         float: right;
+    //         margin: 0;
+    //         width: 44vw; 
+    //         list-style-type: none;   
+    //         padding-top: 3vh;
+    //     }
+    // }
+    // .navbar-tools{ 
+    //     li {
+    //         display: inline-block;
+    //         padding: 0; 
+    //         margin: 0 0 0 8px; 
+    //         margin: 0 0 0 .5vw;
+    //         width: 9vw; 
+    //         height: 9vw;
+
+    //         &:hover,
+    //         &.active {
+    //             .icomoon {
+    //                 color: rgba(185, 85, 120, 0.6);/*darken(@clr-orange, 15%);*/
+    //                 -webkit-transition: all 700ms ease;
+    //                 -moz-transition: all 700ms ease;
+    //                 -o-transition: all 700ms ease;
+    //                 transition: all 700ms ease;
+    //             }
+    //         }
+
+    //         &.disabled {
+    //             pointer-events: none;
+    //         }
+    //     }
+    //     a {
+    //         color: white;
+    //         display: block;
+    //         padding: 0; margin: 0;
+    //         width: inherit; height: inherit; 
+    //     }
+    // }
+
     .navbar {
         position: relative;
-        height: 10vh;
         margin-bottom: 0;
-        border-radius: 0px;
-        background-color: #EE4823;
-        border-color: rgba(0, 0, 0, 0.2);/*#EE4823;*/
-        /*overflow: hidden;*/
+        min-height: 0;
+        height: 13vw;
+        border:none;
+        .border-radius-reset();
 
-        .icomoon {
-            font-size: 5.5vw;
-            line-height: 1;
-            vertical-align: bottom;
-        }   
-        span {
-            font-size: 6.2vw;
-            line-height: 1vw;
+        &.show {display: block;}
+        &.navbar-absolute-top {
+           display: none;
         }
-        &.etapa-uno {
-            background-color: #138BCB;
-            border-color: #138BCB;
-        }     
-        ul {
-            margin:  0px;
-            padding: 3vw;
-            line-height: 7vw;
-            li {
-                display: inline-block;
-                width: 8.7vw;
-                /*margin-right: 1vw;*/
-                line-height: 6vw;
-                a{
+
+        .navbar-toggle {
+            border-color:transparent;
+            .border-radius-reset();
+            padding: 0px;
+            height: 13vw;
+            width: 9vw;
+            text-align: center;
+
+            .icon-bar {
+                background-color:@clr-white;
+            }
+            .icomoon {
+                font-size: 6vw;
+                font-weight: bold;
+                line-height: 13vw;
+                color: white;
+            }
+        }
+        .navbar-assets {
+            display:block;
+            position:static;
+            padding:0;
+            margin: 0;
+            margin-left: 9vw;
+            height: 13vw;
+            width:auto;
+            line-height: 13vw;
+
+            .navbar-heading {
+                display:inline-block;
+                overflow:hidden;
+                float:left;
+                padding:0;
+                margin:0;
+                height: inherit;
+                width:50%;
+                color:#fff;
+                font-size: 4.1vw;
+                font-weight:bold;
+                line-height:24px; line-height: inherit;
+                text-overflow:ellipsis;
+                white-space:nowrap
+            }
+            .navbar-tools {
+                display:inline-block; 
+                float: right;
+                padding:0;
+                margin:0;
+                height: inherit;
+                width:50%;
+                max-width:50%;
+                list-style-type:none;
+                line-height: inherit;
+
+                li {
+                    display:inline-block;
+                    float: left;
+                    padding: 0 1vw;
+                    margin:0;
+                    height: inherit;
+                    width: 11.1vw;
                     font-size: 6vw;
-                    color: #FFF;
+                    line-height: inherit;
+                    text-align: center;
+
+                    &.disabled {
+                        pointer-events: none;
+                    }
+
+                    &.active {
+                        .icomoon {
+                            color: rgba(185, 85, 120, 0.6);
+                            transition: all 0.7s ease 0s;
+                        }
+                    }
                 }
-            }
-        }    
-    }
-
-    .navbar-absolute-top {
-        display: none;
-    }
-
-    .navbar.navbar-orange {
-        background-color: #EE4823;
-        border-color: rgba(0, 0, 0, 0.2);
-        -webkit-transition: all 700ms ease;
-            -moz-transition: all 700ms ease;
-            -o-transition: all 700ms ease;
-            transition: all 700ms ease;
-    }
-
-    .navbar.navbar-blue {
-        background-color: #158CCD;
-        border-color: rgba(0, 0, 0, 0.2);
-        -webkit-transition: all 700ms ease;
-            -moz-transition: all 700ms ease;
-            -o-transition: all 700ms ease;
-            transition: all 700ms ease;
-    }
-
-    .navbar.navbar-pink {
-        background-color: #E70E80;
-        border-color: rgba(0, 0, 0, 0.2);
-        -webkit-transition: all 700ms ease;
-            -moz-transition: all 700ms ease;
-            -o-transition: all 700ms ease;
-            transition: all 700ms ease;
-    }
-
-    .navbar.navbar-green {
-        background-color: #68BC45;
-        border-color: rgba(0, 0, 0, 0.2);
-        -webkit-transition: all 700ms ease;
-            -moz-transition: all 700ms ease;
-            -o-transition: all 700ms ease;
-            transition: all 700ms ease;
-    }
-
-
-    .step-dashboard{   
-        .navbar{     
-        background-color: @clr-bluenav;
-        border-color: @clr-bluenav;
-        }
-    }
-    .navbar-default {}
-    .navbar-default .navbar-toggle {}
-
-    .navbar-welcome {
-        background-color: @clr-orange;
-        border-color: @clr-orange;
-    }
-    .navbar-welcome .navbar-toggle,.navbar-step .navbar-toggle  {border-color: transparent;}
-    .navbar-welcome .navbar-toggle .icon-bar,.navbar-step .navbar-toggle .icon-bar {background-color: @clr-white;}
-    .navbar-step {background-color: @clr-bluenav;}
-    .navbar-header {}
-    .navbar-assets {
-        display: block;
-        position: static;
-        padding: 0; 
-        margin: 0 2vw;
-        height: 12vw; 
-        width: 95vw;
-
-        .sidebar-toggle {
-            width: 50vw;
-            padding: 0px 1vw;
-            text-align: left;
-            line-height: inherit;
-        }
-        .navbar-heading {
-            display: inline-block;
-            overflow: hidden;
-            /*float: left;*/
-            margin: 0;
-            width: 48vw;
-            max-width:48vw;
-            color: @clr-white;
-            font-family: 'Play';   
-            font-size: 4vw;
-            font-weight: bold;
-            /*line-height: 14vw;*/
-            text-overflow:ellipsis;
-            white-space: nowrap;
-            text-transform: none;
-            a{
-                color: @clr-white;            
-            }
-        }
-        .btn-group {
-            width: 44vw;
-            padding-top: 3vh;
-        }
-        .navbar-tools {
-            display: inline-block;
-            float: right;
-            margin: 0;
-            width: 44vw; 
-            list-style-type: none;   
-            padding-top: 3vh;
-        }
-    }
-    .navbar-tools{ 
-        li {
-            display: inline-block;
-            padding: 0; 
-            margin: 0 0 0 8px; 
-            margin: 0 0 0 .5vw;
-            width: 9vw; 
-            height: 9vw;
-
-            &:hover,
-            &.active {
+                a,
+                a:hover,
+                a:active {
+                    display:inline-block;
+                    overflow: hidden;
+                    padding:0;
+                    margin: 0 auto;
+                    width:100%;  
+                    height:inherit;
+                    text-align: center;
+                }
                 .icomoon {
-                    color: rgba(185, 85, 120, 0.6);/*darken(@clr-orange, 15%);*/
-                    -webkit-transition: all 700ms ease;
-                    -moz-transition: all 700ms ease;
-                    -o-transition: all 700ms ease;
-                    transition: all 700ms ease;
+                    color:@clr-white;
+                    line-height: inherit;
+                    vertical-align: inherit;
                 }
-            }
+                // .contribute .icon {
+                //     background-position:center 0
+                // }
+                // .notifications .icon {
+                //     background-position:center -32px
+                // }
+                // .chat .icon {
+                //     background-position:center -64px
+                // }
+                // .profile .icon {
+                //     background-position:center -96px
+                // }
+            }            
+        }
 
-            &.disabled {
-                pointer-events: none;
-            }
+        /* by theme */
+        &.navbar-orange {
+            background-color: @clr-orange;
+            border-color: @clr-orange;
         }
-        a {
-            color: white;
-            display: block;
-            padding: 0; margin: 0;
-            width: inherit; height: inherit; 
+        &.navbar-blue {
+            background-color: #158CCD;
+            border-color: #158CCD;
         }
+        &.navbar-pink {
+            background-color: #E70E80;
+            border-color: #E70E80;
+        }
+        &.navbar-green {
+            background-color: #68BC45;
+            border-color: #68BC45;
+        }        
     }
     /***************************************************************************/    
     
@@ -1526,35 +1665,89 @@ body {
      $navbar-toggle
      Description: CSS override to bootstrap's navbar toggle button on mobile.
     ****************************************************************************/
-    .navbar-toggle {
-        position: absolute;
-        left: 0; top: 0;
-        float: none;
-        padding: 0;
-        margin: 0;
-        width: 42px;
+    // .navbar-toggle {
+    //     position: absolute;
+    //     left: 0; top: 0;
+    //     float: none;
+    //     padding: 0;
+    //     margin: 0;
+    //     width: 42px;
 
-        .icomoon {
-            color:white;
-            font-size: 26px;
-            font-weight: bold;
-            line-height: 62px;
-            text-align: center;
-        }        
-    }
-    .navbar-toggle .icon-bar {
-      display: block;
-      width: 6px;
-      height: 6px;
-      -webkit-border-radius:16px;
-         -moz-border-radius:16px;
-              border-radius:16px;
-    }
+    //     .icomoon {
+    //         color:white;
+    //         font-size: 26px;
+    //         font-weight: bold;
+    //         line-height: 62px;
+    //         text-align: center;
+    //     }        
+    // }
+    // .navbar-toggle .icon-bar {
+    //   display: block;
+    //   width: 6px;
+    //   height: 6px;
+    //   -webkit-border-radius:16px;
+    //      -moz-border-radius:16px;
+    //           border-radius:16px;
+    // }
+
+    .navbar-toggle {
+        position:absolute;
+        left:0;
+        top:0;
+        float:none;
+        padding:0;
+        margin:0;
+
+        // .icon-bar {
+        //     display:block;
+        //     width:6px;
+        //     height:6px;
+        //     -webkit-border-radius:16px;
+        //     -moz-border-radius:16px;
+        //     border-radius:16px
+        // }
+    } 
     /***************************************************************************/
 
 
     /****************************************************************************
-     $panel
+     $sidebar
+     Description: CSS overrides to angular-ui mobile class sidebar
+    ****************************************************************************/
+    .sidebar {
+        .navbar {
+            font-size: 6vw;
+
+            .navbar-toggle {
+                width: 12vw;
+                .clr-black(background-color, 0.2);
+
+                &:hover,
+                &:active {
+                    .clr-black(background-color, 0.2);
+                }
+
+                .icomoon {
+                    font-size: 5vw;
+                }
+            }
+            .navbar-assets {
+                margin-left:12vw;
+                .clr-black(background-color, 0.2);
+                //font-size:inherit;
+
+                .navbar-heading {
+                    width: 100%;
+                    font-size:inherit;
+                }
+            }
+        }
+    }
+    /***************************************************************************/    
+
+
+    /****************************************************************************
+     $panels
      Description: CSS override to bootstrap's panel class.
     ****************************************************************************/
     .panel {
@@ -1914,13 +2107,12 @@ body {
             background-position: 50% 0;
             box-shadow: unset;
         }
-
     }
     /***************************************************************************/
 
 
     /****************************************************************************
-     16. $app-preloader
+     $app-preloader
      Description: CSS class to represent a backdrop layer and an animation
     ****************************************************************************/
     .app-preloader {
@@ -1977,7 +2169,7 @@ body {
 
 
     /***********************************************************************
-     00. $points
+     $app-footer
      Description: CSS to represent the main footer for the application with
      themes to overrides diferent views.
     ************************************************************************/
@@ -2026,7 +2218,7 @@ body {
             .box-shadow-reset();
         }
     } 
-    /***********************************************************************/    
+    /***********************************************************************/  
  
 
     /****************************************************************************

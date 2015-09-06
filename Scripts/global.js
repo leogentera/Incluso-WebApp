@@ -244,10 +244,7 @@ var _updateBadgeStatus = function(coursemoduleid, callback){
 var _createNotification = function(activityId, triggerActivity){
   
   currentUserId = localStorage.getItem("userId");
-  //var currentDate = new Date();
-  //var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
-  //var currentDay = (currentDate.getDay() < 10) ? ("0" + currentDate.getDay()) : currentDate.getDay();
-  //var formattedDate = currentMonth + "/" + currentDay + "/" + currentDate.getFullYear();
+
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
  
   for(var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++ ){
@@ -515,15 +512,17 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getActivityByActivity_identifier(activity_identifier);
      extraPoints ? '' : extraPoints = 0;
-
+     profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+     
      if (activity_identifier == '1009') {
          activity.points = 0;
      }
+     
+     profile.stars = profile.stars + activity.points + Number(extraPoints);
 
-   profile.stars = profile.stars + activity.points + Number(extraPoints);
     var data={
       userId: profile.id,
-      stars: activity.points + Number(extraPoints),
+      stars: Number(activity.points) + Number(extraPoints),
       instance: activity.coursemoduleid,
       instanceType: 0,
       date: getdate()
@@ -551,7 +550,7 @@ function getExtActivityByActivity_identifier(activity_identifier){
      var userCourse = JSON.parse(localStorage.getItem("usercourse"));
      for (var activityIndex = 0; activityIndex < userCourse.activities.length; activityIndex++) {
        var extActivity = userCourse.activities[activityIndex];
-        if(extActivity.activity_identifier = activity_identifier){
+        if(extActivity.activity_identifier == activity_identifier){
           return extActivity;
         }
      }

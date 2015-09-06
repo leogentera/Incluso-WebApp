@@ -354,7 +354,6 @@
                                             {
                                                 globalActivities++;
                                                 stageActivities++;
-
                                                 if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
                                                     globalCompletedActivities++;
                                                     stageCompletedActivities++;

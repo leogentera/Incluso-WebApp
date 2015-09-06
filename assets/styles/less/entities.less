@@ -1852,6 +1852,8 @@
                 margin-top: 4vh;
             }
         }
+        /***********************************************************************/
+
 
         /***********************************************************************
          $terms-and-conditions
@@ -2081,6 +2083,7 @@
         }
         /***********************************************************************/
 
+
         /***********************************************************************
          $media-collapse
          Description: CSS to represent look collapsible panel with the content as media [video/image]
@@ -2129,43 +2132,79 @@
         }
         /*********************************************************************/
 
+
         /***********************************************************************
          $bubble
          Description: CSS to represent look for generic bubble near to the element
         ************************************************************************/
-        .bubble {
-            display: block;            
-            background-color: #B8CF33;
-            .border-radius(13px 13px 11px 11px);
-            position: absolute;
-            z-index: 1900;
-            margin-top: -1vh;
-            margin-left: -0.5vw;
-            cursor: pointer;
-            &.bubble-sm {
-                min-width: 9vw;
-                width: auto;
-                height: 4.8vh;
-                padding: 0px 2vw;
-            }
-            .glyphicon-triangle-top {
-                position: absolute;
-                left: 2.7vw;
-                font-size: 4vw;
-                top: -.1vh;
-                color: #B8CF33;
-            }
-            .number-alerts {
-                color: #000;
-                font-size: 3vw;
-                font-weight: 600;
-            }
-            &.bubble-chat{
+        // .bubble {
+        //     display: block;            
+        //     background-color: #B8CF33;
+        //     .border-radius(13px 13px 11px 11px);
+        //     position: absolute;
+        //     z-index: 1900;
+        //     margin-top: -1vh;
+        //     margin-left: -0.5vw;
+        //     cursor: pointer;
+        //     &.bubble-sm {
+        //         min-width: 9vw;
+        //         width: auto;
+        //         height: 4.8vh;
+        //         padding: 0px 2vw;
+        //     }
+        //     .glyphicon-triangle-top {
+        //         position: absolute;
+        //         left: 2.7vw;
+        //         font-size: 4vw;
+        //         top: -.1vh;
+        //         color: #B8CF33;
+        //     }
+        //     .number-alerts {
+        //         color: #000;
+        //         font-size: 3vw;
+        //         font-weight: 600;
+        //         line-height: 3vw;
+        //     }
+        //     &.bubble-chat{
 
+        //     }
+        // }
+        .bubble {
+            display: block;
+            position: absolute;
+            z-index: 100;
+            bottom: -5vw;
+            padding:0;
+            margin: 1vw 0 0;
+
+            .number-alerts {
+                display: block;
+                position: relative;
+                width: auto;
+                min-width: 9vw;
+                height: auto;
+                padding: 0 1vw;
+                margin: 0;
+                .border-radius(0.888em);
+                background-color: @clr-green;
+                color:@clr-blueDark;
+                font-size: 3vw;
+                line-height: 6vw;
+
+                .glyphicon {
+                    position: absolute;
+                    z-index: 100;
+                    top: -1.8vw;
+                    left:50%;
+                    margin-left:-1.5vw;
+                    color: @clr-green;
+                    font-size: 3vw;
+                }
             }
         }
 
         /***********************************************************************
+
 
         /***********************************************************************
          $experience-share
@@ -2343,6 +2382,7 @@
         }
 
     }
+
 }
 
 /* sm viewport */
