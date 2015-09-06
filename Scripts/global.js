@@ -107,7 +107,14 @@ var _setLocalStorageItem = function(key, value) {
 }
 
 var _setLocalStorageJsonItem = function(key, object) {
+  try {
     localStorage.setItem(key, JSON.stringify(object));
+  }
+  catch (e) {
+      ClearLocalStorage("activity");
+      ClearLocalStorage("activitiesCache");
+    localStorage.setItem(key, JSON.stringify(object));
+  }
 }
 
 function syncCacheData (){

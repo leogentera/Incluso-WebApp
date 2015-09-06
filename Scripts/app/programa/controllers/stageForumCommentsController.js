@@ -91,7 +91,7 @@ angular
                 function errorCallback(){};
             };
 
-            var checkForumProgress = function(callback){                
+            var checkForumProgress = function(callback){
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
 
@@ -228,7 +228,8 @@ angular
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         //getTopicDataAsync();
                         updateForumProgress($scope.discussion.post_id);
-                        refreshTopicData();
+                        //refreshTopicData();
+                        checkForumProgress(refreshTopicData);
                     },
                     function(){
                         $scope.textToPost=null;
@@ -244,7 +245,8 @@ angular
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                         updateForumProgress($scope.discussion.post_id);
-                        refreshTopicData();
+                        //refreshTopicData();
+                        checkForumProgress(refreshTopicData);
                     },
                     function(){
                         $scope.linkToPost = null;
@@ -260,7 +262,8 @@ angular
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
                         updateForumProgress($scope.discussion.post_id);
-                        refreshTopicData();
+                        //refreshTopicData();
+                        checkForumProgress(refreshTopicData);
                     },
                     function(){
                         $scope.videoToPost = null;
@@ -288,7 +291,8 @@ angular
                         $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                         updateForumProgress($scope.discussion.post_id);
-                        refreshTopicData();
+                        //refreshTopicData();
+                        checkForumProgress(refreshTopicData);
                     },
                     function(){
                         $scope.videoToPost = null;

@@ -13,7 +13,8 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _httpFactory = $http;
             _timeout = $timeout;
-           
+
+            $scope.currentChallenge = 2;
              var userCourse = JSON.parse(localStorage.getItem('usercourse'));
              var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
              var activityFromTree;
@@ -32,7 +33,7 @@ angular
             $scope.$emit('HidePreloader');
 
             var endForumActivity = function(moodleid){
-
+                debugger;
                var parentActivity = getActivityByActivity_identifier($routeParams.moodleid, userCourse);
                var activities = parentActivity.activities;
 
@@ -78,6 +79,7 @@ angular
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
                             updateActivityStatus(moodleid);
                               var activity_identifier = null;
+                              var moodleId = $routeParams.moodleid;
                               if(moodleId == 151){
                                   activity_identifier = 1010;
                                   moodleid = 64;
@@ -95,12 +97,12 @@ angular
                                   moodleid = 148;
 
                               }
-                              updateUserStars(activity_identifier);
-                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);
+                              updateUserStars(moodleId);
+                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                           }, errorCallback);
                     },
                     function(){
-                      $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage);                
+                      $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                     });
 
             };
