@@ -245,10 +245,7 @@ var _updateBadgeStatus = function(coursemoduleid, callback){
 var _createNotification = function(activityId, triggerActivity){
   
   currentUserId = localStorage.getItem("userId");
-  //var currentDate = new Date();
-  //var currentMonth = (currentDate.getMonth() + 1) < 10 ? ("0" + (currentDate.getMonth() + 1)) : (currentDate.getMonth() + 1);
-  //var currentDay = (currentDate.getDay() < 10) ? ("0" + currentDate.getDay()) : currentDate.getDay();
-  //var formattedDate = currentMonth + "/" + currentDay + "/" + currentDate.getFullYear();
+
   var allNotifications = JSON.parse(localStorage.getItem("notifications"));
  
   for(var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++ ){
@@ -547,7 +544,7 @@ function getExtActivityByActivity_identifier(activity_identifier){
      var userCourse = JSON.parse(localStorage.getItem("usercourse"));
      for (var activityIndex = 0; activityIndex < userCourse.activities.length; activityIndex++) {
        var extActivity = userCourse.activities[activityIndex];
-        if(extActivity.activity_identifier = activity_identifier){
+        if(extActivity.activity_identifier == activity_identifier){
           return extActivity;
         }
      }
