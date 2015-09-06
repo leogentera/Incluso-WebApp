@@ -106,12 +106,11 @@ angular
                     "activityType": "Quiz"
                 };
 
-                console.log("activityModel = " + JSON.stringify(activityModel));
+                //console.log("activityModel = " + JSON.stringify(activityModel));
 
                 _endActivity(activityModel);
-                var currentChallenge = 1;
                 var currentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + currentChallenge);
+                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + $scope.currentChallenge);
             };
 
 
@@ -125,7 +124,7 @@ angular
                 $scope.AnswersResult.answers[4].splice(index, 1);
             };
 
-            $scope.addSueno1 = function () {alert("sueño 1");
+            $scope.addSueno1 = function () {
                 addHeight("#listaDinamica1");
                 $scope.misSuenosAnswers[0].push("");
             };
@@ -564,9 +563,10 @@ angular
 
                 if (activity != null) {
 
-                    if ($scope.activity_identifier == 1009) {
+                    if ($scope.activity_identifier == '1009') {
                         $scope.AnswersResult.answers = [0, 0, 0, 0, 0];
                     }
+
                     $scope.coursemoduleid = activity.coursemoduleid;    //console.log("coursemoduleid: " + activity.coursemoduleid);
                     $scope.activityPoints = activity.points;            //console.log("points: " + activity.points);
                     $scope.activityname = activity.activityname;        //console.log("activityname: " + activity.activityname);
@@ -576,7 +576,7 @@ angular
                     //$scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/" + $scope.coursemoduleid));
 
                     var activityFinished = false;
-                    console.log("userprofile: " + $scope.userprofile.id);
+                    console.log("userprofile: " + $scope.userprofile.id + ", activity status: " + activity.status);
                     if (activity.status != 0) {
                         activityFinished = true;
                         $scope.setReadOnly = true;
@@ -585,7 +585,6 @@ angular
                     //console.log("setReadOnly: " + $scope.setReadOnly);
                     $scope.activity = activity;
                     $scope.activityFinished = activityFinished;
-                    //console.log("activityFinished: " + $scope.activityFinished);
                 }
             }
 
@@ -711,7 +710,6 @@ angular
 
 
             $scope.answerIndex = 1;
-            //$scope.answerIndex1 = 1;
 
             $scope.addToAnswerIndex = function (delta, maxPages) {
 
@@ -798,7 +796,8 @@ angular
                 }
 
                 if (validAnswers) {
-                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
+                    //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
+                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBack, partialErrorCallback, true);
 
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);

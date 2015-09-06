@@ -124,7 +124,7 @@
             _httpFactory({
                 method: 'GET',
                 url: url, 
-                headers: {'Content-Type': 'application/json'},
+                headers: {'Content-Type': 'application/json'}
                 }).success(function(data, status, headers, config) {
                     localStorage.setItem(key, JSON.stringify(data));
                     successCallback(data, key);
@@ -270,7 +270,7 @@
         //    });
         // };
         
-        var _endActivity = function(key, data, userCourseModel, url, token, successCallback, errorCallback){            
+        var _endActivity = function(key, data, userCourseModel, url, token, successCallback, errorCallback){
             _httpFactory({                
                method: 'PUT',
                url: url,        
@@ -354,7 +354,6 @@
                                             {
                                                 globalActivities++;
                                                 stageActivities++;
-
                                                 if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
                                                     globalCompletedActivities++;
                                                     stageCompletedActivities++;
