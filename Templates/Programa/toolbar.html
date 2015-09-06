@@ -41,10 +41,10 @@
 </div> -->
 
 <div class="navbar navbar-app navbar-absolute-top" id="navBar" ng-class="{'navbar-blue': navbarBlue, 'navbar-orange': navbarOrange, 'show': showToolbar, 'navbar-green': navbarGreen, 'navbar-pink': navbarPink }">
-  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navigation" ng-click="sideToggle()">
+  <a class="navbar-toggle collapsed" ng-click="sideToggle()">
     <span class="sr-only">Toggle navigation</span>
     <span class="icomoon icon-more-options"></span>
-  </button>
+  </a>
 
   <div class="navbar-assets clearfix">
     <h1 class="navbar-heading">{{pageName}}</h1>
