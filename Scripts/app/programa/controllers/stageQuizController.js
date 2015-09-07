@@ -28,7 +28,7 @@ angular
 
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial"
                 "userid": 0,
-                "answers": [null, [0, 0, 0, 0, 0], [], null, []],
+                "answers": [null, [0, 0, 0, 0, 0, ''], [], null, []],
                 "activityidnumber": 0,                         //$scope.activity.coursemoduleid
                 "like_status": 0
             };
@@ -38,8 +38,12 @@ angular
             $scope.misSuenosAnswers = [[], [], [], []];
             $scope.exploracionFinal = ["", "", "", "", ""];
 
-            $scope.addCaptureField = function () {
-                //addHeight("#owl-carousel");
+            $scope.addCaptureField = function (elem, value) {
+                if (value) {
+                    addHeight2(elem);
+                } else {
+                    reduceHeight(elem);
+                }
             };
 
 
@@ -178,10 +182,14 @@ angular
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
                 if ($scope.AnswersResult.answers[0] != null) {
-                    if ($scope.AnswersResult.answers[1][0] == true ||
-                        $scope.AnswersResult.answers[1][1] == true ||
-                        $scope.AnswersResult.answers[1][2] == true ||
-                        $scope.AnswersResult.answers[1][3] == true) {
+
+                    $scope.AnswersResult.answers[1][5] = $scope.AnswersResult.answers[1][5].replace(/\r?\n|\r/g, " ").trim();
+                    if ( ( $scope.AnswersResult.answers[1][0] == true ||
+                           $scope.AnswersResult.answers[1][1] == true ||
+                           $scope.AnswersResult.answers[1][2] == true ||
+                           $scope.AnswersResult.answers[1][3] == true) || ($scope.AnswersResult.answers[1][4] == true && $scope.AnswersResult.answers[1][5] != '')) {
+                            console.log("La 2 es válida");
+
                         if ($scope.AnswersResult.answers.length[2] != 0) {
                             //Solving for the '\n' character
                             for (var a = 0; a < $scope.AnswersResult.answers[2].length; a++) {
@@ -691,6 +699,17 @@ angular
                     $scope.finalHeight = angular.element(lista).height() + 177;
                     angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
                 }
+
+                function addHeight2(lista) {
+                    $scope.finalHeight = angular.element('.owl-wrapper-outer').height() + 100;
+                    angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
+                }
+
+                function reduceHeight(lista) {
+                    $scope.finalHeight = angular.element('.owl-wrapper-outer').height() - 100;
+                    angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
+                }
+
 
                 function removeHeight(lista) {
                     $scope.finalHeight = angular.element(lista).height() - 172;
