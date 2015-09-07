@@ -194,7 +194,7 @@ angular
             var challengeExploracionInicial = 140;
             var challengeExploracionFinal = 152;
             if(challengeCompletedId && challengeCompletedId != challengeExploracionInicial && challengeCompletedId != challengeExploracionFinal){
-              _setLocalStorageItem("challengeMessageId",challengeCompleted);
+              _setLocalStorageItem("challengeMessageId",challengeCompletedId);
               $scope.openModal_CloseChallenge();
             }else{
                 _setLocalStorageItem("challengeMessageId",0);
