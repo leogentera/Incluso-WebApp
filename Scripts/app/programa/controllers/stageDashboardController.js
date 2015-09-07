@@ -187,13 +187,13 @@ angular
             }
             
             $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);            
-            var challengeCompleted = _isChallengeCompleted();            
+            var challengeCompletedId = _isChallengeCompleted();            
             _coachNotification();
                                     
             //Exclude challenges initial and final from showing modal robot
             var challengeExploracionInicial = 140;
             var challengeExploracionFinal = 152;
-            if(challengeCompleted && challengeCompleted != challengeExploracionInicial && challengeCompleted != challengeExploracionFinal){
+            if(challengeCompletedId && challengeCompletedId != challengeExploracionInicial && challengeCompletedId != challengeExploracionFinal){
               _setLocalStorageItem("challengeMessageId",challengeCompleted);
               $scope.openModal_CloseChallenge();
             }else{
