@@ -626,12 +626,14 @@ angular
 
             //This callback is invoked for finished activities only
             function successfullCallBack(activityAnswers) {
+
+                $scope.$emit('HidePreloader');
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
                         var question = activityAnswers.questions[index];
-                        $scope.$emit('HidePreloader');
+
                         switch ($scope.activityname) {
                             case "Exploración inicial":
                                 updateSelectedAnswers(index, question);
