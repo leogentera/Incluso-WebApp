@@ -73,7 +73,7 @@
         <div class="part">
           <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>{{p.post_author}} <span>publicó:</span>
-            <div>{{p.created | date: "dd MMMM yyyy"}}</div>
+            <div>{{p.created * 1000 | date: "dd MMMM yyyy"}}</div>
             </div>
           </div>
           <div class="block">
