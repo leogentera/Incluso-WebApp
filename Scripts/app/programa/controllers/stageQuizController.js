@@ -925,6 +925,7 @@ angular
                 }
             };
 
+
             function partialSuccessfullCallBack(partialActivityAnswers) {
                 if (partialActivityAnswers != null) {
 
@@ -947,6 +948,7 @@ angular
                             }
                         ];
                     var _mathFloor = 0;
+                    var goodAnswersQty =0;
                     for (var index = 0; index < partialActivityAnswers.questions.length; index++) {
                         var question = partialActivityAnswers.questions[index];
                         for (var answerIndex = 0; answerIndex < question.answers.length; answerIndex++) {
@@ -988,22 +990,11 @@ angular
                                         break;
                                     }
                                 }
-                                //                                 else {
-                                //                                     $scope.exploracionFinalresult[index].badAnswer = true;
-                                //
-                                //                                     if (answerIndex == 0) {
-                                //                                         $scope.exploracionFinalresult[index].firstOptionWrong = true;
-                                //                                         break;
-                                //                                     }
-                                //                                     else if (answerIndex == 1) {
-                                //                                         $scope.exploracionFinalresult[index].secondOptionWrong = true;
-                                //                                         break;
-                                //                                     }
-                                //                                     else {
-                                //                                         $scope.exploracionFinalresult[index].thirdOptionWrong = true;
-                                //                                     }
-                                //                                 }
                             }
+                        }
+
+                        if(!$scope.exploracionFinalresult[index].badAnswer){
+                            goodAnswersQty ++;
                         }
                     }
                 }
@@ -1011,6 +1002,8 @@ angular
                     $scope.showWarning = true;
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
                 }
+
+                $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult.length;
             }
 
 
