@@ -12,18 +12,17 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            //Turn on Preloader
             $scope.$emit('ShowPreloader'); //show preloader
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            
             $scope.currentPage = 1;
             $scope.setReadOnly = false;
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
-
             $scope.like_status = 1;
 
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial"
@@ -33,8 +32,13 @@ angular
                 "like_status": 0
             };
 
+            /*        //For storing responses in "Exploración Inicial"
+            $scope.AnswersResult = {
+                "answers": [null, [false, false, false, false, false, ''], [], null, []]
+            };
+            */
+
             $scope.misCualidadesAnswers = [[false, false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, false, '']];
-            //$scope.misCualidadesAnswers = [[false, false, false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false, false, false]];
             $scope.misGustosAnswers = [[false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, '']];
             $scope.misSuenosAnswers = [[], [], []];
             $scope.exploracionFinal = ['', '', '', '', ''];
@@ -49,6 +53,7 @@ angular
 
             $scope.show = function() {
                 console.log($scope.AnswersResult.answers[0]);
+                console.log($scope.AnswersResult.answers);
             };
 
             $scope.show1 = function() {
@@ -306,16 +311,17 @@ angular
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer != "No") {
-                            console.log("question.userAnswer = " + question.userAnswer);
-                            $scope.AnswersResult.answers[0] = "0";
+
+                            $scope.AnswersResult.answers[0] = "yes";
                         }
                         else if (question.userAnswer == "No") {
-                            console.log("question.userAnswer = " + question.userAnswer);
-                            $scope.AnswersResult.answers[0] = "1";
+                            //console.log("question.userAnswer = " + question.userAnswer);  "0"si  y "1"no
+                            $scope.AnswersResult.answers[0] = "no";
                         }
                         break;
 
                     case 1:
+                        console.log("To render: " + question.userAnswer);
                         if (question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
                             for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
@@ -605,21 +611,27 @@ angular
                         activityFinished = true;
                         $scope.setReadOnly = true;
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
+                    } else {
+                        $scope.$emit('HidePreloader');
                     }
 
                     $scope.activity = activity;
                     $scope.activityFinished = activityFinished;
+
+                } else {
+                    console.log("Activity is NOT defined");
+                    $scope.$emit('HidePreloader');
                 }
             }
 
-
+            //This callback is invoked for finished activities only
             function successfullCallBack(activityAnswers) {
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
                         var question = activityAnswers.questions[index];
-
+                        $scope.$emit('HidePreloader');
                         switch ($scope.activityname) {
                             case "Exploración inicial":
                                 updateSelectedAnswers(index, question);
@@ -640,6 +652,8 @@ angular
                                 break;
                         }
                     }
+
+                    //$scope.$emit('HidePreloader');
                 }
 
                 else {
@@ -650,7 +664,8 @@ angular
 
 
             function errorCallback() {
-
+                console.log("error Callback");
+                $scope.$emit('HidePreloader');
             }
 
 
@@ -708,14 +723,9 @@ angular
                         //Check if dreams are not empty strings or spaces
                         var countNotEmptyAnswers = 0;
                         for (var b = 0; b < cont; b++) {
-                            //var text = $scope.misSuenosAnswers[a][b];
-                            //console.log(text);
 
                             //Correction for the '\n' reserved character
-                            //text = text.replace(/\r?\n|\r/g, " ").trim();
-                            //$scope.misSuenosAnswers[a][b] = text;
                             $scope.misSuenosAnswers[a][b] = $scope.misSuenosAnswers[a][b].replace(/\r?\n|\r/g, " ").trim();
-                            //console.log(text);
 
                             if ($scope.misSuenosAnswers[a][b] !== '') {
                                 countNotEmptyAnswers++;
@@ -1013,7 +1023,7 @@ angular
                 $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult.length;
             }
 
-                $scope.$emit('HidePreloader'); //hide preloader
+                //$scope.$emit('HidePreloader'); //hide preloader
             function partialErrorCallback(partialActivityAnswers) {
             }
 
@@ -1023,6 +1033,7 @@ angular
     controller('OpeningStageController', function ($scope, $modalInstance) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
+
         };
     })
     .controller('videoCollapsiblePanelController', function ($scope) {
