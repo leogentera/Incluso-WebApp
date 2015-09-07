@@ -19,7 +19,6 @@ angular
         'MoodleIds',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $filter, MoodleIds) {
 
-
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.$emit('ShowPreloader');
@@ -97,6 +96,8 @@ angular
             };
 
             var checkForumProgress = function(callback){
+                debugger;
+                callback();
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
 
@@ -125,7 +126,6 @@ angular
                 }
 
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
-
                 if(activityFromTree.status == 1){
 
                     var commentsCounterCollection = getForumsProgress();
@@ -366,7 +366,6 @@ angular
                 $scope.$emit('HidePreloader');
             }
 
-                //TODO cambiar esta lógica, demasiados requests
             function getDataAsyncCallback(){
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
