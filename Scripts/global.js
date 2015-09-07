@@ -139,9 +139,7 @@ var _endActivity = function(activityModel){
         var currentUserId = currentUser.userId;
         var activityId = activityModel.coursemoduleid;
         //create notification
-        _createNotification(activityId, triggerActivity);
-        //complete stage
-        _updateBadgeStatus(activityId);
+        _createNotification(activityId, triggerActivity);              
         
       if (activityModel.activityType == "Quiz"){
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successCallback, errorCallback);
@@ -196,14 +194,12 @@ var _isChallengeCompleted = function(){
     for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++){
         var currentChallenge = currentStage.challenges[challengeIndex];
         if(currentChallenge.status == 0){
-          _updateBadgeStatus(currentChallenge.coursemoduleid);
-
-
-          var totalActivitiesByStage = currentChallenge.activities.length;
+                   var totalActivitiesByStage = currentChallenge.activities.length;
           var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
           if (totalActivitiesByStage == totalActivitiesCompletedByStage){
               
               //updateBadge
+              _updateBadgeStatus(currentChallenge.coursemoduleid);
               userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
               _setLocalStorageJsonItem("usercourse", userCourse);
               var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -228,8 +224,8 @@ var _isChallengeCompleted = function(){
 
 var _updateBadgeStatus = function(coursemoduleid, callback){
     moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {
-      if (callback) callback();
-      var profile = moodleFactory.Services.GetCacheJson("profile");
+    if (callback) callback();
+    var profile = moodleFactory.Services.GetCacheJson("profile");
     var badges = profile.badges;
     var currentBadge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});    
     if (currentBadge) {
