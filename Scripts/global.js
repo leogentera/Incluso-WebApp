@@ -540,7 +540,7 @@ function updateUserStarsUsingExternalActivity (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getExtActivityByActivity_identifier(activity_identifier);   
-   profile.stars = Number(profile.stars) +  Number(activity.points);
+   //profile.stars = Number(profile.stars) +  Number(activity.points);
     var data={
        userId: profile.id,
        stars: activity.points ,
