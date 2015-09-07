@@ -104,7 +104,7 @@ angular
 
                 _endActivity(activityModel);
                 var currentStage = localStorage.getItem("currentStage");
-                debugger;
+                //debugger;
                 $location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + $scope.currentChallenge);
             };
 
