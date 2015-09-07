@@ -83,8 +83,10 @@ angular
                   }
                   else
                   {
-                    waitPreloader += 1;
-                    moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);                 
+                    waitPreloader = 1;
+                    
+                        moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);
+                    
                   }  
                 }
                                  
