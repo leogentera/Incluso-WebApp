@@ -1046,6 +1046,7 @@ angular
                 };
 
                 try {
+                    $scope.$emit('ShowPreloader');
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch (e) {
                     SuccessAvatar(
@@ -1056,6 +1057,7 @@ angular
 
             function SuccessAvatar(data) {
                 //the next fields should match the database in moodle
+    
                 $scope.avatarInfo = [{
                     "userid": data.userid,
                     "aplicacion": data.actividad,
