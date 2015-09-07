@@ -131,7 +131,7 @@
                 url: url,
                 headers: { 'Content-Type': 'application/json' }
             }).success(function (data, status, headers, config) {
-                localStorage.setItem(key, JSON.stringify(data));
+                _setLocalStorageJsonItem(key, data);
                 successCallback(data, key);
             }).error(function (data, status, headers, config) {
                 errorCallback(data);
@@ -154,7 +154,7 @@
                 headers: { 'Content-Type': 'application/json', 'Authorization': token },
             }).success(function (data, status, headers, config) {
                 var forum = createForumTree(data);
-                localStorage.setItem(key, JSON.stringify(forum));
+                _setLocalStorageJsonItem(key,forum);
                 successCallback(data);
             }).error(function (data, status, headers, config) {
                 errorCallback(data);
@@ -189,11 +189,11 @@
                 headers: { 'Content-Type': 'application/json' },
             }).success(function (data, status, headers, config) {
                 console.log('success');
-                localStorage.setItem(key, JSON.stringify(data));
+                _setLocalStorageJsonItem(key,data);
                 successCallback();
             }).error(function (data, status, headers, config) {
                 console.log(data);
-                localStorage.setItem(key, JSON.stringify(data));
+                _setLocalStorageJsonItem(key,data);
                 errorCallback();
             });
         };
@@ -205,10 +205,10 @@
                 data: dataModel,
                 headers: { 'Content-Type': 'application/json' },
             }).success(function (data, status, headers, config) {
-                localStorage.setItem(key, JSON.stringify(dataModel));
+                _setLocalStorageJsonItem(key,dataModel);
                 successCallback();
             }).error(function (data, status, headers, config) {
-                localStorage.setItem(key, JSON.stringify(dataModel));
+                _setLocalStorageJsonItem(key,dataModel);
                 errorCallback();
             });
         };
@@ -220,10 +220,10 @@
                 data: data,
                 headers: { 'Content-Type': 'application/json' },
             }).success(function (data, status, headers, config) {
-                //localStorage.setItem(key, JSON.stringify(dataModel));
+                //_setLocalStorageJsonItem(key,dataModel);
                 successCallback();
             }).error(function (data, status, headers, config) {
-                //localStorage.setItem(key, JSON.stringify(dataModel));
+                //_setLocalStorageJsonItem(key,dataModel);
                 errorCallback();
             });
         };
@@ -239,10 +239,10 @@
                 data: dataModel,
                 headers: { 'Content-Type': 'application/json', 'Authorization': token },
             }).success(function (data, status, headers, config) {
-                localStorage.setItem(key, JSON.stringify(profile));
+                _setLocalStorageJsonItem(key,profile);
                 successCallback();
             }).error(function (data, status, headers, config) {
-                localStorage.setItem(key, JSON.stringify(profile));
+                _setLocalStorageJsonItem(key,profile);
                 errorCallback();
             });
         };
@@ -267,10 +267,10 @@
         //        data: data,       
         //        headers: {'Content-Type': 'application/json', 'Authorization': token},
         //        }).success(function(data, status, headers, config) {
-        //            localStorage.setItem(key, JSON.stringify(activityModel));
+        //            _setLocalStorageJsonItem(key,activityModel);
         //            successCallback();
         //        }).error(function(data, status, headers, config) {
-        //            localStorage.setItem(key, JSON.stringify(activityModel));
+        //            _setLocalStorageJsonItem(key,activityModel);
         //            errorCallback();
         //    });
         // };
@@ -282,10 +282,10 @@
                 data: data,
                 headers: { 'Content-Type': 'application/json', 'Authorization': token },
             }).success(function (data, status, headers, config) {
-                localStorage.setItem(key, JSON.stringify(userCourseModel));
+                _setLocalStorageJsonItem(key,userCourseModel);
                 successCallback(data);
             }).error(function (data, status, headers, config) {
-                localStorage.setItem(key, JSON.stringify(userCourseModel));
+                _setLocalStorageJsonItem(key,userCourseModel);
                 errorCallback();
             });
         };
@@ -528,11 +528,11 @@
                 var progress = refreshProgress(course, user);
                 course = progress.course;
                 user = progress.user;
-                localStorage.setItem("profile", JSON.stringify(user));
-                localStorage.setItem("usercourse", JSON.stringify(course));
+                _setLocalStorageJsonItem("profile",user);
+                _setLocalStorageJsonItem("usercourse",course);
                 loadActivityStatus();
-                localStorage.setItem("course", JSON.stringify(course));
-                localStorage.setItem("activityManagers", JSON.stringify(activityManagers));
+                _setLocalStorageJsonItem("course",course);
+                _setLocalStorageJsonItem("activityManagers",activityManagers);
 
             }
         };
@@ -554,7 +554,7 @@
 
                 }
             }
-            localStorage.setItem("activityStatus", JSON.stringify(activityStatus));
+            _setLocalStorageJsonItem("activityStatus",activityStatus);
             _activityStatus = activityStatus;
             console.log("Loaded activityStatus");
         };

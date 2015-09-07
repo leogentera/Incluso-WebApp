@@ -18,7 +18,7 @@ angular
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
 
             ///////harcoded/////
-            localStorage.setItem("currentStage", "1");
+            _setLocalStorageItem("currentStage", "1");
             ////////////////////
 
             var currentStage = JSON.parse(localStorage.getItem("currentStage"));
@@ -62,7 +62,7 @@ angular
             var closingStageModal = localStorage.getItem('closeStageModal');
             if (closingStageModal == 'true') {
                 openStageModal();
-                localStorage.setItem('closeStageModal', 'false');
+                _setLocalStorageItem('closeStageModal', 'false');
             }
 
             $scope.activitiesCompletedInCurrentStage = [];
@@ -129,12 +129,12 @@ angular
 
             $scope.avanceEnEtapaActual = Math.ceil(avanceEnEtapaActual * 100 / totalActividadesEnEtapaActual);
             $scope.retosIconos = {
-                "Exploración Inicial": "assets/images/challenges/stage-1/img-evaluacion inicial.svg",
+                "Exploración Inicial": "assets/images/challenges/stage-1/img-evaluacion-inicial.svg",
                 "Cuarto de recursos": "assets/images/challenges/stage-1/img-cuarto-recursos.svg",
                 "Conócete": "assets/images/challenges/stage-1/img-conocete.svg",
                 "Mis sueños": "assets/images/challenges/stage-1/img-mis-suenos.svg",
                 "Cabina de soporte": "assets/images/challenges/stage-1/img-cabina-soporte.svg",
-                "Exploración final": "assets/images/challenges/stage-1/img-evaluacion final.svg"
+                "Exploración final": "assets/images/challenges/stage-1/img-evaluacion-final.svg"
             };
 
             $scope.playVideo = function (videoAddress, videoName) {

@@ -81,13 +81,7 @@ angular
             }
 
             $scope.login = function (username, password) {  
-                console.log('Login action started'); //- debug
-
-                var isModelValid = validateModel();
-                console.log('isValid: ' + isModelValid); //- debug
-
-                if (isModelValid) {
-
+                               
                     // reflect loading state at UI
                     $scope.$emit('ShowPreloader'); //show preloader
                     console.log('preloading...'); //- debug
@@ -107,7 +101,7 @@ angular
                             $scope.currentUserModel = data;
                             $scope.currentUserModel.userId = data.id;
 
-                            localStorage.setItem("CurrentUser", JSON.stringify($scope.currentUserModel));
+                            _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
 
                             _setToken(data.token);
                             _setId(data.id);
@@ -126,7 +120,7 @@ angular
                             });
 
                             if ($scope.userCredentialsModel.rememberCredentials) {
-                                localStorage.setItem("Credentials", JSON.stringify($scope.userCredentialsModel));
+                                _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
                             } else {
                                 localStorage.removeItem("Credentials");
                             }
@@ -141,11 +135,7 @@ angular
                             $scope.$emit('scrollTop'); //- scroll
                             $scope.isLogginIn = false;
                         });
-                } else {
-                    console.log('End'); //- debug
-                    //$scope.scrollToTop();
-                    $scope.$emit('scrollTop'); //- scroll
-                }
+               
             }
 
             $scope.loginWithFacebook = function () {
@@ -170,7 +160,7 @@ angular
                 $scope.currentUserModel.token = userFacebook.token;
                 $scope.currentUserModel.userId = userFacebook.id;
 
-                localStorage.setItem("CurrentUser", JSON.stringify($scope.currentUserModel));
+                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
 
                 _setToken(userFacebook.token);
                 _setId(userFacebook.id);
@@ -189,7 +179,7 @@ angular
                 });
 
                 if ($scope.userCredentialsModel.rememberCredentials) {
-                    localStorage.setItem("Credentials", JSON.stringify($scope.userCredentialsModel));
+                    _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
                 } else {
                     localStorage.removeItem("Credentials");
                 }
@@ -205,19 +195,7 @@ angular
                 //$scope.scrollToTop();
                 $scope.$emit('scrollTop'); //- scroll
             }
-
-            function validateModel() {
-                var errors = [];
-
-                 var passwordPolicy = "debe ser almenos de 8 caracterres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
-                
-                if (!$scope.loginForm.userName.$valid) { errors.push("formato de usuario incorrecto."); }
-                if (!$scope.loginForm.password.$valid) { errors.push("formato de contraseña incorrecto. La contraseña " + passwordPolicy); }
-
-                $scope.userCredentialsModel.modelState.errorMessages = errors;
-
-                return (errors.length === 0);
-            }
+            
 
             $scope.loadCredentials();
 

@@ -12,6 +12,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http) {
 
             _timeout = $timeout;
+            $scope.setToolbar($location.$$path, "");
             _httpFactory = $http;
             $scope.$emit('ShowPreloader');
             console.log("cargando usuario");
@@ -94,6 +95,7 @@ angular
 
                 $scope.birthdate_Dateformat = formatDate($scope.model.birthday);
                 getAge();
+                $scope.showPlaceHolder = true;
 
             });
 
@@ -381,6 +383,14 @@ angular
                 return age;
             }
             
+             $scope.showPlaceHolderBirthday = function(){                
+                var bd = $("input[name='date']").val();                
+                if(bd){
+                    $scope.showPlaceHolder = false;                    
+                }else{
+                    $scope.showPlaceHolder = true;                    
+                }
+            };
             
             function validateModel() {
                 console.log('fetching editProfile errors list');
@@ -1056,7 +1066,7 @@ angular
                     "escudo": $scope.model.shield
                 }];
                 uploadAvatar($scope.avatarInfo);
-                localStorage.setItem("avatarInfo", JSON.stringify($scope.avatarInfo));
+                _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
             }
 
             function FailureAvatar(data) {

@@ -70,7 +70,7 @@
                 var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
                 if(userCourse!={}) {
                     userCourse.firsttime = 0;
-                    localStorage.setItem("usercourse",JSON.stringify(userCourse));
+                    _setLocalStorageJsonItem("usercourse",userCourse);
                 }
                 //Update back-end
                 var dataModel = {
@@ -103,7 +103,7 @@
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = getCurrentStage();                
-                    localStorage.setItem("currentStage", $scope.currentStage);
+                    _setLocalStorageItem("currentStage", $scope.currentStage);
 
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, function(){
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
@@ -126,7 +126,7 @@
                 
                 for(var i = 0; i < $scope.usercourse.stages.length; i++) {
                     var uc = $scope.usercourse.stages[i];
-                    localStorage.setItem("stage", JSON.stringify(uc));
+                    _setLocalStorageJsonItem("stage", uc);
                     $scope.stage = uc;
                     
                     if(uc.stageStatus === 0){
@@ -154,10 +154,10 @@
                         });
                                                     
                     if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
-                        localStorage.setItem('chatRead',"false");
+                        _setLocalStorageItem('chatRead',"false");
                     }
 
-                    localStorage.setItem('chatAmountRead',chatAmount.true);
+                    _setLocalStorageItem('chatAmountRead',chatAmount.true);
                 }, errorCallback, false);                
             }
             

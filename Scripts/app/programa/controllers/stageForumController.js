@@ -85,7 +85,7 @@ angular
                         discussionsCollection.push({"discussion_id":currentDiscussion.post_id, "replies_counter":0});
                     } else {}
                 }
-                localStorage.setItem('currentForumsProgress', JSON.stringify(discussionsCollection));
+                _setLocalStorageJsonItem('currentForumsProgress', discussionsCollection);
             }
 
             function getDataAsync() {
@@ -131,7 +131,26 @@ angular
                     });
                 }, 1000);
               
-              $location.path('/ZonaDeVuelo/Dashboard/1');
+              var moodleId = $scope.moodleId;
+              
+              switch (moodleId){
+                  case "64":
+                     $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
+                      break;
+                  case "73":
+                      $location.path('/ZonaDeVuelo/Dashboard/1/'+3);
+                      break;
+                  case "147":
+                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
+                      break;
+                  case "148":
+                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
+                      break;
+                  default:
+                      $location.path('/ZonaDeVuelo/Dashboard/1');
+                      break;
+              }                                      
+              
             }
 
         }]).controller('tutorialController', function ($scope, $modalInstance) {
