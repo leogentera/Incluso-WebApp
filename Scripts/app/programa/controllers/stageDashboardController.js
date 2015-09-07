@@ -213,12 +213,12 @@ angular
             
             //Load challenges images
             $scope.retosIconos = {
-                "Exploración inicial": "assets/images/challenges/stage-1/img-evaluacion inicial.svg",
+                "Exploración inicial": "assets/images/challenges/stage-1/img-evaluacion-inicial.svg",
                 "Cuarto de recursos": "assets/images/challenges/stage-1/img-cuarto-recursos.svg",
                 "Conócete": "assets/images/challenges/stage-1/img-conocete.svg",
                 "Mis sueños": "assets/images/challenges/stage-1/img-mis-suenos.svg",
                 "Cabina de soporte": "assets/images/challenges/stage-1/img-cabina-soporte.svg",
-                "Exploración final": "assets/images/challenges/stage-1/img-evaluacion final.svg"
+                "Exploración final": "assets/images/challenges/stage-1/img-evaluacion-final.svg"
             };
 
             $scope.challengeDescription= {
@@ -230,13 +230,19 @@ angular
                 "Exploración final": "Explora qué tanto descubriste en la Zona de Vuelo"
             };
 
-            $scope.$emit('HidePreloader'); //hide preloader
+            // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
+            $scope.$on('$viewContentLoaded', function() {
+                //$scope.$emit('HidePreloader'); //hide preloader
+            });
+            // this is the dirty way to hide owl's carousel rendering process while user waits
+            $timeout(function() {
+                $scope.$emit('HidePreloader'); //hide preloader
+            }, 2000);
 
             $scope.playVideo = function (videoAddress, videoName) {
                 playVideo(videoAddress, videoName);
             };
 
-            
             $scope.startActivity = function (activity, index, parentIndex) {                
                 if(!$scope.canStartActivity(activity.coursemoduleid)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.coursemoduleid })[0].url;

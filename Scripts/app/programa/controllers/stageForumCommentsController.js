@@ -1,5 +1,10 @@
 angular
     .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants', 'naif.base64'])
+    .filter('reverse', function() {
+        return function(items) {
+            return items.slice().reverse();
+        };
+    })
     .controller('stageForumCommentsController', [
         '$q',
         '$scope',
@@ -270,6 +275,20 @@ angular
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
                     });
             };
+            $scope.clickPostAttachment = function(){
+                clickPostAttachment();
+            };
+            clickPostAttachment = function(){
+                cordova.exec(SuccessAttachment, FailureAttachment, "CallToAndroid", "AttachPicture", []);
+            };
+
+            var SuccessAttachment = function (data) {
+                $scope.attachmentToPost = data;
+            }
+
+            var FailureAttachment = function(data) {
+
+            }
             $scope.postAttachmentToForum = function(){
                 var userId = localStorage.getItem("userId");
                 var dataObject = {
@@ -280,8 +299,8 @@ angular
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "posttype": 4,
-                    "filecontent":$scope.attachmentToPost.base64,
-                    "filename": userId + $scope.attachmentToPost.filename,
+                    "filecontent":$scope.attachmentToPost.image,
+                    "filename": userId + $scope.attachmentToPost.fileName,
                     "picture_post_author": profile.profileimageurlsmall
                 };
 
