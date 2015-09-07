@@ -60,6 +60,15 @@ angular
             }
 
             $scope.stars = stars;
+            $scope.isInstalled = false;
+
+            try {
+              cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+            }
+            catch (e) {
+                $scope.isInstalled = true;
+            }
+
 
             function assignCourseModuleId(asyncRequest, data){
               $scope.retoMultipleActivities[$scope.retoMultipleActivities.length - 1]["coursemoduleid"] = 

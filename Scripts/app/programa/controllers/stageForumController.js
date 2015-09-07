@@ -87,6 +87,24 @@ angular
                 }
                 _setLocalStorageJsonItem('currentForumsProgress', discussionsCollection);
             }
+            var getForumsExtraPointsCounter = function(){
+                var forumExtraPointsCounter = localStorage.getItem('extraPointsForums')? JSON.parse(localStorage.getItem('extraPointsForums')) : setExtraPointsCounters();
+                return forumExtraPointsCounter;
+            };
+            var setExtraPointsCounters = function(){
+                var extraPointsCounter = [];
+                var discussions = $scope.activity.discussions;
+
+                for(var i=0 ; i< discussions.length; i++ ){
+                    var currentDiscussionCounter = discussions[i];
+
+                    var topic = _.where(extraPointsCounter, function(exCount){ return exCount.discussion_id == currentDiscussionCounter.post_id});
+                    if(!topic.length>0){
+                        extraPointsCounter.push({"discussion_id":currentDiscussionCounter.post_id, "extra_replies_counter":0});
+                    } else {}
+                }
+                _setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
+            };
 
             function getDataAsync() {
                 $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, currentUser.token, getActivityInfoCallback, '', true):'';
@@ -95,6 +113,7 @@ angular
             function getActivityInfoCallback() {
                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
                getForumsProgress();
+                getForumsExtraPointsCounter();
                $scope.$emit('HidePreloader'); //hide preloader
             }
 
