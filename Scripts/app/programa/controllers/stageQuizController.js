@@ -190,10 +190,6 @@ angular
 
                         //Check the pair checkbox - input field
 
-
-
-
-
                         if ($scope.AnswersResult.answers.length[2] != 0) {
                             //Solving for the '\n' character
                             for (var a = 0; a < $scope.AnswersResult.answers[2].length; a++) {
