@@ -143,14 +143,15 @@ var _endActivity = function(activityModel){
         //complete stage
         _updateBadgeStatus(activityId);
         
-      if (activityModel.activityType == "Quiz"){console.log(JSON.stringify(activityModel.answersResult) + "  " + activityModel.token);
+      if (activityModel.activityType == "Quiz"){
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successCallback, errorCallback);
       }
       else if(activityModel.activityType == "Assign")
       {
         var data = {userid :  currentUserId };
         
-        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, successCallback,errorCallback);
+        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse,activityModel.token,
+        successCallback,errorCallback);
       }
       else{            
         var data = {userid :  currentUserId };
@@ -306,6 +307,13 @@ var _coachNotification = function(){
     }      
   }  
 };
+                
+      
+      
+
+
+
+
 
 
 var successCallback = function(data){

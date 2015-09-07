@@ -33,7 +33,7 @@
                                             <div class="clearfix">
                                                 <span>Sueño {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                        ng-click="deleteSueno1($index)" >
+                                                        ng-click="deleteSueno1($index)" ng-hide="setReadOnly">
                                                     <span class="icomoon icon-cross white"></i>
                                                 </a>
                                             </div>
@@ -41,7 +41,7 @@
                                                 <span class="icomoon icon-edit"></span>
                                                 <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nuevo sueño" ng-model="misSuenosAnswers[0][$index]"
-                                                          >
+                                                          ng-readonly="setReadOnly">
                                                 </textarea>
                                             </div>
 
@@ -73,7 +73,7 @@
                                             <div class="clearfix">
                                                 <span>Sueño {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                        ng-click="deleteSueno2($index)" >
+                                                        ng-click="deleteSueno2($index)" ng-hide="setReadOnly">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
@@ -81,7 +81,7 @@
                                                 <span class="icomoon icon-edit"></span>
                                                 <textarea id="textoarea2" class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nuevo sueño" ng-model="misSuenosAnswers[1][$index]"
-                                                         >
+                                                          ng-readonly="setReadOnly">
                                                 </textarea>
                                             </div>
 
@@ -114,14 +114,14 @@
                                             <div class="clearfix">
                                                 <span>Sueño {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                        ng-click="deleteSueno3($index)" >
+                                                        ng-click="deleteSueno3($index)" ng-hide="setReadOnly">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
                                             <div class="add"><span class="icomoon icon-edit"></span>
                                                 <textarea id="textoarea3" class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nuevo sueño" ng-model="misSuenosAnswers[2][$index]"
-                                                          >
+                                                          ng-readonly="setReadOnly">
                                                 </textarea>
                                             </div>
 
@@ -142,10 +142,10 @@
 
                     <section id="controls" class="controls">
                         <div class="paginate">
-                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 3)">
+                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1)">
                                 <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
                             </a>
-                            <a href="#" id="next" ng-click="addToAnswerIndex(1, 3)">
+                            <a href="#" id="next" ng-click="addToAnswerIndex(1)">
                                 <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
                             </a>
 
@@ -156,9 +156,10 @@
                         <a class="btn btn-primary btn-lg btn-cnt"
                            id="save"
                            role="button"
-                           ng-show="true"
+                           style="display:none"
+                           ng-hide="setReadOnly"
                            ng-click="validateMisSuenosAnsweredQuestions()">
-                           GUARDAR
+                            GUARDAR
                         </a>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
@@ -258,9 +259,8 @@
         }
         
 
-        $("#next").click(function (evt) {
+        $("#next").click(function () {
             owl.trigger('owl.next');
-            /*
             var numberOfPage = $('#index');
             var totalPages = $('#totalPages');            
             if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
@@ -268,13 +268,11 @@
             }else{              
               $('#save').hide();
             }
-            */
-            evt.preventDefault();
+            return false;
         });
 
-        $("#prev").click(function (evt) {
+        $("#prev").click(function () {
             owl.trigger('owl.prev');
-            /*
             var numberOfPage = $('#index');
             var totalPages = $('#totalPages');            
             if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
@@ -282,8 +280,7 @@
             }else{              
               $('#save').hide();
             }
-            */
-            evt.preventDefault();
+            return false;
         });
 
         /*
