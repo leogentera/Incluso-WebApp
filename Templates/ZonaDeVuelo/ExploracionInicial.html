@@ -67,6 +67,15 @@
                                         />
                                 <label for="check5">Otro</label>
 
+                                <div class="form-group theme-form" ng-show="AnswersResult.answers[1][4]">
+                                    <div class="add">
+                                        <span class="icomoon icon-edit"></span>
+                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
+                                                  name="opciones" placeholder="¿Qué has intentado?">
+                                        </textarea>
+                                    </div>
+                                </div>
+
                                 <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
                                 <label for="otros">Otros</label>-->
                             </section>
@@ -212,7 +221,7 @@
                         <section class="centered txt-bigger ">
                             <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
                         </section>
-                        <section class="txt-renglon pill">
+                        <section class="txt-renglon pill" ng-show="activityPoints > 0">
                             <div class="pull-left">Estrellas ganadas:</div>
                             <div class="pull-right sm-pill">
                                 <span class="pull-left">{{activityPoints}}</span>
