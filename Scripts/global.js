@@ -236,7 +236,7 @@ var _updateBadgeStatus = function(coursemoduleid, callback){
       for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
         if (badges[indexBadge].id == currentBadge.badgeId) {
           profile.badges[indexBadge].status = "won";
-          moodleFactory.Services.PutAsyncProfile(_getItem("userId"), profile,function(){},function(){});
+          //moodleFactory.Services.PutAsyncProfile(_getItem("userId"), profile,function(){},function(){});
           _setLocalStorageJsonItem("profile",profile);
         }else{
           //This else statement is set to avoid errors on execution flows

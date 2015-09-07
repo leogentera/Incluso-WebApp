@@ -29,11 +29,12 @@ angular
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial"
                 "userid": 0,
                 "answers": [null, [false, false, false, false, false, ''], [], null, []],
-                "activityidnumber": 0,                         //$scope.activity.coursemoduleid
+                "activityidnumber": 0,
                 "like_status": 0
             };
 
             $scope.misCualidadesAnswers = [[false, false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, false, '']];
+            //$scope.misCualidadesAnswers = [[false, false, false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false, false, false]];
             $scope.misGustosAnswers = [[false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, '']];
             $scope.misSuenosAnswers = [[], [], []];
             $scope.exploracionFinal = ['', '', '', '', ''];
@@ -48,6 +49,10 @@ angular
 
             $scope.show = function() {
                 console.log($scope.AnswersResult.answers[0]);
+            };
+
+            $scope.show1 = function() {
+                console.log($scope.AnswersResult.answers[1]);
             };
 
 
@@ -105,6 +110,7 @@ angular
                 };
 
                 //console.log("activityModel = " + JSON.stringify(activityModel));
+                console.log("answersResult = " + JSON.stringify($scope.AnswersResult));
 
                 _endActivity(activityModel);
                 var currentStage = localStorage.getItem("currentStage");
@@ -296,6 +302,7 @@ angular
 
             function updateSelectedAnswers(questionIndex, question) {//For "Exploración Inicial" only
                 console.log("Question = " + JSON.stringify(question));
+                var userAnswers = '';
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer != "No") {
@@ -310,7 +317,7 @@ angular
 
                     case 1:
                         if (question.userAnswer.length > 0) {
-                            var userAnswers = question.userAnswer.split(";");
+                            userAnswers = question.userAnswer.split(";");
                             for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
                                 var userAnswer = cleanText(userAnswers[indexUserAnswers]).trim();
                                 for (var index = 0; index < question.answers.length; index++) {
@@ -326,7 +333,7 @@ angular
                     case 2:
 
                         if (question.userAnswer != null) {
-                            var userAnswers = question.userAnswer.split('\n');
+                            userAnswers = question.userAnswer.split('\n');
 
                             console.log(userAnswers);
 
@@ -339,7 +346,7 @@ angular
                         break;
                     case 3:
 
-                        var userAnswer = question.userAnswer.replace("\n", "");
+                        userAnswer = question.userAnswer.replace("\n", "");
 
                         if (userAnswer == "Si") {
                             $scope.AnswersResult.answers[3] = 0;
@@ -359,7 +366,7 @@ angular
 
                         if (question.userAnswer != null) {
                             console.log("userAnswer : " + question.userAnswer);
-                            var userAnswers = question.userAnswer.split(';');
+                            userAnswers = question.userAnswer.split(';');
 
                             console.log("To render : " + userAnswers);
 
@@ -569,8 +576,8 @@ angular
                 }
 
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
-                console.log("The activity ID is: \n" + $scope.activity_identifier);
-                console.log("The activity data is: \n" + JSON.stringify(activity));
+                console.log("The activity ID is: " + $scope.activity_identifier);
+                console.log("The activity data is: " + JSON.stringify(activity));
                 console.log("The activity status is: " + activity.status);
 
                 if (activity != null) {
@@ -593,7 +600,7 @@ angular
                     //$scope.activitieCache = JSON.parse(localStorage.getItem("activitiesCache/" + $scope.coursemoduleid));
 
                     var activityFinished = false;
-                    console.log("userprofile: " + $scope.userprofile.id + ", activity status: " + activity.status);
+                    console.log("userprofile: " + $scope.userprofile.id);
                     if (activity.status != 0) {
                         activityFinished = true;
                         $scope.setReadOnly = true;
@@ -701,15 +708,16 @@ angular
                         //Check if dreams are not empty strings or spaces
                         var countNotEmptyAnswers = 0;
                         for (var b = 0; b < cont; b++) {
-                            var text = $scope.misSuenosAnswers[a][b];
-                            console.log(text);
+                            //var text = $scope.misSuenosAnswers[a][b];
+                            //console.log(text);
 
                             //Correction for the '\n' reserved character
-                            text = text.replace(/\r?\n|\r/g, " ").trim();
-                            $scope.misSuenosAnswers[a][b] = text;
-                            console.log(text);
+                            //text = text.replace(/\r?\n|\r/g, " ").trim();
+                            //$scope.misSuenosAnswers[a][b] = text;
+                            $scope.misSuenosAnswers[a][b] = $scope.misSuenosAnswers[a][b].replace(/\r?\n|\r/g, " ").trim();
+                            //console.log(text);
 
-                            if (text !== '') {
+                            if ($scope.misSuenosAnswers[a][b] !== '') {
                                 countNotEmptyAnswers++;
                             }
                         }
@@ -764,7 +772,8 @@ angular
                         var checked = $scope.misCualidadesAnswers[a][b];
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
-                            break;
+                        } else {
+                            $scope.misGustosAnswers[a][b] = false;
                         }
                     }
 
@@ -776,7 +785,6 @@ angular
                         if ($scope.misCualidadesAnswers[a][12] != '') {
                             validateOther[a] = 1;
                         } else {
-                            console.log('empty input field');
                             validateOther[a] = -1;
                         }
                     }

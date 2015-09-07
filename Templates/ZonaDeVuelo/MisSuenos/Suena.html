@@ -34,14 +34,14 @@
                                                 <span>Sueño {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
                                                         ng-click="deleteSueno1($index)" ng-hide="setReadOnly">
-                                                    <span class="icomoon icon-cross white"></i>
+                                                    <span class="icomoon icon-cross white"></span></i>
                                                 </a>
                                             </div>
                                             <div class="add">
                                                 <span class="icomoon icon-edit"></span>
                                                 <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nuevo sueño" ng-model="misSuenosAnswers[0][$index]"
-                                                          ng-readonly="setReadOnly">
+                                                          >
                                                 </textarea>
                                             </div>
 
@@ -50,7 +50,7 @@
                                 </li>
                             </ul>
 
-                            <div class="txt-renglon" ng-show="!activityFinished">
+                            <div class="txt-renglon">
                                 <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno1();">
                                     <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
                                 </a>
@@ -90,7 +90,7 @@
                                 </li>
                             </ul>
 
-                            <div class="txt-renglon" ng-show="!activityFinished">
+                            <div class="txt-renglon">
                                 <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno2();">
                                     <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
                                 </a>
@@ -120,8 +120,7 @@
                                             </div>
                                             <div class="add"><span class="icomoon icon-edit"></span>
                                                 <textarea id="textoarea3" class="form-control form-control-lg theme-form" row="2"
-                                                          name="opciones" placeholder="Nuevo sueño" ng-model="misSuenosAnswers[2][$index]"
-                                                         >
+                                                          name="opciones" placeholder="Nuevo sueño" ng-model="misSuenosAnswers[2][$index]" >
                                                 </textarea>
                                             </div>
 
@@ -130,7 +129,7 @@
                                 </li>
                             </ul>
 
-                            <div class="txt-renglon" ng-show="!activityFinished">
+                            <div class="txt-renglon">
                                 <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno3();">
                                     <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
                                 </a>

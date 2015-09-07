@@ -45,7 +45,7 @@
                             <div class="txt-renglon txt-bigger">2. ¿Qué de lo siguiente has intentado hacer para
                                 lograrlo? Puedes elegir más de una.
                             </div>
-                            <section id='exploracion2' class="form txt-renglon txt-bigger part list">
+                            <section id='exploracion2' class="form txt-renglon txt-bigger part list" ng-click="show1()">
                                 <input id="check1" type="checkbox" value="check1" name="check"
                                        ng-model="AnswersResult.answers[1][0]"
                                         />
@@ -110,11 +110,7 @@
                                             </div>
                                             <div class="add">
                                                 <span class="icomoon icon-edit"></span>
-                                                <textarea id="textoarea4"
-                                                          class="form-control form-control-lg theme-form"
-                                                          row="2"
-                                                          name="txtAbierto"
-                                                          placeholder="Tu respuesta aquí..."
+                                                <textarea id="textoarea4" class="form-control form-control-lg theme-form" row="2" name="txtAbierto" placeholder="Tu respuesta aquí..."
                                                           ng-model="AnswersResult.answers[2][$index]">
                                                 </textarea>
                                             </div>
