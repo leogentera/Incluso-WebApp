@@ -77,8 +77,7 @@ angular
             };
 
             $scope.sendMessage = function() {
-                if($scope.currentMessage.trim() != ""){
-                    debugger;
+                if($scope.currentMessage.trim() != ""){                    
                     triggerAndroidKeyboardHide();
  
                     var newMessage = {
