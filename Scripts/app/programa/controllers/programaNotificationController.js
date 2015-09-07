@@ -11,7 +11,7 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-
+            $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"Notificaciones");
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false;
