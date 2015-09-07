@@ -496,7 +496,6 @@ angular
                     var qty = userAnswersList.length;
                     addHeightConsulta("#listaDinamica", qty);
                 }
-
             }
 
             function updateExploracionFinalSelectedAnswersFinal(index, question) {
