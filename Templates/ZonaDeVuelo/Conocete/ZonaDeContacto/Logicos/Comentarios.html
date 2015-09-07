@@ -62,13 +62,14 @@
 
       <div id="openModal4" class="modalDialog" collapse="forumModals['isAttachmentCollapsed']">
         <div>
-          <div class="add"><form><input type="file" placeholder="Atachea algo..." value="Buscar" ng-model="attachmentToPost"  base-sixty-four-input maxsize="2000000" accept="image/*"></form></div>
+          <!--<div class="add"><form><input type="file" placeholder="Atachea algo..." value="Buscar" ng-model="attachmentToPost"  base-sixty-four-input maxsize="2000000" accept="image/*"></form></div>-->
+          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="clickPostAttachment()" >Buscar</a> {{attachmentToPost.fileName}}
           <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postAttachmentToForum()" >Compartir</a>
         </div>
       </div>
     </section>
     <section class="wall">
-      <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies">
+      <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies | reverse">
         <div class="part">
           <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>{{p.post_author}} <span>public&oacute;:</span>
