@@ -12,13 +12,13 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-
+            $scope.$emit('ShowPreloader'); //show preloader
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            $scope.$emit('HidePreloader'); //hide preloader
+            
             $scope.currentPage = 1;
             $scope.setReadOnly = false;
             $scope.showWarning = false;
@@ -941,7 +941,7 @@ angular
                     $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult.length;
                 }
 
-
+                $scope.$emit('HidePreloader'); //hide preloader
                 function partialErrorCallback(partialActivityAnswers) {
                 }
 
