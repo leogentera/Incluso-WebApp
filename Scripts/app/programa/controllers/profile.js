@@ -12,6 +12,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http) {
 
             _timeout = $timeout;
+            $scope.setToolbar($location.$$path, "");
             _httpFactory = $http;
             $scope.$emit('ShowPreloader');
             console.log("cargando usuario");
