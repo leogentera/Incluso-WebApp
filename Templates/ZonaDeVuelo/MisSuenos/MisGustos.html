@@ -19,7 +19,7 @@
                       <!--Pregunta tipo Opción Multiple + Otro-->
                         <div>                          
                             <div class="txt-renglon txt-bigger">1. De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo para el siguiente reto.</div>
-                            <section class="form txt-renglon txt-bigger part list">
+                            <section id='gustos1' class="form txt-renglon txt-bigger part list">
                                 <input id="q1r0" type="checkbox" value="0" name="check" ng-model='misGustosAnswers[0][0]' />
                                   <label for="q1r0">Ciclismo</label>
                                 <input id="q1r1" type="checkbox" value="1" name="check" ng-model='misGustosAnswers[0][1]' />
@@ -40,7 +40,7 @@
                                   <label for="q1r8">Basebol</label>
                                 <input id="q1r9" type="checkbox" value="9" name="check" ng-model='misGustosAnswers[0][9]' />
                                   <label for="q1r9">Carreras</label>
-                                <input id="q1r10" type="checkbox" value="10" name="check" ng-model='misGustosAnswers[0][10]' />
+                                <input id="q1r10" type="checkbox" value="10" name="check" ng-model='misGustosAnswers[0][10]' ng-click="addCaptureField('gustos1', misGustosAnswers[0][10])"/>
                                 <label for="q1r10">Otro</label>
                                 <div class="form-group theme-form" ng-show="misGustosAnswers[0][10]">
                                     <div class="add">
@@ -55,7 +55,7 @@
                       <!--Pregunta tipo Opción Multiple + Otro-->
                         <div>
                           <div class="txt-renglon txt-bigger">2. De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo para el siguiente reto</div>
-                          <section class="form txt-renglon txt-bigger part list">
+                          <section id='gustos2' class="form txt-renglon txt-bigger part list">
                               <input id="q2r0" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][0]' />
                                 <label for="q2r0">Pintura</label>
                               <input id="q2r1" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][1]' />
@@ -76,7 +76,7 @@
                                 <label for="q2r8">Modelado</label>
                               <input id="q2r9" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][9]' />
                                 <label for="q2r9">Dibujo</label>
-                              <input id="q2r10" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][10]' />
+                              <input id="q2r10" type="checkbox" value="check2" name="check" ng-model='misGustosAnswers[1][10]' ng-click="addCaptureField('gustos2', misGustosAnswers[1][10])"/>
                               <label for="q2r10">Otro</label>
                               <div class="form-group theme-form" ng-show="misGustosAnswers[1][10]">
                                   <div class="add">
@@ -91,7 +91,7 @@
                         <!--Pregunta tipo Opción Multiple + Otro-->
                         <div>
                           <div class="txt-renglon txt-bigger">3. De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo para el siguiente reto</div>
-                          <section class="form txt-renglon txt-bigger part list">
+                          <section id='gustos3' class="form txt-renglon txt-bigger part list">
                               <input id="q3r0" type="checkbox" value="0" name="check" ng-model='misGustosAnswers[2][0]' />
                                 <label for="q3r0">Ir a fiestas</label>
                               <input id="q3r1" type="checkbox" value="1" name="check" ng-model='misGustosAnswers[2][1]' />
@@ -112,7 +112,7 @@
                                 <label for="q3r8">Pasar tiempo en redes sociales</label>
                               <input id="q3r9" type="checkbox" value="9" name="check" ng-model='misGustosAnswers[2][9]' />
                                 <label for="q3r9">Escuchar música</label>
-                              <input id="q3r10" type="checkbox" value="10" name="check" ng-model='misGustosAnswers[2][10]' />
+                              <input id="q3r10" type="checkbox" value="10" name="check" ng-model='misGustosAnswers[2][10]' ng-click="addCaptureField('gustos3', misGustosAnswers[2][10])"/>
                               <label for="q3r10">Otro</label>
                               <div class="form-group theme-form" ng-show="misGustosAnswers[2][10]">
                                   <div class="add">

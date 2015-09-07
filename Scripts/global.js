@@ -521,13 +521,13 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getActivityByActivity_identifier(activity_identifier);
      extraPoints ? '' : extraPoints = 0;
-     profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+     
      
      if (activity_identifier == '1009' || activity_identifier == '1001') {
          activity.points = 0;
      }
      
-     profile.stars = profile.stars + activity.points + Number(extraPoints);
+     profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);  
 
     var data={
       userId: profile.id,
@@ -543,7 +543,7 @@ function updateUserStarsUsingExternalActivity (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getExtActivityByActivity_identifier(activity_identifier);   
-   profile.stars = Number(profile.stars) +  Number(activity.points);
+   //profile.stars = Number(profile.stars) +  Number(activity.points);
     var data={
        userId: profile.id,
        stars: activity.points ,

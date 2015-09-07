@@ -19,7 +19,6 @@ angular
         'MoodleIds',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $filter, MoodleIds) {
 
-
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.$emit('ShowPreloader');
