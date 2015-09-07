@@ -180,8 +180,14 @@ angular
                 if (parentActivity.status == 0) {
                   if (shield != "" && $scope.profile) {
                     //update profile
+                    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+
                     $scope.profile["shield"] = shield;
+                    currentUser.shield = shield;
+
                     _setLocalStorageJsonItem("profile", $scope.profile);
+                    _setLocalStorageJsonItem("CurrentUser", currentUser)
+
                     $scope.saveUser();
                   }
 
