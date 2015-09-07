@@ -97,17 +97,18 @@ angular
             };
 
             var checkForumProgress = function(callback){
-                debugger;
-                callback();
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
+                //debugger;
+                callback();
+                $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
 
-                var numberOfDiscussionsWithMoreThan2Replies = _.filter($scope.activity.discussions, function(d) { return d.replies >= 2});
-                isActivityFinished = numberOfDiscussionsWithMoreThan2Replies.length == $scope.activity.discussions.length;
+                //var numberOfDiscussionsWithMoreThan2Replies = _.filter($scope.activity.discussions, function(d) { return d.replies >= 2});
+                var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2});
+                isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentActivity.discussions.length);
 
                 //Check for activity status
                 var activity_identifier = null;
-                var moodleid;
                 if($scope.moodleId == 151){
                     activity_identifier = 1010;
                     moodleid = 64;
@@ -125,6 +126,7 @@ angular
                     moodleid = 148;
 
                 }
+                var moodleid;
 
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
                 if(activityFromTree.status == 1){
