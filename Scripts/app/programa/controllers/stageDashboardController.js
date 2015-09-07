@@ -86,14 +86,20 @@ angular
                     $("span#index").text((item+1));
                 }
 
-               $("#prev").click(function (ev) {                                        
-                    //owl2.trigger('owl.prev');
-                    owl2.trigger('owl.goTo', currentItem - 1);
+               $("#prev").click(function (ev) {                                                            
+                    if(currentItem)
+                        owl2.trigger('owl.goTo', currentItem - 1);
+                    else
+                        owl2.trigger('owl.prev');
                     ev.preventDefault();
                 });
                  $("#next").click(function (ev) {                    
-                    //owl2.trigger('owl.next');
-                    owl2.trigger('owl.goTo', currentItem + 1);
+                    
+                    console.log(currentItem);
+                    if(currentItem)
+                        owl2.trigger('owl.goTo', currentItem + 1);
+                    else
+                        owl2.trigger('owl.next');
                     ev.preventDefault();
                 });
 
