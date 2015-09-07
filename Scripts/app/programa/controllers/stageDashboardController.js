@@ -213,12 +213,12 @@ angular
             
             //Load challenges images
             $scope.retosIconos = {
-                "Exploración inicial": "assets/images/challenges/stage-1/img-evaluacion inicial.svg",
+                "Exploración inicial": "assets/images/challenges/stage-1/img-evaluacion-inicial.svg",
                 "Cuarto de recursos": "assets/images/challenges/stage-1/img-cuarto-recursos.svg",
                 "Conócete": "assets/images/challenges/stage-1/img-conocete.svg",
                 "Mis sueños": "assets/images/challenges/stage-1/img-mis-suenos.svg",
                 "Cabina de soporte": "assets/images/challenges/stage-1/img-cabina-soporte.svg",
-                "Exploración final": "assets/images/challenges/stage-1/img-evaluacion final.svg"
+                "Exploración final": "assets/images/challenges/stage-1/img-evaluacion-final.svg"
             };
 
             $scope.challengeDescription= {
