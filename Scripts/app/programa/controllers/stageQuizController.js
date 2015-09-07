@@ -46,6 +46,10 @@ angular
                 }
             };
 
+            $scope.show = function() {
+                console.log($scope.AnswersResult.answers[0]);
+            };
+
 
             $scope.finishActivity = function () {
                 //Activity completed
@@ -183,13 +187,12 @@ angular
 
             $scope.validateAnsweredQuestions = function () {
 
-                //var validationMenssage = "Asegurate de contestar todas las preguntas antes de guardar";
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
                 if ($scope.AnswersResult.answers[0] != null) {
 
-                    $scope.AnswersResult.answers[1][5] = $scope.AnswersResult.answers[1][5].replace(/\r?\n|\r/g, ';').trim();
-                    console.log($scope.AnswersResult.answers[1]);
+                    //$scope.AnswersResult.answers[1][5] = $scope.AnswersResult.answers[1][5].replace(/\r?\n|\r/g, ';').trim();
+                    console.log("AnswersResult.answers = " + $scope.AnswersResult.answers);
                     if (( $scope.AnswersResult.answers[1][0] == true ||
                         $scope.AnswersResult.answers[1][1] == true ||
                         $scope.AnswersResult.answers[1][2] == true ||
@@ -297,11 +300,11 @@ angular
                     case 0:
                         if (question.userAnswer != "No") {
                             console.log("question.userAnswer = " + question.userAnswer);
-                            $scope.AnswersResult.answers[0] = 0;
+                            $scope.AnswersResult.answers[0] = "0";
                         }
                         else if (question.userAnswer == "No") {
                             console.log("question.userAnswer = " + question.userAnswer);
-                            $scope.AnswersResult.answers[0] = 1;
+                            $scope.AnswersResult.answers[0] = "1";
                         }
                         break;
 
@@ -597,7 +600,7 @@ angular
                         $scope.setReadOnly = true;
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
                     }
-                    //console.log("setReadOnly: " + $scope.setReadOnly);
+
                     $scope.activity = activity;
                     $scope.activityFinished = activityFinished;
                 }
@@ -897,7 +900,7 @@ angular
                  showWarningAndGoToTop();
                  }
                  */
-            }
+            };
 
             $scope.validateExploracionFinalAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";

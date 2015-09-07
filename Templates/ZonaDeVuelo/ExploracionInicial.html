@@ -26,12 +26,14 @@
                                     <input id="tru" type="radio" name="vf"
                                            ng-model="AnswersResult.answers[0]"
                                            value="0"
+                                           ng-click="show()"
                                            />
                                     <label for="tru">Sí</label>
 
                                     <input id="fols" type="radio" name="vf"
                                            ng-model="AnswersResult.answers[0]"
                                            value="1"
+                                           ng-click="show()"
                                            />
                                     <label for="fols">No</label>
                                 </div>
@@ -113,8 +115,7 @@
                                                           row="2"
                                                           name="txtAbierto"
                                                           placeholder="Tu respuesta aquí..."
-                                                          ng-model="AnswersResult.answers[2][$index]"
-                                                          >
+                                                          ng-model="AnswersResult.answers[2][$index]">
                                                 </textarea>
                                             </div>
 
