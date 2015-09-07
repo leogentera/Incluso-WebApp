@@ -66,6 +66,7 @@ angular
                 });    
 
                 this.currentItem = $scope.idReto;
+                var currentItem;
                 owl.trigger("owl.goTo", $scope.idReto);
                     $("span#index").text(($scope.idReto+1));  
 
@@ -73,27 +74,29 @@ angular
                     $("span#index").text(($scope.idReto+1));            
 
                 function callback1(event) {
-                    var item = this.currentItem;
-                    owl.trigger("owl.goTo", item);
-                    $("span#index").text((item+1));
-                }
-
-                function callback2(event) {
-                    var item = this.currentItem;
+                    var item = this.currentItem;                    
+                    currentItem = parseInt(this.owl.currentItem);
                     owl2.trigger("owl.goTo", item);
                     $("span#index").text((item+1));
                 }
 
-                $("#next").click(function (ev) {
-                    owl.trigger('owl.next');
-                    ev.preventDefault();
+                function callback2(event) {
+                    item = this.currentItem;                    
+                    owl.trigger("owl.goTo", item);
+                    $("span#index").text((item+1));
+                }
 
+               $("#prev").click(function (ev) {                                        
+                    //owl2.trigger('owl.prev');
+                    owl2.trigger('owl.goTo', currentItem - 1);
+                    ev.preventDefault();
+                });
+                 $("#next").click(function (ev) {                    
+                    //owl2.trigger('owl.next');
+                    owl2.trigger('owl.goTo', currentItem + 1);
+                    ev.preventDefault();
                 });
 
-                $("#prev").click(function (ev) {
-                    owl.trigger('owl.prev');
-                    ev.preventDefault();
-                });
             }, 1000);         
 
             //Opens stage welcome message if first time visit
