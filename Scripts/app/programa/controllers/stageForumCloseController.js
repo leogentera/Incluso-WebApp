@@ -14,6 +14,8 @@ angular
             _httpFactory = $http;
             _timeout = $timeout;
 
+            localStorage.removeItem('currentForumsProgress');
+
             $scope.currentChallenge = 2;
              var userCourse = JSON.parse(localStorage.getItem('usercourse'));
              var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
@@ -33,7 +35,7 @@ angular
             $scope.$emit('HidePreloader');
 
             var endForumActivity = function(moodleid){
-                debugger;
+                //debugger;
                var parentActivity = getActivityByActivity_identifier($routeParams.moodleid, userCourse);
                var activities = parentActivity.activities;
 
