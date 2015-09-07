@@ -38,8 +38,12 @@ angular
             $scope.misSuenosAnswers = [[], [], [], []];
             $scope.exploracionFinal = ["", "", "", "", ""];
 
-            $scope.addCaptureField = function () {
-                //addHeight("#owl-carousel");
+            $scope.addCaptureField = function (elem, value) {
+                if (value) {
+                    addHeight2(elem);
+                } else {
+                    reduceHeight(elem);
+                }
             };
 
 
@@ -178,12 +182,13 @@ angular
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
                 if ($scope.AnswersResult.answers[0] != null) {
-                    if ($scope.AnswersResult.answers[1][0] == true ||
-                        $scope.AnswersResult.answers[1][1] == true ||
-                        $scope.AnswersResult.answers[1][2] == true ||
-                        $scope.AnswersResult.answers[1][3] == true) {
 
-                        //Check the pair checkbox - input field
+                    $scope.AnswersResult.answers[1][5] = $scope.AnswersResult.answers[1][5].replace(/\r?\n|\r/g, " ").trim();
+                    if ( ( $scope.AnswersResult.answers[1][0] == true ||
+                           $scope.AnswersResult.answers[1][1] == true ||
+                           $scope.AnswersResult.answers[1][2] == true ||
+                           $scope.AnswersResult.answers[1][3] == true) || ($scope.AnswersResult.answers[1][4] == true && $scope.AnswersResult.answers[1][5] != '')) {
+                            console.log("La 2 es válida");
 
                         if ($scope.AnswersResult.answers.length[2] != 0) {
                             //Solving for the '\n' character
@@ -694,6 +699,17 @@ angular
                     $scope.finalHeight = angular.element(lista).height() + 177;
                     angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
                 }
+
+                function addHeight2(lista) {
+                    $scope.finalHeight = angular.element('.owl-wrapper-outer').height() + 100;
+                    angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
+                }
+
+                function reduceHeight(lista) {
+                    $scope.finalHeight = angular.element('.owl-wrapper-outer').height() - 100;
+                    angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
+                }
+
 
                 function removeHeight(lista) {
                     $scope.finalHeight = angular.element(lista).height() - 172;
