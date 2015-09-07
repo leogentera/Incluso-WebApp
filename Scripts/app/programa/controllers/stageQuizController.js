@@ -28,7 +28,7 @@ angular
 
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial"
                 "userid": 0,
-                "answers": [null, [0, 0, 0, 0, 0], [], null, []],
+                "answers": [null, [0, 0, 0, 0, 0, ''], [], null, []],
                 "activityidnumber": 0,                         //$scope.activity.coursemoduleid
                 "like_status": 0
             };
@@ -187,6 +187,13 @@ angular
                         $scope.AnswersResult.answers[1][1] == true ||
                         $scope.AnswersResult.answers[1][2] == true ||
                         $scope.AnswersResult.answers[1][3] == true) {
+
+                        //Check the pair checkbox - input field
+
+
+
+
+
                         if ($scope.AnswersResult.answers.length[2] != 0) {
                             //Solving for the '\n' character
                             for (var a = 0; a < $scope.AnswersResult.answers[2].length; a++) {

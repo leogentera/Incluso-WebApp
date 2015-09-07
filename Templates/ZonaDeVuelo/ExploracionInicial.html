@@ -43,7 +43,7 @@
                             <div class="txt-renglon txt-bigger">2. ¿Qué de lo siguiente has intentado hacer para
                                 lograrlo? Puedes elegir más de una.
                             </div>
-                            <section class="form txt-renglon txt-bigger part list">
+                            <section id='exploracion2' class="form txt-renglon txt-bigger part list">
                                 <input id="check1" type="checkbox" value="check1" name="check"
                                        ng-model="AnswersResult.answers[1][0]" ng-disabled="setReadOnly"
                                         />
@@ -64,14 +64,15 @@
 
                                 <input id="check5" type="checkbox" value="check1" name="check"
                                        ng-model="AnswersResult.answers[1][4]" ng-disabled="setReadOnly"
-                                        />
+                                       ng-click="addCaptureField('exploracion2', AnswersResult.answers[1][4])" />
                                 <label for="check5">Otro</label>
 
                                 <div class="form-group theme-form" ng-show="AnswersResult.answers[1][4]">
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
                                         <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
+                                                  name="opciones" placeholder="¿Qué has intentado?"
+                                                  ng-model="AnswersResult.answers[1][5]">
                                         </textarea>
                                     </div>
                                 </div>
