@@ -236,6 +236,7 @@ var _updateBadgeStatus = function(coursemoduleid, callback){
       for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
         if (badges[indexBadge].id == currentBadge.badgeId) {
           profile.badges[indexBadge].status = "won";
+          moodleFactory.Services.PutAsyncProfile(_getItem("userId"), profile,function(){},function(){});
           _setLocalStorageJsonItem("profile",profile);
         }else{
           //This else statement is set to avoid errors on execution flows
@@ -500,7 +501,8 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
       }
     }
     stars += (subactivitiesCourseModuleId.length == parentActivity.activities.length ? parentActivity.points : 0);
-    profile.stars += stars;
+    profile.stars = parseInt(profile.stars) + stars;
+    currentUser.stars = profile.stars;
     if (stars > 0) {
       var data = {
         userId: profile.id,
@@ -510,6 +512,8 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
         date: getdate()
       };
       moodleFactory.Services.PutStars(data, profile, currentUser.token, successCallback, errorCallback);
+      _setLocalStorageJsonItem("profile", profile)
+      _setLocalStorageJsonItem("CurrentUser", currentUser)
     }
 }
 
@@ -540,7 +544,7 @@ function updateUserStarsUsingExternalActivity (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getExtActivityByActivity_identifier(activity_identifier);   
-   profile.stars = Number(profile.stars) +  Number(activity.points);
+   //profile.stars = Number(profile.stars) +  Number(activity.points);
     var data={
        userId: profile.id,
        stars: activity.points ,
