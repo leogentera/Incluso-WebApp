@@ -81,13 +81,7 @@ angular
             }
 
             $scope.login = function (username, password) {  
-                console.log('Login action started'); //- debug
-
-                var isModelValid = validateModel();
-                console.log('isValid: ' + isModelValid); //- debug
-
-                if (isModelValid) {
-
+                               
                     // reflect loading state at UI
                     $scope.$emit('ShowPreloader'); //show preloader
                     console.log('preloading...'); //- debug
@@ -141,11 +135,7 @@ angular
                             $scope.$emit('scrollTop'); //- scroll
                             $scope.isLogginIn = false;
                         });
-                } else {
-                    console.log('End'); //- debug
-                    //$scope.scrollToTop();
-                    $scope.$emit('scrollTop'); //- scroll
-                }
+               
             }
 
             $scope.loginWithFacebook = function () {
@@ -205,19 +195,7 @@ angular
                 //$scope.scrollToTop();
                 $scope.$emit('scrollTop'); //- scroll
             }
-
-            function validateModel() {
-                var errors = [];
-
-                 var passwordPolicy = "debe ser almenos de 8 caracterres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
-                
-                if (!$scope.loginForm.userName.$valid) { errors.push("formato de usuario incorrecto."); }
-                if (!$scope.loginForm.password.$valid) { errors.push("formato de contraseña incorrecto. La contraseña " + passwordPolicy); }
-
-                $scope.userCredentialsModel.modelState.errorMessages = errors;
-
-                return (errors.length === 0);
-            }
+            
 
             $scope.loadCredentials();
 
