@@ -30,150 +30,86 @@ angular
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);   
             
-            //setTimeout(function () {            
-            //var hits = 1;
+            setTimeout(function () {            
+            var hits = 1;
 
                 //Carrusel de retos
-               //  var owl2 = $("#challengesCarousel");
+                var owl2 = $("#owl-demo2");
 
-               //  owl2.owlCarousel({
-               //      navigation: false,
-               //      pagination: false,
-               //      //paginationSpeed: 1000,
-               //      goToFirstSpeed: 2000,
-               //      singleItem: true,
-               //      autoHeight: true,
-               //      touchDrag:false,
-               //      mouseDrag:false,
-               //      transitionStyle:"fade",
-               //      afterMove: callback1
-               //  });
+                owl2.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    //paginationSpeed: 1000,
+                    goToFirstSpeed: 2000,
+                    singleItem: true,
+                    autoHeight: true,
+                    touchDrag:false,
+                    mouseDrag:false,
+                    transitionStyle:"fade",
+                    afterMove: callback1
+                });
 
-               //  //Carrusel de Actividades
-               //  var owl = $("#activitiesCarousel");
+                //Carrusel de Actividades
+                var owl = $("#owl-demo");
 
-               //  owl.owlCarousel({
-               //      navigation: false,
-               //      pagination: false,
-               //      //paginationSpeed: 1000,
-               //      goToFirstSpeed: 2000,
-               //      singleItem: true,
-               //      autoHeight: true,
-               //      touchDrag:false,
-               //      mouseDrag:false,
-               //      transitionStyle:"fade",
-               //      afterMove: callback2
-               //  });    
+                owl.owlCarousel({
+                    navigation: false,
+                    pagination: false,
+                    //paginationSpeed: 1000,
+                    goToFirstSpeed: 2000,
+                    singleItem: true,
+                    autoHeight: true,
+                    touchDrag:false,
+                    mouseDrag:false,
+                    transitionStyle:"fade",
+                    afterMove: callback2
+                });    
 
-               //  this.currentItem = $scope.idReto;
-               //  var currentItem;
-               //  owl.trigger("owl.goTo", $scope.idReto);
-               //      $("span#index").text(($scope.idReto+1));  
-
-               //  owl2.trigger("owl.goTo", $scope.idReto);
-               //      $("span#index").text(($scope.idReto+1));            
-
-               //  function callback1(event) {
-               //      var item = this.currentItem;                    
-               //      currentItem = parseInt(this.owl.currentItem);
-               //      owl2.trigger("owl.goTo", item);
-               //      $("span#index").text((item+1));
-               //  }
-
-               //  function callback2(event) {
-               //      item = this.currentItem;                    
-               //      owl.trigger("owl.goTo", item);
-               //      $("span#index").text((item+1));
-               //  }
-
-               // $("#prev").click(function (ev) {                                                            
-               //      if(currentItem){
-               //          owl.trigger('owl.goTo', currentItem - 1);
-               //          owl2.trigger('owl.goTo', currentItem - 1);
-               //      }
-               //      else{
-               //          owl.trigger('owl.prev');
-               //          owl2.trigger('owl.prev');
-               //      }
-               //      ev.preventDefault();
-               //  });
-               //   $("#next").click(function (ev) {                                        
-               //      if(currentItem){
-               //          owl.trigger('owl.goTo', currentItem + 1);
-               //          owl2.trigger('owl.goTo', currentItem + 1);
-               //      }
-               //      else{
-               //          owl.trigger('owl.next');
-               //          owl2.trigger('owl.next');
-               //      }
-               //      ev.preventDefault();
-               //  });
                 this.currentItem = $scope.idReto;
-                var $challengesCarousel = $("#challengesCarousel");
-                var $activitiesCarousel = $("#activitiesCarousel");
-                var $prev = $("#prev");
-                var $next = $("#next");
+                var currentItem;
+                owl.trigger("owl.goTo", $scope.idReto);
+                    $("span#index").text(($scope.idReto+1));  
 
-                var prevItem = function(e) {
-                    $challengesCarousel.trigger('owl.prev');
-                    $activitiesCarousel.trigger('owl.prev');
-                    console.log($scope.thisStage.challenges);
-                }
-                var nextItem = function(e) {
-                    $challengesCarousel.trigger('owl.next');
-                    $activitiesCarousel.trigger('owl.next');
-                    console.log($scope.thisStage.challenges);
+                owl2.trigger("owl.goTo", $scope.idReto);
+                    $("span#index").text(($scope.idReto+1));            
+
+                function callback1(event) {
+                    var item = this.currentItem;                    
+                    currentItem = parseInt(this.owl.currentItem);
+                    owl2.trigger("owl.goTo", item);
+                    $("span#index").text((item+1));
                 }
 
-                var callback1 = function(e) {
-                    var item = this.currentItem;
-                    $challengesCarousel.trigger("owl.goTo", item);
-                }
-                var callback2 = function(e) {
-                    var item = this.currentItem;
-                    $activitiesCarousel.trigger("owl.goTo", item);
+                function callback2(event) {
+                    item = this.currentItem;                    
+                    owl.trigger("owl.goTo", item);
+                    $("span#index").text((item+1));
                 }
 
-                var initChallengesCarousel = function() {
-                    $challengesCarousel.owlCarousel({
-                        navigation: false,
-                        pagination: false,
-                        goToFirstSpeed: 2000,
-                        singleItem: true,
-                        autoHeight: true,
-                        touchDrag:false,
-                        mouseDrag:false,
-                        transitionStyle:"fade",
-                        afterMove: callback1
-                    });
-                    //- $challengesCarousel.owlCarousel();
-                }
-                var initActivitiesCarousel = function() {
-                    $activitiesCarousel.owlCarousel({
-                        navigation: false,
-                        pagination: false,
-                        goToFirstSpeed: 2000,
-                        singleItem: true,
-                        autoHeight: true,
-                        touchDrag:false,
-                        mouseDrag:false,
-                        transitionStyle:"fade",
-                        afterMove: callback2
-                    });
-                    //- $challengesCarousel.owlCarousel();
-                }
-                var initControlsBinding = function() {
-                    $prev.click(nextItem);
-                    $next.click(nextItem);
-                }
+               $("#prev").click(function (ev) {                                                            
+                    if(currentItem){
+                        owl.trigger('owl.goTo', currentItem - 1);
+                        owl2.trigger('owl.goTo', currentItem - 1);
+                    }
+                    else{
+                        owl.trigger('owl.prev');
+                        owl2.trigger('owl.prev');
+                    }
+                    ev.preventDefault();
+                });
+                 $("#next").click(function (ev) {                                        
+                    if(currentItem){
+                        owl.trigger('owl.goTo', currentItem + 1);
+                        owl2.trigger('owl.goTo', currentItem + 1);
+                    }
+                    else{
+                        owl.trigger('owl.next');
+                        owl2.trigger('owl.next');
+                    }
+                    ev.preventDefault();
+                });
 
-                $timeout(function() {
-                  initChallengesCarousel();
-                  initActivitiesCarousel();
-                  initControlsBinding();
-                }, 1000);
-
-            //}, 2000);         
+            }, 1000);         
 
             //Opens stage welcome message if first time visit
             $scope.openModal_StageFirstTime = function (size) {
