@@ -104,7 +104,7 @@
           <div ng-show="p.likes" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto</div></div>
 
 
-          <div id="item{{$index}}" ng-repeat="r in p.replies">
+          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost[p.post_id]">
 
             <div class="coment block"><img src="assets/images/avatar.svg">
               <div>{{r.postAutor}} <span>publicó:</span>   <div>{{r.message}}</div>
@@ -112,10 +112,13 @@
             </div>
           </div>
 
-        <div class="vermas" ng-show="false">
-        Ver más comentarios
-        <i class="icomoon icon-plus"></i>
+        <div class="coment block" ng-show="(showAllCommentsByPost[p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+          <div class="vermas">
+            <span class="icomoon icon-show-more"></span>
+            Mostrar más comentarios...
+          </div>
         </div>
+        
         <div class="social">
         <div><i class="icomoon icon-required"></i> Me gusta
         </div>
@@ -135,6 +138,12 @@
         </div> </section>
     </div>
 
+<section>
+  <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
+     <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
+  </a>          
+  <div class="txt-renglon" ng-show="!morePendingPosts">No se encontraron más posts</div>
+</section>
 
 <section>
 <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
