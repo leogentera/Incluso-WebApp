@@ -19,6 +19,10 @@ angular
             $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+
+            $scope.scrollToTop();
+
+
             $scope.currentPage = 1;
             $scope.setReadOnly = false;
             $scope.showWarning = false;
@@ -244,6 +248,7 @@ angular
                                         if (lastQuestionValidation) {
                                             $scope.showWarning = false;
                                             $scope.navigateToPage(2);
+                                            $scope.scrollToTop();
                                         } else {
                                             showWarningAndGoToTop();
                                         }
@@ -283,6 +288,7 @@ angular
                                 if ($scope.AnswersResult.answers[4] != null) {
                                     $scope.showWarning = false;
                                     $scope.navigateToPage(2);
+                                    $scope.scrollToTop();
                                 }
                                 else {
                                     showWarningAndGoToTop();
@@ -608,6 +614,7 @@ angular
 
                     var activityFinished = false;
                     console.log("userprofile: " + $scope.userprofile.id);
+
                     $scope.activity_status = activity.status;
 
                     if (activity.status != 0) {
@@ -749,6 +756,7 @@ angular
                 if (validAnswers == 3) {
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
+                    $scope.scrollToTop();
                 } else {
                     showWarningAndGoToTop();
                 }
@@ -821,6 +829,7 @@ angular
                     console.log('!HURAA');
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
+                    $scope.scrollToTop();
                 } else {
                     showWarningAndGoToTop();
                 }
@@ -898,6 +907,7 @@ angular
                     console.log('!HURAA');
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
+                    $scope.scrollToTop();
                 } else {
                     showWarningAndGoToTop();
                 }
@@ -950,6 +960,7 @@ angular
 
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
+                    $scope.scrollToTop();
                 }
             };
 
