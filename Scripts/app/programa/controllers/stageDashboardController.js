@@ -30,8 +30,8 @@ angular
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);   
             
-            setTimeout(function () {            
-            var hits = 1;
+            //setTimeout(function () {            
+            //var hits = 1;
 
                 //Carrusel de retos
                //  var owl2 = $("#challengesCarousel");
@@ -117,10 +117,12 @@ angular
                 var prevItem = function(e) {
                     $challengesCarousel.trigger('owl.prev');
                     $activitiesCarousel.trigger('owl.prev');
+                    console.log($scope.thisStage.challenges);
                 }
                 var nextItem = function(e) {
                     $challengesCarousel.trigger('owl.next');
-                    $activitiesCarousel.trigger('owl.next');                    
+                    $activitiesCarousel.trigger('owl.next');
+                    console.log($scope.thisStage.challenges);
                 }
 
                 var callback1 = function(e) {
@@ -129,7 +131,7 @@ angular
                 }
                 var callback2 = function(e) {
                     var item = this.currentItem;
-                    $$activitiesCarousel.trigger("owl.goTo", item);
+                    $activitiesCarousel.trigger("owl.goTo", item);
                 }
 
                 var initChallengesCarousel = function() {
@@ -142,12 +144,12 @@ angular
                         touchDrag:false,
                         mouseDrag:false,
                         transitionStyle:"fade",
-                        afterMove: null //callback1
+                        afterMove: callback1
                     });
                     //- $challengesCarousel.owlCarousel();
                 }
                 var initActivitiesCarousel = function() {
-                    $challengesCarousel.owlCarousel({
+                    $activitiesCarousel.owlCarousel({
                         navigation: false,
                         pagination: false,
                         goToFirstSpeed: 2000,
@@ -156,7 +158,7 @@ angular
                         touchDrag:false,
                         mouseDrag:false,
                         transitionStyle:"fade",
-                        afterMove: null //callback2
+                        afterMove: callback2
                     });
                     //- $challengesCarousel.owlCarousel();
                 }
@@ -165,11 +167,13 @@ angular
                     $next.click(nextItem);
                 }
 
-                initChallengesCarousel();
-                initActivitiesCarousel();
-                initControlsBinding();
+                $timeout(function() {
+                  initChallengesCarousel();
+                  initActivitiesCarousel();
+                  initControlsBinding();
+                }, 1000);
 
-            }, 1000);         
+            //}, 2000);         
 
             //Opens stage welcome message if first time visit
             $scope.openModal_StageFirstTime = function (size) {
