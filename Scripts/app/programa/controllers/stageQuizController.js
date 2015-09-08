@@ -1059,7 +1059,7 @@ angular
             $modalInstance.dismiss('cancel');            
             setTimeout(function(){
                 $scope.$emit('HidePreloader');    
-                alert("hide");
+                
             }, 1000);
             
         };
