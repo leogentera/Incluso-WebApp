@@ -15,6 +15,7 @@ angular
             //Turn on Preloader
             $scope.$emit('ShowPreloader'); //show preloader
             _httpFactory = $http;
+            _location = $location;
             _timeout = $timeout;
             $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
@@ -121,9 +122,7 @@ angular
                 //console.log("activityModel = " + JSON.stringify(activityModel));
                 console.log("answersResult = " + JSON.stringify($scope.AnswersResult));
 
-                _endActivity(activityModel);
-                var currentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + $scope.currentChallenge);
+                _endActivity(activityModel,null,$scope.currentChallenge);                
             };
 
 

@@ -86,10 +86,17 @@
             <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> j&oacute;venes les gusta esto
             </div>
           </div>
-          <div id="item{{$index}}" ng-repeat="r in p.replies">
+          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost[p.post_id]">
             <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
               <div>{{r.post_author}} <span>coment&oacute;:</span>   <div>{{r.message}}</div>
               </div>
+            </div>
+          </div>
+          
+          <div class="coment block" ng-show="(showAllCommentsByPost[p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+            <div class="vermas">
+              <span class="icomoon icon-show-more"></span>
+              Mostrar más comentarios...
             </div>
           </div>
 
@@ -117,6 +124,13 @@
             </div>
          </section>
       </div>
+      
+      <section>
+        <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
+           <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
+        </a>          
+        <div class="txt-renglon" ng-show="!morePendingPosts">No se encontraron más posts</div>
+      </section>
 
       <section>
         <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
