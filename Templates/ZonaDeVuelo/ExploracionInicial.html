@@ -8,237 +8,240 @@
     </div>
 
 
-        <article class="blueprint evaluation">
-            <div class="pages">
-                <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
-                    <section id="title">
-                        <div class="subtitle">Exploración inicial</div>
-                        <div class="txt-renglon">Responde lo siguiente:</div>
-                    </section>
-                    <div id="owl" class="owl-carousel">
-                        <!--Pregunta tipo Si/No-->
-                        <div>
-                            <div class="txt-renglon txt-bigger">1. ¿Alguna vez has tenido un sueño que no has sabido
-                                cómo alcanzar?
-                            </div>
-                            <section class="form txt-renglon txt-bigger part list">
-                                <div class="tnf">
-                                    <input id="tru" type="radio" name="vf"
-                                           ng-model="AnswersResult.answers[0]"
-                                           value="0"
-                                           ng-click="show()"
-                                           />
-                                    <label for="tru">Sí</label>
-
-                                    <input id="fols" type="radio" name="vf"
-                                           ng-model="AnswersResult.answers[0]"
-                                           value="1"
-                                           ng-click="show()"
-                                           />
-                                    <label for="fols">No</label>
-                                </div>
-                            </section>
+    <article class="blueprint evaluation">
+        <div class="pages">
+            <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
+                <section id="title">
+                    <div class="subtitle">Exploración inicial</div>
+                    <div class="txt-renglon">Responde lo siguiente:</div>
+                </section>
+                <div id="owl" class="owl-carousel">
+                    <!--Pregunta tipo Si/No-->
+                    <div>
+                        setReadOnly: {{setReadOnly}}
+                        <div class="txt-renglon txt-bigger">1. ¿Alguna vez has tenido un sueño que no has sabido
+                            cómo alcanzar?
                         </div>
+                        <section class="form txt-renglon txt-bigger part list">
+                            <div class="tnf">
+                                <input id="tru" type="radio" name="vf"
+                                       ng-model="AnswersResult.answers[0]"
+                                       value="0"
+                                       ng-click="show()"
+                                       ng-disabled="setReadOnly"/>
+                                <label for="tru">Sí</label>
 
-                        <!--Pregunta tipo Opción Multiple + Otro-->
-                        <div>
-                            <div class="txt-renglon txt-bigger">2. ¿Qué de lo siguiente has intentado hacer para
-                                lograrlo? Puedes elegir más de una.
+                                <input id="fols" type="radio" name="vf"
+                                       ng-model="AnswersResult.answers[0]"
+                                       value="1"
+                                       ng-click="show()"
+                                       ng-disabled="setReadOnly"/>
+                                <label for="fols">No</label>
                             </div>
-                            <section id='exploracion2' class="form txt-renglon txt-bigger part list" ng-click="show1()">
-                                <input id="check1" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResult.answers[1][0]"
-                                        />
-                                <label for="check1">Pedir ayuda a alguien</label>
-                                <input id="check2" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResult.answers[1][1]"
-                                        />
-                                <label for="check2">Investigar del tema</label>
-                                <input id="check3" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResult.answers[1][2]"
-                                        />
-                                <label for="check3">Nada, porque parece imposible</label>
+                        </section>
+                    </div>
 
-                                <input id="check4" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResult.answers[1][3]" ng-click="showme()" />
-                                <label for="check4">Trazar un plan de lo que necesito hacer</label>
+                    <!--Pregunta tipo Opción Multiple + Otro-->
+                    <div>
+                        <div class="txt-renglon txt-bigger">2. ¿Qué de lo siguiente has intentado hacer para
+                            lograrlo? Puedes elegir más de una.
+                        </div>
+                        <section id='exploracion2' class="form txt-renglon txt-bigger part list" ng-click="show1()">
+                            <input id="check1" type="checkbox" value="0" name="check"
+                                   ng-model="AnswersResult.answers[1][0]" ng-disabled="setReadOnly"/>
+                            <label for="check1">Pedir ayuda a alguien</label>
+                            <input id="check2" type="checkbox" value="1" name="check"
+                                   ng-model="AnswersResult.answers[1][1]" ng-disabled="setReadOnly"/>
+                            <label for="check2">Investigar del tema</label>
+                            <input id="check3" type="checkbox" value="2" name="check"
+                                   ng-model="AnswersResult.answers[1][2]" ng-disabled="setReadOnly"/>
+                            <label for="check3">Nada, porque parece imposible</label>
+                            <input id="check4" type="checkbox" value="3" name="check"
+                                   ng-model="AnswersResult.answers[1][3]" ng-disabled="setReadOnly"
+                                   ng-click="showme()"/>
+                            <label for="check4">Trazar un plan de lo que necesito hacer</label>
+                            <input id="check5" type="checkbox" value="4" value="check1" name="check"
+                                   ng-model="AnswersResult.answers[1][4]"
+                                   ng-click="addCaptureField('exploracion2', AnswersResult.answers[1][4])"
+                                   ng-disabled="setReadOnly"/>
+                            <label for="check5">Otro</label>
 
-                                <input id="check5"
-                                       type="checkbox"
-                                       value="check1"
-                                       name="check"
-                                       ng-model="AnswersResult.answers[1][4]"
-                                       ng-click="addCaptureField('exploracion2', AnswersResult.answers[1][4])" />
-                                <label for="check5">Otro</label>
-
-                                <div class="form-group theme-form"
-                                     ng-show="AnswersResult.answers[1][4]">
-                                    <div class="add">
-                                        <span class="icomoon icon-edit"></span>
+                            <div class="form-group theme-form" ng-show="AnswersResult.answers[1][4]">
+                                <div class="add">
+                                    <span class="icomoon icon-edit"></span>
                                         <textarea id="" class="form-control form-control-lg theme-form" row="2"
                                                   name="opciones" placeholder="¿Qué has intentado?"
-                                                  ng-model="AnswersResult.answers[1][5]"
-                                                >
+                                                  ng-readonly="setReadOnly">
                                         </textarea>
+                                </div>
+                            </div>
+
+
+                            <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
+                            <label for="otros">Otros</label>-->
+                        </section>
+                        <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
+                          <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
+                        </div>-->
+                    </div>
+
+                    <!--Pregunta tipo Lista Dinámica-->
+                    <div id="listaDinamica4">
+                        <div class="txt-renglon txt-bigger">3. ¿Qué persona exitosa que conoces te inspira?</div>
+
+                        <ul class="block-list clearfix">
+                            <li ng-repeat="ability in AnswersResult.answers[2] track by $index">
+                                <section class="form txt-renglon part list clearfix">
+                                    <div class="form-group theme-form">
+
+                                        <div class="clearfix">
+                                            <span>Persona {{AnswersResult.answers[2].indexOf(ability) + 1}}</span>
+                                            <a class="btn btn-circle pull-right"
+                                               ng-click="deletePerson($index);" ng-show="activity_status == 0">
+                                                <span class="icomoon icon-cross white"></span>
+                                            </a>
+                                        </div>
+                                        <div class="add">
+                                            <span class="icomoon icon-edit"></span>
+                                                <textarea id="textoarea4"
+                                                          class="form-control form-control-lg theme-form" row="2"
+                                                          name="txtAbierto" placeholder="Tu respuesta aquí..."
+                                                          ng-model="AnswersResult.answers[2][$index]"
+                                                          ng-readonly="setReadOnly">
+                                                </textarea>
+                                        </div>
+
                                     </div>
-                                </div>
+                                </section>
+                            </li>
+                        </ul>
 
-
-                                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                                <label for="otros">Otros</label>-->
-                            </section>
-                            <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                              <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-                            </div>-->
-                        </div>
-
-                        <!--Pregunta tipo Lista Dinámica-->
-                        <div id="listaDinamica4">
-                            <div class="txt-renglon txt-bigger">3. ¿Qué persona exitosa que conoces te inspira?</div>
-
-                            <ul class="block-list clearfix">
-                                <li ng-repeat="ability in AnswersResult.answers[2] track by $index">
-                                    <section class="form txt-renglon part list clearfix">
-                                        <div class="form-group theme-form">
-
-                                            <div class="clearfix">
-                                                <span>Persona {{AnswersResult.answers[2].indexOf(ability) + 1}}</span>
-                                                <a class="btn btn-circle pull-right"
-                                                   ng-click="deletePerson($index);">
-                                                    <span class="icomoon icon-cross white"></span>
-                                                </a>
-                                            </div>
-                                            <div class="add">
-                                                <span class="icomoon icon-edit"></span>
-                                                <textarea id="textoarea4" class="form-control form-control-lg theme-form" row="2" name="txtAbierto" placeholder="Tu respuesta aquí..."
-                                                          ng-model="AnswersResult.answers[2][$index]">
-                                                </textarea>
-                                            </div>
-
-                                        </div>
-                                    </section>
-                                </li>
-                            </ul>
-
-                            <div class="txt-renglon">
-                                <a href="" class="btn btn-lg btn-block btn-add" ng-click="addPerson();" >
-                                    <span class="icomoon icon-plus"></span>Agregar persona...
-                                </a>
-                            </div>
-                        </div>
-
-
-                        <!--Pregunta tipo Texto Abierto-->
-                        <!--
-                        <div>
-                            <div class="txt-renglon txt-bigger">3. ¿Qué persona exitosa que conoces te inspira?</div>
-                            <section class="form txt-renglon txt-bigger part list">
-                                <div class="add">
-                                    <span class="icomoon icon-edit"></span> 
-                                    <textarea id="texto1" row="2" name="txtAbierto" placeholder="Tu respuesta aquí..."
-                                              ng-model="AnswersResult.answers[2]" ng-readonly="setReadOnly"></textarea>
-                                </div>
-                            </section>
-                        </div>
-                        -->
-                        <!--Pregunta tipo Selección Simple-->
-                        <div>
-                            <div class="txt-renglon txt-bigger">4. ¿Sabes cuáles son tus habilidades?</div>
-                            <section class="form txt-renglon txt-bigger part list">
-                                <input id="option1" type="radio" value="0" name="option"
-                                       ng-model="AnswersResult.answers[3]"
-                                        />
-                                <label for="option1">Sí</label>
-
-                                <input id="option2" type="radio" value="1" name="option"
-                                       ng-model="AnswersResult.answers[3]"
-                                        />
-                                <label for="option2">No</label>
-
-                                <input id="option3" type="radio" value="2" name="option"
-                                       ng-model="AnswersResult.answers[3]"
-                                        />
-                                <label for="option3">Más o menos</label>
-                            </section>
-                        </div>
-                        <!--Pregunta tipo Lista Dinámica-->
-                        <div id="listaDinamica">
-                            <div class="txt-renglon txt-bigger">5. Menciona tus principales habilidades</div>
-
-                            <ul class="block-list clearfix">
-                                <li ng-repeat="ability in AnswersResult.answers[4] track by $index">
-                                    <section class="form txt-renglon part list clearfix">
-                                        <div class="form-group theme-form">
-
-                                            <div class="clearfix">
-                                                <span>Habilidad {{AnswersResult.answers[4].indexOf(ability) + 1}}</span>
-                                                <a class="btn btn-circle pull-right"
-                                                        ng-click="deleteAbility($index);" >
-                                                    <span class="icomoon icon-cross white"></span>
-                                                </a>
-                                            </div>
-                                            <div class="add">
-                                                <span class="icomoon icon-edit"></span>
-                                                <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2" 
-                                                name="txtAbierto" placeholder="Nueva habilidad" ng-model="AnswersResult.answers[4][$index]" 
-                                                >
-                                                </textarea>
-                                            </div>
-
-                                        </div>
-                                    </section>
-                                </li>
-                            </ul>
-
-                            <div class="txt-renglon">
-                                <a href="" class="btn btn-lg btn-block btn-add" ng-click="addAbility()" >
-                                    <span class="icomoon icon-plus"></span>Agregar nueva habilidad...
-                                </a>
-                            </div>
+                        <div class="txt-renglon">
+                            <a href="" class="btn btn-lg btn-block btn-add" ng-click="addPerson();"
+                               ng-hide="setReadOnly">
+                                <span class="icomoon icon-plus"></span>Agregar persona...
+                            </a>
                         </div>
                     </div>
 
-                    <section id="controls" class="controls">
-                        <div class="paginate">
-                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 5)">
-                                <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
-                            </a>
-                            <a href="#" id="next" ng-click="addToAnswerIndex(1, 5)">
-                                <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
-                            </a>
 
-                            <div class="centered">
-                                <span id="index" class="txt-bigger">1/</span>
-                                <span id="totalPages" class="white txt-bigger">5</span>
+                    <!--Pregunta tipo Texto Abierto-->
+                    <!--
+                    <div>
+                        <div class="txt-renglon txt-bigger">3. ¿Qué persona exitosa que conoces te inspira?</div>
+                        <section class="form txt-renglon txt-bigger part list">
+                            <div class="add">
+                                <span class="icomoon icon-edit"></span>
+                                <textarea id="texto1" row="2" name="txtAbierto" placeholder="Tu respuesta aquí..."
+                                          ng-model="AnswersResult.answers[2]" ng-readonly="setReadOnly"></textarea>
                             </div>
+                        </section>
+                    </div>
+                    -->
+                    <!--Pregunta tipo Selección Simple-->
+                    <div>
+                        <div class="txt-renglon txt-bigger">4. ¿Sabes cuáles son tus habilidades?</div>
+                        <section class="form txt-renglon txt-bigger part list" ng-click="show()">
+                            <input id="option1" type="radio" value="0" name="option"
+                                   ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
+                                    />
+                            <label for="option1">Sí</label>
+
+                            <input id="option2" type="radio" value="1" name="option"
+                                   ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
+                                    />
+                            <label for="option2">No</label>
+
+                            <input id="option3" type="radio" value="2" name="option"
+                                   ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
+                                    />
+                            <label for="option3">Más o menos</label>
+                        </section>
+                    </div>
+                    <!--Pregunta tipo Lista Dinámica-->
+                    <div id="listaDinamica">
+                        <div class="txt-renglon txt-bigger">5. Menciona tus principales habilidades</div>
+
+                        <ul class="block-list clearfix">
+                            <li ng-repeat="ability in AnswersResult.answers[4] track by $index">
+                                <section class="form txt-renglon part list clearfix">
+                                    <div class="form-group theme-form">
+
+                                        <div class="clearfix">
+                                            <span>Habilidad {{AnswersResult.answers[4].indexOf(ability) + 1}}</span>
+                                            <a class="btn btn-circle pull-right"
+                                               ng-click="deleteAbility($index);" ng-show="activity_status == 0">
+                                                <span class="icomoon icon-cross white"></span>
+                                            </a>
+                                        </div>
+                                        <div class="add">
+                                            <span class="icomoon icon-edit"></span>
+                                                <textarea id="textoarea1"
+                                                          class="form-control form-control-lg theme-form" row="2"
+                                                          name="txtAbierto" placeholder="Nueva habilidad"
+                                                          ng-model="AnswersResult.answers[4][$index]"
+                                                          ng-readonly="setReadOnly"
+                                                        >
+                                                </textarea>
+                                        </div>
+
+                                    </div>
+                                </section>
+                            </li>
+                        </ul>
+
+                        <div class="txt-renglon">
+                            <a href="" class="btn btn-lg btn-block btn-add" ng-click="addAbility()"
+                               ng-hide="setReadOnly">
+                                <span class="icomoon icon-plus"></span>Agregar nueva habilidad...
+                            </a>
                         </div>
-                        <a class="btn btn-primary btn-lg btn-cnt"
-                           id="save"
-                           href=""
-                           ng-show="answerIndex == 5"
-                           ng-click="validateAnsweredQuestions()">Guardar</a>
-                        <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
-                    </section>
+                    </div>
                 </div>
 
-                <div class="page" ng-class="currentPage==2 ? 'active' : '' ">
-                    <div id="finalized">
-                        <section class="header-title ">
-                            <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
-                            <div class="subtitle centered min-pad ">"Exploración inicial"</div>
-                            <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
-                        </section>
-                        <section class="centered txt-bigger ">
-                            <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
-                        </section>
-                        <section class="txt-renglon pill" ng-show="activityPoints > 0">
-                            <div class="pull-left">Estrellas ganadas:</div>
-                            <div class="pull-right sm-pill">
-                                <span class="pull-left">{{activityPoints}}</span>
-                                <span class="icomoon icon-star pull-right"></span>
-                            </div>
-                        </section>
-                        <section class="txt-renglon centered form ">
+                <section id="controls" class="controls">
+                    <div class="paginate">
+                        <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 5)">
+                            <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
+                        </a>
+                        <a href="#" id="next" ng-click="addToAnswerIndex(1, 5)">
+                            <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
+                        </a>
+
+                        <div class="centered">
+                            <span id="index" class="txt-bigger">1/</span>
+                            <span id="totalPages" class="white txt-bigger">5</span>
+                        </div>
+                    </div>
+                    <a class="btn btn-primary btn-lg btn-cnt"
+                       id="save"
+                       href=""
+                       ng-show="answerIndex == 5"
+                       ng-click="validateAnsweredQuestions()">Guardar</a>
+
+                    <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
+                </section>
+            </div>
+
+            <div class="page" ng-class="currentPage==2 ? 'active' : '' ">
+                <div id="finalized">
+                    <section class="header-title ">
+                        <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
+                        <div class="subtitle centered min-pad ">"Exploración inicial"</div>
+                        <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
+                    </section>
+                    <section class="centered txt-bigger ">
+                        <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
+                    </section>
+                    <section class="txt-renglon pill" ng-show="activityPoints > 0 && activity_status == 0">
+                        <div class="pull-left">Estrellas ganadas:</div>
+                        <div class="pull-right sm-pill">
+                            <span class="pull-left">{{activityPoints}}</span>
+                            <span class="icomoon icon-star pull-right"></span>
+                        </div>
+                    </section>
+                    <section class="txt-renglon centered form">
+                        <div ng-show="activity_status == 0">
                             ¿Que opinas de ésta actividad?
                             <section class="txt-renglon txt-bigger clearfix">
                                 <div class="opinion">
@@ -250,31 +253,34 @@
                                     <label for="dislike">No me gusta</label>
                                 </div>
                             </section>
-                            <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" >TERMINAR</a>
-                        </section>
-                    </div>
+                        </div>
+                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">TERMINAR</a>
+                    </section>
                 </div>
             </div>
-        </article>
-        <!-- initial message -->
-        <script type="text/ng-template" id="openingStageModal.html">
-            <div class="modal-robot robot-lg closing-stage-modal user-help">
-                <img src="assets/images/img-robot-lg.svg">
-                <div class="modal-header">
-                    <a class="icon icon-close btn btn-circle" ng-click="cancel()">
-                        <span class="icomoon icon-cross"></span>
-                    </a>
-                </div>
-                <div class="modal-body">
-                    <h3 class="subtitle text-center">Exploración inicial</h3>
-                    <p class="txt-renglon centered">
-                        Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad.
-                    </p>
-                </div>               
-            </div>
+        </div>
+    </article>
+    <!-- initial message -->
+    <script type="text/ng-template" id="openingStageModal.html">
+        <div class="modal-robot robot-lg closing-stage-modal user-help">
+            <img src="assets/images/img-robot-lg.svg">
 
-        </script>
-    
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">Exploración inicial</h3>
+
+                <p class="txt-renglon centered">
+                    Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad.
+                </p>
+            </div>
+        </div>
+
+    </script>
+
 </div>
 
 <script>
@@ -300,28 +306,28 @@
         $("#next").click(function (evt) {
             owl.trigger('owl.next');
             /*
-            var numberOfPage = $('#index');
-            var totalPages = $('#totalPages');
-            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
-              $('#save').show();
-            }else{              
-              $('#save').hide();
-            }
-            */
+             var numberOfPage = $('#index');
+             var totalPages = $('#totalPages');
+             if (numberOfPage.text().substring(0,1) == totalPages.text()) {
+             $('#save').show();
+             }else{
+             $('#save').hide();
+             }
+             */
             evt.preventDefault();
         });
 
         $("#prev").click(function (evt) {
             owl.trigger('owl.prev');
             /*
-            var numberOfPage = $('#index');
-            var totalPages = $('#totalPages');
-            if (numberOfPage.text().substring(0,1) == totalPages.text()) {              
-              $('#save').show();
-            }else{              
-              $('#save').hide();
-            }
-            */
+             var numberOfPage = $('#index');
+             var totalPages = $('#totalPages');
+             if (numberOfPage.text().substring(0,1) == totalPages.text()) {
+             $('#save').show();
+             }else{
+             $('#save').hide();
+             }
+             */
             evt.preventDefault();
         });
 
