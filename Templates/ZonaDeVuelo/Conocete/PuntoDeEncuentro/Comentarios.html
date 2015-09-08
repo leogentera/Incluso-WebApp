@@ -119,6 +119,11 @@
       </div>
 
       <section>
+        <div>
+          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">Ver más</a>
+          <div class="txt-renglon txt-bigger" ng-show="!morePendingPosts">No se encontraron más posts</div>
+        </div>
+        
         <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
       </section>
     </section>

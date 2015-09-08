@@ -26,6 +26,13 @@
         var _getAsyncForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
             _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
+        
+        var _getAsyncDiscussionPosts = function(discussionId, discussion, forumId, page, successCallback, errorCallback, forceRefresh) {
+            var key = "discussion/" + discussionId + discussion + forumId + page;
+            var url = API_RESOURCE.format("discussion/" + discussionId + "?discussion=" + discussion + "&forumid=" + forumId + "&page=" + page);
+            
+            _getAsyncData(key, url, successCallback, errorCallback, forceRefresh);
+        };
 
         var _putAsyncActivityInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
             _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + '/user/' + userId), successCallback, errorCallback);
@@ -584,8 +591,8 @@
             PutStartActivity: _startActivity,
             PutEndActivity: _putEndActivity,
             PutEndActivityQuizes: _putEndActivityQuizes,
-            PutForumPostLikeNoCache: _putForumPostLikeNoCache
-
+            PutForumPostLikeNoCache: _putForumPostLikeNoCache,
+            GetAsyncDiscussionPosts: _getAsyncDiscussionPosts
         };
     })();
 }).call(this);
