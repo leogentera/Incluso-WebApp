@@ -224,10 +224,9 @@ var _isChallengeCompleted = function(){
          }else{
            success = 0;
          }
-    return success;
-    
-};
-
+        return success;    
+    };
+}
 
 
 var _updateBadgeStatus = function(coursemoduleid, callback){
@@ -283,7 +282,9 @@ var _coachNotification = function(){
   var notificationCoach = _.find(notifications,function(notif){
       if(notif.id == 4){
         return notif;
-        }else{}
+        }else{
+          
+        }
     });                                
   
   if (notificationCoach && !notificationCoach.timemodified) {
@@ -1036,3 +1037,4 @@ document.addEventListener("deviceready", onDeviceReady, false);
             //
             function onBackKeyDown() {
             }
+
