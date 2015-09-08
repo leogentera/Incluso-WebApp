@@ -800,7 +800,7 @@ angular
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
                         } else {
-                            //$scope.misGustosAnswers[a][b] = false;
+                            $scope.misGustosAnswers[a][b] = 0;
                         }
                     }
                     /*
@@ -877,7 +877,7 @@ angular
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
                         } else {
-                            //$scope.misGustosAnswers[a][b] = false;
+                            $scope.misGustosAnswers[a][b] = 0;
                         }
                     }
                     /*
