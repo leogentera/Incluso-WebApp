@@ -530,11 +530,10 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
 
     /*
      if (activity_identifier == '1009' || activity_identifier == '1001') {
-         activity.points = 0;
+         activity.points = 50;
      }
 
      */
-
 
      if(extraPoints != 0){
          profile.stars = Number(profile.stars) + Number(extraPoints);
