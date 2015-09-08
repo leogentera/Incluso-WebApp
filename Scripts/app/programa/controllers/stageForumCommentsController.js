@@ -85,19 +85,19 @@ angular
                 _setLocalStorageJsonItem('currentForumsProgress', forumsCommentsCountCollection);
             };
 
-            var assignStars = function(numStars){
-                var userId = JSON.parse(localStorage.getItem('userId'));
+            var getForumsExtraPointsCounter = function(){
+                var forumExtraPointsCounter = JSON.parse(localStorage.getItem('extraPointsForums'));
+                return forumExtraPointsCounter;
+            };
 
-                var data={
-                    userId: userId,
-                    stars: numStars,
-                    instance: $routeParams.moodleid,
-                    instanceType: 0,
-                    date: getdate()
-                };
-                moodleFactory.Services.PutStars(data,null, $scope.userToken,successfullCallBack, errorCallback);
-                function successfullCallBack(){};
-                function errorCallback(){};
+            var addExtraForumParticipation = function(discussionId){
+                console.log('Discussion ID: ' + discussionId);
+              var extraPointsCounter = getForumsExtraPointsCounter();
+                var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == discussionId; });
+                currentDiscussionCounter.extra_replies_counter++;
+                //extraPointsCounter.push({"discussion_id":currentDiscussion.post_id, "replies_counter":0});
+                _setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
+
             };
 
             var checkForumProgress = function(callback){

@@ -78,7 +78,7 @@
         <div class="part">
           <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>{{p.post_author}} <span>publicó:</span>
-            <div>{{p.created | date: "dd MMMM yyyy"}}</div>
+            <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
             </div>
           </div>
           <div class="block">
@@ -113,7 +113,7 @@
               <span class="icomoon icon-like"></span> Ya no me gusta
             </div>
             <!--<div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">-->
-            <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">
+            <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">{{$index}}
               <span class="icomoon icon-comment"></span> Comentar              
             </div>
           </div>
@@ -123,7 +123,7 @@
             <!--<div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">-->
             <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed[$index]">
                 <div>
-                    <span class="close"></span>
+                    <a href="#close" title="Close" class="close"></a>
                     <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
 
                     <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
@@ -133,12 +133,12 @@
       </div>
 
       
-        <section>
+        <!--<section>
           <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
              <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
           </a>          
           <div class="txt-renglon" ng-show="!morePendingPosts">No se encontraron más posts</div>
-        </section>
+        </section>-->
       <section class="actions">  
         <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
         <div>{{isCommentModalCollapsed[676]}}</div>
