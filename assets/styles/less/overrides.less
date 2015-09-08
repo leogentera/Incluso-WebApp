@@ -432,7 +432,51 @@
     .background-size(100%, auto);
 
     article {
-        margin-bottom: 12vw;
+        padding-bottom: 15vw;
+
+        .component {
+            padding:0;
+            padding-top:15vw;
+            margin:0 auto;
+            width: 80vw;
+            max-width: 80vw;
+            height: auto;
+            
+            h3 {
+                width:auto;
+                text-align: left;
+                text-transform: uppercase;
+            }
+            ul, li, p {
+                width:auto;
+                color:@clr-white;
+                font-size: 5vw;
+                text-align: left;
+            }
+            figure {
+                display: block;
+                padding: 0;
+                margin: 0 auto;
+                width: auto;
+                max-width: inherit;
+                overflow: hidden;
+
+                img {
+                    display: block;
+                    padding: 0;
+                    margin: 0 auto;
+                    width: auto; 
+                    max-width: inherit;
+                }
+            }
+            .link, 
+            .link:hover, 
+            .link:active {
+                color:@clr-white;
+                font-weight: bold;
+            }
+            .btn {margin-top: 6vw;}
+        }
     }
 }
 
