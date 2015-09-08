@@ -1016,3 +1016,15 @@ var _activityRoutes = [
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
+
+document.addEventListener("deviceready", onDeviceReady, false);
+            
+             function onDeviceReady() {
+        // Register the event listener
+                document.addEventListener("backbutton", onBackKeyDown, false);
+            }
+        
+            // Handle the back button
+            //
+            function onBackKeyDown() {
+            }
