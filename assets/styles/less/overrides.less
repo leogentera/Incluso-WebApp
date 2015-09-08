@@ -830,10 +830,20 @@ section.part.inbloq{
 
 
 //////////////// owl plugin ///////////////////////////
-.owl-carousel .owl-wrapper-outer.autoHeight {
-    transition: none;
-}
 
+
+.owl-carousel {
+    opacity: 1 !important;
+    .owl-wrapper,
+    .owl-item {
+        backface-visibility: visible;
+        transition: none !important;
+        transform: none !important;
+    }
+    .owl-wrapper-outer.autoHeight {
+        transition: none;
+    }
+}
 
 ///////////////// switch-handle [switch slider toggle] ///////////////////////
 .switch {
