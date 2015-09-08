@@ -335,7 +335,8 @@ angular
             var initializeCommentsData = function(element, index, array){
                 $scope.isCommentModalCollapsed[index] = false;
                 console.log(element.post_id);
-                $scope.showAllCommentsByPost[element.post_id] = false;
+                
+                $scope.showAllCommentsByPost[element.post_id] = 3;
             };
 
             var refreshTopicData = function(){   
@@ -356,7 +357,7 @@ angular
             
             $scope.showPreviousComments = function(postId) {
             
-                $scope.showAllCommentsByPost[postId] = true;
+                $scope.showAllCommentsByPost[postId] = 1000000;
             };
             
             $scope.showMore = function() {
@@ -380,7 +381,7 @@ angular
                         currentPosts.push(tempPosts[i]);
                     }
                     
-                    currentPosts.forEach(createModalReferences);
+                    currentPosts.forEach(initializeCommentsData);
                     $scope.discussion.posts[0].replies = currentPosts;
                     
                     $scope.morePendingPosts = false;
