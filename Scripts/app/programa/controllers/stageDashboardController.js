@@ -87,19 +87,25 @@ angular
                 }
 
                $("#prev").click(function (ev) {                                                            
-                    if(currentItem)
+                    if(currentItem){
+                        owl.trigger('owl.goTo', currentItem - 1);
                         owl2.trigger('owl.goTo', currentItem - 1);
-                    else
+                    }
+                    else{
+                        owl.trigger('owl.prev');
                         owl2.trigger('owl.prev');
+                    }
                     ev.preventDefault();
                 });
-                 $("#next").click(function (ev) {                    
-                    
-                    console.log(currentItem);
-                    if(currentItem)
+                 $("#next").click(function (ev) {                                        
+                    if(currentItem){
+                        owl.trigger('owl.goTo', currentItem + 1);
                         owl2.trigger('owl.goTo', currentItem + 1);
-                    else
+                    }
+                    else{
+                        owl.trigger('owl.next');
                         owl2.trigger('owl.next');
+                    }
                     ev.preventDefault();
                 });
 
