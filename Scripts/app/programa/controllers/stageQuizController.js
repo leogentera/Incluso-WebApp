@@ -685,11 +685,18 @@ angular
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
+                    animation: false,
+                    backdrop: false,
                     templateUrl: 'openingStageModal.html',
                     controller: 'OpeningStageController',
                     size: size,
                     windowClass: 'user-help-modal opening-stage-modal'
+                }).result.finally(function(){
+                    $scope.$emit('ShowPreloader');    
+                    $timeout(function (){
+                        $scope.$emit('HidePreloader');  
+                    },1000)
+                    //$scope.$emit('HidePreloader');  
                 });
             };
 
@@ -1050,15 +1057,12 @@ angular
         }
     ])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
-        $scope.$emit('ShowPreloader');
+        
         $scope.cancel = function () {
-            $scope.$emit('ShowPreloader');
-            $modalInstance.dismiss('cancel');            
-            setTimeout(function(){
-                $scope.$emit('HidePreloader');                    
-            }, 2000);
-            
+            $scope.$emit('ShowPreloader');                
+                $modalInstance.dismiss('cancel');                                        
         };
+       
     })
     .controller('videoCollapsiblePanelController', function ($scope) {
         $scope.isCollapsed = false;
