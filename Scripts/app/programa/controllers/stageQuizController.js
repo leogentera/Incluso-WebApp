@@ -597,10 +597,10 @@ angular
                         $scope.AnswersResult.answers = [0, 0, 0, 0, 0];
                     }
 
-                    $scope.coursemoduleid = activity.coursemoduleid;    //console.log("coursemoduleid: " + activity.coursemoduleid);
+                    $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
                     console.log("points: " + activity.points);
-                    $scope.activityname = activity.activityname;        //console.log("activityname: " + activity.activityname);
+                    $scope.activityname = activity.activityname;
                         /*
                     if (activity.activity_identifier == '1001') {//INC-1826: Not assign Stars to "Exploración Inicial" activity
                         $scope.activityPoints = 0;
@@ -771,7 +771,6 @@ angular
             $scope.answerIndex = 1;
 
             $scope.addToAnswerIndex = function (delta, maxPages) {
-
                 $scope.answerIndex = parseInt($('span#index').text());
 
                 if ($scope.answerIndex > maxPages) {
