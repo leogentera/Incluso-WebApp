@@ -92,19 +92,25 @@
               </div>
             </div>
           </div>
-          <div ng-show="(!showAllCommentsByPost[p.post_id] && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
-            Mostrar mensajes anteriores
+          <div class="coment block" ng-show="(!showAllCommentsByPost[p.post_id] && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+            <div class="vermas">
+              <span class="icomoon icon-show-more"></span>
+              Mostrar más comentarios...
+            </div>
           </div>
+          <!--<div ng-show="(!showAllCommentsByPost[p.post_id] && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+            Mostrar mensajes anteriores
+          </div>-->
 
           <div class="social">
             <div class="pink" ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
-              <span class="icomoon icon-like pink"></span> Me gusta
+              <span class="icomoon icon-like pink"></span> Me gusta              
             </div>
             <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
               <span class="icomoon icon-like"></span> Ya no me gusta
             </div>
             <div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">
-              <span class="icomoon icon-comment"></span> Comentar
+              <span class="icomoon icon-comment"></span> Comentar              
             </div>
           </div>
 
@@ -112,7 +118,7 @@
         <section class="modales">
             <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">
                 <div>
-                    <a href="#close" title="Close" class="close"></a>
+                    <span class="close"></span>
                     <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
 
                     <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent)" >Compartir</a>
@@ -121,12 +127,14 @@
          </section>
       </div>
 
-      <section>
-        <div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">Ver más</a>
+      
+        <section>
+          <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
+             <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
+          </a>          
           <div class="txt-renglon txt-bigger" ng-show="!morePendingPosts">No se encontraron más posts</div>
-        </div>
-        
+        </section>
+      <section class="actions">  
         <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
       </section>
     </section>
