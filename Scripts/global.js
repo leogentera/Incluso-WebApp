@@ -139,9 +139,7 @@ var _endActivity = function(activityModel){
         var currentUserId = currentUser.userId;
         var activityId = activityModel.coursemoduleid;
         //create notification
-        _createNotification(activityId, triggerActivity);
-        //complete stage
-        _updateBadgeStatus(activityId);
+        _createNotification(activityId, triggerActivity);              
         
       if (activityModel.activityType == "Quiz"){
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successCallback, errorCallback);
@@ -196,14 +194,12 @@ var _isChallengeCompleted = function(){
     for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++){
         var currentChallenge = currentStage.challenges[challengeIndex];
         if(currentChallenge.status == 0){
-          _updateBadgeStatus(currentChallenge.coursemoduleid);
-
-
-          var totalActivitiesByStage = currentChallenge.activities.length;
+                   var totalActivitiesByStage = currentChallenge.activities.length;
           var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
           if (totalActivitiesByStage == totalActivitiesCompletedByStage){
               
               //updateBadge
+              _updateBadgeStatus(currentChallenge.coursemoduleid);
               userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
               _setLocalStorageJsonItem("usercourse", userCourse);
               var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -228,8 +224,8 @@ var _isChallengeCompleted = function(){
 
 var _updateBadgeStatus = function(coursemoduleid, callback){
     moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {
-      if (callback) callback();
-      var profile = moodleFactory.Services.GetCacheJson("profile");
+    if (callback) callback();
+    var profile = moodleFactory.Services.GetCacheJson("profile");
     var badges = profile.badges;
     var currentBadge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});    
     if (currentBadge) {
@@ -520,14 +516,23 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getActivityByActivity_identifier(activity_identifier);
+
      extraPoints ? '' : extraPoints = 0;
-     
-     
+
+    /*
      if (activity_identifier == '1009' || activity_identifier == '1001') {
          activity.points = 0;
      }
-     
-     profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);  
+
+     */
+
+
+     if(extraPoints != 0){
+         profile.stars = Number(profile.stars) + Number(extraPoints);
+     } else {
+         profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+     }
+
 
     var data={
       userId: profile.id,
@@ -1011,3 +1016,15 @@ var _activityRoutes = [
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
+
+document.addEventListener("deviceready", onDeviceReady, false);
+            
+             function onDeviceReady() {
+        // Register the event listener
+                document.addEventListener("backbutton", onBackKeyDown, false);
+            }
+        
+            // Handle the back button
+            //
+            function onBackKeyDown() {
+            }

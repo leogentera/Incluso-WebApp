@@ -83,8 +83,10 @@ angular
                   }
                   else
                   {
-                    waitPreloader += 1;
-                    moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);                 
+                    waitPreloader = 1;
+                    
+                        moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);
+                    
                   }  
                 }
                                  
@@ -229,8 +231,7 @@ angular
                 var activityId = $scope.fuenteDeEnergia.coursemoduleid;
                 //create notification
                 _createNotification(activityId, triggerActivity);
-                //complete stage
-                _updateBadgeStatus(activityId);
+                //complete stage                
                 var like_status = $scope.like_status;
                 var data = {userid :  currentUserId, like_status: like_status };
                 $scope.fuenteDeEnergia.status = 1;
