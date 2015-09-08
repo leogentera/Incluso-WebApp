@@ -150,7 +150,7 @@ angular
                     });
                 }, 1000);
               
-              var moodleId = $scope.moodleId;
+              var moodleId = $routeParams.moodleid;
               
               switch (moodleId){
                   case "64":

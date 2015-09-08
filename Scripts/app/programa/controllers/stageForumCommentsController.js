@@ -193,7 +193,8 @@ angular
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){
                         $scope.textToPost=null;
-                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
+                        //$scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
+                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         updateForumProgress(topicId);
                         $scope.$emit('ShowPreloader');
@@ -201,7 +202,8 @@ angular
                     },
                     function(){
                         $scope.textToPost=null;
-                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
+                        //$scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
+                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                         $scope.$emit('HidePreloader');
                     });
             };
@@ -350,8 +352,13 @@ angular
                 var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
                 //posts.forEach(createModalReferences);
                 $scope.isCommentModalCollapsed.push(false);
+                $scope.isCommentModalCollapsed.reverse();
                 $scope.$emit('HidePreloader');
             }
+
+            var createModalReferences = function(element, index, array){
+                $scope.isCommentModalCollapsed[element.post_id] = true;
+            };
 
             getTopicDataAsync();
             
