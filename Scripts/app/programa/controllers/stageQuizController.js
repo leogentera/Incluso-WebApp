@@ -27,7 +27,7 @@ angular
 
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial"
                 "userid": 0,
-                "answers": [null, [false, false, false, false, false, ''], [], null, []],
+                "answers": [null, [0, 0, 0, 0, 0], [], null, []],
                 "activityidnumber": 0,
                 "like_status": 0
             };
@@ -38,8 +38,8 @@ angular
             };
             */
 
-            $scope.misCualidadesAnswers = [[false, false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, false, '']];
-            $scope.misGustosAnswers = [[false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, '']];
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misSuenosAnswers = [[], [], []];
             $scope.exploracionFinal = ['', '', '', '', ''];
 
@@ -310,13 +310,13 @@ angular
                 var userAnswers = '';
                 switch (questionIndex) {
                     case 0:
-                        if (question.userAnswer != "No") {
+                        if (question.userAnswer == "Si") {
 
-                            $scope.AnswersResult.answers[0] = "yes";
+                            $scope.AnswersResult.answers[0] = "0";
                         }
                         else if (question.userAnswer == "No") {
                             //console.log("question.userAnswer = " + question.userAnswer);  "0"si  y "1"no
-                            $scope.AnswersResult.answers[0] = "no";
+                            $scope.AnswersResult.answers[0] = "1";
                         }
                         break;
 
@@ -507,7 +507,7 @@ angular
 
                 if (index == 0) {
                     var qty = userAnswersList.length;
-                    addHeightConsulta("#listaDinamica", qty);
+                    addHeightConsulta("#listaDinamica1", qty);
                 }
             }
 
@@ -596,10 +596,11 @@ angular
                     $scope.activityPoints = activity.points;
                     console.log("points: " + activity.points);
                     $scope.activityname = activity.activityname;        //console.log("activityname: " + activity.activityname);
-
+                        /*
                     if (activity.activity_identifier == '1001') {//INC-1826: Not assign Stars to "Exploración Inicial" activity
                         $scope.activityPoints = 0;
                     }
+                    */
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -607,9 +608,14 @@ angular
 
                     var activityFinished = false;
                     console.log("userprofile: " + $scope.userprofile.id);
+                    $scope.activity_status = activity.status;
+
                     if (activity.status != 0) {
                         activityFinished = true;
-                        $scope.setReadOnly = true;
+                        if ($scope.activity_identifier == '1009' || $scope.activity_identifier == '1001') {
+                            $scope.setReadOnly = true;
+                        }
+
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
                     } else {
                         $scope.$emit('HidePreloader');
@@ -774,6 +780,7 @@ angular
             $scope.validateMisCualidadesAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
+
                 var validatedAnswers = [0, 0, 0];
                 var validateOther = [0, 0, 0];
 
@@ -785,10 +792,10 @@ angular
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
                         } else {
-                            $scope.misGustosAnswers[a][b] = false;
+                            //$scope.misGustosAnswers[a][b] = false;
                         }
                     }
-
+                    /*
                     //...and lastly, for the input value...
                     if ($scope.misCualidadesAnswers[a][11] == true) {
                         //Get rid from carriage return
@@ -800,6 +807,7 @@ angular
                             validateOther[a] = -1;
                         }
                     }
+                    */
                 }
                 console.log(validatedAnswers);
                 console.log(validateOther);
@@ -855,15 +863,15 @@ angular
                 for (var a = 0; a < $scope.misGustosAnswers.length; a++) {
                     var cont = $scope.misGustosAnswers[a].length;  //It should be equal to 12
 
-                    for (var b = 0; b < cont - 1; b++) { //Only the first 11 checkboxes
+                    for (var b = 0; b < cont; b++) { //Only the first 11 checkboxes
                         var checked = $scope.misGustosAnswers[a][b];
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
                         } else {
-                            $scope.misGustosAnswers[a][b] = false;
+                            //$scope.misGustosAnswers[a][b] = false;
                         }
                     }
-
+                    /*
                     //...and lastly, for the input value...
                     if ($scope.misGustosAnswers[a][10] == true) {
                         //Get rid from carriage return
@@ -876,6 +884,7 @@ angular
                             validateOther[a] = -1;
                         }
                     }
+                    */
                 }
                 console.log(validatedAnswers);
                 console.log(validateOther);
