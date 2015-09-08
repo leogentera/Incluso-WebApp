@@ -40,9 +40,6 @@ body {
         position:fixed;
         x-index: 1;
     }
-    .disabled {
-        color: rgba(0,0,0,.3) !important;
-    }
 }
     /****************************************************************************
      $menu 
@@ -271,6 +268,7 @@ body {
             padding: 1.5vh 3vw;
             position: relative;
             width: 100%;
+
             &:focus, &:hover{
                 background-color: rgba(255, 255, 255, 0.28);
             }
@@ -328,6 +326,8 @@ body {
             a{
                 color: white;
                 line-height: 20px;
+
+                &.disabled {opacity: 0.3;}
             }
             ul{
                 list-style: none;
@@ -1600,6 +1600,7 @@ body {
 
                     &.disabled {
                         pointer-events: none;
+                        color: rgba(0,0,0,.3);
                     }
 
                     &.active {
@@ -1740,6 +1741,11 @@ body {
                     width: 100%;
                     font-size:inherit;
                 }
+            }
+        }
+        .submenu {
+            .disabled {
+                color: rgba(0,0,0,.3);
             }
         }
     }
