@@ -223,9 +223,9 @@ var _isChallengeCompleted = function(){
             }          
          }else{
            success = 0;
-         }
-        return success;    
+         }          
     };
+    return success;
 }
 
 
