@@ -182,13 +182,13 @@ angular
 
             $scope.isCommentModalCollapsed= [];
             $scope.replyText = null;
-            $scope.replyToPost = function(that, parentId, topicId){                
+            $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex){
                 var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){
                         $scope.textToPost=null;
-                        $scope.isCommentModalCollapsed[parentId] = true;
+                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         updateForumProgress(topicId);
                         $scope.$emit('ShowPreloader');
@@ -196,7 +196,7 @@ angular
                     },
                     function(){
                         $scope.textToPost=null;
-                        $scope.isCommentModalCollapsed[parentId] = true;
+                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
                         $scope.$emit('HidePreloader');
                     });
             };
@@ -327,7 +327,9 @@ angular
             }
 
             var createModalReferences = function(element, index, array){
-                $scope.isCommentModalCollapsed[element.post_id] = true;
+                //$scope.isCommentModalCollapsed[element.post_id] = true;
+                $scope.isCommentModalCollapsed[index] = false;
+                console.log(element.post_id);
             };
 
             var refreshTopicData = function(){   
@@ -339,7 +341,8 @@ angular
                 console.log($scope.activity);
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion_id == $routeParams.discussionId; });
                 var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
-                posts.forEach(createModalReferences);
+                //posts.forEach(createModalReferences);
+                $scope.isCommentModalCollapsed.push(false);
                 $scope.$emit('HidePreloader');
             }
 
@@ -379,5 +382,6 @@ angular
 
                 $scope.$emit('scrollTop');
             }
+            $scope.pageLoaded = true;
         }]);
 
