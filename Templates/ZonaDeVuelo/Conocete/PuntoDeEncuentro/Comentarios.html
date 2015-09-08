@@ -91,26 +91,30 @@
             <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
             </div>
           </div>
-          <div id="item{{$index}}" ng-repeat="r in p.replies">
-            <div ng-show="(showAllCommentsByPost[p.post_id] || $index < 3)" class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost[p.post_id]">
+            <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
               <div>{{r.post_author}} <span>comentó:</span>   <div>{{r.message}}</div>
               </div>
             </div>
           </div>
-          <div ng-show="(!showAllCommentsByPost[p.post_id] && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
-            Mostrar mensajes anteriores
+          
+          <div class="coment block" ng-show="(showAllCommentsByPost[p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+            <div class="vermas">
+              <span class="icomoon icon-show-more"></span>
+              Mostrar más comentarios...
+            </div>
           </div>
 
           <div class="social">
             <div class="pink" ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
-              <span class="icomoon icon-like pink"></span> Me gusta
+              <span class="icomoon icon-like pink"></span> Me gusta              
             </div>
             <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
               <span class="icomoon icon-like"></span> Ya no me gusta
             </div>
             <!--<div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">-->
             <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">
-              <span class="icomoon icon-comment"></span> Comentar
+              <span class="icomoon icon-comment"></span> Comentar              
             </div>
           </div>
 
@@ -119,7 +123,7 @@
             <!--<div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">-->
             <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed[$index]">
                 <div>
-                    <a href="#close" title="Close" class="close"></a>
+                    <span class="close"></span>
                     <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
 
                     <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
@@ -128,12 +132,14 @@
          </section>
       </div>
 
-      <section>
-        <div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">Ver más</a>
-          <div class="txt-renglon txt-bigger" ng-show="!morePendingPosts">No se encontraron más posts</div>
-        </div>
-        
+      
+        <section>
+          <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
+             <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
+          </a>          
+          <div class="txt-renglon" ng-show="!morePendingPosts">No se encontraron más posts</div>
+        </section>
+      <section class="actions">  
         <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
         <div>{{isCommentModalCollapsed[676]}}</div>
       </section>
