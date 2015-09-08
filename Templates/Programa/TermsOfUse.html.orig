@@ -1,9 +1,37 @@
+<<<<<<< HEAD
+<div class="incluso-app content-page-theme" id="site-wrapper">
+  <article>
+    <section class="component">
+      <h3 ng-class="main-title">Condiciones de uso</h3>
+        <p>Todos los elementos que conforman el contenido de esta aplicación, identificado por el
+              nombre de “Misión Incluso”, incluyendo de manera enunciativa más no limitativa, los
+              nombres comerciales, marcas u otros signos distintivos que figuren en la misma son
+              propiedad de Gentera, S.A.B. y se encuentran protegidos bajo las leyes de Propiedad
+              Industrial. Los derechos de Propiedad Intelectual sobre los contenidos, diseño gráfico,
+              estructura, elementos audiovisuales y demás elementos de este sitio web son
+              propiedad exclusivamente de Gentera, S.A.B., quedando expresamente prohibido su
+              reenvío, transmisión, modificación, reproducción, distribución, comercialización o
+              cualquier otro tipo de explotación comercial en términos de las leyes aplicables sin el
+              previo consentimiento y autorización expresa para ello, por parte del titular de los
+              derechos patrimoniales mencionado previamente.</p>
+              <p>En virtud de lo anterior, salvo el uso que se llegue a dar para fines personales o
+              privados, a los cuales se encuentra autorizado el usuario, cualquier uso distinto que se
+              dé a cualquiera de los elementos de propiedad intelectual e industrial mencionados en
+              el párrafo previo constituirá en sí mismo una infracción a los derechos de propiedad
+              intelectual e industrial por lo que el titular de los mismos, podrá proceder civil e incluso
+              penalmente de acuerdo a las leyes aplicables.</p>
+
+        <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateTo('ProgramaDashboard', 'sideToggle')">Regresar</a> 
+    </section>
+  </article>
+=======
 <div class="incluso-app content-page-theme privacy-notice" id="site-wrapper">
     <article>
       <div class="container">
         <section class="component">
           <h3 ng-class="main-title">Declaración de derechos y responsabilidades</h3> <!-- Condiciones de uso -->
           		<p>
+
                 Esta declaración de derechos y responsabilidades (en adelante la ""Declaración"" o ""Condiciones"") contiene las condiciones de los servicios de [Incluso] que rigen la relación entre [Incluso], los usuarios y con todos aquellos que interactúan en la “Plataforma Misión Incluso”, así como con las marcas, los productos y los servicios de la misma. Al usar la Plataforma o al acceder a ella, manifiestas tu conformidad con la presente Declaración, la cual podrá actualizarse periódicamente según se estipula en la sección 6 “Enmiendas” descrita más adelante.
               </p>
               <p>
@@ -185,7 +213,7 @@
                     c) Tu uso continuado de los Servicios de nuestra Plataforma después de recibir la notificación sobre los cambios en nuestras Condiciones, políticas o normas supone la aceptación de las Enmiendas.
                 </li>
               </ul>
-
+              
               <p>7. Terminación</p>
               <p>
                 Si infringes la esencia o el espíritu de esta Declaración, creas riesgos de cualquier tipo para la Plataforma o nos expones a posibles responsabilidades jurídicas, podríamos impedirte el acceso a la misma total o parcialmente. Te notificaremos por correo electrónico o la próxima vez que intentes acceder a tu cuenta. También puedes eliminar tu cuenta o desactivar tu aplicación en cualquier momento. En tales casos, esta Declaración cesará. 
@@ -206,4 +234,5 @@
         </section>
       </div>
     </article>
+>>>>>>> origin/1.1
 </div>

@@ -131,32 +131,33 @@ var updateActivityStatusDictionary = function(activityId){
     _activityStatus[activityId] =1;
 };
 
-var _endActivity = function(activityModel){
+var _endActivity = function(activityModel, callback){
         
         //trigger activity type 2 is sent when the activity ends.
         var triggerActivity = 2;
         var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
         var currentUserId = currentUser.userId;
         var activityId = activityModel.coursemoduleid;
+        callback = callback || successCallback;
         //create notification
         _createNotification(activityId, triggerActivity);              
         
       if (activityModel.activityType == "Quiz"){
-        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successCallback, errorCallback);
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
       }
       else if(activityModel.activityType == "Assign")
       {
         var data = {userid :  currentUserId };
         
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse,activityModel.token,
-        successCallback,errorCallback);
+        callback,errorCallback);
       }
       else{            
         var data = {userid :  currentUserId };
         
         // update activity status dictionary used for blocking activity links
         updateActivityStatusDictionary(activityId);
-        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback, errorCallback);
+        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, callback, errorCallback);
       }                  
 };
 
@@ -518,17 +519,21 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    var activity = getActivityByActivity_identifier(activity_identifier);
 
      extraPoints ? '' : extraPoints = 0;
-     
-     
+
+    /*
      if (activity_identifier == '1009' || activity_identifier == '1001') {
          activity.points = 0;
      }
+
+     */
+
 
      if(extraPoints != 0){
          profile.stars = Number(profile.stars) + Number(extraPoints);
      } else {
          profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
      }
+
 
     var data={
       userId: profile.id,
@@ -1012,3 +1017,15 @@ var _activityRoutes = [
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
+
+document.addEventListener("deviceready", onDeviceReady, false);
+            
+             function onDeviceReady() {
+        // Register the event listener
+                document.addEventListener("backbutton", onBackKeyDown, false);
+            }
+        
+            // Handle the back button
+            //
+            function onBackKeyDown() {
+            }

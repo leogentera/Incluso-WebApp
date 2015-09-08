@@ -73,7 +73,7 @@
         <div class="part">
           <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>{{p.post_author}} <span>publicó:</span>
-            <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
+            <div>{{p.created | date: "dd MMMM yyyy"}}</div>
             </div>
           </div>
           <div class="block">
@@ -87,10 +87,13 @@
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies">
-            <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+            <div ng-show="(showAllCommentsByPost[p.post_id] || $index < 3)" class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
               <div>{{r.post_author}} <span>comentó:</span>   <div>{{r.message}}</div>
               </div>
             </div>
+          </div>
+          <div ng-show="(!showAllCommentsByPost[p.post_id] && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+            Mostrar mensajes anteriores
           </div>
 
           <div class="social">
@@ -121,6 +124,11 @@
       </div>
 
       <section>
+        <div>
+          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">Ver más</a>
+          <div class="txt-renglon txt-bigger" ng-show="!morePendingPosts">No se encontraron más posts</div>
+        </div>
+        
         <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
         <div>{{isCommentModalCollapsed[676]}}</div>
       </section>

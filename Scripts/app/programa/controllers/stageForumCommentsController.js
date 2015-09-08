@@ -33,6 +33,11 @@ angular
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
             $scope.moodleId = $routeParams.moodleid;
+            
+            var showMoreCounter = 1;
+            $scope.morePendingPosts = true;
+            
+            $scope.showAllCommentsByPost = new Array();
 
             $scope.scrollToTop();
 
@@ -80,19 +85,19 @@ angular
                 _setLocalStorageJsonItem('currentForumsProgress', forumsCommentsCountCollection);
             };
 
-            var getForumsExtraPointsCounter = function(){
-                var forumExtraPointsCounter = JSON.parse(localStorage.getItem('extraPointsForums'));
-                return forumExtraPointsCounter;
-            };
+            var assignStars = function(numStars){
+                var userId = JSON.parse(localStorage.getItem('userId'));
 
-            var addExtraForumParticipation = function(discussionId){
-                console.log('Discussion ID: ' + discussionId);
-              var extraPointsCounter = getForumsExtraPointsCounter();
-                var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == discussionId; });
-                currentDiscussionCounter.extra_replies_counter++;
-                //extraPointsCounter.push({"discussion_id":currentDiscussion.post_id, "replies_counter":0});
-                _setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
-
+                var data={
+                    userId: userId,
+                    stars: numStars,
+                    instance: $routeParams.moodleid,
+                    instanceType: 0,
+                    date: getdate()
+                };
+                moodleFactory.Services.PutStars(data,null, $scope.userToken,successfullCallBack, errorCallback);
+                function successfullCallBack(){};
+                function errorCallback(){};
             };
 
             var checkForumProgress = function(callback){
@@ -322,14 +327,15 @@ angular
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion_id == $routeParams.discussionId; });
                 var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
-                posts.forEach(createModalReferences);
+                posts.forEach(initializeCommentsData);
                 $scope.$emit('HidePreloader');
             }
 
-            var createModalReferences = function(element, index, array){
-                //$scope.isCommentModalCollapsed[element.post_id] = true;
+
+            var initializeCommentsData = function(element, index, array){
                 $scope.isCommentModalCollapsed[index] = false;
                 console.log(element.post_id);
+                $scope.showAllCommentsByPost[element.post_id] = false;
             };
 
             var refreshTopicData = function(){   
@@ -347,6 +353,49 @@ angular
             }
 
             getTopicDataAsync();
+            
+            $scope.showPreviousComments = function(postId) {
+            
+                $scope.showAllCommentsByPost[postId] = true;
+            };
+            
+            $scope.showMore = function() {
+                
+                //moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, function(data1, data2){
+                //    console.log(data1);
+                //    console.log(data2);
+                //    }, function(){}, true);
+                //$scope.moodleId
+                
+
+                showMoreCounter++;
+                
+                $scope.$emit('ShowPreloader');
+                var tempPosts = getTempCachePosts($scope.discussion.discussion_id, showMoreCounter);
+                
+                if (Object.prototype.toString.call($scope.discussion.posts[0].replies) === '[object Array]') {
+                    
+                    var currentPosts = JSON.parse(JSON.stringify($scope.discussion.posts[0].replies));
+                    for(var i = 0; i < tempPosts.length; i++) {
+                        currentPosts.push(tempPosts[i]);
+                    }
+                    
+                    currentPosts.forEach(createModalReferences);
+                    $scope.discussion.posts[0].replies = currentPosts;
+                    
+                    $scope.morePendingPosts = false;
+                }
+                
+                $scope.$emit('HidePreloader');
+            };
+            
+            function getTempCachePosts(discussionId, page) {
+                
+                var stringTempPosts = '[{"post_id": "1000", "forumid": "20", "forum_name": "Puntodeencuentro", "activity_type": "forum", "description": "", "discussion_id": "5", "discussion_name": "Tomaelreto", "post_parent": "7", "post_type": "1", "created": "1441576800", "has_attachment": "", "liked": "0", "likes": "0", "message": "uno", "post_autor_id": "392", "picture_post_author": null, "post_author": "ch8", "filename": null, "fileurl": null, "mimetype": null, "replies": [] }, { "post_id": "1001", "forumid": "20", "forum_name": "Puntodeencuentro", "activity_type": "forum", "description": "", "discussion_id": "5", "discussion_name": "Tomaelreto", "post_parent": "7", "post_type": "1", "created": "1441576800", "has_attachment": "", "liked": "0", "likes": "0", "message": "dos", "post_autor_id": "392", "picture_post_author": null, "post_author": "ch8", "filename": null, "fileurl": null, "mimetype": null, "replies": [] }, { "post_id": "1002", "forumid": "20", "forum_name": "Puntodeencuentro", "activity_type": "forum", "description": "", "discussion_id": "5", "discussion_name": "Tomaelreto", "post_parent": "7", "post_type": "1", "created": "1441576800", "has_attachment": "", "liked": "0", "likes": "0", "message": "1-2", "post_autor_id": "394", "picture_post_author": null, "post_author": "ch9", "filename": null, "fileurl": null, "mimetype": null, "replies": [] }, { "post_id": "1003", "forumid": "20", "forum_name": "Puntodeencuentro", "activity_type": "forum", "description": "", "discussion_id": "5", "discussion_name": "Tomaelreto", "post_parent": "7", "post_type": "1", "created": "1441576800", "has_attachment": "", "liked": "0", "likes": "0", "message": "2-2", "post_autor_id": "394", "picture_post_author": null, "post_author": "ch9", "filename": null, "fileurl": null, "mimetype": null, "replies": [] }, { "post_id": "1004", "forumid": "20", "forum_name": "Puntodeencuentro", "activity_type": "forum", "description": "", "discussion_id": "5", "discussion_name": "Tomaelreto", "post_parent": "7", "post_type": "1", "created": "1441576800", "has_attachment": "", "liked": "0", "likes": "0", "message": "3-1", "post_autor_id": "396", "picture_post_author": null, "post_author": "ch10", "filename": null, "fileurl": null, "mimetype": null, "replies": [{ "post_id": "692", "forumid": "20", "forum_name": "Puntodeencuentro", "activity_type": "forum", "description": "", "discussion_id": "5", "discussion_name": "Tomaelreto", "post_parent": "691", "post_type": "1", "created": "1441576800", "has_attachment": "", "liked": "0", "likes": "0", "message": "3-1-1", "post_autor_id": "396", "picture_post_author": null, "post_author": "ch10", "filename": null, "fileurl": null, "mimetype": null, "replies": "1" }, { "post_id": "699", "forumid": "20", "forum_name": "Puntodeencuentro", "activity_type": "forum", "description": "", "discussion_id": "5", "discussion_name": "Tomaelreto", "post_parent": "691", "post_type": "1", "created": "1441576800", "has_attachment": "", "liked": "0", "likes": "0", "message": "dfdfd", "post_autor_id": "395", "picture_post_author": null, "post_author": "root", "filename": null, "fileurl": null, "mimetype": null, "replies": "1"}]}]';
+                var jsonTempPosts = JSON.parse(stringTempPosts);
+                
+                return jsonTempPosts;
+            }
 
             $scope.back = function () {
 
@@ -382,6 +431,5 @@ angular
 
                 $scope.$emit('scrollTop');
             }
-            $scope.pageLoaded = true;
         }]);
 

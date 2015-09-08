@@ -432,7 +432,51 @@
     .background-size(100%, auto);
 
     article {
-        margin-bottom: 12vw;
+        padding-bottom: 15vw;
+
+        .component {
+            padding:0;
+            padding-top:15vw;
+            margin:0 auto;
+            width: 80vw;
+            max-width: 80vw;
+            height: auto;
+            
+            h3 {
+                width:auto;
+                text-align: left;
+                text-transform: uppercase;
+            }
+            ul, li, p {
+                width:auto;
+                color:@clr-white;
+                font-size: 5vw;
+                text-align: left;
+            }
+            figure {
+                display: block;
+                padding: 0;
+                margin: 0 auto;
+                width: auto;
+                max-width: inherit;
+                overflow: hidden;
+
+                img {
+                    display: block;
+                    padding: 0;
+                    margin: 0 auto;
+                    width: auto; 
+                    max-width: inherit;
+                }
+            }
+            .link, 
+            .link:hover, 
+            .link:active {
+                color:@clr-white;
+                font-weight: bold;
+            }
+            .btn {margin-top: 6vw;}
+        }
     }
 }
 
@@ -786,10 +830,20 @@ section.part.inbloq{
 
 
 //////////////// owl plugin ///////////////////////////
-.owl-carousel .owl-wrapper-outer.autoHeight {
-    transition: none;
-}
 
+
+.owl-carousel {
+    opacity: 1 !important;
+    .owl-wrapper,
+    .owl-item {
+        backface-visibility: visible;
+        transition: none !important;
+        transform: none !important;
+    }
+    .owl-wrapper-outer.autoHeight {
+        transition: none;
+    }
+}
 
 ///////////////// switch-handle [switch slider toggle] ///////////////////////
 .switch {
@@ -994,6 +1048,7 @@ section.part.inbloq{
         }
         .terms-and-conditions,
         .dashboard-stage-intro,
+        .opening-stage-modal,
         .closing-stage-modal,
         .dashboard-programa {
             &.in {
@@ -1032,9 +1087,10 @@ section.part.inbloq{
 .incluso-app{
     .activity-closing {
         .sm-pill{
-            padding: .3vw 2vw;
+            padding: .3vw 3vw;
             .icon-star {
-                margin-left: 1vw;
+                padding-left: 1.5vw;
+                vertical-align: middle;
             }
         }
         .actions {
