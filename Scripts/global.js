@@ -518,17 +518,21 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    var activity = getActivityByActivity_identifier(activity_identifier);
 
      extraPoints ? '' : extraPoints = 0;
-     
-     
+
+    /*
      if (activity_identifier == '1009' || activity_identifier == '1001') {
          activity.points = 0;
      }
+
+     */
+
 
      if(extraPoints != 0){
          profile.stars = Number(profile.stars) + Number(extraPoints);
      } else {
          profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
      }
+
 
     var data={
       userId: profile.id,

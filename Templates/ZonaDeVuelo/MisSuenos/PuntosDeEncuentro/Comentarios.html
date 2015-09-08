@@ -73,7 +73,7 @@
         <div class="part">
           <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>{{p.post_author}} <span>publicó:</span>
-            <div>{{p.created | date: "dd MMMM yyyy"}}</div>
+            <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
             </div>
           </div>
           <div class="block">
@@ -94,11 +94,11 @@
           </div>
 
           <div class="social">
-            <div ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
-              <span class="icomoon icon-like"></span> Me gusta
+            <div class="pink" ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
+              <span class="icomoon icon-like pink"></span> Me gusta
             </div>
-            <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
-              <span class="icomoon icon-like"></span> Ya no me gusta
+            <div class="pink" ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
+              <span class="icomoon icon-like pink"></span> Ya no me gusta
             </div>
             <div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">
               <span class="icomoon icon-comment"></span> Comentar

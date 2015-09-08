@@ -12,30 +12,38 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            //Turn on Preloader
             $scope.$emit('ShowPreloader'); //show preloader
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            
+
+            $scope.scrollToTop();
+
+
             $scope.currentPage = 1;
             $scope.setReadOnly = false;
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
-
             $scope.like_status = 1;
 
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial"
                 "userid": 0,
-                "answers": [null, [false, false, false, false, false, ''], [], null, []],
+                "answers": [null, [0, 0, 0, 0, 0], [], null, []],
                 "activityidnumber": 0,
                 "like_status": 0
             };
 
-            $scope.misCualidadesAnswers = [[false, false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, false, '']];
-            //$scope.misCualidadesAnswers = [[false, false, false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false, false, false], [false, false, false, false, false, false, false, false, false, false, false, false]];
-            $scope.misGustosAnswers = [[false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, ''], [false, false, false, false, false, false, false, false, false, false, false, '']];
+            /*        //For storing responses in "Exploración Inicial"
+            $scope.AnswersResult = {
+                "answers": [null, [false, false, false, false, false, ''], [], null, []]
+            };
+            */
+
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misSuenosAnswers = [[], [], []];
             $scope.exploracionFinal = ['', '', '', '', ''];
 
@@ -49,6 +57,7 @@ angular
 
             $scope.show = function() {
                 console.log($scope.AnswersResult.answers[0]);
+                console.log($scope.AnswersResult.answers);
             };
 
             $scope.show1 = function() {
@@ -239,6 +248,7 @@ angular
                                         if (lastQuestionValidation) {
                                             $scope.showWarning = false;
                                             $scope.navigateToPage(2);
+                                            $scope.scrollToTop();
                                         } else {
                                             showWarningAndGoToTop();
                                         }
@@ -278,6 +288,7 @@ angular
                                 if ($scope.AnswersResult.answers[4] != null) {
                                     $scope.showWarning = false;
                                     $scope.navigateToPage(2);
+                                    $scope.scrollToTop();
                                 }
                                 else {
                                     showWarningAndGoToTop();
@@ -305,17 +316,18 @@ angular
                 var userAnswers = '';
                 switch (questionIndex) {
                     case 0:
-                        if (question.userAnswer != "No") {
-                            console.log("question.userAnswer = " + question.userAnswer);
+                        if (question.userAnswer == "Si") {
+
                             $scope.AnswersResult.answers[0] = "0";
                         }
                         else if (question.userAnswer == "No") {
-                            console.log("question.userAnswer = " + question.userAnswer);
+                            //console.log("question.userAnswer = " + question.userAnswer);  "0"si  y "1"no
                             $scope.AnswersResult.answers[0] = "1";
                         }
                         break;
 
                     case 1:
+                        console.log("To render: " + question.userAnswer);
                         if (question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
                             for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
@@ -501,7 +513,7 @@ angular
 
                 if (index == 0) {
                     var qty = userAnswersList.length;
-                    addHeightConsulta("#listaDinamica", qty);
+                    addHeightConsulta("#listaDinamica1", qty);
                 }
             }
 
@@ -590,10 +602,11 @@ angular
                     $scope.activityPoints = activity.points;
                     console.log("points: " + activity.points);
                     $scope.activityname = activity.activityname;        //console.log("activityname: " + activity.activityname);
-
+                        /*
                     if (activity.activity_identifier == '1001') {//INC-1826: Not assign Stars to "Exploración Inicial" activity
                         $scope.activityPoints = 0;
                     }
+                    */
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -601,19 +614,33 @@ angular
 
                     var activityFinished = false;
                     console.log("userprofile: " + $scope.userprofile.id);
+
+                    $scope.activity_status = activity.status;
+
                     if (activity.status != 0) {
                         activityFinished = true;
-                        $scope.setReadOnly = true;
+                        if ($scope.activity_identifier == '1009' || $scope.activity_identifier == '1001') {
+                            $scope.setReadOnly = true;
+                        }
+
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
+                    } else {
+                        $scope.$emit('HidePreloader');
                     }
 
                     $scope.activity = activity;
                     $scope.activityFinished = activityFinished;
+
+                } else {
+                    console.log("Activity is NOT defined");
+                    $scope.$emit('HidePreloader');
                 }
             }
 
-
+            //This callback is invoked for finished activities only
             function successfullCallBack(activityAnswers) {
+
+                $scope.$emit('HidePreloader');
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
@@ -640,6 +667,8 @@ angular
                                 break;
                         }
                     }
+
+                    //$scope.$emit('HidePreloader');
                 }
 
                 else {
@@ -650,7 +679,8 @@ angular
 
 
             function errorCallback() {
-
+                console.log("error Callback");
+                $scope.$emit('HidePreloader');
             }
 
 
@@ -708,14 +738,9 @@ angular
                         //Check if dreams are not empty strings or spaces
                         var countNotEmptyAnswers = 0;
                         for (var b = 0; b < cont; b++) {
-                            //var text = $scope.misSuenosAnswers[a][b];
-                            //console.log(text);
 
                             //Correction for the '\n' reserved character
-                            //text = text.replace(/\r?\n|\r/g, " ").trim();
-                            //$scope.misSuenosAnswers[a][b] = text;
                             $scope.misSuenosAnswers[a][b] = $scope.misSuenosAnswers[a][b].replace(/\r?\n|\r/g, " ").trim();
-                            //console.log(text);
 
                             if ($scope.misSuenosAnswers[a][b] !== '') {
                                 countNotEmptyAnswers++;
@@ -731,6 +756,7 @@ angular
                 if (validAnswers == 3) {
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
+                    $scope.scrollToTop();
                 } else {
                     showWarningAndGoToTop();
                 }
@@ -762,6 +788,7 @@ angular
             $scope.validateMisCualidadesAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
+
                 var validatedAnswers = [0, 0, 0];
                 var validateOther = [0, 0, 0];
 
@@ -773,10 +800,10 @@ angular
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
                         } else {
-                            $scope.misGustosAnswers[a][b] = false;
+                            $scope.misGustosAnswers[a][b] = 0;
                         }
                     }
-
+                    /*
                     //...and lastly, for the input value...
                     if ($scope.misCualidadesAnswers[a][11] == true) {
                         //Get rid from carriage return
@@ -788,6 +815,7 @@ angular
                             validateOther[a] = -1;
                         }
                     }
+                    */
                 }
                 console.log(validatedAnswers);
                 console.log(validateOther);
@@ -801,6 +829,7 @@ angular
                     console.log('!HURAA');
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
+                    $scope.scrollToTop();
                 } else {
                     showWarningAndGoToTop();
                 }
@@ -843,15 +872,15 @@ angular
                 for (var a = 0; a < $scope.misGustosAnswers.length; a++) {
                     var cont = $scope.misGustosAnswers[a].length;  //It should be equal to 12
 
-                    for (var b = 0; b < cont - 1; b++) { //Only the first 11 checkboxes
+                    for (var b = 0; b < cont; b++) { //Only the first 11 checkboxes
                         var checked = $scope.misGustosAnswers[a][b];
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
                         } else {
-                            $scope.misGustosAnswers[a][b] = false;
+                            $scope.misGustosAnswers[a][b] = 0;
                         }
                     }
-
+                    /*
                     //...and lastly, for the input value...
                     if ($scope.misGustosAnswers[a][10] == true) {
                         //Get rid from carriage return
@@ -864,6 +893,7 @@ angular
                             validateOther[a] = -1;
                         }
                     }
+                    */
                 }
                 console.log(validatedAnswers);
                 console.log(validateOther);
@@ -877,6 +907,7 @@ angular
                     console.log('!HURAA');
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
+                    $scope.scrollToTop();
                 } else {
                     showWarningAndGoToTop();
                 }
@@ -929,6 +960,7 @@ angular
 
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
+                    $scope.scrollToTop();
                 }
             };
 
@@ -1013,7 +1045,7 @@ angular
                 $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult.length;
             }
 
-                $scope.$emit('HidePreloader'); //hide preloader
+                //$scope.$emit('HidePreloader'); //hide preloader
             function partialErrorCallback(partialActivityAnswers) {
             }
 
@@ -1023,6 +1055,7 @@ angular
     controller('OpeningStageController', function ($scope, $modalInstance) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
+
         };
     })
     .controller('videoCollapsiblePanelController', function ($scope) {
