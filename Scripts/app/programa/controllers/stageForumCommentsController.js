@@ -101,17 +101,16 @@ angular
             };
 
             var checkForumProgress = function(callback){
-                debugger;
-                callback();
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
+                console.log('Checking forum progress');
+                callback();
+                $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
 
-                var numberOfDiscussionsWithMoreThan2Replies = _.filter($scope.activity.discussions, function(d) { return d.replies >= 2});
-                isActivityFinished = numberOfDiscussionsWithMoreThan2Replies.length == $scope.activity.discussions.length;
+                var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2});
+                isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentActivity.discussions.length);
 
-                //Check for activity status
                 var activity_identifier = null;
-                var moodleid;
                 if($scope.moodleId == 151){
                     activity_identifier = 1010;
                     moodleid = 64;
@@ -129,38 +128,37 @@ angular
                     moodleid = 148;
 
                 }
+                var moodleid;
 
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
                 if(activityFromTree.status == 1){
+                    addExtraForumParticipation($scope.discussion.post_id);
+                    var extraPointsCounter = getForumsExtraPointsCounter();
+                    var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $scope.discussion.post_id; });
+                    if(currentDiscussionCounter.extra_replies_counter <= 10){
+                        updateUserStars(activity_identifier, 50 );
+                    }else{}
 
-                    var commentsCounterCollection = getForumsProgress();
-                    var totalCommentsCounter = 0;
-                    for(var i = 0 ; i < commentsCounterCollection.length ; i++){
-                        totalCommentsCounter += Number(commentsCounterCollection[i].replies_counter);
-                    }
-                    var totalTopics = commentsCounterCollection.length;
-                    var extraPoints = totalCommentsCounter - (totalTopics * 2);
-                    extraPoints > 10? extraPoints = 10 : '';
-                    var totalExtraPoints = 100 + (extraPoints*50);
-
-                    updateUserStars(activity_identifier, totalExtraPoints );
+                    //var commentsCounterCollection = getForumsProgress();
+                    //var totalCommentsCounter = 0;
+                    //for(var i = 0 ; i < commentsCounterCollection.length ; i++){
+                    //    totalCommentsCounter += Number(commentsCounterCollection[i].replies_counter);
+                    //}
+                    //var totalTopics = commentsCounterCollection.length;
+                    //var extraPoints = totalCommentsCounter - (totalTopics * 2);
+                    //extraPoints > 10? extraPoints = 10 : '';
+                    //var totalExtraPoints = 100 + (extraPoints*50);
+                    //
+                    ////updateUserStars(activity_identifier, totalExtraPoints );
                 }else{}
 
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);                    
                 } else {
                    callback();
-                   // getDataAsync();
                 }
 
             };
-            //TODO implement adding points to user
-            var addPointsToUser = function(){
-
-            };
-            //TODO Check if this call is needed
-            //checkForumProgress();
-
 
             var _uncollapse = function(element, elementsArray){
                 for(var key in elementsArray){
@@ -189,13 +187,13 @@ angular
 
             $scope.isCommentModalCollapsed= [];
             $scope.replyText = null;
-            $scope.replyToPost = function(that, parentId, topicId){                
+            $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex){
                 var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){
                         $scope.textToPost=null;
-                        $scope.isCommentModalCollapsed[parentId] = true;
+                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         updateForumProgress(topicId);
                         $scope.$emit('ShowPreloader');
@@ -203,7 +201,7 @@ angular
                     },
                     function(){
                         $scope.textToPost=null;
-                        $scope.isCommentModalCollapsed[parentId] = true;
+                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
                         $scope.$emit('HidePreloader');
                     });
             };
@@ -333,10 +331,12 @@ angular
                 $scope.$emit('HidePreloader');
             }
 
+
             var initializeCommentsData = function(element, index, array){
-                $scope.isCommentModalCollapsed[element.post_id] = true;
+                $scope.isCommentModalCollapsed[index] = false;
+                console.log(element.post_id);
                 
-                $scope.showAllCommentsByPost[element.post_id] = false;
+                $scope.showAllCommentsByPost[element.post_id] = 3;
             };
 
             var refreshTopicData = function(){   
@@ -345,9 +345,11 @@ angular
 
             function getActivityInfoCallback(data) {
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
+                console.log($scope.activity);
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion_id == $routeParams.discussionId; });
                 var posts = $scope.discussion.posts[0].replies? $scope.discussion.posts[0].replies : new Array();
-                posts.forEach(createModalReferences);
+                //posts.forEach(createModalReferences);
+                $scope.isCommentModalCollapsed.push(false);
                 $scope.$emit('HidePreloader');
             }
 
@@ -355,7 +357,7 @@ angular
             
             $scope.showPreviousComments = function(postId) {
             
-                $scope.showAllCommentsByPost[postId] = true;
+                $scope.showAllCommentsByPost[postId] = 1000000;
             };
             
             $scope.showMore = function() {
@@ -379,7 +381,7 @@ angular
                         currentPosts.push(tempPosts[i]);
                     }
                     
-                    currentPosts.forEach(createModalReferences);
+                    currentPosts.forEach(initializeCommentsData);
                     $scope.discussion.posts[0].replies = currentPosts;
                     
                     $scope.morePendingPosts = false;
