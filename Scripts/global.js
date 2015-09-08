@@ -131,32 +131,33 @@ var updateActivityStatusDictionary = function(activityId){
     _activityStatus[activityId] =1;
 };
 
-var _endActivity = function(activityModel){
+var _endActivity = function(activityModel, callback){
         
         //trigger activity type 2 is sent when the activity ends.
         var triggerActivity = 2;
         var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
         var currentUserId = currentUser.userId;
         var activityId = activityModel.coursemoduleid;
+        callback = callback || successCallback;
         //create notification
         _createNotification(activityId, triggerActivity);              
         
       if (activityModel.activityType == "Quiz"){
-        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successCallback, errorCallback);
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
       }
       else if(activityModel.activityType == "Assign")
       {
         var data = {userid :  currentUserId };
         
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse,activityModel.token,
-        successCallback,errorCallback);
+        callback,errorCallback);
       }
       else{            
         var data = {userid :  currentUserId };
         
         // update activity status dictionary used for blocking activity links
         updateActivityStatusDictionary(activityId);
-        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback, errorCallback);
+        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, callback, errorCallback);
       }                  
 };
 
