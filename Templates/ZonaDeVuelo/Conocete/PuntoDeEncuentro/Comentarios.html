@@ -73,7 +73,7 @@
         <div class="part">
           <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>{{p.post_author}} <span>publicó:</span>
-            <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
+            <div>{{p.created | date: "dd MMMM yyyy"}}</div>
             </div>
           </div>
           <div class="block">
@@ -87,18 +87,21 @@
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies">
-            <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+            <div ng-show="(showAllCommentsByPost[p.post_id] || $index < 3)" class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
               <div>{{r.post_author}} <span>comentó:</span>   <div>{{r.message}}</div>
               </div>
             </div>
+          </div>
+          <div ng-show="(!showAllCommentsByPost[p.post_id] && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+            Mostrar mensajes anteriores
           </div>
 
           <div class="social">
             <div class="pink" ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
               <span class="icomoon icon-like pink"></span> Me gusta
             </div>
-            <div class="pink" ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
-              <span class="icomoon icon-like pink"></span> Ya no me gusta
+            <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
+              <span class="icomoon icon-like"></span> Ya no me gusta
             </div>
             <div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">
               <span class="icomoon icon-comment"></span> Comentar
