@@ -379,7 +379,7 @@ angular
                         currentPosts.push(tempPosts[i]);
                     }
                     
-                    currentPosts.forEach(createModalReferences);
+                    currentPosts.forEach(initializeCommentsData);
                     $scope.discussion.posts[0].replies = currentPosts;
                     
                     $scope.morePendingPosts = false;
