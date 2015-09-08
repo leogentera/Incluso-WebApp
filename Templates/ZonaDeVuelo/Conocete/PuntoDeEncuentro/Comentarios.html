@@ -103,19 +103,21 @@
             <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
               <span class="icomoon icon-like"></span> Ya no me gusta
             </div>
-            <div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">
+            <!--<div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">-->
+            <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">
               <span class="icomoon icon-comment"></span> Comentar
             </div>
           </div>
 
         </div>
         <section class="modales">
-            <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">
+            <!--<div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">-->
+            <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed[$index]">
                 <div>
                     <a href="#close" title="Close" class="close"></a>
                     <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
 
-                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent)" >Compartir</a>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
                 </div>
             </div>
          </section>
@@ -128,6 +130,7 @@
         </div>
         
         <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
+        <div>{{isCommentModalCollapsed[676]}}</div>
       </section>
     </section>
   </article>
