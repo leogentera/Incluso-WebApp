@@ -15,6 +15,7 @@ angular
             //Turn on Preloader
             $scope.$emit('ShowPreloader'); //show preloader
             _httpFactory = $http;
+            _location = $location;
             _timeout = $timeout;
             $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
@@ -121,9 +122,7 @@ angular
                 //console.log("activityModel = " + JSON.stringify(activityModel));
                 console.log("answersResult = " + JSON.stringify($scope.AnswersResult));
 
-                _endActivity(activityModel);
-                var currentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + $scope.currentChallenge);
+                _endActivity(activityModel,null,$scope.currentChallenge);                
             };
 
 
@@ -598,10 +597,10 @@ angular
                         $scope.AnswersResult.answers = [0, 0, 0, 0, 0];
                     }
 
-                    $scope.coursemoduleid = activity.coursemoduleid;    //console.log("coursemoduleid: " + activity.coursemoduleid);
+                    $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
                     console.log("points: " + activity.points);
-                    $scope.activityname = activity.activityname;        //console.log("activityname: " + activity.activityname);
+                    $scope.activityname = activity.activityname;
                         /*
                     if (activity.activity_identifier == '1001') {//INC-1826: Not assign Stars to "Exploración Inicial" activity
                         $scope.activityPoints = 0;
@@ -779,7 +778,6 @@ angular
             $scope.answerIndex = 1;
 
             $scope.addToAnswerIndex = function (delta, maxPages) {
-
                 $scope.answerIndex = parseInt($('span#index').text());
 
                 if ($scope.answerIndex > maxPages) {
