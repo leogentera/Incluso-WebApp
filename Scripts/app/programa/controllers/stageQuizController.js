@@ -1051,16 +1051,14 @@ angular
 
         }
     ])
-    .
-    controller('OpeningStageController', function ($scope, $modalInstance) {
+    .controller('OpeningStageController', function ($scope, $modalInstance) {
         $scope.$emit('ShowPreloader');
         $scope.cancel = function () {
-            
+            $scope.$emit('ShowPreloader');
             $modalInstance.dismiss('cancel');            
             setTimeout(function(){
-                $scope.$emit('HidePreloader');    
-                
-            }, 1000);
+                $scope.$emit('HidePreloader');                    
+            }, 2000);
             
         };
     })
