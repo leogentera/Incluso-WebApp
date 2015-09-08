@@ -245,7 +245,7 @@
 
     <!-- initial message -->
     <script type="text/ng-template" id="openingStageModal.html">
-        <div class="modal-robot robot-lg closing-stage-modal user-help">
+        <div class="modal-robot robot-lg opening-stage-modal user-help">
             <!--<img src="assets/images/img-robot-lg.svg" alt="robot" />-->
             <span class="img-robot-lg"></span>
 
@@ -269,7 +269,7 @@
 
 <script>
     $(document).ready(function () {
-        var owl = $("#owl ");
+        var owl = $("#owl");
         owl.owlCarousel({
             navigation: false,
             pagination: false,
@@ -279,12 +279,15 @@
             mouseDrag: false,
             touchDrag: false,
             transitionStyle: "fade",
+            afterInit: function() {
+                //$scope.$emit('ShowPreloader');
+            },
             afterMove: callback
         });
 
         function callback(event) {
             var item = this.currentItem;
-            $("#index").html(item + 1 + '/');
+            $("#index").html(item + 1 + '/');            
         }
 
         $("#next").click(function (evt) {
@@ -295,7 +298,7 @@
         $("#prev").click(function (evt) {
             owl.trigger('owl.prev');
             evt.preventDefault();
-        });
+        });        
     });
 
 </script>

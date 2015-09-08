@@ -690,7 +690,7 @@ angular
                     templateUrl: 'openingStageModal.html',
                     controller: 'OpeningStageController',
                     size: size,
-                    windowClass: 'user-help-modal'
+                    windowClass: 'user-help-modal opening-stage-modal'
                 });
             };
 
@@ -1053,9 +1053,15 @@ angular
     ])
     .
     controller('OpeningStageController', function ($scope, $modalInstance) {
+        $scope.$emit('ShowPreloader');
         $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-
+            
+            $modalInstance.dismiss('cancel');            
+            setTimeout(function(){
+                $scope.$emit('HidePreloader');    
+                alert("hide");
+            }, 1000);
+            
         };
     })
     .controller('videoCollapsiblePanelController', function ($scope) {
