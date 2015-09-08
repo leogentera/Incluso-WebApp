@@ -132,32 +132,31 @@ var updateActivityStatusDictionary = function(activityId){
     _activityStatus[activityId] =1;
 };
 
-var _endActivity = function(activityModel, currentChallenge){                
+var _endActivity = function(activityModel, callback, currentChallenge){
+        
         //trigger activity type 2 is sent when the activity ends.
         var triggerActivity = 2;
         var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
         var currentUserId = currentUser.userId;
         var activityId = activityModel.coursemoduleid;
+        callback = callback || successCallback;
         //create notification
         _createNotification(activityId, triggerActivity);              
-        
-      if (activityModel.activityType == "Quiz"){        
+      if (activityModel.activityType == "Quiz"){
         _endActivityCurrentChallenge = currentChallenge;        
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successQuizCallback, errorCallback);
       }
       else if(activityModel.activityType == "Assign")
       {
-        var data = {userid :  currentUserId };
-        
-        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse,activityModel.token,
-        successCallback,errorCallback);
+        var data = {userid :  currentUserId };        
+        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse,activityModel.token, callback,errorCallback);
       }
       else{            
         var data = {userid :  currentUserId };
         
         // update activity status dictionary used for blocking activity links
         updateActivityStatusDictionary(activityId);
-        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback, errorCallback);
+        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, callback, errorCallback);
       }                  
 };
 
@@ -195,44 +194,36 @@ var _isStageCompleted = function(){
   
 };
 
-var _isChallengeCompleted = function(){
-    console.log("challenge Completed starts");
+var _isChallengeCompleted = function(){    
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));      
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
     var currentStage = userCourse.stages[lastStageIndex];
     
     for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++){
-        var currentChallenge = currentStage.challenges[challengeIndex];
+         var currentChallenge = currentStage.challenges[challengeIndex];
         if(currentChallenge.status == 0){              
             var totalActivitiesByStage = currentChallenge.activities.length;
-            var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
-            console.log("TotalActivitiesByStage" + totalActivitiesByStage + "TotalActivitiesCompleted:" + totalActivitiesCompletedByStage);
+            var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;            
             if (totalActivitiesByStage == totalActivitiesCompletedByStage){
                 
                 //updateBadge
                 _updateBadgeStatus(currentChallenge.coursemoduleid);
-                userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
-                console.log(userCourse);
+                userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;                
                 _setLocalStorageJsonItem("usercourse", userCourse);
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 var currentUserId = currentUser.userId;
                 var data = { userid :  currentUserId };
-                var currentActivityModuleId = currentChallenge.coursemoduleid;
-                console.log("inside currentChallengeCompleted");
-                console.log(currentChallenge);
-                moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, function(){
-                    console.log("success Callback");
-                  },errorCallback);
+                var currentActivityModuleId = currentChallenge.coursemoduleid;              
+                moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, successCallback,errorCallback);
                 success = currentActivityModuleId;
                 return success;
             }else{
               success = 0;
             }          
-        }else{
-          success = 0;
-        }
-    }
+         }else{
+           success = 0;
+         }
     return success;
     
 };
@@ -533,14 +524,23 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getActivityByActivity_identifier(activity_identifier);
+
      extraPoints ? '' : extraPoints = 0;
-     
-     
+
+    /*
      if (activity_identifier == '1009' || activity_identifier == '1001') {
          activity.points = 0;
      }
-     
-     profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);  
+
+     */
+
+
+     if(extraPoints != 0){
+         profile.stars = Number(profile.stars) + Number(extraPoints);
+     } else {
+         profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+     }
+
 
     var data={
       userId: profile.id,
@@ -1024,3 +1024,15 @@ var _activityRoutes = [
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
+
+document.addEventListener("deviceready", onDeviceReady, false);
+            
+             function onDeviceReady() {
+        // Register the event listener
+                document.addEventListener("backbutton", onBackKeyDown, false);
+            }
+        
+            // Handle the back button
+            //
+            function onBackKeyDown() {
+            }
