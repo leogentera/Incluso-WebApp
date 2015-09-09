@@ -72,6 +72,7 @@
         $http.get('Templates/Programa/formulario.html', { cache: $templateCache });
         $http.get('Templates/Programa/community.html', { cache: $templateCache });
         $http.get('Templates/Programa/sharingexperience.html', { cache: $templateCache });  
+        $http.get('Templates/Programa/AlbumIncluso.html', { cache: $templateCache });  
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
@@ -253,6 +254,11 @@
             templateUrl: 'Templates/Programa/sharingexperience.html',
             controller: 'AlertsController'          //to do: add corresponding controller 
         });  
+
+       $routeProvider.when('/AlbumIncluso', { 
+            templateUrl: 'Templates/Programa/AlbumIncluso.html',
+            controller: 'AlertsController'          //to do: add corresponding controller 
+        });
 
         $routeProvider.when('/Chat', { 
             templateUrl: 'Templates/Chat/index.html',
