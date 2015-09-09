@@ -64,16 +64,21 @@ angular
             $scope.show1 = function() {
                 console.log($scope.AnswersResult.answers[1]);
             };
-
-
+            
+            $scope.isDisabled = false;
+            
             $scope.finishActivity = function () {
                 //Activity completed
 
                 $scope.activity.status = 1;
+                $scope.isDisabled = true;
 
                 //Update Activity Log Service
                 console.log("For update stars. activity_identifier = " + $scope.activity_identifier);
-                updateUserStars($scope.activity_identifier);
+                if($scope.activity_status == 0){
+                    $scope.activity_status == 1;
+                    updateUserStars($scope.activity_identifier);
+                }
 
                 $scope.AnswersResult.userid = $scope.userprofile.id;
                 $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
@@ -800,12 +805,12 @@ angular
                 for (var a = 0; a < $scope.misCualidadesAnswers.length; a++) {
                     var cont = $scope.misCualidadesAnswers[a].length;  //It should be equal to 13
 
-                    for (var b = 0; b < cont - 1; b++) { //Only the first 12 checkboxes
+                    for (var b = 0; b < cont ; b++) { //Only the first 12 checkboxes
                         var checked = $scope.misCualidadesAnswers[a][b];
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
                         } else {
-                            $scope.misGustosAnswers[a][b] = 0;
+                            $scope.misCualidadesAnswers[a][b] = 0;
                         }
                     }
                     /*
@@ -826,8 +831,8 @@ angular
                 console.log(validateOther);
 
                 if (validatedAnswers[0] > 0 &&
-                    validatedAnswers[0] > 0 &&
-                    validatedAnswers[0] > 0 &&
+                    validatedAnswers[1] > 0 &&
+                    validatedAnswers[2] > 0 &&
                     validateOther[0] != -1 &&
                     validateOther[1] != -1 &&
                     validateOther[2] != -1) {

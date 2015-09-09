@@ -35,9 +35,9 @@
 				<section class="component global-progress txt-renglon centered">
 					<h3>- MI AVANCE -</h3>
 					<div class="spinner">
-						<img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.ceil(usercourse.globalProgress)}}.png" alt="progress" />
+						<img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.ceil(stageProgress)}}.png" alt="progress" />
 						<div class="circle"></div>
-						<div class="text">{{usercourse.globalProgress || 0}}%</div>
+						<div class="text">{{stageProgress|| 0}}%</div>
 					</div>
 				</section>
 
