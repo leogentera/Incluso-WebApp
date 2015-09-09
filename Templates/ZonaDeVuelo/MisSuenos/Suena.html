@@ -161,7 +161,7 @@
                     <a class="btn btn-primary btn-lg btn-cnt"
                        id="save"
                        role="button"
-                       ng-click="validateMisSuenosAnsweredQuestions()" ng-show="answerIndex == 3">>
+                       ng-click="validateMisSuenosAnsweredQuestions()" ng-show="answerIndex == 3">
                         GUARDAR
                     </a>
 
@@ -202,7 +202,7 @@
                                 </div>
                             </section>
                         </div>
-                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">
+                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">
                             Terminar
                         </a>
                     </section>
