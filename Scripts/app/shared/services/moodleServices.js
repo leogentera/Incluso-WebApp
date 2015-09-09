@@ -35,7 +35,7 @@
             var key = "discussion/" + discussionId + discussion + forumId + page;
             var url = API_RESOURCE.format("discussion/" + discussionId + "?discussion=" + discussion + "&forumid=" + forumId + "&page=" + page);
             
-            _getAsyncData(key, url, successCallback, errorCallback, forceRefresh);
+            _getAsyncForumDiscussionsData(key, url, successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncActivityInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
@@ -148,7 +148,32 @@
                 errorCallback(data);
             });
         };
+        
+        var _getAsyncForumDiscussionsData = function (key, url, successCallback, errorCallback, forceRefresh) {
+            
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
+            if (returnValue) {
+                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                return returnValue;
+            }
+            
+            _httpFactory({
+                method: 'GET',
+                url: url,
+                headers: { 'Content-Type': 'application/json' }
+            }).success(function (data, status, headers, config) {
+                
+                var posts = createPostsTree(data);
+                
+                _setLocalStorageJsonItem(key, posts);
+                successCallback(posts, key);
+                
+            }).error(function (data, status, headers, config) {
+                errorCallback(data);
+            });
+            
+        };
 
         var _getForumAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
 
@@ -314,6 +339,52 @@
             });
         };
 
+        var createPostsTree = function(posts) {
+            var postsTree = new Array();
+            
+            for(var p = 0; p < posts.length; p++) {
+                var post = posts[p];
+                
+                if (isLegalPost(post, posts)) {
+                    var comments = new Array();
+                    
+                    for(var np = 0; np < posts.length; np++) {
+                        var nextPost = posts[np];
+                        
+                        if ((post["post_id"] != nextPost["post_id"]) && post["post_id"] === nextPost["post_parent"]) {
+                            comments.push(nextPost);
+                        }
+                    }
+                    post.replies = comments;
+                    postsTree.push(post);
+                }
+            }
+            
+            return postsTree;
+        };
+        
+        var isLegalPost = function(post, posts) {
+            var isLegalPost = true;
+            
+            
+            if (posts.length > 1) {
+                
+                for(var p = 0; p < posts.length; p++) {
+                    var currentPost = posts[p];
+                    
+                    if (post["post_id"] != currentPost["post_id"]) {
+                        isLegalPost = !(post["post_parent"] == currentPost["post_id"]);
+                    
+                        if (!isLegalPost) {
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            return isLegalPost;
+        };
+        
         var createForumTree = function (posts) {
 
             var forum = {

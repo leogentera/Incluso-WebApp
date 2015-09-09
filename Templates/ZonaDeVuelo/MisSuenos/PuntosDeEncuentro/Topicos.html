@@ -7,8 +7,8 @@
     </section>
     <section class="list txt-renglon">
       <div id="item{{$index}}" ng-repeat="t in activity.discussions">
-        <div class="part list-item" ng-click="showComentarios(t.discussion_id, moodleId)">
-          <span>{{t.discussion_name}}</span>
+        <div class="part list-item" ng-click="showComentarios(t.discussion, moodleId)">
+          <span>{{t.name}}</span>
           <a href="">
             <span class="icomoon icon-arrow-right-aligned fl-right"></span>
           </a>
