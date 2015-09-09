@@ -24,7 +24,7 @@
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
-        'incluso.programa.comunidad',        
+        'incluso.programa.comunidad',     
 
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
@@ -43,7 +43,7 @@
         'incluso.program.hallOfFame',
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
-        'incluso.program.helpAndSupport',
+        'incluso.program.helpAndSupport',        
         'incluso.programa.evaluacionFormulario',
     ])
     .run(function ($templateCache, $http, $rootScope) {
@@ -257,7 +257,7 @@
 
        $routeProvider.when('/AlbumIncluso', { 
             templateUrl: 'Templates/Programa/AlbumIncluso.html',
-            controller: 'AlertsController'          //to do: add corresponding controller 
+            controller: 'programaChatController'
         });
 
         $routeProvider.when('/Chat', { 

@@ -2205,7 +2205,69 @@
         }
 
         /***********************************************************************
+        
+        /***********************************************************************
+         $album
+         Description: CSS to represent look of album incluso layout and content
+        ************************************************************************/        
+        .album{
 
+            .album-starway {
+                    color: #FFF;
+                    min-height: 175vh;
+                    background: #1f2733;
+                    background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
+                    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
+                    background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                    background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                    background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
+                    background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );                
+                    background-image:url('@{url-images}/bg-album-modules.gif');
+                    background-position: -1px top;
+                    background-repeat: no-repeat, repeat-y;
+                    background-size: 100% 102%;
+                    padding-bottom: 16vw;
+                    
+                    .section-description {  
+                        height: 30vh;             
+                        h2 {
+                            margin: 0px;
+                            padding: 5vh 0px 2vh;
+                        }
+                        .txt-renglon {
+                            padding: 1vh 0px;
+                            font-weight: 500;
+
+                        }
+                    }
+
+                    .section-album{
+                        &.avatar {
+                            margin: 2vh;
+                            img {
+                                margin-top: 12vh;
+                                width: 63vw;                                
+                            }
+                        }
+                    }
+                    .btn-icon-aside {
+                        &.light {
+                            width: 60vw;
+                            height: 5vh;
+                            margin-top: 4vh;
+                            background-color: rgba(128, 152, 160, 0.5);
+                        }
+                        .btn-icon {
+                           margin-left: -8vw; 
+                           &+span {
+                                line-height: 4vh;
+                            }
+                        }
+                        
+                    }
+            }
+        }
 
         /***********************************************************************
          $experience-share
