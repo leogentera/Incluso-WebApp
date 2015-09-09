@@ -165,7 +165,8 @@ angular
                     key==element? elementsArray[key] = !elementsArray[key] : elementsArray[key] = true;
                 };
             };
-            $scope.collapseForumButtomsTrigger = function(element){
+            $scope.collapseForumButtomsTrigger = function(element, callFileBrowser){
+                callFileBrowser?clickPostAttachment():'';
                 _uncollapse(element, $scope.forumModals);
             };
 

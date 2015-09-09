@@ -36,7 +36,7 @@
       <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isVideoCollapsed')" ng-class="{'active': !forumModals['isVideoCollapsed']}">
         <span class="icomoon icon-video-file" ></span>
         <span class="arrow-up"></span></a>
-      <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isAttachmentCollapsed')" ng-class="{'active': !forumModals['isAttachmentCollapsed']}">
+      <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isAttachmentCollapsed', 1)" ng-class="{'active': !forumModals['isAttachmentCollapsed']}">
         <span class="icomoon icon-attachment"></span>
         <span class="arrow-up"></span></a>
     </section>
@@ -67,13 +67,10 @@
 
       <div id="openModal4" class="modalDialog" collapse="forumModals['isAttachmentCollapsed']">
         <div>
-          <form name="postUrlForm">
-
-            <div class="add"><span class="icomoon icon-edit"></span>
-              <input type="url" name="urlToPost" placeholder="Agregar tu enlace..." ng-model="linkToPost"  required /></div>
-            <div class="error" ng-show="postUrlForm.urlToPost.$error.url">Link invalido, introduzca una URL con el formato http://exemplo.com </div>
-            <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postLinkToForum()" ng-disabled="!postUrlForm.urlToPost.$valid" >Compartir</a>
-          </form>
+          <!--<div class="add"><form><input type="file" placeholder="Atachea algo..." value="Buscar" ng-model="attachmentToPost"  base-sixty-four-input maxsize="2000000" accept="image/*"></form></div>-->
+          <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="clickPostAttachment()" >Buscar</a>-->
+          <div> {{attachmentToPost.fileName}} </div>
+          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postAttachmentToForum()" >Compartir</a>
         </div>
       </div>
     </section>
