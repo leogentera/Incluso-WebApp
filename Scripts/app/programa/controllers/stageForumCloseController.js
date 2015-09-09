@@ -35,6 +35,7 @@ angular
             $scope.$emit('HidePreloader');
 
             var endForumActivity = function(moodleid){
+                $scope.$emit('ShowPreloader');
                 //debugger;
                var parentActivity = getActivityByActivity_identifier($routeParams.moodleid, userCourse);
                var activities = parentActivity.activities;
@@ -100,6 +101,7 @@ angular
 
                               }
                               updateUserStars(moodleId);
+                              $scope.$emit('HidePreloader');
                             $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                           }, errorCallback);
                     },
