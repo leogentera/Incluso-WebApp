@@ -50,9 +50,10 @@ angular
 
             var profile = JSON.parse(localStorage.getItem("profile"));
             $scope.clickLikeButton = function(postId){
-                var post = _.find($scope.discussion.posts[0].replies, function(a){
+                var post = _.find($scope.posts, function(a){
                     return a.post_id == postId
-                }) ;
+                });
+                
                 if(post.liked == 0){
                     post.liked = 1;
                     post.likes = parseInt(post.likes) + 1;
@@ -169,8 +170,8 @@ angular
             };
 
             var createReplyDataObject = function( parentId, message, postType){
-                var userId = localStorage.getItem("userId");    
-
+                var userId = localStorage.getItem("userId");
+                
                 var dataObject= {
                     "userid":userId,
                     "discussionid": $scope.discussion.discussion,
@@ -214,10 +215,11 @@ angular
 
             var createPostDataObject = function(message, postType, attachment){
                 var userId = localStorage.getItem("userId");
+                console.log("reply data object");
                 var dataObject = {
                     "userid":userId,
-                    "discussionid": $scope.discussion.discussion_id,
-                    "parentid": $scope.discussion.post_id,
+                    "discussionid": $scope.discussion.discussion,
+                    "parentid": $scope.discussion.id,
                     "message": message,
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
@@ -296,8 +298,8 @@ angular
                 var userId = localStorage.getItem("userId");
                 var dataObject = {
                     "userid":userId,
-                    "discussionid": $scope.discussion.discussion_id,
-                    "parentid": $scope.discussion.post_id,
+                    "discussionid": $scope.discussion.discussion,
+                    "parentid": $scope.discussion.id,
                     "message": '',
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
                     "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
