@@ -123,7 +123,7 @@
             <!--<div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">-->
             <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed[$index]">
                 <div>
-                    <a href="#close" title="Close" class="close"></a>
+                    <span class="close"></span>
                     <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
 
                     <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
