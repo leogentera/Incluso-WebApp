@@ -24,7 +24,8 @@
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
-        'incluso.programa.comunidad',     
+        'incluso.programa.comunidad',
+        'incluso.programa.reconocimiento',
 
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
@@ -73,6 +74,7 @@
         $http.get('Templates/Programa/community.html', { cache: $templateCache });
         $http.get('Templates/Programa/sharingexperience.html', { cache: $templateCache });  
         $http.get('Templates/Programa/AlbumIncluso.html', { cache: $templateCache });  
+        $http.get('Templates/Programa/reconocimiento.html', { cache: $templateCache });
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
@@ -150,6 +152,11 @@
             controller: 'evaluacionFormulario'
         });
         
+        $routeProvider.when('/reconocimiento', {
+            templateUrl: 'Templates/Programa/reconocimiento.html',
+            controller: 'reconocimiento'
+        });
+
         $routeProvider.when('/ProgramaDashboard', {
         	templateUrl: 'Templates/Programa/Dashboard.html',
         	controller: 'programaDashboardController'
