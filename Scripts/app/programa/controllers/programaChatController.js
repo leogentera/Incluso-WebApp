@@ -10,7 +10,7 @@ angular
         '$http',
         '$anchorScroll',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {            
             $scope.$emit('ShowPreloader'); 
             _timeout = $timeout;
             _httpFactory = $http;

@@ -12,7 +12,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
                           
             var userNotifications = JSON.parse(localStorage.getItem("notifications"));
-            
+            $scope.$emit('ShowPreloader'); //show preloader
             $scope.notifications = _.filter(userNotifications, function(notif){
                     return notif.timemodified != null;
                 });
@@ -39,6 +39,7 @@ angular
                   text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
                     ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
                 });
+                $scope.$emit('HidePreloader'); //hide preloader
             };
             for (var i=0; i<4; i++) {
                 $scope.addSlide();

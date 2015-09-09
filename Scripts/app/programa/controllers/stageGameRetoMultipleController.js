@@ -60,6 +60,15 @@ angular
             }
 
             $scope.stars = stars;
+            $scope.isInstalled = false;
+
+            try {
+              cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+            }
+            catch (e) {
+                $scope.isInstalled = true;
+            }
+
 
             function assignCourseModuleId(asyncRequest, data){
               $scope.retoMultipleActivities[$scope.retoMultipleActivities.length - 1]["coursemoduleid"] = 
@@ -173,10 +182,10 @@ angular
                                     completedActivities.completed > 1;
 
                 //save response
-                var parentActivityIdentifier = $routeParams.moodleid;
-                var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier);
-                var subactivitiesCompleted = [];
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
+                var parentActivityIdentifier = $routeParams.moodleid;
+                var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
+                var subactivitiesCompleted = [];
                 if (parentActivity.status == 0) {
                   if (shield != "" && $scope.profile) {
                     //update profile
@@ -192,39 +201,47 @@ angular
                   }
 
                   if ($scope.IsComplete) {
-                    _endActivity(parentActivity);
-                  }
+                    _endActivity(parentActivity, function() { 
 
-                  if (parentActivity.activities) {
-                    //Searches for the quizzes completedm
-                    _.each(quizzesRequests, function(q){
-                      if(q.quiz_answered){
-                        subactivitiesCompleted.push(q.coursemoduleid);
+
+                      parentActivity.status = 1;
+                      _setLocalStorageJsonItem("usercourse", userCourseUpdated)
+
+                        if (parentActivity.activities) {
+                          //Searches for the quizzes completedm
+                          _.each(quizzesRequests, function(q){
+                            if(q.quiz_answered){
+                              subactivitiesCompleted.push(q.coursemoduleid);
+                            }
+                          });
+                          //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
+                          updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
+                          //Updates the statuses of the subactivities completed
+                          userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
+                        }
+
+                      for(i = 0; i < quizzesRequests.length; i++){
+                        if (quizzesRequests[i].quiz_answered) {
+                          var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
+                          $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
+                        }
+                      }
+
+                      _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
+                      
+                      if ($scope.IsComplete) {
+                        $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
+                      }
+                      else
+                      {
+                          $location.path('/ZonaDeVuelo/Dashboard/1/2');
                       }
                     });
-                    //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
-                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
-                    //Updates the statuses of the subactivities completed
-                    userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
                   }
                 }
 
-                for(i = 0; i < quizzesRequests.length; i++){
-                  if (quizzesRequests[i].quiz_answered) {
-                    var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                    $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
-                  }
-                }
-
-                _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
-                
-                if ($scope.IsComplete) {
-                    //Only shows the results if all of the quizzes are answered
-                    $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
-                } else {
-                    $location.path('/ZonaDeVuelo/Dashboard/1');
-                }
             }
+
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
               //Update quiz on server
