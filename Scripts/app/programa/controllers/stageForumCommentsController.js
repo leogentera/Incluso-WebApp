@@ -37,7 +37,7 @@ angular
             var showMoreCounter = 1;
             $scope.morePendingPosts = true;
             
-            $scope.showAllCommentsByPost = new Array();
+            $scope.showAllCommentsByPost = {};
 
             $scope.scrollToTop();
 
@@ -104,7 +104,7 @@ angular
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
                 console.log('Checking forum progress');
-                callback();
+                //callback();
                 $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
 
                 var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2});
@@ -189,6 +189,9 @@ angular
             $scope.isCommentModalCollapsed= [];
             $scope.replyText = null;
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex){
+                debugger;
+                console.log('Topic Id: '+ topicId);
+                console.log('Parent Id: '+ parentId);
                 var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
@@ -241,6 +244,7 @@ angular
                         updateForumProgress($scope.discussion.post_id);
                         //refreshTopicData();
                         checkForumProgress(refreshTopicData);
+                        getTopicDataAsync();
                     },
                     function(){
                         $scope.textToPost=null;
@@ -338,8 +342,8 @@ angular
             var initializeCommentsData = function(element, index, array){
                 $scope.isCommentModalCollapsed[index] = false;
                 console.log(element.post_id);
-                
-                $scope.showAllCommentsByPost[element.post_id] = 3;
+                $scope.showAllCommentsByPost['id' + element.post_id] = 3;
+                console.log($scope.showAllCommentsByPost);
             };
 
             var refreshTopicData = function(){   
@@ -347,6 +351,7 @@ angular
             };
 
             function getActivityInfoCallback(data) {
+                debugger;
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid ));
                 console.log($scope.activity);
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion_id == $routeParams.discussionId; });
@@ -365,7 +370,7 @@ angular
             
             $scope.showPreviousComments = function(postId) {
             
-                $scope.showAllCommentsByPost[postId] = 1000000;
+                $scope.showAllCommentsByPost['id' + postId] = 1000000;
             };
             
             $scope.showMore = function() {

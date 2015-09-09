@@ -92,7 +92,8 @@
             <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> j&oacute;venes les gusta esto
             </div>
           </div>
-          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost[p.post_id]">
+          <!--<div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost[p.post_id]">-->
+          <div id="item{{$index}}" ng-repeat="r in p.replies">
             <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
               <div>{{r.post_author}} <span>coment&oacute;:</span>   <div>{{r.message}}</div>
               </div>
