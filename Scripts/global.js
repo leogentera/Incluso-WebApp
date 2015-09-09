@@ -104,14 +104,37 @@ var _readNotification = function(currentUserId,currentNotificationId){
 };
 
 var _setLocalStorageItem = function(key, value) {
+  try {
     localStorage.setItem(key, value);
+    var size = 0;
+    for(var x in localStorage) {
+      if (localStorage[x].length) {
+        size = size + ((localStorage[x].length * 2)/1024);
+      }
+    }
+   console.log("localstorage contains:" + size.toFixed(2) + " Kb");
+  }
+  catch (e) {
+    console.log("localstorage error, clearing up storage");
+    ClearLocalStorage("activity");
+    ClearLocalStorage("activitiesCache");
+    localStorage.setItem(key, value);
+}
 }
 
 var _setLocalStorageJsonItem = function(key, object) {
   try {
     localStorage.setItem(key, JSON.stringify(object));
+    var size = 0;
+    for(var x in localStorage) {
+      if (localStorage[x].length) {
+        size = size + ((localStorage[x].length * 2)/1024);
+      }
+    }
+   console.log("localstorage contains:" + size.toFixed(2) + " Kb");
   }
   catch (e) {
+    console.log("localstorage error, clearing up storage");
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
     localStorage.setItem(key, JSON.stringify(object));

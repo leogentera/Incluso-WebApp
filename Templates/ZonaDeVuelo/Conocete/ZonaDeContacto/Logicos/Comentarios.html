@@ -36,7 +36,7 @@
       <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isVideoCollapsed')" ng-class="{'active': !forumModals['isVideoCollapsed']}">
         <span class="icomoon icon-video-file" ></span>
         <span class="arrow-up"></span></a>
-      <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isAttachmentCollapsed')" ng-class="{'active': !forumModals['isAttachmentCollapsed']}">
+      <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isAttachmentCollapsed', 1)" ng-class="{'active': !forumModals['isAttachmentCollapsed']}">
         <span class="icomoon icon-attachment"></span>
         <span class="arrow-up"></span></a>
     </section>
@@ -66,7 +66,8 @@
       <div id="openModal4" class="modalDialog" collapse="forumModals['isAttachmentCollapsed']">
         <div>
           <!--<div class="add"><form><input type="file" placeholder="Atachea algo..." value="Buscar" ng-model="attachmentToPost"  base-sixty-four-input maxsize="2000000" accept="image/*"></form></div>-->
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="clickPostAttachment()" >Buscar</a> {{attachmentToPost.fileName}}
+          <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="clickPostAttachment()" >Buscar</a>-->
+          <div> {{attachmentToPost.fileName}}</div>
           <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postAttachmentToForum()" >Compartir</a>
         </div>
       </div>
@@ -119,7 +120,7 @@
         <section class="modales">
           <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed[$index]">
                 <div>
-                    <a href="#close" title="Close" class="close"></a>
+                    <span class="close"></span>
                     <div class="add" ><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar texto..."  ng-model="replyText" /></div>
 
                     <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent)" >Compartir</a>
