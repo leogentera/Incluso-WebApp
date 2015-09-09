@@ -173,7 +173,7 @@ angular
 
                 var dataObject= {
                     "userid":userId,
-                    "discussionid": $scope.discussion.discussion_id,
+                    "discussionid": $scope.discussion.discussion,
                     "parentid": parentId,
                     "message": message,
                     "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
