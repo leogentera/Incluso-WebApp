@@ -115,18 +115,18 @@
 
                     <section id="controls" class="controls">
                         <div class="paginate">
-                            <a href="#" id="prev"><span
-                                    class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span></a>
-                            <a href="#" id="next"><span
-                                    class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span></a>
-
+                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 5)">
+                                <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
+                            </a>
+                            <a href="#" id="next" ng-click="addToAnswerIndex(1, 5)">
+                                <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
+                            </a>
                             <div class="centered">
-                                <span id="index" class="txt-bigger">1/</span><span id="totalPages"
-                                                                                   class="white txt-bigger">5</span>
+                                <span id="index" class="txt-bigger">1/</span>
+                                <span id="totalPages" class="white txt-bigger">5</span>
                             </div>
                         </div>
-                        <a class="btn btn-primary btn-lg btn-cnt" style="display:none" id="save" ng-hide="setReadOnly"
-                           ng-click='validateExploracionFinalAnsweredQuestions()'>GUARDAR</a>
+                        <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 5 && activity_status == 0" ng-click="validateExploracionFinalAnsweredQuestions()">GUARDAR</a>
 
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
@@ -321,7 +321,7 @@
                         </section>
                         <section class="txt-renglon centered txt-bigger">
                         </section>
-                        <section class="txt-renglon pill" ng-show="activityPoints > 0 && activity_status == 0">
+                        <section class="txt-renglon pill" ng-show="activityPoints > 0">
                             <div class="pull-left">Estrellas ganadas:</div>
                             <div class="pull-right sm-pill">
                                 <span class="pull-left">{{activityPoints}}</span>
@@ -342,7 +342,7 @@
                                     </div>
                                 </section>
                             </div>
-                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">Terminar</button>
+                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">Terminar</button>
                         </section>
                     </div>
                 </div>
@@ -385,13 +385,15 @@
             afterMove: callback
         });
 
-        function callback(event) {
+        function callback(evt) {
             var item = this.currentItem;
             $("#index").html(item + 1 + '/');
         }
 
-        $("#next").click(function () {
+        $("#next").click(function (evt) {
             owl.trigger('owl.next');
+
+            /*
             var numberOfPage = $('#index');
             var totalPages = $('#totalPages');
             if (numberOfPage.text().substring(0, 1) == totalPages.text()) {
@@ -399,11 +401,14 @@
             } else {
                 $('#save').hide();
             }
-            return false;
+            */
+            evt.preventDefault();
         });
 
-        $("#prev").click(function () {
+        $("#prev").click(function (evt) {
             owl.trigger('owl.prev');
+
+            /*
             var numberOfPage = $('#index');
             var totalPages = $('#totalPages');
             if (numberOfPage.text().substring(0, 1) == totalPages.text()) {
@@ -411,7 +416,8 @@
             } else {
                 $('#save').hide();
             }
-            return false;
+            */
+            evt.preventDefault();
         });
 
     });

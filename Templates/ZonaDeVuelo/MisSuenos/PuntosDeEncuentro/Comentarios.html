@@ -49,8 +49,13 @@
       </div>
       <div id="openModal2" class="modalDialog" collapse="forumModals['isLinkCollapsed']">
         <div>
-          <div class="add"><span class="icomoon icon-edit"></span><input type="url" placeholder="Agregar tu enlace..." value="" ng-model="linkToPost" /></div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postLinkToForum()" >Compartir</a>
+          <form name="postUrlForm">
+
+            <div class="add"><span class="icomoon icon-edit"></span>
+              <input type="url" name="urlToPost" placeholder="Agregar tu enlace..." ng-model="linkToPost"  required /></div>
+            <div class="error txt-renglon" ng-show="postUrlForm.urlToPost.$error.url">Link invalido, introduzca una URL con el formato http://exemplo.com </div>
+            <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postLinkToForum()" ng-disabled="!postUrlForm.urlToPost.$valid" >Compartir</a>
+          </form>
         </div>
       </div>
       <div id="openModal3" class="modalDialog" collapse="forumModals['isVideoCollapsed']">
@@ -62,9 +67,13 @@
 
       <div id="openModal4" class="modalDialog" collapse="forumModals['isAttachmentCollapsed']">
         <div>
-          <!--<div class="add"><form><input type="file" placeholder="Atachea algo..." value="Buscar" ng-model="attachmentToPost"  base-sixty-four-input maxsize="2000000" accept="image/*"></form></div>-->
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="clickPostAttachment()" >Buscar</a> {{attachmentToPost.fileName}}
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postAttachmentToForum()" >Compartir</a>
+          <form name="postUrlForm">
+
+            <div class="add"><span class="icomoon icon-edit"></span>
+              <input type="url" name="urlToPost" placeholder="Agregar tu enlace..." ng-model="linkToPost"  required /></div>
+            <div class="error txt-renglon" ng-show="postUrlForm.urlToPost.$error.url">Link invalido, introduzca una URL con el formato http://exemplo.com </div>
+            <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postLinkToForum()" ng-disabled="!postUrlForm.urlToPost.$valid" >Compartir</a>
+          </form>
         </div>
       </div>
     </section>
@@ -86,10 +95,17 @@
             <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
             </div>
           </div>
-          <div id="item{{$index}}" ng-repeat="r in p.replies">
+          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost[p.post_id]">
             <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
               <div>{{r.post_author}} <span>comentó:</span>   <div>{{r.message}}</div>
               </div>
+            </div>
+          </div>
+          
+          <div class="coment block" ng-show="(showAllCommentsByPost[p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+            <div class="vermas">
+              <span class="icomoon icon-show-more"></span>
+              Mostrar más comentarios...
             </div>
           </div>
 
@@ -100,14 +116,14 @@
             <div class="pink" ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
               <span class="icomoon icon-like pink"></span> Ya no me gusta
             </div>
-            <div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">
+            <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">
               <span class="icomoon icon-comment"></span> Comentar
             </div>
           </div>
 
         </div>
         <section class="modales">
-            <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">
+          <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed[$index]">
                 <div>
                     <a href="#close" title="Close" class="close"></a>
                     <div class="add" ><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar texto..."  ng-model="replyText" /></div>
@@ -117,8 +133,13 @@
             </div>
          </section>
       </div>
-
       <section>
+          <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
+             <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
+          </a>          
+          <div class="txt-renglon" ng-show="!morePendingPosts">No se encontraron más posts</div>
+        </section>
+      <section class="actions">
         <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
       </section>
     </section>

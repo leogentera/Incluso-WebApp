@@ -5,9 +5,10 @@ var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";
 
 
 var _courseId = 4;
-
+var _endActivityCurrentChallenge = null;
 var _httpFactory = null;
 var _timeout = null;
+var _location = null;
 
 var _activityStatus = null;
 
@@ -154,7 +155,7 @@ var updateActivityStatusDictionary = function(activityId){
     _activityStatus[activityId] =1;
 };
 
-var _endActivity = function(activityModel, callback){
+var _endActivity = function(activityModel, callback, currentChallenge){
         
         //trigger activity type 2 is sent when the activity ends.
         var triggerActivity = 2;
@@ -164,16 +165,14 @@ var _endActivity = function(activityModel, callback){
         callback = callback || successCallback;
         //create notification
         _createNotification(activityId, triggerActivity);              
-        
       if (activityModel.activityType == "Quiz"){
-        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
+        _endActivityCurrentChallenge = currentChallenge;        
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successQuizCallback, errorCallback);
       }
       else if(activityModel.activityType == "Assign")
       {
-        var data = {userid :  currentUserId };
-        
-        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse,activityModel.token,
-        callback,errorCallback);
+        var data = {userid :  currentUserId };        
+        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse,activityModel.token, callback,errorCallback);
       }
       else{            
         var data = {userid :  currentUserId };
@@ -183,6 +182,15 @@ var _endActivity = function(activityModel, callback){
         moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, callback, errorCallback);
       }                  
 };
+
+var successQuizCallback = function(){
+  var currentStage = localStorage.getItem("currentStage");
+  if (_location) {
+    _location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + _endActivityCurrentChallenge);
+  }else{
+    
+  }  
+}
 
 
 //This function updates in localStorage the status of the stage when completed
@@ -209,41 +217,39 @@ var _isStageCompleted = function(){
   
 };
 
-var _isChallengeCompleted = function(){
+var _isChallengeCompleted = function(){    
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));      
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
     var currentStage = userCourse.stages[lastStageIndex];
     
     for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++){
-        var currentChallenge = currentStage.challenges[challengeIndex];
-        if(currentChallenge.status == 0){
-                   var totalActivitiesByStage = currentChallenge.activities.length;
-          var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
-          if (totalActivitiesByStage == totalActivitiesCompletedByStage){
-              
-              //updateBadge
-              _updateBadgeStatus(currentChallenge.coursemoduleid);
-              userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
-              _setLocalStorageJsonItem("usercourse", userCourse);
-              var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-              var currentUserId = currentUser.userId;
-              var data = { userid :  currentUserId };
-              var currentActivityModuleId = currentChallenge.coursemoduleid;              
-              moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, function(){},errorCallback);
-              success = currentActivityModuleId;
-              return success
-          }else{
-            success = 0;
-          }
-        }else{
-          success = 0;
-        }
-    }
+         var currentChallenge = currentStage.challenges[challengeIndex];
+        if(currentChallenge.status == 0){              
+            var totalActivitiesByStage = currentChallenge.activities.length;
+            var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;            
+            if (totalActivitiesByStage == totalActivitiesCompletedByStage){
+                
+                //updateBadge
+                _updateBadgeStatus(currentChallenge.coursemoduleid);
+                userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;                
+                _setLocalStorageJsonItem("usercourse", userCourse);
+                var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+                var currentUserId = currentUser.userId;
+                var data = { userid :  currentUserId };
+                var currentActivityModuleId = currentChallenge.coursemoduleid;              
+                moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, successCallback,errorCallback);
+                success = currentActivityModuleId;
+                return success;
+            }else{
+              success = 0;
+            }          
+         }else{
+           success = 0;
+         }          
+    };
     return success;
-    
-};
-
+}
 
 
 var _updateBadgeStatus = function(coursemoduleid, callback){
@@ -299,7 +305,9 @@ var _coachNotification = function(){
   var notificationCoach = _.find(notifications,function(notif){
       if(notif.id == 4){
         return notif;
-        }else{}
+        }else{
+          
+        }
     });                                
   
   if (notificationCoach && !notificationCoach.timemodified) {
@@ -545,11 +553,10 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
 
     /*
      if (activity_identifier == '1009' || activity_identifier == '1001') {
-         activity.points = 0;
+         activity.points = 50;
      }
 
      */
-
 
      if(extraPoints != 0){
          profile.stars = Number(profile.stars) + Number(extraPoints);
@@ -1052,3 +1059,4 @@ document.addEventListener("deviceready", onDeviceReady, false);
             //
             function onBackKeyDown() {
             }
+

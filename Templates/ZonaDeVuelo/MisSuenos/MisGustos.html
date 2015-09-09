@@ -42,11 +42,11 @@
                             <label for="q1r8">Basebol</label>
                             <input id="q1r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[0][9]"/>
                             <label for="q1r9">Carreras</label>
-                            <input id="q1r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[0][10]"
-                                   ng-click="addCaptureField('gustos1', misGustosAnswers[0][10])"/>
+                            <!--<input id="q1r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[0][10]" ng-click="addCaptureField('gustos1', misGustosAnswers[0][10])"/>-->
+                            <input id="q1r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[0][10]" />
                             <label for="q1r10">Otro</label>
 
-                            <div class="form-group theme-form" ng-show="misGustosAnswers[0][10]">
+                            <!--<div class="form-group theme-form" ng-show="misGustosAnswers[0][10]">
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
                                         <textarea id="textoarea1" class="form-control form-control-lg theme-form"
@@ -54,7 +54,7 @@
                                                   name="opciones" placeholder="¿Cuál?">
                                         </textarea>
                                 </div>
-                            </div>
+                            </div>-->
                         </section>
                     </div>
                     <!--Pregunta tipo Opción Multiple + Otro-->
@@ -83,17 +83,19 @@
                             <label for="q2r8">Modelado</label>
                             <input id="q2r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[1][9]">
                             <label for="q2r9">Dibujo</label>
-                            <input id="q2r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[1][10]" ng-click="addCaptureField('gustos2', misGustosAnswers[1][10])"/>
+                            <!--<input id="q2r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[1][10]" ng-click="addCaptureField('gustos2', misGustosAnswers[1][10])"/>-->
+                            <input id="q2r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[1][10]"/>
                             <label for="q2r10">Otro</label>
-
-                            <div class="form-group theme-form" ng-show="misGustosAnswers[1][10]">
+                            
+                            <!--<div class="form-group theme-form" ng-show="misGustosAnswers[1][10]">
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
                                         <textarea id="textoarea2" class="form-control form-control-lg theme-form" row="2"
                                                   name="opciones" placeholder="¿Cuál?">
                                         </textarea>
                                 </div>
-                            </div>
+                            </div>-->
+                            
                         </section>
                     </div>
                     <!--Pregunta tipo Opción Multiple + Otro-->
@@ -122,10 +124,11 @@
                             <label for="q3r8">Pasar tiempo en redes sociales</label>
                             <input id="q3r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[2][9]"/>
                             <label for="q3r9">Escuchar música</label>
-                            <input id="q3r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[2][10]" ng-click="addCaptureField('gustos3', misGustosAnswers[2][10])"/>
+                            <!--<input id="q3r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[2][10]" ng-click="addCaptureField('gustos3', misGustosAnswers[2][10])"/>-->
+                            <input id="q3r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[2][10]" />
                             <label for="q3r10">Otro</label>
 
-                            <div class="form-group theme-form" ng-show="misGustosAnswers[2][10]">
+                            <!--<div class="form-group theme-form" ng-show="misGustosAnswers[2][10]">
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
                                         <textarea id="textoarea3" class="form-control form-control-lg theme-form"
@@ -133,7 +136,7 @@
                                                   name="opciones" placeholder="¿Cuál?">
                                         </textarea>
                                 </div>
-                            </div>
+                            </div>-->
                         </section>
                     </div>
                 </div>
@@ -190,7 +193,7 @@
                                 </div>
                             </section>
                         </div>
-                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">TERMINAR</a>
+                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR</a>
                     </section>
                 </div>
             </div>

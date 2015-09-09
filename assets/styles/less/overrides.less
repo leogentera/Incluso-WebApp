@@ -830,10 +830,20 @@ section.part.inbloq{
 
 
 //////////////// owl plugin ///////////////////////////
-.owl-carousel .owl-wrapper-outer.autoHeight {
-    transition: none;
-}
 
+
+.owl-carousel {
+    opacity: 1 !important;
+    .owl-wrapper,
+    .owl-item {
+        backface-visibility: visible;
+        // transition: none !important;
+        // transform: none !important;
+    }
+    .owl-wrapper-outer.autoHeight {
+        transition: none;
+    }
+}
 
 ///////////////// switch-handle [switch slider toggle] ///////////////////////
 .switch {
@@ -994,6 +1004,15 @@ section.part.inbloq{
                     bottom: -9vw;
                 }
             }
+            
+            form {
+                .error {
+                    width: auto;
+                    margin: 0px 10%;
+                    padding: 0px 0px 2vh;
+                }
+            }
+        
             .add {
                 .icon-edit {
                  padding: 0px;
@@ -1016,7 +1035,15 @@ section.part.inbloq{
                 }
                 .icon-comment {
                     color: #08B190;
+                    & + span{
+                        
+                        bottom: -3vh;
+                        margin-left: 10vw;
+                    }
                 }
+            }
+            .actions {
+                margin: 2vh 0px 0px;
             }
         }
     }
@@ -1083,10 +1110,11 @@ section.part.inbloq{
                 vertical-align: middle;
             }
         }
-        .actions {
+        
+    }
+    .actions {
             margin: 7vh 0px 0px;
         }
-    }
 }
 
 ///////////////// my-habilities ///////////////////////////

@@ -15,6 +15,7 @@ angular
             //Turn on Preloader
             $scope.$emit('ShowPreloader'); //show preloader
             _httpFactory = $http;
+            _location = $location;
             _timeout = $timeout;
             $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
@@ -63,16 +64,21 @@ angular
             $scope.show1 = function() {
                 console.log($scope.AnswersResult.answers[1]);
             };
-
-
+            
+            $scope.isDisabled = false;
+            
             $scope.finishActivity = function () {
                 //Activity completed
 
                 $scope.activity.status = 1;
+                $scope.isDisabled = true;
 
                 //Update Activity Log Service
                 console.log("For update stars. activity_identifier = " + $scope.activity_identifier);
-                updateUserStars($scope.activity_identifier);
+                if($scope.activity_status == 0){
+                    $scope.activity_status == 1;
+                    updateUserStars($scope.activity_identifier);
+                }
 
                 $scope.AnswersResult.userid = $scope.userprofile.id;
                 $scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
@@ -121,9 +127,7 @@ angular
                 //console.log("activityModel = " + JSON.stringify(activityModel));
                 console.log("answersResult = " + JSON.stringify($scope.AnswersResult));
 
-                _endActivity(activityModel);
-                var currentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + $scope.currentChallenge);
+                _endActivity(activityModel,null,$scope.currentChallenge);                
             };
 
 
@@ -598,10 +602,10 @@ angular
                         $scope.AnswersResult.answers = [0, 0, 0, 0, 0];
                     }
 
-                    $scope.coursemoduleid = activity.coursemoduleid;    //console.log("coursemoduleid: " + activity.coursemoduleid);
+                    $scope.coursemoduleid = activity.coursemoduleid;
                     $scope.activityPoints = activity.points;
                     console.log("points: " + activity.points);
-                    $scope.activityname = activity.activityname;        //console.log("activityname: " + activity.activityname);
+                    $scope.activityname = activity.activityname;
                         /*
                     if (activity.activity_identifier == '1001') {//INC-1826: Not assign Stars to "Exploración Inicial" activity
                         $scope.activityPoints = 0;
@@ -686,11 +690,18 @@ angular
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
+                    animation: false,
+                    backdrop: false,
                     templateUrl: 'openingStageModal.html',
                     controller: 'OpeningStageController',
                     size: size,
                     windowClass: 'user-help-modal opening-stage-modal'
+                }).result.finally(function(){
+                    $scope.$emit('ShowPreloader');    
+                    $timeout(function (){
+                        $scope.$emit('HidePreloader');  
+                    },1000)
+                    //$scope.$emit('HidePreloader');  
                 });
             };
 
@@ -772,7 +783,6 @@ angular
             $scope.answerIndex = 1;
 
             $scope.addToAnswerIndex = function (delta, maxPages) {
-
                 $scope.answerIndex = parseInt($('span#index').text());
 
                 if ($scope.answerIndex > maxPages) {
@@ -795,12 +805,12 @@ angular
                 for (var a = 0; a < $scope.misCualidadesAnswers.length; a++) {
                     var cont = $scope.misCualidadesAnswers[a].length;  //It should be equal to 13
 
-                    for (var b = 0; b < cont - 1; b++) { //Only the first 12 checkboxes
+                    for (var b = 0; b < cont ; b++) { //Only the first 12 checkboxes
                         var checked = $scope.misCualidadesAnswers[a][b];
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
                         } else {
-                            $scope.misGustosAnswers[a][b] = 0;
+                            $scope.misCualidadesAnswers[a][b] = 0;
                         }
                     }
                     /*
@@ -821,8 +831,8 @@ angular
                 console.log(validateOther);
 
                 if (validatedAnswers[0] > 0 &&
-                    validatedAnswers[0] > 0 &&
-                    validatedAnswers[0] > 0 &&
+                    validatedAnswers[1] > 0 &&
+                    validatedAnswers[2] > 0 &&
                     validateOther[0] != -1 &&
                     validateOther[1] != -1 &&
                     validateOther[2] != -1) {
@@ -1051,18 +1061,13 @@ angular
 
         }
     ])
-    .
-    controller('OpeningStageController', function ($scope, $modalInstance) {
-        $scope.$emit('ShowPreloader');
+    .controller('OpeningStageController', function ($scope, $modalInstance) {
+        
         $scope.cancel = function () {
-            
-            $modalInstance.dismiss('cancel');            
-            setTimeout(function(){
-                $scope.$emit('HidePreloader');    
-                
-            }, 1000);
-            
+            $scope.$emit('ShowPreloader');                
+                $modalInstance.dismiss('cancel');                                        
         };
+       
     })
     .controller('videoCollapsiblePanelController', function ($scope) {
         $scope.isCollapsed = false;
