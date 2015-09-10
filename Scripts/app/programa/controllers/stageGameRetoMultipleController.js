@@ -275,11 +275,11 @@ angular
             };
                 
             var failureGame = function (data){
-              $location.path('/ZonaDeVuelo/Dashboard/1/1');
+              $location.path('/ZonaDeVuelo/Dashboard/1/2');
             }
 
             $scope.back = function () {
-                $location.path('/ZonaDeVuelo/Dashboard/1/1');
+                $location.path('/ZonaDeVuelo/Dashboard/1/2');
             }
 
         }]);
