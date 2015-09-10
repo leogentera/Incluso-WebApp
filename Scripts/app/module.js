@@ -339,26 +339,7 @@
     
         $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/:moodleid', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html',
-            //templateUrl: function(params){
-            //    var logicForumTopicsUrl = 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html';
-            //    var artisticForumTopicsUrl = 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.htm';
-            //    //Listado de escudos
-            //    var shields = [
-            //        {name: 'musical' , category:'artistico'},
-            //        {name:'interpersonal' , category: 'artistico'},
-            //        {name:'naturalista' , category: 'logico'},
-            //        {name:'intrapersonal' , category: 'logico'},
-            //        {name:'corporal' , category: 'artistico'},
-            //        {name:'espacial' , category: 'artistico'},
-            //        {name:'matematica' , category: 'logico'},
-            //        {name:'liguistica' , category: 'logico'},
-            //    ];
-            //    var shield = JSON.parse(localStorage.getItem('shield')) ;
-            //    shield ? shield = shield.shield : shield = null;
-            //    var shieldCategory = shield ? _.find(shields, function(s){ return s.name == shield }).category : 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html';
-            //    return shieldCategory == "logico" ? logicForumTopicsUrl : artisticForumTopicsUrl;
-            //},
-            controller: 'stageForumController' //'stageDashboardController'  //this may need to be change to another type of controller
+            controller: 'stageForumController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/:moodleid', {
@@ -465,6 +446,11 @@
         $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId', {
             templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
             controller: 'stageDashboardController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicial.html',
+            controller: 'stageQuizController'
         });
 
         //Zona de aterrizaje
