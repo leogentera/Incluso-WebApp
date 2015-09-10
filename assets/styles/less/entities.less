@@ -2212,6 +2212,7 @@
         ************************************************************************/        
         .album{
             background-image:url('@{url-images}/bg-notifications-sky.gif');
+            color: #FFF;
             .section-description {  
                 height: 33vh;       
                 //background: url('@{url-images}/bg-notifications-sky.gif');      
@@ -2241,7 +2242,19 @@
                     
                 }
             }
-
+            .list-group {
+                .list-group-item {                                    
+                    margin: 0px;
+                    padding: 1.1vh 5vw;
+                    font-size: 4.5vw;
+                    list-style: none;
+                    background: none;
+                    border: 0px none;
+                    label {
+                        margin: 0px;
+                    }
+                }
+            }
             .actions{
                 display: flex;
                 flex-flow: row wrap;
@@ -2251,8 +2264,7 @@
                     font-size: 10vw;
                 }
             }
-            .album-page1 {
-                    color: #FFF;
+            .album-page1 {                    
                     /*min-height: 175vh;
                     background: #1f2733;
                     background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
@@ -2302,20 +2314,7 @@
                     .section-abilities {
                         height: 30vh;
                         .container {
-                            padding: 7vh 0px;
-                            .list-group {
-                                .list-group-item {                                    
-                                    margin: 0px;
-                                    padding: 1.1vh 5vw;
-                                    font-size: 4.5vw;
-                                    list-style: none;
-                                    background: none;
-                                    border: 0px none;
-                                    label {
-                                        margin: 0px;
-                                    }
-                                }
-                            }
+                            padding: 7vh 0px;                            
                         }
                     }
             }
