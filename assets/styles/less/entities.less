@@ -2211,10 +2211,49 @@
          Description: CSS to represent look of album incluso layout and content
         ************************************************************************/        
         .album{
+            background-image:url('@{url-images}/bg-notifications-sky.gif');
+            .section-description {  
+                height: 33vh;       
+                //background: url('@{url-images}/bg-notifications-sky.gif');      
+                h2 {
+                    margin: 0px;
+                    padding: 5vh 0px 2vh;
+                }
+                .txt-renglon {
+                    width: 90%;
+                    margin: 0px auto;
+                    padding: 1vh 0px;
+                    font-weight: 500;
+                }
+                .btn-icon-aside {
+                    &.light {
+                        width: 60vw;
+                        height: 5vh;
+                        margin-top: 3vh;
+                        background-color: rgba(128, 152, 160, 0.5);
+                    }
+                    .btn-icon {
+                       margin-left: -8vw; 
+                       &+span {
+                            line-height: 4vh;
+                        }
+                    }
+                    
+                }
+            }
 
-            .album-starway {
+            .actions{
+                display: flex;
+                flex-flow: row wrap;
+                justify-content: space-between;
+                .control {
                     color: #FFF;
-                    min-height: 175vh;
+                    font-size: 10vw;
+                }
+            }
+            .album-page1 {
+                    color: #FFF;
+                    /*min-height: 175vh;
                     background: #1f2733;
                     background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
                     background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
@@ -2223,26 +2262,12 @@
                     background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
                     background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
                     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );                
-                    background-image:url('@{url-images}/bg-album-modules.gif');
+                    //background-image:url('@{url-images}/bg-album-modules.gif');
                     background-position: -1px top;
                     background-repeat: no-repeat, repeat-y;
-                    background-size: 100% 102%;
+                    background-size: 100% 102%;*/
                     padding-bottom: 16vw;
                     
-                    .section-description {  
-                        height: 33vh;             
-                        h2 {
-                            margin: 0px;
-                            padding: 5vh 0px 2vh;
-                        }
-                        .txt-renglon {
-                            width: 90%;
-                            margin: 0px auto;
-                            padding: 1vh 0px;
-                            font-weight: 500;
-                        }
-                    }
-
                     .section-album{
                         .container {
                             width: 75vw;
@@ -2250,22 +2275,7 @@
                             overflow: auto;
                             white-space: nowrap;
                         }                        
-                    }
-                    .btn-icon-aside {
-                        &.light {
-                            width: 60vw;
-                            height: 5vh;
-                            margin-top: 3vh;
-                            background-color: rgba(128, 152, 160, 0.5);
-                        }
-                        .btn-icon {
-                           margin-left: -8vw; 
-                           &+span {
-                                line-height: 4vh;
-                            }
-                        }
-                        
-                    }
+                    }                    
                     .section-avatar {
                         height: 49vh;  
                         figure {
