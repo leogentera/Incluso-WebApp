@@ -2230,32 +2230,32 @@
                     padding-bottom: 16vw;
                     
                     .section-description {  
-                        height: 30vh;             
+                        height: 33vh;             
                         h2 {
                             margin: 0px;
                             padding: 5vh 0px 2vh;
                         }
                         .txt-renglon {
+                            width: 90%;
+                            margin: 0px auto;
                             padding: 1vh 0px;
                             font-weight: 500;
-
                         }
                     }
 
                     .section-album{
-                        &.avatar {
-                            margin: 2vh;
-                            img {
-                                margin-top: 12vh;
-                                width: 63vw;                                
-                            }
-                        }
+                        .container {
+                            width: 75vw;
+                            height: 100%;
+                            overflow: auto;
+                            white-space: nowrap;
+                        }                        
                     }
                     .btn-icon-aside {
                         &.light {
                             width: 60vw;
                             height: 5vh;
-                            margin-top: 4vh;
+                            margin-top: 3vh;
                             background-color: rgba(128, 152, 160, 0.5);
                         }
                         .btn-icon {
@@ -2265,6 +2265,48 @@
                             }
                         }
                         
+                    }
+                    .section-avatar {
+                        height: 49vh;  
+                        figure {
+                            padding-top: 8vh;
+                        }
+                        img {                                
+                            width: 65vw;                                
+                        }
+                    }
+                    .section-shield-name {
+                        height: 15vh;
+                        .container {
+                            padding: 4vh 0px;
+                            p{
+                                margin: 0px;
+                            }
+                            h4 {
+                                margin: 0px;
+                                padding: 0px;
+                                font-size: 4.5vw;
+                            }
+                        }
+                    }
+                    .section-abilities {
+                        height: 30vh;
+                        .container {
+                            padding: 7vh 0px;
+                            .list-group {
+                                .list-group-item {                                    
+                                    margin: 0px;
+                                    padding: 1.1vh 5vw;
+                                    font-size: 4.5vw;
+                                    list-style: none;
+                                    background: none;
+                                    border: 0px none;
+                                    label {
+                                        margin: 0px;
+                                    }
+                                }
+                            }
+                        }
                     }
             }
         }
