@@ -1,7 +1,7 @@
 //global variables
 
-//var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";
-var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}";
+var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";
+//var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}";
 
 
 var _courseId = 4;
@@ -123,7 +123,12 @@ var _setLocalStorageItem = function(key, value) {
 }
 
 var _setLocalStorageJsonItem = function(key, object) {
+   console.log("[" + key + "]:" + ((JSON.stringify(object).length*2)/1024).toFixed(2) + " Kb");
   try {
+    if (key == "activityStatus") {
+      console.log(object);
+      debugger;
+    }
     localStorage.setItem(key, JSON.stringify(object));
     var size = 0;
     for(var x in localStorage) {
@@ -147,7 +152,7 @@ function syncCacheData (){
 
 //Update activity status for activity blocking binding
 var updateActivityStatusDictionary = function(activityId){
-    var activityStatus = moodleFactory.Services.GetCacheObject("activityStatus");
+    var activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
     if(activityStatus){
         activityStatus[activityId] = 1;
     }
@@ -645,6 +650,7 @@ var logout = function($scope, $location){
       localStorage.removeItem("notifications");
       localStorage.removeItem("userChat");
       localStorage.removeItem("leaderboard");
+      localStorage.removeItem("activityStatus");
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
       $location.path('/');
