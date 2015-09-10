@@ -645,28 +645,66 @@ Parallel work file for UI Developer 01
 
         padding: 19% 0;
 
-        .yellow-border {
-            border: 1px solid yellow;
+        .green-border {
+            border: 1px solid #BBD231;
             margin: 0 5% 3%;
             .border-radius(1.5vw);
-            padding: 0 10%;
-
-            .subtitle {
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                font-size: 130%;
-
-                &.txt-bigger {
-                    text-transform: uppercase;
-                }
-            }
-
+            padding: 15% 6% 5%;
+            
             .txt-renglon {
                 margin-right: 0;
                 margin-left: 0;
                 width: 100%;
+                font-weight: normal;
+                font-size: 120%;
             }
+
+            .subtitle {
+                color: #BBD231;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                font-size: 148%;
+                font-weight: bold;
+
+                &.txt-bigger {                    
+                    text-transform: uppercase;
+                    font-size: 130%;
+                }
+            }            
+
+            .username {
+                font-size: 165%;
+                font-weight: bold;
+
+                div:first-child {
+                    margin-bottom: -3vw;
+                }
+            }
+
+            .quote {
+
+                .subtitle {
+                    font-size: 110%
+                }
+
+                .author {
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .distribuido {
+            margin: 0 5%;
+            width: 90%;
+
+            .icon-circle {
+                padding: 2.3vh 0 1.5vh;
+
+                .icomoon {
+                    font-size: 8.5vw;
+                }
+            }            
         }
 
     }
