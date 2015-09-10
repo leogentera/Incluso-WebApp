@@ -31,9 +31,9 @@
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), successCallback, errorCallback, forceRefresh);
         };
         
-        var _getAsyncDiscussionPosts = function(discussionId, discussion, forumId, page, successCallback, errorCallback, forceRefresh) {
-            var key = "discussion/" + discussionId + discussion + forumId + page;
-            var url = API_RESOURCE.format("discussion/" + discussionId + "?discussion=" + discussion + "&forumid=" + forumId + "&page=" + page);
+        var _getAsyncDiscussionPosts = function(discussionId, discussion, forumId, sinceId, maxId, first, successCallback, errorCallback, forceRefresh) {
+            var key = "discussion/" + discussionId + discussion + forumId + sinceId + maxId + first;
+            var url = API_RESOURCE.format("discussion/" + discussionId + "?discussion=" + discussion + "&forumid=" + forumId + "&sinceid=" + sinceId + "&maxid=" + maxId + "&first=" + first);
             
             _getAsyncForumDiscussionsData(key, url, successCallback, errorCallback, forceRefresh);
         };
@@ -164,10 +164,10 @@
                 headers: { 'Content-Type': 'application/json' }
             }).success(function (data, status, headers, config) {
                 
-                var posts = createPostsTree(data);
-                
-                _setLocalStorageJsonItem(key, posts);
-                successCallback(posts, key);
+                var posts = createPostsTree(data.posts);
+                data.posts = posts;
+                _setLocalStorageJsonItem(key, data);
+                successCallback(data, key);
                 
             }).error(function (data, status, headers, config) {
                 errorCallback(data);

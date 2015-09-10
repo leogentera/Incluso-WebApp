@@ -75,7 +75,7 @@
       </div>
     </section>
     <section class="wall">
-      <div id="item{{$index}}" ng-repeat="p in posts  | reverse">
+      <div id="item{{$index}}" ng-repeat="p in posts">
         <div class="part">
           <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>{{p.post_author}} <span>public&oacute;:</span>
