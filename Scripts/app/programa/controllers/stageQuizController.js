@@ -1,4 +1,4 @@
-//Controller for Suena.html :)
+//Controller for Suena.html
 angular
     .module('incluso.stage.quizcontroller', [])
     .controller('stageQuizController', [
