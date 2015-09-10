@@ -197,14 +197,17 @@
 
                     <section id="controls" class="controls">
                         <div class="paginate">
-                            <a href="#" id="prev" ng-click="addToAnswerIndex1(-1)">
+                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 5)">
                                 <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
                             </a>
-                            <a href="#" id="next" ng-click="addToAnswerIndex1(1)">
+                            <a href="#" id="prev" ng-click="addToAnswerIndex(1, 5)">
                                 <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
                             </a>
 
-                            <div class="centered"><span id="index" class="txt-bigger">1/</span><span id="totalPages" class="white txt-bigger">5</span></div>
+                            <div class="centered">
+                                <span id="index" class="txt-bigger">1/</span>
+                                <span id="totalPages" class="white txt-bigger">5</span>
+                            </div>
                         </div>
                         <a class="btn btn-primary btn-lg btn-cnt" style="display:none" id="save" href="" ng-hide="setReadOnly" ng-click="validateAnsweredQuestions()">Guardar</a>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
