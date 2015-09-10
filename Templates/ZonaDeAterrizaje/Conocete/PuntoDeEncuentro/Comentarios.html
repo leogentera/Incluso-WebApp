@@ -104,7 +104,7 @@
           <div ng-show="p.likes" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto</div></div>
 
 
-          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost[p.post_id]">
+          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
 
             <div class="coment block"><img src="assets/images/avatar.svg">
               <div>{{r.postAutor}} <span>publicó:</span>   <div>{{r.message}}</div>
@@ -112,7 +112,7 @@
             </div>
           </div>
 
-        <div class="coment block" ng-show="(showAllCommentsByPost[p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+        <div class="coment block" ng-show="(showAllCommentsByPost['id' + p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
           <div class="vermas">
             <span class="icomoon icon-show-more"></span>
             Mostrar más comentarios...
