@@ -439,7 +439,6 @@ function updateSubActivityStatus(coursemoduleid) {
 
  function updateActivityStatus(activity_identifier) {
                 //Update activity status for activity blocking binding
-                updateActivityStatusDictionary(activity_identifier);
                 //Update activity status in usercourse
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
@@ -451,6 +450,7 @@ function updateSubActivityStatus(coursemoduleid) {
                             var activity = challenge.activities[activityIndex];
                             if (activity.activity_identifier == activity_identifier) {
                                 activity.status = 1;
+                                updateActivityStatusDictionary(activity.coursemoduleid);
                                 breakAll = true;
                                 break;
                             }
