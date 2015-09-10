@@ -337,7 +337,7 @@
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
-    
+
         $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/:moodleid', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html',
             controller: 'stageForumController'
@@ -453,6 +453,28 @@
             templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicial.html',
             controller: 'stageQuizController'
         });
+
+        $routeProvider.when('/ZonaDeNavegacion/ExploracionInicialCierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicialCierre.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/CuartoDeRecursos/MensajeDeCierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/CuartoDeRecursos/MensajeDeCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
+
 
         //Zona de aterrizaje
         $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId', {
