@@ -112,10 +112,8 @@ var _setLocalStorageItem = function(key, value) {
         size = size + ((localStorage[x].length * 2)/1024);
       }
     }
-   console.log("localstorage contains:" + size.toFixed(2) + " Kb");
   }
   catch (e) {
-    console.log("localstorage error, clearing up storage");
     ClearLocalStorage("activity");
     ClearLocalStorage("activitiesCache");
     localStorage.setItem(key, value);
@@ -123,23 +121,10 @@ var _setLocalStorageItem = function(key, value) {
 }
 
 var _setLocalStorageJsonItem = function(key, object) {
-   console.log("[" + key + "]:" + ((JSON.stringify(object).length*2)/1024).toFixed(2) + " Kb");
   try {
-    if (key == "activityStatus") {
-      console.log(object);
-      debugger;
-    }
     localStorage.setItem(key, JSON.stringify(object));
-    var size = 0;
-    for(var x in localStorage) {
-      if (localStorage[x].length) {
-        size = size + ((localStorage[x].length * 2)/1024);
-      }
-    }
-   console.log("localstorage contains:" + size.toFixed(2) + " Kb");
   }
   catch (e) {
-    console.log("localstorage error, clearing up storage");
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
     localStorage.setItem(key, JSON.stringify(object));
