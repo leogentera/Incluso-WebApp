@@ -599,8 +599,8 @@ angular
 
                     var activity = getActivityByActivity_identifier($scope.activity_identifier);
                     console.log("The activity ID is: \n" + $scope.activity_identifier);
-                    console.log("The activity data is: \n" + JSON.stringify(activity));
-                    console.log("The activity status is: " + activity.status);
+                    //console.log("The activity data is: \n" + JSON.stringify(activity));
+                    //console.log("The activity status is: " + activity.status);
 
                     if (activity != null) {
 
