@@ -26,6 +26,7 @@
         'incluso.programa.leaderboard',
         'incluso.programa.comunidad',
         'incluso.programa.reconocimiento',
+        'incluso.programa.album',
 
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
@@ -38,7 +39,7 @@
         'incluso.stage.gameretomultipleresultscontroller',
         'incluso.stage.quizcontroller',
         'incluso.stage.chatcontroller',
-        'incluso.program.alerts',
+        'incluso.program.alerts',        
         'incluso.program.myInterests',
         'incluso.program.myStrengths',
         'incluso.program.hallOfFame',
@@ -262,11 +263,11 @@
             controller: 'AlertsController'          //to do: add corresponding controller 
         });  
 
-       $routeProvider.when('/AlbumIncluso', { 
+       $routeProvider.when('/AlbumIncluso', {
             templateUrl: 'Templates/Programa/AlbumIncluso.html',
-            controller: 'programaChatController'
+            controller: 'AlbumInclusoController'
         });
-
+       
         $routeProvider.when('/Chat', { 
             templateUrl: 'Templates/Chat/index.html',
             controller: 'programaChatController'
