@@ -643,20 +643,37 @@ Parallel work file for UI Developer 01
 
     .award {
 
-        padding: 19% 0;
+        padding: 25% 0 10%;
 
         .green-border {
-            border: 1px solid #BBD231;
+            border: 2px solid #BBD231;
             margin: 0 5% 3%;
             .border-radius(1.5vw);
-            padding: 15% 6% 5%;
+            padding: 17% 6% 7%;
+            position: relative;
+
+            .logo {
+                background-image: url('@{url-images}/bg-notifications-sky.gif');                
+                background-position: 63% -74.7%;
+                background-size: auto auto;
+                left: 1%;
+                margin: 0 auto;
+                position: absolute;
+                right: 0;
+                top: -6.3%;
+                width: 89%;               
+            }
+
+            img.medalla {
+                margin: 2% auto -9%;
+            }
             
             .txt-renglon {
                 margin-right: 0;
                 margin-left: 0;
                 width: 100%;
                 font-weight: normal;
-                font-size: 120%;
+                font-size: 119%;
             }
 
             .subtitle {
@@ -701,8 +718,12 @@ Parallel work file for UI Developer 01
             .icon-circle {
                 padding: 2.3vh 0 1.5vh;
 
+                &:last-child {
+                    margin: 0;
+                }
+
                 .icomoon {
-                    font-size: 8.5vw;
+                    font-size: 9.5vw;
                 }
             }            
         }
