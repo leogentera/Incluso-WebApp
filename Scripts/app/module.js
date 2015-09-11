@@ -468,44 +468,46 @@
             templateUrl: 'Templates/ZonaDeNavegacion/CuartoDeRecursos/MensajeDeCierre.html',
             controller: 'stageMessageController'
         });
+
         //Tus Ideas /ZonaDeNavegacion/Transformate/TusIdeas/
         $routeProvider.when('/ZonaDeNavegacion/Transformate/TusIdeas/ :activityIdentifier', {
             templateUrl: 'Templates/ZonaDeNavegacion/TusIdeas.html',
             controller: 'stageQuizController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/FuenteDeEnergia/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/FuenteDeEnergia.html',
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Transformate/FuenteDeEnergia.html',
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultiple/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultiple.html',
-            controller: 'stageGameRetoMultipleController'
-        });
+        //$routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultiple/:moodleid', {
+        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultiple.html',
+        //    controller: 'stageGameRetoMultipleController'
+        //});
 
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultipleExternalApp', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultipleExternalApp.html',
-            controller: 'stageGameRetoMultipleExternalAppController'
-        });
+        //$routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultipleExternalApp', {
+        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultipleExternalApp.html',
+        //    controller: 'stageGameRetoMultipleExternalAppController'
+        //});
 
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultipleFichaDeResultados', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultipleFichaDeResultados.html',
-            controller: 'stageGameRetoMultipleResultsController'
-        });
-
+        //$routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultipleFichaDeResultados', {
+        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultipleFichaDeResultados.html',
+        //    controller: 'stageGameRetoMultipleResultsController'
+        //});
+//**********************************************************************************************************
+        //TODO Agregar template 'Templates/ZonaDeNavegacion/ForoCierre.html'
         $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/PuntoDeEncuentro/Topicos/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/PuntoDeEncuentro/Topicos.html',
+        $routeProvider.when('/ZonaDeNavegacion/transformate/PuntoDeEncuentro/Topicos/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/PuntoDeEncuentro/Comentarios.html',
+        $routeProvider.when('/ZonaDeNavegacion/transformate/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
 
@@ -514,41 +516,55 @@
             controller: 'stageForumController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Topicos/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Topicos.html',
-            controller: 'stageForumController'
-        });
+        //$routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Topicos/:moodleid', {
+        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Topicos.html',
+        //    controller: 'stageForumController'
+        //});
+        //
+        //$routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Comentarios/:moodleid/:discussionId', {
+        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Comentarios.html',
+        //    controller: 'stageForumCommentsController'
+        //});
+        //
+        //$routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Topicos/:moodleid', {
+        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Topicos.html',
+        //    controller: 'stageForumController'
+        //});
+        //
+        //$routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Comentarios/:moodleid/:discussionId', {
+        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Comentarios.html',
+        //    controller: 'stageForumCommentsController'
+        //});
 
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Comentarios/:moodleid/:discussionId', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Comentarios.html',
-            controller: 'stageForumCommentsController'
-        });
+        //$routeProvider.when('/ZonaDeNavegacion/Conocete/MensajeDeCierre', {
+        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/MensajeDeCierre.html',
+        //    controller: 'stageMessageController'
+        //});
 
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Topicos/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Topicos.html',
-            controller: 'stageForumController'
-        });
-
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Comentarios/:moodleid/:discussionId', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Comentarios.html',
-            controller: 'stageForumCommentsController'
-        });
-
-        $routeProvider.when('/ZonaDeNavegacion/Conocete/MensajeDeCierre', {
-            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/MensajeDeCierre.html',
-            controller: 'stageMessageController'
-        });
-
-        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/FuenteDeEnergia/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/FuenteDeEnergia.html',
+        $routeProvider.when('/ZonaDeNavegacion/TuElijes/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/FuenteDeEnergia.html',
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/MisCualidades/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/MisCualidades.html',
+        // ISSUE No hay plantilla, definir controlador
+        $routeProvider.when('/ZonaDeNavegacion/TuElijes/', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuElijes.html',
             controller: 'stageQuizController'
         });
 
+        // ISSUE Agregar plantilla al directorio, definir controlador
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia.html',
+            controller: 'stageMessageController'
+        });
+
+        // ISSUE Agregar plantilla al directorio
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:ActivityIdentifier', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/13y5.html',
+            controller: 'stageQuizController'
+        });
+
+        //**********************************************************************************
         $routeProvider.when('/ZonaDeNavegacion/MisSuenos/MisCualidades/Cierre', {
             templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/MisCualidadesCierre.html',
             controller: 'stageMessageController'
