@@ -1,4 +1,4 @@
-//Controller for Suena.html :|
+//Controller for
 angular
     .module('incluso.stage.quizcontroller', [])
     .controller('stageQuizController', [
@@ -198,6 +198,13 @@ angular
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
             };
+
+
+            $scope.cancel2 = function () {
+                var userCurrentStage = localStorage.getItem("userCurrentStage");alert(userCurrentStage);
+                $location.path('/ZonaDeNavegacion/Dashboard/2');
+            };
+
 
             $scope.showme = function () {
                 console.log($scope.AnswersResult.answers[1]);
@@ -593,8 +600,8 @@ angular
 
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
                 console.log("The activity ID is: " + $scope.activity_identifier);
-                console.log("The activity data is: " + JSON.stringify(activity));
-                console.log("The activity status is: " + activity.status);
+                //console.log("The activity data is: " + JSON.stringify(activity));
+                //console.log("The activity status is: " + activity.status);
 
                 if (activity != null) {
 
