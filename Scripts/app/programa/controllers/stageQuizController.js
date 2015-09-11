@@ -795,7 +795,7 @@ angular
             }
 
             function addHeight2(lista) {
-                $scope.finalHeight = angular.element('.owl-wrapper-outer').height() + 120;
+                $scope.finalHeight = angular.element('.owl-wrapper-outer').height() + 100;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
@@ -806,7 +806,7 @@ angular
 
 
             function removeHeight(lista) {
-                $scope.finalHeight = angular.element(lista).height() - 100;
+                $scope.finalHeight = angular.element(lista).height() - 177;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
@@ -1147,7 +1147,7 @@ angular
             };
 
 
-            scope.validateTuFuturo = function() {
+            $scope.validateTuFuturo = function() {
 
                 var validAnswers = 0;
                 var num = $scope.miFuturo.length;
