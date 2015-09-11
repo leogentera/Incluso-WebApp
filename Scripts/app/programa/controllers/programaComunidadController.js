@@ -39,7 +39,8 @@ angular
                 "isTextCollapsed":true,
                 "isLinkCollapsed":true,
                 "isVideoCollapsed":true,
-                "isAttachmentCollapsed":true
+                "isAttachmentCollapsed":true,
+                "isReportCollapsed":false
             };
 
             var _uncollapse = function(element, elementsArray){
