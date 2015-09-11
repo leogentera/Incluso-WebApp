@@ -100,40 +100,55 @@
                           Zona de navegacion
                         </a>
                         <div class="submenu" id="sub1">
-                            <ul>
+                            <!--<ul>
                                 <li>Exploración inicial</li>
                                 <li><a ng-click="navigateTo('/ZonaDeNavegacion/ExploracionInicial/2001','Exploración inicial', 'sideToggle', 75)">Exploración inicial</a></li>
-                            </ul>
+                            </ul>-->
                             <ul>
                               <li>Cuarto de recursos</li>
                               <li><a ng-click="navigateTo('/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia','Zona de Vuelo', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
                             </ul>
                             <ul>
-                                <li>Conócete</li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia','Descubre más', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/Conocete/RetoMultiple/zv_conocete_retomultiple','Reto múltiple', 'sideToggle', 'navbarorange')">Reto múltiple </a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/Conocete/PuntoDeEncuentro/Topicos/64','Punto de encuentro', 'sideToggle', 'navbarorange')">Punto de encuentro </a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/Conocete/ZonaDeContacto','Zona de contacto', 'sideToggle', 'navbarorange')">Zona de contacto</a></li>
+                                <li>Transfórmate</li>
+                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia','Descubre más', 'sideToggle', 158)">Fuente de energía</a></li>
+                                <!--TODO Cambiar esta ruta y modificar el $routeProvider-->
+                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/Transformate/TusIdeas/2002','Tus Ideas', 'sideToggle', 159)">Tus ideas </a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/Conocete/PuntoDeEncuentro/Topicos/79','Punto de encuentro', 'sideToggle', 79)">Punto de encuentro </a></li>
+                                <!--<li><a ng-click="navigateTo('/ZonaDeNavegacion/Conocete/ZonaDeContacto','Zona de contacto', 'sideToggle', 'navbarorange')">Zona de contacto</a></li>-->
                             </ul>
 
                             <ul>
-                                <li>Mis sueños </li>
+                                <!-- TODO Preguntar a Nora dónde está el contenido en Moodle-->
+                                <li>Tú eliges </li>
+                                <!-- TODO No hay contenido en Moodle-->
+                                <!-- TODO Crear rutas y agregar a $routesProvider-->
+                                <!--<li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia','Descubre más', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>-->
+                                <!--<li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/MisGustos/zv_missuenos_misgustos','Mis gustos', 'sideToggle', 'navbarorange')">Tú eliges</a></li>-->
+                            </ul>
+                            <ul>
+                                <!-- TODO Cambiar todas las rutas y agregar al $routesProvider-->
+                                <li>Proyecta tu vida</li>
                                 <li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia','Descubre más', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/MisGustos/zv_missuenos_misgustos','Mis gustos', 'sideToggle', 'navbarorange')">Mis gustos</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/MisCualidades/zv_missuenos_miscualidades','Mis cualidades', 'sideToggle', 'navbarorange')">Mis Cualidades</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/Suena/zv_missuenos_suena','Sueña', 'sideToggle', 'navbarorange')">Sueña</a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/MisGustos/zv_missuenos_misgustos','Mis gustos', 'sideToggle', 'navbarorange')">Mi vida en 1 año</a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/MisGustos/zv_missuenos_misgustos','Mis gustos', 'sideToggle', 'navbarorange')">Mi vida en 3 años</a></li>
+                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/MisGustos/zv_missuenos_misgustos','Mis gustos', 'sideToggle', 'navbarorange')">Mi vida en 5 años</a></li> <!-- TODO Crear ruta en el $routeProvider-->
+                                <!-- TODO Levantar tasks para que UI cree el template-->
+                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/Suena/zv_missuenos_suena','Sueña', 'sideToggle', 'navbarorange')">Mapa de vida</a></li>
                                 <li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro','Punto de encuentro', 'sideToggle', 'navbarorange')">Punto de encuentro </a></li>
+
+                                <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>-->
                             </ul>
                             <ul>
                                 <li>Cabina de soporte</li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/CabinaDeSoporte/zv_cabinadesoporte_chat','Reto múltiple', 'sideToggle', 'navbarorange')">Chat</a></li>
+                                <!-- TODO Checar ruta y entrada en $routeProvider-->
+                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/CabinaDeSoporte/zv_cabinadesoporte_chat','Reto múltiple', 'sideToggle', 'navbarorange')">Cabina de soporte</a></li>
 
-                                <li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>
+                                <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>-->
                             </ul>
-                            <ul>
-                                <li>Exploración final</li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/ExploracionFinal/zv_exploracionfinal','Exploración final', 'sideToggle', 'navbarorange')">Exploración final</a></li>
-                            </ul>
+                            <!--<ul>-->
+                                <!--<li>Exploración final</li>-->
+                                <!--<li><a ng-click="navigateTo('/ZonaDeNavegacion/ExploracionFinal/zv_exploracionfinal','Exploración final', 'sideToggle', 'navbarorange')">Exploración final</a></li>-->
+                            <!--</ul>-->
                         </div>
                     </li>
                     <li class="hidden">
