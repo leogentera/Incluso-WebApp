@@ -37,11 +37,9 @@ angular
                 "like_status": 0
             };
 
-            /*        //For storing responses in "Exploración Inicial"
-             $scope.AnswersResult = {
-             "answers": [null, [false, false, false, false, false, ''], [], null, []]
-             };
-             */
+            $scope.AnswersResultStage2 = {
+                "answers": [null, null, null, [0, 0, 0, 0, 0]]
+            };
 
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
@@ -56,12 +54,12 @@ angular
                 }
             };
 
-            $scope.show = function() {
+            $scope.show = function () {
                 console.log($scope.AnswersResult.answers[0]);
                 console.log($scope.AnswersResult.answers);
             };
 
-            $scope.show1 = function() {
+            $scope.show1 = function () {
                 console.log($scope.AnswersResult.answers[1]);
             };
 
@@ -75,7 +73,7 @@ angular
 
                 //Update Activity Log Service
                 console.log("For update stars. activity_identifier = " + $scope.activity_identifier);
-                if($scope.activity_status == 0){
+                if ($scope.activity_status == 0) {
                     $scope.activity_status == 1;
                     updateUserStars($scope.activity_identifier);
                 }
@@ -106,6 +104,12 @@ angular
                         break;
                 }
 
+                if ($scope.activity_identifier == "2001") {
+
+                }
+
+                debugger;
+
                 console.log($scope.AnswersResult.answers); //This is an array that contains the encoded answers
 
                 //Update local storage and activities status array
@@ -127,7 +131,7 @@ angular
                 //console.log("activityModel = " + JSON.stringify(activityModel));
                 console.log("answersResult = " + JSON.stringify($scope.AnswersResult));
 
-                _endActivity(activityModel,null,$scope.currentChallenge);
+                _endActivity(activityModel, null, $scope.currentChallenge);
             };
 
 
@@ -593,6 +597,9 @@ angular
                     case "1009":
                         $scope.currentChallenge = 5; //Exploración Final
                         break;
+                    case "2001":
+                        $scope.currentChallenge = 0; //Exploración Inicial Etapa 2
+                        break;
                     default:
                         $scope.currentChallenge = 0; //Default
 
@@ -703,11 +710,11 @@ angular
                     controller: 'OpeningStageController',
                     size: size,
                     windowClass: 'user-help-modal opening-stage-modal'
-                }).result.finally(function(){
+                }).result.finally(function () {
                         $scope.$emit('ShowPreloader');
-                        $timeout(function (){
+                        $timeout(function () {
                             $scope.$emit('HidePreloader');
-                        },1000)
+                        }, 1000)
                         //$scope.$emit('HidePreloader');
                     });
             };
@@ -812,7 +819,7 @@ angular
                 for (var a = 0; a < $scope.misCualidadesAnswers.length; a++) {
                     var cont = $scope.misCualidadesAnswers[a].length;  //It should be equal to 13
 
-                    for (var b = 0; b < cont ; b++) { //Only the first 12 checkboxes
+                    for (var b = 0; b < cont; b++) { //Only the first 12 checkboxes
                         var checked = $scope.misCualidadesAnswers[a][b];
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
@@ -879,6 +886,7 @@ angular
                  }
                  */
             };
+
 
             $scope.validateMisGustosAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
@@ -982,6 +990,63 @@ angular
             };
 
 
+            $scope.validateExploracionInicialEtapa2 = function () {
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+
+                var validatedAnswers = 0;
+                var validateOther = [0, 0, 0];
+
+                //Validación de las preguntas Sí/No
+                if ($scope.AnswersResultStage2.answers[0] != null
+                    && $scope.AnswersResultStage2.answers[1] != null
+                    && $scope.AnswersResultStage2.answers[2] != null) {
+                    validatedAnswers = 1;
+                }
+
+                //Validación de la pregunta de opción múltiple
+                for (var a = 0; a < $scope.AnswersResultStage2.answers[3].length; a++) {
+                    var checked = $scope.AnswersResultStage2.answers[3][a];
+                    if (checked) {  //An option was checked by the user
+                        validatedAnswers++;
+                    } else {
+                        $scope.AnswersResultStage2.answers[3][a] = 0;
+                    }
+                }
+                /*
+                 //...and lastly, for the input value...
+                 if ($scope.misGustosAnswers[a][10] == true) {
+                 //Get rid from carriage return
+                 $scope.misGustosAnswers[a][11] = $scope.misGustosAnswers[a][11].replace(/\r?\n|\r/g, " ").trim();
+
+                 if ($scope.misGustosAnswers[a][11] != '') {
+                 validateOther[a] = 1;
+                 } else {
+                 console.log('empty input field');
+                 validateOther[a] = -1;
+                 }
+                 }
+                 */
+
+                //Validación de la opción "Otro"
+
+                console.log(validatedAnswers);
+                console.log(validateOther);
+
+                if (validatedAnswers > 0 &&
+                    validateOther[0] != -1 &&
+                    validateOther[1] != -1 &&
+                    validateOther[2] != -1) {
+                    console.log('!HURAA' + $scope.AnswersResultStage2.answers);
+                    $scope.showWarning = false;
+                    $scope.navigateToPage(2);
+                    $scope.scrollToTop();
+
+                } else {
+                    showWarningAndGoToTop();
+                }
+            };
+
+
             function partialSuccessfullCallBack(partialActivityAnswers) {
                 if (partialActivityAnswers != null) {
 
@@ -1004,7 +1069,7 @@ angular
                             }
                         ];
                     var _mathFloor = 0;
-                    var goodAnswersQty =0;
+                    var goodAnswersQty = 0;
                     for (var index = 0; index < partialActivityAnswers.questions.length; index++) {
                         var question = partialActivityAnswers.questions[index];
                         for (var answerIndex = 0; answerIndex < question.answers.length; answerIndex++) {
@@ -1049,8 +1114,8 @@ angular
                             }
                         }
 
-                        if(!$scope.exploracionFinalresult[index].badAnswer){
-                            goodAnswersQty ++;
+                        if (!$scope.exploracionFinalresult[index].badAnswer) {
+                            goodAnswersQty++;
                         }
                     }
                 }
