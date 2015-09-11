@@ -18,40 +18,42 @@
                     <div id="owl" class="owl-carousel">
                         <!--Pregunta tipo Si/No-->
                         <div>
-                            <div class="txt-renglon txt-bigger">1. ¿Crees que tus ideas pueden impulsar o limitar tus sueños?
+                            <div class="txt-renglon txt-bigger">1. ¿Crees que tus ideas pueden impulsar o limitar tus
+                                sueños?
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
-                                    <input id="tru1" type="radio" name="vf"
-                                           ng-model="AnswersResult.answers[0]"
+                                    <input id="tru1" type="radio" name="vf1"
+                                           ng-model="AnswersResultStage2.answers[0]"
                                            value="0"
-                                           ng-disabled="setReadOnly" />
+                                           ng-disabled="setReadOnly"/>
                                     <label for="tru1">Sí</label>
 
-                                    <input id="fols1" type="radio" name="vf"
-                                           ng-model="AnswersResult.answers[0]"
+                                    <input id="fols1" type="radio" name="vf1"
+                                           ng-model="AnswersResultStage2.answers[0]"
                                            value="1"
-                                           ng-disabled="setReadOnly" />
+                                           ng-disabled="setReadOnly"/>
                                     <label for="fols1">No</label>
                                 </div>
                             </section>
                         </div>
 
                         <div>
-                            <div class="txt-renglon txt-bigger">1. ¿Has imaginado qué te gustaría estar haciendo en tres años?
+                            <div class="txt-renglon txt-bigger">1. ¿Has imaginado qué te gustaría estar haciendo en tres
+                                años?
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
-                                    <input id="tru2" type="radio" name="vf"
-                                           ng-model="AnswersResult.answers[0]"
+                                    <input id="tru2" type="radio" name="vf2"
+                                           ng-model="AnswersResultStage2.answers[1]"
                                            value="0"
-                                           ng-disabled="setReadOnly" />
+                                           ng-disabled="setReadOnly"/>
                                     <label for="tru2">Sí</label>
 
-                                    <input id="fols2" type="radio" name="vf"
-                                           ng-model="AnswersResult.answers[0]"
+                                    <input id="fols2" type="radio" name="vf2"
+                                           ng-model="AnswersResultStage2.answers[1]"
                                            value="1"
-                                           ng-disabled="setReadOnly" />
+                                           ng-disabled="setReadOnly"/>
                                     <label for="fols2">No</label>
                                 </div>
                             </section>
@@ -63,16 +65,16 @@
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
-                                    <input id="tru3" type="radio" name="vf"
-                                           ng-model="AnswersResult.answers[0]"
+                                    <input id="tru3" type="radio" name="vf3"
+                                           ng-model="AnswersResultStage2.answers[2]"
                                            value="0"
-                                           ng-disabled="setReadOnly" />
+                                           ng-disabled="setReadOnly"/>
                                     <label for="tru3">Sí</label>
 
-                                    <input id="fols3" type="radio" name="vf"
-                                           ng-model="AnswersResult.answers[0]"
+                                    <input id="fols3" type="radio" name="vf3"
+                                           ng-model="AnswersResultStage2.answers[2]"
                                            value="1"
-                                           ng-disabled="setReadOnly" />
+                                           ng-disabled="setReadOnly"/>
                                     <label for="fols3">No</label>
                                 </div>
                             </section>
@@ -81,33 +83,34 @@
 
                         <!--Pregunta tipo Opción Multiple + Otro-->
                         <div>
-                            <div class="txt-renglon txt-bigger">2. ¿Con qué se relacionan esas metas? Puedes elegir más de una.
+                            <div class="txt-renglon txt-bigger">2. ¿Con qué se relacionan esas metas? Puedes elegir más
+                                de una.
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <input id="check1" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResult.answers[1][0]" ng-disabled="setReadOnly"
+                                       ng-model="AnswersResultStage2.answers[3][0]" ng-disabled="setReadOnly"
                                         />
                                 <label for="check1">Salud Física</label>
                                 <input id="check2" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResult.answers[1][1]" ng-disabled="setReadOnly"
+                                       ng-model="AnswersResultStage2.answers[3][1]" ng-disabled="setReadOnly"
                                         />
                                 <label for="check2">Escuela</label>
                                 <input id="check3" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResult.answers[1][2]" ng-disabled="setReadOnly"
+                                       ng-model="AnswersResultStage2.answers[3][2]" ng-disabled="setReadOnly"
                                         />
                                 <label for="check3">Familia y amigos</label>
 
                                 <input id="check4" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResult.answers[1][3]" ng-disabled="setReadOnly"
+                                       ng-model="AnswersResultStage2.answers[3][3]" ng-disabled="setReadOnly"
                                         />
                                 <label for="check4">Hobbies</label>
 
                                 <input id="check5" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResult.answers[1][4]" ng-disabled="setReadOnly"
+                                       ng-model="AnswersResultStage2.answers[3][4]" ng-disabled="setReadOnly"
                                         />
                                 <label for="check5">Otro</label>
 
-                                <div class="form-group theme-form" ng-show="AnswersResult.answers[1][4]">
+                                <div class="form-group theme-form" ng-show="AnswersResultStage2.answers[3][4]">
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
                                         <textarea id="" class="form-control form-control-lg theme-form" row="2"
@@ -123,17 +126,14 @@
                               <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
                             </div>-->
                         </div>
-
-
-
                     </div>
 
                     <section id="controls" class="controls">
                         <div class="paginate">
-                            <a href="#" id="prev"  ng-click="addToAnswerIndex(-1, 4)">
+                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 4)">
                                 <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
                             </a>
-                            <a href="#" id="next"  ng-click="addToAnswerIndex(1, 4)">
+                            <a href="#" id="next" ng-click="addToAnswerIndex(1, 4)">
                                 <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
                                 <!--
                                 <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
@@ -152,12 +152,14 @@
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                         -->
 
-                        <a class="btn btn-primary btn-lg btn-cnt" id="save" href="#" ng-show="answerIndex == 4" style="color:white;" ng-click="validateAnsweredQuestions()">Guardar</a>
+                        <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 4"
+                           ng-click="validateExploracionInicialEtapa2()">Guardar</a>
+
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel2()">Cancelar</div>
                     </section>
                 </div>
 
-                <div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
+                <div class="page" ng-class="currentPage == 2 ? 'active' : '' ">
                     <div id="finalized">
                         <section class="header-title ">
                             <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
@@ -188,17 +190,19 @@
 
 
                         <section class="txt-renglon centered form">
-                            ¿Que opinas de ésta actividad?
-                            <section class="txt-renglon txt-bigger clearfix">
-                                <div class="opinion">
-                                    <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                                    <label for="like">Me gusta</label>
-                                </div>
-                                <div class="opinion">
-                                    <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                                    <label for="dislike">No me gusta</label>
-                                </div>
-                            </section>
+                            <div ng-show="activity_status == 0">
+                                ¿Que opinas de ésta actividad?
+                                <section class="txt-renglon txt-bigger clearfix">
+                                    <div class="opinion">
+                                        <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                                        <label for="like">Me gusta</label>
+                                    </div>
+                                    <div class="opinion">
+                                        <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                                        <label for="dislike">No me gusta</label>
+                                    </div>
+                                </section>
+                            </div>
                             <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">Terminar</button>
                         </section>
                     </div>
@@ -209,22 +213,22 @@
         <!-- initial message -->
         <script type="text/ng-template" id="openingStageModal.html">
 
-                <div class="modal-robot robot-lg closing-stage-modal user-help">
-                    <img src="assets/images/img-robot-lg.svg">
+            <div class="modal-robot robot-lg closing-stage-modal user-help">
+                <img src="assets/images/img-robot-lg.svg">
 
-                    <div class="modal-header">
-                        <a class="icon icon-close btn btn-circle" ng-click="cancel()">
-                            <span class="icomoon icon-cross"></span>
-                        </a>
-                    </div>
-                    <div class="modal-body">
-                        <h3 class="subtitle text-center">Exploración inicial</h3>
-
-                        <p class="txt-renglon centered">
-                            Explora más sobre ti y sobre lo que te gustaría hacer en el futuro.
-                        </p>
-                    </div>
+                <div class="modal-header">
+                    <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                        <span class="icomoon icon-cross"></span>
+                    </a>
                 </div>
+                <div class="modal-body">
+                    <h3 class="subtitle text-center">Exploración inicial</h3>
+
+                    <p class="txt-renglon centered">
+                        Explora más sobre ti y sobre lo que te gustaría hacer en el futuro.
+                    </p>
+                </div>
+            </div>
 
         </script>
     </div>
