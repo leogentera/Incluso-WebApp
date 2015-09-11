@@ -188,7 +188,7 @@ angular
                         description = "El 'Campo de fuerza' es tuyo. ¡Lograste un reto más!";
                         break;
                     case 9:
-                        description = "Has obtenido el 'Radar' ¡Continua la aventura!";
+                        description = "Has obtenido el 'Radar' ¡Continúa la aventura!";
                         break;
                     case 10:
                         description = "Lograste obtener el 'Tanque de oxígeno' ¡No te rindas!";
@@ -209,13 +209,13 @@ angular
                         description = "Por obtener 30 likes en Foro o Comunidad has ganado la insignia 'Corazón digital'";
                         break;
                     case 16:
-                        description = "Has ganado el 'Casco'. Ahora, ¡Ve por más!";
+                        description = "Has ganado el 'Casco'. Ahora, ¡ve por más!";
                         break;
                     case 17:
                         description = "Has ganado el 'Radio de comunicación'. ¡Nunca te des por vencido!";
                         break;
                     case 18:
-                        description = "Ya es tuyo el 'Turbo' ¡No te rindas!";
+                        description = "Ya es tuyo el 'Turbo' ¡no te rindas!";
                         break;
                     default:
                         description = "";
