@@ -11,7 +11,7 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-
+            $scope.$emit('ShowPreloader'); //show preloader
             _timeout = $timeout;
             $scope.scrollToTop();
             $scope.model = getDataAsync();

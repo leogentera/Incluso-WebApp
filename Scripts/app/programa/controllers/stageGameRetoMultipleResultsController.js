@@ -29,7 +29,7 @@ angular
             $scope.$emit('HidePreloader');
 
             $scope.back = function () {
-                $location.path('/ZonaDeVuelo/Dashboard/1/1');
+                $location.path('/ZonaDeVuelo/Dashboard/1/2');
             }
 
         }]);

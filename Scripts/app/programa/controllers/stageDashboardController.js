@@ -66,6 +66,7 @@ angular
                 });    
 
                 this.currentItem = $scope.idReto;
+                var currentItem;
                 owl.trigger("owl.goTo", $scope.idReto);
                     $("span#index").text(($scope.idReto+1));  
 
@@ -73,27 +74,41 @@ angular
                     $("span#index").text(($scope.idReto+1));            
 
                 function callback1(event) {
-                    var item = this.currentItem;
-                    owl.trigger("owl.goTo", item);
-                    $("span#index").text((item+1));
-                }
-
-                function callback2(event) {
-                    var item = this.currentItem;
+                    var item = this.currentItem;                    
+                    currentItem = parseInt(this.owl.currentItem);
                     owl2.trigger("owl.goTo", item);
                     $("span#index").text((item+1));
                 }
 
-                $("#next").click(function (ev) {
-                    owl.trigger('owl.next');
-                    ev.preventDefault();
+                function callback2(event) {
+                    item = this.currentItem;                    
+                    owl.trigger("owl.goTo", item);
+                    $("span#index").text((item+1));
+                }
 
+               $("#prev").click(function (ev) {                                                            
+                    if(currentItem){
+                        owl.trigger('owl.goTo', currentItem - 1);
+                        owl2.trigger('owl.goTo', currentItem - 1);
+                    }
+                    else{
+                        owl.trigger('owl.prev');
+                        owl2.trigger('owl.prev');
+                    }
+                    ev.preventDefault();
+                });
+                 $("#next").click(function (ev) {                                        
+                    if(currentItem){
+                        owl.trigger('owl.goTo', currentItem + 1);
+                        owl2.trigger('owl.goTo', currentItem + 1);
+                    }
+                    else{
+                        owl.trigger('owl.next');
+                        owl2.trigger('owl.next');
+                    }
+                    ev.preventDefault();
                 });
 
-                $("#prev").click(function (ev) {
-                    owl.trigger('owl.prev');
-                    ev.preventDefault();
-                });
             }, 1000);         
 
             //Opens stage welcome message if first time visit
@@ -187,15 +202,15 @@ angular
             }
             
             $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);            
-            var challengeCompleted = _isChallengeCompleted();            
+            var challengeCompletedId = _isChallengeCompleted();            
             _coachNotification();
                                     
             //Exclude challenges initial and final from showing modal robot
             var challengeExploracionInicial = 140;
             var challengeExploracionFinal = 152;
-            if(challengeCompleted && challengeCompleted != challengeExploracionInicial && challengeCompleted != challengeExploracionFinal){
-              _setLocalStorageItem("challengeMessageId",challengeCompleted);
-              $scope.openModal_CloseChallenge();
+            if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){            
+                _setLocalStorageItem("challengeMessageId",challengeCompletedId);
+                $scope.openModal_CloseChallenge();
             }else{
                 _setLocalStorageItem("challengeMessageId",0);
             }
@@ -281,7 +296,7 @@ angular
                         challengeId: 115},
                     {
                         title : "CABINA DE SOPORTE",
-                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave!  Lograste unir los puntos clave para definir un sueño: pasión, habilidades y talentos. ¡sólo falta ponerlos en acción para lograr lo que te propongas!",
+                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave!  Lograste unir los puntos clave para definir un sueño: pasión, habilidades y talentos. ¡Sólo falta ponerlos en acción para lograr lo que te propongas!",
                         read : "false",
                         challengeId: 116}];
              
