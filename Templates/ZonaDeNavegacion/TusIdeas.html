@@ -25,7 +25,7 @@
                             </div>
 
                             <ul class="block-list clearfix">
-                                <li ng-repeat="dream in misSuenosAnswers[0] track by $index">
+                                <li ng-repeat="idea in misIdeas[0] track by $index">
                                     <section class="form txt-renglon part list clearfix">
                                         <div class="form-group theme-form">
 
@@ -65,7 +65,7 @@
                             </div>
 
                             <ul class="block-list clearfix">
-                                <li ng-repeat="ability in misSuenosAnswers[1] track by $index">
+                                <li ng-repeat="idea in misIdeas[1] track by $index">
                                     <section class="form txt-renglon part list clearfix">
                                         <div class="form-group theme-form">
 
@@ -97,14 +97,15 @@
                                 </a>
                             </div>
                         </div>
+                    </div>
 
 
                     <section id="controls" class="controls">
                         <div class="paginate">
-                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 4)">
+                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 2)">
                                 <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
                             </a>
-                            <a href="#" id="next" ng-click="addToAnswerIndex(1, 4)">
+                            <a href="#" id="next" ng-click="addToAnswerIndex(1, 2)">
                                 <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
                                 <!--
                                 <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
@@ -113,7 +114,7 @@
 
                             <div class="centered">
                                 <span id="index" class="txt-bigger">1/</span>
-                                <span id="totalPages" class="white txt-bigger">4</span>
+                                <span id="totalPages" class="white txt-bigger">2</span>
                             </div>
                         </div>
                         <!--
@@ -123,8 +124,8 @@
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                         -->
 
-                        <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 4"
-                           ng-click="validateExploracionInicialEtapa2()">Guardar</a>
+                        <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 2"
+                           ng-click="validateTusIdeas()">Guardar</a>
 
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel2()">Cancelar</div>
                     </section>

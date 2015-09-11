@@ -469,7 +469,7 @@
             controller: 'stageMessageController'
         });
         //Tus Ideas /ZonaDeNavegacion/Transformate/TusIdeas/
-        $routeProvider.when('/ZonaDeNavegacion/Transformate/TusIdeas/ :activityIdentifier', {
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/TusIdeas/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeNavegacion/TusIdeas.html',
             controller: 'stageQuizController'
         });
