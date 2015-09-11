@@ -41,6 +41,8 @@ angular
                 "answers": [null, null, null, [0, 0, 0, 0, 0]]
             };
 
+            $scope.misIdeas = [[], []];
+
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misSuenosAnswers = [[], [], []];
@@ -173,6 +175,26 @@ angular
             $scope.deleteSueno3 = function (index) {
                 removeHeight("#listaDinamica3");
                 $scope.misSuenosAnswers[2].splice(index, 1);
+            };
+
+            $scope.addIdea1 = function () {
+                addHeight("#listaDinamica1");
+                $scope.misIdeas[0].push("");
+            };
+
+            $scope.addIdea2 = function () {
+                addHeight("#listaDinamica2");
+                $scope.misIdeas[1].push("");
+            };
+
+            $scope.deleteIdea1 = function (index) {
+                removeHeight("#listaDinamica1");
+                $scope.misIdeas[0].splice(index, 1);
+            };
+
+            $scope.deleteIdea2 = function (index) {
+                removeHeight("#listaDinamica2");
+                $scope.misIdeas[1].splice(index, 1);
             };
 
             $scope.addPerson = function () {
@@ -607,8 +629,8 @@ angular
 
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
                 console.log("The activity ID is: " + $scope.activity_identifier);
-                console.log("The activity data is: " + JSON.stringify(activity));
-                console.log("The activity status is: " + activity.status);
+                //console.log("The activity data is: " + JSON.stringify(activity));
+                //console.log("The activity status is: " + activity.status);
 
                 if (activity != null) {
 
@@ -1072,6 +1094,19 @@ angular
                     showWarningAndGoToTop();
                 }
             };
+
+            function validateTusIdeas() {
+
+                if (true) {
+                    console.log('!HURAA' + $scope.AnswersResultStage2.answers);
+                    $scope.showWarning = false;
+                    $scope.navigateToPage(2);
+                    $scope.scrollToTop();
+
+                } else {
+                    showWarningAndGoToTop();
+                }
+            }
 
 
             function partialSuccessfullCallBack(partialActivityAnswers) {

@@ -468,6 +468,11 @@
             templateUrl: 'Templates/ZonaDeNavegacion/CuartoDeRecursos/MensajeDeCierre.html',
             controller: 'stageMessageController'
         });
+        //Tus Ideas /ZonaDeNavegacion/Transformate/TusIdeas/
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/TusIdeas/:activityIdentifier', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TusIdeas.html',
+            controller: 'stageQuizController'
+        });
 
         $routeProvider.when('/ZonaDeNavegacion/Conocete/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/Conocete/FuenteDeEnergia.html',
