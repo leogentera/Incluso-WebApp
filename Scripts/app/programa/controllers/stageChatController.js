@@ -114,12 +114,12 @@ angular
 
                 //create notification
                 _createNotification(activity.coursemoduleid, triggerActivity);
-                //complete stage
-                _updateBadgeStatus(activity.coursemoduleid);
+                //complete stage                
+                _updateBadgeStatus(activity.coursemoduleid);  
+
 
                 // update activity status dictionary used for blocking activity links
-                updateActivityStatusDictionary(activity.coursemoduleid);
-                _isChallengeCompleted();    
+                updateActivityStatusDictionary(activity.coursemoduleid);                
 
                 $scope.$emit('HidePreloader'); //hide preloader  
                 var userCurrentStage = localStorage.getItem("currentStage");

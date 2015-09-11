@@ -5,9 +5,10 @@ var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";
 
 
 var _courseId = 4;
-
+var _endActivityCurrentChallenge = null;
 var _httpFactory = null;
 var _timeout = null;
+var _location = null;
 
 var _activityStatus = null;
 
@@ -103,7 +104,20 @@ var _readNotification = function(currentUserId,currentNotificationId){
 };
 
 var _setLocalStorageItem = function(key, value) {
+  try {
     localStorage.setItem(key, value);
+    var size = 0;
+    for(var x in localStorage) {
+      if (localStorage[x].length) {
+        size = size + ((localStorage[x].length * 2)/1024);
+      }
+    }
+  }
+  catch (e) {
+    ClearLocalStorage("activity");
+    ClearLocalStorage("activitiesCache");
+    localStorage.setItem(key, value);
+}
 }
 
 var _setLocalStorageJsonItem = function(key, object) {
@@ -123,7 +137,7 @@ function syncCacheData (){
 
 //Update activity status for activity blocking binding
 var updateActivityStatusDictionary = function(activityId){
-    var activityStatus = moodleFactory.Services.GetCacheObject("activityStatus");
+    var activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
     if(activityStatus){
         activityStatus[activityId] = 1;
     }
@@ -131,35 +145,42 @@ var updateActivityStatusDictionary = function(activityId){
     _activityStatus[activityId] =1;
 };
 
-var _endActivity = function(activityModel){
+var _endActivity = function(activityModel, callback, currentChallenge){
         
         //trigger activity type 2 is sent when the activity ends.
         var triggerActivity = 2;
         var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
         var currentUserId = currentUser.userId;
         var activityId = activityModel.coursemoduleid;
+        callback = callback || successCallback;
         //create notification
-        _createNotification(activityId, triggerActivity);
-        //complete stage
-        _updateBadgeStatus(activityId);
-        
-      if (activityModel.activityType == "Quiz"){console.log(JSON.stringify(activityModel.answersResult) + "  " + activityModel.token);
-        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successCallback, errorCallback);
+        _createNotification(activityId, triggerActivity);              
+      if (activityModel.activityType == "Quiz"){
+        _endActivityCurrentChallenge = currentChallenge;        
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successQuizCallback, errorCallback);
       }
       else if(activityModel.activityType == "Assign")
       {
-        var data = {userid :  currentUserId };
-        
-        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, successCallback,errorCallback);
+        var data = {userid :  currentUserId };        
+        moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse,activityModel.token, callback,errorCallback);
       }
       else{            
         var data = {userid :  currentUserId };
         
         // update activity status dictionary used for blocking activity links
         updateActivityStatusDictionary(activityId);
-        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, successCallback, errorCallback);
+        moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, callback, errorCallback);
       }                  
 };
+
+var successQuizCallback = function(){
+  var currentStage = localStorage.getItem("currentStage");
+  if (_location) {
+    _location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + _endActivityCurrentChallenge);
+  }else{
+    
+  }  
+}
 
 
 //This function updates in localStorage the status of the stage when completed
@@ -186,49 +207,45 @@ var _isStageCompleted = function(){
   
 };
 
-var _isChallengeCompleted = function(){
+var _isChallengeCompleted = function(){    
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));      
     var lastStageIndex = _.where(userCourse.stages,{status: 1}).length;
     var currentStage = userCourse.stages[lastStageIndex];
     
     for(var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++){
-        var currentChallenge = currentStage.challenges[challengeIndex];
-        if(currentChallenge.status == 0){
-          _updateBadgeStatus(currentChallenge.coursemoduleid);
-
-
-          var totalActivitiesByStage = currentChallenge.activities.length;
-          var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
-          if (totalActivitiesByStage == totalActivitiesCompletedByStage){
-              
-              //updateBadge
-              userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
-              _setLocalStorageJsonItem("usercourse", userCourse);
-              var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-              var currentUserId = currentUser.userId;
-              var data = { userid :  currentUserId };
-              var currentActivityModuleId = currentChallenge.coursemoduleid;              
-              moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, function(){},errorCallback);
-              success = currentActivityModuleId;
-              return success
-          }else{
-            success = 0;
-          }
-        }else{
-          success = 0;
-        }
-    }
+         var currentChallenge = currentStage.challenges[challengeIndex];
+        if(currentChallenge.status == 0){              
+            var totalActivitiesByStage = currentChallenge.activities.length;
+            var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;            
+            if (totalActivitiesByStage == totalActivitiesCompletedByStage){
+                
+                //updateBadge
+                _updateBadgeStatus(currentChallenge.coursemoduleid);
+                userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;                
+                _setLocalStorageJsonItem("usercourse", userCourse);
+                var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+                var currentUserId = currentUser.userId;
+                var data = { userid :  currentUserId };
+                var currentActivityModuleId = currentChallenge.coursemoduleid;              
+                moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, successCallback,errorCallback);
+                success = currentActivityModuleId;
+                return success;
+            }else{
+              success = 0;
+            }          
+         }else{
+           success = 0;
+         }          
+    };
     return success;
-    
-};
-
+}
 
 
 var _updateBadgeStatus = function(coursemoduleid, callback){
     moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {
-      if (callback) callback();
-      var profile = moodleFactory.Services.GetCacheJson("profile");
+    if (callback) callback();
+    var profile = moodleFactory.Services.GetCacheJson("profile");
     var badges = profile.badges;
     var currentBadge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});    
     if (currentBadge) {
@@ -278,7 +295,9 @@ var _coachNotification = function(){
   var notificationCoach = _.find(notifications,function(notif){
       if(notif.id == 4){
         return notif;
-        }else{}
+        }else{
+          
+        }
     });                                
   
   if (notificationCoach && !notificationCoach.timemodified) {
@@ -306,6 +325,13 @@ var _coachNotification = function(){
     }      
   }  
 };
+                
+      
+      
+
+
+
+
 
 
 var successCallback = function(data){
@@ -413,7 +439,6 @@ function updateSubActivityStatus(coursemoduleid) {
 
  function updateActivityStatus(activity_identifier) {
                 //Update activity status for activity blocking binding
-                updateActivityStatusDictionary(activity_identifier);
                 //Update activity status in usercourse
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
@@ -425,6 +450,7 @@ function updateSubActivityStatus(coursemoduleid) {
                             var activity = challenge.activities[activityIndex];
                             if (activity.activity_identifier == activity_identifier) {
                                 activity.status = 1;
+                                updateActivityStatusDictionary(activity.coursemoduleid);
                                 breakAll = true;
                                 break;
                             }
@@ -492,7 +518,8 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
       }
     }
     stars += (subactivitiesCourseModuleId.length == parentActivity.activities.length ? parentActivity.points : 0);
-    profile.stars += stars;
+    profile.stars = parseInt(profile.stars) + stars;
+    currentUser.stars = profile.stars;
     if (stars > 0) {
       var data = {
         userId: profile.id,
@@ -502,6 +529,8 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
         date: getdate()
       };
       moodleFactory.Services.PutStars(data, profile, currentUser.token, successCallback, errorCallback);
+      _setLocalStorageJsonItem("profile", profile)
+      _setLocalStorageJsonItem("CurrentUser", currentUser)
     }
 }
 
@@ -509,14 +538,22 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getActivityByActivity_identifier(activity_identifier);
+
      extraPoints ? '' : extraPoints = 0;
-     profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
-     
+
+    /*
      if (activity_identifier == '1009' || activity_identifier == '1001') {
-         activity.points = 0;
+         activity.points = 50;
      }
-     
-     profile.stars = profile.stars + activity.points + Number(extraPoints);
+
+     */
+
+     if(extraPoints != 0){
+         profile.stars = Number(profile.stars) + Number(extraPoints);
+     } else {
+         profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+     }
+
 
     var data={
       userId: profile.id,
@@ -532,7 +569,7 @@ function updateUserStarsUsingExternalActivity (activity_identifier){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getExtActivityByActivity_identifier(activity_identifier);   
-   profile.stars = Number(profile.stars) +  Number(activity.points);
+   //profile.stars = Number(profile.stars) +  Number(activity.points);
     var data={
        userId: profile.id,
        stars: activity.points ,
@@ -598,8 +635,10 @@ var logout = function($scope, $location){
       localStorage.removeItem("notifications");
       localStorage.removeItem("userChat");
       localStorage.removeItem("leaderboard");
+      localStorage.removeItem("activityStatus");
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
+      ClearLocalStorage("activityAnswers");      
       $location.path('/');
     };
       
@@ -1000,3 +1039,15 @@ var _activityRoutes = [
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
+
+document.addEventListener("deviceready", onDeviceReady, false);
+            
+             function onDeviceReady() {
+        // Register the event listener
+                document.addEventListener("backbutton", onBackKeyDown, false);
+            }
+        
+            // Handle the back button
+            //
+            function onBackKeyDown() {
+            }

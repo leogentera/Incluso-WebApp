@@ -188,7 +188,7 @@ angular
                         description = "El 'Campo de fuerza' es tuyo. ¡Lograste un reto más!";
                         break;
                     case 9:
-                        description = "Has obtenido el 'Radar' ¡Continua la aventura!";
+                        description = "Has obtenido el 'Radar' ¡Continúa la aventura!";
                         break;
                     case 10:
                         description = "Lograste obtener el 'Tanque de oxígeno' ¡No te rindas!";
@@ -209,13 +209,13 @@ angular
                         description = "Por obtener 30 likes en Foro o Comunidad has ganado la insignia 'Corazón digital'";
                         break;
                     case 16:
-                        description = "Has ganado el 'Casco'. Ahora, ¡Ve por más!";
+                        description = "Has ganado el 'Casco'. Ahora, ¡ve por más!";
                         break;
                     case 17:
                         description = "Has ganado el 'Radio de comunicación'. ¡Nunca te des por vencido!";
                         break;
                     case 18:
-                        description = "Ya es tuyo el 'Turbo' ¡No te rindas!";
+                        description = "Ya es tuyo el 'Turbo' ¡no te rindas!";
                         break;
                     default:
                         description = "";
@@ -250,10 +250,12 @@ angular
                     if ($scope.model.profileimageurl) {
                         $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                     }
-
+                    
+                    console.log("Profile current stars:" + $scope.model.stars);
+                    
                     callback();
 
-                    moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback, function(){}, true);
+                    moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback, function () { }, true);
 
                     if (!$scope.model) {
                         $location.path('/');
@@ -360,28 +362,26 @@ angular
                 $location.path('/ProgramaDashboard');
             };
 
-            function calculate_age()
-            {
+            function calculate_age() {
                 var dpValue = $scope.model.birthday;
-                var birth_month = dpValue.substring(0,2);
-                var birth_day = dpValue.substring(3,5);
-                var birth_year = dpValue.substring(6,10);
+                var birth_month = dpValue.substring(0, 2);
+                var birth_day = dpValue.substring(3, 5);
+                var birth_year = dpValue.substring(6, 10);
                 today_date = new Date();
                 today_year = today_date.getFullYear();
                 today_month = today_date.getMonth();
                 today_day = today_date.getDate();
                 age = today_year - birth_year;
-            
-                if ( today_month < (birth_month - 1))
-                {
+
+                if (today_month < (birth_month - 1)) {
                     age--;
                 }
-                if (((birth_month - 1) == today_month) && (today_day < birth_day))
-                {
+                if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
                     age--;
                 }
                 return age;
             }
+
             
              $scope.showPlaceHolderBirthday = function(){                
                 var bd = $("input[name='date']").val();                
@@ -390,16 +390,16 @@ angular
                 }else{
                     $scope.showPlaceHolder = true;                    
                 }
-            };
-            
+            };            
+
             function validateModel() {
                 console.log('fetching editProfile errors list');
                 var errors = [];
 
                 validateEmptyItemsOnLists();
-                
-                var age = calculate_age();                
-                if(age < 13){ errors.push("Debes ser mayor de 13 años para poder registrarte."); }
+
+                var age = calculate_age();
+                if (age < 13) { errors.push("Debes ser mayor de 13 años para poder registrarte."); }
                 if (!$scope.editForm.firstname.$valid) { errors.push("Formato de nombre incorrecto."); }
                 if (!$scope.editForm.lastname.$valid) { errors.push("Formato de apellido paterno incorrecto."); }
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
@@ -640,15 +640,15 @@ angular
 
             function ValidatePointsPolicy() {
 
-               var usercourse = JSON.parse(localStorage.getItem("usercourse"));
+                var usercourse = JSON.parse(localStorage.getItem("usercourse"));
                 //var profile = JSON.parse(localStorage.getItem("profile"));
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
                 for (var activityIndex = 0; activityIndex < usercourse.activities.length; activityIndex++) {
                     var activity = usercourse.activities[activityIndex];
-                    
-                    console.log("Activity Name: " + activity.activityname + " - Activity Points: " + activity.points + " - Activity Status: " + activity.status + 
-                    " - Current Stars: " + $scope.model.stars + " - Stars to add: " + activity.points);
+
+                    console.log("Activity Name: " + activity.activityname + " - Activity Points: " + activity.points + " - Activity Status: " + activity.status +
+                        " - Current Stars: " + $scope.model.stars + " - Stars to add: " + activity.points);
 
                     if (activity.status == 0) {
                         var result;
@@ -673,11 +673,20 @@ angular
                         if (result) {
 
                             $scope.model.stars += activity.points;
+
                             usercourse.activities[activityIndex].status = 1;
 
-                            updateUserStarsUsingExternalActivity(activity.activity_identifier);
+                            var profileBefore = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
+                            console.log("profile.stars (before): " + profileBefore.stars);
                             
-                            console.log("Despues de actualizar el profile con servicio");
+                            var newPoints = Number(profileBefore.stars) + Number(usercourse.activities[activityIndex].points);
+                            profileBefore.stars =newPoints;                       
+                            _setLocalStorageJsonItem("profile",profileBefore);
+
+                            updateUserStarsUsingExternalActivity(activity.activity_identifier);
+
+                            // var profileAfter = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
+                            // console.log("profile.stars (after): " + profileAfter.stars);
 
                             var activityModel = {
                                 "usercourse": usercourse,
@@ -1037,16 +1046,18 @@ angular
                 };
 
                 try {
+                    $scope.$emit('ShowPreloader');
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch (e) {
-                SuccessAvatar(
-                        {"userid":$scope.model.id,"actividad":"Mi Avatar","alias": $scope.model.username, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/05/2015 08:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
-                );
+                    SuccessAvatar(
+                        { "userid": $scope.model.id, "actividad": "Mi Avatar", "alias": $scope.model.username, "genero": "Hombre", "rostro": "Preocupado", "color_de_piel": "E6C8B0", "estilo_cabello": "Cabello02", "color_cabello": "694027", "traje_color_principal": "00A0FF", "traje_color_secundario": "006192", "imagen_recortada": "app/initializr/media", "fecha_modificacion": "09/05/2015 08:32:04", "Te_gusto_la_actividad": null, "pathimagen": "default.png" }
+                        );
                 }
             };
 
             function SuccessAvatar(data) {
                 //the next fields should match the database in moodle
+    
                 $scope.avatarInfo = [{
                     "userid": data.userid,
                     "aplicacion": data.actividad,
