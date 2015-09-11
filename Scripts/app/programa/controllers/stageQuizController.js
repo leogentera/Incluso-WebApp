@@ -42,6 +42,7 @@ angular
             };
 
             $scope.misIdeas = [[], []];
+            $scope.miFuturo = [[], [], []];
 
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
@@ -207,6 +208,19 @@ angular
                 removeHeight("#listaDinamica4");
                 $scope.AnswersResult.answers[2].splice(index, 1);
             };
+
+            $scope.addFuturo = function (pos) {
+                var listaId = pos + 1;
+                addHeight("#listaDinamica" + listaId);
+                $scope.miFuturo[pos].push("");
+            };
+
+            $scope.deleteFuturo = function (index, pos) {
+                var listaId = pos + 1;
+                removeHeight("#listaDinamica" + listaId);
+                $scope.miFuturo[pos].splice(index, 1);
+            };
+
 
             $scope.hideWarning = function () {
                 $scope.showWarning = false;
@@ -1095,9 +1109,10 @@ angular
                 }
             };
 
-            $scope.validateTusIdeas = function() {alert("idas");
+            $scope.validateTusIdeas = function() {
 
                 var validAnswers = 0;
+                var num = $scope.misIdeas.length;
 
                 for (var a = 0; a < $scope.misIdeas.length; a++) {
                     var cont = $scope.misIdeas[a].length;
@@ -1122,7 +1137,45 @@ angular
                     }
                 }
 
-                if (validAnswers == 2) {
+                if (validAnswers == num) {
+                    $scope.showWarning = false;
+                    $scope.navigateToPage(2);
+                    $scope.scrollToTop();
+                } else {
+                    showWarningAndGoToTop();
+                }
+            };
+
+
+            scope.validateTuFuturo = function() {
+
+                var validAnswers = 0;
+                var num = $scope.miFuturo.length;
+
+                for (var a = 0; a < num; a++) {
+                    var cont = $scope.miFuturo[a].length;
+
+                    if (cont > 0) {//Question with dreams
+
+                        //Check if dreams are not empty strings or spaces
+                        var countNotEmptyAnswers = 0;
+                        for (var b = 0; b < cont; b++) {
+
+                            //Correction for the '\n' reserved character
+                            $scope.miFuturo[a][b] = $scope.miFuturo[a][b].replace(/\r?\n|\r/g, " ").trim();
+
+                            if ($scope.miFuturo[a][b] !== '') {
+                                countNotEmptyAnswers++;
+                            }
+                        }
+
+                        if (countNotEmptyAnswers > 0) {
+                            validAnswers++;
+                        }
+                    }
+                }
+
+                if (validAnswers == num) {
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
