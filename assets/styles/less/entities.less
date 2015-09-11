@@ -2243,6 +2243,7 @@
                 }
             }
             .list-group {
+                margin: 0px;
                 .list-group-item {                                    
                     margin: 0px;
                     padding: 1.1vh 5vw;
@@ -2273,9 +2274,9 @@
                     background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
                     background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
                     background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
-                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );                
-                    //background-image:url('@{url-images}/bg-album-modules.gif');
-                    background-position: -1px top;
+                    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );*/
+                    
+                    /*background-position: -1px top;
                     background-repeat: no-repeat, repeat-y;
                     background-size: 100% 102%;*/
                     padding-bottom: 16vw;
@@ -2289,7 +2290,9 @@
                         }                        
                     }                    
                     .section-avatar {
-                        height: 49vh;  
+                        height: 57vh;
+                        background-image:url('@{url-images}/album/bg-album-avatar.gif'); 
+                        background-size: 100%; 
                         figure {
                             padding-top: 8vh;
                         }
@@ -2298,9 +2301,11 @@
                         }
                     }
                     .section-shield-name {
-                        height: 15vh;
+                        height: 16vh;
+                        padding-top: 4vh;
                         .container {
-                            padding: 4vh 0px;
+                            width: 100%;   
+                            padding: 4vh 0px 0px; 
                             p{
                                 margin: 0px;
                             }
@@ -2312,12 +2317,48 @@
                         }
                     }
                     .section-abilities {
-                        height: 30vh;
+                        height: 25vh;
+                        background-image:url('@{url-images}/album/bg-album-abilities.gif');
+                        background-size: 100%;
                         .container {
-                            padding: 7vh 0px;                            
+                            padding: 6vh 0px 0px;                            
                         }
                     }
             }
+
+            .section-what-ilike {
+                height: 25vh;
+                background-image:url('@{url-images}/album/bg-album-what-ilike.gif');
+                background-size: 100%;
+                 .container {
+                            padding: 6vh 0px 0px;                            
+                        }
+            }
+            .section-qualities {
+                height: 30vh;
+                background-image:url('@{url-images}/album/bg-album-qualities.gif');
+                background-size: 100%;
+                 .container {
+                            padding: 7.5vh 0px 0px;                            
+                        }
+            }
+            .section-what-drivesme {
+                height: 26vh;
+                background-image:url('@{url-images}/album/bg-album-what-drivesme.gif');
+                background-size: 100%;
+                 .container {
+                            padding: 5.5vh 0px 0px;                            
+                        }
+            }
+            .section-dreams {
+                height: 30vh;
+                background-image:url('@{url-images}/album/bg-album-dreams.gif');
+                background-size: 100%;
+                 .container {
+                            padding: 8vh 0px 0px;                            
+                        }
+            }
+
         }
 
         /***********************************************************************
