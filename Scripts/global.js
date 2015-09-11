@@ -638,6 +638,7 @@ var logout = function($scope, $location){
       localStorage.removeItem("activityStatus");
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
+      ClearLocalStorage("activityAnswers");      
       $location.path('/');
     };
       

@@ -56,17 +56,17 @@ angular
                 }
             };
 
-            $scope.show = function() {
+            $scope.show = function () {
                 console.log($scope.AnswersResult.answers[0]);
                 console.log($scope.AnswersResult.answers);
             };
 
-            $scope.show1 = function() {
+            $scope.show1 = function () {
                 console.log($scope.AnswersResult.answers[1]);
             };
-            
+
             $scope.isDisabled = false;
-            
+
             $scope.finishActivity = function () {
                 //Activity completed
 
@@ -75,7 +75,7 @@ angular
 
                 //Update Activity Log Service
                 console.log("For update stars. activity_identifier = " + $scope.activity_identifier);
-                if($scope.activity_status == 0){
+                if ($scope.activity_status == 0) {
                     $scope.activity_status == 1;
                     updateUserStars($scope.activity_identifier);
                 }
@@ -127,7 +127,8 @@ angular
                 //console.log("activityModel = " + JSON.stringify(activityModel));
                 console.log("answersResult = " + JSON.stringify($scope.AnswersResult));
 
-                _endActivity(activityModel,null,$scope.currentChallenge);                
+                _endActivity(activityModel, null, $scope.currentChallenge);
+                _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
             };
 
 
@@ -212,7 +213,7 @@ angular
 
                     //$scope.AnswersResult.answers[1][5] = $scope.AnswersResult.answers[1][5].replace(/\r?\n|\r/g, ';').trim();
                     console.log("AnswersResult.answers = " + $scope.AnswersResult.answers);
-                    if (( $scope.AnswersResult.answers[1][0] == true ||
+                    if (($scope.AnswersResult.answers[1][0] == true ||
                         $scope.AnswersResult.answers[1][1] == true ||
                         $scope.AnswersResult.answers[1][2] == true ||
                         $scope.AnswersResult.answers[1][3] == true) || ($scope.AnswersResult.answers[1][4] == true && $scope.AnswersResult.answers[1][5] != '')) {
@@ -588,7 +589,7 @@ angular
                         break;
                     default:
                         $scope.currentChallenge = 0; //Default
-
+                        break;
                 }
 
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
@@ -606,11 +607,11 @@ angular
                     $scope.activityPoints = activity.points;
                     console.log("points: " + activity.points);
                     $scope.activityname = activity.activityname;
-                        /*
-                    if (activity.activity_identifier == '1001') {//INC-1826: Not assign Stars to "Exploración Inicial" activity
-                        $scope.activityPoints = 0;
-                    }
-                    */
+                    /*
+                if (activity.activity_identifier == '1001') {//INC-1826: Not assign Stars to "Exploración Inicial" activity
+                    $scope.activityPoints = 0;
+                }
+                */
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
@@ -627,18 +628,45 @@ angular
                             $scope.setReadOnly = true;
                         }
 
-                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
+                        var localAnswers = JSON.parse(_getItem("activityAnswers/" + activity.coursemoduleid));
+                        if (localAnswers == null) {
+                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
+                        }
+                        else {
+                            switch ($scope.activity_identifier) {
+
+                                case "1001":
+                                    $scope.AnswersResult.answers = localAnswers; //Exploración Inicial
+                                    break;
+                                case "1005":
+                                    $scope.misCualidadesAnswers = localAnswers;  //Mis Cualidades
+                                    break;
+                                case "1006":
+                                    $scope.misGustosAnswers = localAnswers;  //Mis Gustos
+                                    break;
+                                case "1007":
+                                    $scope.misSuenosAnswers = localAnswers; //Sueña
+                                    break;
+                                case "1009":
+                                    $scope.exploracionFinal = localAnswers; //Exploración Final
+                                    break;
+                                default:
+                                    $scope.currentChallenge = 0; //Default
+                                    break;
+                            }
+
+                        }
                     } else {
-                        $scope.$emit('HidePreloader');
+
                     }
 
                     $scope.activity = activity;
                     $scope.activityFinished = activityFinished;
 
-                } else {
                     console.log("Activity is NOT defined");
-                    $scope.$emit('HidePreloader');
+
                 }
+                $scope.$emit('HidePreloader');
             }
 
             //This callback is invoked for finished activities only
@@ -671,7 +699,7 @@ angular
                                 break;
                         }
                     }
-
+                    _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
                     //$scope.$emit('HidePreloader');
                 }
 
@@ -696,11 +724,11 @@ angular
                     controller: 'OpeningStageController',
                     size: size,
                     windowClass: 'user-help-modal opening-stage-modal'
-                }).result.finally(function(){
-                    $scope.$emit('ShowPreloader');    
-                    $timeout(function (){
-                        $scope.$emit('HidePreloader');  
-                    },1000)
+                }).result.finally(function () {
+                    $scope.$emit('ShowPreloader');
+                    $timeout(function () {
+                        $scope.$emit('HidePreloader');
+                    }, 1000)
                     //$scope.$emit('HidePreloader');  
                 });
             };
@@ -980,9 +1008,9 @@ angular
 
                     $scope.exploracionFinalresult =
                         [
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
                             {
                                 "badAnswer": false,
                                 "firstOptionWrong": false,
@@ -997,7 +1025,7 @@ angular
                             }
                         ];
                     var _mathFloor = 0;
-                    var goodAnswersQty =0;
+                    var goodAnswersQty = 0;
                     for (var index = 0; index < partialActivityAnswers.questions.length; index++) {
                         var question = partialActivityAnswers.questions[index];
                         for (var answerIndex = 0; answerIndex < question.answers.length; answerIndex++) {
@@ -1042,8 +1070,8 @@ angular
                             }
                         }
 
-                        if(!$scope.exploracionFinalresult[index].badAnswer){
-                            goodAnswersQty ++;
+                        if (!$scope.exploracionFinalresult[index].badAnswer) {
+                            goodAnswersQty++;
                         }
                     }
                 }
@@ -1055,19 +1083,19 @@ angular
                 $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult.length;
             }
 
-                //$scope.$emit('HidePreloader'); //hide preloader
+            //$scope.$emit('HidePreloader'); //hide preloader
             function partialErrorCallback(partialActivityAnswers) {
             }
 
         }
     ])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
-        
+
         $scope.cancel = function () {
-            $scope.$emit('ShowPreloader');                
-                $modalInstance.dismiss('cancel');                                        
+            $scope.$emit('ShowPreloader');
+            $modalInstance.dismiss('cancel');
         };
-       
+
     })
     .controller('videoCollapsiblePanelController', function ($scope) {
         $scope.isCollapsed = false;
