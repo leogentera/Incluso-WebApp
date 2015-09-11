@@ -27,7 +27,7 @@
       <div class="panel-body" collapse="isCollapsed">
         <div class="stage perform">
           <figure class="player">
-              <img src="{{ discussion.image[0].fileurl }}" alt="{{ discussion.image[0].filename }}">
+              <img src="{{ discussion.attachments[0].fileurl + '?token=' + userToken }}" alt="{{ discussion.attachments[0].filename }}" alt="discussion" />
           </figure>
         </div>
       </div>
@@ -85,7 +85,7 @@
 
 <section class="wall">
 
-    <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies">
+    <div id="item{{$index}}" ng-repeat="p in posts">
 
 
 
@@ -141,8 +141,7 @@
 <section>
   <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
      <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
-  </a>          
-  <div class="txt-renglon" ng-show="!morePendingPosts">No se encontraron más posts</div>
+  </a>
 </section>
 
 <section>

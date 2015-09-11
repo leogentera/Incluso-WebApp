@@ -296,7 +296,7 @@ angular
                         challengeId: 115},
                     {
                         title : "CABINA DE SOPORTE",
-                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave!  Lograste unir los puntos clave para definir un sueño: pasión, habilidades y talentos. ¡sólo falta ponerlos en acción para lograr lo que te propongas!",
+                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave!  Lograste unir los puntos clave para definir un sueño: pasión, habilidades y talentos. ¡Sólo falta ponerlos en acción para lograr lo que te propongas!",
                         read : "false",
                         challengeId: 116}];
              
