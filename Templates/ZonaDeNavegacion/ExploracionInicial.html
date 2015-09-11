@@ -130,8 +130,15 @@
 
                     <section id="controls" class="controls">
                         <div class="paginate">
-                            <a href="#" id="prev"  ng-click="addToAnswerIndex(-1, 4)"><i class="icomoon icon-arrow-bold-left txt-bigger fl-left"></i></a>
-                            <a href="#" id="next"  ng-click="addToAnswerIndex(1, 4)"><i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i></a>
+                            <a href="#" id="prev"  ng-click="addToAnswerIndex(-1, 4)">
+                                <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
+                            </a>
+                            <a href="#" id="next"  ng-click="addToAnswerIndex(1, 4)">
+                                <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
+                                <!--
+                                <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
+                                -->
+                            </a>
 
                             <div class="centered">
                                 <span id="index" class="txt-bigger">1/</span>
@@ -145,16 +152,8 @@
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                         -->
 
-                        <a class="btn btn-primary btn-lg btn-cnt"
-                           id="save"
-                           href=""
-                           ng-show="answerIndex == 4 && activity_status == 0"
-                           ng-click="validateAnsweredQuestions()">Guardar</a>
-
+                        <a class="btn btn-primary btn-lg btn-cnt" id="save" href="#" ng-show="answerIndex == 4" style="color:white;" ng-click="validateAnsweredQuestions()">Guardar</a>
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
-
-
-
                     </section>
                 </div>
 
@@ -188,7 +187,7 @@
                         </section>
 
 
-                        <section class="txt-renglon centered form ">
+                        <section class="txt-renglon centered form">
                             ¿Que opinas de ésta actividad?
                             <section class="txt-renglon txt-bigger clearfix">
                                 <div class="opinion">
