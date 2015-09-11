@@ -1095,18 +1095,41 @@ angular
                 }
             };
 
-            $scope.validateTusIdeas = function() {
+            $scope.validateTusIdeas = function() {alert("idas");
 
-                if (true) {
-                    console.log('!HURAA' + $scope.AnswersResultStage2.answers);
+                var validAnswers = 0;
+
+                for (var a = 0; a < $scope.misIdeas.length; a++) {
+                    var cont = $scope.misIdeas[a].length;
+
+                    if (cont > 0) {//Question with dreams
+
+                        //Check if dreams are not empty strings or spaces
+                        var countNotEmptyAnswers = 0;
+                        for (var b = 0; b < cont; b++) {
+
+                            //Correction for the '\n' reserved character
+                            $scope.misIdeas[a][b] = $scope.misIdeas[a][b].replace(/\r?\n|\r/g, " ").trim();
+
+                            if ($scope.misIdeas[a][b] !== '') {
+                                countNotEmptyAnswers++;
+                            }
+                        }
+
+                        if (countNotEmptyAnswers > 0) {
+                            validAnswers++;
+                        }
+                    }
+                }
+
+                if (validAnswers == 2) {
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
-
                 } else {
                     showWarningAndGoToTop();
                 }
-            }
+            };
 
 
             function partialSuccessfullCallBack(partialActivityAnswers) {
