@@ -47,13 +47,13 @@ angular
             $timeout(function() { $scope.$emit('HidePreloader'); }, 3000);
             
             
-            var _initCommunityModals = function() {
+            function _initCommunityModals() {
                 return {
                     "isTextCollapsed":true,
                     "isLinkCollapsed":true,
                     "isVideoCollapsed":true,
                     "isAttachmentCollapsed":true,
-                    "isReportCollapsed":false
+                    "isReportCollapsed":true
                 };
             };
             
