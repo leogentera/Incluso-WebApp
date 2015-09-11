@@ -41,6 +41,8 @@ angular
                 "answers": [null, null, null, [0, 0, 0, 0, 0]]
             };
 
+            $scope.misIdeas = [[], []];
+
             $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misSuenosAnswers = [[], [], []];
@@ -173,6 +175,26 @@ angular
             $scope.deleteSueno3 = function (index) {
                 removeHeight("#listaDinamica3");
                 $scope.misSuenosAnswers[2].splice(index, 1);
+            };
+
+            $scope.addIdea1 = function () {
+                addHeight("#listaDinamica1");
+                $scope.misIdeas[0].push("");
+            };
+
+            $scope.addIdea2 = function () {
+                addHeight("#listaDinamica2");
+                $scope.misIdeas[1].push("");
+            };
+
+            $scope.deleteIdea1 = function (index) {
+                removeHeight("#listaDinamica1");
+                $scope.misIdeas[0].splice(index, 1);
+            };
+
+            $scope.deleteIdea2 = function (index) {
+                removeHeight("#listaDinamica2");
+                $scope.misIdeas[1].splice(index, 1);
             };
 
             $scope.addPerson = function () {
@@ -607,8 +629,8 @@ angular
 
                 var activity = getActivityByActivity_identifier($scope.activity_identifier);
                 console.log("The activity ID is: " + $scope.activity_identifier);
-                console.log("The activity data is: " + JSON.stringify(activity));
-                console.log("The activity status is: " + activity.status);
+                //console.log("The activity data is: " + JSON.stringify(activity));
+                //console.log("The activity status is: " + activity.status);
 
                 if (activity != null) {
 
@@ -759,7 +781,7 @@ angular
             }
 
             function addHeight2(lista) {
-                $scope.finalHeight = angular.element('.owl-wrapper-outer').height() + 100;
+                $scope.finalHeight = angular.element('.owl-wrapper-outer').height() + 120;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
@@ -770,7 +792,7 @@ angular
 
 
             function removeHeight(lista) {
-                $scope.finalHeight = angular.element(lista).height() - 172;
+                $scope.finalHeight = angular.element(lista).height() - 100;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
@@ -1068,6 +1090,42 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
 
+                } else {
+                    showWarningAndGoToTop();
+                }
+            };
+
+            $scope.validateTusIdeas = function() {alert("idas");
+
+                var validAnswers = 0;
+
+                for (var a = 0; a < $scope.misIdeas.length; a++) {
+                    var cont = $scope.misIdeas[a].length;
+
+                    if (cont > 0) {//Question with dreams
+
+                        //Check if dreams are not empty strings or spaces
+                        var countNotEmptyAnswers = 0;
+                        for (var b = 0; b < cont; b++) {
+
+                            //Correction for the '\n' reserved character
+                            $scope.misIdeas[a][b] = $scope.misIdeas[a][b].replace(/\r?\n|\r/g, " ").trim();
+
+                            if ($scope.misIdeas[a][b] !== '') {
+                                countNotEmptyAnswers++;
+                            }
+                        }
+
+                        if (countNotEmptyAnswers > 0) {
+                            validAnswers++;
+                        }
+                    }
+                }
+
+                if (validAnswers == 2) {
+                    $scope.showWarning = false;
+                    $scope.navigateToPage(2);
+                    $scope.scrollToTop();
                 } else {
                     showWarningAndGoToTop();
                 }
