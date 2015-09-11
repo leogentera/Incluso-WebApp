@@ -630,7 +630,7 @@ angular
 
                     if (activity.status != 0) {
                         activityFinished = true;
-                        if ($scope.activity_identifier == '1009' || $scope.activity_identifier == '1001') {
+                        if ($scope.activity_identifier == '1009' || $scope.activity_identifier == '1001' || $scope.activity_identifier == '2001') {
                             $scope.setReadOnly = true;
                         }
 
