@@ -201,7 +201,7 @@ angular
 
 
             $scope.cancel2 = function () {
-                var userCurrentStage = localStorage.getItem("userCurrentStage");alert(userCurrentStage);
+                var userCurrentStage = localStorage.getItem("userCurrentStage");
                 $location.path('/ZonaDeNavegacion/Dashboard/2');
             };
 
