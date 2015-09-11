@@ -2292,7 +2292,7 @@
                         }                        
                     }                    
                     .section-avatar {
-                        height: 57vh;
+                        height: 60vh;
                         background-image:url('@{url-images}/album/bg-album-avatar.gif'); 
                         background-size: 100%; 
                         figure {
@@ -2328,13 +2328,27 @@
                     }
             }
 
+            /////// page 2 ////////
             .section-what-ilike {
-                height: 25vh;
+                height: 27vh;
                 background-image:url('@{url-images}/album/bg-album-what-ilike.gif');
                 background-size: 100%;
-                 .container {
-                            padding: 6vh 0px 0px;                            
-                        }
+                &.bg-pink {
+                    height: 30vh;
+                    background-image:url('@{url-images}/album/bg-album-what-ilike-pink.gif');  
+                    color: #FFF; 
+                    .container{
+                         padding: 9vh 0px 0px;
+                        .list-group{
+                            .list-group-item {
+                                padding: 1vh 5vw
+                            }
+                        }      
+                    }             
+                }
+                .container {
+                    padding: 6vh 0px 0px;                            
+                }
             }
             .section-qualities {
                 height: 30vh;
@@ -2349,16 +2363,92 @@
                 background-image:url('@{url-images}/album/bg-album-what-drivesme.gif');
                 background-size: 100%;
                  .container {
-                            padding: 5.5vh 0px 0px;                            
+                        padding: 6vh 0px 0px;  
+                         .list-group{
+                        .list-group-item {
+                            padding: 1vh 5vw
                         }
+                    }                            
+                }
             }
             .section-dreams {
-                height: 30vh;
+                height: 32vh;
                 background-image:url('@{url-images}/album/bg-album-dreams.gif');
                 background-size: 100%;
                  .container {
-                            padding: 8vh 0px 0px;                            
+                            padding: 8.5vh 0px 0px;                            
                         }
+            }
+
+            /////// page 3 ////////
+            .section-future-plans {
+                height: 33vh;
+                background-image:url('@{url-images}/album/bg-album-future-plans.gif');
+                background-size: 100%;
+                 .container {
+                    padding: 9.5vh 0px 0px; 
+                    span {
+                        color: @clr-blueTurquoise;
+                    }                           
+                }
+            }
+            .section-goals {
+                height: 39vh;
+                background-image:url('@{url-images}/album/bg-album-goals.gif');
+                background-size: 100%;
+                 .container {
+                    padding: 7.5vh 0px 0px;  
+                     .list-group{
+                        .list-group-item {
+                            padding: 1vh 5vw
+                        }
+                    }                          
+                }
+            }
+            .section-now-iknow {
+                height: 32vh;
+                background-image:url('@{url-images}/album/bg-album-now-iknow.gif');
+                background-size: 100%;
+                 .container {
+                    padding: 9.5vh 0px 0px;                            
+                }
+            }
+            .section-project {
+                height: 30vh;
+                background-image:url('@{url-images}/album/bg-album-project.gif');
+                background-size: 100% 105%;
+                 .container {
+                    padding: 14vh 0px 0px; 
+                    .txt-renglon {
+                        width: 75%;
+                        max-height: 10vh;
+                        margin: 0px auto;
+                        padding: 0px;
+                        overflow: auto;
+                    }                           
+                }
+            }
+
+             /////// page 4 ////////
+            .section-participation {
+                height: 33vh;
+                background-image:url('@{url-images}/album/bg-album-participation.gif');
+                background-size: 100%;
+                 .container {
+                    padding: 9.5vh 0px 0px; 
+                    span {
+                        color: @clr-blueTurquoise;
+                    }                           
+                }
+            }
+            .section-next-time {
+                height: 33vh;
+                background-image:url('@{url-images}/album/bg-album-next-time.gif');
+                background-size: 100%;
+                 .container {
+                    padding: 9.5vh 0px 0px; 
+                    
+                }
             }
 
         }
