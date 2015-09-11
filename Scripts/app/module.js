@@ -327,7 +327,7 @@
             templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
-    
+
         $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
@@ -474,7 +474,140 @@
             controller: 'stageContentsController'
         });
 
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultiple/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultiple.html',
+            controller: 'stageGameRetoMultipleController'
+        });
 
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultipleExternalApp', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultipleExternalApp.html',
+            controller: 'stageGameRetoMultipleExternalAppController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultipleFichaDeResultados', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultipleFichaDeResultados.html',
+            controller: 'stageGameRetoMultipleResultsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
+            controller: 'stageForumCloseController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/PuntoDeEncuentro/Topicos/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/PuntoDeEncuentro/Topicos.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/PuntoDeEncuentro/Comentarios.html',
+            controller: 'stageForumCommentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/dashboard.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Topicos/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Topicos.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Comentarios/:moodleid/:discussionId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Comentarios.html',
+            controller: 'stageForumCommentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Topicos/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Topicos.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Comentarios/:moodleid/:discussionId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Comentarios.html',
+            controller: 'stageForumCommentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Conocete/MensajeDeCierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Conocete/MensajeDeCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/MisCualidades/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/MisCualidades.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/MisCualidades/Cierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/MisCualidadesCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/MisGustos/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/MisGustos.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/MisGustos/Cierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/MisGustosCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/Suena/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/Suena.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/Suena/Cierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/SuenaCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/PuntosDeEncuentro/Topicos/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/PuntosDeEncuentro/Topicos.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/PuntosDeEncuentro/Comentarios/:moodleid/:discussionId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/PuntosDeEncuentro/Comentarios.html',
+            controller: 'stageForumCommentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/MisSuenos/MensajeDeCierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/MisSuenos/MensajeDeCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/CabinaDeSoporte/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/CabinaDeSoporte.html',
+            controller: 'stageChatController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/CabinaDeSoporteCierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ExploracionFinal/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ExploracionFinal.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ExploracionFinalCierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ExploracionFinalCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Cierre/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Cierre.html',
+            controller: 'programaEndController'
+        });
 
         //Zona de aterrizaje
         $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId', {

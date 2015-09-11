@@ -15,10 +15,19 @@
             _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
+            $scope.stageProgress=0;
 
-            console.log('loading user');
-            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load profile from local storage
+            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
             $scope.user.profileimageurl = $scope.user.profileimageurl + "?rnd=" + new Date().getTime();
+
+            $scope.profile = moodleFactory.Services.GetCacheJson("profile"); //profile is not used in this page, it is only used for stars. 
+            if ($scope.profile && $scope.profile.stars) {
+                //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
+                //the entire application updates profile.stars.  The cached version of stars should be read from profile (if it exists)
+                $scope.user.stars = $scope.profile.stars;
+                $scope.profile = null;   //profile is not used in this page, it is only used for stars
+            }
+
             console.log("Scope user = " + JSON.stringify($scope.user));
 
             if (!_getItem("userId")) {
@@ -49,7 +58,9 @@
 
             $scope.logout = function(){
                 logout($http, $scope, $location);
-            };
+            };                    
+          
+
 
             $scope.navigateToStage = function(){
                 //Check if first time with course
@@ -113,6 +124,42 @@
                     }, errorCallback);
 
                 }, errorCallback);
+                
+                calculateTotalProgress();
+            }
+            
+            function calculateTotalProgress(){
+                var currentStage = 0;                
+                if (currentStage != null) {
+                    var usercourses = $scope.usercourse;
+                    
+                    var stageProgressBuffer = 0;
+                    var stageTotalActivities = 0; //Attainment of user in the current Stage
+                    var stageChallengesCount = usercourses.stages[currentStage].challenges.length;
+        
+                    var i, j,k;
+                    for (i = 0; i < stageChallengesCount; i++) {
+                        var challenge = usercourses.stages[currentStage].challenges[i];
+                        var challengeActivitiesCount = challenge.activities.length;
+                        for (j = 0; j < challengeActivitiesCount; j++) {
+                            var activity = challenge.activities[j];
+                            stageProgressBuffer += activity.status;
+                            stageTotalActivities++;
+                            /*if(activity.activities) {
+                                var subActivitiesCount = activity.activities.length;
+                                for (k = 0; k < subActivitiesCount; k++) {
+                                    var subActivity = activity.activities[k];
+                                    stageProgressBuffer += subActivity.status;
+                                    stageTotalActivities++;
+                                }
+                            }*/
+                        }
+                    }
+                    
+                    $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
+                }
+                else {                                        
+                }
             }
 
             function errorCallback(data){

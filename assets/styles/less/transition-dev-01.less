@@ -302,33 +302,37 @@ Parallel work file for UI Developer 01
 
                         > .panel-heading {
                             background: rgba(0, 0, 0, 0) radial-gradient(ellipse at center center , #1f2733 0%, #141921 100%) repeat scroll 0 0;
-                            border-radius: 1.5vw 1.5vw 0 0;
-                            padding: 2.5vw 4.6vw;
+                            .border-radius(1.5vw);
+                            padding: 2.5vw 9vw 2.5vw 13.6vw;
                             font-size: 5vw;
-                            line-height: 1.4;                        
+                            line-height: 1.4;
+                            position: relative;                      
 
                             .icon-wrong-join {                                        
                                 color: transparent;
                                 margin-right: 1.5vw; 
                                 margin-top: 2px;
-                                font-size: 7vw;                                    
+                                font-size: 7vw;
+                                position: absolute;
+                                left: 4.5vw;
                             }
 
                             .icon-wrong-join.active {                                        
                                 color: #ee4823;                                   
                             }
 
+                            .icon-arrow,
                             .icon-arrow-up {
-                                position: relative;
-                                top: 1vw;
-                            }
-                            
+                                position: absolute;
+                                right: 4.2vw;
+                                top: 41.5%;
+                            }                            
                         }
 
                         &.collapsed {
 
-                            > .panel-heading {
-                                .border-radius(1.5vw);
+                            > .panel-heading {                                
+                                border-radius: 1.5vw 1.5vw 0 0;
                             }
 
                         } 
@@ -347,16 +351,19 @@ Parallel work file for UI Developer 01
 
                                 li {
                                     padding: .2vw 0;
+                                    padding-left: 7.2vw;
 
                                     &:first-child, 
                                     &:last-child {
-                                        padding: 0;
+                                       
+                                        padding-bottom: 0;
                                     }                   
 
                                     &::before {
                                         font-size: 6vw;
                                         content: "•";
-                                        padding-right: 3.3vw;                        
+                                        padding-right: 3.3vw;
+                                        margin-left: -7.2vw;                     
                                     }
 
                                     &.failed {
@@ -370,7 +377,9 @@ Parallel work file for UI Developer 01
                                             font-size: 4vw;
                                             margin-left: -0.5vw;
                                             margin-top: 1.65vw;
-                                            padding-right: 2.6vw;                              
+                                            padding-right: 2.6vw;
+                                            position: absolute;
+                                            left: 9.5vw;                              
                                         }
                                     }                        
                                 }
@@ -393,6 +402,48 @@ Parallel work file for UI Developer 01
             margin: 0 5%;
         }
 
+        .wall {
+            section {
+                a.btn {
+                    width: 90%;
+                    margin: 0 5vw;
+
+                    &.btn-showmore {
+                        background-color: rgba(13, 15, 20, 0.5);
+                        color: #08b190;
+                        font-size: 4vw;
+                        padding: 4vw;
+                        text-align: left;
+
+                        span {
+                            font-size: 7vw;
+                            padding-right: 2vw;
+                            vertical-align: middle;
+                        }
+                    }
+
+                }
+            }
+
+            .reportModal {
+
+                .close {
+                    right: 15%;
+                }
+
+                .add {
+                    border: none;
+                    font-size: 145%;
+                    margin-right: 5%;
+                    margin-left: 5%;
+                }
+
+                .btn {
+                    width: 39%;
+                }
+            }
+        }
+
         .part {
             width: 90%;
             margin: 2vh 5%;
@@ -405,7 +456,7 @@ Parallel work file for UI Developer 01
                 }
 
                 div {
-                    max-width: 80%;
+                    min-width: 80%;
                     word-wrap: break-word;
 
                     span {
@@ -553,9 +604,7 @@ Parallel work file for UI Developer 01
 
         .wall {
 
-            .part {
-               
-                .vermas {}                
+            .part {                            
 
                 .social {
 
@@ -583,29 +632,7 @@ Parallel work file for UI Developer 01
                         }
                     }
                 }
-            }
-
-            section {
-                a {
-                    width: 90%;
-                    margin: 0 5vw;
-
-                    &.btn-showmore {
-                        background-color: rgba(13, 15, 20, 0.5);
-                        color: #08b190;
-                        font-size: 4vw;
-                        padding: 4vw;
-                        text-align: left;
-
-                        span {
-                            font-size: 7vw;
-                            padding-right: 2vw;
-                            vertical-align: middle;
-                        }
-                    }
-
-                }
-            }
+            }            
         }
     }
 
@@ -643,20 +670,37 @@ Parallel work file for UI Developer 01
 
     .award {
 
-        padding: 19% 0;
+        padding: 25% 0 10%;
 
         .green-border {
-            border: 1px solid #BBD231;
+            border: 2px solid #BBD231;
             margin: 0 5% 3%;
             .border-radius(1.5vw);
-            padding: 15% 6% 5%;
+            padding: 17% 6% 7%;
+            position: relative;
+
+            .logo {
+                background-image: url('@{url-images}/bg-notifications-sky.gif');                
+                background-position: 63% -74.7%;
+                background-size: auto auto;
+                left: 1%;
+                margin: 0 auto;
+                position: absolute;
+                right: 0;
+                top: -6.3%;
+                width: 89%;               
+            }
+
+            img.medalla {
+                margin: 2% auto -9%;
+            }
             
             .txt-renglon {
                 margin-right: 0;
                 margin-left: 0;
                 width: 100%;
                 font-weight: normal;
-                font-size: 120%;
+                font-size: 119%;
             }
 
             .subtitle {
@@ -692,19 +736,6 @@ Parallel work file for UI Developer 01
                     font-weight: bold;
                 }
             }
-        }
-
-        .distribuido {
-            margin: 0 5%;
-            width: 90%;
-
-            .icon-circle {
-                padding: 2.3vh 0 1.5vh;
-
-                .icomoon {
-                    font-size: 8.5vw;
-                }
-            }            
         }
 
     }
