@@ -111,7 +111,6 @@ angular
 
                 }
 
-                debugger;
 
                 console.log($scope.AnswersResult.answers); //This is an array that contains the encoded answers
 
@@ -148,11 +147,13 @@ angular
                 $scope.AnswersResult.answers[4].splice(index, 1);
             };
 
-            $scope.addSueno1 = function () {
-                addHeight("#listaDinamica1");
-                $scope.misSuenosAnswers[0].push("");
+            $scope.addSueno = function (pos) {
+                var listaId = pos + 1;
+                addHeight("#listaDinamica" + listaId);
+                $scope.misSuenosAnswers[pos].push("");
             };
 
+            /*
             $scope.addSueno2 = function () {
                 addHeight("#listaDinamica2");
                 $scope.misSuenosAnswers[1].push("");
@@ -162,12 +163,15 @@ angular
                 addHeight("#listaDinamica3");
                 $scope.misSuenosAnswers[2].push("");
             };
+            */
 
-            $scope.deleteSueno1 = function (index) {
-                removeHeight("#listaDinamica1");
-                $scope.misSuenosAnswers[0].splice(index, 1);
+            $scope.deleteSueno = function (index, pos) {
+                var listaId = pos + 1;
+                removeHeight("#listaDinamica" + listaId);
+                $scope.misSuenosAnswers[pos].splice(index, 1);
             };
 
+            /*
             $scope.deleteSueno2 = function (index) {
                 removeHeight("#listaDinamica2");
                 $scope.misSuenosAnswers[1].splice(index, 1);
@@ -177,6 +181,7 @@ angular
                 removeHeight("#listaDinamica3");
                 $scope.misSuenosAnswers[2].splice(index, 1);
             };
+            */
 
             $scope.addIdea1 = function () {
                 addHeight("#listaDinamica1");
@@ -385,6 +390,7 @@ angular
                                 var userAnswer = cleanText(userAnswers[indexUserAnswers]).trim();
                                 for (var index = 0; index < question.answers.length; index++) {
                                     var questionOption = cleanText(question.answers[index].answer).trim();
+                                    console.log(questionOption + " == " + userAnswer);
                                     if (questionOption == userAnswer) {
                                         $scope.AnswersResult.answers[1][index] = true;
                                     }
