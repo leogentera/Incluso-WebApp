@@ -14,7 +14,8 @@
                 </section>
                 <div id="owl" class="owl-carousel">
                     <div>
-                        <div class="txt-renglon txt-bigger">De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo
+                        <div class="txt-renglon txt-bigger">
+                            De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo
                             para el siguiente reto.
                         </div>
                         <section id='cualidades1' class="form txt-renglon txt-bigger part list">
@@ -38,26 +39,25 @@
                             <label for="q1r8">Ubicar lugares </label>
                             <input id="q1r9" type="checkbox" value="9" ng-model="misCualidadesAnswers[0][9]" ng-true-value="1" ng-false-value="0" />
                             <label for="q1r9">Memorizar</label>
-                            <input id="q1r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[0][10]" />
-                            <label for="q1r10">Hacer manualidades</label>
-                            <!--<input id="q1r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[0][11]" ng-click="addCaptureField('cualidades1', misCualidadesAnswers[0][11])"/>-->
-                            <input id="q1r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[0][11]"/>
+                            <input id="q1r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[0][10]" ng-true-value="1" ng-false-value="0" />
+                            <label for="q1r10">Hacer manualidades</label>                            
+                            <input id="q1r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[0][11]" ng-true-value="1" ng-false-value="0"
+                                   ng-change="misCualidadesOtroAnswers[0].answers[0] = misCualidadesAnswers[0][11]==0 ? '' : misCualidadesOtroAnswers[0].answers[0]" 
+                                   ng-click="addCaptureField('cualidades1', misCualidadesAnswers[0][11])"/>
                             <label for="q1r11">Otro</label>
-                            <!--<div class="form-group theme-form" ng-show="misCualidadesAnswers[0][11]">                            
+                            <div class="form-group theme-form" ng-show="misCualidadesAnswers[0][11]">
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
-                                    <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Cuál?">
-                                    </textarea>
+                                    <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Cuál?" ng-model="misCualidadesOtroAnswers[0].answers[0]"></textarea>
                                 </div>
-                            </div>-->
 
-
+                            </div>
                         </section>
-
                     </div>
 
                     <div>
-                        <div class="txt-renglon txt-bigger">De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo
+                        <div class="txt-renglon txt-bigger">
+                            De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo
                             para el siguiente reto.
                         </div>
                         <section id='cualidades2' class="form txt-renglon txt-bigger part list">
@@ -81,23 +81,24 @@
                             <label for="q2r8">Amistad</label>
                             <input id="q2r9" type="checkbox" value="9" ng-model="misCualidadesAnswers[1][9]" ng-true-value="1" ng-false-value="0" />
                             <label for="q2r9">Generosidad</label>
-                            <input id="q2r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[1][10]" />
-                            <label for="q2r10">Esfuerzo</label>
-                            <!--<input id="q2r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[1][11]" ng-click="addCaptureField('cualidades2', misCualidadesAnswers[1][11])"/>-->
-                            <input id="q2r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[1][11]"/>
+                            <input id="q2r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[1][10]" ng-true-value="1" ng-false-value="0" />
+                            <label for="q2r10">Esfuerzo</label>                            
+                            <input id="q2r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[1][11]" ng-true-value="1" ng-false-value="0"
+                                   ng-change="misCualidadesOtroAnswers[1].answers[0] = misCualidadesAnswers[1][11]==0 ? '' : misCualidadesOtroAnswers[1].answers[0]" 
+                                   ng-click="addCaptureField('cualidades2', misCualidadesAnswers[1][11])"/>
                             <label for="q2r11">Otro</label>
-                            <!--<div class="form-group theme-form" ng-show="misCualidadesAnswers[1][11]">                            
+                            <div class="form-group theme-form" ng-show="misCualidadesAnswers[1][11]">
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
-                                    <textarea id="textoarea2" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Cuál?">
-                                    </textarea>
+                                    <textarea id="textoarea2" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Cuál?" ng-model="misCualidadesOtroAnswers[1].answers[0]"></textarea>
                                 </div>
-                            </div>-->
+                            </div>
                         </section>
                     </div>
 
                     <div>
-                        <div class="txt-renglon txt-bigger">De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo
+                        <div class="txt-renglon txt-bigger">
+                            De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo
                             para el siguiente reto.
                         </div>
                         <section id='cualidades3' class="form txt-renglon txt-bigger part list">
@@ -122,17 +123,18 @@
                             <input id="q3r9" type="checkbox" value="9" ng-model="misCualidadesAnswers[2][9]" ng-true-value="1" ng-false-value="0" />
                             <label for="q3r9">Planeación</label>
                             <input id="q3r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[2][10]" ng-true-value="1" ng-false-value="0" />
-                            <label for="q3r10">Organización</label>
-                            <!--<input id="q3r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[2][11]" ng-click="addCaptureField('cualidades3', misCualidadesAnswers[2][11])"/>-->
-                            <input id="q3r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[2][11]" ng-true-value="1" ng-false-value="0" />
+                            <label for="q3r10">Organización</label>                            
+                            <input id="q3r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[2][11]" ng-true-value="1" ng-false-value="0"
+                                   ng-change="misCualidadesOtroAnswers[2].answers[0] = misCualidadesAnswers[2][11]==0 ? '' : misCualidadesOtroAnswers[2].answers[0]" 
+                                   ng-click="addCaptureField('cualidades3', misCualidadesAnswers[2][11])"/>
                             <label for="q3r11">Otro</label>
-                            <!--<div class="form-group theme-form" ng-show="misCualidadesAnswers[2][11]">                            
+                            <div class="form-group theme-form" ng-show="misCualidadesAnswers[2][11]">
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
-                                    <textarea id="textoarea3" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Cuál?">
-                                    </textarea>
+                                    <textarea id="textoarea3" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Cuál?" ng-model="misCualidadesOtroAnswers[2].answers[0]"></textarea>
                                 </div>
-                            </div>-->
+
+                            </div>
                         </section>
                     </div>
                 </div>
@@ -169,7 +171,8 @@
                     </section>
                     <section class="txt-renglon pill" ng-show="activityPoints > 0 && activity_status == 0">
                         <div class="pull-left">Estrellas ganadas:</div>
-                        <div class="pull-right sm-pill"><span class="pull-left">{{activityPoints}}</span><span class="icomoon icon-star pull-right"></span>
+                        <div class="pull-right sm-pill">
+                            <span class="pull-left">{{activityPoints}}</span><span class="icomoon icon-star pull-right"></span>
                         </div>
                     </section>
                     <section class="txt-renglon centered form">
