@@ -157,9 +157,9 @@ var _endActivity = function(activityModel, callback, currentChallenge){
         _createNotification(activityId, triggerActivity);              
       if (activityModel.activityType == "Quiz"){
           _endActivityCurrentChallenge = currentChallenge;
-          activityModel.answersResult.dateStart = activityModel.startingTime;
-          activityModel.answersResult.dateEnd = activityModel.endingTime;
-          activityModel.answersResult.others = activityModel.others;
+          //activityModel.answersResult.dateStart = activityModel.startingTime;
+          //activityModel.answersResult.dateEnd = activityModel.endingTime;
+          //activityModel.answersResult.others = activityModel.others;
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successQuizCallback, errorCallback);
       }
       else if(activityModel.activityType == "Assign")

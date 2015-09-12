@@ -146,6 +146,21 @@ angular
                     "activityType": "Quiz"
                 };
 
+                activityModel.answersResult.dateStart = activityModel.startingTime;
+                activityModel.answersResult.dateEnd = activityModel.endingTime;                
+
+                switch ($scope.activityname) {
+                    case "Exploración inicial":
+                        activityModel.answersResult.others = activityModel.others;
+                        break;
+                    case "Mis cualidades":
+                        activityModel.answersResult.others = activityModel.others;
+                        break;
+                    case "Mis gustos":
+                        activityModel.answersResult.others = activityModel.others;
+                        break;
+                }
+
                 _endActivity(activityModel, null, $scope.currentChallenge);
                 _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
                 _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);
