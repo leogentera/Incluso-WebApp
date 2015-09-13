@@ -25,15 +25,13 @@
                             <div class="tnf">
                                 <input id="tru" type="radio" name="vf"
                                        ng-model="AnswersResult.answers[0]"
-                                       value="0"
-                                       ng-click="show()"
+                                       value="0"                                       
                                        ng-disabled="setReadOnly"/>
                                 <label for="tru">Sí</label>
 
                                 <input id="fols" type="radio" name="vf"
                                        ng-model="AnswersResult.answers[0]"
-                                       value="1"
-                                       ng-click="show()"
+                                       value="1"                                       
                                        ng-disabled="setReadOnly"/>
                                 <label for="fols">No</label>
                             </div>
@@ -45,44 +43,34 @@
                         <div class="txt-renglon txt-bigger">2. ¿Qué de lo siguiente has intentado hacer para
                             lograrlo? Puedes elegir más de una.
                         </div>
-                        <section id='exploracion2' class="form txt-renglon txt-bigger part list" ng-click="show1()">
+                        <section id='exploracion2' class="form txt-renglon txt-bigger part list">
                             <input id="check1" type="checkbox" value="0" name="check"
-                                   ng-model="AnswersResult.answers[1][0]" ng-disabled="setReadOnly"/>
+                                   ng-model="AnswersResult.answers[1][0]"  ng-false-value="0" ng-disabled="setReadOnly"/>
                             <label for="check1">Pedir ayuda a alguien</label>
                             <input id="check2" type="checkbox" value="1" name="check"
-                                   ng-model="AnswersResult.answers[1][1]" ng-disabled="setReadOnly"/>
+                                   ng-model="AnswersResult.answers[1][1]" ng-true-value="1" ng-false-value="0" ng-disabled="setReadOnly"/>
                             <label for="check2">Investigar del tema</label>
                             <input id="check3" type="checkbox" value="2" name="check"
-                                   ng-model="AnswersResult.answers[1][2]" ng-disabled="setReadOnly"/>
+                                   ng-model="AnswersResult.answers[1][2]" ng-true-value="1" ng-false-value="0" ng-disabled="setReadOnly"/>
                             <label for="check3">Nada, porque parece imposible</label>
                             <input id="check4" type="checkbox" value="3" name="check"
-                                   ng-model="AnswersResult.answers[1][3]" ng-disabled="setReadOnly"
-                                   ng-click="showme()"/>
+                                   ng-model="AnswersResult.answers[1][3]" ng-true-value="1" ng-false-value="0" ng-disabled="setReadOnly"/>
                             <label for="check4">Trazar un plan de lo que necesito hacer</label>
-                            <input id="check5" type="checkbox" value="4" value="check1" name="check"
-                                   ng-model="AnswersResult.answers[1][4]"
+                            <input id="check5" type="checkbox" value="4" name="check"
+                                   ng-model="AnswersResult.answers[1][4]" ng-true-value="1" ng-false-value="0" 
                                    ng-click="addCaptureField('exploracion2', AnswersResult.answers[1][4])"
                                    ng-disabled="setReadOnly"/>
                             <label for="check5">Otro</label>
-                            <!--
                             <div class="form-group theme-form" ng-show="AnswersResult.answers[1][4]">
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
                                         <textarea id="" class="form-control form-control-lg theme-form" row="2"
                                                   name="opciones" placeholder="¿Qué has intentado?"
-                                                  ng-readonly="setReadOnly">
+                                                  ng-readonly="setReadOnly" ng-model="exploracionInicialOtroAnswer[0].answers[0]">
                                         </textarea>
-                                </div>
-                            </div>
-                            -->
-
-
-                            <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                            <label for="otros">Otros</label>-->
-                        </section>
-                        <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                          <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-                        </div>-->
+                                </div>                                                           
+                            </div>                            
+                        </section>                        
                     </div>
 
                     <!--Pregunta tipo Lista Dinámica-->
@@ -141,7 +129,7 @@
                     <!--Pregunta tipo Selección Simple-->
                     <div>
                         <div class="txt-renglon txt-bigger">4. ¿Sabes cuáles son tus habilidades?</div>
-                        <section class="form txt-renglon txt-bigger part list" ng-click="show()">
+                        <section class="form txt-renglon txt-bigger part list">
                             <input id="option1" type="radio" value="0" name="option"
                                    ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
                                     />

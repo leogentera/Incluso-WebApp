@@ -2,16 +2,16 @@
   <article class="blueprint forum">
     <section>
       <div class="txt-renglon centered txt-bigger"></div>
-      <div class="subtitle">{{discussion.discussion_name}}</div>
+      <div class="subtitle">{{discussion.name}}</div>
 
       <div class="txt-renglon txt-bigger" ng-bind-html="discussion.message | linky"></div>
     </section>
-    <section class="txt-renglon centered collapse-media" ng-show="(discussion.fileurl && (discussion.fileurl.length > 0))">
+    <section class="txt-renglon centered collapse-media" ng-show="(discussion.attachments.length == 1 && discussion.attachments[0].fileurl && (discussion.attachments[0].fileurl.length > 0))">
       <div class="panel">
         <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
           <h3>
             <span class="icomoon icon-camera"></span>
-        <span>{{ discussion.filename }}</span>
+        <span>{{discussion.attachments.length == 1 ? discussion.attachments[0].filename : "" }}</span>
             <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
             <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
           </h3>
@@ -19,7 +19,7 @@
         <div class="panel-body" collapse="isCollapsed">
           <div class="stage perform">
             <figure class="player">
-                <img src="{{ discussion.fileurl + '?token=' + userToken }}" alt="{{ discussion.filename }}" alt="discussion" />
+                <img src="{{ discussion.attachments[0].fileurl + '?token=' + userToken }}" alt="{{ discussion.attachments[0].filename }}" alt="discussion" />
             </figure>
           </div>
         </div>
@@ -75,7 +75,7 @@
       </div>
     </section>
     <section class="wall">
-      <div id="item{{$index}}" ng-repeat="p in discussion.posts[0].replies  | reverse">
+      <div id="item{{$index}}" ng-repeat="p in posts">
         <div class="part">
           <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>{{p.post_author}} <span>public&oacute;:</span>
@@ -92,14 +92,14 @@
             <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> j&oacute;venes les gusta esto
             </div>
           </div>
-          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost[p.post_id]">
+          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
             <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
               <div>{{r.post_author}} <span>coment&oacute;:</span>   <div>{{r.message}}</div>
               </div>
             </div>
           </div>
           
-          <div class="coment block" ng-show="(showAllCommentsByPost[p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+          <div class="coment block" ng-show="(showAllCommentsByPost['id' + p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
             <div class="vermas">
               <span class="icomoon icon-show-more"></span>
               Mostrar más comentarios...
@@ -134,8 +134,7 @@
       <section>
         <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
            <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
-        </a>          
-        <div class="txt-renglon" ng-show="!morePendingPosts">No se encontraron más posts</div>
+        </a>
       </section>
 
       <section>

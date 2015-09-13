@@ -156,7 +156,10 @@ var _endActivity = function(activityModel, callback, currentChallenge){
         //create notification
         _createNotification(activityId, triggerActivity);              
       if (activityModel.activityType == "Quiz"){
-        _endActivityCurrentChallenge = currentChallenge;        
+          _endActivityCurrentChallenge = currentChallenge;
+          //activityModel.answersResult.dateStart = activityModel.startingTime;
+          //activityModel.answersResult.dateEnd = activityModel.endingTime;
+          //activityModel.answersResult.others = activityModel.others;
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successQuizCallback, errorCallback);
       }
       else if(activityModel.activityType == "Assign")
@@ -638,6 +641,7 @@ var logout = function($scope, $location){
       localStorage.removeItem("activityStatus");
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
+      ClearLocalStorage("activityAnswers");      
       $location.path('/');
     };
       
