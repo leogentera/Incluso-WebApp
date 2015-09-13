@@ -278,7 +278,7 @@ angular
 
 
             try {
-              document.addEventListener("deviceready",  function() { alert("device ready"); cordova.exec(successGame, failureGame, "CallToAndroid", "setRetoMultipleCallback", [])}, false) 
+              document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setRetoMultipleCallback", [])}, false) 
             }
             catch (e) {
               successGame(
