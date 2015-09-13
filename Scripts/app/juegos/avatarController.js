@@ -73,7 +73,6 @@ angular
                 var ctx = c.getContext("2d");
                 var img = new Image();
                 img.onload = function() {
-                    alert('loading avatar');
                     c.width = this.width;
                     c.height = this.height;
                     ctx.drawImage(img, 0, 0);
