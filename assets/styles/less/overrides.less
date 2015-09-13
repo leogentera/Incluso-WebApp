@@ -484,7 +484,9 @@
 /* Step dashboard*/
 .incluso-app.step-dashboard {
     background:none;
-
+    .disabled {
+        color: rgba(128, 152, 160, 0.5);
+    }
     .navbar{     
         background-color: @clr-bluenav;
         border-color: @clr-bluenav;
@@ -933,7 +935,7 @@ section.part.inbloq{
                     padding: 6vw 5vw;
             }
         }
-        &#item0 {
+        &.active {
             .panel {
                 .panel-heading {                   
                     background: none!important;

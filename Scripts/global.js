@@ -112,10 +112,8 @@ var _setLocalStorageItem = function(key, value) {
         size = size + ((localStorage[x].length * 2)/1024);
       }
     }
-   console.log("localstorage contains:" + size.toFixed(2) + " Kb");
   }
   catch (e) {
-    console.log("localstorage error, clearing up storage");
     ClearLocalStorage("activity");
     ClearLocalStorage("activitiesCache");
     localStorage.setItem(key, value);
@@ -125,16 +123,8 @@ var _setLocalStorageItem = function(key, value) {
 var _setLocalStorageJsonItem = function(key, object) {
   try {
     localStorage.setItem(key, JSON.stringify(object));
-    var size = 0;
-    for(var x in localStorage) {
-      if (localStorage[x].length) {
-        size = size + ((localStorage[x].length * 2)/1024);
-      }
-    }
-   console.log("localstorage contains:" + size.toFixed(2) + " Kb");
   }
   catch (e) {
-    console.log("localstorage error, clearing up storage");
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
     localStorage.setItem(key, JSON.stringify(object));
@@ -147,7 +137,7 @@ function syncCacheData (){
 
 //Update activity status for activity blocking binding
 var updateActivityStatusDictionary = function(activityId){
-    var activityStatus = moodleFactory.Services.GetCacheObject("activityStatus");
+    var activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
     if(activityStatus){
         activityStatus[activityId] = 1;
     }
@@ -166,7 +156,10 @@ var _endActivity = function(activityModel, callback, currentChallenge){
         //create notification
         _createNotification(activityId, triggerActivity);              
       if (activityModel.activityType == "Quiz"){
-        _endActivityCurrentChallenge = currentChallenge;        
+          _endActivityCurrentChallenge = currentChallenge;
+          //activityModel.answersResult.dateStart = activityModel.startingTime;
+          //activityModel.answersResult.dateEnd = activityModel.endingTime;
+          //activityModel.answersResult.others = activityModel.others;
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successQuizCallback, errorCallback);
       }
       else if(activityModel.activityType == "Assign")
@@ -449,7 +442,6 @@ function updateSubActivityStatus(coursemoduleid) {
 
  function updateActivityStatus(activity_identifier) {
                 //Update activity status for activity blocking binding
-                updateActivityStatusDictionary(activity_identifier);
                 //Update activity status in usercourse
                 var breakAll = false;
                 var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
@@ -461,6 +453,7 @@ function updateSubActivityStatus(coursemoduleid) {
                             var activity = challenge.activities[activityIndex];
                             if (activity.activity_identifier == activity_identifier) {
                                 activity.status = 1;
+                                updateActivityStatusDictionary(activity.coursemoduleid);
                                 breakAll = true;
                                 break;
                             }
@@ -645,8 +638,10 @@ var logout = function($scope, $location){
       localStorage.removeItem("notifications");
       localStorage.removeItem("userChat");
       localStorage.removeItem("leaderboard");
+      localStorage.removeItem("activityStatus");
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
+      ClearLocalStorage("activityAnswers");      
       $location.path('/');
     };
       
@@ -1059,4 +1054,3 @@ document.addEventListener("deviceready", onDeviceReady, false);
             //
             function onBackKeyDown() {
             }
-
