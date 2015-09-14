@@ -83,6 +83,7 @@ angular
 
             //Models for Quizzes - Stage #3
             $scope.exploracionInicialStage3 = [null, [0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0]];
+            $scope.exploracionFinalStage3 = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0, 0], null, [0, 0, 0, 0]];
 
             $scope.showme = function() {
                 console.log($scope.exploracionFinalStage2);
