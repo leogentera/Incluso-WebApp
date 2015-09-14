@@ -563,6 +563,16 @@
             controller: 'stageDashboardController'
         });
 
+        $routeProvider.when('/ZonaDeAterrizaje/ExploracionInicial/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/ExploracionInicial.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/ExploracionFinal/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/ExploracionFinal.html',
+            controller: 'stageQuizController'
+        });
+
         $routeProvider.otherwise({
         	redirectTo: '/'
         });
