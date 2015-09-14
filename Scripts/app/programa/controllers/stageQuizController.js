@@ -1152,9 +1152,64 @@ angular
 
             $scope.validateTuFuturo = function() {
 
-                var validAnswers = 0;
-                var num = $scope.miFuturo.length;
+                //var validAnswers = 0;
+                var quizIsValid = true;
+                var numOfValidAnswers = [0, 0, 0];
+                var num = $scope.miFuturo.length; //It is equal to 3
+                var someNonAnswered = false;
+                var i, b;
 
+                //First, delete repeated and null answers from i-th question...
+                for (i = 0; i < num; i++) {
+                    console.log("Before: " + $scope.miFuturo[i]);
+                    $scope.miFuturo[i] = $scope.miFuturo[i].filter(function (item, pos) {
+                        return item.trim().length > 0 && $scope.miFuturo[i].indexOf(item) == pos;
+                    });
+
+                    console.log("After: " + $scope.miFuturo[i]);
+
+                    //...and check that each quiz has remaining answers...
+                    var numStrings = $scope.miFuturo[i].length;
+
+                    if (numStrings == 0) {
+                        someNonAnswered = true;
+                    }
+                    console.log(someNonAnswered);
+                }
+
+                //...and that those answers are non-null strings.
+                if (!someNonAnswered) {
+                    for (i = 0; i < num; i++) {
+
+                        for (b = 0; b < $scope.miFuturo[i].length; b++) {
+                            //Correction for the '\n' reserved character
+                            $scope.miFuturo[i][b] = $scope.miFuturo[i][b].replace(/\r?\n|\r/g, " ");
+
+                            if ($scope.miFuturo[i][b] !== "" && $scope.miFuturo[i][b] !== "Qué haré") {
+                                numOfValidAnswers[i]++; //This is a valid answer for this Question
+                            }
+                        }
+                    }
+
+                    //Chek for some non answered question.
+                    for (i = 0; i < num; i++) {
+                        if (numOfValidAnswers[i] == 0) {
+                            quizIsValid = false; //The i-th question was not properly answered
+                        }
+                    }
+                } else {
+                    quizIsValid = false;  //The i-th question was left blank
+                }
+
+                if (quizIsValid) {
+                    $scope.showWarning = false;
+                    $scope.navigateToPage(2);
+                    $scope.scrollToTop();
+                } else {
+                    showWarningAndGoToTop();
+                }
+
+                /*
                 for (var a = 0; a < num; a++) {
                     var cont = $scope.miFuturo[a].length;
 
@@ -1178,6 +1233,7 @@ angular
                     }
                 }
 
+
                 if (validAnswers == num) {
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
@@ -1185,6 +1241,7 @@ angular
                 } else {
                     showWarningAndGoToTop();
                 }
+                 */
             };
 
 
