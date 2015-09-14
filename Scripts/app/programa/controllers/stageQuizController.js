@@ -52,6 +52,9 @@ angular
             $scope.miFuturo = [[], [], []];
             $scope.exploracionFinalStage2 = [null, [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
 
+            //Models for Quizzes - Stage #3
+            $scope.exploracionInicialStage3 = [null, [0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0]];
+
             $scope.showme = function() {
                 console.log($scope.exploracionFinalStage2);
             };
@@ -1350,6 +1353,48 @@ angular
 
                  */
 
+            };
+
+            $scope.validateExploracionInicialStage3 = function () {
+                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+
+                var cont = $scope.exploracionInicialStage3.length;  //It should be equal to 4: Four questions.
+                var quizIsValid = true;
+
+                //Check if first (yes/no) question was answered
+                if ($scope.exploracionInicialStage3[0]) {
+
+                    //Check if second (multiple choice) question was answered
+                    if ($scope.exploracionInicialStage3[1].indexOf(true) > -1) {
+
+                        //Check if third (multiple choice) question was answered
+                        if ($scope.exploracionInicialStage3[2].indexOf(true) > -1) {
+
+                            //Check if fourth (multiple choice) question was answered
+                            if (!($scope.exploracionInicialStage3[3].indexOf(true) > -1)) {
+                                quizIsValid = false;
+                            }
+
+                        } else {
+                            quizIsValid = false;
+                        }
+
+                    } else {
+                        quizIsValid = false;
+                    }
+
+                } else {
+                    quizIsValid = false;
+                }
+                console.log(quizIsValid);
+
+                if (quizIsValid) {
+                    $scope.showWarning = false;
+                    $scope.navigateToPage(2);
+                    $scope.scrollToTop();
+                } else {
+                    showWarningAndGoToTop();
+                }
             };
 
 
