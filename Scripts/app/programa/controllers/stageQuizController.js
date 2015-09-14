@@ -1161,12 +1161,9 @@ angular
 
                 //First, delete repeated and null answers from i-th question...
                 for (i = 0; i < num; i++) {
-                    console.log("Before: " + $scope.miFuturo[i]);
                     $scope.miFuturo[i] = $scope.miFuturo[i].filter(function (item, pos) {
                         return item.trim().length > 0 && $scope.miFuturo[i].indexOf(item) == pos;
                     });
-
-                    console.log("After: " + $scope.miFuturo[i]);
 
                     //...and check that each quiz has remaining answers...
                     var numStrings = $scope.miFuturo[i].length;
@@ -1174,7 +1171,6 @@ angular
                     if (numStrings == 0) {
                         someNonAnswered = true;
                     }
-                    console.log(someNonAnswered);
                 }
 
                 //...and that those answers are non-null strings.
@@ -1208,40 +1204,6 @@ angular
                 } else {
                     showWarningAndGoToTop();
                 }
-
-                /*
-                for (var a = 0; a < num; a++) {
-                    var cont = $scope.miFuturo[a].length;
-
-                    if (cont > 0) {//Question with dreams
-
-                        //Check if dreams are not empty strings or spaces
-                        var countNotEmptyAnswers = 0;
-                        for (var b = 0; b < cont; b++) {
-
-                            //Correction for the '\n' reserved character
-                            $scope.miFuturo[a][b] = $scope.miFuturo[a][b].replace(/\r?\n|\r/g, " ").trim();
-
-                            if ($scope.miFuturo[a][b] !== '') {
-                                countNotEmptyAnswers++;
-                            }
-                        }
-
-                        if (countNotEmptyAnswers > 0) {
-                            validAnswers++;
-                        }
-                    }
-                }
-
-
-                if (validAnswers == num) {
-                    $scope.showWarning = false;
-                    $scope.navigateToPage(2);
-                    $scope.scrollToTop();
-                } else {
-                    showWarningAndGoToTop();
-                }
-                 */
             };
 
 
