@@ -480,20 +480,6 @@
             controller: 'stageContentsController'
         });
 
-        //$routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultiple/:moodleid', {
-        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultiple.html',
-        //    controller: 'stageGameRetoMultipleController'
-        //});
-
-        //$routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultipleExternalApp', {
-        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultipleExternalApp.html',
-        //    controller: 'stageGameRetoMultipleExternalAppController'
-        //});
-
-        //$routeProvider.when('/ZonaDeNavegacion/Conocete/RetoMultipleFichaDeResultados', {
-        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/RetoMultipleFichaDeResultados.html',
-        //    controller: 'stageGameRetoMultipleResultsController'
-        //});
 //**********************************************************************************************************
         $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
@@ -509,36 +495,6 @@
             templateUrl: 'Templates/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
-
-        //$routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/:moodleid', {
-        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/dashboard.html',
-        //    controller: 'stageForumController'
-        //});
-
-        //$routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Topicos/:moodleid', {
-        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Topicos.html',
-        //    controller: 'stageForumController'
-        //});
-        //
-        //$routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Comentarios/:moodleid/:discussionId', {
-        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Logicos/Comentarios.html',
-        //    controller: 'stageForumCommentsController'
-        //});
-        //
-        //$routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Topicos/:moodleid', {
-        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Topicos.html',
-        //    controller: 'stageForumController'
-        //});
-        //
-        //$routeProvider.when('/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Comentarios/:moodleid/:discussionId', {
-        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/ZonaDeContacto/Artisticos/Comentarios.html',
-        //    controller: 'stageForumCommentsController'
-        //});
-
-        //$routeProvider.when('/ZonaDeNavegacion/Conocete/MensajeDeCierre', {
-        //    templateUrl: 'Templates/ZonaDeNavegacion/Conocete/MensajeDeCierre.html',
-        //    controller: 'stageMessageController'
-        //});
 
         $routeProvider.when('/ZonaDeNavegacion/TuElijes/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/FuenteDeEnergia.html',
@@ -578,7 +534,7 @@
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
-        
+
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/MensajeDeCierre', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/MensajeDeCierre.html',
