@@ -252,6 +252,12 @@ angular
                 $location.path('/ZonaDeNavegacion/Dashboard/2/1');
             };
 
+
+            $scope.cancel3 = function () {
+                var userCurrentStage = localStorage.getItem("userCurrentStage");
+                $location.path('/ZonaDeNavegacion/Dashboard/3/1');
+            };
+
             $scope.validateAnsweredQuestions = function () {
 
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
