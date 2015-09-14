@@ -32,7 +32,7 @@
                                             <div class="clearfix">
                                                 <span>Ideas {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                   ng-click="deleteIdea1($index)">
+                                                   ng-click="deleteIdea($index, 0)">
                                                     <span class="icomoon icon-cross white"></span></i>
                                                 </a>
                                             </div>
@@ -52,7 +52,7 @@
                             </ul>
 
                             <div class="txt-renglon">
-                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addIdea1();">
+                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addIdea(0)">
                                     <span class="icomoon icon-plus"></span>Agregar nueva idea...
                                 </a>
                             </div>
@@ -72,7 +72,7 @@
                                             <div class="clearfix">
                                                 <span>Ideas {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                   ng-click="deleteIdea2($index)">
+                                                   ng-click="deleteIdea($index, 1)">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
@@ -92,7 +92,7 @@
                             </ul>
 
                             <div class="txt-renglon">
-                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addIdea2();">
+                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addIdea(1);">
                                     <span class="icomoon icon-plus"></span>Agregar nueva idea...
                                 </a>
                             </div>

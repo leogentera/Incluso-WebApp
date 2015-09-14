@@ -111,8 +111,6 @@ angular
 
                 }
 
-                debugger;
-
                 console.log($scope.AnswersResult.answers); //This is an array that contains the encoded answers
 
                 //Update local storage and activities status array
@@ -148,11 +146,13 @@ angular
                 $scope.AnswersResult.answers[4].splice(index, 1);
             };
 
-            $scope.addSueno1 = function () {
-                addHeight("#listaDinamica1");
-                $scope.misSuenosAnswers[0].push("");
+            $scope.addSueno = function (pos) {
+                var listaId = pos + 1;
+                addHeight("#listaDinamica" + listaId);
+                $scope.misSuenosAnswers[pos].push("");
             };
 
+            /*
             $scope.addSueno2 = function () {
                 addHeight("#listaDinamica2");
                 $scope.misSuenosAnswers[1].push("");
@@ -162,12 +162,15 @@ angular
                 addHeight("#listaDinamica3");
                 $scope.misSuenosAnswers[2].push("");
             };
+            */
 
-            $scope.deleteSueno1 = function (index) {
-                removeHeight("#listaDinamica1");
-                $scope.misSuenosAnswers[0].splice(index, 1);
+            $scope.deleteSueno = function (index, pos) {
+                var listaId = pos + 1;
+                removeHeight("#listaDinamica" + listaId);
+                $scope.misSuenosAnswers[pos].splice(index, 1);
             };
 
+            /*
             $scope.deleteSueno2 = function (index) {
                 removeHeight("#listaDinamica2");
                 $scope.misSuenosAnswers[1].splice(index, 1);
@@ -177,26 +180,32 @@ angular
                 removeHeight("#listaDinamica3");
                 $scope.misSuenosAnswers[2].splice(index, 1);
             };
+            */
 
-            $scope.addIdea1 = function () {
-                addHeight("#listaDinamica1");
-                $scope.misIdeas[0].push("");
+            $scope.addIdea = function (pos) {
+                var listaId = pos + 1;
+                addHeight("#listaDinamica" + listaId);
+                $scope.misIdeas[pos].push("");
             };
 
+            /*
             $scope.addIdea2 = function () {
                 addHeight("#listaDinamica2");
                 $scope.misIdeas[1].push("");
             };
+            */
 
-            $scope.deleteIdea1 = function (index) {
-                removeHeight("#listaDinamica1");
-                $scope.misIdeas[0].splice(index, 1);
+            $scope.deleteIdea = function (index,  pos) {
+                var listaId = pos + 1;
+                removeHeight("#listaDinamica" + listaId);
+                $scope.misIdeas[pos].splice(index, 1);
             };
-
+            /*
             $scope.deleteIdea2 = function (index) {
                 removeHeight("#listaDinamica2");
                 $scope.misIdeas[1].splice(index, 1);
             };
+            */
 
             $scope.addPerson = function () {
                 addHeight("#listaDinamica4");
@@ -225,10 +234,11 @@ angular
             $scope.hideWarning = function () {
                 $scope.showWarning = false;
             };
-
+            /* invoked in suana.html
             $scope.hideWarning2 = function () {
                 $scope.showWarning = false;
             };
+            */
 
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
@@ -385,6 +395,7 @@ angular
                                 var userAnswer = cleanText(userAnswers[indexUserAnswers]).trim();
                                 for (var index = 0; index < question.answers.length; index++) {
                                     var questionOption = cleanText(question.answers[index].answer).trim();
+                                    console.log(questionOption + " == " + userAnswer);
                                     if (questionOption == userAnswer) {
                                         $scope.AnswersResult.answers[1][index] = true;
                                     }
@@ -750,9 +761,7 @@ angular
                     }
                     _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
                     //$scope.$emit('HidePreloader');
-                }
-
-                else {
+                } else {
                     $scope.showWarning = true;
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
                 }
@@ -795,7 +804,7 @@ angular
             }
 
             function addHeight2(lista) {
-                $scope.finalHeight = angular.element('.owl-wrapper-outer').height() + 120;
+                $scope.finalHeight = angular.element('.owl-wrapper-outer').height() + 100;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
@@ -806,7 +815,7 @@ angular
 
 
             function removeHeight(lista) {
-                $scope.finalHeight = angular.element(lista).height() - 100;
+                $scope.finalHeight = angular.element(lista).height() - 177;
                 angular.element("div.owl-wrapper-outer").css('height', $scope.finalHeight);
             }
 
@@ -1147,7 +1156,7 @@ angular
             };
 
 
-            scope.validateTuFuturo = function() {
+            $scope.validateTuFuturo = function() {
 
                 var validAnswers = 0;
                 var num = $scope.miFuturo.length;
