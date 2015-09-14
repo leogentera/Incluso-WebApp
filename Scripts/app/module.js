@@ -7,6 +7,7 @@
         'ui.bootstrap.tpls',
         'inlcuso.shared.mainNavigation',
         'incluso.home',
+        //TODO remover todas las referencias a esta libreria
         'naif.base64',
         // One module per controller. If we wanted to use one module for several controllers we would need to load dependencies of
         // one controller for all controllers in the module, and we would also need a variable to keep track of the modules:
@@ -87,7 +88,7 @@
         $http.get('Templates/ZonaDeVuelo/ExploracionInicial.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html', { cache: $templateCache });  
+        //$http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultiple.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleExternalApp.html', { cache: $templateCache });  
@@ -99,7 +100,7 @@
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html', { cache: $templateCache });  
+        //$http.get('Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html', { cache: $templateCache });  
@@ -109,7 +110,7 @@
         $http.get('Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html', { cache: $templateCache });  
+        //$http.get('Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/CabinaDeSoporte.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
@@ -298,10 +299,10 @@
             controller: 'stageContentsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre', { 
-            templateUrl: 'Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html',
-            controller: 'stageMessageController'
-        });
+        //$routeProvider.when('/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre', {
+        //    templateUrl: 'Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html',
+        //    controller: 'stageMessageController'
+        //});
     
         $routeProvider.when('/ZonaDeVuelo/Conocete/FuenteDeEnergia/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html',
@@ -363,10 +364,10 @@
             controller: 'stageForumCommentsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/MensajeDeCierre', { 
-            templateUrl: 'Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html',
-            controller: 'stageMessageController'
-        });
+        //$routeProvider.when('/ZonaDeVuelo/Conocete/MensajeDeCierre', {
+        //    templateUrl: 'Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html',
+        //    controller: 'stageMessageController'
+        //});
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html',
@@ -377,7 +378,7 @@
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html',
             controller: 'stageQuizController'
         });
-    
+        //TODO Checar este tipo de cierre
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/Cierre', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html',
             controller: 'stageMessageController'
@@ -387,7 +388,7 @@
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustos.html',
             controller: 'stageQuizController'
         });
-    
+        //TODO Checar este tipo de cierre
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/Cierre', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html',
             controller: 'stageMessageController'
@@ -397,7 +398,7 @@
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/Suena.html',
             controller: 'stageQuizController'
         });
-    
+        //TODO Checar este tipo de cierre
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/Cierre', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html',
             controller: 'stageMessageController'
@@ -412,7 +413,7 @@
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
-    
+        //TODO Checar este tipo de cierre
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MensajeDeCierre', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html',
             controller: 'stageMessageController'
@@ -422,7 +423,7 @@
             templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporte.html',
             controller: 'stageChatController'
         });
-    
+        //TODO Checar este tipo de cierre
         $routeProvider.when('/ZonaDeVuelo/CabinaDeSoporteCierre', { 
             templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html',
             controller: 'stageMessageController'
@@ -432,44 +433,40 @@
             templateUrl: 'Templates/ZonaDeVuelo/ExploracionFinal.html',
             controller: 'stageQuizController'
         });
-    
+        //TODO Checar este tipo de cierre
         $routeProvider.when('/ZonaDeVuelo/ExploracionFinalCierre', { 
             templateUrl: 'Templates/ZonaDeVuelo/ExploracionFinalCierre.html',
             controller: 'stageMessageController'
         });
-    
+        //TODO Checar este tipo de cierre
         $routeProvider.when('/ZonaDeVuelo/Cierre/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Cierre.html',
             controller: 'programaEndController'
         });
 
         //Zona de navegacion
-        $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId', {
+        //TODO Change zona de vuelo route to dashboard, there's a typo and refactor dashboard controller, the typo is there too
+        //Done
+        $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
             controller: 'stageDashboardController'
         });
-
+        //Done
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicial.html',
             controller: 'stageQuizController'
         });
-
+        //Done
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicialCierre', {
             templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicialCierre.html',
             controller: 'stageQuizController'
         });
-
+        //Done
         $routeProvider.when('/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia.html',
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/CuartoDeRecursos/MensajeDeCierre', {
-            templateUrl: 'Templates/ZonaDeNavegacion/CuartoDeRecursos/MensajeDeCierre.html',
-            controller: 'stageMessageController'
-        });
-
-        //Tus Ideas /ZonaDeNavegacion/Transformate/TusIdeas/
         $routeProvider.when('/ZonaDeNavegacion/Transformate/TusIdeas/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeNavegacion/TusIdeas.html',
             controller: 'stageQuizController'
@@ -479,6 +476,7 @@
             templateUrl: 'Templates/ZonaDeNavegacion/Transformate/FuenteDeEnergia.html',
             controller: 'stageContentsController'
         });
+
 
 //**********************************************************************************************************
         $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:moodleid', {
@@ -507,6 +505,8 @@
             controller: 'stageQuizController'
         });
 
+
+
         // ISSUE Agregar plantilla al directorio, definir controlador
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia.html',
@@ -534,13 +534,6 @@
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
-
-
-        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/MensajeDeCierre', {
-            templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/MensajeDeCierre.html',
-            controller: 'stageMessageController'
-        });
-        //**********************************************************************************
 
         $routeProvider.when('/ZonaDeNavegacion/CabinaDeSoporte/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/CabinaDeSoporte.html',
