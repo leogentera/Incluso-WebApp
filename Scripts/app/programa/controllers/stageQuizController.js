@@ -249,7 +249,7 @@ angular
 
             $scope.cancel2 = function () {
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
-                $location.path('/ZonaDeNavegacion/Dashboard/2');
+                $location.path('/ZonaDeNavegacion/Dashboard/2/1');
             };
 
             $scope.validateAnsweredQuestions = function () {
