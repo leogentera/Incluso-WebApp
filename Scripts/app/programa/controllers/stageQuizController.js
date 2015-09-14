@@ -255,12 +255,6 @@ angular
                 $location.path('/ZonaDeNavegacion/Dashboard/2');
             };
 
-
-            $scope.showme = function () {
-                console.log($scope.AnswersResult.answers[1]);
-            };
-
-
             $scope.validateAnsweredQuestions = function () {
 
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
