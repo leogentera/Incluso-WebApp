@@ -26,7 +26,6 @@
         'incluso.programa.comunidad',
         'incluso.programa.reconocimiento',
         'incluso.programa.album',
-
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
         'incluso.stage.forumcontroller',
@@ -79,7 +78,7 @@
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
         $http.get('Templates/Programa/Dashboard.html', { cache: $templateCache });  
-        $http.get('Templates/Chat/index.html', { cache: $templateCache });  
+        $http.get('Templates/Chat/index.html', { cache: $templateCache });
 
         $http.get('Templates/Leaderboard/index.html', { cache: $templateCache });          
         $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: $templateCache });  
@@ -498,7 +497,7 @@
         });
 
         // ISSUE No hay plantilla, definir controlador
-        $routeProvider.when('/ZonaDeNavegacion/TuElijes/', {
+        $routeProvider.when('/ZonaDeNavegacion/TuElijes/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuElijes.html',
             controller: 'stageQuizController'
         });
