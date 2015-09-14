@@ -30,6 +30,7 @@ angular
             $scope.coursemoduleid = 0;
             $scope.like_status = 1;
 
+            //Models for Quizzes - Stage #1
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial"
                 "userid": 0,
                 "answers": [null, [0, 0, 0, 0, 0], [], null, []],
@@ -37,17 +38,23 @@ angular
                 "like_status": 0
             };
 
+            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+            $scope.misSuenosAnswers = [[], [], []];
+            $scope.exploracionFinal = ['', '', '', '', ''];
+
+            //Models for Quizzes - Stage #2
             $scope.AnswersResultStage2 = {
                 "answers": [null, null, null, [0, 0, 0, 0, 0]]
             };
 
             $scope.misIdeas = [[], []];
             $scope.miFuturo = [[], [], []];
+            $scope.exploracionFinalStage2 = [null, [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
 
-            $scope.misCualidadesAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-            $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
-            $scope.misSuenosAnswers = [[], [], []];
-            $scope.exploracionFinal = ['', '', '', '', ''];
+            $scope.showme = function() {
+                console.log($scope.exploracionFinalStage2);
+            };
 
             $scope.addCaptureField = function (elem, value) {
                 if (value) {
@@ -55,15 +62,6 @@ angular
                 } else {
                     reduceHeight(elem);
                 }
-            };
-
-            $scope.show = function () {
-                console.log($scope.AnswersResult.answers[0]);
-                console.log($scope.AnswersResult.answers);
-            };
-
-            $scope.show1 = function () {
-                console.log($scope.AnswersResult.answers[1]);
             };
 
             $scope.isDisabled = false;
@@ -111,7 +109,7 @@ angular
 
                 }
 
-                console.log($scope.AnswersResult.answers); //This is an array that contains the encoded answers
+                console.log("Answers to send: " + $scope.AnswersResult.answers); //This is an array that contains the encoded answers
 
                 //Update local storage and activities status array
                 _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
@@ -210,7 +208,6 @@ angular
             $scope.addPerson = function () {
                 addHeight("#listaDinamica4");
                 $scope.AnswersResult.answers[2].push("");
-                console.log($scope.AnswersResult.answers[2]);
             };
 
             $scope.deletePerson = function (index) {
@@ -907,8 +904,9 @@ angular
                     }
                     */
                 }
-                console.log(validatedAnswers);
-                console.log(validateOther);
+
+                //console.log(validatedAnswers);
+                //console.log(validateOther);
 
                 if (validatedAnswers[0] > 0 &&
                     validatedAnswers[1] > 0 &&
@@ -1095,8 +1093,8 @@ angular
 
                 //Validación de la opción "Otro"
 
-                console.log(validatedAnswers);
-                console.log(validateOther);
+                //console.log(validatedAnswers);
+                //console.log(validateOther);
 
                 if (validatedAnswers > 0 &&
                     validateOther[0] != -1 &&
