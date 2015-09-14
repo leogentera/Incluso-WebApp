@@ -255,12 +255,6 @@ angular
                 $location.path('/ZonaDeNavegacion/Dashboard/2');
             };
 
-
-            $scope.showme = function () {
-                console.log($scope.AnswersResult.answers[1]);
-            };
-
-
             $scope.validateAnsweredQuestions = function () {
 
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
@@ -1158,33 +1152,52 @@ angular
 
             $scope.validateTuFuturo = function() {
 
-                var validAnswers = 0;
-                var num = $scope.miFuturo.length;
+                //var validAnswers = 0;
+                var quizIsValid = true;
+                var numOfValidAnswers = [0, 0, 0];
+                var num = $scope.miFuturo.length; //It is equal to 3
+                var someNonAnswered = false;
+                var i, b;
 
-                for (var a = 0; a < num; a++) {
-                    var cont = $scope.miFuturo[a].length;
+                //First, delete repeated and null answers from i-th question...
+                for (i = 0; i < num; i++) {
+                    $scope.miFuturo[i] = $scope.miFuturo[i].filter(function (item, pos) {
+                        return item.trim().length > 0 && $scope.miFuturo[i].indexOf(item) == pos;
+                    });
 
-                    if (cont > 0) {//Question with dreams
+                    //...and check that each quiz has remaining answers...
+                    var numStrings = $scope.miFuturo[i].length;
 
-                        //Check if dreams are not empty strings or spaces
-                        var countNotEmptyAnswers = 0;
-                        for (var b = 0; b < cont; b++) {
-
-                            //Correction for the '\n' reserved character
-                            $scope.miFuturo[a][b] = $scope.miFuturo[a][b].replace(/\r?\n|\r/g, " ").trim();
-
-                            if ($scope.miFuturo[a][b] !== '') {
-                                countNotEmptyAnswers++;
-                            }
-                        }
-
-                        if (countNotEmptyAnswers > 0) {
-                            validAnswers++;
-                        }
+                    if (numStrings == 0) {
+                        someNonAnswered = true;
                     }
                 }
 
-                if (validAnswers == num) {
+                //...and that those answers are non-null strings.
+                if (!someNonAnswered) {
+                    for (i = 0; i < num; i++) {
+
+                        for (b = 0; b < $scope.miFuturo[i].length; b++) {
+                            //Correction for the '\n' reserved character
+                            $scope.miFuturo[i][b] = $scope.miFuturo[i][b].replace(/\r?\n|\r/g, " ");
+
+                            if ($scope.miFuturo[i][b] !== "" && $scope.miFuturo[i][b] !== "Qué haré") {
+                                numOfValidAnswers[i]++; //This is a valid answer for this Question
+                            }
+                        }
+                    }
+
+                    //Chek for some non answered question.
+                    for (i = 0; i < num; i++) {
+                        if (numOfValidAnswers[i] == 0) {
+                            quizIsValid = false; //The i-th question was not properly answered
+                        }
+                    }
+                } else {
+                    quizIsValid = false;  //The i-th question was left blank
+                }
+
+                if (quizIsValid) {
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
