@@ -7,8 +7,6 @@
         'ui.bootstrap.tpls',
         'inlcuso.shared.mainNavigation',
         'incluso.home',
-        //TODO remover todas las referencias a esta libreria
-        'naif.base64',
         // One module per controller. If we wanted to use one module for several controllers we would need to load dependencies of
         // one controller for all controllers in the module, and we would also need a variable to keep track of the modules:
         // http://zinkpulse.com/organizing-modules-in-angularjs/ and http://cliffmeyers.com/blog/2013/4/21/code-organization-angularjs-javascript
