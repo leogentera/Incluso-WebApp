@@ -249,7 +249,7 @@ angular
 
             $scope.cancel2 = function () {
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
-                $location.path('/ZonaDeNavegacion/Dashboard/2');
+                $location.path('/ZonaDeNavegacion/Dashboard/2/1');
             };
 
             $scope.validateAnsweredQuestions = function () {
@@ -1054,7 +1054,93 @@ angular
             };
 
 
-            $scope.validateExploracionInicialEtapa2 = function () {
+            function partialSuccessfullCallBack(partialActivityAnswers) {
+                if (partialActivityAnswers != null) {
+
+                    $scope.exploracionFinalresult =
+                        [
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            {
+                                "badAnswer": false,
+                                "firstOptionWrong": false,
+                                "secondOptionWrong": false,
+                                "thirdOptionWrong": false
+                            },
+                            {
+                                "badAnswer": false,
+                                "firstOptionWrong": false,
+                                "secondOptionWrong": false,
+                                "thirdOptionWrong": false
+                            }
+                        ];
+                    var _mathFloor = 0;
+                    var goodAnswersQty = 0;
+                    for (var index = 0; index < partialActivityAnswers.questions.length; index++) {
+                        var question = partialActivityAnswers.questions[index];
+                        for (var answerIndex = 0; answerIndex < question.answers.length; answerIndex++) {
+                            var questionAnswer = question.answers[answerIndex];
+                            if (index == 0 || index == 1 || index == 2) {
+                                var questionAnswerAnswer = questionAnswer.answer.toLowerCase().trim() == "true" ? 1 : 0;
+                                var selectedAnswer = Number($scope.exploracionFinal[index]);
+                                if (questionAnswerAnswer == selectedAnswer) {
+                                    _mathFloor = Math.floor(questionAnswer.fraction);
+                                    if (_mathFloor != 1) {
+                                        $scope.exploracionFinalresult[index].badAnswer = true;
+                                        if (questionAnswerAnswer == 0) {
+                                            $scope.exploracionFinalresult[index].falseOptionWrong = true;
+                                        }
+                                        else {
+                                            $scope.exploracionFinalresult[index].trueOptionWrong = true;
+                                        }
+                                    }
+                                    else {
+                                    }
+                                }
+                            }
+                            else if (index == 3 || index == 4) {
+                                if (answerIndex == $scope.exploracionFinal[index]) {
+                                    if (Math.floor(questionAnswer.fraction) == 1) {
+
+                                    }
+                                    else {
+                                        $scope.exploracionFinalresult[index].badAnswer = true;
+                                        if (answerIndex == 0) {
+                                            $scope.exploracionFinalresult[index].firstOptionWrong = true;
+                                        }
+                                        else if (answerIndex == 1) {
+                                            $scope.exploracionFinalresult[index].secondOptionWrong = true;
+                                        }
+                                        else {
+                                            $scope.exploracionFinalresult[index].thirdOptionWrong = true;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        if (!$scope.exploracionFinalresult[index].badAnswer) {
+                            goodAnswersQty++;
+                        }
+                    }
+                }
+                else {
+                    $scope.showWarning = true;
+                    $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
+                }
+
+                $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult.length;
+            }
+
+            //$scope.$emit('HidePreloader'); //hide preloader
+            function partialErrorCallback(partialActivityAnswers) {
+
+            }
+
+
+            $scope.validateExploracionInicialStage2 = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
                 var validatedAnswers = 0;
@@ -1244,92 +1330,23 @@ angular
                 } else {
                     showWarningAndGoToTop();
                 }
+
+                /*
+
+                 if (validAnswers) {
+                 //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
+                 moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBack, partialErrorCallback, true);
+
+                 $scope.showWarning = false;
+                 $scope.navigateToPage(2);
+                 $scope.scrollToTop();
+                 }
+
+                 */
+
             };
 
 
-            function partialSuccessfullCallBack(partialActivityAnswers) {
-                if (partialActivityAnswers != null) {
-
-                    $scope.exploracionFinalresult =
-                        [
-                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
-                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
-                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
-                            {
-                                "badAnswer": false,
-                                "firstOptionWrong": false,
-                                "secondOptionWrong": false,
-                                "thirdOptionWrong": false
-                            },
-                            {
-                                "badAnswer": false,
-                                "firstOptionWrong": false,
-                                "secondOptionWrong": false,
-                                "thirdOptionWrong": false
-                            }
-                        ];
-                    var _mathFloor = 0;
-                    var goodAnswersQty = 0;
-                    for (var index = 0; index < partialActivityAnswers.questions.length; index++) {
-                        var question = partialActivityAnswers.questions[index];
-                        for (var answerIndex = 0; answerIndex < question.answers.length; answerIndex++) {
-                            var questionAnswer = question.answers[answerIndex];
-                            if (index == 0 || index == 1 || index == 2) {
-                                var questionAnswerAnswer = questionAnswer.answer.toLowerCase().trim() == "true" ? 1 : 0;
-                                var selectedAnswer = Number($scope.exploracionFinal[index]);
-                                if (questionAnswerAnswer == selectedAnswer) {
-                                    _mathFloor = Math.floor(questionAnswer.fraction);
-                                    if (_mathFloor != 1) {
-                                        $scope.exploracionFinalresult[index].badAnswer = true;
-                                        if (questionAnswerAnswer == 0) {
-                                            $scope.exploracionFinalresult[index].falseOptionWrong = true;
-                                        }
-                                        else {
-                                            $scope.exploracionFinalresult[index].trueOptionWrong = true;
-                                        }
-                                    }
-                                    else {
-                                    }
-                                }
-                            }
-                            else if (index == 3 || index == 4) {
-                                if (answerIndex == $scope.exploracionFinal[index]) {
-                                    if (Math.floor(questionAnswer.fraction) == 1) {
-
-                                    }
-                                    else {
-                                        $scope.exploracionFinalresult[index].badAnswer = true;
-                                        if (answerIndex == 0) {
-                                            $scope.exploracionFinalresult[index].firstOptionWrong = true;
-                                        }
-                                        else if (answerIndex == 1) {
-                                            $scope.exploracionFinalresult[index].secondOptionWrong = true;
-                                        }
-                                        else {
-                                            $scope.exploracionFinalresult[index].thirdOptionWrong = true;
-                                        }
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                        if (!$scope.exploracionFinalresult[index].badAnswer) {
-                            goodAnswersQty++;
-                        }
-                    }
-                }
-                else {
-                    $scope.showWarning = true;
-                    $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
-                }
-
-                $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult.length;
-            }
-
-            //$scope.$emit('HidePreloader'); //hide preloader
-            function partialErrorCallback(partialActivityAnswers) {
-            }
 
         }
     ])
