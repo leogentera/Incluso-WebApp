@@ -496,21 +496,17 @@
             controller: 'stageContentsController'
         });
 
-        // ISSUE No hay plantilla, definir controlador
         $routeProvider.when('/ZonaDeNavegacion/TuElijes/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuElijes.html',
             controller: 'stageQuizController'
         });
 
 
-
-        // ISSUE Agregar plantilla al directorio, definir controlador
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia.html',
             controller: 'stageMessageController'
         });
 
-        // ISSUE Agregar plantilla al directorio
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:ActivityIdentifier', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/13y5.html',
             controller: 'stageQuizController'
@@ -558,7 +554,7 @@
         });
 
         //Zona de aterrizaje
-        $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId', {
+        $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html',
             controller: 'stageDashboardController'
         });
