@@ -87,7 +87,7 @@
             <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> 
             <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>
-              <a class="user-alias">{{p.post_author}} </a>
+              <a class="user-alias" ng-click="navigateTo('Profile/' + p.post_autor_id)">{{p.postAutor}} </a>
               <span>publicó:</span>
               <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
             </div>
@@ -107,7 +107,7 @@
               <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> 
               <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />              
               <div>
-                <a class="user-alias">{{r.post_author}}</a>
+                <a class="user-alias" ng-click="navigateTo('Profile/' + r.post_autor_id)">{{r.postAutor}} </a>
                 <span>comentó:</span>   
                 <div>{{r.message}}</div>
               </div>
