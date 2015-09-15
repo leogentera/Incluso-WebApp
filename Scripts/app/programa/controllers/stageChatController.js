@@ -92,7 +92,7 @@ angular
 
                 moodleFactory.Services.PutEndActivity(activity.coursemoduleid, data, activity, currentUser.token, function () {
                     _setLocalStorageJsonItem('usercourse', $scope.model);
-                    var profile = JSON.parse(localStorage.getItem("profile"));
+                    var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
                     var model = {
                         userId: currentUser.userId,
                         stars: activity.points,

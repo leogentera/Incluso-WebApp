@@ -131,7 +131,7 @@
             controller: 'programaProfileController'
         });
 
-        $routeProvider.when('/Profile', {
+        $routeProvider.when('/Profile/:id', {
             templateUrl: 'Templates/Programa/profile.html',
             controller: 'programaProfileController'
         });

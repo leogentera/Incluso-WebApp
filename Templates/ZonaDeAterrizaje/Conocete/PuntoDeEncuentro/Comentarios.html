@@ -90,7 +90,7 @@
 
 
         <div class="part">
-          <div class="author"><img src="assets/images/avatar.svg">
+          <div class="author"><img ng-click="navigateTo('Profile/' + p.post_autor_id)" src="assets/images/avatar.svg">
           <div>{{p.postAutor}} <span>publicó:</span>
           <div>{{p.created | date: "dd MMMM yyyy"}}</div>
           </div>
@@ -106,7 +106,7 @@
 
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
 
-            <div class="coment block"><img src="assets/images/avatar.svg">
+            <div class="coment block"><img ng-click="navigateTo('Profile/' + r.post_autor_id)" src="assets/images/avatar.svg">
               <div>{{r.postAutor}} <span>publicó:</span>   <div>{{r.message}}</div>
               </div>
             </div>

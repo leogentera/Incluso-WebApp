@@ -167,7 +167,7 @@ angular
             };
 
             function assingStars(isMandatory, coursemoduleid, stars){
-              profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));              
+              profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));              
               var data={
                 userId: profile.id,
                 stars: stars,
