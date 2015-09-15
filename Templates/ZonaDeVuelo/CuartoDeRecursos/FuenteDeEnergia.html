@@ -86,7 +86,7 @@
                       <span class="icomoon icon-camera"></span>
                     </div>
                     <div class="col-xs-9">   
-                      <span>{{activity.activityname}}</span>
+                      <span>{{activity.activityname.length > 2 ? activity.activityname : ''}}</span>
                     </div>        
                     <div class="col-xs-1">
                       <span class="icomoon icon-required" ng-hide="activity.optional"></span>

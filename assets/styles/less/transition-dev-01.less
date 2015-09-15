@@ -614,7 +614,6 @@ Parallel work file for UI Developer 01
                         font-weight: bold;                       
                         
                         span {
-                            color: #08b190;
                             font-size: 5vw;
                             padding: 0;
                         }
@@ -631,6 +630,9 @@ Parallel work file for UI Developer 01
                             }
                         }
                     }
+                    .icomoon.icon-comment {color:@clr-commentButton;}
+                    .icomoon.icon-like {color:@clr-likeButton;}
+                    .icomoon.icon-pinch {color:@clr-reportButton;}
                 }
             }            
         }
@@ -757,5 +759,32 @@ Parallel work file for UI Developer 01
 
 
     }
+
+    .post {
+        display:block;
+        width: auto;
+        height:auto;
+        padding:0;
+        margin: 3vw auto 0;
+
+        .post-head {}
+        .post-message {}
+        .post-comments {}
+        .post-actions {}
+        .user-alias {
+            color:@clr-white;
+            font-size: 4vw;
+            font-weight: 400;
+            text-decoration: none;
+        }
+    }    
+
+    // .posts-list {
+    //     display:block;
+    //     width: auto;
+    //     height:auto;
+    //     padding:0;
+    //     margin: 6vw auto 0;
+    // }
 
 }
