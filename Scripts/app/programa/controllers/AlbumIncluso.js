@@ -51,6 +51,8 @@ angular
             $scope.$emit('HidePreloader');
         }, 1000);
 
+        $scope.message = "Todos los logros en un solo lugar. <br/> Recuerda lo vivido en esta misi&#243;n y no te olvides de continuar con tus prop&#243;sitos.";
+
         controllerInit();
 
         function controllerInit() {
