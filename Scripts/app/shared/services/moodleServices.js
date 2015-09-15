@@ -120,6 +120,10 @@
             _putDataNoCache(data, API_RESOURCE.format('forum/' + postId), successCallback, errorCallback);
         };
 
+        var _getAsyncAlbum = function (userId, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), successCallback, errorCallback, forceRefresh);
+        };
+
         var _getCacheObject = function (key) {
             return localStorage.getItem(key);
         };
@@ -698,7 +702,8 @@
             PutForumPostLikeNoCache: _putForumPostLikeNoCache,
             GetAsyncDiscussionPosts: _getAsyncDiscussionPosts,
             GetAsyncForumDiscussions: _getAsyncForumDiscussions,
-            PostAsyncReportAbuse: _postAsyncReportAbuse
+            PostAsyncReportAbuse: _postAsyncReportAbuse,
+            GetAsyncAlbum: _getAsyncAlbum
         };
     })();
 }).call(this);
