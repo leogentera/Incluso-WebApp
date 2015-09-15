@@ -24,7 +24,7 @@
         'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
         'incluso.programa.comunidad',
-        'incluso.programa.reconocimiento',
+        //'incluso.programa.reconocimiento',
         'incluso.programa.album',
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
