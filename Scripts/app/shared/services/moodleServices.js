@@ -3,11 +3,11 @@
 
     moodleFactory.Services = (function () {
         var _getAsyncProfile = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("profile", API_RESOURCE.format('user/' + userId), successCallback, errorCallback, forceRefresh);
+            _getAsyncData("profile/" + userId, API_RESOURCE.format('user/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncProfile = function (userId, data, successCallback, errorCallback, forceRefresh) {
-            _putAsyncData("profile", data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
+            _putAsyncData("profile/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };
 
         var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
@@ -31,11 +31,11 @@
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), successCallback, errorCallback, forceRefresh);
         };
         
-        var _getAsyncDiscussionPosts = function(discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
-            var key = "discussion/" + discussionId + discussion + forumId + sinceId + maxId + first + filter;
+        var _getAsyncDiscussionPosts = function(token, discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
+            var key = "discussion/" + token + discussionId + discussion + forumId + sinceId + maxId + first + filter;
             var url = API_RESOURCE.format("discussion/" + discussionId + "?discussion=" + discussion + "&forumid=" + forumId + "&sinceid=" + sinceId + "&maxid=" + maxId + "&first=" + first + "&filter=" + filter);
             
-            _getAsyncForumDiscussionsData(key, url, successCallback, errorCallback, forceRefresh);
+            _getAsyncForumDiscussionsData(key, url, token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncActivityInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
@@ -103,7 +103,7 @@
 
         var _assignStars = function (data, profile, token, successCallback, errorCallback, forceRefresh) {
 
-            _putAsyncStars("profile", data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
+            _putAsyncStars("profile/" + data.userId, data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
         var _putEndActivity = function (activityId, data, activityModel, token, successCallback, errorCallback) {
@@ -118,6 +118,10 @@
 
         var _putForumPostLikeNoCache = function (postId, data, successCallback, errorCallback) {
             _putDataNoCache(data, API_RESOURCE.format('forum/' + postId), successCallback, errorCallback);
+        };
+
+        var _getAsyncAlbum = function (userId, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
         var _getCacheObject = function (key) {
@@ -153,7 +157,7 @@
             });
         };
         
-        var _getAsyncForumDiscussionsData = function (key, url, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncForumDiscussionsData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
             
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
@@ -165,7 +169,7 @@
             _httpFactory({
                 method: 'GET',
                 url: url,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json', 'Authorization': token }
             }).success(function (data, status, headers, config) {
                 
                 var posts = createPostsTree(data.posts);
@@ -634,12 +638,12 @@
                     started: generalCommunity.started
                 };
 
-                var user = JSON.parse(localStorage.getItem("profile"));
+                var user = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
                 var progress = refreshProgress(course, user);
                 course = progress.course;
                 course.community = community;
                 user = progress.user;
-                _setLocalStorageJsonItem("profile",user);
+                _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),user);
                 _setLocalStorageJsonItem("usercourse",course);
                 loadActivityStatus();
                 _setLocalStorageJsonItem("course",course);
@@ -698,7 +702,8 @@
             PutForumPostLikeNoCache: _putForumPostLikeNoCache,
             GetAsyncDiscussionPosts: _getAsyncDiscussionPosts,
             GetAsyncForumDiscussions: _getAsyncForumDiscussions,
-            PostAsyncReportAbuse: _postAsyncReportAbuse
+            PostAsyncReportAbuse: _postAsyncReportAbuse,
+            GetAsyncAlbum: _getAsyncAlbum
         };
     })();
 }).call(this);
