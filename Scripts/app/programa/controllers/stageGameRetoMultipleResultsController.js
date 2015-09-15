@@ -22,7 +22,7 @@ angular
             $scope.isCollapsed = true;
 
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
-            $scope.profile = moodleFactory.Services.GetCacheJson("profile");
+            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
            
             $scope.fortalezas = _.filter($scope.retoMultipleActivities, function(a){ return a.score == "3"});
             $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3"});

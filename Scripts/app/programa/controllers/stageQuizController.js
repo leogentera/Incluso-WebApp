@@ -702,7 +702,7 @@ angular
                     console.log("points: " + activity.points);
                     $scope.activityname = activity.activityname;
 
-                    $scope.userprofile = JSON.parse(localStorage.getItem("profile"));
+                    $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
                     var activityFinished = false;
