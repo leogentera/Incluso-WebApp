@@ -121,7 +121,7 @@ angular
 
                 switch ($scope.activityname) {
                     case "Exploración inicial":
-                        $scope.OtroAnswer = $scope.exploracionInicialOtroAnswer;
+                        $scope.OtroAnswer = $scope.exploracionInicialOtroAnswer;                        
                         break;
                     case "Mis cualidades":
                         $scope.AnswersResult.answers = $scope.misCualidadesAnswers;
@@ -313,7 +313,7 @@ angular
                         $scope.AnswersResult.answers[1][1] == true ||
                         $scope.AnswersResult.answers[1][2] == true ||
                         $scope.AnswersResult.answers[1][3] == true) ||
-                        ($scope.AnswersResult.answers[1][4] == true && $scope.exploracionInicialOtroAnswer != '')) {                       
+                        ($scope.AnswersResult.answers[1][4] == true && $scope.exploracionInicialOtroAnswer[0].answers[0] != '')) {                       
                         if ($scope.AnswersResult.answers.length[2] != 0) {
                             //Solving for the '\n' character
                             for (var a = 0; a < $scope.AnswersResult.answers[2].length; a++) {
