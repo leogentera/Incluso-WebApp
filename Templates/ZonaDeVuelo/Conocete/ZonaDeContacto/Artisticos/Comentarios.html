@@ -6,6 +6,7 @@
 
       <div class="txt-renglon txt-bigger" ng-bind-html="discussion.message | linky"></div>
     </section>
+
     <section class="txt-renglon centered collapse-media" ng-show="(discussion.attachments.length == 1 && discussion.attachments[0].fileurl && (discussion.attachments[0].fileurl.length > 0))">
       <div class="panel">
         <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
@@ -25,6 +26,7 @@
         </div>
       </div>
     </section>
+
     <section class="txt-renglon distribuido">
         <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isTextCollapsed')" ng-class="{'active': !forumModals['isTextCollapsed']}">
           <span class="icomoon icon-text text-bigger"></span>
@@ -40,6 +42,7 @@
         <span class="icomoon icon-attachment"></span>
         <span class="arrow-up"></span></a>
     </section>
+
     <section class="modales">
       <div id="openModal1" class="modalDialog" collapse="forumModals['isTextCollapsed']">
         <div>
@@ -74,51 +77,69 @@
         </div>
       </div>
     </section>
+
     <section class="wall">
-      <div id="item{{$index}}" ng-repeat="p in posts">
-        <div class="part">
-          <div class="author"><img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
-            <div>{{p.post_author}} <span>public&oacute;:</span>
-            <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
-            </div>
-          </div>
-          <div class="block">
-            <span ng-switch="p.post_type">
-              <span ng-switch-default>{{ p.message }}</span>
-              <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>
-              <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
-              <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>
-            </span>
-            <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> j&oacute;venes les gusta esto
-            </div>
-          </div>
-          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
-            <div class="coment block"><img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
-              <div>{{r.post_author}} <span>coment&oacute;:</span>   <div>{{r.message}}</div>
-              </div>
-            </div>
-          </div>
+		<div id="item{{$index}}" ng-repeat="p in posts">
+        	<div class="part post">
+          		<div class="author">
+          			<img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> 
+          			<img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+		            <div>
+		            	<a class="user-alias">{{p.post_author}} </a>
+		            	<span>public&oacute;:</span>
+		            	<div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
+		            </div>
+          		</div>
+          		<div class="block">
+          			<span ng-switch="p.post_type">
+          				<span ng-switch-default>{{ p.message }}</span>
+          				<span ng-switch-when="2">
+          					<span ng-bind-html="p.message | linky"></span>
+          				</span>
+          				<span ng-switch-when="3">
+          					<a ng-href="{{p.message}}">
+          						<span class="icomoon icon-video-file"></span>
+          					</a>
+          				</span>
+          				<span ng-switch-when="4">
+          					<a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}" alt="post" /></a>
+          				</span>
+          			</span>
+            		<div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> j&oacute;venes les gusta esto</div>
+				</div>
+
+				<div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
+					<div class="coment block">
+						<img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" />
+						<img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+						<div>
+							<a class="user-alias">{{r.post_author}} </a>
+							<span>coment&oacute;:</span>
+							<div>{{r.message}}</div>
+						</div>
+					</div>
+				</div>
           
-          <div class="coment block" ng-show="(showAllCommentsByPost['id' + p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
-            <div class="vermas">
-              <span class="icomoon icon-show-more"></span>
-              Mostrar más comentarios...
-            </div>
-          </div>
+				<div class="coment block" ng-show="(showAllCommentsByPost['id' + p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+					<div class="vermas">
+						<span class="icomoon icon-show-more"></span>
+						Mostrar más comentarios...
+					</div>
+				</div>
 
-          <div class="social">
-            <div class="pink" ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
-              <span class="icomoon icon-like pink"></span> Me gusta
-            </div>
-            <div class="pink" ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
-              <span class="icomoon icon-like pink"></span> Ya no me gusta
-            </div>
-            <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">
-              <span class="icomoon icon-comment"></span> Comentar
-            </div>
-          </div>
+				<div class="social">
+					<div class="pink" ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
+						<span class="icomoon icon-like pink"></span> Me gusta
+					</div>
+					<div class="pink" ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
+						<span class="icomoon icon-like pink"></span> Ya no me gusta
+					</div>
+					<div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">
+						<span class="icomoon icon-comment"></span> Comentar
+					</div>
+				</div>
 
-        </div>
+        	</div>
         <section class="modales">
           <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed[$index]">
                 <div>
@@ -142,7 +163,4 @@
       </section>
     </section>
   </article>
-
 </div>
-
-
