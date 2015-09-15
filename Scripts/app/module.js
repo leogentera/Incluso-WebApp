@@ -311,7 +311,7 @@
             controller: 'stageGameRetoMultipleController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultipleExternalApp', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultipleExternalApp/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/RetoMultipleExternalApp.html',
             controller: 'stageGameRetoMultipleExternalAppController'
         });

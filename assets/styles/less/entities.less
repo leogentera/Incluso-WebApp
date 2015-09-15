@@ -15,6 +15,7 @@
         06. $top-users
 
             $acerca-programa
+            $album
 ********************************************************************************/
 @import "less-utilities.less";
 
@@ -2212,7 +2213,7 @@
          Description: CSS to represent look of album incluso layout and content
         ************************************************************************/        
         .album{
-            background-image:url('@{url-images}/bg-notifications-sky.gif');
+            //background-image:url('@{url-images}/bg-notifications-sky.gif');
             color: #FFF;
             .section-description {  
                 height: 33vh;       
@@ -2259,6 +2260,9 @@
             }
             .actions{
                 display: flex;
+                /*position: absolute;
+                left: 10%;
+                bottom: 27vh;*/
                 flex-flow: row wrap;
                 justify-content: space-between;
                 margin: 0px auto 0px;
@@ -2268,8 +2272,8 @@
                 }
             }
             .album-page1 {                    
-                    /*min-height: 175vh;
-                    background: #1f2733;
+                    min-height: 160vh;
+                    /*background: #1f2733;
                     background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
                     background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#1f2733), color-stop(100%,#141921));
                     background: -webkit-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
@@ -2277,11 +2281,11 @@
                     background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
                     background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
                     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );*/
-                    
-                    /*background-position: -1px top;
-                    background-repeat: no-repeat, repeat-y;
-                    background-size: 100% 102%;*/
-                    padding-bottom: 16vw;
+                    background-image:url('@{url-images}/album/bg-album-page1.gif');
+                    /*background-position: -1px top;*/
+                    background-repeat: no-repeat;
+                    background-size: 100% 107%; 
+                    /*padding-bottom: 16vw;*/
                     
                     .section-album{
                         .container {
@@ -2292,9 +2296,9 @@
                         }                        
                     }                    
                     .section-avatar {
-                        height: 60vh;
-                        background-image:url('@{url-images}/album/bg-album-avatar.gif'); 
-                        background-size: 100%; 
+                        height: 62vh;
+                        /*background-image:url('@{url-images}/album/bg-album-avatar.gif'); 
+                        background-size: 100%; */
                         figure {
                             padding-top: 8vh;
                         }
@@ -2303,7 +2307,7 @@
                         }
                     }
                     .section-shield-name {
-                        height: 16vh;
+                        height: 20vh;
                         padding-top: 4vh;
                         .container {
                             width: 100%;   
@@ -2319,138 +2323,195 @@
                         }
                     }
                     .section-abilities {
-                        height: 25vh;
-                        background-image:url('@{url-images}/album/bg-album-abilities.gif');
-                        background-size: 100%;
+                        height: 30vh;
+                        /*background-image:url('@{url-images}/album/bg-album-abilities.gif');
+                        background-size: 100%;*/
                         .container {
-                            padding: 6vh 0px 0px;                            
+                            padding: 4vh 0px 0px;                            
                         }
                     }
             }
 
             /////// page 2 ////////
-            .section-what-ilike {
-                height: 27vh;
-                background-image:url('@{url-images}/album/bg-album-what-ilike.gif');
-                background-size: 100%;
-                &.bg-pink {
+            .album-page2 { 
+                min-height: 180vh;
+                background-image:url('@{url-images}/album/bg-album-page2.gif');
+                background-size: 100% auto;
+                background-repeat: no-repeat;
+                .section-description {
                     height: 30vh;
-                    background-image:url('@{url-images}/album/bg-album-what-ilike-pink.gif');  
-                    color: #FFF; 
-                    .container{
-                         padding: 9vh 0px 0px;
+                }
+                .section-what-ilike {
+                    height: 27vh;
+                    /*background-image:url('@{url-images}/album/bg-album-what-ilike.gif');
+                    background-size: 100%;*/
+                    
+                    .container {
+                        padding: 7vh 0px 0px;  
                         .list-group{
                             .list-group-item {
                                 padding: 1vh 5vw
                             }
-                        }      
-                    }             
+                        }                          
+                    }
                 }
-                .container {
-                    padding: 6vh 0px 0px;                            
+                .section-qualities {
+                    height: 30vh;
+                    /*background-image:url('@{url-images}/album/bg-album-qualities.gif');
+                    background-size: 100%;*/
+                     .container {
+                                padding: 7.5vh 0px 0px;                            
+                            }
+                }
+                .section-what-drivesme {
+                    height: 26vh;
+                    /*background-image:url('@{url-images}/album/bg-album-what-drivesme.gif');
+                    background-size: 100%;*/
+                     .container {
+                        padding: 7vh 0px 0px;  
+                        .list-group{
+                            .list-group-item {
+                                padding: 1vh 5vw
+                            }
+                        }                            
+                    }
+                }
+                .section-dreams {
+                    height: 30vh;
+                    /*background-image:url('@{url-images}/album/bg-album-dreams.gif');
+                    background-size: 100%;*/
+                     .container {
+                                padding: 8.5vh 0px 0px;                            
+                            }
                 }
             }
-            .section-qualities {
-                height: 30vh;
-                background-image:url('@{url-images}/album/bg-album-qualities.gif');
-                background-size: 100%;
-                 .container {
-                            padding: 7.5vh 0px 0px;                            
-                        }
-            }
-            .section-what-drivesme {
-                height: 26vh;
-                background-image:url('@{url-images}/album/bg-album-what-drivesme.gif');
-                background-size: 100%;
-                 .container {
-                        padding: 6vh 0px 0px;  
-                         .list-group{
-                        .list-group-item {
-                            padding: 1vh 5vw
-                        }
-                    }                            
-                }
-            }
-            .section-dreams {
-                height: 32vh;
-                background-image:url('@{url-images}/album/bg-album-dreams.gif');
-                background-size: 100%;
-                 .container {
-                            padding: 8.5vh 0px 0px;                            
-                        }
-            }
-
             /////// page 3 ////////
-            .section-future-plans {
-                height: 33vh;
-                background-image:url('@{url-images}/album/bg-album-future-plans.gif');
-                background-size: 100%;
-                 .container {
-                    padding: 9.5vh 0px 0px; 
-                    span {
-                        color: @clr-blueTurquoise;
-                    }                           
+            .album-page3 { 
+                min-height: 220vh;
+                padding-bottom: 5vh;
+                background-image:url('@{url-images}/album/bg-album-page3.gif');
+                background-size: 100% 110%;
+                background-repeat: no-repeat;
+                .section-future-plans {
+                    height: 30vh;
+                    /*background-image:url('@{url-images}/album/bg-album-future-plans.gif');
+                    background-size: 100%;*/
+                     .container {
+                        padding: 9.5vh 0px 0px; 
+                        span {
+                            color: @clr-blueTurquoise;
+                        }                           
+                    }
+                }
+                .section-goals {
+                    height: 38vh;
+                    /*background-image:url('@{url-images}/album/bg-album-goals.gif');
+                    background-size: 100%;*/
+                     .container {
+                        padding: 6.5vh 0px 0px;  
+                         .list-group{
+                            .list-group-item {
+                                padding: 1vh 5vw
+                            }
+                        }                          
+                    }
+                }
+                .section-now-iknow {
+                    height: 32vh;
+                    /*background-image:url('@{url-images}/album/bg-album-now-iknow.gif');
+                    background-size: 100%;*/
+                     .container {
+                        padding: 8.5vh 0px 0px;                            
+                    }
+                }
+                .section-what-ilike.bg-pink {
+                        height: 28vh;
+                        /*background-image:url('@{url-images}/album/bg-album-what-ilike-pink.gif'); */
+                        color: #FFF; 
+                        .container{
+                             padding: 6vh 0px 0px;
+                            .list-group{
+                                .list-group-item {
+                                    padding: 1vh 5vw
+                                }
+                            }      
+                        }             
+                    }
+                .section-project {
+                    height: 28vh;
+                    /*background-image:url('@{url-images}/album/bg-album-project.gif');
+                    background-size: 100% 105%;*/
+                     .container {
+                        padding: 12vh 0px 0px; 
+                        .txt-renglon {
+                            width: 75%;
+                            max-height: 10vh;
+                            margin: 0px auto;
+                            padding: 0px;
+                            overflow: auto;
+                        }                           
+                    }
                 }
             }
-            .section-goals {
-                height: 39vh;
-                background-image:url('@{url-images}/album/bg-album-goals.gif');
-                background-size: 100%;
-                 .container {
-                    padding: 7.5vh 0px 0px;  
-                     .list-group{
-                        .list-group-item {
-                            padding: 1vh 5vw
-                        }
-                    }                          
-                }
-            }
-            .section-now-iknow {
-                height: 32vh;
-                background-image:url('@{url-images}/album/bg-album-now-iknow.gif');
-                background-size: 100%;
-                 .container {
-                    padding: 9.5vh 0px 0px;                            
-                }
-            }
-            .section-project {
-                height: 30vh;
-                background-image:url('@{url-images}/album/bg-album-project.gif');
-                background-size: 100% 105%;
-                 .container {
-                    padding: 14vh 0px 0px; 
-                    .txt-renglon {
-                        width: 75%;
-                        max-height: 10vh;
-                        margin: 0px auto;
-                        padding: 0px;
-                        overflow: auto;
-                    }                           
-                }
-            }
-
              /////// page 4 ////////
-            .section-participation {
-                height: 33vh;
-                background-image:url('@{url-images}/album/bg-album-participation.gif');
-                background-size: 100%;
-                 .container {
-                    padding: 9.5vh 0px 0px; 
-                    span {
-                        color: @clr-blueTurquoise;
-                    }                           
+            .album-page4 { 
+                min-height: 180vh;
+                padding-bottom: 5vh;
+                background-image:url('@{url-images}/album/bg-album-page4.gif');
+                background-size: 100% 115%;
+                background-repeat: no-repeat;
+                .section-description {
+                    height: 35vh;
+                }
+                .section-participation {
+                    height: 100vh;
+                    /*background-image:url('@{url-images}/album/bg-album-participation.gif');
+                    background-size: 100%;*/
+                     .container {
+                        padding: 5vh 0px 0px; 
+                        .results-title {
+                            color: rgba(128, 152, 160, 0.5);
+                            font-size: 6vw;
+                        }
+                        h2 {
+                            margin: 1.5vh 0px;
+                        } 
+                        .sm-pill {
+                            position: relative;
+                            max-width: 45%;
+                            height: 5vh;
+                            margin: 0px auto;
+                            padding: 0.7vw 3vw 1vw;
+                            border-width: 2px;
+                            font-size: 5.4vw;
+                            font-weight: 700;                            
+                            span {
+                                display: inline-block;
+                                padding: 0px 2vw;                                
+                                width: auto;
+                                line-height: 6vw;
+                                vertical-align: top;
+                            }
+                        }
+                        .badges {
+                            padding: 0px;                            
+                        }
+                        .badge-item {
+                            display: inline-block;
+                            width: 30%;
+                        }                           
+                    }
+                }
+                .section-next-time {
+                    height: 15vh;
+                    /*background-image:url('@{url-images}/album/bg-album-next-time.gif');
+                    background-size: 100%;*/
+                     .container {
+                        padding: 9.5vh 0px 0px; 
+                        
+                    }
                 }
             }
-            .section-next-time {
-                height: 33vh;
-                background-image:url('@{url-images}/album/bg-album-next-time.gif');
-                background-size: 100%;
-                 .container {
-                    padding: 9.5vh 0px 0px; 
-                    
-                }
-            }
-
         }
 
         /***********************************************************************
