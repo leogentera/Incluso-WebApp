@@ -106,44 +106,35 @@
                             </ul>-->
                             <ul>
                               <li>Cuarto de recursos</li>
-                              <li><a ng-click="navigateTo('/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
+                              <li><a ng-class="canStartActivity(156)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/156', 'sideToggle', 156)">Fuente de energía</a></li>
                             </ul>
                             <ul>
                                 <li>Transfórmate</li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/Transformate/FuenteDeEnergia/zv_conocete_fuentedeenergia', 'sideToggle', 158)">Fuente de energía</a></li>
-                                <!--TODO Cambiar esta ruta y modificar el $routeProvider-->
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/Transformate/TusIdeas/2002', 'sideToggle', 159)">Tus ideas </a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/79', 'sideToggle', 79)">Punto de encuentro </a></li>
-                                <!--<li><a ng-click="navigateTo('/ZonaDeNavegacion/Conocete/ZonaDeContacto','Zona de contacto', 'sideToggle', 'navbarorange')">Zona de contacto</a></li>-->
+                                <li><a ng-class="canStartActivity(158)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/Transformate/FuenteDeEnergia/158', 'sideToggle', 158)">Fuente de energía</a></li>
+                                <!--TODO Agregar Activity identifier-->
+                                <li><a ng-class="canStartActivity(159)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/Transformate/TusIdeas/', 'sideToggle', 159)">Tus ideas </a></li>
+                                <li><a ng-class="canStartActivity(79)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/79', 'sideToggle', 79)">Punto de encuentro </a></li>
                             </ul>
 
                             <ul>
                                 <li>Tú eliges </li>
-                                <!-- TODO No hay contenido en Moodle-->
-                                <!-- TODO Crear rutas y agregar a $routesProvider-->
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/TuElijes/FuenteDeEnergia/zv_missuenos_fuentedeenergia', 'sideToggle', 161)">Fuente de energía</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/TuElijes', 'sideToggle', 162)">Tú eliges</a></li>
+                                <li><a ng-class="canStartActivity(161)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/TuElijes/FuenteDeEnergia/161', 'sideToggle', 161)">Fuente de energía</a></li>
+                                <li><a ng-class="canStartActivity(170)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/TuElijes/162', 'sideToggle', 170)">Tú eliges</a></li>
                             </ul>
                             <ul>
-                                <!-- TODO Cambiar todas las rutas y agregar al $routesProvider-->
                                 <li>Proyecta tu vida</li>
-                                <!-- ISSUE Colocar la plantilla en el directorio-->
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/zv_missuenos_fuentedeenergia', 'sideToggle', 163)">Fuente de energía</a></li>
-                                <!-- ISSUE No hay plantilla-->
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/13y5/zv_missuenos_misgustos', 'sideToggle', 164)">1, 3 y 5</a></li>
-                                <!--<li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/MisGustos/zv_missuenos_misgustos','Proyecta Tu Vida', 'sideToggle', 'navbarorange')">Mi vida en 3 años</a></li>-->
-                                <!--<li><a ng-click="navigateTo('/ZonaDeNavegacion/MisSuenos/MisGustos/zv_missuenos_misgustos','Proyecta Tu Vida', 'sideToggle', 'navbarorange')">Mi vida en 5 años</a></li> -->
-                                <!-- TODO Crear ruta en el $routeProvider-->
-                                <!-- TODO Levantar tasks para que UI cree el template-->
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/zv_missuenos_suena', 'sideToggle', 165)">Mapa de vida</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro', 'sideToggle', 'navbarorange')">Punto de encuentro </a></li>
+                                <li><a ng-class="canStartActivity(163)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/163', 'sideToggle', 163)">Fuente de energía</a></li>
+                                <!-- TODO Agregar activity identifier-->
+                                <li><a ng-class="canStartActivity(164)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/13y5/activityidentifier', 'sideToggle', 164)">1, 3 y 5</a></li>
+                                <li><a ng-class="canStartActivity(165)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/165', 'sideToggle', 166)">Mapa de vida</a></li>
+                                <li><a ng-class="canStartActivity(85)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/85', 'sideToggle', 85)">Punto de encuentro </a></li>
 
                                 <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>-->
                             </ul>
                             <ul>
                                 <li>Cabina de soporte</li>
                                 <!-- TODO Checar ruta y entrada en $routeProvider-->
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/CabinaDeSoporte/zv_cabinadesoporte_chat', 'sideToggle', 'navbarorange')">Cabina de soporte</a></li>
+                                <li><a ng-class="canStartActivity(87)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/CabinaDeSoporte/87', 'sideToggle', 87)">Cabina de soporte</a></li>
 
                                 <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>-->
                             </ul>
