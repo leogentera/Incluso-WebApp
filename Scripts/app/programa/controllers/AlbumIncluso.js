@@ -9,39 +9,85 @@ angular
     '$rootScope',
     '$http',
     '$modal',
-    function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-        $scope.setToolbar($location.$$path,"AlbumIncluso");
-        $rootScope.showFooter = false; 
+    '$timeout',
+    function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $timeout) {
+        $scope.setToolbar($location.$$path, "AlbumIncluso");
+        $rootScope.showFooter = false;
         $rootScope.showFooterRocks = false;
         $scope.$emit('ShowPreloader');
 
-        //apply carousel to album layout
-         var owlAlbum = $("#owlAlbum");
+        $timeout(function () {
+            //apply carousel to album layout
+            var owlAlbum = $("#owlAlbum");
 
-                owlAlbum.owlCarousel({
-                    navigation: false,
-                    pagination: false,
-                    //paginationSpeed: 1000,
-                    goToFirstSpeed: 2000,
-                    singleItem: true,
-                    autoHeight: true,
-                    touchDrag:false,
-                    mouseDrag:false,
-                    transitionStyle:"fade",
-                    afterInit : function(el){
-                        $scope.$emit('HidePreloader');
-                    }
-                    //afterMove: callback1
-                });
+            owlAlbum.owlCarousel({
+                navigation: false,
+                pagination: false,
+                //paginationSpeed: 1000,
+                goToFirstSpeed: 2000,
+                singleItem: true,
+                autoHeight: true,
+                touchDrag: false,
+                mouseDrag: false,
+                transitionStyle: "fade",
+                afterInit: function (el) {
 
-                $("#next").click(function (ev) {
-                    owlAlbum.trigger('owl.next');
-                    ev.preventDefault();
 
-                });
 
-                $("#prev").click(function (ev) {
-                    owlAlbum.trigger('owl.prev');
-                    ev.preventDefault();
-                });
+                }
+                //afterMove: callback1
+            });
+
+            $(".next").click(function (ev) {
+                owlAlbum.trigger('owl.next');
+                ev.preventDefault();
+
+            });
+
+            $(".back").click(function (ev) {
+                owlAlbum.trigger('owl.prev');
+                ev.preventDefault();
+            });
+            $scope.$emit('HidePreloader');
+        }, 1000);
+
+        controllerInit();
+
+        function controllerInit() {
+            $scope.album = JSON.parse(_getItem("album"));
+            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+
+            if ($scope.album == null) {
+                if ($scope.currentUser.userId != null) {
+                    moodleFactory.Services.GetAsyncAlbum($scope.currentUser.userId, successfullCallBack, errorCallback, true);
+                }
+                else {
+                    //Albun no reachable
+                }
+            }
+            else {
+                renderInfo();
+            }
+        }
+
+        function successfullCallBack(albumData) {
+            if (albumData != null) {
+                _setLocalStorageJsonItem("album", albumData);
+                $scope.album = albumData;
+                renderInfo();
+            }
+            else {
+                //Albun no reachable
+            }
+        }
+
+        function errorCallback(albumData) {
+            //Albun no reachable
+        }
+
+        function renderInfo() {
+            //Albun no reachable
+        }
+
+
     }]);

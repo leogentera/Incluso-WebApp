@@ -3,9 +3,9 @@
     <section>
       <div class="txt-renglon centered txt-bigger"></div>
       <div class="subtitle">{{discussion.name}}</div>
-
       <div class="txt-renglon txt-bigger" ng-bind-html="discussion.message | linky"></div>
     </section>
+
     <section class="txt-renglon centered collapse-media" ng-show="(discussion.attachments.length == 1 && discussion.attachments[0].fileurl && (discussion.attachments[0].fileurl.length > 0))">
       <div class="panel">
         <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
@@ -25,21 +25,26 @@
         </div>
       </div>
     </section>
+
     <section class="txt-renglon distribuido">
-        <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isTextCollapsed')" ng-class="{'active': !forumModals['isTextCollapsed']}">
-          <span class="icomoon icon-text text-bigger"></span>
-          <span class="arrow-up"></span>
-        </a>
+      <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isTextCollapsed')" ng-class="{'active': !forumModals['isTextCollapsed']}">
+        <span class="icomoon icon-text text-bigger"></span>
+        <span class="arrow-up"></span>
+      </a>
       <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isLinkCollapsed')" ng-class="{'active': !forumModals['isLinkCollapsed']}">
         <span class="icomoon icon-hyperlink" ></span>
-        <span class="arrow-up"></span></a>
+        <span class="arrow-up"></span>
+      </a>
       <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isVideoCollapsed')" ng-class="{'active': !forumModals['isVideoCollapsed']}">
-        <span class="icomoon icon-video-file" ></span>
-        <span class="arrow-up"></span></a>
+        <span class="icomoon icon-video-file"></span>
+        <span class="arrow-up"></span>
+      </a>
       <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isAttachmentCollapsed', 1)" ng-class="{'active': !forumModals['isAttachmentCollapsed']}">
         <span class="icomoon icon-attachment"></span>
-        <span class="arrow-up"></span></a>
+        <span class="arrow-up"></span>
+      </a>
     </section>
+
     <section class="modales">
       <div id="openModal1" class="modalDialog" collapse="forumModals['isTextCollapsed']">
         <div>    
@@ -74,12 +79,17 @@
         </div>
       </div>
     </section>
+
     <section class="wall">
       <div id="item{{$index}}" ng-repeat="p in posts">
-        <div class="part">
-          <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
-            <div>{{p.post_author}} <span>publicó:</span>
-            <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
+        <div class="part post">
+          <div class="author">
+            <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> 
+            <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+            <div>
+              <a class="user-alias" ng-click="navigateTo('Profile/' + p.post_autor_id)">{{p.postAutor}} </a>
+              <span>publicó:</span>
+              <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
             </div>
           </div>
           <div class="block">
@@ -93,8 +103,13 @@
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
-            <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
-              <div>{{r.post_author}} <span>comentó:</span>   <div>{{r.message}}</div>
+            <div class="coment block">
+              <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> 
+              <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />              
+              <div>
+                <a class="user-alias" ng-click="navigateTo('Profile/' + r.post_autor_id)">{{r.postAutor}} </a>
+                <span>comentó:</span>   
+                <div>{{r.message}}</div>
               </div>
             </div>
           </div>
@@ -144,7 +159,4 @@
       </section>
     </section>
   </article>
-
 </div>
-
-

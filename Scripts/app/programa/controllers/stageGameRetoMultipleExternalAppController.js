@@ -26,9 +26,9 @@ angular
 
             _setLocalStorageItem("retoMultipleActivities", null);
 
-            $scope.user = moodleFactory.Services.GetCacheJson("profile");
+            $scope.user = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
-            $scope.profile = moodleFactory.Services.GetCacheJson("profile");
+            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
 
@@ -156,7 +156,7 @@ angular
                     $scope.profile["shield"] = shield;
                     currentUser.shield = shield;
 
-                    _setLocalStorageJsonItem("profile", $scope.profile);
+                    _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), $scope.profile);
                     _setLocalStorageJsonItem("CurrentUser", currentUser)
 
                     $scope.saveUser();

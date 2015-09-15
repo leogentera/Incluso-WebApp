@@ -46,7 +46,8 @@ angular
                                 return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
                             });
 
-                            if (latestMessages.length >= 2) {    
+                            if (latestMessages.length >= 2) { 
+                                localStorage.removeItem("startedActivityCabinaDeSoporte");   
                                 _setLocalStorageItem('finishCabinaSoporte', 'true');
                             }
                         }   
