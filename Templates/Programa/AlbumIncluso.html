@@ -9,13 +9,21 @@
             <section class="centered section-description">
                 <h2 class="subtitle centered text-uppercase">Mi album</h2>
                 <p class=" txt-renglon centered">Cada logo debe ser recolectado y aquí encontrarás los momentos mas especiales de tu viaje.</p>
-                <a class="btn btn-icon-aside light centered">
+                <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
                   <div class="btn-icon">
                       <span class="icomoon icon-share"></span>
                   </div>
                   <span>Compartir mi album</span>
+                  <span class="arrow-up"></span>
                 </a>
             </section>
+
+            <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
+              <div>    
+                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
+                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+              </div>
+            </div>
             <!-- my avatar -->
             <section class="section-album section-avatar centered">
               <div class="container">
