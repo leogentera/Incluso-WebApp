@@ -13,20 +13,17 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _timeout = $timeout;
             _httpFactory = $http;
-            var moduleid;
+            var moduleid = parseInt($routeParams.moodleid);
             var pagename;      
             var currentChallenge;              
-            switch($routeParams.moodleid){
-              case 'zv_cuartoderecursos_fuentedeenergia':
-                moduleid = 112;
+            switch(moduleid){
+              case 112:                
                 currentChallenge = 1;
                 break;
-              case 'zv_conocete_fuentedeenergia':
-                moduleid = 145;
+              case 145:                
                 currentChallenge = 2;
                 break;
-              case 'zv_missuenos_fuentedeenergia':
-                moduleid = 146;
+              case 146:                
                 currentChallenge = 3;
                 break;
             }
@@ -167,7 +164,7 @@ angular
             };
 
             function assingStars(isMandatory, coursemoduleid, stars){
-              profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));              
+              profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));              
               var data={
                 userId: profile.id,
                 stars: stars,

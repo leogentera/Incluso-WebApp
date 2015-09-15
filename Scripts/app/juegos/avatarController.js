@@ -19,7 +19,7 @@ angular
             $scope.file = null;
             $rootScope.showFooter = false;
             $rootScope.showFooterRocks = false;
-            var user = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
+            var user = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
             $scope.selectAvatarCabelloAmarillo = function() {
                 if ( $scope.avatarInfo != null) {
                     $scope.avatarInfo[0]["color_cabello"] = "amarillo";

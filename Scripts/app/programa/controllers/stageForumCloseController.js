@@ -70,7 +70,7 @@ angular
 
                 moodleFactory.Services.PutEndActivity(moodleid, data, parentActivity, userToken,
                     function(response){
-                          var profile = JSON.parse(localStorage.getItem("profile"));
+                          var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
                           var model = {
                               userId: userId,
                               stars: activityFromTree.points,
