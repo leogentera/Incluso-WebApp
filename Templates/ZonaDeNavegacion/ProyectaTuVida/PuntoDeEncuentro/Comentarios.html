@@ -11,7 +11,7 @@
         <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
           <h3>
             <span class="icomoon icon-camera"></span>
-        <span>{{discussion.attachments.length == 1 ? discussion.attachments[0].filename : "" }}</span>
+            <span>{{discussion.attachments.length == 1 ? discussion.attachments[0].filename : "" }}</span>
             <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
             <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
           </h3>
@@ -19,17 +19,17 @@
         <div class="panel-body" collapse="isCollapsed">
           <div class="stage perform">
             <figure class="player">
-                <img src="{{ discussion.attachments[0].fileurl + '?token=' + userToken }}" alt="{{ discussion.attachments[0].filename }}" alt="discussion" />
+              <img src="{{ discussion.attachments[0].fileurl + '?token=' + userToken }}" alt="{{ discussion.attachments[0].filename }}" alt="discussion" />
             </figure>
           </div>
         </div>
       </div>
     </section>
     <section class="txt-renglon distribuido">
-        <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isTextCollapsed')" ng-class="{'active': !forumModals['isTextCollapsed']}">
-          <span class="icomoon icon-text text-bigger"></span>
-          <span class="arrow-up"></span>
-        </a>
+      <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isTextCollapsed')" ng-class="{'active': !forumModals['isTextCollapsed']}">
+        <span class="icomoon icon-text text-bigger"></span>
+        <span class="arrow-up"></span>
+      </a>
       <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isLinkCollapsed')" ng-class="{'active': !forumModals['isLinkCollapsed']}">
         <span class="icomoon icon-hyperlink" ></span>
         <span class="arrow-up"></span></a>
@@ -42,7 +42,7 @@
     </section>
     <section class="modales">
       <div id="openModal1" class="modalDialog" collapse="forumModals['isTextCollapsed']">
-        <div>    
+        <div>
           <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
           <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
         </div>
@@ -51,10 +51,10 @@
         <div>
           <form name="postUrlForm">
 
-          <div class="add"><span class="icomoon icon-edit"></span>
-            <input type="url" name="urlToPost" placeholder="Agregar tu enlace..." ng-model="linkToPost"  required /></div>
-          <div class="error txt-renglon" ng-show="postUrlForm.urlToPost.$error.url">Link invalido, introduzca una URL con el formato http://exemplo.com </div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postLinkToForum()" ng-disabled="!postUrlForm.urlToPost.$valid" >Compartir</a>
+            <div class="add"><span class="icomoon icon-edit"></span>
+              <input type="url" name="urlToPost" placeholder="Agregar tu enlace..." ng-model="linkToPost"  required /></div>
+            <div class="error txt-renglon" ng-show="postUrlForm.urlToPost.$error.url">Link invalido, introduzca una URL con el formato http://exemplo.com </div>
+            <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postLinkToForum()" ng-disabled="!postUrlForm.urlToPost.$valid" >Compartir</a>
           </form>
         </div>
       </div>
@@ -66,7 +66,7 @@
       </div>
 
       <div id="openModal4" class="modalDialog" collapse="forumModals['isAttachmentCollapsed']">
-        <div>    
+        <div>
           <!--<div class="add"><form><input type="file" placeholder="Atachea algo..." value="Buscar" ng-model="attachmentToPost"  base-sixty-four-input maxsize="2000000" accept="image/*"></form></div>-->
           <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="clickPostAttachment()" >Buscar</a>-->
           <div class="add"> {{attachmentToPost.fileName}} </div>
@@ -79,7 +79,7 @@
         <div class="part">
           <div class="author"><img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>{{p.post_author}} <span>publicó:</span>
-            <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
+              <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
             </div>
           </div>
           <div class="block">
@@ -88,7 +88,7 @@
               <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>              
               <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
               <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>
-            </span>              
+            </span>
             <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
             </div>
           </div>
@@ -98,7 +98,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="coment block" ng-show="(showAllCommentsByPost['id' + p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
             <div class="vermas">
               <span class="icomoon icon-show-more"></span>
@@ -108,38 +108,38 @@
 
           <div class="social">
             <div class="pink" ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
-              <span class="icomoon icon-like pink"></span> Me gusta              
+              <span class="icomoon icon-like pink"></span> Me gusta
             </div>
             <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
               <span class="icomoon icon-like"></span> Ya no me gusta
             </div>
             <!--<div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">-->
             <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">
-              <span class="icomoon icon-comment"></span> Comentar              
+              <span class="icomoon icon-comment"></span> Comentar
             </div>
           </div>
 
         </div>
         <section class="modales">
-            <!--<div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">-->
-            <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed[$index]">
-                <div>
-                    <span class="close"></span>
-                    <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
+          <!--<div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">-->
+          <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed[$index]">
+            <div>
+              <span class="close"></span>
+              <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
 
-                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
-                </div>
+              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
             </div>
-         </section>
+          </div>
+        </section>
       </div>
 
-      
-        <section>
-          <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
-             <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
-          </a>
-        </section>
-      <section class="actions">  
+
+      <section>
+        <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
+          <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
+        </a>
+      </section>
+      <section class="actions">
         <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
       </section>
     </section>

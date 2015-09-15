@@ -1,164 +1,150 @@
-<div class="incluso-app step-dashboard" id="site-wrapper">
-  <div id="site-menu" >
-  <!--<menu-component></menu-component>-->
-  </div>
-  <div id="site-canvas">
+<div class="incluso-app step-dashboard comments-forum">
+    <article class="blueprint forum">
+        <section>
+            <div class="txt-renglon centered txt-bigger"></div>
+            <div class="subtitle">{{discussion.name}}</div>
 
-
-<article class="blueprint">
-
-  <section>
-    <div class="txt-renglon centered txt-bigger"></div>
-    <div class="subtitle">Foro Común</div>
-
-    <div class="txt-renglon txt-bigger">{{discussion.message}}</div>  
-  </section>
-
-  <section class="txt-renglon centered collapse-media">
-    <div class="panel">
-      <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
-        <h3>
-          <span class="icomoon icon-camera"></span>
-          <span>Fotografía de foro</span>
-          <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
-          <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
-        </h3>
-      </div>
-      <div class="panel-body" collapse="isCollapsed">
-        <div class="stage perform">
-          <figure class="player">
-              <img src="{{ discussion.attachments[0].fileurl + '?token=' + userToken }}" alt="{{ discussion.attachments[0].filename }}" alt="discussion" />
-          </figure>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="txt-renglon distribuido">
-    <!--<a href="" ng-click="collapseText()"><img src="assets/images/aa.svg"></a> -->
-      <a href="" ng-click="collapseForumButtomsTrigger('isTextCollapsed')"><img src="assets/images/aa.svg"></a>
-    <a href="" ng-click="collapseForumButtomsTrigger('isLinkCollapsed')"><img src="assets/images/link.svg"></a>
-    <a href="" ng-click="collapseForumButtomsTrigger('isVideoCollapsed')"><img src="assets/images/play.svg  "></a>
-    <a href="" ng-click="collapseForumButtomsTrigger('isAttachmentCollapsed')"><img src="assets/images/clip.svg"></a>
-  </section>
-
-<section class="modales">
-
-<!--<div id="openModal1" class="modalDialog" collapse="isTextCollapsed">-->
-    <div id="openModal1" class="modalDialog" collapse="forumModals['isTextCollapsed']">
-  <div>
-    <a href="#close" title="Close" class="close"></a>
-<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value="" ng-model="textToPost" /></div>
-
-<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postTextToForum()">Compartir</button>
-  </div>
-</div>
-
-<div id="openModal2" class="modalDialog" collapse="forumModals['isLinkCollapsed']">
-  <div>
-    <a href="#close" title="Close" class="close"></a>
-<div class="add"><i class="icomoon icon-edit"></i><input type="url" placeholder="Agregar tu enlace..." value="" ng-model="linkToPost" /></div>
-
-<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postLinkToForum()" >Compartir</button>
-  </div>
-</div>
-
-<div id="openModal3" class="modalDialog" collapse="forumModals['isVideoCollapsed']">
-  <div>
-    <a href="#close" title="Close" class="close"></a>
-<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar ruta de tu peli..." value="" ng-model="videoToPost" /></div>
-
-<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postVideoToForum()" >Compartir</button>
-  </div>
-</div>
-
-<div id="openModal4" class="modalDialog" collapse="forumModals['isAttachmentCollapsed']">
-  <div>
-    <a href="#close" title="Close" class="close"></a>
-<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Atachea algo..." value="" ng-model="attachmentToPost" /></div>
-
-<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postAttachmentToForum()" >Compartir</button>
-  </div>
-</div>
-</section>
-
-
-<section class="wall">
-
-    <div id="item{{$index}}" ng-repeat="p in posts">
-
-
-
-        <div class="part">
-          <div class="author"><img ng-click="navigateTo('Profile/' + p.post_autor_id)" src="assets/images/avatar.svg">
-          <div>{{p.postAutor}} <span>publicó:</span>
-          <div>{{p.created | date: "dd MMMM yyyy"}}</div>
-          </div>
-        </div>
-        <div class="block">  
-            {{p.message }}
-            <!--ng-bind-html="p.message | parseLinks" -->
-            <div ng-repeat="attachment in p.attachments">
-                <a href="{{ attachmentsfileurl }}"><i class="icomoon icon-required"></i> {{ attachment.filename }} </a>
+            <div class="txt-renglon txt-bigger" ng-bind-html="discussion.message | linky"></div>
+        </section>
+        <section class="txt-renglon centered collapse-media" ng-show="(discussion.attachments.length == 1 && discussion.attachments[0].fileurl && (discussion.attachments[0].fileurl.length > 0))">
+            <div class="panel">
+                <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
+                    <h3>
+                        <span class="icomoon icon-camera"></span>
+                        <span>{{discussion.attachments.length == 1 ? discussion.attachments[0].filename : "" }}</span>
+                        <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
+                        <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
+                    </h3>
+                </div>
+                <div class="panel-body" collapse="isCollapsed">
+                    <div class="stage perform">
+                        <figure class="player">
+                            <img src="{{ discussion.attachments[0].fileurl + '?token=' + userToken }}" alt="{{ discussion.attachments[0].filename }}" alt="discussion" />
+                        </figure>
+                    </div>
+                </div>
             </div>
-          <div ng-show="p.likes" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto</div></div>
-
-
-          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
-
-            <div class="coment block"><img ng-click="navigateTo('Profile/' + r.post_autor_id)" src="assets/images/avatar.svg">
-              <div>{{r.postAutor}} <span>publicó:</span>   <div>{{r.message}}</div>
-              </div>
-            </div>
-          </div>
-
-        <div class="coment block" ng-show="(showAllCommentsByPost['id' + p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
-          <div class="vermas">
-            <span class="icomoon icon-show-more"></span>
-            Mostrar más comentarios...
-          </div>
-        </div>
-        
-        <div class="social">
-        <div><i class="icomoon icon-required"></i> Me gusta
-        </div>
-        <div ng-click="isCommentModalCollapsed[p.id] = !isCommentModalCollapsed[p.id]"><i class="icomoon icon-required"></i> Comentar
-        </div>
-        </div>
-
-        </div>
+        </section>
+        <section class="txt-renglon distribuido">
+            <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isTextCollapsed')" ng-class="{'active': !forumModals['isTextCollapsed']}">
+                <span class="icomoon icon-text text-bigger"></span>
+                <span class="arrow-up"></span>
+            </a>
+            <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isLinkCollapsed')" ng-class="{'active': !forumModals['isLinkCollapsed']}">
+                <span class="icomoon icon-hyperlink" ></span>
+                <span class="arrow-up"></span></a>
+            <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isVideoCollapsed')" ng-class="{'active': !forumModals['isVideoCollapsed']}">
+                <span class="icomoon icon-video-file" ></span>
+                <span class="arrow-up"></span></a>
+            <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isAttachmentCollapsed', 1)" ng-class="{'active': !forumModals['isAttachmentCollapsed']}">
+                <span class="icomoon icon-attachment"></span>
+                <span class="arrow-up"></span></a>
+        </section>
         <section class="modales">
-        <div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.id]">
-            <div>
-                <a href="#close" title="Close" class="close"></a>
-                <div class="add" ><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..."  ng-model="replyText" /></div>
-
-                <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="replyToPost(this, p.id)" >Compartir</button>
+            <div id="openModal1" class="modalDialog" collapse="forumModals['isTextCollapsed']">
+                <div>
+                    <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+                </div>
             </div>
-        </div> </section>
-    </div>
+            <div id="openModal2" class="modalDialog" collapse="forumModals['isLinkCollapsed']">
+                <div>
+                    <form name="postUrlForm">
 
-<section>
-  <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
-     <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
-  </a>
-</section>
+                        <div class="add"><span class="icomoon icon-edit"></span>
+                            <input type="url" name="urlToPost" placeholder="Agregar tu enlace..." ng-model="linkToPost"  required /></div>
+                        <div class="error txt-renglon" ng-show="postUrlForm.urlToPost.$error.url">Link invalido, introduzca una URL con el formato http://exemplo.com </div>
+                        <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postLinkToForum()" ng-disabled="!postUrlForm.urlToPost.$valid" >Compartir</a>
+                    </form>
+                </div>
+            </div>
+            <div id="openModal3" class="modalDialog" collapse="forumModals['isVideoCollapsed']">
+                <div>
+                    <div class="add"><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar ruta de tu peli..." value="" ng-model="videoToPost" /></div>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postVideoToForum()" >Compartir</a>
+                </div>
+            </div>
 
-<section>
-<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
-<div class="txt-renglon centered txt-bigger"></div> 
-</section>
+            <div id="openModal4" class="modalDialog" collapse="forumModals['isAttachmentCollapsed']">
+                <div>
+                    <!--<div class="add"><form><input type="file" placeholder="Atachea algo..." value="Buscar" ng-model="attachmentToPost"  base-sixty-four-input maxsize="2000000" accept="image/*"></form></div>-->
+                    <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="clickPostAttachment()" >Buscar</a>-->
+                    <div class="add"> {{attachmentToPost.fileName}} </div>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postAttachmentToForum()" >Compartir</a>
+                </div>
+            </div>
+        </section>
+        <section class="wall">
+            <div id="item{{$index}}" ng-repeat="p in posts">
+                <div class="part">
+                    <div class="author"><img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+                        <div>{{p.post_author}} <span>publicó:</span>
+                            <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
+                        </div>
+                    </div>
+                    <div class="block">
+            <span ng-switch="p.post_type">
+              <span ng-switch-default>{{ p.message }}</span>
+              <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>              
+              <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
+              <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>
+            </span>
+                        <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
+                        </div>
+                    </div>
+                    <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
+                        <div class="coment block"><img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+                            <div>{{r.post_author}} <span>comentó:</span>   <div>{{r.message}}</div>
+                            </div>
+                        </div>
+                    </div>
 
-  </article>
+                    <div class="coment block" ng-show="(showAllCommentsByPost['id' + p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousComments(p.post_id)">
+                        <div class="vermas">
+                            <span class="icomoon icon-show-more"></span>
+                            Mostrar más comentarios...
+                        </div>
+                    </div>
 
-  <footer class="footer">
-    <ul class="block-list">
-      <li><a href="" class="centered txt-title">Preguntas Frecuentes</a></li>
-      <li><a href="" class="centered txt-title">Ayuda y Soporte</a></li>
-    </ul>
-    <a href="#navBar" class="to-top"><i class="icomoon icon-double-arrow-up"></i><br/>SUBIR</a>
-  </footer>
-    </div>
-    </div>
-  <!-- html -->
+                    <div class="social">
+                        <div class="pink" ng-hide="p.liked >= 1" ng-click="clickLikeButton(p.post_id)">
+                            <span class="icomoon icon-like pink"></span> Me gusta
+                        </div>
+                        <div ng-hide="p.liked == 0" ng-click="clickLikeButton(p.post_id)">
+                            <span class="icomoon icon-like"></span> Ya no me gusta
+                        </div>
+                        <!--<div ng-click="isCommentModalCollapsed[p.post_id] = !isCommentModalCollapsed[p.post_id]">-->
+                        <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">
+                            <span class="icomoon icon-comment"></span> Comentar
+                        </div>
+                    </div>
+
+                </div>
+                <section class="modales">
+                    <!--<div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">-->
+                    <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed[$index]">
+                        <div>
+                            <span class="close"></span>
+                            <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
+
+                            <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+
+            <section>
+                <a class="btn btn-showmore btn-lg btn-cnt" role="button" ng-click="showMore()" ng-show="morePendingPosts">
+                    <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
+                </a>
+            </section>
+            <section class="actions">
+                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
+            </section>
+        </section>
+    </article>
+
+</div>
+
 
