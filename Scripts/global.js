@@ -380,10 +380,10 @@ function getActivityByActivity_identifier(activity_identifier, usercourse) {
             return matchingActivity;
 }
 
-function _getActivityByCourseModuleId(coursemoduleid) {          
+function _getActivityByCourseModuleId(coursemoduleid, usercourse) {          
             var matchingActivity = null;
             var breakAll = false;
-            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+            var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
             for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
                 var stage = userCourse.stages[stageIndex];
                 for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
