@@ -239,6 +239,42 @@ angular
                     });
                   }
                 }
+                else 
+                  {
+                      parentActivity.status = 1;
+                      _setLocalStorageJsonItem("usercourse", userCourseUpdated)
+
+                        if (parentActivity.activities) {
+                          //Searches for the quizzes completedm
+                          _.each(quizzesRequests, function(q){
+                            if(q.quiz_answered){
+                              subactivitiesCompleted.push(q.coursemoduleid);
+                            }
+                          });
+                          //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
+                          updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
+                          //Updates the statuses of the subactivities completed
+                          userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
+                        }
+
+                      for(i = 0; i < quizzesRequests.length; i++){
+                        if (quizzesRequests[i].quiz_answered) {
+                          var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
+                          $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
+                        }
+                      }
+
+                      _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
+
+
+                      if ($scope.IsComplete) {
+                        $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
+                      }
+                      else
+                      {
+                          $location.path('/ZonaDeVuelo/Dashboard/1/2');
+                      }
+                    }
 
             }
 

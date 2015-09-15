@@ -73,13 +73,12 @@ angular
                 var ctx = c.getContext("2d");
                 var img = new Image();
                 img.onload = function() {
-                    alert('loading avatar');
                     c.width = this.width;
                     c.height = this.height;
                     ctx.drawImage(img, 0, 0);
 
                     if(typeof callback === 'function'){
-                        var dataURL = c.toDataURL("image/jpeg");
+                        var dataURL = c.toDataURL("image/png");
                         callback(dataURL.slice(22, dataURL.length));
                     }
                 };
