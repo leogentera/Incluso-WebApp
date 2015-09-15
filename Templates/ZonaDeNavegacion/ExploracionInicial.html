@@ -23,13 +23,13 @@
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
                                     <input id="tru1" type="radio" name="vf1"
-                                           ng-model="AnswersResultStage2.answers[0]"
+                                           ng-model="exploracionInicialStage2[0]"
                                            value="0"
                                            ng-disabled="setReadOnly"/>
                                     <label for="tru1">Sí</label>
 
                                     <input id="fols1" type="radio" name="vf1"
-                                           ng-model="AnswersResultStage2.answers[0]"
+                                           ng-model="exploracionInicialStage2[0]"
                                            value="1"
                                            ng-disabled="setReadOnly"/>
                                     <label for="fols1">No</label>
@@ -45,13 +45,13 @@
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
                                     <input id="tru2" type="radio" name="vf2"
-                                           ng-model="AnswersResultStage2.answers[1]"
+                                           ng-model="exploracionInicialStage2[1]"
                                            value="0"
                                            ng-disabled="setReadOnly"/>
                                     <label for="tru2">Sí</label>
 
                                     <input id="fols2" type="radio" name="vf2"
-                                           ng-model="AnswersResultStage2.answers[1]"
+                                           ng-model="exploracionInicialStage2[1]"
                                            value="1"
                                            ng-disabled="setReadOnly"/>
                                     <label for="fols2">No</label>
@@ -67,13 +67,13 @@
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
                                     <input id="tru3" type="radio" name="vf3"
-                                           ng-model="AnswersResultStage2.answers[2]"
+                                           ng-model="exploracionInicialStage2[2]"
                                            value="0"
                                            ng-disabled="setReadOnly"/>
                                     <label for="tru3">Sí</label>
 
                                     <input id="fols3" type="radio" name="vf3"
-                                           ng-model="AnswersResultStage2.answers[2]"
+                                           ng-model="exploracionInicialStage2[2]"
                                            value="1"
                                            ng-disabled="setReadOnly"/>
                                     <label for="fols3">No</label>
@@ -89,40 +89,36 @@
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <input id="check1" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResultStage2.answers[3][0]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionInicialStage2[3][0]" ng-disabled="setReadOnly"/>
                                 <label for="check1">Salud Física</label>
 
                                 <input id="check2" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResultStage2.answers[3][1]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionInicialStage2[3][1]" ng-disabled="setReadOnly"/>
                                 <label for="check2">Escuela</label>
 
                                 <input id="check3" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResultStage2.answers[3][2]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionInicialStage2[3][2]" ng-disabled="setReadOnly"/>
                                 <label for="check3">Familia y amigos</label>
 
                                 <input id="check4" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResultStage2.answers[3][3]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionInicialStage2[3][3]" ng-disabled="setReadOnly"/>
                                 <label for="check4">Hobbies</label>
 
                                 <input id="check5" type="checkbox" value="check1" name="check"
-                                       ng-model="AnswersResultStage2.answers[3][4]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionInicialStage2[3][4]" ng-disabled="setReadOnly"
+                                       ng-change="exploracionInicialStage2OtroAnswer[0].answers[0] = exploracionInicialStage2[3][4] == false ? '' : exploracionInicialStage2OtroAnswer[0].answers[0]"
+                                       ng-click="addCaptureField(exploracionInicialStage2[3][4])"/>
                                 <label for="check5">Otro</label>
 
-                                <div class="form-group theme-form" ng-show="AnswersResultStage2.answers[3][4]">
+                                <div class="form-group theme-form" ng-show="exploracionInicialStage2[3][4]">
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
+                                        <textarea id="" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
+                                                  ng-model="exploracionInicialStage2OtroAnswer[0].answers[0]">
                                         </textarea>
                                     </div>
                                 </div>
-
-                                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                                <label for="otros">Otros</label>-->
                             </section>
-                            <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                              <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-                            </div>-->
                         </div>
                     </div>
 
