@@ -144,6 +144,12 @@ angular
                   case "148":
                       $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $scope.moodleId + "/" + discussionId);
                       break;
+                  case "179":
+                      $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                      break;
+                  case "85":
+                      $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                      break;
               }
 
             }

@@ -481,12 +481,12 @@
             controller: 'stageForumCloseController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/transformate/PuntoDeEncuentro/Topicos/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/transformate/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
             templateUrl: 'Templates/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
