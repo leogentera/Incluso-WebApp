@@ -1,315 +1,372 @@
 <div class="incluso-app album">
-               
-    <div class="carousel">      
-      <div id="owlAlbum" class="owl-carousel">
+  <div class="carousel">
+    <div id="owlAlbum" class="owl-carousel">
         <!-- page 1 -->
         <div class="item">
-          <article class="album-page1">  
-            <!-- description -->
-            <section class="centered section-description">
-                <h2 class="subtitle centered text-uppercase">Mi album</h2>
-                <p class=" txt-renglon centered">Cada logo debe ser recolectado y aquí encontrarás los momentos mas especiales de tu viaje.</p>
-                <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
-                  <div class="btn-icon">
-                      <span class="icomoon icon-share"></span>
-                  </div>
-                  <span>Compartir mi album</span>
-                  <span class="arrow-up"></span>
-                </a>
-                <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
-                  <div>    
-                    <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
-                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
-                  </div>
-                </div>
-            </section>           
-            <!-- my avatar -->
-            <section class="section-album section-avatar centered">
-              <div class="container">
-                <figure>
-                  <img src="assets/images/img-album-avatar.svg" alt="Avatar" />
-                </figure>
-                <!-- shield -->
-                <section class="section-album section-shield-name centered">
-                  <div class="container">
-                    <p>El escudo que me distingue es: </p>
-                    <h4 class="subtitle centered text-uppercase">Inteligencia interpersonal</h4>
+            <article class="album-page1">
+                <!-- description -->
+                <section class="centered section-description">
+                  <h2 class="subtitle centered text-uppercase">Mi album</h2>
+                  <p class=" txt-renglon centered">Cada logo debe ser recolectado y aquí encontrarás los momentos mas especiales de tu viaje.</p>
+                  <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
+                    <div class="btn-icon">
+                        <span class="icomoon icon-share"></span>
+                    </div>
+                    <span>Compartir mi album</span>
+                    <span class="arrow-up"></span>
+                  </a>
+                  <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
+                    <div>    
+                      <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
+                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+                    </div>
                   </div>
                 </section>
-              </div>
-            </section>           
-            <!-- abilities -->
-            <section class="section-album section-abilities centered">
-              <div class="container">
-                <ul class="list-group">
-                  <li class="list-group-item"><label>Musical</label></li>
-                  <li class="list-group-item"><label>Interpersonal</label></li>
-                  <li class="list-group-item"><label>Naturalista</label></li>
-                </ul>
-              </div>
-            </section>
-            <!-- carousel controls -->
-            <div class="actions txt-renglon">
-              <a class="control back" href="#" id="prev">
-                  <span class="icomoon icon-arrow-bold-left"></span>
-              </a>
-              <a class="control next" href="#" id="next">
-                  <span class="icomoon icon-arrow-bold-right"></span>
-              </a>  
-            </div>
-          </article>  
+                <!-- my avatar -->
+                <section class="section-album section-avatar centered">
+                    <div class="container">
+                        <figure>                                
+                            <img ng-src="{{album.profileimageurl}}" alt="Avatar" />
+                        </figure>
+                        <!-- shield -->
+                        <section class="section-album section-shield-name centered">
+                          <div class="container">
+                              <p>El escudo que me distingue es: </p>
+                              <h4 class="subtitle centered text-uppercase">{{album.shield==''?'Aún no tienes tu primer escudo':album.shield}}</h4>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+                <!-- abilities -->
+                <section class="section-album section-abilities centered">
+                    <div class="container">
+                        <ul class="list-group">                                
+                            <li class="list-group-item" ng-repeat="hability in album.myHabilities">
+                                hability                                    
+                            </li>
+                            <li class="list-group-item" ng-if="album.myHabilities.length == 0">
+                                <strong>No has seleccionado habilidades aún</strong>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- carousel controls -->
+                <div class="actions txt-renglon">
+                    <a class="control back" href="#" id="prev">
+                        <span class="icomoon icon-arrow-bold-left"></span>
+                    </a>
+                    <a class="control next" href="#" id="next">
+                        <span class="icomoon icon-arrow-bold-right"></span>
+                    </a>
+                </div>                    
+                <!-- footer section -->            
+                <section class="section-footer">
+                  <ul class="block-list">
+                    <li>
+                      <a href="" class="btn-link">Preguntas Frecuentes</a>
+                    </li>
+                    <li>
+                      <a href="" class="btn-link" ng-click="navigateTo('HelpAndSupport','sidebar')">Ayuda y Soporte</a>
+                    </li>
+                  </ul>
+                  <a class="btn-back-to-top" ng-click="$emit('scrollTop');">
+                      <span class="icomoon icon-double-arrow-up"></span>
+                      <span>Subir</span>
+                  </a>
+                </section>
+            </article>  
         </div>
+   
         <!-- page 2 -->
         <div class="item">
-          <article class="album-page2">   
-            <!-- description -->
-            <section class="centered section-description">
-                <h2 class="subtitle centered text-uppercase">Mi album</h2>
-                <p class=" txt-renglon centered">Cada logo debe ser recolectado y aquí encontrarás los momentos mas especiales de tu viaje.</p>
-                <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
-                  <div class="btn-icon">
-                      <span class="icomoon icon-share"></span>
+            <article class="album-page2">
+                <!-- description -->
+                <section class="centered section-description">
+                  <h2 class="subtitle centered text-uppercase">Mi album</h2>
+                  <p class=" txt-renglon centered">
+                      Todos los logros en un solo lugar.
+                      Recuerda lo vivido en esta misión y no te olvides de continuar con tus propósitos.
+                  </p>
+                  <a class="btn btn-icon-aside light centered">
+                      <div class="btn-icon">
+                          <span class="icomoon icon-share"></span>
+                      </div>
+                      <span>Compartir mi album</span>
+                    <span class="arrow-up"></span>
+                  </a>
+                  <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
+                    <div>    
+                      <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
+                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+                    </div>
                   </div>
-                  <span>Compartir mi album</span>
-                  <span class="arrow-up"></span>
-                </a>
-                <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
-                  <div>    
-                    <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
-                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
-                  </div>
-                </div>
-            </section>         
-            <!-- What I like -->
-            <section class="section-album section-what-ilike centered">
-              <div class="container">
-                <ul class="list-group">
-                  <li class="list-group-item"><label>Tocar la batería</label></li>
-                  <li class="list-group-item"><label>Ir al cine con mi novia</label></li>
-                  <li class="list-group-item"><label>Jugar futbol</label></li>
-                </ul>
-              </div>
-            </section>
-            <!-- qualities -->
-            <section class="section-album section-qualities centered">
-              <div class="container">
-                <ul class="list-group">
-                  <li class="list-group-item"><label>Amigable</label></li>
-                  <li class="list-group-item"><label>Responsable</label></li>
-                  <li class="list-group-item"><label>Inteligente</label></li>
-                </ul>
-              </div>
-            </section>
-            <!-- What drives me -->
-            <section class="section-album section-what-drivesme centered">
-              <div class="container">
-                <ul class="list-group">
-                  <li class="list-group-item"><label>Mi familia</label></li>
-                  <li class="list-group-item"><label>Mis amigos</label></li>
-                  <li class="list-group-item"><label>Mis padres</label></li>
-                </ul>
-              </div>
-            </section>
-            <!-- dreams -->
-            <section class="section-album section-dreams centered">
-              <div class="container">
-                <ul class="list-group">
-                  <li class="list-group-item"><label>Amigable</label></li>
-                  <li class="list-group-item"><label>Responsable</label></li>
-                  <li class="list-group-item"><label>Inteligente</label></li>
-                </ul>
-              </div>
-            </section>
-            <!-- carousel controls -->
-            <div class="actions txt-renglon">
-              <a class="control back" href="#" id="prev">
-                  <span class="icomoon icon-arrow-bold-left"></span>
-              </a>
-              <a class="control next" href="#" id="next">
-                  <span class="icomoon icon-arrow-bold-right"></span>
-              </a>  
-            </div>
-          </article>
+                </section>
+                <!-- What I like -->
+                <section class="section-album section-what-ilike centered">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"><label>Tocar la batería</label></li>
+                            <li class="list-group-item"><label>Ir al cine con mi novia</label></li>
+                            <li class="list-group-item"><label>Jugar futbol</label></li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- qualities -->
+                <section class="section-album section-qualities centered">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"><label>Amigable</label></li>
+                            <li class="list-group-item"><label>Responsable</label></li>
+                            <li class="list-group-item"><label>Inteligente</label></li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- What drives me -->
+                <section class="section-album section-what-drivesme centered">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"><label>Mi familia</label></li>
+                            <li class="list-group-item"><label>Mis amigos</label></li>
+                            <li class="list-group-item"><label>Mis padres</label></li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- dreams -->
+                <section class="section-album section-dreams centered">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"><label>Amigable</label></li>
+                            <li class="list-group-item"><label>Responsable</label></li>
+                            <li class="list-group-item"><label>Inteligente</label></li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- carousel controls -->
+                <div class="actions txt-renglon">
+                    <a class="control back" href="#" id="prev">
+                        <span class="icomoon icon-arrow-bold-left"></span>
+                    </a>
+                    <a class="control next" href="#" id="next">
+                        <span class="icomoon icon-arrow-bold-right"></span>
+                    </a>
+                </div>              
+                <!-- footer section -->            
+                <section class="section-footer">
+                  <ul class="block-list">
+                    <li>
+                      <a href="" class="btn-link">Preguntas Frecuentes</a>
+                    </li>
+                    <li>
+                      <a href="" class="btn-link" ng-click="navigateTo('HelpAndSupport','sidebar')">Ayuda y Soporte</a>
+                    </li>
+                  </ul>
+                  <a class="btn-back-to-top" ng-click="$emit('scrollTop');">
+                      <span class="icomoon icon-double-arrow-up"></span>
+                      <span>Subir</span>
+                  </a>
+                </section>
+            </article>
         </div>
+   
         <!-- page 3 -->
         <div class="item">
-          <article class="album-page3">
-            <!-- description -->
-            <section class="centered section-description">
-                <h2 class="subtitle centered text-uppercase">Mi album</h2>
-                <p class=" txt-renglon centered">Cada logo debe ser recolectado y aquí encontrarás los momentos mas especiales de tu viaje.</p>
-                <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
-                  <div class="btn-icon">
-                      <span class="icomoon icon-share"></span>
-                  </div>
-                  <span>Compartir mi album</span>
-                  <span class="arrow-up"></span>
-                </a>
-                <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
-                  <div>    
-                    <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
-                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
-                  </div>
-                </div>
-            </section>
-            <!-- future plans -->
-            <section class="section-album section-future-plans centered">
-              <div class="container">
-                <ul class="list-group">
-                  <li class="list-group-item"><span>1 año. </span><label>Terminar estudios</label></li>
-                  <li class="list-group-item"><span>2 años. </span><label>Comprar mi casa ideal</label></li>
-                  <li class="list-group-item"><span>5 años. </span><label>Ser futbolista</label></li>
-                </ul>
-              </div>
-            </section>
-            <!-- goals -->
-            <section class="section-album section-goals centered">
-              <div class="container">
-                <ul class="list-group">
-                  <li class="list-group-item"><label>Estudiar para mis exámenes</label></li>
-                  <li class="list-group-item"><label>Aplicar a entrevistas de trabajo</label></li>
-                  <li class="list-group-item"><label>Seguir con el futbol</label></li>
-                  <li class="list-group-item"><label>Estabilidad económica</label></li>
-                  <li class="list-group-item"><label>Tener tiempo para mí</label></li>
-                </ul>
-              </div>
-            </section>
-            <!-- now i know -->
-            <section class="section-album section-now-iknow centered">
-              <div class="container">
-                <ul class="list-group">
-                  <li class="list-group-item"><label>Ahorro</label></li>
-                  <li class="list-group-item"><label>Préstamo</label></li>
-                  <li class="list-group-item"><label>Inversión</label></li>
-                </ul>
-              </div>
-            </section>
-            <!-- what i like -->
-            <section class="section-album section-what-ilike bg-pink centered">
-              <div class="container">
-                <ul class="list-group">
-                 <li class="list-group-item"><label>Tocar la bateria</label></li>
-                  <li class="list-group-item"><label>Ir al cine con mi novia</label></li>
-                  <li class="list-group-item"><label>Jugar futbol</label></li>
-                </ul>
-              </div>
-            </section>
-            <!-- project -->
-            <section class="section-album section-project centered">
-              <div class="container">
-               <p class="txt-renglon">Seguir practicando futbol y aplicar para las eliminatorias de seleccion de jugadores profesionales</p>
-              </div>
-            </section>
-            <!-- carousel controls -->
-            <div class="actions txt-renglon">
-              <a class="control back" href="#" id="prev">
-                  <span class="icomoon icon-arrow-bold-left"></span>
-              </a>
-              <a class="control next" href="#" id="next">
-                  <span class="icomoon icon-arrow-bold-right"></span>
-              </a>  
-            </div>
-          </article>
+            <article class="album-page3">
+                <!-- description -->
+                <section class="centered section-description">
+                    <h2 class="subtitle centered text-uppercase">Mi album</h2>
+                    <p class=" txt-renglon centered">Cada logo debe ser recolectado y aquí encontrarás los momentos mas especiales de tu viaje.</p>
+                    <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
+                      <div class="btn-icon">
+                          <span class="icomoon icon-share"></span>
+                      </div>
+                      <span>Compartir mi album</span>
+                      <span class="arrow-up"></span>
+                    </a>
+                    <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
+                      <div>    
+                        <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
+                        <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+                      </div>
+                    </div>
+                </section>
+                <!-- future plans -->
+                <section class="section-album section-future-plans centered">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"><span>1 año. </span><label>Terminar estudios</label></li>
+                            <li class="list-group-item"><span>2 años. </span><label>Comprar mi casa ideal</label></li>
+                            <li class="list-group-item"><span>5 años. </span><label>Ser futbolista</label></li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- goals -->
+                <section class="section-album section-goals centered">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"><label>Estudiar para mis exámenes</label></li>
+                            <li class="list-group-item"><label>Aplicar a entrevistas de trabajo</label></li>
+                            <li class="list-group-item"><label>Seguir con el futbol</label></li>
+                            <li class="list-group-item"><label>Estabilidad económica</label></li>
+                            <li class="list-group-item"><label>Tener tiempo para mí</label></li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- now i know -->
+                <section class="section-album section-now-iknow centered">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"><label>Ahorro</label></li>
+                            <li class="list-group-item"><label>Préstamo</label></li>
+                            <li class="list-group-item"><label>Inversión</label></li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- what i like -->
+                <section class="section-album section-what-ilike bg-pink centered">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"><label>Tocar la bateria</label></li>
+                            <li class="list-group-item"><label>Ir al cine con mi novia</label></li>
+                            <li class="list-group-item"><label>Jugar futbol</label></li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- project -->
+                <section class="section-album section-project centered">
+                    <div class="container">
+                        <p class="txt-renglon">Seguir practicando futbol y aplicar para las eliminatorias de seleccion de jugadores profesionales</p>
+                    </div>
+                </section>
+                <!-- carousel controls -->
+                <div class="actions txt-renglon">
+                    <a class="control back" href="#" id="prev">
+                        <span class="icomoon icon-arrow-bold-left"></span>
+                    </a>
+                    <a class="control next" href="#" id="next">
+                        <span class="icomoon icon-arrow-bold-right"></span>
+                    </a>
+                </div>               
+                <!-- footer section -->            
+                <section class="section-footer">
+                  <ul class="block-list">
+                    <li>
+                      <a href="" class="btn-link">Preguntas Frecuentes</a>
+                    </li>
+                    <li>
+                      <a href="" class="btn-link" ng-click="navigateTo('HelpAndSupport','sidebar')">Ayuda y Soporte</a>
+                    </li>
+                  </ul>
+                  <a class="btn-back-to-top" ng-click="$emit('scrollTop');">
+                      <span class="icomoon icon-double-arrow-up"></span>
+                      <span>Subir</span>
+                  </a>
+                </section>
+            </article>
         </div>
+         
         <!-- page 4 -->
         <div class="item">
-          <article class="album-page4">
-            <!-- description -->
-            <section class="centered section-description">
-                <h2 class="subtitle centered text-uppercase">Mi album</h2>
-                <p class=" txt-renglon centered">Cada logo debe ser recolectado y aquí encontrarás los momentos mas especiales de tu viaje.</p>
-                <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
-                  <div class="btn-icon">
-                      <span class="icomoon icon-share"></span>
-                  </div>
-                  <span>Compartir mi album</span>
-                  <span class="arrow-up"></span>
-                </a>
-                <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
-                  <div>    
-                    <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
-                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
-                  </div>
-                </div>
-            </section>
-            <!-- my participation -->
-            <section class="section-album section-participation centered">
-              <div class="container">
-                <ul class="list-group">
-                  <li class="list-group-item"><span class="results-title">comunidad </span><label>34 entradas</label></li>
-                  <li class="list-group-item"><span class="results-title">Foros </span><label>28 entradas</label></li>                  
-                </ul>
-                <!-- won stars -->
-                <div class="txt-renglon">
-                  <h2 class="results-title">Estrellas ganadas</h2>
-                  <div class="sm-pill">
-                    <span class="ng-binding">300</span>
-                    <span class="icomoon icon-star pull-right"></span>
-                  </div>
-                </div>
-                <!-- badges obtained -->
-                <div class="txt-renglon badges">
-                  <h2 class="results-title">Insignias obtenidas</h2>
-                  <div class="badge-item text-center">
-                    <img class="badgesviews" src="assets/images/badges/IDintergalactica.svg" alt="IDintergalactica" class="img-responsive" width="100px"
-                    height="100px" />
-                  </div>
-                  <div class="badge-item text-center">
-                    <img class="badgesviews" src="assets/images/badges/combustible.svg" alt="combustible" class="img-responsive" width="100px"
-                    height="100px" />
-                  </div>
-                  <div class="badge-item text-center">
-                    <img class="badgesviews" src="assets/images/badges/corazon_digital.svg" alt="corazon_digital" class="img-responsive" width="100px"
-                    height="100px" />
-                  </div>
-                  <div class="badge-item text-center">
-                    <img class="badgesviews" src="assets/images/badges/foro_interplanetario.svg" alt="foro_interplanetario" class="img-responsive" width="100px"
-                    height="100px"  />
-                  </div>
-                  <div class="badge-item text-center">
-                    <img class="badgesviews" src="assets/images/badges/turbina.svg" alt="turbina" class="img-responsive" width="100px"
-                    height="100px"  />
-                  </div>
-                  <div class="badge-item text-center">
-                    <img class="badgesviews" src="assets/images/badges/sistNavegacion.svg" alt="sistNavegacion" class="img-responsive" width="100px"
-                    height="100px"  />
-                  </div>
-                  <div class="badge-item text-center">
-                    <img class="badgesviews" src="assets/images/badges/ala.svg" alt="ala" class="img-responsive" width="100px"
-                    height="100px"  />
-                  </div>
-                  <div class="badge-item text-center">
-                    <img class="badgesviews" src="assets/images/badges/participacion_electrica.svg" alt="participacion_electrica" class="img-responsive" width="100px"
-                    height="100px"  />
-                  </div>
-                  <div class="badge-item text-center">
-                    <img class="badgesviews" src="assets/images/badges/turbina.svg" alt="turbina" class="img-responsive" width="100px"
-                    height="100px"  />
-                  </div>
+            <article class="album-page4">
+                <!-- description -->
+                <section class="centered section-description">
+                    <h2 class="subtitle centered text-uppercase">Mi album</h2>
+                    <p class=" txt-renglon centered">Cada logo debe ser recolectado y aquí encontrarás los momentos mas especiales de tu viaje.</p>
+                    <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
+                      <div class="btn-icon">
+                          <span class="icomoon icon-share"></span>
+                      </div>
+                      <span>Compartir mi album</span>
+                      <span class="arrow-up"></span>
+                    </a>
+                    <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
+                      <div>    
+                        <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
+                        <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+                      </div>
+                    </div>
+                </section>
+                <!-- my participation -->
+                <section class="section-album section-participation centered">
+                    <div class="container">
+                        <ul class="list-group">
+                            <li class="list-group-item"><span class="results-title">comunidad </span><label>34 entradas</label></li>
+                            <li class="list-group-item"><span class="results-title">Foros </span><label>28 entradas</label></li>
+                        </ul>
+                        <!-- won stars -->
+                        <div class="txt-renglon">
+                            <h2 class="results-title">Estrellas ganadas</h2>
+                            <div class="sm-pill">
+                                <span class="ng-binding">300</span>
+                                <span class="icomoon icon-star pull-right"></span>
+                            </div>
+                        </div>
+                        <!-- badges obtained -->
+                        <div class="txt-renglon badges">
+                            <h2 class="results-title">Insignias obtenidas</h2>
+                            <div class="badge-item text-center">
+                                <img class="badgesviews" src="assets/images/badges/IDintergalactica.svg" alt="IDintergalactica" />
+                            </div>
+                            <div class="badge-item text-center">
+                                <img class="badgesviews" src="assets/images/badges/combustible.svg" alt="combustible" />
+                            </div>
+                            <div class="badge-item text-center">
+                                <img class="badgesviews" src="assets/images/badges/corazon_digital.svg" alt="corazon_digital"/>
+                            </div>
+                            <div class="badge-item text-center">
+                                <img class="badgesviews" src="assets/images/badges/foro_interplanetario.svg" alt="foro_interplanetario" />
+                            </div>
+                            <div class="badge-item text-center">
+                                <img class="badgesviews" src="assets/images/badges/turbina.svg" alt="turbina"   />
+                            </div>
+                            <div class="badge-item text-center">
+                                <img class="badgesviews" src="assets/images/badges/sistNavegacion.svg" alt="sistNavegacion"  />
+                            </div>
+                            <div class="badge-item text-center">
+                                <img class="badgesviews" src="assets/images/badges/ala.svg" alt="ala" 
+                                      />
+                            </div>
+                            <div class="badge-item text-center">
+                                <img class="badgesviews" src="assets/images/badges/participacion_electrica.svg" alt="participacion_electrica"  />
+                            </div>
+                            <div class="badge-item text-center">
+                                <img class="badgesviews" src="assets/images/badges/turbina.svg" alt="turbina"  />
+                            </div>
+                            </div>
+                        </div>
+                </section>
+                <!-- next time -->
+                <section class="section-album section-next-time centered">
+                    <div class="container">
 
-              </div>
-            </section>
-            <!-- next time -->
-            <section class="section-album section-next-time centered">
-              <div class="container">
-                
-              </div>
-            </section>
-            <!-- carousel controls -->
-            <div class="actions txt-renglon">
-              <a class="control back" href="#" id="prev">
-                  <span class="icomoon icon-arrow-bold-left"></span>
-              </a>
-              <a class="control next" href="#" id="next">
-                  <span class="icomoon icon-arrow-bold-right"></span>
-              </a>  
-            </div>
-          </article>
+                    </div>
+                </section>
+                <!-- carousel controls -->
+                <div class="actions txt-renglon">
+                    <a class="control back" href="#" id="prev">
+                        <span class="icomoon icon-arrow-bold-left"></span>
+                    </a>
+                    <a class="control next" href="#" id="next">
+                        <span class="icomoon icon-arrow-bold-right"></span>
+                    </a>
+                </div>
+           
+                <!-- footer section -->            
+                <section class="section-footer">
+                  <ul class="block-list">
+                    <li>
+                      <a href="" class="btn-link">Preguntas Frecuentes</a>
+                    </li>
+                    <li>
+                      <a href="" class="btn-link" ng-click="navigateTo('HelpAndSupport','sidebar')">Ayuda y Soporte</a>
+                    </li>
+                  </ul>
+                  <a class="btn-back-to-top" ng-click="$emit('scrollTop');">
+                      <span class="icomoon icon-double-arrow-up"></span>
+                      <span>Subir</span>
+                  </a>
+                </section>
+            </article>
         </div>
-
-              
-      </div> 
-
-    </div>  
-        
+    </div>
+  </div>
 </div>
