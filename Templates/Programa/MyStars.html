@@ -1,162 +1,83 @@
-<div class="incluso-app hall-of-fame" id="site-wrapper">
-	<article>
-		<section class="showcase-carousel">
-			<div class="owl-carousel-" id="top-users-statistics">
-				<div class="item">
-					<!-- <div class="showcase"> -->
-						<div class="user-stats by-stars component">
-							<h3>Top 5: <span>Estrellas</span></h3>
-							<div class="user-avatar">
-								<figure>
-									<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
-								</figure>
-							</div>
-							<div class="user-data">
-								<p class="user-name">Mis estrellas</p>
-								<p class="user-points">
-				                    <span>0</span>
-				                    <span class="icomoon icon-star"></span>
-				                </p>
-							</div>
-						</div>
-					<!-- </div> -->
-				</div>
-				<div class="item"></div>
-				<div class="item"></div>
-				<div class="item"></div>
+<div class="incluso-app content-page-theme my-stars score-dashboard" id="site-wrapper">
+<!--   <article>
+    <section class="component">
+      <h3>Mis estrellas</h3>
 
-				<a class="control back" href="#" id="prev">
-					<span class="icomoon icon-arrow-bold-left"></span>
-				</a>
-				<a class="control next" href="#" id="next">
-					<span class="icomoon icon-arrow-bold-right"></span>
-				</a>
-			</div>
-		</section>
+      <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateTo('ProgramaDashboard', 'sideToggle')">Regresar</a> 
+    </section>
+  </article> -->
 
-		<section class="block-list">
-			
-		</section>
-		<section class="component">
-			<h3>Salón de la fama</h3>
-			<div></div>
-		</section>
-	</article>
-	
-	<!-- <div id="carousel-example-generic2" class="carousel">
-		<div id="owl-demo2" class="owl-carousel">
-			<div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">                            
-				<figure class="item-image">
-					<img ng-src="{{retosIconos[reto.sectionname]}}" alt="{{reto.sectionname}}" />
-				</figure>
-				<h4 class="item-title" ng-bind="reto.sectionname"></h4>
-				<p class="item-description" ng-bind="reto.activityintro"></p>
-				<p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : 'Cada sueño en su lugar' "></p>
+  <article class="starway">
 
-				<div class="page-number">
-					<p class="text-center">
-						<span>{{model.stages[idEtapa].challenges.indexOf(reto) + 1}}</span>
-						<span>/</span>
-						<span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
-					</p>                    
-				</div>                               
-			</div>
-		</div>
+  	<section class="score centered txt-bigger lightgreen">
+  		<div id="totstars">240</div>
+  	</section>
+  	<section class="centered">
+  		<div class="sharer">
+  			<i class="icomoon icon-share icon"></i><a href="#openModal1" class="modbut"><div class="txt">Compartir puntuación</div></a>
+  		</div>
+  	</section>
+  	<section class="modales">
 
-		<a class="control back" href="#" id="prev">
-			<span class="icomoon icon-arrow-bold-left"></span>
-		</a>
-		<a class="control next" href="#" id="next">
-			<span class="icomoon icon-arrow-bold-right"></span>
-		</a>                    
-	</div> -->
+  		<div id="openModal1" class="modalDialog">
+  			<div>
+  				<a href="#close" title="Close" class="close"></a>
+  				<div class="txt-renglon txt-bigger">"Puntuación 240 Estrellas"</div>
+  				<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value=""/></div>
 
-  <!-- <div id="site-menu" >
+  				<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+  			</div>
+  		</div>
+  	</section>
+  	<section class="starcontain">
+  		<div class="subtitle centered">Mis estrellas</div>
+  		<div class="part">
+  			<div class="fl-left"><div class="date">21 de Julio 2015 - 4:30 PM</div>Conócete:Descubre Más</div><div class="fl-right sm-pill">+240&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+  		</div>
+  		<div class="part">
+  			<div class="fl-left"><div class="date">20 de Junio 2015 - 10:22 PM</div>Conócete:Mis Cualidades</div><div class="fl-right sm-pill">+50&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+  		</div>
+  		<div class="part">
+  			<div class="fl-left"><div class="date">20 de Junio 2015 - 5:50 PM</div>Conócete:Sueña</div><div class="fl-right sm-pill">+40&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+  		</div>
+  		<div class="part">
+  			<div class="fl-left"><div class="date">19 de Junio 2015 - 3:22 PM</div>Conócete:Foro Común</div><div class="fl-right sm-pill">+30&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+  		</div>
+  		<div class="part">
+  			<div class="fl-left"><div class="date">16 de Mayo 2015 - 11:42 AM</div>Evaluación Inicial</div><div class="fl-right sm-pill">+20&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+  		</div>
 
-  </div> -->
-<!--   <div id="site-canvas">
+  		<div class="part showmore">
+  			<i class="icomoon  icon-show-more fl-right"></i> Mostrar más estrellas...
+  		</div>
+  	</section>
+  	<section class="starcontain">
+  		<div class="subtitle centered">Mis Recompensas</div>
+  		<div class="part">
+  			<div class="fl-left"><div class="date">21 de Julio 2015 - 4:30 PM</div>Nueva Mochila Incluso</div>
+  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
+  		</div>
+  		<div class="part">
+  			<div class="fl-left"><div class="date">20 de Junio 2015 - 10:22 PM</div>Estuche nuevo para celular</div>
+  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
+  		</div>
+  		<div class="part">
+  			<div class="fl-left"><div class="date">20 de Junio 2015 - 5:50 PM</div>¡Te regalamos 1000 estrellas!</div>
+  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
+  		</div>
+  		<div class="part">
+  			<div class="fl-left"><div class="date">19 de Junio 2015 - 3:22 PM</div>Gorra Incluso</div>
+  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
+  		</div>
+  		<div class="part">
+  			<div class="fl-left"><div class="date">16 de Mayo 2015 - 11:42 AM</div>Sudadera Incluso</div>
+  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
+  		</div>
 
-	<article>
-	  <div class="container">
+  		<div class="part showmore">
+  			<i class="icomoon  icon-show-more fl-right"></i> Mostrar más recompensas...
+  		</div>
+  	</section>
+  </article>
 
-		<section class="component">
-		  <h3 ng-class="main-title">Salón de la fama</h3>
-				<p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-
-			  <p>Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. </p> 
-		</section>
-		s
-	  </div> 
-
-	</article>
-
-  </div>
- -->
 </div>
-  
-// <script>
-//     $(document).ready(function () {
-//         function myController($scope) {
-//             $scope.challengeName = "MIS RETOS";
-//         }
-
-//         setTimeout(function () {
-//             var hits = 1;
-
-//                 //Carrusel de retos
-//                 var owl2 = $("#owl-demo2");
-
-//                 owl2.owlCarousel({
-//                     navigation: false,
-//                     pagination: false,
-//                     //paginationSpeed: 1000,
-//                     goToFirstSpeed: 2000,
-//                     singleItem: true,
-//                     autoHeight: true,
-//                     touchDrag:false,
-//                     mouseDrag:false,
-//                     transitionStyle:"fade",
-//                     afterMove: callback1
-//                 });
-
-//                 //Carrusel de Actividades
-//                 var owl = $("#owl-demo");
-
-//                 owl.owlCarousel({
-//                     navigation: false,
-//                     pagination: false,
-//                     //paginationSpeed: 1000,
-//                     goToFirstSpeed: 2000,
-//                     singleItem: true,
-//                     autoHeight: true,
-//                     touchDrag:false,
-//                     mouseDrag:false,
-//                     transitionStyle:"fade",
-//                     afterMove: callback2
-//                 });
-
-//                 function callback1(event) {
-//                     var item = this.currentItem;
-//                     owl.trigger("owl.goTo", item);
-//                     $("span#index").text((item+1));
-//                 }
-
-//                 function callback2(event) {
-//                     var item = this.currentItem;
-//                     owl2.trigger("owl.goTo", item);
-//                     $("span#index").text((item+1));
-//                 }
-
-//                 $("#next").click(function (ev) {
-//                     owl.trigger('owl.next');
-//                     ev.preventDefault();
-
-//                 });
-
-//                 $("#prev").click(function (ev) {
-//                     owl.trigger('owl.prev');
-//                     ev.preventDefault();
-//                 });
-//             }, 1000);
-//     });
-// </script>
