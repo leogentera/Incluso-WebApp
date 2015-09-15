@@ -45,7 +45,7 @@
                         <!--Pregunta tipo Opción Multiple + Otro-->
                         <div>
                             <div class="txt-renglon txt-bigger">2. Darte cuenta de lo que quieres estar haciendo en unos años te ayuda a:</div>
-                            <section class="form txt-renglon txt-bigger part list">
+                            <section id='questionNum1' class="form txt-renglon txt-bigger part list">
                                 <input id="check1" type="checkbox" value="check1" name="check"
                                        ng-model="exploracionFinalStage2[1][0]" ng-disabled="setReadOnly"/>
                                 <label for="check1">Planear lo que puedes hacer hoy para lograrlo</label>
@@ -59,24 +59,20 @@
                                 <label for="check3">Imaginar muchas cosas que te encantan</label>
 
                                 <input id="check4" type="checkbox" value="check4" name="check"
-                                       ng-model="exploracionFinalStage2[1][3]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionFinalStage2[1][3]" ng-disabled="setReadOnly"
+                                       ng-change="exploracionFinalStage2OtroAnswers[0].answers[0] = exploracionFinalStage2[1][3] == false ? '' : exploracionFinalStage2OtroAnswers[0].answers[0]"
+                                       ng-click="addCaptureField(exploracionFinalStage2[1][3])"/>
                                 <label for="check4">Otro</label>
 
                                 <div class="form-group theme-form" ng-show="exploracionFinalStage2[1][3]">
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
+                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
+                                                  ng-model="exploracionFinalStage2OtroAnswers[0].answers[0]">
                                         </textarea>
                                     </div>
                                 </div>
-
-                                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                                <label for="otros">Otros</label>-->
                             </section>
-                            <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                              <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-                            </div>-->
                         </div>
 
 
@@ -97,24 +93,20 @@
                                 <label for="check7">Te ayuda a crecer de igual forma en todos las áreas de tu vida</label>
 
                                 <input id="check8" type="checkbox" value="check8" name="check"
-                                       ng-model="exploracionFinalStage2[2][3]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionFinalStage2[2][3]" ng-disabled="setReadOnly"
+                                       ng-change="exploracionFinalStage2OtroAnswers[1].answers[0] = exploracionFinalStage2[2][3] == false ? '' : exploracionFinalStage2OtroAnswers[1].answers[0]"
+                                       ng-click="addCaptureField(exploracionFinalStage2[2][3])"/>
                                 <label for="check8">Otro</label>
 
                                 <div class="form-group theme-form" ng-show="exploracionFinalStage2[2][3]">
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
+                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
+                                                  ng-model="exploracionFinalStage2OtroAnswers[1].answers[0]">
                                         </textarea>
                                     </div>
                                 </div>
-
-                                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                                <label for="otros">Otros</label>-->
                             </section>
-                            <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                              <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-                            </div>-->
                         </div>
 
 
@@ -135,24 +127,20 @@
                                 <label for="check11">Para darme cuenta del trabajo que cuesta </label>
 
                                 <input id="check12" type="checkbox" value="check12" name="check"
-                                       ng-model="exploracionFinalStage2[3][3]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionFinalStage2[3][3]" ng-disabled="setReadOnly"
+                                       ng-change="exploracionFinalStage2OtroAnswers[2].answers[0] = exploracionFinalStage2[3][3] == false ? '' : exploracionFinalStage2OtroAnswers[2].answers[0]"
+                                       ng-click="addCaptureField(exploracionFinalStage2[3][3])"/>
                                 <label for="check12">Otro</label>
 
                                 <div class="form-group theme-form" ng-show="exploracionFinalStage2[3][3]">
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
+                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
+                                                  ng-model="exploracionFinalStage2OtroAnswers[2].answers[0]">
                                         </textarea>
                                     </div>
                                 </div>
-
-                                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                                <label for="otros">Otros</label>-->
                             </section>
-                            <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                              <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-                            </div>-->
                         </div>
 
 
@@ -175,7 +163,7 @@
                         </div>
                         <a class="btn btn-primary btn-lg btn-cnt" id="save"
                            ng-show="answerIndex == 4"
-                           ng-click="validateZNExploracionFinal()">GUARDAR</a>
+                           ng-click="validateExploracionFinalStage2()">GUARDAR</a>
 
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel2()">Cancelar</div>
                     </section>
