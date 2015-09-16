@@ -86,10 +86,16 @@ angular
             };
 
             var addExtraForumParticipation = function(discussionId){
-
+                debugger;
               var extraPointsCounter = getForumsExtraPointsCounter();
                 var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == discussionId; });
-                currentDiscussionCounter.extra_replies_counter++;
+                //If discussion is not registered, well, register it mofo
+                if(currentDiscussionCounter){
+                    currentDiscussionCounter.extra_replies_counter++;
+                } else {
+                    extraPointsCounter.push({'discussion_id':discussionId, 'extra_replies_counter':1});
+                }
+
                 _setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
             };
 
@@ -135,21 +141,21 @@ angular
                 debugger;
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
                 if(activityFromTree.status == 1){
-                    addExtraForumParticipation($scope.discussion.discussion);
+                    addExtraForumParticipation($scope.discussion.id);
                     var extraPointsCounter = getForumsExtraPointsCounter();
-                    var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $scope.discussion.discussion; });
+                    var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $scope.discussion.id; });
                     if(currentDiscussionCounter.extra_replies_counter <= 10) {
                         updateUserStars(activity_identifier, 50 );
                     }
                 }
 
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
-                    switch ($routeParams.moodleid) {
+                    switch ($scope.moodleId) {
                         case "179":
-                            $location.path('ZonaDeNavegacion/ForoCierre/' + activity_identifier);
+                            $location.path('/ZonaDeNavegacion/ForoCierre/' + activity_identifier);
                             break;
                         case "85":
-                            $location.path('ZonaDeNavegacion/ForoCierre/' + activity_identifier);
+                            $location.path('/ZonaDeNavegacion/ForoCierre/' + activity_identifier);
                             break;
                         default :
                             $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);
@@ -236,7 +242,7 @@ angular
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
-                        updateForumProgress($scope.discussion.post_id);
+                        updateForumProgress($scope.discussion.id);
                         //refreshTopicData();
                         checkForumProgress(refreshTopicData);
                     },
