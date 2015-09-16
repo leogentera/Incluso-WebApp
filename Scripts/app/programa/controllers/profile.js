@@ -20,7 +20,7 @@ angular
             $scope.forumId = null;
             
             $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
-            $scope.userId = $routeParams.id;
+            $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
             
             $scope.setToolbar($location.$$path, "");
             $scope.currentPage = 1;
@@ -98,6 +98,7 @@ angular
                 $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
                 $scope.yesNoList = ['Si', 'No'];
                 $scope.moneyIncomeList = ['Padres', 'Trabajo'];
+                $scope.medicalCoverageList = ['Sí', 'No', 'No sé'];
                 $scope.medicalInsuranceList = ['IMSS', 'Privado', 'Seguro Popular'];
                 $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora'];
                 $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
@@ -943,11 +944,19 @@ angular
             };
 
             $scope.addKindOfVideoGame = function (index) {
-                $scope.model.kindOfVideoGames.push(new String());
+                $scope.model.kindOfVideogames.push(new String());
             };
 
             $scope.deleteKindOfVideoGame = function (index) {
-                $scope.model.kindOfVideoGames.splice(index, 1);
+                $scope.model.kindOfVideogames.splice(index, 1);
+            };
+            
+            $scope.deleteMainActivity = function (index) {
+                $scope.model.mainActivity.splice(index, 1);
+            };
+            
+            $scope.addMainActivity = function() {
+                $scope.model.mainActivity.push(new String());
             };
 
             $scope.addFavoriteGame = function (index) {

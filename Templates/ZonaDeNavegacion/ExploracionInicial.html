@@ -18,8 +18,7 @@
                     <div id="owl" class="owl-carousel">
                         <!--Pregunta tipo Si/No-->
                         <div>
-                            <div class="txt-renglon txt-bigger">1. ¿Crees que tus ideas pueden impulsar o limitar tus sueños?
-                            </div>
+                            <div class="txt-renglon txt-bigger">1. ¿Crees que tus ideas pueden impulsar o limitar tus sueños?</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
                                     <input id="tru1" type="radio" name="vf1"
@@ -39,9 +38,7 @@
 
                         <!--Pregunta tipo Si/No-->
                         <div>
-                            <div class="txt-renglon txt-bigger">1. ¿Has imaginado qué te gustaría estar haciendo en tres
-                                años?
-                            </div>
+                            <div class="txt-renglon txt-bigger">1. ¿Has imaginado qué te gustaría estar haciendo en tres años?</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
                                     <input id="tru2" type="radio" name="vf2"
@@ -61,9 +58,7 @@
 
                         <!--Pregunta tipo Si/No-->
                         <div>
-                            <div class="txt-renglon txt-bigger">1. ¿Tienes metas por lograr durante este añoo
-                                cómo alcanzar?
-                            </div>
+                            <div class="txt-renglon txt-bigger">1. ¿Tienes metas por lograr durante este año cómo alcanzar?</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
                                     <input id="tru3" type="radio" name="vf3"
@@ -106,7 +101,7 @@
 
                                 <input id="check5" type="checkbox" value="check1" name="check"
                                        ng-model="exploracionInicialStage2[3][4]" ng-disabled="setReadOnly"
-                                       ng-change="exploracionInicialStage2OtroAnswer[0].answers[0] = exploracionInicialStage2[3][4] == false ? '' : exploracionInicialStage2OtroAnswer[0].answers[0]"
+                                       ng-change="exploracionInicialStage2OtroAnswers[0].answers[0] = exploracionInicialStage2[3][4] == false ? '' : exploracionInicialStage2OtroAnswers[0].answers[0]"
                                        ng-click="addCaptureField(exploracionInicialStage2[3][4])"/>
                                 <label for="check5">Otro</label>
 
@@ -114,7 +109,7 @@
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
                                         <textarea id="" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
-                                                  ng-model="exploracionInicialStage2OtroAnswer[0].answers[0]">
+                                                  ng-model="exploracionInicialStage2OtroAnswers[0].answers[0]">
                                         </textarea>
                                     </div>
                                 </div>
@@ -146,7 +141,7 @@
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                         -->
 
-                        <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 4"
+                        <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 4 && activity_status == 0"
                            ng-click="validateExploracionInicialStage2()">Guardar</a>
 
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel2()">Cancelar</div>
@@ -171,7 +166,7 @@
                         </section>
                         -->
 
-                        <section class="centered txt-bigger ">
+                        <section class="centered txt-bigger">
                             <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
                         </section>
                         <section class="txt-renglon pill" ng-show="activityPoints > 0">
@@ -201,8 +196,7 @@
                         </section>
                     </div>
                 </div>
-            </div>
-            <img src="assets/images/img-lines-ftr.png " class="centered ">
+            </div>            
         </article>
         <!-- initial message -->
         <script type="text/ng-template" id="openingStageModal.html">
