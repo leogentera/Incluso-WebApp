@@ -355,7 +355,7 @@ var _notificationExists = function(){
   
 };
 
-function getActivityByActivity_identifier(activity_identifier, usercourse) {          
+function getActivityByActivity_identifier(activity_identifier, usercourse) {
             var matchingActivity = null;
             var breakAll = false;
             var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
@@ -364,11 +364,12 @@ function getActivityByActivity_identifier(activity_identifier, usercourse) {
                 for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
                     var challenge = stage.challenges[challengeIndex];
                     for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                      var activity = challenge.activities[activityIndex];
-                      if (activity.activity_identifier == activity_identifier) {
-                        matchingActivity = activity;
-                        breakAll = true;
-                        break;
+                        var activity = challenge.activities[activityIndex];
+                        //console.log(activity.activity_identifier + " : " + activity);
+                        if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
+                          matchingActivity = activity;
+                          breakAll = true;
+                          break;
                         }
                     }
                     if(breakAll)
