@@ -1549,6 +1549,63 @@ angular
             };
 
 
+
+            $scope.validateExploracionFinalStage3 = function () {
+
+                var cont = $scope.exploracionFinalStage2.length;
+                var quizIsValid = true;
+
+                //Check if first (yes/no) question was answered
+                if ($scope.exploracionFinalStage2[0]) {
+
+                    //Check if second (multiple choice) question was answered
+                    if ($scope.exploracionFinalStage2[1].indexOf(true) > -1) {
+
+                        //Check if third (multiple choice) question was answered
+                        if ($scope.exploracionFinalStage2[2].indexOf(true) > -1) {
+
+                            //Check if fourth (multiple choice) question was answered
+                            if (!($scope.exploracionFinalStage2[3].indexOf(true) > -1)) {
+                                quizIsValid = false;
+                            }
+
+                        } else {
+                            quizIsValid = false;
+                        }
+
+                    } else {
+                        quizIsValid = false;
+                    }
+
+                } else {
+                    quizIsValid = false;
+                }
+                console.log(quizIsValid);
+
+                if (quizIsValid) {
+                    $scope.showWarning = false;
+                    $scope.navigateToPage(2);
+                    $scope.scrollToTop();
+                } else {
+                    showWarningAndGoToTop();
+                }
+
+                /*
+
+                 if (validAnswers) {
+                 //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
+                 moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBack, partialErrorCallback, true);
+
+                 $scope.showWarning = false;
+                 $scope.navigateToPage(2);
+                 $scope.scrollToTop();
+                 }
+
+                 */
+
+            };
+
+
         }
     ])
     .controller('OpeningStageController', function ($scope, $modalInstance) {
