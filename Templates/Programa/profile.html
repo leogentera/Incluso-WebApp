@@ -100,7 +100,7 @@
 
                                     <!-- Mis areas de oportunidad -->
                                     <!--<li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">-->
-                                    <li class="list-group-item no-badge hidden" ng-click="navigateToPage(8)">
+                                        <li class="list-group-item no-badge hidden" ng-click="navigateToPage(8)">
                                         <a href="">
                                             <span class="icomoon icon-workman"></span>
                                             <span>Mis Áreas de Oportunidad</span>
@@ -287,7 +287,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                                   
                             </div>
                         </div>
                     </div>
@@ -572,7 +572,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -603,14 +603,14 @@
 
                                                 <div ng-repeat="badge in wholeBadgesPages[badgePage]" class="badge-item text-center">
                                                     <img class="badgesviews" ng-src="assets/images/badges/{{badge.filename}}" alt="" class="img-responsive" width="100px"
-                                                         height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times, badge.description, badge.status)" />                                              />
+                                                    height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times, badge.description, badge.status)" />                                              />
 
                                                     <!--
                                                     <img class="badgesviews" ng-src="assets/images/badges/default_placeholder.svg" alt="" class="img-responsive" width="100px"
                                                     height="100px" ng-click="showDetailBadge('default_placeholder.svg', badge.name, badge.dateIssued, badge.earned_times, badge.status)" ng-show="badge.status == 'pending'"
                                                     />
                                                     -->
-
+                                                    
                                                     <span class="badgename text-center" ng-bind="badge.name"></span>
                                                 </div>
 
@@ -658,15 +658,15 @@
                                                         <ul class="block-list">
                                                             <li class="profile-info-asset">
                                                                 <h4>Musical</h4>
-                                                                <p>
-                                                                    Si en clase de ciencias, mate y biología haces ritmos con tus plumas en vez de apuntar, el ipod es tu mejor compañia y cantas a todo pulmon en la ducha.
-                                                                </p>
+                                                                    <p>
+                                                                        Si en clase de ciencias, mate y biología haces ritmos con tus plumas en vez de apuntar, el ipod es tu mejor compañia y cantas a todo pulmon en la ducha.
+                                                                    </p>
                                                             </li>
                                                             <li class="profile-info-asset">
                                                                 <h4>Interpersonal</h4>
-                                                                <p>
-                                                                    Si en tu escuela eres el mejor amigo de todos, el que pide todos los permisos a los papás de tus amigos y todos recurren a ti para que escuches y aconsejes sus truenes.
-                                                                </p>
+                                                                    <p>
+                                                                        Si en tu escuela eres el mejor amigo de todos, el que pide todos los permisos a los papás de tus amigos y todos recurren a ti para que escuches y aconsejes sus truenes.
+                                                                    </p>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -724,15 +724,15 @@
                                                         <ul class="block-list">
                                                             <li class="profile-info-asset">
                                                                 <h4>Interpersonal</h4>
-                                                                <p>
-                                                                    Si en clase de filosofía, eres el unico despierto, preguntas el por qué de las cosas, frecuentemente escuchas a tus amigos decirte no me regañes y antes de tomar una decisión evaluas las consecuencias.
-                                                                </p>
+                                                                    <p>
+                                                                        Si en clase de filosofía, eres el unico despierto, preguntas el por qué de las cosas, frecuentemente escuchas a tus amigos decirte no me regañes y antes de tomar una decisión evaluas las consecuencias.
+                                                                    </p>
                                                             </li>
                                                             <li class="profile-info-asset">
                                                                 <h4>Interpersonal</h4>
-                                                                <p>
-                                                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-                                                                </p>
+                                                                    <p>
+                                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+                                                                    </p>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -769,7 +769,7 @@
                                                                 <p ng-bind="b"></p>
                                                             </li>
                                                         </ul>-->
-                                                        <ul class="block-list">
+                                                         <ul class="block-list">
                                                             <li class="profile-info-asset">
                                                                 <p>Biólogo</p>
                                                             </li>
@@ -805,49 +805,66 @@
                                     </div>
                                     <div class="panel-body">
 
-                                        <div class="my-profile-information">
-                                            <div class="container-fluid">
-                                                <div class="row">
-                                                    <div class="text-center">
-                                                        <div class="achievement-badge">
-                                                            <!--
-                                                            <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px" height="100px"
-                                                            />
-                                                            -->
-                                                            <img class="badgesviews" ng-src="assets/images/badges/{{fileName}}" alt="" class="img-responsive" width="100px"
-                                                                 height="100px" />
-                                                            <!--
-                                                            <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
-                                                            height="100px" ng-show="status == 'pending'"
-                                                            />
-                                                            -->
-                                                            <div class="badgename" ng-bind="badgeName"></div>
-                                                            <div class="badgedate" ng-bind="badgeDateIssued"></div>
-                                                        </div>
-                                                        <div class="achievement-description">
-                                                            <span ng-bind="description"></span>
-                                                        </div>
-                                                        <div class="earned-info">
-                                                            <span class="users">
-                                                                <span ng-show="earnedTimes > 0">
-                                                                    <span ng-show="status == 'won'">Tú y</span>
-                                                                    <span ng-bind="earnedTimes"></span>
-                                                                    jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span>
-                                                                </span><span ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
-                                                        </div>
+                                    <div class="my-profile-information">
+                                        <div class="container-fluid">
+                                            <div class="row">
+                                                <div class="text-center">
+                                                    <div class="achievement-badge">
                                                         <!--
-                                                        <div class="share-achievement">
-                                                            <span class="icon-container">
-                                                                <span class="icomoon icon-share"></span>
-
-                                                            </span>
-                                                            <span class="share-text">Compartir Insignia</span>
-                                                        </div>
+                                                        <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px" height="100px"
+                                                        />
                                                         -->
-
-                                                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>
-                                                        <div class="txt-renglon centered txt-bigger"></div>
+                                                        <img class="badgesviews" ng-src="assets/images/badges/{{fileName}}" alt="" class="img-responsive" width="100px"
+                                                        height="100px" />
+                                                        <!--
+                                                        <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
+                                                        height="100px" ng-show="status == 'pending'"
+                                                        />
+                                                        -->
+                                                        <div class="badgename" ng-bind="badgeName"></div>
+                                                        <div class="badgedate" ng-bind="badgeDateIssued"></div>
                                                     </div>
+                                                    <div class="achievement-description">
+                                                        <span ng-bind="description"></span>
+                                                    </div>
+                                                    <div class="earned-info">
+                                                        <span class="users">
+                                                                <span ng-show="earnedTimes > 0">
+                                                                <span ng-show="status == 'won'">Tú y</span>
+                                                                <span ng-bind="earnedTimes"></span>
+                                                            jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span>
+                                                                </span><span ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
+                                                    </div>
+
+                                                    <div class="share-achievement" ng-show="status == 'won'">
+                                                        <span class="icon-container">
+                                                            <span class="icomoon icon-share"></span>
+
+                                                        </span>
+                                                        <span class="share-text" ng-click="showShareAchievementMessage = !showShareAchievementMessage">Compartir Insignia</span>
+                                                    </div>
+                                                    
+                                                    <section class="modales">
+                                                        <div id="openModal1" class="modalDialog" ng-show="showShareAchievementMessage">
+                                                            <div>
+                                                                <span class="close"></span>
+                                                                <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."  ng-model="shareAchievementMessage"></textarea></div>
+                                            
+                                                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareAchievement()" >Compartir</a>
+                                                            </div>
+                                                        </div>
+                                                        <div id="openModal6" class="modalDialog reportModal" ng-show="showSharedAchievement">
+                                                            <div>
+                                                              <a title="close" class="close"></a>
+                                                              <div class="add">La insignia ha sido compartida.</div>
+                                                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAchievement = false">Ok</a>
+                                                            </div>
+                                                    </div>
+                                                    </section>
+
+                                                    <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>
+                                                    <div class="txt-renglon centered txt-bigger"></div>
+                                                </div>
 
                                                 </div>
                                             </div>

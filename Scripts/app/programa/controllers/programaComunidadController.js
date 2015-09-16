@@ -129,6 +129,7 @@ angular
                 
                 for(p = 0; p < $scope.posts.length; p++){
                     if ($scope.posts[p].post_id === element.post_id) {
+                        element.message = restoreHtmlTag(element.message);
                         $scope.posts[p] = element;
                         existingPost = true;
                         break;
@@ -136,6 +137,7 @@ angular
                 }
                 
                 if (!existingPost) {
+                    element.message = restoreHtmlTag(element.message);
                     $scope.posts.push(element);
                 }
             };
