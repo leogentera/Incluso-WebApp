@@ -13,8 +13,8 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"Mis estrellas");
             
-            
-            var profile = JSON.parse(localStorage.getItem("profile"));
+                        
+            var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
             
             if (profile) {
                 $scope.profileStars = profile.stars;
