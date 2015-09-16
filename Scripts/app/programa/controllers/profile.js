@@ -20,7 +20,7 @@ angular
             $scope.forumId = null;
             
             $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
-            $scope.userId = $routeParams.id;
+            $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
             
             $scope.setToolbar($location.$$path, "");
             $scope.currentPage = 1;
@@ -943,11 +943,11 @@ angular
             };
 
             $scope.addKindOfVideoGame = function (index) {
-                $scope.model.kindOfVideoGames.push(new String());
+                $scope.model.kindOfVideogames.push(new String());
             };
 
             $scope.deleteKindOfVideoGame = function (index) {
-                $scope.model.kindOfVideoGames.splice(index, 1);
+                $scope.model.kindOfVideogames.splice(index, 1);
             };
 
             $scope.addFavoriteGame = function (index) {

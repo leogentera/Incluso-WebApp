@@ -18,7 +18,7 @@
                 </p>
             </div>
             <div class="profile-settings">
-                <a class="btn btn-icon-aside left" ng-click="edit();">
+                <a class="btn btn-icon-aside left" ng-click="edit();" ng-show="loggedUser">
                     <div class="btn-icon">
                         <span class="icomoon icon-settings"></span>
                     </div>
@@ -58,7 +58,7 @@
                                         </a>
                                     </li>
 
-                                    <li class="list-group-item hidden" ng-click="navigateToPage(4)">
+                                    <li class="list-group-item" ng-click="navigateToPage(4)">
                                         <a href="">
                                             <span class="icomoon icon-wallet"></span>
                                             <span>Socioeconómicos</span>
@@ -67,7 +67,7 @@
                                         </a>
                                     </li>
 
-                                    <li class="list-group-item no-badge hidden" ng-click="navigateToPage(5)">
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(5)">
                                         <a href="">
                                             <span class="icomoon icon-smartphone"></span>
                                             <span>Uso Tecnología</span>
@@ -89,7 +89,7 @@
 
                                     <!-- Mis habilidades -->
                                     <!--<li class="list-group-item no-badge" ng-click="navigateToPage(7)" ng-show="model.recomendedBachelorDegrees.length > 0">-->
-                                    <li class="list-group-item no-badge hidden" ng-click="navigateToPage(7)">
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(7)">
                                         <a href="">
                                             <span class="icomoon icon-user"></span>
                                             <span>Mis Habilidades</span>
@@ -100,7 +100,7 @@
 
                                     <!-- Mis areas de oportunidad -->
                                     <!--<li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">-->
-                                        <li class="list-group-item no-badge hidden" ng-click="navigateToPage(8)">
+                                        <li class="list-group-item no-badge" ng-click="navigateToPage(8)">
                                         <a href="">
                                             <span class="icomoon icon-workman"></span>
                                             <span>Mis Áreas de Oportunidad</span>
@@ -110,7 +110,7 @@
                                     </li>
 
                                     <!--<li class="list-group-item no-badge" ng-click="navigateToPage(9)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">-->
-                                    <li class="list-group-item no-badge hidden" ng-click="navigateToPage(9)">
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(9)">
                                         <a href="">
                                             <span class="icomoon icon-rocket"></span>
                                             <span>Elige el Rumbo</span>
@@ -125,7 +125,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mi informacion /////////// -->
                 <div class="page" ng-class="currentPage == 2 ? 'active' : ''">
                     <div class="container-fluid">
@@ -143,7 +142,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showGeneralData">
                                                             <h4>Datos Generales</h4>
 
                                                             <div class="from-group">
@@ -193,7 +192,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showEducation">
                                                             <h4>Educación</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.studies">
@@ -205,7 +204,7 @@
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showAddress">
                                                             <h4>Dirección</h4>
                                                             <div class="from-group">
                                                                 <label>País</label>
@@ -243,7 +242,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showPhones">
                                                             <h4>Teléfonos</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.phones">
@@ -255,7 +254,7 @@
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showSocialNetworks">
                                                             <h4>Redes sociales</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.socialNetworks">
@@ -267,7 +266,7 @@
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:showFamiliaCompartamos">
                                                             <h4>Familia Compartamos</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.familiaCompartamos">
@@ -294,7 +293,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mi personalidad /////////// -->
                 <div class="page" ng-class="currentPage == 3 ? 'active' : ''">
                     <div class="container-fluid">
@@ -313,7 +311,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:loggedUser">
                                                             <h4>Mis gustos</h4>
                                                             <div class="from-group">
                                                                 <label>Mis deportes preferidos</label>
@@ -343,7 +341,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:showPhones">
                                                             <h4>Mis cualidades</h4>
                                                             <div class="from-group">
                                                                 <label>Talentos</label>
@@ -401,7 +399,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Socioeconomicos /////////// -->
                 <div class="page" ng-class="currentPage == 4 ? 'active' : ''">
                     <div class="container-fluid">
@@ -420,7 +417,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:showILiveWith">
                                                             <h4>Vivienda</h4>
                                                             <div class="from-group">
                                                                 <label>Vivo con</label>
@@ -428,7 +425,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showMainActivity">
                                                             <h4>Actividad</h4>
                                                             <div class="from-group">
                                                                 <label>Mi actividad principal</label>
@@ -440,7 +437,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showCurrentEducation">
                                                             <h4>Actualmente estudio</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.currentStudies">
@@ -452,7 +449,7 @@
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showFamiliar">
                                                             <h4>Familiar</h4>
                                                             <div class="from-group">
                                                                 <label>Tengo hijos</label>
@@ -460,7 +457,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showMoneyIncome">
                                                             <h4>Ingresos</h4>
                                                             <div class="from-group">
                                                                 <label>Recibo ingresos</label>
@@ -476,7 +473,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showHealth">
                                                             <h4>Salud</h4>
                                                             <div class="from-group">
                                                                 <label>Cuento con seguro médico</label>
@@ -500,7 +497,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Uso tecnologia /////////// -->
                 <div class="page" ng-class="currentPage == 5 ? 'active' : ''">
                     <div class="container-fluid">
@@ -519,7 +515,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showDevices">
                                                             <h4>Dispositivos</h4>
                                                             <div class="from-group">
                                                                 <label>¿Qué dispositivo sabes usar?</label>
@@ -549,7 +545,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showVideogames">
                                                             <h4>Videojuegos</h4>
                                                             <div class="from-group">
                                                                 <label>¿Juegas videojuegos?</label>
@@ -589,9 +585,8 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mis logros /////////// -->
-                <div class="page" ng-class="currentPage == 6 ? 'active' : ''">
+                <div class="page" ng-class="currentPage == 6 ? 'active' : ''" ng-show="loggedUser?loggedUser:showBadgesEarned">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
@@ -638,7 +633,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mis habilidades /////////// -->
                 <div class="page my-abilities" ng-class="currentPage == 7 ? 'active' : ''">
                     <div class="container-fluid">
@@ -686,7 +680,8 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
+                
+                <!-- ////////// Mis áreas de oportunidad /////////// -->
                 <div class="page my-abilities" ng-class="currentPage == 8 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
@@ -835,11 +830,11 @@
                                                     </div>
                                                     <div class="earned-info">
                                                         <span class="users">
-                                                            <span  ng-show="earnedTimes > 0">
+                                                                <span ng-show="earnedTimes > 0">
                                                                 <span ng-show="status == 'won'">Tú y</span>
                                                                 <span ng-bind="earnedTimes"></span>
                                                             jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span>
-                                                            </span><span  ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
+                                                                </span><span ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
                                                     </div>
 
                                                     <div class="share-achievement" ng-show="status == 'won'">
@@ -865,7 +860,7 @@
                                                               <div class="add">La insignia ha sido compartida.</div>
                                                               <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAchievement = false">Ok</a>
                                                             </div>
-                                                        </div>
+                                                    </div>
                                                     </section>
 
                                                     <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>

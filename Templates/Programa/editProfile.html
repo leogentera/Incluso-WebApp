@@ -64,7 +64,7 @@
 											</a>
 										</li>
 
-										<li class="list-group-item hidden" ng-click="navigateToPage(8)">
+										<li class="list-group-item" ng-click="navigateToPage(8)">
 											<a href="">
 												<span class="icomoon icon-wallet"></span>
 												<span>Socioeconómicos</span>
@@ -73,7 +73,7 @@
 											</a>
 										</li>
 
-										<li class="list-group-item hidden" ng-click="navigateToPage(10)">
+										<li class="list-group-item" ng-click="navigateToPage(10)">
 											<a href="">
 												<span class="icomoon icon-smartphone"></span>
 												<span>Uso Tecnología</span>
@@ -1343,33 +1343,35 @@
 													<h5>Videojuegos</h5>
 
 													<h4>¿Juegas videojuegos?</h4>
-													<input type="text" class="form-control form-control-lg theme-form" placeholder="¿Juegas videojuegos?" ng-model="s.playVideogames"
-													/>
 													<select ng-model="model.playVideogames" ng-options="item for item in yesNoList" ng-init="model.playVideogames == null" class="form-control form-control-lg theme-form">
 														<option value="" ng-disabled="!!model.playVideogames">¿Juegas videojuegos?</option>
 													</select>
 
 													<h4>¿Con qué frecuencia juegas videojuegos?</h4>
-													<select ng-model="model.videoGamesFrecuency[$index]" ng-options="item for item in videoGamesFrecuencyList" ng-init="model.videoGamesFrecuency == null"
+													<select ng-model="model.videogamesFrecuency" ng-options="item for item in videoGamesFrecuencyList" ng-init="model.videogamesFrecuency == null"
 													class="form-control form-control-lg theme-form">
-														<option value="" ng-disabled="!!model.videoGamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
+														<option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
 													</select>
+													
+													<input type="text" class="form-control form-control-lg theme-form" placeholder="¿Cuántas horas juegas al día?" ng-model="model.videogamesHours" />
 
 													<h4>¿Qué tipo de videojuegos te gustan más?</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.kindOfVideoGames">
+														<li ng-repeat="s in model.kindOfVideogames">
+															
 															<div class="form-group theme-form">
 																<h5>
-																		<span>Videojuejo {{model.kindOfVideoGames.indexOf(s) + 1}}</span>
-																		<button class="btn btn-circle" ng-click="deleteKindOfVideoGame($index);">
-																			<span class="icomoon icon-cross"></span>
-																		</button>
-																	</h5>
-																<select ng-model="model.kindOfVideoGames[$index]" ng-options="item for item in kindOfVideoGamesList" ng-init="model.kindOfVideoGames == null"
+																	<span>Videojuego {{model.kindOfVideogames.indexOf(s) + 1}}</span>
+																	<button class="btn btn-circle" ng-click="deleteKindOfVideoGame($index);">
+																		<span class="icomoon icon-cross"></span>
+																	</button>
+																</h5>
+																<select ng-model="model.kindOfVideogames[$index]" ng-options="item for item in kindOfVideoGamesList" ng-init="model.kindOfVideogames == null"
 																class="form-control form-control-lg theme-form">
-																	<option value="" ng-disabled="!!model.kindOfVideoGames">¿Qué tipo de videojuegos te gustan más?</option>
+																	<option value="" ng-disabled="!!model.kindOfVideogames">¿Qué tipo de videojuegos te gustan más?</option>
 																</select>
 															</div>
+															
 														</li>
 													</ul>
 													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addKindOfVideoGame();">
@@ -1382,7 +1384,7 @@
 															<li ng-repeat="p in model.favoriteGames track by $index">
 																<div class="form-group theme-form">
 																	<h5>
-																			<span>Juago {{model.favoriteGames.indexOf(p) + 1}}</span>
+																			<span>Juego {{model.favoriteGames.indexOf(p) + 1}}</span>
 																			<button class="btn btn-circle" ng-click="deleteFavoriteGame($index);">
 																				<span class="icomoon icon-cross"></span>
 																			</button>
