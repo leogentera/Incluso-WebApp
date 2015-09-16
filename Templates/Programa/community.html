@@ -77,13 +77,13 @@
               <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
             </div>
           </div>
-          <div class="block">
-            <span ng-switch="p.post_type">
-              <span ng-switch-default>{{ p.message }}</span>
-              <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>              
-              <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
-              <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>
-            </span>              
+          <div class="block-not post-contents">
+            <div ng-switch="p.post_type">
+              <p ng-switch-default>{{ p.message }}</p>
+              <p ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></p>              
+              <p ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></p>
+              <p ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></p>
+            </div>              
             <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
             </div>
           </div>
