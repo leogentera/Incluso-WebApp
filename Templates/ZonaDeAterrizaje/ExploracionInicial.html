@@ -8,7 +8,7 @@
     </div>
 
     <div id="site-canvas">
-        <article class="blueprint evaluation">
+        <article class="blueplanets evaluation">
             <div class="pages">
                 <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
                     <section id="title">
@@ -52,14 +52,16 @@
                                 <label for="check2">No, porque si la idea es buena no necesita un plan </label>
 
                                 <input id="check3" type="checkbox" value="check3" name="check"
-                                       ng-model="exploracionInicialStage3[1][2]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionInicialStage3[1][2]" ng-disabled="setReadOnly"
+                                       ng-change="exploracionInicialStage3OtroAnswers[0].answers[0] = exploracionInicialStage3[1][2] == false ? '' : exploracionInicialStage3OtroAnswers[0].answers[0]"
+                                       ng-click="addCaptureField(exploracionInicialStage3[1][2])"/>
                                 <label for="check3">Otro</label>
 
                                 <div class="form-group theme-form" ng-show="exploracionInicialStage3[1][2]">
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
+                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
+                                                  ng-model="exploracionInicialStage3OtroAnswers[0].answers[0]">
                                         </textarea>
                                     </div>
                                 </div>
@@ -99,14 +101,16 @@
                                 <label for="check8">Los recursos que se necesitan</label>
 
                                 <input id="check9" type="checkbox" value="check9" name="check"
-                                       ng-model="exploracionInicialStage3[2][5]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionInicialStage3[2][5]" ng-disabled="setReadOnly"
+                                       ng-change="exploracionInicialStage3OtroAnswers[1].answers[0] = exploracionInicialStage3[2][5] == false ? '' : exploracionInicialStage3OtroAnswers[1].answers[0]"
+                                       ng-click="addCaptureField(exploracionInicialStage3[2][5])"/>
                                 <label for="check9">Otro</label>
 
                                 <div class="form-group theme-form" ng-show="exploracionInicialStage3[2][5]">
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
+                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
+                                                  ng-model="exploracionInicialStage3OtroAnswers[1].answers[0]">
                                         </textarea>
                                     </div>
                                 </div>
@@ -137,14 +141,16 @@
                                 <label for="check12">Separar una parte de tu dinero antes de gastarlo</label>
 
                                 <input id="check13" type="checkbox" value="check13" name="check"
-                                       ng-model="exploracionInicialStage3[3][3]" ng-disabled="setReadOnly"/>
+                                       ng-model="exploracionInicialStage3[3][3]" ng-disabled="setReadOnly"
+                                       ng-change="exploracionInicialStage3OtroAnswers[2].answers[0] = exploracionInicialStage3[3][3] == false ? '' : exploracionInicialStage3OtroAnswers[2].answers[0]"
+                                       ng-click="addCaptureField(exploracionInicialStage3[3][3])"/>
                                 <label for="check13">Otro</label>
 
                                 <div class="form-group theme-form" ng-show="exploracionInicialStage3[3][3]">
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
+                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
+                                                  ng-model="exploracionInicialStage3OtroAnswers[2].answers[0]">
                                         </textarea>
                                     </div>
                                 </div>
