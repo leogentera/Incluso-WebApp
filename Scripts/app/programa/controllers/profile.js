@@ -98,6 +98,7 @@ angular
                 $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
                 $scope.yesNoList = ['Si', 'No'];
                 $scope.moneyIncomeList = ['Padres', 'Trabajo'];
+                $scope.medicalCoverageList = ['Sí', 'No', 'No sé'];
                 $scope.medicalInsuranceList = ['IMSS', 'Privado', 'Seguro Popular'];
                 $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora'];
                 $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
@@ -948,6 +949,14 @@ angular
 
             $scope.deleteKindOfVideoGame = function (index) {
                 $scope.model.kindOfVideogames.splice(index, 1);
+            };
+            
+            $scope.deleteMainActivity = function (index) {
+                $scope.model.mainActivity.splice(index, 1);
+            };
+            
+            $scope.addMainActivity = function() {
+                $scope.model.mainActivity.push(new String());
             };
 
             $scope.addFavoriteGame = function (index) {

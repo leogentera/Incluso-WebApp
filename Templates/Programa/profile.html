@@ -439,14 +439,18 @@
 
                                                         <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showCurrentEducation">
                                                             <h4>Actualmente estudio</h4>
-                                                            <ul class="block-list">
-                                                                <li ng-repeat="s in model.currentStudies">
-                                                                    <div class="from-group">
-                                                                        <label>Nivel</label>
-                                                                        <p ng-bind="s"></p>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
+                                                            <div class="from-group">
+                                                                <label>Nivel</label>
+                                                                <p ng-bind="model.level"></p>
+                                                            </div>
+                                                            <div class="from-group">
+                                                                <label>Grado</label>
+                                                                <p ng-bind="model.grade"></p>
+                                                            </div>
+                                                            <div class="from-group">
+                                                                <label>Periodo</label>
+                                                                <p ng-bind="model.period"></p>
+                                                            </div>
                                                         </div>
 
                                                         <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showFamiliar">
