@@ -77,7 +77,7 @@
               <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
             </div>
           </div>
-          <div class="block post-contents">
+          <div class="block-not post-contents">
             <div ng-switch="p.post_type">
               <p ng-switch-default>{{ p.message }}</p>
               <p ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></p>              

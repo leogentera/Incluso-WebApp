@@ -769,6 +769,18 @@ Parallel work file for UI Developer 01
 
         .post-head {}
         .post-contents {
+            display:block;
+            width:auto;
+            margin:0;
+            padding:3% 0;
+            border-bottom: 0.1em solid rgba(255, 255, 255, 0.08);
+
+            & > div {
+                display:block;
+                width:90%;
+                margin:0 auto;
+                padding:0;
+            }
 
             .achievement-badge {
                 display:block;
@@ -817,7 +829,7 @@ Parallel work file for UI Developer 01
         .user-alias {
             color:@clr-white;
             font-size: 4vw;
-            font-weight: 400;
+            font-weight: bold;
             text-decoration: none;
         }
     }    
