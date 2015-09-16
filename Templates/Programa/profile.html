@@ -18,7 +18,7 @@
                 </p>
             </div>
             <div class="profile-settings">
-                <a class="btn btn-icon-aside left" ng-click="edit();">
+                <a class="btn btn-icon-aside left" ng-click="edit();" ng-show="loggedUser">
                     <div class="btn-icon">
                         <span class="icomoon icon-settings"></span>
                     </div>
@@ -100,7 +100,7 @@
 
                                     <!-- Mis areas de oportunidad -->
                                     <!--<li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">-->
-                                        <li class="list-group-item no-badge hidden" ng-click="navigateToPage(8)">
+                                    <li class="list-group-item no-badge hidden" ng-click="navigateToPage(8)">
                                         <a href="">
                                             <span class="icomoon icon-workman"></span>
                                             <span>Mis Áreas de Oportunidad</span>
@@ -125,7 +125,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mi informacion /////////// -->
                 <div class="page" ng-class="currentPage == 2 ? 'active' : ''">
                     <div class="container-fluid">
@@ -143,7 +142,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showGeneralData">
                                                             <h4>Datos Generales</h4>
 
                                                             <div class="from-group">
@@ -193,7 +192,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showEducation">
                                                             <h4>Educación</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.studies">
@@ -205,7 +204,7 @@
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showAddress">
                                                             <h4>Dirección</h4>
                                                             <div class="from-group">
                                                                 <label>País</label>
@@ -243,7 +242,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showPhones">
                                                             <h4>Teléfonos</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.phones">
@@ -255,7 +254,7 @@
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showSocialNetworks">
                                                             <h4>Redes sociales</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.socialNetworks">
@@ -267,7 +266,7 @@
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:showFamiliaCompartamos">
                                                             <h4>Familia Compartamos</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.familiaCompartamos">
@@ -288,13 +287,12 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>                                   
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mi personalidad /////////// -->
                 <div class="page" ng-class="currentPage == 3 ? 'active' : ''">
                     <div class="container-fluid">
@@ -313,7 +311,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:loggedUser">
                                                             <h4>Mis gustos</h4>
                                                             <div class="from-group">
                                                                 <label>Mis deportes preferidos</label>
@@ -343,7 +341,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:showPhones">
                                                             <h4>Mis cualidades</h4>
                                                             <div class="from-group">
                                                                 <label>Talentos</label>
@@ -401,7 +399,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Socioeconomicos /////////// -->
                 <div class="page" ng-class="currentPage == 4 ? 'active' : ''">
                     <div class="container-fluid">
@@ -420,7 +417,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:showILiveWith">
                                                             <h4>Vivienda</h4>
                                                             <div class="from-group">
                                                                 <label>Vivo con</label>
@@ -428,7 +425,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showMainActivity">
                                                             <h4>Actividad</h4>
                                                             <div class="from-group">
                                                                 <label>Mi actividad principal</label>
@@ -440,7 +437,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showCurrentEducation">
                                                             <h4>Actualmente estudio</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.currentStudies">
@@ -452,7 +449,7 @@
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showFamiliar">
                                                             <h4>Familiar</h4>
                                                             <div class="from-group">
                                                                 <label>Tengo hijos</label>
@@ -460,7 +457,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showMoneyIncome">
                                                             <h4>Ingresos</h4>
                                                             <div class="from-group">
                                                                 <label>Recibo ingresos</label>
@@ -476,7 +473,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showHealth">
                                                             <h4>Salud</h4>
                                                             <div class="from-group">
                                                                 <label>Cuento con seguro médico</label>
@@ -500,7 +497,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Uso tecnologia /////////// -->
                 <div class="page" ng-class="currentPage == 5 ? 'active' : ''">
                     <div class="container-fluid">
@@ -519,7 +515,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showDevices">
                                                             <h4>Dispositivos</h4>
                                                             <div class="from-group">
                                                                 <label>¿Qué dispositivo sabes usar?</label>
@@ -549,7 +545,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showVideogames">
                                                             <h4>Videojuegos</h4>
                                                             <div class="from-group">
                                                                 <label>¿Juegas videojuegos?</label>
@@ -576,7 +572,7 @@
                                                                 </ul>
                                                             </div>
                                                         </div>
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -589,9 +585,8 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mis logros /////////// -->
-                <div class="page" ng-class="currentPage == 6 ? 'active' : ''">
+                <div class="page" ng-class="currentPage == 6 ? 'active' : ''" ng-show="loggedUser?loggedUser:showBadgesEarned">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
@@ -608,14 +603,14 @@
 
                                                 <div ng-repeat="badge in wholeBadgesPages[badgePage]" class="badge-item text-center">
                                                     <img class="badgesviews" ng-src="assets/images/badges/{{badge.filename}}" alt="" class="img-responsive" width="100px"
-                                                    height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times, badge.description, badge.status)" />                                              />
+                                                         height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times, badge.description, badge.status)" />                                              />
 
                                                     <!--
                                                     <img class="badgesviews" ng-src="assets/images/badges/default_placeholder.svg" alt="" class="img-responsive" width="100px"
                                                     height="100px" ng-click="showDetailBadge('default_placeholder.svg', badge.name, badge.dateIssued, badge.earned_times, badge.status)" ng-show="badge.status == 'pending'"
                                                     />
                                                     -->
-                                                    
+
                                                     <span class="badgename text-center" ng-bind="badge.name"></span>
                                                 </div>
 
@@ -638,7 +633,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mis habilidades /////////// -->
                 <div class="page my-abilities" ng-class="currentPage == 7 ? 'active' : ''">
                     <div class="container-fluid">
@@ -664,15 +658,15 @@
                                                         <ul class="block-list">
                                                             <li class="profile-info-asset">
                                                                 <h4>Musical</h4>
-                                                                    <p>
-                                                                        Si en clase de ciencias, mate y biología haces ritmos con tus plumas en vez de apuntar, el ipod es tu mejor compañia y cantas a todo pulmon en la ducha.
-                                                                    </p>
+                                                                <p>
+                                                                    Si en clase de ciencias, mate y biología haces ritmos con tus plumas en vez de apuntar, el ipod es tu mejor compañia y cantas a todo pulmon en la ducha.
+                                                                </p>
                                                             </li>
                                                             <li class="profile-info-asset">
                                                                 <h4>Interpersonal</h4>
-                                                                    <p>
-                                                                        Si en tu escuela eres el mejor amigo de todos, el que pide todos los permisos a los papás de tus amigos y todos recurren a ti para que escuches y aconsejes sus truenes.
-                                                                    </p>
+                                                                <p>
+                                                                    Si en tu escuela eres el mejor amigo de todos, el que pide todos los permisos a los papás de tus amigos y todos recurren a ti para que escuches y aconsejes sus truenes.
+                                                                </p>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -730,15 +724,15 @@
                                                         <ul class="block-list">
                                                             <li class="profile-info-asset">
                                                                 <h4>Interpersonal</h4>
-                                                                    <p>
-                                                                        Si en clase de filosofía, eres el unico despierto, preguntas el por qué de las cosas, frecuentemente escuchas a tus amigos decirte no me regañes y antes de tomar una decisión evaluas las consecuencias.
-                                                                    </p>
+                                                                <p>
+                                                                    Si en clase de filosofía, eres el unico despierto, preguntas el por qué de las cosas, frecuentemente escuchas a tus amigos decirte no me regañes y antes de tomar una decisión evaluas las consecuencias.
+                                                                </p>
                                                             </li>
                                                             <li class="profile-info-asset">
                                                                 <h4>Interpersonal</h4>
-                                                                    <p>
-                                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-                                                                    </p>
+                                                                <p>
+                                                                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
+                                                                </p>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -775,7 +769,7 @@
                                                                 <p ng-bind="b"></p>
                                                             </li>
                                                         </ul>-->
-                                                         <ul class="block-list">
+                                                        <ul class="block-list">
                                                             <li class="profile-info-asset">
                                                                 <p>Biólogo</p>
                                                             </li>
@@ -811,49 +805,49 @@
                                     </div>
                                     <div class="panel-body">
 
-                                    <div class="my-profile-information">
-                                        <div class="container-fluid">
-                                            <div class="row">
-                                                <div class="text-center">
-                                                    <div class="achievement-badge">
+                                        <div class="my-profile-information">
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="text-center">
+                                                        <div class="achievement-badge">
+                                                            <!--
+                                                            <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px" height="100px"
+                                                            />
+                                                            -->
+                                                            <img class="badgesviews" ng-src="assets/images/badges/{{fileName}}" alt="" class="img-responsive" width="100px"
+                                                                 height="100px" />
+                                                            <!--
+                                                            <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
+                                                            height="100px" ng-show="status == 'pending'"
+                                                            />
+                                                            -->
+                                                            <div class="badgename" ng-bind="badgeName"></div>
+                                                            <div class="badgedate" ng-bind="badgeDateIssued"></div>
+                                                        </div>
+                                                        <div class="achievement-description">
+                                                            <span ng-bind="description"></span>
+                                                        </div>
+                                                        <div class="earned-info">
+                                                            <span class="users">
+                                                                <span ng-show="earnedTimes > 0">
+                                                                    <span ng-show="status == 'won'">Tú y</span>
+                                                                    <span ng-bind="earnedTimes"></span>
+                                                                    jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span>
+                                                                </span><span ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
+                                                        </div>
                                                         <!--
-                                                        <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px" height="100px"
-                                                        />
-                                                        -->
-                                                        <img class="badgesviews" ng-src="assets/images/badges/{{fileName}}" alt="" class="img-responsive" width="100px"
-                                                        height="100px" />
-                                                        <!--
-                                                        <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
-                                                        height="100px" ng-show="status == 'pending'"
-                                                        />
-                                                        -->
-                                                        <div class="badgename" ng-bind="badgeName"></div>
-                                                        <div class="badgedate" ng-bind="badgeDateIssued"></div>
-                                                    </div>
-                                                    <div class="achievement-description">
-                                                        <span ng-bind="description"></span>
-                                                    </div>
-                                                    <div class="earned-info">
-                                                        <span class="users">
-                                                            <span  ng-show="earnedTimes > 0">
-                                                                <span ng-show="status == 'won'">Tú y</span>
-                                                                <span ng-bind="earnedTimes"></span>
-                                                            jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span>
-                                                            </span><span  ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
-                                                    </div>
-                                                    <!--
-                                                    <div class="share-achievement">
-                                                        <span class="icon-container">
-                                                            <span class="icomoon icon-share"></span>
+                                                        <div class="share-achievement">
+                                                            <span class="icon-container">
+                                                                <span class="icomoon icon-share"></span>
 
-                                                        </span>
-                                                        <span class="share-text">Compartir Insignia</span>
-                                                    </div>
-                                                    -->
+                                                            </span>
+                                                            <span class="share-text">Compartir Insignia</span>
+                                                        </div>
+                                                        -->
 
-                                                    <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>
-                                                    <div class="txt-renglon centered txt-bigger"></div>
-                                                </div>
+                                                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>
+                                                        <div class="txt-renglon centered txt-bigger"></div>
+                                                    </div>
 
                                                 </div>
                                             </div>
