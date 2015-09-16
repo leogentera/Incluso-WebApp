@@ -79,7 +79,7 @@
           </div>
           <div class="block">
             <span ng-switch="p.post_type">
-              <span ng-switch-default>{{ p.message }}</span>
+              <span ng-switch-default ng-bind-html="p.message"></span>
               <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>              
               <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
               <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>

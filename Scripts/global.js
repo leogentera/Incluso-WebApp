@@ -1044,6 +1044,19 @@ var _activityRoutes = [
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 
+
+function removeHtmlTag(value) {
+    value = value.replace(/</g, '&lt;');
+    value = value.replace(/>/g, '&gt;');
+    return value;
+}
+
+function restoreHtmlTag(value) {
+    value = value.replace('&lt;', "<");
+    value = value.replace('&gt;', ">");
+    return value;
+}
+
 document.addEventListener("deviceready", onDeviceReady, false);
             
              function onDeviceReady() {
