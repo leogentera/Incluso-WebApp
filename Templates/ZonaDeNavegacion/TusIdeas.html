@@ -8,7 +8,7 @@
     </div>
 
     <div id="site-canvas">
-        <article class="blueprint evaluation">
+        <article class="bluespace evaluation">
             <div class="pages">
                 <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
                     <section id="title">
@@ -32,7 +32,7 @@
                                             <div class="clearfix">
                                                 <span>Ideas {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                   ng-click="deleteIdea1($index)">
+                                                   ng-click="deleteIdea($index, 0)">
                                                     <span class="icomoon icon-cross white"></span></i>
                                                 </a>
                                             </div>
@@ -41,8 +41,7 @@
                                                 <textarea id="textoarea1"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nueva idea"
-                                                          ng-model="misIdeas[0][$index]"
-                                                        >
+                                                          ng-model="misIdeas[0][$index]">
                                                 </textarea>
                                             </div>
 
@@ -52,7 +51,7 @@
                             </ul>
 
                             <div class="txt-renglon">
-                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addIdea1();">
+                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addIdea(0);">
                                     <span class="icomoon icon-plus"></span>Agregar nueva idea...
                                 </a>
                             </div>
@@ -72,7 +71,7 @@
                                             <div class="clearfix">
                                                 <span>Ideas {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                   ng-click="deleteIdea2($index)">
+                                                   ng-click="deleteIdea($index, 1)">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
@@ -81,8 +80,7 @@
                                                 <textarea id="textoarea2"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nueva idea"
-                                                          ng-model="misIdeas[1][$index]"
-                                                        >
+                                                          ng-model="misIdeas[1][$index]">
                                                 </textarea>
                                             </div>
 
@@ -92,7 +90,7 @@
                             </ul>
 
                             <div class="txt-renglon">
-                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addIdea2();">
+                                <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addIdea(1)">
                                     <span class="icomoon icon-plus"></span>Agregar nueva idea...
                                 </a>
                             </div>

@@ -9,17 +9,31 @@ angular
         '$timeout',
         '$rootScope',
         '$http',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http) {
+        '$filter',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter) {
 
-            _timeout = $timeout;
-            $scope.setToolbar($location.$$path, "");
             _httpFactory = $http;
-            $scope.$emit('ShowPreloader');
-            console.log("cargando usuario");
+            _timeout = $timeout;
+            
+            var _course = moodleFactory.Services.GetCacheJson("course");
+            $scope.discussion = null;
+            $scope.forumId = null;
+            
+            $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
+            $scope.userId = $routeParams.id;
+            
+            $scope.setToolbar($location.$$path, "");
             $scope.currentPage = 1;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.status = "";
+            $scope.shareAchievementMessage = "";
+            $scope.showShareAchievementMessage = false;
+            $scope.showSharedAchievement = false;
+            
+            $scope.$emit('ShowPreloader');
+
+
             getDataAsync(function () {
 
                 /////// privacy settings initial switches [boolean]/////////
@@ -244,9 +258,9 @@ angular
 
             function getDataAsync(callback) {
 
-                moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function () {
+                moodleFactory.Services.GetAsyncProfile($scope.userId, function () {
 
-                    $scope.model = moodleFactory.Services.GetCacheJson("profile");
+                    $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
                     if ($scope.model.profileimageurl) {
                         $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                     }
@@ -255,7 +269,7 @@ angular
                     
                     callback();
 
-                    moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback, function () { }, true);
+                    moodleFactory.Services.GetAsyncAvatar($scope.userId, getAvatarInfoCallback, function () { }, true);
 
                     if (!$scope.model) {
                         $location.path('/');
@@ -340,6 +354,9 @@ angular
             };
 
             $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description, status) {
+                $scope.shareAchievementMessage = "";
+                $scope.showShareAchievementMessage = false;
+                
                 $scope.currentPage = 10;
                 $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
@@ -609,7 +626,7 @@ angular
             };
 
             var saveUser = function () {
-                moodleFactory.Services.PutAsyncProfile(_getItem("userId"), $scope.model,
+                moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
 
                     function (data) {
                         ValidatePointsPolicy();
@@ -676,17 +693,14 @@ angular
 
                             usercourse.activities[activityIndex].status = 1;
 
-                            var profileBefore = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
+                            var profileBefore = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));
                             console.log("profile.stars (before): " + profileBefore.stars);
                             
                             var newPoints = Number(profileBefore.stars) + Number(usercourse.activities[activityIndex].points);
                             profileBefore.stars =newPoints;                       
-                            _setLocalStorageJsonItem("profile",profileBefore);
+                            _setLocalStorageJsonItem("profile/" + $scope.userId,profileBefore);
 
                             updateUserStarsUsingExternalActivity(activity.activity_identifier);
-
-                            // var profileAfter = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
-                            // console.log("profile.stars (after): " + profileAfter.stars);
 
                             var activityModel = {
                                 "usercourse": usercourse,
@@ -1104,5 +1118,65 @@ angular
             function addZeroBefore(n) {
                 return (n < 10 ? '0' : '') + n;
             }
+            
+            $scope.shareAchievement = function() {
+                
+                $scope.$emit('ShowPreloader');
+                
+                if ($scope.discussion == null || $scope.forumId == null) {
+                    
+                    moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, function(data, key) {
+                        $scope.discussion = data.discussions[0];
+                        $scope.forumId = data.forumid;
+                        
+                        postAchievement();
+                        
+                        }, function(data){
+                            $scope.shareAchievementMessage = "";
+                            $scope.showShareAchievementMessage = false;
+                            $scope.showSharedAchievement = true;
+                            
+                            $scope.$emit('HidePreloader'); }, true);
+                }else {
+                    postAchievement();
+                }
+
+            };
+            
+            function postAchievement() {
+                
+                var appendImg = '<img src="assets/images/badges/' + $scope.fileName + '" alt="" class="img-responsive" width="100px" height="100px" />';
+                appendImg = removeHtmlTag(appendImg);
+                
+                var requestData = {
+                    "userid": $scope.userId,
+                    "discussionid": $scope.discussion.discussion,
+                    "parentid": $scope.discussion.id,
+                    "message": $scope.shareAchievementMessage + appendImg + $scope.badgeName,
+                    "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                    "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                    "posttype": 1,
+                    "fileToUpload": null
+                };
+                
+                moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                    function() {
+                        $scope.shareAchievementMessage = "";
+                        $scope.showShareAchievementMessage = false;
+                        $scope.showSharedAchievement = true;
+                        
+                        $scope.$emit('HidePreloader');
+                    },
+                    function(){
+                        $scope.shareAchievementMessage = "";
+                        $scope.showShareAchievementMessage = false;
+                        $scope.showSharedAchievement = false;
+                        
+                        $scope.$emit('HidePreloader');
+                    }
+                );
+            };
+            
+            $scope.scrollToTop();
 
         }]);

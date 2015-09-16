@@ -34,6 +34,10 @@
                 if(sideToggle == "sideToggle")
                     $rootScope.sidebar = !$rootScope.sidebar;
             };
+			
+			$scope.navigateToMyProfile = function(){
+				$location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
+            };
 
             $scope.setToolbar = function(url,name){
                 //Set toolbar color and text based on path

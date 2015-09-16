@@ -195,7 +195,12 @@
                         </div>
                     </li>                    
                     <li class="hidden"><a class="menu-green" ng-href="#"><span class="icomoon icon-asterodis"></span>Zona de Navegación</a></li>
-                    <li class="hidden"><a class="menu-pink" ng-href="#"><span class="icomoon icon-planet"></span>Zona de Aterrizaje</a></li>                    
+                    <li class="hidden"><a class="menu-pink" ng-href="#"><span class="icomoon icon-planet"></span>Zona de Aterrizaje</a></li>
+                    <li>
+                      <a ng-click="navigateTo('MyStars','sideToggle')">
+                        <span class="icomoon icon-earned-stars"></span> Mis estrellas
+                      </a>
+                    </li>
                     <li class="hidden"><a ng-click="navigateTo('HallOfFame', 'sideToggle')"><span class="icomoon icon-cup"></span> Salón de la fama</a></li>
                     <li class="hidden"><a><span class="icomoon icon-racing-flag "></span> Recuerdos Incluso</a></li>
                     <li class="hidden"><a><span class="icomoon icon-loop"></span> Seguimiento</a></li>
@@ -204,8 +209,8 @@
                     <li><a ng-click="navigateTo('PrivacyNotice', 'sideToggle')"><span class="icomoon icon-privacy"></span> Aviso de privacidad</a></li>
                     <li><a ng-click="navigateTo('TermsOfUse', 'sideToggle')"><span class="icomoon icon-books"></span> Condiciones de uso</a></li>
                     <li class="hidden"><a ng-click="navigateTo('SharingExperience', 'sideToggle')">Compartir experiencia</a></li>
-                    <li class=""><a ng-click="navigateTo('AlbumIncluso', 'sideToggle')">Album incluso</a></li>
-                    <li class=""><a ng-click="navigateTo('reconocimiento', 'sideToggle')">Reconocimiento</a></li>
+                    <li class=""><a ng-click="navigateTo('/AlbumIncluso', 'sideToggle')">Album incluso</a></li>
+                    <li class=""><a ng-click="navigateTo('/reconocimiento', 'sideToggle')">Reconocimiento</a></li>
                     <li class="separate"></li>                    
                     <li><a ng-click="logout()"><span class="icomoon icon-logout"></span> Salir</a></li>
                   </ul>

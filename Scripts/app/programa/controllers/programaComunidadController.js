@@ -19,7 +19,7 @@ angular
             _timeout = $timeout;
             
             /* local view variables */
-            var _userProfile = moodleFactory.Services.GetCacheJson("profile");
+            var _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             var _currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
             var _userId = moodleFactory.Services.GetCacheObject("userId");
             var _course = moodleFactory.Services.GetCacheJson("course");
@@ -41,7 +41,7 @@ angular
             $scope.postTextValue = null;
             $scope.postLinkValue = null;
             $scope.postVideoValue = null;
-            $scope.postAttachmentValue = {};
+            $scope.postAttachmentValue = null;
             $scope.filter = "";
             
             /* View settings */
@@ -71,7 +71,7 @@ angular
                     $scope.discussion = data.discussions[0];
                     $scope.forumId = data.forumid;
 
-                    moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 1, _currentFilter, getAsyncDiscussionPostsCallback, function() {}, true);
+                    moodleFactory.Services.GetAsyncDiscussionPosts(_currentUser.token, $scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 1, _currentFilter, getAsyncDiscussionPostsCallback, function() {}, true);
                 };
                 function initCommunityErrorCallback (data) { $scope.$emit('HidePreloader'); };
             }
@@ -87,7 +87,7 @@ angular
             
             $scope.showMorePosts = function() {
                 $scope.$emit('ShowPreloader');
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 0, _currentFilter, getAsyncDiscussionPostsCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(_currentUser.token, $scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 0, _currentFilter, getAsyncDiscussionPostsCallback, null, true);
             };
             
             var getAsyncDiscussionPostsCallback = function(data, key) {
@@ -112,7 +112,7 @@ angular
                     
                     $scope.posts = new Array();
                     $scope.$emit('ShowPreloader');
-                    moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 1, _currentFilter, getAsyncDiscussionPostsCallback, function() {}, true);
+                    moodleFactory.Services.GetAsyncDiscussionPosts(_currentUser.token, $scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 1, _currentFilter, getAsyncDiscussionPostsCallback, function() {}, true);
                 }
             };
             
@@ -129,6 +129,7 @@ angular
                 
                 for(p = 0; p < $scope.posts.length; p++){
                     if ($scope.posts[p].post_id === element.post_id) {
+                        element.message = restoreHtmlTag(element.message);
                         $scope.posts[p] = element;
                         existingPost = true;
                         break;
@@ -136,12 +137,13 @@ angular
                 }
                 
                 if (!existingPost) {
+                    element.message = restoreHtmlTag(element.message);
                     $scope.posts.push(element);
                 }
             };
             
             var refreshTopicData = function() {
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 0, _currentFilter, getAsyncDiscussionPostsCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(_currentUser.token, $scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 0, _currentFilter, getAsyncDiscussionPostsCallback, null, true);
             };
             
             $scope.reportPost = function(postId) {

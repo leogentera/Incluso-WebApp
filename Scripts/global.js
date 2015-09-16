@@ -246,16 +246,16 @@ var _isChallengeCompleted = function(){
 
 
 var _updateBadgeStatus = function(coursemoduleid, callback){
-    moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {
+    moodleFactory.Services.GetAsyncProfile(moodleFactory.Services.GetCacheObject("userId"), function() {
     if (callback) callback();
-    var profile = moodleFactory.Services.GetCacheJson("profile");
+    var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
     var badges = profile.badges;
     var currentBadge = _.findWhere(_badgesPerChallenge,{ challengeId : coursemoduleid});    
     if (currentBadge) {
       for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
         if (badges[indexBadge].id == currentBadge.badgeId) {
           profile.badges[indexBadge].status = "won";
-          _setLocalStorageJsonItem("profile",profile);
+          _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
         }else{
           //This else statement is set to avoid errors on execution flows
         }
@@ -510,7 +510,7 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
 }
 
 function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModuleId){
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));   
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var stars = 0;
     for(var i=0; i < parentActivity.activities.length; i++){
@@ -532,13 +532,13 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
         date: getdate()
       };
       moodleFactory.Services.PutStars(data, profile, currentUser.token, successCallback, errorCallback);
-      _setLocalStorageJsonItem("profile", profile)
+      _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile)
       _setLocalStorageJsonItem("CurrentUser", currentUser)
     }
 }
 
  function updateUserStars (activity_identifier, extraPoints){
-   var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
+   var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getActivityByActivity_identifier(activity_identifier);
 
@@ -569,7 +569,7 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
 }
 
 function updateUserStarsUsingExternalActivity (activity_identifier){
-   var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));   
+   var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    var activity = getExtActivityByActivity_identifier(activity_identifier);   
    //profile.stars = Number(profile.stars) +  Number(activity.points);
@@ -630,7 +630,7 @@ var logout = function($scope, $location){
         );
       }
       localStorage.removeItem("CurrentUser");
-      localStorage.removeItem("profile");
+      localStorage.removeItem("profile/" + moodleFactory.Services.GetCacheObject("userId"));
       localStorage.removeItem("course");
       localStorage.removeItem("stage");
       localStorage.removeItem("usercourse");
@@ -641,7 +641,8 @@ var logout = function($scope, $location){
       localStorage.removeItem("activityStatus");
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
-      ClearLocalStorage("activityAnswers");      
+      ClearLocalStorage("activityAnswers");
+      ClearLocalStorage("album");
       $location.path('/');
     };
       
@@ -1042,6 +1043,19 @@ var _activityRoutes = [
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
+
+
+function removeHtmlTag(value) {
+    value = value.replace(/</g, '&lt;');
+    value = value.replace(/>/g, '&gt;');
+    return value;
+}
+
+function restoreHtmlTag(value) {
+    value = value.replace('&lt;', "<");
+    value = value.replace('&gt;', ">");
+    return value;
+}
 
 document.addEventListener("deviceready", onDeviceReady, false);
             

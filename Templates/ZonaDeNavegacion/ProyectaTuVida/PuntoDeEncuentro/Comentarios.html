@@ -77,8 +77,8 @@
     <section class="wall">
       <div id="item{{$index}}" ng-repeat="p in posts">
         <div class="part">
-          <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
-            <div>{{p.post_author}} <span>publicó:</span>
+          <div class="author"><img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+            <div><a class="user-alias" ng-click="navigateTo('Profile/' + p.post_autor_id)">{{p.postAutor}} </a> <span>publicó:</span>
               <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
             </div>
           </div>
@@ -93,8 +93,8 @@
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
-            <div class="coment block"><img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
-              <div>{{r.post_author}} <span>comentó:</span>   <div>{{r.message}}</div>
+            <div class="coment block"><img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+              <div><a class="user-alias" ng-click="navigateTo('Profile/' + r.post_autor_id)">{{r.postAutor}} </a> <span>comentó:</span>   <div>{{r.message}}</div>
               </div>
             </div>
           </div>

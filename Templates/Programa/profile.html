@@ -841,15 +841,32 @@
                                                             jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span>
                                                             </span><span  ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
                                                     </div>
-                                                    <!--
-                                                    <div class="share-achievement">
+
+                                                    <div class="share-achievement" ng-show="status == 'won'">
                                                         <span class="icon-container">
                                                             <span class="icomoon icon-share"></span>
 
                                                         </span>
-                                                        <span class="share-text">Compartir Insignia</span>
+                                                        <span class="share-text" ng-click="showShareAchievementMessage = !showShareAchievementMessage">Compartir Insignia</span>
                                                     </div>
-                                                    -->
+                                                    
+                                                    <section class="modales">
+                                                        <div id="openModal1" class="modalDialog" ng-show="showShareAchievementMessage">
+                                                            <div>
+                                                                <span class="close"></span>
+                                                                <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."  ng-model="shareAchievementMessage"></textarea></div>
+                                            
+                                                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareAchievement()" >Compartir</a>
+                                                            </div>
+                                                        </div>
+                                                        <div id="openModal6" class="modalDialog reportModal" ng-show="showSharedAchievement">
+                                                            <div>
+                                                              <a title="close" class="close"></a>
+                                                              <div class="add">La insignia ha sido compartida.</div>
+                                                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAchievement = false">Ok</a>
+                                                            </div>
+                                                        </div>
+                                                    </section>
 
                                                     <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>
                                                     <div class="txt-renglon centered txt-bigger"></div>

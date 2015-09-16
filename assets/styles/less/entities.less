@@ -188,6 +188,24 @@
                 border-bottom: 10px solid #24282a;
                 padding-bottom: 20.5vw;
             }
+            .bluespace{
+                background-image:url('@{url-images}/bg-stage-2-theme-asteroids.gif'), url('@{url-images}/bg-stage-1-theme-bottom.gif'), url('@{url-images}/bg-stage-1-theme-pattern.gif');
+                background-color: #112845;
+                background-position: -1px top, -1px bottom, -1px top;
+                background-repeat: no-repeat, no-repeat, repeat-y;
+                background-size: 100% auto;
+                border-bottom: 10px solid #24282a;
+                padding-bottom: 20.5vw;
+            }
+            .blueplanets{
+                background-image:url('@{url-images}/bg-stage-3-theme-planets.gif'), url('@{url-images}/bg-stage-1-theme-bottom.gif'), url('@{url-images}/bg-stage-1-theme-pattern.gif');
+                background-color: #112845;
+                background-position: -1px top, -1px bottom, -1px top;
+                background-repeat: no-repeat, no-repeat, repeat-y;
+                background-size: 100% auto;
+                border-bottom: 10px solid #24282a;
+                padding-bottom: 20.5vw;
+            }
             .starway{
                 background: #1f2733;
                 background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
@@ -2216,11 +2234,11 @@
             //background-image:url('@{url-images}/bg-notifications-sky.gif');
             color: #FFF;
             .section-description {  
-                height: 33vh;       
+                height: 28vh;       
                 //background: url('@{url-images}/bg-notifications-sky.gif');      
                 h2 {
                     margin: 0px;
-                    padding: 5vh 0px 2vh;
+                    padding: 2vh 0px 1vh;
                 }
                 .txt-renglon {
                     width: 90%;
@@ -2232,17 +2250,35 @@
                     &.light {
                         width: 60vw;
                         height: 5vh;
-                        margin-top: 3vh;
+                        margin-top: 2vh;
                         background-color: rgba(128, 152, 160, 0.5);
+                    }
+                    &.active .arrow-up{            
+                        display: block;                
                     }
                     .btn-icon {
                        margin-left: -8vw; 
                        &+span {
                             line-height: 4vh;
-                        }
+                        }                        
                     }
                     
                 }
+                .modalDialog {
+                    top: 2vh;
+                }
+            }            
+            .arrow-up {
+                display: none;
+                position: absolute;
+                bottom: -4vh;
+                left: 52%;
+                margin-left: -20px;
+                width: 0px;
+                height: 0px;
+                border-left: 20px solid transparent;
+                border-right: 20px solid transparent;
+                border-bottom: 20px solid #FFF;
             }
             .list-group {
                 margin: 0px;
@@ -2271,6 +2307,9 @@
                     font-size: 10vw;
                 }
             }
+            .section-footer {
+                padding-top: 10vh;
+            }
             .album-page1 {                    
                     min-height: 160vh;
                     /*background: #1f2733;
@@ -2282,9 +2321,9 @@
                     background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
                     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );*/
                     background-image:url('@{url-images}/album/bg-album-page1.gif');
-                    /*background-position: -1px top;*/
+                    background-position: 0px -2vh;
                     background-repeat: no-repeat;
-                    background-size: 100% 107%; 
+                    background-size: 100% 102%; 
                     /*padding-bottom: 16vw;*/
                     
                     .section-album{
@@ -2296,22 +2335,22 @@
                         }                        
                     }                    
                     .section-avatar {
-                        height: 62vh;
+                        height: 61vh;
                         /*background-image:url('@{url-images}/album/bg-album-avatar.gif'); 
                         background-size: 100%; */
                         figure {
                             padding-top: 8vh;
                         }
                         img {                                
-                            width: 65vw;                                
+                            width: 55vw;                                
                         }
                     }
                     .section-shield-name {
-                        height: 20vh;
-                        padding-top: 4vh;
+                        height: 15vh;
+                        //padding-top: 5vh;
                         .container {
                             width: 100%;   
-                            padding: 4vh 0px 0px; 
+                            padding: 7vh 0px 0px; 
                             p{
                                 margin: 0px;
                             }
@@ -2323,7 +2362,7 @@
                         }
                     }
                     .section-abilities {
-                        height: 30vh;
+                        height: 25vh;
                         /*background-image:url('@{url-images}/album/bg-album-abilities.gif');
                         background-size: 100%;*/
                         .container {
@@ -2334,12 +2373,13 @@
 
             /////// page 2 ////////
             .album-page2 { 
-                min-height: 180vh;
+                min-height: 190vh;
                 background-image:url('@{url-images}/album/bg-album-page2.gif');
                 background-size: 100% auto;
+                background-position: 0px -2vh;
                 background-repeat: no-repeat;
                 .section-description {
-                    height: 30vh;
+                    //height: 30vh;
                 }
                 .section-what-ilike {
                     height: 27vh;
@@ -2356,7 +2396,7 @@
                     }
                 }
                 .section-qualities {
-                    height: 30vh;
+                    height: 28vh;
                     /*background-image:url('@{url-images}/album/bg-album-qualities.gif');
                     background-size: 100%;*/
                      .container {
@@ -2368,7 +2408,7 @@
                     /*background-image:url('@{url-images}/album/bg-album-what-drivesme.gif');
                     background-size: 100%;*/
                      .container {
-                        padding: 7vh 0px 0px;  
+                        padding: 8vh 0px 0px;  
                         .list-group{
                             .list-group-item {
                                 padding: 1vh 5vw
@@ -2377,34 +2417,35 @@
                     }
                 }
                 .section-dreams {
-                    height: 30vh;
+                    height: 32vh;
                     /*background-image:url('@{url-images}/album/bg-album-dreams.gif');
                     background-size: 100%;*/
                      .container {
-                                padding: 8.5vh 0px 0px;                            
+                                padding: 9.5vh 0px 0px;                            
                             }
                 }
             }
             /////// page 3 ////////
             .album-page3 { 
-                min-height: 220vh;
+                min-height: 230vh;
                 padding-bottom: 5vh;
                 background-image:url('@{url-images}/album/bg-album-page3.gif');
-                background-size: 100% 110%;
+                background-size: 100% auto;
+                background-position: 0px -2vh;
                 background-repeat: no-repeat;
                 .section-future-plans {
                     height: 30vh;
                     /*background-image:url('@{url-images}/album/bg-album-future-plans.gif');
                     background-size: 100%;*/
                      .container {
-                        padding: 9.5vh 0px 0px; 
+                        padding: 8.5vh 0px 0px; 
                         span {
                             color: @clr-blueTurquoise;
                         }                           
                     }
                 }
                 .section-goals {
-                    height: 38vh;
+                    height: 37vh;
                     /*background-image:url('@{url-images}/album/bg-album-goals.gif');
                     background-size: 100%;*/
                      .container {
@@ -2417,19 +2458,19 @@
                     }
                 }
                 .section-now-iknow {
-                    height: 32vh;
+                    height: 30vh;
                     /*background-image:url('@{url-images}/album/bg-album-now-iknow.gif');
                     background-size: 100%;*/
                      .container {
-                        padding: 8.5vh 0px 0px;                            
+                        padding: 10vh 0px 0px;                            
                     }
                 }
                 .section-what-ilike.bg-pink {
-                        height: 28vh;
+                        height: 29vh;
                         /*background-image:url('@{url-images}/album/bg-album-what-ilike-pink.gif'); */
                         color: #FFF; 
                         .container{
-                             padding: 6vh 0px 0px;
+                             padding: 9vh 0px 0px;
                             .list-group{
                                 .list-group-item {
                                     padding: 1vh 5vw
@@ -2438,11 +2479,11 @@
                         }             
                     }
                 .section-project {
-                    height: 28vh;
+                    height: 32vh;
                     /*background-image:url('@{url-images}/album/bg-album-project.gif');
                     background-size: 100% 105%;*/
                      .container {
-                        padding: 12vh 0px 0px; 
+                        padding: 14vh 0px 0px; 
                         .txt-renglon {
                             width: 75%;
                             max-height: 10vh;
@@ -2455,20 +2496,25 @@
             }
              /////// page 4 ////////
             .album-page4 { 
-                min-height: 180vh;
-                padding-bottom: 5vh;
+                min-height: 190vh;                
                 background-image:url('@{url-images}/album/bg-album-page4.gif');
-                background-size: 100% 115%;
+                background-size: 100% auto;
+                background-position: 0px -2vh;
                 background-repeat: no-repeat;
                 .section-description {
-                    height: 35vh;
+                    height: 30vh;
                 }
                 .section-participation {
-                    height: 100vh;
+                    height: 95vh;
                     /*background-image:url('@{url-images}/album/bg-album-participation.gif');
                     background-size: 100%;*/
                      .container {
                         padding: 5vh 0px 0px; 
+                        .list-group {
+                            .list-group-item {
+                                padding: 0.5vh 5vw;
+                            }
+                        }
                         .results-title {
                             color: rgba(128, 152, 160, 0.5);
                             font-size: 6vw;
@@ -2492,9 +2538,14 @@
                                 line-height: 6vw;
                                 vertical-align: top;
                             }
-                        }
+                        }                        
                         .badges {
-                            padding: 0px;                            
+                            
+                            img {
+                                width: 85%;
+                                height: 100%;
+                                margin-bottom: 2vh;
+                            }                          
                         }
                         .badge-item {
                             display: inline-block;
@@ -2503,7 +2554,7 @@
                     }
                 }
                 .section-next-time {
-                    height: 15vh;
+                    height: 16vh;
                     /*background-image:url('@{url-images}/album/bg-album-next-time.gif');
                     background-size: 100%;*/
                      .container {

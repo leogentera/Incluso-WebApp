@@ -67,16 +67,25 @@
     <section class="wall">
       
       <div id="item{{$index}}" ng-repeat="p in posts">
+<<<<<<< HEAD
+        <div class="part post">
+          <div class="author"><img ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+            <div>
+              <a class="user-alias">{{p.post_author}} </a>
+              <span>publicó:</span>
+              <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
+=======
         
         <div class="part">
           <div class="author"><img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
             <div>{{p.post_author}} <span>publicó:</span>
             <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
+>>>>>>> origin/1.2
             </div>
           </div>
           <div class="block">
             <span ng-switch="p.post_type">
-              <span ng-switch-default ng-bind-html="p.message"></span>
+              <span ng-switch-default>{{ p.message }}</span>
               <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>              
               <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
               <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>
@@ -85,19 +94,27 @@
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showedCommentsByPost['id' + p.post_id]">
+<<<<<<< HEAD
+            <div class="coment block">
+              <img ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> 
+              <img ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+              <div>
+                <a class="user-alias">{{r.post_author}}</a>
+                <span>comentó:</span>   
+                <div>{{r.message}}</div>
+=======
             <div class="coment block"><img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
               <div>{{r.post_author}} <span>comentó:</span>   <div>{{r.message}}</div>
+>>>>>>> origin/1.2
               </div>
             </div>
           </div>
-          
           <div class="coment block" ng-show="(showedCommentsByPost['id' + p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousCommentsByPost(p.post_id)">
             <div class="vermas">
               <span class="icomoon icon-show-more"></span>
               Mostrar más comentarios...
             </div>
           </div>
-
           <div class="social">
             <div class="pink" ng-hide="p.liked >= 1" ng-click="likePost(p.post_id)">
               <span class="icomoon icon-like pink"></span> Me gusta              
@@ -112,10 +129,9 @@
               <span class="icomoon icon-pinch"></span> Reportar
             </div>
           </div>
-
         </div>
         
-          <section class="modales">
+        <section class="modales">
               <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed['id' + p.post_id]">
                   <div>
                       <span class="close"></span>
@@ -141,7 +157,7 @@
                   <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="isReportedAbuseSentModalCollapsed['id' + p.post_id] = false">Ok</a>
                 </div>
               </div>
-         </section>
+        </section>
       </div>
 
       <section>

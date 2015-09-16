@@ -24,7 +24,7 @@
         'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
         'incluso.programa.comunidad',
-        'incluso.programa.reconocimiento',
+        //'incluso.programa.reconocimiento',
         'incluso.programa.album',
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
@@ -40,6 +40,7 @@
         'incluso.program.alerts',        
         'incluso.program.myInterests',
         'incluso.program.myStrengths',
+        'incluso.program.myStars',
         'incluso.program.hallOfFame',
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
@@ -64,6 +65,7 @@
         $http.get('Templates/Programa/MyInterests.html', { cache: $templateCache });
         $http.get('Templates/Programa/MyStrengths.html', { cache: $templateCache });
         $http.get('Templates/Programa/HallOfFame.html', { cache: $templateCache });
+        $http.get('Templates/Programa/MyStars.html', { cache: $templateCache });
         $http.get('Templates/Programa/PrivacyNotice.html', { cache: $templateCache });
         $http.get('Templates/Programa/TermsOfUse.html', { cache: $templateCache });
         $http.get('Templates/Programa/HelpAndSupport.html', { cache: $templateCache });
@@ -131,7 +133,7 @@
             controller: 'programaProfileController'
         });
 
-        $routeProvider.when('/Profile', {
+        $routeProvider.when('/Profile/:id', {
             templateUrl: 'Templates/Programa/profile.html',
             controller: 'programaProfileController'
         });
@@ -215,6 +217,11 @@
             templateUrl: 'Templates/Programa/MyStrengths.html',
             controller: 'MyStrengthsController'
         });
+
+        $routeProvider.when('/MyStars', {
+            templateUrl: 'Templates/Programa/MyStars.html',
+            controller: 'MyStarsController'
+        });        
 
         $routeProvider.when('/HallOfFame', {
             templateUrl: 'Templates/Programa/HallOfFame.html',
