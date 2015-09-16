@@ -569,6 +569,16 @@
             controller: 'stageQuizController'
         });
 
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios.html',
+            controller: 'stageForumCommentsController'
+        });
+
         $routeProvider.otherwise({
         	redirectTo: '/'
         });
