@@ -353,8 +353,9 @@ angular
             }
             
             function getPostsDataCallback(data, key) {
-                postPager.from = data.sinceid;
-                postPager.to = data.maxid;
+                
+                postPager.from = (postPager.from < 0 && postPager.from < data.maxid) ? postPager.from : data.maxid;
+                postPager.to = postPager.to > data.sinceid ? postPager.to : data.sinceid;
                 
                 var posts = data.posts;
                 $scope.morePendingPosts = posts.length === 10;
