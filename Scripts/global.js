@@ -10,7 +10,7 @@ var _httpFactory = null;
 var _timeout = null;
 var _location = null;
 
-var _activityStatus = null;
+var _activityStatus = [];
 
 var _activityDependencies = [
     {
@@ -585,6 +585,39 @@ function updateUserStarsUsingExternalActivity (activity_identifier){
    moodleFactory.Services.PutStars(data,profile, currentUser.token, successCallback, errorCallback);
 }
 
+function updateActivityManager(activityManager, coursemoduleid){    
+  var breakAll = false;   
+  if(!activityManager){   
+    activityManager = moodleFactory.Services.GetCacheJson("activityManagers");    
+  }   
+  for(var activityIndex = 0; activityIndex < activityManager.length; activityIndex++){    
+    var activity = activityManager[activityIndex];    
+    for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {   
+      var subactivity = activity.activities[subactivityIndex];    
+      if(subactivity.coursemoduleid == coursemoduleid){   
+        subactivity.status = 1;   
+        breakAll = true;    
+        break;    
+      }   
+      if(subactivity.activities){   
+        for(var subsubactivityIndex = 0; subsubactivityIndex < subactivity.activities.length; subsubactivityIndex++){   
+          var subsubactivity = subactivity.activities[subsubactivityIndex];   
+          if(subsubactivity && subsubactivity.coursemoduleid == coursemoduleid){    
+            subsubactivity.status = 1;    
+            breakAll = true;    
+            break;    
+          }   
+        }   
+        if (breakAll)   
+          break;    
+      }   
+    }   
+    if (breakAll)   
+      break;    
+  }   
+  return activityManager;   
+}
+
 function getExtActivityByActivity_identifier(activity_identifier){     
      var userCourse = JSON.parse(localStorage.getItem("usercourse"));
      for (var activityIndex = 0; activityIndex < userCourse.activities.length; activityIndex++) {
@@ -1000,29 +1033,16 @@ var _staticStages = [
 ];
 
 var _badgesPerChallenge = [
-  {
-    badgeId: 2,
-    badgeName: "Combustible",
-    challengeId: 113
-  },
-
-  {
-    badgeId: 3,
-    badgeName: "Turbina C0N0-CT",
-    challengeId: 114
-  },
-  {
-    badgeId: 4,
-    badgeName: "Ala Ctu-3000",
-    challengeId: 115
-  },
-  {
-    badgeId: 5,
-    badgeName: "Combustible",
-    challengeId: 68
-  }
+  { badgeId: 2, badgeName: "Combustible", challengeId: 113 },
+  { badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114 },
+  { badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115 },
+  { badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 68 },
+  { badgeId: 6, badgeName: "Propulsor", challengeId: 155 },
+  { badgeId: 7, badgeName: "Misiles", challengeId: 157 },
+  { badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81 },
+  { badgeId: 9, badgeName: "Radar", challengeId: 167 },
+  { badgeId: 18, badgeName: "Turbo", challengeId: 160 }
 ];
-
 
 
 var _activityRoutes = [
@@ -1053,8 +1073,8 @@ function removeHtmlTag(value) {
 }
 
 function restoreHtmlTag(value) {
-    value = value.replace('&lt;', "<");
-    value = value.replace('&gt;', ">");
+    value = value.replace(/&lt;/g, "<");
+    value = value.replace(/&gt;/g, ">");
     return value;
 }
 
