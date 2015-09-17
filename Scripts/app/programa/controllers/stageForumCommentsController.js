@@ -126,7 +126,7 @@ angular
                     moodleid = 148;
                 } else if($scope.moodleId == 179){
                     activity_identifier = 2008;
-                    moodleid = 179;
+                    moodleid = 178;
                 } else if($scope.moodleId == 85){
                     activity_identifier = 2018;
                     moodleid = 85;
@@ -139,7 +139,22 @@ angular
                 console.log(moodleid);
                 //var moodleid;
                 debugger;
-               var activityFromTree = getActivityByActivity_identifier(activity_identifier);
+                var activityFromTree = getActivityAtAnyCost(activity_identifier, moodleid).activity;
+                //var activityFromTree = getActivityByActivity_identifier(activity_identifier);
+                //
+                ////In case getActivityByActivity_identifier can't reach the activity node
+                //if(!activityFromTree){
+                //    switch (moodleid){
+                //        case 178:
+                //            activityFromTree = _getActivityByCourseModuleId(moodleid);
+                //            break;
+                //    }
+                //
+                //    //If serached activity happens to be a child node
+                //    activityFromTree.activities && activityFromTree.activities.length? activityFromTree = activityFromTree.activities[0] : '';
+                //
+                //}
+
                 if(activityFromTree.status == 1){
                     addExtraForumParticipation($scope.discussion.id);
                     var extraPointsCounter = getForumsExtraPointsCounter();
@@ -152,7 +167,7 @@ angular
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     switch ($scope.moodleId) {
                         case "179":
-                            $location.path('/ZonaDeNavegacion/ForoCierre/' + activity_identifier);
+                                $location.path('/ZonaDeNavegacion/ForoCierre/' + activity_identifier +'/'+ 178);
                             break;
                         case "85":
                             $location.path('/ZonaDeNavegacion/ForoCierre/' + activity_identifier);

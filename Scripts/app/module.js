@@ -485,7 +485,7 @@
 
 
 //**********************************************************************************************************
-        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activity_identifier/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
