@@ -16,6 +16,8 @@ angular
         $rootScope.showFooterRocks = false;
         $scope.$emit('ShowPreloader');
 
+// :)
+
         $timeout(function () {
             //apply carousel to album layout
             var owlAlbum = $("#owlAlbum");
@@ -30,11 +32,7 @@ angular
                 touchDrag: false,
                 mouseDrag: false,
                 transitionStyle: "fade",
-                afterInit: function (el) {
-
-
-
-                }
+                afterInit: function (el) {}
                 //afterMove: callback1
             });
 
@@ -47,8 +45,7 @@ angular
             $(".back").click(function (ev) {
                 owlAlbum.trigger('owl.prev');
                 ev.preventDefault();
-            });
-            $scope.$emit('HidePreloader');
+            });            
         }, 1000);
 
         $scope.message = "Todos los logros en un solo lugar. <br/> Recuerda lo vivido en esta misi&#243;n y no te olvides de continuar con tus prop&#243;sitos.";
@@ -118,6 +115,7 @@ angular
         controllerInit();
 
         function controllerInit() {
+            
             $scope.album = JSON.parse(_getItem("album"));
             $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
@@ -137,7 +135,7 @@ angular
         function successfullCallBack(albumData) {
             if (albumData != null) {
                 _setLocalStorageJsonItem("album", albumData);
-                $scope.album = albumData;
+                $scope.album = albumData;                
                 renderInfo();
             }
             else {
@@ -145,13 +143,11 @@ angular
             }
         }
 
-        function errorCallback(albumData) {
+        function errorCallback(albumData) {            
             //Albun no reachable
         }
 
         function renderInfo() {
-            //Albun no reachable
+            $scope.$emit('HidePreloader');
         }
-
-
     }]);

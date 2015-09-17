@@ -11,16 +11,17 @@ angular
 	'$modal',
 	'$timeout',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $timeout) {
-	    $scope.setToolbar($location.$$path, "Reconocimiento");
-	    $rootScope.showFooter = true;
-	    $rootScope.showFooterRocks = false;
-	    $scope.$emit('HidePreloader');
+        $scope.setToolbar($location.$$path, "Reconocimiento");
+        $rootScope.showFooter = true;
+        $rootScope.showFooterRocks = false;
+        $scope.$emit('HidePreloader');
 
-	    $scope.currentYear = moment().format('YYYY');
+        $scope.currentYear = moment().format('YYYY');
 
-	    controllerInit();
+        controllerInit();
 
-	    function controllerInit() {
-	        $scope.profile = JSON.parse(localStorage.getItem("profile"));
-	    }
-	}]);
+        function controllerInit() {
+            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            $scope.profile = JSON.parse(localStorage.getItem("profile/" + $scope.currentUser.id));
+        }
+    }]);

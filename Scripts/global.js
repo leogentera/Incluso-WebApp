@@ -428,15 +428,19 @@ function getActivityAtAnyCost(activity_identifier, moodle_id){
 
     //In case getActivityByActivity_identifier can't reach the parentActivity node
     if(!parentActivity){
-        switch (Number(moodle_id)){
-            case 178:
-                parentActivity= _getActivityByCourseModuleId(moodle_id);
-                break;
-        }
+        var moodleId = _.find( relation_MoodleId_ActivityIdentifier, function(activity){ return activity.activity_identifier == activity_identifier; }).moodleid;
+        //switch (Number(moodle_id)){
+        //    case 178:
+                parentActivity= _getActivityByCourseModuleId(moodleId);
+                //break;
+        //}
 
-        //If serached parentActivity happens to be a child node
-        parentActivity.activities && parentActivity.activities.length? activity = parentActivity.activities[0] : '';
+        //If parentActivity happens to be a child node
+        parentActivity.activities && parentActivity.activities.length? activity = parentActivity.activities[0] : activity = parentActivity;
 
+    } else {
+        //activity = parentActivity;
+        parentActivity.activities && parentActivity.activities.length? activity = parentActivity.activities[0] : activity = parentActivity;
     }
     console.log('Parent activity:');
     console.log(parentActivity);
@@ -609,11 +613,12 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
     }
 }
 
- function updateUserStars (moodleId, extraPoints){
+ function updateUserStars (activityIdentifier, extraPoints){
+     debugger;
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    //var activity = getActivityByActivity_identifier(activity_identifier);
-     var activity = getActivityAtAnyCost(null, moodleId).activity;
+     var activity = getActivityAtAnyCost(activityIdentifier).activity;
 
      extraPoints ? '' : extraPoints = 0;
 
