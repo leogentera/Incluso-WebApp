@@ -22,6 +22,10 @@ angular
             $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
             $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
             
+            $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
+            $scope.myStrengths = new Array();
+            $scope.myWindowOfOpportunities = new Array();
+            
             $scope.setToolbar($location.$$path, "");
             $scope.currentPage = 1;
             $rootScope.showFooter = true;
@@ -114,6 +118,35 @@ angular
 
             });
 
+            function  loadStrengths() {
+                
+                var strengthArray = new Array();
+                
+                for(var s = 0; s < $scope.model.strengths.length; s++) {
+                    
+                    var strength = $scope.model.strengths[s];
+                    var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == strength.replace("\r", ""); });
+                    
+                     strengthArray.push(result);
+                }
+                
+                $scope.myStrengths = strengthArray;
+            }
+            
+            function loadWindowOfOpportunities() {
+                
+                var windowOfOpportunitiesArray = new Array();
+                
+                for(var s = 0; s < $scope.model.windowOfOpportunity.length; s++) {
+                    
+                    var windowOfOpportunities = $scope.model.windowOfOpportunity[s];
+                    var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == windowOfOpportunities.replace("\r", ""); });
+                    
+                     windowOfOpportunitiesArray.push(result);
+                }
+                
+                $scope.myWindowOfOpportunities = windowOfOpportunitiesArray;
+            }
 
             function getFileName(id) {
                 var filename = "";
@@ -278,6 +311,8 @@ angular
                     }
 
                     initFields($scope.model);
+                    loadStrengths();
+                    loadWindowOfOpportunities();
                 }, true);
             }
 
@@ -1153,15 +1188,19 @@ angular
             };
             
             function postAchievement() {
+                var customMessage = '<p> ' + $scope.shareAchievementMessage + '</p>';
+                var msgOpenContainer = '<div class="achievement-badge"> ';
+                var appendImg = '<figure> <img src="assets/images/badges/' + $scope.fileName + '" ng-src="assets/images/badges/' + $scope.fileName + '" alt="" /> </figure>';
+                var msgCaption = '<figcaption> <p class="badgename">' + $scope.badgeName + '</p> </figcaption>';
+                var msgCloseContainer = ' </div>';
                 
-                var appendImg = '<img src="assets/images/badges/' + $scope.fileName + '" alt="" class="img-responsive" width="100px" height="100px" />';
-                appendImg = removeHtmlTag(appendImg);
+                var fullMessage = customMessage + msgOpenContainer + appendImg + msgCaption + msgCloseContainer;
                 
                 var requestData = {
                     "userid": $scope.userId,
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
-                    "message": $scope.shareAchievementMessage + appendImg + $scope.badgeName,
+                    "message": removeHtmlTag(fullMessage),
                     "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
                     "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
                     "posttype": 1,

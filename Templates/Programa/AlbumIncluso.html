@@ -44,7 +44,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="strengths in album.myStrengths">
-                                    strengths
+                                    {{strengths}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myStrengths.length == 0">
                                     <strong>No has seleccionado fortalezas</strong>
@@ -107,7 +107,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="likes in album.myLikes">
-                                    likes
+                                    {{likes}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myLikes.length == 0">
                                     <strong>No has seleccionado tus gustos</strong>
@@ -120,7 +120,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="attributes in album.myAttributes">
-                                    attributes
+                                    {{attributes}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myAttributes.length == 0">
                                     <strong>No has seleccionado tus cualidades</strong>
@@ -133,7 +133,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="ideas in album.myIdeas">
-                                    ideas
+                                    {{ideas}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myIdeas.length == 0">
                                     <strong>No has seleccionado aún nada</strong>
@@ -146,7 +146,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="dreams in album.myDreams">
-                                    dreams
+                                    {{dreams}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myDreams.length == 0">
                                     <strong>No has seleccionado aún nada</strong>
@@ -206,9 +206,9 @@
                     <section class="section-album section-future-plans centered">
                         <div class="container">
                             <ul class="list-group">
-                                <li class="list-group-item"><span>1 año. </span><label>album.myPlans.oneYear</label></li>
-                                <li class="list-group-item"><span>2 años. </span><label>album.myPlans.threeYear</label></li>
-                                <li class="list-group-item"><span>5 años. </span><label>album.myPlans.fiveYear</label></li>
+                                <li class="list-group-item"><span>1 año. </span><label>{{album.myPlans.oneYear == '' ? 'Comparte tu plan':album.myPlans.oneYear}}</label></li>
+                                <li class="list-group-item"><span>2 años. </span><label>{{album.myPlans.threeYear == '' ? 'Comparte tu plan':album.myPlans.threeYear}}</label></li>
+                                <li class="list-group-item"><span>5 años. </span><label>{{album.myPlans.fiveYear == '' ? 'Comparte tu plan':album.myPlans.fiveYear}}</label></li>
                             </ul>
                         </div>
                     </section>
@@ -217,7 +217,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="goals in album.myGoals">
-                                    goals
+                                    {{goals}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myGoals.length == 0">
                                     <strong>No has seleccionado aún nada</strong>
@@ -230,7 +230,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="iKnow in album.iKnowWhatIs">
-                                    iKnow
+                                    {{iKnow}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.iKnowWhatIs.length == 0">
                                     <strong>No has seleccionado aún nada</strong>
@@ -242,11 +242,11 @@
                     <section class="section-album section-what-ilike bg-pink centered">
                         <div class="container">
                             <ul class="list-group">
-                                <li class="list-group-item" ng-repeat="iKnow in album.iKnowWhatIs">
-                                    iKnow
+                                <li class="list-group-item" ng-repeat="likes in album.myLikes">
+                                    {{likes}}
                                 </li>
-                                <li class="list-group-item" ng-if="album.iKnowWhatIs.length == 0">
-                                    <strong>No has seleccionado aún nada</strong>
+                                <li class="list-group-item" ng-if="album.myLikes.length == 0">
+                                    <strong>No has seleccionado tus gustos</strong>
                                 </li>
                             </ul>
                         </div>
@@ -256,7 +256,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="proj in album.project">
-                                    proj
+                                    {{proj}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.project.length == 0">
                                     <strong>No has seleccionado aún nada</strong>
@@ -330,32 +330,41 @@
                             <!-- badges obtained -->
                             <div class="txt-renglon badges">
                                 <h2 class="results-title">Insignias obtenidas</h2>
-                                <div class="badge-item text-center">
-                                    <img class="badgesviews" src="assets/images/badges/IDintergalactica.svg" alt="IDintergalactica" />
+                                <div class="badge-item text-center">                                    
+                                    <!--<img class="badgesviews" src="assets/images/badges/IDintergalactica.svg" alt="IDintergalactica" />-->                                    
+                                    <img class="badgesviews" ng-src="assets/images/badges/{{badgeFileName(13)}}" alt="combustible" />
                                 </div>
                                 <div class="badge-item text-center">
-                                    <img class="badgesviews" src="assets/images/badges/combustible.svg" alt="combustible" />
+                                    <!--<img class="badgesviews" src="assets/images/badges/combustible.svg" alt="combustible" />-->
+                                    <img class="badgesviews" ng-src="assets/images/badges/{{badgeFileName(2)}}" alt="combustible" />
                                 </div>
                                 <div class="badge-item text-center">
-                                    <img class="badgesviews" src="assets/images/badges/corazon_digital.svg" alt="corazon_digital" />
+                                    <!--<img class="badgesviews" src="assets/images/badges/corazon_digital.svg" alt="corazon_digital" />-->
+                                    <img class="badgesviews" src="assets/images/badges/{{badgeFileName(15)}}" alt="corazon_digital" />
                                 </div>
                                 <div class="badge-item text-center">
-                                    <img class="badgesviews" src="assets/images/badges/foro_interplanetario.svg" alt="foro_interplanetario" />
+                                    <!--<img class="badgesviews" src="assets/images/badges/foro_interplanetario.svg" alt="foro_interplanetario" />-->
+                                    <img class="badgesviews" src="assets/images/badges/{{badgeFileName(12)}}" alt="foro_interplanetario" />
                                 </div>
                                 <div class="badge-item text-center">
-                                    <img class="badgesviews" src="assets/images/badges/turbina.svg" alt="turbina" />
+                                    <!--<img class="badgesviews" src="assets/images/badges/turbina.svg" alt="turbina" />-->
+                                    <img class="badgesviews" src="assets/images/badges/{{badgeFileName(3)}}" alt="turbina" />
                                 </div>
                                 <div class="badge-item text-center">
-                                    <img class="badgesviews" src="assets/images/badges/sistNavegacion.svg" alt="sistNavegacion" />
+                                    <!--<img class="badgesviews" src="assets/images/badges/sistNavegacion.svg" alt="sistNavegacion" />-->
+                                    <img class="badgesviews" src="assets/images/badges/{{badgeFileName(5)}}" alt="sistNavegacion" />
                                 </div>
                                 <div class="badge-item text-center">
-                                    <img class="badgesviews" src="assets/images/badges/ala.svg" alt="ala" />
+                                    <!--<img class="badgesviews" src="assets/images/badges/ala.svg" alt="ala" />-->
+                                    <img class="badgesviews" src="assets/images/badges/{{badgeFileName(4)}}" alt="ala" />
                                 </div>
                                 <div class="badge-item text-center">
-                                    <img class="badgesviews" src="assets/images/badges/participacion_electrica.svg" alt="participacion_electrica" />
+                                    <!--<img class="badgesviews" src="assets/images/badges/participacion_electrica.svg" alt="participacion_electrica" />-->
+                                    <img class="badgesviews" src="assets/images/badges/{{badgeFileName(14)}}" alt="participacion_electrica" />
                                 </div>
                                 <div class="badge-item text-center">
-                                    <img class="badgesviews" src="assets/images/badges/turbina.svg" alt="turbina" />
+                                    <!--<img class="badgesviews" src="assets/images/badges/turbina.svg" alt="turbina" />-->
+                                    <img class="badgesviews" src="assets/images/badges/{{badgeFileName(3)}}" alt="turbina" />
                                 </div>
                             </div>
                         </div>

@@ -93,6 +93,7 @@ angular
 
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
                             updateActivityStatus(moodleid);
+                            _updateRewardStatus();
                               var activity_identifier = null;
                               //var moodleId = $routeParams.moodleid;
                               //var moodleid = $routeParams.moodleid;
