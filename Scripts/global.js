@@ -265,6 +265,21 @@ var _updateBadgeStatus = function(coursemoduleid, callback){
     });
 };
 
+var _updateRewardStatus = function(){
+  
+  var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+  var totalRewards = profile.rewards;
+  var profilePoints = profile.stars;
+  
+  for(var i =0; i< totalRewards.length; i++){
+      var profileReward = profile.rewards[i];
+      if (profileReward.status != "won" && profileReward.points_to_get_reward < profilePoints) {
+        profile.rewards[i].status = "won";
+        profile.rewards[i].dateIssued = new Date();        
+      }
+  }
+  localStorage.setItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),JSON.stringify(profile));  
+}
 
 
 var _createNotification = function(activityId, triggerActivity){
@@ -332,12 +347,12 @@ var _coachNotification = function(){
       
       
 
+var successPutStarsCallback = function(data){
+  _updateRewardStatus();  
+};
 
 
-
-
-
-var successCallback = function(data){
+var successCallback = function(data){    
 };
 
 var errorCallback = function(data){
@@ -532,7 +547,7 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
         instanceType: 0,
         date: getdate()
       };
-      moodleFactory.Services.PutStars(data, profile, currentUser.token, successCallback, errorCallback);
+      moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
       _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile)
       _setLocalStorageJsonItem("CurrentUser", currentUser)
     }
@@ -566,7 +581,7 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
       instanceType: 0,
       date: getdate()
    };
-   moodleFactory.Services.PutStars(data,profile, currentUser.token,successCallback, errorCallback);
+   moodleFactory.Services.PutStars(data,profile, currentUser.token,successPutStarsCallback, errorCallback);
 }
 
 function updateUserStarsUsingExternalActivity (activity_identifier){
@@ -582,7 +597,7 @@ function updateUserStarsUsingExternalActivity (activity_identifier){
        date: getdate()
    };
    
-   moodleFactory.Services.PutStars(data,profile, currentUser.token, successCallback, errorCallback);
+   moodleFactory.Services.PutStars(data,profile, currentUser.token, successPutStarsCallback, errorCallback);
 }
 
 function updateActivityManager(activityManager, coursemoduleid){    

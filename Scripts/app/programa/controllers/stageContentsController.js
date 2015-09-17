@@ -205,7 +205,8 @@ angular
               return (n < 10 ? '0' : '') + n;
             }
 
-            function successfullCallBack(){              
+            function successfullCallBack(){
+                  _updateRewardStatus();
             }
 
             function errorCallback(){

@@ -126,9 +126,9 @@ angular
                 //create notification
                 _createNotification(treeActivity.coursemoduleid, triggerActivity);
                 //complete stage                
-                _updateBadgeStatus(treeActivity.coursemoduleid);  
-
-
+                _updateBadgeStatus(treeActivity.coursemoduleid);
+                
+                _updateRewardStatus();
                 // update activity status dictionary used for blocking activity links
                 updateActivityStatusDictionary(treeActivity.coursemoduleid);                
                 
