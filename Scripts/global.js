@@ -1061,22 +1061,22 @@ var _badgesPerChallenge = [
 
 
 var _activityRoutes = [
-  { id: 150, url: '/ZonaDeVuelo/ExploracionInicial/1001'},
-  { id: 112, url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia'},
-  { id: 113, url: '#'},
-  { id: 149, url: '/ZonaDeVuelo/Conocete/ZonaDeContacto/149'},
-  { id: 145, url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia'},
-  { id: 139, url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
-  { id: 151, url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
-  { id: 114, url: '#'},
-  { id: 146, url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia'},
-  { id: 70, url: '/ZonaDeVuelo/MisSuenos/MisGustos/1006'},
-  { id: 71, url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
-  { id: 72, url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
-  { id: 73, url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
-  { id: 115, url: '#'},
-  { id: 68, url: '/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat'}, 
-  { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
+  { id: 150, name: '', url: '/ZonaDeVuelo/ExploracionInicial/1001'},
+  { id: 112, name: '', url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia'},
+  { id: 113, name: '', url: '#'},
+  { id: 149, name: '', url: '/ZonaDeVuelo/Conocete/ZonaDeContacto/149'},
+  { id: 145, name: '', url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia'},
+  { id: 139, name: 'Reto Multiple', url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
+  { id: 151, name: '', url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
+  { id: 114, name: '', url: '#'},
+  { id: 146, name: '', url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia'},
+  { id: 70, name: '', url: '/ZonaDeVuelo/MisSuenos/MisGustos/1006'},
+  { id: 71, name: '', url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
+  { id: 72, name: '', url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
+  { id: 73, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
+  { id: 115, name: '', url: '#'},
+  { id: 68, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat'}, 
+  { id: 100, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 
