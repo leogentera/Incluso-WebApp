@@ -18,12 +18,24 @@ angular
 
             $scope.currentChallenge = 2;
              var userCourse = JSON.parse(localStorage.getItem('usercourse'));
-             var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
-             var activityFromTree;
+             //var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
+            debugger;
+            var parentActivity = getActivityAtAnyCost($routeParams.activity_identifier, $routeParams.moodleid).parentActivity;
+            var activityFromTree;
+
+            //In case getActivityByActivity_identifier can't reach the activity node
+            //if(!parentActivity){
+            //    switch (moodleid){
+            //        case 178:
+            //            parentActivity = _getActivityByCourseModuleId(moodleid);
+            //            break;
+            //    }
+            //}
+
              if (parentActivity.activities && parentActivity.activities.length) {
                 activityFromTree = parentActivity.activities[0];
              } else {
-                activityFromTree = parentActivity
+                activityFromTree = parentActivity;
              }
 
 
@@ -37,7 +49,7 @@ angular
             var endForumActivity = function(moodleid){
                 $scope.$emit('ShowPreloader');
                 //debugger;
-               var parentActivity = getActivityByActivity_identifier($routeParams.moodleid, userCourse);
+               //var parentActivity = getActivityByActivity_identifier($routeParams.moodleid, userCourse);
                var activities = parentActivity.activities;
 
                parentActivity.status = 1;
@@ -83,25 +95,34 @@ angular
                             updateActivityStatus(moodleid);
                             _updateRewardStatus();
                               var activity_identifier = null;
-                              var moodleId = $routeParams.moodleid;
-                              if(moodleId == 151){
+                              //var moodleId = $routeParams.moodleid;
+                              //var moodleid = $routeParams.moodleid;
+                              if(moodleid == 151){
                                   activity_identifier = 1010;
                                   moodleid = 64;
-                              } else if(moodleId == 64){
+                              } else if(moodleid == 64){
                                   activity_identifier = 1010;
                                   moodleid = 64;
-                              } else if(moodleId == 73){
+                              } else if(moodleid == 73){
                                   activity_identifier = 1008;
                                   moodleid = 73;
-                              } else if(moodleId == 147){
+                              } else if(moodleid == 147){
                                   activity_identifier = 1049;
                                   moodleid = 147;
-                              } else if(moodleId == 148){
+                              } else if(moodleid == 148){
                                   activity_identifier = 1049;
                                   moodleid = 148;
-
+                              } else if(moodleid == 178){
+                                  activity_identifier = 2008;
+                                  moodleid = 178;
+                              } else if(moodleid == 179){
+                                  activity_identifier = 2008;
+                                  moodleid = 178;
                               }
-                              updateUserStars(moodleId);
+
+                              debugger;
+
+                              updateUserStars(moodleid);
                               $scope.$emit('HidePreloader');
                             $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                           }, errorCallback);
@@ -114,7 +135,8 @@ angular
 
 
             $scope.finishActivity = function () {
-               endForumActivity(parentActivity.coursemoduleid);
+               //endForumActivity(parentActivity.coursemoduleid);
+                endForumActivity(moodleid);
             }
 
 

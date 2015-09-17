@@ -421,6 +421,62 @@ function _getActivityByCourseModuleId(coursemoduleid, usercourse) {
             return matchingActivity;
 }
 
+function getActivityAtAnyCost(activity_identifier, moodle_id){
+    debugger;
+    var parentActivity = getActivityByActivity_identifier(activity_identifier);
+    var activity;
+
+    //In case getActivityByActivity_identifier can't reach the parentActivity node
+    if(!parentActivity){
+        switch (Number(moodle_id)){
+            case 178:
+                parentActivity= _getActivityByCourseModuleId(moodle_id);
+                break;
+        }
+
+        //If serached parentActivity happens to be a child node
+        parentActivity.activities && parentActivity.activities.length? activity = parentActivity.activities[0] : '';
+
+    }
+    console.log('Parent activity:');
+    console.log(parentActivity);
+
+    return{
+        parentActivity: parentActivity,
+        activity: activity
+    }
+
+}
+
+var relation_MoodleId_ActivityIdentifier = [
+    {   'recievedMoodleId' : 151,
+        'activity_identifier' : 1010,
+        'moodleid' : 64
+    },
+    {   'recievedMoodleId' : 64,
+        'activity_identifier' : 1010,
+        'moodleid' : 64},
+    {   'recievedMoodleId' : 73,
+        'activity_identifier' : 1008,
+        'moodleid' : 73},
+    {   'recievedMoodleId' : 147,
+        'activity_identifier' : 1049,
+        'moodleid' : 147},
+    {   'recievedMoodleId' : 148,
+        'activity_identifier' : 1049,
+        'moodleid' : 148},
+    {   'recievedMoodleId' : 179,
+        'activity_identifier' : 2008,
+        'moodleid' : 178},
+    {   'recievedMoodleId' : 178,
+        'activity_identifier' : 2008,
+        'moodleid' : 178},
+    {   'recievedMoodleId' : 85,
+        'activity_identifier' : 2018,
+        'moodleid' : 85},
+
+];
+
 function updateSubActivityStatus(coursemoduleid) {
                 //Update activity status for activity blocking binding
                 //updateActivityStatusDictionary(coursemoduleid);
@@ -553,10 +609,11 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
     }
 }
 
- function updateUserStars (activity_identifier, extraPoints){
+ function updateUserStars (moodleId, extraPoints){
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-   var activity = getActivityByActivity_identifier(activity_identifier);
+   //var activity = getActivityByActivity_identifier(activity_identifier);
+     var activity = getActivityAtAnyCost(null, moodleId).activity;
 
      extraPoints ? '' : extraPoints = 0;
 
