@@ -88,8 +88,7 @@
                                     </li>
 
                                     <!-- Mis habilidades -->
-                                    <!--<li class="list-group-item no-badge" ng-click="navigateToPage(7)" ng-show="model.recomendedBachelorDegrees.length > 0">-->
-                                    <li class="list-group-item no-badge" ng-click="navigateToPage(7)">
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(7)" ng-show="isMultipleChallengeActivityFinished">
                                         <a href="">
                                             <span class="icomoon icon-user"></span>
                                             <span>Mis Habilidades</span>
@@ -99,8 +98,7 @@
                                     </li>
 
                                     <!-- Mis areas de oportunidad -->
-                                    <!--<li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">-->
-                                        <li class="list-group-item no-badge" ng-click="navigateToPage(8)">
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="isMultipleChallengeActivityFinished">
                                         <a href="">
                                             <span class="icomoon icon-workman"></span>
                                             <span>Mis Áreas de Oportunidad</span>
@@ -108,9 +106,9 @@
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
                                     </li>
-
-                                    <!--<li class="list-group-item no-badge" ng-click="navigateToPage(9)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">-->
-                                    <li class="list-group-item no-badge" ng-click="navigateToPage(9)">
+                                    
+                                    <!-- Elige el Rumbo -->
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(9)" ng-show="isMultipleChallengeActivityFinished">
                                         <a href="">
                                             <span class="icomoon icon-rocket"></span>
                                             <span>Elige el Rumbo</span>
@@ -654,23 +652,13 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <!--<ul class="block-list" ng-repeat="b in model.recomendedBachelorDegrees">
-                                                            <li>
-                                                                <p ng-bind="b"></p>
-                                                            </li>
-                                                        </ul>-->
+
                                                         <ul class="block-list">
-                                                            <li class="profile-info-asset">
-                                                                <h4>Musical</h4>
-                                                                    <p>
-                                                                        Si en clase de ciencias, mate y biología haces ritmos con tus plumas en vez de apuntar, el ipod es tu mejor compañia y cantas a todo pulmon en la ducha.
-                                                                    </p>
-                                                            </li>
-                                                            <li class="profile-info-asset">
-                                                                <h4>Interpersonal</h4>
-                                                                    <p>
-                                                                        Si en tu escuela eres el mejor amigo de todos, el que pide todos los permisos a los papás de tus amigos y todos recurren a ti para que escuches y aconsejes sus truenes.
-                                                                    </p>
+                                                            <li class="profile-info-asset" ng-repeat="s in myStrengths">
+                                                                <h4 ng-bind="s.name"></h4>
+                                                                    
+                                                                    <div ng-bind-html="s.description">
+                                                                    </div>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -702,42 +690,12 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <!-- <h4>Sueños Ser</h5>
-                                                        <ul class="block-list" ng-repeat="db in model.dreamsToBe">
-                                                            <li>
-                                                                <p ng-bind="db"></p>
-                                                            </li>
-                                                        </ul>
-                                                        <hr />
-
-                                                        <h4>Sueños Tener</h5>
-                                                        <ul class="block-list" ng-repeat="dh in model.dreamsToHave">
-                                                            <li>
-                                                                <p ng-bind="dh"></p>
-                                                            </li>
-                                                        </ul>
-                                                        <hr />
-
-                                                        <h4>Sueños Hacer</h5>
-                                                        <ul class="block-list" ng-repeat="dd in model.dreamsToDo">
-                                                            <li>
-                                                                <p ng-bind="dd"></p>
-                                                            </li>
-                                                        </ul>
-                                                        <hr />
-                                                        <br />-->
                                                         <ul class="block-list">
-                                                            <li class="profile-info-asset">
-                                                                <h4>Interpersonal</h4>
-                                                                    <p>
-                                                                        Si en clase de filosofía, eres el unico despierto, preguntas el por qué de las cosas, frecuentemente escuchas a tus amigos decirte no me regañes y antes de tomar una decisión evaluas las consecuencias.
-                                                                    </p>
-                                                            </li>
-                                                            <li class="profile-info-asset">
-                                                                <h4>Interpersonal</h4>
-                                                                    <p>
-                                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-                                                                    </p>
+                                                            <li class="profile-info-asset" ng-repeat="s in myWindowOfOpportunities">
+                                                                <h4 ng-bind="s.name"></h4>
+                                                                    
+                                                                <div ng-bind-html="s.description">
+                                                                </div>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -769,20 +727,9 @@
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <!--<ul class="block-list" ng-repeat="b in model.recomendedBachelorDegrees">
-                                                            <li>
+                                                        <ul class="block-list">
+                                                            <li class="profile-info-asset" ng-repeat="b in model.recomendedBachelorDegrees">
                                                                 <p ng-bind="b"></p>
-                                                            </li>
-                                                        </ul>-->
-                                                         <ul class="block-list">
-                                                            <li class="profile-info-asset">
-                                                                <p>Biólogo</p>
-                                                            </li>
-                                                            <li class="profile-info-asset">
-                                                                <p>Nutriólogo</p>
-                                                            </li>
-                                                            <li class="profile-info-asset">
-                                                                <p>Agrónomo</p>
                                                             </li>
                                                         </ul>
                                                     </div>

@@ -150,6 +150,9 @@ angular
                   case "85":
                       $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
                       break;
+                  case "93":
+                      $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                      break;
               }
 
             }
@@ -167,7 +170,7 @@ angular
                 }, 1000);
               
               var moodleId = $routeParams.moodleid;
-              
+              //TODO Add new routes for Zona de Navegación && Zona de Aterrizaje
               switch (moodleId){
                   case "64":
                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);

@@ -25,8 +25,7 @@ angular
             $scope.scrollToTop();            
             $scope.currentPage = 1;
             var index = 0;
-            var parentIndex = 4;               
-            debugger;         
+            var parentIndex = 4;                           
             var coursemoduleid = parseInt($routeParams.moodleid);
             var currentChallenge = 0;
             switch(coursemoduleid){
@@ -126,9 +125,9 @@ angular
                 //create notification
                 _createNotification(treeActivity.coursemoduleid, triggerActivity);
                 //complete stage                
-                _updateBadgeStatus(treeActivity.coursemoduleid);  
-
-
+                _updateBadgeStatus(treeActivity.coursemoduleid);
+                
+                _updateRewardStatus();
                 // update activity status dictionary used for blocking activity links
                 updateActivityStatusDictionary(treeActivity.coursemoduleid);                
                 

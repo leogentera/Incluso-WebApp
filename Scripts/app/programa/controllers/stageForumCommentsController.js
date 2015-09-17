@@ -86,10 +86,16 @@ angular
             };
 
             var addExtraForumParticipation = function(discussionId){
-
+                debugger;
               var extraPointsCounter = getForumsExtraPointsCounter();
                 var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == discussionId; });
-                currentDiscussionCounter.extra_replies_counter++;
+                //If discussion is not registered, well, register it mofo
+                if(currentDiscussionCounter){
+                    currentDiscussionCounter.extra_replies_counter++;
+                } else {
+                    extraPointsCounter.push({'discussion_id':discussionId, 'extra_replies_counter':1});
+                }
+
                 _setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
             };
 
@@ -118,11 +124,37 @@ angular
                 } else if($scope.moodleId == 148){
                     activity_identifier = 1049;
                     moodleid = 148;
-
+                } else if($scope.moodleId == 179){
+                    activity_identifier = 2008;
+                    moodleid = 178;
+                } else if($scope.moodleId == 85){
+                    activity_identifier = 2018;
+                    moodleid = 85;
+                } else if($scope.moodleId == 93){
+                    //TODO Agregar activity_identifier a Moodle y relacionarlo
+                    activity_identifier = 0000;
+                    moodleid = 93;
                 }
-                var moodleid;
+                console.log(activity_identifier);
+                console.log(moodleid);
+                //var moodleid;
+                debugger;
+                var activityFromTree = getActivityAtAnyCost(activity_identifier, moodleid).activity;
+                //var activityFromTree = getActivityByActivity_identifier(activity_identifier);
+                //
+                ////In case getActivityByActivity_identifier can't reach the activity node
+                //if(!activityFromTree){
+                //    switch (moodleid){
+                //        case 178:
+                //            activityFromTree = _getActivityByCourseModuleId(moodleid);
+                //            break;
+                //    }
+                //
+                //    //If serached activity happens to be a child node
+                //    activityFromTree.activities && activityFromTree.activities.length? activityFromTree = activityFromTree.activities[0] : '';
+                //
+                //}
 
-               var activityFromTree = getActivityByActivity_identifier(activity_identifier);
                 if(activityFromTree.status == 1){
                     addExtraForumParticipation($scope.discussion.id);
                     var extraPointsCounter = getForumsExtraPointsCounter();
@@ -133,7 +165,16 @@ angular
                 }
 
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
-                    $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);                    
+                    switch ($scope.moodleId) {
+                        case "179":
+                                $location.path('/ZonaDeNavegacion/ForoCierre/' + activity_identifier +'/'+ 178);
+                            break;
+                        case "85":
+                            $location.path('/ZonaDeNavegacion/ForoCierre/' + activity_identifier);
+                            break;
+                        default :
+                            $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);
+                    }
                 } else {
                    callback();
                 }
@@ -216,7 +257,7 @@ angular
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
-                        updateForumProgress($scope.discussion.post_id);
+                        updateForumProgress($scope.discussion.id);
                         //refreshTopicData();
                         checkForumProgress(refreshTopicData);
                     },
@@ -390,8 +431,14 @@ angular
                     case "73":
                         $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.moodleid);
                         break;
+                    case "197":
+                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
+                    case "85":
+                        $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
                     default:
-                        $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/" + $routeParams.moodleid);
+                        $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
                         break;
                 }
             };
