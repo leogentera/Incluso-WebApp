@@ -48,7 +48,7 @@ angular
             
             $scope.rewardsEarned = _.filter(profile.rewards, function(reward){
                     return reward.status == "won";
-                } );
+            } );
             
             $scope.qtyStarsByAcctivity = function(){                
                 return this.$index < $scope.starsByActivityQuantity;                     

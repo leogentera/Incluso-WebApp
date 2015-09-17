@@ -636,7 +636,7 @@ Parallel work file for UI Developer 01
                 }
             }            
         }
-    }
+    } //community
 
     .privacy-notice,
     .use-terms {
@@ -758,7 +758,7 @@ Parallel work file for UI Developer 01
         }
 
 
-    }
+    } //award
 
     .post {
         display:block;
@@ -832,7 +832,7 @@ Parallel work file for UI Developer 01
             font-weight: bold;
             text-decoration: none;
         }
-    }    
+    } // post    
 
     // .posts-list {
     //     display:block;
@@ -841,5 +841,85 @@ Parallel work file for UI Developer 01
     //     padding:0;
     //     margin: 6vw auto 0;
     // }
+
+    .reward {
+
+        .part.inbloq{
+            margin-bottom: 2vh;
+
+            .notif-title {
+
+                .icomoon {
+                    color: @clr-blueTurquoise;
+                }
+
+                .alert-name {
+                    text-transform: capitalize;
+                }
+        
+            }
+
+           img {
+            width: 100%
+            height: auto;
+           }
+
+            .txt-renglon {
+
+                &.pill {
+                    font-weight: normal;
+                    font-size: 4.5vw;
+                    margin: 8vw 0;
+                    padding: 5vw 4vw 10vw 7vw;
+                    width: 100%;
+
+                    div {
+                        width: auto;
+                    }
+
+                    .sm-pill,
+                    .green-pill {
+                        border-width: 2px;
+                        font-size: 5.4vw;
+                        font-weight: bold;
+                        padding: 0.7vw 3vw 1vw;
+                        position: relative;
+                        top: -6px;
+
+                        > span {
+                            display: inline-block;
+                            width: auto;
+
+                            &.icon-star {
+                                font-size: 4.5vw;
+                                position: relative;
+                                top: 3px;
+                                padding: 0;
+                            }
+                        }
+                    }
+
+                    .green-pill {
+                        margin: -0.3vw -1vw;
+                        padding: 0.7vw 2.3vw 1vw;                
+                    }            
+                }
+            }
+
+            .code {
+                display: block;
+                color: @clr-green;
+                font-size: 110%;
+                letter-spacing: 0.5vw;
+                padding: 1vw 0;
+            }
+
+            .actions {
+                margin-top: 6vh;
+            }
+
+        }
+
+    } // reward
 
 }

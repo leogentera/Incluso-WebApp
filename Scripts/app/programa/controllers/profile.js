@@ -22,6 +22,10 @@ angular
             $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
             $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
             
+            $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
+            $scope.myStrengths = new Array();
+            $scope.myWindowOfOpportunities = new Array();
+            
             $scope.setToolbar($location.$$path, "");
             $scope.currentPage = 1;
             $rootScope.showFooter = true;
@@ -114,6 +118,35 @@ angular
 
             });
 
+            function  loadStrengths() {
+                
+                var strengthArray = new Array();
+                
+                for(var s = 0; s < $scope.model.strengths.length; s++) {
+                    
+                    var strength = $scope.model.strengths[s];
+                    var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == strength.replace("\r", ""); });
+                    
+                     strengthArray.push(result);
+                }
+                
+                $scope.myStrengths = strengthArray;
+            }
+            
+            function loadWindowOfOpportunities() {
+                
+                var windowOfOpportunitiesArray = new Array();
+                
+                for(var s = 0; s < $scope.model.windowOfOpportunity.length; s++) {
+                    
+                    var windowOfOpportunities = $scope.model.windowOfOpportunity[s];
+                    var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == windowOfOpportunities.replace("\r", ""); });
+                    
+                     windowOfOpportunitiesArray.push(result);
+                }
+                
+                $scope.myWindowOfOpportunities = windowOfOpportunitiesArray;
+            }
 
             function getFileName(id) {
                 var filename = "";
@@ -278,6 +311,8 @@ angular
                     }
 
                     initFields($scope.model);
+                    loadStrengths();
+                    loadWindowOfOpportunities();
                 }, true);
             }
 
