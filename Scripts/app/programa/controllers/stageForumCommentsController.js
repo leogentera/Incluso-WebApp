@@ -86,7 +86,6 @@ angular
             };
 
             var addExtraForumParticipation = function(discussionId){
-                debugger;
               var extraPointsCounter = getForumsExtraPointsCounter();
                 var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == discussionId; });
                 //If discussion is not registered, well, register it mofo
@@ -129,7 +128,7 @@ angular
                     moodleid = 178;
                 } else if($scope.moodleId == 85){
                     activity_identifier = 2018;
-                    moodleid = 85;
+                    moodleid = 197;
                 } else if($scope.moodleId == 93){
                     //TODO Agregar activity_identifier a Moodle y relacionarlo
                     activity_identifier = 0000;
@@ -161,6 +160,7 @@ angular
                     var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $scope.discussion.id; });
                     if(currentDiscussionCounter.extra_replies_counter <= 10) {
                         updateUserStars(activity_identifier, 50 );
+                        //updateUserStars(moodleid, 50 );
                     }
                 }
 
