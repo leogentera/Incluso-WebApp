@@ -1085,8 +1085,8 @@ function removeHtmlTag(value) {
 }
 
 function restoreHtmlTag(value) {
-    value = value.replace('&lt;', "<");
-    value = value.replace('&gt;', ">");
+    value = value.replace(/&lt;/g, "<");
+    value = value.replace(/&gt;/g, ">");
     return value;
 }
 
