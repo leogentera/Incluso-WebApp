@@ -617,10 +617,18 @@
 
                     }
                 }
-                console.log(activities);
-                /* Conocete - reto múltiple */
+
+                /* Conocete - reto múltiple */ 
+                var multipleChallengeActivityId = _.filter(_activityRoutes, function (ar){
+                    return ar.name == "Reto Multiple";
+                });
+                
+                var multipleChallengeActivity = _.filter(activities, function (a){
+                    return a.coursemoduleid == multipleChallengeActivityId[0].id;
+                });
+                
                 var multipleChallenges = _.filter(activities, function (a){
-                    return a.activity_type == 'quiz' && a.sectionname.indexOf("Reto m") != -1;
+                    return  a.section == multipleChallengeActivity[0].section;
                 });
                 
                 var multipleChallengesArray = new Array();
@@ -656,6 +664,7 @@
                 course = progress.course;
                 course.community = community;
                 course.multipleChallenges = multipleChallengesArray;
+                course.isMultipleChallengeActivityFinished = (multipleChallengeActivity[0].status === 1);
                 user = progress.user;
                 _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),user);
                 _setLocalStorageJsonItem("usercourse",course);

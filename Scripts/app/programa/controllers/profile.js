@@ -18,6 +18,7 @@ angular
             var _course = moodleFactory.Services.GetCacheJson("course");
             $scope.discussion = null;
             $scope.forumId = null;
+            $scope.isMultipleChallengeActivityFinished = _course.isMultipleChallengeActivityFinished;
             $scope.myStrengths = new Array();
             $scope.myWindowOfOpportunities = new Array();
             
