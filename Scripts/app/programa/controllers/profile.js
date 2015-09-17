@@ -18,12 +18,13 @@ angular
             var _course = moodleFactory.Services.GetCacheJson("course");
             $scope.discussion = null;
             $scope.forumId = null;
-            $scope.isMultipleChallengeActivityFinished = _course.isMultipleChallengeActivityFinished;
-            $scope.myStrengths = new Array();
-            $scope.myWindowOfOpportunities = new Array();
             
             $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
             $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
+            
+            $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
+            $scope.myStrengths = new Array();
+            $scope.myWindowOfOpportunities = new Array();
             
             $scope.setToolbar($location.$$path, "");
             $scope.currentPage = 1;
