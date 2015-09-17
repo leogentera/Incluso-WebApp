@@ -692,7 +692,6 @@ angular
                 switch (questionIndex) {
                     case 0:
                         if (question.userAnswer == "Sí") {
-
                             $scope.exploracionInicialStage2[0] = "0";
                         }
                         else if (question.userAnswer == "No") {
@@ -702,7 +701,6 @@ angular
 
                     case 1:
                         if (question.userAnswer == "Sí") {
-
                             $scope.exploracionInicialStage2[1] = "0";
                         }
                         else if (question.userAnswer == "No") {
@@ -713,7 +711,6 @@ angular
                     case 2:
 
                         if (question.userAnswer == "Sí") {
-
                             $scope.exploracionInicialStage2[2] = "0";
                         }
                         else if (question.userAnswer == "No") {
@@ -722,7 +719,6 @@ angular
                         break;
 
                     case 3:
-
                         if (question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
                             console.log(userAnswers);
@@ -895,7 +891,8 @@ angular
                             $scope.activity_identifier == '2001' ||
                             $scope.activity_identifier == '2023' ||
                             $scope.activity_identifier == '2009') {
-                            $scope.setReadOnly = true;
+
+                                $scope.setReadOnly = true;  //The Quiz can not be edited
                         }
 
                         var localAnswers = JSON.parse(_getItem("activityAnswers/" + activity.coursemoduleid));
@@ -1112,6 +1109,33 @@ angular
             $scope.validateMisSuenosAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
+                var quizIsValid = true;
+                var numQuestions = $scope.misSuenosAnswers.length;
+                var i, b;
+
+                //Remove repeated entries and blanks in each of the 3 questions
+                for (i = 0; i < numQuestions; i++) {
+                    $scope.misSuenosAnswers[i] = $scope.misSuenosAnswers[i].filter(function (item, pos) {
+                        return item.trim().length > 0 && $scope.misSuenosAnswers[i].indexOf(item) == pos;
+                    });
+                }
+
+                //Correction for the '\n' reserved character
+                for (i = 0; i < numQuestions; i++) {
+                    for (b = 0; b < $scope.misSuenosAnswers[i].length; b++) {
+                        $scope.misSuenosAnswers[i][b] = $scope.misSuenosAnswers[i][b].replace(/\r?\n|\r/g, " ").trim();
+                    }
+                }
+
+                //Check is some of the questions has an invalid answer
+                for (i = 0; i < numQuestions; i++) {
+                    if ($scope.misSuenosAnswers[i].length == 0) {
+                        quizIsValid = false;
+                    }
+                }
+
+
+                /*
                 var validAnswers = 0;
 
                 for (var a = 0; a < $scope.misSuenosAnswers.length; a++) {
@@ -1136,12 +1160,14 @@ angular
                         }
                     }
                 }
+                */
 
-                if (validAnswers == 3) {
+                if (quizIsValid) {
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                 } else {
+                    $scope.showWarning = true;
                     showWarningAndGoToTop();
                 }
             };
