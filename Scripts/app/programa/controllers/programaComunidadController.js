@@ -92,9 +92,9 @@ angular
             
             var getAsyncDiscussionPostsCallback = function(data, key) {
                 
-                _postPager.from = data.sinceid;
-                _postPager.to = _postPager.to < data.maxid ? data.maxid : _postPager.to;
-                
+                _postPager.from = (_postPager.from < 0 && _postPager.from < data.maxid) ? _postPager.from : data.maxid;
+                _postPager.to = _postPager.to > data.sinceid ? _postPager.to : data.sinceid;
+                console.log(_postPager);
                 var posts = data.posts;
                 $scope.morePendingPosts = posts.length === 10;
                 posts.forEach(initializeCommentsData);
@@ -129,6 +129,7 @@ angular
                 
                 for(p = 0; p < $scope.posts.length; p++){
                     if ($scope.posts[p].post_id === element.post_id) {
+                        element.message = restoreHtmlTag(element.message);
                         $scope.posts[p] = element;
                         existingPost = true;
                         break;
@@ -136,12 +137,13 @@ angular
                 }
                 
                 if (!existingPost) {
+                    element.message = restoreHtmlTag(element.message);
                     $scope.posts.push(element);
                 }
             };
             
             var refreshTopicData = function() {
-                moodleFactory.Services.GetAsyncDiscussionPosts(_currentUser.token, $scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 0, _currentFilter, getAsyncDiscussionPostsCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(_currentUser.token, $scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 1, _currentFilter, getAsyncDiscussionPostsCallback, null, true);
             };
             
             $scope.reportPost = function(postId) {

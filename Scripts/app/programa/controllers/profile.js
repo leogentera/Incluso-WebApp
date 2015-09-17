@@ -9,19 +9,27 @@ angular
         '$timeout',
         '$rootScope',
         '$http',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http) {
+        '$filter',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter) {
 
             _httpFactory = $http;
             _timeout = $timeout;
             
+            var _course = moodleFactory.Services.GetCacheJson("course");
+            $scope.discussion = null;
+            $scope.forumId = null;
+            
             $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
-            $scope.userId = $routeParams.id;
+            $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
             
             $scope.setToolbar($location.$$path, "");
             $scope.currentPage = 1;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $scope.status = "";
+            $scope.shareAchievementMessage = "";
+            $scope.showShareAchievementMessage = false;
+            $scope.showSharedAchievement = false;
             
             $scope.$emit('ShowPreloader');
 
@@ -90,6 +98,7 @@ angular
                 $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
                 $scope.yesNoList = ['Si', 'No'];
                 $scope.moneyIncomeList = ['Padres', 'Trabajo'];
+                $scope.medicalCoverageList = ['Sí', 'No', 'No sé'];
                 $scope.medicalInsuranceList = ['IMSS', 'Privado', 'Seguro Popular'];
                 $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora'];
                 $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
@@ -346,6 +355,9 @@ angular
             };
 
             $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description, status) {
+                $scope.shareAchievementMessage = "";
+                $scope.showShareAchievementMessage = false;
+                
                 $scope.currentPage = 10;
                 $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
@@ -932,11 +944,19 @@ angular
             };
 
             $scope.addKindOfVideoGame = function (index) {
-                $scope.model.kindOfVideoGames.push(new String());
+                $scope.model.kindOfVideogames.push(new String());
             };
 
             $scope.deleteKindOfVideoGame = function (index) {
-                $scope.model.kindOfVideoGames.splice(index, 1);
+                $scope.model.kindOfVideogames.splice(index, 1);
+            };
+            
+            $scope.deleteMainActivity = function (index) {
+                $scope.model.mainActivity.splice(index, 1);
+            };
+            
+            $scope.addMainActivity = function() {
+                $scope.model.mainActivity.push(new String());
             };
 
             $scope.addFavoriteGame = function (index) {
@@ -1107,6 +1127,68 @@ angular
             function addZeroBefore(n) {
                 return (n < 10 ? '0' : '') + n;
             }
+            
+            $scope.shareAchievement = function() {
+                
+                $scope.$emit('ShowPreloader');
+                
+                if ($scope.discussion == null || $scope.forumId == null) {
+                    
+                    moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, function(data, key) {
+                        $scope.discussion = data.discussions[0];
+                        $scope.forumId = data.forumid;
+                        
+                        postAchievement();
+                        
+                        }, function(data){
+                            $scope.shareAchievementMessage = "";
+                            $scope.showShareAchievementMessage = false;
+                            $scope.showSharedAchievement = true;
+                            
+                            $scope.$emit('HidePreloader'); }, true);
+                }else {
+                    postAchievement();
+                }
+
+            };
+            
+            function postAchievement() {
+                var customMessage = '<p> ' + $scope.shareAchievementMessage + '</p>';
+                var msgOpenContainer = '<div class="achievement-badge"> ';
+                var appendImg = '<figure> <img src="assets/images/badges/' + $scope.fileName + '" ng-src="assets/images/badges/' + $scope.fileName + '" alt="" /> </figure>';
+                var msgCaption = '<figcaption> <p class="badgename">' + $scope.badgeName + '</p> </figcaption>';
+                var msgCloseContainer = ' </div>';
+                
+                var fullMessage = customMessage + msgOpenContainer + appendImg + msgCaption + msgCloseContainer;
+                
+                var requestData = {
+                    "userid": $scope.userId,
+                    "discussionid": $scope.discussion.discussion,
+                    "parentid": $scope.discussion.id,
+                    "message": removeHtmlTag(fullMessage),
+                    "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                    "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                    "posttype": 1,
+                    "fileToUpload": null
+                };
+                
+                moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                    function() {
+                        $scope.shareAchievementMessage = "";
+                        $scope.showShareAchievementMessage = false;
+                        $scope.showSharedAchievement = true;
+                        
+                        $scope.$emit('HidePreloader');
+                    },
+                    function(){
+                        $scope.shareAchievementMessage = "";
+                        $scope.showShareAchievementMessage = false;
+                        $scope.showSharedAchievement = false;
+                        
+                        $scope.$emit('HidePreloader');
+                    }
+                );
+            };
             
             $scope.scrollToTop();
 

@@ -10,7 +10,7 @@ var _httpFactory = null;
 var _timeout = null;
 var _location = null;
 
-var _activityStatus = null;
+var _activityStatus = [];
 
 var _activityDependencies = [
     {
@@ -355,7 +355,7 @@ var _notificationExists = function(){
   
 };
 
-function getActivityByActivity_identifier(activity_identifier, usercourse) {          
+function getActivityByActivity_identifier(activity_identifier, usercourse) {
             var matchingActivity = null;
             var breakAll = false;
             var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
@@ -364,11 +364,12 @@ function getActivityByActivity_identifier(activity_identifier, usercourse) {
                 for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
                     var challenge = stage.challenges[challengeIndex];
                     for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                      var activity = challenge.activities[activityIndex];
-                      if (activity.activity_identifier == activity_identifier) {
-                        matchingActivity = activity;
-                        breakAll = true;
-                        break;
+                        var activity = challenge.activities[activityIndex];
+                        //console.log(activity.activity_identifier + " : " + activity);
+                        if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
+                          matchingActivity = activity;
+                          breakAll = true;
+                          break;
                         }
                     }
                     if(breakAll)
@@ -582,6 +583,39 @@ function updateUserStarsUsingExternalActivity (activity_identifier){
    };
    
    moodleFactory.Services.PutStars(data,profile, currentUser.token, successCallback, errorCallback);
+}
+
+function updateActivityManager(activityManager, coursemoduleid){    
+  var breakAll = false;   
+  if(!activityManager){   
+    activityManager = moodleFactory.Services.GetCacheJson("activityManagers");    
+  }   
+  for(var activityIndex = 0; activityIndex < activityManager.length; activityIndex++){    
+    var activity = activityManager[activityIndex];    
+    for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {   
+      var subactivity = activity.activities[subactivityIndex];    
+      if(subactivity.coursemoduleid == coursemoduleid){   
+        subactivity.status = 1;   
+        breakAll = true;    
+        break;    
+      }   
+      if(subactivity.activities){   
+        for(var subsubactivityIndex = 0; subsubactivityIndex < subactivity.activities.length; subsubactivityIndex++){   
+          var subsubactivity = subactivity.activities[subsubactivityIndex];   
+          if(subsubactivity && subsubactivity.coursemoduleid == coursemoduleid){    
+            subsubactivity.status = 1;    
+            breakAll = true;    
+            break;    
+          }   
+        }   
+        if (breakAll)   
+          break;    
+      }   
+    }   
+    if (breakAll)   
+      break;    
+  }   
+  return activityManager;   
 }
 
 function getExtActivityByActivity_identifier(activity_identifier){     
@@ -1017,11 +1051,10 @@ var _badgesPerChallenge = [
   },
   {
     badgeId: 5,
-    badgeName: "Combustible",
+    badgeName: "Sistema de Navegación",
     challengeId: 68
   }
 ];
-
 
 
 var _activityRoutes = [
@@ -1043,6 +1076,19 @@ var _activityRoutes = [
   { id: 100, url: '/ZonaDeVuelo/ExploracionFinal/1009'}
   //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
+
+
+function removeHtmlTag(value) {
+    value = value.replace(/</g, '&lt;');
+    value = value.replace(/>/g, '&gt;');
+    return value;
+}
+
+function restoreHtmlTag(value) {
+    value = value.replace(/&lt;/g, "<");
+    value = value.replace(/&gt;/g, ">");
+    return value;
+}
 
 document.addEventListener("deviceready", onDeviceReady, false);
             

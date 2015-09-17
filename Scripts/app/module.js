@@ -24,7 +24,7 @@
         'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
         'incluso.programa.comunidad',
-        'incluso.programa.reconocimiento',
+        //'incluso.programa.reconocimiento',
         'incluso.programa.album',
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
@@ -36,10 +36,12 @@
         'incluso.stage.gameretomultipleexternalappcontroller',
         'incluso.stage.gameretomultipleresultscontroller',
         'incluso.stage.quizcontroller',
+        'incluso.stage.tueligesController',
         'incluso.stage.chatcontroller',
         'incluso.program.alerts',        
         'incluso.program.myInterests',
         'incluso.program.myStrengths',
+        'incluso.program.myStars',
         'incluso.program.hallOfFame',
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
@@ -64,6 +66,7 @@
         $http.get('Templates/Programa/MyInterests.html', { cache: $templateCache });
         $http.get('Templates/Programa/MyStrengths.html', { cache: $templateCache });
         $http.get('Templates/Programa/HallOfFame.html', { cache: $templateCache });
+        $http.get('Templates/Programa/MyStars.html', { cache: $templateCache });
         $http.get('Templates/Programa/PrivacyNotice.html', { cache: $templateCache });
         $http.get('Templates/Programa/TermsOfUse.html', { cache: $templateCache });
         $http.get('Templates/Programa/HelpAndSupport.html', { cache: $templateCache });
@@ -113,6 +116,7 @@
         $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });          
 
          document.addEventListener("keyup", function(e) {
             if (e.keyCode === 27)
@@ -215,6 +219,11 @@
             templateUrl: 'Templates/Programa/MyStrengths.html',
             controller: 'MyStrengthsController'
         });
+
+        $routeProvider.when('/MyStars', {
+            templateUrl: 'Templates/Programa/MyStars.html',
+            controller: 'MyStarsController'
+        });        
 
         $routeProvider.when('/HallOfFame', {
             templateUrl: 'Templates/Programa/HallOfFame.html',
@@ -491,14 +500,14 @@
             controller: 'stageForumCommentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/TuElijes/FuenteDeEnergia/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/FuenteDeEnergia.html',
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/TuElijes/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuElijes.html',
-            controller: 'stageQuizController'
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEliges.html',
+            controller: 'stageTuEligesController'
         });
 
 
