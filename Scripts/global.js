@@ -10,7 +10,7 @@ var _httpFactory = null;
 var _timeout = null;
 var _location = null;
 
-var _activityStatus = null;
+var _activityStatus = [];
 
 var _activityDependencies = [
     {
@@ -583,6 +583,39 @@ function updateUserStarsUsingExternalActivity (activity_identifier){
    };
    
    moodleFactory.Services.PutStars(data,profile, currentUser.token, successCallback, errorCallback);
+}
+
+function updateActivityManager(activityManager, coursemoduleid){    
+  var breakAll = false;   
+  if(!activityManager){   
+    activityManager = moodleFactory.Services.GetCacheJson("activityManagers");    
+  }   
+  for(var activityIndex = 0; activityIndex < activityManager.length; activityIndex++){    
+    var activity = activityManager[activityIndex];    
+    for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {   
+      var subactivity = activity.activities[subactivityIndex];    
+      if(subactivity.coursemoduleid == coursemoduleid){   
+        subactivity.status = 1;   
+        breakAll = true;    
+        break;    
+      }   
+      if(subactivity.activities){   
+        for(var subsubactivityIndex = 0; subsubactivityIndex < subactivity.activities.length; subsubactivityIndex++){   
+          var subsubactivity = subactivity.activities[subsubactivityIndex];   
+          if(subsubactivity && subsubactivity.coursemoduleid == coursemoduleid){    
+            subsubactivity.status = 1;    
+            breakAll = true;    
+            break;    
+          }   
+        }   
+        if (breakAll)   
+          break;    
+      }   
+    }   
+    if (breakAll)   
+      break;    
+  }   
+  return activityManager;   
 }
 
 function getExtActivityByActivity_identifier(activity_identifier){     

@@ -78,7 +78,7 @@ angular
 
             function assignCourseModuleId(asyncRequest, data){
               $scope.tuEligesActivities["coursemoduleid"] = 
-              	( asyncRequest ? _.find(tuEligesChallenge.activities, function(r){ return r.activityname == data.name }).coursemoduleid : data.coursemoduleid);
+              	( asyncRequest ? _.find(tuEligesActivity.activities, function(r){ return r.activityname == data.activityname }).coursemoduleid : data.coursemoduleid);
               $scope.$emit('HidePreloader');
               _setLocalStorageJsonItem("tuEligesActivities", $scope.tuEligesActivities);
             }
@@ -167,20 +167,25 @@ angular
                 if (parentActivity.status == 0) {
                 	parentActivity.status = 1;
                 	for (var i = 0; i < parentActivity.activities.length; i++) {
-            			if(parentActivity.activities[i].status == 1 || i != 0){
-            				subactivitiesCompleted++;
+            			if(parentActivity.activities[i].status == 1 && i != 0){
+            				activitiesCompleted++;
             			}
             		}
                 	if ($scope.IsComplete && activitiesCompleted == parentActivity.activities.length - 1) {
                 		_endActivity(parentActivity, function(){ });
+                        $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                 	}
                 }
                 if (parentActivity.activities) {
                 	//TODO: change for all activities in case there are other siblings completed
                 	subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
                 	updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
+                    for (var i = 0; i < subactivitiesCompleted.length; i++) {
+                        $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i]);
+                    };
                 	userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
-            		_setLocalStorageJsonItem("usercourse", userCourseUpdated);
+                    _setLocalStorageJsonItem("usercourse", userCourseUpdated);
+            		_setLocalStorageJsonItem("activityManagers", $scope.activities);
             		$scope.saveQuiz($scope.tuEligesActivities, logEntry, userCourseUpdated);
                 }
                 /*var grandparentActivityIdentifier = $routeParams.moodleid;
