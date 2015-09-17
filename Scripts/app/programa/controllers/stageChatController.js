@@ -11,6 +11,7 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {        
+            _timeout = $timeout;
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false;            
