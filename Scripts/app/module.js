@@ -36,6 +36,7 @@
         'incluso.stage.gameretomultipleexternalappcontroller',
         'incluso.stage.gameretomultipleresultscontroller',
         'incluso.stage.quizcontroller',
+        'incluso.stage.tueligesController',
         'incluso.stage.chatcontroller',
         'incluso.program.alerts',        
         'incluso.program.myInterests',
@@ -115,6 +116,7 @@
         $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });          
 
          document.addEventListener("keyup", function(e) {
             if (e.keyCode === 27)
@@ -498,14 +500,14 @@
             controller: 'stageForumCommentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/TuElijes/FuenteDeEnergia/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/FuenteDeEnergia.html',
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/TuElijes/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuElijes.html',
-            controller: 'stageQuizController'
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEliges.html',
+            controller: 'stageTuEligesController'
         });
 
 
