@@ -47,7 +47,7 @@ angular
             }
             
             $scope.rewardsEarned = _.filter(profile.rewards, function(reward){
-                    return reward.dateIssued != 0 && reward.dateIssued != "";
+                    return reward.status == "won";
                 } );
             
             $scope.qtyStarsByAcctivity = function(){                
