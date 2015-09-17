@@ -199,7 +199,7 @@ angular
                         $scope.AnswersResult.answers = $scope.misIdeas;
                         break;
                     case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
-                        $scope.AnswersResult.answers = $scope.miFuturo;console.log("AnswersResult.answers " + $scope.AnswersResult.answers);
+                        $scope.AnswersResult.answers = $scope.miFuturo;
                         break;
                     case "2023": //Exploración Final - Etapa 2
                         $scope.AnswersResult.answers = $scope.exploracionFinalStage2;
@@ -687,7 +687,7 @@ angular
             }
 
             function updateExploracionInicialStage2Answers(questionIndex, question) {
-                console.log(questionIndex + " -- " + question.userAnswer);
+
                 var userAnswers = '';
                 switch (questionIndex) {
                     case 0:
@@ -721,11 +721,9 @@ angular
                     case 3:
                         if (question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
-                            console.log(userAnswers);
 
                             userAnswers.forEach(function(item){
                                 var cleanedItem = cleanText(item).trim();
-                                console.log(cleanedItem);
                                 switch (cleanedItem) {
                                     case "Salud Física":
                                         $scope.exploracionInicialStage2[3][0] = true;
@@ -1017,7 +1015,6 @@ angular
                                 _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.exploracionFinal);
                                 break;
                             case "2001": //Exploración Inicial - Etapa 2
-                                console.log("updateExploracionInicialStage2Answers");
                                 updateExploracionInicialStage2Answers(index, question);
                                 _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.exploracionInicialStage2);
                                 break;
@@ -1054,7 +1051,6 @@ angular
 
 
             function errorCallback() {
-                console.log("error Callback");
                 $scope.$emit('HidePreloader');
             }
 
@@ -1462,20 +1458,16 @@ angular
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
                 var quizIsValid = false;
-                console.log($scope.exploracionInicialStage2 + " answer: " + $scope.exploracionInicialStage2OtroAnswers[0].answers[0]);
 
                 //Validation: there must not be a 'null' value AND the multichoice must have some 'true' value
                 if (($scope.exploracionInicialStage2.indexOf(null) === -1) && ($scope.exploracionInicialStage2[3].indexOf(1) > -1)) {
 
                     //Other is 'true' and has a non empty string in the input
                     var userInput = $scope.exploracionInicialStage2OtroAnswers[0].answers[0].replace(/\r?\n|\r/g, " ").trim();
-                    console.log("userInput = " + userInput);
                     if (($scope.exploracionInicialStage2[3][4] && userInput != '') || !$scope.exploracionInicialStage2[3][4]) {
                         quizIsValid = true;
                     }
                 }
-
-                console.log("Variable quizIsValid : " + quizIsValid);
 
                 if (quizIsValid) {
                     $scope.showWarning = false;
@@ -1612,7 +1604,6 @@ angular
                 } else {
                     quizIsValid = false;
                 }
-                console.log(quizIsValid);
 
                 if (quizIsValid) {
                     $scope.showWarning = false;
@@ -1688,15 +1679,11 @@ angular
                     quizIsValid = false;
                 }
 
-                console.log(quizIsValid);
-
                 if (quizIsValid) {
-                    console.log("Good");
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                 } else {
-                    console.log("bad");
                     showWarningAndGoToTop();
                 }
             };
@@ -1729,7 +1716,6 @@ angular
                 } else {
                     quizIsValid = false;
                 }
-                console.log(quizIsValid);
 
                 if (quizIsValid) {
                     $scope.showWarning = false;
