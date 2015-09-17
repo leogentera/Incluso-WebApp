@@ -39,12 +39,12 @@
 	</section>  	
   	<section class="starcontain">
   		<div class="subtitle centered">Mis Recompensas</div>
-  		<div class="part" ng-repeat="reward in rewardsEarned">
+  		<div class="part" ng-repeat="reward in rewardsEarned" ng-show="qtyRewards()">
   			<div class="fl-left"><div class="date">{{reward.dateIssued | date: 'fullDate'}}</div>{{reward.name}}</div>
   			<i class="icomoon icon-arrow-bold-right fl-right"></i>
   		</div>
   		
-  		<div class="part showmore">
+  		<div class="part showmore" ng-click="showMoreRewards()" ng-show="showMoreBarRewards()">
   			<i class="icomoon  icon-show-more fl-right"></i> Mostrar más recompensas...
   		</div>
   	</section>

@@ -16,6 +16,8 @@ angular
             var starsByActivityQuantityInitial = 3;
             $scope.starsByActivityQuantity = starsByActivityQuantityInitial;
             
+            var rewardsQuantityInitial = 3;
+            $scope.rewardsQuantity = rewardsQuantityInitial;
             
             var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
             
@@ -51,13 +53,26 @@ angular
             $scope.qtyStarsByAcctivity = function(){                
                 return this.$index < $scope.starsByActivityQuantity;                     
             }
-            
+                        
             $scope.showMore = function(){
                 $scope.starsByActivityQuantity = ($scope.starsByActivityQuantity + starsByActivityQuantityInitial);                
-            }
+            }                        
             
             $scope.showLoadMoreBar = function(){               
                 return !($scope.starsByActivityQuantity >= $scope.activitiesCompleted.length);                
+            }
+            
+            $scope.qtyRewards = function(){
+                return this.$index < $scope.rewardsQuantity;
+                
+            }
+            $scope.showMoreRewards = function(){
+                $scope.rewardsQuantity = ($scope.rewardsQuantity + rewardsQuantityInitial);
+            }
+            
+            $scope.showMoreBarRewards = function(){
+                return !($scope.rewardsQuantity >= $scope.rewardsEarned.length);
+                
             }
             
             
