@@ -1017,11 +1017,10 @@ var _badgesPerChallenge = [
   },
   {
     badgeId: 5,
-    badgeName: "Combustible",
+    badgeName: "Sistema de Navegación",
     challengeId: 68
   }
 ];
-
 
 
 var _activityRoutes = [

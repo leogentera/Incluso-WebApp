@@ -17,8 +17,7 @@
   			<i class="icomoon icon-share icon"></i><a href="#openModal1" class="modbut"><div class="txt">Compartir puntuación</div></a>
   		</div>
   	</section>
-  	<section class="modales">
-
+  	<section class="modales" style="display:none">
   		<div id="openModal1" class="modalDialog">
   			<div>
   				<a href="#close" title="Close" class="close"></a>
@@ -29,51 +28,22 @@
   			</div>
   		</div>
   	</section>
-  	<section class="starcontain">
-  		<div class="subtitle centered">Mis estrellas</div>
-  		<div class="part">
-  			<div class="fl-left"><div class="date">21 de Julio 2015 - 4:30 PM</div>Conócete:Descubre Más</div><div class="fl-right sm-pill">+240&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
-  		</div>
-  		<div class="part">
-  			<div class="fl-left"><div class="date">20 de Junio 2015 - 10:22 PM</div>Conócete:Mis Cualidades</div><div class="fl-right sm-pill">+50&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
-  		</div>
-  		<div class="part">
-  			<div class="fl-left"><div class="date">20 de Junio 2015 - 5:50 PM</div>Conócete:Sueña</div><div class="fl-right sm-pill">+40&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
-  		</div>
-  		<div class="part">
-  			<div class="fl-left"><div class="date">19 de Junio 2015 - 3:22 PM</div>Conócete:Foro Común</div><div class="fl-right sm-pill">+30&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
-  		</div>
-  		<div class="part">
-  			<div class="fl-left"><div class="date">16 de Mayo 2015 - 11:42 AM</div>Evaluación Inicial</div><div class="fl-right sm-pill">+20&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
-  		</div>
-
-  		<div class="part showmore">
+	<section class="starcontain">
+	  <div class="subtitle centered">Mis estrellas</div>
+	  <div class="part" ng-repeat="activity in activitiesCompleted">
+		<div class="fl-left"><div class="date">{{activity.last_status_update*1000 | date :'fullDate'}}</div>{{activity.sectionname}} : {{activity.activityname}}</div><div class="fl-right sm-pill">{{activity.points}}<i class="icomoon icon-star fl-right"></i></div>
+	  </div>
+	  <div class="part showmore">
   			<i class="icomoon  icon-show-more fl-right"></i> Mostrar más estrellas...
   		</div>
-  	</section>
+	</section>  	
   	<section class="starcontain">
   		<div class="subtitle centered">Mis Recompensas</div>
-  		<div class="part">
-  			<div class="fl-left"><div class="date">21 de Julio 2015 - 4:30 PM</div>Nueva Mochila Incluso</div>
+  		<div class="part" ng-repeat="reward in rewardsEarned">
+  			<div class="fl-left"><div class="date">{{reward.dateIssued | date: 'fullDate'}}</div>{{reward.name}}</div>
   			<i class="icomoon icon-arrow-bold-right fl-right"></i>
   		</div>
-  		<div class="part">
-  			<div class="fl-left"><div class="date">20 de Junio 2015 - 10:22 PM</div>Estuche nuevo para celular</div>
-  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
-  		</div>
-  		<div class="part">
-  			<div class="fl-left"><div class="date">20 de Junio 2015 - 5:50 PM</div>¡Te regalamos 1000 estrellas!</div>
-  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
-  		</div>
-  		<div class="part">
-  			<div class="fl-left"><div class="date">19 de Junio 2015 - 3:22 PM</div>Gorra Incluso</div>
-  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
-  		</div>
-  		<div class="part">
-  			<div class="fl-left"><div class="date">16 de Mayo 2015 - 11:42 AM</div>Sudadera Incluso</div>
-  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
-  		</div>
-
+  		
   		<div class="part showmore">
   			<i class="icomoon  icon-show-more fl-right"></i> Mostrar más recompensas...
   		</div>
