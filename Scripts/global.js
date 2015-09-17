@@ -1033,27 +1033,15 @@ var _staticStages = [
 ];
 
 var _badgesPerChallenge = [
-  {
-    badgeId: 2,
-    badgeName: "Combustible",
-    challengeId: 113
-  },
-
-  {
-    badgeId: 3,
-    badgeName: "Turbina C0N0-CT",
-    challengeId: 114
-  },
-  {
-    badgeId: 4,
-    badgeName: "Ala Ctu-3000",
-    challengeId: 115
-  },
-  {
-    badgeId: 5,
-    badgeName: "Sistema de Navegación",
-    challengeId: 68
-  }
+  { badgeId: 2, badgeName: "Combustible", challengeId: 113 },
+  { badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114 },
+  { badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115 },
+  { badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 68 },
+  { badgeId: 6, badgeName: "Propulsor", challengeId: 155 },
+  { badgeId: 7, badgeName: "Misiles", challengeId: 157 },
+  { badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81 },
+  { badgeId: 9, badgeName: "Radar", challengeId: 167 },
+  { badgeId: 18, badgeName: "Turbo", challengeId: 160 }
 ];
 
 
