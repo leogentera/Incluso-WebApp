@@ -13,7 +13,10 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"Mis estrellas");
             
-                        
+            var starsByActivityQuantityInitial = 3;
+            $scope.starsByActivityQuantity = starsByActivityQuantityInitial;
+            
+            
             var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
             
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -44,6 +47,19 @@ angular
             $scope.rewardsEarned = _.filter(profile.rewards, function(reward){
                     return reward.dateIssued != 0 && reward.dateIssued != "";
                 } );
+            
+            $scope.qtyStarsByAcctivity = function(){                
+                return this.$index < $scope.starsByActivityQuantity;                     
+            }
+            
+            $scope.showMore = function(){
+                $scope.starsByActivityQuantity = ($scope.starsByActivityQuantity + starsByActivityQuantityInitial);                
+            }
+            
+            $scope.showLoadMoreBar = function(){               
+                return !($scope.starsByActivityQuantity >= $scope.activitiesCompleted.length);                
+            }
+            
             
             
             $rootScope.showFooter = true; 
