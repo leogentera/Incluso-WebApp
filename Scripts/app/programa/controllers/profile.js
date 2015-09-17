@@ -1153,15 +1153,19 @@ angular
             };
             
             function postAchievement() {
+                var customMessage = '<p> ' + $scope.shareAchievementMessage + '</p>';
+                var msgOpenContainer = '<div class="achievement-badge"> ';
+                var appendImg = '<figure> <img src="assets/images/badges/' + $scope.fileName + '" ng-src="assets/images/badges/' + $scope.fileName + '" alt="" /> </figure>';
+                var msgCaption = '<figcaption> <p class="badgename">' + $scope.badgeName + '</p> </figcaption>';
+                var msgCloseContainer = ' </div>';
                 
-                var appendImg = '<img src="assets/images/badges/' + $scope.fileName + '" alt="" class="img-responsive" width="100px" height="100px" />';
-                appendImg = removeHtmlTag(appendImg);
+                var fullMessage = customMessage + msgOpenContainer + appendImg + msgCaption + msgCloseContainer;
                 
                 var requestData = {
                     "userid": $scope.userId,
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
-                    "message": $scope.shareAchievementMessage + appendImg + $scope.badgeName,
+                    "message": removeHtmlTag(fullMessage),
                     "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
                     "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
                     "posttype": 1,
