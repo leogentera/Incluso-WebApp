@@ -148,8 +148,8 @@
                       <li>
                         <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="2"></i>-->
                          <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="2" ng-show="!three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
-                        <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="1" ng-show="three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
-                        <a class="menu-pink" ng-click="navigateTo('/ZonaDeAterrizaje/Dashboard/2', 'sideToggle')">
+                        <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="2" ng-show="three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
+                        <a class="menu-pink" ng-click="navigateTo('/ZonaDeAterrizaje/Dashboard/3', 'sideToggle')">
                           <span class="icomoon icon-planet">
                               <span class="path1"></span>
                               <span class="path2"></span>
@@ -165,6 +165,7 @@
                             <ul>
                               <li>Educación Financiera</li>
                               <li><a ng-click="navigateTo('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/93', 'sideToggle', 93)">Punto de encuentro</a></li>
+                               <li><a ng-class="canStartActivity(211)?'':'disabled'" ng-click="navigateTo('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302', 'sideToggle', 211)">Multiplica tu dinero</a></li>
                             </ul>
                             <ul>
                                 <li>Conócete</li>

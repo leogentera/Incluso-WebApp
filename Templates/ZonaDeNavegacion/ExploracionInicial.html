@@ -84,23 +84,28 @@
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <input id="check1" type="checkbox" value="check1" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage2[3][0]" ng-disabled="setReadOnly"/>
                                 <label for="check1">Salud Física</label>
 
                                 <input id="check2" type="checkbox" value="check1" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage2[3][1]" ng-disabled="setReadOnly"/>
                                 <label for="check2">Escuela</label>
 
                                 <input id="check3" type="checkbox" value="check1" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage2[3][2]" ng-disabled="setReadOnly"/>
                                 <label for="check3">Familia y amigos</label>
 
                                 <input id="check4" type="checkbox" value="check1" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage2[3][3]" ng-disabled="setReadOnly"/>
                                 <label for="check4">Hobbies</label>
 
                                 <input id="check5" type="checkbox" value="check1" name="check"
                                        ng-model="exploracionInicialStage2[3][4]" ng-disabled="setReadOnly"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-change="exploracionInicialStage2OtroAnswers[0].answers[0] = exploracionInicialStage2[3][4] == false ? '' : exploracionInicialStage2OtroAnswers[0].answers[0]"
                                        ng-click="addCaptureField(exploracionInicialStage2[3][4])"/>
                                 <label for="check5">Otro</label>

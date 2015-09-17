@@ -19,8 +19,17 @@ angular
             var rewardsQuantityInitial = 3;
             $scope.rewardsQuantity = rewardsQuantityInitial;
             
-            var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+            $scope.userId = moodleFactory.Services.GetCacheObject("userId");
             
+            var profile = JSON.parse(localStorage.getItem("profile/" + $scope.userId));
+            
+            //if (!profile) {
+            //    moodleFactory.Services.GetAsyncProfile($scope.userId, function () {                
+            //        var profile = JSON.parse(localStorage.getItem("profile/" + $scope.userId));
+            //    }, true);
+            //}
+                        
+                                                
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             
             var activitiesCompleted = [];
@@ -75,8 +84,10 @@ angular
                 
             }
             
-            
-            
+             $scope.showRewardDetail = function (rewardId) {                
+                $scope.navigateTo('/RewardDetail/' + rewardId, 'null');
+            }
+                                
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false; 
             $scope.back = function () {

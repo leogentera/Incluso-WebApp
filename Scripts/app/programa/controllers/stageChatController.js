@@ -11,6 +11,7 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {        
+            _timeout = $timeout;
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false;            
@@ -25,8 +26,7 @@ angular
             $scope.scrollToTop();            
             $scope.currentPage = 1;
             var index = 0;
-            var parentIndex = 4;               
-            debugger;         
+            var parentIndex = 4;                           
             var coursemoduleid = parseInt($routeParams.moodleid);
             var currentChallenge = 0;
             switch(coursemoduleid){

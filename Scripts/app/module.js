@@ -35,12 +35,15 @@
         'incluso.stage.gameretomultiplecontroller',
         'incluso.stage.gameretomultipleexternalappcontroller',
         'incluso.stage.gameretomultipleresultscontroller',
+        'incluso.stage.tueligesController',
         'incluso.stage.quizcontroller',
         'incluso.stage.chatcontroller',
+        'incluso.stage.multiplicatudineroController',
         'incluso.program.alerts',        
         'incluso.program.myInterests',
         'incluso.program.myStrengths',
         'incluso.program.myStars',
+        'incluso.program.rewardDetail',
         'incluso.program.hallOfFame',
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
@@ -66,6 +69,7 @@
         $http.get('Templates/Programa/MyStrengths.html', { cache: $templateCache });
         $http.get('Templates/Programa/HallOfFame.html', { cache: $templateCache });
         $http.get('Templates/Programa/MyStars.html', { cache: $templateCache });
+        $http.get('Templates/Programa/RewardDetail.html',{ cache: $templateCache });
         $http.get('Templates/Programa/PrivacyNotice.html', { cache: $templateCache });
         $http.get('Templates/Programa/TermsOfUse.html', { cache: $templateCache });
         $http.get('Templates/Programa/HelpAndSupport.html', { cache: $templateCache });
@@ -76,6 +80,7 @@
         $http.get('Templates/Programa/sharingexperience.html', { cache: $templateCache });  
         $http.get('Templates/Programa/AlbumIncluso.html', { cache: $templateCache });  
         $http.get('Templates/Programa/reconocimiento.html', { cache: $templateCache });
+        $http.get('Templates/Programa/RewardDetail.html', { cache: $templateCache });
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
@@ -115,6 +120,8 @@
         $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });                  
+        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });  
 
          document.addEventListener("keyup", function(e) {
             if (e.keyCode === 27)
@@ -221,7 +228,12 @@
         $routeProvider.when('/MyStars', {
             templateUrl: 'Templates/Programa/MyStars.html',
             controller: 'MyStarsController'
-        });        
+        });
+
+        $routeProvider.when('/RewardDetail/:id', {
+            templateUrl: function(params){ return 'Templates/Programa/RewardDetail.html?id=' + params.id; } ,
+            controller: 'rewardDetailController'
+        });
 
         $routeProvider.when('/HallOfFame', {
             templateUrl: 'Templates/Programa/HallOfFame.html',
@@ -498,14 +510,14 @@
             controller: 'stageForumCommentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/TuElijes/FuenteDeEnergia/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/FuenteDeEnergia.html',
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/TuElijes/:moodleid', {
-            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuElijes.html',
-            controller: 'stageQuizController'
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEliges.html',
+            controller: 'stageTuEligesController'
         });
 
 
@@ -584,6 +596,11 @@
         $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html',
+            controller: 'stageMultiplicaTuDineroController'
         });
 
         $routeProvider.otherwise({
