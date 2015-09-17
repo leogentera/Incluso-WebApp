@@ -25,8 +25,7 @@ angular
             $scope.scrollToTop();            
             $scope.currentPage = 1;
             var index = 0;
-            var parentIndex = 4;               
-            debugger;         
+            var parentIndex = 4;                           
             var coursemoduleid = parseInt($routeParams.moodleid);
             var currentChallenge = 0;
             switch(coursemoduleid){

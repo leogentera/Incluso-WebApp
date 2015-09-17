@@ -32,12 +32,13 @@ angular
 
 
             function validateCabinaDeSoporte(){
+                debugger;
                 $scope.scrollToTop('anchor-bottom');                       
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
                     var isStarted = _startedActivityCabinaDeSoporte;
-                    var currentActivity = _usercourse.stages[isStarted.$stage].challenges[isStarted.$parentIndex].activities[isStarted.$index];
+                    var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.$data.moduleid, _usercourse);    
 
                         if (!currentActivity.status) {
                             var rawDate = isStarted.$data.datestarted.split(/:|\s|:/);
