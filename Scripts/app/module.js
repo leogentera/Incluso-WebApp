@@ -77,6 +77,7 @@
         $http.get('Templates/Programa/sharingexperience.html', { cache: $templateCache });  
         $http.get('Templates/Programa/AlbumIncluso.html', { cache: $templateCache });  
         $http.get('Templates/Programa/reconocimiento.html', { cache: $templateCache });
+        $http.get('Templates/Programa/RewardDetail.html', { cache: $templateCache });
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
@@ -223,7 +224,12 @@
         $routeProvider.when('/MyStars', {
             templateUrl: 'Templates/Programa/MyStars.html',
             controller: 'MyStarsController'
-        });        
+        });
+
+        $routeProvider.when('/RewardDetail', {
+            templateUrl: 'Templates/Programa/RewardDetail.html',
+            controller: 'MyStarsController'
+        });         
 
         $routeProvider.when('/HallOfFame', {
             templateUrl: 'Templates/Programa/HallOfFame.html',
@@ -513,7 +519,7 @@
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia.html',
-            controller: 'stageMessageController'
+            controller: 'stageContentsController'
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:ActivityIdentifier', {
