@@ -41,6 +41,7 @@
         'incluso.program.myInterests',
         'incluso.program.myStrengths',
         'incluso.program.myStars',
+        'incluso.program.rewardDetail',
         'incluso.program.hallOfFame',
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
@@ -66,6 +67,7 @@
         $http.get('Templates/Programa/MyStrengths.html', { cache: $templateCache });
         $http.get('Templates/Programa/HallOfFame.html', { cache: $templateCache });
         $http.get('Templates/Programa/MyStars.html', { cache: $templateCache });
+        $http.get('Templates/Programa/RewardDetail.html',{ cache: $templateCache });
         $http.get('Templates/Programa/PrivacyNotice.html', { cache: $templateCache });
         $http.get('Templates/Programa/TermsOfUse.html', { cache: $templateCache });
         $http.get('Templates/Programa/HelpAndSupport.html', { cache: $templateCache });
@@ -221,7 +223,12 @@
         $routeProvider.when('/MyStars', {
             templateUrl: 'Templates/Programa/MyStars.html',
             controller: 'MyStarsController'
-        });        
+        });
+                
+        $routeProvider.when('/RewardDetail/:id', {
+            templateUrl: function(params){ return 'Templates/Programa/RewardDetail.html?id=' + params.id; } ,
+            controller: 'rewardDetailController'
+        });
 
         $routeProvider.when('/HallOfFame', {
             templateUrl: 'Templates/Programa/HallOfFame.html',
