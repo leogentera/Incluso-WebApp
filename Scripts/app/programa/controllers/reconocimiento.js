@@ -1,6 +1,6 @@
 angular
 .module('incluso.programa.reconocimiento', [])
-.controller('reconocimiento', [
+.controller('reconocimientoController', [
 	'$q',
 	'$scope',
 	'$location',
