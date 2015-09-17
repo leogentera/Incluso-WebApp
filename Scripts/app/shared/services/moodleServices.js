@@ -617,6 +617,19 @@
 
                     }
                 }
+                console.log(activities);
+                /* Conocete - reto múltiple */
+                var multipleChallenges = _.filter(activities, function (a){
+                    return a.activity_type == 'quiz' && a.sectionname.indexOf("Reto m") != -1;
+                });
+                
+                var multipleChallengesArray = new Array();
+                for(var mc = 0; mc < multipleChallenges.length; mc++) {
+                    multipleChallengesArray.push({
+                        "name": multipleChallenges[mc].activityname,
+                        "description": multipleChallenges[mc].activityintro
+                    });
+                }
                 
                 /* General Community */
                 var generalCommunity =_.filter(activities, function (a){
@@ -642,6 +655,7 @@
                 var progress = refreshProgress(course, user);
                 course = progress.course;
                 course.community = community;
+                course.multipleChallenges = multipleChallengesArray;
                 user = progress.user;
                 _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),user);
                 _setLocalStorageJsonItem("usercourse",course);
