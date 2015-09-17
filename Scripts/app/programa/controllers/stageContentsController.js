@@ -15,16 +15,24 @@ angular
             _httpFactory = $http;
             var moduleid = parseInt($routeParams.moodleid);
             var pagename;      
-            var currentChallenge;              
+            var currentChallenge; 
+            var stage;             
             switch(moduleid){
               case 112:                
                 currentChallenge = 1;
+                stage = "ZonaDeVuelo";
                 break;
               case 145:                
                 currentChallenge = 2;
+                stage = "ZonaDeVuelo";
                 break;
               case 146:                
                 currentChallenge = 3;
+                stage = "ZonaDeVuelo";
+                break;
+              case 156:
+                currentChallenge = 1;
+                stage = "ZonaDeNavegacion";
                 break;
             }
 
