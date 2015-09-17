@@ -422,7 +422,7 @@ function _getActivityByCourseModuleId(coursemoduleid, usercourse) {
 }
 
 function getActivityAtAnyCost(activity_identifier, moodle_id){
-    debugger;
+
     var parentActivity = getActivityByActivity_identifier(activity_identifier);
     var activity;
 

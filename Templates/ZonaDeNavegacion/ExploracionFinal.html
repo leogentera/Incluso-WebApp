@@ -21,7 +21,6 @@
 
                         <!--Pregunta tipo Si/No-->
                         <div>
-
                             <div class="txt-renglon txt-bigger">1. Una creencia limitante puede romperse</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
@@ -38,112 +37,59 @@
                                     <label for="fols3">No</label>
                                 </div>
                             </section>
-
                         </div>
 
-
-                        <!--Pregunta tipo Opción Multiple + Otro-->
+                        <!--Pregunta tipo Selección Simple-->
                         <div>
                             <div class="txt-renglon txt-bigger">2. Darte cuenta de lo que quieres estar haciendo en unos años te ayuda a:</div>
-                            <section id='questionNum1' class="form txt-renglon txt-bigger part list">
-                                <input id="check1" type="checkbox" value="check1" name="check"
-                                       ng-true-value="1" ng-false-value="0"
-                                       ng-model="exploracionFinalStage2[1][0]" ng-disabled="setReadOnly"/>
-                                <label for="check1">Planear lo que puedes hacer hoy para lograrlo</label>
+                            <section class="form txt-renglon txt-bigger part list">
+                                <input id="option1" type="radio" value="0" name="option"
+                                       ng-model="exploracionFinalStage2[1]" ng-disabled="setReadOnly"/>
+                                <label for="option1">Planear lo que puedes hacer hoy para lograrlo</label>
 
-                                <input id="check2" type="checkbox" value="check2" name="check"
-                                       ng-true-value="1" ng-false-value="0"
-                                       ng-model="exploracionFinalStage2[1][1]" ng-disabled="setReadOnly"/>
-                                <label for="check2">Tener algo en que soñar</label>
+                                <input id="option2" type="radio" value="1" name="option"
+                                       ng-model="exploracionFinalStage2[1]" ng-disabled="setReadOnly"/>
+                                <label for="option2">Tener algo en que soñar</label>
 
-                                <input id="check3" type="checkbox" value="check3" name="check"
-                                       ng-true-value="1" ng-false-value="0"
-                                       ng-model="exploracionFinalStage2[1][2]" ng-disabled="setReadOnly"/>
-                                <label for="check3">Imaginar muchas cosas que te encantan</label>
-
-                                <input id="check4" type="checkbox" value="check4" name="check"
-                                       ng-true-value="1" ng-false-value="0"
-                                       ng-model="exploracionFinalStage2[1][3]" ng-disabled="setReadOnly"
-                                       ng-change="exploracionFinalStage2OtroAnswers[0].answers[0] = exploracionFinalStage2[1][3] == false ? '' : exploracionFinalStage2OtroAnswers[0].answers[0]"
-                                       ng-click="addCaptureField(exploracionFinalStage2[1][3])"/>
-                                <label for="check4">Otro</label>
-
-                                <div class="form-group theme-form" ng-show="exploracionFinalStage2[1][3]">
-                                    <div class="add">
-                                        <span class="icomoon icon-edit"></span>
-                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
-                                                  ng-model="exploracionFinalStage2OtroAnswers[0].answers[0]">
-                                        </textarea>
-                                    </div>
-                                </div>
+                                <input id="option3" type="radio" value="2" name="option"
+                                       ng-model="exploracionFinalStage2[1]" ng-disabled="setReadOnly"/>
+                                <label for="option3">Imaginar muchas cosas que te encantan</label>
                             </section>
                         </div>
 
-
-                        <!--Pregunta tipo Opción Multiple + Otro-->
+                        <!--Pregunta tipo Selección Simple-->
                         <div>
                             <div class="txt-renglon txt-bigger">3. Ponerte metas en diferentes áreas de tu vida es importante porque:</div>
                             <section class="form txt-renglon txt-bigger part list">
-                                <input id="check5" type="checkbox" value="check5" name="check"
-                                       ng-model="exploracionFinalStage2[2][0]" ng-disabled="setReadOnly"/>
-                                <label for="check5">Eres capaz de hacer muchas cosas al mismo tiempo</label>
+                                <input id="option4" type="radio" value="0" name="option"
+                                       ng-model="exploracionFinalStage2[2]" ng-disabled="setReadOnly"/>
+                                <label for="option4">Eres capaz de hacer muchas cosas al mismo tiempo</label>
 
-                                <input id="check6" type="checkbox" value="check6" name="check"
-                                       ng-model="exploracionFinalStage2[2][1]" ng-disabled="setReadOnly"/>
-                                <label for="check6">Las demás personas creen que es importante</label>
+                                <input id="option5" type="radio" value="1" name="option"
+                                       ng-model="exploracionFinalStage2[2]" ng-disabled="setReadOnly"/>
+                                <label for="option5">Las demás personas creen que es importante</label>
 
-                                <input id="check7" type="checkbox" value="check7" name="check"
-                                       ng-model="exploracionFinalStage2[2][2]" ng-disabled="setReadOnly"/>
-                                <label for="check7">Te ayuda a crecer de igual forma en todos las áreas de tu vida</label>
-
-                                <input id="check8" type="checkbox" value="check8" name="check"
-                                       ng-model="exploracionFinalStage2[2][3]" ng-disabled="setReadOnly"
-                                       ng-change="exploracionFinalStage2OtroAnswers[1].answers[0] = exploracionFinalStage2[2][3] == false ? '' : exploracionFinalStage2OtroAnswers[1].answers[0]"
-                                       ng-click="addCaptureField(exploracionFinalStage2[2][3])"/>
-                                <label for="check8">Otro</label>
-
-                                <div class="form-group theme-form" ng-show="exploracionFinalStage2[2][3]">
-                                    <div class="add">
-                                        <span class="icomoon icon-edit"></span>
-                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
-                                                  ng-model="exploracionFinalStage2OtroAnswers[1].answers[0]">
-                                        </textarea>
-                                    </div>
-                                </div>
+                                <input id="option6" type="radio" value="2" name="option"
+                                       ng-model="exploracionFinalStage2[2]" ng-disabled="setReadOnly"/>
+                                <label for="option6">Te ayuda a crecer de igual forma en todos las áreas de tu vida</label>
                             </section>
                         </div>
 
-
-                        <!--Pregunta tipo Opción Multiple + Otro-->
+                        <!--Pregunta tipo Selección Simple-->
                         <div>
                             <div class="txt-renglon txt-bigger">4. ¿Para qué sirve ponerle un indicador a las metas?</div>
                             <section class="form txt-renglon txt-bigger part list">
-                                <input id="check9" type="checkbox" value="check9" name="check"
-                                       ng-model="exploracionFinalStage2[3][0]" ng-disabled="setReadOnly"/>
-                                <label for="check9">Para poner una referencia y saber que lo has logrado</label>
+                                <input id="option7" type="radio" value="0" name="option"
+                                       ng-model="exploracionFinalStage2[3]" ng-disabled="setReadOnly"/>
+                                <label for="option7">Para poner una referencia y saber que lo has logrado</label>
 
-                                <input id="check10" type="checkbox" value="check10" name="check"
-                                       ng-model="exploracionFinalStage2[3][1]" ng-disabled="setReadOnly"/>
-                                <label for="check10">Para calificarme si lo hice bien o mal</label>
+                                <input id="option8" type="radio" value="1" name="option"
+                                       ng-model="exploracionFinalStage2[3]" ng-disabled="setReadOnly"/>
+                                <label for="option8">Para calificarme si lo hice bien o mal</label>
 
-                                <input id="check11" type="checkbox" value="check11" name="check"
-                                       ng-model="exploracionFinalStage2[3][2]" ng-disabled="setReadOnly"/>
-                                <label for="check11">Para darme cuenta del trabajo que cuesta </label>
-
-                                <input id="check12" type="checkbox" value="check12" name="check"
-                                       ng-model="exploracionFinalStage2[3][3]" ng-disabled="setReadOnly"
-                                       ng-change="exploracionFinalStage2OtroAnswers[2].answers[0] = exploracionFinalStage2[3][3] == false ? '' : exploracionFinalStage2OtroAnswers[2].answers[0]"
-                                       ng-click="addCaptureField(exploracionFinalStage2[3][3])"/>
-                                <label for="check12">Otro</label>
-
-                                <div class="form-group theme-form" ng-show="exploracionFinalStage2[3][3]">
-                                    <div class="add">
-                                        <span class="icomoon icon-edit"></span>
-                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
-                                                  ng-model="exploracionFinalStage2OtroAnswers[2].answers[0]">
-                                        </textarea>
-                                    </div>
-                                </div>
+                                <input id="option9" type="radio" value="2" name="option"
+                                       ng-model="exploracionFinalStage2[3]" ng-disabled="setReadOnly"/>
+                                <label for="option9">Para darme cuenta del trabajo que cuesta</label>
                             </section>
                         </div>
 
