@@ -519,7 +519,7 @@
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia.html',
-            controller: 'stageMessageController'
+            controller: 'stageContentsController'
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:ActivityIdentifier', {
