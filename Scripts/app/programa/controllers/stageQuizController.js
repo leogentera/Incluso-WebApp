@@ -726,7 +726,6 @@ angular
                             userAnswers.forEach(function(item){
                                 var cleanedItem = cleanText(item).trim();
                                 console.log(cleanedItem);
-
                                 switch (cleanedItem) {
                                     case "Salud Física":
                                         $scope.exploracionInicialStage2[3][0] = true;
@@ -772,8 +771,6 @@ angular
 
                             */
                         }
-
-
                 }
             }
 
@@ -882,8 +879,9 @@ angular
                     var activityFinished = false;
 
                     $scope.activity_status = activity.status;
+                    console.log(activity.status);
 
-                    if (activity.status != 0) {
+                    if (activity.status != 0) {//If the activity is currently finished...
                         activityFinished = true;
 
                         if ($scope.activity_identifier == '1001' ||
@@ -897,10 +895,11 @@ angular
 
                         var localAnswers = JSON.parse(_getItem("activityAnswers/" + activity.coursemoduleid));
                         var localOtrosAnswers = JSON.parse(_getItem("activityOtrosAnswers/" + activity.coursemoduleid));
-                        if (localAnswers == null) {
+                        console.log("localAnswers : " + localAnswers);
+                        if (localAnswers == null) {// If activity not exists in Local Storage...get it from Server
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
                         }
-                        else {
+                        else {//Angular-bind the answers in the respective HTML template
 
                             switch ($scope.activity_identifier) {
                                 case "1001": //Exploración Inicial - Etapa 1
@@ -926,17 +925,17 @@ angular
                                     $scope.exploracionInicialStage2OtroAnswers = localOtrosAnswers;
                                     break;
                                 case "2007": //Tus ideas - Etapa 2
-                                    $scope.misIdeas = localAnswers; //Sueña
+                                    $scope.misIdeas = localAnswers;
                                     break;
                                 case "2016": //Mi futuro - Etapa 2
-                                    $scope.miFuturo = localAnswers; //Sueña
+                                    $scope.miFuturo = localAnswers;
                                     break;
                                 case "2023":
-                                    $scope.exploracionFinalStage2 = localAnswers; //Exploración Inicial
+                                    $scope.exploracionFinalStage2 = localAnswers; //Exploración Final - Etapa 2
                                     $scope.exploracionFinalStage2OtroAnswers = localOtrosAnswers;
                                     break;
                                 case "3001":
-                                    $scope.exploracionInicialStage3 = localAnswers; //Exploración Inicial
+                                    $scope.exploracionInicialStage3 = localAnswers; //Exploración Inicial - Etapa 3
                                     $scope.exploracionInicialStage3OtroAnswers = localOtrosAnswers;
                                     break;
                                 case "xxxx": //Pending to fill in
@@ -946,10 +945,7 @@ angular
                                     $scope.currentChallenge = 0; //Default
                                     break;
                             }
-
                         }
-                    } else {
-
                     }
 
                     $scope.activity = activity;
@@ -973,7 +969,7 @@ angular
                         var question = activityAnswers.questions[index];
 
                         /*
-                        //*  WARNING: DEPRECATED TO AVOID ACTIVITY NAME COLLISIONS - ACTIVITY NAMES REPEAT IN SUBSEQUENT STAGES
+                        //  WARNING: DEPRECATED TO AVOID ACTIVITY NAME COLLISIONS - ACTIVITY NAMES REPEAT IN SUBSEQUENT STAGES
                         //
                         switch ($scope.activityname) {
                             case "Exploración inicial":
@@ -997,7 +993,7 @@ angular
                             default:
                                 break;
                         }
-                         */
+                        */
 
                         switch ($scope.activity_identifier) {
                             case "1001": //Exploración Inicial - Etapa 1
@@ -1014,9 +1010,11 @@ angular
                                 break;
                             case "1007": //Sueña - Etapa 1
                                 updateMisSueñosSelectedAnswers(index, question);
+                                _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.misSuenosAnswers);
                                 break;
                             case "1009": //Exploración Final - Etapa 1
                                 updateExploracionFinalSelectedAnswersFinal(index, question);
+                                _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.exploracionFinal);
                                 break;
                             case "2001": //Exploración Inicial - Etapa 2
                                 console.log("updateExploracionInicialStage2Answers");
@@ -1025,9 +1023,11 @@ angular
                                 break;
                             case "2007": //Tus ideas - Etapa 2
                                 updateTusIdeasStage2Answers(index, question);
+                                _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.misIdeas);
                                 break;
                             case "2016": //Tu Futuro - Etapa 2
                                 updateTuFuturoStage2Answers(index, question);
+                                _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.miFuturo);
                                 break;
                             case "2023": //Exploración final - Etapa 2
                                 updateExploracionFinalStage2Answers(index, question);
@@ -1465,14 +1465,17 @@ angular
                 console.log($scope.exploracionInicialStage2 + " answer: " + $scope.exploracionInicialStage2OtroAnswers[0].answers[0]);
 
                 //Validation: there must not be a 'null' value AND the multichoice must have some 'true' value
-                if (($scope.exploracionInicialStage2.indexOf(null) == -1) && ($scope.exploracionInicialStage2[3].indexOf(true) > -1)) {
+                if (($scope.exploracionInicialStage2.indexOf(null) === -1) && ($scope.exploracionInicialStage2[3].indexOf(1) > -1)) {
 
                     //Other is 'true' and has a non empty string in the input
                     var userInput = $scope.exploracionInicialStage2OtroAnswers[0].answers[0].replace(/\r?\n|\r/g, " ").trim();
+                    console.log("userInput = " + userInput);
                     if (($scope.exploracionInicialStage2[3][4] && userInput != '') || !$scope.exploracionInicialStage2[3][4]) {
                         quizIsValid = true;
                     }
                 }
+
+                console.log("Variable quizIsValid : " + quizIsValid);
 
                 if (quizIsValid) {
                     $scope.showWarning = false;
