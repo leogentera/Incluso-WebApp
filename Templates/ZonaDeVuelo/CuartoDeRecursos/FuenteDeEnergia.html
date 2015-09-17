@@ -35,7 +35,7 @@
                       <span class="icomoon icon-hyperlink"></span>
                     </div>
                     <div class="col-xs-9">
-                      <span>{{activity.activityContent.name}}</span>
+                      <span>{{activity.activityname}}</span>
                     </div>
                     <div class="col-xs-1">
                       <span class="icomoon icon-required" ng-hide="activity.optional"></span>
@@ -52,7 +52,7 @@
                       <span class="icomoon icon-video-file"></span>
                     </div>
                     <div class="col-xs-9">
-                      <span>{{activity.activityContent.name}}</span>
+                      <span>{{activity.activityname}}</span>
                     </div>
                     <div class="col-xs-1">
                       <span class="icomoon icon-required" ng-hide="activity.optional"></span>
@@ -69,7 +69,7 @@
                       <span class="icomoon icon-text"></span>
                     </div>
                     <div class="col-xs-9">
-                      <span>{{activity.activityContent.name}}</span>
+                      <span>{{activity.activityname}}</span>
                     </div>
                     <div class="col-xs-1">
                       <span class="icomoon icon-required" ng-hide="activity.optional"></span>
@@ -86,7 +86,7 @@
                       <span class="icomoon icon-camera"></span>
                     </div>
                     <div class="col-xs-9">   
-                      <span>{{activity.activityContent.name}}</span>
+                      <span>{{activity.activityname.length > 2 ? activity.activityname : ''}}</span>
                     </div>        
                     <div class="col-xs-1">
                       <span class="icomoon icon-required" ng-hide="activity.optional"></span>
@@ -99,15 +99,14 @@
                 </div>
                 <div class="detail">  
                   <div>
-                    <div ng-if="activity.activity_type == 'resource'" class="image-container">
-                      <a href="{{activity.activityContent.fileurl}}&token={{token}}" target="blank"><img ng-click="updateStatus(activity.groupid)" ng-src="{{activity.activityContent.fileurl}}&token={{token}}" class="image-element"></a>
-                    </div>
                     <div class="message">
-                      <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>
-                      <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'page' && !activity.status">Mostrar texto...</span>
                       <span ng-show="activity.status" ng-bind-html="activity.pageContent"></span>
                       <span ng-bind-html="activity.file.pageContent"></span>
-
+                      <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'page' && !activity.status">Mostrar texto...</span>                      
+                      <div ng-if="activity.activity_type == 'resource'" class="image-container">
+                        <a href="{{activity.activityContent.fileurl}}&token={{token}}" target="blank"><img ng-click="updateStatus(activity.groupid)" ng-src="assets/images/svg/img_placeholder-01.svg" class="image-element"></a>
+                      </div>
+                      <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>
                       <section class="component ng-scope"  ng-if="activity.activityintro == 'video'">
                         <div class="panel panel-video">
                             <div class="video-player">
@@ -116,7 +115,7 @@
                                         <span class="glyphicon glyphicon-play"></span>
                                     </a>
                                     <figure class="poster">
-                                        <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />
+                                        <img src="assets/images/svg/img_placeholder-01.svg" alt="video" />
                                     </figure>
                                 </div>
                             </div>
