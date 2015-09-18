@@ -563,6 +563,7 @@ function updateActivityStatus(activity_identifier) {
 
 function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId) {
     var breakAll = false;
+    var subactivitiesCompleted = 0;
     var theUserCourse = JSON.parse(localStorage.getItem("usercourse"));
     for (var stageIndex = 0; stageIndex < theUserCourse.stages.length; stageIndex++) {
         var stage = theUserCourse.stages[stageIndex];
@@ -574,17 +575,20 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
                     if (activity.status == 1) {
                         breakAll = true;
                         break;
-                    } else {
+                    } else if(activity.activities.length == subactivitiesCourseModuleId.length) {
                         activity.status = 1;
                     }
                     for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {
                         var subactivity = activity.activities[subactivityIndex];
-                        for (var subactivityCourseModuleId = 0; subactivityCourseModuleId < subactivitiesCourseModuleId.length; subactivitiesCourseModuleId++) {
+                        for (var subactivityCourseModuleId = 0; subactivityCourseModuleId < subactivitiesCourseModuleId.length; subactivityCourseModuleId++) {
                             if (subactivity.coursemoduleid == subactivitiesCourseModuleId[subactivityCourseModuleId] && subactivity.status == 0) {
                                 subactivity.status = 1;
-                                breakAll = true;
+                                subactivitiesCompleted++;
                                 break;
                             }
+                        }
+                        if (subactivitiesCompleted == subactivitiesCourseModuleId.length) {
+                          breakAll = true;
                         }
                         if (breakAll)
                             break;
@@ -678,7 +682,7 @@ function updateUserStarsUsingExternalActivity(activity_identifier) {
     moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
 }
 
-function updateActivityManager(activityManager, coursemoduleid) {
+function updateActivityManager(activityManager, coursemoduleid, activity_identifier) {
     var breakAll = false;
     if (!activityManager) {
         activityManager = moodleFactory.Services.GetCacheJson("activityManagers");
@@ -695,7 +699,7 @@ function updateActivityManager(activityManager, coursemoduleid) {
             if (subactivity.activities) {
                 for (var subsubactivityIndex = 0; subsubactivityIndex < subactivity.activities.length; subsubactivityIndex++) {
                     var subsubactivity = subactivity.activities[subsubactivityIndex];
-                    if (subsubactivity && subsubactivity.coursemoduleid == coursemoduleid) {
+                    if (subsubactivity && subsubactivity.coursemoduleid == coursemoduleid  && !activity_identifier) {
                         subsubactivity.status = 1;
                         breakAll = true;
                         break;

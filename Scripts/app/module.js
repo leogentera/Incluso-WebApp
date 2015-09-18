@@ -41,6 +41,7 @@
         'incluso.stage.gameretomultipleresultscontroller',
         'incluso.stage.tueligesController',
         'incluso.stage.quizcontroller',
+        'incluso.stage.mapadevidaController',
         'incluso.stage.chatcontroller',
         'incluso.stage.multiplicatudineroController',
         'incluso.program.alerts',        
@@ -128,7 +129,8 @@
         ///////// Stage 3 //////////
         $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: $templateCache });  
 
-        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });                  
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html', { cache: $templateCache });                   
         $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });  
 
          document.addEventListener("keyup", function(e) {
@@ -542,7 +544,7 @@
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html',
-            controller: 'stageMessageController'
+            controller: 'stageMapaDeVidaController'
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/:moodleid', {
