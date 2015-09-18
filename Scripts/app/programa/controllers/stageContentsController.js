@@ -46,6 +46,19 @@ angular
                 currentChallenge = 4;
                 stage = "ZonaDeNavegacion";
                 break;
+              case 207:
+                currentChallenge = 1;
+                stage = "ZonaDeAterrizaje";
+                break;
+              case 209:
+                currentChallenge = 2;
+                stage = "ZonaDeAterrizaje";
+                break;
+              case 213:
+                currentChallenge = 3;
+                stage = "ZonaDeAterrizaje";
+                break;
+
             }
 
             $scope.currentPage = 1;  
@@ -63,8 +76,7 @@ angular
             $scope.scrollToTop();
             //$scope.$emit('HidePreloader'); //hide preloader            
             var starsNoMandatory = 0;
-            var starsMandatory = 0;    
-            var userCurrentStage = localStorage.getItem("currentStage");            
+            var starsMandatory = 0;                
             var getcoursemoduleids = [];
             $scope.like_status = 1;
 
