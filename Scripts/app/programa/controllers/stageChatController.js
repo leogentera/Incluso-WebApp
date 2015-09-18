@@ -111,7 +111,8 @@ angular
                         instanceType: 0,
                         date: new Date()
                     };
-
+                    
+                    profile.stars = parseInt(profile.stars) + activity.points;
                     moodleFactory.Services.PutStars(model, profile, currentUser.token, successfullCallBack, errorCallback);                    
                 }, function(){
                     $scope.$emit('HidePreloader'); //hide preloader  
