@@ -949,25 +949,25 @@ angular
 
                             switch ($scope.activity_identifier) {
                                 case "1001": //Exploración Inicial - Etapa 1
-                                    $scope.AnswersResult.answers = localAnswers; //Exploración Inicial
+                                    $scope.AnswersResult.answers = localAnswers;
                                     $scope.exploracionInicialOtroAnswer = localOtrosAnswers;
                                     break;
                                 case "1005": //Mis Cualidades - Etapa 1
-                                    $scope.misCualidadesAnswers = localAnswers;  //Mis Cualidades
+                                    $scope.misCualidadesAnswers = localAnswers;
                                     $scope.misCualidadesOtroAnswers = localOtrosAnswers;
                                     break;
                                 case "1006": //Mis Gustos - Etapa 1
-                                    $scope.misGustosAnswers = localAnswers;  //Mis Gustos
+                                    $scope.misGustosAnswers = localAnswers;
                                     $scope.misGustosOtroAnswers = localOtrosAnswers;
                                     break;
                                 case "1007": //Sueña - Etapa 1
                                     $scope.misSuenosAnswers = localAnswers; //Sueña
                                     break;
                                 case "1009": //Exploración Final - Etapa 1
-                                    $scope.exploracionFinal = localAnswers; //Exploración Final
+                                    $scope.exploracionFinal = localAnswers;
                                     break;
                                 case "2001": //Exploración Inicial - Etapa 2
-                                    $scope.exploracionInicialStage2 = localAnswers; //Exploración Inicial
+                                    $scope.exploracionInicialStage2 = localAnswers;
                                     $scope.exploracionInicialStage2OtroAnswers = localOtrosAnswers;
                                     break;
                                 case "2007": //Tus ideas - Etapa 2
@@ -976,11 +976,11 @@ angular
                                 case "2016": //Mi futuro - Etapa 2
                                     $scope.miFuturo = localAnswers;
                                     break;
-                                case "2023":
-                                    $scope.exploracionFinalStage2 = localAnswers; //Exploración Final - Etapa 2
+                                case "2023": //Exploración Final - Etapa 2
+                                    $scope.exploracionFinalStage2 = localAnswers;
                                     break;
-                                case "3001":
-                                    $scope.exploracionInicialStage3 = localAnswers; //Exploración Inicial - Etapa 3
+                                case "3001": //Exploración Inicial - Etapa 3
+                                    $scope.exploracionInicialStage3 = localAnswers;
                                     $scope.exploracionInicialStage3OtroAnswers = localOtrosAnswers;
                                     break;
                                 case "xxxx": //Pending to fill in
@@ -1532,6 +1532,7 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                 } else {
+                    $scope.showWarning = true;
                     showWarningAndGoToTop();
                 }
             };

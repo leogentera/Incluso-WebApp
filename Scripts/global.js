@@ -614,7 +614,6 @@ function updateMultipleSubactivityStars (parentActivity, subactivitiesCourseModu
 }
 
  function updateUserStars (activityIdentifier, extraPoints){
-     debugger;
    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));   
    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
    //var activity = getActivityByActivity_identifier(activity_identifier);
