@@ -28,7 +28,7 @@
                 $scope.profile = null;   //profile is not used in this page, it is only used for stars
             }
 
-            console.log("Scope user = " + JSON.stringify($scope.user));
+            //console.log("Scope user = " + JSON.stringify($scope.user));
 
             if (!_getItem("userId")) {
                 $location.path('/');

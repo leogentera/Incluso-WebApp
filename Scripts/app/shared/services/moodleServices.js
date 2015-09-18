@@ -31,11 +31,11 @@
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), successCallback, errorCallback, forceRefresh);
         };
         
-        var _getAsyncDiscussionPosts = function(discussionId, discussion, forumId, sinceId, maxId, first, successCallback, errorCallback, forceRefresh) {
-            var key = "discussion/" + discussionId + discussion + forumId + sinceId + maxId + first;
+        var _getAsyncDiscussionPosts = function(token, discussionId, discussion, forumId, sinceId, maxId, first, successCallback, errorCallback, forceRefresh) {
+            var key = "discussion/" + token + discussionId + discussion + forumId + sinceId + maxId + first;
             var url = API_RESOURCE.format("discussion/" + discussionId + "?discussion=" + discussion + "&forumid=" + forumId + "&sinceid=" + sinceId + "&maxid=" + maxId + "&first=" + first);
             
-            _getAsyncForumDiscussionsData(key, url, successCallback, errorCallback, forceRefresh);
+            _getAsyncForumDiscussionsData(key, url, token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncActivityInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
@@ -149,7 +149,7 @@
             });
         };
         
-        var _getAsyncForumDiscussionsData = function (key, url, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncForumDiscussionsData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
             
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
@@ -161,7 +161,7 @@
             _httpFactory({
                 method: 'GET',
                 url: url,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json', 'Authorization': token }
             }).success(function (data, status, headers, config) {
                 
                 var posts = createPostsTree(data.posts);

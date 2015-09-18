@@ -100,9 +100,9 @@ angular
                                   moodleid = 148;
 
                               }
-                              updateUserStars(moodleId);
+                              updateUserStars(moodleId,null, updateUserStarsCallback);
                               $scope.$emit('HidePreloader');
-                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                            
                           }, errorCallback);
                     },
                     function(){
@@ -111,6 +111,10 @@ angular
 
             };
 
+            var updateUserStarsCallback = function(){
+                var userCurrentStage = localStorage.getItem("currentStage");
+                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);                    
+            };
 
             $scope.finishActivity = function () {
                endForumActivity(parentActivity.coursemoduleid);

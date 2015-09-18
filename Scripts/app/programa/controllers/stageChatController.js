@@ -100,7 +100,7 @@ angular
                         instanceType: 0,
                         date: new Date()
                     };
-
+                    profile.stars = parseInt(profile.stars) + activity.points;
                     moodleFactory.Services.PutStars(model, profile, currentUser.token, successfullCallBack, errorCallback);                    
                 }, function(){
                     $scope.$emit('HidePreloader'); //hide preloader  
@@ -120,7 +120,7 @@ angular
 
                 // update activity status dictionary used for blocking activity links
                 updateActivityStatusDictionary(activity.coursemoduleid);                
-
+                //console.log(profile);
                 $scope.$emit('HidePreloader'); //hide preloader  
                 var userCurrentStage = localStorage.getItem("currentStage");
                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4'); 

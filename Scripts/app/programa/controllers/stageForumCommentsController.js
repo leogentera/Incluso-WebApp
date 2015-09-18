@@ -73,10 +73,11 @@ angular
                 return forumsProgress;
             };
 
-            function updateForumProgress(discussionId){
+            function updateForumProgress() {
+
                 var forumsCommentsCountCollection = getForumsProgress();
-                var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussion_id == discussionId; });
-                alreadyCommented? alreadyCommented.replies_counter++ : forumsCommentsCountCollection.push({'discussion_id':discussionId, 'replies_counter':1});
+                var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussion_id == $scope.discussion.id; });
+                alreadyCommented? alreadyCommented.replies_counter++ : forumsCommentsCountCollection.push({'discussion_id': $scope.discussion.id, 'replies_counter':1});
                 _setLocalStorageJsonItem('currentForumsProgress', forumsCommentsCountCollection);
             };
 
@@ -177,7 +178,7 @@ angular
                         //$scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
                         $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
-                        updateForumProgress(topicId);
+                        updateForumProgress();
                         checkForumProgress(refreshTopicData);
                     },
                     function(){
@@ -216,7 +217,7 @@ angular
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
-                        updateForumProgress($scope.discussion.post_id);
+                        updateForumProgress();
                         //refreshTopicData();
                         checkForumProgress(refreshTopicData);
                     },
@@ -233,7 +234,7 @@ angular
                     function(){
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
-                        updateForumProgress($scope.discussion.post_id);
+                        updateForumProgress();
                         //refreshTopicData();
                         checkForumProgress(refreshTopicData);
                     },
@@ -250,7 +251,7 @@ angular
                     function(){
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
-                        updateForumProgress($scope.discussion.post_id);
+                        updateForumProgress();
                         //refreshTopicData();
                         checkForumProgress(refreshTopicData);
                     },
@@ -293,7 +294,7 @@ angular
                     function(){
                         $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
-                        updateForumProgress($scope.discussion.post_id);
+                        updateForumProgress();
                         //refreshTopicData();
                         checkForumProgress(refreshTopicData);
                     },
@@ -308,12 +309,13 @@ angular
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == $routeParams.discussionId; });
                 
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
             }
             
             function getPostsDataCallback(data, key) {
-                postPager.from = data.sinceid;
-                postPager.to = data.maxid;
+                
+                postPager.from = (postPager.from < 0 && postPager.from < data.maxid) ? postPager.from : data.maxid;
+                postPager.to = postPager.to > data.sinceid ? postPager.to : data.sinceid;
                 
                 var posts = data.posts;
                 $scope.morePendingPosts = posts.length === 10;
@@ -346,7 +348,7 @@ angular
 
             var refreshTopicData = function(){
                 console.log("refreshTopicData");
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
             };
 
             function getActivityInfoCallback(data) {
@@ -378,7 +380,7 @@ angular
                 showMoreCounter++;
                 
                 $scope.$emit('ShowPreloader');
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, getPostsDataCallback, null, true);
             };
 
             $scope.back = function () {
