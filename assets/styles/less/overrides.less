@@ -610,7 +610,7 @@
         }
         .page-number {
             margin-top: 37.2vw;
-        }
+        }        
     }
     .activities {
         border:none;
@@ -644,6 +644,36 @@
         }
 
         .my-progress {}
+    }
+
+    .dashboard-bluespace {           
+        .component.video,
+        .showcase-carousel.pages,
+        .activities {
+            background: none;
+            background-image: none;        
+        }                
+        .progreso.blueprint {
+            width: 90%;
+            height: 22vh;
+            margin: 0px auto;
+            padding: 0px;
+            padding-top: 1vh;
+            background-image: url("@{url-images}/bg-stage-1-theme-pattern.gif");
+            background-position: 100% center;
+            background-size: 100% 100%; 
+            .border-radius(5px);
+            .spinner {
+                padding: 3% 9% 6%;
+                .circle {
+                    height: 50%;
+                }
+                .text {
+                    top: ~"calc(53% - 25px)";
+                }
+            }
+        }
+
     }
 
     footer.footer{
