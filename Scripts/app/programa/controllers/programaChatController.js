@@ -31,8 +31,7 @@ angular
             $scope.$emit('HidePreloader'); //hide preloader
 
 
-            function validateCabinaDeSoporte(){
-                debugger;
+            function validateCabinaDeSoporte(){                
                 $scope.scrollToTop('anchor-bottom');                       
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
@@ -97,7 +96,7 @@ angular
                         $anchorScroll();
                                                        
                         moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
-                    }, 1000);
+                    }, 500);
                 }                
             };
             

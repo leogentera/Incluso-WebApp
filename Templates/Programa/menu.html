@@ -181,7 +181,7 @@
                             </ul>
                             <ul>
                                 <li>Cabina de soporte</li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat','Reto múltiple', 'sideToggle', 'navbarorange')">Chat</a></li>
+                                <li><a ng-class="canStartActivity(95)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/CabinaDeSoporte/95', 'sideToggle', 95)">Chat</a></li>
                                 
                                 <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>
                             </ul>
