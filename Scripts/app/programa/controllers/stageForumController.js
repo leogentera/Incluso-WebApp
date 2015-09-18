@@ -32,13 +32,11 @@ angular
                  ];
 
                  var shield = JSON.parse(localStorage.getItem('profile')).shield;
-                 //shield ? shield = shield.shield : shield = null;
                  if (shield && shield != '') {
 
                      var shieldCategory = _.find(shields, function (s) {
                          return s.name == shield.toLowerCase()
                      });
-                     //return shieldCategory == "logico" ?  $location.path(logicForumTopicsUrl) : $location.path(artisticForumTopicsUrl);
                      if (shieldCategory) {
                        if (shieldCategory.category == "logico") {
                            $scope.moodleId = 147;
@@ -107,10 +105,7 @@ angular
             };
 
             function getDataAsync() {
-                
                 $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
-                
-                //$routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, currentUser.token, getActivityInfoCallback, '', true):'';
             }
             
             function getForumDiscussionsCallback() {
@@ -150,6 +145,9 @@ angular
                   case "85":
                       $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
                       break;
+                  case "93":
+                      $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                      break;
               }
 
             }
@@ -167,7 +165,7 @@ angular
                 }, 1000);
               
               var moodleId = $routeParams.moodleid;
-              
+              //TODO Add new routes for Zona de Navegación && Zona de Aterrizaje
               switch (moodleId){
                   case "64":
                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);

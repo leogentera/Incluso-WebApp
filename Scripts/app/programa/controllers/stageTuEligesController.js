@@ -29,14 +29,15 @@ angular
             $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.tuEligesActivities = moodleFactory.Services.GetCacheJson("tuEligesActivities");
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
+            $scope.stars = 0;
 
-            var stars = 0;
             if (!$scope.tuEligesActivities) {
             	$scope.tuEligesActivities = {};
             	var tuEligesActivity = _.find($scope.activities, function(a) { return a.activity_identifier == $routeParams.moodleid });
             	if (tuEligesActivity) {
-            		stars += tuEligesActivity.points;
+            		$scope.stars += tuEligesActivity.points;
             		for (var i = 0; i < tuEligesActivity.activities.length; i++) {
+                        $scope.stars += tuEligesActivity.activities[i].points;
             			var activity = moodleFactory.Services.GetCacheJson("activity/" + tuEligesActivity.activities[i].coursemoduleid);
             			if (activity) {
         					$scope.tuEligesActivities = activity;
@@ -49,38 +50,13 @@ angular
         				}
             		};
             	}
-            }
-
-           /* if (!$scope.tuEligesActivities) {
-            	$scope.tuEligesActivities = {};
-            	var tuEligesChallenge = _.find($scope.activities, function(a) { return a.activity_identifier == $routeParams.moodleid });
-            	if (tuEligesChallenge.activities) {
-            		var tuEligesActivity = _.find(tuEligesChallenge.activities, function(c) { return c.activity_identifier == "2012" });
-            		if (tuEligesActivity) {
-            			stars += tuEligesActivity.points;
-            			//var tuEligesChildActivity = tuEligesActivity.activities[0];
-            			for (var i = 0; i < tuEligesActivity.activities.length; i++) {
-            				var activity = moodleFactory.Services.GetCacheJson("activity/" + tuEligesActivity.activities[i].coursemoduleid);
-            				stars += tuEligesActivity.activities[i].points;
-            				if (activity) {
-            					$scope.tuEligesActivities = activity;
-                      			assignCourseModuleId(false, tuEligesActivity.activities[i]);
-            				}else{
-            					moodleFactory.Services.GetAsyncActivity(tuEligesActivity.activities[i].coursemoduleid, function(data){
-            						$scope.tuEligesActivities = data;
-            						assignCourseModuleId(true, data);
-            					});
-            				}
-            			}
-            		}
-            	}
-            }  */
+            }   
 
             function assignCourseModuleId(asyncRequest, data){
               $scope.tuEligesActivities["coursemoduleid"] = 
-              	( asyncRequest ? _.find(tuEligesActivity.activities, function(r){ return r.activityname == data.activityname }).coursemoduleid : data.coursemoduleid);
-              $scope.$emit('HidePreloader');
-              _setLocalStorageJsonItem("tuEligesActivities", $scope.tuEligesActivities);
+              	( asyncRequest ? _.find(tuEligesActivity.activities, function(r){ return r.activityname == data.name }).coursemoduleid : data.coursemoduleid);
+                $scope.$emit('HidePreloader');
+                _setLocalStorageJsonItem("tuEligesActivities", $scope.tuEligesActivities);
             }
 
             function createRequest () {
@@ -115,17 +91,17 @@ angular
             	return request;
             }
 
-            $scope.startGame = function () {
+            $scope.downloadGame = function () {
                 var r = createRequest();
 
-                /*try {
+                try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
-                catch (e) {*/
-                  successGame(
-                  	{ "userid":$scope.user.id,"pathImagenes":"","actividad":"Tu Eliges","respuestas":[{"preguntaid":105,"respuesta":"Elegir una de las profesiones que dicen son las mejor pagadas"},{"preguntaid":104,"respuesta":"Ir al concierto, es tu banda favorita y es el concierto de despedida"},{"preguntaid":106,"respuesta":"Antes de aceptar, revisas quién es y si no tienes ni idea lo rechazas"},{"preguntaid":107,"respuesta":"Hacerlo porque no pasa nada, él lo hace todo el tiempo"},{"preguntaid":108,"respuesta":"Investigar cuál tiene más materias relacionadas con la carrera que te gustaría elegir más adelante"},{"preguntaid":109,"respuesta":"Organizar entrenamientos extra para quien quiera estar mejor preparado"},{"preguntaid":110,"respuesta":"Ir sin avisar, prefieres pedir perdón que pedir permiso"},{"preguntaid":111,"respuesta": "Hacer como que no viste nada"}] }
-                  );
-                //}
+                catch (e) {
+                    successGame(
+                        { "userid":$scope.user.id,"pathImagenes":"","actividad":"Tu Eliges","respuestas":[{"preguntaid":105,"respuesta":468},{"preguntaid":104,"respuesta":466},{"preguntaid":106,"respuesta":473},{"preguntaid":107,"respuesta":476},{"preguntaid":108,"respuesta":479},{"preguntaid":109,"respuesta":480},{"preguntaid":110,"respuesta":485},{"preguntaid":111,"respuesta": 486}] }
+                    );
+                }
             }
 
             function successGame(data){
@@ -144,7 +120,7 @@ angular
             			if (q.id == data.respuestas[i].preguntaid) {
             				q.userAnswer = data.respuestas[i].respuesta;
             				//finds index of answer to insert it into array of logentry
-            				var answerIndex = q.answers.getIndexBy("answer", data.respuestas[i].respuesta);
+            				var answerIndex = q.answers.getIndexBy("id", data.respuestas[i].respuesta);
             				logEntry.answers.push(answerIndex);
             			}
             		});
@@ -171,40 +147,25 @@ angular
             				activitiesCompleted++;
             			}
             		}
+                    //Checks if siblings activities are finished and ends parent activity
                 	if ($scope.IsComplete && activitiesCompleted == parentActivity.activities.length - 1) {
                 		_endActivity(parentActivity, function(){ });
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                 	}
+                    if (parentActivity.activities) {
+                        //TODO: change for all activities in case there are other siblings completed
+                        subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
+                        updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
+                        for (var i = 0; i < subactivitiesCompleted.length; i++) {
+                            $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i]);
+                        };
+                        userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
+                        _setLocalStorageJsonItem("usercourse", userCourseUpdated);
+                        _setLocalStorageJsonItem("activityManagers", $scope.activities);
+                        $scope.saveQuiz($scope.tuEligesActivities, logEntry, userCourseUpdated);
+                    }
                 }
-                if (parentActivity.activities) {
-                	//TODO: change for all activities in case there are other siblings completed
-                	subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
-                	updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
-                    for (var i = 0; i < subactivitiesCompleted.length; i++) {
-                        $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i]);
-                    };
-                	userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
-                    _setLocalStorageJsonItem("usercourse", userCourseUpdated);
-            		_setLocalStorageJsonItem("activityManagers", $scope.activities);
-            		$scope.saveQuiz($scope.tuEligesActivities, logEntry, userCourseUpdated);
-                }
-                /*var grandparentActivityIdentifier = $routeParams.moodleid;
-                var grandparentActivity = getActivityByActivity_identifier(grandparentActivityIdentifier, userCourseUpdated);
-        		var parentActivity = getActivityByActivity_identifier("2012", userCourseUpdated);
-                var activitiesCompleted = 0;
-                var subactivitiesCompleted = [];
-                if (grandparentActivity.status == 0) {                    
-					grandparentActivity.status = 1;
-                	//checks if siblings of parent activity are completed so grandparent activity could be finished
-                	for (var i = 0; i < grandparentActivity.activities.length; i++) {
-                		if (grandparentActivity.activities[i].activity_identifier != "2012" && grandparentActivity.activities[i].status == 1){
-                			activitiesCompleted++;
-                		}
-                	}
-	                if ($scope.IsComplete && activitiesCompleted == grandparentActivity.activities.length - 1) {
-                    	_endActivity(grandparentActivity, function() {});
-					}
-                }*/
+                $location.path('/ZonaDeNavegacion/Dashboard/2');
             }
 
 
@@ -228,23 +189,13 @@ angular
               };             
               _endActivity(activityModel, function(){});
             }
-
-            $scope.saveUser = function () {
-                moodleFactory.Services.PutAsyncProfile(_getItem("userId"), $scope.profile,
-                function (data) {
-//                    console.log('Save profile successful...');
-                },
-                function (date) {
-//                    console.log('Save profile fail...');
-                });
-            };
                 
             var failureGame = function (data){
-              $location.path('/ZonaDeVuelo/Dashboard/1/2');
+              $location.path('/ZonaDeNavegacion/Dashboard/2');
             }
 
             $scope.back = function () {
-                $location.path('/ZonaDeVuelo/Dashboard/1/2');
+                $location.path('/ZonaDeNavegacion/Dashboard/2');
             }
 
             Array.prototype.getIndexBy = function (name, value) {
@@ -254,7 +205,4 @@ angular
 			        }
 			    }
 			}
-
-            $scope.startGame();
-
         }]);

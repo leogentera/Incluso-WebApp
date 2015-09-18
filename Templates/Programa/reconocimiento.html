@@ -1,36 +1,39 @@
 <div class="incluso-app step-dashboard">
-	<div id="site-canvas">
-		<article class="starway award">
-			<div class="green-border">
-				<div class="logo"><img src="assets/images/reconocimiento-logo.gif"></div>
-				<section class="subtitle centered txt-renglon txt-bigger">Otorga el presente reconocimiento a</section>				
-				<img class="medalla" src="assets/images/badges/gold-medal.gif"> <!--La medalla cambia dependiendo de tu puntaje (oro, plata o bronce)-->
-				<section class="centered txt-renglon username"><div>{{profile.firstname}}</div><div>{{profile.lastname profile.mothername}}</div></section>
-				<section class="centered txt-renglon">
-					<div>Por su participación en la misión</div>
-					<div class="subtitle">Incluso {{currentYear}}</div>
-					<div>Para una inclusión Productiva Sana</div>
-				</section>
-				<section class="centered txt-renglon quote">
-					<div class="subtitle">Todos tenemos sueños</div>
-					<div>pero para que se vuelvan realidad se necesita una gran determinación, autodisciplina y esfuerzo...</div>
-					<div class="author">Jesse Owens</div>
-				</section>		
-			</div>
-			<section class="txt-renglon distribuido">
-		      <a href="" class="icon-circle">
-		        <span class="icomoon icon-download"></span>		       
-		      </a>
-		      <a href="" class="icon-circle">
-		        <span class="icomoon icon-envelope"></span>
-		      </a>
-		      <a href="" class="icon-circle">
-		        <span class="icomoon icon-share"></span>
-		      </a>
-		      <a href="" class="icon-circle">
-		        <span class="icomoon icon-more-options-horizontal"></span>
-		      </a>
-		    </section>
-		</article>
-	</div>
+    <div id="site-canvas">
+        <article class="starway award">
+            <div class="green-border">
+                <div class="logo"><img src="assets/images/reconocimiento-logo.gif"></div>
+                <section class="subtitle centered txt-renglon txt-bigger">Otorga el presente reconocimiento a</section>
+                <img class="medalla" src="assets/images/badges/gold-medal.gif">
+                <section class="centered txt-renglon username">
+                    <div>{{profile.firstname}}</div>
+                    <div>{{profile.lastname + " " + profile.mothername}}</div>
+                </section>
+                <section class="centered txt-renglon">
+                    <div>Por su participación en la misión</div>
+                    <div class="subtitle">Incluso {{currentYear}}</div>
+                    <div>Para una inclusión Productiva Sana</div>
+                </section>
+                <section class="centered txt-renglon quote">
+                    <div class="subtitle">Todos tenemos sueños</div>
+                    <div>pero para que se vuelvan realidad se necesita una gran determinación, autodisciplina y esfuerzo...</div>
+                    <div class="author">Jesse Owens</div>
+                </section>
+            </div>
+            <section class="txt-renglon distribuido">
+                <a href="" class="icon-circle">
+                    <span class="icomoon icon-download"></span>
+                </a>
+                <a href="" class="icon-circle">
+                    <span class="icomoon icon-envelope"></span>
+                </a>
+                <a href="" class="icon-circle">
+                    <span class="icomoon icon-share"></span>
+                </a>
+                <a href="" class="icon-circle">
+                    <span class="icomoon icon-more-options-horizontal"></span>
+                </a>
+            </section>
+        </article>
+    </div>
 </div>

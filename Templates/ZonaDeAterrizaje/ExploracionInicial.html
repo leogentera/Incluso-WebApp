@@ -44,14 +44,17 @@
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <input id="check1" type="checkbox" value="check1" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[1][0]" ng-disabled="setReadOnly"/>
                                 <label for="check1">Si, porque es la ruta para hacer realidad una idea</label>
 
                                 <input id="check2" type="checkbox" value="check2" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[1][1]" ng-disabled="setReadOnly"/>
                                 <label for="check2">No, porque si la idea es buena no necesita un plan </label>
 
                                 <input id="check3" type="checkbox" value="check3" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[1][2]" ng-disabled="setReadOnly"
                                        ng-change="exploracionInicialStage3OtroAnswers[0].answers[0] = exploracionInicialStage3[1][2] == false ? '' : exploracionInicialStage3OtroAnswers[0].answers[0]"
                                        ng-click="addCaptureField(exploracionInicialStage3[1][2])"/>

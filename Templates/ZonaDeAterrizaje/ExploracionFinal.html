@@ -1,465 +1,411 @@
 <div id="site-wrapper" class="incluso-app step-dashboard">
-  <div class="alert alert-warning" role="alert" ng-show="showWarning" ng-cloak>
-    <div class="alert-message" ng-click="hideWarning">
-      <div class="icomoon icon-warning"></div>
-      <!--<p>Reposnde todas las preguntas para poder continuar</p>-->
-      <p>{{warningMessage}}</p>
-    </div>
-  </div>
-
-  <div id="site-canvas">
-    <article class="blueplanets evaluation">
-      <div class="pages">
-        <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
-          <section id="title">
-            <div class="subtitle">Exploración final</div>
-            <div class="txt-renglon">Responde lo siguiente:</div>
-            <span class="txt-renglon"></span>
-            <!--<div class="txt-renglon">exploracionFinal: {{exploracionFinal}}</div>-->
-          </section>
-          <div id="owl" class="owl-carousel">
-
-            <!--Pregunta tipo Opción Multiple + Otro-->
-            <div>
-              <div class="txt-renglon txt-bigger">1. Para plantear una idea de negocio lo primero que debes considerar es:</div>
-              <section class="form txt-renglon txt-bigger part list">
-                <input id="check1" type="checkbox" value="check1" name="check"
-                       ng-model="exploracionFinalStage2[1][0]" ng-disabled="setReadOnly"/>
-                <label for="check1">Las necesidades que tiene una comunidad</label>
-
-                <input id="check2" type="checkbox" value="check2" name="check"
-                       ng-model="exploracionFinalStage2[1][1]" ng-disabled="setReadOnly"/>
-                <label for="check2">El dinero que tienes para realizarlo</label>
-
-                <input id="check3" type="checkbox" value="check3" name="check"
-                       ng-model="exploracionFinalStage2[1][2]" ng-disabled="setReadOnly"/>
-                <label for="check3">Que este compobrado el éxito que tiene esa idea</label>
-
-                <input id="check4" type="checkbox" value="check4" name="check"
-                       ng-model="exploracionFinalStage2[1][3]" ng-disabled="setReadOnly"/>
-                <label for="check4">Otro</label>
-
-                <div class="form-group theme-form" ng-show="exploracionFinalStage2[1][3]">
-                  <div class="add">
-                    <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
-                                        </textarea>
-                  </div>
-                </div>
-
-                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                <label for="otros">Otros</label>-->
-              </section>
-              <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-              </div>-->
-            </div>
-
-
-            <!--Pregunta tipo Opción Multiple + Otro-->
-            <div>
-              <div class="txt-renglon txt-bigger">2. Una propuesta de valor es:</div>
-              <section class="form txt-renglon txt-bigger part list">
-                <input id="check5" type="checkbox" value="check5" name="check"
-                       ng-model="exploracionFinalStage2[2][0]" ng-disabled="setReadOnly"/>
-                <label for="check5">La idea que te deja más ganancias</label>
-
-                <input id="check6" type="checkbox" value="check6" name="check"
-                       ng-model="exploracionFinalStage2[2][1]" ng-disabled="setReadOnly"/>
-                <label for="check6">Lo que te hace diferente y mejor que tu competencia</label>
-
-                <input id="check7" type="checkbox" value="check7" name="check"
-                       ng-model="exploracionFinalStage2[2][2]" ng-disabled="setReadOnly"/>
-                <label for="check7">La mejor idea que has tenido</label>
-
-                <input id="check8" type="checkbox" value="check8" name="check"
-                       ng-model="exploracionFinalStage2[2][3]" ng-disabled="setReadOnly"/>
-                <label for="check8">Otro</label>
-
-                <div class="form-group theme-form" ng-show="exploracionFinalStage2[2][3]">
-                  <div class="add">
-                    <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
-                                        </textarea>
-                  </div>
-                </div>
-
-                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                <label for="otros">Otros</label>-->
-              </section>
-              <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-              </div>-->
-            </div>
-
-
-            <!--Pregunta tipo Opción Multiple + Otro-->
-            <div>
-              <div class="txt-renglon txt-bigger">3. ¿Qué debes considerar para hacer tu mapa de negocio? Puedes elegir más de una</div>
-              <section class="form txt-renglon txt-bigger part list">
-                <input id="check9" type="checkbox" value="check9" name="check"
-                       ng-model="exploracionFinalStage2[3][0]" ng-disabled="setReadOnly"/>
-                <label for="check9">La necesidad que cubres</label>
-
-                <input id="check10" type="checkbox" value="check10" name="check"
-                       ng-model="exploracionFinalStage2[3][1]" ng-disabled="setReadOnly"/>
-                <label for="check10">Tu público objetivo</label>
-
-                <input id="check11" type="checkbox" value="check11" name="check"
-                       ng-model="exploracionFinalStage2[3][2]" ng-disabled="setReadOnly"/>
-                <label for="check11">El canal de entrega</label>
-
-                <input id="check11" type="checkbox" value="check11" name="check"
-                       ng-model="exploracionFinalStage2[3][2]" ng-disabled="setReadOnly"/>
-                <label for="check11">Los recursos que necesitas</label>
-
-                <input id="check12" type="checkbox" value="check12" name="check"
-                       ng-model="exploracionFinalStage2[3][3]" ng-disabled="setReadOnly"/>
-                <label for="check12">Otro</label>
-
-                <div class="form-group theme-form" ng-show="exploracionFinalStage2[3][3]">
-                  <div class="add">
-                    <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
-                                        </textarea>
-                  </div>
-                </div>
-
-                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                <label for="otros">Otros</label>-->
-              </section>
-              <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-              </div>-->
-            </div>
-
-            <!--Pregunta tipo Si/No-->
-            <div>
-              <div class="txt-renglon txt-bigger">4. ¿Un jóven puede ahorrar aunque no trabaje?
-              </div>
-              <section class="form txt-renglon txt-bigger part list">
-                <div class="tnf">
-                  <input id="tru1" type="radio" name="vf1"
-                         ng-model="exploracionInicialStage3[0]"
-                         value="0"
-                         ng-disabled="setReadOnly"/>
-                  <label for="tru1">Sí</label>
-
-                  <input id="fols1" type="radio" name="vf1"
-                         ng-model="exploracionInicialStage3[0]"
-                         value="1"
-                         ng-disabled="setReadOnly"/>
-                  <label for="fols1">No</label>
-                </div>
-              </section>
-            </div>
-
-
-            <!--Pregunta tipo Opción Multiple + Otro-->
-            <div>
-              <div class="txt-renglon txt-bigger">5. ¿Cómo puede ahorrar alguien?</div>
-              <section class="form txt-renglon txt-bigger part list">
-                <input id="check9" type="checkbox" value="check9" name="check"
-                       ng-model="exploracionFinalStage2[3][0]" ng-disabled="setReadOnly"/>
-                <label for="check9">Guardando lo que le sobra</label>
-
-                <input id="check10" type="checkbox" value="check10" name="check"
-                       ng-model="exploracionFinalStage2[3][1]" ng-disabled="setReadOnly"/>
-                <label for="check10">Separando lo que va a ahorrar antes</label>
-
-                <input id="check11" type="checkbox" value="check11" name="check"
-                       ng-model="exploracionFinalStage2[3][2]" ng-disabled="setReadOnly"/>
-                <label for="check11">No gastando</label>
-
-                <input id="check12" type="checkbox" value="check12" name="check"
-                       ng-model="exploracionFinalStage2[3][3]" ng-disabled="setReadOnly"/>
-                <label for="check12">Otro</label>
-
-                <div class="form-group theme-form" ng-show="exploracionFinalStage2[3][3]">
-                  <div class="add">
-                    <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
-                                                  name="opciones" placeholder="¿Qué has intentado?">
-                                        </textarea>
-                  </div>
-                </div>
-
-                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                <label for="otros">Otros</label>-->
-              </section>
-              <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-              </div>-->
-            </div>
-
-
-
-          </div>
-
-          <section id="controls" class="controls">
-            <div class="paginate">
-              <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 4)">
-                <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
-              </a>
-              <a href="#" id="next" ng-click="addToAnswerIndex(1, 4)">
-                <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
-              </a>
-
-              <div class="centered">
-                <span id="index" class="txt-bigger">1/</span>
-                <span id="totalPages" class="white txt-bigger">4</span>
-              </div>
-            </div>
-            <a class="btn btn-primary btn-lg btn-cnt" id="save"
-               ng-show="answerIndex == 4"
-               ng-click="validateExploracionFinalStage3()">GUARDAR</a>
-
-            <div class="txt-renglon centered txt-bigger" ng-click="cancel3()">Cancelar</div>
-          </section>
+    <div class="alert alert-warning" role="alert" ng-show="showWarning" ng-cloak>
+        <div class="alert-message" ng-click="hideWarning">
+            <div class="icomoon icon-warning"></div>
+            <!--<p>Reposnde todas las preguntas para poder continuar</p>-->
+            <p>{{warningMessage}}</p>
         </div>
+    </div>
+
+    <div id="site-canvas">
+        <article class="blueplanets evaluation">
+            <div class="pages">
+                <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
+                    <section id="title">
+                        <div class="subtitle">Exploración final</div>
+                        <div class="txt-renglon">Responde lo siguiente:</div>
+                        <span class="txt-renglon"></span>
+                        <!--<div class="txt-renglon">exploracionFinal: {{exploracionFinal}}</div>-->
+                    </section>
+                    <div id="owl" class="owl-carousel">
+
+                        <!--Pregunta tipo Selección Simple-->
+                        <div>
+                            <div class="txt-renglon txt-bigger">1. Para plantear una idea de negocio lo primero que debes considerar es:</div>
+                            <section class="form txt-renglon txt-bigger part list">
+                                <input id="option1" type="radio" value="0" name="option"
+                                       ng-model="exploracionFinalStage3[0]" ng-disabled="setReadOnly"/>
+                                <label for="option1">Las necesidades que tiene una comunidad</label>
+
+                                <input id="option2" type="radio" value="1" name="option"
+                                       ng-model="exploracionFinalStage3[0]" ng-disabled="setReadOnly"/>
+                                <label for="option2">El dinero que tienes para realizarlo</label>
+
+                                <input id="option3" type="radio" value="2" name="option"
+                                       ng-model="exploracionFinalStage3[0]" ng-disabled="setReadOnly"/>
+                                <label for="option3">Que este comprobado el éxito que tiene esa idea</label>
+                            </section>
+                        </div>
 
 
-        <div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
-          <div id="finalized">
-            <section class="header-title ">
-              <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
-              <div class="subtitle centered min-pad ">"Exploración final"</div>
-              <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
-            </section>
-            <section class="txt-renglon pill">
-              <div class="pull-left">Mi puntuación</div>
-              <div class="pull-right green-pill"><span>{{Score}}</span><span class="white">/100</span>
-              </div>
-            </section>
-            <section class="question-parts">
-              <div id="question1">
-                <div class="txt-renglon panel" ng-class="{'collapsed': question1.isCollapsed}">
-                  <div class="panel-heading clearfix"
-                       ng-click="question1.isCollapsed = !question1.isCollapsed">
-                    <!--<span class="pull-left icomoon icon-wrong-join" ng-class="{'active': true}"></span>1.
-                    ¿Podemos desarrollar y-->
+                        <!--Pregunta tipo Selección Simple-->
+                        <div>
+                            <div class="txt-renglon txt-bigger">2. Una propuesta de valor es:</div>
+                            <section class="form txt-renglon txt-bigger part list">
+                                <input id="option4" type="radio" value="0" name="option"
+                                       ng-model="exploracionFinalStage3[1]" ng-disabled="setReadOnly"/>
+                                <label for="option1">La idea que te deja más ganancias</label>
+
+                                <input id="option5" type="radio" value="1" name="option"
+                                       ng-model="exploracionFinalStage3[1]" ng-disabled="setReadOnly"/>
+                                <label for="option2">Lo que te hace diferente y mejor que tu competencia</label>
+
+                                <input id="option6" type="radio" value="2" name="option"
+                                       ng-model="exploracionFinalStage3[1]" ng-disabled="setReadOnly"/>
+                                <label for="option3">La mejor idea que has tenido</label>
+                            </section>
+                        </div>
+
+                        <!--Pregunta tipo Opción Multiple + Otro-->
+                        <div>
+                            <div class="txt-renglon txt-bigger">3. ¿Qué debes considerar para hacer tu mapa de negocio? Puedes elegir más de una</div>
+                            <section class="form txt-renglon txt-bigger part list">
+                                <input id="check9" type="checkbox" value="check9" name="check"
+                                       ng-true-value="1" ng-false-value="0"
+                                       ng-model="exploracionFinalStage3[2][0]" ng-disabled="setReadOnly"/>
+                                <label for="check9">La necesidad que cubres</label>
+
+                                <input id="check10" type="checkbox" value="check10" name="check"
+                                       ng-true-value="1" ng-false-value="0"
+                                       ng-model="exploracionFinalStage3[2][1]" ng-disabled="setReadOnly"/>
+                                <label for="check10">Tu público objetivo</label>
+
+                                <input id="check11" type="checkbox" value="check11" name="check"
+                                       ng-true-value="1" ng-false-value="0"
+                                       ng-model="exploracionFinalStage3[2][2]" ng-disabled="setReadOnly"/>
+                                <label for="check11">El canal de entrega</label>
+
+                                <input id="check11" type="checkbox" value="check11" name="check"
+                                       ng-true-value="1" ng-false-value="0"
+                                       ng-model="exploracionFinalStage3[2][3]" ng-disabled="setReadOnly"/>
+                                <label for="check11">Los recursos que necesitas</label>
+
+                                <input id="check12" type="checkbox" value="check12" name="check"
+                                       ng-true-value="1" ng-false-value="0"
+                                       ng-model="exploracionFinalStage3[2][4]" ng-disabled="setReadOnly"
+                                       ng-change="exploracionFinalStage3OtroAnswers[0].answers[0] = exploracionFinalStage3[2][4] == false ? '' : exploracionFinalStage3OtroAnswers[0].answers[0]"
+                                       ng-click="addCaptureField(exploracionFinalStage3[2][4])"/>/>
+                                <label for="check12">Otro</label>
+
+                                <div class="form-group theme-form" ng-show="exploracionFinalStage2[3][3]">
+                                    <div class="add">
+                                        <span class="icomoon icon-edit"></span>
+                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
+                                                  name="opciones" placeholder="¿Qué has intentado?"
+                                                  ng-model="exploracionFinalStage3OtroAnswers[0].answers[0]">
+                                        </textarea>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+
+
+                        <!--Pregunta tipo Si/No-->
+                        <div>
+                            <div class="txt-renglon txt-bigger">4. ¿Un jóven puede ahorrar aunque no trabaje?</div>
+                            <section class="form txt-renglon txt-bigger part list">
+                                <div class="tnf">
+                                    <input id="tru1" type="radio" name="vf1"
+                                           ng-model="exploracionFinalStage3[3]"
+                                           value="0"
+                                           ng-disabled="setReadOnly"/>
+                                    <label for="tru1">Sí</label>
+
+                                    <input id="fols1" type="radio" name="vf1"
+                                           ng-model="exploracionFinalStage3[3]"
+                                           value="1"
+                                           ng-disabled="setReadOnly"/>
+                                    <label for="fols1">No</label>
+                                </div>
+                            </section>
+                        </div>
+
+
+                        <!--Pregunta tipo Selección Simple-->
+                        <div>
+                            <div class="txt-renglon txt-bigger">5. ¿Cómo puede ahorrar alguien?</div>
+                            <section class="form txt-renglon txt-bigger part list">
+                                <input id="option7" type="radio" value="0" name="option"
+                                       ng-model="exploracionFinalStage3[4]" ng-disabled="setReadOnly"/>
+                                <label for="option1">Guardando lo que le sobra</label>
+
+                                <input id="option8" type="radio" value="1" name="option"
+                                       ng-model="exploracionFinalStage3[4]" ng-disabled="setReadOnly"/>
+                                <label for="option2">Separando lo que va a ahorrar antes</label>
+
+                                <input id="option9" type="radio" value="2" name="option"
+                                       ng-model="exploracionFinalStage3[4]" ng-disabled="setReadOnly"/>
+                                <label for="option3">No gastando</label>
+                            </section>
+                        </div>
+
+
+                    </div>
+
+                    <section id="controls" class="controls">
+                        <div class="paginate">
+                            <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 5)">
+                                <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
+                            </a>
+                            <a href="#" id="next" ng-click="addToAnswerIndex(1, 5)">
+                                <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
+                            </a>
+
+                            <div class="centered">
+                                <span id="index" class="txt-bigger">1/</span>
+                                <span id="totalPages" class="white txt-bigger">5</span>
+                            </div>
+                        </div>
+                        <a class="btn btn-primary btn-lg btn-cnt" id="save"
+                           ng-show="answerIndex == 5"
+                           ng-click="validateExploracionFinalStage3()">GUARDAR</a>
+
+                        <div class="txt-renglon centered txt-bigger" ng-click="cancel3()">Cancelar</div>
+                    </section>
+                </div>
+
+
+                <div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
+                    <div id="finalized">
+                        <section class="header-title ">
+                            <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
+                            <div class="subtitle centered min-pad ">"Exploración final"</div>
+                            <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
+                        </section>
+                        <section class="txt-renglon pill">
+                            <div class="pull-left">Mi puntuación</div>
+                            <div class="pull-right green-pill"><span>{{Score}}</span><span class="white">/100</span>
+                            </div>
+                        </section>
+                        <section class="question-parts">
+                            <div id="question1">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question1.isCollapsed}">
+                                    <div class="panel-heading clearfix"
+                                         ng-click="question1.isCollapsed = !question1.isCollapsed">
+                                        <!--<span class="pull-left icomoon icon-wrong-join" ng-class="{'active': true}"></span>1.
+                                        ¿Podemos desarrollar y-->
                                         <span class="pull-left icomoon icon-wrong-join"
                                               ng-class="{'active': exploracionFinalresult[0].badAnswer}"></span>
-                    1. Una creencia limitante puede romperse
-                    <span class="pull-right icomoon icon-arrow" ng-show="!question1.isCollapsed"></span>
-                    <span class="pull-right icomoon icon-arrow-up" ng-show="question1.isCollapsed"></span>
-                  </div>
-                  <div id="results1" class="panel-body" collapse="!question1.isCollapsed">
-                    <ul>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[0].trueOptionWrong}">
+                                        1. Una creencia limitante puede romperse
+                                        <span class="pull-right icomoon icon-arrow"
+                                              ng-show="!question1.isCollapsed"></span>
+                                        <span class="pull-right icomoon icon-arrow-up"
+                                              ng-show="question1.isCollapsed"></span>
+                                    </div>
+                                    <div id="results1" class="panel-body" collapse="!question1.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[0].trueOptionWrong}">
                                                 <span class="pull-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[0].trueOptionWrong"></span>Verdadero
-                      </li>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[0].falseOptionWrong}">
+                                            </li>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[0].falseOptionWrong}">
                                                 <span class="pull-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[0].falseOptionWrong"></span>Falso
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
 
 
-              <div id="question2">
-                <div class="txt-renglon panel" ng-class="{'collapsed': question2.isCollapsed}">
-                  <div class="panel-heading clearfix"
-                       ng-click="question2.isCollapsed = !question2.isCollapsed">
+                            <div id="question2">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question2.isCollapsed}">
+                                    <div class="panel-heading clearfix"
+                                         ng-click="question2.isCollapsed = !question2.isCollapsed">
                                         <span class="pull-left icomoon icon-wrong-join"
                                               ng-class="{'active': exploracionFinalresult[1].badAnswer}"></span>
-                    2. Darte cuenta de lo que quieres estar haciendo en unos años te ayuda a:
+                                        2. Darte cuenta de lo que quieres estar haciendo en unos años te ayuda a:
                                         <span class="pull-right icomoon icon-arrow"
                                               ng-show="!question2.isCollapsed"></span>
                                         <span class="pull-right icomoon icon-arrow-up"
                                               ng-show="question2.isCollapsed"></span>
-                  </div>
-                  <div id="results2" class="panel-body" collapse="!question2.isCollapsed">
-                    <ul>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[1].firstOptionWrong}">
+                                    </div>
+                                    <div id="results2" class="panel-body" collapse="!question2.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].firstOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[1].firstOptionWrong"></span>
-                        Planear lo que puedes hacer hoy para lograrlo
-                      </li>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[1].secondOptionWrong}">
+                                                Planear lo que puedes hacer hoy para lograrlo
+                                            </li>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].secondOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[1].secondOptionWrong"></span>
-                        Tener algo en que soñar
-                      </li>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[1].thirdOptionWrong}">
+                                                Tener algo en que soñar
+                                            </li>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].thirdOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[1].thirdOptionWrong"></span>
-                        Imaginar muchas cosas que te encantan
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+                                                Imaginar muchas cosas que te encantan
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
 
-              <div id="question3">
-                <div class="txt-renglon panel" ng-class="{'collapsed': question3.isCollapsed}">
-                  <div class="panel-heading clearfix"
-                       ng-click="question3.isCollapsed = !question3.isCollapsed">
+                            <div id="question3">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question3.isCollapsed}">
+                                    <div class="panel-heading clearfix"
+                                         ng-click="question3.isCollapsed = !question3.isCollapsed">
                                         <span class="pull-left icomoon icon-wrong-join"
                                               ng-class="{'active': exploracionFinalresult[2].badAnswer}"></span>
-                    3. Ponerte metas en diferentes áreas de tu vida es importante porque:
+                                        3. Ponerte metas en diferentes áreas de tu vida es importante porque:
                                         <span class="pull-right icomoon icon-arrow"
                                               ng-show="!question3.isCollapsed"></span>
                                         <span class="pull-right icomoon icon-arrow-up"
                                               ng-show="question3.isCollapsed"></span>
-                  </div>
-                  <div id="results3" class="panel-body" collapse="!question3.isCollapsed">
-                    <ul>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[2].firstOptionWrong}">
+                                    </div>
+                                    <div id="results3" class="panel-body" collapse="!question3.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].firstOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[2].firstOptionWrong"></span>
-                        Eres capaz de hacer muchas cosas al mismo tiempo
-                      </li>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[2].secondOptionWrong}">
+                                                Eres capaz de hacer muchas cosas al mismo tiempo
+                                            </li>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].secondOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[2].secondOptionWrong"></span>
-                        Las demás personas creen que es importante
-                      </li>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[2].thirdOptionWrong}">
+                                                Las demás personas creen que es importante
+                                            </li>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].thirdOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[2].thirdOptionWrong"></span>
-                        Te ayuda a crecer de igual forma en todos las áreas de tu vida
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+                                                Te ayuda a crecer de igual forma en todos las áreas de tu vida
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
 
 
-              <div id="question4">
-                <div class="txt-renglon panel" ng-class="{'collapsed': question4.isCollapsed}">
-                  <div class="panel-heading clearfix"
-                       ng-click="question4.isCollapsed = !question4.isCollapsed">
+                            <div id="question4">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question4.isCollapsed}">
+                                    <div class="panel-heading clearfix"
+                                         ng-click="question4.isCollapsed = !question4.isCollapsed">
                                         <span class="pull-left icomoon icon-wrong-join"
                                               ng-class="{'active': exploracionFinalresult[3].badAnswer}"></span>5.
-                    ¿Porqué es importante que tus sueños se relacionen con lo que te gusta y para lo
-                    que eres bueno?
+                                        ¿Porqué es importante que tus sueños se relacionen con lo que te gusta y para lo
+                                        que eres bueno?
                                         <span class="pull-right icomoon icon-arrow"
                                               ng-show="!question4.isCollapsed"></span>
                                         <span class="pull-right icomoon icon-arrow-up"
                                               ng-show="question4.isCollapsed"></span>
-                  </div>
-                  <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
-                    <ul>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[3].firstOptionWrong}">
+                                    </div>
+                                    <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].firstOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[3].firstOptionWrong"></span>Porque
-                        aprovechas mejor tus talentos y difrutas lo que haces
-                      </li>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[3].secondOptionWrong}">
+                                                aprovechas mejor tus talentos y difrutas lo que haces
+                                            </li>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].secondOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[3].secondOptionWrong"></span>Porque
-                        puedes ser más famoso y exitoso
-                      </li>
-                      <li ng-class="{'failed clearfix': exploracionFinalresult[3].thirdOptionWrong}">
+                                                puedes ser más famoso y exitoso
+                                            </li>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].thirdOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[3].thirdOptionWrong"></span>Porque
-                        debes hacer lo que quieras sin importar nada ni nadie
-                      </li>
-                    </ul>
-                  </div>
+                                                debes hacer lo que quieras sin importar nada ni nadie
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </section>
+                        <section class="txt-renglon pill" ng-show="activityPoints > 0">
+                            <div class="pull-left">Estrellas ganadas:</div>
+                            <div class="pull-right sm-pill">
+                                <span class="pull-left">{{activityPoints}}</span>
+                                <span class="icomoon icon-star pull-right"></span>
+                            </div>
+                        </section>
+                        <section class="txt-renglon centered form">
+                            <div ng-show="activity_status == 0">
+                                ¿Que opinas de ésta actividad?
+                                <section class="txt-renglon txt-bigger clearfix">
+                                    <div class="opinion">
+                                        <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                                        <label for="like">Me gusta</label>
+                                    </div>
+                                    <div class="opinion">
+                                        <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                                        <label for="dislike">No me gusta</label>
+                                    </div>
+                                </section>
+                            </div>
+                            <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()"
+                                    ng-disabled="isDisabled">TERMINAR
+                            </button>
+                        </section>
+                    </div>
                 </div>
-              </div>
+            </div>
+        </article>
+        <!-- initial message -->
+        <script type="text/ng-template" id="openingStageModal.html">
+            <div class="modal-robot robot-lg closing-stage-modal user-help">
+                <img src="assets/images/img-robot-lg.svg">
 
+                <div class="modal-header">
+                    <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                        <span class="icomoon icon-cross"></span>
+                    </a>
+                </div>
+                <div class="modal-body">
+                    <h3 class="subtitle text-center">Exploración final</h3>
 
-            </section>
-            <section class="txt-renglon pill" ng-show="activityPoints > 0">
-              <div class="pull-left">Estrellas ganadas:</div>
-              <div class="pull-right sm-pill">
-                <span class="pull-left">{{activityPoints}}</span>
-                <span class="icomoon icon-star pull-right"></span>
-              </div>
-            </section>
-            <section class="txt-renglon centered form">
-              <div ng-show="activity_status == 0">
-                ¿Que opinas de ésta actividad?
-                <section class="txt-renglon txt-bigger clearfix">
-                  <div class="opinion">
-                    <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                    <label for="like">Me gusta</label>
-                  </div>
-                  <div class="opinion">
-                    <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                    <label for="dislike">No me gusta</label>
-                  </div>
-                </section>
-              </div>
-              <button class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR
-              </button>
-            </section>
-          </div>
-        </div>
-      </div>
-    </article>
-    <!-- initial message -->
-    <script type="text/ng-template" id="openingStageModal.html">
-      <div class="modal-robot robot-lg closing-stage-modal user-help">
-        <img src="assets/images/img-robot-lg.svg">
-
-        <div class="modal-header">
-          <a class="icon icon-close btn btn-circle" ng-click="cancel()">
-            <span class="icomoon icon-cross"></span>
-          </a>
-        </div>
-        <div class="modal-body">
-          <h3 class="subtitle text-center">Exploración final</h3>
-
-          <p class="txt-renglon centered">
-            Explora qué tanto descubriste en la zona de aterrizaje
-          </p>
-        </div>
-      </div>
-    </script>
-  </div>
+                    <p class="txt-renglon centered">
+                        Explora qué tanto descubriste en la zona de aterrizaje
+                    </p>
+                </div>
+            </div>
+        </script>
+    </div>
 </div>
 
 <script>
-  $(document).ready(function () {
-    var owl = $("#owl ");
-    owl.owlCarousel({
-      navigation: false,
-      pagination: false,
-      goToFirstSpeed: 2000,
-      singleItem: true,
-      autoHeight: true,
-      mouseDrag: false,
-      touchDrag: false,
-      transitionStyle: "fade",
-      afterMove: callback
+    $(document).ready(function () {
+        var owl = $("#owl ");
+        owl.owlCarousel({
+            navigation: false,
+            pagination: false,
+            goToFirstSpeed: 2000,
+            singleItem: true,
+            autoHeight: true,
+            mouseDrag: false,
+            touchDrag: false,
+            transitionStyle: "fade",
+            afterMove: callback
+        });
+
+        function callback(evt) {
+            var item = this.currentItem;
+            $("#index").html(item + 1 + '/');
+        }
+
+        $("#next").click(function (evt) {
+            owl.trigger('owl.next');
+            evt.preventDefault();
+        });
+
+        $("#prev").click(function (evt) {
+            owl.trigger('owl.prev');
+            evt.preventDefault();
+        });
+
     });
-
-    function callback(evt) {
-      var item = this.currentItem;
-      $("#index").html(item + 1 + '/');
-    }
-
-    $("#next").click(function (evt) {
-      owl.trigger('owl.next');
-      evt.preventDefault();
-    });
-
-    $("#prev").click(function (evt) {
-      owl.trigger('owl.prev');
-      evt.preventDefault();
-    });
-
-  });
 
 </script>
 
 <script src="../../Scripts/classie.js "></script>
 <script src="../../Scripts/selectFx.js "></script>
 <script>
-  (function () {
-    [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function (el) {
-      new SelectFx(el);
-    });
-  })();
+    (function () {
+        [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function (el) {
+            new SelectFx(el);
+        });
+    })();
 
 </script>

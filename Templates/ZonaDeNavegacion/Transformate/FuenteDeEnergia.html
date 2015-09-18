@@ -1,5 +1,5 @@
 <div class="incluso-app acerca-programa">
-  <article class="blueprint">
+  <article class="bluespace">
     <div class="pages">
       <div class="page" ng-class="currentPage== 1 ? 'active' : '' ">
         <div class="fuente-energia">
@@ -100,7 +100,7 @@
                 <div class="detail">  
                   <div>
                     <div ng-if="activity.activity_type == 'resource'" class="image-container">
-                      <a href="{{activity.activityContent.fileurl}}&token={{token}}" target="blank"><img ng-click="updateStatus(activity.groupid)" ng-src="{{activity.activityContent.fileurl}}&token={{token}}" class="image-element"></a>
+                      <a href="{{activity.activityContent.fileurl}}&token={{token}}" target="blank"><img ng-click="updateStatus(activity.groupid)" ng-src="assets/images/svg/img_placeholder-01.svg" class="image-element"></a>
                     </div>
                     <div class="message">
                       <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>
@@ -116,7 +116,7 @@
                                         <span class="glyphicon glyphicon-play"></span>
                                     </a>
                                     <figure class="poster">
-                                        <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />
+                                        <img src="assets/images/svg/img_placeholder-01.svg" alt="video" />
                                     </figure>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@
         </div>
       </div><!--fin página 1 -->
       <!-- activity closing  -->
-      <div class="page blueprint evaluation" ng-class="currentPage == 2 ? 'active' : ''">
+      <div class="page evaluation" ng-class="currentPage == 2 ? 'active' : ''">
         <div id="finalized">
             <section class="header-title">
                 <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
