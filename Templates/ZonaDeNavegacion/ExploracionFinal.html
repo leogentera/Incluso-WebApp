@@ -24,17 +24,17 @@
                             <div class="txt-renglon txt-bigger">1. Una creencia limitante puede romperse</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
-                                    <input id="tru3" type="radio" name="vf3"
+                                    <input id="tru" type="radio" name="vf"
                                            ng-model="exploracionFinalStage2[0]"
                                            value="0"
                                            ng-disabled="setReadOnly" ng-click="showme()"/>
-                                    <label for="tru3">Sí</label>
+                                    <label for="tru">Sí</label>
 
-                                    <input id="fols3" type="radio" name="vf3"
+                                    <input id="fols" type="radio" name="vf"
                                            ng-model="exploracionFinalStage2[0]"
                                            value="1"
                                            ng-disabled="setReadOnly" ng-click="showme()"/>
-                                    <label for="fols3">No</label>
+                                    <label for="fols">No</label>
                                 </div>
                             </section>
                         </div>
@@ -43,15 +43,15 @@
                         <div>
                             <div class="txt-renglon txt-bigger">2. Darte cuenta de lo que quieres estar haciendo en unos años te ayuda a:</div>
                             <section class="form txt-renglon txt-bigger part list">
-                                <input id="option1" type="radio" value="0" name="option"
+                                <input id="option1" type="radio" value="0" name="option1"
                                        ng-model="exploracionFinalStage2[1]" ng-disabled="setReadOnly"/>
                                 <label for="option1">Planear lo que puedes hacer hoy para lograrlo</label>
 
-                                <input id="option2" type="radio" value="1" name="option"
+                                <input id="option2" type="radio" value="1" name="option1"
                                        ng-model="exploracionFinalStage2[1]" ng-disabled="setReadOnly"/>
                                 <label for="option2">Tener algo en que soñar</label>
 
-                                <input id="option3" type="radio" value="2" name="option"
+                                <input id="option3" type="radio" value="2" name="option1"
                                        ng-model="exploracionFinalStage2[1]" ng-disabled="setReadOnly"/>
                                 <label for="option3">Imaginar muchas cosas que te encantan</label>
                             </section>
@@ -61,15 +61,15 @@
                         <div>
                             <div class="txt-renglon txt-bigger">3. Ponerte metas en diferentes áreas de tu vida es importante porque:</div>
                             <section class="form txt-renglon txt-bigger part list">
-                                <input id="option4" type="radio" value="0" name="option"
+                                <input id="option4" type="radio" value="0" name="option2"
                                        ng-model="exploracionFinalStage2[2]" ng-disabled="setReadOnly"/>
                                 <label for="option4">Eres capaz de hacer muchas cosas al mismo tiempo</label>
 
-                                <input id="option5" type="radio" value="1" name="option"
+                                <input id="option5" type="radio" value="1" name="option2"
                                        ng-model="exploracionFinalStage2[2]" ng-disabled="setReadOnly"/>
                                 <label for="option5">Las demás personas creen que es importante</label>
 
-                                <input id="option6" type="radio" value="2" name="option"
+                                <input id="option6" type="radio" value="2" name="option2"
                                        ng-model="exploracionFinalStage2[2]" ng-disabled="setReadOnly"/>
                                 <label for="option6">Te ayuda a crecer de igual forma en todos las áreas de tu vida</label>
                             </section>
@@ -79,15 +79,15 @@
                         <div>
                             <div class="txt-renglon txt-bigger">4. ¿Para qué sirve ponerle un indicador a las metas?</div>
                             <section class="form txt-renglon txt-bigger part list">
-                                <input id="option7" type="radio" value="0" name="option"
+                                <input id="option7" type="radio" value="0" name="option3"
                                        ng-model="exploracionFinalStage2[3]" ng-disabled="setReadOnly"/>
                                 <label for="option7">Para poner una referencia y saber que lo has logrado</label>
 
-                                <input id="option8" type="radio" value="1" name="option"
+                                <input id="option8" type="radio" value="1" name="option3"
                                        ng-model="exploracionFinalStage2[3]" ng-disabled="setReadOnly"/>
                                 <label for="option8">Para calificarme si lo hice bien o mal</label>
 
-                                <input id="option9" type="radio" value="2" name="option"
+                                <input id="option9" type="radio" value="2" name="option3"
                                        ng-model="exploracionFinalStage2[3]" ng-disabled="setReadOnly"/>
                                 <label for="option9">Para darme cuenta del trabajo que cuesta</label>
                             </section>
@@ -132,7 +132,9 @@
                             <div class="pull-right green-pill"><span>{{Score}}</span><span class="white">/100</span>
                             </div>
                         </section>
+
                         <section class="question-parts">
+
                             <div id="question1">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question1.isCollapsed}">
                                     <div class="panel-heading clearfix"
@@ -159,7 +161,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                             <div id="question2">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question2.isCollapsed}">
@@ -229,7 +230,6 @@
                                 </div>
                             </div>
 
-
                             <div id="question4">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question4.isCollapsed}">
                                     <div class="panel-heading clearfix"
@@ -264,9 +264,9 @@
                                     </div>
                                 </div>
                             </div>
-
-
                         </section>
+
+
                         <section class="txt-renglon pill" ng-show="activityPoints > 0">
                             <div class="pull-left">Estrellas ganadas:</div>
                             <div class="pull-right sm-pill">
