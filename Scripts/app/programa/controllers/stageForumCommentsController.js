@@ -308,12 +308,13 @@ angular
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == $routeParams.discussionId; });
                 
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
             }
             
             function getPostsDataCallback(data, key) {
-                postPager.from = data.sinceid;
-                postPager.to = data.maxid;
+                
+                postPager.from = (postPager.from < 0 && postPager.from < data.maxid) ? postPager.from : data.maxid;
+                postPager.to = postPager.to > data.sinceid ? postPager.to : data.sinceid;
                 
                 var posts = data.posts;
                 $scope.morePendingPosts = posts.length === 10;
@@ -346,7 +347,7 @@ angular
 
             var refreshTopicData = function(){
                 console.log("refreshTopicData");
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
             };
 
             function getActivityInfoCallback(data) {
@@ -378,7 +379,7 @@ angular
                 showMoreCounter++;
                 
                 $scope.$emit('ShowPreloader');
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, getPostsDataCallback, null, true);
             };
 
             $scope.back = function () {
