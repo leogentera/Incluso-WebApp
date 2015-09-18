@@ -164,7 +164,11 @@ angular
                     $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
                     $scope.isReportedAbuseSentModalCollapsed["id" + postId] = true;
                     
-                    }, function(){ $scope.$emit('HidePreloader'); }, true);
+                    }, function(){
+                        $scope.$emit('HidePreloader');
+                        $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
+                        $scope.isReportedAbuseSentModalCollapsed["id" + postId] = false;
+                    }, true);
             };
             
             $scope.likePost = function(postId) {
