@@ -37,7 +37,7 @@
 					<div class="spinner">
 						<img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.ceil(stageProgress)}}.png" alt="progress" />
 						<div class="circle"></div>
-						<div class="text">{{stageProgress|| 0}}%</div>
+						<div class="text">{{Math.ceil(stageProgress/3.33)|| 0}}%</div>
 					</div>
 				</section>
 
@@ -169,7 +169,7 @@
 								</p>
 								<ul class="inline-list">
 									<li class="points"><span>{{user.stars}}</span> <i class="icomoon icon-star"></i></li>
-									<li><span>{{usercourse.globalProgress}}%</span></li>
+									<li><span>{{Math.ceil(stageProgress/3.33)|| 0}}%</span></li>
 								</ul>
 							</div>
 						</div>
