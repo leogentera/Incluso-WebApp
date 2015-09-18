@@ -147,12 +147,12 @@ angular
             };
             
             $scope.reportPost = function(postId) {
-                var createdDate = new Date();
+                var createdDate = (new Date().getTime() / 1000).toFixed(0);
                 
                 var requestData = {
                     "postid": postId,
                     "userid": _userId,
-                    "create": createdDate.getMilliseconds(),
+                    "create": createdDate,
                     "forumid": $scope.forumId,
                     "discussionid": $scope.discussion.discussion,
                 };
