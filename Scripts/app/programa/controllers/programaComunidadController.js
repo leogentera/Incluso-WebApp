@@ -94,7 +94,7 @@ angular
                 
                 _postPager.from = (_postPager.from < 0 && _postPager.from < data.maxid) ? _postPager.from : data.maxid;
                 _postPager.to = _postPager.to > data.sinceid ? _postPager.to : data.sinceid;
-                console.log(_postPager);
+
                 var posts = data.posts;
                 $scope.morePendingPosts = posts.length === 10;
                 posts.forEach(initializeCommentsData);
