@@ -29,12 +29,19 @@ angular
             var parentIndex = 4;                           
             var coursemoduleid = parseInt($routeParams.moodleid);
             var currentChallenge = 0;
+            var currentStage;
             switch(coursemoduleid){
                 case 68:
                     currentChallenge = 4;
+                    currentStage = "ZonaDeVuelo";
                     break;
                 case 87:
                     currentChallenge = 5;
+                    currentStage = "ZonaDeNavegacion";
+                    break;
+                case 95:
+                    currentChallenge = 5;
+                    currentStage = "ZonaDeAterrizaje";
                     break;
 
             }
@@ -111,7 +118,7 @@ angular
                         instanceType: 0,
                         date: new Date()
                     };
-                    
+
                     profile.stars = parseInt(profile.stars) + activity.points;
                     moodleFactory.Services.PutStars(model, profile, currentUser.token, successfullCallBack, errorCallback);                    
                 }, function(){
@@ -138,7 +145,7 @@ angular
                 $scope.$emit('HidePreloader'); //hide preloader  
                 var userCurrentStage = localStorage.getItem("currentStage");
 
-                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + currentChallenge); 
+                $location.path('/'+ currentStage +'/Dashboard/' + userCurrentStage + '/' + currentChallenge); 
                 
             }
 
