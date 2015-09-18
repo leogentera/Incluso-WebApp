@@ -27,6 +27,10 @@
         //'incluso.programa.reconocimiento',
         'incluso.programa.album',
         'incluso.stage.dashboardcontroller',
+        
+        // TODO: replace this controller with the correct
+        'incluso.stage.dashboardcontrollerDummy',
+
         'incluso.stage.forumclosecontroller',
         'incluso.stage.forumcontroller',
         'incluso.stage.forumcommentscontroller',
@@ -116,7 +120,11 @@
         $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });          
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });     
+
+        ///////// Stage 3 //////////
+        $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: $templateCache });  
+
 
          document.addEventListener("keyup", function(e) {
             if (e.keyCode === 27)
@@ -455,7 +463,7 @@
         //Done
         $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
-            controller: 'stageDashboardController'
+            controller: 'stageDashboardControllerDummy'
         });
         //Done
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:moodleid', {
@@ -564,8 +572,8 @@
 
         //Zona de aterrizaje
         $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId/:challenge', {
-            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html',
-            controller: 'stageDashboardController'
+            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html'
+            //controller: 'stageDashboardControllerDummy'
         });
 
         $routeProvider.when('/ZonaDeAterrizaje/ExploracionInicial/:moodleid', {
