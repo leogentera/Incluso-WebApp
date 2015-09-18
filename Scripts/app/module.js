@@ -531,7 +531,7 @@
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia.html',
-            controller: 'stageMessageController'
+            controller: 'stageContentsController'
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:ActivityIdentifier', {
@@ -586,6 +586,11 @@
             //controller: 'stageDashboardControllerDummy'
         });
 
+        $routeProvider.when('/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
         $routeProvider.when('/ZonaDeAterrizaje/ExploracionInicial/:moodleid', {
             templateUrl: 'Templates/ZonaDeAterrizaje/ExploracionInicial.html',
             controller: 'stageQuizController'
@@ -601,6 +606,11 @@
             controller: 'stageForumController'
         });
 
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
         $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
@@ -609,6 +619,11 @@
         $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/:moodleid', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html',
             controller: 'stageMultiplicaTuDineroController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
         });
 
         $routeProvider.otherwise({

@@ -11,7 +11,7 @@ angular
     '$modal',
     '$timeout',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $timeout) {
-        $scope.setToolbar($location.$$path, "AlbumIncluso");
+        $scope.setToolbar($location.$$path, "Album Incluso");
         $rootScope.showFooter = false;
         $rootScope.showFooterRocks = false;
         $scope.$emit('ShowPreloader');
@@ -37,12 +37,14 @@ angular
             });
 
             $(".next").click(function (ev) {
+                $scope.scrollToTop();
                 owlAlbum.trigger('owl.next');
                 ev.preventDefault();
 
             });
 
             $(".back").click(function (ev) {
+                $scope.scrollToTop();
                 owlAlbum.trigger('owl.prev');
                 ev.preventDefault();
             });            

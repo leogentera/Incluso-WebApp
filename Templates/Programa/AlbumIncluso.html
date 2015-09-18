@@ -7,9 +7,9 @@
                     <!-- description -->
                     <section class="centered section-description">
                         <h2 class="subtitle centered text-uppercase">Mi album</h2>
-                        <p class=" txt-renglon centered">
+                        <div class=" txt-renglon centered">
                             <div ng-bind-html="message"></div>
-                        </p>
+                        </div>
                         <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
@@ -85,9 +85,9 @@
                     <!-- description -->
                     <section class="centered section-description">
                         <h2 class="subtitle centered text-uppercase">Mi album</h2>
-                        <p class=" txt-renglon centered">
+                        <div class=" txt-renglon centered">
                             <div ng-bind-html="message"></div>
-                        </p>
+                        </div>
                         <a class="btn btn-icon-aside light centered">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
@@ -187,7 +187,9 @@
                     <!-- description -->
                     <section class="centered section-description">
                         <h2 class="subtitle centered text-uppercase">Mi album</h2>
-                        <p class=" txt-renglon centered">Cada logo debe ser recolectado y aquí encontrarás los momentos mas especiales de tu viaje.</p>
+                        <div class=" txt-renglon centered">
+                            <div ng-bind-html="message"></div>
+                        </div>
                         <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
@@ -297,7 +299,9 @@
                     <!-- description -->
                     <section class="centered section-description">
                         <h2 class="subtitle centered text-uppercase">Mi album</h2>
-                        <p class=" txt-renglon centered">Cada logo debe ser recolectado y aquí encontrarás los momentos mas especiales de tu viaje.</p>
+                        <div class=" txt-renglon centered">
+                            <div ng-bind-html="message"></div>
+                        </div>
                         <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
@@ -316,55 +320,46 @@
                     <section class="section-album section-participation centered">
                         <div class="container">
                             <ul class="list-group">
-                                <li class="list-group-item"><span class="results-title">comunidad </span><label>{{album.amountOfCommunityPosts}} entradas</label></li>
+                                <li class="list-group-item"><span class="results-title">Comunidad </span><label>{{album.amountOfCommunityPosts}} entradas</label></li>
                                 <li class="list-group-item"><span class="results-title">Foros </span><label>{{album.amountOfForumPosts}} entradas</label></li>
                             </ul>
                             <!-- won stars -->
                             <div class="txt-renglon">
                                 <h2 class="results-title">Estrellas ganadas</h2>
                                 <div class="sm-pill">
-                                    <span class="ng-binding">{{album.starsEarned}}</span>
+                                    <span class="ng-binding pull-left">{{album.starsEarned}}</span>
                                     <span class="icomoon icon-star pull-right"></span>
                                 </div>
                             </div>
                             <!-- badges obtained -->
                             <div class="txt-renglon badges">
                                 <h2 class="results-title">Insignias obtenidas</h2>
-                                <div class="badge-item text-center">                                    
-                                    <!--<img class="badgesviews" src="assets/images/badges/IDintergalactica.svg" alt="IDintergalactica" />-->                                    
+                                <!--div class="badge-item text-center">                                                                                                   
                                     <img class="badgesviews" ng-src="assets/images/badges/{{badgeFileName(13)}}" alt="combustible" />
                                 </div>
-                                <div class="badge-item text-center">
-                                    <!--<img class="badgesviews" src="assets/images/badges/combustible.svg" alt="combustible" />-->
+                                <div class="badge-item text-center">                                    
                                     <img class="badgesviews" ng-src="assets/images/badges/{{badgeFileName(2)}}" alt="combustible" />
                                 </div>
-                                <div class="badge-item text-center">
-                                    <!--<img class="badgesviews" src="assets/images/badges/corazon_digital.svg" alt="corazon_digital" />-->
+                                <div class="badge-item text-center">                                    
                                     <img class="badgesviews" src="assets/images/badges/{{badgeFileName(15)}}" alt="corazon_digital" />
                                 </div>
-                                <div class="badge-item text-center">
-                                    <!--<img class="badgesviews" src="assets/images/badges/foro_interplanetario.svg" alt="foro_interplanetario" />-->
+                                <div class="badge-item text-center">                                
                                     <img class="badgesviews" src="assets/images/badges/{{badgeFileName(12)}}" alt="foro_interplanetario" />
                                 </div>
-                                <div class="badge-item text-center">
-                                    <!--<img class="badgesviews" src="assets/images/badges/turbina.svg" alt="turbina" />-->
+                                <div class="badge-item text-center">                                
                                     <img class="badgesviews" src="assets/images/badges/{{badgeFileName(3)}}" alt="turbina" />
                                 </div>
-                                <div class="badge-item text-center">
-                                    <!--<img class="badgesviews" src="assets/images/badges/sistNavegacion.svg" alt="sistNavegacion" />-->
+                                <div class="badge-item text-center">                                    
                                     <img class="badgesviews" src="assets/images/badges/{{badgeFileName(5)}}" alt="sistNavegacion" />
                                 </div>
-                                <div class="badge-item text-center">
-                                    <!--<img class="badgesviews" src="assets/images/badges/ala.svg" alt="ala" />-->
+                                <div class="badge-item text-center">                                    
                                     <img class="badgesviews" src="assets/images/badges/{{badgeFileName(4)}}" alt="ala" />
                                 </div>
-                                <div class="badge-item text-center">
-                                    <!--<img class="badgesviews" src="assets/images/badges/participacion_electrica.svg" alt="participacion_electrica" />-->
+                                <div class="badge-item text-center">                                    
                                     <img class="badgesviews" src="assets/images/badges/{{badgeFileName(14)}}" alt="participacion_electrica" />
-                                </div>
-                                <div class="badge-item text-center">
-                                    <!--<img class="badgesviews" src="assets/images/badges/turbina.svg" alt="turbina" />-->
-                                    <img class="badgesviews" src="assets/images/badges/{{badgeFileName(3)}}" alt="turbina" />
+                                </div-->
+                                <div class="badge-item text-center">                                    
+                                    <img class="badgesviews" src="assets/images/badges/addBadge.svg" alt="Ver más" />
                                 </div>
                             </div>
                         </div>
