@@ -27,6 +27,10 @@
         'incluso.programa.reconocimiento',
         'incluso.programa.album',
         'incluso.stage.dashboardcontroller',
+        
+        // TODO: replace this controller with the correct
+        'incluso.stage.dashboardcontrollerDummy',
+
         'incluso.stage.forumclosecontroller',
         'incluso.stage.forumcontroller',
         'incluso.stage.forumcommentscontroller',
@@ -120,6 +124,10 @@
         $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
+
+        ///////// Stage 3 //////////
+        $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: $templateCache });  
+
         $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });                  
         $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });  
 
@@ -465,7 +473,7 @@
         //Done
         $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
-            controller: 'stageDashboardController'
+            controller: 'stageDashboardControllerDummy'
         });
         //Done
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:moodleid', {
@@ -523,7 +531,7 @@
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia.html',
-            controller: 'stageMessageController'
+            controller: 'stageContentsController'
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:ActivityIdentifier', {
@@ -574,8 +582,13 @@
 
         //Zona de aterrizaje
         $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId/:challenge', {
-            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html',
-            controller: 'stageDashboardController'
+            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html'
+            //controller: 'stageDashboardControllerDummy'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
         });
 
         $routeProvider.when('/ZonaDeAterrizaje/ExploracionInicial/:moodleid', {
@@ -593,6 +606,11 @@
             controller: 'stageForumController'
         });
 
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
         $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
@@ -601,6 +619,11 @@
         $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/:moodleid', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html',
             controller: 'stageMultiplicaTuDineroController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
         });
 
         $routeProvider.otherwise({

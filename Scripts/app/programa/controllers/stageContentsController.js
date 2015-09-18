@@ -34,6 +34,31 @@ angular
                 currentChallenge = 1;
                 stage = "ZonaDeNavegacion";
                 break;
+              case 158:
+                currentChallenge = 2;
+                stage = "ZonaDeNavegacion";
+                break;
+              case 161:
+                currentChallenge = 3;
+                stage = "ZonaDeNavegacion";
+                break;
+              case 163:
+                currentChallenge = 4;
+                stage = "ZonaDeNavegacion";
+                break;
+              case 207:
+                currentChallenge = 1;
+                stage = "ZonaDeAterrizaje";
+                break;
+              case 209:
+                currentChallenge = 2;
+                stage = "ZonaDeAterrizaje";
+                break;
+              case 213:
+                currentChallenge = 3;
+                stage = "ZonaDeAterrizaje";
+                break;
+
             }
 
             $scope.currentPage = 1;  
@@ -51,8 +76,7 @@ angular
             $scope.scrollToTop();
             //$scope.$emit('HidePreloader'); //hide preloader            
             var starsNoMandatory = 0;
-            var starsMandatory = 0;    
-            var userCurrentStage = localStorage.getItem("currentStage");            
+            var starsMandatory = 0;                
             var getcoursemoduleids = [];
             $scope.like_status = 1;
 
@@ -195,7 +219,7 @@ angular
 
             $scope.back = function () {   
             var userCurrentStage = localStorage.getItem("currentStage");              
-                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + currentChallenge);
+                $location.path('/'+ stage +'/Dashboard/' + userCurrentStage + '/' + currentChallenge);
             };
 
             function getdate(){
@@ -224,7 +248,7 @@ angular
             function successEndFuente(){
               var userCurrentStage = localStorage.getItem("currentStage"); 
               $scope.$emit('HidePreloader'); //hide preloader
-              $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + currentChallenge);
+              $location.path('/'+ stage +'/Dashboard/' + userCurrentStage + '/' + currentChallenge);
             }          
 
             $scope.finishActivity = function(){   

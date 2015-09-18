@@ -94,7 +94,7 @@ angular
                 
                 _postPager.from = (_postPager.from < 0 && _postPager.from < data.maxid) ? _postPager.from : data.maxid;
                 _postPager.to = _postPager.to > data.sinceid ? _postPager.to : data.sinceid;
-                console.log(_postPager);
+
                 var posts = data.posts;
                 $scope.morePendingPosts = posts.length === 10;
                 posts.forEach(initializeCommentsData);
@@ -147,12 +147,12 @@ angular
             };
             
             $scope.reportPost = function(postId) {
-                var createdDate = new Date();
+                var createdDate = (new Date().getTime() / 1000).toFixed(0);
                 
                 var requestData = {
                     "postid": postId,
                     "userid": _userId,
-                    "create": createdDate.getMilliseconds(),
+                    "create": createdDate,
                     "forumid": $scope.forumId,
                     "discussionid": $scope.discussion.discussion,
                 };
@@ -164,7 +164,11 @@ angular
                     $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
                     $scope.isReportedAbuseSentModalCollapsed["id" + postId] = true;
                     
-                    }, function(){ $scope.$emit('HidePreloader'); }, true);
+                    }, function(){
+                        $scope.$emit('HidePreloader');
+                        $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
+                        $scope.isReportedAbuseSentModalCollapsed["id" + postId] = false;
+                    }, true);
             };
             
             $scope.likePost = function(postId) {

@@ -221,6 +221,13 @@
                 background-size: 100% auto;
                 padding-bottom: 16vw;
             }
+            .dashboard-bluespace {
+                min-height: 180vh;
+                background-image:url('@{url-images}/bg-stage-2-dashboard.gif');
+                background-position: -1px 70%;
+                background-repeat: no-repeat, repeat-y;
+                background-size: 100% auto;                            
+            }
             .progreso{
                 background-image:url('@{url-images}/bg-progress-spinn.jpg');
                 background-size:cover;
@@ -2257,7 +2264,8 @@
                         display: block;                
                     }
                     .btn-icon {
-                       margin-left: -8vw; 
+                       margin-left: -8vw;
+                       top: -1.7vw; 
                        &+span {
                             line-height: 4vh;
                         }                        
@@ -2350,7 +2358,7 @@
                         //padding-top: 5vh;
                         .container {
                             width: 100%;   
-                            padding: 7vh 0px 0px; 
+                            padding: 8.5vh 0px 0px; 
                             p{
                                 margin: 0px;
                             }
@@ -2358,6 +2366,7 @@
                                 margin: 0px;
                                 padding: 0px;
                                 font-size: 4.5vw;
+                                line-height: 1.4;
                             }
                         }
                     }
@@ -2408,7 +2417,7 @@
                     /*background-image:url('@{url-images}/album/bg-album-what-drivesme.gif');
                     background-size: 100%;*/
                      .container {
-                        padding: 8vh 0px 0px;  
+                        padding: 8.5vh 0px 0px;  
                         .list-group{
                             .list-group-item {
                                 padding: 1vh 5vw
@@ -2449,7 +2458,7 @@
                     /*background-image:url('@{url-images}/album/bg-album-goals.gif');
                     background-size: 100%;*/
                      .container {
-                        padding: 6.5vh 0px 0px;  
+                        padding: 7vh 0px 0px;  
                          .list-group{
                             .list-group-item {
                                 padding: 1vh 5vw
@@ -2483,7 +2492,7 @@
                     /*background-image:url('@{url-images}/album/bg-album-project.gif');
                     background-size: 100% 105%;*/
                      .container {
-                        padding: 14vh 0px 0px; 
+                        padding: 12vh 0px 0px; 
                         .txt-renglon {
                             width: 75%;
                             max-height: 10vh;
@@ -2537,6 +2546,10 @@
                                 width: auto;
                                 line-height: 6vw;
                                 vertical-align: top;
+
+                                &.icomoon {
+                                    padding: 0;
+                                }
                             }
                         }                        
                         .badges {
@@ -2554,7 +2567,7 @@
                             display: inline-block;
                             width: 35%;
                             margin-left: 50vw;
-                            margin-top: 31.5vh;
+                            margin-top: 32vh;
                         }                           
                     }
                 }
