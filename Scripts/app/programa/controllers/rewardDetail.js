@@ -23,11 +23,38 @@ angular
                                 
             $scope.rewardDetail = _.find(profile.rewards, function(d){return d.id == $routeParams.id; });
             
+            var rewardId = $scope.rewardDetail.id;
+            
+            if (rewardId) {
+                $scope.rewardDetail.image = getFileName(rewardId);
+            }
+                    
             $scope.scrollToTop();
             $scope.$emit('HidePreloader'); //hide preloader
 
             $scope.back = function () {
                 $location.path('/MyStars');
+            }                   
+                   
+                   
+            function getFileName(id) {
+                var filename = "";
+
+                switch (id) {
+                    case 19:
+                        filename = "assets/images/mochila.png";
+                        break;
+                    case 20:
+                        filename = "assets/images/mochila.png";
+                        break;
+                    case 21:
+                        filename = "assets/images/mochila.png";
+                        break;                   
+                    default:
+                        filename = "assets/images/mochila.png";
+                }
+
+                return filename;
             }
                                 
         }]);
