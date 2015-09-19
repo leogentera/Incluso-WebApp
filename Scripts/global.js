@@ -2,6 +2,7 @@
 
 //var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";
 var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}";
+var API_SSL_RESOURCE = "https://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}";
 
 
 var _courseId = 4;

@@ -89,7 +89,7 @@ angular
                     $http(
                         {
                             method: 'POST',
-                            url: API_RESOURCE.format("authentication"),
+                            url: API_SSL_RESOURCE.format("authentication"),
                             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                             data: $.param({ username: $scope.userCredentialsModel.username.toString().toLowerCase(), password: $scope.userCredentialsModel.password })
                         }
