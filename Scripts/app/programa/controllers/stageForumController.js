@@ -148,6 +148,9 @@ angular
                   case "93":
                       $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
                       break;
+                  case "91":
+                      $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                      break;
               }
 
             }
