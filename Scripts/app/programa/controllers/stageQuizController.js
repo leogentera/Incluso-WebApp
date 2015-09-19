@@ -1692,7 +1692,7 @@ angular
             function partialSuccessfullCallBackStage2(partialActivityAnswers) {
                 if (partialActivityAnswers != null) {
 
-                    $scope.exploracionFinalresult =
+                    $scope.exploracionFinalresult2 =
                         [
                             {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
                             {
@@ -1717,50 +1717,61 @@ angular
 
                     var _mathFloor = 0;
                     var goodAnswersQty = 0;
+
                     for (var index = 0; index < partialActivityAnswers.questions.length; index++) {
                         var question = partialActivityAnswers.questions[index];
                         for (var answerIndex = 0; answerIndex < question.answers.length; answerIndex++) {
+
+
                             var questionAnswer = question.answers[answerIndex];
+                            console.log(index + " -- " + JSON.stringify(questionAnswer));
                             if (index == 0) {
-                                console.log(questionAnswer.answer.toLowerCase());
-                                var questionAnswerAnswer = questionAnswer.answer.toLowerCase().trim() == "true" ? 1 : 0;
-                                var selectedAnswer = Number($scope.exploracionFinal[index]);
-                                if (questionAnswerAnswer == selectedAnswer) {
+                                var questionAnswerAnswer;
+                                if (questionAnswer.answer == "Sí") {
+                                    questionAnswerAnswer = 0;
+                                } else {
+                                    questionAnswerAnswer = 1;
+                                }
+
+                                if (questionAnswerAnswer == $scope.exploracionFinalStage2[index]) {
                                     _mathFloor = Math.floor(questionAnswer.fraction);
-                                    if (_mathFloor != 1) {
-                                        $scope.exploracionFinalresult[index].badAnswer = true;
-                                        if (questionAnswerAnswer == 0) {
-                                            $scope.exploracionFinalresult[index].falseOptionWrong = true;
-                                        }
-                                        else {
-                                            $scope.exploracionFinalresult[index].trueOptionWrong = true;
+                                    if (_mathFloor < 1) {//Fraction = 0
+                                        $scope.exploracionFinalresult2[index].badAnswer = true;
+                                        if (questionAnswerAnswer == 0) {//The bad answer is "Sí"
+                                            $scope.exploracionFinalresult2[index].falseOptionWrong = true;
+                                        } else if (questionAnswerAnswer == 1){
+                                            $scope.exploracionFinalresult2[index].falseOptionWrong = true;
                                         }
                                     }
                                 }
                             }
-                            else if (index >= 1) {
-                                if (answerIndex == $scope.exploracionFinal[index]) {
+                            else if (index > 0) {
+                                if (answerIndex == $scope.exploracionFinalStage2[index]) {
                                     if (Math.floor(questionAnswer.fraction) == 1) {
 
-                                    }
-                                    else {
-                                        $scope.exploracionFinalresult[index].badAnswer = true;
+                                    } else {
+                                        $scope.exploracionFinalresult2[index].badAnswer = true;
                                         if (answerIndex == 0) {
-                                            $scope.exploracionFinalresult[index].firstOptionWrong = true;
+                                            $scope.exploracionFinalresult2[index].firstOptionWrong = true;
                                         }
                                         else if (answerIndex == 1) {
-                                            $scope.exploracionFinalresult[index].secondOptionWrong = true;
+                                            $scope.exploracionFinalresult2[index].secondOptionWrong = true;
                                         }
                                         else {
-                                            $scope.exploracionFinalresult[index].thirdOptionWrong = true;
+                                            $scope.exploracionFinalresult2[index].thirdOptionWrong = true;
                                         }
-                                        break;
+                                        //break;
                                     }
                                 }
                             }
+
+
+
+
+
                         }
 
-                        if (!$scope.exploracionFinalresult[index].badAnswer) {
+                        if (!$scope.exploracionFinalresult2[index].badAnswer) {
                             goodAnswersQty++;
                         }
                     }
@@ -1770,7 +1781,7 @@ angular
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
                 }
 
-                $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult.length;
+                $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult2.length;
             }
 
             //$scope.$emit('HidePreloader'); //hide preloader
@@ -1936,7 +1947,7 @@ angular
                                     }
                                 }
                             }
-                            else if (index == 2) {
+                            else if (index == 2) {//Multiple choice question
                                 if (answerIndex == $scope.exploracionFinal[index]) {
                                     if (Math.floor(questionAnswer.fraction) == 1) {
 
