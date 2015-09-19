@@ -457,6 +457,11 @@ function getActivityAtAnyCost(activity_identifier, moodle_id) {
 
 var relation_MoodleId_ActivityIdentifier = [
     {
+        'recievedMoodleId': 212,
+        'activity_identifier': 3304,
+        'moodleid': 93
+    },
+    {
         'recievedMoodleId': 151,
         'activity_identifier': 1010,
         'moodleid': 64
