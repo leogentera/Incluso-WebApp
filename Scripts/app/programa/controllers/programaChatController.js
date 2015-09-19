@@ -11,6 +11,10 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {            
+
+            console.log('program Chat Controller starting....');
+            console.log($location.hash());
+
             $scope.$emit('ShowPreloader'); 
             _timeout = $timeout;
             _httpFactory = $http;
@@ -20,19 +24,45 @@ angular
             var userId = localStorage.getItem('userId');            
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-            var interval = setInterval(getMessages,60000);                    
             $scope.currentMessage = "";
             $scope.setToolbar($location.$$path,"Cabina de Soporte");
             $rootScope.showFooter = false; 
             $rootScope.showFooterRocks = false; 
-            $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
+            var interval = -1;
+            if ($location.hash() == 'top') {
+                $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
+                $anchorScroll();
+            } 
+            else 
+            {
+                moodleFactory.Services.GetUserChat(userId, getUserRefreshChatCallback, errorCallback);             
+                interval = setInterval(getMessages,60000);                    
+                console.log('creating interval:' + interval);
+            }
 
-            moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);             
-            $scope.$emit('HidePreloader'); //hide preloader
+            function getMessages(){
+                 if($location.$$path != "/Chat"){
+                    clearInterval(interval);
+                 }
+                 else{
+                    console.log('getting messages from the services (true)');
+                    moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
+                 }
+            }
 
+            function getUserRefreshChatCallback() {
+                $scope.$emit('HidePreloader'); //hide preloader
+                $scope.messages = JSON.parse(localStorage.getItem('userChat'));
+                validateCabinaDeSoporte();
+
+                setTimeout(function() {
+                    $anchorScroll();
+                }, 1000);                
+            }   
+            
 
             function validateCabinaDeSoporte(){
-                $scope.scrollToTop('anchor-bottom');                       
+               // $scope.scrollToTop('anchor-bottom');                       
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
@@ -52,25 +82,8 @@ angular
                         }   
                     }                
                 }
-            }            
-
-            function getMessages(){
-                 if($location.$$path != "/Chat"){
-                    clearInterval(interval);
-                 }
-                moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
-            }
-
-            function getUserRefreshChatCallback() {
-                $scope.messages = JSON.parse(localStorage.getItem('userChat'));
-                $anchorScroll();
-                validateCabinaDeSoporte();
-
-                setTimeout(function() {
-                    $anchorScroll();
-                }, 1000);                
             }   
-            
+
             $scope.back = function () {
                 var userCurrentStage = localStorage.getItem("currentStage");              
                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4');
@@ -93,18 +106,18 @@ angular
                         var newMessages = JSON.stringify($scope.messages);                
                         _setLocalStorageItem('userChat',newMessages);
                         $anchorScroll();
-                                                       
                         moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
                     }, 1000);
                 }                
             };
             
             function getUserChatCallback() {
-                $anchorScroll();
+                //too late, we already did the scroll
+//                $anchorScroll();
             }
             
             function errorCallback() { 
-                $anchorScroll();
+  //              $anchorScroll();
             }
 
             function triggerAndroidKeyboardHide() {

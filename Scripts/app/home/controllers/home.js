@@ -27,10 +27,14 @@
             };
 
             $scope.navigateTo = function(url,sideToggle,activityId){
+                console.log('home.navitageTo ' + url);
+
                 if(activityId!= undefined && activityId > 0 && !$scope.canStartActivity(activityId)) {
                     return false;
                 }
+                console.log('location path before');
                 $location.path(url);
+                console.log('location path after');
                 if(sideToggle == "sideToggle")
                     $rootScope.sidebar = !$rootScope.sidebar;
             };
@@ -93,7 +97,6 @@
 			
             $scope.scrollToTop = function(element){         
                 $location.hash(element);
-                $anchorScroll();      
             };
             
             //*******************************************************************
