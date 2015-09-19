@@ -89,7 +89,6 @@ angular
             var addExtraForumParticipation = function(discussionId){
               var extraPointsCounter = getForumsExtraPointsCounter();
                 var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == discussionId; });
-                //If discussion is not registered, well, register it mofo
                 if(currentDiscussionCounter){
                     currentDiscussionCounter.extra_replies_counter++;
                 } else {
@@ -156,6 +155,7 @@ angular
                 //}
 
                 if(activityFromTree.status == 1){
+                    debugger;
                     addExtraForumParticipation($scope.discussion.id);
                     var extraPointsCounter = getForumsExtraPointsCounter();
                     var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $scope.discussion.id; });

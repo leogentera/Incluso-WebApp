@@ -122,7 +122,8 @@ angular
 
                               debugger;
 
-                              updateUserStars(moodleid);
+                              //updateUserStars(moodleid);
+                              updateUserStars(activity_identifier);
                               $scope.$emit('HidePreloader');
                             $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                           }, errorCallback);

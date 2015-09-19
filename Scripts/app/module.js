@@ -472,25 +472,24 @@
 
         //Zona de navegacion
         //TODO Change zona de vuelo route to dashboard, there's a typo and refactor dashboard controller, the typo is there too
-        //Done
         $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
             controller: 'stageDashboardControllerDummy'
         });
-        //Done
+
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicial.html',
             controller: 'stageQuizController'
         });
-        //Done
+
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicialCierre', {
             templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicialCierre.html',
             controller: 'stageQuizController'
         });
-        //Done
+
         $routeProvider.when('/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia.html',
-            controller: 'stageContentsController'
+        controller: 'stageContentsController'
         });
 
         $routeProvider.when('/ZonaDeNavegacion/Transformate/TusIdeas/:activityIdentifier', {
@@ -603,6 +602,7 @@
             controller: 'stageQuizController'
         });
 
+        //TODO Agregar ruta para cerrar foro
         $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/:moodleid', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
@@ -626,6 +626,16 @@
         $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia.html',
             controller: 'stageContentsController'
+        });
+        //TODO Agregar ruta para cerrar foro
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios.html',
+            controller: 'stageForumCommentsController'
         });
 
         $routeProvider.otherwise({
