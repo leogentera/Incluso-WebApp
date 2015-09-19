@@ -64,7 +64,7 @@ angular
                     "userid": $scope.user.id,
                     "alias": $scope.user.username,
                     "pathimagenes":"",
-                    "activitidad": "Toma de decisiones",
+                    "actividad": "Toma de decisiones",
                     "preguntas": [],
                     "catalogorespuestas": []
                 }
