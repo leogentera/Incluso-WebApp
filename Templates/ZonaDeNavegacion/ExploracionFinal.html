@@ -27,13 +27,13 @@
                                     <input id="tru" type="radio" name="vf"
                                            ng-model="exploracionFinalStage2[0]"
                                            value="0"
-                                           ng-disabled="setReadOnly" ng-click="showme()"/>
+                                           ng-disabled="setReadOnly"/>
                                     <label for="tru">Sí</label>
 
                                     <input id="fols" type="radio" name="vf"
                                            ng-model="exploracionFinalStage2[0]"
                                            value="1"
-                                           ng-disabled="setReadOnly" ng-click="showme()"/>
+                                           ng-disabled="setReadOnly"/>
                                     <label for="fols">No</label>
                                 </div>
                             </section>
@@ -112,7 +112,7 @@
                             </div>
                         </div>
                         <a class="btn btn-primary btn-lg btn-cnt" id="save"
-                           ng-show="answerIndex == 4"
+                           ng-show="answerIndex == 4 && activity_status == 0"
                            ng-click="validateExploracionFinalStage2()">GUARDAR</a>
 
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel2()">Cancelar</div>

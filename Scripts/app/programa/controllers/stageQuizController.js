@@ -85,18 +85,10 @@ angular
             $scope.exploracionFinalStage2 = [null, null, null, null];
 
             // ********************************      Models for Quizzes - Stage #3
-            $scope.exploracionInicialStage3 = [null, [0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0]];
+            $scope.exploracionInicialStage3 = [null, null, [0, 0, 0, 0, 0, 0], null];
             $scope.exploracionInicialStage3OtroAnswers = [
                 {
                     "questionid": 16,
-                    "answers": ['']
-                },
-                {
-                    "questionid": 17,
-                    "answers": ['']
-                },
-                {
-                    "questionid": 18,
                     "answers": ['']
                 }
             ];
@@ -116,11 +108,69 @@ angular
                 }
             };
 
-            $scope.showme = function() {
-                console.log($scope.exploracionFinalStage2);
+            $scope.isDisabled = false;
+            var moduleid = parseInt($routeParams.moodleid);  //Gets the coursemoduleid from 'activity' object
+            switch(moduleid){
+                case 150:
+                    currentChallenge = 0;
+                    stage = "ZonaDeVuelo";
+                    break;
+                case 71:
+                    currentChallenge = 3;
+                    stage = "ZonaDeVuelo";
+                    break;
+                case 70:
+                    currentChallenge = 3;
+                    stage = "ZonaDeVuelo";
+                    break;
+                case 72:
+                    currentChallenge = 3;
+                    stage = "ZonaDeVuelo";
+                    break;
+                case 86:
+                    currentChallenge = 5;
+                    stage = "ZonaDeVuelo";
+                    break;
+                case 75: //Exploración Inicial - Etapa 2
+                    currentChallenge = 0;
+                    stage = "ZonaDeNavegacion";
+                    break;
+                case 169: //Tus Ideas (Hija: 159) - Etapa 2
+                    currentChallenge = 4;
+                    stage = "ZonaDeNavegacion";
+                    break;
+                case 82:  //1,3 y 5 (Hija: "") - Etapa 2
+                    currentChallenge = 1;
+                    stage = "ZonaDeNavegacion";
+                    break;
+                case 86: //Exploración Final - Etapa 2
+                    currentChallenge = 2;
+                    stage = "ZonaDeAterrizaje";
+                    break;
+                case 213:
+                    currentChallenge = 3;
+                    stage = "ZonaDeAterrizaje";
+                    break;
             }
 
-            $scope.isDisabled = false;
+            var activities = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/159"));
+            if(!activities){
+                var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
+                $scope.theactivity = _.find(activitymanagers, function(a) {
+                    return a.coursemoduleid == moduleid
+                });
+
+                //getDataAsync();
+            }
+            else{
+                $scope.theactivity = activities;
+                //getDataAsync();
+                $scope.$emit('HidePreloader'); //hide preloader
+            }
+
+
+            getDataAsync();
+
 
             $scope.finishActivity = function () {
                 //Activity completed
@@ -152,6 +202,15 @@ angular
                 $scope.AnswersResult.like_status = $scope.like_status;
                 $scope.AnswersResult.updatetype = 1;
                 $scope.showWarning = false;
+
+                var updatedActivityOnUsercourse;
+                if ($scope.activity.activities) {  //Update status of Quiz ("child") activity
+                    updatedActivityOnUsercourse = updateSubActivityStatus($scope.activity.activities[0].coursemoduleid);  //actualizar arbol
+                    _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
+                    _endActivity($scope.activity.activities[0]);
+                }
+
+
 
                 var updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
 
@@ -243,7 +302,39 @@ angular
                         break;
                 }
 
-                _endActivity(activityModel, null, $scope.currentChallenge);
+                //_endActivity(activityModel, null, $scope.currentChallenge);
+                _endActivity(activityModel);
+
+                //Redirect user to the proper dashboard
+                console.log($scope.activity_identifier);
+                switch ($scope.activity_identifier) {
+                    case "1001":
+                        $location.path('/ZonaDeVuelo/Dashboard/1/0');
+                        break;
+                    case "1005":
+                        $location.path('/ZonaDeVuelo/Dashboard/1/3');
+                        break;
+                    case "1006":
+                        $location.path('/ZonaDeVuelo/Dashboard/1/3');
+                        break;
+                    case "1007":
+                        $location.path('/ZonaDeVuelo/Dashboard/1/3');
+                        break;
+                    case "1009": //Exploración Final - Etapa 1
+                        $location.path('/ZonaDeVuelo/Dashboard/1/5');
+                        break;
+                    case "2001": //Exploración Inicial - Etapa 2
+
+                    case "2007": //Tus Ideas - Etapa 2
+
+                    case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
+
+                    case "2023": //Exploración Final - Etapa 2
+                        $location.path('/ZonaDeNavegacion/Dashboard/2/0');
+                        break;
+                    default:
+                        break;
+                }
 
                 if ($scope.activity.activities) {
                     _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.activities[0].coursemoduleid, $scope.AnswersResult.answers);
@@ -337,13 +428,15 @@ angular
             };
 
             $scope.cancel2 = function () {//Temporary functionality to return to dashboard Stage 2
-                var userCurrentStage = 2;
-                $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                var userCurrentStage = $location.path().split("/")[$location.path().split("/").length - 1];
+                //var userCurrentStage = localStorage.getItem("userCurrentStage");
+                $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + "/0");
             };
 
             $scope.cancel3 = function () {//Temporary functionality to return to dashboard Stage 3
-                var userCurrentStage = 3;
-                $location.path('/ZonaDeAterrizaje/Dashboard/'+ userCurrentStage + '/' + $scope.currentChallenge);
+                var userCurrentStage = $location.path().split("/")[$location.path().split("/").length - 1];
+                //var userCurrentStage = localStorage.getItem("userCurrentStage");
+                $location.path('/ZonaDeAterrizaje/Dashboard/'+ userCurrentStage + "/0");
             };
 
             $scope.validateAnsweredQuestions = function () {
@@ -796,7 +889,7 @@ angular
             function updateExploracionFinalStage2Answers(index, question) {
                 var userAnswers = '';
                 console.log(question.userAnswer);
-                switch (questionIndex) {
+                switch (index) {
                     case 0:
                         if (question.userAnswer == "Sí") {
                             $scope.exploracionFinalStage2[0] = "0";
@@ -832,13 +925,13 @@ angular
 
                     case 3:
                         if (question.userAnswer == "Para poner una referencia y saber que lo has logrado") {
-                            $scope.exploracionFinalStage2[2] = "0";
+                            $scope.exploracionFinalStage2[3] = "0";
                         }
                         if (question.userAnswer == "Para calificarme si lo hice bien o mal") {
-                            $scope.exploracionFinalStage2[2] = "1";
+                            $scope.exploracionFinalStage2[3] = "1";
                         }
                         if (question.userAnswer == "Para darme cuenta del trabajo que cuesta") {
-                            $scope.exploracionFinalStage2[2] = "2";
+                            $scope.exploracionFinalStage2[3] = "2";
                         }
                         break;
                 }
@@ -1144,7 +1237,7 @@ angular
             }
 
             //$scope.openModal();
-            getDataAsync();
+            //getDataAsync();
 
             $scope.validateMisSuenosAnsweredQuestions = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
@@ -1530,7 +1623,7 @@ angular
                     $scope.scrollToTop();
                 } else {
                     $scope.showWarning = true;
-                    showWarningAndGoToTop();
+                    //showWarningAndGoToTop();
                 }
             };
 
@@ -1587,6 +1680,7 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                     //GET request to get activity; like for example: http://incluso.definityfirst.com/RestfulAPI/public/activity/159?userid=542
+                    console.log("The coursemoduleid = " + $scope.coursemoduleid);
                     moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBackStage2, partialErrorCallbackStage2, true);
                 } else {
                     $scope.showWarning = true;
@@ -1601,8 +1695,12 @@ angular
                     $scope.exploracionFinalresult =
                         [
                             {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                            {
+                                "badAnswer": false,
+                                "firstOptionWrong": false,
+                                "secondOptionWrong": false,
+                                "thirdOptionWrong": false
+                            },
                             {
                                 "badAnswer": false,
                                 "firstOptionWrong": false,
@@ -1637,8 +1735,6 @@ angular
                                         else {
                                             $scope.exploracionFinalresult[index].trueOptionWrong = true;
                                         }
-                                    }
-                                    else {
                                     }
                                 }
                             }
@@ -1775,26 +1871,127 @@ angular
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
+                    //GET request to get activity; like for example: http://incluso.definityfirst.com/RestfulAPI/public/activity/159?userid=542
+                    console.log("The coursemoduleid = " + $scope.coursemoduleid);
+                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBackStage3, partialErrorCallbackStage3, true);
                 } else {
                     showWarningAndGoToTop();
                 }
-
-                /*
-
-                 if (validAnswers) {
-                 //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
-                 moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBack, partialErrorCallback, true);
-
-                 $scope.showWarning = false;
-                 $scope.navigateToPage(2);
-                 $scope.scrollToTop();
-                 }
-
-                 */
-
             };
 
 
+            function partialSuccessfullCallBackStage3(partialActivityAnswers) {
+                if (partialActivityAnswers != null) {
+
+                    $scope.exploracionFinalresult = [
+                            {
+                                "badAnswer": false,
+                                "firstOptionWrong": false,
+                                "secondOptionWrong": false,
+                                "thirdOptionWrong": false
+                            },
+                            {
+                                "badAnswer": false,
+                                "firstOptionWrong": false,
+                                "secondOptionWrong": false,
+                                "thirdOptionWrong": false
+                            },
+                            {
+                                "badAnswer": false,
+                                "firstOptionWrong": false,
+                                "secondOptionWrong": false,
+                                "thirdOptionWrong": false,
+                                "fourthOptionWrong": false,
+                                "fifthOptionWrong": false
+                            },
+                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                            {
+                                "badAnswer": false,
+                                "firstOptionWrong": false,
+                                "secondOptionWrong": false,
+                                "thirdOptionWrong": false
+                            }
+                        ];
+
+                    var _mathFloor = 0;
+                    var goodAnswersQty = 0;
+                    for (var index = 0; index < partialActivityAnswers.questions.length; index++) {
+                        var question = partialActivityAnswers.questions[index];
+                        for (var answerIndex = 0; answerIndex < question.answers.length; answerIndex++) {
+                            var questionAnswer = question.answers[answerIndex];
+                            if (index == 0 || index == 1 || index == 4) {
+                                console.log(questionAnswer.answer.toLowerCase());
+                                var questionAnswerAnswer = questionAnswer.answer.toLowerCase().trim() == "true" ? 1 : 0;
+                                var selectedAnswer = Number($scope.exploracionFinal[index]);
+                                if (questionAnswerAnswer == selectedAnswer) {
+                                    _mathFloor = Math.floor(questionAnswer.fraction);
+                                    if (_mathFloor != 1) {
+                                        $scope.exploracionFinalresult[index].badAnswer = true;
+                                        if (questionAnswerAnswer == 0) {
+                                            $scope.exploracionFinalresult[index].falseOptionWrong = true;
+                                        }
+                                        else {
+                                            $scope.exploracionFinalresult[index].trueOptionWrong = true;
+                                        }
+                                    }
+                                }
+                            }
+                            else if (index == 2) {
+                                if (answerIndex == $scope.exploracionFinal[index]) {
+                                    if (Math.floor(questionAnswer.fraction) == 1) {
+
+                                    }
+                                    else {
+                                        $scope.exploracionFinalresult[index].badAnswer = true;
+                                        if (answerIndex == 0) {
+                                            $scope.exploracionFinalresult[index].firstOptionWrong = true;
+                                        }
+                                        else if (answerIndex == 1) {
+                                            $scope.exploracionFinalresult[index].secondOptionWrong = true;
+                                        }
+                                        else {
+                                            $scope.exploracionFinalresult[index].thirdOptionWrong = true;
+                                        }
+                                        break;
+                                    }
+                                }
+                            }
+                            else if (index == 3) {
+                                console.log(questionAnswer.answer.toLowerCase());
+                                var questionAnswerAnswer = questionAnswer.answer.toLowerCase().trim() == "true" ? 1 : 0;
+                                var selectedAnswer = Number($scope.exploracionFinal[index]);
+                                if (questionAnswerAnswer == selectedAnswer) {
+                                    _mathFloor = Math.floor(questionAnswer.fraction);
+                                    if (_mathFloor != 1) {
+                                        $scope.exploracionFinalresult[index].badAnswer = true;
+                                        if (questionAnswerAnswer == 0) {
+                                            $scope.exploracionFinalresult[index].falseOptionWrong = true;
+                                        }
+                                        else {
+                                            $scope.exploracionFinalresult[index].trueOptionWrong = true;
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                        if (!$scope.exploracionFinalresult[index].badAnswer) {
+                            goodAnswersQty++;
+                        }
+                    }
+                }
+                else {
+                    $scope.showWarning = true;
+                    $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
+                }
+
+                $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult.length;
+            }
+
+            function partialErrorCallbackStage3(partialActivityAnswers) {
+
+            }
         }
     ])
     .controller('OpeningStageController', function ($scope, $modalInstance) {

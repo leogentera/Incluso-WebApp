@@ -536,7 +536,7 @@
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:ActivityIdentifier', {
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/13y5.html',
             controller: 'stageQuizController'
         });
