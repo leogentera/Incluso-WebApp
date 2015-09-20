@@ -41,6 +41,7 @@
                                                 <textarea id="textoarea1"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nueva idea"
+                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-model="misIdeas[0][$index]">
                                                 </textarea>
                                             </div>
@@ -80,6 +81,7 @@
                                                 <textarea id="textoarea2"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nueva idea"
+                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-model="misIdeas[1][$index]">
                                                 </textarea>
                                             </div>
@@ -105,9 +107,6 @@
                             </a>
                             <a href="#" id="next" ng-click="addToAnswerIndex(1, 2)">
                                 <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
-                                <!--
-                                <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
-                                -->
                             </a>
 
                             <div class="centered">
@@ -115,12 +114,6 @@
                                 <span id="totalPages" class="white txt-bigger">2</span>
                             </div>
                         </div>
-                        <!--
-                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
-                                ng-click="validateAnsweredQuestions()">Terminar
-                        </button>
-                        <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
-                        -->
 
                         <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 2"
                            ng-click="validateTusIdeas()">Guardar</a>
@@ -136,16 +129,6 @@
                             <div class="subtitle centered min-pad">"Tus ideas"</div>
                             <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
                         </section>
-                        <!--
-                        <section class="centered txt-bigger ">
-                            <i class="icomoon icon-checked-join txt-bigger green-giant "></i>
-                        </section>
-                        <section class="txt-renglon pill">
-                            <div class="fl-left">Estrellas ganadas:</div>
-                            <div class="fl-right sm-pill"><span>240</span><i class="icomoon icon-star fl-right"></i>
-                            </div>
-                        </section>
-                        -->
 
                         <section class="centered txt-bigger ">
                             <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
@@ -157,7 +140,6 @@
                                 <span class="icomoon icon-star pull-right"></span>
                             </div>
                         </section>
-
 
                         <section class="txt-renglon centered form">
                             <div ng-show="activity_status == 0">
