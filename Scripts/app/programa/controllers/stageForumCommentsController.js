@@ -441,6 +441,15 @@ angular
                     case "85":
                         $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
                         break;
+                    case "93":
+                        $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
+                    case "179":
+                        $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
+                    case "91":
+                        $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
                     default:
                         $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
                         break;
