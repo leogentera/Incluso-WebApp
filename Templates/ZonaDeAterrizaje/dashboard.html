@@ -5,7 +5,7 @@
                 <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
                     <h3>
                         <span class="icomoon icon-video-file"></span>
-                        <span>¿Y tú qué sueñas?</span>
+                        <span>Conquista tu sueño</span>
                         <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
                         <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
                     </h3>
@@ -13,11 +13,11 @@
                 <div class="panel-body" collapse="isCollapsed">
                     <div class="video-player">
                         <div class="stage">
-                            <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-zona-de-vuelo.mp4')">
+                            <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-zona-de-aterrizaje.mp4')">
                                 <span class="glyphicon glyphicon-play"></span>
                             </a>
-                            <figure class="poster" ng-click="playVideo('assets/media', 'video-zona-de-vuelo.mp4')">
-                                <img src="assets/media/thumb-zona-de-vuelo.jpg" alt="video" />
+                            <figure class="poster" ng-click="playVideo('assets/media', 'video-zona-de-aterrizaje.mp4')">
+                                <img src="assets/media/thumb-zona-de-aterrizaje.jpg" alt="video" />
                             </figure>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                 <div id="owl-demo2" class="owl-carousel">
                     <div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">
                         <figure class="item-image">
-                            <img ng-src="{{retosIconos[reto.sectionname]}}" alt="{{reto.sectionname}}" />
+                            <img ng-src="{{'assets/images/challenges/stage-'+(idEtapa+1)+'/img-challenge-'+model.stages[idEtapa].challenges.indexOf(reto)+'.svg'}}" alt="{{reto.sectionname}}" />
                         </figure>
                         <h4 class="item-title" ng-bind="reto.sectionname"></h4>
                         <p class="item-description" ng-bind="reto.activityintro"></p>

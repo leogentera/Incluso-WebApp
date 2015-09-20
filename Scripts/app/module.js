@@ -30,7 +30,7 @@
         
         // TODO: Should be just one controller for all stage dashboards, will merge soon
         'incluso.stage.dashboardcontrollerDummy',
-        //'incluso.stage.dashboardcontroller3',
+        'incluso.stage.dashboardcontroller3',
 
         'incluso.stage.forumclosecontroller',
         'incluso.stage.forumcontroller',

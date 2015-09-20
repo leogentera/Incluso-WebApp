@@ -25,7 +25,7 @@ angular
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
             $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
-            $scope.idReto = $routeParams['challengue'];
+            $scope.idReto = $routeParams['challenge'];
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
@@ -226,24 +226,9 @@ angular
             //_setLocalStorageItem("challengeMessageId",113);
             //$scope.openModal_CloseChallenge();
 
-            //Load challenges images
-            $scope.retosIconos = {
-                "Exploración inicial": "assets/images/challenges/stage-1/img-evaluacion-inicial.svg",
-                "Cuarto de recursos": "assets/images/challenges/stage-1/img-cuarto-recursos.svg",
-                "Conócete": "assets/images/challenges/stage-1/img-conocete.svg",
-                "Mis sueños": "assets/images/challenges/stage-1/img-mis-suenos.svg",
-                "Cabina de soporte": "assets/images/challenges/stage-1/img-cabina-soporte.svg",
-                "Exploración final": "assets/images/challenges/stage-1/img-evaluacion-final.svg"
-            };
 
-            $scope.challengeDescription= {
-                "Exploración inicial": "Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad",
-                "Cuarto de recursos": "Descubre más y métele velocidad a tus sueños",
-                "Conócete": "Juega y descubre tus inteligencias",
-                "Mis sueños": "Cada sueño en su lugar",
-                "Cabina de soporte": "Contacta a tu coach",
-                "Exploración final": "Explora qué tanto descubriste en la Zona de Vuelo"
-            };
+
+
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
             $scope.$on('$viewContentLoaded', function() {
