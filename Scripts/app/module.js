@@ -30,7 +30,7 @@
         
         // TODO: Should be just one controller for all stage dashboards, will merge soon
         'incluso.stage.dashboardcontrollerDummy',
-        'incluso.stage.dashboardcontroller3',
+        //'incluso.stage.dashboardcontroller3',
 
         'incluso.stage.forumclosecontroller',
         'incluso.stage.forumcontroller',
@@ -54,7 +54,7 @@
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
         'incluso.program.helpAndSupport',        
-        'incluso.programa.evaluacionFormulario',
+        'incluso.programa.evaluacionFormulario'
     ])
     .run(function ($templateCache, $http, $rootScope) {
         $http.get('Templates/Public/Login.html', { cache: $templateCache });
@@ -128,7 +128,7 @@
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
 
         ///////// Stage 2 //////////
-        $http.get('Templates/ZonaDeNavegacion/dashboard.html',{cache:$templatecache});
+        $http.get('Templates/ZonaDeNavegacion/dashboard.html',{cache:$templateCache});
         $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html', { cache: $templateCache });
 
