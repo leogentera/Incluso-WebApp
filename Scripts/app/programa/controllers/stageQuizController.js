@@ -1739,7 +1739,7 @@ angular
                                         $scope.exploracionFinalresult2[index].badAnswer = true;
                                         if (questionAnswerAnswer == 0) {//The bad answer is "Sí"
                                             $scope.exploracionFinalresult2[index].falseOptionWrong = true;
-                                        } else if (questionAnswerAnswer == 1){
+                                        } else if (questionAnswerAnswer == 1){//The bad answer is "No"
                                             $scope.exploracionFinalresult2[index].falseOptionWrong = true;
                                         }
                                     }
@@ -1852,21 +1852,25 @@ angular
 
             $scope.validateExploracionFinalStage3 = function () {
 
-                var cont = $scope.exploracionFinalStage2.length;
+                var cont = $scope.exploracionFinalStage3.length;
                 var quizIsValid = true;
 
                 //Check if first (yes/no) question was answered
-                if ($scope.exploracionFinalStage2[0]) {
+                if ($scope.exploracionFinalStage3[0]) {
 
                     //Check if second (multiple choice) question was answered
-                    if ($scope.exploracionFinalStage2[1].indexOf(1) > -1) {
+                    if ($scope.exploracionFinalStage3[1].indexOf(1) > -1) {
 
-                        //Check if third (multiple choice) question was answered
-                        if ($scope.exploracionFinalStage2[2].indexOf(1) > -1) {
+                        //Check if third (multiple choice) question was answered//Check if Other was selected and it has a non null string
+                        userInput = $scope.exploracionFinalStage3OtroAnswers[1].answers[0].replace(/\r?\n|\r/g, " ").trim();
+                        if (($scope.exploracionFinalStage3[2][4] && userInput != '') || !$scope.exploracionFinalStage3[2][4]) {
 
                             //Check if fourth (multiple choice) question was answered
-                            if (!($scope.exploracionFinalStage2[3].indexOf(1) > -1)) {
-                                quizIsValid = false;
+                            if (!($scope.exploracionFinalStage3[3].indexOf(1) > -1)) {
+                                //Check if fourth (multiple choice) question was answered
+                                if (!($scope.exploracionFinalStage3[3].indexOf(1) > -1)) {
+                                    quizIsValid = false;
+                                }
                             }
                         } else {
                             quizIsValid = false;

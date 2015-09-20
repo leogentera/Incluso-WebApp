@@ -66,6 +66,7 @@
                                     <span class="icomoon icon-edit"></span>
                                         <textarea id="" class="form-control form-control-lg theme-form" row="2"
                                                   name="opciones" placeholder="¿Qué has intentado?"
+                                                  onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                   ng-readonly="setReadOnly" ng-model="exploracionInicialOtroAnswer[0].answers[0]">
                                         </textarea>
                                 </div>                                                           
@@ -112,20 +113,6 @@
                         </div>
                     </div>
 
-
-                    <!--Pregunta tipo Texto Abierto-->
-                    <!--
-                    <div>
-                        <div class="txt-renglon txt-bigger">3. ¿Qué persona exitosa que conoces te inspira?</div>
-                        <section class="form txt-renglon txt-bigger part list">
-                            <div class="add">
-                                <span class="icomoon icon-edit"></span>
-                                <textarea id="texto1" row="2" name="txtAbierto" placeholder="Tu respuesta aquí..."
-                                          ng-model="AnswersResult.answers[2]" ng-readonly="setReadOnly"></textarea>
-                            </div>
-                        </section>
-                    </div>
-                    -->
                     <!--Pregunta tipo Selección Simple-->
                     <div>
                         <div class="txt-renglon txt-bigger">4. ¿Sabes cuáles son tus habilidades?</div>
@@ -146,6 +133,7 @@
                             <label for="option3">Más o menos</label>
                         </section>
                     </div>
+
                     <!--Pregunta tipo Lista Dinámica-->
                     <div id="listaDinamica">
                         <div class="txt-renglon txt-bigger">5. Menciona tus principales habilidades</div>
