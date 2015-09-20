@@ -328,7 +328,7 @@
                 method: 'PUT',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token },
+                headers: { 'Content-Type': 'application/json', 'Authorization': token }
             }).success(function (data, status, headers, config) {
                 _setLocalStorageJsonItem(key,userCourseModel);
                 successCallback(data);

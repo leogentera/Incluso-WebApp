@@ -28,7 +28,7 @@ angular
             $scope.idReto = $routeParams['challengue'];
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
-            _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);   
+            _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
             
             setTimeout(function () {            
             var hits = 1;
