@@ -28,8 +28,9 @@
         'incluso.programa.album',
         'incluso.stage.dashboardcontroller',
         
-        // TODO: replace this controller with the correct
+        // TODO: Should be just one controller for all stage dashboards, will merge soon
         'incluso.stage.dashboardcontrollerDummy',
+        'incluso.stage.dashboardcontroller3',
 
         'incluso.stage.forumclosecontroller',
         'incluso.stage.forumcontroller',
@@ -53,7 +54,7 @@
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
         'incluso.program.helpAndSupport',        
-        'incluso.programa.evaluacionFormulario',
+        'incluso.programa.evaluacionFormulario'
     ])
     .run(function ($templateCache, $http, $rootScope) {
         $http.get('Templates/Public/Login.html', { cache: $templateCache });
@@ -126,12 +127,14 @@
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
 
-        ///////// Stage 3 //////////
-        $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: $templateCache });  
+        ///////// Stage 2 //////////
+        $http.get('Templates/ZonaDeNavegacion/dashboard.html',{cache:$templateCache});
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html', { cache: $templateCache });
 
-        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html', { cache: $templateCache });                   
-        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });  
+        ///////// Stage 3 //////////
+        $http.get('Templates/ZonaDeAterrizaje/dashboard.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });
 
          document.addEventListener("keyup", function(e) {
             if (e.keyCode === 27)
@@ -470,7 +473,7 @@
             controller: 'programaEndController'
         });
 
-        //Zona de navegacion
+        //Stage 2 - Zona de navegacion
         //TODO Change zona de vuelo route to dashboard, there's a typo and refactor dashboard controller, the typo is there too
         $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
@@ -581,11 +584,12 @@
             controller: 'programaEndController'
         });
 
-        //Zona de aterrizaje
+        //Stage 3 - Zona de Aterrizaje
         $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId/:challenge', {
-            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html'
-            //controller: 'stageDashboardControllerDummy'
+            templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html',
+            controller: 'stage3DashboardController'
         });
+
 
         $routeProvider.when('/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia.html',

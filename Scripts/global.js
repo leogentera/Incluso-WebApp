@@ -461,7 +461,12 @@ function getActivityAtAnyCost(activity_identifier, moodle_id) {
 
 var relation_MoodleId_ActivityIdentifier = [
     {
-        'recievedMoodleId': 212,
+        'recievedMoodleId': 91,
+        'activity_identifier': 3404,
+        'moodleid': 91
+    },
+    {
+        'recievedMoodleId': 93,
         'activity_identifier': 3304,
         'moodleid': 93
     },
@@ -1168,7 +1173,17 @@ var _activityRoutes = [
     {id: 73, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
     {id: 115, name: '', url: '#'},
     {id: 68, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat'},
-    {id: 100, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'}
+    {id: 100, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
+    {id:89,name:'',url:'/ZonaDeAterrizaje/ExploracionInicial/3101'},
+    {id:207,name:'',url:'/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/207'},
+    {id:209,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/209'},
+    {id:210,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302'},
+    {id:212,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/93'},
+    {id:213,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/213'},
+    {id:214,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
+    {id:216,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
+    {id:95,name:'',url:'/ZonaDeAterrizaje/CabinaDeSoporte/95'},
+    {id:96,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'}
     //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 
