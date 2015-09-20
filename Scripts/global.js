@@ -167,7 +167,10 @@ var _endActivity = function (activityModel, callback, currentChallenge) {
         var data = {userid: currentUserId};
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallback);
     }
-    else {
+    else if (activityModel.activityType == "Parent") {
+        _endActivityCurrentChallenge = currentChallenge;
+        moodleFactory.Services.PutEndActivity(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
+    } else {
         var data = {userid: currentUserId};
 
         // update activity status dictionary used for blocking activity links
@@ -178,12 +181,12 @@ var _endActivity = function (activityModel, callback, currentChallenge) {
 
 var successQuizCallback = function () {
     var currentStage = localStorage.getItem("currentStage");
+    /*
     if (_location) {
         _location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + _endActivityCurrentChallenge);
-    } else {
-
     }
-}
+    */
+};
 
 
 //This function updates in localStorage the status of the stage when completed
@@ -407,6 +410,7 @@ function _getActivityByCourseModuleId(coursemoduleid, usercourse) {
             var challenge = stage.challenges[challengeIndex];
             for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                 var activity = challenge.activities[activityIndex];
+                //console.log(activity.activity_identifier + " : " + activity);
                 if (activity.coursemoduleid == coursemoduleid) {
                     matchingActivity = activity;
                     breakAll = true;
@@ -500,7 +504,7 @@ var relation_MoodleId_ActivityIdentifier = [
         'recievedMoodleId': 85,
         'activity_identifier': 2018,
         'moodleid': 85
-    },
+    }
 
 ];
 
@@ -526,7 +530,6 @@ function updateSubActivityStatus(coursemoduleid) {
                         }
                     }
                 }
-
             }
             if (breakAll)
                 break;
