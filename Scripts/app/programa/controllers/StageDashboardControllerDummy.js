@@ -112,6 +112,17 @@ angular
 
             }, 1000);  
                  
+                 
+                 
+            $scope.openModal_CloseChallenge = function (size) {                
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'ClosingChallengeModal.html',
+                    controller: 'closingChallengeController',
+                    size: size,
+                    windowClass: 'closing-stage-modal user-help-modal'                    
+                });
+            };
 
            //calculate user's stage progress
             var stageProgressBuffer = 0;
@@ -137,8 +148,9 @@ angular
                 }
             }
             
-            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);            
-            var challengeCompletedId = _isChallengeCompleted();            
+            var stageCompleted = _isStageCompleted();
+            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
+            var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
                                     
             //Exclude challenges initial and final from showing modal robot
@@ -161,6 +173,9 @@ angular
             
             //_setLocalStorageItem("challengeMessageId",113);
             //$scope.openModal_CloseChallenge();
+            
+            
+            
             
             //Load challenges images
             $scope.retosIconos = {
@@ -215,27 +230,34 @@ angular
             };
                         
             var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
-            
-            $scope.robotMessages = [{
+                                                                    
+            $scope.robotMessages = [                      
+                    {
                         title : "CUARTO DE RECURSOS",
-                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave! Ahora sabes que los sueños son el motor que te impulsa a avanzar y llegar cada vez más lejos.",
+                        message : "¡Has recuperado un elemento más para atravesar los asteroides! Estas listo para tomar tus decisiones   y tener  nuevas ideas que te impulsen a lograr lo que te propongas.",
                         read : "false",
-                        challengeId: 113},
+                        challengeId : 155},
                     {
-                        title : "CONÓCETE",
-                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave! Haz de tus habilidades una fortaleza y pónlas en acción cada día.",
+                        title : "TRANSFÓRMATE",
+                        message : "¡Has recuperado un elemento más para atravesar los asteroides! Rompe con las ideas que te limitan y escucha a las que te impulsan para lograr tus sueños.",
                         read : "false",
-                        challengeId: 114},
+                        challengeId : 157},
                     {
-                        title : "MIS SUEÑOS",
-                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave! Lograste descubrir cuáles son tus más grandes sueños, ahora sabes hacia dónde te diriges.",
+                        title : "TÚ ELIGES",
+                        message : "¡Has recuperado un elemento más para atravesar los asteroides! Ahora ya conoces más sobre como tomar mejores decisiones.",
                         read : "false",
-                        challengeId: 115},
+                        challengeId : 160},
                     {
-                        title : "CABINA DE SOPORTE",
-                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave!  Lograste unir los puntos clave para definir un sueño: pasión, habilidades y talentos. ¡Sólo falta ponerlos en acción para lograr lo que te propongas!",
+                        title: "PROYECTA TU VIDA",
+                        message : "¡Has recuperado un elemento más para atravesar los asteroides! La ruta para llegar a tus sueños esta trazada, ahora sólo depende de ti.",
                         read : "false",
-                        challengeId: 116}];
+                        challengeId : 81},
+                    {
+                        title: "CABINA DE SOPORTE",
+                        message: "¡Has recuperado un elemento más para atravesar los asteroides! Ya tienes lo necesario para seguir la ruta que has trazado, piensa en positivo y toma mejores decisiones.",
+                        read: "false",
+                        challengeId : 167}
+                        ];
              
              $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});             
              

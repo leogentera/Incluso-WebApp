@@ -106,7 +106,7 @@ angular
 
                 var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2});
                 isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentActivity.discussions.length);
-
+                debugger;
                 var activity_identifier = null;
                 if($scope.moodleId == 151){
                     activity_identifier = 1010;
@@ -130,8 +130,10 @@ angular
                     activity_identifier = 2018;
                     moodleid = 197;
                 } else if($scope.moodleId == 93){
-                    //TODO Agregar activity_identifier a Moodle y relacionarlo
-                    activity_identifier = 0000;
+                    activity_identifier = 3304;
+                    moodleid = 93;
+                } else if($scope.moodleId == 91){
+                    activity_identifier = 3304;
                     moodleid = 93;
                 }
                 console.log(activity_identifier);
