@@ -27,13 +27,13 @@
                                     <input id="tru" type="radio" name="vf"
                                            ng-model="exploracionFinalStage2[0]"
                                            value="0"
-                                           ng-disabled="setReadOnly" ng-click="showme()"/>
+                                           ng-disabled="setReadOnly"/>
                                     <label for="tru">Sí</label>
 
                                     <input id="fols" type="radio" name="vf"
                                            ng-model="exploracionFinalStage2[0]"
                                            value="1"
-                                           ng-disabled="setReadOnly" ng-click="showme()"/>
+                                           ng-disabled="setReadOnly"/>
                                     <label for="fols">No</label>
                                 </div>
                             </section>
@@ -112,7 +112,7 @@
                             </div>
                         </div>
                         <a class="btn btn-primary btn-lg btn-cnt" id="save"
-                           ng-show="answerIndex == 4"
+                           ng-show="answerIndex == 4 && activity_status == 0"
                            ng-click="validateExploracionFinalStage2()">GUARDAR</a>
 
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel2()">Cancelar</div>
@@ -142,20 +142,20 @@
                                         <!--<span class="pull-left icomoon icon-wrong-join" ng-class="{'active': true}"></span>1.
                                         ¿Podemos desarrollar y-->
                                         <span class="pull-left icomoon icon-wrong-join"
-                                              ng-class="{'active': exploracionFinalresult[0].badAnswer}"></span>
+                                              ng-class="{'active': exploracionFinalresult2[0].badAnswer}"></span>
                                         1. Una creencia limitante puede romperse
                                         <span class="pull-right icomoon icon-arrow" ng-show="!question1.isCollapsed"></span>
                                         <span class="pull-right icomoon icon-arrow-up" ng-show="question1.isCollapsed"></span>
                                     </div>
                                     <div id="results1" class="panel-body" collapse="!question1.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[0].trueOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[0].trueOptionWrong}">
                                                 <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[0].trueOptionWrong"></span>Verdadero
+                                                      ng-show="exploracionFinalresult2[0].trueOptionWrong"></span>Sí
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[0].falseOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[0].falseOptionWrong}">
                                                 <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[0].falseOptionWrong"></span>Falso
+                                                      ng-show="exploracionFinalresult2[0].falseOptionWrong"></span>No
                                             </li>
                                         </ul>
                                     </div>
@@ -167,7 +167,7 @@
                                     <div class="panel-heading clearfix"
                                          ng-click="question2.isCollapsed = !question2.isCollapsed">
                                         <span class="pull-left icomoon icon-wrong-join"
-                                              ng-class="{'active': exploracionFinalresult[1].badAnswer}"></span>
+                                              ng-class="{'active': exploracionFinalresult2[1].badAnswer}"></span>
                                         2. Darte cuenta de lo que quieres estar haciendo en unos años te ayuda a:
                                         <span class="pull-right icomoon icon-arrow"
                                               ng-show="!question2.isCollapsed"></span>
@@ -176,19 +176,19 @@
                                     </div>
                                     <div id="results2" class="panel-body" collapse="!question2.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].firstOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[1].firstOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[1].firstOptionWrong"></span>
+                                                      ng-show="exploracionFinalresult2[1].firstOptionWrong"></span>
                                                 Planear lo que puedes hacer hoy para lograrlo
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].secondOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[1].secondOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[1].secondOptionWrong"></span>
+                                                      ng-show="exploracionFinalresult2[1].secondOptionWrong"></span>
                                                 Tener algo en que soñar
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].thirdOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[1].thirdOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[1].thirdOptionWrong"></span>
+                                                      ng-show="exploracionFinalresult2[1].thirdOptionWrong"></span>
                                                 Imaginar muchas cosas que te encantan
                                             </li>
                                         </ul>
@@ -201,7 +201,7 @@
                                     <div class="panel-heading clearfix"
                                          ng-click="question3.isCollapsed = !question3.isCollapsed">
                                         <span class="pull-left icomoon icon-wrong-join"
-                                              ng-class="{'active': exploracionFinalresult[2].badAnswer}"></span>
+                                              ng-class="{'active': exploracionFinalresult2[2].badAnswer}"></span>
                                         3. Ponerte metas en diferentes áreas de tu vida es importante porque:
                                         <span class="pull-right icomoon icon-arrow"
                                               ng-show="!question3.isCollapsed"></span>
@@ -210,19 +210,19 @@
                                     </div>
                                     <div id="results3" class="panel-body" collapse="!question3.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].firstOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[2].firstOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[2].firstOptionWrong"></span>
+                                                      ng-show="exploracionFinalresult2[2].firstOptionWrong"></span>
                                                 Eres capaz de hacer muchas cosas al mismo tiempo
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].secondOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[2].secondOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[2].secondOptionWrong"></span>
+                                                      ng-show="exploracionFinalresult2[2].secondOptionWrong"></span>
                                                 Las demás personas creen que es importante
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].thirdOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[2].thirdOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[2].thirdOptionWrong"></span>
+                                                      ng-show="exploracionFinalresult2[2].thirdOptionWrong"></span>
                                                 Te ayuda a crecer de igual forma en todos las áreas de tu vida
                                             </li>
                                         </ul>
@@ -235,9 +235,8 @@
                                     <div class="panel-heading clearfix"
                                          ng-click="question4.isCollapsed = !question4.isCollapsed">
                                         <span class="pull-left icomoon icon-wrong-join"
-                                              ng-class="{'active': exploracionFinalresult[3].badAnswer}"></span>5.
-                                        ¿Porqué es importante que tus sueños se relacionen con lo que te gusta y para lo
-                                        que eres bueno?
+                                              ng-class="{'active': exploracionFinalresult2[3].badAnswer}"></span>5.
+                                        4. ¿Para qué sirve ponerle un indicador a las metas?
                                         <span class="pull-right icomoon icon-arrow"
                                               ng-show="!question4.isCollapsed"></span>
                                         <span class="pull-right icomoon icon-arrow-up"
@@ -245,20 +244,20 @@
                                     </div>
                                     <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].firstOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[3].firstOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[3].firstOptionWrong"></span>Porque
-                                                aprovechas mejor tus talentos y difrutas lo que haces
+                                                      ng-show="exploracionFinalresult2[3].firstOptionWrong"></span>
+                                                Para poner una referencia y saber que lo has logrado
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].secondOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[3].secondOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[3].secondOptionWrong"></span>Porque
-                                                puedes ser más famoso y exitoso
+                                                      ng-show="exploracionFinalresult2[3].secondOptionWrong"></span>
+                                                Para calificarme si lo hice bien o mal
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].thirdOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[3].thirdOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[3].thirdOptionWrong"></span>Porque
-                                                debes hacer lo que quieras sin importar nada ni nadie
+                                                      ng-show="exploracionFinalresult2[3].thirdOptionWrong"></span>
+                                                Para darme cuenta del trabajo que cuesta
                                             </li>
                                         </ul>
                                     </div>

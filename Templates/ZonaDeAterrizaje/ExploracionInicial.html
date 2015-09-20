@@ -38,44 +38,24 @@
                         </div>
 
 
-                        <!--Pregunta tipo Opción Multiple + Otro-->
+                        <!--Pregunta tipo Selección Simple-->
                         <div>
-                            <div class="txt-renglon txt-bigger">2. Para emprender se necesita armar un buen plan:
-                            </div>
+                            <div class="txt-renglon txt-bigger">2. Para emprender se necesita armar un buen plan:</div>
                             <section class="form txt-renglon txt-bigger part list">
-                                <input id="check1" type="checkbox" value="check1" name="check"
-                                       ng-true-value="1" ng-false-value="0"
-                                       ng-model="exploracionInicialStage3[1][0]" ng-disabled="setReadOnly"/>
-                                <label for="check1">Si, porque es la ruta para hacer realidad una idea</label>
+                                <input id="option1" type="radio" value="0" name="option1"
+                                       ng-model="exploracionInicialStage3[1]" ng-disabled="setReadOnly"/>
+                                <label for="option1">Si, porque es la ruta para hacer realidad una idea</label>
 
-                                <input id="check2" type="checkbox" value="check2" name="check"
-                                       ng-true-value="1" ng-false-value="0"
-                                       ng-model="exploracionInicialStage3[1][1]" ng-disabled="setReadOnly"/>
-                                <label for="check2">No, porque si la idea es buena no necesita un plan </label>
+                                <input id="option2" type="radio" value="1" name="option1"
+                                       ng-model="exploracionInicialStage3[1]" ng-disabled="setReadOnly"/>
+                                <label for="option2">No, porque si la idea es buena no necesita un plan</label>
 
-                                <input id="check3" type="checkbox" value="check3" name="check"
-                                       ng-true-value="1" ng-false-value="0"
-                                       ng-model="exploracionInicialStage3[1][2]" ng-disabled="setReadOnly"
-                                       ng-change="exploracionInicialStage3OtroAnswers[0].answers[0] = exploracionInicialStage3[1][2] == false ? '' : exploracionInicialStage3OtroAnswers[0].answers[0]"
-                                       ng-click="addCaptureField(exploracionInicialStage3[1][2])"/>
-                                <label for="check3">Otro</label>
-
-                                <div class="form-group theme-form" ng-show="exploracionInicialStage3[1][2]">
-                                    <div class="add">
-                                        <span class="icomoon icon-edit"></span>
-                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
-                                                  ng-model="exploracionInicialStage3OtroAnswers[0].answers[0]">
-                                        </textarea>
-                                    </div>
-                                </div>
-
-                                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                                <label for="otros">Otros</label>-->
+                                <input id="option3" type="radio" value="2" name="option1"
+                                       ng-model="exploracionInicialStage3[1]" ng-disabled="setReadOnly"/>
+                                <label for="option3">Te ayuda a crecer de igual forma en todos las áreas de tu vida</label>
                             </section>
-                            <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                              <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-                            </div>-->
                         </div>
+
 
 
                         <!--Pregunta tipo Opción Multiple + Otro-->
@@ -84,18 +64,22 @@
                             </div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <input id="check4" type="checkbox" value="check4" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[2][0]" ng-disabled="setReadOnly"/>
                                 <label for="check4">La necesidad que satisface</label>
 
                                 <input id="check5" type="checkbox" value="check5" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[2][1]" ng-disabled="setReadOnly"/>
                                 <label for="check5">El público objetivo</label>
 
                                 <input id="check6" type="checkbox" value="check6" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[2][2]" ng-disabled="setReadOnly"/>
                                 <label for="check6">El producto o servicio</label>
 
                                 <input id="check7" type="checkbox" value="check7" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[2][3]" ng-disabled="setReadOnly"/>
                                 <label for="check7">La forma en que se entrega al cliente</label>
 
@@ -104,8 +88,9 @@
                                 <label for="check8">Los recursos que se necesitan</label>
 
                                 <input id="check9" type="checkbox" value="check9" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[2][5]" ng-disabled="setReadOnly"
-                                       ng-change="exploracionInicialStage3OtroAnswers[1].answers[0] = exploracionInicialStage3[2][5] == false ? '' : exploracionInicialStage3OtroAnswers[1].answers[0]"
+                                       ng-change="exploracionInicialStage3OtroAnswers[0].answers[0] = exploracionInicialStage3[2][5] == false ? '' : exploracionInicialStage3OtroAnswers[0].answers[0]"
                                        ng-click="addCaptureField(exploracionInicialStage3[2][5])"/>
                                 <label for="check9">Otro</label>
 
@@ -113,58 +98,32 @@
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
                                         <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
-                                                  ng-model="exploracionInicialStage3OtroAnswers[1].answers[0]">
+                                                  ng-model="exploracionInicialStage3OtroAnswers[0].answers[0]">
                                         </textarea>
                                     </div>
                                 </div>
-
-                                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                                <label for="otros">Otros</label>-->
                             </section>
-                            <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                              <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-                            </div>-->
                         </div>
 
-                        <!--Pregunta tipo Opción Multiple + Otro-->
+                        <!--Pregunta tipo Selección Simple-->
                         <div>
-                            <div class="txt-renglon txt-bigger">4. Ahorrar es:
-                            </div>
+                            <div class="txt-renglon txt-bigger">4. Ahorrar es:</div>
                             <section class="form txt-renglon txt-bigger part list">
-                                <input id="check10" type="checkbox" value="check10" name="check"
-                                       ng-model="exploracionInicialStage3[3][0]" ng-disabled="setReadOnly"/>
-                                <label for="check10">Guardar el dinero que te sobra</label>
+                                <input id="option10" type="radio" value="0" name="option2"
+                                       ng-model="exploracionInicialStage3[3]" ng-disabled="setReadOnly"/>
+                                <label for="option10">Guardar el dinero que te sobra</label>
 
-                                <input id="check11" type="checkbox" value="check11" name="check"
-                                       ng-model="exploracionInicialStage3[3][1]" ng-disabled="setReadOnly"/>
-                                <label for="check11">No gastar en cosas que no necesitas</label>
+                                <input id="option11" type="radio" value="1" name="option2"
+                                       ng-model="exploracionInicialStage3[3]" ng-disabled="setReadOnly"/>
+                                <label for="option11">No gastar en cosas que no necesitas</label>
 
-                                <input id="check12" type="checkbox" value="check12" name="check"
-                                       ng-model="exploracionInicialStage3[3][2]" ng-disabled="setReadOnly"/>
-                                <label for="check12">Separar una parte de tu dinero antes de gastarlo</label>
-
-                                <input id="check13" type="checkbox" value="check13" name="check"
-                                       ng-model="exploracionInicialStage3[3][3]" ng-disabled="setReadOnly"
-                                       ng-change="exploracionInicialStage3OtroAnswers[2].answers[0] = exploracionInicialStage3[3][3] == false ? '' : exploracionInicialStage3OtroAnswers[2].answers[0]"
-                                       ng-click="addCaptureField(exploracionInicialStage3[3][3])"/>
-                                <label for="check13">Otro</label>
-
-                                <div class="form-group theme-form" ng-show="exploracionInicialStage3[3][3]">
-                                    <div class="add">
-                                        <span class="icomoon icon-edit"></span>
-                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
-                                                  ng-model="exploracionInicialStage3OtroAnswers[2].answers[0]">
-                                        </textarea>
-                                    </div>
-                                </div>
-
-                                <!--<input id="otros" type="checkbox" value="check1" name="check" ng-click="toggleAddNewOptionButton">
-                                <label for="otros">Otros</label>-->
+                                <input id="option12" type="radio" value="2" name="option2"
+                                       ng-model="exploracionInicialStage3[3]" ng-disabled="setReadOnly"/>
+                                <label for="option12">Separar una parte de tu dinero antes de gastarlo</label>
                             </section>
-                            <!--<div id="agregar" class="add" ng-show="showAddNewOption==true"><span class="icomoon icon-edit"></span>
-                              <input id="otrosCheck" type="text" name="txtAbierto" placeholder="Aquí escribe otros..." ng-model="AnswersResult.answers[2].third"/>
-                            </div>-->
                         </div>
+
+
 
                     </div>
 
