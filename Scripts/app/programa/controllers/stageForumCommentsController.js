@@ -27,7 +27,7 @@ angular
 
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
-            $scope.moodleId = $routeParams.moodleid;
+            $scope.moodleId = getMoodleIdFromTreeActivity( $routeParams.activityId);
             
             var showMoreCounter = 1;
             var postPager = { from: 0, to: 0 };
@@ -136,8 +136,6 @@ angular
                     activity_identifier = 3304;
                     moodleid = 93;
                 }
-                console.log(activity_identifier);
-                console.log(moodleid);
 
                 var activityFromTree = getActivityAtAnyCost(activity_identifier, moodleid).activity;
 
@@ -333,7 +331,7 @@ angular
             };
 
             function getTopicData() {
-                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid ));
+                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == $routeParams.discussionId; });
                 
                 moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
@@ -411,31 +409,32 @@ angular
             };
 
             $scope.back = function () {
+                var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
 
-                switch ($routeParams.moodleid) {
-                    case "64":
-                        $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/' + $routeParams.moodleid);
+                switch (moodleId) {
+                    case 64:
+                        $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/' + $routeParams.activityId);
                         break;
-                    case "73":
-                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.moodleid);
+                    case 73:
+                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
-                    case "197":
-                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.moodleid);
+                    case 197:
+                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
-                    case "85":
-                        $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                    case 85:
+                        $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
-                    case "93":
-                        $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                    case 93:
+                        $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
-                    case "179":
-                        $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                    case 179:
+                        $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
-                    case "91":
-                        $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                    case 91:
+                        $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
                     default:
-                        $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
                 }
             };

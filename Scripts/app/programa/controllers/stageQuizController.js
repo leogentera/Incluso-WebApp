@@ -301,35 +301,44 @@ angular
                         break;
                 }
 
+                console.log("Ending activity...");
                 //_endActivity(activityModel, null, $scope.currentChallenge);
                 _endActivity(activityModel);
 
                 //Redirect user to the proper dashboard
                 console.log($scope.activity_identifier);
+                var destinationPath = "";
                 switch ($scope.activity_identifier) {
                     case "1001":
-                        $location.path('/ZonaDeVuelo/Dashboard/1/0');
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/0";
                         break;
                     case "1005":
-                        $location.path('/ZonaDeVuelo/Dashboard/1/3');
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        //$location.path('/ZonaDeVuelo/Dashboard/1/3');
                         break;
                     case "1006":
-                        $location.path('/ZonaDeVuelo/Dashboard/1/3');
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        //$location.path('/ZonaDeVuelo/Dashboard/1/3');
                         break;
                     case "1007":
-                        $location.path('/ZonaDeVuelo/Dashboard/1/3');
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        //$location.path('/ZonaDeVuelo/Dashboard/1/3');
                         break;
                     case "1009": //Exploración Final - Etapa 1
-                        $location.path('/ZonaDeVuelo/Dashboard/1/5');
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/5";
+                        //$location.path('/ZonaDeVuelo/Dashboard/1/5');
                         break;
                     case "2001": //Exploración Inicial - Etapa 2
-
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        //$location.path('/ZonaDeVuelo/Dashboard/1/5');
+                        break;
                     case "2007": //Tus Ideas - Etapa 2
 
                     case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
 
                     case "2023": //Exploración Final - Etapa 2
-                        $location.path('/ZonaDeNavegacion/Dashboard/2/0');
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        //$location.path('/ZonaDeNavegacion/Dashboard/2/0');
                         break;
                     default:
                         break;
@@ -353,6 +362,10 @@ angular
                         _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);
                     }
                 }
+
+                //$scope.$emit('HidePreloader'); //hide preloader
+                console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
+                $location.path(destinationPath);
 
             };
 

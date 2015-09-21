@@ -345,24 +345,24 @@ var successQuizCallback = function () {
 var _isStageCompleted = function () {
 
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-
+    
+    var stageCompleted = false;
+    
     for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
         var currentStage = userCourse.stages[stageIndex];
-        if (currentStage.status == 1) {
-            break;
-        } else {
+        if (currentStage.status == 0 && currentStage.sectionname != "General") {
             var totalChallengesByStage = currentStage.challenges.length;
             var totalChallengesCompleted = _.where(currentStage.challenges, {status: 1}).length;
             if (totalChallengesByStage == totalChallengesCompleted) {
                 userCourse.stages[stageIndex].status = 1;
                 _setLocalStorageJsonItem("usercourse", userCourse);
-                return true;
+                stageCompleted = true;
             } else {
-                return false;
+                stageCompleted = false;
             }
         }
     }
-
+    return stageCompleted;
 };
 
 var _isChallengeCompleted = function () {
@@ -609,6 +609,14 @@ function getActivityAtAnyCost(activity_identifier, moodle_id) {
         activity: activity
     }
 
+}
+
+function getMoodleIdFromTreeActivity(activityId){
+    var moodleId;
+    var activityFromTree = getActivityByActivity_identifier(activityId);
+    activityFromTree.activities? moodleId = activityFromTree.activities[0].coursemoduleid : moodleId = activityFromTree.coursemoduleid;
+
+    return moodleId;
 }
 
 var relation_MoodleId_ActivityIdentifier = [
@@ -1010,7 +1018,8 @@ var _activityRoutes = [
     {id:3402,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
     {id:3404,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
     {id:3501,name:'',url:'/ZonaDeAterrizaje/CabinaDeSoporte/95'},
-    {id:3601,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'}
+    {id:3601,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'},
+    {id:50000,name: 'Comunidad General', url: '/Community/50000'}
     //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 
