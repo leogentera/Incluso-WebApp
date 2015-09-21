@@ -611,6 +611,14 @@ function getActivityAtAnyCost(activity_identifier, moodle_id) {
 
 }
 
+function getMoodleIdFromTreeActivity(activityId){
+    var moodleId;
+    var activityFromTree = getActivityByActivity_identifier(activityId);
+    activityFromTree.activities? moodleId = activityFromTree.activities[0].coursemoduleid : moodleId = activityFromTree.coursemoduleid;
+
+    return moodleId;
+}
+
 var relation_MoodleId_ActivityIdentifier = [
     {
         'recievedMoodleId': 91,
@@ -1010,7 +1018,8 @@ var _activityRoutes = [
     {id:3402,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
     {id:3404,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
     {id:3501,name:'',url:'/ZonaDeAterrizaje/CabinaDeSoporte/95'},
-    {id:3601,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'}
+    {id:3601,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'},
+    {id:50000,name: 'Comunidad General', url: '/Community/50000'}
     //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 
