@@ -273,7 +273,7 @@
             controller: 'GameController'
         });
 
-        $routeProvider.when('/Community', { 
+        $routeProvider.when('/Community/:activityId', { 
             templateUrl: 'Templates/Programa/community.html',
             controller: 'programaComunidadController'
         });
