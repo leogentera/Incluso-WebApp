@@ -20,7 +20,7 @@ angular
             
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            $rootScope.linksFooter = true;
+            $rootScope.linksStage2Footer = true;
             $scope.scrollToTop();
 
             $scope.activitiesCompletedInCurrentStage = [];

@@ -987,7 +987,11 @@ var _badgesPerChallenge = [
     {badgeId: 7, badgeName: "Misiles", challengeId: 157},
     {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81},
     {badgeId: 9, badgeName: "Radar", challengeId: 167},
-    {badgeId: 18, badgeName: "Turbo", challengeId: 160}
+    {badgeId: 18, badgeName: "Turbo", challengeId: 160},
+    {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206},
+    {badgeId: 16, badgeName: "Casco espacial", challengeId: 208},
+    {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90},
+    {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217}
 ];
 
 
@@ -1014,7 +1018,8 @@ var _activityRoutes = [
     {id:3402,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
     {id:3404,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
     {id:3501,name:'',url:'/ZonaDeAterrizaje/CabinaDeSoporte/95'},
-    {id:3601,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'}
+    {id:3601,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'},
+    {id:50000,name: 'Comunidad General', url: '/Community/50000'}
     //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 
