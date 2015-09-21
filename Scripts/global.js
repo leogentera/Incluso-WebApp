@@ -345,24 +345,24 @@ var successQuizCallback = function () {
 var _isStageCompleted = function () {
 
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-
+    
+    var stageCompleted = false;
+    
     for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
         var currentStage = userCourse.stages[stageIndex];
-        if (currentStage.status == 1) {
-            break;
-        } else {
+        if (currentStage.status == 0 && currentStage.sectionname != "General") {
             var totalChallengesByStage = currentStage.challenges.length;
             var totalChallengesCompleted = _.where(currentStage.challenges, {status: 1}).length;
             if (totalChallengesByStage == totalChallengesCompleted) {
                 userCourse.stages[stageIndex].status = 1;
                 _setLocalStorageJsonItem("usercourse", userCourse);
-                return true;
+                stageCompleted = true;
             } else {
-                return false;
+                stageCompleted = false;
             }
         }
     }
-
+    return stageCompleted;
 };
 
 var _isChallengeCompleted = function () {
