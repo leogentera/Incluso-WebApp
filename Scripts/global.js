@@ -1153,7 +1153,11 @@ var _badgesPerChallenge = [
     {badgeId: 7, badgeName: "Misiles", challengeId: 157},
     {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81},
     {badgeId: 9, badgeName: "Radar", challengeId: 167},
-    {badgeId: 18, badgeName: "Turbo", challengeId: 160}
+    {badgeId: 18, badgeName: "Turbo", challengeId: 160},
+    {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206},
+    {badgeId: 16, badgeName: "Casco espacial", challengeId: 208},
+    {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90},
+    {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217}
 ];
 
 
