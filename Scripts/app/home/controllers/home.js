@@ -208,24 +208,45 @@
 
 
             //Helps defining if activity can be started
-            $scope.canStartActivity = function(activityId){
+            $scope.canStartActivity = function(activityIdentifier){
+
+                //If public page, return false
+                if(!$rootScope.showToolbar) {
+                    return false;
+                }
+                //Load activity status dictionary from local cache
                 if(!_activityStatus) {
                     _activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
+                    //TODO: Need to rebuild from tree if cache was somehow cleared
                 }
-                if(_activityStatus && !_activityStatus[activityId]) {
-                    var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
-                        return x.id == activityId;
-                    });
-                    if (activityDependenciesRecord[0]) {
-                        var activityDependencies = activityDependenciesRecord[0].dependsOn;
-                        var dependenciesCount = activityDependencies.length;
-                        for (var i = 0; i < dependenciesCount; i++) {
-                            if (!_activityStatus[activityDependencies[i]]) {
-                                return false;
-                            }
+                return true;
+                //TODO: need to load tree right here, can't wait until a controller does
+                //Load activity
+               // var activity = getActivityByActivity_identifier(activityIdentifier);
+                //if(!activity) return false;
+                //Return TRUE if no activity status in cache or activity has been completed already
+                if(!_activityStatus || _activityStatus[activity.activity_identifier] || _activityStatus[activity.coursemoduleid]){
+                    return true;
+                }
+                //Load dependencies for activity, from current activity_identifier-based collection and legacy coursemoduleid-based collection
+                var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
+                    return x.id == activity.activity_identifier;
+                });
+                var legacyActivityDependenciesRecord = _.filter(_activityDependenciesLegacy, function (x) {
+                    return x.id == activity.activity_identifier;
+                });
+                //Check status for found dependencies. If any dependency is still pending, the activity cannot be started
+                if (activityDependenciesRecord[0]) {
+                    var activityDependencies = activityDependenciesRecord[0].dependsOn;
+                    var activityDependenciesLegacy = legacyActivityDependenciesRecord[0]?legacyActivityDependenciesRecord[0].dependsOn:activityDependencies;//if not in legacy dependencies, then just use the current definition, will take care of itself in the evaluation
+                    var dependenciesCount = activityDependencies.length;
+                    for (var i = 0; i < dependenciesCount; i++) {
+                        if (!(_activityStatus[activityDependencies[i]] || _activityStatus[activityDependenciesLegacy[i]]))  {
+                            return false;
                         }
                     }
                 }
+                //No dependencies found or all have been completed, the activity can be started
                 return true;
             };
 

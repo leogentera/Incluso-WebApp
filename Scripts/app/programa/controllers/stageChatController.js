@@ -138,7 +138,7 @@ angular
                 
                 _updateRewardStatus();
                 // update activity status dictionary used for blocking activity links
-                updateActivityStatusDictionary(treeActivity.coursemoduleid);                
+                updateActivityStatusDictionary(treeActivity.activity_identifier);
                 
                 localStorage.removeItem("finishCabinaSoporte");
 

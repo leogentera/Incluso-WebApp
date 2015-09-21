@@ -624,7 +624,7 @@
                 });
                 
                 var multipleChallengeActivity = _.filter(activities, function (a){
-                    return a.coursemoduleid == multipleChallengeActivityId[0].id;
+                    return a.activity_identifier == multipleChallengeActivityId[0].id;
                 });
                 
                 var multipleChallenges = _.filter(activities, function (a){

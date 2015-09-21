@@ -12,56 +12,208 @@ var _location = null;
 
 var _activityStatus = [];
 
-var _activityDependencies = [
+var _activityDependencies=[
+    //Stage 1 dependencies
     {
-        id: 112,
+        id: 1101,
+        dependsOn: [1001]
+    },
+    {
+        id: 1020,
+        dependsOn: [1001]
+    },
+    {
+        id: 1039,
+        dependsOn: [1001]
+    },
+    {
+        id: 1010,
+        dependsOn: [1001]
+    },
+    {
+        id: 1049,
+        dependsOn: [1001, 1039]
+    },
+    {
+        id: 1021,
+        dependsOn: [1001]
+    },
+    {
+        id: 1005,
+        dependsOn: [1001]
+    },
+    {
+        id: 1006,
+        dependsOn: [1001]
+    },
+    {
+        id: 1007,
+        dependsOn: [1001]
+    },
+    {
+        id: 1008,
+        dependsOn: [1001]
+    },
+    {
+        id: 1002,
+        dependsOn: [1001, 1101, 1020, 1039, 1010, 1049, 1021, 1005, 1006, 1007, 1008]
+    },
+    {
+        id: 1009,
+        dependsOn: [1001, 1002]
+    },
+    //Stage 2 dependencies
+    {
+        id:2001,
+        dependsOn:[1009]
+    },
+    {
+        id:2004,
+        dependsOn:[2001]
+    },
+    {
+        id:2006,
+        dependsOn:[2001]
+    },
+    {
+        id:2007,
+        dependsOn:[2001]
+    },
+    {
+        id:2030,
+        dependsOn:[2001]
+    },
+    {
+        id:2011,
+        dependsOn:[2001]
+    },
+    {
+        id:2012,
+        dependsOn:[2001]
+    },
+    {
+        id:2015,
+        dependsOn:[2001]
+    },
+    {
+        id:2016,
+        dependsOn:[2001]
+    },
+    {
+        id:2017,
+        dependsOn:[2001]
+    },
+    {
+        id:2026,
+        dependsOn:[2001]
+    },
+    {
+        id:2022,
+        dependsOn:[2001,2004,2006,2009,2008,2011,2013,2015,2025,2017,2018]
+    },
+    {
+        id:2023,
+        dependsOn:[2001,2022]
+    },
+    //Stage 3 dependencies
+    {
+        id:3101,
+        dependsOn:[2023]
+    },
+    {
+        id:3201,
+        dependsOn:[3101]
+    },
+    {
+        id:3301,
+        dependsOn:[3101]
+    },
+    {
+        id:3302,
+        dependsOn:[3101]
+    },
+    {
+        id:3304,
+        dependsOn:[3101]
+    },
+    {
+        id:3401,
+        dependsOn:[3101]
+    },
+    {
+        id:3402,
+        dependsOn:[3101]
+    },
+    {
+        id:3404,
+        dependsOn:[3101]
+    },
+    {
+        id:3501,
+        dependsOn:[3101,3201,3301,3303,3305,3401,3403,3405]
+    },
+    {
+        id:3601,
+        dependsOn:[3501]
+    }
+];
+
+var _activityDependenciesLegacy = [
+    //Stage 1 dependencies
+    {
+        id: 1101,
         dependsOn: [150]
     },
     {
-        id: 145,
+        id: 1020,
         dependsOn: [150]
     },
     {
-        id: 139,
+        id: 1039,
         dependsOn: [150]
     },
     {
-        id: 151,
+        id: 1010,
         dependsOn: [150]
     },
     {
-        id: 149,
+        id: 1049,
         dependsOn: [150, 139]
     },
     {
-        id: 146,
+        id: 1021,
         dependsOn: [150]
     },
     {
-        id: 71,
+        id: 1005,
         dependsOn: [150]
     },
     {
-        id: 70,
+        id: 1006,
         dependsOn: [150]
     },
     {
-        id: 72,
+        id: 1007,
         dependsOn: [150]
     },
     {
-        id: 73,
+        id: 1008,
         dependsOn: [150]
     },
     {
-        id: 68,
-        dependsOn: [150, 112, 145, 139, 151, 149, 146, 71, 70, 72, 73]
+        id: 1002,
+        dependsOn: [150, 112, 145, 139, 64, 149, 146, 71, 70, 72, 73]
     },
     {
-        id: 100,
+        id: 1009,
         dependsOn: [150, 68]
-    }
+    },
 
+    //Stage 2 dependencies on stage 1
+    {
+        id:2002,
+        dependsOn:[100]
+    }
 ];
 
 var _IsOffline = function () {
@@ -137,13 +289,13 @@ function syncCacheData() {
 }
 
 //Update activity status for activity blocking binding
-var updateActivityStatusDictionary = function (activityId) {
+var updateActivityStatusDictionary = function (activityIdentifierId) {
     var activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
     if (activityStatus) {
-        activityStatus[activityId] = 1;
+        activityStatus[activityIdentifierId] = 1;
     }
     _setLocalStorageJsonItem("activityStatus", activityStatus);
-    _activityStatus[activityId] = 1;
+    _activityStatus[activityIdentifierId] = 1;
 };
 
 var _endActivity = function (activityModel, callback, currentChallenge) {
@@ -174,7 +326,7 @@ var _endActivity = function (activityModel, callback, currentChallenge) {
         var data = {userid: currentUserId};
 
         // update activity status dictionary used for blocking activity links
-        updateActivityStatusDictionary(activityId);
+        updateActivityStatusDictionary(activityModel.activity_identifier);
         moodleFactory.Services.PutEndActivity(activityId, data, activityModel, currentUser.token, callback, errorCallback);
     }
 };
@@ -559,7 +711,7 @@ function updateActivityStatus(activity_identifier) {
                 var activity = challenge.activities[activityIndex];
                 if (activity.activity_identifier == activity_identifier) {
                     activity.status = 1;
-                    updateActivityStatusDictionary(activity.coursemoduleid);
+                    updateActivityStatusDictionary(activity.activity_identifier);
                     breakAll = true;
                     break;
                 }
@@ -816,333 +968,7 @@ function FailureVideo() {
 
 }
 
-var _staticStages = [
-    {
-        "sectionname": "Zona de Vuelo",
-        "challenges": [
-            {
-                "sectionname": "Exploración inicial",
-                "activities": [
-                    {
-                        "activityname": "Exploración Inicial",
-                        "coursemoduleid": 140,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Exploracion Inicial",
-                        "coursemoduleid": 150,
-                        "points": 100,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Cuarto de recursos",
-                "activities": [
-                    {
-                        "activityname": "Fuente de energía",
-                        "coursemoduleid": 112,
-                        "points": 250,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Cuarto de recursos",
-                        "coursemoduleid": 113,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Conócete",
-                "activities": [
-                    {
-                        "activityname": "Zona de Contacto",
-                        "coursemoduleid": 149,
-                        "points": 100,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Fuente de energía",
-                        "coursemoduleid": 145,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Reto múltiple",
-                        "coursemoduleid": 139,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Punto de Encuentro",
-                        "coursemoduleid": 64,
-                        "points": 100,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Conócete",
-                        "coursemoduleid": 114,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Mis sueños",
-                "activities": [
-                    {
-                        "activityname": "Fuente de energía",
-                        "coursemoduleid": 146,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Mis gustos",
-                        "coursemoduleid": 70,
-                        "points": 300,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Mis cualidades",
-                        "coursemoduleid": 71,
-                        "points": 300,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Sueña",
-                        "coursemoduleid": 72,
-                        "points": 300,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Punto de encuentro",
-                        "coursemoduleid": 73,
-                        "points": 100,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Mis sueños",
-                        "coursemoduleid": 115,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Cabina de soporte",
-                "activities": [
-                    {
-                        "activityname": "Cabina de soporte",
-                        "coursemoduleid": 116,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Exploración final",
-                "activities": [
-                    {
-                        "activityname": "Exploración final",
-                        "coursemoduleid": 100,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "sectionname": "Zona de navegación",
-        "challenges": [
-            {
-                "sectionname": "Exploración inicial",
-                "activities": [
-                    {
-                        "activityname": "Exploración inicial",
-                        "coursemoduleid": 75,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Cuarto de recursos",
-                "activities": [
-                    {
-                        "activityname": "Fuente de energía",
-                        "coursemoduleid": -1,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Competencias sociales",
-                "activities": [
-                    {
-                        "activityname": "Fuente de energía",
-                        "coursemoduleid": -1,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Toma de decisiones",
-                        "coursemoduleid": -1,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Creencias",
-                        "coursemoduleid": -1,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Punto de contacto",
-                        "coursemoduleid": 79,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Proyecto de vida",
-                "activities": [
-                    {
-                        "activityname": "Fuente de energía",
-                        "coursemoduleid": -1,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Proyección de vida",
-                        "coursemoduleid": -1,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Canvas",
-                        "coursemoduleid": 81,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Foro",
-                        "coursemoduleid": 85,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Cabina de soporte",
-                "activities": []
-            },
-            {
-                "sectionname": "Exploración final",
-                "activities": [
-                    {
-                        "activityname": "Exploración final",
-                        "coursemoduleid": 86,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            }
-        ]
-    },
-    {
-        "sectionname": "Zona de aterrizaje",
-        "challenges": [
-            {
-                "sectionname": "Exploración inicial",
-                "activities": [
-                    {
-                        "activityname": "Exploración Inicial",
-                        "coursemoduleid": 89,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Descubre más",
-                "activities": [
-                    {
-                        "activityname": "Fuente de energía",
-                        "coursemoduleid": -1,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Proyecto de emprendimiento",
-                "activities": [
-                    {
-                        "activityname": "Fuente de energía",
-                        "coursemoduleid": -1,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Canvas",
-                        "coursemoduleid": 90,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Foro",
-                        "coursemoduleid": 91,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Educación financiera",
-                "activities": [
-                    {
-                        "activityname": "Fuente de energía",
-                        "coursemoduleid": -1,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Habilidades financieras",
-                        "coursemoduleid": -1,
-                        "points": 0,
-                        "started": 0
-                    },
-                    {
-                        "activityname": "Foro",
-                        "coursemoduleid": 93,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            },
-            {
-                "sectionname": "Cabina de soporte",
-                "activities": []
-            },
-            {
-                "sectionname": "Exploración final",
-                "activities": [
-                    {
-                        "activityname": "Exploración final",
-                        "coursemoduleid": 96,
-                        "points": 0,
-                        "started": 0
-                    }
-                ]
-            }
-        ]
-    }
-];
+
 
 var _badgesPerChallenge = [
     {badgeId: 2, badgeName: "Combustible", challengeId: 113},
@@ -1158,32 +984,29 @@ var _badgesPerChallenge = [
 
 
 var _activityRoutes = [
-    {id: 150, name: '', url: '/ZonaDeVuelo/ExploracionInicial/1001'},
-    {id: 112, name: '', url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia'},
-    {id: 113, name: '', url: '#'},
-    {id: 149, name: '', url: '/ZonaDeVuelo/Conocete/ZonaDeContacto/149'},
-    {id: 145, name: '', url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia'},
-    {id: 139, name: 'Reto Multiple', url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
-    {id: 151, name: '', url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
-    {id: 114, name: '', url: '#'},
-    {id: 146, name: '', url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia'},
-    {id: 70, name: '', url: '/ZonaDeVuelo/MisSuenos/MisGustos/1006'},
-    {id: 71, name: '', url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
-    {id: 72, name: '', url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
-    {id: 73, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
-    {id: 115, name: '', url: '#'},
-    {id: 68, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat'},
-    {id: 100, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
-    {id:89,name:'',url:'/ZonaDeAterrizaje/ExploracionInicial/3101'},
-    {id:207,name:'',url:'/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/207'},
-    {id:209,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/209'},
-    {id:210,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302'},
-    {id:212,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/93'},
-    {id:213,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/213'},
-    {id:214,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
-    {id:216,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
-    {id:95,name:'',url:'/ZonaDeAterrizaje/CabinaDeSoporte/95'},
-    {id:96,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'}
+    {id: 1001, name: '', url: '/ZonaDeVuelo/ExploracionInicial/1001'},
+    {id: 1101, name: '', url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/112'},
+    {id: 1049, name: '', url: '/ZonaDeVuelo/Conocete/ZonaDeContacto/149'},
+    {id: 1020, name: '', url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/145'},
+    {id: 1039, name: 'Reto Multiple', url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
+    {id: 1010, name: '', url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
+    {id: 1021, name: '', url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/146'},
+    {id: 1006, name: '', url: '/ZonaDeVuelo/MisSuenos/MisGustos/1006'},
+    {id: 1005, name: '', url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
+    {id: 1007, name: '', url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
+    {id: 1008, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
+    {id: 1002, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/68'},
+    {id: 1009, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
+    {id:3101,name:'',url:'/ZonaDeAterrizaje/ExploracionInicial/3101'},
+    {id:3201,name:'',url:'/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/207'},
+    {id:3301,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/209'},
+    {id:3302,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302'},
+    {id:3304,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/93'},
+    {id:3401,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/213'},
+    {id:3402,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
+    {id:3404,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
+    {id:3501,name:'',url:'/ZonaDeAterrizaje/CabinaDeSoporte/95'},
+    {id:3601,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'}
     //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 
