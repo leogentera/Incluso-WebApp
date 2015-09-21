@@ -266,7 +266,7 @@ angular
                 var data = {userid :  currentUserId, like_status: like_status };
                 $scope.fuenteDeEnergia.status = 1;
                 // update activity status dictionary used for blocking activity links
-                updateActivityStatusDictionary(activityId);                
+                updateActivityStatusDictionary($scope.fuenteDeEnergia.activity_identifier);
                 moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token,successEndFuente, function(){$scope.$emit('HidePreloader');});                                                                    
             }            
         }]);
