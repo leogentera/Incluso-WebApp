@@ -1006,7 +1006,8 @@ var _activityRoutes = [
     {id:3402,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
     {id:3404,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
     {id:3501,name:'',url:'/ZonaDeAterrizaje/CabinaDeSoporte/95'},
-    {id:3601,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'}
+    {id:3601,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'},
+    {id:50000,name: 'Comunidad General', url: '/Community/50000'}
     //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 

@@ -640,8 +640,12 @@
                 }
                 
                 /* General Community */
-                var generalCommunity =_.filter(activities, function (a){
-                    return a.activity_type == 'forum' && a.activityname == "Comunidad" && a.sectionname == "General" && a.parentsection == 0;
+                var communityActivityId = _.filter(_activityRoutes, function (ar){
+                    return ar.name == "Comunidad General";
+                });
+                
+                var generalCommunity = _.filter(activities, function (a){
+                    return a.activity_identifier == communityActivityId[0].id;
                 })[0];
                 
                 var community = {
