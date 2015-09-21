@@ -30,6 +30,7 @@
                 if(activityId!= undefined && activityId > 0 && !$scope.canStartActivity(activityId)) {
                     return false;
                 }
+                //$location.path(url + activityId);
                 $location.path(url);
                 if(sideToggle == "sideToggle")
                     $rootScope.sidebar = !$rootScope.sidebar;
