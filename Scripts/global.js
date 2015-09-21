@@ -611,6 +611,14 @@ function getActivityAtAnyCost(activity_identifier, moodle_id) {
 
 }
 
+function getMoodleIdFromTreeActivity(activityId){
+    var moodleId;
+    var activityFromTree = getActivityByActivity_identifier(activityId);
+    activityFromTree.activities? moodleId = activityFromTree.activities[0].coursemoduleid : moodleId = activityFromTree.coursemoduleid;
+
+    return moodleId;
+}
+
 var relation_MoodleId_ActivityIdentifier = [
     {
         'recievedMoodleId': 91,
