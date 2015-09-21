@@ -676,6 +676,35 @@
 
     }
 
+    .dashboard-blueplanets {
+        .component.video,
+        .showcase-carousel.pages,
+        .activities {
+            background: none;
+            background-image: none;        
+        }  
+        .progreso {
+            width: 90%;
+            height: 22vh;
+            margin: 0px auto;
+            padding: 0px;
+            padding-top: 1vh;
+            background-image: url("@{url-images}/bg-stage-1-theme-pattern.gif");
+            background-position: 100% center;
+            background-size: 100% 100%; 
+            .border-radius(5px);
+            .spinner {
+                padding: 3% 9% 6%;
+                .circle {
+                    height: 50%;
+                }
+                .text {
+                    top: ~"calc(53% - 25px)";
+                }
+            }
+        }   
+    }
+
     footer.footer{
         background-image: url('@{url-images}/img-footer-texture-lg.png');
         background-color: #24292B;
