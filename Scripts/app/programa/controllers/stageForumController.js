@@ -182,6 +182,15 @@ angular
                   case "148":
                       $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
+                  case "179":
+                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 1);
+                      break;
+                  case "93":
+                      $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 2);
+                      break;
+                  case "91":
+                      $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 3);
+                      break;
                   default:
                       $location.path('/ZonaDeVuelo/Dashboard/1');
                       break;

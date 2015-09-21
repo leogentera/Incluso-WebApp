@@ -113,7 +113,8 @@
                                 <div class="form-group theme-form" ng-show="exploracionInicialStage2[3][4]">
                                     <div class="add">
                                         <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
+                                        <textarea class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Qué has intentado?"
+                                                  onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                   ng-model="exploracionInicialStage2OtroAnswers[0].answers[0]">
                                         </textarea>
                                     </div>
@@ -129,9 +130,6 @@
                             </a>
                             <a href="#" id="next" ng-click="addToAnswerIndex(1, 4)">
                                 <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
-                                <!--
-                                <i class="icomoon icon-arrow-bold-right txt-bigger fl-right"></i>
-                                -->
                             </a>
 
                             <div class="centered">
@@ -139,12 +137,6 @@
                                 <span id="totalPages" class="white txt-bigger">4</span>
                             </div>
                         </div>
-                        <!--
-                        <button class="btn btn-primary btn-lg btn-cnt" id="save" type="button"
-                                ng-click="validateAnsweredQuestions()">Terminar
-                        </button>
-                        <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
-                        -->
 
                         <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 4 && activity_status == 0"
                            ng-click="validateExploracionInicialStage2()">Guardar</a>
@@ -160,16 +152,6 @@
                             <div class="subtitle centered min-pad">"Exploración inicial"</div>
                             <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
                         </section>
-                        <!--
-                        <section class="centered txt-bigger ">
-                            <i class="icomoon icon-checked-join txt-bigger green-giant "></i>
-                        </section>
-                        <section class="txt-renglon pill">
-                            <div class="fl-left">Estrellas ganadas:</div>
-                            <div class="fl-right sm-pill"><span>240</span><i class="icomoon icon-star fl-right"></i>
-                            </div>
-                        </section>
-                        -->
 
                         <section class="centered txt-bigger">
                             <span class="icomoon icon-checked-join txt-bigger green-giant"></span>

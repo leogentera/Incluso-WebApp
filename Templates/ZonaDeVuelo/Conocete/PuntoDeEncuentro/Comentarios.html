@@ -89,7 +89,7 @@
             <div>
               <a class="user-alias" ng-click="navigateTo('Profile/' + p.post_autor_id)">{{p.post_author}} </a>
               <span>publicó:</span>
-              <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
+              <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
             </div>
           </div>
           <div class="block">
@@ -108,7 +108,8 @@
               <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />              
               <div>
                 <a class="user-alias" ng-click="navigateTo('Profile/' + r.post_autor_id)">{{r.post_author}} </a>
-                <span>comentó:</span>   
+                <span>comentó:</span>
+                <div> {{r.created *1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
                 <div>{{r.message}}</div>
               </div>
             </div>

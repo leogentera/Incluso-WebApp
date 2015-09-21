@@ -18,9 +18,7 @@
                 <div id="owl" class="owl-carousel">
                     <!--Pregunta tipo Si/No-->
                     <div>
-                        <div class="txt-renglon txt-bigger">1. ¿Alguna vez has tenido un sueño que no has sabido
-                            cómo alcanzar?
-                        </div>
+                        <div class="txt-renglon txt-bigger">1. ¿Alguna vez has tenido un sueño que no has sabido cómo alcanzar?</div>
                         <section class="form txt-renglon txt-bigger part list">
                             <div class="tnf">
                                 <input id="tru" type="radio" name="vf"
@@ -64,9 +62,11 @@
                             <div class="form-group theme-form" ng-show="AnswersResult.answers[1][4]">
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
-                                        <textarea id="" class="form-control form-control-lg theme-form" row="2"
+                                        <textarea class="form-control form-control-lg theme-form" row="2"
                                                   name="opciones" placeholder="¿Qué has intentado?"
-                                                  ng-readonly="setReadOnly" ng-model="exploracionInicialOtroAnswer[0].answers[0]">
+                                                  onkeydown="if(event.keyCode == 13) event.preventDefault();"
+                                                  ng-readonly="setReadOnly"
+                                                  ng-model="exploracionInicialOtroAnswer[0].answers[0]">
                                         </textarea>
                                 </div>                                                           
                             </div>                            
@@ -94,6 +94,7 @@
                                                 <textarea id="textoarea4"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="txtAbierto" placeholder="Tu respuesta aquí..."
+                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-model="AnswersResult.answers[2][$index]"
                                                           ng-readonly="setReadOnly">
                                                 </textarea>
@@ -112,40 +113,24 @@
                         </div>
                     </div>
 
-
-                    <!--Pregunta tipo Texto Abierto-->
-                    <!--
-                    <div>
-                        <div class="txt-renglon txt-bigger">3. ¿Qué persona exitosa que conoces te inspira?</div>
-                        <section class="form txt-renglon txt-bigger part list">
-                            <div class="add">
-                                <span class="icomoon icon-edit"></span>
-                                <textarea id="texto1" row="2" name="txtAbierto" placeholder="Tu respuesta aquí..."
-                                          ng-model="AnswersResult.answers[2]" ng-readonly="setReadOnly"></textarea>
-                            </div>
-                        </section>
-                    </div>
-                    -->
                     <!--Pregunta tipo Selección Simple-->
                     <div>
                         <div class="txt-renglon txt-bigger">4. ¿Sabes cuáles son tus habilidades?</div>
                         <section class="form txt-renglon txt-bigger part list">
                             <input id="option1" type="radio" value="0" name="option"
-                                   ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
-                                    />
+                                   ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"/>
                             <label for="option1">Sí</label>
 
                             <input id="option2" type="radio" value="1" name="option"
-                                   ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
-                                    />
+                                   ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"/>
                             <label for="option2">No</label>
 
                             <input id="option3" type="radio" value="2" name="option"
-                                   ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"
-                                    />
+                                   ng-model="AnswersResult.answers[3]" ng-disabled="setReadOnly"/>
                             <label for="option3">Más o menos</label>
                         </section>
                     </div>
+
                     <!--Pregunta tipo Lista Dinámica-->
                     <div id="listaDinamica">
                         <div class="txt-renglon txt-bigger">5. Menciona tus principales habilidades</div>
@@ -168,8 +153,8 @@
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="txtAbierto" placeholder="Nueva habilidad"
                                                           ng-model="AnswersResult.answers[4][$index]"
-                                                          ng-readonly="setReadOnly"
-                                                        >
+                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
+                                                          ng-readonly="setReadOnly">
                                                 </textarea>
                                         </div>
 
@@ -293,32 +278,13 @@
 
         $("#next").click(function (evt) {
             owl.trigger('owl.next');
-            /*
-             var numberOfPage = $('#index');
-             var totalPages = $('#totalPages');
-             if (numberOfPage.text().substring(0,1) == totalPages.text()) {
-             $('#save').show();
-             }else{
-             $('#save').hide();
-             }
-             */
             evt.preventDefault();
         });
 
         $("#prev").click(function (evt) {
             owl.trigger('owl.prev');
-            /*
-             var numberOfPage = $('#index');
-             var totalPages = $('#totalPages');
-             if (numberOfPage.text().substring(0,1) == totalPages.text()) {
-             $('#save').show();
-             }else{
-             $('#save').hide();
-             }
-             */
             evt.preventDefault();
         });
-
     });
 
 </script>

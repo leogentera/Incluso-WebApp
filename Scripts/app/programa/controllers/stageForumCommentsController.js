@@ -138,26 +138,10 @@ angular
                 }
                 console.log(activity_identifier);
                 console.log(moodleid);
-                //var moodleid;
-                debugger;
+
                 var activityFromTree = getActivityAtAnyCost(activity_identifier, moodleid).activity;
-                //var activityFromTree = getActivityByActivity_identifier(activity_identifier);
-                //
-                ////In case getActivityByActivity_identifier can't reach the activity node
-                //if(!activityFromTree){
-                //    switch (moodleid){
-                //        case 178:
-                //            activityFromTree = _getActivityByCourseModuleId(moodleid);
-                //            break;
-                //    }
-                //
-                //    //If serached activity happens to be a child node
-                //    activityFromTree.activities && activityFromTree.activities.length? activityFromTree = activityFromTree.activities[0] : '';
-                //
-                //}
 
                 if(activityFromTree.status == 1){
-                    debugger;
                     addExtraForumParticipation($scope.discussion.id);
                     var extraPointsCounter = getForumsExtraPointsCounter();
                     var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $scope.discussion.id; });
@@ -201,8 +185,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": parentId,
                     "message": message,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
                     "posttype": postType,
                     "fileToUpload":""
                 };
@@ -244,8 +228,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": message,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
                     "posttype": postType,
                     "fileToUpload": attachment? attachment.base64 : null
                 };
@@ -324,8 +308,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": '',
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
                     "posttype": 4,
                     "filecontent":$scope.attachmentToPost.image,
                     "filename": userId + $scope.attachmentToPost.fileName,
@@ -440,6 +424,15 @@ angular
                         break;
                     case "85":
                         $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
+                    case "93":
+                        $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
+                    case "179":
+                        $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
+                        break;
+                    case "91":
+                        $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
                         break;
                     default:
                         $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.moodleid);
