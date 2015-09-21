@@ -273,7 +273,7 @@
             controller: 'GameController'
         });
 
-        $routeProvider.when('/Community', { 
+        $routeProvider.when('/Community/:activityId', { 
             templateUrl: 'Templates/Programa/community.html',
             controller: 'programaComunidadController'
         });
@@ -607,6 +607,11 @@
         });
 
         //TODO Agregar ruta para cerrar foro
+        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activity_identifier/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/ForoCierre.html',
+            controller: 'stageForumCloseController'
+        });
+
         $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/:moodleid', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'

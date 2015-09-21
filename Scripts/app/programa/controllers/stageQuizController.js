@@ -252,9 +252,9 @@ angular
                 _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
 
                 if ($scope.activity.activities) {
-                    _activityStatus[$scope.activity.activities[0].coursemoduleid] = 1;
+                    _activityStatus[$scope.activity.activities[0].activity_identifier] = 1;
                 } else {
-                    _activityStatus[$scope.activity.coursemoduleid] = 1;
+                    _activityStatus[$scope.activity.activity_identifier] = 1;
                 }
 
                 //Update quiz on server

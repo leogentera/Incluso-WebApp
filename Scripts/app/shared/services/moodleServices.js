@@ -480,13 +480,13 @@
                             }
                         }
                     }
-                    usercourse.stages[i].stageProgress = Math.round(100.0 * stageCompletedActivities / stageActivities, 0);
+                    usercourse.stages[i].stageProgress = Math.trunc(100.0 * stageCompletedActivities / stageActivities, 0);
                     if (usercourse.stages[i].status == 1) {
                         globalPointsAchieved += usercourse.stages[i].points;
                     }
                 }
             }
-            usercourse.globalProgress = Math.round(100.0 * globalCompletedActivities / globalActivities, 0);
+            usercourse.globalProgress = Math.trunc(100.0 * globalCompletedActivities / globalActivities, 0);
             if (user) {
                 user.stars = globalPointsAchieved;
             }
@@ -624,7 +624,7 @@
                 });
                 
                 var multipleChallengeActivity = _.filter(activities, function (a){
-                    return a.coursemoduleid == multipleChallengeActivityId[0].id;
+                    return a.activity_identifier == multipleChallengeActivityId[0].id;
                 });
                 
                 var multipleChallenges = _.filter(activities, function (a){
@@ -640,8 +640,12 @@
                 }
                 
                 /* General Community */
-                var generalCommunity =_.filter(activities, function (a){
-                    return a.activity_type == 'forum' && a.activityname == "Comunidad" && a.sectionname == "General" && a.parentsection == 0;
+                var communityActivityId = _.filter(_activityRoutes, function (ar){
+                    return ar.name == "Comunidad General";
+                });
+                
+                var generalCommunity = _.filter(activities, function (a){
+                    return a.activity_identifier == communityActivityId[0].id;
                 })[0];
                 
                 var community = {
