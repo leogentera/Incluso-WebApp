@@ -480,13 +480,13 @@
                             }
                         }
                     }
-                    usercourse.stages[i].stageProgress = Math.trunc(100.0 * stageCompletedActivities / stageActivities, 0);
+                    usercourse.stages[i].stageProgress = Math.floor(100.0 * stageCompletedActivities / stageActivities, 0);
                     if (usercourse.stages[i].status == 1) {
                         globalPointsAchieved += usercourse.stages[i].points;
                     }
                 }
             }
-            usercourse.globalProgress = Math.trunc(100.0 * globalCompletedActivities / globalActivities, 0);
+            usercourse.globalProgress = Math.floor(100.0 * globalCompletedActivities / globalActivities, 0);
             if (user) {
                 user.stars = globalPointsAchieved;
             }
