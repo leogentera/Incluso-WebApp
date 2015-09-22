@@ -582,39 +582,6 @@ function _getActivityByCourseModuleId(coursemoduleid, usercourse) {
     return matchingActivity;
 }
 
-function getActivityAtAnyCost(activity_identifier, moodle_id) {
-
-    var parentActivity = getActivityByActivity_identifier(activity_identifier);
-    var activity;
-
-    //In case getActivityByActivity_identifier can't reach the parentActivity node
-    if (!parentActivity) {
-        var moodleId = _.find(relation_MoodleId_ActivityIdentifier, function (activity) {
-            return activity.activity_identifier == activity_identifier;
-        }).moodleid;
-        //switch (Number(moodle_id)){
-        //    case 178:
-        parentActivity = _getActivityByCourseModuleId(moodleId);
-        //break;
-        //}
-
-        //If parentActivity happens to be a child node
-        parentActivity.activities && parentActivity.activities.length ? activity = parentActivity.activities[0] : activity = parentActivity;
-
-    } else {
-        //activity = parentActivity;
-        parentActivity.activities && parentActivity.activities.length ? activity = parentActivity.activities[0] : activity = parentActivity;
-    }
-    console.log('Parent activity:');
-    console.log(parentActivity);
-
-    return {
-        parentActivity: parentActivity,
-        activity: activity
-    }
-
-}
-
 function getMoodleIdFromTreeActivity(activityId){
     var moodleId;
     var activityFromTree = getActivityByActivity_identifier(activityId);
