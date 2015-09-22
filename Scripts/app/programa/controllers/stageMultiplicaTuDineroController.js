@@ -149,7 +149,7 @@ angular
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
                 var subactivitiesCompleted = [];
                 var activitiesCompleted = 0;
-                if (parentActivit == 0) {
+                if (parentActivity.status == 0) {
                     for (var i = 0; i < parentActivity.activities.length; i++) {
                         if(parentActivity.activities[i].status == 1 && i != 0){
                             activitiesCompleted++;
@@ -171,7 +171,9 @@ angular
                         userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
                         _setLocalStorageJsonItem("usercourse", userCourseUpdated);
                         _setLocalStorageJsonItem("activityManagers", $scope.activities);
-                        $scope.saveQuiz($scope.multiplicaTuDineroActivity, logEntry, userCourseUpdated);
+                        if (parentActivity.activities[0].status == 0) {
+                            $scope.saveQuiz($scope.multiplicaTuDineroActivity, logEntry, userCourseUpdated);
+                        }
                     }
                 }
                 $location.path('/ZonaDeAterrizaje/Dashboard/3/0');
