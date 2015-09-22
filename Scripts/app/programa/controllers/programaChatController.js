@@ -40,15 +40,7 @@ angular
                 console.log('creating interval:' + interval);
             }
 
-            function getMessages(){
-                 if($location.$$path != "/Chat"){
-                    clearInterval(interval);
-                 }
-                 else{
-                    console.log('getting messages from the services (true)');
-                    moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
-                 }
-            }
+
 
             function getUserRefreshChatCallback() {
                 $scope.$emit('HidePreloader'); //hide preloader
@@ -84,6 +76,27 @@ angular
                 }
             }   
 
+            function getMessages(){
+                var existingInterval = localStorage.getItem('Interval');
+                 if($location.$$path != "/Chat"){
+                    //Necesitamos volver a poner en marcha el refresh de notificaciones del chat
+                    if(!existingInterval){       
+                    clearInterval(interval);
+                        interval = setInterval(getUserChat,180000);          
+                        _setLocalStorageItem('Interval', interval);
+                    }                    
+                 }
+                 else{
+                     //Si ya existe un intervalo hay que borrarlo                    
+                    if(existingInterval){
+                        clearInterval(parseInt(existingInterval));
+                        ClearLocalStorage("Interval");
+                    }                
+
+                    moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
+                 }
+            }
+
             $scope.back = function () {
                 var userCurrentStage = localStorage.getItem("currentStage");              
                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4');
@@ -106,10 +119,29 @@ angular
                         var newMessages = JSON.stringify($scope.messages);                
                         _setLocalStorageItem('userChat',newMessages);
                         $anchorScroll();
+                                                       
                         moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
                     }, 1000);
                 }                
             };
+            
+            function getUserChat() {     
+                       
+                moodleFactory.Services.GetUserChat(_getItem("userId"),function() {                    
+                    var chat = JSON.parse(localStorage.getItem('userChat'));
+                    var userId = localStorage.getItem("userId");
+                    
+                    var chatAmount = _.countBy(chat,function(messages){
+                            return messages.senderid != userId;
+                        });
+                                                    
+                    if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
+                        _setLocalStorageItem('chatRead',"false");
+                    }
+
+                    _setLocalStorageItem('chatAmountRead',chatAmount.true);
+                }, errorCallback, true);                
+            }
             
             function getUserChatCallback() {
                 //too late, we already did the scroll

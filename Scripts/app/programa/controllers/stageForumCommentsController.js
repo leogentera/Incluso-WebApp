@@ -1,5 +1,5 @@
 angular
-    .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants', 'naif.base64'])
+    .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants'])
     .controller('stageForumCommentsController', [
         '$q',
         '$scope',

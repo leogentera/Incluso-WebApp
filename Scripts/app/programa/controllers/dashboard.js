@@ -58,7 +58,11 @@
                 logout($http, $scope, $location);
             };                    
           
-
+            var existingInterval = localStorage.getItem('Interval');
+            if(!existingInterval){
+                var interval = setInterval(getUserChat,180000);          
+                _setLocalStorageItem('Interval', interval);
+            }                        
 
             $scope.navigateToStage = function(){
                 //Check if first time with course
@@ -203,7 +207,7 @@
                     }
 
                     _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                }, errorCallback, false);                
+                }, errorCallback, true);                
             }
             
 

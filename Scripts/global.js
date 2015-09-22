@@ -644,6 +644,8 @@ var logout = function($scope, $location){
       localStorage.removeItem("userChat");
       localStorage.removeItem("leaderboard");
       localStorage.removeItem("activityStatus");
+      clearInterval(parseInt(localStorage.getItem('Interval')));
+      localStorage.removeItem("Interval");      
       ClearLocalStorage("activity");
       ClearLocalStorage("activitiesCache");
       ClearLocalStorage("activityAnswers");      
