@@ -56,6 +56,7 @@ angular
                 "questionid": 18,
                 "answers": ['']
             }];
+
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosOtroAnswers = [{
                 "questionid": 43,
@@ -66,7 +67,7 @@ angular
             }, {
                 "questionid": 45,
                 "answers": ['']
-            }];
+            }];            
 
             $scope.misSuenosAnswers = [[], [], []];
             $scope.exploracionFinal = ['', '', '', '', ''];
@@ -304,6 +305,8 @@ angular
                 //_endActivity(activityModel, null, $scope.currentChallenge);
                 _endActivity(activityModel);
 
+                updateProfile();
+
                 //Redirect user to the proper dashboard
                 console.log($scope.activity_identifier);
                 switch ($scope.activity_identifier) {
@@ -341,8 +344,10 @@ angular
                     _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
                 }
 
+                _setLocalStorageJsonItem("UserTalents/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
+
                 //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
-                if (( $scope.activity_identifier == '1001' ||
+                if (($scope.activity_identifier == '1001' ||
                     $scope.activity_identifier == '1005' ||
                     $scope.activity_identifier == '1006' ||
                     $scope.activity_identifier == '2001')) {
@@ -354,6 +359,77 @@ angular
                     }
                 }
 
+            };
+
+            function updateProfile () {
+
+                $scope.userId = moodleFactory.Services.GetCacheObject("userId");
+                moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
+
+                    function (responseData) {                        
+                        console.log('Update profile successful...');                        
+                    },
+                    function (responseData) {
+                        console.log('Update profile fail...');
+                    });
+            };
+            
+            $scope.toggleSelection = function toggleSelection(stringValue, isChecked, questionArray) {
+                var index = -1;
+                if (isChecked) {
+                    switch (questionArray) {
+                        case "talents":
+                            $scope.userprofile.talents.push(stringValue);                            
+                            break;
+                        case "values":
+                            $scope.userprofile.values.push(stringValue);
+                            break;
+                        case "habilities":
+                            $scope.userprofile.habilities.push(stringValue);
+                            break;
+                        case "favoriteSports":
+                            $scope.userprofile.favoriteSports.push(stringValue);
+                            break;
+                        case "artisticActivities":
+                            $scope.userprofile.artisticActivities.push(stringValue);
+                            break;
+                        case "hobbies":
+                            $scope.userprofile.hobbies.push(stringValue);
+                            break;
+                        default:
+                            console.log('Unknow profile poperty');
+                    }
+                }
+                else {
+                    switch (questionArray) {
+                        case "talents":
+                            var index = $scope.userprofile.talents.indexOf(stringValue);
+                            $scope.userprofile.talents.splice(index, 1);
+                            break;
+                        case "values":
+                            var index = $scope.userprofile.values.indexOf(stringValue);
+                            $scope.userprofile.values.splice(index, 1);
+                            break;
+                        case "habilities":
+                            var index = $scope.userprofile.habilities.indexOf(stringValue);
+                            $scope.userprofile.habilities.splice(index, 1);
+                            break;
+                        case "favoriteSports":
+                            var index = $scope.userprofile.favoriteSports.indexOf(stringValue);
+                            $scope.userprofile.favoriteSports.splice(index, 1);
+                            break;
+                        case "artisticActivities":
+                            var index = $scope.userprofile.artisticActivities.indexOf(stringValue);
+                            $scope.userprofile.artisticActivities.splice(index, 1);
+                            break;
+                        case "hobbies":
+                            var index = $scope.userprofile.hobbies.indexOf(stringValue);
+                            $scope.userprofile.hobbies.splice(index, 1);
+                            break;
+                        default:
+                            console.log('Unknow profile poperty');
+                    }                    
+                }                
             };
 
 
@@ -704,7 +780,7 @@ angular
                         for (var userAnswersListIndex = 0; userAnswersListIndex < userAnswersList.length; userAnswersListIndex++) {
                             var userAnswer = cleanText(userAnswersList[userAnswersListIndex]).trim();
                             if (answerOption.answer == userAnswer) {
-                                $scope.misCualidadesAnswers[currentQuestionIndex][answerOptionsIndex] = 1;
+                                $scope.misCualidadesAnswers[currentQuestionIndex][answerOptionsIndex] = 1;                                
                                 if (userAnswer == "Otro") {
                                     $scope.misCualidadesOtroAnswers[currentQuestionIndex].answers[0] = question.other;
                                 }
@@ -712,7 +788,7 @@ angular
                         }
                     }
                     $scope.OtroAnswer = $scope.misCualidadesOtroAnswers;
-                    _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);
+                    _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);                   
                 }
             }
 
@@ -1036,7 +1112,7 @@ angular
                         }
 
                         //If...the activity quiz has a checkbox for the "Other" answer, then get it from Local Storage
-                        if (( $scope.activity_identifier == '1001' ||
+                        if (($scope.activity_identifier == '1001' ||
                             $scope.activity_identifier == '1005' ||
                             $scope.activity_identifier == '1006' ||
                             $scope.activity_identifier == '2001')) {
@@ -1200,12 +1276,12 @@ angular
                     size: size,
                     windowClass: 'user-help-modal opening-stage-modal'
                 }).result.finally(function () {
-                        $scope.$emit('ShowPreloader');
-                        $timeout(function () {
-                            $scope.$emit('HidePreloader');
-                        }, 1000)
-                        //$scope.$emit('HidePreloader');
-                    });
+                    $scope.$emit('ShowPreloader');
+                    $timeout(function () {
+                        $scope.$emit('HidePreloader');
+                    }, 1000)
+                    //$scope.$emit('HidePreloader');
+                });
             };
 
             $scope.openModal();
@@ -1481,9 +1557,9 @@ angular
 
                     $scope.exploracionFinalresult =
                         [
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
                             {
                                 "badAnswer": false,
                                 "firstOptionWrong": false,
@@ -1693,7 +1769,7 @@ angular
 
                     $scope.exploracionFinalresult2 =
                         [
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
                             {
                                 "badAnswer": false,
                                 "firstOptionWrong": false,
@@ -1917,7 +1993,7 @@ angular
                             "fourthOptionWrong": false,
                             "fifthOptionWrong": false
                         },
-                        {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                        { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
                         {
                             "badAnswer": false,
                             "firstOptionWrong": false,
@@ -2007,7 +2083,7 @@ angular
                 }
 
                 //console.log("Final: " + goodAnswersQty + " == " + checkPoints);
-                $scope.Score = (goodAnswersQty + addToScore ) * 100 / $scope.exploracionFinalresult3.length;
+                $scope.Score = (goodAnswersQty + addToScore) * 100 / $scope.exploracionFinalresult3.length;
             }
 
             function partialErrorCallbackStage3(partialActivityAnswers) {
