@@ -25,11 +25,11 @@ angular
 
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
-        $scope.idEtapa = 0; //hard coded
+        $scope.idEtapa = 1; //hard coded
             $scope.idReto = $routeParams['challengue'];
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
-        _setLocalStorageItem("userCurrentStage", 0);   // hard coded
+        _setLocalStorageItem("userCurrentStage", 1);   // hard coded
 
              setTimeout(function () {            
             var hits = 1;
@@ -210,10 +210,11 @@ angular
                 playVideo(videoAddress, videoName);
             };
 
-            $scope.startActivity = function (activity, index, parentIndex) {                
+            $scope.startActivity = function (activity, index, parentIndex) {
+                console.log(activity.activity_identifier);
                 if(!$scope.canStartActivity(activity.activity_identifier)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
-
+                console.log(url);
                 if (url) {
                     $location.path(url);
                 }

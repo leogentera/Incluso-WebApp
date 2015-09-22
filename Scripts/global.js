@@ -979,6 +979,7 @@ var _activityRoutes = [
     {id: 1008, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
     {id: 1002, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/1002'},
     {id: 1009, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
+    {id: 2001, name: '', url: '/ZonaDeNavegacion/ExploracionInicial/2001'},
     {id:3101,name:'',url:'/ZonaDeAterrizaje/ExploracionInicial/3101'},
     {id:3201,name:'',url:'/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201'},
     {id:3301,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/3301'},
