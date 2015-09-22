@@ -1,5 +1,5 @@
 angular
-    .module('incluso.programa.comunidad', ['GlobalAppConstants', 'naif.base64'])
+    .module('incluso.programa.comunidad', ['GlobalAppConstants'])
     .controller('programaComunidadController', [
         '$q',
         '$scope',

@@ -49,10 +49,6 @@
                                 <input id="option2" type="radio" value="1" name="option1"
                                        ng-model="exploracionInicialStage3[1]" ng-disabled="setReadOnly"/>
                                 <label for="option2">No, porque si la idea es buena no necesita un plan</label>
-
-                                <input id="option3" type="radio" value="2" name="option1"
-                                       ng-model="exploracionInicialStage3[1]" ng-disabled="setReadOnly"/>
-                                <label for="option3">Te ayuda a crecer de igual forma en todos las áreas de tu vida</label>
                             </section>
                         </div>
 
@@ -82,6 +78,7 @@
                                 <label for="check7">La forma en que se entrega al cliente</label>
 
                                 <input id="check8" type="checkbox" value="check8" name="check"
+                                       ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[2][4]" ng-disabled="setReadOnly"/>
                                 <label for="check8">Los recursos que se necesitan</label>
 
@@ -144,7 +141,7 @@
                         <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 4"
                            ng-click="validateExploracionInicialStage3()">Guardar</a>
 
-                        <div class="txt-renglon centered txt-bigger" ng-click="cancel3()">Cancelar</div>
+                        <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                     </section>
                 </div>
 

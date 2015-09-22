@@ -13,7 +13,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _httpFactory = $http;
             _timeout = $timeout;
-            $scope.moodleId = $routeParams.moodleid;
+            $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
              var redirectOnShield = function () {
@@ -52,7 +52,7 @@ angular
                  }
             };
 
-            if($routeParams.moodleid == 149) {
+            if($scope.moodleId == 149) {
               redirectOnShield();
             }
 
@@ -61,11 +61,10 @@ angular
             $rootScope.showFooter = true; 
             $rootScope.showFooterRocks = false;
 
-            $scope.moodleId = $routeParams.moodleid;
+            //$scope.moodleId = $routeParams.moodleid;
 
             $scope.scrollToTop();
 
-           $scope.activity = "Here is a value";
            function getForumsProgress(){
               var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : setForumsList();
               return forumsProgress;
@@ -105,51 +104,48 @@ angular
             };
 
             function getDataAsync() {
-                $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
+                //$scope.moodleId;
+                //var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
+                //activityFromTree.activities? $scope.moodleId = activityFromTree.activities[0].coursemoduleid : $scope.moodleId = activityFromTree.coursemoduleid;
+                $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+                $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
+                //$routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
             }
             
             function getForumDiscussionsCallback() {
-                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid));
+                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
                 getForumsProgress();
-                getForumsExtraPointsCounter();
-               $scope.$emit('HidePreloader'); //hide preloader
-            }
-
-            function getActivityInfoCallback() {
-               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
-               getForumsProgress();
                 getForumsExtraPointsCounter();
                $scope.$emit('HidePreloader'); //hide preloader
             }
 
             getDataAsync();
 
-            $scope.showComentarios = function (discussionId, moodleId) {
-
-              switch (moodleId){
-                  case "64":
-                      $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.moodleid + "/" + discussionId);
+            $scope.showComentarios = function (discussionId) {
+              switch ($scope.moodleId){
+                  case 64:
+                      $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
-                  case "73":
-                      $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/" + $routeParams.moodleid + "/" + discussionId);
+                  case 73:
+                      $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
-                  case "147":
-                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                  case 147:
+                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
-                  case "148":
-                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                  case 148:
+                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
-                  case "179":
-                      $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                  case 179:
+                      $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
-                  case "85":
-                      $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                  case 85:
+                      $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
-                  case "93":
-                      $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                  case 93:
+                      $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
-                  case "91":
-                      $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                  case 91:
+                      $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
               }
 
@@ -167,10 +163,10 @@ angular
                     });
                 }, 1000);
               
-              var moodleId = $routeParams.moodleid;
+              var moodleId = $scope.moodleId;
               //TODO Add new routes for Zona de Navegación && Zona de Aterrizaje
               switch (moodleId){
-                  case "64":
+                  case 64:
                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
                   case "73":

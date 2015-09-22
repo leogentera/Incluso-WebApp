@@ -201,7 +201,7 @@ angular
                 }
             }
             
-            $scope.stageProgress = Math.trunc((stageProgressBuffer  / stageTotalActivities)*100);            
+            $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);            
             var challengeCompletedId = _isChallengeCompleted();            
             _coachNotification();
                                     
@@ -279,7 +279,8 @@ angular
                         
             var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
             
-            $scope.robotMessages = [{
+            $scope.robotMessages = [
+                    {
                         title : "CUARTO DE RECURSOS",
                         message : "¡Has recuperado con éxito una de las piezas para reparar la nave! Ahora sabes que los sueños son el motor que te impulsa a avanzar y llegar cada vez más lejos.",
                         read : "false",
@@ -299,7 +300,7 @@ angular
                         message : "¡Has recuperado con éxito una de las piezas para reparar la nave!  Lograste unir los puntos clave para definir un sueño: pasión, habilidades y talentos. ¡Sólo falta ponerlos en acción para lograr lo que te propongas!",
                         read : "false",
                         challengeId: 116}];
-             
+                          
              $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});             
              
             }).controller('closingStageController', function ($scope, $modalInstance,$location) {

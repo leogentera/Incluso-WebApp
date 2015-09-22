@@ -25,7 +25,7 @@
         'incluso.programa.leaderboard',
         'incluso.programa.comunidad',
         'incluso.programa.reconocimiento',
-        'incluso.programa.album',
+        //'incluso.programa.album',
         'incluso.stage.dashboardcontroller',
         
         // TODO: Should be just one controller for all stage dashboards, will merge soon
@@ -40,16 +40,16 @@
         'incluso.stage.gameretomultiplecontroller',
         'incluso.stage.gameretomultipleexternalappcontroller',
         'incluso.stage.gameretomultipleresultscontroller',
-        'incluso.stage.tueligesController',
+        //'incluso.stage.tueligesController',
         'incluso.stage.quizcontroller',
-        'incluso.stage.mapadevidaController',
+        //'incluso.stage.mapadevidaController',
         'incluso.stage.chatcontroller',
-        'incluso.stage.multiplicatudineroController',
+        //'incluso.stage.multiplicatudineroController',
         'incluso.program.alerts',        
         'incluso.program.myInterests',
         'incluso.program.myStrengths',
-        'incluso.program.myStars',
-        'incluso.program.rewardDetail',
+        //'incluso.program.myStars',
+        //'incluso.program.rewardDetail',
         'incluso.program.hallOfFame',
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
@@ -328,11 +328,6 @@
             controller: 'stageContentsController'
         });
     
-        //$routeProvider.when('/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre', {
-        //    templateUrl: 'Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html',
-        //    controller: 'stageMessageController'
-        //});
-    
         $routeProvider.when('/ZonaDeVuelo/Conocete/FuenteDeEnergia/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html',
             controller: 'stageContentsController'
@@ -353,50 +348,45 @@
             controller: 'stageGameRetoMultipleResultsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
 
-        $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
 
-        $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
 
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/:moodleid', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html',
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/:moodleid', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html',
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html',
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
-    
-        //$routeProvider.when('/ZonaDeVuelo/Conocete/MensajeDeCierre', {
-        //    templateUrl: 'Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html',
-        //    controller: 'stageMessageController'
-        //});
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html',
@@ -407,8 +397,8 @@
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html',
             controller: 'stageQuizController'
         });
-        //TODO Checar este tipo de cierre
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/Cierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/Cierre', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html',
             controller: 'stageMessageController'
         });
@@ -417,8 +407,8 @@
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustos.html',
             controller: 'stageQuizController'
         });
-        //TODO Checar este tipo de cierre
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/Cierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/Cierre', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html',
             controller: 'stageMessageController'
         });
@@ -427,23 +417,23 @@
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/Suena.html',
             controller: 'stageQuizController'
         });
-        //TODO Checar este tipo de cierre
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/Cierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/Cierre', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html',
             controller: 'stageMessageController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
-        //TODO Checar este tipo de cierre
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MensajeDeCierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MensajeDeCierre', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html',
             controller: 'stageMessageController'
         });
@@ -452,8 +442,8 @@
             templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporte.html',
             controller: 'stageChatController'
         });
-        //TODO Checar este tipo de cierre
-        $routeProvider.when('/ZonaDeVuelo/CabinaDeSoporteCierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/CabinaDeSoporteCierre', {
             templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html',
             controller: 'stageMessageController'
         });
@@ -462,13 +452,13 @@
             templateUrl: 'Templates/ZonaDeVuelo/ExploracionFinal.html',
             controller: 'stageQuizController'
         });
-        //TODO Checar este tipo de cierre
-        $routeProvider.when('/ZonaDeVuelo/ExploracionFinalCierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/ExploracionFinalCierre', {
             templateUrl: 'Templates/ZonaDeVuelo/ExploracionFinalCierre.html',
             controller: 'stageMessageController'
         });
-        //TODO Checar este tipo de cierre
-        $routeProvider.when('/ZonaDeVuelo/Cierre/:moodleid', { 
+
+        $routeProvider.when('/ZonaDeVuelo/Cierre/:moodleid', {
             templateUrl: 'Templates/ZonaDeVuelo/Cierre.html',
             controller: 'programaEndController'
         });
@@ -505,19 +495,17 @@
             controller: 'stageContentsController'
         });
 
-
-//**********************************************************************************************************
-        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activity_identifier/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:activityId', {
             templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/:activityId', {
             templateUrl: 'Templates/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
@@ -549,12 +537,12 @@
             controller: 'stageMapaDeVidaController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/:activityId', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
@@ -606,13 +594,12 @@
             controller: 'stageQuizController'
         });
 
-        //TODO Agregar ruta para cerrar foro
-        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activity_identifier/:moodleid', {
+        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activity_identifier/:activityId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
 
-        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/:moodleid', {
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/:activityId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
@@ -622,7 +609,7 @@
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
@@ -636,13 +623,13 @@
             templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia.html',
             controller: 'stageContentsController'
         });
-        //TODO Agregar ruta para cerrar foro
-        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/:moodleid', {
+
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/:activityId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
 
-        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });

@@ -20,7 +20,7 @@ angular
             
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            $rootScope.linksFooter = true;
+            $rootScope.linksStage2Footer = true;
             $scope.scrollToTop();
 
             $scope.activitiesCompletedInCurrentStage = [];
@@ -117,8 +117,8 @@ angular
             $scope.openModal_CloseChallenge = function (size) {                
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'ClosingChallengeModal.html',
-                    controller: 'closingChallengeController',
+                    templateUrl: 'ClosingStageTwoChallengeModal.html',
+                    controller: 'closingStageTwoChallengeController',
                     size: size,
                     windowClass: 'closing-stage-modal user-help-modal'                    
                 });
@@ -224,7 +224,7 @@ angular
                 return activity.status;
             };
             
-        }]).controller('closingChallengeController', function ($scope, $modalInstance) {
+        }]).controller('closingStageTwoChallengeController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };

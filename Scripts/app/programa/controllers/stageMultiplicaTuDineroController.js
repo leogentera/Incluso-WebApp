@@ -26,7 +26,6 @@ angular
 
             $scope.user = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
-            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.multiplicaTuDineroActivity = moodleFactory.Services.GetCacheJson("multiplicaTuDineroActivities");
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             $scope.stars = 0;
@@ -63,27 +62,37 @@ angular
                 var request = {
                     "userid": $scope.user.id,
                     "alias": $scope.user.username,
-                    "pathimagenes":"",
-                    "actividad": "Toma de decisiones",
+                    "actividad": $scope.multiplicaTuDineroActivity.name,
+                    "estrellas":$scope.stars,
+                    "pathImagenes":"",
                     "preguntas": [],
-                    "catalogorespuestas": []
+                    "introduccion": $scope.multiplicaTuDineroActivity.description,
+                    "retro_final": $scope.multiplicaTuDineroActivity.quiz_feedback[0].feedbacktext
                 }
                 for (var i = 0; i < $scope.multiplicaTuDineroActivity.questions.length; i++) {
                     var currentQuestion = $scope.multiplicaTuDineroActivity.questions[i];
                     var question = {
                         "orden": i + 1,
-                        "preguntaid": currentQuestion.id,
+                        "preguntaId": currentQuestion.id,
                         "pregunta": currentQuestion.question,
-                        "tiporespuesta": "Retroalimentacion"
+                        "imagen":"imagen" + currentQuestion.id + ".jpg",
+                        "respuestas":[],
+                        "retro_resp_correcta":"",
+                        "retro_resp_incorrecta":""
                     }
                     for(var j = 0; j < currentQuestion.answers.length; j++){
                         var currentAnswer = currentQuestion.answers[j];
                         var answer = {
-                            "respuestaid": currentAnswer.id,
+                            "respuestaId": currentAnswer.id,
                             "respuesta": currentAnswer.answer,
-                            "Retro": "Óptimo", //TODO: check why the server is not returning retro from moodle
+                            "tipo": (currentAnswer.fraction == 0 ? "incorrecta" : "correcta")
                         }
-                        request.catalogorespuestas.push(answer);
+                        question.respuestas.push(answer);
+                        if (currentAnswer.fraction == 0) {
+                            question.retro_resp_incorrecta = currentAnswer.feedback;
+                        }else{
+                            question.retro_resp_correcta = currentAnswer.feedback;
+                        }
                     }
                     request.preguntas.push(question);
                 }
@@ -98,7 +107,7 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"userid":2,"pathImagenes":"","actividad":"Toma de decisiones","respuestas":[{"preguntaid":127,"respuesta":529},{"preguntaid":128,"respuesta":532},{"preguntaid":129,"respuesta":534},{"preguntaid":130,"respuesta":536},{"preguntaid":131,"respuesta":540},{"preguntaid":132,"respuesta":543},{"preguntaid":133,"respuesta":545},{"preguntaid":134,"respuesta":550},{"preguntaid":135,"respuesta":552},{"preguntaid":136,"respuesta":555},{"preguntaid":137,"respuesta":557},{"preguntaid":138,"respuesta":560},{"preguntaid":139,"respuesta":563},{"preguntaid":140,"respuesta":567},{"preguntaid":141,"respuesta":570},{"preguntaid":142,"respuesta":573},{"preguntaid":143,"respuesta":576},{"preguntaid":144,"respuesta":579},{"preguntaid":145,"respuesta":581},{"preguntaid":146,"respuesta":584}]}
+                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si", "calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuesta":529},{"preguntaId":128,"respuesta":532},{"preguntaId":129,"respuesta":534},{"preguntaId":130,"respuesta":536},{"preguntaId":131,"respuesta":540},{"preguntaId":132,"respuesta":543},{"preguntaId":133,"respuesta":545},{"preguntaId":134,"respuesta":550},{"preguntaId":135,"respuesta":552},{"preguntaId":136,"respuesta":555},{"preguntaId":137,"respuesta":557},{"preguntaId":138,"respuesta":560},{"preguntaId":139,"respuesta":563},{"preguntaId":140,"respuesta":567},{"preguntaId":141,"respuesta":570},{"preguntaId":142,"respuesta":573},{"preguntaId":143,"respuesta":576},{"preguntaId":144,"respuesta":579},{"preguntaId":145,"respuesta":581},{"preguntaId":146,"respuesta":584}]}
                     );
                 }
             }
@@ -109,14 +118,14 @@ angular
                     "userid":$scope.user.id,
                     "answers": [],
                     "coursemoduleid": $scope.multiplicaTuDineroActivity.coursemoduleid,
-                    "like_status": 1,
-                    "startingTime": new Date(),
-                    "endingTime": new Date(),
-                    "quiz_answered": true
+                    "like_status": (data.gusta_actividad == "Si" ? 1 : 0 ),
+                    "startingTime": data.fecha_inicio,
+                    "endingTime": data.fecha_fin
                 };
+                var quiz_finished = (data.actividad_completa == "Si" ? true : false);
                 for (var i = 0; i < data.respuestas.length; i++) {
                     _.each($scope.multiplicaTuDineroActivity.questions, function(q){
-                        if (q.id == data.respuestas[i].preguntaid) {
+                        if (q.id == data.respuestas[i].preguntaId) {
                             q.userAnswer = data.respuestas[i].respuesta;
                             //finds index of answer to insert it into array of logentry
                             var answerIndex = q.answers.getIndexBy("id", data.respuestas[i].respuesta);
@@ -132,21 +141,23 @@ angular
                 $scope.IsComplete = $scope.multiplicaTuDineroActivity && 
                                     questionsAnswered.completed && 
                                     questionsAnswered.completed >= $scope.multiplicaTuDineroActivity.questions.length &&
-                                    questionsAnswered.completed > 0;
+                                    questionsAnswered.completed > 0 &&
+                                    quiz_finished;
 
                 //save response
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
                 var subactivitiesCompleted = [];
                 var activitiesCompleted = 0;
-                if (parentActivit == 0) {
-                    parentActivity.status = 1;
+                if (parentActivity.status == 0) {
                     for (var i = 0; i < parentActivity.activities.length; i++) {
                         if(parentActivity.activities[i].status == 1 && i != 0){
                             activitiesCompleted++;
                         }
                     }
+
                     if (activitiesCompleted == parentActivity.activities.length - 1) {
+                        parentActivity.status = 1;
                         _endActivity(parentActivity, function(){ });
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                     }
@@ -160,10 +171,12 @@ angular
                         userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
                         _setLocalStorageJsonItem("usercourse", userCourseUpdated);
                         _setLocalStorageJsonItem("activityManagers", $scope.activities);
-                        $scope.saveQuiz($scope.multiplicaTuDineroActivity, logEntry, userCourseUpdated);
+                        if (parentActivity.activities[0].status == 0) {
+                            $scope.saveQuiz($scope.multiplicaTuDineroActivity, logEntry, userCourseUpdated);
+                        }
                     }
                 }
-                $location.path('/ZonaDeAterrizaje/Dashboard/3');
+                $location.path('/ZonaDeAterrizaje/Dashboard/3/0');
             }
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
@@ -188,11 +201,11 @@ angular
             }
 
             var failureGame = function (data){
-              $location.path('/ZonaDeAterrizaje/Dashboard/3');
+              $location.path('/ZonaDeAterrizaje/Dashboard/3/0');
             }
 
             $scope.back = function () {
-                $location.path('/ZonaDeAterrizaje/Dashboard/3');
+                $location.path('/ZonaDeAterrizaje/Dashboard/3/0');
             }
 
             Array.prototype.getIndexBy = function (name, value) {

@@ -25,7 +25,6 @@ angular
 
             $scope.user = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
-            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.mapaDeVidaActivities = moodleFactory.Services.GetCacheJson("mapaDeVidaActivities");
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
 
@@ -72,18 +71,18 @@ angular
                 for (var i = 0; i < $scope.mapaDeVidaActivities.length; i++) {
                     var activity = $scope.mapaDeVidaActivities[i];
                     if(activity.name.toLowerCase() != "mapa de vida"){
-                        var dimension = { "dimensionid": activity.coursemoduleid, "dimension": activity.name };
+                        var dimension = { "dimensionId": activity.coursemoduleid, "dimension": activity.name };
                         request.dimensiones.push(dimension);
                         //set questions just once
                         if (i == 1) {
                             for (var j = 0; j < activity.questions.length; j++) {
                                 var currentQuestion = activity.questions[j];
                                 var question = {
-                                    "preguntaid": (j + 1),
-                                    "titulo": "",//currentQuestion.name,
+                                    "preguntaId": (j + 1),
+                                    "titulo": currentQuestion.title,
                                     "pregunta": currentQuestion.question,
                                     "orden": (j + 1),
-                                    "tiporespuesta": "Abierta"
+                                    "tipoRespuesta": "Abierta"
                                 }
                                 request.preguntas.push(question);
                             }
@@ -101,8 +100,8 @@ angular
                 }
                 catch (e) {*/
                     successGame(
-                        //Incompleto {"userid":"293","actividad":"Proyecta tu vida","duración":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"No","gusta_actividad":"Si","ficha_proyecto":[{"dimensionid":1,"respuestas":[{"preguntaid":1,"respuesta":"Lorem ipsum"},{"preguntaid":2,"respuesta":"Lorem ipsum"},{"preguntaid":3,"respuesta":"Lorem ipsum"},{"preguntaid":4,"respuesta":"Lorem ipsum"},{"preguntaid":5,"respuesta":"Lorem ipsum"},{"preguntaid":6,"respuesta":"Lorem ipsum"}]},{"dimensionid":2,"respuestas":[{"preguntaid":1,"respuesta":"Lorem ipsum"},{"preguntaid":2,"respuesta":"Lorem ipsum"},{"preguntaid":3,"respuesta":"Lorem ipsum"},{"preguntaid":4,"respuesta":"Lorem ipsum"},{"preguntaid":5,"respuesta":"Lorem ipsum"},{"preguntaid":6,"respuesta":"Lorem ipsum"}]}]}
-                        /*Completo*/{"userid":"103","actividad":"Tú eliges","duración":"5","fecha_inicio":"2015:07:15 14:23:12","fecha_fin":"2015:07:15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionid":242,"respuestas":[{"preguntaid":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim ipsum."},{"preguntaid":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."},{"preguntaid":3,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet."},{"preguntaid":4,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit."},{"preguntaid":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaid":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}]},{"dimensionid":243,"respuestas":[{"preguntaid":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing."},{"preguntaid":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur."},{"preguntaid":3,"respuesta":"Lorem ipsum dolor sit amet."},{"preguntaid":4,"respuesta":"Lorem ipsum dolor sit."},{"preguntaid":5,"respuesta":"Lorem ipsum dolor."},{"preguntaid":6,"respuesta":"Lorem ipsum."}]},{"dimensionid":244,"respuestas":[{"preguntaid":1,"respuesta":"Lorem."},{"preguntaid":2,"respuesta":"Lorem ipsum."},{"preguntaid":3,"respuesta":"Lorem ipsum dolor."},{"preguntaid":4,"respuesta":"Lorem ipsum dolor sit."},{"preguntaid":5,"respuesta":"Lorem ipsum dolor sit amet."},{"preguntaid":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur."}]},{"dimensionid":245,"respuestas":[{"preguntaid":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing."},{"preguntaid":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."},{"preguntaid":3,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaid":4,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit."},{"preguntaid":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet."},{"preguntaid":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."}]},{"dimensionid":246,"respuestas":[{"preguntaid":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim ipsum."},{"preguntaid":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."},{"preguntaid":3,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet."},{"preguntaid":4,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit."},{"preguntaid":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaid":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}]}]}
+                        /*Incompleto*/ {"userid":"293","actividad":"Proyecta tu vida","duración":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"No","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor"},{"preguntaId":2,"respuesta":"Lorem ipsum"},{"preguntaId":3,"respuesta":"Lorem ipsum"},{"preguntaId":4,"respuesta":"Lorem ipsum"},{"preguntaId":5,"respuesta":"Lorem ipsum"},{"preguntaId":6,"respuesta":"Lorem ipsum"}]},{"dimensionId":244,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum"},{"preguntaId":2,"respuesta":"Lorem ipsum"},{"preguntaId":3,"respuesta":"Lorem ipsum"},{"preguntaId":4,"respuesta":"Lorem ipsum"},{"preguntaId":5,"respuesta":"Lorem ipsum"},{"preguntaId":6,"respuesta":"Lorem ipsum"}]}]}
+                        ///*Completo*/{"userid":"103","actividad":"Tú eliges","duración":"5","fecha_inicio":"2015:07:15 14:23:12","fecha_fin":"2015:07:15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim ipsum."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."},{"preguntaId":3,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet."},{"preguntaId":4,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit."},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}]},{"dimensionId":243,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur."},{"preguntaId":3,"respuesta":"Lorem ipsum dolor sit amet."},{"preguntaId":4,"respuesta":"Lorem ipsum dolor sit."},{"preguntaId":5,"respuesta":"Lorem ipsum dolor."},{"preguntaId":6,"respuesta":"Lorem ipsum."}]},{"dimensionId":244,"respuestas":[{"preguntaId":1,"respuesta":"Lorem."},{"preguntaId":2,"respuesta":"Lorem ipsum."},{"preguntaId":3,"respuesta":"Lorem ipsum dolor."},{"preguntaId":4,"respuesta":"Lorem ipsum dolor sit."},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur."}]},{"dimensionId":245,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."},{"preguntaId":3,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaId":4,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit."},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."}]},{"dimensionId":246,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim ipsum."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."},{"preguntaId":3,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet."},{"preguntaId":4,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit."},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}]}]}
                     );
                 //}
             }
@@ -126,14 +125,14 @@ angular
                         for (var j = 0; j < dimension.respuestas.length; j++) {
                             var respuesta = data.ficha_proyecto[i].respuestas[j];
                             _.each($scope.mapaDeVidaActivities, function(a){
-                                if (dimension.dimensionid == a.coursemoduleid) {
-                                    return a.questions[(respuesta.preguntaid - 1)].userAnswer = respuesta.respuesta;
+                                if (dimension.dimensionId == a.coursemoduleid) {
+                                    return a.questions[(respuesta.preguntaId - 1)].userAnswer = respuesta.respuesta;
                                 };
                             });
                             logEntry.quiz_answered = (respuesta.respuesta && respuesta.respuesta != "" && logEntry.quiz_answered);
                             logEntry.answers.push([respuesta.respuesta]);
                         };
-                        logEntry.coursemoduleid = dimension.dimensionid;
+                        logEntry.coursemoduleid = dimension.dimensionId;
                         logEntry.startingTime = data.fecha_inicio;
                         logEntry.endingTime = data.fecha_fin;
                         logEntry.like_status = (data.gusta_actividad == "Si" ? 1 : 0 );
@@ -161,34 +160,36 @@ angular
                 //had to concat unused activity cause if all quizzes were finished parentactivity wouldnt be marked as finished
                 var subactivitiesCompleted = [166];
                 var activitiesCompleted = 0;
-
-                //counts how many quizzes were answered
-                _.each(quizzesRequests, function(q){
-                    if(q.quiz_answered){
-                        subactivitiesCompleted.push(q.coursemoduleid);
-                    }
-                });
-                
-                if ($scope.IsComplete) {
-                    if (parentActivity.status == 0) {
+                if (parentActivity.status == 0) {
+                    //counts how many quizzes were answered
+                    _.each(quizzesRequests, function(q){
+                        if(q.quiz_answered){
+                            subactivitiesCompleted.push(q.coursemoduleid);
+                        }
+                    });
+                    
+                    if ($scope.IsComplete) {
                         parentActivity.status = 1;
                         _endActivity(parentActivity);
                     }
+                    if (parentActivity.activities) {
+                        updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
+                        for (var i = 0; i < subactivitiesCompleted.length; i++) {
+                            $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i], true);
+                        };
+                        userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
+                        _setLocalStorageJsonItem("usercourse", userCourseUpdated);
+                        _setLocalStorageJsonItem("activityManagers", $scope.activities);
+                        for (var i = 0; i < quizzesRequests.length; i++) {
+                            var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
+                            if (userActivity.status == 0) {
+                                $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
+                            }
+                        };
+                    }
                 }
-                if (parentActivity.activities) {
-                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
-                    for (var i = 0; i < subactivitiesCompleted.length; i++) {
-                        $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i], true);
-                    };
-                    userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
-                    _setLocalStorageJsonItem("usercourse", userCourseUpdated);
-                    _setLocalStorageJsonItem("activityManagers", $scope.activities);
-                    for (var i = 0; i < quizzesRequests.length; i++) {
-                        var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                        $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
-                    };
-                }
-                $location.path('/ZonaDeAterrizaje/Dashboard/3');
+                
+                $location.path('/ZonaDeAterrizaje/Dashboard/3/0');
             }
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
@@ -213,11 +214,11 @@ angular
             }
 
             var failureGame = function (data){
-              $location.path('/ZonaDeAterrizaje/Dashboard/3');
+              $location.path('/ZonaDeAterrizaje/Dashboard/3/0');
             }
 
             $scope.back = function () {
-                $location.path('/ZonaDeAterrizaje/Dashboard/3');
+                $location.path('/ZonaDeAterrizaje/Dashboard/3/0');
             }
 
             Array.prototype.getIndexBy = function (name, value) {
