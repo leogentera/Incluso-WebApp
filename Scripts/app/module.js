@@ -913,6 +913,13 @@
             });
         };
     })
+    .directive('shareAlbum', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Partials/sharedAlbum.html'
+        };
+    })
     .directive('menuComponent', function(){
         return {
           restrict: 'E',
