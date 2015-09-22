@@ -13,7 +13,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _httpFactory = $http;
             _timeout = $timeout;
-            //$scope.moodleId = $routeParams.moodleid;
+            $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
              var redirectOnShield = function () {
