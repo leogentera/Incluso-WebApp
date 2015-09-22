@@ -18,8 +18,7 @@ angular
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             $scope.model = userCourse;
             $scope.like_status = 1;
-            $rootScope.showFooterRocks = false; 
-            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+            $rootScope.showFooterRocks = false;             
             var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
 
             $scope.idEtapa = 0;
@@ -31,21 +30,21 @@ angular
             var currentChallenge = 0;
             var currentStage;
             switch(coursemoduleid){
-                case 68:
+                case 1002:
                     currentChallenge = 4;
                     currentStage = "ZonaDeVuelo";
                     break;
-                case 87:
+                case 2022:
                     currentChallenge = 5;
                     currentStage = "ZonaDeNavegacion";
                     break;
-                case 95:
+                case 3501:
                     currentChallenge = 5;
                     currentStage = "ZonaDeAterrizaje";
                     break;
 
             }
-            var treeActivity = _getActivityByCourseModuleId(coursemoduleid, userCourse);            
+            var treeActivity = getActivityByActivity_identifier(coursemoduleid, userCourse);            
             $scope.activityPoints = treeActivity.points;
             var cabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
 

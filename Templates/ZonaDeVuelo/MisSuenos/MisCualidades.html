@@ -17,29 +17,29 @@
                         <div class="txt-renglon txt-bigger">
                             De la siguiente lista, elige lo que mejor te describe, esto aparecerá en tu perfil. No olvides utilizarlo
                             para el siguiente reto.
-                        </div>
+                        </div> 
                         <section id='cualidades1' class="form txt-renglon txt-bigger part list">
-                            <input id="q1r0" type="checkbox" value="0" ng-model="misCualidadesAnswers[0][0]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r0" type="checkbox" value="0" ng-model="misCualidadesAnswers[0][0]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Cantar',misCualidadesAnswers[0][0],'talents')"/>
                             <label for="q1r0">Cantar</label>
-                            <input id="q1r1" type="checkbox" value="1" ng-model="misCualidadesAnswers[0][1]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r1" type="checkbox" value="1" ng-model="misCualidadesAnswers[0][1]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Llevar ritmos',misCualidadesAnswers[0][1],'talents')"/>
                             <label for="q1r1">Llevar ritmos</label>
-                            <input id="q1r2" type="checkbox" value="2" ng-model="misCualidadesAnswers[0][2]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r2" type="checkbox" value="2" ng-model="misCualidadesAnswers[0][2]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Bailar',misCualidadesAnswers[0][2],'talents')"/>
                             <label for="q1r2">Bailar</label>
-                            <input id="q1r3" type="checkbox" value="3" ng-model="misCualidadesAnswers[0][3]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r3" type="checkbox" value="3" ng-model="misCualidadesAnswers[0][3]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Hablar frente a otros',misCualidadesAnswers[0][3],'talents')"/>
                             <label for="q1r3">Hablar frente a otros</label>
-                            <input id="q1r4" type="checkbox" value="4" ng-model="misCualidadesAnswers[0][4]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r4" type="checkbox" value="4" ng-model="misCualidadesAnswers[0][4]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Dibujar',misCualidadesAnswers[0][4],'talents')"/>
                             <label for="q1r4">Dibujar</label>
-                            <input id="q1r5" type="checkbox" value="5" ng-model="misCualidadesAnswers[0][5]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r5" type="checkbox" value="5" ng-model="misCualidadesAnswers[0][5]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Hacer amigos',misCualidadesAnswers[0][5],'talents')"/>
                             <label for="q1r5">Hacer amigos</label>
-                            <input id="q1r6" type="checkbox" value="6" ng-model="misCualidadesAnswers[0][6]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r6" type="checkbox" value="6" ng-model="misCualidadesAnswers[0][6]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Hacer operaciones matemáticas',misCualidadesAnswers[0][6],'talents')"/>
                             <label for="q1r6">Hacer operaciones matemáticas</label>
-                            <input id="q1r7" type="checkbox" value="7" ng-model="misCualidadesAnswers[0][7]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r7" type="checkbox" value="7" ng-model="misCualidadesAnswers[0][7]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Aprender cosas rápido',misCualidadesAnswers[0][7],'talents')"/>
                             <label for="q1r7">Aprender cosas rápido</label>
-                            <input id="q1r8" type="checkbox" value="8" ng-model="misCualidadesAnswers[0][8]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r8" type="checkbox" value="8" ng-model="misCualidadesAnswers[0][8]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Ubicar lugares',misCualidadesAnswers[0][8],'talents')"/>
                             <label for="q1r8">Ubicar lugares </label>
-                            <input id="q1r9" type="checkbox" value="9" ng-model="misCualidadesAnswers[0][9]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r9" type="checkbox" value="9" ng-model="misCualidadesAnswers[0][9]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Memorizar',misCualidadesAnswers[0][9],'talents')"/>
                             <label for="q1r9">Memorizar</label>
-                            <input id="q1r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[0][10]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[0][10]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Hacer manualidades',misCualidadesAnswers[0][10],'talents')"/>
                             <label for="q1r10">Hacer manualidades</label>                            
                             <input id="q1r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[0][11]" ng-true-value="1" ng-false-value="0"
                                    ng-change="misCualidadesOtroAnswers[0].answers[0] = misCualidadesAnswers[0][11]==0 ? '' : misCualidadesOtroAnswers[0].answers[0]" 
@@ -61,27 +61,27 @@
                             para el siguiente reto.
                         </div>
                         <section id='cualidades2' class="form txt-renglon txt-bigger part list">
-                            <input id="q2r0" type="checkbox" value="0" ng-model="misCualidadesAnswers[1][0]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r0" type="checkbox" value="0" ng-model="misCualidadesAnswers[1][0]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Tolerancia',misCualidadesAnswers[1][0],'values')"/>
                             <label for="q2r0">Tolerancia</label>
-                            <input id="q2r1" type="checkbox" value="1" ng-model="misCualidadesAnswers[1][1]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r1" type="checkbox" value="1" ng-model="misCualidadesAnswers[1][1]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Respeto',misCualidadesAnswers[1][1],'values')"/>
                             <label for="q2r1">Respeto</label>
-                            <input id="q2r2" type="checkbox" value="2" ng-model="misCualidadesAnswers[1][2]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r2" type="checkbox" value="2" ng-model="misCualidadesAnswers[1][2]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Honestidad',misCualidadesAnswers[1][2],'values')"/>
                             <label for="q2r2">Honestidad</label>
-                            <input id="q2r3" type="checkbox" value="3" ng-model="misCualidadesAnswers[1][3]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r3" type="checkbox" value="3" ng-model="misCualidadesAnswers[1][3]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Responsabilidad',misCualidadesAnswers[1][3],'values')"/>
                             <label for="q2r3">Responsabilidad</label>
-                            <input id="q2r4" type="checkbox" value="4" ng-model="misCualidadesAnswers[1][4]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r4" type="checkbox" value="4" ng-model="misCualidadesAnswers[1][4]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Confiabilidad',misCualidadesAnswers[1][4],'values')"/>
                             <label for="q2r4">Confiabilidad</label>
-                            <input id="q2r5" type="checkbox" value="5" ng-model="misCualidadesAnswers[1][5]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r5" type="checkbox" value="5" ng-model="misCualidadesAnswers[1][5]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Solidaridad',misCualidadesAnswers[1][5],'values')"/>
                             <label for="q2r5">Solidaridad</label>
-                            <input id="q2r6" type="checkbox" value="6" ng-model="misCualidadesAnswers[1][6]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r6" type="checkbox" value="6" ng-model="misCualidadesAnswers[1][6]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Igualdad',misCualidadesAnswers[1][6],'values')"/>
                             <label for="q2r6">Igualdad</label>
-                            <input id="q2r7" type="checkbox" value="7" ng-model="misCualidadesAnswers[1][7]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r7" type="checkbox" value="7" ng-model="misCualidadesAnswers[1][7]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Lealtad',misCualidadesAnswers[1][7],'values')"/>
                             <label for="q2r7">Lealtad</label>
-                            <input id="q2r8" type="checkbox" value="8" ng-model="misCualidadesAnswers[1][8]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r8" type="checkbox" value="8" ng-model="misCualidadesAnswers[1][8]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Amistad',misCualidadesAnswers[1][8],'values')"/>
                             <label for="q2r8">Amistad</label>
-                            <input id="q2r9" type="checkbox" value="9" ng-model="misCualidadesAnswers[1][9]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r9" type="checkbox" value="9" ng-model="misCualidadesAnswers[1][9]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Generosidad',misCualidadesAnswers[1][9],'values')"/>
                             <label for="q2r9">Generosidad</label>
-                            <input id="q2r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[1][10]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q2r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[1][10]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Esfuerzo',misCualidadesAnswers[1][10],'values')"/>
                             <label for="q2r10">Esfuerzo</label>                            
                             <input id="q2r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[1][11]" ng-true-value="1" ng-false-value="0"
                                    ng-change="misCualidadesOtroAnswers[1].answers[0] = misCualidadesAnswers[1][11]==0 ? '' : misCualidadesOtroAnswers[1].answers[0]" 
@@ -102,27 +102,27 @@
                             para el siguiente reto.
                         </div>
                         <section id='cualidades3' class="form txt-renglon txt-bigger part list">
-                            <input id="q3r0" type="checkbox" value="0" ng-model="misCualidadesAnswers[2][0]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r0" type="checkbox" value="0" ng-model="misCualidadesAnswers[2][0]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Empatía',misCualidadesAnswers[2][0],'habilities')"/>
                             <label for="q3r0">Empatía</label>
-                            <input id="q3r1" type="checkbox" value="1" ng-model="misCualidadesAnswers[2][1]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r1" type="checkbox" value="1" ng-model="misCualidadesAnswers[2][1]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Creatividad',misCualidadesAnswers[2][1],'habilities')"/>
                             <label for="q3r1">Creatividad</label>
-                            <input id="q3r2" type="checkbox" value="2" ng-model="misCualidadesAnswers[2][2]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r2" type="checkbox" value="2" ng-model="misCualidadesAnswers[2][2]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Liderazgo',misCualidadesAnswers[2][2],'habilities')"/>
                             <label for="q3r2">Liderazgo</label>
-                            <input id="q3r3" type="checkbox" value="3" ng-model="misCualidadesAnswers[2][3]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r3" type="checkbox" value="3" ng-model="misCualidadesAnswers[2][3]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Comunicación',misCualidadesAnswers[2][3],'habilities')"/>
                             <label for="q3r3">Comunicación</label>
-                            <input id="q3r4" type="checkbox" value="4" ng-model="misCualidadesAnswers[2][4]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r4" type="checkbox" value="4" ng-model="misCualidadesAnswers[2][4]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Negociación',misCualidadesAnswers[2][4],'habilities')"/>
                             <label for="q3r4">Negociación</label>
-                            <input id="q3r5" type="checkbox" value="5" ng-model="misCualidadesAnswers[2][5]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r5" type="checkbox" value="5" ng-model="misCualidadesAnswers[2][5]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Trabajo en equipo',misCualidadesAnswers[2][5],'habilities')"/>
                             <label for="q3r5">Trabajo en equipo</label>
-                            <input id="q3r6" type="checkbox" value="6" ng-model="misCualidadesAnswers[2][6]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r6" type="checkbox" value="6" ng-model="misCualidadesAnswers[2][6]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Innovación',misCualidadesAnswers[2][6],'habilities')"/>
                             <label for="q3r6">Innovación</label>
-                            <input id="q3r7" type="checkbox" value="7" ng-model="misCualidadesAnswers[2][7]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r7" type="checkbox" value="7" ng-model="misCualidadesAnswers[2][7]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Iniciativa',misCualidadesAnswers[2][7],'habilities')"/>
                             <label for="q3r7">Iniciativa</label>
-                            <input id="q3r8" type="checkbox" value="8" ng-model="misCualidadesAnswers[2][8]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r8" type="checkbox" value="8" ng-model="misCualidadesAnswers[2][8]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Toma de decisiones',misCualidadesAnswers[2][8],'habilities')"/>
                             <label for="q3r8">Toma de decisiones</label>
-                            <input id="q3r9" type="checkbox" value="9" ng-model="misCualidadesAnswers[2][9]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r9" type="checkbox" value="9" ng-model="misCualidadesAnswers[2][9]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Planeación',misCualidadesAnswers[2][9],'habilities')"/>
                             <label for="q3r9">Planeación</label>
-                            <input id="q3r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[2][10]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r10" type="checkbox" value="10" ng-model="misCualidadesAnswers[2][10]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Organización',misCualidadesAnswers[2][10],'habilities')"/>
                             <label for="q3r10">Organización</label>                            
                             <input id="q3r11" type="checkbox" value="11" ng-model="misCualidadesAnswers[2][11]" ng-true-value="1" ng-false-value="0"
                                    ng-change="misCualidadesOtroAnswers[2].answers[0] = misCualidadesAnswers[2][11]==0 ? '' : misCualidadesOtroAnswers[2].answers[0]" 
