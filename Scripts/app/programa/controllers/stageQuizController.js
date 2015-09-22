@@ -624,10 +624,10 @@ angular
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
                         break;
                     case "2007": //Tus Ideas - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
                         break;
                     case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";  //Pending: UPDATE ACTIVITY NUMBER
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
                         break;
                     case "2023": //Exploración Final - Etapa 2
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/0"; //Pending: UPDATE ACTIVITY NUMBER
@@ -671,8 +671,76 @@ angular
 
             };
 
+            function updateProfile() {
 
+                $scope.userId = moodleFactory.Services.GetCacheObject("userId");
+                moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
+                    function (responseData) {
+                        console.log('Update profile successful...');
+                    },
+                    function (responseData) {
+                        console.log('Update profile fail...');
+                    });
+            };
+
+            $scope.toggleSelection = function toggleSelection(stringValue, isChecked, questionArray) {
+                var index = -1;
+                if (isChecked) {
+                    switch (questionArray) {
+                        case "talents":
+                            $scope.userprofile.talents.push(stringValue);
+                            break;
+                        case "values":
+                            $scope.userprofile.values.push(stringValue);
+                            break;
+                        case "habilities":
+                            $scope.userprofile.habilities.push(stringValue);
+                            break;
+                        case "favoriteSports":
+                            $scope.userprofile.favoriteSports.push(stringValue);
+                            break;
+                        case "artisticActivities":
+                            $scope.userprofile.artisticActivities.push(stringValue);
+                            break;
+                        case "hobbies":
+                            $scope.userprofile.hobbies.push(stringValue);
+                            break;
+                        default:
+                            console.log('Unknow profile poperty');
+                    }
+                }
+                else {
+                    switch (questionArray) {
+                        case "talents":
+                            var index = $scope.userprofile.talents.indexOf(stringValue);
+                            $scope.userprofile.talents.splice(index, 1);
+                            break;
+                        case "values":
+                            var index = $scope.userprofile.values.indexOf(stringValue);
+                            $scope.userprofile.values.splice(index, 1);
+                            break;
+                        case "habilities":
+                            var index = $scope.userprofile.habilities.indexOf(stringValue);
+                            $scope.userprofile.habilities.splice(index, 1);
+                            break;
+                        case "favoriteSports":
+                            var index = $scope.userprofile.favoriteSports.indexOf(stringValue);
+                            $scope.userprofile.favoriteSports.splice(index, 1);
+                            break;
+                        case "artisticActivities":
+                            var index = $scope.userprofile.artisticActivities.indexOf(stringValue);
+                            $scope.userprofile.artisticActivities.splice(index, 1);
+                            break;
+                        case "hobbies":
+                            var index = $scope.userprofile.hobbies.indexOf(stringValue);
+                            $scope.userprofile.hobbies.splice(index, 1);
+                            break;
+                        default:
+                            console.log('Unknow profile poperty');
+                    }
+                }
+            };
 
             // ##################################### VALIDATING USER ANSWERS ##################################################
 
