@@ -18,20 +18,9 @@ angular
 
             $scope.currentChallenge = 2;
              var userCourse = JSON.parse(localStorage.getItem('usercourse'));
-             //var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
             debugger;
-            //var parentActivity = getActivityAtAnyCost($routeParams.activity_identifier, $routeParams.moodleid).parentActivity;
-            var parentActivity = getActivityByActivity_identifier($routeParams.activityId);
+            var parentActivity = getActivityByActivity_identifier($routeParams.activityId, userCourse);
             var activityFromTree;
-
-            //In case getActivityByActivity_identifier can't reach the activity node
-            //if(!parentActivity){
-            //    switch (moodleid){
-            //        case 178:
-            //            parentActivity = _getActivityByCourseModuleId(moodleid);
-            //            break;
-            //    }
-            //}
 
              if (parentActivity.activities && parentActivity.activities.length) {
                 activityFromTree = parentActivity.activities[0];
@@ -51,7 +40,6 @@ angular
                 console.log('Closing time: ' + moodleid);
                 $scope.$emit('ShowPreloader');
                 debugger;
-               //var parentActivity = getActivityByActivity_identifier($routeParams.moodleid, userCourse);
                var activities = parentActivity.activities;
 
                parentActivity.status = 1;
@@ -97,8 +85,6 @@ angular
                             updateActivityStatus(moodleid);
                             _updateRewardStatus();
                               var activity_identifier = null;
-                              //var moodleId = $routeParams.moodleid;
-                              //var moodleid = $routeParams.moodleid;
                               if(moodleid == 151){
                                   activity_identifier = 1010;
                                   moodleid = 64;
@@ -124,7 +110,6 @@ angular
 
                               debugger;
 
-                              //updateUserStars(moodleid);
                               updateUserStars(activity_identifier);
                               $scope.$emit('HidePreloader');
                             $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
@@ -138,7 +123,6 @@ angular
 
 
             $scope.finishActivity = function () {
-               //endForumActivity(parentActivity.coursemoduleid);
                 var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 endForumActivity(moodleId);
             }
