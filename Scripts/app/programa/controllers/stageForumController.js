@@ -52,7 +52,7 @@ angular
                  }
             };
 
-            if($routeParams.moodleid == 149) {
+            if($scope.moodleId == 149) {
               redirectOnShield();
             }
 
@@ -119,17 +119,10 @@ angular
                $scope.$emit('HidePreloader'); //hide preloader
             }
 
-            function getActivityInfoCallback() {
-               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
-               getForumsProgress();
-                getForumsExtraPointsCounter();
-               $scope.$emit('HidePreloader'); //hide preloader
-            }
-
             getDataAsync();
 
-            $scope.showComentarios = function (discussionId, moodleId) {
-              switch (moodleId){
+            $scope.showComentarios = function (discussionId) {
+              switch ($scope.moodleId){
                   case 64:
                       $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;

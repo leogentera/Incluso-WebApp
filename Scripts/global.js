@@ -810,8 +810,8 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
 function updateUserStars(activityIdentifier, extraPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-    //var activity = getActivityByActivity_identifier(activity_identifier);
-    var activity = getActivityAtAnyCost(activityIdentifier).activity;
+    var activity = getActivityByActivity_identifier(activityIdentifier);
+    //var activity = getActivityAtAnyCost(activityIdentifier).activity;
 
     extraPoints ? '' : extraPoints = 0;
 
@@ -1001,7 +1001,7 @@ var _activityRoutes = [
     {id: 1049, name: '', url: '/ZonaDeVuelo/Conocete/ZonaDeContacto/149'},
     {id: 1020, name: '', url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/145'},
     {id: 1039, name: 'Reto Multiple', url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
-    {id: 1010, name: '', url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
+    {id: 1010, name: '', url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/1010'},
     {id: 1021, name: '', url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/146'},
     {id: 1006, name: '', url: '/ZonaDeVuelo/MisSuenos/MisGustos/1006'},
     {id: 1005, name: '', url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
