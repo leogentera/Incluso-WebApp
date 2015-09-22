@@ -147,6 +147,7 @@ angular
                     break;
             }
 
+            /*
             var activities = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/159"));
             if (!activities) {
                 var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
@@ -161,6 +162,7 @@ angular
                 //getDataAsync();
                 $scope.$emit('HidePreloader'); //hide preloader
             }
+            */
 
 
             $scope.openModal = function (size) {
@@ -175,7 +177,7 @@ angular
                         $scope.$emit('ShowPreloader');
                         $timeout(function () {
                             $scope.$emit('HidePreloader');
-                        }, 1000)
+                        }, 1000);
                         //$scope.$emit('HidePreloader');
                     });
             };
@@ -196,7 +198,7 @@ angular
             $scope.openModal();
             getDataAsync();
 
-
+            //***********************************************************************************************************
             function getDataAsync() {
                 $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
@@ -204,37 +206,37 @@ angular
 
                 switch ($scope.activity_identifier) {
                     case "1001":
-                        $scope.currentChallenge = 0; //Exploración Inicial
+                        $scope.currentChallenge = 0; //Exploración Inicial - Etapa 1
                         break;
                     case "1005":
-                        $scope.currentChallenge = 3;  //Mis Cualidades
+                        $scope.currentChallenge = 3;  //Mis Cualidades - Etapa 1
                         break;
                     case "1006":
-                        $scope.currentChallenge = 3;  //Mis Gustos
+                        $scope.currentChallenge = 3;  //Mis Gustos - Etapa 1
                         break;
                     case "1007":
-                        $scope.currentChallenge = 3; //Sueña
+                        $scope.currentChallenge = 3; //Sueña - Etapa 1
                         break;
                     case "1009":
-                        $scope.currentChallenge = 5; //Exploración Final
+                        $scope.currentChallenge = 5; //Exploración Final - Etapa 1
                         break;
                     case "2001":
                         $scope.currentChallenge = 0; //Exploración Inicial Etapa 2
                         break;
                     case "2007":
-                        $scope.currentChallenge = 0; //Tus ideas Etapa 2
+                        $scope.currentChallenge = 0; //Tus ideas - Etapa 2
                         break;
                     case "2016":
-                        $scope.currentChallenge = 0; //Mi Futuro Etapa 2
+                        $scope.currentChallenge = 0; //Mi Futuro - Etapa 2
                         break;
                     case "2023":
-                        $scope.currentChallenge = 0; //Exploración Final Etapa 2
+                        $scope.currentChallenge = 0; //Exploración - Final Etapa 2
                         break;
                     case "3101":
-                        $scope.currentChallenge = 0; //Exploración Inicial Etapa 3
+                        $scope.currentChallenge = 0; //Exploración - Inicial Etapa 3
                         break;
                     case "3601":
-                        $scope.currentChallenge = 0; //Exploración Final Etapa 3
+                        $scope.currentChallenge = 0; //Exploración - Final Etapa 3
                         break;
                     default:
                         $scope.currentChallenge = 0; //Default
@@ -487,7 +489,7 @@ angular
                 if ($scope.activity.activities) {  //Update status of Quiz ("child") activity
                     updatedActivityOnUsercourse = updateSubActivityStatus($scope.activity.activities[0].coursemoduleid);  //actualizar arbol
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
-                    _endActivity($scope.activity.activities[0]);
+                    //_endActivity($scope.activity.activities[0]);
                 }
 
 
@@ -647,7 +649,9 @@ angular
                 if (( $scope.activity_identifier == '1001' ||
                     $scope.activity_identifier == '1005' ||
                     $scope.activity_identifier == '1006' ||
-                    $scope.activity_identifier == '2001')) {
+                    $scope.activity_identifier == '2001' ||
+                    $scope.activity_identifier == '3101' ||
+                    $scope.activity_identifier == '3601')) {
 
                     if ($scope.activity.activities) {
                         _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.activities[0].coursemoduleid, $scope.OtroAnswer);
