@@ -328,11 +328,6 @@
             controller: 'stageContentsController'
         });
     
-        //$routeProvider.when('/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre', {
-        //    templateUrl: 'Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html',
-        //    controller: 'stageMessageController'
-        //});
-    
         $routeProvider.when('/ZonaDeVuelo/Conocete/FuenteDeEnergia/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html',
             controller: 'stageContentsController'
@@ -392,11 +387,6 @@
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
-    
-        //$routeProvider.when('/ZonaDeVuelo/Conocete/MensajeDeCierre', {
-        //    templateUrl: 'Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html',
-        //    controller: 'stageMessageController'
-        //});
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html',

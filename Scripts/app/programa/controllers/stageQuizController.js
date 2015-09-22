@@ -56,6 +56,7 @@ angular
                 "questionid": 18,
                 "answers": ['']
             }];
+
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosOtroAnswers = [{
                 "questionid": 43,
@@ -598,6 +599,8 @@ angular
                 //_endActivity(activityModel, null, $scope.currentChallenge);
                 _endActivity(activityModel);
 
+                updateProfile();
+
                 //Redirect user to the proper dashboard
                 console.log($scope.activity_identifier);
 
@@ -645,8 +648,10 @@ angular
                     _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
                 }
 
+                _setLocalStorageJsonItem("UserTalents/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
+
                 //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
-                if (( $scope.activity_identifier == '1001' ||
+                if (($scope.activity_identifier == '1001' ||
                     $scope.activity_identifier == '1005' ||
                     $scope.activity_identifier == '1006' ||
                     $scope.activity_identifier == '2001' ||
@@ -836,7 +841,7 @@ angular
 
                     //...and lastly, for the input value...
                     if ($scope.misCualidadesAnswers[a][11] == true) {
-                        //Get rid from carriage return
+                        //Get rid from carriage return                        
 
                         if ($scope.misCualidadesOtroAnswers[a].answers[0] != '') {
                             $scope.misCualidadesOtroAnswers[a].answers[0] = $scope.misCualidadesOtroAnswers[a].answers[0].replace(/\r?\n|\r/g, " ").trim();
@@ -939,9 +944,9 @@ angular
 
                     $scope.exploracionFinalresult =
                         [
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
                             {
                                 "badAnswer": false,
                                 "firstOptionWrong": false,
@@ -1153,7 +1158,7 @@ angular
 
                     $scope.exploracionFinalresult2 =
                         [
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
                             {
                                 "badAnswer": false,
                                 "firstOptionWrong": false,
@@ -1379,7 +1384,7 @@ angular
                             "fourthOptionWrong": false,
                             "fifthOptionWrong": false
                         },
-                        {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                        { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
                         {
                             "badAnswer": false,
                             "firstOptionWrong": false,
@@ -1469,7 +1474,7 @@ angular
                 }
 
                 //console.log("Final: " + goodAnswersQty + " == " + checkPoints);
-                $scope.Score = (goodAnswersQty + addToScore ) * 100 / $scope.exploracionFinalresult3.length;
+                $scope.Score = (goodAnswersQty + addToScore) * 100 / $scope.exploracionFinalresult3.length;
             }
 
             function partialErrorCallbackStage3(partialActivityAnswers) {
@@ -1563,8 +1568,8 @@ angular
                          var userAnswerArray = userAnswers.split(";");
                          for (var i = 0; i < userAnswerArray.length; i++) {
                          $scope.AnswersResult.answers[4].push(userAnswerArray[i]);
-                         }
-                         }
+            }
+        }
                          */
 
                         break;
