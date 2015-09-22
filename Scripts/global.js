@@ -386,7 +386,11 @@ var _isChallengeCompleted = function () {
                 var currentUserId = currentUser.userId;
                 var data = {userid: currentUserId};
                 var currentActivityModuleId = currentChallenge.coursemoduleid;
-                moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, successCallback, errorCallback);
+                var activityIdentifier = _getActivityByCourseModuleId();                
+                var activitymodel = {
+                    activity_identifier: currentChallenge.activity_identifier
+                };
+                moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallback);
                 success = currentActivityModuleId;
                 return success;
             } else {
