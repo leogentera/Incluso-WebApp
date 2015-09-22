@@ -102,49 +102,50 @@ angular
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
 
-                $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid));
+                $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
 
                 var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2});
                 isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentActivity.discussions.length);
                 debugger;
-                var activity_identifier = null;
-                if($scope.moodleId == 151){
-                    activity_identifier = 1010;
-                    moodleid = 64;
-                } else if($scope.moodleId == 64){
-                    activity_identifier = 1010;
-                    moodleid = 64;
-                } else if($scope.moodleId == 73){
-                    activity_identifier = 1008;
-                    moodleid = 73;
-                } else if($scope.moodleId == 147){
-                    activity_identifier = 1049;
-                    moodleid = 147;
-                } else if($scope.moodleId == 148){
-                    activity_identifier = 1049;
-                    moodleid = 148;
-                } else if($scope.moodleId == 179){
-                    activity_identifier = 2008;
-                    moodleid = 178;
-                } else if($scope.moodleId == 85){
-                    activity_identifier = 2018;
-                    moodleid = 197;
-                } else if($scope.moodleId == 93){
-                    activity_identifier = 3304;
-                    moodleid = 93;
-                } else if($scope.moodleId == 91){
-                    activity_identifier = 3304;
-                    moodleid = 93;
-                }
+                //var activity_identifier = null;
+                //if($scope.moodleId == 151){
+                //    activity_identifier = 1010;
+                //    moodleid = 64;
+                //} else if($scope.moodleId == 64){
+                //    activity_identifier = 1010;
+                //    moodleid = 64;
+                //} else if($scope.moodleId == 73){
+                //    activity_identifier = 1008;
+                //    moodleid = 73;
+                //} else if($scope.moodleId == 147){
+                //    activity_identifier = 1049;
+                //    moodleid = 147;
+                //} else if($scope.moodleId == 148){
+                //    activity_identifier = 1049;
+                //    moodleid = 148;
+                //} else if($scope.moodleId == 179){
+                //    activity_identifier = 2008;
+                //    moodleid = 178;
+                //} else if($scope.moodleId == 85){
+                //    activity_identifier = 2018;
+                //    moodleid = 197;
+                //} else if($scope.moodleId == 93){
+                //    activity_identifier = 3304;
+                //    moodleid = 93;
+                //} else if($scope.moodleId == 91){
+                //    activity_identifier = 3304;
+                //    moodleid = 93;
+                //}
 
-                var activityFromTree = getActivityAtAnyCost(activity_identifier, moodleid).activity;
+                //var activityFromTree = getActivityAtAnyCost(activity_identifier, moodleid).activity;
+                var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
 
                 if(activityFromTree.status == 1){
                     addExtraForumParticipation($scope.discussion.id);
                     var extraPointsCounter = getForumsExtraPointsCounter();
                     var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $scope.discussion.id; });
                     if(currentDiscussionCounter.extra_replies_counter <= 10) {
-                        updateUserStars(activity_identifier, 50 );
+                        updateUserStars($routeParams.activityId, 50 );
                         //updateUserStars(moodleid, 50 );
                     }
                 }
@@ -152,13 +153,13 @@ angular
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     switch ($scope.moodleId) {
                         case "179":
-                                $location.path('/ZonaDeNavegacion/ForoCierre/' + activity_identifier +'/'+ 178);
+                                $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178);
                             break;
                         case "85":
-                            $location.path('/ZonaDeNavegacion/ForoCierre/' + activity_identifier);
+                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId);
                             break;
                         default :
-                            $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);
+                            $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId);
                     }
                 } else {
                    callback();
@@ -242,6 +243,7 @@ angular
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
+                        debugger;
                         updateForumProgress();
                         //refreshTopicData();
                         checkForumProgress(refreshTopicData);

@@ -20,7 +20,8 @@ angular
              var userCourse = JSON.parse(localStorage.getItem('usercourse'));
              //var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
             debugger;
-            var parentActivity = getActivityAtAnyCost($routeParams.activity_identifier, $routeParams.moodleid).parentActivity;
+            //var parentActivity = getActivityAtAnyCost($routeParams.activity_identifier, $routeParams.moodleid).parentActivity;
+            var parentActivity = getActivityByActivity_identifier($routeParams.activityId);
             var activityFromTree;
 
             //In case getActivityByActivity_identifier can't reach the activity node
@@ -47,8 +48,9 @@ angular
             $scope.$emit('HidePreloader');
 
             var endForumActivity = function(moodleid){
+                console.log('Closing time: ' + moodleid);
                 $scope.$emit('ShowPreloader');
-                //debugger;
+                debugger;
                //var parentActivity = getActivityByActivity_identifier($routeParams.moodleid, userCourse);
                var activities = parentActivity.activities;
 
@@ -73,7 +75,7 @@ angular
                 };
 
                 var userCurrentStage = localStorage.getItem("currentStage");
-
+                debugger;
                if (activities) {
                  for(var i = 0; i < activities.length; i++) {
                   moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {});
@@ -137,7 +139,8 @@ angular
 
             $scope.finishActivity = function () {
                //endForumActivity(parentActivity.coursemoduleid);
-                endForumActivity(moodleid);
+                var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+                endForumActivity(moodleId);
             }
 
 
