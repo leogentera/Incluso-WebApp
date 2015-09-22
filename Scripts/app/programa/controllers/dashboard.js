@@ -1,4 +1,4 @@
-﻿daangular
+﻿angular
     .module('incluso.programa.dashboard', [])
     .controller('programaDashboardController', [
         '$q',
