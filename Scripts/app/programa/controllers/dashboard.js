@@ -15,8 +15,13 @@
             _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-            $scope.stageProgress=0;
 
+            if (!_getItem("userId")) {
+                $location.path('/');
+                return "";
+            }
+
+            $scope.stageProgress=0;
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
             $scope.user.profileimageurl = $scope.user.profileimageurl + "?rnd=" + new Date().getTime();
 
@@ -26,13 +31,6 @@
                 //the entire application updates profile.stars.  The cached version of stars should be read from profile (if it exists)
                 $scope.user.stars = $scope.profile.stars;
                 $scope.profile = null;   //profile is not used in this page, it is only used for stars
-            }
-
-            //console.log("Scope user = " + JSON.stringify($scope.user));
-
-            if (!_getItem("userId")) {
-                $location.path('/');
-                return "";
             }
 
             $scope.setToolbar($location.$$path,"Misión Incluso"); //set global toolbar properties

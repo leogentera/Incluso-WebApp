@@ -7,7 +7,7 @@
         'ui.bootstrap.tpls',
         'inlcuso.shared.mainNavigation',
         'incluso.home',
-        'naif.base64',
+        ///'naif.base64',
         // One module per controller. If we wanted to use one module for several controllers we would need to load dependencies of
         // one controller for all controllers in the module, and we would also need a variable to keep track of the modules:
         // http://zinkpulse.com/organizing-modules-in-angularjs/ and http://cliffmeyers.com/blog/2013/4/21/code-organization-angularjs-javascript
@@ -24,12 +24,12 @@
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
-        'incluso.programa.comunidad',        
+        //'incluso.programa.comunidad',        
 
         'incluso.stage.dashboardcontroller',
         'incluso.stage.forumclosecontroller',
         'incluso.stage.forumcontroller',
-        'incluso.stage.forumcommentscontroller',
+        //'incluso.stage.forumcommentscontroller',
         'incluso.stage.contentscontroller',
         'incluso.stage.messagecontroller',
         'incluso.stage.gameretomultiplecontroller',
