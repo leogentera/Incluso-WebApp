@@ -55,7 +55,7 @@
 											</a>
 										</li>
 
-										<li class="list-group-item" ng-click="navigateToPage(5)">
+										<li class="list-group-item" ng-click="navigateToPage(7)">
 											<a href="">
 												<span class="icomoon icon-star-clip"></span>
 												<span>Mi Personalidad</span>
@@ -814,7 +814,20 @@
 														<span class="icomoon icon-plus"></span>Agregar personaje...
 													</button>
 
-													<div class="page-number">
+                                                    <div class="page-number">
+                                                        <p class="text-center">
+                                                            <span>1</span>
+                                                            <span>/</span>
+                                                            <span>1</span>
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="actions">
+                                                        <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="save()">Guardar</button>
+                                                        <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+                                                    </div>
+
+													<!--<div class="page-number">
 														<p class="text-center">
 															<span>3</span>
 															<span>/</span>
@@ -833,7 +846,7 @@
 															</button>
 														</div>
 														<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
-													</div>
+													</div>-->
 												</section>
 											</fieldset>
 										</div>
