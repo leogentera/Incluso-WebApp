@@ -841,7 +841,6 @@ angular
                             validateOther[a] = -1;
                         }
                     }
-
                 }
 
                 if (validatedAnswers[0] > 0 &&
@@ -888,7 +887,6 @@ angular
                             validateOther[a] = -1;
                         }
                     }
-
                 }
 
                 if (validatedAnswers[0] > 0 &&
@@ -1018,7 +1016,8 @@ angular
             }
 
 
-            //*********************************** VALIDATION OF USER ANSWERS FOR QUIZZES STAGE 2 *******************************************
+            //*********************************** VALIDATION OF USER ANSWERS FOR QUIZZES STAGE 2 *****************************
+
             $scope.validateExploracionInicialStage2 = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
@@ -1242,7 +1241,7 @@ angular
 
             }
 
-            //************************************************** VALIDATION OF USER ANSWERS FOR STAGE 3 *****************
+            //*********************************** VALIDATION OF USER ANSWERS FOR STAGE 3 **********************************
 
             $scope.validateExploracionInicialStage3 = function () {
                 $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
@@ -1477,7 +1476,7 @@ angular
 
             //#######################################  SECTION FOR DATA-BINDING FUNCTIONS ##################################
 
-            //********************************** Data Binding for Quizzes Stage 1 *****************************************
+            //********************************** DATA-BINDING FOR QUIZZES - STAGE 1 *****************************************
 
             function updateSelectedAnswers(questionIndex, question) {//For "Exploración Inicial" only                
                 var userAnswers = '';
@@ -1711,7 +1710,7 @@ angular
                 }
             }
 
-            //******************************************** Data binding for Quizzes Stage 2 *******************************
+            //******************************************** DATA-BINDING FOR QUIZZES - STAGE 2 *******************************
 
             function updateExploracionInicialStage2Answers(questionIndex, question) {
 
@@ -1748,28 +1747,28 @@ angular
                     case 3:
                         if (question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
-
+                            console.log(userAnswers);
                             userAnswers.forEach(function (item) {
-                                var cleanedItem = cleanText(item).trim();
+                                var cleanedItem = item.trim();
                                 switch (cleanedItem) {
                                     case "Salud Física":
-                                        $scope.exploracionInicialStage2[3][0] = true;
+                                        $scope.exploracionInicialStage2[3][0] = 1;
                                         break;
                                     case "Escuela":
-                                        $scope.exploracionInicialStage2[3][1] = true;
+                                        $scope.exploracionInicialStage2[3][1] = 1;
                                         break;
                                     case "Familia y amigos":
-                                        $scope.exploracionInicialStage2[3][2] = true;
+                                        $scope.exploracionInicialStage2[3][2] = 1;
                                         break;
                                     case "Hobbies":
-                                        $scope.exploracionInicialStage2[3][3] = true;
+                                        $scope.exploracionInicialStage2[3][3] = 1;
                                         break;
                                     default:
                                         break;
                                 }
 
                                 if (cleanedItem == "Otro") {
-                                    $scope.exploracionInicialStage2[3][4] = true;
+                                    $scope.exploracionInicialStage2[3][4] = 1;
                                     $scope.exploracionInicialStage2OtroAnswers[0].answers[0] = question.other;
                                     $scope.OtroAnswer = $scope.exploracionInicialStage2OtroAnswers;
                                     _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);
@@ -1859,70 +1858,170 @@ angular
 
             //****************************************** DATA-BINDING FOR QUIZZES - STAGE 3 *******************************
 
-            function updateExploracionInicialStage3Answers(questionIndex, question) {
-
+            function updateExploracionInicialStage3Answers(index, question) {
+                console.log(question.userAnswer);
                 var userAnswers = '';
-                switch (questionIndex) {
+                switch (index) {
                     case 0:
                         if (question.userAnswer == "Sí") {
-                            $scope.exploracionInicialStage2[0] = "0";
+                            $scope.exploracionInicialStage3[0] = "0";
                         }
                         else if (question.userAnswer == "No") {
-                            $scope.exploracionInicialStage2[0] = "1";
+                            $scope.exploracionInicialStage3[0] = "1";
                         }
                         break;
 
                     case 1:
-                        if (question.userAnswer == "Sí") {
-                            $scope.exploracionInicialStage2[1] = "0";
+                        if (question.userAnswer == "Si, porque es la ruta para hacer realidad una idea") {
+                            $scope.exploracionInicialStage3[1] = "0";
                         }
-                        else if (question.userAnswer == "No") {
-                            $scope.exploracionInicialStage2[1] = "1";
+                        if (question.userAnswer == "No, porque si la idea es buena no necesita un plan") {
+                            $scope.exploracionInicialStage3[1] = "1";
                         }
+
                         break;
 
                     case 2:
 
-                        if (question.userAnswer == "Sí") {
-                            $scope.exploracionInicialStage2[2] = "0";
-                        }
-                        else if (question.userAnswer == "No") {
-                            $scope.exploracionInicialStage2[2] = "1";
-                        }
-                        break;
-
-                    case 3:
                         if (question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
 
                             userAnswers.forEach(function (item) {
-                                var cleanedItem = cleanText(item).trim();
+                                var cleanedItem = item.trim();
                                 switch (cleanedItem) {
-                                    case "Salud Física":
-                                        $scope.exploracionInicialStage2[3][0] = true;
+                                    case "La necesidad que satisface":
+                                        $scope.exploracionInicialStage3[2][0] = 1;
                                         break;
-                                    case "Escuela":
-                                        $scope.exploracionInicialStage2[3][1] = true;
+                                    case "El p\u00fablico objetivo":
+                                        $scope.exploracionInicialStage3[2][1] = 1;
                                         break;
-                                    case "Familia y amigos":
-                                        $scope.exploracionInicialStage2[3][2] = true;
+                                    case "El producto o servicio":
+                                        $scope.exploracionInicialStage3[2][2] = 1;
                                         break;
-                                    case "Hobbies":
-                                        $scope.exploracionInicialStage2[3][3] = true;
+                                    case "La forma en que se entrega al cliente":
+                                        $scope.exploracionInicialStage3[2][3] = 1;
+                                        break;
+                                    case "Los recursos que se necesitan":
+                                        $scope.exploracionInicialStage3[2][4] = 1;
                                         break;
                                     default:
                                         break;
                                 }
 
                                 if (cleanedItem == "Otro") {
-                                    $scope.exploracionInicialStage2[3][4] = true;
-                                    $scope.exploracionInicialStage2OtroAnswers[0].answers[0] = question.other;
-                                    $scope.OtroAnswer = $scope.exploracionInicialStage2OtroAnswers;
+                                    $scope.exploracionInicialStage3[2][5] = 1;
+                                    $scope.exploracionInicialStage3OtroAnswers[0].answers[0] = question.other;
+                                    $scope.OtroAnswer = $scope.exploracionInicialStage3OtroAnswers;
                                     _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);
                                 }
 
                             });
                         }
+
+                        break;
+
+                    case 3:
+                        if (question.userAnswer == "Guardar el dinero que te sobra") {
+                            $scope.exploracionInicialStage3[3] = "0";
+                        }
+                        if (question.userAnswer == "No gastar en cosas que no necesitas") {
+                            $scope.exploracionInicialStage3[3] = "1";
+                        }
+                        if (question.userAnswer == "Separar una parte de tu dinero antes de gastarlo") {
+                            $scope.exploracionInicialStage3[3] = "2";
+                        }
+
+                        break;
+                }
+            }
+
+
+            function updateExploracionFinalStage3Answers(index, question) {
+                console.log(question.userAnswer);
+                var userAnswers = '';
+                console.log(question.userAnswer);
+                switch (index) {
+                    case 0:
+                        if (question.userAnswer == "Las necesidades que tiene una comunidad") {
+                            $scope.exploracionFinalStage3[0] = "0";
+                        }
+                        if (question.userAnswer == "El dinero que tienes para realizarlo") {
+                            $scope.exploracionFinalStage3[0] = "1";
+                        }
+                        if (question.userAnswer == "Que este compobrado el \u00e9xito que tiene esa idea") {
+                            $scope.exploracionFinalStage3[0] = "2";
+                        }
+                        break;
+
+                    case 1:
+                        if (question.userAnswer == "La idea que te deja m\u00e1s ganancias") {
+                            $scope.exploracionFinalStage3[1] = "0";
+                        }
+                        if (question.userAnswer == "Lo que te hace diferente y mejor que tu competencia") {
+                            $scope.exploracionFinalStage3[1] = "1";
+                        }
+                        if (question.userAnswer == "La mejor idea que has tenido") {
+                            $scope.exploracionFinalStage3[1] = "2";
+                        }
+                        break;
+
+                    case 2:
+                        if (question.userAnswer.length > 0) {
+                            userAnswers = question.userAnswer.split(";");
+
+                            userAnswers.forEach(function (item) {
+                                var cleanedItem = item.trim();
+                                switch (cleanedItem) {
+                                    case "La necesidad que cubres":
+                                        $scope.exploracionFinalStage3[2][0] = 1;
+                                        break;
+                                    case "Tu p\u00fablico objetivo":
+                                        $scope.exploracionFinalStage3[2][1] = 1;
+                                        break;
+                                    case "El canal de entrega":
+                                        $scope.exploracionFinalStage3[2][2] = 1;
+                                        break;
+                                    case "Los recursos que necesitas":
+                                        $scope.exploracionFinalStage3[2][3] = 1;
+                                        break;
+                                    default:
+                                        break;
+                                }
+
+                                if (cleanedItem == "Otro") {
+                                    $scope.exploracionFinalStage3[2][4] = 1;
+                                    $scope.exploracionFinalStage3OtroAnswers[0].answers[0] = question.other;
+                                    $scope.OtroAnswer = $scope.exploracionFinalStage3OtroAnswers;
+                                    _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);
+                                }
+
+                            });
+                        }
+
+                        break;
+
+                    case 3:
+                        if (question.userAnswer == "Sí") {
+                            $scope.exploracionFinalStage3[3] = "0";
+                        }
+                        else if (question.userAnswer == "No") {
+                            $scope.exploracionFinalStage3[3] = "1";
+                        }
+
+                        break;
+
+                    case 4:
+                        if (question.userAnswer == "Guardando lo que le sobra") {
+                            $scope.exploracionFinalStage3[4] = "0";
+                        }
+                        if (question.userAnswer == "Separando lo que va a ahorrar antes") {
+                            $scope.exploracionFinalStage3[4] = "1";
+                        }
+                        if (question.userAnswer == "No gastando") {
+                            $scope.exploracionFinalStage3[4] = "2";
+                        }
+
+                        break;
                 }
             }
 
