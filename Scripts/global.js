@@ -221,8 +221,7 @@ var _IsOffline = function () {
 };
 
 var _syncAll = function (callback) {
-    callback();
-//    moodleFactory.Services.GetAsyncProfile(_getItem("userId"), allServicesCallback);
+    moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), callback, function() {} );
 };
 
 var allServicesCallback = function () {
