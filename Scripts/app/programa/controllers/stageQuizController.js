@@ -251,6 +251,45 @@ angular
                 var activity = parentActivity.activities ? parentActivity.activities[0] : parentActivity;
                 console.log(activity);
 
+                //Redirect user to the proper dashboard
+                switch ($scope.activity_identifier) {
+                    case "1001":  //Exploración Inicial - Etapa 1
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/0";
+                        break;
+                    case "1005":  //Mis Cualidades - Etapa 1
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        break;
+                    case "1006":  //Mis Gustos - Etapa 1
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        break;
+                    case "1007":  //Sueña - Etapa 1
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        break;
+                    case "1009": //Exploración Final - Etapa 1
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/5";
+                        break;
+                    case "2001": //Exploración Inicial - Etapa 2
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        break;
+                    case "2007": //Tus Ideas - Etapa 2
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        break;
+                    case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        break;
+                    case "2023": //Exploración Final - Etapa 2
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        break;
+                    case "3101": //Exploración Inicial - Etapa 3
+                        destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        break;
+                    case "3601": //Exploración Final - Etapa 3
+                        destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        break;
+                    default:
+                        break;
+                }
+
                 if (activity != null) {
 
                     if ($scope.activity_identifier == '1009') {
@@ -601,46 +640,7 @@ angular
 
                 updateProfile();
 
-                //Redirect user to the proper dashboard
-                console.log($scope.activity_identifier);
-
-                switch ($scope.activity_identifier) {
-                    case "1001":
-                        destinationPath = "/ZonaDeVuelo/Dashboard/1/0";
-                        break;
-                    case "1005":
-                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
-                        break;
-                    case "1006":
-                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
-                        break;
-                    case "1007":
-                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
-                        break;
-                    case "1009": //Exploración Final - Etapa 1
-                        destinationPath = "/ZonaDeVuelo/Dashboard/1/5";
-                        break;
-                    case "2001": //Exploración Inicial - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
-                        break;
-                    case "2007": //Tus Ideas - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
-                        break;
-                    case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
-                        break;
-                    case "2023": //Exploración Final - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0"; //Pending: UPDATE ACTIVITY NUMBER
-                        break;
-                    case "3101": //Exploración Inicial - Etapa 3
-                        destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
-                        break;
-                    case "3601": //Exploración Final - Etapa 3
-                        destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
-                        break;
-                    default:
-                        break;
-                }
+                //-------------****************
 
                 if ($scope.activity.activities) {
                     _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.activities[0].coursemoduleid, $scope.AnswersResult.answers);
@@ -2228,6 +2228,7 @@ angular
             $scope.cancel = function () {
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
                 //$location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                console.log(destinationPath);
                 $location.path(destinationPath);
             };
 
