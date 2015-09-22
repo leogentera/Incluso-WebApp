@@ -35,9 +35,9 @@
 				<section class="component global-progress txt-renglon centered">
 					<h3>- MI AVANCE -</h3>
 					<div class="spinner">
-						<img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.trunc(stageProgress/3.33)}}.png" alt="progress" />
+						<img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.floor(stageProgress/3.33)}}.png" alt="progress" />
 						<div class="circle"></div>
-						<div class="text">{{Math.trunc(stageProgress/3.33)|| 0}}%</div>
+						<div class="text">{{Math.floor(stageProgress/3.33)|| 0}}%</div>
 					</div>
 				</section>
 
@@ -81,7 +81,7 @@
 									</p>
 									<ul class="inline-list">
 										<li class="points"><span>{{course.leaderboard[0] ? course.leaderboard[0].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-										<li><span>{{course.leaderboard[0] ? Math.trunc(course.leaderboard[0].progress/3.33) : 0}}%</span></li>
+										<li><span>{{course.leaderboard[0] ? Math.floor(course.leaderboard[0].progress/3.33) : 0}}%</span></li>
 									</ul>
 								</div>
 							</div>
@@ -107,7 +107,7 @@
 								</p>
 								<ul class="inline-list">
 									<li class="points"><span>{{course.leaderboard[1] ? course.leaderboard[1].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-									<li><span>{{course.leaderboard[1] ? Math.trunc(course.leaderboard[1].progress/3.33) : 0}}%</span></li>
+									<li><span>{{course.leaderboard[1] ? Math.floor(course.leaderboard[1].progress/3.33) : 0}}%</span></li>
 								</ul>
 							</div>
 						</div>
@@ -133,7 +133,7 @@
 									</p>
 									<ul class="inline-list">
 										<li class="points"><span>{{course.leaderboard[2] ? course.leaderboard[2].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-										<li><span>{{course.leaderboard[2] ? Math.trunc(course.leaderboard[2].progress/3.33) : 0}}%</span></li>
+										<li><span>{{course.leaderboard[2] ? Math.floor(course.leaderboard[2].progress/3.33) : 0}}%</span></li>
 									</ul>
 								</div>
 							</div>
@@ -163,7 +163,7 @@
 								</p>
 								<ul class="inline-list">
 									<li class="points"><span>{{user.stars}}</span> <i class="icomoon icon-star"></i></li>
-									<li><span>{{Math.trunc(stageProgress/3.33)|| 0}}%</span></li>
+									<li><span>{{Math.floor(stageProgress/3.33)|| 0}}%</span></li>
 								</ul>
 							</div>
 						</div>

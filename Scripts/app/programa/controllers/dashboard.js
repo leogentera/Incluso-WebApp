@@ -154,7 +154,7 @@
                         }
                     }
                     
-                    $scope.stageProgress = Math.trunc((stageProgressBuffer  / stageTotalActivities)*100);
+                    $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);
                 }
                 else {                                        
                 }
