@@ -18,8 +18,7 @@ angular
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             $scope.model = userCourse;
             $scope.like_status = 1;
-            $rootScope.showFooterRocks = false; 
-            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+            $rootScope.showFooterRocks = false;             
             var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
 
             $scope.idEtapa = 0;
