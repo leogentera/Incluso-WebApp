@@ -202,6 +202,7 @@ angular
                 }
             }
 
+            var stageCompleted = _isStageCompleted();
             $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
             var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
@@ -265,26 +266,28 @@ angular
 
         var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
 
-        $scope.robotMessages = [{
-            title : "CUARTO DE RECURSOS",
-            message : "¡Has recuperado con éxito una de las piezas para reparar la nave! Ahora sabes que los sueños son el motor que te impulsa a avanzar y llegar cada vez más lejos.",
-            read : "false",
-            challengeId: 113},
+        $scope.robotMessages = [
             {
-                title : "CONÓCETE",
-                message : "¡Has recuperado con éxito una de las piezas para reparar la nave! Haz de tus habilidades una fortaleza y pónlas en acción cada día.",
+                title : "CUARTO DE RECURSOS",
+                message : "!Ahora tienes una pieza más del equipo de exploración! Recuerda, un emprendedor ve oportunidades donde otros ven problemas.",
                 read : "false",
-                challengeId: 114},
+                challengeId: 206},
             {
-                title : "MIS SUEÑOS",
-                message : "¡Has recuperado con éxito una de las piezas para reparar la nave! Lograste descubrir cuáles son tus más grandes sueños, ahora sabes hacia dónde te diriges.",
+                title : "EDUCACIÓN FINANCIERA   ",
+                message : "!Ahora tienes una pieza más del equipo de exploración! Estás listo para conseguir lo que te propongas, ahorrar puede ayudarte a reunir los recursos que necesitas para lograrlo.",
                 read : "false",
-                challengeId: 115},
+                challengeId: 208},
+            {
+                title : "MAPA DEL EMPRENDEDOR",
+                message : "!Ahora tienes una pieza más del equipo de exploración! Todos podemos ser emprendedores, sólo hace falta creer en nuestras ideas y tomar las acciones necesarias para hacerlas realidad.",
+                read : "false",
+                challengeId: 90},
             {
                 title : "CABINA DE SOPORTE",
-                message : "¡Has recuperado con éxito una de las piezas para reparar la nave!  Lograste unir los puntos clave para definir un sueño: pasión, habilidades y talentos. ¡Sólo falta ponerlos en acción para lograr lo que te propongas!",
+                message : "!Ahora tienes una pieza más del equipo de exploración! El mapa de tu idea de negocio esta completo, ya tienes todas las piezas para volverlo realidad, ahora sólo depende de ti.",
                 read : "false",
-                challengeId: 116}];
+                challengeId: 217
+            }];
 
         $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});
 

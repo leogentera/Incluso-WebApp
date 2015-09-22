@@ -107,7 +107,7 @@
         };
 
         var _putEndActivity = function (activityId, data, activityModel, token, successCallback, errorCallback) {
-            _endActivity("activitiesCache/" + activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
+            _endActivity("activitiesCache/" + activityModel.activity_identifier, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
 
         };
 
