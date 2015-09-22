@@ -1,4 +1,4 @@
-﻿angular
+﻿daangular
     .module('incluso.programa.dashboard', [])
     .controller('programaDashboardController', [
         '$q',
@@ -156,7 +156,7 @@
                         }
                     }
                     
-                    $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
+                    $scope.stageProgress = Math.trunc((stageProgressBuffer  / stageTotalActivities)*100);
                 }
                 else {                                        
                 }
