@@ -95,15 +95,16 @@ angular
             $scope.downloadGame = function () {
                 var r = createRequest();
 
-                /*try {
+                try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
-                catch (e) {*/
+                catch (e) {
                     successGame(
-                        /*Incompleto*/ {"userid":"293","actividad":"Proyecta tu vida","duración":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"No","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor"},{"preguntaId":2,"respuesta":"Lorem ipsum"},{"preguntaId":3,"respuesta":"Lorem ipsum"},{"preguntaId":4,"respuesta":"Lorem ipsum"},{"preguntaId":5,"respuesta":"Lorem ipsum"},{"preguntaId":6,"respuesta":"Lorem ipsum"}]},{"dimensionId":244,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum"},{"preguntaId":2,"respuesta":"Lorem ipsum"},{"preguntaId":3,"respuesta":"Lorem ipsum"},{"preguntaId":4,"respuesta":"Lorem ipsum"},{"preguntaId":5,"respuesta":"Lorem ipsum"},{"preguntaId":6,"respuesta":"Lorem ipsum"}]}]}
+                        /*Incompleto*/ //{"userid":"293","actividad":"Proyecta tu vida","duración":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"No","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor"},{"preguntaId":2,"respuesta":"Lorem ipsum"},{"preguntaId":3,"respuesta":"Lorem ipsum"},{"preguntaId":4,"respuesta":"Lorem ipsum"},{"preguntaId":5,"respuesta":"Lorem ipsum"},{"preguntaId":6,"respuesta":"Lorem ipsum"}]},{"dimensionId":244,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum"},{"preguntaId":2,"respuesta":"Lorem ipsum"},{"preguntaId":3,"respuesta":"Lorem ipsum"},{"preguntaId":4,"respuesta":"Lorem ipsum"},{"preguntaId":5,"respuesta":"Lorem ipsum"},{"preguntaId":6,"respuesta":"Lorem ipsum"}]}]}
+                        /*Completo v.2*/ {"userid":"103","actividad":"Tú eliges","duración":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim ipsum."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."},{"preguntaId":3,"respuesta":["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."]},{"preguntaId":4,"respuesta":["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla.","Lorem ipsum dolor sit amet, consectetur adipiscing elit.."]},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}]},{"dimensionId":243,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur."},{"preguntaId":3,"respuesta":["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."]},{"preguntaId":4,"respuesta":["Lorem ipsum dolor sit amet, consectetur adipiscing elit","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla.","Lorem ipsum dolor sit amet, consectetur adipiscing elit.."]},{"preguntaId":5,"respuesta":"Lorem ipsum dolor."},{"preguntaId":6,"respuesta":"Lorem ipsum."}]},{"dimensionId":244,"respuestas":[{"preguntaId":1,"respuesta":"Lorem."},{"preguntaId":2,"respuesta":"Lorem ipsum."},{"preguntaId":3,"respuesta":["Lorem, consectetur adipiscing elit. Nulla sit amet.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."]},{"preguntaId":4,"respuesta":["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla.","Lorem ipsum dolor sit amet, consectetur adipiscing elit.."]},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur."}]},{"dimensionId":245,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."},{"preguntaId":3,"respuesta":["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."]},{"preguntaId":4,"respuesta":["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla.","Lorem ipsum dolor sit amet, consectetur adipiscing elit.."]},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."}]},{"dimensionId":246,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim ipsum."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."},{"preguntaId":3,"respuesta":["Lorem ipsum dolor s iadipiscing elit. Nulla sit amet.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."]},{"preguntaId":4,"respuesta":["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit.","Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla.","Lorem ipsum dolor sit amet, consectetur adipiscing elit.."]},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}]}]}
                         ///*Completo*/{"userid":"103","actividad":"Tú eliges","duración":"5","fecha_inicio":"2015:07:15 14:23:12","fecha_fin":"2015:07:15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim ipsum."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."},{"preguntaId":3,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet."},{"preguntaId":4,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit."},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}]},{"dimensionId":243,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur."},{"preguntaId":3,"respuesta":"Lorem ipsum dolor sit amet."},{"preguntaId":4,"respuesta":"Lorem ipsum dolor sit."},{"preguntaId":5,"respuesta":"Lorem ipsum dolor."},{"preguntaId":6,"respuesta":"Lorem ipsum."}]},{"dimensionId":244,"respuestas":[{"preguntaId":1,"respuesta":"Lorem."},{"preguntaId":2,"respuesta":"Lorem ipsum."},{"preguntaId":3,"respuesta":"Lorem ipsum dolor."},{"preguntaId":4,"respuesta":"Lorem ipsum dolor sit."},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur."}]},{"dimensionId":245,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."},{"preguntaId":3,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaId":4,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit."},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."}]},{"dimensionId":246,"respuestas":[{"preguntaId":1,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim ipsum."},{"preguntaId":2,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet dignissim."},{"preguntaId":3,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit amet."},{"preguntaId":4,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla sit."},{"preguntaId":5,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla."},{"preguntaId":6,"respuesta":"Lorem ipsum dolor sit amet, consectetur adipiscing elit."}]}]}
                     );
-                //}
+                }
             }
 
             function successGame(data){
@@ -123,14 +124,21 @@ angular
                     var dimension = data.ficha_proyecto[i];
                     if (dimension) {
                         for (var j = 0; j < dimension.respuestas.length; j++) {
+                            var answerConcat = "";
                             var respuesta = data.ficha_proyecto[i].respuestas[j];
                             _.each($scope.mapaDeVidaActivities, function(a){
                                 if (dimension.dimensionId == a.coursemoduleid) {
-                                    return a.questions[(respuesta.preguntaId - 1)].userAnswer = respuesta.respuesta;
+                                    if(typeof respuesta.respuesta != 'string'){
+                                        _.each(respuesta.respuesta, function(r){
+                                            answerConcat = answerConcat +""+ cleanText(r).trim() + "\n";
+                                        });
+                                        return a.questions[(respuesta.preguntaId - 1)].userAnswer = answerConcat;
+                                    }
+                                    return a.questions[(respuesta.preguntaId - 1)].userAnswer = cleanText(respuesta.respuesta);
                                 };
                             });
                             logEntry.quiz_answered = (respuesta.respuesta && respuesta.respuesta != "" && logEntry.quiz_answered);
-                            logEntry.answers.push([respuesta.respuesta]);
+                            logEntry.answers.push([answerConcat != "" ? answerConcat : respuesta.respuesta]);
                         };
                         logEntry.coursemoduleid = dimension.dimensionId;
                         logEntry.startingTime = data.fecha_inicio;
@@ -140,6 +148,7 @@ angular
                         quizzesRequests.push(logEntry);
                     }
                 }
+                debugger;
                 var quizzesAnswered = _.countBy($scope.mapaDeVidaActivities, function(a){
                     if (a.questions) {
                         var questionsAnswers = _.countBy(a.questions, function(q){
@@ -227,5 +236,14 @@ angular
                         return i;
                     }
                 }
+            }
+
+            function cleanText(userAnswer) {
+                var result = userAnswer.replace("/\r/", "");
+                result = userAnswer.replace("/<br>/", "");
+                result = userAnswer.replace("/<p>/", "");
+                result = userAnswer.replace("/</p>/", "");
+                result = userAnswer.replace("/\n/", "");
+                return result;
             }
         }]);
