@@ -1747,28 +1747,28 @@ angular
                     case 3:
                         if (question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
-
+                            console.log(userAnswers);
                             userAnswers.forEach(function (item) {
-                                var cleanedItem = cleanText(item).trim();
+                                var cleanedItem = item.trim();
                                 switch (cleanedItem) {
                                     case "Salud Física":
-                                        $scope.exploracionInicialStage2[3][0] = true;
+                                        $scope.exploracionInicialStage2[3][0] = 1;
                                         break;
                                     case "Escuela":
-                                        $scope.exploracionInicialStage2[3][1] = true;
+                                        $scope.exploracionInicialStage2[3][1] = 1;
                                         break;
                                     case "Familia y amigos":
-                                        $scope.exploracionInicialStage2[3][2] = true;
+                                        $scope.exploracionInicialStage2[3][2] = 1;
                                         break;
                                     case "Hobbies":
-                                        $scope.exploracionInicialStage2[3][3] = true;
+                                        $scope.exploracionInicialStage2[3][3] = 1;
                                         break;
                                     default:
                                         break;
                                 }
 
                                 if (cleanedItem == "Otro") {
-                                    $scope.exploracionInicialStage2[3][4] = true;
+                                    $scope.exploracionInicialStage2[3][4] = 1;
                                     $scope.exploracionInicialStage2OtroAnswers[0].answers[0] = question.other;
                                     $scope.OtroAnswer = $scope.exploracionInicialStage2OtroAnswers;
                                     _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);
@@ -1887,29 +1887,29 @@ angular
                             userAnswers = question.userAnswer.split(";");
 
                             userAnswers.forEach(function (item) {
-                                var cleanedItem = cleanText(item).trim();
+                                var cleanedItem = item.trim();
                                 switch (cleanedItem) {
                                     case "La necesidad que satisface":
-                                        $scope.exploracionInicialStage3[2][0] = true;
+                                        $scope.exploracionInicialStage3[2][0] = 1;
                                         break;
                                     case "El p\u00fablico objetivo":
-                                        $scope.exploracionInicialStage3[2][1] = true;
+                                        $scope.exploracionInicialStage3[2][1] = 1;
                                         break;
                                     case "El producto o servicio":
-                                        $scope.exploracionInicialStage3[2][2] = true;
+                                        $scope.exploracionInicialStage3[2][2] = 1;
                                         break;
                                     case "La forma en que se entrega al cliente":
-                                        $scope.exploracionInicialStage3[2][3] = true;
+                                        $scope.exploracionInicialStage3[2][3] = 1;
                                         break;
                                     case "Los recursos que se necesitan":
-                                        $scope.exploracionInicialStage3[2][4] = true;
+                                        $scope.exploracionInicialStage3[2][4] = 1;
                                         break;
                                     default:
                                         break;
                                 }
 
                                 if (cleanedItem == "Otro") {
-                                    $scope.exploracionInicialStage3[2][5] = true;
+                                    $scope.exploracionInicialStage3[2][5] = 1;
                                     $scope.exploracionInicialStage3OtroAnswers[0].answers[0] = question.other;
                                     $scope.OtroAnswer = $scope.exploracionInicialStage3OtroAnswers;
                                     _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);
@@ -1970,26 +1970,26 @@ angular
                             userAnswers = question.userAnswer.split(";");
 
                             userAnswers.forEach(function (item) {
-                                var cleanedItem = cleanText(item).trim();
+                                var cleanedItem = item.trim();
                                 switch (cleanedItem) {
                                     case "La necesidad que cubres":
-                                        $scope.exploracionFinalStage3[2][0] = true;
+                                        $scope.exploracionFinalStage3[2][0] = 1;
                                         break;
                                     case "Tu p\u00fablico objetivo":
-                                        $scope.exploracionFinalStage3[2][1] = true;
+                                        $scope.exploracionFinalStage3[2][1] = 1;
                                         break;
                                     case "El canal de entrega":
-                                        $scope.exploracionFinalStage3[2][2] = true;
+                                        $scope.exploracionFinalStage3[2][2] = 1;
                                         break;
                                     case "Los recursos que necesitas":
-                                        $scope.exploracionFinalStage3[2][3] = true;
+                                        $scope.exploracionFinalStage3[2][3] = 1;
                                         break;
                                     default:
                                         break;
                                 }
 
                                 if (cleanedItem == "Otro") {
-                                    $scope.exploracionFinalStage3[2][4] = true;
+                                    $scope.exploracionFinalStage3[2][4] = 1;
                                     $scope.exploracionFinalStage3OtroAnswers[0].answers[0] = question.other;
                                     $scope.OtroAnswer = $scope.exploracionFinalStage3OtroAnswers;
                                     _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);
