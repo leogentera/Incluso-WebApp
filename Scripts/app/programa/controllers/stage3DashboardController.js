@@ -129,8 +129,8 @@ angular
             $scope.openModal_CloseChallenge = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'ClosingChallengeModal.html',
-                    controller: 'closingChallengeController',
+                    templateUrl: 'ClosingStageThreeChallengeModal.html',
+                    controller: 'closingStageThreeChallengeController',
                     size: size,
                     windowClass: 'closing-stage-modal user-help-modal'
                 });
@@ -259,7 +259,7 @@ angular
                 return activity.status;
             };
 
-        }]).controller('closingChallengeController', function ($scope, $modalInstance) {
+        }]).controller('closingStageThreeChallengeController', function ($scope, $modalInstance) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
