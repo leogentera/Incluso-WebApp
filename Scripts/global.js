@@ -345,24 +345,24 @@ var successQuizCallback = function () {
 var _isStageCompleted = function () {
 
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-
+    
+    var stageCompleted = false;
+    
     for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
         var currentStage = userCourse.stages[stageIndex];
-        if (currentStage.status == 1) {
-            break;
-        } else {
+        if (currentStage.status == 0 && currentStage.sectionname != "General") {
             var totalChallengesByStage = currentStage.challenges.length;
             var totalChallengesCompleted = _.where(currentStage.challenges, {status: 1}).length;
             if (totalChallengesByStage == totalChallengesCompleted) {
                 userCourse.stages[stageIndex].status = 1;
                 _setLocalStorageJsonItem("usercourse", userCourse);
-                return true;
+                stageCompleted = true;
             } else {
-                return false;
+                stageCompleted = false;
             }
         }
     }
-
+    return stageCompleted;
 };
 
 var _isChallengeCompleted = function () {
@@ -386,7 +386,11 @@ var _isChallengeCompleted = function () {
                 var currentUserId = currentUser.userId;
                 var data = {userid: currentUserId};
                 var currentActivityModuleId = currentChallenge.coursemoduleid;
-                moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, null, currentUser.token, successCallback, errorCallback);
+                var activityIdentifier = _getActivityByCourseModuleId();                
+                var activitymodel = {
+                    activity_identifier: currentChallenge.activity_identifier
+                };
+                moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallback);
                 success = currentActivityModuleId;
                 return success;
             } else {
@@ -810,8 +814,8 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
 function updateUserStars(activityIdentifier, extraPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-    //var activity = getActivityByActivity_identifier(activity_identifier);
-    var activity = getActivityAtAnyCost(activityIdentifier).activity;
+    var activity = getActivityByActivity_identifier(activityIdentifier);
+    //var activity = getActivityAtAnyCost(activityIdentifier).activity;
 
     extraPoints ? '' : extraPoints = 0;
 
@@ -997,12 +1001,12 @@ var _badgesPerChallenge = [
 
 var _activityRoutes = [
     {id: 1001, name: '', url: '/ZonaDeVuelo/ExploracionInicial/1001'},
-    {id: 1101, name: '', url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/112'},
+    {id: 1101, name: '', url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/1101'},
     {id: 1049, name: '', url: '/ZonaDeVuelo/Conocete/ZonaDeContacto/149'},
-    {id: 1020, name: '', url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/145'},
+    {id: 1020, name: '', url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/1020'},
     {id: 1039, name: 'Reto Multiple', url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
     {id: 1010, name: '', url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
-    {id: 1021, name: '', url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/146'},
+    {id: 1021, name: '', url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/1021'},
     {id: 1006, name: '', url: '/ZonaDeVuelo/MisSuenos/MisGustos/1006'},
     {id: 1005, name: '', url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
     {id: 1007, name: '', url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
@@ -1010,11 +1014,11 @@ var _activityRoutes = [
     {id: 1002, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/68'},
     {id: 1009, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
     {id:3101,name:'',url:'/ZonaDeAterrizaje/ExploracionInicial/3101'},
-    {id:3201,name:'',url:'/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/207'},
-    {id:3301,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/209'},
+    {id:3201,name:'',url:'/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201'},
+    {id:3301,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/3301'},
     {id:3302,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302'},
     {id:3304,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/93'},
-    {id:3401,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/213'},
+    {id:3401,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/3401'},
     {id:3402,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
     {id:3404,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
     {id:3501,name:'',url:'/ZonaDeAterrizaje/CabinaDeSoporte/95'},

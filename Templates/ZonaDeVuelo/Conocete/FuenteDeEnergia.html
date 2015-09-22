@@ -104,7 +104,7 @@
                       <span ng-show="activity.status" ng-bind-html="activity.pageContent"></span>
                       <span ng-bind-html="activity.file.pageContent"></span>
                       <div ng-if="activity.activity_type == 'resource'" class="image-container">
-                        <a href="{{activity.activityContent.fileurl}}&token={{token}}" target="blank"><img ng-click="updateStatus(activity.groupid)" ng-src="assets/images/svg/img_placeholder-01.svg" class="image-element"></a>
+                        <a href="{{activity.activityContent.content[0].fileurl}}" target="blank"><img ng-click="updateStatus(activity.groupid)" ng-src="{{activity.status && activity.activityContent.content[0].fileurl || 'assets/images/svg/img_placeholder-01.svg'}}" class="image-element"></a>
                       </div>
                       <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>                      
 

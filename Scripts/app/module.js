@@ -353,7 +353,7 @@
             controller: 'stageGameRetoMultipleResultsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -439,7 +439,7 @@
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
@@ -508,7 +508,7 @@
 
 
 //**********************************************************************************************************
-        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activity_identifier/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
             controller: 'stageForumCloseController'
         });

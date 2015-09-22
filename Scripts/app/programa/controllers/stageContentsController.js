@@ -13,48 +13,48 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _timeout = $timeout;
             _httpFactory = $http;
-            var moduleid = parseInt($routeParams.moodleid);
+            var moduleid = $routeParams.moodleid;
             var pagename;      
             var currentChallenge; 
             var stage;             
             switch(moduleid){
-              case 112:                
+              case "1101":  
                 currentChallenge = 1;
                 stage = "ZonaDeVuelo";
                 break;
-              case 145:                
+              case "1020":                
                 currentChallenge = 2;
                 stage = "ZonaDeVuelo";
                 break;
-              case 146:                
+              case "1021":                
                 currentChallenge = 3;
                 stage = "ZonaDeVuelo";
                 break;
-              case 156:
+              case "2004":
                 currentChallenge = 1;
                 stage = "ZonaDeNavegacion";
                 break;
-              case 158:
+              case "2006":
                 currentChallenge = 2;
                 stage = "ZonaDeNavegacion";
                 break;
-              case 161:
+              case "2011":
                 currentChallenge = 3;
                 stage = "ZonaDeNavegacion";
                 break;
-              case 163:
+              case "2015":
                 currentChallenge = 4;
                 stage = "ZonaDeNavegacion";
                 break;
-              case 207:
+              case "3201":
                 currentChallenge = 1;
                 stage = "ZonaDeAterrizaje";
                 break;
-              case 209:
+              case "3301":
                 currentChallenge = 2;
                 stage = "ZonaDeAterrizaje";
                 break;
-              case 213:
+              case "3401":
                 currentChallenge = 3;
                 stage = "ZonaDeAterrizaje";
                 break;
@@ -83,7 +83,7 @@ angular
             if(!activities){
               var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
               $scope.fuenteDeEnergia = _.find(activitymanagers,function(a) { 
-                                  return a.coursemoduleid == moduleid
+                                  return a.activity_identifier == moduleid
                                   });                    
               getDataAsync();    
             }      
@@ -133,6 +133,9 @@ angular
                   for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){ 
                     if($scope.fuenteDeEnergia.activities[i].coursemoduleid == courseId) {                      
                       $scope.fuenteDeEnergia.activities[i].activityContent = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + courseId));
+                      if($scope.fuenteDeEnergia.activities[i].activity_type == 'resource'){                        
+                        $scope.fuenteDeEnergia.activities[i].activityContent.content[0].fileurl = $scope.fuenteDeEnergia.activities[i].activityContent.content[0].fileurl + "&token=" + $scope.token;
+                      }
                       hidePreloader += 1;
                       break;                      
                     }                    
@@ -153,8 +156,8 @@ angular
                 $scope.activities.push(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 80)));
                        
             }*/
-             function checkProgress(){
-              for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {              
+             function checkProgress(){              
+              for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {                              
                 if(!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){                
                   $scope.statusObligatorios+=1; 
                   starsMandatory += 50;               
