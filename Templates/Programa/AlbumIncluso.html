@@ -21,7 +21,14 @@
                             <div>
                                 <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToSocialNetworks()">Compartir en Redes Sociales</a>
+                            </div>
+                        </div>
+                        <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum">
+                            <div>
+                              <a title="close" class="close"></a>
+                              <div class="add">Has compartido tú album.</div>
+                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>
+                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>
                             </div>
                         </div>
                     </section>
