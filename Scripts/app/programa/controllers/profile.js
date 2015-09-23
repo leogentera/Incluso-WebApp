@@ -66,7 +66,7 @@ angular
                             elem.filename = getFileName(elem.id);
                             elem.description = getDescription(elem.id);
                         } else {
-                            elem.filename = "default_placeholder.svg";
+                            elem.filename = "insignia-bloqueada.gif";
                         }
 
                         $scope.wholeBadgesPages[i].push(elem);
@@ -153,58 +153,58 @@ angular
 
                 switch (id) {
                     case 2:
-                        filename = "combustible.svg";
+                        filename = "insignias-combustible.gif";
                         break;
                     case 3:
-                        filename = "turbina.svg";
+                        filename = "insignias-turbina.gif";
                         break;
                     case 4:
-                        filename = "ala.svg";
+                        filename = "insignias-ala.gif";
                         break;
                     case 5:
-                        filename = "sistNavegacion.svg";
+                        filename = "insignias-sist-navegacion.gif";
                         break;
                     case 6:
-                        filename = "propulsor.svg";
+                        filename = "insignias-propulsor.gif";
                         break;
                     case 7:
-                        filename = "misiles.svg";
+                        filename = "insignias-misiles.gif";
                         break;
                     case 8:
-                        filename = "escudo.svg";
+                        filename = "insignias-campodefuerza.gif";
                         break;
                     case 9:
-                        filename = "radar.svg";
+                        filename = "insignias-radar.gif";
                         break;
                     case 10:
-                        filename = "tanqueoxigeno.svg";
+                        filename = "insignias-tanqueoxigeno.gif";
                         break;
                     case 11:
-                        filename = "sondaEspacial.svg";
+                        filename = "insignias-sondaespacial.gif";
                         break;
                     case 12:
-                        filename = "foro_interplanetario.svg";
+                        filename = "insignias-foro.gif";
                         break;
                     case 13:
-                        filename = "IDintergalactica.svg";
+                        filename = "insignias-id.gif";
                         break;
                     case 14:
-                        filename = "participacion_electrica.svg";
+                        filename = "insignias-participacion.gif";
                         break;
                     case 15:
-                        filename = "corazon_digital.svg";
+                        filename = "insignias-corazon.gif";
                         break;
                     case 16:
-                        filename = "casco.svg";
+                        filename = "insignias-casco.gif";
                         break;
                     case 17:
-                        filename = "radioComunicacion.svg";
+                        filename = "insignias-radio.gif";
                         break;
                     case 18:
-                        filename = "turbo.svg";
+                        filename = "insignias-turbo.gif";
                         break;
                     default:
-                        filename = "default_placeholder.svg";
+                        filename = "insignia-bloqueada.gif";
                 }
 
                 return filename;

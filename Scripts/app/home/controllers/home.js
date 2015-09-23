@@ -27,7 +27,8 @@
             };
 
             $scope.navigateTo = function(url,sideToggle,activityId){
-                if(activityId!= undefined && activityId > 0 && !$scope.canStartActivity(activityId)) {
+                //TODO: Remove false from condition, only there to jump freely into activities in DEV
+                if(false && activityId!= undefined && activityId > 0 && !$scope.canStartActivity(activityId)) {
                     return false;
                 }
                 //$location.path(url + activityId);
@@ -210,21 +211,19 @@
 
             //Helps defining if activity can be started
             $scope.canStartActivity = function(activityIdentifier){
-
                 //If public page, return false
-                if(!$rootScope.showToolbar) {
+                var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+
+                if(!$rootScope.showToolbar || !userCourse ) {
                     return false;
                 }
+                //Load activity
+                var activity = getActivityByActivity_identifier(activityIdentifier);
+                if(!activity) return false;
                 //Load activity status dictionary from local cache
                 if(!_activityStatus) {
                     _activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
-                    //TODO: Need to rebuild from tree if cache was somehow cleared
                 }
-                return true;
-                //TODO: need to load tree right here, can't wait until a controller does
-                //Load activity
-               // var activity = getActivityByActivity_identifier(activityIdentifier);
-                //if(!activity) return false;
                 //Return TRUE if no activity status in cache or activity has been completed already
                 if(!_activityStatus || _activityStatus[activity.activity_identifier] || _activityStatus[activity.coursemoduleid]){
                     return true;

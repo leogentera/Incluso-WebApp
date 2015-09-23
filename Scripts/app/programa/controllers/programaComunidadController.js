@@ -348,6 +348,16 @@ angular
                 };
             };
             
+            $scope.commentModalClick = function(postId) {
+                $scope.isCommentModalCollapsed['id' + postId] = !$scope.isCommentModalCollapsed['id' + postId];
+                $scope.isReportedAbuseModalCollapsed['id' + postId] = false;
+            };
+            
+            $scope.reportModalClick = function(postId) {
+                $scope.isReportedAbuseModalCollapsed['id' + postId] = !$scope.isReportedAbuseModalCollapsed['id' + postId];
+                $scope.isCommentModalCollapsed['id' + postId] = false;
+            };
+            
             $scope.scrollToTop();
             _initCommunity();
             

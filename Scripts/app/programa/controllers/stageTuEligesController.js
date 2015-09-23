@@ -1,4 +1,3 @@
-// http://weblogs.asp.net/dwahlin/archive/2013/09/18/building-an-angularjs-modal-service.aspx
 angular
     .module('incluso.stage.tueligesController', [])
     .controller('stageTuEligesController', [
@@ -29,6 +28,15 @@ angular
             $scope.tuEligesActivities = moodleFactory.Services.GetCacheJson("tuEligesActivities");
             $scope.stars = 0;
             $scope.enabled = true;
+            $scope.isInstalled = false;
+
+            try {
+              cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+            }
+            catch (e) {
+                $scope.isInstalled = true;
+            }
+
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var userScore = null;
 

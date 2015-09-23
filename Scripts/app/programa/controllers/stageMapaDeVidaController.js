@@ -27,8 +27,14 @@ angular
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.mapaDeVidaActivities = moodleFactory.Services.GetCacheJson("mapaDeVidaActivities");
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
-
             $scope.stars = 0;
+            $scope.isInstalled = false;     
+            try {       
+              cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);      
+            }       
+            catch (e) {     
+                $scope.isInstalled = true;      
+            }
 
             if (!$scope.mapaDeVidaActivities) {
                 $scope.mapaDeVidaActivities = [];
@@ -148,7 +154,7 @@ angular
                         quizzesRequests.push(logEntry);
                     }
                 }
-                debugger;
+
                 var quizzesAnswered = _.countBy($scope.mapaDeVidaActivities, function(a){
                     if (a.questions) {
                         var questionsAnswers = _.countBy(a.questions, function(q){
