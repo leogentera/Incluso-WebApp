@@ -1117,6 +1117,7 @@ angular
 
                 } else {
                     $scope.showWarning = true;
+                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                     $scope.$emit('scrollTop');
                 }
             };
@@ -1193,6 +1194,8 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                 } else {
+                    $scope.showWarning = true;
+                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                     showWarningAndGoToTop();
                 }
             };
@@ -1217,6 +1220,7 @@ angular
                     moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBackStage2, partialErrorCallbackStage2, true);
                 } else {
                     $scope.showWarning = true;
+                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                     showWarningAndGoToTop();
                 }
 
