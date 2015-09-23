@@ -139,8 +139,8 @@ angular
             $scope.openModal_CloseStage = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'ClosingStageModal.html',
-                    controller: 'closingStageController',
+                    templateUrl: 'ClosingStageThreeModal.html',
+                    controller: 'closingStageThreeController',
                     size: size,
                     windowClass: 'closing-stage-modal user-help-modal'
                 });
@@ -292,14 +292,14 @@ angular
 
         $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});
 
-    }).controller('closingStageController', function ($scope, $modalInstance,$location) {
+    }).controller('closingStageThreeController', function ($scope, $modalInstance,$location) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
 
         $scope.robotMessages = {
-            title: "Cierre Zona de Vuelo",
-            message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
+            title: "Cierre Zona de Aterrizaje",
+            message: "Mensaje de cierre zona de aterrizaje!"
         };
 
         $scope.navigateToDashboard = function () {

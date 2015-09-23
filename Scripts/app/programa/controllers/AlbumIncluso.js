@@ -15,20 +15,21 @@ angular
         $scope.setToolbar($location.$$path, "Album Incluso");
         $rootScope.showFooter = false;
         $rootScope.showFooterRocks = false;
-        $scope.$emit('ShowPreloader');
         $scope.isShareCollapsed = false;
-        
+        $scope.showSharedAlbum = false;
         $scope.sharedAlbumMessage = null;
-        
-        var albumSrc = null;
         
         var _course = moodleFactory.Services.GetCacheJson("course");
         var _userId = moodleFactory.Services.GetCacheObject("userId");
         var _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
-            
+        var albumSrc = null;
+        
         $scope.discussion = null;
         $scope.forumId = null;
 
+        
+        $scope.$emit('ShowPreloader');
+        
         $timeout(function () {
             //apply carousel to album layout
             var owlAlbum = $("#owlAlbum");
@@ -60,9 +61,6 @@ angular
         }, 1000);
 
         $scope.message = "Todos los logros en un solo lugar. <br/> Recuerda lo vivido en esta misi&#243;n y no te olvides de continuar con tus prop&#243;sitos.";
-
-        $scope.postTextToSocialNetworks = function(){
-        };
         
         $scope.postTextToCommunity = function(){
             
@@ -79,6 +77,7 @@ angular
                     }, function(data){
                         $scope.sharedAlbumMessage = null;
                         $scope.isShareCollapsed = false;
+                        $scope.showSharedAlbum = false;
                         $scope.$emit('HidePreloader');
                     }, true);
             } else {
@@ -184,6 +183,7 @@ angular
             
             if (albumSrc == null) {
                     var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
+                    console.log(document.querySelector('image'));
                     var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
                     var DOMURL = self.URL || self.webkitURL || self;
                     var url = DOMURL.createObjectURL(svg);
@@ -222,11 +222,13 @@ angular
                     function() {
                         $scope.sharedAlbumMessage = null;
                         $scope.isShareCollapsed = false;
+                        $scope.showSharedAlbum = true;
                         $scope.$emit('HidePreloader');
                     },
                     function(){
                         $scope.sharedAlbumMessage = null;
                         $scope.isShareCollapsed = false;
+                        $scope.showSharedAlbum = false;
                         $scope.$emit('HidePreloader');
                     }
                 );
