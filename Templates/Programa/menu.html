@@ -37,7 +37,7 @@
                   <ul class="nav" ng-controller="menuController">
                     <li><a ng-click="navigateTo('ProgramaDashboard', 'sideToggle')"><span class="icomoon icon-home"></span> Inicio</a></li>
                     <li><a ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"><span class="icomoon icon-video-file"></span> Acerca de Incluso</a></li>
-                    <li><a ng-click="playVideo('assets/media', 'video-tutorial.mp4')"><span class="icomoon icon-video-file"></span> Guía de uso </a></li>
+
                     <li>
                         <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="0"></i>-->
                         <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="0" ng-show="!one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
@@ -82,13 +82,13 @@
                         <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="1"></i>-->
                         <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="1" ng-show="!two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
                         <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="1" ng-show="two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
-                        <a class="menu-green" ng-click="navigateTo('/ZonaDeNavegacion/Dashboard/2/0', 'sideToggle')">
+                        <a class="menu-green" ng-click="navigateTo('/ZonaDeNavegacion/Dashboard/2/0', 'sideToggle',2001)">
                           <span class="icomoon icon-asterodis">
                               <span class="path1"></span>
                               <span class="path2"></span>
                               <span class="path3"></span>        
                           </span>    
-                          Zona de navegacion
+                          Zona de Navegacion
                         </a>
                         <div class="submenu" id="sub1">
                             <ul>
@@ -125,13 +125,13 @@
                         <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="2"></i>-->
                          <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="2" ng-show="!three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
                         <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="2" ng-show="three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
-                        <a class="menu-pink" ng-click="navigateTo('/ZonaDeAterrizaje/Dashboard/3/0', 'sideToggle')">
+                        <a class="menu-pink" ng-click="navigateTo('/ZonaDeAterrizaje/Dashboard/3/0', 'sideToggle',3101)">
                           <span class="icomoon icon-planet">
                               <span class="path1"></span>
                               <span class="path2"></span>
                               <span class="path3"></span>        
                           </span>    
-                          Zona de aterrizaje
+                          Zona de Aterrizaje
                         </a>
                         <div class="submenu" id="sub2">
                            <ul>
@@ -159,26 +159,26 @@
 
                             </ul>
                         </div>
-                    </li>                    
-                    <li class="hidden"><a class="menu-green" ng-href="#"><span class="icomoon icon-asterodis"></span>Zona de Navegación</a></li>
-                    <li class="hidden"><a class="menu-pink" ng-href="#"><span class="icomoon icon-planet"></span>Zona de Aterrizaje</a></li>
-                    <li>
-                      <a ng-click="navigateTo('MyStars','sideToggle')">
-                        <span class="icomoon icon-earned-stars"></span> Mis estrellas
-                      </a>
                     </li>
-                    <li class="hidden"><a ng-click="navigateTo('HallOfFame', 'sideToggle')"><span class="icomoon icon-cup"></span> Salón de la fama</a></li>
-                    <li class="hidden"><a><span class="icomoon icon-racing-flag "></span> Recuerdos Incluso</a></li>
-                    <li class="hidden"><a><span class="icomoon icon-loop"></span> Seguimiento</a></li>
-                    <li class="hidden"><a><span class="icomoon icon-document"></span> Certificación</a></li>                    
-                    <li class="hidden"><a><span class="icomoon icon-lifesaver"></span> Preguntas frecuentes</a></li>
-                    <li><a ng-click="navigateTo('PrivacyNotice', 'sideToggle')"><span class="icomoon icon-privacy"></span> Aviso de privacidad</a></li>
-                    <li><a ng-click="navigateTo('TermsOfUse', 'sideToggle')"><span class="icomoon icon-books"></span> Condiciones de uso</a></li>
-                    <li class="hidden"><a ng-click="navigateTo('SharingExperience', 'sideToggle')">Compartir experiencia</a></li>
-                    <li class=""><a ng-click="navigateTo('/AlbumIncluso', 'sideToggle')">Album incluso</a></li>
-                    <li class=""><a ng-click="navigateTo('/reconocimiento', 'sideToggle')">Reconocimiento</a></li>
-                    <li class="separate"></li>                    
-                    <li><a ng-click="logout()"><span class="icomoon icon-logout"></span> Salir</a></li>
+
+                      <li>
+                          <a ng-click="navigateTo('MyStars','sideToggle')">
+                              <span class="icomoon icon-earned-stars"></span> Mis estrellas
+                          </a>
+                      </li>
+                      <li class="hidden"><a ng-click="navigateTo('HallOfFame', 'sideToggle')"><span class="icomoon icon-cup"></span> Salón de la fama</a></li>
+                      <li class="hidden"><a><span class="icomoon icon-racing-flag "></span> Recuerdos Incluso</a></li>
+                      <li class="hidden"><a><span class="icomoon icon-loop"></span> Seguimiento</a></li>
+                      <li class="hidden"><a><span class="icomoon icon-document"></span> Certificación</a></li>
+                      <li class="hidden"><a><span class="icomoon icon-lifesaver"></span> Preguntas frecuentes</a></li>
+                      <li><a ng-click="playVideo('assets/media', 'video-tutorial.mp4')"><span class="icomoon icon-video-file"></span> Guía de uso </a></li>
+                      <li><a ng-click="navigateTo('PrivacyNotice', 'sideToggle')"><span class="icomoon icon-privacy"></span> Aviso de privacidad</a></li>
+                      <li><a ng-click="navigateTo('TermsOfUse', 'sideToggle')"><span class="icomoon icon-books"></span> Condiciones de uso</a></li>
+                      <li class="hidden"><a ng-click="navigateTo('SharingExperience', 'sideToggle')">Compartir experiencia</a></li>
+                      <li class=""><a ng-click="navigateTo('/AlbumIncluso', 'sideToggle')">Album incluso</a></li>
+                      <li class=""><a ng-click="navigateTo('/reconocimiento', 'sideToggle')"><span class="icomoon icon-document"></span>Reconocimiento</a></li>
+                      <li class="separate"></li>
+                      <li><a ng-click="logout()"><span class="icomoon icon-logout"></span> Salir</a></li>
                   </ul>
                 </div>
             </div>
