@@ -104,7 +104,8 @@ angular
                               }
 
 
-                              updateUserStars(activity_identifier);
+                              //updateUserStars(activity_identifier);
+                              updateUserStars($routeParams.activityId);
                               $scope.$emit('HidePreloader');
                             $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                           }, errorCallback);
@@ -117,6 +118,7 @@ angular
 
 
             $scope.finishActivity = function () {
+                debugger;
                 var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 endForumActivity(moodleId);
             }
