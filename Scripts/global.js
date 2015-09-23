@@ -776,6 +776,7 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
 }
 
 function updateUserStars(activityIdentifier, extraPoints) {
+    debugger;
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
@@ -793,9 +794,16 @@ function updateUserStars(activityIdentifier, extraPoints) {
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
     } else {
-        profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
-    }
+        if (activityIdentifier == "2016" || activityIdentifier == "2023" || activityIdentifier == "3601") {
+            profile.stars = Number(profile.stars) + Number(activity.activities[0].points) + Number(extraPoints);
+        }
+        else {
+            profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+        }
 
+
+    }
+    console.log("Profile stars = " + profile.stars);
 
     var data = {
         userId: profile.id,

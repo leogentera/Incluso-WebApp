@@ -184,15 +184,71 @@ angular
             };
 
 
-            $scope.addCaptureField = function (value) {
-                if (value) {
+            $scope.addCaptureField = function (value,check) {
+                if (check) {
                     addHeightForOther();
+
+                    switch (value) {
+                        case "cualidades1":
+                            $('#textoarea1').attr('readonly', false);
+                            break;
+                        case "cualidades2":
+                            $('#textoarea2').attr('readonly', false);
+                            break;
+                        case "cualidades3":
+                            $('#textoarea2').attr('readonly', false);
+                            break;
+                        case "gustos1":
+                            $('#textoarea1').attr('readonly', false);
+                            break;
+                        case "gustos2":
+                            $('#textoarea2').attr('readonly', false);
+                            break;
+                        case "gustos3":
+                            $('#textoarea3').attr('readonly', false);
+                            break;
+                        default:
+                            console.log('Unknow textArea');
+                    }
                 } else {
                     reduceHeightForOther();
+
+                    switch (value) {
+                        case "cualidades1":
+                            var index = $scope.userprofile.talents.indexOf($scope.misCualidadesOtroAnswers[0].answers[0]);
+                            $scope.userprofile.talents.splice(index, 1);
+                            $scope.misCualidadesOtroAnswers[0].answers[0] = '';
+                            break;
+                        case "cualidades2":
+                            var index = $scope.userprofile.values.indexOf($scope.misCualidadesOtroAnswers[1].answers[0]);
+                            $scope.userprofile.values.splice(index, 1);
+                            $scope.misCualidadesOtroAnswers[1].answers[0] = '';
+                            break;
+                        case "cualidades3":
+                            var index = $scope.userprofile.habilities.indexOf($scope.misCualidadesOtroAnswers[2].answers[0]);
+                            $scope.userprofile.habilities.splice(index, 1);
+                            $scope.misCualidadesOtroAnswers[2].answers[0] = '';
+                            break;
+                        case "gustos1":
+                            var index = $scope.userprofile.favoriteSports.indexOf($scope.misGustosOtroAnswers[0].answers[0]);
+                            $scope.userprofile.favoriteSports.splice(index, 1);
+                            $scope.misGustosOtroAnswers[0].answers[0] = '';
+                            break;
+                        case "gustos2":
+                            var index = $scope.userprofile.artisticActivities.indexOf($scope.misGustosOtroAnswers[1].answers[0]);
+                            $scope.userprofile.artisticActivities.splice(index, 1);
+                            $scope.misGustosOtroAnswers[1].answers[0] = '';
+                            break;
+                        case "gustos3":
+                            var index = $scope.userprofile.hobbies.indexOf($scope.misGustosOtroAnswers[2].answers[0]);
+                            $scope.userprofile.hobbies.splice(index, 1);
+                            $scope.misGustosOtroAnswers[2].answers[0] = '';
+                            break;
+                        default:
+                            console.log('Unknow textArea');
+                    }
                 }
             };
-
-
 
             //****************************************  STARTING POINT **************************************************
 
@@ -247,9 +303,9 @@ angular
                 console.log("Activity identifier: " + $scope.activity_identifier);
 
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);
-                console.log(parentActivity);
+                console.log("parentActivity = " + parentActivity);
                 var activity = parentActivity.activities ? parentActivity.activities[0] : parentActivity;
-                console.log(activity);
+                console.log("Activity = " + parentActivity.toString());
 
                 //Redirect user to the proper dashboard
                 switch ($scope.activity_identifier) {
@@ -301,14 +357,14 @@ angular
                     console.log("points: " + activity.points);
                     $scope.activityname = activity.activityname;
 
-                    $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+                    $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-
+                    console.log($scope.userprofile);
                     var activityFinished = false;
 
                     $scope.activity_status = parentActivity.status;
-                    //$scope.activity_status = activity.status;
-                    console.log(activity.status);
+                    //before: $scope.activity_status = activity.status;
+                    //console.log(activity.status);
 
                     if (activity.status != 0) {//If the activity is currently finished...
                         activityFinished = true;
@@ -330,6 +386,7 @@ angular
                         } else {
                             localAnswers = JSON.parse(_getItem("activityAnswers/" + activity.coursemoduleid));
                         }
+                        //console.log("localAnswers = " + localAnswers + " - " + parentActivity.activities[0].coursemoduleid + " - " + activity.coursemoduleid);
 
                         //If...the activity quiz has a checkbox for the "Other" answer, then get it from Local Storage
                         if (( $scope.activity_identifier == '1001' ||
@@ -349,7 +406,7 @@ angular
 
                         }
 
-                        console.log("localAnswers : " + localAnswers);
+                        //console.log("localAnswers : " + localAnswers);
                         if (localAnswers == null) {// If activity not exists in Local Storage...get it from Server
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
                         }
@@ -415,7 +472,7 @@ angular
             function successfullCallBack(activityAnswers) {
 
                 $scope.$emit('HidePreloader');
-                console.log("activityAnswers = " + JSON.stringify(activityAnswers));
+                //console.log("activityAnswers = " + JSON.stringify(activityAnswers));
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
@@ -511,6 +568,7 @@ angular
                 //Update Activity Log Service                
                 if ($scope.activity_status == 0) {
                     $scope.activity_status = 1;
+                    console.log("Update Activity Log : " + $scope.activity_identifier);
                     updateUserStars($scope.activity_identifier);
                 }
 
@@ -675,6 +733,28 @@ angular
 
             function updateProfile() {
 
+                if ($scope.misCualidadesOtroAnswers[0].answers[0] != '') {
+                    $scope.userprofile.talents.push($scope.misCualidadesOtroAnswers[0].answers[0]);
+                }
+
+                if ($scope.misCualidadesOtroAnswers[1].answers[0] != '') {
+                    $scope.userprofile.values.push($scope.misCualidadesOtroAnswers[1].answers[0]);
+                }                
+
+                if ($scope.misCualidadesOtroAnswers[2].answers[0] != '') {
+                    $scope.userprofile.habilities.push($scope.misCualidadesOtroAnswers[2].answers[0]);
+                }
+
+                if ($scope.misGustosOtroAnswers[0].answers[0] != '') {
+                    $scope.userprofile.favoriteSports.push($scope.misGustosOtroAnswers[0].answers[0]);
+                }
+                if ($scope.misGustosOtroAnswers[1].answers[0] != '') {
+                    $scope.userprofile.artisticActivities.push($scope.misGustosOtroAnswers[1].answers[0]);
+                }
+                if ($scope.misGustosOtroAnswers[2].answers[0] != '') {
+                    $scope.userprofile.hobbies.push($scope.misGustosOtroAnswers[2].answers[0]);
+                }
+
                 $scope.userId = moodleFactory.Services.GetCacheObject("userId");
                 moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
@@ -742,7 +822,7 @@ angular
                             console.log('Unknow profile poperty');
                     }
                 }
-            };
+            };            
 
             // ##################################### VALIDATING USER ANSWERS ##################################################
 
