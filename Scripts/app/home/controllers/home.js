@@ -28,7 +28,7 @@
 
             $scope.navigateTo = function(url,sideToggle,activityId){
                 //TODO: Remove false from condition, only there to jump freely into activities in DEV
-                if(false && activityId!= undefined && activityId > 0 && !$scope.canStartActivity(activityId)) {
+                if(activityId!= undefined && activityId > 0 && !$scope.canStartActivity(activityId)) {
                     return false;
                 }
                 //$location.path(url + activityId);
