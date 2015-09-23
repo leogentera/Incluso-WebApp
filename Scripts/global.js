@@ -356,8 +356,6 @@ var _isStageCompleted = function () {
                 userCourse.stages[stageIndex].status = 1;
                 _setLocalStorageJsonItem("usercourse", userCourse);
                 stageCompleted = true;
-            } else {
-                stageCompleted = false;
             }
         }
     }

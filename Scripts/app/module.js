@@ -29,7 +29,7 @@
         'incluso.stage.dashboardcontroller',
         
         // TODO: Should be just one controller for all stage dashboards, will merge soon
-        'incluso.stage.dashboardcontrollerDummy',
+        'incluso.stage.dashboardcontroller2',
         'incluso.stage.dashboardcontroller3',
 
         'incluso.stage.forumclosecontroller',
@@ -40,16 +40,16 @@
         'incluso.stage.gameretomultiplecontroller',
         'incluso.stage.gameretomultipleexternalappcontroller',
         'incluso.stage.gameretomultipleresultscontroller',
-        //'incluso.stage.tueligesController',
+        'incluso.stage.tueligesController',
         'incluso.stage.quizcontroller',
-        //'incluso.stage.mapadevidaController',
+        'incluso.stage.mapadevidaController',
         'incluso.stage.chatcontroller',
-        //'incluso.stage.multiplicatudineroController',
+        'incluso.stage.multiplicatudineroController',
         'incluso.program.alerts',        
         'incluso.program.myInterests',
         'incluso.program.myStrengths',
-        //'incluso.program.myStars',
-        //'incluso.program.rewardDetail',
+        'incluso.program.myStars',
+        'incluso.program.rewardDetail',
         'incluso.program.hallOfFame',
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
@@ -368,22 +368,22 @@
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/:activityId', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/:activityId/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html',
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/:activityId/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/:activityId/:discussionId/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/:activityId', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/:activityId/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html',
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/:activityId/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/:activityId/:discussionId/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
@@ -467,7 +467,7 @@
         //TODO Change zona de vuelo route to dashboard, there's a typo and refactor dashboard controller, the typo is there too
         $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
-            controller: 'stageDashboardControllerDummy'
+            controller: 'stage2DashboardController'
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:moodleid', {
@@ -898,6 +898,13 @@
             elem.bind('blur', function () {
                 scope.$apply(attrs.ngBlur);
             });
+        };
+    })
+    .directive('shareAlbum', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Partials/sharedAlbum.html'
         };
     })
     .directive('menuComponent', function(){

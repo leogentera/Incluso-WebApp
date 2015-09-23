@@ -1,4 +1,3 @@
-// http://weblogs.asp.net/dwahlin/archive/2013/09/18/building-an-angularjs-modal-service.aspx
 angular
     .module('incluso.stage.multiplicatudineroController', [])
     .controller('stageMultiplicaTuDineroController', [
@@ -66,8 +65,10 @@ angular
                     "estrellas":$scope.stars,
                     "pathImagenes":"",
                     "preguntas": [],
-                    "introduccion": $scope.multiplicaTuDineroActivity.description,
-                    "retro_final": $scope.multiplicaTuDineroActivity.quiz_feedback[0].feedbacktext
+                    "introduccion": $scope.multiplicaTuDineroActivity.description,/* Ready to implement once all the retros are given by client
+                    "retro_aprobado":(_.max($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
+                    "retro_regular":(_.find($scope.tuEligesActivities.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
+                    "retro_reprobado":(_.min($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext*/
                 }
                 for (var i = 0; i < $scope.multiplicaTuDineroActivity.questions.length; i++) {
                     var currentQuestion = $scope.multiplicaTuDineroActivity.questions[i];
@@ -107,7 +108,8 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si", "calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuesta":529},{"preguntaId":128,"respuesta":532},{"preguntaId":129,"respuesta":534},{"preguntaId":130,"respuesta":536},{"preguntaId":131,"respuesta":540},{"preguntaId":132,"respuesta":543},{"preguntaId":133,"respuesta":545},{"preguntaId":134,"respuesta":550},{"preguntaId":135,"respuesta":552},{"preguntaId":136,"respuesta":555},{"preguntaId":137,"respuesta":557},{"preguntaId":138,"respuesta":560},{"preguntaId":139,"respuesta":563},{"preguntaId":140,"respuesta":567},{"preguntaId":141,"respuesta":570},{"preguntaId":142,"respuesta":573},{"preguntaId":143,"respuesta":576},{"preguntaId":144,"respuesta":579},{"preguntaId":145,"respuesta":581},{"preguntaId":146,"respuesta":584}]}
+                        /*Completo*/ //{"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si", "calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuesta":529},{"preguntaId":128,"respuesta":532},{"preguntaId":129,"respuesta":534},{"preguntaId":130,"respuesta":536},{"preguntaId":131,"respuesta":540},{"preguntaId":132,"respuesta":543},{"preguntaId":133,"respuesta":545},{"preguntaId":134,"respuesta":550},{"preguntaId":135,"respuesta":552},{"preguntaId":136,"respuesta":555},{"preguntaId":137,"respuesta":557},{"preguntaId":138,"respuesta":560},{"preguntaId":139,"respuesta":563},{"preguntaId":140,"respuesta":567},{"preguntaId":141,"respuesta":570},{"preguntaId":142,"respuesta":573},{"preguntaId":143,"respuesta":576},{"preguntaId":144,"respuesta":579},{"preguntaId":145,"respuesta":581},{"preguntaId":146,"respuesta":584}]}
+                        /*8 respuestas*/ {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuesta":529},{"preguntaId":129,"respuesta":534},{"preguntaId":130,"respuesta":536},{"preguntaId":133,"respuesta":545},{"preguntaId":137,"respuesta":557},{"preguntaId":139,"respuesta":563},{"preguntaId":140,"respuesta":567},{"preguntaId":142,"respuesta":573}]}
                     );
                 }
             }
@@ -123,25 +125,28 @@ angular
                     "endingTime": data.fecha_fin
                 };
                 var quiz_finished = (data.actividad_completa == "Si" ? true : false);
-                for (var i = 0; i < data.respuestas.length; i++) {
-                    _.each($scope.multiplicaTuDineroActivity.questions, function(q){
-                        if (q.id == data.respuestas[i].preguntaId) {
-                            q.userAnswer = data.respuestas[i].respuesta;
-                            //finds index of answer to insert it into array of logentry
-                            var answerIndex = q.answers.getIndexBy("id", data.respuestas[i].respuesta);
+                for(var i = 0; i < $scope.multiplicaTuDineroActivity.questions.length; i++){
+                    var activity = $scope.multiplicaTuDineroActivity.questions[i];
+                    _.each(data.respuestas, function(a){
+                        if (a.preguntaId == activity.id) {
+                            activity.userAnswer = a.respuesta;
+                            var answerIndex = activity.answers.getIndexBy("id", a.respuesta);
                             logEntry.answers.push(answerIndex);
                         }
                     });
-
+                    if (!activity.userAnswer || activity.userAnswer == "") {
+                        logEntry.answers.push(null);
+                    }
                 }
                 var questionsAnswered = _.countBy($scope.multiplicaTuDineroActivity.questions, function(q) {
                     return (q.userAnswer && q.userAnswer != '' ? 'completed' : 'incompleted');
                 });
 
                 $scope.IsComplete = $scope.multiplicaTuDineroActivity && 
-                                    questionsAnswered.completed && 
-                                    questionsAnswered.completed >= $scope.multiplicaTuDineroActivity.questions.length &&
-                                    questionsAnswered.completed > 0 &&
+                                    questionsAnswered.completed == data.respuestas.length &&
+                                    //questionsAnswered.completed && 
+                                    //questionsAnswered.completed >= $scope.multiplicaTuDineroActivity.questions.length &&
+                                    //questionsAnswered.completed > 0 &&
                                     quiz_finished;
 
                 //save response

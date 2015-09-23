@@ -108,13 +108,16 @@ angular
                 else{
                   var activityContentCache = (JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
                   if(activityContentCache){                      
-                    $scope.fuenteDeEnergia.activities[i].activityContent = activityContentCache;
+                    $scope.fuenteDeEnergia.activities[i].activityContent = activityContentCache;                    
+
+                    setResources($scope.fuenteDeEnergia.activities[i]);
+                                        
                   }
                   else
                   {
-                    waitPreloader = 1;
+                    waitPreloader += 1;
                     
-                        moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);
+                    moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);
                     
                   }  
                 }
@@ -133,26 +136,10 @@ angular
                   for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){ 
                     var myActivity = $scope.fuenteDeEnergia.activities[i];
                     if(myActivity.coursemoduleid == courseId) {                      
-                      myActivity.activityContent = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + courseId));
-                      myActivity.activityContent.thumbnail = "assets/images/svg/img_placeholder-01.svg";
-                      if(myActivity.activity_type == 'resource'){                                           
-                          myActivity.activityContent.content[0].fileurl = myActivity.activityContent.content[0].fileurl + "&token=" + $scope.token;
-                          if(myActivity.activityContent.content[0].fileurl.indexOf(".mp4") > -1){
-                            myActivity.activityintro = "video";
-                            myActivity.activity_type = "video";
-                            myActivity.activityContent.url = myActivity.activityContent.content[0].fileurl;
-                            myActivity.activityContent.thumbnail = myActivity.activityContent.content[1].fileurl + "&token=" + $scope.token;
-                          }    
-                          if(myActivity.activityContent.content[1]){
-                            myActivity.activityContent.content[1].fileurl = myActivity.activityContent.content[1].fileurl + "&token=" + $scope.token;
-                            if(myActivity.activityContent.content[1].fileurl.indexOf(".mp4") > -1){
-                              myActivity.activityintro = "video";
-                              myActivity.activity_type = "video";
-                              myActivity.activityContent.url = myActivity.activityContent.content[1].fileurl;
-                              myActivity.activityContent.thumbnail = myActivity.activityContent.content[0].fileurl;
-                            }
-                          }                                                                                          
-                      }
+                      myActivity.activityContent = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + courseId));                      
+                                                               
+                      setResources(myActivity);
+                      
                       hidePreloader += 1;
                       break;                      
                     }                    
@@ -167,6 +154,33 @@ angular
                 if(waitPreloader == hidePreloader){
                     $scope.$emit('HidePreloader'); //hide preloader
                   }  
+              }
+
+              function setResources(myActivity){
+                if(myActivity.activityContent.thumbnail){
+                  myActivity.activityContent.thumbnail = myActivity.activityContent.thumbnail.fileurl + "&token=" + $scope.token;
+                }
+                else{
+                  myActivity.activityContent.thumbnail = "assets/images/svg/img_placeholder-01.svg";
+                }
+                if(myActivity.activity_type == 'resource'){
+                    myActivity.activityContent.content[0].fileurl = myActivity.activityContent.content[0].fileurl + "&token=" + $scope.token;
+                  if(myActivity.activityContent.content[0].fileurl.indexOf(".mp4") > -1){
+                    myActivity.activityintro = "video";
+                    myActivity.activity_type = "video";
+                    myActivity.activityContent.url = myActivity.activityContent.content[0].fileurl;
+                    myActivity.activityContent.thumbnail = myActivity.activityContent.content[1].fileurl + "&token=" + $scope.token;
+                  }    
+                  if(myActivity.activityContent.content[1]){//Si es una actividad con video y thumbnail
+                    myActivity.activityContent.content[1].fileurl = myActivity.activityContent.content[1].fileurl + "&token=" + $scope.token;
+                    if(myActivity.activityContent.content[1].fileurl.indexOf(".mp4") > -1){
+                      myActivity.activityintro = "video";
+                      myActivity.activity_type = "video";
+                      myActivity.activityContent.url = myActivity.activityContent.content[1].fileurl;
+                      myActivity.activityContent.thumbnail = myActivity.activityContent.content[0].fileurl;
+                    }
+                  }                                                                                                            
+                }                
               }
 
             /*function getActivityInfoCallback() {
