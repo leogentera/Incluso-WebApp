@@ -28,7 +28,8 @@ angular
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
             $scope.moodleId = $routeParams.moodleid;
-            
+            $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
+            $scope.currentDiscussionsIds = loadCurrentDiscussions();            
             var showMoreCounter = 1;
             var postPager = { from: 0, to: 0 };
             $scope.morePendingPosts = true;
@@ -68,6 +69,18 @@ angular
                     } );
             };
 
+            function loadCurrentDiscussions() {
+                var array = new Array();
+                
+                var discussions = $scope.currentActivity.discussions;
+                
+                for(var d = 0; d < discussions.length; d++) {
+                    array.push(discussions[d].id);
+                }
+                
+                return array;
+            }
+
             function getForumsProgress(){
                 var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : new Array();
                 return forumsProgress;
@@ -98,11 +111,10 @@ angular
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
 
-                $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid));
+                var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2 && _.some($scope.currentDiscussionsIds, function(cdid) { return cdid === d.discussion_id; }) });
+                isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentDiscussionsIds.length);
 
-                var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2});
-                isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentActivity.discussions.length);
-
+                var moodleid;
                 var activity_identifier = null;
                 if($scope.moodleId == 151){
                     activity_identifier = 1010;
@@ -119,9 +131,7 @@ angular
                 } else if($scope.moodleId == 148){
                     activity_identifier = 1049;
                     moodleid = 148;
-
                 }
-                var moodleid;
 
                var activityFromTree = getActivityByActivity_identifier(activity_identifier);
                 if(activityFromTree.status == 1){
@@ -134,11 +144,28 @@ angular
                 }
 
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
+                    resetForumDiscussionsProgress();
+
                     $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);                    
                 } else {
                    callback();
                 }
             };
+
+            function resetForumDiscussionsProgress() {
+                var globalDiscussions = getForumsProgress();
+                var discussionIds = $scope.currentDiscussionsIds;
+                
+                for(var gd = 0; gd < globalDiscussions.length; gd++) {
+                    var isCurrentForumDiscussion = _.some(discussionIds, function(id) { return globalDiscussions[gd].discussion_id == id });
+                    
+                    if (isCurrentForumDiscussion) {
+                        globalDiscussions[gd].replies_counter = 0;
+                    }
+                }
+                
+                localStorage.setItem('currentForumsProgress', JSON.stringify(globalDiscussions));
+            }
 
             var _uncollapse = function(element, elementsArray){
                 for(var key in elementsArray){
@@ -306,6 +333,7 @@ angular
             };
 
             function getTopicData() {
+
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == $routeParams.discussionId; });
                 
