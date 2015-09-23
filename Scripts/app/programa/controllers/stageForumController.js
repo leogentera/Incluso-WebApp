@@ -60,6 +60,7 @@ angular
 
             //if($scope.moodleId == 149) {
             if($routeParams.activityId == 1049) {
+                debugger;
               redirectOnShield();
             }
 
@@ -142,7 +143,7 @@ angular
                       $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
                   case 147:
-                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/" + $routeParams.activityId + "/" + discussionId + "/"+ $routeParams.moodleId);
                       break;
                   case 148:
                       $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $routeParams.activityId + "/" + discussionId + "/"+ $routeParams.moodleId);
