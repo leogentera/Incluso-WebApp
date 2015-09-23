@@ -371,9 +371,9 @@ var _isChallengeCompleted = function () {
     for (var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++) {
         var currentChallenge = currentStage.challenges[challengeIndex];
         if (currentChallenge.status == 0) {
-            var totalActivitiesByStage = currentChallenge.activities.length;
-            var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
-            if (totalActivitiesByStage == totalActivitiesCompletedByStage) {
+            var totalActivitiesByChallenge = currentChallenge.activities.length;
+            var totalActivitiesCompletedByChallenge = (_.where(currentChallenge.activities, {status: 1})).length;
+            if (totalActivitiesByChallenge == totalActivitiesCompletedByChallenge) {
 
                 //updateBadge
                 _updateBadgeStatus(currentChallenge.coursemoduleid);
@@ -978,17 +978,29 @@ var _activityRoutes = [
     {id: 1002, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/1002'},
     {id: 1009, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
     {id: 2001, name: '', url: '/ZonaDeNavegacion/ExploracionInicial/2001'},
-    {id:3101,name:'',url:'/ZonaDeAterrizaje/ExploracionInicial/3101'},
-    {id:3201,name:'',url:'/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201'},
-    {id:3301,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/3301'},
-    {id:3302,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302'},
-    {id:3304,name:'',url:'/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/93'},
-    {id:3401,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/3401'},
-    {id:3402,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
-    {id:3404,name:'',url:'/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
-    {id:3501,name:'',url:'/ZonaDeAterrizaje/CabinaDeSoporte/3501'},
-    {id:3601,name:'',url:'/ZonaDeAterrizaje/ExploracionFinal/3601'},
-    {id:50000,name: 'Comunidad General', url: '/Community/50000'}
+    {id: 2004, name: '', url: '/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/2004'},
+    {id: 2006, name: '', url: '/ZonaDeNavegacion/Transformate/FuenteDeEnergia/2006'},
+    {id: 2007, name: '', url: '/ZonaDeNavegacion/Transformate/TusIdeas/2007'},
+    {id: 2030, name: '', url: '/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/2030'},
+    {id: 2011, name: '', url: '/ZonaDeNavegacion/TuEliges/FuenteDeEnergia/2011'},
+    {id: 2012, name: '', url: '/ZonaDeNavegacion/TuEliges/2012'},
+    {id: 2015, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/2015'},
+    {id: 2016, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/13y5/2016'},
+    {id: 2017, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/2017'},
+    {id: 2026, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/2026'},
+    {id: 2022, name: '', url: '/ZonaDeNavegacion/CabinaDeSoporte/2022'},
+    {id: 2023, name: '', url: '/ZonaDeNavegacion/ExploracionFinal/2023'},
+    {id: 3101, name: '', url: '/ZonaDeAterrizaje/ExploracionInicial/3101'},
+    {id: 3201, name: '', url: '/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201'},
+    {id: 3301, name: '', url: '/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/3301'},
+    {id: 3302, name: '', url: '/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302'},
+    {id: 3304, name: '', url: '/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/93'},
+    {id: 3401, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/3401'},
+    {id: 3402, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
+    {id: 3404, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
+    {id: 3501, name: '', url: '/ZonaDeAterrizaje/CabinaDeSoporte/3501'},
+    {id: 3601, name: '', url: '/ZonaDeAterrizaje/ExploracionFinal/3601'},
+    {id: 50000, name: 'Comunidad General', url: '/Community/50000'}
     //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 

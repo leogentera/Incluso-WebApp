@@ -14,7 +14,7 @@ angular
             _httpFactory = $http;
             _timeout = $timeout;
             //$scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
-            debugger;
+
             $routeParams.activityId == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 

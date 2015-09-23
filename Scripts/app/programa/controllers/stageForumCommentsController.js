@@ -27,13 +27,14 @@ angular
 
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
-            debugger;
             $scope.moodleId;
             console.log($routeParams.activityId);
             //Put artistic or logic forum check here
             //Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
             Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId     : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
             console.log($scope.moodleId);
+            $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
+            $scope.currentDiscussionsIds = loadCurrentDiscussions();
             var showMoreCounter = 1;
             var postPager = { from: 0, to: 0 };
             $scope.morePendingPosts = true;
@@ -72,6 +73,18 @@ angular
 
                     } );
             };
+            
+            function loadCurrentDiscussions() {
+                var array = new Array();
+                
+                var discussions = $scope.currentActivity.discussions;
+                
+                for(var d = 0; d < discussions.length; d++) {
+                    array.push(discussions[d].id);
+                }
+                
+                return array;
+            }
 
             function getForumsProgress(){
                 var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : new Array();
@@ -107,11 +120,10 @@ angular
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
 
-                $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
+                var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2 && _.some($scope.currentDiscussionsIds, function(cdid) { return cdid === d.discussion_id; }) });
+                console.log("numberOfDiscussionsWithMoreThan2Replies " + numberOfDiscussionsWithMoreThan2Replies.length);
+                isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentDiscussionsIds.length);
 
-                var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2});
-                isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentActivity.discussions.length);
-                debugger;
 
                 var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
 
@@ -125,6 +137,8 @@ angular
                 }
 
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
+                    resetForumDiscussionsProgress();
+                    
                     switch ($scope.moodleId) {
                         case "179":
                                 $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178);
@@ -139,6 +153,21 @@ angular
                    callback();
                 }
             };
+            
+            function resetForumDiscussionsProgress() {
+                var globalDiscussions = getForumsProgress();
+                var discussionIds = $scope.currentDiscussionsIds;
+                
+                for(var gd = 0; gd < globalDiscussions.length; gd++) {
+                    var isCurrentForumDiscussion = _.some(discussionIds, function(id) { return globalDiscussions[gd].discussion_id == id });
+                    
+                    if (isCurrentForumDiscussion) {
+                        globalDiscussions[gd].replies_counter = 0;
+                    }
+                }
+                
+                localStorage.setItem('currentForumsProgress', JSON.stringify(globalDiscussions));
+            }
 
             var _uncollapse = function(element, elementsArray){
                 for(var key in elementsArray){
@@ -217,7 +246,7 @@ angular
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
-                        debugger;
+
                         updateForumProgress();
                         //refreshTopicData();
                         checkForumProgress(refreshTopicData);
@@ -307,7 +336,7 @@ angular
             };
 
             function getTopicData() {
-                debugger;
+
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                 
@@ -370,7 +399,7 @@ angular
             var createModalReferences = function(element, index, array){
                 $scope.isCommentModalCollapsed[element.post_id] = true;
             };
-            debugger;
+
             getTopicData();
             
             $scope.showPreviousComments = function(postId) {

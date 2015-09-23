@@ -153,9 +153,9 @@ angular
             var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
 
-            //Exclude challenges initial and final from showing modal robot
-            var challengeExploracionInicial = 140;
-            var challengeExploracionFinal = 152;
+            //Exclude initial and final challenges from showing modal robot
+            var challengeExploracionInicial = 154;
+            var challengeExploracionFinal = 168;
             if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){            
                 _setLocalStorageItem("challengeMessageId",challengeCompletedId);
                 $scope.openModal_CloseChallenge();
@@ -192,7 +192,8 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
-                if(!$scope.canStartActivity(activity.activity_identifier)) return false;
+                //TODO: Remove false from condition, only there to jump freely into activities in DEV
+                if(false && !$scope.canStartActivity(activity.activity_identifier)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
 
                 if (url) {
@@ -242,14 +243,14 @@ angular
              
              $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});             
              
-            }).controller('closingStageController', function ($scope, $modalInstance,$location) {
+            }).controller('closingStageTwoController', function ($scope, $modalInstance,$location) {
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
                     
                     $scope.robotMessages = {
-                        title: "Cierre Zona de Vuelo",
-                        message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
+                        title: "Cierre Zona de Navegación",
+                        message: "Mensaje de cierre zona de navegación!"
                     };
                     
                     $scope.navigateToDashboard = function () {                        
