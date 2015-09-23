@@ -13,12 +13,17 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _httpFactory = $http;
             _timeout = $timeout;
-            $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+            //$scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+            debugger;
+            $routeParams.activityId == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
              var redirectOnShield = function () {
-                 var logicForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/' + 147;
-                 var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + 148;
+                 var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
+                 //var logicForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/' + 147;
+                 var logicForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/' + $routeParams.activityId + '/'+ activityFromTree.activities[0].coursemoduleid;
+                 //var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + 148;
+                 var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + $routeParams.activityId + '/'+ activityFromTree.activities[1].coursemoduleid;
 
                  var shields = [
                      {name: 'musical', category: 'artistico'},
@@ -30,8 +35,9 @@ angular
                      {name: 'matematica', category: 'logico'},
                      {name: 'liguistica', category: 'logico'},
                  ];
-
-                 var shield = JSON.parse(localStorage.getItem('profile')).shield;
+                 var userId = JSON.parse(localStorage.getItem('userId'));
+                 var shield = JSON.parse(localStorage.getItem('profile/' + userId )).shield;
+                 console.log('Mofakin shield:' + shield);
                  if (shield && shield != '') {
 
                      var shieldCategory = _.find(shields, function (s) {
@@ -52,7 +58,8 @@ angular
                  }
             };
 
-            if($scope.moodleId == 149) {
+            //if($scope.moodleId == 149) {
+            if($routeParams.activityId == 1049) {
               redirectOnShield();
             }
 
@@ -104,10 +111,10 @@ angular
             };
 
             function getDataAsync() {
-                //$scope.moodleId;
+                console.log('Moodle ID on dataAsync: ' + $scope.moodleId);
                 //var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
                 //activityFromTree.activities? $scope.moodleId = activityFromTree.activities[0].coursemoduleid : $scope.moodleId = activityFromTree.coursemoduleid;
-                $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+                //$scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
                 //$routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
             }
@@ -122,7 +129,12 @@ angular
             getDataAsync();
 
             $scope.showComentarios = function (discussionId) {
-              switch ($scope.moodleId){
+              var moodleId = $routeParams.moodleId;
+              //switch ($scope.moodleId){
+                console.log('Moodle ID: ' + $routeParams.moodleId);
+                !moodleId? moodleId = getMoodleIdFromTreeActivity($routeParams.activityId): '';
+              //switch (Number($routeParams.moodleId)){
+              switch (Number(moodleId)){
                   case 64:
                       $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
@@ -133,7 +145,7 @@ angular
                       $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
                   case 148:
-                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $routeParams.activityId + "/" + discussionId + "/"+ $routeParams.moodleId);
                       break;
                   case 179:
                       $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
