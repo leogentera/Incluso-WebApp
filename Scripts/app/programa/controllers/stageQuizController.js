@@ -272,13 +272,13 @@ angular
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
                         break;
                     case "2007": //Tus Ideas - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/2";
                         break;
                     case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/4";
                         break;
                     case "2023": //Exploración Final - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/6"; //Pending: UPDATE ACTIVITY NUMBER
                         break;
                     case "3101": //Exploración Inicial - Etapa 3
                         destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
@@ -307,9 +307,10 @@ angular
                     var activityFinished = false;
 
                     $scope.activity_status = parentActivity.status;
+                    //$scope.activity_status = activity.status;
                     console.log(activity.status);
 
-                    if ($scope.activity_status != 0) {//If the activity is currently finished...
+                    if (activity.status != 0) {//If the activity is currently finished...
                         activityFinished = true;
 
                         if ($scope.activity_identifier == '1001' ||
@@ -583,6 +584,7 @@ angular
 
                 if ($scope.activity.activities) {
                     _activityStatus[$scope.activity.activities[0].activity_identifier] = 1;
+                    _activityStatus[$scope.activity.activity_identifier] = 1;
                 } else {
                     _activityStatus[$scope.activity.activity_identifier] = 1;
                 }
@@ -1166,10 +1168,38 @@ angular
 
                 var quizIsValid = true;
                 var numQuestions = $scope.miFuturo.length;
+                var numOfEntries = [];
                 var i, b;
+                console.log("numQuestions = " + numQuestions);
+                //Count how many items per question
+                //Remove repeated entries and blanks in each of the two questions
+                for (i = 0; i < numQuestions; i++) {
+                    numOfEntries[i] = $scope.miFuturo[i].length;
+                    console.log(numOfEntries[i]);
+                }
 
                 //Remove repeated entries and blanks in each of the two questions
                 for (i = 0; i < numQuestions; i++) {
+                    console.log("$scope.miFuturo[" + i + "].length = " + $scope.miFuturo[i].length);
+                    for (b = 0; b < $scope.miFuturo[i].length; b++) {
+                        var item = $scope.miFuturo[i][b].replace(/\r?\n|\r/g, " ").trim();
+                        console.log("Pregunta= " + i + " Resp= " + b + " item = " + item);
+                        /*
+                        if (item == "") {
+                            //$scope.deleteFuturo(b, i);
+                            var listaId = i + 1;
+                            //removeHeight("#listaDinamica" + listaId);
+                            var listaHeight = $("#listaDinamica" + listaId).height();
+                            var outerWrapperHeight = $(".owl-wrapper-outer").height();
+                            console.log("#listaDinamica" + listaId + " height = " + listaHeight);
+                            $("#listaDinamica" + listaId).css('height', listaHeight - 145);
+                            $(".owl-wrapper-outer").css('height', outerWrapperHeight - 145);
+                            console.log("#listaDinamica" + listaId + " height after = " + listaHeight);
+                            $scope.miFuturo[i].splice(b, 1);
+                        }
+                        */
+                    }
+
                     $scope.miFuturo[i] = $scope.miFuturo[i].filter(function (item, pos) {
                         return item.trim().length > 0 && $scope.miFuturo[i].indexOf(item) == pos;
                     });
@@ -2217,7 +2247,7 @@ angular
             };
 
             $scope.deleteFuturo = function (index, pos) {
-                    var listaId = pos + 1;
+                var listaId = pos + 1;
                 removeHeight("#listaDinamica" + listaId);
                 $scope.miFuturo[pos].splice(index, 1);
             };
