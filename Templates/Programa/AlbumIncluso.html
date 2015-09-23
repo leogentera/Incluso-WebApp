@@ -19,8 +19,9 @@
                         </a>
                         <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
                             <div>
-                                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+                                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToSocialNetworks()">Compartir en Redes Sociales</a>
                             </div>
                         </div>
                     </section>
@@ -400,3 +401,6 @@
         </div>
     </div>
 </div>
+
+<!-- Album Incluso -->
+<share-album></share-album>

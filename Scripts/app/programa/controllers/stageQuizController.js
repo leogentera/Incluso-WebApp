@@ -56,6 +56,7 @@ angular
                 "questionid": 18,
                 "answers": ['']
             }];
+
             $scope.misGustosAnswers = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
             $scope.misGustosOtroAnswers = [{
                 "questionid": 43,
@@ -249,6 +250,45 @@ angular
                 console.log(parentActivity);
                 var activity = parentActivity.activities ? parentActivity.activities[0] : parentActivity;
                 console.log(activity);
+
+                //Redirect user to the proper dashboard
+                switch ($scope.activity_identifier) {
+                    case "1001":  //Exploración Inicial - Etapa 1
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/0";
+                        break;
+                    case "1005":  //Mis Cualidades - Etapa 1
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        break;
+                    case "1006":  //Mis Gustos - Etapa 1
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        break;
+                    case "1007":  //Sueña - Etapa 1
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        break;
+                    case "1009": //Exploración Final - Etapa 1
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/5";
+                        break;
+                    case "2001": //Exploración Inicial - Etapa 2
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        break;
+                    case "2007": //Tus Ideas - Etapa 2
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        break;
+                    case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        break;
+                    case "2023": //Exploración Final - Etapa 2
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        break;
+                    case "3101": //Exploración Inicial - Etapa 3
+                        destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        break;
+                    case "3601": //Exploración Final - Etapa 3
+                        destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        break;
+                    default:
+                        break;
+                }
 
                 if (activity != null) {
 
@@ -598,46 +638,9 @@ angular
                 //_endActivity(activityModel, null, $scope.currentChallenge);
                 _endActivity(activityModel);
 
-                //Redirect user to the proper dashboard
-                console.log($scope.activity_identifier);
+                updateProfile();
 
-                switch ($scope.activity_identifier) {
-                    case "1001":
-                        destinationPath = "/ZonaDeVuelo/Dashboard/1/0";
-                        break;
-                    case "1005":
-                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
-                        break;
-                    case "1006":
-                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
-                        break;
-                    case "1007":
-                        destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
-                        break;
-                    case "1009": //Exploración Final - Etapa 1
-                        destinationPath = "/ZonaDeVuelo/Dashboard/1/5";
-                        break;
-                    case "2001": //Exploración Inicial - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
-                        break;
-                    case "2007": //Tus Ideas - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
-                        break;
-                    case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
-                        break;
-                    case "2023": //Exploración Final - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0"; //Pending: UPDATE ACTIVITY NUMBER
-                        break;
-                    case "3101": //Exploración Inicial - Etapa 3
-                        destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
-                        break;
-                    case "3601": //Exploración Final - Etapa 3
-                        destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
-                        break;
-                    default:
-                        break;
-                }
+                //-------------****************
 
                 if ($scope.activity.activities) {
                     _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.activities[0].coursemoduleid, $scope.AnswersResult.answers);
@@ -645,8 +648,10 @@ angular
                     _setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
                 }
 
+                _setLocalStorageJsonItem("UserTalents/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
+
                 //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
-                if (( $scope.activity_identifier == '1001' ||
+                if (($scope.activity_identifier == '1001' ||
                     $scope.activity_identifier == '1005' ||
                     $scope.activity_identifier == '1006' ||
                     $scope.activity_identifier == '2001' ||
@@ -666,8 +671,76 @@ angular
 
             };
 
+            function updateProfile() {
 
+                $scope.userId = moodleFactory.Services.GetCacheObject("userId");
+                moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
+                    function (responseData) {
+                        console.log('Update profile successful...');
+                    },
+                    function (responseData) {
+                        console.log('Update profile fail...');
+                    });
+            }
+
+            $scope.toggleSelection = function toggleSelection(stringValue, isChecked, questionArray) {
+                var index = -1;
+                if (isChecked) {
+                    switch (questionArray) {
+                        case "talents":
+                            $scope.userprofile.talents.push(stringValue);
+                            break;
+                        case "values":
+                            $scope.userprofile.values.push(stringValue);
+                            break;
+                        case "habilities":
+                            $scope.userprofile.habilities.push(stringValue);
+                            break;
+                        case "favoriteSports":
+                            $scope.userprofile.favoriteSports.push(stringValue);
+                            break;
+                        case "artisticActivities":
+                            $scope.userprofile.artisticActivities.push(stringValue);
+                            break;
+                        case "hobbies":
+                            $scope.userprofile.hobbies.push(stringValue);
+                            break;
+                        default:
+                            console.log('Unknow profile poperty');
+                    }
+                }
+                else {
+                    switch (questionArray) {
+                        case "talents":
+                            var index = $scope.userprofile.talents.indexOf(stringValue);
+                            $scope.userprofile.talents.splice(index, 1);
+                            break;
+                        case "values":
+                            var index = $scope.userprofile.values.indexOf(stringValue);
+                            $scope.userprofile.values.splice(index, 1);
+                            break;
+                        case "habilities":
+                            var index = $scope.userprofile.habilities.indexOf(stringValue);
+                            $scope.userprofile.habilities.splice(index, 1);
+                            break;
+                        case "favoriteSports":
+                            var index = $scope.userprofile.favoriteSports.indexOf(stringValue);
+                            $scope.userprofile.favoriteSports.splice(index, 1);
+                            break;
+                        case "artisticActivities":
+                            var index = $scope.userprofile.artisticActivities.indexOf(stringValue);
+                            $scope.userprofile.artisticActivities.splice(index, 1);
+                            break;
+                        case "hobbies":
+                            var index = $scope.userprofile.hobbies.indexOf(stringValue);
+                            $scope.userprofile.hobbies.splice(index, 1);
+                            break;
+                        default:
+                            console.log('Unknow profile poperty');
+                    }
+                }
+            };
 
             // ##################################### VALIDATING USER ANSWERS ##################################################
 
@@ -836,7 +909,7 @@ angular
 
                     //...and lastly, for the input value...
                     if ($scope.misCualidadesAnswers[a][11] == true) {
-                        //Get rid from carriage return
+                        //Get rid from carriage return                        
 
                         if ($scope.misCualidadesOtroAnswers[a].answers[0] != '') {
                             $scope.misCualidadesOtroAnswers[a].answers[0] = $scope.misCualidadesOtroAnswers[a].answers[0].replace(/\r?\n|\r/g, " ").trim();
@@ -939,9 +1012,9 @@ angular
 
                     $scope.exploracionFinalresult =
                         [
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
                             {
                                 "badAnswer": false,
                                 "firstOptionWrong": false,
@@ -1153,7 +1226,7 @@ angular
 
                     $scope.exploracionFinalresult2 =
                         [
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                            { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
                             {
                                 "badAnswer": false,
                                 "firstOptionWrong": false,
@@ -1379,7 +1452,7 @@ angular
                             "fourthOptionWrong": false,
                             "fifthOptionWrong": false
                         },
-                        {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
+                        { "badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false },
                         {
                             "badAnswer": false,
                             "firstOptionWrong": false,
@@ -1469,7 +1542,7 @@ angular
                 }
 
                 //console.log("Final: " + goodAnswersQty + " == " + checkPoints);
-                $scope.Score = (goodAnswersQty + addToScore ) * 100 / $scope.exploracionFinalresult3.length;
+                $scope.Score = (goodAnswersQty + addToScore) * 100 / $scope.exploracionFinalresult3.length;
             }
 
             function partialErrorCallbackStage3(partialActivityAnswers) {
@@ -1563,8 +1636,8 @@ angular
                          var userAnswerArray = userAnswers.split(";");
                          for (var i = 0; i < userAnswerArray.length; i++) {
                          $scope.AnswersResult.answers[4].push(userAnswerArray[i]);
-                         }
-                         }
+            }
+        }
                          */
 
                         break;
@@ -2139,7 +2212,7 @@ angular
             };
 
             $scope.deleteFuturo = function (index, pos) {
-                var listaId = pos + 1;
+                    var listaId = pos + 1;
                 removeHeight("#listaDinamica" + listaId);
                 $scope.miFuturo[pos].splice(index, 1);
             };
@@ -2155,25 +2228,11 @@ angular
             $scope.cancel = function () {
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
                 //$location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                console.log(destinationPath);
                 $location.path(destinationPath);
             };
 
-            /*
-            $scope.cancel2 = function () {//Temporary functionality to return to dashboard Stage 2
-                var userCurrentStage = $location.path().split("/")[$location.path().split("/").length - 1];
-                //var userCurrentStage = localStorage.getItem("userCurrentStage");
-                //$location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + "/0");
-            };
-
-            $scope.cancel3 = function () {//Temporary functionality to return to dashboard Stage 3
-                var userCurrentStage = $location.path().split("/")[$location.path().split("/").length - 1];
-                //var userCurrentStage = localStorage.getItem("userCurrentStage");
-                //$location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + "/0");
-            };
-            */
-
-
-
+            
 
         }
     ])

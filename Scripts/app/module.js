@@ -25,11 +25,11 @@
         'incluso.programa.leaderboard',
         'incluso.programa.comunidad',
         'incluso.programa.reconocimiento',
-        //'incluso.programa.album',
+        'incluso.programa.album',
         'incluso.stage.dashboardcontroller',
         
         // TODO: Should be just one controller for all stage dashboards, will merge soon
-        'incluso.stage.dashboardcontrollerDummy',
+        'incluso.stage.dashboardcontroller2',
         'incluso.stage.dashboardcontroller3',
 
         'incluso.stage.forumclosecontroller',
@@ -467,7 +467,7 @@
         //TODO Change zona de vuelo route to dashboard, there's a typo and refactor dashboard controller, the typo is there too
         $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
-            controller: 'stageDashboardControllerDummy'
+            controller: 'stage2DashboardController'
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:moodleid', {
@@ -898,6 +898,13 @@
             elem.bind('blur', function () {
                 scope.$apply(attrs.ngBlur);
             });
+        };
+    })
+    .directive('shareAlbum', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Partials/sharedAlbum.html'
         };
     })
     .directive('menuComponent', function(){

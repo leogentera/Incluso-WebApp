@@ -9,14 +9,25 @@ angular
     '$rootScope',
     '$http',
     '$modal',
-    '$timeout',
-    function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $timeout) {
+    '$filter',
+    function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+        
         $scope.setToolbar($location.$$path, "Album Incluso");
         $rootScope.showFooter = false;
         $rootScope.showFooterRocks = false;
         $scope.$emit('ShowPreloader');
-
-// :)
+        $scope.isShareCollapsed = false;
+        
+        $scope.sharedAlbumMessage = null;
+        
+        var albumSrc = null;
+        
+        var _course = moodleFactory.Services.GetCacheJson("course");
+        var _userId = moodleFactory.Services.GetCacheObject("userId");
+        var _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+            
+        $scope.discussion = null;
+        $scope.forumId = null;
 
         $timeout(function () {
             //apply carousel to album layout
@@ -25,7 +36,6 @@ angular
             owlAlbum.owlCarousel({
                 navigation: false,
                 pagination: false,
-                //paginationSpeed: 1000,
                 goToFirstSpeed: 2000,
                 singleItem: true,
                 autoHeight: true,
@@ -33,7 +43,6 @@ angular
                 mouseDrag: false,
                 transitionStyle: "fade",
                 afterInit: function (el) {}
-                //afterMove: callback1
             });
 
             $(".next").click(function (ev) {
@@ -52,6 +61,32 @@ angular
 
         $scope.message = "Todos los logros en un solo lugar. <br/> Recuerda lo vivido en esta misi&#243;n y no te olvides de continuar con tus prop&#243;sitos.";
 
+        $scope.postTextToSocialNetworks = function(){
+        };
+        
+        $scope.postTextToCommunity = function(){
+            
+            $scope.$emit('ShowPreloader');
+                
+            if ($scope.discussion == null || $scope.forumId == null) {
+                
+                moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, function(data, key) {
+                    
+                    $scope.discussion = data.discussions[0];
+                    $scope.forumId = data.forumid;
+                    generateAlbumImgSrc(postAlbumToCommunity);
+                    
+                    }, function(data){
+                        $scope.sharedAlbumMessage = null;
+                        $scope.isShareCollapsed = false;
+                        $scope.$emit('HidePreloader');
+                    }, true);
+            } else {
+                generateAlbumImgSrc(postAlbumToCommunity);
+            }
+            
+        };
+        
         $scope.badgeFileName = function getFileName(id) {
             var filename = "";
 
@@ -130,7 +165,7 @@ angular
                 }
             }
             else {
-                renderInfo();
+                $scope.$emit('HidePreloader');
             }
         }
 
@@ -138,18 +173,63 @@ angular
             if (albumData != null) {
                 _setLocalStorageJsonItem("album", albumData);
                 $scope.album = albumData;                
-                renderInfo();
+                $scope.$emit('HidePreloader');
             }
             else {
                 //Albun no reachable
             }
         }
-
-        function errorCallback(albumData) {            
-            //Albun no reachable
+        
+        function generateAlbumImgSrc(callback) {
+            
+            if (albumSrc == null) {
+                    var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
+                    var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
+                    var DOMURL = self.URL || self.webkitURL || self;
+                    var url = DOMURL.createObjectURL(svg);
+                    
+                    var canvas = document.getElementById("canvas");
+                    var ctx = canvas.getContext("2d");
+                    
+                    var img = new Image();
+                    img.onload = function() {
+                        ctx.drawImage(img, 0, 0);
+                        albumSrc = canvas.toDataURL("image/png");
+                        callback();
+                    };
+                    img.src = url;
+            }else{
+                callback();   
+            }
+        }
+        
+        function postAlbumToCommunity() {
+            
+                var requestData = {
+                    "userid": _userId,
+                    "discussionid": $scope.discussion.discussion,
+                    "parentid": $scope.discussion.id,
+                    "message": $scope.sharedAlbumMessage,
+                    "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                    "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                    "posttype": 4,
+                    "filecontent":albumSrc.replace("data:image/png;base64", ""),
+                    "filename": 'album.png',
+                    "picture_post_author": _userProfile.profileimageurlsmall
+                };
+                
+                moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                    function() {
+                        $scope.sharedAlbumMessage = null;
+                        $scope.isShareCollapsed = false;
+                        $scope.$emit('HidePreloader');
+                    },
+                    function(){
+                        $scope.sharedAlbumMessage = null;
+                        $scope.isShareCollapsed = false;
+                        $scope.$emit('HidePreloader');
+                    }
+                );
         }
 
-        function renderInfo() {
-            $scope.$emit('HidePreloader');
-        }
     }]);

@@ -93,7 +93,7 @@
                         <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="1"></i>-->
                         <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="1" ng-show="!two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
                         <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="1" ng-show="two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
-                        <a class="menu-green" ng-click="navigateTo('/ZonaDeNavegacion/Dashboard/2/1', 'sideToggle')">
+                        <a class="menu-green" ng-click="navigateTo('/ZonaDeNavegacion/Dashboard/2/0', 'sideToggle')">
                           <span class="icomoon icon-asterodis">
                               <span class="path1"></span>
                               <span class="path2"></span>
@@ -102,10 +102,10 @@
                           Zona de navegacion
                         </a>
                         <div class="submenu" id="sub1">
-                            <!--<ul>
+                            <ul>
                                 <li>Exploración inicial</li>
-                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/ExploracionInicial/2001','Exploración inicial', 'sideToggle', 75)">Exploración inicial</a></li>
-                            </ul>-->
+                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/ExploracionInicial/2001', 'sideToggle', 2001)">Exploración inicial</a></li>
+                            </ul>
                             <ul>
                               <li>Cuarto de recursos</li>
                               <li><a ng-class="canStartActivity(2004)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/2004', 'sideToggle', 2004)">Fuente de energía</a></li>
@@ -113,7 +113,7 @@
                             <ul>
                                 <li>Transfórmate</li>
                                 <li><a ng-class="canStartActivity(2006)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/Transformate/FuenteDeEnergia/2006', 'sideToggle', 2006)">Fuente de energía</a></li>
-                                <li><a ng-class="canStartActivity(2007)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/Transformate/TusIdeas/', 'sideToggle', 2007)">Tus ideas </a></li>
+                                <li><a ng-class="canStartActivity(2007)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/Transformate/TusIdeas/2007', 'sideToggle', 2007)">Tus ideas </a></li>
                                 <li><a ng-class="canStartActivity(2030)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/2030', 'sideToggle', 2030)">Punto de encuentro </a></li>
                             </ul>
 
@@ -125,7 +125,7 @@
                             <ul>
                                 <li>Proyecta tu vida</li>
                                 <li><a ng-class="canStartActivity(2015)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/2015', 'sideToggle', 2015)">Fuente de energía</a></li>
-                                <li><a ng-class="canStartActivity(2016)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/13y5/activityidentifier', 'sideToggle', 2016)">1, 3 y 5</a></li>
+                                <li><a ng-class="canStartActivity(2016)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/13y5/2016', 'sideToggle', 2016)">1, 3 y 5</a></li>
                                 <li><a ng-class="canStartActivity(2017)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/2017', 'sideToggle', 2017)">Mapa de vida</a></li>
                                 <li><a ng-class="canStartActivity(2026)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/2026', 'sideToggle', 2026)">Punto de encuentro </a></li>
 
@@ -137,10 +137,10 @@
 
                                 <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>-->
                             </ul>
-                            <!--<ul>-->
-                                <!--<li>Exploración final</li>-->
-                                <!--<li><a ng-click="navigateTo('/ZonaDeNavegacion/ExploracionFinal/zv_exploracionfinal','Exploración final', 'sideToggle', 'navbarorange')">Exploración final</a></li>-->
-                            <!--</ul>-->
+                            <ul>
+                                <li>Exploración final</li>
+                                <li><a ng-click="navigateTo('/ZonaDeNavegacion/ExploracionFinal/2023', 'sideToggle', 'navbarorange')">Exploración final</a></li>
+                            </ul>
                         </div>
                     </li>
                     <!--<li class="hidden">-->
@@ -157,6 +157,10 @@
                           Zona de aterrizaje
                         </a>
                         <div class="submenu" id="sub2">
+                          <ul>
+                                <li>Exploración inicial</li>
+                                <li><a ng-click="navigateTo('/ZonaDeAterrizaje/ExploracionInicial/3101', 'sideToggle', 89)">Exploración inicial</a></li>
+                            </ul>
                            <ul>
                               <li>Cuarto de recursos</li>
                               <li><a ng-class="canStartActivity(3201)?'':'disabled'" ng-click="navigateTo('/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201', 'sideToggle', 3201)">Fuente de energía</a></li>
@@ -180,11 +184,11 @@
                                 <li><a ng-class="canStartActivity(3501)?'':'disabled'" ng-click="navigateTo('/ZonaDeNavegacion/CabinaDeSoporte/3501', 'sideToggle', 3501)">Chat</a></li>
                                 
                                 <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>
-                            </ul>
+                            </ul>-->
                             <ul>
                                 <li>Exploración final</li> 
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal','Exploración final', 'sideToggle', 'navbarorange')">Exploración final</a></li>
-                            </ul>-->
+                                <li><a ng-click="navigateTo('/ZonaDeAterrizaje/ExploracionFinal/3601', 'sideToggle', 'navbarorange')">Exploración final</a></li>
+                            </ul>
                         </div>
                     </li>                    
                     <li class="hidden"><a class="menu-green" ng-href="#"><span class="icomoon icon-asterodis"></span>Zona de Navegación</a></li>

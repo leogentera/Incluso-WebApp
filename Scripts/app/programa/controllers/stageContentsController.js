@@ -131,10 +131,27 @@ angular
                   var courseId = key.split('/')[1];
 
                   for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){ 
-                    if($scope.fuenteDeEnergia.activities[i].coursemoduleid == courseId) {                      
-                      $scope.fuenteDeEnergia.activities[i].activityContent = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + courseId));
-                      if($scope.fuenteDeEnergia.activities[i].activity_type == 'resource'){                        
-                        $scope.fuenteDeEnergia.activities[i].activityContent.content[0].fileurl = $scope.fuenteDeEnergia.activities[i].activityContent.content[0].fileurl + "&token=" + $scope.token;
+                    var myActivity = $scope.fuenteDeEnergia.activities[i];
+                    if(myActivity.coursemoduleid == courseId) {                      
+                      myActivity.activityContent = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + courseId));
+                      myActivity.activityContent.thumbnail = "assets/images/svg/img_placeholder-01.svg";
+                      if(myActivity.activity_type == 'resource'){                                           
+                          myActivity.activityContent.content[0].fileurl = myActivity.activityContent.content[0].fileurl + "&token=" + $scope.token;
+                          if(myActivity.activityContent.content[0].fileurl.indexOf(".mp4") > -1){
+                            myActivity.activityintro = "video";
+                            myActivity.activity_type = "video";
+                            myActivity.activityContent.url = myActivity.activityContent.content[0].fileurl;
+                            myActivity.activityContent.thumbnail = myActivity.activityContent.content[1].fileurl + "&token=" + $scope.token;
+                          }    
+                          if(myActivity.activityContent.content[1]){
+                            myActivity.activityContent.content[1].fileurl = myActivity.activityContent.content[1].fileurl + "&token=" + $scope.token;
+                            if(myActivity.activityContent.content[1].fileurl.indexOf(".mp4") > -1){
+                              myActivity.activityintro = "video";
+                              myActivity.activity_type = "video";
+                              myActivity.activityContent.url = myActivity.activityContent.content[1].fileurl;
+                              myActivity.activityContent.thumbnail = myActivity.activityContent.content[0].fileurl;
+                            }
+                          }                                                                                          
                       }
                       hidePreloader += 1;
                       break;                      
