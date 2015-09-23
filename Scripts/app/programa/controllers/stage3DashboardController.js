@@ -246,7 +246,8 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
-                if(!$scope.canStartActivity(activity.activity_identifier)) return false;
+                //TODO: Remove false from condition, only there to jump freely into activities in DEV
+                if(false && !$scope.canStartActivity(activity.activity_identifier)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
 
                 if (url) {
