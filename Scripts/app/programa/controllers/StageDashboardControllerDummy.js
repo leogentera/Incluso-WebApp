@@ -1,6 +1,6 @@
 angular
-    .module('incluso.stage.dashboardcontrollerDummy', [])
-    .controller('stageDashboardControllerDummy', [
+    .module('incluso.stage.dashboardcontroller2', [])
+    .controller('stage2DashboardController', [
        '$q',
         '$scope',
         '$location',
@@ -9,12 +9,12 @@ angular
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {            
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             /* $routeParams.stageId */
             _timeout = $timeout;
             _httpFactory = $http;
             $scope.Math = window.Math;
-            $scope.$emit('HidePreloader'); //show preloader
+            $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.setToolbar($location.$$path,"");
             
@@ -25,14 +25,14 @@ angular
 
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
-        $scope.idEtapa = 1; //hard coded
-            $scope.idReto = $routeParams['challengue'];
+            $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
+            $scope.idReto = $routeParams['challenge'];
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
-        _setLocalStorageItem("userCurrentStage", 1);   // hard coded
+            _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
 
-             setTimeout(function () {            
-            var hits = 1;
+            setTimeout(function () {
+                var hits = 1;
 
                 //Carrusel de retos
                 var owl2 = $("#owl-demo2");
@@ -64,25 +64,25 @@ angular
                     mouseDrag:false,
                     transitionStyle:"fade",
                     afterMove: callback2
-                });    
+                });
 
                 this.currentItem = $scope.idReto;
                 var currentItem;
                 owl.trigger("owl.goTo", $scope.idReto);
-                    $("span#index").text(($scope.idReto+1));  
+                $("span#index").text(($scope.idReto+1));
 
                 owl2.trigger("owl.goTo", $scope.idReto);
-                    $("span#index").text(($scope.idReto+1));            
+                $("span#index").text(($scope.idReto+1));
 
                 function callback1(event) {
-                    var item = this.currentItem;                    
+                    var item = this.currentItem;
                     currentItem = parseInt(this.owl.currentItem);
                     owl2.trigger("owl.goTo", item);
                     $("span#index").text((item+1));
                 }
 
                 function callback2(event) {
-                    item = this.currentItem;                    
+                    item = this.currentItem;
                     owl.trigger("owl.goTo", item);
                     $("span#index").text((item+1));
                 }
@@ -110,11 +110,11 @@ angular
                     ev.preventDefault();
                 });
 
-            }, 1000);  
-                 
-                 
-                 
-            $scope.openModal_CloseChallenge = function (size) {                
+            }, 1000);
+
+
+
+            $scope.openModal_CloseChallenge = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'ClosingStageTwoChallengeModal.html',
@@ -147,12 +147,12 @@ angular
                     }*/
                 }
             }
-            
+
             var stageCompleted = _isStageCompleted();
             $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
             var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
-                                    
+
             //Exclude challenges initial and final from showing modal robot
             var challengeExploracionInicial = 140;
             var challengeExploracionFinal = 152;
@@ -173,28 +173,9 @@ angular
             
             //_setLocalStorageItem("challengeMessageId",113);
             //$scope.openModal_CloseChallenge();
-            
-            
-            
-            
-            //Load challenges images
-            $scope.retosIconos = {
-                "Exploración inicial": "assets/images/challenges/stage-1/img-evaluacion-inicial.svg",
-                "Cuarto de recursos": "assets/images/challenges/stage-1/img-cuarto-recursos.svg",
-                "Conócete": "assets/images/challenges/stage-1/img-conocete.svg",
-                "Mis sueños": "assets/images/challenges/stage-1/img-mis-suenos.svg",
-                "Cabina de soporte": "assets/images/challenges/stage-1/img-cabina-soporte.svg",
-                "Exploración final": "assets/images/challenges/stage-1/img-evaluacion-final.svg"
-            };
 
-            $scope.challengeDescription= {
-                "Exploración inicial": "Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad",
-                "Cuarto de recursos": "Descubre más y métele velocidad a tus sueños",
-                "Conócete": "Juega y descubre tus inteligencias",
-                "Mis sueños": "Cada sueño en su lugar",
-                "Cabina de soporte": "Contacta a tu coach",
-                "Exploración final": "Explora qué tanto descubriste en la Zona de Vuelo"
-            };  
+
+
 
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
@@ -211,10 +192,9 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
-                console.log(activity.activity_identifier);
                 if(!$scope.canStartActivity(activity.activity_identifier)) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
-                console.log(url);
+
                 if (url) {
                     $location.path(url);
                 }
