@@ -272,13 +272,13 @@ angular
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
                         break;
                     case "2007": //Tus Ideas - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/2";
                         break;
                     case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/4";
                         break;
                     case "2023": //Exploración Final - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/6"; //Pending: UPDATE ACTIVITY NUMBER
                         break;
                     case "3101": //Exploración Inicial - Etapa 3
                         destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
