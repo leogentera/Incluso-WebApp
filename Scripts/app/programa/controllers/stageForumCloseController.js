@@ -14,11 +14,8 @@ angular
             _httpFactory = $http;
             _timeout = $timeout;
 
-            localStorage.removeItem('currentForumsProgress');
-
             $scope.currentChallenge = 2;
              var userCourse = JSON.parse(localStorage.getItem('usercourse'));
-            debugger;
             var parentActivity = getActivityByActivity_identifier($routeParams.activityId, userCourse);
             var activityFromTree;
 
@@ -39,7 +36,6 @@ angular
             var endForumActivity = function(moodleid){
                 console.log('Closing time: ' + moodleid);
                 $scope.$emit('ShowPreloader');
-                debugger;
                var activities = parentActivity.activities;
 
                parentActivity.status = 1;
@@ -63,7 +59,6 @@ angular
                 };
 
                 var userCurrentStage = localStorage.getItem("currentStage");
-                debugger;
                if (activities) {
                  for(var i = 0; i < activities.length; i++) {
                   moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {});
@@ -108,7 +103,6 @@ angular
                                   moodleid = 178;
                               }
 
-                              debugger;
 
                               updateUserStars(activity_identifier);
                               $scope.$emit('HidePreloader');
