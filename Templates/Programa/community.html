@@ -120,10 +120,10 @@
             <div ng-hide="p.liked == 0" ng-click="likePost(p.post_id)">
               <span class="icomoon icon-like"></span> Ya no me gusta
             </div>
-            <div ng-click="isCommentModalCollapsed['id' + p.post_id] = !isCommentModalCollapsed['id' + p.post_id]">
+            <div ng-click="commentModalClick(p.post_id)">
               <span class="icomoon icon-comment"></span> Comentar              
             </div>
-            <div ng-click="isReportedAbuseModalCollapsed['id' + p.post_id] = !isReportedAbuseModalCollapsed['id' + p.post_id]">
+            <div ng-click="reportModalClick(p.post_id)">
               <span class="icomoon icon-pinch"></span> Reportar
             </div>
           </div>
