@@ -691,7 +691,9 @@
                     var challengeActivitiesCount = challenge.activities.length;
                     for (k = 0; k < challengeActivitiesCount; k++) {
                         var activity = challenge.activities[k];
-                        activityStatus[activity.coursemoduleid] = activity.status;
+                        if(activity.status) {
+                            activityStatus[activity.activity_identifier] = activity.status;
+                        }
                     }
 
                 }

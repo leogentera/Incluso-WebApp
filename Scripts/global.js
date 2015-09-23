@@ -371,9 +371,9 @@ var _isChallengeCompleted = function () {
     for (var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++) {
         var currentChallenge = currentStage.challenges[challengeIndex];
         if (currentChallenge.status == 0) {
-            var totalActivitiesByStage = currentChallenge.activities.length;
-            var totalActivitiesCompletedByStage = (_.where(currentChallenge.activities, {status: 1})).length;
-            if (totalActivitiesByStage == totalActivitiesCompletedByStage) {
+            var totalActivitiesByChallenge = currentChallenge.activities.length;
+            var totalActivitiesCompletedByChallenge = (_.where(currentChallenge.activities, {status: 1})).length;
+            if (totalActivitiesByChallenge == totalActivitiesCompletedByChallenge) {
 
                 //updateBadge
                 _updateBadgeStatus(currentChallenge.coursemoduleid);
