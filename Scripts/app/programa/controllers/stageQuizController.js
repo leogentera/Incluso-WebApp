@@ -682,7 +682,7 @@ angular
                     function (responseData) {
                         console.log('Update profile fail...');
                     });
-            };
+            }
 
             $scope.toggleSelection = function toggleSelection(stringValue, isChecked, questionArray) {
                 var index = -1;
@@ -2212,7 +2212,7 @@ angular
             };
 
             $scope.deleteFuturo = function (index, pos) {
-                var listaId = pos + 1;
+                    var listaId = pos + 1;
                 removeHeight("#listaDinamica" + listaId);
                 $scope.miFuturo[pos].splice(index, 1);
             };
@@ -2232,22 +2232,7 @@ angular
                 $location.path(destinationPath);
             };
 
-            /*
-            $scope.cancel2 = function () {//Temporary functionality to return to dashboard Stage 2
-                var userCurrentStage = $location.path().split("/")[$location.path().split("/").length - 1];
-                //var userCurrentStage = localStorage.getItem("userCurrentStage");
-                //$location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + "/0");
-            };
-
-            $scope.cancel3 = function () {//Temporary functionality to return to dashboard Stage 3
-                var userCurrentStage = $location.path().split("/")[$location.path().split("/").length - 1];
-                //var userCurrentStage = localStorage.getItem("userCurrentStage");
-                //$location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + "/0");
-            };
-            */
-
-
-
+            
 
         }
     ])
