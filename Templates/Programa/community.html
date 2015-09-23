@@ -86,7 +86,9 @@
                 <p ng-bind="p.message"></p>
                 <div class="achievement-badge">
                   <figure>
-                    <img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" />
+                    <a href="{{p.fileurl + '?token=' + userToken}}">
+                      <img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
                   </figure>
                 </div>
               </div>
