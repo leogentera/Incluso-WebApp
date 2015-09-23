@@ -307,9 +307,10 @@ angular
                     var activityFinished = false;
 
                     $scope.activity_status = parentActivity.status;
+                    //$scope.activity_status = activity.status;
                     console.log(activity.status);
 
-                    if ($scope.activity_status != 0) {//If the activity is currently finished...
+                    if (activity.status != 0) {//If the activity is currently finished...
                         activityFinished = true;
 
                         if ($scope.activity_identifier == '1001' ||
@@ -583,6 +584,7 @@ angular
 
                 if ($scope.activity.activities) {
                     _activityStatus[$scope.activity.activities[0].activity_identifier] = 1;
+                    _activityStatus[$scope.activity.activity_identifier] = 1;
                 } else {
                     _activityStatus[$scope.activity.activity_identifier] = 1;
                 }
