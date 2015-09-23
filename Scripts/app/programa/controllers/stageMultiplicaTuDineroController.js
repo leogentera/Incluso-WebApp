@@ -28,6 +28,14 @@ angular
             $scope.multiplicaTuDineroActivity = moodleFactory.Services.GetCacheJson("multiplicaTuDineroActivities");
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             $scope.stars = 0;
+            $scope.isInstalled = false;
+
+            try {
+              cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+            }
+            catch (e) {
+                $scope.isInstalled = true;
+            }
 
             if (!$scope.multiplicaTuDineroActivity) {
                 $scope.multiplicaTuDineroActivity = {};
@@ -161,7 +169,7 @@ angular
                         }
                     }
 
-                    if (activitiesCompleted == parentActivity.activities.length - 1) {
+                    if ((activitiesCompleted == parentActivity.activities.length - 1) && $scope.IsComplete) {
                         parentActivity.status = 1;
                         _endActivity(parentActivity, function(){ });
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
