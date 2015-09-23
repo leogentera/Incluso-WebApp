@@ -43,8 +43,7 @@
                             <label for="q1r8">Basebol</label>
                             <input id="q1r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[0][9]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Carreras',misGustosAnswers[0][9],'favoriteSports')"/>
                             <label for="q1r9">Carreras</label>                            
-                            <input id="q1r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[0][10]" ng-true-value="1" ng-false-value="0"
-                                   ng-change="misGustosOtroAnswers[0].answers[0] = misGustosAnswers[0][10]==0 ? '' : misGustosOtroAnswers[0].answers[0]"
+                            <input id="q1r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[0][10]" ng-true-value="1" ng-false-value="0"                                   
                                    ng-click="addCaptureField('gustos1', misGustosAnswers[0][10])" />
                             <label for="q1r10">Otro</label>
 
@@ -53,7 +52,7 @@
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea1" class="form-control form-control-lg theme-form"
                                               row="2"
-                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[0].answers[0]"></textarea>
+                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[0].answers[0]" ng-readonly="{{misGustosAnswers[0][10] == 1}} && {{misGustosOtroAnswers[0].answers[0] != ''}}"></textarea>
                                 </div>
                             </div>
                         </section>
@@ -85,8 +84,7 @@
                             <label for="q2r8">Modelado</label>
                             <input id="q2r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[1][9]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Dibujo',misGustosAnswers[1][9],'artisticActivities')">
                             <label for="q2r9">Dibujo</label>                            
-                            <input id="q2r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[1][10]" ng-true-value="1" ng-false-value="0"
-                                   ng-change="misGustosOtroAnswers[1].answers[0] = misGustosAnswers[1][10]==0 ? '' : misGustosOtroAnswers[1].answers[0]"
+                            <input id="q2r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[1][10]" ng-true-value="1" ng-false-value="0"                                   
                                    ng-click="addCaptureField('gustos2', misGustosAnswers[1][10])" />
                             <label for="q2r10">Otro</label>
 
@@ -94,7 +92,7 @@
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea2" class="form-control form-control-lg theme-form" row="2"
-                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[1].answers[0]"></textarea>
+                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[1].answers[0]"  ng-readonly="{{misGustosAnswers[1][10] == 1}} && {{misGustosOtroAnswers[1].answers[0] != ''}}"></textarea>
                                 </div>
                             </div>
 
@@ -127,8 +125,7 @@
                             <label for="q3r8">Pasar tiempo en redes sociales</label>
                             <input id="q3r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[2][9]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Escuchar música',misGustosAnswers[2][9],'hobbies')"/>
                             <label for="q3r9">Escuchar música</label>                            
-                            <input id="q3r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[2][10]" ng-true-value="1" ng-false-value="0"
-                                   ng-change="misGustosOtroAnswers[2].answers[0] = misGustosAnswers[2][10]==0 ? '' : misGustosOtroAnswers[2].answers[0]"
+                            <input id="q3r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[2][10]" ng-true-value="1" ng-false-value="0"                                   
                                    ng-click="addCaptureField('gustos3', misGustosAnswers[2][10])" />
                             <label for="q3r10">Otro</label>
 
@@ -137,7 +134,7 @@
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea3" class="form-control form-control-lg theme-form"
                                               row="2"
-                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[2].answers[0]"></textarea>
+                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[2].answers[0]"  ng-readonly="{{misGustosAnswers[2][10] == 1}} && {{misGustosOtroAnswers[2].answers[0] != ''}}"></textarea>
                                 </div>
                             </div>
                         </section>
