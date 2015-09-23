@@ -148,7 +148,7 @@ angular
                         quizzesRequests.push(logEntry);
                     }
                 }
-                debugger;
+
                 var quizzesAnswered = _.countBy($scope.mapaDeVidaActivities, function(a){
                     if (a.questions) {
                         var questionsAnswers = _.countBy(a.questions, function(q){
