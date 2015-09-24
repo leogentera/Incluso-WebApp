@@ -200,7 +200,7 @@ angular
                         if((data != null && data.messageerror != null)){
                             errorMessage = window.atob(data.messageerror);
                         }else{
-                            errorMessage = "Se ha producido un error, contactate al administrador."
+                            errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
                         }
 
                         $scope.registerModel.modelState.errorMessages = [errorMessage];                        

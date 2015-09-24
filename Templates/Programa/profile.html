@@ -309,7 +309,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:loggedUser">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:showLikesAndPreferences">
                                                             <h4>Mis gustos</h4>
                                                             <div class="from-group">
                                                                 <label>Mis deportes preferidos</label>
@@ -339,7 +339,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:showPhones">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:showAttributesAndQualities">
                                                             <h4>Mis cualidades</h4>
                                                             <div class="from-group">
                                                                 <label>Talentos</label>
@@ -369,7 +369,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:showWhomAdmires">
                                                             <h4>A quién admiro</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.inspirationalCharacters">
