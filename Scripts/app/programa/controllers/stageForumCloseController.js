@@ -107,7 +107,10 @@ angular
                               //updateUserStars(activity_identifier);
                               updateUserStars($routeParams.activityId);
                               $scope.$emit('HidePreloader');
-                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                              if($routeParams.activityId == 1010 || $routeParams.activityId == 1049 || $routeParams.activityId == 1008 ){
+                                  $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                              } //else if($routeParams.activityId == 1010){}
+
                           }, errorCallback);
                     },
                     function(){
