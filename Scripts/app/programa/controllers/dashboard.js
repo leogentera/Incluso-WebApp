@@ -70,7 +70,15 @@
                     $scope.updateProgramFirstTime();
                 }
                 //redirect user to stage 1 dashboard after closing modal
-                $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section + '/0');
+                var zone = '/ZonaDeVuelo/Dashboard/';
+
+                //Depend of section is the zone to redirect
+                if($scope.currentStage == 2){
+                    zone = '/ZonaDeNavegacion/Dashboard/';
+                }else if ($scope.currentStage == 3){
+                    zone = '/ZonaDeAterrizaje/Dashboard/';
+                }
+                $location.path(zone + $scope.currentStage + '/0');
             };
 
             //Updates firsttime flag for program in model, localstorage and server
