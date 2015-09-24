@@ -558,8 +558,8 @@ angular
                 }
 
                 else {
-                    $scope.showWarning = true;
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
+                    $scope.showWarning = true;
                 }
             }
 
@@ -994,7 +994,6 @@ angular
 
 
             $scope.validateMisSuenosAnsweredQuestions = function () {
-                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
                 var quizIsValid = true;
                 var numQuestions = $scope.misSuenosAnswers.length;
@@ -1026,6 +1025,7 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                 } else {
+                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                     $scope.showWarning = true;
                     showWarningAndGoToTop();
                 }
@@ -1033,8 +1033,6 @@ angular
 
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {
-                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-
 
                 var validatedAnswers = [0, 0, 0];
                 var validateOther = [0, 0, 0];
@@ -1075,12 +1073,13 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                 } else {
+                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                    $scope.showWarning = true;
                     showWarningAndGoToTop();
                 }
             };
 
             $scope.validateMisGustosAnsweredQuestions = function () {
-                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
                 var validatedAnswers = [0, 0, 0];
                 var validateOther = [0, 0, 0];
@@ -1121,32 +1120,32 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                 } else {
+                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                    $scope.showWarning = true;
                     showWarningAndGoToTop();
                 }
 
             };
 
             $scope.validateExploracionFinalAnsweredQuestions = function () {
-                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                var quizIsValid = true;
 
-                var validAnswers = true;
-
-                for (var index = 0; index < $scope.exploracionFinal.length; index++) {
-                    var element = $scope.exploracionFinal[index];
-                    if (element == "") {
-                        validAnswers = false;
-                        showWarningAndGoToTop();
-                        break;
-                    }
+                //Check if all questions were answered
+                if ($scope.exploracionFinal.indexOf(null) > -1) {
+                    quizIsValid = false;
                 }
 
-                if (validAnswers) {
+                if (quizIsValid) {
                     //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
                     moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBack, partialErrorCallback, true);
 
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
+                }  else {
+                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                    $scope.showWarning = true;
+                    showWarningAndGoToTop();
                 }
             };
 
@@ -1473,8 +1472,6 @@ angular
                                     }
                                 }
                             }
-
-
                         }
 
                         if (!$scope.exploracionFinalresult2[index].badAnswer) {
@@ -1498,7 +1495,6 @@ angular
             //*********************************** VALIDATION OF USER ANSWERS FOR STAGE 3 **********************************
 
             $scope.validateExploracionInicialStage3 = function () {
-                $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
 
                 var cont = $scope.exploracionInicialStage3.length;  //It should be equal to 4: Four questions.
                 var quizIsValid = true;
@@ -1540,6 +1536,7 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                 } else {
+                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                     $scope.showWarning = true;
                     showWarningAndGoToTop();
                 }
@@ -1598,6 +1595,7 @@ angular
                     moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBackStage3, partialErrorCallbackStage3, true);
                 } else {
                     $scope.showWarning = true;
+                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                     showWarningAndGoToTop();
                 }
             };
@@ -1708,8 +1706,8 @@ angular
                     }
                 }
                 else {
-                    $scope.showWarning = true;
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
+                    $scope.showWarning = true;
                 }
 
                 addToScore = checkPoints / 4;
