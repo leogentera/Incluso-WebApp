@@ -317,10 +317,6 @@ var _endActivity = function (activityModel, callback, pathCh) {
     else if (activityModel.activityType == "Assign") {
         var data = {userid: currentUserId};
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallback);
-    }
-    else if (activityModel.activityType == "Parent") {
-        _endActivityCurrentChallenge = pathCh;
-        moodleFactory.Services.PutEndActivity(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
     } else {
         var data = {userid: currentUserId};
 
