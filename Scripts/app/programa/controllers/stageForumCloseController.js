@@ -83,7 +83,6 @@ angular
                               updateUserStars($routeParams.activityId);
                               $scope.$emit('HidePreloader');
                               var activityId = Number($routeParams.activityId);
-                              //$location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                               if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
                                   $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                               } else if(activityId == 2030 || activityId == 2026){
@@ -96,7 +95,6 @@ angular
                     },
                     function(){
                         var activityId = Number($routeParams.activityId);
-                      //$location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                         if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
                             $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                         } else if(activityId == 2030 || activityId == 2026){
