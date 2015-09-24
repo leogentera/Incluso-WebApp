@@ -751,7 +751,7 @@ angular
 
                     _endActivity(activityModel, function () {
                         updateProfile();
-                    }, 0);
+                    }, destinationPath);
 
                     activityModel.activityType = "Assign";
                     activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid; //
@@ -759,7 +759,7 @@ angular
 
                     _endActivity(activityModel, function () {
                         updateProfile();
-                    }, 0);
+                    }, destinationPath);
 
                 } else {
                     activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
@@ -768,7 +768,7 @@ angular
 
                     _endActivity(activityModel, function () {
                         updateProfile();
-                    }, 0);
+                    }, destinationPath);
                 }
 
 
