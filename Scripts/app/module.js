@@ -308,7 +308,7 @@
             controller: 'programaLeaderBoard'
         });        
      
-        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId/:challengue', {
+        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeVuelo/dashboard.html',
             controller: 'stageDashboardController'
         });
@@ -905,6 +905,13 @@
           restrict: 'E',
           scope: false,
           templateUrl: 'Templates/Partials/sharedAlbum.html'
+        };
+    })
+    .directive('shareReconocimiento', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Partials/shareReconocimiento.html'
         };
     })
     .directive('menuComponent', function(){
