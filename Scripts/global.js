@@ -782,23 +782,22 @@ function updateUserStars(activityIdentifier, extraPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
-    //var activity = getActivityAtAnyCost(activityIdentifier).activity;
 
     extraPoints ? '' : extraPoints = 0;
-
-    /*
-     if (activity_identifier == '1009' || activity_identifier == '1001') {
-     activity.points = 50;
-     }
-
-     */
 
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
     } else {
-        profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
-    }
+        if (activityIdentifier == "2016") {
+            profile.stars = Number(profile.stars) + Number(activity.activities[0].points) + Number(extraPoints);
+        }
+        else {
+            profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+        }
 
+
+    }
+    console.log("Profile stars = " + profile.stars);
 
     var data = {
         userId: profile.id,
@@ -906,8 +905,7 @@ var logout = function ($scope, $location) {
             }
         );
     }
-    localStorage.removeItem("CurrentUser");
-    localStorage.removeItem("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+    localStorage.removeItem("CurrentUser");    
     localStorage.removeItem("course");
     localStorage.removeItem("stage");
     localStorage.removeItem("usercourse");
@@ -916,10 +914,15 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("userChat");
     localStorage.removeItem("leaderboard");
     localStorage.removeItem("activityStatus");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("avatarInfo");
+    localStorage.removeItem("chatRead");
+    localStorage.removeItem("chatAmountRead");
     ClearLocalStorage("activity");
     ClearLocalStorage("activitiesCache");
     ClearLocalStorage("activityAnswers");
-    ClearLocalStorage("album");
+    ClearLocalStorage("album");    
+    ClearLocalStorage("profile");
     $location.path('/');
 };
 
@@ -969,15 +972,15 @@ var _badgesPerChallenge = [
 var _activityRoutes = [
     {id: 1001, name: '', url: '/ZonaDeVuelo/ExploracionInicial/1001'},
     {id: 1101, name: '', url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/1101'},
-    {id: 1049, name: '', url: '/ZonaDeVuelo/Conocete/ZonaDeContacto/149'},
+    {id: 1049, name: '', url: '/ZonaDeVuelo/Conocete/ZonaDeContacto/1049'},
     {id: 1020, name: '', url: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/1020'},
     {id: 1039, name: 'Reto Multiple', url: '/ZonaDeVuelo/Conocete/RetoMultiple/1039'},
-    {id: 1010, name: '', url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64'},
+    {id: 1010, name: '', url: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/1010'},
     {id: 1021, name: '', url: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/1021'},
     {id: 1006, name: '', url: '/ZonaDeVuelo/MisSuenos/MisGustos/1006'},
     {id: 1005, name: '', url: '/ZonaDeVuelo/MisSuenos/MisCualidades/1005'},
     {id: 1007, name: '', url: '/ZonaDeVuelo/MisSuenos/Suena/1007'},
-    {id: 1008, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73'},
+    {id: 1008, name: '', url: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/1008'},
     {id: 1002, name: '', url: '/ZonaDeVuelo/CabinaDeSoporte/1002'},
     {id: 1009, name: '', url: '/ZonaDeVuelo/ExploracionFinal/1009'},
     {id: 2001, name: '', url: '/ZonaDeNavegacion/ExploracionInicial/2001'},

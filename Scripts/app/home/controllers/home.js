@@ -212,7 +212,9 @@
             //Helps defining if activity can be started
             $scope.canStartActivity = function(activityIdentifier){
                 //If public page, return false
-                if(!$rootScope.showToolbar) {
+                var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+
+                if(!$rootScope.showToolbar || !userCourse ) {
                     return false;
                 }
                 //Load activity
