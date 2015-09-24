@@ -173,9 +173,9 @@ angular
                     });
                 }, 1000);
               
-              var moodleId = $scope.moodleId;
+              //var moodleId = $scope.moodleId;
               //TODO Add new routes for Zona de Navegación && Zona de Aterrizaje
-              switch (moodleId){
+              switch (Number($routeParams.activityId)){
                   case 1010:
                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
@@ -186,10 +186,10 @@ angular
                       $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
                   case 2030:
-                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 1);
+                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 2);
                       break;
                   case 2026:
-                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 2);
+                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 4);
                       break
                   case 3304:
                       $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 2);
