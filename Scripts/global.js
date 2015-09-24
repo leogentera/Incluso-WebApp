@@ -779,16 +779,8 @@ function updateUserStars(activityIdentifier, extraPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
-    //var activity = getActivityAtAnyCost(activityIdentifier).activity;
 
     extraPoints ? '' : extraPoints = 0;
-
-    /*
-     if (activity_identifier == '1009' || activity_identifier == '1001') {
-     activity.points = 50;
-     }
-
-     */
 
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
