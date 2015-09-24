@@ -77,7 +77,7 @@ angular
                           };
 
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
-                            updateActivityStatus(moodleid);
+                            updateActivityStatus($routeParams.activityId);
                             _updateRewardStatus();
                               //var activity_identifier = null;
                               //if(moodleid == 151){
