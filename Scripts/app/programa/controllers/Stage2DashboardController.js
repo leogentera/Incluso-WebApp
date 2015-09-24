@@ -203,7 +203,7 @@ angular
             }
 
             var stageCompleted = _isStageCompleted();
-            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
+            $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);
             var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
 
