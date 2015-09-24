@@ -747,14 +747,28 @@ angular
                 if ($scope.childActivity) {
                     activityModel.coursemoduleid = $scope.childActivity.coursemoduleid;
                     activityModel.activityType = "Quiz";
-                    _endActivity(activityModel, null, destinationPath); //
+                    //_endActivity(activityModel, null, destinationPath); //
+
+                    _endActivity(activityModel, function () {
+                        updateProfile();
+                    }, 0);
+
                     activityModel.activityType = "Assign";
                     activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid; //
-                    _endActivity(activityModel, null, destinationPath); //
+                    //_endActivity(activityModel, null, destinationPath); //
+
+                    _endActivity(activityModel, function () {
+                        updateProfile();
+                    }, 0);
+
                 } else {
                     activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
                     activityModel.activityType = "Quiz";
-                    _endActivity(activityModel, null, destinationPath); //
+                    //_endActivity(activityModel, null, destinationPath); //
+
+                    _endActivity(activityModel, function () {
+                        updateProfile();
+                    }, 0);
                 }
 
 
@@ -762,9 +776,7 @@ angular
                 //Update quiz on server - Child Activity
                 //_endActivity(activityModel);
 
-                updateProfile();
-
-                },0);
+               
                 
 
                 //-------------****************
