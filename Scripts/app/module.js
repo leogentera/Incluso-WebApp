@@ -907,6 +907,13 @@
           templateUrl: 'Templates/Partials/sharedAlbum.html'
         };
     })
+    .directive('shareReconocimiento', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Partials/shareReconocimiento.html'
+        };
+    })
     .directive('menuComponent', function(){
         return {
           restrict: 'E',
