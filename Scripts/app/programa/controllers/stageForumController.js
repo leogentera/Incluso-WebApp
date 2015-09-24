@@ -23,14 +23,14 @@ angular
                  var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + $routeParams.activityId + '/'+ activityFromTree.activities[1].coursemoduleid;
 
                  var shields = [
-                     {name: 'musical', category: 'artistico'},
-                     {name: 'interpersonal', category: 'artistico'},
-                     {name: 'naturalista', category: 'logico'},
-                     {name: 'intrapersonal', category: 'logico'},
-                     {name: 'corporal', category: 'artistico'},
-                     {name: 'espacial', category: 'artistico'},
-                     {name: 'matematica', category: 'logico'},
-                     {name: 'liguistica', category: 'logico'},
+                     {name: 'Musical', category: 'artistico'},
+                     {name: 'Interpersonal', category: 'artistico'},
+                     {name: 'Naturalista', category: 'logico'},
+                     {name: 'Intrapersonal', category: 'logico'},
+                     {name: 'Corporal', category: 'artistico'},
+                     {name: 'Espacial', category: 'artistico'},
+                     {name: 'Matemática', category: 'logico'},
+                     {name: 'Lingüística', category: 'logico'},
                  ];
                  var userId = JSON.parse(localStorage.getItem('userId'));
                  var shield = JSON.parse(localStorage.getItem('profile/' + userId )).shield;
@@ -173,33 +173,33 @@ angular
                     });
                 }, 1000);
               
-              var moodleId = $scope.moodleId;
+              //var moodleId = $scope.moodleId;
               //TODO Add new routes for Zona de Navegación && Zona de Aterrizaje
-              switch (moodleId){
-                  case 64:
+              switch (Number($routeParams.activityId)){
+                  case 1010:
                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
-                  case "73":
+                  case 1008:
                       $location.path('/ZonaDeVuelo/Dashboard/1/'+3);
                       break;
-                  case "147":
+                  case 1049:
                       $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
-                  case "148":
-                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
+                  case 2030:
+                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 2);
                       break;
-                  case "179":
-                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 1);
-                      break;
-                  case "93":
+                  case 2026:
+                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 4);
+                      break
+                  case 3304:
                       $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 2);
                       break;
-                  case "91":
+                  case 3404:
                       $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 3);
                       break;
-                  default:
-                      $location.path('/ZonaDeVuelo/Dashboard/1');
-                      break;
+                  //default:
+                  //    $location.path('/ZonaDeVuelo/Dashboard/1');
+                  //    break;
               }                                      
               
             }

@@ -9,7 +9,7 @@ angular
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {            
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             /* $routeParams.stageId */
             _timeout = $timeout;
             _httpFactory = $http;
@@ -25,7 +25,7 @@ angular
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
             $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
-            $scope.idReto = $routeParams['challengue'];
+            $scope.idReto = $routeParams['challenge'];
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
@@ -63,25 +63,25 @@ angular
                     mouseDrag:false,
                     transitionStyle:"fade",
                     afterMove: callback2
-                });    
+                });
 
                 this.currentItem = $scope.idReto;
                 var currentItem;
                 owl.trigger("owl.goTo", $scope.idReto);
-                    $("span#index").text(($scope.idReto+1));  
+                $("span#index").text(($scope.idReto+1));
 
                 owl2.trigger("owl.goTo", $scope.idReto);
-                    $("span#index").text(($scope.idReto+1));            
+                $("span#index").text(($scope.idReto+1));
 
                 function callback1(event) {
-                    var item = this.currentItem;                    
+                    var item = this.currentItem;
                     currentItem = parseInt(this.owl.currentItem);
                     owl2.trigger("owl.goTo", item);
                     $("span#index").text((item+1));
                 }
 
                 function callback2(event) {
-                    item = this.currentItem;                    
+                    item = this.currentItem;
                     owl.trigger("owl.goTo", item);
                     $("span#index").text((item+1));
                 }
@@ -109,7 +109,7 @@ angular
                     ev.preventDefault();
                 });
 
-            }, 1000);         
+            }, 1000);
 
             //Opens stage welcome message if first time visit
             $scope.openModal_StageFirstTime = function (size) {
@@ -122,8 +122,7 @@ angular
                 });
             };
 
-            //$scope.openModal_StageFirstTime();
-            
+
             
             $scope.openModal_CloseChallenge = function (size) {                
                 var modalInstance = $modal.open({
@@ -216,7 +215,7 @@ angular
             }
                         
                         
-            var robotEndStageShown = localStorage.getItem('robotEndStorageShown');            
+            var robotEndStageShown = localStorage.getItem('robotEndStageShown');            
             var stageCompleted = _isStageCompleted();
             
             if (stageCompleted && !robotEndStageShown) {
@@ -318,5 +317,5 @@ angular
                         $modalInstance.dismiss('cancel');
                         $location.path('/ProgramaDashboard');
                     };
-                    _setLocalStorageItem('robotEndStorageShown',true);
+                    _setLocalStorageItem('robotEndStageShown',true);
                 });
