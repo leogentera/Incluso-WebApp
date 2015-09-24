@@ -304,10 +304,10 @@ angular
 
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);
                 console.log("parentActivity = " + parentActivity);
-                var activity = parentActivity.activities ? parentActivity.activities[0] : parentActivity;
+                var activity = parentActivity.activities ? parentActivity.activities[0] : parentActivity; //Select "child" activity
                 console.log("Activity = " + parentActivity.toString());
 
-                //Redirect user to the proper dashboard
+                //Making up path to redirect user to the proper dashboard
                 switch ($scope.activity_identifier) {
                     case "1001":  //Exploración Inicial - Etapa 1
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/0";
@@ -334,13 +334,13 @@ angular
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/4";
                         break;
                     case "2023": //Exploración Final - Etapa 2
-                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/6"; //Pending: UPDATE ACTIVITY NUMBER
+                        destinationPath = "/ZonaDeNavegacion/Dashboard/2/6";
                         break;
                     case "3101": //Exploración Inicial - Etapa 3
                         destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
                         break;
                     case "3601": //Exploración Final - Etapa 3
-                        destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0"; //Pending: UPDATE ACTIVITY NUMBER
+                        destinationPath = "/ZonaDeAterrizaje/Dashboard/3/5"; //Pending: UPDATE ACTIVITY NUMBER
                         break;
                     default:
                         break;
