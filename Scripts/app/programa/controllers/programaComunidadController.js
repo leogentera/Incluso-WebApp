@@ -25,6 +25,7 @@ angular
             var _course = moodleFactory.Services.GetCacheJson("course");
             var _postPager = { from: 0, to: 0 };
             var _currentFilter = "default";
+            $scope.hasCommunityAccess = _hasCommunityAccessLegacy(_userProfile.communityAccess);
             
             $scope.userToken = _currentUser.token;
             $scope.moodleId = $routeParams.moodleid;
@@ -147,183 +148,202 @@ angular
             };
             
             $scope.reportPost = function(postId) {
-                var createdDate = (new Date().getTime() / 1000).toFixed(0);
                 
-                var requestData = {
-                    "postid": postId,
-                    "userid": _userId,
-                    "create": createdDate,
-                    "forumid": $scope.forumId,
-                    "discussionid": $scope.discussion.discussion,
-                };
+                if ($scope.hasCommunityAccess) {
+                    var createdDate = (new Date().getTime() / 1000).toFixed(0);
                 
-                $scope.$emit('ShowPreloader');
-                moodleFactory.Services.PostAsyncReportAbuse(null, requestData, function(){
-                    
-                    $scope.$emit('HidePreloader');
-                    $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
-                    $scope.isReportedAbuseSentModalCollapsed["id" + postId] = true;
-                    
-                    }, function(){
+                    var requestData = {
+                        "postid": postId,
+                        "userid": _userId,
+                        "create": createdDate,
+                        "forumid": $scope.forumId,
+                        "discussionid": $scope.discussion.discussion,
+                    };
+                
+                    $scope.$emit('ShowPreloader');
+                    moodleFactory.Services.PostAsyncReportAbuse(null, requestData, function(){
+                        
                         $scope.$emit('HidePreloader');
                         $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
-                        $scope.isReportedAbuseSentModalCollapsed["id" + postId] = false;
-                    }, true);
+                        $scope.isReportedAbuseSentModalCollapsed["id" + postId] = true;
+                        
+                        }, function(){
+                            $scope.$emit('HidePreloader');
+                            $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
+                            $scope.isReportedAbuseSentModalCollapsed["id" + postId] = false;
+                        }, true);
+                }
             };
             
             $scope.likePost = function(postId) {
-                var post = _.find($scope.posts, function(a){ return a.post_id == postId });
                 
-                if(post.liked == 0) {
-                    post.liked = 1;
-                    post.likes = parseInt(post.likes) + 1;
-                } else {
-                    post.liked = 0;
-                    post.likes = parseInt(post.likes) - 1;
+                if ($scope.hasCommunityAccess) {
+                    var post = _.find($scope.posts, function(a){ return a.post_id == postId });
+                
+                    if(post.liked == 0) {
+                        post.liked = 1;
+                        post.likes = parseInt(post.likes) + 1;
+                    } else {
+                        post.liked = 0;
+                        post.likes = parseInt(post.likes) - 1;
+                    }
+                    
+                    var userIdObject = {
+                        "userid": _userId
+                    };
+                    
+                    moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, function(){ }, function(){});
                 }
-                
-                var userIdObject = {
-                    "userid": _userId
-                };
-                
-                moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, function(){ }, function(){});
             };
             
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex) {
                 
-                var requestData = {
-                    "userid": _userId,
-                    "discussionid": $scope.discussion.discussion,
-                    "parentid": parentId,
-                    "message": that.replyText,
-                    "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                    "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                    "posttype": 1,
-                    "fileToUpload": ""
-                };
-                
-                $scope.$emit('ShowPreloader');
-                moodleFactory.Services.PostAsyncForumPost ('reply', requestData,
-                    function(){
-                        $scope.replyText = null;
-                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
-                        refreshTopicData();
-                    },
-                    function(){
-                        $scope.replyText = null;
-                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
-                    }
-                );
+                if ($scope.hasCommunityAccess) {
+                    var requestData = {
+                        "userid": _userId,
+                        "discussionid": $scope.discussion.discussion,
+                        "parentid": parentId,
+                        "message": that.replyText,
+                        "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "posttype": 1,
+                        "fileToUpload": ""
+                    };
+                    
+                    $scope.$emit('ShowPreloader');
+                    moodleFactory.Services.PostAsyncForumPost ('reply', requestData,
+                        function(){
+                            $scope.replyText = null;
+                            $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
+                            refreshTopicData();
+                        },
+                        function(){
+                            $scope.replyText = null;
+                            $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
+                        }
+                    );
+                }
             };
 
             $scope.postText = function() {
                 
-                var requestData = {
-                    "userid": _userId,
-                    "discussionid": $scope.discussion.discussion,
-                    "parentid": $scope.discussion.id,
-                    "message": $scope.postTextValue,
-                    "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                    "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                    "posttype": 1,
-                    "fileToUpload": null
-                };
-                
-                $scope.$emit('ShowPreloader');
-                moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                    function() {
-                        $scope.postTextValue = null;
-                        $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
-                        refreshTopicData();
-                    },
-                    function(){
-                        $scope.postTextValue = null;
-                        $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
-                    }
-                );
+                if ($scope.hasCommunityAccess) {
+                    var requestData = {
+                        "userid": _userId,
+                        "discussionid": $scope.discussion.discussion,
+                        "parentid": $scope.discussion.id,
+                        "message": $scope.postTextValue,
+                        "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "posttype": 1,
+                        "fileToUpload": null
+                    };
+                    
+                    $scope.$emit('ShowPreloader');
+                    moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                        function() {
+                            $scope.postTextValue = null;
+                            $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
+                            refreshTopicData();
+                        },
+                        function(){
+                            $scope.postTextValue = null;
+                            $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
+                        }
+                    );
+                }
             };
             
             $scope.postLink = function() {
                 
-                var requestData = {
-                    "userid": _userId,
-                    "discussionid": $scope.discussion.discussion,
-                    "parentid": $scope.discussion.id,
-                    "message": $scope.postLinkValue,
-                    "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                    "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                    "posttype": 2,
-                    "fileToUpload": null
-                };
-                
-                $scope.$emit('ShowPreloader');
-                moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                    function() {
-                        $scope.postLinkValue = null;
-                        $scope.collapseCommunityButtomsTrigger('isLinkCollapsed');
-                        refreshTopicData();
-                    },
-                    function() {
-                        $scope.postLinkValue = null;
-                        $scope.collapseCommunityButtomsTrigger('isLinkCollapsed');
-                    });
+                if ($scope.hasCommunityAccess) {
+                    var requestData = {
+                        "userid": _userId,
+                        "discussionid": $scope.discussion.discussion,
+                        "parentid": $scope.discussion.id,
+                        "message": $scope.postLinkValue,
+                        "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "posttype": 2,
+                        "fileToUpload": null
+                    };
+                    
+                    $scope.$emit('ShowPreloader');
+                    moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                        function() {
+                            $scope.postLinkValue = null;
+                            $scope.collapseCommunityButtomsTrigger('isLinkCollapsed');
+                            refreshTopicData();
+                        },
+                        function() {
+                            $scope.postLinkValue = null;
+                            $scope.collapseCommunityButtomsTrigger('isLinkCollapsed');
+                        });
+                }
             };
             
             $scope.postVideo = function() {
                 
-                var requestData = {
-                    "userid": _userId,
-                    "discussionid": $scope.discussion.discussion,
-                    "parentid": $scope.discussion.id,
-                    "message": $scope.postVideoValue,
-                    "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                    "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                    "posttype": 3,
-                    "fileToUpload": null
-                };
-                
-                moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                    function() {
-                        $scope.postVideoValue = null;
-                        $scope.collapseCommunityButtomsTrigger('isVideoCollapsed');
-                        refreshTopicData();
-                    },
-                    function() {
-                        $scope.postVideoValue = null;
-                        $scope.collapseCommunityButtomsTrigger('isVideoCollapsed');
-                    });
+                if ($scope.hasCommunityAccess) {
+                    var requestData = {
+                        "userid": _userId,
+                        "discussionid": $scope.discussion.discussion,
+                        "parentid": $scope.discussion.id,
+                        "message": $scope.postVideoValue,
+                        "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "posttype": 3,
+                        "fileToUpload": null
+                    };
+                    
+                    moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                        function() {
+                            $scope.postVideoValue = null;
+                            $scope.collapseCommunityButtomsTrigger('isVideoCollapsed');
+                            refreshTopicData();
+                        },
+                        function() {
+                            $scope.postVideoValue = null;
+                            $scope.collapseCommunityButtomsTrigger('isVideoCollapsed');
+                        });
+                }
             };
             
             $scope.postAttachment = function() {
                 
-                var requestData = {
-                    "userid": _userId,
-                    "discussionid": $scope.discussion.discussion,
-                    "parentid": $scope.discussion.id,
-                    "message": '',
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "posttype": 4,
-                    "filecontent":$scope.postAttachmentValue.image,
-                    "filename": _userId + $scope.postAttachmentValue.fileName,
-                    "picture_post_author": _userProfile.profileimageurlsmall
-                };
-
-                $scope.$emit('ShowPreloader');
-                moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                    function() {
-                        $scope.postAttachmentValue = {};
-                        $scope.collapseCommunityButtomsTrigger('isAttachmentCollapsed');
-                        refreshTopicData();
-                    },
-                    function() {
-                        $scope.postAttachmentValue = {};
-                        $scope.collapseCommunityButtomsTrigger('isAttachmentCollapsed');
-                    });
+                if ($scope.hasCommunityAccess) {
+                    var requestData = {
+                        "userid": _userId,
+                        "discussionid": $scope.discussion.discussion,
+                        "parentid": $scope.discussion.id,
+                        "message": '',
+                        "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                        "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                        "posttype": 4,
+                        "filecontent":$scope.postAttachmentValue.image,
+                        "filename": _userId + $scope.postAttachmentValue.fileName,
+                        "picture_post_author": _userProfile.profileimageurlsmall
+                    };
+    
+                    $scope.$emit('ShowPreloader');
+                    moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                        function() {
+                            $scope.postAttachmentValue = {};
+                            $scope.collapseCommunityButtomsTrigger('isAttachmentCollapsed');
+                            refreshTopicData();
+                        },
+                        function() {
+                            $scope.postAttachmentValue = {};
+                            $scope.collapseCommunityButtomsTrigger('isAttachmentCollapsed');
+                        });
+                }
             };
             
-            $scope.clickPostAttachment = function(){
-                clickPostAttachment();
+            $scope.clickPostAttachment = function() {
+                
+                if ($scope.hasCommunityAccess) {
+                    clickPostAttachment();
+                }
             };
             
             clickPostAttachment = function(){
