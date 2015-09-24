@@ -366,6 +366,7 @@ var _isStageCompleted = function () {
 };
 
 var _isChallengeCompleted = function () {
+    console.log("isChallengeCompleted?");
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var lastStageIndex = _.where(userCourse.stages, {status: 1}).length;
@@ -385,13 +386,13 @@ var _isChallengeCompleted = function () {
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 var currentUserId = currentUser.userId;
                 var data = {userid: currentUserId};
-                var currentActivityModuleId = currentChallenge.coursemoduleid;
-                var activityIdentifier = _getActivityByCourseModuleId();                
+                var currentActivityModuleId = currentChallenge.coursemoduleid;                
                 var activitymodel = {
                     activity_identifier: currentChallenge.activity_identifier
                 };
                 moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallback);
                 success = currentActivityModuleId;
+                console.log("challengeCompleted true");
                 return success;
             } else {
                 success = 0;
