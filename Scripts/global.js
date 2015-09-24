@@ -109,7 +109,7 @@ var _activityDependencies=[
     },
     {
         id:2022,
-        dependsOn:[2001,2004,2006,2009,2008,2011,2013,2015,2025,2017,2018]
+        dependsOn:[2001,2004,2006,2007,2030,2011,2012,2015,2016,2017,2026]
     },
     {
         id:2023,
@@ -150,11 +150,11 @@ var _activityDependencies=[
     },
     {
         id:3501,
-        dependsOn:[3101,3201,3301,3303,3305,3401,3403,3405]
+        dependsOn:[3101,3201,3301,3302,3304,3401,3402,3404]
     },
     {
         id:3601,
-        dependsOn:[3501]
+        dependsOn:[3101,3501]
     }
 ];
 
@@ -339,6 +339,9 @@ var successQuizCallback = function () {
     */
 };
 
+var _hasCommunityAccessLegacy = function(value) {
+    return (value == "Enable" || value == "1");
+};
 
 //This function updates in localStorage the status of the stage when completed
 var _isStageCompleted = function () {

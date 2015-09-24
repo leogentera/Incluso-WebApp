@@ -34,6 +34,7 @@ angular
             $scope.shareAchievementMessage = "";
             $scope.showShareAchievementMessage = false;
             $scope.showSharedAchievement = false;
+            $scope.hasCommunityAccess = false;
             
             $scope.$emit('ShowPreloader');
 
@@ -298,6 +299,8 @@ angular
                     if ($scope.model.profileimageurl) {
                         $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                     }
+                    
+                    $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
                     
                     console.log("Profile current stars:" + $scope.model.stars);
                     
@@ -1165,24 +1168,26 @@ angular
             
             $scope.shareAchievement = function() {
                 
-                $scope.$emit('ShowPreloader');
+                if ($scope.hasCommunityAccess) {
+                    $scope.$emit('ShowPreloader');
                 
-                if ($scope.discussion == null || $scope.forumId == null) {
-                    
-                    moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, function(data, key) {
-                        $scope.discussion = data.discussions[0];
-                        $scope.forumId = data.forumid;
+                    if ($scope.discussion == null || $scope.forumId == null) {
                         
-                        postAchievement();
-                        
-                        }, function(data){
-                            $scope.shareAchievementMessage = "";
-                            $scope.showShareAchievementMessage = false;
-                            $scope.showSharedAchievement = true;
+                        moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, function(data, key) {
+                            $scope.discussion = data.discussions[0];
+                            $scope.forumId = data.forumid;
                             
-                            $scope.$emit('HidePreloader'); }, true);
-                }else {
-                    postAchievement();
+                            postAchievement();
+                            
+                            }, function(data){
+                                $scope.shareAchievementMessage = "";
+                                $scope.showShareAchievementMessage = false;
+                                $scope.showSharedAchievement = true;
+                                
+                                $scope.$emit('HidePreloader'); }, true);
+                    }else {
+                        postAchievement();
+                    }
                 }
 
             };
