@@ -911,8 +911,7 @@ var logout = function ($scope, $location) {
             }
         );
     }
-    localStorage.removeItem("CurrentUser");
-    localStorage.removeItem("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+    localStorage.removeItem("CurrentUser");    
     localStorage.removeItem("course");
     localStorage.removeItem("stage");
     localStorage.removeItem("usercourse");
@@ -921,10 +920,15 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("userChat");
     localStorage.removeItem("leaderboard");
     localStorage.removeItem("activityStatus");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("avatarInfo");
+    localStorage.removeItem("chatRead");
+    localStorage.removeItem("chatAmountRead");
     ClearLocalStorage("activity");
     ClearLocalStorage("activitiesCache");
     ClearLocalStorage("activityAnswers");
-    ClearLocalStorage("album");
+    ClearLocalStorage("album");    
+    ClearLocalStorage("profile");
     $location.path('/');
 };
 
