@@ -23,14 +23,14 @@ angular
                  var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + $routeParams.activityId + '/'+ activityFromTree.activities[1].coursemoduleid;
 
                  var shields = [
-                     {name: 'musical', category: 'artistico'},
-                     {name: 'interpersonal', category: 'artistico'},
-                     {name: 'naturalista', category: 'logico'},
-                     {name: 'intrapersonal', category: 'logico'},
-                     {name: 'corporal', category: 'artistico'},
-                     {name: 'espacial', category: 'artistico'},
-                     {name: 'matematica', category: 'logico'},
-                     {name: 'liguistica', category: 'logico'},
+                     {name: 'Musical', category: 'artistico'},
+                     {name: 'Interpersonal', category: 'artistico'},
+                     {name: 'Naturalista', category: 'logico'},
+                     {name: 'Intrapersonal', category: 'logico'},
+                     {name: 'Corporal', category: 'artistico'},
+                     {name: 'Espacial', category: 'artistico'},
+                     {name: 'Matemática', category: 'logico'},
+                     {name: 'Lingüística', category: 'logico'},
                  ];
                  var userId = JSON.parse(localStorage.getItem('userId'));
                  var shield = JSON.parse(localStorage.getItem('profile/' + userId )).shield;
