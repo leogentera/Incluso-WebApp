@@ -215,15 +215,9 @@ angular
             }
                         
                         
-            var robotEndStageShown = localStorage.getItem('robotEndStorageShown');            
-            var stageCompleted = _isStageCompleted();
-            
-            if (stageCompleted && !robotEndStageShown) {
-                $scope.openModal_CloseStage();
-            }
-            
-            //_setLocalStorageItem("challengeMessageId",113);
-            //$scope.openModal_CloseChallenge();
+           if(_tryCloseStage($scope.idEtapa)) {
+               $scope.openModal_CloseStage();
+           }
             
             //Load challenges images
             $scope.retosIconos = {

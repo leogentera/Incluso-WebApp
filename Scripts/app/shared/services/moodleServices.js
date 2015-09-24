@@ -672,7 +672,10 @@
                 user = progress.user;
                 _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),user);
                 _setLocalStorageJsonItem("usercourse",course);
+                //reload activty status dictionary
                 loadActivityStatus();
+                //set stages as completed in local storage, as this is not set by the back-end
+                _setStagesStatus();
                 _setLocalStorageJsonItem("course",course);
                 _setLocalStorageJsonItem("activityManagers",activityManagers);
 
@@ -701,6 +704,25 @@
             _setLocalStorageJsonItem("activityStatus",activityStatus);
             _activityStatus = activityStatus;
             console.log("Loaded activityStatus");
+        };
+
+        //This function updates the status of each stage in local status
+        var _setStagesStatus = function () {
+
+            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+            if(!userCourse) return;
+            for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+                var currentStage = userCourse.stages[stageIndex];
+                if (currentStage.status == 0 && currentStage.sectionname != "General") {
+                    var totalChallengesByStage = currentStage.challenges.length;
+                    var totalChallengesCompleted = _.where(currentStage.challenges, {status: 1}).length;
+                    if (totalChallengesByStage == totalChallengesCompleted) {
+                        userCourse.stages[stageIndex].status = 1;
+                    }
+                }
+            }
+            _setLocalStorageJsonItem("usercourse", userCourse);
+
         };
 
         return {

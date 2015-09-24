@@ -217,19 +217,10 @@ angular
             }
 
 
-            var robotEndStageShown = localStorage.getItem('robotEndStorageShown');
-            var stageCompleted = _isStageCompleted();
-
-            if (stageCompleted && !robotEndStageShown) {
+            //Try to close stage. If stage is closed exactly in this attempt, show closing message.
+            if(_tryCloseStage($scope.idEtapa)){
                 $scope.openModal_CloseStage();
             }
-
-            //_setLocalStorageItem("challengeMessageId",113);
-            //$scope.openModal_CloseChallenge();
-
-
-
-
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
             $scope.$on('$viewContentLoaded', function() {
@@ -297,8 +288,8 @@ angular
         };
 
         $scope.robotMessages = {
-            title: "Cierre Zona de Aterrizaje",
-            message: "Mensaje de cierre zona de aterrizaje!"
+            title: "Zona de Aterrizaje",
+            message: "¡Bien hecho! Lograste reunir el equipo de exploración espacial. Ahora tienes el mapa que reúne tus sueños y tus habilidades en una idea de negocio que mejorará tu comunidad ¡Estás listo para caminar hacia tus metas!"
         };
 
         $scope.navigateToDashboard = function () {
