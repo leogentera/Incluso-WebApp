@@ -601,11 +601,11 @@ angular
 
                 //if ($scope.activity.activities) {
                 if ($scope.childActivity) {
-                    console.log("Assignment with Quiz child; coursemoduleid = " + $scope.activity.activities[0].coursemoduleid);
+                    console.log("Assignment with Quiz child; coursemoduleid = " + $scope.childActivity.coursemoduleid);
                     //$scope.AnswersResult.activityidnumber = $scope.activity.activities[0].coursemoduleid;
                     $scope.AnswersResult.activityidnumber = $scope.childActivity.coursemoduleid;
                 } else {
-                    console.log("This activity has no child; coursemoduleid = " + $scope.activity.activities[0].coursemoduleid);
+                    console.log("This activity has no child; coursemoduleid = " + $scope.parentActivity.coursemoduleid);
                     //$scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
                     $scope.AnswersResult.activityidnumber = $scope.parentActivity.coursemoduleid;
                 }
