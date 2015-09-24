@@ -339,6 +339,9 @@ var successQuizCallback = function () {
     */
 };
 
+var _hasCommunityAccessLegacy = function(value) {
+    return (value == "Enable" || value == "1");
+};
 
 //This function updates in localStorage the status of the stage when completed
 var _isStageCompleted = function () {

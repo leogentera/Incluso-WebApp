@@ -13,7 +13,7 @@
         </select>
         <span class="icomoon icon-arrow"></span>
     </section>
-    <section class="txt-renglon distribuido">
+    <section class="txt-renglon distribuido" ng-show="hasCommunityAccess">
       <a href="" class="icon-circle" ng-click="collapseCommunityButtomsTrigger('isTextCollapsed')" ng-class="{'active': !communityModals['isTextCollapsed']}">
         <span class="icomoon icon-text text-bigger"></span>
         <span class="arrow-up"></span>
@@ -31,7 +31,7 @@
         <span class="arrow-up"></span>
       </a>
     </section>
-    <section class="modales">
+    <section class="modales" ng-show="hasCommunityAccess">
       <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
         <div>    
           <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="postTextValue"></textarea></div>
@@ -113,7 +113,7 @@
               Mostrar más comentarios...
             </div>
           </div>
-          <div class="social">
+          <div class="social" ng-show="hasCommunityAccess">
             <div class="pink" ng-hide="p.liked >= 1" ng-click="likePost(p.post_id)">
               <span class="icomoon icon-like pink"></span> Me gusta              
             </div>
@@ -129,7 +129,7 @@
           </div>
         </div>
         
-        <section class="modales">
+        <section class="modales" ng-show="hasCommunityAccess">
               <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed['id' + p.post_id]">
                   <div>
                       <span class="close"></span>

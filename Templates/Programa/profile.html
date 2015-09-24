@@ -788,7 +788,7 @@
                                                                 </span><span ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
                                                     </div>
 
-                                                    <div class="share-achievement" ng-show="status == 'won'">
+                                                    <div class="share-achievement" ng-show="status == 'won' && hasCommunityAccess">
                                                         <span class="icon-container">
                                                             <span class="icomoon icon-share"></span>
 
@@ -796,7 +796,7 @@
                                                         <span class="share-text" ng-click="showShareAchievementMessage = !showShareAchievementMessage">Compartir Insignia</span>
                                                     </div>
                                                     
-                                                    <section class="modales">
+                                                    <section class="modales" ng-show="status == 'won' && hasCommunityAccess">
                                                         <div id="openModal1" class="modalDialog" ng-show="showShareAchievementMessage">
                                                             <div>
                                                                 <span class="close"></span>
