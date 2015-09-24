@@ -776,27 +776,25 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
 }
 
 function updateUserStars(activityIdentifier, extraPoints) {
-    debugger;
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
-    //var activity = getActivityAtAnyCost(activityIdentifier).activity;
 
     extraPoints ? '' : extraPoints = 0;
-
-    /*
-     if (activity_identifier == '1009' || activity_identifier == '1001') {
-     activity.points = 50;
-     }
-
-     */
 
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
     } else {
-        profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
-    }
+        if (activityIdentifier == "2016" || activityIdentifier == "2023" || activityIdentifier == "3601") {
+            profile.stars = Number(profile.stars) + Number(activity.activities[0].points) + Number(extraPoints);
+        }
+        else {
+            profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+        }
 
+
+    }
+    console.log("Profile stars = " + profile.stars);
 
     var data = {
         userId: profile.id,
