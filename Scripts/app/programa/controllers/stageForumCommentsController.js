@@ -135,10 +135,8 @@ angular
                         updateUserStars($routeParams.activityId, 50 );
                     }
                 }
-
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     resetForumDiscussionsProgress();
-                    
                     switch ($scope.moodleId) {
                         case "179":
                                 $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178);
@@ -148,6 +146,7 @@ angular
                             break;
                         default :
                             $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId);
+                        $scope.scrollToTop();
                     }
                 } else {
                    callback();

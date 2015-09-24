@@ -138,8 +138,8 @@ angular
             $scope.openModal_CloseStage = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'ClosingStageModal.html',
-                    controller: 'closingStageController',
+                    templateUrl: 'ClosingStageTwoModal.html',
+                    controller: 'closingStageTwoController',
                     size: size,
                     windowClass: 'closing-stage-modal user-help-modal'
                 });
@@ -203,7 +203,7 @@ angular
             }
 
             var stageCompleted = _isStageCompleted();
-            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
+            $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);
             var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
 
@@ -218,7 +218,7 @@ angular
             }
                         
                         
-            var robotEndStageShown = localStorage.getItem('robotEndStorageShown');            
+            var robotEndStageShown = localStorage.getItem('robotEndStageTwoShown');            
             var stageCompleted = _isStageCompleted();
             
             if (stageCompleted && !robotEndStageShown) {
@@ -267,7 +267,7 @@ angular
                         
             var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
                                                                     
-            $scope.robotMessages = [                      
+            $scope.robotMessages = [
                     {
                         title : "CUARTO DE RECURSOS",
                         message : "¡Has recuperado un elemento más para atravesar los asteroides! Estas listo para tomar tus decisiones   y tener  nuevas ideas que te impulsen a lograr lo que te propongas.",
@@ -311,6 +311,6 @@ angular
                         $modalInstance.dismiss('cancel');
                         $location.path('/ProgramaDashboard');
                     };
-                    _setLocalStorageItem('robotEndStorageShown',true);
+                    _setLocalStorageItem('robotEndStageTwoShown',true);
                 });
 
