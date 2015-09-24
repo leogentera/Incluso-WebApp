@@ -352,6 +352,13 @@ var _isStageCompleted = function () {
             var totalChallengesCompleted = _.where(currentStage.challenges, {status: 1}).length;
             if (totalChallengesByStage == totalChallengesCompleted) {
                 userCourse.stages[stageIndex].status = 1;
+                //Get current stage for update
+                var stage = localStorage.getItem("currentStage");
+                //Check if not is the last stage
+                if(stageIndex+1 < userCourse.stages.length){
+                    stage = stageIndex+1;
+                    _setLocalStorageJsonItem("currentStage", stage);    
+                }
                 _setLocalStorageJsonItem("usercourse", userCourse);
                 stageCompleted = true;
             }
