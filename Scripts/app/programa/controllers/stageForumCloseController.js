@@ -65,7 +65,7 @@ angular
                  }
                }
 
-                moodleFactory.Services.PutEndActivity(moodleid, data, parentActivity, userToken,
+                moodleFactory.Services.PutEndActivity(parentActivity.coursemoduleid, data, parentActivity, userToken,
                     function(response){
                           var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
                           var model = {
@@ -79,29 +79,29 @@ angular
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
                             updateActivityStatus(moodleid);
                             _updateRewardStatus();
-                              var activity_identifier = null;
-                              if(moodleid == 151){
-                                  activity_identifier = 1010;
-                                  moodleid = 64;
-                              } else if(moodleid == 64){
-                                  activity_identifier = 1010;
-                                  moodleid = 64;
-                              } else if(moodleid == 73){
-                                  activity_identifier = 1008;
-                                  moodleid = 73;
-                              } else if(moodleid == 147){
-                                  activity_identifier = 1049;
-                                  moodleid = 147;
-                              } else if(moodleid == 148){
-                                  activity_identifier = 1049;
-                                  moodleid = 148;
-                              } else if(moodleid == 178){
-                                  activity_identifier = 2008;
-                                  moodleid = 178;
-                              } else if(moodleid == 179){
-                                  activity_identifier = 2008;
-                                  moodleid = 178;
-                              }
+                              //var activity_identifier = null;
+                              //if(moodleid == 151){
+                              //    activity_identifier = 1010;
+                              //    moodleid = 64;
+                              //} else if(moodleid == 64){
+                              //    activity_identifier = 1010;
+                              //    moodleid = 64;
+                              //} else if(moodleid == 73){
+                              //    activity_identifier = 1008;
+                              //    moodleid = 73;
+                              //} else if(moodleid == 147){
+                              //    activity_identifier = 1049;
+                              //    moodleid = 147;
+                              //} else if(moodleid == 148){
+                              //    activity_identifier = 1049;
+                              //    moodleid = 148;
+                              //} else if(moodleid == 178){
+                              //    activity_identifier = 2008;
+                              //    moodleid = 178;
+                              //} else if(moodleid == 179){
+                              //    activity_identifier = 2008;
+                              //    moodleid = 178;
+                              //}
 
 
                               //updateUserStars(activity_identifier);
@@ -118,7 +118,6 @@ angular
 
 
             $scope.finishActivity = function () {
-                debugger;
                 var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 endForumActivity(moodleId);
             }
