@@ -297,7 +297,7 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
     _activityStatus[activityIdentifierId] = 1;
 };
 
-var _endActivity = function (activityModel, callback, currentChallenge) {
+var _endActivity = function (activityModel, callback, pathCh) {
 
     //trigger activity type 2 is sent when the activity ends.
     var triggerActivity = 2;
@@ -308,19 +308,15 @@ var _endActivity = function (activityModel, callback, currentChallenge) {
     //create notification
     _createNotification(activityId, triggerActivity);
     if (activityModel.activityType == "Quiz") {
-        _endActivityCurrentChallenge = currentChallenge;
+        _endActivityCurrentChallenge = pathCh;
         //activityModel.answersResult.dateStart = activityModel.startingTime;
         //activityModel.answersResult.dateEnd = activityModel.endingTime;
         //activityModel.answersResult.others = activityModel.others;
-        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successQuizCallback, errorCallback);
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
     }
     else if (activityModel.activityType == "Assign") {
         var data = {userid: currentUserId};
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallback);
-    }
-    else if (activityModel.activityType == "Parent") {
-        _endActivityCurrentChallenge = currentChallenge;
-        moodleFactory.Services.PutEndActivity(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
     } else {
         var data = {userid: currentUserId};
 
@@ -332,11 +328,10 @@ var _endActivity = function (activityModel, callback, currentChallenge) {
 
 var successQuizCallback = function () {
     var currentStage = localStorage.getItem("currentStage");
-    /*
+
     if (_location) {
-        _location.path('/ZonaDeVuelo/Dashboard/' + currentStage + '/' + _endActivityCurrentChallenge);
+        _location.path(_endActivityCurrentChallenge);
     }
-    */
 };
 
 var _hasCommunityAccessLegacy = function(value) {

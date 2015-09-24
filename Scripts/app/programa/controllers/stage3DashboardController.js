@@ -123,7 +123,6 @@ angular
                 });
             };
 
-            //$scope.openModal_StageFirstTime();
 
 
             $scope.openModal_CloseChallenge = function (size) {
