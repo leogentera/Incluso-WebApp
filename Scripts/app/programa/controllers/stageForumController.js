@@ -176,30 +176,30 @@ angular
               var moodleId = $scope.moodleId;
               //TODO Add new routes for Zona de Navegación && Zona de Aterrizaje
               switch (moodleId){
-                  case 64:
+                  case 1010:
                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
-                  case "73":
+                  case 1008:
                       $location.path('/ZonaDeVuelo/Dashboard/1/'+3);
                       break;
-                  case "147":
+                  case 1049:
                       $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
-                  case "148":
-                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
-                      break;
-                  case "179":
+                  case 2030:
                       $location.path("/ZonaDeNavegacion/Dashboard/2/" + 1);
                       break;
-                  case "93":
+                  case 2026:
+                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 2);
+                      break
+                  case 3304:
                       $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 2);
                       break;
-                  case "91":
+                  case 3404:
                       $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 3);
                       break;
-                  default:
-                      $location.path('/ZonaDeVuelo/Dashboard/1');
-                      break;
+                  //default:
+                  //    $location.path('/ZonaDeVuelo/Dashboard/1');
+                  //    break;
               }                                      
               
             }
