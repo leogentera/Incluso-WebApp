@@ -23,6 +23,7 @@ angular
         var _userId = moodleFactory.Services.GetCacheObject("userId");
         var _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
         var albumSrc = null;
+        $scope.avatarSrc = null;
         
         $scope.discussion = null;
         $scope.forumId = null;
@@ -164,6 +165,7 @@ angular
                 }
             }
             else {
+                generateAvatarImgSrc();
                 $scope.$emit('HidePreloader');
             }
         }
@@ -171,7 +173,8 @@ angular
         function successfullCallBack(albumData) {
             if (albumData != null) {
                 _setLocalStorageJsonItem("album", albumData);
-                $scope.album = albumData;                
+                $scope.album = albumData;
+                generateAvatarImgSrc();
                 $scope.$emit('HidePreloader');
             }
             else {
@@ -183,7 +186,6 @@ angular
             
             if (albumSrc == null) {
                     var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
-                    console.log(document.querySelector('image'));
                     var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
                     var DOMURL = self.URL || self.webkitURL || self;
                     var url = DOMURL.createObjectURL(svg);
@@ -201,6 +203,27 @@ angular
             }else{
                 callback();   
             }
+        }
+        
+        function generateAvatarImgSrc() {
+            
+            $timeout(function(){
+                if ($scope.avatarSrc == null) {
+                var canvas = document.getElementById("canvasAvatar");
+                var ctx = canvas.getContext("2d");
+                
+                var img = new Image();
+                img.width = "127px";
+                img.height = "155px";
+                img.crossOrigin="Anonymous";
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0);
+                    $scope.avatarSrc = canvas.toDataURL("image/png");
+                    console.log($scope.avatarSrc);
+                };
+                img.src = $scope.album.profileimageurl;
+            }
+                }, 3000)
         }
         
         function postAlbumToCommunity() {

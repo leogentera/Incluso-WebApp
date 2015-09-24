@@ -47075,26 +47075,7 @@ AO0huiSQzBsVU6YgUNtC9TR4N7R+0KD6XBCgPUS7AmlLVQoCdR5h2gjONupzPoD2EF02SD2YhoHa
 </svg>
 </div>
 <canvas id="canvas" width="1280" height="1329" style="display: none"></canvas>
+<canvas id="canvasAvatar" width="127" height="155" style="display: none"></canvas>
 
-<script>
-
-var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-
-var DOMURL = self.URL || self.webkitURL || self;
-var img = new Image();
-var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
-var url = DOMURL.createObjectURL(svg);
-
-img.onload = function() {
-    ctx.drawImage(img, 0, 0);
-    var png = canvas.toDataURL("image/png");
-	console.log(png);
-};
-
-img.src = url;
-
-</script>
 </body>
 </html>
