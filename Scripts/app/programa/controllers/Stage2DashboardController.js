@@ -87,7 +87,7 @@ angular
                     $("span#index").text((item+1));
                 }
 
-               $(".back").click(function (ev) {                                                            
+                $("#prev").click(function (ev) {
                     if(currentItem){
                         owl.trigger('owl.goTo', currentItem - 1);
                         owl2.trigger('owl.goTo', currentItem - 1);
@@ -98,7 +98,7 @@ angular
                     }
                     ev.preventDefault();
                 });
-                 $(".next").click(function (ev) {                                        
+                $("#next").click(function (ev) {
                     if(currentItem){
                         owl.trigger('owl.goTo', currentItem + 1);
                         owl2.trigger('owl.goTo', currentItem + 1);
@@ -112,6 +112,17 @@ angular
 
             }, 1000);
 
+            //Opens stage welcome message if first time visit
+            $scope.openModal_StageFirstTime = function (size) {
+                var modalInstance = $modal.open({
+                    animation: false,//$scope.animationsEnabled,
+                    templateUrl: 'OpeningStageModal.html',
+                    controller: 'OpeningStageController',
+                    size: size,
+                    windowClass: 'user-help-modal dashboard-stage-intro'
+                });
+            };
+
 
 
             $scope.openModal_CloseChallenge = function (size) {
@@ -123,6 +134,49 @@ angular
                     windowClass: 'closing-stage-modal user-help-modal'                    
                 });
             };
+
+            $scope.openModal_CloseStage = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'ClosingStageModal.html',
+                    controller: 'closingStageController',
+                    size: size,
+                    windowClass: 'closing-stage-modal user-help-modal'
+                });
+            };
+
+
+            //Updated stage first time flag in scope, local storage and server
+            $scope.updateStageFirstTime = function(){
+                //Update model
+                $scope.thisStage.firsttime = 0;
+                $scope.model.stages[$scope.idEtapa].firsttime = 0;
+                //Update local storage
+                var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+                if(userCourse!={}) {
+                    userCourse.stages[$scope.idEtapa].firsttime = 0;
+                    _setLocalStorageJsonItem("usercourse",userCourse);
+                }
+                //Update back-end
+                var dataModel = {
+                    stages: [
+                        {
+                            firstTime:0,
+                            section:$scope.thisStage.section
+                        }
+                    ]
+                };
+
+                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel,function(){},function(){});
+
+            };
+
+            //If first time in stage, show modal with welcome message
+            if($scope.thisStage.firsttime){
+                $scope.openModal_StageFirstTime();
+                $scope.updateStageFirstTime();
+            }
+
 
            //calculate user's stage progress
             var stageProgressBuffer = 0;

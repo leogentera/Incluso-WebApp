@@ -30,8 +30,8 @@ angular
             $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
-
-            var stars = 0;            
+            var stars = 0;
+            var activitiesPosted = 0;
 
             if (!$scope.retoMultipleActivities) {
                $scope.retoMultipleActivities = [];
@@ -88,7 +88,7 @@ angular
 
                 for(i = 0; i < $scope.retoMultipleActivities.length; i++) {
                     var subactivity = {
-                        "estrellas": $scope.retoMultipleActivities[i].points,
+                        "estrellas": ( $scope.retoMultipleActivities[i].points ? $scope.retoMultipleActivities[i].points : 0 ),
                         "sub_actividad": $scope.retoMultipleActivities[i].name
                     };
 
@@ -101,14 +101,14 @@ angular
             $scope.downloadGame = function () {
                 var r = createRequest();
 
-                try {
+               /* try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
-                catch (e) {
+                catch (e) {*/
                   successGame(
-                      {"userid":$scope.user.id,"actividad":"Reto múltiple","escudo":"Musical","inteligencia_predominante":[{"inteligencia":"Musical","puntuacion":"13243"},{"inteligencia":"Naturalista","puntuacion":"15500"},{"inteligencia":"Corporal","puntuacion":"15500"}],"resultado":[{"subactividad":"Musical","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"13243","nivel_de_reto":"2","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Sé tocar algún instrumento?","respuesta":"6"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Interpersonal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta enseñar lo que sé a otras personas?","respuesta":"8"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Naturalista","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gustaría tener mi propio jardín en el que pueda cultivar mis alimentos?","respuesta":"5"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Intrapersonal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta evaluar las consecuencias antes de tomar una decisión?","respuesta":"4"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Corporal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta ser la primera en bailar en las fiestas?","respuesta":"8"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Espacial","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?","respuesta":"6"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Matemática","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta clasificar cosas por colores, tamaños y tener todo en orden?","respuesta":"2"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Lingüística","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gustan los juegos de palabras y los crucigramas?","respuesta":"10"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]}]}
+                      {"userid":$scope.user.id,"actividad":"Reto múltiple","escudo":"Musical","inteligencia_predominante":[{"inteligencia":"Musical","puntuacion":"13243"},{"inteligencia":"Naturalista","puntuacion":"15500"},{"inteligencia":"Corporal","puntuacion":"15500"}],"resultado":[{"subactividad":"Interpersonal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta enseñar lo que sé a otras personas?","respuesta":"8"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Naturalista","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gustaría tener mi propio jardín en el que pueda cultivar mis alimentos?","respuesta":"5"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Intrapersonal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta evaluar las consecuencias antes de tomar una decisión?","respuesta":"4"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Corporal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta ser la primera en bailar en las fiestas?","respuesta":"8"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Espacial","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?","respuesta":"6"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Matemática","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta clasificar cosas por colores, tamaños y tener todo en orden?","respuesta":"2"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Lingüística","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gustan los juegos de palabras y los crucigramas?","respuesta":"10"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]}]}
                   );
-                }
+               // }
 
             }
             
@@ -186,100 +186,55 @@ angular
                 var parentActivityIdentifier = $routeParams.moodleid;
                 var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
                 var subactivitiesCompleted = [];
-                if (parentActivity.status == 0) {
+                //Searches for the quizzes completed
+                debugger;
+                _.each(quizzesRequests, function(q){
+                  if(q.quiz_answered){
+                    subactivitiesCompleted.push(q.coursemoduleid);
+                  }
+                });
+                //Shield and stars are only assigned if parent activity has neved been completed and all quizzes were answered
+                if (parentActivity.status == 0 && $scope.IsComplete) {
                   if (shield != "" && $scope.profile) {
                     //update profile
-                    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-
                     $scope.profile["shield"] = shield;
                     currentUser.shield = shield;
 
-                    _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), $scope.profile);
+                    _setLocalStorageJsonItem("profile/" + $scope.user.id, $scope.profile);
                     _setLocalStorageJsonItem("CurrentUser", currentUser)
 
                     $scope.saveUser();
                   }
 
-                  if ($scope.IsComplete) {
-                    _endActivity(parentActivity, function() { 
+                  _endActivity(parentActivity, function(){});
+                  parentActivity.status = 1;
 
-
-                      parentActivity.status = 1;
-                      _setLocalStorageJsonItem("usercourse", userCourseUpdated)
-
-                        if (parentActivity.activities) {
-                          //Searches for the quizzes completedm
-                          _.each(quizzesRequests, function(q){
-                            if(q.quiz_answered){
-                              subactivitiesCompleted.push(q.coursemoduleid);
-                            }
-                          });
-                          //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
-                          updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
-                          //Updates the statuses of the subactivities completed
-                          userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
-                        }
-
-                      for(i = 0; i < quizzesRequests.length; i++){
-                        if (quizzesRequests[i].quiz_answered) {
-                          var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                          $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
-                        }
-                      }
-
-                      _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
-                      
-                      if ($scope.IsComplete) {
-                        $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
-                      }
-                      else
-                      {
-                          $location.path('/ZonaDeVuelo/Dashboard/1/2');
-                      }
-                    });
+                  if (parentActivity.activities) {
+                    //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
+                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                   }
                 }
-                else 
-                  {
-                      parentActivity.status = 1;
-                      _setLocalStorageJsonItem("usercourse", userCourseUpdated)
 
-                        if (parentActivity.activities) {
-                          //Searches for the quizzes completedm
-                          _.each(quizzesRequests, function(q){
-                            if(q.quiz_answered){
-                              subactivitiesCompleted.push(q.coursemoduleid);
-                            }
-                          });
-                          //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
-                          updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
-                          //Updates the statuses of the subactivities completed
-                          userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
-                        }
+                //Updates the statuses of the subactivities completed - Status should always be updated because ending an activity updates the status anyway.
+                userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
 
-                      for(i = 0; i < quizzesRequests.length; i++){
-                        if (quizzesRequests[i].quiz_answered) {
-                          var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                          $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated);
-                        }
-                      }
-
-                      _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
-
-
-                      if ($scope.IsComplete) {
-                        $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
-                      }
-                      else
-                      {
-                          $location.path('/ZonaDeVuelo/Dashboard/1/2');
-                      }
-                    }
-
+                for(i = 0; i < quizzesRequests.length; i++){
+                  if (quizzesRequests[i].quiz_answered) {
+                    var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
+                    $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, subactivitiesCompleted);
+                  }
+                }
+                _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
+                _setLocalStorageJsonItem("usercourse", userCourseUpdated);
+                if ($scope.IsComplete) {
+                  $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
+                }else{
+                    $location.path('/ZonaDeVuelo/Dashboard/1/2');
+                }
             }
 
 
-            $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
+            $scope.saveQuiz = function(activity, quiz, userCourseUpdated, activitiesFinished) {
               //Update quiz on server
               var results = {
                 "userid": currentUser.userId,
@@ -296,18 +251,21 @@ angular
                 "userId": quiz.userid,
                 "token": currentUser.token,
                 "activityType": "Quiz"
-              };             
-              _endActivity(activityModel);
+              };
+              _endActivity(activityModel, function(){
+                /*activitiesPosted++;
+                if (activitiesPosted == activitiesFinished.length) {
+                  if ($scope.IsComplete) {
+                    $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
+                  }else{
+                      $location.path('/ZonaDeVuelo/Dashboard/1/2');
+                  }
+                }*/
+              });
             }
 
             $scope.saveUser = function () {
-                moodleFactory.Services.PutAsyncProfile(_getItem("userId"), $scope.profile,
-                function (data) {
-//                    console.log('Save profile successful...');
-                },
-                function (date) {
-//                    console.log('Save profile fail...');
-                });
+                moodleFactory.Services.PutAsyncProfile($scope.user.id, $scope.profile);
             };
                 
             var failureGame = function (data){
