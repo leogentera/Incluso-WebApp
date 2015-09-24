@@ -696,9 +696,11 @@ angular
 
                 console.log("Ending activity...");
                 //_endActivity(activityModel, null, $scope.currentChallenge);
-                _endActivity(activityModel);
-
-                updateProfile();
+                _endActivity(activityModel, function () {
+                    updateProfile();
+                    
+                },0);
+                
 
                 //-------------****************
 
@@ -726,8 +728,8 @@ angular
                 }
 
                 //$scope.$emit('HidePreloader'); //hide preloader
-                console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
-                $location.path(destinationPath);
+                
+                
 
             };
 
@@ -760,6 +762,8 @@ angular
 
                     function (responseData) {
                         console.log('Update profile successful...');
+                        console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
+                        $location.path(destinationPath);
                     },
                     function (responseData) {
                         console.log('Update profile fail...');

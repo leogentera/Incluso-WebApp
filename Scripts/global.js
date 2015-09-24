@@ -312,7 +312,7 @@ var _endActivity = function (activityModel, callback, currentChallenge) {
         //activityModel.answersResult.dateStart = activityModel.startingTime;
         //activityModel.answersResult.dateEnd = activityModel.endingTime;
         //activityModel.answersResult.others = activityModel.others;
-        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, successQuizCallback, errorCallback);
+        moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
     }
     else if (activityModel.activityType == "Assign") {
         var data = {userid: currentUserId};
