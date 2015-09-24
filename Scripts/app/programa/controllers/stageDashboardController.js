@@ -215,7 +215,7 @@ angular
             }
                         
                         
-            var robotEndStageShown = localStorage.getItem('robotEndStorageShown');            
+            var robotEndStageShown = localStorage.getItem('robotEndStageShown');            
             var stageCompleted = _isStageCompleted();
             
             if (stageCompleted && !robotEndStageShown) {
@@ -317,5 +317,5 @@ angular
                         $modalInstance.dismiss('cancel');
                         $location.path('/ProgramaDashboard');
                     };
-                    _setLocalStorageItem('robotEndStorageShown',true);
+                    _setLocalStorageItem('robotEndStageShown',true);
                 });
