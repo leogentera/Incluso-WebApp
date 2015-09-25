@@ -587,6 +587,10 @@ function _getActivityByCourseModuleId(coursemoduleid, usercourse) {
         var stage = userCourse.stages[stageIndex];
         for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
             var challenge = stage.challenges[challengeIndex];
+            //Return challenge when courseModuleId match a challenge.
+            if (challenge.coursemoduleid == coursemoduleid) {
+              return challenge;
+            }            
             for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                 var activity = challenge.activities[activityIndex];
                 //console.log(activity.activity_identifier + " : " + activity);
@@ -977,19 +981,19 @@ function FailureVideo() {
 }
 
 var _badgesPerChallenge = [
-    {badgeId: 2, badgeName: "Combustible", challengeId: 113, activity_identifier : 1100},
-    {badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114, activity_identifier : 1200},
-    {badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115, activity_identifier : 1300},
-    {badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 116, activity_identifier : 1002},
-    {badgeId: 6, badgeName: "Propulsor", challengeId: 155, activity_identifier : 2003},
-    {badgeId: 7, badgeName: "Misiles", challengeId: 157, activity_identifier : 2005},
-    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81, activity_identifier : 2014},
-    {badgeId: 9, badgeName: "Radar", challengeId: 167, activity_identifier : 2020},
-    {badgeId: 18, badgeName: "Turbo", challengeId: 160, activity_identifier : 2010},
-    {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206, activity_identifier : 3200},
-    {badgeId: 16, badgeName: "Casco espacial", challengeId: 208, activity_identifier : 3300},
-    {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90, activity_identifier : 3400},
-    {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217, activity_identifier : 3500}
+    {badgeId: 2, badgeName: "Combustible", challengeId: 113, activity_identifier : "1100"},
+    {badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114, activity_identifier : "1200"},
+    {badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115, activity_identifier : "1300"},
+    {badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 116, activity_identifier : "1002"},
+    {badgeId: 6, badgeName: "Propulsor", challengeId: 155, activity_identifier : "2003"},
+    {badgeId: 7, badgeName: "Misiles", challengeId: 157, activity_identifier : "2005"},
+    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81, activity_identifier : "2014"},
+    {badgeId: 9, badgeName: "Radar", challengeId: 167, activity_identifier : "2020"},
+    {badgeId: 18, badgeName: "Turbo", challengeId: 160, activity_identifier : "2010"},
+    {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206, activity_identifier : "3200"},
+    {badgeId: 16, badgeName: "Casco espacial", challengeId: 208, activity_identifier : "3300"},
+    {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90, activity_identifier : "3400"},
+    {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217, activity_identifier : "3500"}
 ];
 
 
