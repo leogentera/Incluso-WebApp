@@ -203,7 +203,7 @@ angular
                 }
             }
 
-            var stageCompleted = _isStageCompleted();
+            var stageCompleted = _updateStageStatus();
             $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
             var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
@@ -217,6 +217,7 @@ angular
             }else{
                 _setLocalStorageItem("challengeMessageId",0);
             }
+
 
 
             //Try to close stage. If stage is closed exactly in this attempt, show closing message.

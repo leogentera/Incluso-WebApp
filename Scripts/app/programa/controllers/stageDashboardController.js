@@ -218,9 +218,11 @@ angular
             }
                         
 
+
            if(_tryCloseStage($scope.idEtapa)) {
                $scope.openModal_CloseStage();
            }
+
 
             
             //Load challenges images
