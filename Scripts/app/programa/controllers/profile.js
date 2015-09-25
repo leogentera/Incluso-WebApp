@@ -10,7 +10,8 @@ angular
         '$rootScope',
         '$http',
         '$filter',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter) {
+        '$route',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
 
             _httpFactory = $http;
             _timeout = $timeout;
@@ -1062,14 +1063,18 @@ angular
                         data: avatarInfo[0]
                     })
                         .success(function () {
-                            console.log('Foto guardada exitosamente!');
-                            $location.path('/ProgramaDashboard');
+                            avatarUploaded("Éxito");
                         })
                         .error(function () {
-                            console.log('Error al subir la foto!');
-                            $location.path('/ProgramaDashboard');
+                            avatarUploaded("Error");
                         });
                 });
+            }
+
+            function avatarUploaded(message){
+                console.log(message + " al subir la foto!");
+                $location.path('/Profile/' + $scope.userId);
+                $route.reload();
             }
 
             function setEmptyAvatar() {
@@ -1144,7 +1149,7 @@ angular
             }
 
             function FailureAvatar(data) {
-                console.log("Couldn't retrieve avatar");
+                avatarUploaded("Error");
             }
 
             var $selects = $('select.form-control');
