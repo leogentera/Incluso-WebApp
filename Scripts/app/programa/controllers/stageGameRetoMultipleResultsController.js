@@ -25,6 +25,7 @@ angular
             $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
            
             $scope.fortalezas = _.filter($scope.retoMultipleActivities, function(a){ return a.score == "3"});
+            $scope.fortalezas = _.sortBy($scope.fortalezas, function(f){ return -f.total_score });
             $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3"});
             $scope.$emit('HidePreloader');
 
