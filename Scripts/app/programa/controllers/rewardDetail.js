@@ -40,18 +40,15 @@ angular
             function getFileName(id) {
                 var filename = "";
 
-                switch (id) {
-                    case 19:
-                        filename = "assets/images/mochila.png";
+                switch (id) {                   
+                    case 24:
+                        filename = "assets/images/CursosIngles.png";
                         break;
-                    case 20:
-                        filename = "assets/images/mochila.png";
-                        break;
-                    case 21:
-                        filename = "assets/images/mochila.png";
+                    case 25:
+                        filename = "assets/images/iphone.png";
                         break;                   
                     default:
-                        filename = "assets/images/mochila.png";
+                        filename = "assets/images/CursosIngles.png";
                 }
 
                 return filename;

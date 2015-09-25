@@ -40,7 +40,7 @@ angular
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var userScore = null;
 
-            if (!$scope.tuEligesActivities) {
+            if (!$scope.tuEligesActivities && $routeParams.moodleid) {
                 $scope.tuEligesActivities = {};
                 var tuEligesActivity = _.find($scope.activities, function(a) { return a.activity_identifier == $routeParams.moodleid });
                 if (tuEligesActivity) {
@@ -59,12 +59,15 @@ angular
                         }
                     };
                 }
-            }   
+            }else{
+                $scope.$emit('HidePreloader');
+            } 
 
             function assignCourseModuleId(asyncRequest, data){
                 $scope.tuEligesActivities["coursemoduleid"] = 
               	    ( asyncRequest ? _.find(tuEligesActivity.activities, function(r){ return r.activityname == data.name }).coursemoduleid : data.coursemoduleid);
                 _setLocalStorageJsonItem("tuEligesActivities", $scope.tuEligesActivities);
+                debugger;
                 $scope.$emit('HidePreloader');
                 //Gets highest score of user
                 /*
@@ -135,14 +138,14 @@ angular
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-                try {
+               /* try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
-                catch (e) {
+                catch (e) {*/
                     successGame(
                         { "userid":$scope.user.id,"actividad":"Tu Eliges","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaid":105,"respuesta":469},{"preguntaid":104,"respuesta":466},{"preguntaid":106,"respuesta":473},{"preguntaid":107,"respuesta":476},{"preguntaid":108,"respuesta":479},{"preguntaid":109,"respuesta":481},{"preguntaid":110,"respuesta":484},{"preguntaid":111,"respuesta":487}] }
                     );
-                } 
+               // } 
             }
 
             function successGame(data){
@@ -210,8 +213,14 @@ angular
                         }
                     }
                 }
+                if ($scope.IsComplete) {
+                    debugger;
+                    $location.path('/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
+                }else{
+                    $location.path('/ZonaDeNavegacion/Dashboard/2/1')
+                };
+
                 //localStorage.removeItem("activity/"+$scope.tuEligesActivities.coursemoduleid + "?userid=" + $scope.user.id);
-                $location.path('/ZonaDeNavegacion/Dashboard/2/1');
             }
 
 
