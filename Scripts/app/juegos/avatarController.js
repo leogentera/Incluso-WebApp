@@ -19,6 +19,9 @@ angular
             $scope.file = null;
             $rootScope.showFooter = false;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             var user = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
             $scope.selectAvatarCabelloAmarillo = function() {
                 if ( $scope.avatarInfo != null) {

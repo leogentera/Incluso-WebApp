@@ -19,6 +19,9 @@ angular
         $scope.setToolbar($location.$$path, "Reconocimiento");
         $rootScope.showFooter = true;
         $rootScope.showFooterRocks = false;
+        $rootScope.showStage1Footer = false;
+        $rootScope.showStage2Footer = false;
+        $rootScope.showStage3Footer = false;
         $scope.currentYear = moment().format('YYYY');
         
         $scope.hasCommunityAccess = false;
