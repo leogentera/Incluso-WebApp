@@ -38,6 +38,9 @@
             $scope.setToolbar($location.$$path,"Misión Incluso"); //set global toolbar properties
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = true; 
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
 
             try {
                 //Get stage from local storage

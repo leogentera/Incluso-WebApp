@@ -339,7 +339,7 @@ var _hasCommunityAccessLegacy = function(value) {
 };
 
 //This function updates in localStorage the status of the stage when completed
-var _isStageCompleted = function () {
+var _updateStageStatus = function () {
 
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     
@@ -365,6 +365,22 @@ var _isStageCompleted = function () {
         }
     }
     return stageCompleted;
+};
+
+//Returns TRUE only if the stage gets closed right here. If it was closed before or has activities pending, will return FALSE.
+var _tryCloseStage = function(stageIndex){
+    var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+    if(!userCourse) return false;
+    var stage = userCourse.stages[stageIndex];
+    if(stage.status || stage.sectionname == "General") return false;
+    var totalChallengesInStage = stage.challenges.length;
+    var totalChallengesCompleted = _.where(stage.challenges, {status: 1}).length;
+    if (totalChallengesInStage == totalChallengesCompleted) {
+        userCourse.stages[stageIndex].status = 1;
+        _setLocalStorageJsonItem("usercourse", userCourse);
+        return true;
+    }
+    return false;
 };
 
 var _isChallengeCompleted = function () {
@@ -956,19 +972,19 @@ function FailureVideo() {
 
 
 var _badgesPerChallenge = [
-    {badgeId: 2, badgeName: "Combustible", challengeId: 113},
-    {badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114},
-    {badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115},
-    {badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 68},
-    {badgeId: 6, badgeName: "Propulsor", challengeId: 155},
-    {badgeId: 7, badgeName: "Misiles", challengeId: 157},
-    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81},
-    {badgeId: 9, badgeName: "Radar", challengeId: 167},
-    {badgeId: 18, badgeName: "Turbo", challengeId: 160},
-    {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206},
-    {badgeId: 16, badgeName: "Casco espacial", challengeId: 208},
-    {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90},
-    {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217}
+    {badgeId: 2, badgeName: "Combustible", challengeId: 113, activity_identifier : 1100},
+    {badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114, activity_identifier : 1200},
+    {badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115, activity_identifier : 0},
+    {badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 116, activity_identifier : 1002},
+    {badgeId: 6, badgeName: "Propulsor", challengeId: 155, activity_identifier : 2003},
+    {badgeId: 7, badgeName: "Misiles", challengeId: 157, activity_identifier : 2005},
+    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81, activity_identifier : 2014},
+    {badgeId: 9, badgeName: "Radar", challengeId: 167, activity_identifier : 2020},
+    {badgeId: 18, badgeName: "Turbo", challengeId: 160, activity_identifier : 2010},
+    {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206, activity_identifier : 3200},
+    {badgeId: 16, badgeName: "Casco espacial", challengeId: 208, activity_identifier : 3300},
+    {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90, activity_identifier : 3400},
+    {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217, activity_identifier : 3500}
 ];
 
 
@@ -1003,10 +1019,10 @@ var _activityRoutes = [
     {id: 3201, name: '', url: '/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201'},
     {id: 3301, name: '', url: '/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/3301'},
     {id: 3302, name: '', url: '/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302'},
-    {id: 3304, name: '', url: '/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/93'},
+    {id: 3304, name: '', url: '/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/3304'},
     {id: 3401, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/3401'},
     {id: 3402, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402'},
-    {id: 3404, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/91'},
+    {id: 3404, name: '', url: '/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/3404'},
     {id: 3501, name: '', url: '/ZonaDeAterrizaje/CabinaDeSoporte/3501'},
     {id: 3601, name: '', url: '/ZonaDeAterrizaje/ExploracionFinal/3601'},
     {id: 50000, name: 'Comunidad General', url: '/Community/50000'}

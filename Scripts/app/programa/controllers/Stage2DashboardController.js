@@ -20,7 +20,9 @@ angular
             
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            $rootScope.linksStage2Footer = true;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = true;
+            //$rootScope.linksStage2Footer = true;
             $scope.scrollToTop();
 
             $scope.activitiesCompletedInCurrentStage = [];
@@ -202,7 +204,7 @@ angular
                 }
             }
 
-            var stageCompleted = _isStageCompleted();
+            var stageCompleted = _updateStageStatus();
             $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);
             var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
@@ -216,20 +218,13 @@ angular
             }else{
                 _setLocalStorageItem("challengeMessageId",0);
             }
-                        
-                        
-            var robotEndStageShown = localStorage.getItem('robotEndStageTwoShown');            
-            var stageCompleted = _isStageCompleted();
-            
-            if (stageCompleted && !robotEndStageShown) {
+
+
+            //Try to close stage. If stage is closed exactly in this attempt, show closing message.
+            if(_tryCloseStage($scope.idEtapa)){
+
                 $scope.openModal_CloseStage();
             }
-            
-            //_setLocalStorageItem("challengeMessageId",113);
-            //$scope.openModal_CloseChallenge();
-
-
-
 
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
@@ -303,8 +298,8 @@ angular
                     };
                     
                     $scope.robotMessages = {
-                        title: "Cierre Zona de Navegación",
-                        message: "Mensaje de cierre zona de navegación!"
+                        title: "Zona de Navegación",
+                        message: "¡Muy bien! Has reunido los elementos necesarios para salir de la lluvia de asteroides. Recuerda, creer en ti y en todo lo que puede lograr, te llevará a avanzar en el camino que has elegido ¡Adelante!"
                     };
                     
                     $scope.navigateToDashboard = function () {                        

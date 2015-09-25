@@ -122,7 +122,11 @@
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: $templateCache });  
         //$http.get('Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/CabinaDeSoporte.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporte.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporte.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
@@ -554,6 +558,16 @@
 
         $routeProvider.when('/ZonaDeNavegacion/CabinaDeSoporteCierre', {
             templateUrl: 'Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/CabinaDeSoporte/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/CabinaDeSoporte.html',
+            controller: 'stageChatController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/CabinaDeSoporteCierre', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html',
             controller: 'stageMessageController'
         });
 

@@ -20,6 +20,9 @@ angular
             
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = true;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.scrollToTop();
 
             $scope.activitiesCompletedInCurrentStage = [];
@@ -214,16 +217,13 @@ angular
                 _setLocalStorageItem("challengeMessageId",0);
             }
                         
-                        
-            var robotEndStageShown = localStorage.getItem('robotEndStageShown');            
-            var stageCompleted = _isStageCompleted();
-            
-            if (stageCompleted && !robotEndStageShown) {
-                $scope.openModal_CloseStage();
-            }
-            
-            //_setLocalStorageItem("challengeMessageId",113);
-            //$scope.openModal_CloseChallenge();
+
+
+           if(_tryCloseStage($scope.idEtapa)) {
+               $scope.openModal_CloseStage();
+           }
+
+
             
             //Load challenges images
             $scope.retosIconos = {
