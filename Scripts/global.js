@@ -340,7 +340,7 @@ var _hasCommunityAccessLegacy = function(value) {
 
 //This function updates in localStorage the status of the stage when completed
 var _updateStageStatus = function () {
-
+    console.log("update stage status");
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     
     var stageCompleted = false;

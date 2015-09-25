@@ -254,34 +254,34 @@ angular
             };
 
         }]).controller('closingStageThreeChallengeController', function ($scope, $modalInstance) {
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-
-        var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
-
-        $scope.robotMessages = [
-            {
-                title : "CUARTO DE RECURSOS",
-                message : "!Ahora tienes una pieza más del equipo de exploración! Recuerda, un emprendedor ve oportunidades donde otros ven problemas.",
-                read : "false",
-                challengeId: 206},
-            {
-                title : "EDUCACIÓN FINANCIERA   ",
-                message : "!Ahora tienes una pieza más del equipo de exploración! Estás listo para conseguir lo que te propongas, ahorrar puede ayudarte a reunir los recursos que necesitas para lograrlo.",
-                read : "false",
-                challengeId: 208},
-            {
-                title : "MAPA DEL EMPRENDEDOR",
-                message : "!Ahora tienes una pieza más del equipo de exploración! Todos podemos ser emprendedores, sólo hace falta creer en nuestras ideas y tomar las acciones necesarias para hacerlas realidad.",
-                read : "false",
-                challengeId: 90},
-            {
-                title : "CABINA DE SOPORTE",
-                message : "!Ahora tienes una pieza más del equipo de exploración! El mapa de tu idea de negocio esta completo, ya tienes todas las piezas para volverlo realidad, ahora sólo depende de ti.",
-                read : "false",
-                challengeId: 217
-            }];
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+    
+            var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
+    
+            $scope.robotMessages = [
+                    {
+                        title : "CUARTO DE RECURSOS",
+                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Recuerda, un emprendedor ve oportunidades donde otros ven problemas.",                        
+                        read : "false",
+                        challengeId : 206},
+                    {
+                        title : "EDUCACI\u00D3N FINANCIERA",
+                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Est\u00E1s listo para conseguir lo que te propongas, ahorrar puede ayudarte a reunir los recursos que necesitas para lograrlo.",
+                        read : "false",
+                        challengeId : 208},
+                    {
+                        title : "MAPA DEL EMPRENDEDOR",
+                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Todos podemos ser emprendedores, s\u00F3lo hace falta creer en nuestras ideas y tomar las acciones necesarias para hacerlas realidad.",
+                        read : "false",
+                        challengeId : 90},
+                    {
+                        title : "CABINA DE SOPORTE",
+                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! El mapa de tu idea de negocio esta completo, ya tienes todas las piezas para volverlo realidad, ahora s\u00F3lo depende de ti.",
+                        read : "false",
+                        challengeId : 217
+                    }];
 
         $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});
 
