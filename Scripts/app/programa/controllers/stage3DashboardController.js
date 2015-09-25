@@ -178,34 +178,8 @@ angular
                 $scope.updateStageFirstTime();
             }
 
+            var challengeCompletedId = _closeChallenge($scope.idEtapa);
 
-            //calculate user's stage progress
-            var stageProgressBuffer = 0;
-            var stageTotalActivities = 0; //Attainment of user in the current Stage
-            var stageChallengesCount = $scope.thisStage.challenges.length;
-
-            var i, j,k;
-            for (i = 0; i < stageChallengesCount; i++) {
-                var challenge = $scope.thisStage.challenges[i];
-                var challengeActivitiesCount = challenge.activities.length;
-                for (j = 0; j < challengeActivitiesCount; j++) {
-                    var activity = challenge.activities[j];
-                    stageProgressBuffer += activity.status;
-                    stageTotalActivities++;
-                    /*if(activity.activities) {
-                     var subActivitiesCount = activity.activities.length;
-                     for (k = 0; k < subActivitiesCount; k++) {
-                     var subActivity = activity.activities[k];
-                     stageProgressBuffer += subActivity.status;
-                     stageTotalActivities++;
-                     }
-                     }*/
-                }
-            }
-
-            var stageCompleted = _updateStageStatus();
-            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
-            var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
 
             //Exclude challenges initial and final from showing modal robot
@@ -218,12 +192,21 @@ angular
                 _setLocalStorageItem("challengeMessageId",0);
             }
 
-
-
             //Try to close stage. If stage is closed exactly in this attempt, show closing message.
             if(_tryCloseStage($scope.idEtapa)){
                 $scope.openModal_CloseStage();
             }
+
+            //Update progress
+            var userid = localStorage.getItem("userId");
+            var user = JSON.parse(localStorage.getItem("profile/" + userid));
+            var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
+            $scope.model = progress.course;
+            var userdata = progress.user;
+            _setLocalStorageJsonItem("profile/" + userid, userdata);
+            _setLocalStorageJsonItem("usercourse", $scope.model);
+
+            $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
             $scope.$on('$viewContentLoaded', function() {
