@@ -937,11 +937,14 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("avatarInfo");
     localStorage.removeItem("chatRead");
     localStorage.removeItem("chatAmountRead");
+    localStorage.removeItem("challengeMessageId");
+    localStorage.removeItem("userCurrentStage");
     ClearLocalStorage("activity");
     ClearLocalStorage("activitiesCache");
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
     ClearLocalStorage("profile");
+    ClearLocalStorage("UserTalents");
     $location.path('/');
 };
 
