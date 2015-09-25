@@ -819,7 +819,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
 
     var data = {
         userId: profile.id,
-        stars: Number(activity.points) + Number(extraPoints),
+        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : Number(activity.points) + Number(extraPoints),
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
