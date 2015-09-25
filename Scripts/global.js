@@ -426,21 +426,25 @@ var _closeChallenge = function (stageId) {
 
 var _updateBadgeStatus = function (coursemoduleid, callback) {
     moodleFactory.Services.GetAsyncProfile(moodleFactory.Services.GetCacheObject("userId"), function () {
-        if (callback) callback();
+        if (callback){callback();}
         var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
         var badges = profile.badges;
-        var currentBadge = _.findWhere(_badgesPerChallenge, {challengeId: coursemoduleid});
-        if (currentBadge) {
-            for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
-                if (badges[indexBadge].id == currentBadge.badgeId) {
-                    profile.badges[indexBadge].status = "won";
-                    _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
-                } else {
-                    //This else statement is set to avoid errors on execution flows
-                }
-            }
-        } else {//This else statement is set to avoid errors on execution flows
-        }
+        var activity = _getActivityByCourseModuleId(coursemoduleid);
+        if (activity) {
+          var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
+          if (currentBadge) {
+              for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
+                  if (badges[indexBadge].id == currentBadge.badgeId) {
+                      profile.badges[indexBadge].status = "won";
+                      _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
+                  } else {
+                      //This else statement is set to avoid errors on execution flows
+                  }
+              }
+          } else {//This else statement is set to avoid errors while debugging in firefox
+          }
+        }else{          
+        }        
     });
 };
 
@@ -972,12 +976,10 @@ function FailureVideo() {
 
 }
 
-
-
 var _badgesPerChallenge = [
     {badgeId: 2, badgeName: "Combustible", challengeId: 113, activity_identifier : 1100},
     {badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114, activity_identifier : 1200},
-    {badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115, activity_identifier : 0},
+    {badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115, activity_identifier : 1300},
     {badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 116, activity_identifier : 1002},
     {badgeId: 6, badgeName: "Propulsor", challengeId: 155, activity_identifier : 2003},
     {badgeId: 7, badgeName: "Misiles", challengeId: 157, activity_identifier : 2005},
