@@ -118,7 +118,7 @@ var _activityDependencies=[
     //Stage 3 dependencies
     {
         id:3101,
-        dependsOn:[2023]
+        dependsOn:[2023,-10]
     },
     {
         id:3201,
@@ -340,7 +340,7 @@ var _hasCommunityAccessLegacy = function(value) {
 
 //This function updates in localStorage the status of the stage when completed
 var _updateStageStatus = function () {
-
+    console.log("update stage status");
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     
     var stageCompleted = false;
@@ -937,11 +937,14 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("avatarInfo");
     localStorage.removeItem("chatRead");
     localStorage.removeItem("chatAmountRead");
+    localStorage.removeItem("challengeMessageId");
+    localStorage.removeItem("userCurrentStage");
     ClearLocalStorage("activity");
     ClearLocalStorage("activitiesCache");
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
     ClearLocalStorage("profile");
+    ClearLocalStorage("UserTalents");
     $location.path('/');
 };
 

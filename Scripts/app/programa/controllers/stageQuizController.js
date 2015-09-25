@@ -484,13 +484,13 @@ angular
                 else {
                     console.log("Activity is NOT defined");
                 }
-                $scope.$emit('HidePreloader');
+                //$scope.$emit('HidePreloader');
             }
 
             //This callback is invoked for finished activities only
             function successfullCallBack(activityAnswers) {
 
-                $scope.$emit('HidePreloader');
+                //$scope.$emit('HidePreloader');
                 //console.log("activityAnswers = " + JSON.stringify(activityAnswers));
                 if (activityAnswers != null) {
                     // $scope.activity = activityAnswers;
@@ -573,7 +573,8 @@ angular
 
             $scope.finishActivity = function () {
                 //Activity completed
-
+                console.log("Start preloader");
+                $scope.$emit('ShowPreloader');
                 //$scope.activity.status = 1;  //Update status of Assignment ("parent") activity
                 if ($scope.childActivity) {
                     $scope.parentActivity.status = 1;
@@ -718,8 +719,6 @@ angular
                 }
 
 
-                //_endActivity(activityModel, null, $scope.currentChallenge);
-
                 if ($scope.childActivity) {
                     activityModel.coursemoduleid = $scope.childActivity.coursemoduleid;
                     activityModel.activityType = "Quiz";
@@ -747,13 +746,6 @@ angular
                     }, destinationPath);
                 }
 
-
-                //_endActivity(activityModel);
-                //Update quiz on server - Child Activity
-                //_endActivity(activityModel);
-
-
-                //-------------****************
 
                 //if ($scope.activity.activities) {
                 if ($scope.childActivity) {
