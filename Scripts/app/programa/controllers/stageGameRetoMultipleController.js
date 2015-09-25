@@ -106,7 +106,8 @@ angular
                 }
                 catch (e) {
                   successGame(
-                    {"userid":$scope.user.id,"actividad":"Reto múltiple","escudo":"Musical","inteligencia_predominante":[{"inteligencia":"Musical","puntuacion":"13243"},{"inteligencia":"Naturalista","puntuacion":"15500"},{"inteligencia":"Corporal","puntuacion":"15500"}],"resultado":[{"subactividad":"Musical","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"9"},{"pregunta":"¿Disfruté este reto?","respuesta":"1"},{"pregunta":"¿Me gusta enseñar lo que sé a otras personas?","respuesta":"9"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Interpersonal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta enseñar lo que sé a otras personas?","respuesta":"8"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Naturalista","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gustaría tener mi propio jardín en el que pueda cultivar mis alimentos?","respuesta":"5"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Intrapersonal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta evaluar las consecuencias antes de tomar una decisión?","respuesta":"4"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Corporal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta ser la primera en bailar en las fiestas?","respuesta":"8"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Espacial","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?","respuesta":"6"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Matemática","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta clasificar cosas por colores, tamaños y tener todo en orden?","respuesta":"2"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Lingüística","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"15500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gustan los juegos de palabras y los crucigramas?","respuesta":"10"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]}]}                  );
+                    {"userid":$scope.user.id,"actividad":"Reto múltiple","escudo":"Musical","inteligencia_predominante":[{"inteligencia":"Musical","puntuacion":"13243"},{"inteligencia":"Naturalista","puntuacion":"12500"},{"inteligencia":"Corporal","puntuacion":"11500"}],"resultado":[{"subactividad":"Musical","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"13243","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"9"},{"pregunta":"¿Disfruté este reto?","respuesta":"1"},{"pregunta":"¿Me gusta enseñar lo que sé a otras personas?","respuesta":"9"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Interpersonal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"11500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta enseñar lo que sé a otras personas?","respuesta":"8"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Naturalista","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"12500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gustaría tener mi propio jardín en el que pueda cultivar mis alimentos?","respuesta":"5"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Intrapersonal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"10500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta evaluar las consecuencias antes de tomar una decisión?","respuesta":"4"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Corporal","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"11500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta ser la primera en bailar en las fiestas?","respuesta":"8"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Espacial","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"9500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?","respuesta":"6"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Matemática","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"8500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gusta clasificar cosas por colores, tamaños y tener todo en orden?","respuesta":"2"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Lingüística","duración":5,"fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","puntaje_interno":"5500","nivel_de_reto":"1","preguntas":[{"pregunta":"¿Nivel inteligencia?","respuesta":"2"},{"pregunta":"¿Me fue fácil completar el reto?","respuesta":"7"},{"pregunta":"¿Disfruté este reto?","respuesta":"9"},{"pregunta":"¿Me gustan los juegos de palabras y los crucigramas?","respuesta":"10"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]}]}
+                    )
                 }
 
             }
@@ -128,7 +129,6 @@ angular
                     }
                   }
                 }
-
                 //Assign results to answers.
                 for (var i = 0; i < data.resultado.length; i++) {
                   var logEntry = {
@@ -153,6 +153,7 @@ angular
                     }
                     var isAlto = _.find(predominantes, function(p) { return p == data.resultado[i].subactividad});
                     activity.score = (isAlto) ? 3 : 1;
+                    activity.total_score = data.resultado[i].puntaje_interno;
                     console.log("score:" + logEntry.score + " " + data.resultado[i].subactividad)
                     logEntry.quiz_answered = ( data.resultado[i].preguntas[j].respuesta != "" && logEntry.quiz_answered);
                     logEntry.coursemoduleid = activity.coursemoduleid;
@@ -186,7 +187,6 @@ angular
                 var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
                 var subactivitiesCompleted = [];
                 //Searches for the quizzes completed
-                debugger;
                 _.each(quizzesRequests, function(q){
                   if(q.quiz_answered){
                     subactivitiesCompleted.push(q.coursemoduleid);
@@ -198,6 +198,26 @@ angular
                     //update profile
                     $scope.profile["shield"] = shield;
                     currentUser.shield = shield;
+                    var abilities = {
+                      "Lingüística":["Escritor","Locutor de radio o TV","Periodista","Abogado","Editor de textos","Traductor","Dramaturgo","Bibliotecario","Orador"],
+                      "Matemática":["Tecnólogo","Contador","Matemático","Científico","Economista","Ingeniero","Informático","Auditor","Físico"], 
+                      "Espacial":["Ingeniero","Topógrafo","Arquitecto","Dibujante","Pintor","Fotógrafo","Diseñador","Marino","Escultor"], 
+                      "Musical":["DJ","Fabricante de instrumentos","Afinador de pianos","Compositor","Ingeniero de sonidos","Corista","Cantante","Profesor de música","Productor musical"],
+                      "Corporal": ["Actor","Profesor de Educación Física","Coreógrafo","Cirujano","Mecánico","Deportista","Bailarín"], 
+                      "Interpersonal":["Sociólogo","Psicólogo social","Vendedor","Publicista","Político","Sacerdote","Educador","Trabajador social","Enfermera"], 
+                      "Intrapersonal":["Consejero","Psicólogo clínico","Terapeuta","Filósofo","Teólogo","Maestro de yoga","Coach"], 
+                      "Naturalista":["Biólogo","Nutriólogo","Agrónomo","Vererinario","Meteorólogo","Ecologista","Geólogo","Antropóloogo","Chef","Biotecnólogo"]
+                    };
+                    $scope.profile["habilities"] = abilities[shield];
+                    $scope.profile["strengths"] = [];
+                    $scope.profile["windowOfOpportunity"] = [];
+                    _.each($scope.retoMultipleActivities, function(a){
+                      if (a.score == 3) {
+                        $scope.profile["strengths"].push(a.name);
+                      }else{
+                        $scope.profile["windowOfOpportunity"].push(a.name)
+                      }
+                    });
 
                     _setLocalStorageJsonItem("profile/" + $scope.user.id, $scope.profile);
                     _setLocalStorageJsonItem("CurrentUser", currentUser)
