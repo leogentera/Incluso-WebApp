@@ -222,8 +222,12 @@
             .dash-bottom {
                 padding-top:0.1vw;
                 background-image: url('@{url-images}/bg-dashboard-full.gif');
-                background-position: center 80.3%;
+<<<<<<< HEAD
+                background-position: center 81.3%;
                 //background-position: center 282vw;
+=======
+                background-position: center 80.3%;
+>>>>>>> origin/1.2
                 background-size: 100% auto;
             }
         }
