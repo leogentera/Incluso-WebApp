@@ -206,7 +206,7 @@ angular
 
             var stageCompleted = _updateStageStatus();
             $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);
-            var challengeCompletedId = _isChallengeCompleted();
+            var challengeCompletedId = _closeChallenge($scope.idEtapa);
             _coachNotification();
 
             //Exclude initial and final challenges from showing modal robot
