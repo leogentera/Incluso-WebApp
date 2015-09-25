@@ -813,9 +813,8 @@ function updateUserStars(activityIdentifier, extraPoints) {
         else {
             profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
         }
-
-
     }
+
     console.log("Profile stars = " + profile.stars);
 
     var data = {
