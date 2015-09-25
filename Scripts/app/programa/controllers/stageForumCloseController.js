@@ -64,7 +64,7 @@ angular
                   moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {});
                  }
                }
-
+                debugger;
                 moodleFactory.Services.PutEndActivity(parentActivity.coursemoduleid, data, parentActivity, userToken,
                     function(response){
                           var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
@@ -79,42 +79,29 @@ angular
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
                             updateActivityStatus($routeParams.activityId);
                             _updateRewardStatus();
-                              //var activity_identifier = null;
-                              //if(moodleid == 151){
-                              //    activity_identifier = 1010;
-                              //    moodleid = 64;
-                              //} else if(moodleid == 64){
-                              //    activity_identifier = 1010;
-                              //    moodleid = 64;
-                              //} else if(moodleid == 73){
-                              //    activity_identifier = 1008;
-                              //    moodleid = 73;
-                              //} else if(moodleid == 147){
-                              //    activity_identifier = 1049;
-                              //    moodleid = 147;
-                              //} else if(moodleid == 148){
-                              //    activity_identifier = 1049;
-                              //    moodleid = 148;
-                              //} else if(moodleid == 178){
-                              //    activity_identifier = 2008;
-                              //    moodleid = 178;
-                              //} else if(moodleid == 179){
-                              //    activity_identifier = 2008;
-                              //    moodleid = 178;
-                              //}
 
-
-                              //updateUserStars(activity_identifier);
                               updateUserStars($routeParams.activityId);
                               $scope.$emit('HidePreloader');
-                              if($routeParams.activityId == 1010 || $routeParams.activityId == 1049 || $routeParams.activityId == 1008 ){
+                              var activityId = Number($routeParams.activityId);
+                              if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
                                   $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
-                              } //else if($routeParams.activityId == 1010){}
+                              } else if(activityId == 2030 || activityId == 2026){
+                                  $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                              } else if(activityId == 3304 || activityId == 3404){
+                                  $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                              }
 
                           }, errorCallback);
                     },
                     function(){
-                      $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                        var activityId = Number($routeParams.activityId);
+                        if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
+                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                        } else if(activityId == 2030 || activityId == 2026){
+                            $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                        } else if(activityId == 3304 || activityId == 3404){
+                            $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                        }
                     });
 
             };

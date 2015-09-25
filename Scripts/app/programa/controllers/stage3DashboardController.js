@@ -207,8 +207,8 @@ angular
             _coachNotification();
 
             //Exclude challenges initial and final from showing modal robot
-            var challengeExploracionInicial = 140;
-            var challengeExploracionFinal = 152;
+            var challengeExploracionInicial = 205;
+            var challengeExploracionFinal = 218;
             if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){
                 _setLocalStorageItem("challengeMessageId",challengeCompletedId);
                 $scope.openModal_CloseChallenge();
@@ -296,5 +296,5 @@ angular
             $modalInstance.dismiss('cancel');
             $location.path('/ProgramaDashboard');
         };
-        _setLocalStorageItem('robotEndStorageShown',true);
+        _setLocalStorageItem('robotEndStageThreeShown',true);
     });

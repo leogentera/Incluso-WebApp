@@ -317,10 +317,6 @@ var _endActivity = function (activityModel, callback, pathCh) {
     else if (activityModel.activityType == "Assign") {
         var data = {userid: currentUserId};
         moodleFactory.Services.PutEndActivityQuizes(activityId, data, activityModel.usercourse, activityModel.token, callback, errorCallback);
-    }
-    else if (activityModel.activityType == "Parent") {
-        _endActivityCurrentChallenge = pathCh;
-        moodleFactory.Services.PutEndActivity(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
     } else {
         var data = {userid: currentUserId};
 
@@ -356,6 +352,13 @@ var _isStageCompleted = function () {
             var totalChallengesCompleted = _.where(currentStage.challenges, {status: 1}).length;
             if (totalChallengesByStage == totalChallengesCompleted) {
                 userCourse.stages[stageIndex].status = 1;
+                //Get current stage for update
+                var stage = localStorage.getItem("currentStage");
+                //Check if not is the last stage
+                if(stageIndex+1 < userCourse.stages.length){
+                    stage = stageIndex+1;
+                    _setLocalStorageJsonItem("currentStage", stage);    
+                }
                 _setLocalStorageJsonItem("usercourse", userCourse);
                 stageCompleted = true;
             }
@@ -381,6 +384,7 @@ var _tryCloseStage = function(stageIndex){
 };
 
 var _isChallengeCompleted = function () {
+    console.log("isChallengeCompleted?");
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var lastStageIndex = _.where(userCourse.stages, {status: 1}).length;
@@ -400,13 +404,13 @@ var _isChallengeCompleted = function () {
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 var currentUserId = currentUser.userId;
                 var data = {userid: currentUserId};
-                var currentActivityModuleId = currentChallenge.coursemoduleid;
-                var activityIdentifier = _getActivityByCourseModuleId();                
+                var currentActivityModuleId = currentChallenge.coursemoduleid;                
                 var activitymodel = {
                     activity_identifier: currentChallenge.activity_identifier
                 };
                 moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallback);
                 success = currentActivityModuleId;
+                console.log("challengeCompleted true");
                 return success;
             } else {
                 success = 0;

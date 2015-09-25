@@ -214,10 +214,11 @@ angular
                 _setLocalStorageItem("challengeMessageId",0);
             }
                         
-                        
+
            if(_tryCloseStage($scope.idEtapa)) {
                $scope.openModal_CloseStage();
            }
+
             
             //Load challenges images
             $scope.retosIconos = {
@@ -311,5 +312,5 @@ angular
                         $modalInstance.dismiss('cancel');
                         $location.path('/ProgramaDashboard');
                     };
-                    _setLocalStorageItem('robotEndStorageShown',true);
+                    _setLocalStorageItem('robotEndStageShown',true);
                 });

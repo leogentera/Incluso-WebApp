@@ -1,6 +1,6 @@
 <div id="site-wrapper" class="incluso-app step-dashboard">
     <div class="alert alert-warning" role="alert" ng-show="showWarning" ng-cloak>
-        <div class="alert-message" ng-click="hideWarning">
+        <div class="alert-message" ng-click="hideWarning()">
             <div class="icomoon icon-warning"></div>
             <!--<p>Reposnde todas las preguntas para poder continuar</p>-->
             <p>{{warningMessage}}</p>
@@ -131,40 +131,6 @@
                     </section>
                 </div>
 
-                <!--<div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
-                    <div id="finalized">
-                        <section class="header-title ">
-                            <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
-                            <div class="subtitle centered min-pad ">"Exploración final"</div>
-                            <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
-                        </section>
-                        <section class="centered txt-bigger ">
-                            <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
-                        </section>
-                        <section class="txt-renglon pill">
-                            <div class="pull-left">Estrellas ganadas:</div>
-                            <div class="pull-right sm-pill">
-                                <span class="pull-left">{{activityPoints}}</span>
-                                <span class="icomoon icon-star pull-right"></span>
-                            </div>
-                        </section>
-                        <section class="txt-renglon centered form ">
-                            ¿Que opinas de ésta actividad?
-                            <section class="txt-renglon txt-bigger clearfix">
-                                <div class="opinion">
-                                    <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                                    <label for="like">Me gusta</label>
-                                </div>
-                                <div class="opinion">
-                                    <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                                    <label for="dislike">No me gusta</label>
-                                </div>
-                            </section>
-                            <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" >TERMINAR</a>
-                        </section>
-                    </div>
-                </div>-->
-
                 <div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
                     <div id="finalized">
                         <section class="header-title ">
@@ -294,7 +260,7 @@
                                         <span class="pull-right icomoon icon-arrow" ng-show="!question5.isCollapsed"></span>
                                         <span class="pull-right icomoon icon-arrow-up" ng-show="question5.isCollapsed"></span>
                                     </div>
-                                    <div id="results4" class="panel-body" collapse="!question5.isCollapsed">
+                                    <div id="results5" class="panel-body" collapse="!question5.isCollapsed">
                                         <ul>
                                             <li ng-class="{'failed clearfix': exploracionFinalresult[4].firstOptionWrong}">
                                                 <span class="fl-left icomoon icon-wrong"

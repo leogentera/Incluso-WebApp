@@ -481,7 +481,9 @@
                         }
                     }
                     usercourse.stages[i].stageProgress = Math.floor(100.0 * stageCompletedActivities / stageActivities, 0);
-                    if (usercourse.stages[i].status == 1) {
+                    if (usercourse.stages[i].status == 1 || usercourse.stages[i].stageProgress == 100) {
+                        usercourse.stages[i].status = 1;
+                        usercourse.stages[i].stageProgress = 100;
                         globalPointsAchieved += usercourse.stages[i].points;
                     }
                 }
