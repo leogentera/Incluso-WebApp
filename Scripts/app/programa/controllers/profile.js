@@ -410,8 +410,7 @@ angular
             };
 
             $scope.index = function () {
-                $scope.navigateTo('Profile', 'null');
-                //$location.path('/Perfil/Editar');
+                $location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
             };
 
             $scope.navigateToDashboard = function () {
