@@ -83,14 +83,18 @@
 
                 //redirect user to stage 1 dashboard after closing modal
                 var zone = '/ZonaDeVuelo/Dashboard/';
+                var activityId=1001;
                 //Depend of section is the zone to redirect
                 if($scope.currentStage == 2){
                     zone = '/ZonaDeNavegacion/Dashboard/';
+                    activityId = 2001;
                 } 
                 if ($scope.currentStage == 3){
                     zone = '/ZonaDeAterrizaje/Dashboard/';
+                    activityId = 3101;
                 }
-                $location.path(zone + $scope.currentStage + '/0');
+                $scope.navigateTo(zone + $scope.currentStage + '/0',false,activityId);
+
             };
 
             //Updates firsttime flag for program in model, localstorage and server
