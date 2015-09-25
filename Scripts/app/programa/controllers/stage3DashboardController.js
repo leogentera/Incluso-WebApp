@@ -20,7 +20,9 @@ angular
 
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            $rootScope.linksStage3Footer = true;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = true;
             $scope.scrollToTop();
 
             $scope.activitiesCompletedInCurrentStage = [];
@@ -201,7 +203,7 @@ angular
                 }
             }
 
-            var stageCompleted = _isStageCompleted();
+            var stageCompleted = _updateStageStatus();
             $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
             var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
@@ -217,19 +219,11 @@ angular
             }
 
 
-            var robotEndStageShown = localStorage.getItem('robotEndStageThreeShown');
-            var stageCompleted = _isStageCompleted();
 
-            if (stageCompleted && !robotEndStageShown) {
+            //Try to close stage. If stage is closed exactly in this attempt, show closing message.
+            if(_tryCloseStage($scope.idEtapa)){
                 $scope.openModal_CloseStage();
             }
-
-            //_setLocalStorageItem("challengeMessageId",113);
-            //$scope.openModal_CloseChallenge();
-
-
-
-
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
             $scope.$on('$viewContentLoaded', function() {
@@ -297,8 +291,8 @@ angular
         };
 
         $scope.robotMessages = {
-            title: "Cierre Zona de Aterrizaje",
-            message: "Mensaje de cierre zona de aterrizaje!"
+            title: "Zona de Aterrizaje",
+            message: "¡Bien hecho! Lograste reunir el equipo de exploración espacial. Ahora tienes el mapa que reúne tus sueños y tus habilidades en una idea de negocio que mejorará tu comunidad ¡Estás listo para caminar hacia tus metas!"
         };
 
         $scope.navigateToDashboard = function () {

@@ -6,7 +6,7 @@
                     <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive" />
                     <figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption>
                 </figure>
-                <a id="editProfile" ng-click="avatar()" class="btn">
+                <a id="editProfile" ng-click="avatar()" class="btn" ng-show="loggedUser">
                     <span class="icomoon icon-edit"></span>
                 </a>
             </div>
@@ -25,7 +25,7 @@
                     <span for="">Editar</span>
                 </a>
 
-                <a class="btn btn-icon-aside right" ng-click="navigateTo('/Perfil/ConfigurarPrivacidad', null, null, null)">
+                <a class="btn btn-icon-aside right" ng-click="navigateTo('/Perfil/ConfigurarPrivacidad', null, null, null)" ng-show=false>
                     <div class="btn-icon">
                         <span class="icomoon icon-lock"></span>
                     </div>

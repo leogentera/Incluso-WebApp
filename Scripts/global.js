@@ -339,7 +339,7 @@ var _hasCommunityAccessLegacy = function(value) {
 };
 
 //This function updates in localStorage the status of the stage when completed
-var _isStageCompleted = function () {
+var _updateStageStatus = function () {
 
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     
@@ -365,6 +365,22 @@ var _isStageCompleted = function () {
         }
     }
     return stageCompleted;
+};
+
+//Returns TRUE only if the stage gets closed right here. If it was closed before or has activities pending, will return FALSE.
+var _tryCloseStage = function(stageIndex){
+    var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+    if(!userCourse) return false;
+    var stage = userCourse.stages[stageIndex];
+    if(stage.status || stage.sectionname == "General") return false;
+    var totalChallengesInStage = stage.challenges.length;
+    var totalChallengesCompleted = _.where(stage.challenges, {status: 1}).length;
+    if (totalChallengesInStage == totalChallengesCompleted) {
+        userCourse.stages[stageIndex].status = 1;
+        _setLocalStorageJsonItem("usercourse", userCourse);
+        return true;
+    }
+    return false;
 };
 
 var _isChallengeCompleted = function () {

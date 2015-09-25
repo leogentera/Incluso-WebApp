@@ -19,11 +19,12 @@
         	}
 
             $scope.sideToggle = function(outside){ 
+                getProgress();
+
                 if(!outside)
                     $rootScope.sidebar = !$rootScope.sidebar;
                 else
-                    $rootScope.sidebar = false;
-                
+                    $rootScope.sidebar = false;                
             };
 
             $scope.navigateTo = function(url,sideToggle,activityId){
@@ -276,6 +277,18 @@
                 $scope.$apply(function() {
                     $scope.close(); 
                 });
+            }
+
+            function getProgress(){
+                $scope.showDiploma = false;
+                
+                var usercourse = moodleFactory.Services.GetCacheJson("usercourse");
+
+                if($rootScope.showToolbar && usercourse ) {
+                    if(usercourse.globalProgress == 100){
+                        $scope.showDiploma = true;
+                    }
+                }
             }
 
         }]);
