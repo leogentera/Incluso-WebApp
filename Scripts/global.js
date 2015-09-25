@@ -383,12 +383,12 @@ var _tryCloseStage = function(stageIndex){
     return false;
 };
 
-var _isChallengeCompleted = function () {
+var _closeChallenge = function (stageId) {
     console.log("isChallengeCompleted?");
     var success = 0;
-    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-    var lastStageIndex = _.where(userCourse.stages, {status: 1}).length;
-    var currentStage = userCourse.stages[lastStageIndex];
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));    
+    var stageIndex = stageId;
+    var currentStage = userCourse.stages[stageIndex];
 
     for (var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++) {
         var currentChallenge = currentStage.challenges[challengeIndex];
@@ -399,7 +399,7 @@ var _isChallengeCompleted = function () {
 
                 //updateBadge
                 _updateBadgeStatus(currentChallenge.coursemoduleid);
-                userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
+                userCourse.stages[stageIndex].challenges[challengeIndex].status = 1;
                 _setLocalStorageJsonItem("usercourse", userCourse);
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 var currentUserId = currentUser.userId;
@@ -1011,7 +1011,7 @@ var _activityRoutes = [
     {id: 2007, name: '', url: '/ZonaDeNavegacion/Transformate/TusIdeas/2007'},
     {id: 2030, name: '', url: '/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/2030'},
     {id: 2011, name: '', url: '/ZonaDeNavegacion/TuEliges/FuenteDeEnergia/2011'},
-    {id: 2012, name: '', url: '/ZonaDeNavegacion/TuEliges/2012'},
+    {id: 2012, name: '', url: '/ZonaDeNavegacion/TuEliges/TuEliges/2012'},
     {id: 2015, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/2015'},
     {id: 2016, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/13y5/2016'},
     {id: 2017, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/2017'},
