@@ -339,7 +339,7 @@ var _hasCommunityAccessLegacy = function(value) {
 };
 
 //This function updates in localStorage the status of the stage when completed
-var _isStageCompleted = function () {
+var _updateStageStatus = function () {
 
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     

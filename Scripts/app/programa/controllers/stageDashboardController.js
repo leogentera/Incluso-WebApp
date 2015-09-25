@@ -216,7 +216,7 @@ angular
                         
                         
             var robotEndStageShown = localStorage.getItem('robotEndStageShown');            
-            var stageCompleted = _isStageCompleted();
+            var stageCompleted = _updateStageStatus();
             
             if (stageCompleted && !robotEndStageShown) {
                 $scope.openModal_CloseStage();

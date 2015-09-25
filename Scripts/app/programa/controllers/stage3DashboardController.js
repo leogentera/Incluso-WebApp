@@ -201,7 +201,7 @@ angular
                 }
             }
 
-            var stageCompleted = _isStageCompleted();
+            var stageCompleted = _updateStageStatus();
             $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
             var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
@@ -218,7 +218,7 @@ angular
 
 
             var robotEndStageShown = localStorage.getItem('robotEndStageThreeShown');
-            var stageCompleted = _isStageCompleted();
+            var stageCompleted = _updateStageStatus();
 
             if (stageCompleted && !robotEndStageShown) {
                 $scope.openModal_CloseStage();
