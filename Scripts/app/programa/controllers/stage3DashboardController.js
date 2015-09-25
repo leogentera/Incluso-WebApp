@@ -290,10 +290,7 @@ angular
             $modalInstance.dismiss('cancel');
         };
 
-        $scope.robotMessages = {
-            title: "Zona de Aterrizaje",
-            message: "¡Bien hecho! Lograste reunir el equipo de exploración espacial. Ahora tienes el mapa que reúne tus sueños y tus habilidades en una idea de negocio que mejorará tu comunidad ¡Estás listo para caminar hacia tus metas!"
-        };
+
 
         $scope.navigateToDashboard = function () {
             $modalInstance.dismiss('cancel');
