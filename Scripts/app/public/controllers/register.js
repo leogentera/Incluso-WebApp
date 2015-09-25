@@ -52,6 +52,10 @@ angular
             $scope.isRegistered = false;
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.genderItems = ['Masculino', 'Femenino'];
             $scope.countryItems = ['México', 'OTRO'];
             $scope.cityItems = ['México D.F', 'Estado de México', 'OTRO'];

@@ -76,8 +76,11 @@ angular
             $scope.currentPage = 1;  
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"");
-            $rootScope.showFooter = true; 
-            $rootScope.showFooterRocks = false; 
+            $rootScope.showFooter = true;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.statusObligatorios = 0; 
             var waitPreloader = 0;
             var hidePreloader = 0;

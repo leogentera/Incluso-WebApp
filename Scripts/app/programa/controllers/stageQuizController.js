@@ -20,6 +20,9 @@ angular
             $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.scrollToTop();
             $scope.currentPage = 1;
             $scope.setReadOnly = false;
@@ -795,22 +798,40 @@ angular
                 if (isChecked) {
                     switch (questionArray) {
                         case "talents":
-                            $scope.userprofile.talents.push(stringValue);
+                            var index = $scope.userprofile.talents.indexOf(stringValue);
+                            if (index == -1){
+                                $scope.userprofile.talents.push(stringValue);
+                            }                            
                             break;
                         case "values":
-                            $scope.userprofile.values.push(stringValue);
+                            var index = $scope.userprofile.values.indexOf(stringValue);
+                            if (index == -1) {
+                                $scope.userprofile.values.push(stringValue);
+                            }
                             break;
                         case "habilities":
-                            $scope.userprofile.habilities.push(stringValue);
+                            var index = $scope.userprofile.habilities.indexOf(stringValue);
+                            if (index == -1){
+                                $scope.userprofile.habilities.push(stringValue);
+                            }
                             break;
                         case "favoriteSports":
-                            $scope.userprofile.favoriteSports.push(stringValue);
+                            var index = $scope.userprofile.favoriteSports.indexOf(stringValue);
+                            if (index == -1){
+                                $scope.userprofile.favoriteSports.push(stringValue);
+                            }
                             break;
                         case "artisticActivities":
-                            $scope.userprofile.artisticActivities.push(stringValue);
+                            var index = $scope.userprofile.artisticActivities.indexOf(stringValue);
+                            if (index == -1){
+                                $scope.userprofile.artisticActivities.push(stringValue);
+                            }
                             break;
                         case "hobbies":
-                            $scope.userprofile.hobbies.push(stringValue);
+                            var index = $scope.userprofile.hobbies.indexOf(stringValue);
+                            if (index == -1){
+                                $scope.userprofile.hobbies.push(stringValue);
+                            }
                             break;
                         default:
                             console.log('Unknow profile poperty');

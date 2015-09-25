@@ -16,6 +16,10 @@ angular
             $scope.$emit('scrollTop'); //- scroll
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.$emit('HidePreloader');
             /* ViewModel */
             $scope.recoverPasswordModel = {
@@ -39,6 +43,10 @@ angular
             $scope.readOnly = false;
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             
             $scope.securityquestionItems = ['¿Dónde crecí?','Nombre de mi mejor amigo','Nombre de mi mascota','Personaje favorito','Banda musical favorita'];
 
