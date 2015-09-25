@@ -30,6 +30,9 @@ angular
             $scope.currentPage = 1;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.status = "";
             $scope.shareAchievementMessage = "";
             $scope.showShareAchievementMessage = false;
