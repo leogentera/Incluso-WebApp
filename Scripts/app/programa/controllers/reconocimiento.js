@@ -38,7 +38,7 @@ angular
         }
         
         function generateReconocimientoImgSrc(callback) {
-
+return;
             if (reconocimientoSrc == null) {
                 
                     var awardSelector = "#" + "gold";
@@ -67,6 +67,7 @@ angular
         }
               
         $scope.download = function() {
+            return;
             $scope.$emit('ShowPreloader');
             
             generateReconocimientoImgSrc(function() {
@@ -82,6 +83,7 @@ angular
         };
         
         $scope.shareByEmail = function() {
+            return;
             $scope.$emit('ShowPreloader');
             
             generateReconocimientoImgSrc(function() {
@@ -97,6 +99,7 @@ angular
         };
         
         $scope.shareToSocialNetworks = function() {
+            return;
             $scope.$emit('ShowPreloader');
             
             generateReconocimientoImgSrc(function() {
@@ -112,10 +115,12 @@ angular
         };
         
         $scope.shareToCommunity = function() {
+            return;
             generateReconocimientoImgSrc(shareToCommunityCallback);
         };
         
         function shareToCommunityCallback() {
+            return;
             $scope.$emit('ShowPreloader');
                 
             if ($scope.discussion == null || $scope.forumId == null) {
@@ -135,7 +140,7 @@ angular
         }
         
         function postReconocimientoToCommunity() {
-            
+            return;
                 var requestData = {
                     "userid": _userId,
                     "discussionid": $scope.discussion.discussion,
@@ -164,6 +169,7 @@ angular
         }
               
         $scope.shareToCommunityClick = function() {
+            return;
             $scope.communityModalOpen = !$scope.communityModalOpen;
         }
           
