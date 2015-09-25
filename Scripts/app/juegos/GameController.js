@@ -18,5 +18,9 @@ angular
             $rootScope.pageName = "Reto multiple"
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = true;
-            $rootScope.showFooter = true; 
+            $rootScope.showFooter = true;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false; 
         }]);

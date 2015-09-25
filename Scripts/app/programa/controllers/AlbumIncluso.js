@@ -15,6 +15,9 @@ angular
         $scope.setToolbar($location.$$path, "Album Incluso");
         $rootScope.showFooter = false;
         $rootScope.showFooterRocks = false;
+        $rootScope.showStage1Footer = false;
+        $rootScope.showStage2Footer = false;
+        $rootScope.showStage3Footer = false;
         $scope.isShareCollapsed = false;
         $scope.showSharedAlbum = false;
         $scope.sharedAlbumMessage = null;

@@ -22,6 +22,7 @@ angular
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = true;
+            $rootScope.showStage3Footer = false;
             //$rootScope.linksStage2Footer = true;
             $scope.scrollToTop();
 

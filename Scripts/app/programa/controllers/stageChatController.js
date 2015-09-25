@@ -14,7 +14,10 @@ angular
             _timeout = $timeout;
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = false; 
-            $rootScope.showFooterRocks = false;            
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;            
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             $scope.model = userCourse;
             $scope.like_status = 1;
