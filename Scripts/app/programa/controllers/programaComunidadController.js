@@ -19,13 +19,13 @@ angular
             _timeout = $timeout;
             
             /* local view variables */
-            var _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+            var _userProfile;
             var _currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
             var _userId = moodleFactory.Services.GetCacheObject("userId");
             var _course = moodleFactory.Services.GetCacheJson("course");
             var _postPager = { from: 0, to: 0 };
             var _currentFilter = "default";
-            $scope.hasCommunityAccess = _hasCommunityAccessLegacy(_userProfile.communityAccess);
+            $scope.hasCommunityAccess = false;
             
             $scope.userToken = _currentUser.token;
             $scope.moodleId = $routeParams.moodleid;
@@ -51,6 +51,9 @@ angular
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.setToolbar($location.$$path,"Comunidad");
             
             function _initCommunityModals() {
@@ -377,6 +380,18 @@ angular
                 $scope.isReportedAbuseModalCollapsed['id' + postId] = !$scope.isReportedAbuseModalCollapsed['id' + postId];
                 $scope.isCommentModalCollapsed['id' + postId] = false;
             };
+            
+            
+            var waitForProfileLoaded = setInterval(waitForProfileLoadedTimer, 1500);
+            
+            function waitForProfileLoadedTimer() {
+                _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+                
+                if (_userProfile != null) {
+                    $scope.hasCommunityAccess = _hasCommunityAccessLegacy(_userProfile.communityAccess);
+                    clearInterval(waitForProfileLoaded);
+                }
+            }
             
             $scope.scrollToTop();
             _initCommunity();

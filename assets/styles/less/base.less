@@ -692,6 +692,7 @@ body {
             border-bottom: 1pt solid;
             .clr-blueGray(border-color, 0.5);
             .clr-blueGray(color, 1);
+            margin-bottom: 4vw;
 
             &::-webkit-input-placeholder {
                 //*color:@clr-blueGray !important;*/
@@ -2113,7 +2114,7 @@ body {
             background-image: url("@{url-images}/bg-footer-rocks.png");
             background-position: 50% 0;
             box-shadow: unset;
-        }        
+        }
     }
 
     /***************************************************************************/
@@ -2219,23 +2220,38 @@ body {
         /* by theme */
         &.theme-rocks {
             min-height: 57vw;
-            padding: 19vw 0 4vw;            
-            background-image: url("@{url-images}/bg-dashboard-full2.gif");
+            padding: 19vw 0 4vw; 
+            background-image: url("@{url-images}/bg-dashboard-full.gif");
             background-position: 50% 0;
             .background-size(100%, auto);
             .box-shadow-reset();
         }
-        &.links-stage2-footer {
+        &.theme-stage-1 {
+            min-height: 40vw;
+            padding: 0 0 6vw;
+            background-color: transparent;
+            background-image: url('@{url-images}/bg-stage-1-dashboard-full.gif');
+            background-position: left bottom;
+            background-repeat: no-repeat; 
+            .background-size(100%, auto); 
+        }
+        &.theme-stage-2 {
             background-image: url("@{url-images}/bg-stage-2-dashboard.gif");
             background-size: 100% auto;
-            background-position: center 97.2%;
+            background-position: center 98.35%;
             background-color: transparent;
+            background-repeat: no-repeat;
+            min-height: 40vw;
+            padding: 0 0 6vw
         }
-        &.links-stage3-footer {
+        &.theme-stage-3 {
             background-image: url("@{url-images}/bg-stage-3-dashboard.gif");
             background-size: 100% auto;
-            background-position: 20% 102%;
+            background-position: center bottom;
             background-color: transparent;
+            background-repeat: no-repeat;
+            min-height: 40vw;
+            padding: 0 0 6vw; 
         }
     } 
     /***********************************************************************/  

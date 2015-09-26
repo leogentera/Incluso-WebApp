@@ -35,20 +35,19 @@
 				<section class="component global-progress txt-renglon centered">
 					<h3>- MI AVANCE -</h3>
 					<div class="spinner">
-						<img src="assets/images/prcnt/{{usercourse == null ? 0 : Math.floor(usercourse.globalProgress)}}.png" alt="progress" />
+						<img src="assets/images/prcnt/{{usercourse == null ? 0 : usercourse.globalProgress}}.png" alt="progress" />
 						<div class="circle"></div>
 						<div class="text">{{usercourse.globalProgress|| 0}}%</div>
 					</div>
-				</section>
+				</section>		
 
 				<section class="component current-satge">
 					<img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
-					<h3>- {{stage.sectionname}} -</h3>
+					<h3>- {{usercourse.stages[currentStage-1].sectionname}} -</h3>
 					<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()">
 						<span>{{usercourse.firsttime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span>
 					</a>
 				</section>
-				
 			</div>
 
 			<div class="dash-bottom">
@@ -56,6 +55,7 @@
 					<h3>- MI ESCUDO -</h3>
 					<img src="assets/images/badges/{{user.shield ? 'img-' + user.shield + '.svg' : 'img-badge-placeholder.svg'}}" alt="badges" />
 				</section>
+				
 				<section class="component top-users" style="width: 100vw">
 					<h3>- TOP 3 -</h3>
 					<tabset justified="true">
@@ -177,7 +177,6 @@
 				</section>
 			</div>
 		</div>
-
 
 		<script type="text/ng-template" id="programWelcome.html">
 			<div class="modal-robot robot-lg user-help">

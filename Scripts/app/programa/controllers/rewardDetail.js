@@ -13,8 +13,11 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             //$scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"Notificaciones");
-            $rootScope.showFooter = true; 
+            $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
                                                 
             //var userNotifications = JSON.parse(localStorage.getItem("notifications"));
               
@@ -40,18 +43,15 @@ angular
             function getFileName(id) {
                 var filename = "";
 
-                switch (id) {
-                    case 19:
-                        filename = "assets/images/mochila.png";
+                switch (id) {                   
+                    case 24:
+                        filename = "assets/images/CursosIngles.png";
                         break;
-                    case 20:
-                        filename = "assets/images/mochila.png";
-                        break;
-                    case 21:
-                        filename = "assets/images/mochila.png";
+                    case 25:
+                        filename = "assets/images/iphone.png";
                         break;                   
                     default:
-                        filename = "assets/images/mochila.png";
+                        filename = "assets/images/CursosIngles.png";
                 }
 
                 return filename;

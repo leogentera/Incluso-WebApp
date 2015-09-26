@@ -21,19 +21,54 @@
                 </section>
             </div>
             <section class="txt-renglon distribuido">
-                <a href="" class="icon-circle">
+                <a href="" class="icon-circle" ng-click="download()" ng-show="false">
                     <span class="icomoon icon-download"></span>
                 </a>
-                <a href="" class="icon-circle">
+                <a href="" class="icon-circle" ng-click="shareByEmail()" ng-show="false">
                     <span class="icomoon icon-envelope"></span>
                 </a>
-                <a href="" class="icon-circle">
+                <a href="" class="icon-circle" ng-click="shareToCommunityClick()" ng-show="false">
                     <span class="icomoon icon-share"></span>
                 </a>
-                <a href="" class="icon-circle">
+                <a href="" class="icon-circle" ng-click="shareToSocialNetworks()" ng-show="false">
                     <span class="icomoon icon-more-options-horizontal"></span>
                 </a>
             </section>
+            <div id="shareAlbum" class="modalDialog" collapse="communityModalOpen" ng-show="false">
+                <div>
+                    <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="textToCommunity"></textarea></div>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareToCommunity()">Compartir en Comunidad</a>
+                </div>
+            </div>
+            <div id="openModal2" class="modalDialog reportModal" ng-show="shareToCommunityOpen">
+               <div>
+                 <a title="close" class="close"></a>
+                 <div class="add">Has compartido tú reconocimiento.</div>
+                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>
+                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareToCommunityOpen = false">Cerrar</a>
+               </div>
+            </div>
+            <div id="openModal3" class="modalDialog reportModal" ng-show="shareToDownloadOpen">
+               <div>
+                 <a title="close" class="close"></a>
+                 <div class="add">Has descargado tú reconocimiento.</div>
+                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareToDownloadOpen = false">Cerrar</a>
+               </div>
+            </div>
+            <div id="openModal4" class="modalDialog reportModal" ng-show="shareToEmailOpen">
+               <div>
+                 <a title="close" class="close"></a>
+                 <div class="add">Has compartido tu reconocimiento por correo.</div>
+                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareToEmailOpen = false">Cerrar</a>
+               </div>
+            </div>
+            <div id="openModal5" class="modalDialog reportModal" ng-show="shareToSocialNetworksOpen">
+               <div>
+                 <a title="close" class="close"></a>
+                 <div class="add">Has compartido tu reconocimiento en redes sociales.</div>
+                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareToSocialNetworksOpen = false">Cerrar</a>
+               </div>
+            </div>
         </article>
     </div>
 </div>

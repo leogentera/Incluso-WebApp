@@ -9,7 +9,7 @@ angular
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {            
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             /* $routeParams.stageId */
             _timeout = $timeout;
             _httpFactory = $http;
@@ -20,12 +20,15 @@ angular
             
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = true;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.scrollToTop();
 
             $scope.activitiesCompletedInCurrentStage = [];
             $scope.isCollapsed = false;
             $scope.idEtapa = $routeParams['stageId'] - 1; //We are in stage stageId, taken from URL
-            $scope.idReto = $routeParams['challengue'];
+            $scope.idReto = $routeParams['challenge'];
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
@@ -63,25 +66,25 @@ angular
                     mouseDrag:false,
                     transitionStyle:"fade",
                     afterMove: callback2
-                });    
+                });
 
                 this.currentItem = $scope.idReto;
                 var currentItem;
                 owl.trigger("owl.goTo", $scope.idReto);
-                    $("span#index").text(($scope.idReto+1));  
+                $("span#index").text(($scope.idReto+1));
 
                 owl2.trigger("owl.goTo", $scope.idReto);
-                    $("span#index").text(($scope.idReto+1));            
+                $("span#index").text(($scope.idReto+1));
 
                 function callback1(event) {
-                    var item = this.currentItem;                    
+                    var item = this.currentItem;
                     currentItem = parseInt(this.owl.currentItem);
                     owl2.trigger("owl.goTo", item);
                     $("span#index").text((item+1));
                 }
 
                 function callback2(event) {
-                    item = this.currentItem;                    
+                    item = this.currentItem;
                     owl.trigger("owl.goTo", item);
                     $("span#index").text((item+1));
                 }
@@ -109,7 +112,7 @@ angular
                     ev.preventDefault();
                 });
 
-            }, 1000);         
+            }, 1000);
 
             //Opens stage welcome message if first time visit
             $scope.openModal_StageFirstTime = function (size) {
@@ -122,8 +125,7 @@ angular
                 });
             };
 
-            //$scope.openModal_StageFirstTime();
-            
+
             
             $scope.openModal_CloseChallenge = function (size) {                
                 var modalInstance = $modal.open({
@@ -176,33 +178,8 @@ angular
                 $scope.updateStageFirstTime();
             }
 
+            var challengeCompletedId = _closeChallenge($scope.idEtapa);         
 
-           //calculate user's stage progress
-            var stageProgressBuffer = 0;
-            var stageTotalActivities = 0; //Attainment of user in the current Stage
-            var stageChallengesCount = $scope.thisStage.challenges.length;
-
-            var i, j,k;
-            for (i = 0; i < stageChallengesCount; i++) {
-                var challenge = $scope.thisStage.challenges[i];
-                var challengeActivitiesCount = challenge.activities.length;
-                for (j = 0; j < challengeActivitiesCount; j++) {
-                    var activity = challenge.activities[j];
-                    stageProgressBuffer += activity.status;
-                    stageTotalActivities++;
-                    /*if(activity.activities) {
-                        var subActivitiesCount = activity.activities.length;
-                        for (k = 0; k < subActivitiesCount; k++) {
-                            var subActivity = activity.activities[k];
-                            stageProgressBuffer += subActivity.status;
-                            stageTotalActivities++;
-                        }
-                    }*/
-                }
-            }
-            
-            $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);            
-            var challengeCompletedId = _isChallengeCompleted();            
             _coachNotification();
                                     
             //Exclude challenges initial and final from showing modal robot
@@ -215,16 +192,21 @@ angular
                 _setLocalStorageItem("challengeMessageId",0);
             }
                         
-                        
-            var robotEndStageShown = localStorage.getItem('robotEndStorageShown');            
-            var stageCompleted = _isStageCompleted();
-            
-            if (stageCompleted && !robotEndStageShown) {
-                $scope.openModal_CloseStage();
+
+            if(_tryCloseStage($scope.idEtapa)) {
+               $scope.openModal_CloseStage();
             }
-            
-            //_setLocalStorageItem("challengeMessageId",113);
-            //$scope.openModal_CloseChallenge();
+
+            //Update progress
+            var userid = localStorage.getItem("userId");
+            var user = JSON.parse(localStorage.getItem("profile/" + userid));
+            var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
+            $scope.model = progress.course;
+            var userdata = progress.user;
+            _setLocalStorageJsonItem("profile/" + userid, userdata);
+            _setLocalStorageJsonItem("usercourse", $scope.model);
+
+            $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
             
             //Load challenges images
             $scope.retosIconos = {
@@ -318,5 +300,5 @@ angular
                         $modalInstance.dismiss('cancel');
                         $location.path('/ProgramaDashboard');
                     };
-                    _setLocalStorageItem('robotEndStorageShown',true);
+                    _setLocalStorageItem('robotEndStageShown',true);
                 });

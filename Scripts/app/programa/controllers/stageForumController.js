@@ -23,22 +23,21 @@ angular
                  var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + $routeParams.activityId + '/'+ activityFromTree.activities[1].coursemoduleid;
 
                  var shields = [
-                     {name: 'musical', category: 'artistico'},
-                     {name: 'interpersonal', category: 'artistico'},
-                     {name: 'naturalista', category: 'logico'},
-                     {name: 'intrapersonal', category: 'logico'},
-                     {name: 'corporal', category: 'artistico'},
-                     {name: 'espacial', category: 'artistico'},
-                     {name: 'matematica', category: 'logico'},
-                     {name: 'liguistica', category: 'logico'},
+                     {name: 'Musical', category: 'artistico'},
+                     {name: 'Interpersonal', category: 'artistico'},
+                     {name: 'Naturalista', category: 'logico'},
+                     {name: 'Intrapersonal', category: 'logico'},
+                     {name: 'Corporal', category: 'artistico'},
+                     {name: 'Espacial', category: 'artistico'},
+                     {name: 'Matemática', category: 'logico'},
+                     {name: 'Lingüística', category: 'logico'},
                  ];
                  var userId = JSON.parse(localStorage.getItem('userId'));
                  var shield = JSON.parse(localStorage.getItem('profile/' + userId )).shield;
-                 console.log('Mofakin shield:' + shield);
                  if (shield && shield != '') {
 
                      var shieldCategory = _.find(shields, function (s) {
-                         return s.name == shield.toLowerCase()
+                         return s.name == shield;
                      });
                      if (shieldCategory) {
                        if (shieldCategory.category == "logico") {
@@ -55,18 +54,17 @@ angular
                  }
             };
 
-            //if($scope.moodleId == 149) {
             if($routeParams.activityId == 1049) {
-                debugger;
               redirectOnShield();
             }
 
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"");
-            $rootScope.showFooter = true; 
+            $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-
-            //$scope.moodleId = $routeParams.moodleid;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
 
             $scope.scrollToTop();
 
@@ -110,11 +108,7 @@ angular
 
             function getDataAsync() {
                 console.log('Moodle ID on dataAsync: ' + $scope.moodleId);
-                //var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
-                //activityFromTree.activities? $scope.moodleId = activityFromTree.activities[0].coursemoduleid : $scope.moodleId = activityFromTree.coursemoduleid;
-                //$scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
-                //$routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
             }
             
             function getForumDiscussionsCallback() {
@@ -128,10 +122,8 @@ angular
 
             $scope.showComentarios = function (discussionId) {
               var moodleId = $routeParams.moodleId;
-              //switch ($scope.moodleId){
                 console.log('Moodle ID: ' + $routeParams.moodleId);
                 !moodleId? moodleId = getMoodleIdFromTreeActivity($routeParams.activityId): '';
-              //switch (Number($routeParams.moodleId)){
               switch (Number(moodleId)){
                   case 64:
                       $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
@@ -173,32 +165,30 @@ angular
                     });
                 }, 1000);
               
-              var moodleId = $scope.moodleId;
-              //TODO Add new routes for Zona de Navegación && Zona de Aterrizaje
-              switch (moodleId){
-                  case 64:
+              switch (Number($routeParams.activityId)){
+                  case 1010:
                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
-                  case "73":
+                  case 1008:
                       $location.path('/ZonaDeVuelo/Dashboard/1/'+3);
                       break;
-                  case "147":
+                  case 1049:
                       $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
-                  case "148":
-                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
+                  case 2030:
+                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 2);
                       break;
-                  case "179":
-                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 1);
-                      break;
-                  case "93":
+                  case 2026:
+                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 4);
+                      break
+                  case 3304:
                       $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 2);
                       break;
-                  case "91":
+                  case 3404:
                       $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 3);
                       break;
                   default:
-                      $location.path('/ZonaDeVuelo/Dashboard/1');
+                      $location.path('/ProgramaDashboard');
                       break;
               }                                      
               

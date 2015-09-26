@@ -869,6 +869,7 @@
 										</div>
 										<div class="panel-body">
 											<fieldset class="my-profile-form">
+
 												<section>
 													<h4>Vivienda</h4>
 													<div class="form-group theme-form">
@@ -942,12 +943,21 @@
 														<span>/</span>
 														<span>2</span>
 													</p>
-												</div>
+												</div>												
 
-												<div class="actions">
-													<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(9)">Continuar</button>
-													<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
-												</div>
+                                                <div class="actions">
+                                                    <div class="button-group page-controls">
+                                                        <button type="button" class="btn btn-primary btn-lg control left" disabled>
+                                                            <span class="icomoon icon-arrow-slim-left"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-primary btn-lg btn-block action" ng-click="save()">Guardar</button>
+                                                        <button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg control right" ng-click="navigateToPage(9)">
+                                                            <span class="icomoon icon-arrow-slim-right"></span>
+                                                        </button>
+                                                    </div>
+                                                    <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+                                                </div>
+
 											</fieldset>
 										</div>
 									</div>
@@ -1048,17 +1058,20 @@
 														<span>/</span>
 														<span>2</span>
 													</p>
-												</div>
+												</div>											
 
-												<div class="actions">
-													<div class="button-group">
-														<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg" ng-click="navigateToPage(8)">
-															<span class="icomoon icon-arrow-slim-left"></span>
-														</button>
-														<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(1)">Continuar</button>
-													</div>
-													<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
-												</div>
+                                                <div class="actions">
+                                                    <div class="button-group page-controls">
+                                                        <button type="button" class="btn btn-primary btn-lg control left" ng-disabled="isRegistered" ng-click="navigateToPage(8)">
+                                                            <span class="icomoon icon-arrow-slim-left"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-primary btn-lg btn-block action" ng-click="save()">Guardar</button>
+                                                        <button type="button" class="btn btn-primary btn-lg control right" disabled>
+                                                            <span class="icomoon icon-arrow-slim-right"></span>
+                                                        </button>
+                                                    </div>
+                                                    <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+                                                </div>
 
 												<section class="old-code">
 													<div class="old-code">
@@ -1248,10 +1261,18 @@
 													</p>
 												</div>
 
-												<div class="actions">
-													<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(11)">Continuar</button>
-													<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
-												</div>
+                                                <div class="actions">
+                                                    <div class="button-group page-controls">
+                                                        <button type="button" class="btn btn-primary btn-lg control left" disabled>
+                                                            <span class="icomoon icon-arrow-slim-left"></span>
+                                                        </button>
+                                                        <button type="button" class="btn btn-primary btn-lg btn-block action" ng-click="save()">Guardar</button>
+                                                        <button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg control right" ng-click="navigateToPage(11)">
+                                                            <span class="icomoon icon-arrow-slim-right"></span>
+                                                        </button>
+                                                    </div>
+                                                    <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+                                                </div>
 
 												<section class="old-code">
 													<div class="old-code">
@@ -1359,23 +1380,30 @@
 										</div>
 										<div class="panel-body">
 											<fieldset class="my-profile-form">
+												<h5>Videojuegos</h5>
 												<section>
-
-													<h5>Videojuegos</h5>
-
 													<h4>¿Juegas videojuegos?</h4>
-													<select ng-model="model.playVideogames" ng-options="item for item in yesNoList" ng-init="model.playVideogames == null" class="form-control form-control-lg theme-form">
-														<option value="" ng-disabled="!!model.playVideogames">¿Juegas videojuegos?</option>
-													</select>
-
-													<h4>¿Con qué frecuencia juegas videojuegos?</h4>
-													<select ng-model="model.videogamesFrecuency" ng-options="item for item in videoGamesFrecuencyList" ng-init="model.videogamesFrecuency == null"
-													class="form-control form-control-lg theme-form">
-														<option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
-													</select>
+													<div class="form-group-control custom-caret-wrapper">
+														<select ng-model="model.playVideogames" ng-options="item for item in yesNoList" ng-init="model.playVideogames == null" class="form-control form-control-lg theme-form">
+															<option value="" ng-disabled="!!model.playVideogames">¿Juegas videojuegos?</option>
+														</select>
+														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+													</div>
 													
+												</section>
+												<section>
+													<h4>¿Con qué frecuencia juegas videojuegos?</h4>
+													<div class="form-group-control custom-caret-wrapper">
+														<select ng-model="model.videogamesFrecuency" ng-options="item for item in videoGamesFrecuencyList" ng-init="model.videogamesFrecuency == null" 
+														class="form-control form-control-lg theme-form">
+															<option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
+														</select>
+														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+													</div>
+																										
 													<input type="text" class="form-control form-control-lg theme-form" placeholder="¿Cuántas horas juegas al día?" ng-model="model.videogamesHours" />
-
+												</section>													
+												<section>
 													<h4>¿Qué tipo de videojuegos te gustan más?</h4>
 													<ul class="block-list">
 														<li ng-repeat="s in model.kindOfVideogames">
@@ -1387,38 +1415,41 @@
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
-																<select ng-model="model.kindOfVideogames[$index]" ng-options="item for item in kindOfVideoGamesList" ng-init="model.kindOfVideogames == null"
-																class="form-control form-control-lg theme-form">
-																	<option value="" ng-disabled="!!model.kindOfVideogames">¿Qué tipo de videojuegos te gustan más?</option>
-																</select>
-															</div>
-															
+																<div class="form-group-control custom-caret-wrapper">
+																	<select ng-model="model.kindOfVideogames[$index]" ng-options="item for item in kindOfVideoGamesList" ng-init="model.kindOfVideogames == null"
+																	class="form-control form-control-lg theme-form">
+																		<option value="" ng-disabled="!!model.kindOfVideogames">¿Qué tipo de videojuegos te gustan más?</option>
+																	</select>
+																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+																</div>																
+															</div>	
+																													
 														</li>
 													</ul>
 													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addKindOfVideoGame();">
 														<span class="icomoon icon-plus"></span>Agregar videojuego...
 													</button>
-
-													<section>
-														<h4>¿Cuáles son tus juegos favoritos?</h4>
-														<ul class="block-list">
-															<li ng-repeat="p in model.favoriteGames track by $index">
-																<div class="form-group theme-form">
-																	<h5>
-																			<span>Juego {{model.favoriteGames.indexOf(p) + 1}}</span>
-																			<button class="btn btn-circle" ng-click="deleteFavoriteGame($index);">
-																				<span class="icomoon icon-cross"></span>
-																			</button>
-																		</h5>
-																	<input type="text" class="form-control form-control-lg theme-form" placeholder="Juego favorito" ng-model="model.favoriteGames[$index]"
-																	/>
-																</div>
-															</li>
-														</ul>
-														<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addFavoriteGame();">
-															<span class="icomoon icon-plus"></span>Agregar juego...
-														</button>
-													</section>
+												</section>
+												<section>
+													<h4>¿Cuáles son tus juegos favoritos?</h4>
+													<ul class="block-list">
+														<li ng-repeat="p in model.favoriteGames track by $index">
+															<div class="form-group theme-form">
+																<h5>
+																		<span>Juego {{model.favoriteGames.indexOf(p) + 1}}</span>
+																		<button class="btn btn-circle" ng-click="deleteFavoriteGame($index);">
+																			<span class="icomoon icon-cross"></span>
+																		</button>
+																	</h5>
+																<input type="text" class="form-control form-control-lg theme-form" placeholder="Juego favorito" ng-model="model.favoriteGames[$index]"
+																/>
+															</div>
+														</li>
+													</ul>
+													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addFavoriteGame();">
+														<span class="icomoon icon-plus"></span>Agregar juego...
+													</button>
+												</section>
 
 													<div class="page-number">
 														<p class="text-center">
@@ -1428,15 +1459,20 @@
 														</p>
 													</div>
 
-													<div class="button-group">
-														<button type="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg" ng-click="navigateToPage(10)">
-															<span class="icomoon icon-arrow-slim-left"></span>
-														</button>
-														<button type="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(1)">Continuar</button>
-														<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
-													</div>
+                                                    <div class="actions">
+                                                        <div class="button-group page-controls">
+                                                            <button type="button" class="btn btn-primary btn-lg control left" ng-disabled="isRegistered" ng-click="navigateToPage(10)">
+                                                                <span class="icomoon icon-arrow-slim-left"></span>
+                                                            </button>
+                                                            <button type="button" class="btn btn-primary btn-lg btn-block action" ng-click="save()">Guardar</button>
+                                                            <button type="button" class="btn btn-primary btn-lg control right" disabled>
+                                                                <span class="icomoon icon-arrow-slim-right"></span>
+                                                            </button>
+                                                        </div>
+                                                        <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+                                                    </div>
 
-												</section>
+												
 											</fieldset>
 										</div>
 									</div>

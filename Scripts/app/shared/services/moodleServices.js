@@ -430,62 +430,69 @@
             var globalActivities = 0;
             var globalCompletedActivities = 0;
             var globalPointsAchieved = 0;
+            var globalProgress = 0;
 
             if (usercourse.stages) {
                 for (i = 0; i < usercourse.stages.length; i++) {
                     //stages
+                    if(usercourse.stages[i].activityname != "General"){    
+                        var stageActivities = 0;
+                        var stageCompletedActivities = 0;
 
-                    var stageActivities = 0;
-                    var stageCompletedActivities = 0;
+                        if (usercourse.stages[i].challenges) {
+                            for (j = 0; j < usercourse.stages[i].challenges.length; j++) {
+                                //challenges
 
-                    if (usercourse.stages[i].challenges) {
-                        for (j = 0; j < usercourse.stages[i].challenges.length; j++) {
-                            //challenges
+                                if (usercourse.stages[i].challenges[j].activities) {
+                                    for (k = 0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
+                                        //activities
 
-                            if (usercourse.stages[i].challenges[j].activities) {
-                                for (k = 0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
-                                    //activities
-
-                                    /*if (usercourse.stages[i].challenges[j].activities[k].activities) {
-                                        for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
-                                            if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
-                                            {
-                                                globalActivities++;
-                                                stageActivities++;
-                                                if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
-                                                    globalCompletedActivities++;
-                                                    stageCompletedActivities++;
-                                                    globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].activities[l].points;
+                                        /*if (usercourse.stages[i].challenges[j].activities[k].activities) {
+                                            for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
+                                                if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
+                                                {
+                                                    globalActivities++;
+                                                    stageActivities++;
+                                                    if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
+                                                        globalCompletedActivities++;
+                                                        stageCompletedActivities++;
+                                                        globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].activities[l].points;
+                                                    }
                                                 }
                                             }
+                                        } 
+                                        else
+                                        {*/
+                                        globalActivities++;
+                                        stageActivities++;
+
+                                        if (usercourse.stages[i].challenges[j].activities[k].status == 1) {
+                                            globalCompletedActivities++;
+                                            stageCompletedActivities++;
+                                            globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].points;
                                         }
-                                    } 
-                                    else
-                                    {*/
-                                    globalActivities++;
-                                    stageActivities++;
+                                        //}
 
-                                    if (usercourse.stages[i].challenges[j].activities[k].status == 1) {
-                                        globalCompletedActivities++;
-                                        stageCompletedActivities++;
-                                        globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].points;
                                     }
-                                    //}
-
+                                }
+                                if (usercourse.stages[i].challenges[j].status == 1) {
+                                    globalPointsAchieved += usercourse.stages[i].challenges[j].points;
                                 }
                             }
-                            if (usercourse.stages[i].challenges[j].status == 1) {
-                                globalPointsAchieved += usercourse.stages[i].challenges[j].points;
-                            }
                         }
-                    }
-                    usercourse.stages[i].stageProgress = Math.floor(100.0 * stageCompletedActivities / stageActivities, 0);
-                    if (usercourse.stages[i].status == 1) {
-                        globalPointsAchieved += usercourse.stages[i].points;
+                        usercourse.stages[i].stageProgress = Math.floor(100.0 * stageCompletedActivities / stageActivities, 0);
+                        if (usercourse.stages[i].status == 1 || usercourse.stages[i].stageProgress == 100) {
+                            usercourse.stages[i].status = 1;
+                            usercourse.stages[i].stageProgress = 100;
+                            globalPointsAchieved += usercourse.stages[i].points;
+                        }
+                        
+                        globalProgress = globalProgress + usercourse.stages[i].stageProgress; 
                     }
                 }
             }
-            usercourse.globalProgress = Math.floor(100.0 * globalCompletedActivities / globalActivities, 0);
+            //usercourse.globalProgress = Math.floor(100.0 * globalCompletedActivities / globalActivities, 0);
+            usercourse.globalProgress = Math.floor(100*globalProgress/300);
             if (user) {
                 user.stars = globalPointsAchieved;
             }
@@ -671,7 +678,10 @@
                 user = progress.user;
                 _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),user);
                 _setLocalStorageJsonItem("usercourse",course);
+                //reload activty status dictionary
                 loadActivityStatus();
+                //set stages as completed in local storage, as this is not set by the back-end
+                _setStagesStatus();
                 _setLocalStorageJsonItem("course",course);
                 _setLocalStorageJsonItem("activityManagers",activityManagers);
 
@@ -700,6 +710,25 @@
             _setLocalStorageJsonItem("activityStatus",activityStatus);
             _activityStatus = activityStatus;
             console.log("Loaded activityStatus");
+        };
+
+        //This function updates the status of each stage in local status
+        var _setStagesStatus = function () {
+
+            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+            if(!userCourse) return;
+            for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+                var currentStage = userCourse.stages[stageIndex];
+                if (currentStage.status == 0 && currentStage.sectionname != "General") {
+                    var totalChallengesByStage = currentStage.challenges.length;
+                    var totalChallengesCompleted = _.where(currentStage.challenges, {status: 1}).length;
+                    if (totalChallengesByStage == totalChallengesCompleted) {
+                        userCourse.stages[stageIndex].status = 1;
+                    }
+                }
+            }
+            _setLocalStorageJsonItem("usercourse", userCourse);
+
         };
 
         return {
@@ -731,7 +760,8 @@
             GetAsyncDiscussionPosts: _getAsyncDiscussionPosts,
             GetAsyncForumDiscussions: _getAsyncForumDiscussions,
             PostAsyncReportAbuse: _postAsyncReportAbuse,
-            GetAsyncAlbum: _getAsyncAlbum
+            GetAsyncAlbum: _getAsyncAlbum,
+            RefreshProgress: refreshProgress
         };
     })();
 }).call(this);

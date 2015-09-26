@@ -20,7 +20,10 @@ angular
             
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            $rootScope.linksStage2Footer = true;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = true;
+            $rootScope.showStage3Footer = false;
+            //$rootScope.linksStage2Footer = true;
             $scope.scrollToTop();
 
             $scope.activitiesCompletedInCurrentStage = [];
@@ -87,7 +90,7 @@ angular
                     $("span#index").text((item+1));
                 }
 
-               $(".back").click(function (ev) {                                                            
+                $("#prev").click(function (ev) {
                     if(currentItem){
                         owl.trigger('owl.goTo', currentItem - 1);
                         owl2.trigger('owl.goTo', currentItem - 1);
@@ -98,7 +101,7 @@ angular
                     }
                     ev.preventDefault();
                 });
-                 $(".next").click(function (ev) {                                        
+                $("#next").click(function (ev) {
                     if(currentItem){
                         owl.trigger('owl.goTo', currentItem + 1);
                         owl2.trigger('owl.goTo', currentItem + 1);
@@ -112,6 +115,17 @@ angular
 
             }, 1000);
 
+            //Opens stage welcome message if first time visit
+            $scope.openModal_StageFirstTime = function (size) {
+                var modalInstance = $modal.open({
+                    animation: false,//$scope.animationsEnabled,
+                    templateUrl: 'OpeningStageModal.html',
+                    controller: 'OpeningStageController',
+                    size: size,
+                    windowClass: 'user-help-modal dashboard-stage-intro'
+                });
+            };
+
 
 
             $scope.openModal_CloseChallenge = function (size) {
@@ -124,33 +138,51 @@ angular
                 });
             };
 
-           //calculate user's stage progress
-            var stageProgressBuffer = 0;
-            var stageTotalActivities = 0; //Attainment of user in the current Stage
-            var stageChallengesCount = $scope.thisStage.challenges.length;
+            $scope.openModal_CloseStage = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'ClosingStageTwoModal.html',
+                    controller: 'closingStageTwoController',
+                    size: size,
+                    windowClass: 'closing-stage-modal user-help-modal'
+                });
+            };
 
-            var i, j,k;
-            for (i = 0; i < stageChallengesCount; i++) {
-                var challenge = $scope.thisStage.challenges[i];
-                var challengeActivitiesCount = challenge.activities.length;
-                for (j = 0; j < challengeActivitiesCount; j++) {
-                    var activity = challenge.activities[j];
-                    stageProgressBuffer += activity.status;
-                    stageTotalActivities++;
-                    /*if(activity.activities) {
-                        var subActivitiesCount = activity.activities.length;
-                        for (k = 0; k < subActivitiesCount; k++) {
-                            var subActivity = activity.activities[k];
-                            stageProgressBuffer += subActivity.status;
-                            stageTotalActivities++;
-                        }
-                    }*/
+
+            //Updated stage first time flag in scope, local storage and server
+            $scope.updateStageFirstTime = function(){
+                //Update model
+                $scope.thisStage.firsttime = 0;
+                $scope.model.stages[$scope.idEtapa].firsttime = 0;
+                //Update local storage
+                var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+                if(userCourse!={}) {
+                    userCourse.stages[$scope.idEtapa].firsttime = 0;
+                    _setLocalStorageJsonItem("usercourse",userCourse);
                 }
+                //Update back-end
+                var dataModel = {
+                    stages: [
+                        {
+                            firstTime:0,
+                            section:$scope.thisStage.section
+                        }
+                    ]
+                };
+
+                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel,function(){},function(){});
+
+            };
+
+            //If first time in stage, show modal with welcome message
+            if($scope.thisStage.firsttime){
+                $scope.openModal_StageFirstTime();
+
+                $scope.updateStageFirstTime();
             }
 
-            var stageCompleted = _isStageCompleted();
-            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
-            var challengeCompletedId = _isChallengeCompleted();
+            var challengeCompletedId = _closeChallenge($scope.idEtapa);
+
             _coachNotification();
 
             //Exclude initial and final challenges from showing modal robot
@@ -162,20 +194,24 @@ angular
             }else{
                 _setLocalStorageItem("challengeMessageId",0);
             }
-                        
-                        
-            var robotEndStageShown = localStorage.getItem('robotEndStorageShown');            
-            var stageCompleted = _isStageCompleted();
-            
-            if (stageCompleted && !robotEndStageShown) {
+
+
+            //Try to close stage. If stage is closed exactly in this attempt, show closing message.
+            if(_tryCloseStage($scope.idEtapa)){
+
                 $scope.openModal_CloseStage();
             }
-            
-            //_setLocalStorageItem("challengeMessageId",113);
-            //$scope.openModal_CloseChallenge();
 
+            //Update progress
+            var userid = localStorage.getItem("userId");
+            var user = JSON.parse(localStorage.getItem("profile/" + userid));
+            var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
+            $scope.model = progress.course;
+            var userdata = progress.user;
+            _setLocalStorageJsonItem("profile/" + userid, userdata);
+            _setLocalStorageJsonItem("usercourse", $scope.model);
 
-
+            $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
@@ -213,7 +249,7 @@ angular
                         
             var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
                                                                     
-            $scope.robotMessages = [                      
+            $scope.robotMessages = [
                     {
                         title : "CUARTO DE RECURSOS",
                         message : "¡Has recuperado un elemento más para atravesar los asteroides! Estas listo para tomar tus decisiones   y tener  nuevas ideas que te impulsen a lograr lo que te propongas.",
@@ -249,14 +285,14 @@ angular
                     };
                     
                     $scope.robotMessages = {
-                        title: "Cierre Zona de Navegación",
-                        message: "Mensaje de cierre zona de navegación!"
+                        title: "Zona de Navegación",
+                        message: "¡Muy bien! Has reunido los elementos necesarios para salir de la lluvia de asteroides. Recuerda, creer en ti y en todo lo que puede lograr, te llevará a avanzar en el camino que has elegido ¡Adelante!"
                     };
                     
                     $scope.navigateToDashboard = function () {                        
                         $modalInstance.dismiss('cancel');
                         $location.path('/ProgramaDashboard');
                     };
-                    _setLocalStorageItem('robotEndStorageShown',true);
+                    _setLocalStorageItem('robotEndStageTwoShown',true);
                 });
 

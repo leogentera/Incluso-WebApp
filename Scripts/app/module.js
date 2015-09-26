@@ -45,6 +45,7 @@
         'incluso.stage.mapadevidaController',
         'incluso.stage.chatcontroller',
         'incluso.stage.multiplicatudineroController',
+        'incluso.stage.mapadelemprendedorController',
         'incluso.program.alerts',        
         'incluso.program.myInterests',
         'incluso.program.myStrengths',
@@ -122,7 +123,11 @@
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: $templateCache });  
         //$http.get('Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/CabinaDeSoporte.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporte.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporte.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
@@ -130,11 +135,13 @@
         ///////// Stage 2 //////////
         $http.get('Templates/ZonaDeNavegacion/dashboard.html',{cache:$templateCache});
         $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEligesResults.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html', { cache: $templateCache });
 
         ///////// Stage 3 //////////
         $http.get('Templates/ZonaDeAterrizaje/dashboard.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html', {cache: $templateCache });
 
          document.addEventListener("keyup", function(e) {
             if (e.keyCode === 27)
@@ -308,7 +315,7 @@
             controller: 'programaLeaderBoard'
         });        
      
-        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId/:challengue', {
+        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeVuelo/dashboard.html',
             controller: 'stageDashboardController'
         });
@@ -515,11 +522,15 @@
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/TuEliges/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/TuEliges/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEliges.html',
             controller: 'stageTuEligesController'
         });
 
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/ResultadosTuEliges', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEligesResults.html',
+            controller: 'stageTuEligesController'
+        });
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia.html',
@@ -554,6 +565,16 @@
 
         $routeProvider.when('/ZonaDeNavegacion/CabinaDeSoporteCierre', {
             templateUrl: 'Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/CabinaDeSoporte/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/CabinaDeSoporte.html',
+            controller: 'stageChatController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/CabinaDeSoporteCierre', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html',
             controller: 'stageMessageController'
         });
 
@@ -622,6 +643,11 @@
         $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia.html',
             controller: 'stageContentsController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/:moodleid', {              
+            templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html',               
+            controller: 'stageMapaDelEmprendedorController'             
         });
 
         $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/:activityId', {
@@ -905,6 +931,13 @@
           restrict: 'E',
           scope: false,
           templateUrl: 'Templates/Partials/sharedAlbum.html'
+        };
+    })
+    .directive('shareReconocimiento', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Partials/shareReconocimiento.html'
         };
     })
     .directive('menuComponent', function(){

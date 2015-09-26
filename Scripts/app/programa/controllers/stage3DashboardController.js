@@ -20,7 +20,9 @@ angular
 
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-            $rootScope.linksStage3Footer = true;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = true;
             $scope.scrollToTop();
 
             $scope.activitiesCompletedInCurrentStage = [];
@@ -123,7 +125,6 @@ angular
                 });
             };
 
-            //$scope.openModal_StageFirstTime();
 
 
             $scope.openModal_CloseChallenge = function (size) {
@@ -177,39 +178,13 @@ angular
                 $scope.updateStageFirstTime();
             }
 
+            var challengeCompletedId = _closeChallenge($scope.idEtapa);
 
-            //calculate user's stage progress
-            var stageProgressBuffer = 0;
-            var stageTotalActivities = 0; //Attainment of user in the current Stage
-            var stageChallengesCount = $scope.thisStage.challenges.length;
-
-            var i, j,k;
-            for (i = 0; i < stageChallengesCount; i++) {
-                var challenge = $scope.thisStage.challenges[i];
-                var challengeActivitiesCount = challenge.activities.length;
-                for (j = 0; j < challengeActivitiesCount; j++) {
-                    var activity = challenge.activities[j];
-                    stageProgressBuffer += activity.status;
-                    stageTotalActivities++;
-                    /*if(activity.activities) {
-                     var subActivitiesCount = activity.activities.length;
-                     for (k = 0; k < subActivitiesCount; k++) {
-                     var subActivity = activity.activities[k];
-                     stageProgressBuffer += subActivity.status;
-                     stageTotalActivities++;
-                     }
-                     }*/
-                }
-            }
-
-            var stageCompleted = _isStageCompleted();
-            $scope.stageProgress = Math.ceil((stageProgressBuffer  / stageTotalActivities)*100);
-            var challengeCompletedId = _isChallengeCompleted();
             _coachNotification();
 
             //Exclude challenges initial and final from showing modal robot
-            var challengeExploracionInicial = 140;
-            var challengeExploracionFinal = 152;
+            var challengeExploracionInicial = 205;
+            var challengeExploracionFinal = 218;
             if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){
                 _setLocalStorageItem("challengeMessageId",challengeCompletedId);
                 $scope.openModal_CloseChallenge();
@@ -217,20 +192,21 @@ angular
                 _setLocalStorageItem("challengeMessageId",0);
             }
 
-
-            var robotEndStageShown = localStorage.getItem('robotEndStorageShown');
-            var stageCompleted = _isStageCompleted();
-
-            if (stageCompleted && !robotEndStageShown) {
+            //Try to close stage. If stage is closed exactly in this attempt, show closing message.
+            if(_tryCloseStage($scope.idEtapa)){
                 $scope.openModal_CloseStage();
             }
 
-            //_setLocalStorageItem("challengeMessageId",113);
-            //$scope.openModal_CloseChallenge();
+            //Update progress
+            var userid = localStorage.getItem("userId");
+            var user = JSON.parse(localStorage.getItem("profile/" + userid));
+            var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
+            $scope.model = progress.course;
+            var userdata = progress.user;
+            _setLocalStorageJsonItem("profile/" + userid, userdata);
+            _setLocalStorageJsonItem("usercourse", $scope.model);
 
-
-
-
+            $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
             $scope.$on('$viewContentLoaded', function() {
@@ -261,34 +237,34 @@ angular
             };
 
         }]).controller('closingStageThreeChallengeController', function ($scope, $modalInstance) {
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-
-        var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
-
-        $scope.robotMessages = [
-            {
-                title : "CUARTO DE RECURSOS",
-                message : "!Ahora tienes una pieza más del equipo de exploración! Recuerda, un emprendedor ve oportunidades donde otros ven problemas.",
-                read : "false",
-                challengeId: 206},
-            {
-                title : "EDUCACIÓN FINANCIERA   ",
-                message : "!Ahora tienes una pieza más del equipo de exploración! Estás listo para conseguir lo que te propongas, ahorrar puede ayudarte a reunir los recursos que necesitas para lograrlo.",
-                read : "false",
-                challengeId: 208},
-            {
-                title : "MAPA DEL EMPRENDEDOR",
-                message : "!Ahora tienes una pieza más del equipo de exploración! Todos podemos ser emprendedores, sólo hace falta creer en nuestras ideas y tomar las acciones necesarias para hacerlas realidad.",
-                read : "false",
-                challengeId: 90},
-            {
-                title : "CABINA DE SOPORTE",
-                message : "!Ahora tienes una pieza más del equipo de exploración! El mapa de tu idea de negocio esta completo, ya tienes todas las piezas para volverlo realidad, ahora sólo depende de ti.",
-                read : "false",
-                challengeId: 217
-            }];
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+    
+            var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
+    
+            $scope.robotMessages = [
+                    {
+                        title : "CUARTO DE RECURSOS",
+                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Recuerda, un emprendedor ve oportunidades donde otros ven problemas.",                        
+                        read : "false",
+                        challengeId : 206},
+                    {
+                        title : "EDUCACI\u00D3N FINANCIERA",
+                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Est\u00E1s listo para conseguir lo que te propongas, ahorrar puede ayudarte a reunir los recursos que necesitas para lograrlo.",
+                        read : "false",
+                        challengeId : 208},
+                    {
+                        title : "MAPA DEL EMPRENDEDOR",
+                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Todos podemos ser emprendedores, s\u00F3lo hace falta creer en nuestras ideas y tomar las acciones necesarias para hacerlas realidad.",
+                        read : "false",
+                        challengeId : 90},
+                    {
+                        title : "CABINA DE SOPORTE",
+                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! El mapa de tu idea de negocio esta completo, ya tienes todas las piezas para volverlo realidad, ahora s\u00F3lo depende de ti.",
+                        read : "false",
+                        challengeId : 217
+                    }];
 
         $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});
 
@@ -297,14 +273,11 @@ angular
             $modalInstance.dismiss('cancel');
         };
 
-        $scope.robotMessages = {
-            title: "Cierre Zona de Aterrizaje",
-            message: "Mensaje de cierre zona de aterrizaje!"
-        };
+
 
         $scope.navigateToDashboard = function () {
             $modalInstance.dismiss('cancel');
             $location.path('/ProgramaDashboard');
         };
-        _setLocalStorageItem('robotEndStorageShown',true);
+        _setLocalStorageItem('robotEndStageThreeShown',true);
     });

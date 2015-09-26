@@ -24,6 +24,9 @@ angular
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
 
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
@@ -135,10 +138,8 @@ angular
                         updateUserStars($routeParams.activityId, 50 );
                     }
                 }
-
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     resetForumDiscussionsProgress();
-                    
                     switch ($scope.moodleId) {
                         case "179":
                                 $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178);
@@ -148,6 +149,7 @@ angular
                             break;
                         default :
                             $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId);
+                        $scope.scrollToTop();
                     }
                 } else {
                    callback();
