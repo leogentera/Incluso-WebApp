@@ -100,7 +100,6 @@
 			
             $scope.scrollToTop = function(element){         
                 $location.hash(element);
-                $anchorScroll();      
             };
             
             //*******************************************************************
@@ -211,7 +210,8 @@
 
 
             //Helps defining if activity can be started
-            $scope.canStartActivity = function(activityIdentifier){
+			$scope.canStartActivity = function (activityIdentifier) {
+			    return true;
                 //If public page, return false
                 var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
 
