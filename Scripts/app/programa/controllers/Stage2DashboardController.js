@@ -16,6 +16,7 @@ angular
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+            $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
             $scope.setToolbar($location.$$path,"");
             
             $rootScope.showFooter = true;
@@ -229,7 +230,7 @@ angular
 
             $scope.startActivity = function (activity, index, parentIndex) {
                 //TODO: Remove false from condition, only there to jump freely into activities in DEV
-                if(false && !$scope.canStartActivity(activity.activity_identifier)) return false;
+                if(false && _activityBlocked[activity_identifier]) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
 
                 if (url) {

@@ -59,7 +59,7 @@
         <section class="parts activities">
             <div id="owl-demo" class="owl-carousel">
                 <div ng-repeat="challenge in model.stages[idEtapa].challenges">
-                    <div ng-class="canStartActivity(activity.activity_identifier)?'part':'part disabled'" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
+                    <div ng-class="{part:true, disabled:activityBlocked[activity.activity_identifier].disabled}" ng-repeat="activity in challenge.activities" ng-click="startActivity(activity, $index, $parent.$index)">
                         <span class="icomoon icon-checked-join" ng-show="activity.status == 1"></span>
                         <span class="icomoon icon-gauge" ng-show="activity.status == 0"></span>
                         <span class="activity-name" ng-bind="activity.activityname"></span>

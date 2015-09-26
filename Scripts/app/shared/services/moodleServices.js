@@ -679,7 +679,9 @@
                 _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),user);
                 _setLocalStorageJsonItem("usercourse",course);
                 //reload activty status dictionary
-                loadActivityStatus();
+                _loadActivityStatus();
+                //load activity accessibility flags
+                _loadActivityBlockStatus();
                 //set stages as completed in local storage, as this is not set by the back-end
                 _setStagesStatus();
                 _setLocalStorageJsonItem("course",course);
@@ -687,7 +689,7 @@
 
             }
         };
-        var loadActivityStatus = function () {
+        var _loadActivityStatus = function () {
             var usercourse = JSON.parse(localStorage.getItem("usercourse"));
             var activityStatus = {};
             var stagesCount = usercourse.stages.length;

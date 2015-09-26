@@ -33,6 +33,7 @@
                 $scope.profile = null;   //profile is not used in this page, it is only used for stars
             }
 
+            $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
             $scope.setToolbar($location.$$path,"Misión Incluso"); //set global toolbar properties
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = true; 

@@ -1000,7 +1000,7 @@ var _badgesPerChallenge = [
     {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217, activity_identifier : "3500"}
 ];
 
-
+//This array is a dictionary of activities and their route in the application
 var _activityRoutes = [
     {id: 1001, name: '', url: '/ZonaDeVuelo/ExploracionInicial/1001'},
     {id: 1101, name: '', url: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/1101'},
@@ -1042,6 +1042,100 @@ var _activityRoutes = [
     //{ id: 0, url: ''}  // TODO: Fill remaining
 ];
 
+//This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
+var _activityBlocked = [];
+
+//This array contains all activity IDs that will be used for navigation
+var _activityRouteIds = [
+    1001,
+    1101,
+    1049,
+     1020,
+     1039,
+     1010,
+     1021,
+    1006,
+    1005,
+    1007,
+    1008,
+    1002,
+    1009,
+    2001,
+    2004,
+    2006,
+    2007,
+    2030,
+    2011,
+    2012,
+    2015,
+    2016,
+    2017,
+    2026,
+    2022,
+    2023,
+    3101,
+    3201,
+    3301,
+    3302,
+    3304,
+    3401,
+    3402,
+    3404,
+    3501,
+    3601
+];
+
+var _loadActivityBlockStatus = function () {
+
+    var activityCount = _activityRouteIds.length;
+    for(var i = 0; i < activityCount; i++ ) {
+        _activityBlocked[_activityRouteIds[i]] ={
+            disabled:!_canStartActivity(_activityRouteIds[i])
+        };
+    }
+};
+
+//Helps defining if activity can be started
+var _canStartActivity = function(activityIdentifier){
+    console.log('canStartActivity');
+
+    //If activity tree has not been loaded, return false.
+    var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+    if(!userCourse ) {
+        return false;
+    }
+    //Load activity
+    var activity = getActivityByActivity_identifier(activityIdentifier);
+    if(!activity) return false;
+    //Load activity status dictionary from local cache
+    if(!_activityStatus) {
+        _activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
+    }
+    //Return TRUE if no activity status in cache or activity has been completed already
+    if(!_activityStatus || _activityStatus[activity.activity_identifier] || _activityStatus[activity.coursemoduleid]){
+        return true;
+    }
+    //Load dependencies for activity, from current activity_identifier-based collection and legacy coursemoduleid-based collection
+    var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
+        return x.id == activity.activity_identifier;
+    });
+    var legacyActivityDependenciesRecord = _.filter(_activityDependenciesLegacy, function (x) {
+        return x.id == activity.activity_identifier;
+    });
+    //Check status for found dependencies. If any dependency is still pending, the activity cannot be started
+    if (activityDependenciesRecord[0]) {
+        var activityDependencies = activityDependenciesRecord[0].dependsOn;
+        var activityDependenciesLegacy = legacyActivityDependenciesRecord[0]?legacyActivityDependenciesRecord[0].dependsOn:activityDependencies;//if not in legacy dependencies, then just use the current definition, will take care of itself in the evaluation
+        var dependenciesCount = activityDependencies.length;
+        for (var i = 0; i < dependenciesCount; i++) {
+            if (!(_activityStatus[activityDependencies[i]] || _activityStatus[activityDependenciesLegacy[i]]))  {
+                return false;
+            }
+        }
+    }
+    //No dependencies found or all have been completed, the activity can be started
+    return true;
+};
 
 function removeHtmlTag(value) {
     value = value.replace(/</g, '&lt;');
