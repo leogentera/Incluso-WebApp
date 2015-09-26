@@ -123,7 +123,7 @@ angular
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-/*
+
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
@@ -131,7 +131,7 @@ angular
                     successGame(
                         /*Completo v.2*/ {"userid":"103","actividad":"Proyecta tu Vida","duración":"5","pathImagenFicha":"","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":147,"respuesta":"Dimension 1 1."},{"preguntaId":148,"respuesta":"Dimension 1 2."},{"preguntaId":149,"respuesta":["Dimension 1 3 1.","Dimension 1 3 2.","Dimension 1 3 3."]},{"preguntaId":150,"respuesta":["Dimension 1 4 1.","Dimension 1 4 2.","Dimension 1 4 3."]},{"preguntaId":151,"respuesta":"Dimension 1 5."},{"preguntaId":152,"respuesta":"Dimension 1 6."}]},{"dimensionId":243,"respuestas":[{"preguntaId":154,"respuesta":"Dimension 2 1."},{"preguntaId":155,"respuesta":"Dimension 2 2."},{"preguntaId":156,"respuesta":["Dimension 2 3 1","Dimension 2 3 2","Dimension 2 3 3"]},{"preguntaId":157,"respuesta":["Dimension 2 4 1","Dimension 2 4 2.","Dimension 2 4 3."]},{"preguntaId":158,"respuesta":"Dimension 2 5."},{"preguntaId":159,"respuesta":"Dimension 2 6."}]},{"dimensionId":244,"respuestas":[{"preguntaId":160,"respuesta":"Dimension 3 1."},{"preguntaId":161,"respuesta":"Dimension 3 2."},{"preguntaId":162,"respuesta":["Dimension 3 3 1.","Dimension 3 3 2.","Dimension 3 3 3."]},{"preguntaId":163,"respuesta":["Dimension 3 4 1.","Dimension 3 4 2.","Dimension 3 4 3."]},{"preguntaId":164,"respuesta":"Dimension 3 5."},{"preguntaId":165,"respuesta":"Dimension 3 6."}]},{"dimensionId":245,"respuestas":[{"preguntaId":166,"respuesta":"Dimension 4 1."},{"preguntaId":167,"respuesta":"Dimension 4 2."},{"preguntaId":168,"respuesta":["Dimension 4 3 1","Dimension 4 3 2","Dimension 4 3 3"]},{"preguntaId":169,"respuesta":["Dimension 4 4 1","Dimension 4 4 2","Dimension 4 4 3"]},{"preguntaId":170,"respuesta":"Dimension 4 5."},{"preguntaId":171,"respuesta":"Dimension 4 6."}]},{"dimensionId":246,"respuestas":[{"preguntaId":172,"respuesta":"Dimension 5 1"},{"preguntaId":173,"respuesta":"Dimension 5 2"},{"preguntaId":174,"respuesta":["Dimension 5 3 1","Dimension 5 3 2","Dimension 5 3 3"]},{"preguntaId":175,"respuesta":["Dimension 5 4 1","Dimension 5 4 2","Dimension 5 4 3"]},{"preguntaId":176,"respuesta":"Dimension 5 4"},{"preguntaId":177,"respuesta":"Dimension 5 5"}]}]}
                     );
-                //}
+                }
             }
 
             function successGame(data){
@@ -190,7 +190,6 @@ angular
                         quizzesRequests.push(logEntry);
                     }
                 }
-                debugger;
                 var quizzesAnswered = _.countBy($scope.mapaDeVidaActivities, function(a){
                     if (a.questions) {
                         var questionsAnswers = _.countBy(a.questions, function(q){
@@ -344,7 +343,6 @@ angular
                     _.each(answer, function(r){
                         answerConcat = answerConcat + (answerConcat != "" ? (forLocalStorage ? ";" : "\n" ) : "") + cleanText(r).trim();
                     });
-                    if (!forLocalStorage) { debugger; }
                     return answerConcat;
                 }
                 return cleanText(answer);
