@@ -30,29 +30,6 @@
 									</span>Zona de Vuelo
 								</a>
 								<div class="submenu" id="sub0">
- 								<!--<ul>
-										<li>Cuarto de recursos</li>
-										<li><a ng-class="{disabled: canStartActivity(1101) == true}" ng-click="navigateTo('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/1101', 'sideToggle',1101)">Fuente de energía</a></li>
-									</ul>
-									<ul>
-										<li>Conócete</li>
-										<li><a ng-class="{disabled: canStartActivity(1020) == true}" ng-click="navigateTo('/ZonaDeVuelo/Conocete/FuenteDeEnergia/1020', 'sideToggle',1020)">Fuente de energía</a></li>
-										<li><a ng-class="{disabled: canStartActivity(1039) == true}" ng-click="navigateTo('/ZonaDeVuelo/Conocete/RetoMultiple/1039', 'sideToggle',1039)">Reto múltiple </a></li>
-										<li><a ng-class="{disabled: canStartActivity(1010) == true}" ng-click="navigateTo('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/1010', 'sideToggle',1010)">Punto de encuentro </a></li>
-										<li><a ng-class="{disabled: canStartActivity(1049) == true}" ng-click="navigateTo('/ZonaDeVuelo/Conocete/ZonaDeContacto/1049', 'sideToggle',1049)">Zona de contacto</a></li>
-									</ul>
-									<ul>
-										<li>Mis sueños </li>
-										<li><a ng-class="{disabled: canStartActivity(1021) == true}" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/1021', 'sideToggle',1021)">Fuente de energía</a></li>
-										<li><a ng-class="{disabled: canStartActivity(1005) == true}" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisCualidades/1005', 'sideToggle',1005)">Mis cualidades</a></li>
-										<li><a ng-class="{disabled: canStartActivity(1006) == true}" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisGustos/1006', 'sideToggle',1006)">Mis gustos</a></li>
-										<li><a ng-class="{disabled: canStartActivity(1007) == true}" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/Suena/1007', 'sideToggle',1007)">Sueña</a></li>
-										<li><a ng-class="{disabled: canStartActivity(1008) == true}" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/1008', 'sideToggle',1008)">Punto de encuentro </a></li>
-									</ul>
-									<ul>
-										<li>Cabina de soporte</li>
-										<li><a ng-class="{disabled: canStartActivity(1002) == true}" ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/1002', 'sideToggle',1002)">Chat</a></li>
-									</ul> -->
 									<ul>
 										<li>Cuarto de recursos</li>
 										<li><a ng-class="{disabled: MenuModel.stages[0].sections[0].items[0].isDisabled}" ng-click="navigateTo('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/1101', 'sideToggle',1101)">Fuente de energía</a></li>
@@ -130,7 +107,8 @@
 								<div class="submenu" id="sub2">
 									<ul>
 										<li>Cuarto de recursos</li>
-										<li><a ng-class="{disabled: MenuModel.stages[3].sections[0].items[0].isDisabled}" ng-click="navigateTo('/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201', 'sideToggle', 3201)">Fuente de energía</a></li>
+										<!-- Negado para mostrar el ejemplo porque yo los veía todos activos  -->
+										<li><a ng-class="{disabled: !MenuModel.stages[3].sections[0].items[0].isDisabled}" ng-click="navigateTo('/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201', 'sideToggle', 3201)">Fuente de energía</a></li>
 									</ul>
 									<!-- <ul>
 										<li>Educación Financiera</li>
