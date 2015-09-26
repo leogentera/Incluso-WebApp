@@ -99,7 +99,6 @@
 			
             $scope.scrollToTop = function(element){         
                 $location.hash(element);
-                $anchorScroll();      
             };
             
             //*******************************************************************

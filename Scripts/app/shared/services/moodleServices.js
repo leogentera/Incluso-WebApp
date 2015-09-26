@@ -93,7 +93,6 @@
         };
 
         var _getUserChat = function (userId, successCallback, errorCallback, forceRefresh) {
-            successCallback();
             _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
