@@ -647,10 +647,10 @@ angular
                 //if ($scope.activity.activities) {
 
                 if ($scope.childActivity) {
-                    _activityStatus[$scope.childActivity.activity_identifier] = 1;
-                    _activityStatus[$scope.parentActivity.activity_identifier] = 1;
+                    updateActivityStatusDictionary($scope.childActivity.activity_identifier);
+                    updateActivityStatusDictionary($scope.parentActivity.activity_identifier);
                 } else {
-                    _activityStatus[$scope.parentActivity.activity_identifier] = 1;
+                    updateActivityStatusDictionary($scope.parentActivity.activity_identifier);
                 }
 
 

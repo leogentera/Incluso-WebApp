@@ -295,6 +295,7 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
     }
     _setLocalStorageJsonItem("activityStatus", activityStatus);
     _activityStatus[activityIdentifierId] = 1;
+    _loadActivityBlockStatus();
 };
 
 var _endActivity = function (activityModel, callback, pathCh) {
@@ -673,7 +674,6 @@ var relation_MoodleId_ActivityIdentifier = [
 
 function updateSubActivityStatus(coursemoduleid) {
     //Update activity status for activity blocking binding
-    //updateActivityStatusDictionary(coursemoduleid);
     //Update activity status in usercourse
     var breakAll = false;
     var theUserCouerse = JSON.parse(localStorage.getItem("usercourse"));
