@@ -20,6 +20,9 @@ angular
             $scope.setToolbar($location.$$path, "");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.scrollToTop();
             $scope.currentPage = 1;
             $scope.setReadOnly = false;
@@ -244,45 +247,6 @@ angular
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
-                switch ($scope.activity_identifier) {
-                    case "1001":
-                        $scope.currentChallenge = 0; //Exploración Inicial - Etapa 1
-                        break;
-                    case "1005":
-                        $scope.currentChallenge = 3;  //Mis Cualidades - Etapa 1
-                        break;
-                    case "1006":
-                        $scope.currentChallenge = 3;  //Mis Gustos - Etapa 1
-                        break;
-                    case "1007":
-                        $scope.currentChallenge = 3; //Sueña - Etapa 1
-                        break;
-                    case "1009":
-                        $scope.currentChallenge = 5; //Exploración Final - Etapa 1
-                        break;
-                    case "2001":
-                        $scope.currentChallenge = 0; //Exploración Inicial Etapa 2
-                        break;
-                    case "2007":
-                        $scope.currentChallenge = 2; //Tus ideas - Etapa 2
-                        break;
-                    case "2016":
-                        $scope.currentChallenge = 4; //Mi Futuro - Etapa 2
-                        break;
-                    case "2023":
-                        $scope.currentChallenge = 6; //Exploración - Final Etapa 2
-                        break;
-                    case "3101":
-                        $scope.currentChallenge = 0; //Exploración - Inicial Etapa 3
-                        break;
-                    case "3601":
-                        $scope.currentChallenge = 5; //Exploración - Final Etapa 3
-                        break;
-                    default:
-                        $scope.currentChallenge = 0; //Default
-                        break;
-                }
-
                 console.log("Activity identifier: " + $scope.activity_identifier);
 
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
@@ -300,39 +264,52 @@ angular
                 //Making up path to redirect user to the proper dashboard
                 switch ($scope.activity_identifier) {
                     case "1001":  //Exploración Inicial - Etapa 1
+                        $scope.currentChallenge = 0;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/0";
                         break;
                     case "1005":  //Mis Cualidades - Etapa 1
+                        $scope.currentChallenge = 3;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
                         break;
                     case "1006":  //Mis Gustos - Etapa 1
+                        $scope.currentChallenge = 3;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
                         break;
                     case "1007":  //Sueña - Etapa 1
+                        $scope.currentChallenge = 3;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
                         break;
                     case "1009": //Exploración Final - Etapa 1
+                        $scope.currentChallenge = 5;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/5";
                         break;
                     case "2001": //Exploración Inicial - Etapa 2
+                        $scope.currentChallenge = 0;
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
                         break;
                     case "2007": //Tus Ideas - Etapa 2
+                        $scope.currentChallenge = 2;
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/2";
                         break;
                     case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
+                        $scope.currentChallenge = 4;
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/4";
                         break;
                     case "2023": //Exploración Final - Etapa 2
+                        $scope.currentChallenge = 6;
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/6";
                         break;
                     case "3101": //Exploración Inicial - Etapa 3
+                        $scope.currentChallenge = 0;
                         destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0";
                         break;
                     case "3601": //Exploración Final - Etapa 3
+                        $scope.currentChallenge = 5;
                         destinationPath = "/ZonaDeAterrizaje/Dashboard/3/5";
                         break;
                     default:
+                        $scope.currentChallenge = 0;
+                        destinationPath = "/ZonaDeVuelo/Dashboard/1/0";
                         break;
                 }
 
@@ -358,16 +335,12 @@ angular
                         $scope.activity_status = parentActivity.status;
                     }
 
-
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     console.log("User profile = " + $scope.userprofile);
                     var activityFinished = false;
 
-
                     //before: $scope.activity_status = activity.status;
-
-
                     console.log("Activity status = " + $scope.activity_status);
 
                     $scope.activity = parentActivity;
@@ -404,7 +377,6 @@ angular
                         } else {
                             console.log("localAnswers = " + localAnswers + " - " + parentActivity.coursemoduleid);
                         }
-
 
                         //If...the activity quiz has a checkbox for the "Other" answer, then get it from Local Storage
                         if (( $scope.activity_identifier == '1001' ||
@@ -598,6 +570,7 @@ angular
                     }
 
                     updateUserStars($scope.parentActivity.activity_identifier);
+                    //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
                 }
 
                 //if ($scope.activity.activities) {
@@ -825,22 +798,40 @@ angular
                 if (isChecked) {
                     switch (questionArray) {
                         case "talents":
-                            $scope.userprofile.talents.push(stringValue);
+                            var index = $scope.userprofile.talents.indexOf(stringValue);
+                            if (index == -1){
+                                $scope.userprofile.talents.push(stringValue);
+                            }                            
                             break;
                         case "values":
-                            $scope.userprofile.values.push(stringValue);
+                            var index = $scope.userprofile.values.indexOf(stringValue);
+                            if (index == -1) {
+                                $scope.userprofile.values.push(stringValue);
+                            }
                             break;
                         case "habilities":
-                            $scope.userprofile.habilities.push(stringValue);
+                            var index = $scope.userprofile.habilities.indexOf(stringValue);
+                            if (index == -1){
+                                $scope.userprofile.habilities.push(stringValue);
+                            }
                             break;
                         case "favoriteSports":
-                            $scope.userprofile.favoriteSports.push(stringValue);
+                            var index = $scope.userprofile.favoriteSports.indexOf(stringValue);
+                            if (index == -1){
+                                $scope.userprofile.favoriteSports.push(stringValue);
+                            }
                             break;
                         case "artisticActivities":
-                            $scope.userprofile.artisticActivities.push(stringValue);
+                            var index = $scope.userprofile.artisticActivities.indexOf(stringValue);
+                            if (index == -1){
+                                $scope.userprofile.artisticActivities.push(stringValue);
+                            }
                             break;
                         case "hobbies":
-                            $scope.userprofile.hobbies.push(stringValue);
+                            var index = $scope.userprofile.hobbies.indexOf(stringValue);
+                            if (index == -1){
+                                $scope.userprofile.hobbies.push(stringValue);
+                            }
                             break;
                         default:
                             console.log('Unknow profile poperty');

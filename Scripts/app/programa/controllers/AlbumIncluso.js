@@ -15,6 +15,9 @@ angular
         $scope.setToolbar($location.$$path, "Album Incluso");
         $rootScope.showFooter = false;
         $rootScope.showFooterRocks = false;
+        $rootScope.showStage1Footer = false;
+        $rootScope.showStage2Footer = false;
+        $rootScope.showStage3Footer = false;
         $scope.isShareCollapsed = false;
         $scope.showSharedAlbum = false;
         $scope.sharedAlbumMessage = null;
@@ -74,7 +77,7 @@ angular
                     
                     $scope.discussion = data.discussions[0];
                     $scope.forumId = data.forumid;
-                    generateAlbumImgSrc(postAlbumToCommunity);
+                    //generateAlbumImgSrc(postAlbumToCommunity);
                     
                     }, function(data){
                         $scope.sharedAlbumMessage = null;
@@ -83,7 +86,7 @@ angular
                         $scope.$emit('HidePreloader');
                     }, true);
             } else {
-                generateAlbumImgSrc(postAlbumToCommunity);
+                //generateAlbumImgSrc(postAlbumToCommunity);
             }
             
         };
@@ -228,7 +231,6 @@ angular
                 }
             }
             else {
-                generateAvatarImgSrc();
                 $scope.$emit('HidePreloader');
             }
         }
@@ -243,7 +245,6 @@ angular
                 }
 
                 $scope.album = albumData;
-                generateAvatarImgSrc();
                 $scope.$emit('HidePreloader');
             }
             else {
@@ -272,27 +273,6 @@ angular
             }else{
                 callback();   
             }
-        }
-        
-        function generateAvatarImgSrc() {
-            
-            $timeout(function(){
-                if ($scope.avatarSrc == null) {
-                var canvas = document.getElementById("canvasAvatar");
-                var ctx = canvas.getContext("2d");
-                
-                var img = new Image();
-                img.width = "127px";
-                img.height = "155px";
-                img.crossOrigin="Anonymous";
-                img.onload = function() {
-                    ctx.drawImage(img, 0, 0);
-                    $scope.avatarSrc = canvas.toDataURL("image/png");
-                    console.log($scope.avatarSrc);
-                };
-                img.src = $scope.album.profileimageurl;
-            }
-                }, 3000)
         }
         
         function postAlbumToCommunity() {

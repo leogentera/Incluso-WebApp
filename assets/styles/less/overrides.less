@@ -700,8 +700,11 @@
         .showcase-carousel.pages,
         .activities {
             background: none;
-            background-image: none;        
+            background-image: none;                
         }                
+        .activities{
+            min-height: 89vw;
+        }
         .progreso.blueprint {
             width: 90%;
             height: 22vh;
@@ -713,13 +716,14 @@
             background-size: 100% 100%; 
             .border-radius(5px);
             .spinner {
-                padding: 3% 9% 6%;
+                margin-top: 2.9vw;
+                /*padding: 3% 9% 6%;
                 .circle {
                     height: 50%;
                 }
                 .text {
                     top: ~"calc(53% - 25px)";
-                }
+                }*/
             }
         }
         .video .panel-video .panel-body {
@@ -736,6 +740,9 @@
         .activities {
             background: none;
             background-image: none;        
+        }
+        .activities {
+            min-height: 89vw;
         }  
         .progreso {
             width: 90%;
@@ -743,20 +750,24 @@
             margin: 0px auto;
             padding: 0px;
             padding-top: 1vh;
-            background-image: url("@{url-images}/bg-stage-1-theme-pattern.gif");
+            background-image: url("@{url-images}/bg-stage-1-theme-blueprint.gif");
             background-position: 100% center;
             background-size: 100% 100%; 
             .border-radius(5px);
             .spinner {
-                padding: 3% 9% 6%;
+                margin-top: 2.9vw;
+                /*padding: 3% 9% 6%;
                 .circle {
                     height: 50%;
                 }
                 .text {
                     top: ~"calc(53% - 25px)";
-                }
+                }*/
             }
-        }   
+        }
+        .video .panel-video .panel-body {
+            margin-bottom: 0;
+        }  
     }
 
     footer.footer{

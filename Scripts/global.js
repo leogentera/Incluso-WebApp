@@ -383,12 +383,12 @@ var _tryCloseStage = function(stageIndex){
     return false;
 };
 
-var _isChallengeCompleted = function () {
+var _closeChallenge = function (stageId) {
     console.log("isChallengeCompleted?");
     var success = 0;
-    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-    var lastStageIndex = _.where(userCourse.stages, {status: 1}).length;
-    var currentStage = userCourse.stages[lastStageIndex];
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));    
+    var stageIndex = stageId;
+    var currentStage = userCourse.stages[stageIndex];
 
     for (var challengeIndex = 0; challengeIndex < currentStage.challenges.length; challengeIndex++) {
         var currentChallenge = currentStage.challenges[challengeIndex];
@@ -399,7 +399,7 @@ var _isChallengeCompleted = function () {
 
                 //updateBadge
                 _updateBadgeStatus(currentChallenge.coursemoduleid);
-                userCourse.stages[lastStageIndex].challenges[challengeIndex].status = 1;
+                userCourse.stages[stageIndex].challenges[challengeIndex].status = 1;
                 _setLocalStorageJsonItem("usercourse", userCourse);
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 var currentUserId = currentUser.userId;
@@ -426,21 +426,25 @@ var _isChallengeCompleted = function () {
 
 var _updateBadgeStatus = function (coursemoduleid, callback) {
     moodleFactory.Services.GetAsyncProfile(moodleFactory.Services.GetCacheObject("userId"), function () {
-        if (callback) callback();
+        if (callback){callback();}
         var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
         var badges = profile.badges;
-        var currentBadge = _.findWhere(_badgesPerChallenge, {challengeId: coursemoduleid});
-        if (currentBadge) {
-            for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
-                if (badges[indexBadge].id == currentBadge.badgeId) {
-                    profile.badges[indexBadge].status = "won";
-                    _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
-                } else {
-                    //This else statement is set to avoid errors on execution flows
-                }
-            }
-        } else {//This else statement is set to avoid errors on execution flows
-        }
+        var activity = _getActivityByCourseModuleId(coursemoduleid);
+        if (activity) {
+          var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
+          if (currentBadge) {
+              for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
+                  if (badges[indexBadge].id == currentBadge.badgeId) {
+                      profile.badges[indexBadge].status = "won";
+                      _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
+                  } else {
+                      //This else statement is set to avoid errors on execution flows
+                  }
+              }
+          } else {//This else statement is set to avoid errors while debugging in firefox
+          }
+        }else{          
+        }        
     });
 };
 
@@ -583,6 +587,10 @@ function _getActivityByCourseModuleId(coursemoduleid, usercourse) {
         var stage = userCourse.stages[stageIndex];
         for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
             var challenge = stage.challenges[challengeIndex];
+            //Return challenge when courseModuleId match a challenge.
+            if (challenge.coursemoduleid == coursemoduleid) {
+              return challenge;
+            }            
             for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                 var activity = challenge.activities[activityIndex];
                 //console.log(activity.activity_identifier + " : " + activity);
@@ -797,6 +805,11 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
     }
 }
 
+var getForumsExtraPointsCounter = function(){
+    var forumExtraPointsCounter = JSON.parse(localStorage.getItem('extraPointsForums'));
+    return forumExtraPointsCounter;
+};
+
 function updateUserStars(activityIdentifier, extraPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -813,14 +826,13 @@ function updateUserStars(activityIdentifier, extraPoints) {
         else {
             profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
         }
-
-
     }
+
     console.log("Profile stars = " + profile.stars);
 
     var data = {
         userId: profile.id,
-        stars: Number(activity.points) + Number(extraPoints),
+        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : Number(activity.points) + Number(extraPoints),
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
@@ -972,22 +984,20 @@ function FailureVideo() {
 
 }
 
-
-
 var _badgesPerChallenge = [
-    {badgeId: 2, badgeName: "Combustible", challengeId: 113, activity_identifier : 1100},
-    {badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114, activity_identifier : 1200},
-    {badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115, activity_identifier : 0},
-    {badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 116, activity_identifier : 1002},
-    {badgeId: 6, badgeName: "Propulsor", challengeId: 155, activity_identifier : 2003},
-    {badgeId: 7, badgeName: "Misiles", challengeId: 157, activity_identifier : 2005},
-    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81, activity_identifier : 2014},
-    {badgeId: 9, badgeName: "Radar", challengeId: 167, activity_identifier : 2020},
-    {badgeId: 18, badgeName: "Turbo", challengeId: 160, activity_identifier : 2010},
-    {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206, activity_identifier : 3200},
-    {badgeId: 16, badgeName: "Casco espacial", challengeId: 208, activity_identifier : 3300},
-    {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90, activity_identifier : 3400},
-    {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217, activity_identifier : 3500}
+    {badgeId: 2, badgeName: "Combustible", challengeId: 113, activity_identifier : "1100"},
+    {badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114, activity_identifier : "1200"},
+    {badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115, activity_identifier : "1300"},
+    {badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 116, activity_identifier : "1002"},
+    {badgeId: 6, badgeName: "Propulsor", challengeId: 155, activity_identifier : "2003"},
+    {badgeId: 7, badgeName: "Misiles", challengeId: 157, activity_identifier : "2005"},
+    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81, activity_identifier : "2014"},
+    {badgeId: 9, badgeName: "Radar", challengeId: 167, activity_identifier : "2020"},
+    {badgeId: 18, badgeName: "Turbo", challengeId: 160, activity_identifier : "2010"},
+    {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206, activity_identifier : "3200"},
+    {badgeId: 16, badgeName: "Casco espacial", challengeId: 208, activity_identifier : "3300"},
+    {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90, activity_identifier : "3400"},
+    {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217, activity_identifier : "3500"}
 ];
 
 
@@ -1011,7 +1021,7 @@ var _activityRoutes = [
     {id: 2007, name: '', url: '/ZonaDeNavegacion/Transformate/TusIdeas/2007'},
     {id: 2030, name: '', url: '/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/2030'},
     {id: 2011, name: '', url: '/ZonaDeNavegacion/TuEliges/FuenteDeEnergia/2011'},
-    {id: 2012, name: '', url: '/ZonaDeNavegacion/TuEliges/2012'},
+    {id: 2012, name: '', url: '/ZonaDeNavegacion/TuEliges/TuEliges/2012'},
     {id: 2015, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/2015'},
     {id: 2016, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/13y5/2016'},
     {id: 2017, name: '', url: '/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/2017'},

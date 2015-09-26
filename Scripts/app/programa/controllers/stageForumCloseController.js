@@ -64,7 +64,6 @@ angular
                   moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {});
                  }
                }
-                debugger;
                 moodleFactory.Services.PutEndActivity(parentActivity.coursemoduleid, data, parentActivity, userToken,
                     function(response){
                           var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
@@ -79,8 +78,20 @@ angular
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
                             updateActivityStatus($routeParams.activityId);
                             _updateRewardStatus();
+                                debugger;
+                              $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
+                              $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
+                              var extraPointsCounter = getForumsExtraPointsCounter();
+                              var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $routeParams.discussionId; });
+                              if(currentDiscussionCounter && currentDiscussionCounter.extra_replies_counter <= 10) {
+                                  console.log('Assigning extras: '+ (50 * Number(currentDiscussionCounter.extra_replies_counter)));
+                                  updateUserStars($routeParams.activityId, (50 * Number(currentDiscussionCounter.extra_replies_counter)) );
+                              } else {
+                                  updateUserStars($routeParams.activityId);
+                              }
+                              //updateUserStars($routeParams.activityId);
 
-                              updateUserStars($routeParams.activityId);
+
                               $scope.$emit('HidePreloader');
                               var activityId = Number($routeParams.activityId);
                               if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
