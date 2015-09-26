@@ -81,7 +81,7 @@
                 if(path.constructor === Array){
                     classdisable = "";
                     for(i= 0; i < path.length; i++){
-                        if($location.path() === path[i]){
+                        if($location.path() === path[i] || $location.path().substr(0, 8) === path[i]){
                             classdisable = "active disabled";
                         }
                     }
