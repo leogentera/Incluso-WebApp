@@ -805,6 +805,11 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
     }
 }
 
+var getForumsExtraPointsCounter = function(){
+    var forumExtraPointsCounter = JSON.parse(localStorage.getItem('extraPointsForums'));
+    return forumExtraPointsCounter;
+};
+
 function updateUserStars(activityIdentifier, extraPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
