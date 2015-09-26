@@ -100,6 +100,11 @@ body {
     display: block;
     width: 85vw;
     pointer-events: all;   
+
+    a.disabled,
+    a[disabled] {
+        pointer-events: none;
+    }
     .navbar { 
         ul {
             background-color: rgba(0,0,0, 0.2);

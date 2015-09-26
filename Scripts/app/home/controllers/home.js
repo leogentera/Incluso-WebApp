@@ -208,10 +208,162 @@
 			};
 
 
+            // Model definition for menu options (handles ui states)
+            $scope.MenuModel = { 
+                stages: [
+                    {
+                        name: 'Zona de Vuelo',
+                        sections: [
+                            {
+                                name: 'Cuarto de recursos',
+                                items: [
+                                    {
+                                        name: 'Fuente de energía',
+                                        activityId: 1101,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/'
+                                    }
+                                ]
+                            },
+                            {
+                                name: 'Conócete',
+                                items: [
+                                    {
+                                        name: 'Fuente de energía',
+                                        activityId: 1020,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/Conocete/FuenteDeEnergia/'
+                                    },
+                                    {
+                                        name: 'Reto Múltiple',
+                                        activityId: 1039,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/Conocete/RetoMultiple/'
+                                    },
+                                    {
+                                        name: 'Punto de encuentro',
+                                        activityId: 1010,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/'
+                                    },
+                                    {
+                                        name: 'Zona de contacto',
+                                        activityId: 1049,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/Conocete/ZonaDeContacto/'
+                                    }
+                                ]
+                            },
+                            {
+                                name: 'Mis sueños',
+                                items: [
+                                    {
+                                        name: 'Fuente de energía',
+                                        activityId: 1021,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/'
+                                    },
+                                    {
+                                        name: 'Mis cualidades',
+                                        activityId: 1005,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/MisSuenos/MisCualidades/'
+                                    },
+                                    {
+                                        name: 'Mis gustos',
+                                        activityId: 1006,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/MisSuenos/MisGustos/'
+                                    },
+                                    {
+                                        name: 'Sueña',
+                                        activityId: 1007,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/MisSuenos/Suena/'
+                                    },
+                                    {
+                                        name: 'Punto de encuentro',
+                                        activityId: 1008,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/'
+                                    }
+                                ]
+                            },
+                            {
+                                name: 'Cabina de soporte',
+                                items: [
+                                    {
+                                        name: 'Chat',
+                                        activityId: 1002,
+                                        isDisabled: false,
+                                        path: '/ZonaDeVuelo/CabinaDeSoporte/'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Zona de Navegación',
+                        sections: [
+                            {
+                                name: 'Cuarto de recursos',
+                                items: [
+                                    {
+                                        name: 'Fuente de energía',
+                                        activityId: 2004,
+                                        isDisabled: false,
+                                        path: '/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/'
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        name: 'Zona de Aterrizaje',
+                        sections: [
+                            {
+                                name: 'Cuarto de recursos',
+                                items: [
+                                    {
+                                        name: 'Fuente de energía',
+                                        activityId: 3201,
+                                        isDisabled: false,
+                                        path: '/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/'
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+            $scope.initDisabledMenuOptions = function () {
+                var oStages = $scope.MenuModel.stages;
+                var iStagesLength = oStages.length;
+                var oSections; 
+                var iSectionsLength; 
+                var oItems; 
+                var iItemsLength; 
 
+                for(var s = 0; s < iStagesLength; s++ ) {
+                    oSections = $scope.MenuModel.stages[s].sections;
+                    iSectionsLength = oSections.length;
+
+                    for(var i = 0; i < iSectionsLength; i++) {
+                        oItems = oSections.items;
+                        iItemsLength = oItems.length;
+
+                        for(var j = 0; j < iItemsLength; j++) {
+                            var id = oItems[j].activityId;
+                            $scope.MenuModel.stages[s].sections[i].items[j].isDisabled = canStartActivity(id);
+                        }
+                    }
+                }
+            }
 
             //Helps defining if activity can be started
             $scope.canStartActivity = function(activityIdentifier){
+                console.log('canStartActivity');
+
                 //If public page, return false
                 var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
 
