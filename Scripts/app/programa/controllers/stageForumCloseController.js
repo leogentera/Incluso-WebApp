@@ -46,7 +46,6 @@ angular
                }
                _setLocalStorageJsonItem('usercourse', userCourse);
 
-
                 console.log('Finishing activity...');
                 var like_status = $scope.like_status;
 
@@ -78,18 +77,18 @@ angular
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
                             updateActivityStatus($routeParams.activityId);
                             _updateRewardStatus();
-                                debugger;
                               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
                               $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                               var extraPointsCounter = getForumsExtraPointsCounter();
                               var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $routeParams.discussionId; });
-                              if(currentDiscussionCounter && currentDiscussionCounter.extra_replies_counter <= 10) {
-                                  console.log('Assigning extras: '+ (50 * Number(currentDiscussionCounter.extra_replies_counter)));
-                                  updateUserStars($routeParams.activityId, (50 * Number(currentDiscussionCounter.extra_replies_counter)) );
-                              } else {
-                                  updateUserStars($routeParams.activityId);
-                              }
-                              //updateUserStars($routeParams.activityId);
+                              //debugger;
+                              var extraPoints = $routeParams.extraPoints? extraPoints = $routeParams.extraPoints : extraPoints = 0;
+                              updateUserStars($routeParams.activityId);
+                              //$timeout(
+                              //    function() {
+                              //        updateUserStars($routeParams.activityId, extraPoints);
+                              //    },2000);
+                              updateUserStars($routeParams.activityId, extraPoints);
 
 
                               $scope.$emit('HidePreloader');
@@ -99,7 +98,7 @@ angular
                               } else if(activityId == 2030 || activityId == 2026){
                                   $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                               } else if(activityId == 3304 || activityId == 3404){
-                                  $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                                  $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                               }
 
                           }, errorCallback);
