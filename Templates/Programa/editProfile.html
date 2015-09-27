@@ -788,8 +788,7 @@
 													<ul class="block-list">
 														<li ng-repeat="p in model.inspirationalCharacters">
 															<div class="form-group theme-form">
-																<h5>
-																	<!-- <span>Personaje {{model.inspirationalCharacters.indexOf(p) + 1}}</span> -->
+																<h5>																	
 																	<span>Personaje {{model.inspirationalCharacters.indexOf(p) + 1}}</span>
 																	<button class="btn btn-circle" ng-click="deleteInspirationalCharacter($index);">
 																		<span class="icomoon icon-cross"></span>
@@ -886,16 +885,16 @@
 												<section>
 													<h4>Mi actividad principal</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.mainActivity">
-															<div class="form-group theme-form">
+														<li ng-repeat="s in model.mainActivity track by $index">
+															<div class="form-group theme-form">                                                                
 																<h5>
 																	<span>Mi actividad principal {{model.mainActivity.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteMainActivity($index);">
+																	<button class="btn btn-circle" ng-click="deleteMainActivity(s);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
-																<select class="form-control form-control-lg theme-form" ng-model="model.mainActivity[$index]" ng-options="item for item in mainActivityList" ng-init="model.mainActivity == null"
-																ng-class="{'selected': model.mainActivity[$index].length != 0 && model.mainActivity[$index] != null}">
+																<select class="form-control form-control-lg theme-form" ng-model="model.mainActivity[$index]" ng-options="item for item in mainActivityList" 
+                                                                        ng-init="model.mainActivity == null" ng-class="{'selected': model.mainActivity[$index].length != 0 && model.mainActivity[$index] != null}">
 																	<option value="" ng-disabled="!!model.mainActivity">Actividad principal</option>
 																</select>
 															</div>
@@ -1008,11 +1007,11 @@
 												<section>
 													<h4>Fuente de ingresos</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.moneyIncome">
+														<li ng-repeat="s in model.moneyIncome track by $index">
 															<div class="form-group theme-form">
 																<h5>
 																	<span>Ingreso {{model.moneyIncome.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteMoneyIncome($index);">
+																	<button class="btn btn-circle" ng-click="deleteMoneyIncome(s);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>

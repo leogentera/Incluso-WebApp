@@ -671,8 +671,7 @@ angular
                 //mainActivity              
                 if ($scope.model.mainActivity.length > 0) {
                     for (var i = 0; i < $scope.model.mainActivity.length; i++) {
-                        if (typeof $scope.model.mainActivity[i].characterName === "undefined" ||
-                            typeof $scope.model.mainActivity[i].characterType === "undefined") {
+                        if (typeof $scope.model.mainActivity[i] === "undefined") {
                             $scope.model.mainActivity.splice(i, 1);
                             i = i - 1;
                         }
@@ -682,8 +681,7 @@ angular
                 //moneyIncome              
                 if ($scope.model.moneyIncome.length > 0) {
                     for (var i = 0; i < $scope.model.moneyIncome.length; i++) {
-                        if (typeof $scope.model.moneyIncome[i].characterName === "undefined" ||
-                            typeof $scope.model.moneyIncome[i].characterType === "undefined") {
+                        if (typeof $scope.model.moneyIncome[i] === "undefined") {
                             $scope.model.moneyIncome.splice(i, 1);
                             i = i - 1;
                         }
@@ -1072,7 +1070,9 @@ angular
                 $scope.model.moneyIncome.push(new String());
             };
 
-            $scope.deleteMoneyIncome = function (index) {
+            $scope.deleteMoneyIncome = function (moneyIncome) {
+                //$scope.model.moneyIncome.splice(index, 1);
+                var index = $scope.model.moneyIncome.indexOf(moneyIncome);
                 $scope.model.moneyIncome.splice(index, 1);
             };
 
@@ -1113,7 +1113,9 @@ angular
                 $scope.model.kindOfVideogames.splice(index, 1);
             };
             
-            $scope.deleteMainActivity = function (index) {
+            $scope.deleteMainActivity = function (mainActivity) {
+                //$scope.model.mainActivity.splice(index, 1);
+                var index = $scope.model.mainActivity.indexOf(mainActivity);
                 $scope.model.mainActivity.splice(index, 1);
             };
             
