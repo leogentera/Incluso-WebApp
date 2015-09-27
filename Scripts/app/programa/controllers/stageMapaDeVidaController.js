@@ -111,7 +111,7 @@ angular
                             var questionAnswer = _.find(activityAnswer.questions, function (a) { return a.id == q.id });
                             if (questionAnswer) {
                                 var userAnswer = questionAnswer.userAnswer;
-                                respuesta.respuesta = ( userAnswer.includes(";") ? userAnswer.split(";") : userAnswer );
+                                respuesta.respuesta = ( userAnswer.indexOf(";") > -1 ? userAnswer.split(";") : userAnswer );
                             }
                         }
                         proyecto.respuestas.push(respuesta);
@@ -123,7 +123,6 @@ angular
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
