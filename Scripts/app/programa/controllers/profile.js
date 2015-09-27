@@ -665,6 +665,83 @@ angular
                         }
                     }
                 }
+
+                //Socioeconomicos
+
+                //mainActivity              
+                if ($scope.model.mainActivity.length > 0) {
+                    for (var i = 0; i < $scope.model.mainActivity.length; i++) {
+                        if (typeof $scope.model.mainActivity[i] === "undefined") {
+                            $scope.model.mainActivity.splice(i, 1);
+                            i = i - 1;
+                        }
+                    }
+                }
+
+                //moneyIncome              
+                if ($scope.model.moneyIncome.length > 0) {
+                    for (var i = 0; i < $scope.model.moneyIncome.length; i++) {
+                        if (typeof $scope.model.moneyIncome[i] === "undefined") {
+                            $scope.model.moneyIncome.splice(i, 1);
+                            i = i - 1;
+                        }
+                    }
+                }
+
+                //Uso de tecnologia
+
+                //knownDevices              
+                if ($scope.model.knownDevices.length > 0) {
+                    for (var i = 0; i < $scope.model.knownDevices.length; i++) {
+                        if (typeof $scope.model.knownDevices[i] === "undefined" ) {
+                            $scope.model.knownDevices.splice(i, 1);
+                            i = i - 1;
+                        }
+                    }
+                }
+
+                //ownDevices              
+                if ($scope.model.ownDevices.length > 0) {
+                    for (var i = 0; i < $scope.model.ownDevices.length; i++) {
+                        if (typeof $scope.model.ownDevices[i] === "undefined") {
+                            $scope.model.ownDevices.splice(i, 1);
+                            i = i - 1;
+                        }
+                    }
+                }
+
+                //phoneUsage              
+                if ($scope.model.phoneUsage.length > 0) {
+                    for (var i = 0; i < $scope.model.phoneUsage.length; i++) {
+                        if (typeof $scope.model.phoneUsage[i] === "undefined") {
+                            $scope.model.phoneUsage.splice(i, 1);
+                            i = i - 1;
+                        }
+                    }
+                }
+              
+
+                //kindOfVideogames              
+                if ($scope.model.kindOfVideogames.length > 0) {
+                    for (var i = 0; i < $scope.model.kindOfVideogames.length; i++) {
+                        if (typeof $scope.model.kindOfVideogames[i] === "undefined") {
+                            $scope.model.kindOfVideogames.splice(i, 1);
+                            i = i - 1;
+                        }
+                    }
+                }
+
+                //favoriteGames
+                if ($scope.model.favoriteGames.length > 0) {
+                    for (var i = 0; i < $scope.model.favoriteGames.length; i++) {
+                        if (typeof $scope.model.favoriteGames[i] === "undefined") {
+                            $scope.model.favoriteGames.splice(i, 1);
+                            i = i - 1;
+                        }
+                    }
+                }
+
+
             };
 
             var saveUser = function () {
@@ -860,6 +937,43 @@ angular
                     return item.trim().length > 0 && $scope.model.habilities.indexOf(item) == pos;
 
                 });
+
+                //Uso de tecnologia
+                $scope.model.knownDevices = $scope.model.knownDevices.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.knownDevices.indexOf(item) == pos;
+
+                });
+
+                $scope.model.ownDevices = $scope.model.ownDevices.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.ownDevices.indexOf(item) == pos;
+
+                });
+
+                $scope.model.phoneUsage = $scope.model.phoneUsage.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.phoneUsage.indexOf(item) == pos;
+
+                });
+
+                $scope.model.kindOfVideogames = $scope.model.kindOfVideogames.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.kindOfVideogames.indexOf(item) == pos;
+
+                });
+
+                $scope.model.favoriteGames = $scope.model.favoriteGames.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.favoriteGames.indexOf(item) == pos;
+
+                });
+
+                //Socio Econimicos
+                $scope.model.mainActivity = $scope.model.mainActivity.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.mainActivity.indexOf(item) == pos;
+
+                });
+
+                $scope.model.moneyIncome = $scope.model.moneyIncome.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.moneyIncome.indexOf(item) == pos;
+
+                });
             };
 
             $scope.addStudy = function () {
@@ -956,7 +1070,9 @@ angular
                 $scope.model.moneyIncome.push(new String());
             };
 
-            $scope.deleteMoneyIncome = function (index) {
+            $scope.deleteMoneyIncome = function (moneyIncome) {
+                //$scope.model.moneyIncome.splice(index, 1);
+                var index = $scope.model.moneyIncome.indexOf(moneyIncome);
                 $scope.model.moneyIncome.splice(index, 1);
             };
 
@@ -964,15 +1080,18 @@ angular
                 $scope.model.knownDevices.push(new String());
             };
 
-            $scope.deleteKnownDevice = function (index) {
+            $scope.deleteKnownDevice = function (knownDevice) {
+                //$scope.model.knownDevices.splice(index, 1);
+                var index = $scope.model.knownDevices.indexOf(knownDevice);
                 $scope.model.knownDevices.splice(index, 1);
             };
 
-            $scope.addKnOwnDevice = function (index) {
+            $scope.addOwnDevice = function (index) {
                 $scope.model.ownDevices.push(new String());
             };
 
-            $scope.deleteOwnDevice = function (index) {
+            $scope.deleteOwnDevice = function (ownDevices) {                
+                var index = $scope.model.ownDevices.indexOf(ownDevices);
                 $scope.model.ownDevices.splice(index, 1);
             };
 
@@ -980,7 +1099,8 @@ angular
                 $scope.model.phoneUsage.push(new String());
             };
 
-            $scope.deletePhoneUsage = function (index) {
+            $scope.deletePhoneUsage = function (phoneUsage) {                
+                var index = $scope.model.phoneUsage.indexOf(phoneUsage);
                 $scope.model.phoneUsage.splice(index, 1);
             };
 
@@ -988,11 +1108,14 @@ angular
                 $scope.model.kindOfVideogames.push(new String());
             };
 
-            $scope.deleteKindOfVideoGame = function (index) {
+            $scope.deleteKindOfVideoGame = function (kindOfVideogames) {                
+                var index = $scope.model.kindOfVideogames.indexOf(kindOfVideogames);
                 $scope.model.kindOfVideogames.splice(index, 1);
             };
             
-            $scope.deleteMainActivity = function (index) {
+            $scope.deleteMainActivity = function (mainActivity) {
+                //$scope.model.mainActivity.splice(index, 1);
+                var index = $scope.model.mainActivity.indexOf(mainActivity);
                 $scope.model.mainActivity.splice(index, 1);
             };
             
@@ -1004,9 +1127,11 @@ angular
                 $scope.model.favoriteGames.push(new String());
             };
 
-            $scope.deleteFavoriteGame = function (index) {
+            $scope.deleteFavoriteGame = function (favoriteGames) {                
+                var index = $scope.model.favoriteGames.indexOf(favoriteGames);
                 $scope.model.favoriteGames.splice(index, 1);
             };
+
             $scope.addEmail = function () {
                 var existingEmail = $scope.model.email;
                 if (existingEmail) {
