@@ -19,24 +19,27 @@
         	}
 
             $scope.sideToggle = function(outside){ 
+                getProgress();
+
                 if(!outside)
                     $rootScope.sidebar = !$rootScope.sidebar;
                 else
-                    $rootScope.sidebar = false;
-                
+                    $rootScope.sidebar = false;                
             };
 
             $scope.navigateTo = function(url,sideToggle,activityId){
-                console.log('home.navitageTo ' + url);
-
-                if(activityId!= undefined && activityId > 0 && !$scope.canStartActivity(activityId)) {
+                //TODO: Remove false from condition, only there to jump freely into activities in DEV
+                if(false && activityId!= undefined && activityId > 0 && _activityBlocked[activityId].disabled) {
                     return false;
                 }
-                console.log('location path before');
+                //$location.path(url + activityId);
                 $location.path(url);
-                console.log('location path after');
                 if(sideToggle == "sideToggle")
                     $rootScope.sidebar = !$rootScope.sidebar;
+            };
+			
+			$scope.navigateToMyProfile = function(){
+				$location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
             };
 
             $scope.setToolbar = function(url,name){
@@ -78,7 +81,7 @@
                 if(path.constructor === Array){
                     classdisable = "";
                     for(i= 0; i < path.length; i++){
-                        if($location.path() === path[i]){
+                        if($location.path() === path[i] || $location.path().substr(0, 8) === path[i]){
                             classdisable = "active disabled";
                         }
                     }
@@ -97,6 +100,7 @@
 			
             $scope.scrollToTop = function(element){         
                 $location.hash(element);
+                $anchorScroll();      
             };
             
             //*******************************************************************
@@ -203,30 +207,11 @@
 				}
 			};
 
-
-
-
-            //Helps defining if activity can be started
-            $scope.canStartActivity = function(activityId){
-                if(!_activityStatus) {
-                    _activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
-                }
-                if(_activityStatus && !_activityStatus[activityId]) {
-                    var activityDependenciesRecord = _.filter(_activityDependencies, function (x) {
-                        return x.id == activityId;
-                    });
-                    if (activityDependenciesRecord[0]) {
-                        var activityDependencies = activityDependenciesRecord[0].dependsOn;
-                        var dependenciesCount = activityDependencies.length;
-                        for (var i = 0; i < dependenciesCount; i++) {
-                            if (!_activityStatus[activityDependencies[i]]) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-                return true;
+            //Load activity block status into binding model
+            $scope.resetActivityBlockedStatus = function () {
+               $rootScope.activityBlocked = _activityBlocked;
             };
+            $scope.resetActivityBlockedStatus();
 
             //// new menu behavior ////
             $scope.leftVisible = false;
@@ -254,6 +239,18 @@
                 $scope.$apply(function() {
                     $scope.close(); 
                 });
+            }
+
+            function getProgress(){
+                $scope.showDiploma = false;
+                
+                var usercourse = moodleFactory.Services.GetCacheJson("usercourse");
+
+                if($rootScope.showToolbar && usercourse ) {
+                    if(usercourse.globalProgress == 100){
+                        $scope.showDiploma = true;
+                    }
+                }
             }
 
         }]);

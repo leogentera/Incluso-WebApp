@@ -404,7 +404,7 @@ Parallel work file for UI Developer 01
 
         .wall {
             section {
-                a {
+                a.btn {
                     width: 90%;
                     margin: 0 5vw;
 
@@ -422,6 +422,24 @@ Parallel work file for UI Developer 01
                         }
                     }
 
+                }
+            }
+
+            .reportModal {
+
+                .close {
+                    right: 15%;
+                }
+
+                .add {
+                    border: none;
+                    font-size: 145%;
+                    margin-right: 5%;
+                    margin-left: 5%;
+                }
+
+                .btn {
+                    width: 39%;
                 }
             }
         }
@@ -596,7 +614,6 @@ Parallel work file for UI Developer 01
                         font-weight: bold;                       
                         
                         span {
-                            color: #08b190;
                             font-size: 5vw;
                             padding: 0;
                         }
@@ -613,42 +630,298 @@ Parallel work file for UI Developer 01
                             }
                         }
                     }
+                    .icomoon.icon-comment {color:@clr-commentButton;}
+                    .icomoon.icon-like {color:@clr-likeButton;padding-right: 5px;}
+                    .icomoon.icon-pinch {color:@clr-reportButton;}
                 }
             }            
         }
-    }
+    } //community
 
-    // .privacy-notice,
-    // .use-terms {
+    .privacy-notice,
+    .use-terms {
         
-    //     .component {
+        .component {
 
-    //         padding: 0 7.5%!important;
+            padding: 0 7.5%!important;
 
-    //         p, ul {
-    //             color:@clr-white;
-    //             font-size: 1.1em;
-    //             text-align: left;
-    //             margin-right: 0;
-    //             margin-left: 0;               
+            p, ul {
+                font-size: 1.1em;
+                text-align: left;
+                margin-right: 0;
+                margin-left: 0;               
 
-    //             .subtitle-green {
-    //                 color: #bcd431;
-    //                 font-size: 4.4vw; 
-    //             }
+                .subtitle-green {
+                    color: #bcd431;
+                    font-size: 4.4vw; 
+                }
 
-    //         }
+            }
 
-    //         h3 {
-    //             text-transform: uppercase;
-    //         }            
+            h3 {
+                text-transform: uppercase;
+            }            
 
-    //         ul {
-    //             padding-left: 4.3vw;
-    //         }
+            ul {
+                padding-left: 4.3vw;
+            }
 
-    //     }
+        }
 
+    } //privacidad y condiciones
+
+    .award {
+
+        padding: 25% 0 10%;
+
+        .green-border {
+            border: 2px solid #BBD231;
+            margin: 0 5% 3%;
+            .border-radius(1.5vw);
+            padding: 17% 6% 7%;
+            position: relative;
+
+            .logo {
+                background-image: url('@{url-images}/bg-notifications-sky.gif');                
+                background-position: 63% -74.7%;
+                background-size: auto auto;
+                left: 1%;
+                margin: 0 auto;
+                position: absolute;
+                right: 0;
+                top: -6.3%;
+                width: 89%;               
+            }
+
+            img.medalla {
+                margin: 2% auto -9%;
+            }
+            
+            .txt-renglon {
+                margin-right: 0;
+                margin-left: 0;
+                width: 100%;
+                font-weight: normal;
+                font-size: 119%;
+            }
+
+            .subtitle {
+                color: #BBD231;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                font-size: 148%;
+                font-weight: bold;
+
+                &.txt-bigger {                    
+                    text-transform: uppercase;
+                    font-size: 130%;
+                }
+            }            
+
+            .username {
+                font-size: 165%;
+                font-weight: bold;
+
+                div:first-child {
+                    margin-bottom: -3vw;
+                }
+            }
+
+            .quote {
+
+                .subtitle {
+                    font-size: 110%
+                }
+
+                .author {
+                    font-weight: bold;
+                }
+            }
+        }
+
+        .distribuido {
+            margin: 0 5%;
+            width: 90%;
+
+            .icon-circle {
+                padding: 2.3vh 0 1.5vh;
+
+                &:last-child {
+                    margin: 0;
+                }
+
+                .icomoon {
+                    font-size: 9.5vw;
+                }
+            }            
+        }
+
+
+    } //award
+
+    .post {
+        display:block;
+        width: auto;
+        height:auto;
+        padding:0;
+        margin: 3vw auto 0;
+
+        .post-head {}
+        .post-contents {
+            display:block;
+            width:auto;
+            margin:0;
+            padding:3% 0;
+            border-bottom: 0.1em solid rgba(255, 255, 255, 0.08);
+
+            & > div {
+                display:block;
+                width:90%;
+                margin:0 auto;
+                padding:0;
+            }
+
+            .achievement-badge {
+                display:block;
+                width:auto;
+                height:auto;
+                padding:0;
+                margin:0;    
+
+                .badgename {
+                    display:block;
+                    width:auto;
+                    height:auto;
+                    padding:4vw 0 0;
+                    margin: 0 0 3vw 0;
+                    color:white;
+                    font-family:Play;
+                    font-size:6.3vw;
+                    font-weight: bold;
+                    line-height:7vw;
+                    text-align:center;
+                }
+                figure {
+                    display:block;
+                    width: 50vw;
+                    height: 50vw;
+                    padding:0;
+                    margin:0 auto;
+                    overflow:hidden;
+                }
+                img {
+                    display:block;
+                    width:auto;
+                    height:auto;
+                    padding:0;
+                    margin:0 auto;          
+                }
+                figcaption {
+                    display:block;
+                    width:auto;
+                    height:auto;            
+                }                
+            }
+        }
+        .post-comments {}
+        .post-actions {}
+        .user-alias {
+            color:@clr-white;
+            font-size: 4vw;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    } // post    
+
+    // .posts-list {
+    //     display:block;
+    //     width: auto;
+    //     height:auto;
+    //     padding:0;
+    //     margin: 6vw auto 0;
     // }
+
+    .reward {
+
+        .part.inbloq{
+            margin-bottom: 2vh;
+
+            .notif-title {
+
+                .icomoon {
+                    color: @clr-blueTurquoise;
+                }
+
+                .alert-name {
+                    text-transform: capitalize;
+                }
+        
+            }
+
+           img {
+            width: 100%;
+            height: auto;
+            border-radius: 3px;
+           }
+
+            .txt-renglon {
+
+                &.pill {
+                    font-weight: normal;
+                    font-size: 4vw;
+                    margin: 8vw 0;
+                    padding: 4vw 4vw 9vw;
+                    width: 100%;
+
+                    div {
+                        width: auto;
+                    }
+
+                    .sm-pill,
+                    .green-pill {
+                        border-width: 2px;
+                        font-size: 4vw;
+                        font-weight: bold;
+                        padding: 1vw 3vw;
+                        position: relative;
+                        top: -4px;
+
+                        > span {
+                            display: inline-block;
+                            width: auto;
+
+                            &.icon-star {
+                                font-size: 3.5vw;
+                                position: relative;
+                                top: 2px;
+                                padding: 0;
+                            }
+                        }
+                    }
+
+                    .green-pill {
+                        margin: -0.3vw -1vw;
+                        padding: 0.7vw 2.3vw 1vw;                
+                    }            
+                }
+            }
+
+            .code {
+                display: block;
+                color: @clr-green;
+                font-size: 110%;
+                letter-spacing: 2px;
+                padding: 1vw 0;
+                margin: 0;
+            }
+
+            .actions {
+                margin-top: 6vh;
+            }
+
+        }
+
+    } // reward
 
 }

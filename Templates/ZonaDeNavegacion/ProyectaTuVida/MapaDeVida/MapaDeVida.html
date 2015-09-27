@@ -1,0 +1,23 @@
+<div class="incluso-app step-dashboard" id="site-wrapper">
+  <div id="site-menu" >
+  </div>
+  <div id="site-canvas">
+  <article class="bluespace">
+    <div class="subtitle">Mapa de Vida</div>
+    <section class="txt-renglon pill">
+      <div class="fl-left">Estrellas a ganar:</div><div class="fl-right sm-pill">{{stars}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+    </section>
+    <div class="txt-renglon">Instrucciones de uso:</div>
+    <section class="txt-renglon up-line">
+      <ol>
+        <li>Descargar la aplicación Incluso Interactivo con el botón naranja.</li>
+        <li>Regresa a Misión Incluso.</li>
+        <li>Presiona el botón para iniciar la aplicación.</li>
+      </ol>
+    </section>  
+    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="!isInstalled" ng-click="downloadGame()">Descargar Reto</a>
+    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="isInstalled" ng-click="downloadGame()">Iniciar Reto</a>
+    <div role="button" class="txt-renglon centered" ng-click="back()">Cancelar</div>
+  </article>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<div class="incluso-app notif-dashboard" id="site-wrapper">      
+  <article class="starway reward">
+    <section class="part inbloq text-left">
+      <div class="notif-title">
+        <span class="icomoon icon-medal fl-left txt-bigger"></span><span class="alert-name">{{rewardDetail.name}}</span>
+      </div>
+      <hr>
+      <!--<img src="assets/images/img-reward.jpg">-->
+      <img src="{{rewardDetail.image}}">
+      <div>
+        <section class="txt-renglon pill">
+          <div class="pull-left">Costo en estrellas:</div>
+          <div class="pull-right sm-pill"><span class="pull-left">{{rewardDetail.points_to_get_reward}}&nbsp;&nbsp;</span><span class="icomoon icon-star pull-right"></span></div>
+        </section>
+        Contacta a tu coach e intercambia tu recompensa con el siguiente código: <label class="code">{{rewardDetail.rewards_claim_code}}</label>{{rewardDetail.directions}}
+      </div>                  
+      <p class="actions">
+        <a role="button" class="btn btn-primary btn-lg btn-block btn-uppercase" ng-click="navigateTo('MyStars','null')"><span>Regresar</a>
+      </p>
+    </section>
+  </article>
+</div>

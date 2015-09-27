@@ -15,16 +15,20 @@ angular
 
             $scope.$emit('ShowPreloader');
             $scope.setToolbar($location.$$path,"");
-            $rootScope.showFooter = true; 
-            $rootScope.showFooterRocks = false; 
+            $rootScope.showFooter = true;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false; 
 
             $scope.scrollToTop();
             $scope.isCollapsed = true;
 
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
-            $scope.profile = moodleFactory.Services.GetCacheJson("profile");
+            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
            
             $scope.fortalezas = _.filter($scope.retoMultipleActivities, function(a){ return a.score == "3"});
+            $scope.fortalezas = _.sortBy($scope.fortalezas, function(f){ return -f.total_score });
             $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3"});
             $scope.$emit('HidePreloader');
 

@@ -27,6 +27,9 @@ angular
             $scope.setToolbar($location.$$path,"Notificaciones");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
                                                 
             ////// displaying notificacions as carousel ////////
             $scope.myInterval = 5000;

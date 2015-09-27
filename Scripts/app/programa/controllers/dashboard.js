@@ -25,7 +25,7 @@
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
             $scope.user.profileimageurl = $scope.user.profileimageurl + "?rnd=" + new Date().getTime();
 
-            $scope.profile = moodleFactory.Services.GetCacheJson("profile"); //profile is not used in this page, it is only used for stars. 
+            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId")); //profile is not used in this page, it is only used for stars. 
             if ($scope.profile && $scope.profile.stars) {
                 //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
                 //the entire application updates profile.stars.  The cached version of stars should be read from profile (if it exists)
@@ -33,9 +33,13 @@
                 $scope.profile = null;   //profile is not used in this page, it is only used for stars
             }
 
+            $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
             $scope.setToolbar($location.$$path,"Misión Incluso"); //set global toolbar properties
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = true; 
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
 
             try {
                 //Get stage from local storage
@@ -58,11 +62,7 @@
                 logout($http, $scope, $location);
             };                    
           
-            var existingInterval = localStorage.getItem('Interval');
-            if(!existingInterval){
-                var interval = setInterval(getUserChat,180000);          
-                _setLocalStorageItem('Interval', interval);
-            }                        
+
 
             $scope.navigateToStage = function(){
                 //Check if first time with course
@@ -71,8 +71,29 @@
                     //Update firsttime value
                     $scope.updateProgramFirstTime();
                 }
+                
+                //Update current stage
+                var stage = _getItem("currentStage");
+                if (stage) {
+                    $scope.currentStage = stage;
+                }else{
+                    $scope.currentStage = getCurrentStage();
+                }
+
                 //redirect user to stage 1 dashboard after closing modal
-                $location.path('/ZonaDeVuelo/Dashboard/' + $scope.stage.section + '/0');
+                var zone = '/ZonaDeVuelo/Dashboard/';
+                var activityId=1001;
+                //Depend of section is the zone to redirect
+                if($scope.currentStage == 2){
+                    zone = '/ZonaDeNavegacion/Dashboard/';
+                    activityId = 2001;
+                } 
+                if ($scope.currentStage == 3){
+                    zone = '/ZonaDeAterrizaje/Dashboard/';
+                    activityId = 3101;
+                }
+                $scope.navigateTo(zone + $scope.currentStage + '/0',false,activityId);
+
             };
 
             //Updates firsttime flag for program in model, localstorage and server
@@ -131,37 +152,38 @@
             }
             
             function calculateTotalProgress(){
-                var currentStage = 0;                
-                if (currentStage != null) {
-                    var usercourses = $scope.usercourse;
-                    
-                    var stageProgressBuffer = 0;
-                    var stageTotalActivities = 0; //Attainment of user in the current Stage
-                    var stageChallengesCount = usercourses.stages[currentStage].challenges.length;
-        
-                    var i, j,k;
-                    for (i = 0; i < stageChallengesCount; i++) {
-                        var challenge = usercourses.stages[currentStage].challenges[i];
-                        var challengeActivitiesCount = challenge.activities.length;
-                        for (j = 0; j < challengeActivitiesCount; j++) {
-                            var activity = challenge.activities[j];
-                            stageProgressBuffer += activity.status;
-                            stageTotalActivities++;
-                            /*if(activity.activities) {
-                                var subActivitiesCount = activity.activities.length;
-                                for (k = 0; k < subActivitiesCount; k++) {
-                                    var subActivity = activity.activities[k];
-                                    stageProgressBuffer += subActivity.status;
-                                    stageTotalActivities++;
-                                }
-                            }*/
-                        }
+                var currentStage = _getItem("currentStage");                
+                if (!currentStage) {
+                    currentStage = getCurrentStage();
+                }
+                currentStage = currentStage - 1;
+                var usercourses = $scope.usercourse;
+                
+                var stageProgressBuffer = 0;
+                var stageTotalActivities = 0; //Attainment of user in the current Stage
+                var stageChallengesCount = usercourses.stages[currentStage].challenges.length;
+    
+                var i, j,k;
+                for (i = 0; i < stageChallengesCount; i++) {
+                    var challenge = usercourses.stages[currentStage].challenges[i];
+                    var challengeActivitiesCount = challenge.activities.length;
+                    for (j = 0; j < challengeActivitiesCount; j++) {
+                        var activity = challenge.activities[j];
+                        stageProgressBuffer += activity.status;
+                        stageTotalActivities++;
+                        /*if(activity.activities) {
+                            var subActivitiesCount = activity.activities.length;
+                            for (k = 0; k < subActivitiesCount; k++) {
+                                var subActivity = activity.activities[k];
+                                stageProgressBuffer += subActivity.status;
+                                stageTotalActivities++;
+                            }
+                        }*/
                     }
-                    
-                    $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);
                 }
-                else {                                        
-                }
+                
+                $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);
+                
             }
 
             function errorCallback(data){
@@ -172,19 +194,22 @@
                                                         
             function getCurrentStage(){
                 var currentStage = 1;
-                
+
                 for(var i = 0; i < $scope.usercourse.stages.length; i++) {
                     var uc = $scope.usercourse.stages[i];
                     _setLocalStorageJsonItem("stage", uc);
                     $scope.stage = uc;
                     
-                    if(uc.stageStatus === 0){
+                    if(uc.status === 0){
                         break;
                     }
 
                     currentStage++;
                 }
 
+                if(currentStage == $scope.usercourse.stages.length){
+                    currentStage--;
+                }
                 return currentStage;
             }
 
@@ -207,7 +232,7 @@
                     }
 
                     _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                }, errorCallback, true);                
+                }, errorCallback, false);                
             }
             
 

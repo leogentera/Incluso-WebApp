@@ -1,6 +1,6 @@
 <div class="incluso-app">
     <div class="alert alert-warning" role="alert" ng-show="showWarning" ng-cloak>
-        <div class="alert-message" ng-click="hideWarning2()">
+        <div class="alert-message" ng-click="hideWarning()">
             <div class="icomoon icon-warning"></div>
             <!--<p>Reposnde todas las preguntas para poder continuar</p>-->
             <p>{{warningMessage}}</p>
@@ -29,11 +29,10 @@
                             <li ng-repeat="dream in misSuenosAnswers[0] track by $index">
                                 <section class="form txt-renglon part list clearfix">
                                     <div class="form-group theme-form">
-
                                         <div class="clearfix">
                                             <span>Sueño {{$index + 1}}</span>
                                             <a class="btn btn-circle pull-right"
-                                               ng-click="deleteSueno1($index)">
+                                               ng-click="deleteSueno($index, 0)">
                                                 <span class="icomoon icon-cross white"></span></i>
                                             </a>
                                         </div>
@@ -42,18 +41,16 @@
                                                 <textarea id="textoarea1"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nuevo sueño"
-                                                          ng-model="misSuenosAnswers[0][$index]"
-                                                        >
+                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
+                                                          ng-model="misSuenosAnswers[0][$index]">
                                                 </textarea>
                                         </div>
-
                                     </div>
                                 </section>
                             </li>
                         </ul>
-
                         <div class="txt-renglon">
-                            <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno1();">
+                            <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno(0)">
                                 <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
                             </a>
                         </div>
@@ -66,16 +63,14 @@
                             de interés propio. Tener sueños de este tipo te ayuda a enriquecer tu mente y espíritu.
                             Y tú ¿con qué sueñas? Registra tus sueños de hacer.
                         </div>
-
                         <ul class="block-list clearfix">
                             <li ng-repeat="ability in misSuenosAnswers[1] track by $index">
                                 <section class="form txt-renglon part list clearfix">
                                     <div class="form-group theme-form">
-
                                         <div class="clearfix">
                                             <span>Sueño {{$index + 1}}</span>
                                             <a class="btn btn-circle pull-right"
-                                               ng-click="deleteSueno2($index)">
+                                               ng-click="deleteSueno($index, 1)">
                                                 <span class="icomoon icon-cross white"></span>
                                             </a>
                                         </div>
@@ -84,18 +79,16 @@
                                                 <textarea id="textoarea2"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nuevo sueño"
-                                                          ng-model="misSuenosAnswers[1][$index]"
-                                                        >
+                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
+                                                          ng-model="misSuenosAnswers[1][$index]">
                                                 </textarea>
                                         </div>
-
                                     </div>
                                 </section>
                             </li>
                         </ul>
-
                         <div class="txt-renglon">
-                            <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno2();">
+                            <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno(1)">
                                 <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
                             </a>
                         </div>
@@ -109,16 +102,14 @@
                             persona que te gustaría llegar a ser para dejar huella. Y tú ¿con qué sueñas? Registra
                             tus sueños de ser.
                         </div>
-
                         <ul class="block-list clearfix">
                             <li ng-repeat="ability in misSuenosAnswers[2] track by $index">
                                 <section class="form txt-renglon part list clearfix">
                                     <div class="form-group theme-form">
-
                                         <div class="clearfix">
                                             <span>Sueño {{$index + 1}}</span>
                                             <a class="btn btn-circle pull-right"
-                                               ng-click="deleteSueno3($index)">
+                                               ng-click="deleteSueno($index, 2)">
                                                 <span class="icomoon icon-cross white"></span>
                                             </a>
                                         </div>
@@ -126,17 +117,16 @@
                                                 <textarea id="textoarea3"
                                                           class="form-control form-control-lg theme-form" row="2"
                                                           name="opciones" placeholder="Nuevo sueño"
+                                                          onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-model="misSuenosAnswers[2][$index]">
                                                 </textarea>
                                         </div>
-
                                     </div>
                                 </section>
                             </li>
                         </ul>
-
                         <div class="txt-renglon">
-                            <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno3();">
+                            <a role="button" class="btn btn-lg btn-block btn-add" ng-click="addSueno(2)">
                                 <span class="icomoon icon-plus"></span>Agregar nuevo sueño...
                             </a>
                         </div>

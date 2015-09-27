@@ -16,12 +16,13 @@ angular
 
             $scope.currentChallenge = 2;
              var userCourse = JSON.parse(localStorage.getItem('usercourse'));
-             var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
-             var activityFromTree;
+            var parentActivity = getActivityByActivity_identifier($routeParams.activityId, userCourse);
+            var activityFromTree;
+
              if (parentActivity.activities && parentActivity.activities.length) {
                 activityFromTree = parentActivity.activities[0];
              } else {
-                activityFromTree = parentActivity
+                activityFromTree = parentActivity;
              }
 
 
@@ -33,9 +34,8 @@ angular
             $scope.$emit('HidePreloader');
 
             var endForumActivity = function(moodleid){
+                console.log('Closing time: ' + moodleid);
                 $scope.$emit('ShowPreloader');
-                //debugger;
-               var parentActivity = getActivityByActivity_identifier($routeParams.moodleid, userCourse);
                var activities = parentActivity.activities;
 
                parentActivity.status = 1;
@@ -59,16 +59,14 @@ angular
                 };
 
                 var userCurrentStage = localStorage.getItem("currentStage");
-
                if (activities) {
                  for(var i = 0; i < activities.length; i++) {
                   moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {});
                  }
                }
-
-                moodleFactory.Services.PutEndActivity(moodleid, data, parentActivity, userToken,
+                moodleFactory.Services.PutEndActivity(parentActivity.coursemoduleid, data, parentActivity, userToken,
                     function(response){
-                          var profile = JSON.parse(localStorage.getItem("profile"));
+                          var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
                           var model = {
                               userId: userId,
                               stars: activityFromTree.points,
@@ -78,44 +76,51 @@ angular
                           };
 
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
-                            updateActivityStatus(moodleid);
-                              var activity_identifier = null;
-                              var moodleId = $routeParams.moodleid;
-                              if(moodleId == 151){
-                                  activity_identifier = 1010;
-                                  moodleid = 64;
-                              } else if(moodleId == 64){
-                                  activity_identifier = 1010;
-                                  moodleid = 64;
-                              } else if(moodleId == 73){
-                                  activity_identifier = 1008;
-                                  moodleid = 73;
-                              } else if(moodleId == 147){
-                                  activity_identifier = 1049;
-                                  moodleid = 147;
-                              } else if(moodleId == 148){
-                                  activity_identifier = 1049;
-                                  moodleid = 148;
-
+                            updateActivityStatus($routeParams.activityId);
+                            _updateRewardStatus();
+                                debugger;
+                              $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
+                              $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
+                              var extraPointsCounter = getForumsExtraPointsCounter();
+                              var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $routeParams.discussionId; });
+                              if(currentDiscussionCounter && currentDiscussionCounter.extra_replies_counter <= 10) {
+                                  console.log('Assigning extras: '+ (50 * Number(currentDiscussionCounter.extra_replies_counter)));
+                                  updateUserStars($routeParams.activityId, (50 * Number(currentDiscussionCounter.extra_replies_counter)) );
+                              } else {
+                                  updateUserStars($routeParams.activityId);
                               }
-                              updateUserStars(moodleId,null, updateUserStarsCallback);
+                              //updateUserStars($routeParams.activityId);
+
+
                               $scope.$emit('HidePreloader');
-                            
+                              var activityId = Number($routeParams.activityId);
+                              if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
+                                  $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                              } else if(activityId == 2030 || activityId == 2026){
+                                  $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                              } else if(activityId == 3304 || activityId == 3404){
+                                  $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                              }
+
                           }, errorCallback);
                     },
                     function(){
-                      $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                        var activityId = Number($routeParams.activityId);
+                        if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
+                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                        } else if(activityId == 2030 || activityId == 2026){
+                            $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                        } else if(activityId == 3304 || activityId == 3404){
+                            $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                        }
                     });
 
             };
 
-            var updateUserStarsCallback = function(){
-                var userCurrentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);                    
-            };
 
             $scope.finishActivity = function () {
-               endForumActivity(parentActivity.coursemoduleid);
+                var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+                endForumActivity(moodleId);
             }
 
 

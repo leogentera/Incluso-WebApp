@@ -11,51 +11,71 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {        
+            _timeout = $timeout;
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = false; 
-            $rootScope.showFooterRocks = false;            
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;            
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             $scope.model = userCourse;
             $scope.like_status = 1;
-            $rootScope.showFooterRocks = false; 
-            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+            $rootScope.showFooterRocks = false;             
             var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
 
             $scope.idEtapa = 0;
             $scope.scrollToTop();            
             $scope.currentPage = 1;
             var index = 0;
-            var parentIndex = 4;
+            var parentIndex = 4;                           
+            var coursemoduleid = parseInt($routeParams.moodleid);
+            var currentChallenge = 0;
+            var currentStage;
+            switch(coursemoduleid){
+                case 1002:
+                    currentChallenge = 4;
+                    currentStage = "ZonaDeVuelo";
+                    break;
+                case 2022:
+                    currentChallenge = 5;
+                    currentStage = "ZonaDeNavegacion";
+                    break;
+                case 3501:
+                    currentChallenge = 5;
+                    currentStage = "ZonaDeAterrizaje";
+                    break;
 
-            var activity = $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index];
-            $scope.activityPoints = activity.points;
+            }
+            var treeActivity = getActivityByActivity_identifier(coursemoduleid, userCourse);            
+            $scope.activityPoints = treeActivity.points;
             var cabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
 
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
             };
 
-             var startedActivityCabinaDeSoporte = ($scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started || $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status) && cabinaDeSoporte;
+             var startedActivityCabinaDeSoporte = (treeActivity.started || treeActivity.status) && cabinaDeSoporte;
             // Start activity of 'cabina de soporte'                    
             if (!startedActivityCabinaDeSoporte) {
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                 var data = {
                     userid: currentUser.userId,
                     datestarted: getdate(),
-                    moduleid: activity.coursemoduleid,
+                    moduleid: treeActivity.coursemoduleid,
                     updatetype: 0
                 };
                 
-                $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].started = 1;
-                $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].datestarted = data.datestarted; 
+                treeActivity.started = 1;
+                treeActivity.datestarted = data.datestarted; 
                 _setLocalStorageJsonItem('startedActivityCabinaDeSoporte', {$stage: $scope.idEtapa, $index: index, $parentIndex: parentIndex, $data: data});                    
-                _setLocalStorageJsonItem('usercourse', $scope.model);
+                _setLocalStorageJsonItem('usercourse', userCourse);
 
-                moodleFactory.Services.PutStartActivity(data, activity, currentUser.token, function (size) {                                            
+                moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {                                            
 
                     //trigger activity type 1 is sent when the activity starts.
                     var triggerActivity = 1;
-                    _createNotification(activity.coursemoduleid, triggerActivity);
+                    _createNotification(treeActivity.coursemoduleid, triggerActivity);
                     
                 },function(){
                     console.log('Error callback');    
@@ -66,19 +86,19 @@ angular
                 $location.path('/Chat');
             };
 
-            if(finishCabinaSoporte){                
-                if($scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status == 1){
-                    $location.path('/Chat');
-                }
-                else{
-                    $scope.navigateToPage(2);
-                }    
-                $scope.$emit('HidePreloader');            
-            }
+            if(treeActivity.status == 1){   
+             $location.path('/Chat'); 
+             }            
+
+            if(finishCabinaSoporte){
+               $scope.navigateToPage(2);
+               $scope.$emit('HidePreloader');            
+            }                            
+            
 
             $scope.finishActivity = function () {
                 $scope.$emit('ShowPreloader'); //show preloader
-                if(!$scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status){
+                if(!treeActivity.status){
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                 var like_status = $scope.like_status;
 
@@ -88,19 +108,20 @@ angular
                 };
 
                 // Update activity in usercourse
-                $scope.model.stages[$scope.idEtapa].challenges[parentIndex].activities[index].status = 1;
+                treeActivity.status = 1;
 
-                moodleFactory.Services.PutEndActivity(activity.coursemoduleid, data, activity, currentUser.token, function () {
+                moodleFactory.Services.PutEndActivity(treeActivity.coursemoduleid, data, treeActivity, currentUser.token, function () {
                     _setLocalStorageJsonItem('usercourse', $scope.model);
-                    var profile = JSON.parse(localStorage.getItem("profile"));
+                    var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
                     var model = {
                         userId: currentUser.userId,
-                        stars: activity.points,
-                        instance: activity.coursemoduleid,
+                        stars: $scope.activityPoints,
+                        instance: treeActivity.coursemoduleid,
                         instanceType: 0,
                         date: new Date()
                     };
-                    profile.stars = parseInt(profile.stars) + activity.points;
+
+                    profile.stars = parseInt(profile.stars) + treeActivity.points;
                     moodleFactory.Services.PutStars(model, profile, currentUser.token, successfullCallBack, errorCallback);                    
                 }, function(){
                     $scope.$emit('HidePreloader'); //hide preloader  
@@ -113,17 +134,21 @@ angular
                 var triggerActivity = 2;   
 
                 //create notification
-                _createNotification(activity.coursemoduleid, triggerActivity);
+                _createNotification(treeActivity.coursemoduleid, triggerActivity);
                 //complete stage                
-                _updateBadgeStatus(activity.coursemoduleid);  
-
-
+                _updateBadgeStatus(treeActivity.coursemoduleid);
+                
+                _updateRewardStatus();
                 // update activity status dictionary used for blocking activity links
-                updateActivityStatusDictionary(activity.coursemoduleid);                
-                //console.log(profile);
+                updateActivityStatusDictionary(treeActivity.activity_identifier);
+                
+                localStorage.removeItem("finishCabinaSoporte");
+
                 $scope.$emit('HidePreloader'); //hide preloader  
                 var userCurrentStage = localStorage.getItem("currentStage");
-                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4'); 
+
+                $location.path('/'+ currentStage +'/Dashboard/' + userCurrentStage + '/' + currentChallenge); 
+                
             }
 
             function errorCallback(){

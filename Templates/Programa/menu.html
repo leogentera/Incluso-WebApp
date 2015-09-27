@@ -1,206 +1,154 @@
- <!-- Sidebars -->
-    <div ui-track-as-search-param='true' class="sidebar sidebar-left ng-scope">
-        <div ui-track-as-search-param="true" class="sidebar sidebar-left ng-scope"><div class="scrollable ng-scope">
-          <div class="scrollable-content">
-            <div class="list-group" ui-turn-off="uiSidebarLeft">
-              <div id="site-menu" >
-                  <!-- <nav class="ng-scope">
-                    <div id="navBar" class="navbar" ng-class="{'navbar-blue': navbarBlue, 'navbar-orange': navbarOrange}">
-                      <ul ng-click="sideToggle()" class="list-inline">
-                        <li>
-                          <span class="icomoon icon-cross white"></span>
-                        </li>
-                        <li>
-                          <a class="navbar-heading"> Menu</a>
-                        </li>
-                      </ul>
-                      <!--<div class="container-fluid">
-                        <div class="row">
-                          <div class="navbar-assets" ng-click="sideToggle()">
-                            <h1 class="navbar-heading"><a id="closeaton" data-transition="ease"><i class="icomoon icon-cross white"></i> Menu</a></h1>
-                          </div>
-                        </div>
-                      </div>- ->
-                    </div>
-                  </nav> -->
-                  <div class="ng-scope">
-                    <div class="navbar" id="navBar" ng-class="{'navbar-blue': navbarBlue, 'navbar-orange': navbarOrange}">
-                      <a class="navbar-toggle collapsed"  ng-click="sideToggle()">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icomoon icon-cross"></span>
-                      </a>
-                      <div class="navbar-assets clearfix">
-                        <h1 class="navbar-heading">Menú</h1>
-                      </div>
-                    </div>
-                  </div>
-                  <ul class="nav" ng-controller="menuController">
-                    <li><a ng-click="navigateTo('ProgramaDashboard', 'sideToggle')"><span class="icomoon icon-home"></span> Inicio</a></li>
-                    <li>
-                        <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="0"></i>-->
-                        <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="0" ng-show="!one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
-                        <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="0" ng-show="one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
-                        <a class="menu-blue" ng-click="navigateTo('/ZonaDeVuelo/Dashboard/1/0','sideToggle')">
-                          <span class="icomoon icon-spaceship">
-                              <span class="path1"></span>
-                              <span class="path2"></span>
-                              <span class="path3"></span>        
-                          </span>
-                          Zona de Vuelo
-                        </a>
-                        <div class="submenu" id="sub0">
-                            <!-- <ul>
-                                <li>Exploración inicial</li> 
-                                <li><a ng-class="canStartActivity(150)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/ExploracionInicial/1001', 'sideToggle',150)">Exploración inicial</a></li>
-                            </ul> -->
-                            <ul>
-                              <li>Cuarto de recursos</li>
-                              <li><a ng-class="canStartActivity(112)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia', 'sideToggle',112)">Fuente de energía</a></li>
-                            </ul>
-                            <ul>
-                                <li>Conócete</li>
-                                <li><a ng-class="canStartActivity(145)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia', 'sideToggle',145)">Fuente de energía</a></li>
-                                <li><a ng-class="canStartActivity(139)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/RetoMultiple/1039', 'sideToggle',139)">Reto múltiple </a></li>
-                                <li><a ng-class="canStartActivity(151)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64', 'sideToggle',151)">Punto de encuentro </a></li>
-                                <li><a ng-class="canStartActivity(149)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/Conocete/ZonaDeContacto/149', 'sideToggle',149)">Zona de contacto</a></li>
-                            </ul>
-                            
-                            <ul>
-                                <li>Mis sueños </li>
-                                <li><a ng-class="canStartActivity(146)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia', 'sideToggle',146)">Fuente de energía</a></li>
-                                <li><a ng-class="canStartActivity(71)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisCualidades/1005', 'sideToggle',71)">Mis cualidades</a></li>
-                                <li><a ng-class="canStartActivity(70)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisGustos/1006', 'sideToggle',70)">Mis gustos</a></li>
-                                <li><a ng-class="canStartActivity(72)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/Suena/1007', 'sideToggle',72)">Sueña</a></li>
-                                <li><a ng-class="canStartActivity(73)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/73', 'sideToggle',73)">Punto de encuentro </a></li>
-                            </ul>
-                            <ul>
-                                <li>Cabina de soporte</li>
-                                <li><a ng-class="canStartActivity(68)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat', 'sideToggle',68)">Chat</a></li>
-                                
-                                <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>-->
-                            </ul>
-                            <!-- <ul>
-                                <li>Exploración final</li> 
-                                <li><a ng-class="canStartActivity(100)?'':'disabled'" ng-click="navigateTo('/ZonaDeVuelo/ExploracionFinal/1009', 'sideToggle',100)">Exploración final</a></li>
-                            </ul> -->
-                        </div>
-                    </li>
-                    <li class="hidden">
-                        <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="1"></i>-->
-                        <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="1" ng-show="!two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
-                        <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="1" ng-show="two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
-                        <a class="menu-green" ng-click="navigateTo('/ZonaDeNavegacion/Dashboard/1', 'sideToggle')">
-                          <span class="icomoon icon-asterodis">
-                              <span class="path1"></span>
-                              <span class="path2"></span>
-                              <span class="path3"></span>        
-                          </span>    
-                          Zona de navegacion
-                        </a>
-                        <!--<div class="submenu" id="sub1">
-                            <ul>
-                                <li>Exploración inicial</li> 
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial','Exploración inicial', 'sideToggle', 'navbarorange')">Exploración inicial</a></li>
-                            </ul>
-                            <ul>
-                              <li>Cuarto de recursos</li>
-                              <li><a ng-click="navigateTo('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia','Zona de Vuelo', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
-                            </ul>
-                            <ul>
-                                <li>Conócete</li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia','Descubre más', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple','Reto múltiple', 'sideToggle', 'navbarorange')">Reto múltiple </a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64','Punto de encuentro', 'sideToggle', 'navbarorange')">Punto de encuentro </a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/ZonaDeContacto','Zona de contacto', 'sideToggle', 'navbarorange')">Zona de contacto</a></li>
-                            </ul>
-                            
-                            <ul>
-                                <li>Mis sueños </li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia','Descubre más', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos','Mis gustos', 'sideToggle', 'navbarorange')">Mis gustos</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades','Mis cualidades', 'sideToggle', 'navbarorange')">Mis Cualidades</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena','Sueña', 'sideToggle', 'navbarorange')">Sueña</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro','Punto de encuentro', 'sideToggle', 'navbarorange')">Punto de encuentro </a></li>
-                            </ul>
-                            <ul>
-                                <li>Cabina de soporte</li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat','Reto múltiple', 'sideToggle', 'navbarorange')">Chat</a></li>
-                                
-                                <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>
-                            </ul>
-                            <ul>
-                                <li>Exploración final</li> 
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal','Exploración final', 'sideToggle', 'navbarorange')">Exploración final</a></li>
-                            </ul>
-                        </div>-->
-                    </li>
-                    <li class="hidden">
-                        <!--<i class="icomoon icon-arrow fl-right white pointer accsub" data-id="2"></i>-->
-                         <span class="icomoon icon-arrow fl-right white pointer accsub" data-id="1" ng-show="!three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
-                        <span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="1" ng-show="three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
-                        <a class="menu-pink" ng-click="navigateTo('/ZonaDeAterrizaje/Dashboard/2', 'sideToggle')">
-                          <span class="icomoon icon-planet">
-                              <span class="path1"></span>
-                              <span class="path2"></span>
-                              <span class="path3"></span>        
-                          </span>    
-                          Zona de aterrizaje
-                        </a>
-                        <!--<div class="submenu" id="sub2">
-                            <ul>
-                                <li>Exploración inicial</li> 
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionInicial/zv_exploracionInicial','Exploración inicial', 'sideToggle', 'navbarorange')">Exploración inicial</a></li>
-                            </ul>
-                            <ul>
-                              <li>Cuarto de recursos</li>
-                              <li><a ng-click="navigateTo('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/zv_cuartoderecursos_fuentedeenergia','Zona de Vuelo', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
-                            </ul>
-                            <ul>
-                                <li>Conócete</li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/FuenteDeEnergia/zv_conocete_fuentedeenergia','Descubre más', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/RetoMultiple/zv_conocete_retomultiple','Reto múltiple', 'sideToggle', 'navbarorange')">Reto múltiple </a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/64','Punto de encuentro', 'sideToggle', 'navbarorange')">Punto de encuentro </a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/Conocete/ZonaDeContacto','Zona de contacto', 'sideToggle', 'navbarorange')">Zona de contacto</a></li>
-                            </ul>
-                            
-                            <ul>
-                                <li>Mis sueños </li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/zv_missuenos_fuentedeenergia','Descubre más', 'sideToggle', 'navbarblue')">Fuente de energía</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisGustos/zv_missuenos_misgustos','Mis gustos', 'sideToggle', 'navbarorange')">Mis gustos</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisCualidades/zv_missuenos_miscualidades','Mis cualidades', 'sideToggle', 'navbarorange')">Mis Cualidades</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/Suena/zv_missuenos_suena','Sueña', 'sideToggle', 'navbarorange')">Sueña</a></li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/zv_missuenos_puntosdeencuentro','Punto de encuentro', 'sideToggle', 'navbarorange')">Punto de encuentro </a></li>
-                            </ul>
-                            <ul>
-                                <li>Cabina de soporte</li>
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/zv_cabinadesoporte_chat','Reto múltiple', 'sideToggle', 'navbarorange')">Chat</a></li>
-                                
-                                <!--<li><a  ng-href="./Templates/Programa/forocom.shtml"> Foro común</a></li>
-                            </ul>
-                            <ul>
-                                <li>Exploración final</li> 
-                                <li><a ng-click="navigateTo('/ZonaDeVuelo/ExploracionFinal/zv_exploracionfinal','Exploración final', 'sideToggle', 'navbarorange')">Exploración final</a></li>
-                            </ul>
-                        </div>-->
-                    </li> 
-                    <li><a ng-click="playVideo('assets/media', 'video-tutorial.mp4')"><span class="icomoon icon-video-file"></span> Guía de uso </a></li>
-                    <li><a ng-click="navigateTo('PrivacyNotice', 'sideToggle')"><span class="icomoon icon-privacy"></span> Aviso de privacidad</a></li>
-                    <li><a ng-click="navigateTo('TermsOfUse', 'sideToggle')"><span class="icomoon icon-books"></span> Condiciones de uso</a></li>
-                    
-                    <li class="hidden"><a ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"><span class="icomoon icon-video-file"></span> Acerca de Incluso</a></li>                                  
-                    <li class="hidden"><a ng-click="navigateTo('HallOfFame', 'sideToggle')"><span class="icomoon icon-cup"></span> Salón de la fama</a></li>
-                    <li class="hidden"><a><span class="icomoon icon-racing-flag "></span> Recuerdos Incluso</a></li>
-                    <li class="hidden"><a><span class="icomoon icon-loop"></span> Seguimiento</a></li>
-                    <li class="hidden"><a><span class="icomoon icon-document"></span> Certificación</a></li>                    
-                    <li class="hidden"><a><span class="icomoon icon-lifesaver"></span> Preguntas frecuentes</a></li>                                        
-                    <li class="hidden"><a class="" ng-click="navigateTo('SharingExperience', 'sideToggle')">Compartir experiencia</a></li>
-
-                    <li class="separate"></li>                    
-                    <li><a ng-click="logout()"><span class="icomoon icon-logout"></span> Salir</a></li>
-                  </ul>
-                </div>
-            </div>
-          </div>
-        </div>
-        </div>
-    </div>
+<!-- Sidebars -->
+<div ui-track-as-search-param='true' class="sidebar sidebar-left ng-scope">
+	<div ui-track-as-search-param="true" class="sidebar sidebar-left ng-scope">
+		<div class="scrollable ng-scope">
+			<div class="scrollable-content">
+				<div class="list-group">
+					<div id="site-menu" >
+						<div class="ng-scope">
+							<div class="navbar" id="navBar" ng-class="{'navbar-blue': navbarBlue, 'navbar-orange': navbarOrange}">
+								<a class="navbar-toggle collapsed"  ng-click="sideToggle()">
+									<span class="sr-only">Toggle navigation</span>
+									<span class="icomoon icon-cross"></span>
+								</a>
+								<div class="navbar-assets clearfix">
+									<h1 class="navbar-heading">Menú</h1>
+								</div>
+							</div>
+						</div>
+						<ul class="nav" ng-controller="menuController">
+							<li><a ng-click="navigateTo('ProgramaDashboard', 'sideToggle')"><span class="icomoon icon-home"></span> Inicio</a></li>
+							<li class="hidden"><a ng-click="playVideo('assets/media', 'video-bienvenida.mp4')"><span class="icomoon icon-video-file"></span> Acerca de Incluso</a></li>
+							<li>
+								<span class="icomoon icon-arrow fl-right white pointer accsub" data-id="0" ng-show="!one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
+								<span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="0" ng-show="one.isCollapsed" ng-click="one.isCollapsed = !one.isCollapsed"></span>
+								<a class="menu-blue" ng-click="navigateTo('/ZonaDeVuelo/Dashboard/1/0', 'sideToggle')">
+									<span class="icomoon icon-spaceship">
+										<span class="path1"></span>
+										<span class="path2"></span>
+										<span class="path3"></span>        
+									</span>Zona de Vuelo
+								</a>
+								<div class="submenu" id="sub0">
+									<ul>
+										<li>Cuarto de recursos</li>
+										<li><a ng-class="activityBlocked[1101]" ng-click="navigateTo('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/1101', 'sideToggle',1101)">Fuente de energía</a></li>
+									</ul>
+									<ul>  
+										<li>Conócete</li>
+										<li><a ng-class="activityBlocked[1020]" ng-click="navigateTo('/ZonaDeVuelo/Conocete/FuenteDeEnergia/1020', 'sideToggle',1020)">Fuente de energía</a></li>
+										<li><a ng-class="activityBlocked[1039]" ng-click="navigateTo('/ZonaDeVuelo/Conocete/RetoMultiple/1039', 'sideToggle',1039)">Reto múltiple </a></li>
+										<li><a ng-class="activityBlocked[1010]" ng-click="navigateTo('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/1010', 'sideToggle',1010)">Punto de encuentro </a></li>
+										<li><a ng-class="activityBlocked[1049]" ng-click="navigateTo('/ZonaDeVuelo/Conocete/ZonaDeContacto/1049', 'sideToggle',1049)">Zona de contacto</a></li>
+									</ul>
+									<ul>
+										<li>Mis sueños </li>
+										<li><a ng-class="activityBlocked[1021]" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/1021', 'sideToggle',1021)">Fuente de energía</a></li>
+										<li><a ng-class="activityBlocked[1005]" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisCualidades/1005', 'sideToggle',1005)">Mis cualidades</a></li>
+										<li><a ng-class="activityBlocked[1006]" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/MisGustos/1006', 'sideToggle',1006)">Mis gustos</a></li>
+										<li><a ng-class="activityBlocked[1007]" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/Suena/1007', 'sideToggle',1007)">Sueña</a></li>
+										<li><a ng-class="activityBlocked[1008]" ng-click="navigateTo('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/1008', 'sideToggle',1008)">Punto de encuentro </a></li>
+									</ul>
+									<ul>
+										<li>Cabina de soporte</li>
+										<li><a ng-class="activityBlocked[1002]" ng-click="navigateTo('/ZonaDeVuelo/CabinaDeSoporte/1002', 'sideToggle',1002)">Chat</a></li>
+									</ul>
+								</div>
+							</li>
+							<li>
+								<span class="icomoon icon-arrow fl-right white pointer accsub" data-id="1" ng-show="!two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
+								<span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="1" ng-show="two.isCollapsed" ng-click="two.isCollapsed = !two.isCollapsed"></span>
+								<a class="menu-green" ng-click="navigateTo('/ZonaDeNavegacion/Dashboard/2/0', 'sideToggle',2001)">
+									<span class="icomoon icon-asterodis">
+										<span class="path1"></span>
+										<span class="path2"></span>
+										<span class="path3"></span>        
+									</span>Zona de Navegacion
+								</a>
+								<div class="submenu" id="sub1">
+									<ul>
+										<li>Cuarto de recursos</li>
+										<li><a ng-class="activityBlocked[2004]" ng-click="navigateTo('/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/2004', 'sideToggle', 2004)">Fuente de energía</a></li>
+									</ul>
+									<ul>
+										<li>Transfórmate</li>
+										<li><a ng-class="activityBlocked[2006]" ng-click="navigateTo('/ZonaDeNavegacion/Transformate/FuenteDeEnergia/2006', 'sideToggle', 2006)">Fuente de energía</a></li>
+										<li><a ng-class="activityBlocked[2007]" ng-click="navigateTo('/ZonaDeNavegacion/Transformate/TusIdeas/2007', 'sideToggle', 2007)">Tus ideas </a></li>
+										<li><a ng-class="activityBlocked[2030]" ng-click="navigateTo('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/2030', 'sideToggle', 2030)">Punto de encuentro </a></li>
+									</ul>
+									<ul>
+										<li>Tú eliges </li>
+										<li><a ng-class="activityBlocked[2011]" ng-click="navigateTo('/ZonaDeNavegacion/TuEliges/FuenteDeEnergia/2011', 'sideToggle', 2011)">Fuente de energía</a></li>
+										<li><a ng-class="activityBlocked[2012]" ng-click="navigateTo('/ZonaDeNavegacion/TuEliges/TuEliges/2012', 'sideToggle', 2012)">Tú eliges</a></li>
+									</ul>
+									<ul>
+										<li>Proyecta tu vida</li>
+										<li><a ng-class="activityBlocked[2015]" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/2015', 'sideToggle', 2015)">Fuente de energía</a></li>
+										<li><a ng-class="activityBlocked[2016]" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/13y5/2016', 'sideToggle', 2016)">1, 3 y 5</a></li>
+										<li><a ng-class="activityBlocked[2017]" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/2017', 'sideToggle', 2017)">Mapa de vida</a></li>
+										<li><a ng-class="activityBlocked[2026]" ng-click="navigateTo('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/2026', 'sideToggle', 2026)">Punto de encuentro </a></li>
+									</ul>
+									<ul>
+										<li>Cabina de soporte</li>
+										<li><a ng-class="activityBlocked[2022]" ng-click="navigateTo('/ZonaDeNavegacion/CabinaDeSoporte/2022', 'sideToggle', 2022)">Chat</a></li>
+									</ul>
+								</div>
+							</li>
+							<li>
+								<span class="icomoon icon-arrow fl-right white pointer accsub" data-id="2" ng-show="!three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
+								<span class="icomoon icon-arrow-up ng-hide fl-right white pointer accsub" data-id="2" ng-show="three.isCollapsed" ng-click="three.isCollapsed = !three.isCollapsed"></span>
+								<a class="menu-pink" ng-click="navigateTo('/ZonaDeAterrizaje/Dashboard/3/0', 'sideToggle', 3201)">
+									<span class="icomoon icon-planet">
+										<span class="path1"></span>
+										<span class="path2"></span>
+										<span class="path3"></span>        
+									</span>Zona de Aterrizaje
+								</a>
+								<div class="submenu" id="sub2">
+									<ul>
+										<li>Cuarto de recursos</li>
+										<li><a ng-class="activityBlocked[3201]" ng-click="navigateTo('/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/3201', 'sideToggle', 3201)">Fuente de energía</a></li>
+									</ul>
+									<ul>
+										<li>Educación Financiera</li>
+										<li><a ng-class="activityBlocked[3301]" ng-click="navigateTo('/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/3301', 'sideToggle', 3301)">Fuente de energía</a></li>
+										<li><a ng-class="activityBlocked[3302]" ng-click="navigateTo('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302', 'sideToggle', 3302)">Multiplica tu dinero</a></li>
+										<li><a ng-class="activityBlocked[3304]" ng-click="navigateTo('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/3304', 'sideToggle', 3304)">Punto de encuentro</a></li>
+									</ul>
+									<ul>
+										<li>Mapa del Emprendedor</li>
+										<li><a ng-class="activityBlocked[3401]" ng-click="navigateTo('/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/3401', 'sideToggle', 3401)">Fuente de energía</a></li>
+										<li><a ng-class="activityBlocked[3402]" ng-click="navigateTo('/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/3402','sideToggle',3402)">Mapa del emprendedor</a></li>
+										<li><a ng-class="activityBlocked[3404]" ng-click="navigateTo('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/3404', 'sideToggle', 3404)">Punto de encuentro </a></li>
+									</ul>
+									<ul>
+										<li>Cabina de soporte</li>
+										<li><a ng-class="activityBlocked[3501]" ng-click="navigateTo('/ZonaDeNavegacion/CabinaDeSoporte/3501', 'sideToggle', 3501)">Chat</a></li>
+									</ul>
+								</div>
+							</li>
+							<li>
+								<a ng-click="navigateTo('MyStars','sideToggle')">
+									<span class="icomoon icon-earned-stars"></span> Mis estrellas
+								</a>
+							</li>
+							<li class="hidden"><a ng-click="navigateTo('HallOfFame', 'sideToggle')"><span class="icomoon icon-cup"></span> Salón de la fama</a></li>
+							<li class="hidden"><a><span class="icomoon icon-racing-flag "></span> Recuerdos Incluso</a></li>
+							<li class="hidden"><a><span class="icomoon icon-loop"></span> Seguimiento</a></li>
+							<li class="hidden"><a><span class="icomoon icon-document"></span> Certificación</a></li>
+							<li class="hidden"><a><span class="icomoon icon-lifesaver"></span> Preguntas frecuentes</a></li>
+							<li><a ng-click="playVideo('assets/media', 'video-tutorial.mp4')"><span class="icomoon icon-video-file"></span> Guía de uso </a></li>
+							<li><a ng-click="navigateTo('PrivacyNotice', 'sideToggle')"><span class="icomoon icon-privacy"></span> Aviso de privacidad</a></li>
+							<li><a ng-click="navigateTo('TermsOfUse', 'sideToggle')"><span class="icomoon icon-books"></span> Condiciones de uso</a></li>
+							<li class="hidden"><a ng-click="navigateTo('SharingExperience', 'sideToggle')">Compartir experiencia</a></li>
+							<li class=""><a ng-click="navigateTo('/AlbumIncluso', 'sideToggle')"><span class="icomoon icon-album"></span> Album incluso</a></li>
+							<li class="" ng-show="showDiploma"><a ng-click="navigateTo('/reconocimiento', 'sideToggle')"><span class="icomoon icon-acknowledgment"></span> Reconocimiento</a></li>
+							<li class="separate"></li>
+							<li><a ng-click="logout()"><span class="icomoon icon-logout"></span> Salir</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -3,11 +3,11 @@
 
     moodleFactory.Services = (function () {
         var _getAsyncProfile = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("profile", API_RESOURCE.format('user/' + userId), successCallback, errorCallback, forceRefresh);
+            _getAsyncData("profile/" + userId, API_RESOURCE.format('user/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncProfile = function (userId, data, successCallback, errorCallback, forceRefresh) {
-            _putAsyncData("profile", data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
+            _putAsyncData("profile/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };
 
         var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
@@ -31,9 +31,9 @@
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), successCallback, errorCallback, forceRefresh);
         };
         
-        var _getAsyncDiscussionPosts = function(token, discussionId, discussion, forumId, sinceId, maxId, first, successCallback, errorCallback, forceRefresh) {
-            var key = "discussion/" + token + discussionId + discussion + forumId + sinceId + maxId + first;
-            var url = API_RESOURCE.format("discussion/" + discussionId + "?discussion=" + discussion + "&forumid=" + forumId + "&sinceid=" + sinceId + "&maxid=" + maxId + "&first=" + first);
+        var _getAsyncDiscussionPosts = function(token, discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
+            var key = "discussion/" + token + discussionId + discussion + forumId + sinceId + maxId + first + filter;
+            var url = API_RESOURCE.format("discussion/" + discussionId + "?discussion=" + discussion + "&forumid=" + forumId + "&sinceid=" + sinceId + "&maxid=" + maxId + "&first=" + first + "&filter=" + filter);
             
             _getAsyncForumDiscussionsData(key, url, token, successCallback, errorCallback, forceRefresh);
         };
@@ -83,6 +83,10 @@
         var _postAsyncForumPost = function (key, data, successCallback, errorCallback, forceRefresh) {
             _postAsyncData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback);
         };
+        
+        var _postAsyncReportAbuse = function (key, data, successCallback, errorCallback, forceRefresh) {
+            _postAsyncData(key, data, API_RESOURCE.format('reportabuse'), successCallback, errorCallback);
+        };
 
         var _putUserNotificationRead = function (notificationId, data, successCallback, errorCallback, forceRefresh) {
             _putAsyncData(null, data, API_RESOURCE.format('notification/') + notificationId, successCallback, errorCallback);
@@ -98,11 +102,11 @@
 
         var _assignStars = function (data, profile, token, successCallback, errorCallback, forceRefresh) {
 
-            _putAsyncStars("profile", data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
+            _putAsyncStars("profile/" + data.userId, data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
         var _putEndActivity = function (activityId, data, activityModel, token, successCallback, errorCallback) {
-            _endActivity("activitiesCache/" + activityId, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
+            _endActivity("activitiesCache/" + activityModel.activity_identifier, data, activityModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
 
         };
 
@@ -113,6 +117,10 @@
 
         var _putForumPostLikeNoCache = function (postId, data, successCallback, errorCallback) {
             _putDataNoCache(data, API_RESOURCE.format('forum/' + postId), successCallback, errorCallback);
+        };
+
+        var _getAsyncAlbum = function (userId, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
         var _getCacheObject = function (key) {
@@ -224,7 +232,11 @@
                 headers: { 'Content-Type': 'application/json' },
             }).success(function (data, status, headers, config) {
                 console.log('success');
-                _setLocalStorageJsonItem(key,data);
+                
+                if (key != null) {
+                    _setLocalStorageJsonItem(key,data);
+                }
+                
                 successCallback();
             }).error(function (data, status, headers, config) {
                 console.log(data);
@@ -315,7 +327,7 @@
                 method: 'PUT',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token },
+                headers: { 'Content-Type': 'application/json', 'Authorization': token }
             }).success(function (data, status, headers, config) {
                 _setLocalStorageJsonItem(key,userCourseModel);
                 successCallback(data);
@@ -418,62 +430,69 @@
             var globalActivities = 0;
             var globalCompletedActivities = 0;
             var globalPointsAchieved = 0;
+            var globalProgress = 0;
 
             if (usercourse.stages) {
                 for (i = 0; i < usercourse.stages.length; i++) {
                     //stages
+                    if(usercourse.stages[i].activityname != "General"){    
+                        var stageActivities = 0;
+                        var stageCompletedActivities = 0;
 
-                    var stageActivities = 0;
-                    var stageCompletedActivities = 0;
+                        if (usercourse.stages[i].challenges) {
+                            for (j = 0; j < usercourse.stages[i].challenges.length; j++) {
+                                //challenges
 
-                    if (usercourse.stages[i].challenges) {
-                        for (j = 0; j < usercourse.stages[i].challenges.length; j++) {
-                            //challenges
+                                if (usercourse.stages[i].challenges[j].activities) {
+                                    for (k = 0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
+                                        //activities
 
-                            if (usercourse.stages[i].challenges[j].activities) {
-                                for (k = 0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
-                                    //activities
-
-                                    /*if (usercourse.stages[i].challenges[j].activities[k].activities) {
-                                        for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
-                                            if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
-                                            {
-                                                globalActivities++;
-                                                stageActivities++;
-                                                if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
-                                                    globalCompletedActivities++;
-                                                    stageCompletedActivities++;
-                                                    globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].activities[l].points;
+                                        /*if (usercourse.stages[i].challenges[j].activities[k].activities) {
+                                            for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
+                                                if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
+                                                {
+                                                    globalActivities++;
+                                                    stageActivities++;
+                                                    if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
+                                                        globalCompletedActivities++;
+                                                        stageCompletedActivities++;
+                                                        globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].activities[l].points;
+                                                    }
                                                 }
                                             }
+                                        } 
+                                        else
+                                        {*/
+                                        globalActivities++;
+                                        stageActivities++;
+
+                                        if (usercourse.stages[i].challenges[j].activities[k].status == 1) {
+                                            globalCompletedActivities++;
+                                            stageCompletedActivities++;
+                                            globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].points;
                                         }
-                                    } 
-                                    else
-                                    {*/
-                                    globalActivities++;
-                                    stageActivities++;
+                                        //}
 
-                                    if (usercourse.stages[i].challenges[j].activities[k].status == 1) {
-                                        globalCompletedActivities++;
-                                        stageCompletedActivities++;
-                                        globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].points;
                                     }
-                                    //}
-
+                                }
+                                if (usercourse.stages[i].challenges[j].status == 1) {
+                                    globalPointsAchieved += usercourse.stages[i].challenges[j].points;
                                 }
                             }
-                            if (usercourse.stages[i].challenges[j].status == 1) {
-                                globalPointsAchieved += usercourse.stages[i].challenges[j].points;
-                            }
                         }
-                    }
-                    usercourse.stages[i].stageProgress = Math.floor(100.0 * stageCompletedActivities / stageActivities, 0);
-                    if (usercourse.stages[i].status == 1) {
-                        globalPointsAchieved += usercourse.stages[i].points;
+                        usercourse.stages[i].stageProgress = Math.floor(100.0 * stageCompletedActivities / stageActivities, 0);
+                        if (usercourse.stages[i].status == 1 || usercourse.stages[i].stageProgress == 100) {
+                            usercourse.stages[i].status = 1;
+                            usercourse.stages[i].stageProgress = 100;
+                            globalPointsAchieved += usercourse.stages[i].points;
+                        }
+                        
+                        globalProgress = globalProgress + usercourse.stages[i].stageProgress; 
                     }
                 }
             }
-            usercourse.globalProgress = Math.floor(100.0 * globalCompletedActivities / globalActivities, 0);
+            //usercourse.globalProgress = Math.floor(100.0 * globalCompletedActivities / globalActivities, 0);
+            usercourse.globalProgress = Math.floor(100*globalProgress/300);
             if (user) {
                 user.stars = globalPointsAchieved;
             }
@@ -605,19 +624,72 @@
                     }
                 }
 
-                var user = JSON.parse(localStorage.getItem("profile"));
+                /* Conocete - reto múltiple */ 
+                var multipleChallengeActivityId = _.filter(_activityRoutes, function (ar){
+                    return ar.name == "Reto Multiple";
+                });
+                
+                var multipleChallengeActivity = _.filter(activities, function (a){
+                    return a.activity_identifier == multipleChallengeActivityId[0].id;
+                });
+                
+                var multipleChallenges = _.filter(activities, function (a){
+                    return  a.section == multipleChallengeActivity[0].section;
+                });
+                
+                var multipleChallengesArray = new Array();
+                for(var mc = 0; mc < multipleChallenges.length; mc++) {
+                    multipleChallengesArray.push({
+                        "name": multipleChallenges[mc].activityname,
+                        "description": multipleChallenges[mc].activityintro
+                    });
+                }
+                
+                /* General Community */
+                var communityActivityId = _.filter(_activityRoutes, function (ar){
+                    return ar.name == "Comunidad General";
+                });
+                
+                var generalCommunity = _.filter(activities, function (a){
+                    return a.activity_identifier == communityActivityId[0].id;
+                })[0];
+                
+                var community = {
+                    activity_identifier: generalCommunity.activity_identifier,
+                    activity_type: generalCommunity.activity_type,
+                    parentsection: generalCommunity.parentsection,
+                    section: generalCommunity.section,
+                    sectionname: generalCommunity.sectionname,
+                    activityname: generalCommunity.activityname,
+                    coursemoduleid: generalCommunity.coursemoduleid,
+                    courseid: generalCommunity.courseid,
+                    firsttime: generalCommunity.firsttime,
+                    last_status_update: generalCommunity.last_status_update,
+                    datestarted: generalCommunity.datestarted,
+                    started: generalCommunity.started
+                };
+
+                var user = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
                 var progress = refreshProgress(course, user);
                 course = progress.course;
+                course.community = community;
+                course.multipleChallenges = multipleChallengesArray;
+                course.isMultipleChallengeActivityFinished = (multipleChallengeActivity[0].status === 1);
                 user = progress.user;
-                _setLocalStorageJsonItem("profile",user);
+                _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),user);
                 _setLocalStorageJsonItem("usercourse",course);
-                loadActivityStatus();
+                //reload activty status dictionary
+                _loadActivityStatus();
+                //load activity accessibility flags
+                _loadActivityBlockStatus();
+                //set stages as completed in local storage, as this is not set by the back-end
+                _setStagesStatus();
                 _setLocalStorageJsonItem("course",course);
                 _setLocalStorageJsonItem("activityManagers",activityManagers);
 
             }
         };
-        var loadActivityStatus = function () {
+        var _loadActivityStatus = function () {
             var usercourse = JSON.parse(localStorage.getItem("usercourse"));
             var activityStatus = {};
             var stagesCount = usercourse.stages.length;
@@ -630,7 +702,9 @@
                     var challengeActivitiesCount = challenge.activities.length;
                     for (k = 0; k < challengeActivitiesCount; k++) {
                         var activity = challenge.activities[k];
-                        activityStatus[activity.coursemoduleid] = activity.status;
+                        if(activity.status) {
+                            activityStatus[activity.activity_identifier] = activity.status;
+                        }
                     }
 
                 }
@@ -638,6 +712,25 @@
             _setLocalStorageJsonItem("activityStatus",activityStatus);
             _activityStatus = activityStatus;
             console.log("Loaded activityStatus");
+        };
+
+        //This function updates the status of each stage in local status
+        var _setStagesStatus = function () {
+
+            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+            if(!userCourse) return;
+            for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+                var currentStage = userCourse.stages[stageIndex];
+                if (currentStage.status == 0 && currentStage.sectionname != "General") {
+                    var totalChallengesByStage = currentStage.challenges.length;
+                    var totalChallengesCompleted = _.where(currentStage.challenges, {status: 1}).length;
+                    if (totalChallengesByStage == totalChallengesCompleted) {
+                        userCourse.stages[stageIndex].status = 1;
+                    }
+                }
+            }
+            _setLocalStorageJsonItem("usercourse", userCourse);
+
         };
 
         return {
@@ -667,7 +760,10 @@
             PutEndActivityQuizes: _putEndActivityQuizes,
             PutForumPostLikeNoCache: _putForumPostLikeNoCache,
             GetAsyncDiscussionPosts: _getAsyncDiscussionPosts,
-            GetAsyncForumDiscussions: _getAsyncForumDiscussions
+            GetAsyncForumDiscussions: _getAsyncForumDiscussions,
+            PostAsyncReportAbuse: _postAsyncReportAbuse,
+            GetAsyncAlbum: _getAsyncAlbum,
+            RefreshProgress: refreshProgress
         };
     })();
 }).call(this);

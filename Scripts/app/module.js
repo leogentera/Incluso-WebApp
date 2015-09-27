@@ -7,7 +7,6 @@
         'ui.bootstrap.tpls',
         'inlcuso.shared.mainNavigation',
         'incluso.home',
-        //'naif.base64',
         // One module per controller. If we wanted to use one module for several controllers we would need to load dependencies of
         // one controller for all controllers in the module, and we would also need a variable to keep track of the modules:
         // http://zinkpulse.com/organizing-modules-in-angularjs/ and http://cliffmeyers.com/blog/2013/4/21/code-organization-angularjs-javascript
@@ -24,9 +23,15 @@
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
-        //'incluso.programa.comunidad',        
-
+        'incluso.programa.comunidad',
+        'incluso.programa.reconocimiento',
+        'incluso.programa.album',
         'incluso.stage.dashboardcontroller',
+        
+        // TODO: Should be just one controller for all stage dashboards, will merge soon
+        'incluso.stage.dashboardcontroller2',
+        'incluso.stage.dashboardcontroller3',
+
         'incluso.stage.forumclosecontroller',
         'incluso.stage.forumcontroller',
         'incluso.stage.forumcommentscontroller',
@@ -35,16 +40,22 @@
         'incluso.stage.gameretomultiplecontroller',
         'incluso.stage.gameretomultipleexternalappcontroller',
         'incluso.stage.gameretomultipleresultscontroller',
+        'incluso.stage.tueligesController',
         'incluso.stage.quizcontroller',
+        'incluso.stage.mapadevidaController',
         'incluso.stage.chatcontroller',
-        'incluso.program.alerts',
+        'incluso.stage.multiplicatudineroController',
+        'incluso.stage.mapadelemprendedorController',
+        'incluso.program.alerts',        
         'incluso.program.myInterests',
         'incluso.program.myStrengths',
+        'incluso.program.myStars',
+        'incluso.program.rewardDetail',
         'incluso.program.hallOfFame',
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
-        'incluso.program.helpAndSupport',
-        'incluso.programa.evaluacionFormulario',
+        'incluso.program.helpAndSupport',        
+        'incluso.programa.evaluacionFormulario'
     ])
     .run(function ($templateCache, $http, $rootScope) {
         $http.get('Templates/Public/Login.html', { cache: $templateCache });
@@ -64,6 +75,8 @@
         $http.get('Templates/Programa/MyInterests.html', { cache: $templateCache });
         $http.get('Templates/Programa/MyStrengths.html', { cache: $templateCache });
         $http.get('Templates/Programa/HallOfFame.html', { cache: $templateCache });
+        $http.get('Templates/Programa/MyStars.html', { cache: $templateCache });
+        $http.get('Templates/Programa/RewardDetail.html',{ cache: $templateCache });
         $http.get('Templates/Programa/PrivacyNotice.html', { cache: $templateCache });
         $http.get('Templates/Programa/TermsOfUse.html', { cache: $templateCache });
         $http.get('Templates/Programa/HelpAndSupport.html', { cache: $templateCache });
@@ -72,18 +85,21 @@
         $http.get('Templates/Programa/formulario.html', { cache: $templateCache });
         $http.get('Templates/Programa/community.html', { cache: $templateCache });
         $http.get('Templates/Programa/sharingexperience.html', { cache: $templateCache });  
+        $http.get('Templates/Programa/AlbumIncluso.html', { cache: $templateCache });  
+        $http.get('Templates/Programa/reconocimiento.html', { cache: $templateCache });
+        $http.get('Templates/Programa/RewardDetail.html', { cache: $templateCache });
 
         $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
         $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
         $http.get('Templates/Programa/Dashboard.html', { cache: $templateCache });  
-        $http.get('Templates/Chat/index.html', { cache: $templateCache });  
+        $http.get('Templates/Chat/index.html', { cache: $templateCache });
 
         $http.get('Templates/Leaderboard/index.html', { cache: $templateCache });          
         $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionInicial.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html', { cache: $templateCache });  
+        //$http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultiple.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleExternalApp.html', { cache: $templateCache });  
@@ -95,7 +111,7 @@
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html', { cache: $templateCache });  
+        //$http.get('Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html', { cache: $templateCache });  
@@ -105,12 +121,27 @@
         $http.get('Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html', { cache: $templateCache });  
+        //$http.get('Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/CabinaDeSoporte.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporte.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporte.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
         $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
+
+        ///////// Stage 2 //////////
+        $http.get('Templates/ZonaDeNavegacion/dashboard.html',{cache:$templateCache});
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEligesResults.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html', { cache: $templateCache });
+
+        ///////// Stage 3 //////////
+        $http.get('Templates/ZonaDeAterrizaje/dashboard.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html', {cache: $templateCache });
 
          document.addEventListener("keyup", function(e) {
             if (e.keyCode === 27)
@@ -129,7 +160,7 @@
             controller: 'programaProfileController'
         });
 
-        $routeProvider.when('/Profile', {
+        $routeProvider.when('/Profile/:id', {
             templateUrl: 'Templates/Programa/profile.html',
             controller: 'programaProfileController'
         });
@@ -149,6 +180,11 @@
             controller: 'evaluacionFormulario'
         });
         
+        $routeProvider.when('/reconocimiento', {
+            templateUrl: 'Templates/Programa/reconocimiento.html',
+            controller: 'reconocimientoController'
+        });
+
         $routeProvider.when('/ProgramaDashboard', {
         	templateUrl: 'Templates/Programa/Dashboard.html',
         	controller: 'programaDashboardController'
@@ -209,6 +245,16 @@
             controller: 'MyStrengthsController'
         });
 
+        $routeProvider.when('/MyStars', {
+            templateUrl: 'Templates/Programa/MyStars.html',
+            controller: 'MyStarsController'
+        });
+
+        $routeProvider.when('/RewardDetail/:id', {
+            templateUrl: function(params){ return 'Templates/Programa/RewardDetail.html?id=' + params.id; } ,
+            controller: 'rewardDetailController'
+        });
+
         $routeProvider.when('/HallOfFame', {
             templateUrl: 'Templates/Programa/HallOfFame.html',
             controller: 'HallOfFameController'
@@ -234,7 +280,7 @@
             controller: 'GameController'
         });
 
-        $routeProvider.when('/Community', { 
+        $routeProvider.when('/Community/:activityId', { 
             templateUrl: 'Templates/Programa/community.html',
             controller: 'programaComunidadController'
         });
@@ -254,6 +300,11 @@
             controller: 'AlertsController'          //to do: add corresponding controller 
         });  
 
+       $routeProvider.when('/AlbumIncluso', {
+            templateUrl: 'Templates/Programa/AlbumIncluso.html',
+            controller: 'AlbumInclusoController'
+        });
+       
         $routeProvider.when('/Chat', { 
             templateUrl: 'Templates/Chat/index.html',
             controller: 'programaChatController'
@@ -264,7 +315,7 @@
             controller: 'programaLeaderBoard'
         });        
      
-        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId/:challengue', {
+        $routeProvider.when('/ZonaDeVuelo/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeVuelo/dashboard.html',
             controller: 'stageDashboardController'
         });
@@ -282,11 +333,6 @@
         $routeProvider.when('/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html',
             controller: 'stageContentsController'
-        });
-    
-        $routeProvider.when('/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre', { 
-            templateUrl: 'Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html',
-            controller: 'stageMessageController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/Conocete/FuenteDeEnergia/:moodleid', { 
@@ -309,68 +355,44 @@
             controller: 'stageGameRetoMultipleResultsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
 
-        $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
 
-        $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/:moodleid/:discussionId', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
-    
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/:moodleid', {
+
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html',
-            //templateUrl: function(params){
-            //    var logicForumTopicsUrl = 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html';
-            //    var artisticForumTopicsUrl = 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.htm';
-            //    //Listado de escudos
-            //    var shields = [
-            //        {name: 'musical' , category:'artistico'},
-            //        {name:'interpersonal' , category: 'artistico'},
-            //        {name:'naturalista' , category: 'logico'},
-            //        {name:'intrapersonal' , category: 'logico'},
-            //        {name:'corporal' , category: 'artistico'},
-            //        {name:'espacial' , category: 'artistico'},
-            //        {name:'matematica' , category: 'logico'},
-            //        {name:'liguistica' , category: 'logico'},
-            //    ];
-            //    var shield = JSON.parse(localStorage.getItem('shield')) ;
-            //    shield ? shield = shield.shield : shield = null;
-            //    var shieldCategory = shield ? _.find(shields, function(s){ return s.name == shield }).category : 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html';
-            //    return shieldCategory == "logico" ? logicForumTopicsUrl : artisticForumTopicsUrl;
-            //},
-            controller: 'stageForumController' //'stageDashboardController'  //this may need to be change to another type of controller
+            controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/:moodleid', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/:activityId/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html',
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/:activityId/:discussionId/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/:activityId/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html',
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/:activityId/:discussionId/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html',
             controller: 'stageForumCommentsController'
-        });
-    
-        $routeProvider.when('/ZonaDeVuelo/Conocete/MensajeDeCierre', { 
-            templateUrl: 'Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html',
-            controller: 'stageMessageController'
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/FuenteDeEnergia/:moodleid', { 
@@ -382,8 +404,8 @@
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html',
             controller: 'stageQuizController'
         });
-    
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/Cierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/Cierre', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html',
             controller: 'stageMessageController'
         });
@@ -392,8 +414,8 @@
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustos.html',
             controller: 'stageQuizController'
         });
-    
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/Cierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/Cierre', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html',
             controller: 'stageMessageController'
         });
@@ -402,23 +424,23 @@
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/Suena.html',
             controller: 'stageQuizController'
         });
-    
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/Cierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/Cierre', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html',
             controller: 'stageMessageController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/:activityId', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html',
             controller: 'stageForumController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/:moodleid/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
         });
-    
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MensajeDeCierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MensajeDeCierre', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html',
             controller: 'stageMessageController'
         });
@@ -427,8 +449,8 @@
             templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporte.html',
             controller: 'stageChatController'
         });
-    
-        $routeProvider.when('/ZonaDeVuelo/CabinaDeSoporteCierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/CabinaDeSoporteCierre', {
             templateUrl: 'Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html',
             controller: 'stageMessageController'
         });
@@ -437,27 +459,205 @@
             templateUrl: 'Templates/ZonaDeVuelo/ExploracionFinal.html',
             controller: 'stageQuizController'
         });
-    
-        $routeProvider.when('/ZonaDeVuelo/ExploracionFinalCierre', { 
+
+        $routeProvider.when('/ZonaDeVuelo/ExploracionFinalCierre', {
             templateUrl: 'Templates/ZonaDeVuelo/ExploracionFinalCierre.html',
             controller: 'stageMessageController'
         });
-    
-        $routeProvider.when('/ZonaDeVuelo/Cierre/:moodleid', { 
+
+        $routeProvider.when('/ZonaDeVuelo/Cierre/:moodleid', {
             templateUrl: 'Templates/ZonaDeVuelo/Cierre.html',
             controller: 'programaEndController'
         });
 
-        //Zona de navegacion
-        $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId', {
+        //Stage 2 - Zona de navegacion
+        //TODO Change zona de vuelo route to dashboard, there's a typo and refactor dashboard controller, the typo is there too
+        $routeProvider.when('/ZonaDeNavegacion/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeNavegacion/dashboard.html',
-            controller: 'stageDashboardController'
+            controller: 'stage2DashboardController'
         });
 
-        //Zona de aterrizaje
-        $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId', {
+        $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicial.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ExploracionInicialCierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicialCierre.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/CuartoDeRecursos/FuenteDeEnergia.html',
+        controller: 'stageContentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/TusIdeas/:activityIdentifier', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TusIdeas.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Transformate/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:activityId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
+            controller: 'stageForumCloseController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/:activityId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios.html',
+            controller: 'stageForumCommentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/TuEliges/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEliges.html',
+            controller: 'stageTuEligesController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/ResultadosTuEliges', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEligesResults.html',
+            controller: 'stageTuEligesController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:activityIdentifier', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/13y5.html',
+            controller: 'stageQuizController'
+        });
+
+
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html',
+            controller: 'stageMapaDeVidaController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/:activityId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios.html',
+            controller: 'stageForumCommentsController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/CabinaDeSoporte/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/CabinaDeSoporte.html',
+            controller: 'stageChatController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/CabinaDeSoporteCierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/CabinaDeSoporte/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/CabinaDeSoporte.html',
+            controller: 'stageChatController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/CabinaDeSoporteCierre', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ExploracionFinal/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ExploracionFinal.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ExploracionFinalCierre', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ExploracionFinalCierre.html',
+            controller: 'stageMessageController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/Cierre/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/Cierre.html',
+            controller: 'programaEndController'
+        });
+
+        //Stage 3 - Zona de Aterrizaje
+        $routeProvider.when('/ZonaDeAterrizaje/Dashboard/:stageId/:challenge', {
             templateUrl: 'Templates/ZonaDeAterrizaje/dashboard.html',
-            controller: 'stageDashboardController'
+            controller: 'stage3DashboardController'
+        });
+
+
+        $routeProvider.when('/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/ExploracionInicial/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/ExploracionInicial.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/ExploracionFinal/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/ExploracionFinal.html',
+            controller: 'stageQuizController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activity_identifier/:activityId', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/ForoCierre.html',
+            controller: 'stageForumCloseController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/:activityId', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios.html',
+            controller: 'stageForumCommentsController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html',
+            controller: 'stageMultiplicaTuDineroController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/:moodleid', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia.html',
+            controller: 'stageContentsController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/:moodleid', {              
+            templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html',               
+            controller: 'stageMapaDelEmprendedorController'             
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/:activityId', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos.html',
+            controller: 'stageForumController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios.html',
+            controller: 'stageForumCommentsController'
         });
 
         $routeProvider.otherwise({
@@ -724,6 +924,20 @@
             elem.bind('blur', function () {
                 scope.$apply(attrs.ngBlur);
             });
+        };
+    })
+    .directive('shareAlbum', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Partials/sharedAlbum.html'
+        };
+    })
+    .directive('shareReconocimiento', function(){
+        return {
+          restrict: 'E',
+          scope: false,
+          templateUrl: 'Templates/Partials/shareReconocimiento.html'
         };
     })
     .directive('menuComponent', function(){

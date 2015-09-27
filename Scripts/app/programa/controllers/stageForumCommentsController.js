@@ -24,12 +24,21 @@ angular
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
 
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
-            $scope.moodleId = $routeParams.moodleid;
+            $scope.moodleId;
+            console.log($routeParams.activityId);
+            //Put artistic or logic forum check here
+            //Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+            Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId     : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+            console.log($scope.moodleId);
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
-            $scope.currentDiscussionsIds = loadCurrentDiscussions();            
+            $scope.currentDiscussionsIds = loadCurrentDiscussions();
+            $scope.currentDiscussionsExtraPoints;
             var showMoreCounter = 1;
             var postPager = { from: 0, to: 0 };
             $scope.morePendingPosts = true;
@@ -45,7 +54,7 @@ angular
                 "isAttachmentCollapsed":true
             };
 
-            var profile = JSON.parse(localStorage.getItem("profile"));
+            var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
             $scope.clickLikeButton = function(postId){
                 var post = _.find($scope.posts, function(a){
                     return a.post_id == postId
@@ -68,7 +77,7 @@ angular
 
                     } );
             };
-
+            
             function loadCurrentDiscussions() {
                 var array = new Array();
                 
@@ -87,11 +96,18 @@ angular
             };
 
             function updateForumProgress() {
-
                 var forumsCommentsCountCollection = getForumsProgress();
                 var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussion_id == $scope.discussion.id; });
-                alreadyCommented? alreadyCommented.replies_counter++ : forumsCommentsCountCollection.push({'discussion_id': $scope.discussion.id, 'replies_counter':1});
-                _setLocalStorageJsonItem('currentForumsProgress', forumsCommentsCountCollection);
+                //alreadyCommented? alreadyCommented.replies_counter++ : forumsCommentsCountCollection.push({'discussion_id': $scope.discussion.id, 'replies_counter':1});
+                if(alreadyCommented){
+                    alreadyCommented.replies_counter++;
+                    alreadyCommented.replies_counter > 2? addExtraForumParticipation($scope.discussion.id) : '';
+                } else {
+                    forumsCommentsCountCollection.push({'discussion_id': $scope.discussion.id, 'replies_counter':1})
+                }
+                //_setLocalStorageJsonItem('currentForumsProgress', forumsCommentsCountCollection);
+                //alreadyCommented.replies_counter > 2? addExtraForumParticipation($scope.discussion.id) : '';
+                localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
             };
 
             var getForumsExtraPointsCounter = function(){
@@ -100,58 +116,54 @@ angular
             };
 
             var addExtraForumParticipation = function(discussionId){
-
               var extraPointsCounter = getForumsExtraPointsCounter();
-                var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == discussionId; });
-                currentDiscussionCounter.extra_replies_counter++;
-                _setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
+                var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return Number(discussion.discussion_id) == Number(discussionId); });
+                if(currentDiscussionCounter){
+                    currentDiscussionCounter.extra_replies_counter++;
+                } else {
+                    extraPointsCounter.push({'discussion_id':discussionId, 'extra_replies_counter':1});
+                }
+
+                //_setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
+                localStorage.setItem('extraPointsForums', JSON.stringify(extraPointsCounter));
             };
 
             var checkForumProgress = function(callback){
                 var forumsCommentsCountCollection = getForumsProgress();
                 var isActivityFinished = null;
-
                 var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2 && _.some($scope.currentDiscussionsIds, function(cdid) { return cdid === d.discussion_id; }) });
+                console.log("numberOfDiscussionsWithMoreThan2Replies " + numberOfDiscussionsWithMoreThan2Replies.length);
                 isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentDiscussionsIds.length);
 
-                var moodleid;
-                var activity_identifier = null;
-                if($scope.moodleId == 151){
-                    activity_identifier = 1010;
-                    moodleid = 64;
-                } else if($scope.moodleId == 64){
-                    activity_identifier = 1010;
-                    moodleid = 64;
-                } else if($scope.moodleId == 73){
-                    activity_identifier = 1008;
-                    moodleid = 73;
-                } else if($scope.moodleId == 147){
-                    activity_identifier = 1049;
-                    moodleid = 147;
-                } else if($scope.moodleId == 148){
-                    activity_identifier = 1049;
-                    moodleid = 148;
-                }
+                var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
 
-               var activityFromTree = getActivityByActivity_identifier(activity_identifier);
                 if(activityFromTree.status == 1){
-                    addExtraForumParticipation($scope.discussion.id);
+
+                    //addExtraForumParticipation($scope.discussion.id);
                     var extraPointsCounter = getForumsExtraPointsCounter();
                     var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $scope.discussion.id; });
                     if(currentDiscussionCounter.extra_replies_counter <= 10) {
-                        updateUserStars(activity_identifier, 50 );
+                        updateUserStars($routeParams.activityId, 50 );
                     }
                 }
-
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     resetForumDiscussionsProgress();
-
-                    $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);                    
+                    switch ($scope.moodleId) {
+                        case "179":
+                                $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178);
+                            break;
+                        case "85":
+                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId);
+                            break;
+                        default :
+                            $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id);
+                        $scope.scrollToTop();
+                    }
                 } else {
                    callback();
                 }
             };
-
+            
             function resetForumDiscussionsProgress() {
                 var globalDiscussions = getForumsProgress();
                 var discussionIds = $scope.currentDiscussionsIds;
@@ -185,8 +197,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": parentId,
                     "message": message,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
                     "posttype": postType,
                     "fileToUpload":""
                 };
@@ -228,8 +240,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": message,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
                     "posttype": postType,
                     "fileToUpload": attachment? attachment.base64 : null
                 };
@@ -244,8 +256,8 @@ angular
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
+
                         updateForumProgress();
-                        //refreshTopicData();
                         checkForumProgress(refreshTopicData);
                     },
                     function(){
@@ -262,7 +274,6 @@ angular
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                         updateForumProgress();
-                        //refreshTopicData();
                         checkForumProgress(refreshTopicData);
                     },
                     function(){
@@ -279,7 +290,6 @@ angular
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
                         updateForumProgress();
-                        //refreshTopicData();
                         checkForumProgress(refreshTopicData);
                     },
                     function(){
@@ -308,8 +318,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": '',
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
                     "posttype": 4,
                     "filecontent":$scope.attachmentToPost.image,
                     "filename": userId + $scope.attachmentToPost.fileName,
@@ -334,10 +344,10 @@ angular
 
             function getTopicData() {
 
-                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid ));
-                $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == $routeParams.discussionId; });
+                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId ));
+                $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                 
-                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
             }
             
             function getPostsDataCallback(data, key) {
@@ -376,7 +386,7 @@ angular
 
             var refreshTopicData = function(){
                 console.log("refreshTopicData");
-                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
             };
 
             function getActivityInfoCallback(data) {
@@ -408,20 +418,36 @@ angular
                 showMoreCounter++;
                 
                 $scope.$emit('ShowPreloader');
-                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, "default", getPostsDataCallback, null, true);
             };
 
             $scope.back = function () {
+                var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
 
-                switch ($routeParams.moodleid) {
-                    case "64":
-                        $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/' + $routeParams.moodleid);
+                switch (moodleId) {
+                    case 64:
+                        $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/' + $routeParams.activityId);
                         break;
-                    case "73":
-                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.moodleid);
+                    case 73:
+                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.activityId);
+                        break;
+                    case 197:
+                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.activityId);
+                        break;
+                    case 85:
+                        $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
+                        break;
+                    case 93:
+                        $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
+                        break;
+                    case 179:
+                        $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
+                        break;
+                    case 91:
+                        $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
                     default:
-                        $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/" + $routeParams.moodleid);
+                        $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
                 }
             };

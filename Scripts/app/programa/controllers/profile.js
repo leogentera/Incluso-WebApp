@@ -9,17 +9,40 @@ angular
         '$timeout',
         '$rootScope',
         '$http',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http) {
+        '$filter',
+        '$route',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
 
-            _timeout = $timeout;
-            $scope.setToolbar($location.$$path, "");
             _httpFactory = $http;
-            $scope.$emit('ShowPreloader');
-            console.log("cargando usuario");
+            _timeout = $timeout;
+            
+            var _course = moodleFactory.Services.GetCacheJson("course");
+            $scope.discussion = null;
+            $scope.forumId = null;
+            
+            $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
+            $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
+            
+            $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
+            $scope.myStrengths = new Array();
+            $scope.myWindowOfOpportunities = new Array();
+            
+            $scope.setToolbar($location.$$path, "");
             $scope.currentPage = 1;
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.status = "";
+            $scope.shareAchievementMessage = "";
+            $scope.showShareAchievementMessage = false;
+            $scope.showSharedAchievement = false;
+            $scope.hasCommunityAccess = false;
+            
+            $scope.$emit('ShowPreloader');
+
+
             getDataAsync(function () {
 
                 /////// privacy settings initial switches [boolean]/////////
@@ -48,7 +71,7 @@ angular
                             elem.filename = getFileName(elem.id);
                             elem.description = getDescription(elem.id);
                         } else {
-                            elem.filename = "default_placeholder.svg";
+                            elem.filename = "insignia-bloqueada.gif";
                         }
 
                         $scope.wholeBadgesPages[i].push(elem);
@@ -84,6 +107,7 @@ angular
                 $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
                 $scope.yesNoList = ['Si', 'No'];
                 $scope.moneyIncomeList = ['Padres', 'Trabajo'];
+                $scope.medicalCoverageList = ['Sí', 'No', 'No sé'];
                 $scope.medicalInsuranceList = ['IMSS', 'Privado', 'Seguro Popular'];
                 $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora'];
                 $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
@@ -99,64 +123,93 @@ angular
 
             });
 
+            function  loadStrengths() {
+                
+                var strengthArray = new Array();
+                
+                for(var s = 0; s < $scope.model.strengths.length; s++) {
+                    
+                    var strength = $scope.model.strengths[s];
+                    var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == strength.replace("\r", ""); });
+                    
+                     strengthArray.push(result);
+                }
+                
+                $scope.myStrengths = strengthArray;
+            }
+            
+            function loadWindowOfOpportunities() {
+                
+                var windowOfOpportunitiesArray = new Array();
+                
+                for(var s = 0; s < $scope.model.windowOfOpportunity.length; s++) {
+                    
+                    var windowOfOpportunities = $scope.model.windowOfOpportunity[s];
+                    var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == windowOfOpportunities.replace("\r", ""); });
+                    
+                     windowOfOpportunitiesArray.push(result);
+                }
+                
+                $scope.myWindowOfOpportunities = windowOfOpportunitiesArray;
+            }
 
             function getFileName(id) {
                 var filename = "";
 
                 switch (id) {
                     case 2:
-                        filename = "combustible.svg";
+                        filename = "insignias-combustible.gif";
                         break;
                     case 3:
-                        filename = "turbina.svg";
+                        filename = "insignias-turbina.gif";
                         break;
                     case 4:
-                        filename = "ala.svg";
+                        filename = "insignias-ala.gif";
                         break;
                     case 5:
-                        filename = "sistNavegacion.svg";
+                        filename = "insignias-sist-navegacion.gif";
                         break;
                     case 6:
-                        filename = "propulsor.svg";
+                        filename = "insignias-propulsor.gif";
                         break;
                     case 7:
-                        filename = "misiles.svg";
+                        filename = "insignias-misiles.gif";
                         break;
                     case 8:
-                        filename = "escudo.svg";
+                        filename = "insignias-campodefuerza.gif";
                         break;
                     case 9:
-                        filename = "radar.svg";
+                        filename = "insignias-radar.gif";
                         break;
                     case 10:
-                        filename = "tanqueoxigeno.svg";
+                        filename = "insignias-tanqueoxigeno.gif";
                         break;
                     case 11:
-                        filename = "sondaEspacial.svg";
+                        filename = "insignias-sondaespacial.gif";
                         break;
                     case 12:
-                        filename = "foro_interplanetario.svg";
+                        filename = "insignias-foro.gif";
                         break;
                     case 13:
-                        filename = "IDintergalactica.svg";
+                        filename = "insignias-id.gif";
                         break;
                     case 14:
-                        filename = "participacion_electrica.svg";
+                        filename = "insignias-participacion.gif";
                         break;
                     case 15:
-                        filename = "corazon_digital.svg";
+                        filename = "insignias-corazon.gif";
                         break;
                     case 16:
-                        filename = "casco.svg";
+                        filename = "insignias-casco.gif";
                         break;
                     case 17:
-                        filename = "radioComunicacion.svg";
+                        filename = "insignias-radio.gif";
                         break;
                     case 18:
-                        filename = "turbo.svg";
+                        filename = "insignias-turbo.gif";
                         break;
                     default:
-                        filename = "default_placeholder.svg";
+                        filename = "insignia-bloqueada.gif";
                 }
 
                 return filename;
@@ -244,18 +297,20 @@ angular
 
             function getDataAsync(callback) {
 
-                moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function () {
+                moodleFactory.Services.GetAsyncProfile($scope.userId, function () {
 
-                    $scope.model = moodleFactory.Services.GetCacheJson("profile");
+                    $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
                     if ($scope.model.profileimageurl) {
                         $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                     }
+                    
+                    $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
                     
                     console.log("Profile current stars:" + $scope.model.stars);
                     
                     callback();
 
-                    moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback, function () { }, true);
+                    moodleFactory.Services.GetAsyncAvatar($scope.userId, getAvatarInfoCallback, function () { }, true);
 
                     if (!$scope.model) {
                         $location.path('/');
@@ -263,6 +318,8 @@ angular
                     }
 
                     initFields($scope.model);
+                    loadStrengths();
+                    loadWindowOfOpportunities();
                 }, true);
             }
 
@@ -340,6 +397,9 @@ angular
             };
 
             $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description, status) {
+                $scope.shareAchievementMessage = "";
+                $scope.showShareAchievementMessage = false;
+                
                 $scope.currentPage = 10;
                 $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
@@ -354,8 +414,7 @@ angular
             };
 
             $scope.index = function () {
-                $scope.navigateTo('Profile', 'null');
-                //$location.path('/Perfil/Editar');
+                $location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
             };
 
             $scope.navigateToDashboard = function () {
@@ -609,7 +668,7 @@ angular
             };
 
             var saveUser = function () {
-                moodleFactory.Services.PutAsyncProfile(_getItem("userId"), $scope.model,
+                moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
 
                     function (data) {
                         ValidatePointsPolicy();
@@ -676,17 +735,14 @@ angular
 
                             usercourse.activities[activityIndex].status = 1;
 
-                            var profileBefore = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
+                            var profileBefore = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));
                             console.log("profile.stars (before): " + profileBefore.stars);
                             
                             var newPoints = Number(profileBefore.stars) + Number(usercourse.activities[activityIndex].points);
                             profileBefore.stars =newPoints;                       
-                            _setLocalStorageJsonItem("profile",profileBefore);
+                            _setLocalStorageJsonItem("profile/" + $scope.userId,profileBefore);
 
                             updateUserStarsUsingExternalActivity(activity.activity_identifier);
-
-                            // var profileAfter = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));
-                            // console.log("profile.stars (after): " + profileAfter.stars);
 
                             var activityModel = {
                                 "usercourse": usercourse,
@@ -929,11 +985,19 @@ angular
             };
 
             $scope.addKindOfVideoGame = function (index) {
-                $scope.model.kindOfVideoGames.push(new String());
+                $scope.model.kindOfVideogames.push(new String());
             };
 
             $scope.deleteKindOfVideoGame = function (index) {
-                $scope.model.kindOfVideoGames.splice(index, 1);
+                $scope.model.kindOfVideogames.splice(index, 1);
+            };
+            
+            $scope.deleteMainActivity = function (index) {
+                $scope.model.mainActivity.splice(index, 1);
+            };
+            
+            $scope.addMainActivity = function() {
+                $scope.model.mainActivity.push(new String());
             };
 
             $scope.addFavoriteGame = function (index) {
@@ -999,14 +1063,18 @@ angular
                         data: avatarInfo[0]
                     })
                         .success(function () {
-                            console.log('Foto guardada exitosamente!');
-                            $location.path('/ProgramaDashboard');
+                            avatarUploaded("Éxito");
                         })
                         .error(function () {
-                            console.log('Error al subir la foto!');
-                            $location.path('/ProgramaDashboard');
+                            avatarUploaded("Error");
                         });
                 });
+            }
+
+            function avatarUploaded(message){
+                console.log(message + " al subir la foto!");
+                $location.path('/Profile/' + $scope.userId);
+                $route.reload();
             }
 
             function setEmptyAvatar() {
@@ -1081,7 +1149,7 @@ angular
             }
 
             function FailureAvatar(data) {
-                console.log("Couldn't retrieve avatar");
+                avatarUploaded("Error");
             }
 
             var $selects = $('select.form-control');
@@ -1104,5 +1172,71 @@ angular
             function addZeroBefore(n) {
                 return (n < 10 ? '0' : '') + n;
             }
+            
+            $scope.shareAchievement = function() {
+                
+                if ($scope.hasCommunityAccess) {
+                    $scope.$emit('ShowPreloader');
+                
+                    if ($scope.discussion == null || $scope.forumId == null) {
+                        
+                        moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, function(data, key) {
+                            $scope.discussion = data.discussions[0];
+                            $scope.forumId = data.forumid;
+                            
+                            postAchievement();
+                            
+                            }, function(data){
+                                $scope.shareAchievementMessage = "";
+                                $scope.showShareAchievementMessage = false;
+                                $scope.showSharedAchievement = true;
+                                
+                                $scope.$emit('HidePreloader'); }, true);
+                    }else {
+                        postAchievement();
+                    }
+                }
+
+            };
+            
+            function postAchievement() {
+                var customMessage = '<p> ' + $scope.shareAchievementMessage + '</p>';
+                var msgOpenContainer = '<div class="achievement-badge"> ';
+                var appendImg = '<figure> <img src="assets/images/badges/' + $scope.fileName + '" ng-src="assets/images/badges/' + $scope.fileName + '" alt="" /> </figure>';
+                var msgCaption = '<figcaption> <p class="badgename">' + $scope.badgeName + '</p> </figcaption>';
+                var msgCloseContainer = ' </div>';
+                
+                var fullMessage = customMessage + msgOpenContainer + appendImg + msgCaption + msgCloseContainer;
+                
+                var requestData = {
+                    "userid": $scope.userId,
+                    "discussionid": $scope.discussion.discussion,
+                    "parentid": $scope.discussion.id,
+                    "message": removeHtmlTag(fullMessage),
+                    "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                    "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                    "posttype": 1,
+                    "fileToUpload": null
+                };
+                
+                moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                    function() {
+                        $scope.shareAchievementMessage = "";
+                        $scope.showShareAchievementMessage = false;
+                        $scope.showSharedAchievement = true;
+                        
+                        $scope.$emit('HidePreloader');
+                    },
+                    function(){
+                        $scope.shareAchievementMessage = "";
+                        $scope.showShareAchievementMessage = false;
+                        $scope.showSharedAchievement = false;
+                        
+                        $scope.$emit('HidePreloader');
+                    }
+                );
+            };
+            
+            $scope.scrollToTop();
 
         }]);

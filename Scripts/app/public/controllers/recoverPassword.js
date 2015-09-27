@@ -16,6 +16,10 @@ angular
             $scope.$emit('scrollTop'); //- scroll
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.$emit('HidePreloader');
             /* ViewModel */
             $scope.recoverPasswordModel = {
@@ -39,6 +43,10 @@ angular
             $scope.readOnly = false;
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             
             $scope.securityquestionItems = ['¿Dónde crecí?','Nombre de mi mejor amigo','Nombre de mi mascota','Personaje favorito','Banda musical favorita'];
 
@@ -102,7 +110,7 @@ angular
                         if((data != null && data.messageerror != null)){
                             errorMessage = window.atob(data.messageerror);
                         }else{
-                            errorMessage = "Se ha producido un error, contactate al administrador."
+                            errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
                         }
 
                         $scope.recoverPasswordModel.modelState.errorMessages = [errorMessage];
@@ -160,7 +168,7 @@ angular
                         if((data != null && data.messageerror != null)){
                             errorMessage = window.atob(data.messageerror);
                         }else{
-                            errorMessage = "Se ha producido un error, contactate al administrador."
+                            errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
                         }
 
                         $scope.recoverPasswordModel.modelState.errorMessages = [errorMessage];

@@ -11,10 +11,6 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {            
-
-            console.log('program Chat Controller starting....');
-            console.log($location.hash());
-
             $scope.$emit('ShowPreloader'); 
             _timeout = $timeout;
             _httpFactory = $http;
@@ -27,10 +23,13 @@ angular
             $scope.currentMessage = "";
             $scope.setToolbar($location.$$path,"Cabina de Soporte");
             $rootScope.showFooter = false; 
-            $rootScope.showFooterRocks = false; 
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false; 
             var interval = -1;
             if ($location.hash() == 'top') {
-                $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
+            $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
                 $anchorScroll();
             } 
             else 
@@ -43,23 +42,23 @@ angular
 
 
             function getUserRefreshChatCallback() {
-                $scope.$emit('HidePreloader'); //hide preloader
+            $scope.$emit('HidePreloader'); //hide preloader
                 $scope.messages = JSON.parse(localStorage.getItem('userChat'));
                 validateCabinaDeSoporte();
 
                 setTimeout(function() {
                     $anchorScroll();
                 }, 1000);                
-            }   
-            
+            }
 
-            function validateCabinaDeSoporte(){
-               // $scope.scrollToTop('anchor-bottom');                       
+
+            function validateCabinaDeSoporte(){                
+                //$scope.scrollToTop('anchor-bottom');                       
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
                     var isStarted = _startedActivityCabinaDeSoporte;
-                    var currentActivity = _usercourse.stages[isStarted.$stage].challenges[isStarted.$parentIndex].activities[isStarted.$index];
+                    var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.$data.moduleid, _usercourse);    
 
                         if (!currentActivity.status) {
                             var rawDate = isStarted.$data.datestarted.split(/:|\s|:/);
@@ -68,13 +67,14 @@ angular
                                 return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
                             });
 
-                            if (latestMessages.length >= 2) {    
+                            if (latestMessages.length >= 2) { 
+                                localStorage.removeItem("startedActivityCabinaDeSoporte");   
                                 _setLocalStorageItem('finishCabinaSoporte', 'true');
                             }
                         }   
                     }                
                 }
-            }   
+            }            
 
             function getMessages(){
                 var existingInterval = localStorage.getItem('Interval');
@@ -93,10 +93,10 @@ angular
                         ClearLocalStorage("Interval");
                     }                
 
-                    moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
-                 }
+                moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
             }
-
+            }   
+            
             $scope.back = function () {
                 var userCurrentStage = localStorage.getItem("currentStage");              
                 $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/4');

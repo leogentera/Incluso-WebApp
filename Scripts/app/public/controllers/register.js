@@ -52,6 +52,10 @@ angular
             $scope.isRegistered = false;
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.genderItems = ['Masculino', 'Femenino'];
             $scope.countryItems = ['México', 'OTRO'];
             $scope.cityItems = ['México D.F', 'Estado de México', 'OTRO'];
@@ -200,7 +204,7 @@ angular
                         if((data != null && data.messageerror != null)){
                             errorMessage = window.atob(data.messageerror);
                         }else{
-                            errorMessage = "Se ha producido un error, contactate al administrador."
+                            errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
                         }
 
                         $scope.registerModel.modelState.errorMessages = [errorMessage];                        

@@ -23,28 +23,27 @@
                             esto aparecerá en tu perfil. No olvides utilizarlo para el siguiente reto.
                         </div>
                         <section id='gustos1' class="form txt-renglon txt-bigger part list">
-                            <input id="q1r0" type="checkbox" value="0" name="check" ng-model="misGustosAnswers[0][0]" ng-true-value="1" ng-false-value="0">
+                            <input id="q1r0" type="checkbox" value="0" name="check" ng-model="misGustosAnswers[0][0]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Ciclismo',misGustosAnswers[0][0],'favoriteSports')"/>
                             <label for="q1r0">Ciclismo</label>
-                            <input id="q1r1" type="checkbox" value="1" name="check" ng-model="misGustosAnswers[0][1]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r1" type="checkbox" value="1" name="check" ng-model="misGustosAnswers[0][1]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Patinaje/skateboarding',misGustosAnswers[0][1],'favoriteSports')"/>
                             <label for="q1r1">Patinaje/skateboarding</label>
-                            <input id="q1r2" type="checkbox" value="2" name="check" ng-model="misGustosAnswers[0][2]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r2" type="checkbox" value="2" name="check" ng-model="misGustosAnswers[0][2]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Futbol soccer',misGustosAnswers[0][2],'favoriteSports')"/>
                             <label for="q1r2">Futbol soccer</label>
-                            <input id="q1r3" type="checkbox" value="3" name="check" ng-model="misGustosAnswers[0][3]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r3" type="checkbox" value="3" name="check" ng-model="misGustosAnswers[0][3]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Basquetbol',misGustosAnswers[0][3],'favoriteSports')"/>
                             <label for="q1r3">Basquetbol</label>
-                            <input id="q1r4" type="checkbox" value="4" name="check" ng-model="misGustosAnswers[0][4]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r4" type="checkbox" value="4" name="check" ng-model="misGustosAnswers[0][4]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Artes marciales',misGustosAnswers[0][4],'favoriteSports')"/>
                             <label for="q1r4">Artes marciales</label>
-                            <input id="q1r5" type="checkbox" value="5" name="check" ng-model="misGustosAnswers[0][5]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r5" type="checkbox" value="5" name="check" ng-model="misGustosAnswers[0][5]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Yoga',misGustosAnswers[0][5],'favoriteSports')"/>
                             <label for="q1r5">Yoga</label>
-                            <input id="q1r6" type="checkbox" value="6" name="check" ng-model="misGustosAnswers[0][6]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r6" type="checkbox" value="6" name="check" ng-model="misGustosAnswers[0][6]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Natación',misGustosAnswers[0][6],'favoriteSports')"/>
                             <label for="q1r6">Natación</label>
-                            <input id="q1r7" type="checkbox" value="7" name="check" ng-model="misGustosAnswers[0][7]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r7" type="checkbox" value="7" name="check" ng-model="misGustosAnswers[0][7]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Futbol americano',misGustosAnswers[0][7],'favoriteSports')"/>
                             <label for="q1r7">Futbol americano</label>
-                            <input id="q1r8" type="checkbox" value="8" name="check" ng-model="misGustosAnswers[0][8]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r8" type="checkbox" value="8" name="check" ng-model="misGustosAnswers[0][8]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Basebol',misGustosAnswers[0][8],'favoriteSports')"/>
                             <label for="q1r8">Basebol</label>
-                            <input id="q1r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[0][9]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q1r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[0][9]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Carreras',misGustosAnswers[0][9],'favoriteSports')"/>
                             <label for="q1r9">Carreras</label>                            
-                            <input id="q1r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[0][10]" ng-true-value="1" ng-false-value="0"
-                                   ng-change="misGustosOtroAnswers[0].answers[0] = misGustosAnswers[0][10]==0 ? '' : misGustosOtroAnswers[0].answers[0]"
+                            <input id="q1r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[0][10]" ng-true-value="1" ng-false-value="0"                                   
                                    ng-click="addCaptureField('gustos1', misGustosAnswers[0][10])" />
                             <label for="q1r10">Otro</label>
 
@@ -53,7 +52,7 @@
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea1" class="form-control form-control-lg theme-form"
                                               row="2"
-                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[0].answers[0]"></textarea>
+                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[0].answers[0]" ng-readonly="{{misGustosAnswers[0][10] == 1}} && {{misGustosOtroAnswers[0].answers[0] != ''}}"></textarea>
                                 </div>
                             </div>
                         </section>
@@ -65,28 +64,27 @@
                             esto aparecerá en tu perfil. No olvides utilizarlo para el siguiente reto
                         </div>
                         <section id='gustos2' class="form txt-renglon txt-bigger part list">
-                            <input id="q2r0" type="checkbox" value="0" name="check" ng-model="misGustosAnswers[1][0]" ng-true-value="1" ng-false-value="0">
+                            <input id="q2r0" type="checkbox" value="0" name="check" ng-model="misGustosAnswers[1][0]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Pintura',misGustosAnswers[1][0],'artisticActivities')">
                             <label for="q2r0">Pintura</label>
-                            <input id="q2r1" type="checkbox" value="1" name="check" ng-model="misGustosAnswers[1][1]" ng-true-value="1" ng-false-value="0">
+                            <input id="q2r1" type="checkbox" value="1" name="check" ng-model="misGustosAnswers[1][1]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Música',misGustosAnswers[1][1],'artisticActivities')">
                             <label for="q2r1">Música</label>
-                            <input id="q2r2" type="checkbox" value="2" name="check" ng-model="misGustosAnswers[1][2]" ng-true-value="1" ng-false-value="0">
+                            <input id="q2r2" type="checkbox" value="2" name="check" ng-model="misGustosAnswers[1][2]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Danza',misGustosAnswers[1][2],'artisticActivities')">
                             <label for="q2r2">Danza</label>
-                            <input id="q2r3" type="checkbox" value="3" name="check" ng-model="misGustosAnswers[1][3]" ng-true-value="1" ng-false-value="0">
+                            <input id="q2r3" type="checkbox" value="3" name="check" ng-model="misGustosAnswers[1][3]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Fotografía',misGustosAnswers[1][3],'artisticActivities')">
                             <label for="q2r3">Fotografía</label>
-                            <input id="q2r4" type="checkbox" value="4" name="check" ng-model="misGustosAnswers[1][4]" ng-true-value="1" ng-false-value="0">
+                            <input id="q2r4" type="checkbox" value="4" name="check" ng-model="misGustosAnswers[1][4]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Graffiti',misGustosAnswers[1][4],'artisticActivities')">
                             <label for="q2r4">Graffiti</label>
-                            <input id="q2r5" type="checkbox" value="5" name="check" ng-model="misGustosAnswers[1][5]" ng-true-value="1" ng-false-value="0">
+                            <input id="q2r5" type="checkbox" value="5" name="check" ng-model="misGustosAnswers[1][5]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Diseño digital',misGustosAnswers[1][5],'artisticActivities')">
                             <label for="q2r5">Diseño digital</label>
-                            <input id="q2r6" type="checkbox" value="6" name="check" ng-model="misGustosAnswers[1][6]" ng-true-value="1" ng-false-value="0">
+                            <input id="q2r6" type="checkbox" value="6" name="check" ng-model="misGustosAnswers[1][6]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Artesanías',misGustosAnswers[1][6],'artisticActivities')">
                             <label for="q2r6">Artesanías</label>
-                            <input id="q2r7" type="checkbox" value="7" name="check" ng-model="misGustosAnswers[1][7]" ng-true-value="1" ng-false-value="0">
+                            <input id="q2r7" type="checkbox" value="7" name="check" ng-model="misGustosAnswers[1][7]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Teatro',misGustosAnswers[1][7],'artisticActivities')">
                             <label for="q2r7">Teatro</label>
-                            <input id="q2r8" type="checkbox" value="8" name="check" ng-model="misGustosAnswers[1][8]" ng-true-value="1" ng-false-value="0">
+                            <input id="q2r8" type="checkbox" value="8" name="check" ng-model="misGustosAnswers[1][8]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Modelado',misGustosAnswers[1][8],'artisticActivities')">
                             <label for="q2r8">Modelado</label>
-                            <input id="q2r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[1][9]" ng-true-value="1" ng-false-value="0">
+                            <input id="q2r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[1][9]" ng-true-value="1" ng-false-value="0" ng-click="toggleSelection('Dibujo',misGustosAnswers[1][9],'artisticActivities')">
                             <label for="q2r9">Dibujo</label>                            
-                            <input id="q2r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[1][10]" ng-true-value="1" ng-false-value="0"
-                                   ng-change="misGustosOtroAnswers[1].answers[0] = misGustosAnswers[1][10]==0 ? '' : misGustosOtroAnswers[1].answers[0]"
+                            <input id="q2r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[1][10]" ng-true-value="1" ng-false-value="0"                                   
                                    ng-click="addCaptureField('gustos2', misGustosAnswers[1][10])" />
                             <label for="q2r10">Otro</label>
 
@@ -94,7 +92,7 @@
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea2" class="form-control form-control-lg theme-form" row="2"
-                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[1].answers[0]"></textarea>
+                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[1].answers[0]"  ng-readonly="{{misGustosAnswers[1][10] == 1}} && {{misGustosOtroAnswers[1].answers[0] != ''}}"></textarea>
                                 </div>
                             </div>
 
@@ -107,28 +105,27 @@
                             esto aparecerá en tu perfil. No olvides utilizarlo para el siguiente reto
                         </div>
                         <section id='gustos3' class="form txt-renglon txt-bigger part list">
-                            <input id="q3r0" type="checkbox" value="0" name="check" ng-model="misGustosAnswers[2][0]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r0" type="checkbox" value="0" name="check" ng-model="misGustosAnswers[2][0]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Ir a fiestas',misGustosAnswers[2][0],'hobbies')"/>
                             <label for="q3r0">Ir a fiestas</label>
-                            <input id="q3r1" type="checkbox" value="1" name="check" ng-model="misGustosAnswers[2][1]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r1" type="checkbox" value="1" name="check" ng-model="misGustosAnswers[2][1]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Leer',misGustosAnswers[2][1],'hobbies')"/>
                             <label for="q3r1">Leer</label>
-                            <input id="q3r2" type="checkbox" value="2" name="check" ng-model="misGustosAnswers[2][2]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r2" type="checkbox" value="2" name="check" ng-model="misGustosAnswers[2][2]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Pasar tiempo con amigos',misGustosAnswers[2][2],'hobbies')"/>
                             <label for="q3r2">Pasar tiempo con amigos</label>
-                            <input id="q3r3" type="checkbox" value="3" name="check" ng-model="misGustosAnswers[2][3]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r3" type="checkbox" value="3" name="check" ng-model="misGustosAnswers[2][3]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Cocinar',misGustosAnswers[2][3],'hobbies')"/>
                             <label for="q3r3">Cocinar</label>
-                            <input id="q3r4" type="checkbox" value="4" name="check" ng-model="misGustosAnswers[2][4]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r4" type="checkbox" value="4" name="check" ng-model="misGustosAnswers[2][4]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Jugar videojuegos',misGustosAnswers[2][4],'hobbies')"/>
                             <label for="q3r4">Jugar videojuegos</label>
-                            <input id="q3r5" type="checkbox" value="5" name="check" ng-model="misGustosAnswers[2][5]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r5" type="checkbox" value="5" name="check" ng-model="misGustosAnswers[2][5]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Visitar museos',misGustosAnswers[2][5],'hobbies')"/>
                             <label for="q3r5">Visitar museos</label>
-                            <input id="q3r6" type="checkbox" value="6" name="check" ng-model="misGustosAnswers[2][6]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r6" type="checkbox" value="6" name="check" ng-model="misGustosAnswers[2][6]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Ver películas/series',misGustosAnswers[2][6],'hobbies')"/>
                             <label for="q3r6">Ver películas/series</label>
-                            <input id="q3r7" type="checkbox" value="7" name="check" ng-model="misGustosAnswers[2][7]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r7" type="checkbox" value="7" name="check" ng-model="misGustosAnswers[2][7]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Ver televisión',misGustosAnswers[2][7],'hobbies')"/>
                             <label for="q3r7">Ver televisión</label>
-                            <input id="q3r8" type="checkbox" value="8" name="check" ng-model="misGustosAnswers[2][8]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r8" type="checkbox" value="8" name="check" ng-model="misGustosAnswers[2][8]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Pasar tiempo en redes sociales',misGustosAnswers[2][8],'hobbies')"/>
                             <label for="q3r8">Pasar tiempo en redes sociales</label>
-                            <input id="q3r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[2][9]" ng-true-value="1" ng-false-value="0" />
+                            <input id="q3r9" type="checkbox" value="9" name="check" ng-model="misGustosAnswers[2][9]" ng-true-value="1" ng-false-value="0"  ng-click="toggleSelection('Escuchar música',misGustosAnswers[2][9],'hobbies')"/>
                             <label for="q3r9">Escuchar música</label>                            
-                            <input id="q3r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[2][10]" ng-true-value="1" ng-false-value="0"
-                                   ng-change="misGustosOtroAnswers[2].answers[0] = misGustosAnswers[2][10]==0 ? '' : misGustosOtroAnswers[2].answers[0]"
+                            <input id="q3r10" type="checkbox" value="10" name="check" ng-model="misGustosAnswers[2][10]" ng-true-value="1" ng-false-value="0"                                   
                                    ng-click="addCaptureField('gustos3', misGustosAnswers[2][10])" />
                             <label for="q3r10">Otro</label>
 
@@ -137,7 +134,7 @@
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea3" class="form-control form-control-lg theme-form"
                                               row="2"
-                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[2].answers[0]"></textarea>
+                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[2].answers[0]"  ng-readonly="{{misGustosAnswers[2][10] == 1}} && {{misGustosOtroAnswers[2].answers[0] != ''}}"></textarea>
                                 </div>
                             </div>
                         </section>

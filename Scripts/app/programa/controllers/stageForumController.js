@@ -13,32 +13,32 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _httpFactory = $http;
             _timeout = $timeout;
-            $scope.moodleId = $routeParams.moodleid;
+
+            $routeParams.activityId == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
              var redirectOnShield = function () {
-                 var logicForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/' + 147;
-                 var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + 148;
+                 var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
+                 var logicForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos/' + $routeParams.activityId + '/'+ activityFromTree.activities[0].coursemoduleid;
+                 var artisticForumTopicsUrl = '/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/' + $routeParams.activityId + '/'+ activityFromTree.activities[1].coursemoduleid;
 
                  var shields = [
-                     {name: 'musical', category: 'artistico'},
-                     {name: 'interpersonal', category: 'artistico'},
-                     {name: 'naturalista', category: 'logico'},
-                     {name: 'intrapersonal', category: 'logico'},
-                     {name: 'corporal', category: 'artistico'},
-                     {name: 'espacial', category: 'artistico'},
-                     {name: 'matematica', category: 'logico'},
-                     {name: 'liguistica', category: 'logico'},
+                     {name: 'Musical', category: 'artistico'},
+                     {name: 'Interpersonal', category: 'artistico'},
+                     {name: 'Naturalista', category: 'logico'},
+                     {name: 'Intrapersonal', category: 'logico'},
+                     {name: 'Corporal', category: 'artistico'},
+                     {name: 'Espacial', category: 'artistico'},
+                     {name: 'Matemática', category: 'logico'},
+                     {name: 'Lingüística', category: 'logico'},
                  ];
-
-                 var shield = JSON.parse(localStorage.getItem('profile')).shield;
-                 //shield ? shield = shield.shield : shield = null;
+                 var userId = JSON.parse(localStorage.getItem('userId'));
+                 var shield = JSON.parse(localStorage.getItem('profile/' + userId )).shield;
                  if (shield && shield != '') {
 
                      var shieldCategory = _.find(shields, function (s) {
-                         return s.name == shield.toLowerCase()
+                         return s.name == shield;
                      });
-                     //return shieldCategory == "logico" ?  $location.path(logicForumTopicsUrl) : $location.path(artisticForumTopicsUrl);
                      if (shieldCategory) {
                        if (shieldCategory.category == "logico") {
                            $scope.moodleId = 147;
@@ -54,20 +54,20 @@ angular
                  }
             };
 
-            if($routeParams.moodleid == 149) {
+            if($routeParams.activityId == 1049) {
               redirectOnShield();
             }
 
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"");
-            $rootScope.showFooter = true; 
+            $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
-
-            $scope.moodleId = $routeParams.moodleid;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
 
             $scope.scrollToTop();
 
-           $scope.activity = "Here is a value";
            function getForumsProgress(){
               var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : setForumsList();
               return forumsProgress;
@@ -107,42 +107,47 @@ angular
             };
 
             function getDataAsync() {
-                
-                $routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
-                
-                //$routeParams.moodleid != 149? moodleFactory.Services.GetAsyncForumInfo($routeParams.moodleid, currentUser.token, getActivityInfoCallback, '', true):'';
+                console.log('Moodle ID on dataAsync: ' + $scope.moodleId);
+                $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
             }
             
             function getForumDiscussionsCallback() {
-                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid));
+                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
                 getForumsProgress();
-                getForumsExtraPointsCounter();
-               $scope.$emit('HidePreloader'); //hide preloader
-            }
-
-            function getActivityInfoCallback() {
-               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $routeParams.moodleid));
-               getForumsProgress();
                 getForumsExtraPointsCounter();
                $scope.$emit('HidePreloader'); //hide preloader
             }
 
             getDataAsync();
 
-            $scope.showComentarios = function (discussionId, moodleId) {
-
-              switch (moodleId){
-                  case "64":
-                      $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.moodleid + "/" + discussionId);
+            $scope.showComentarios = function (discussionId) {
+              var moodleId = $routeParams.moodleId;
+                console.log('Moodle ID: ' + $routeParams.moodleId);
+                !moodleId? moodleId = getMoodleIdFromTreeActivity($routeParams.activityId): '';
+              switch (Number(moodleId)){
+                  case 64:
+                      $location.path("/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
-                  case "73":
-                      $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/" + $routeParams.moodleid + "/" + discussionId);
+                  case 73:
+                      $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
-                  case "147":
-                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                  case 147:
+                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios/" + $routeParams.activityId + "/" + discussionId + "/"+ $routeParams.moodleId);
                       break;
-                  case "148":
-                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $scope.moodleId + "/" + discussionId);
+                  case 148:
+                      $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios/" + $routeParams.activityId + "/" + discussionId + "/"+ $routeParams.moodleId);
+                      break;
+                  case 179:
+                      $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                      break;
+                  case 85:
+                      $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                      break;
+                  case 93:
+                      $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
+                      break;
+                  case 91:
+                      $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/" + $routeParams.activityId + "/" + discussionId);
                       break;
               }
 
@@ -160,23 +165,30 @@ angular
                     });
                 }, 1000);
               
-              var moodleId = $routeParams.moodleid;
-              
-              switch (moodleId){
-                  case "64":
+              switch (Number($routeParams.activityId)){
+                  case 1010:
                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
-                  case "73":
+                  case 1008:
                       $location.path('/ZonaDeVuelo/Dashboard/1/'+3);
                       break;
-                  case "147":
+                  case 1049:
                       $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
                       break;
-                  case "148":
-                      $location.path('/ZonaDeVuelo/Dashboard/1/'+2);
+                  case 2030:
+                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 2);
+                      break;
+                  case 2026:
+                      $location.path("/ZonaDeNavegacion/Dashboard/2/" + 4);
+                      break
+                  case 3304:
+                      $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 2);
+                      break;
+                  case 3404:
+                      $location.path("/ZonaDeAterrizaje/Dashboard/3/" + 3);
                       break;
                   default:
-                      $location.path('/ZonaDeVuelo/Dashboard/1');
+                      $location.path('/ProgramaDashboard');
                       break;
               }                                      
               

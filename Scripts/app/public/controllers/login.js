@@ -20,6 +20,10 @@ angular
             $scope.$emit('scrollTop'); //- scroll
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             // $scope.preloader = angular.element(document.getElementById('spinner')).scope();
             // $scope.preloader.loading = true;
 
@@ -89,7 +93,7 @@ angular
                     $http(
                         {
                             method: 'POST',
-                            url: API_SSL_RESOURCE.format("authentication"),
+                            url: API_RESOURCE.format("authentication"),
                             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                             data: $.param({ username: $scope.userCredentialsModel.username.toString().toLowerCase(), password: $scope.userCredentialsModel.password })
                         }

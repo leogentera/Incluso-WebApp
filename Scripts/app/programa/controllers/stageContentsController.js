@@ -13,29 +13,74 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _timeout = $timeout;
             _httpFactory = $http;
-            var moduleid;
+            var moduleid = $routeParams.moodleid;
             var pagename;      
-            var currentChallenge;              
-            switch($routeParams.moodleid){
-              case 'zv_cuartoderecursos_fuentedeenergia':
-                moduleid = 112;
+            var currentChallenge; 
+            var stage;     
+            var userCurrentStage;        
+            switch(moduleid){
+              
+              case "1101":  
+                userCurrentStage = 1;
                 currentChallenge = 1;
+                stage = "ZonaDeVuelo";
                 break;
-              case 'zv_conocete_fuentedeenergia':
-                moduleid = 145;
+              case "1020":  
+                userCurrentStage = 1;              
                 currentChallenge = 2;
+                stage = "ZonaDeVuelo";
                 break;
-              case 'zv_missuenos_fuentedeenergia':
-                moduleid = 146;
+              case "1021":    
+                userCurrentStage = 1;            
                 currentChallenge = 3;
+                stage = "ZonaDeVuelo";
                 break;
+              case "2004":
+                userCurrentStage = 2;
+                currentChallenge = 1;
+                stage = "ZonaDeNavegacion";
+                break;
+              case "2006":
+                userCurrentStage = 2;
+                currentChallenge = 2;
+                stage = "ZonaDeNavegacion";
+                break;
+              case "2011":
+                userCurrentStage = 2;
+                currentChallenge = 3;
+                stage = "ZonaDeNavegacion";
+                break;
+              case "2015":
+                userCurrentStage = 2;
+                currentChallenge = 4;
+                stage = "ZonaDeNavegacion";
+                break;
+              case "3201":
+                userCurrentStage = 3;
+                currentChallenge = 1;
+                stage = "ZonaDeAterrizaje";
+                break;
+              case "3301":
+                userCurrentStage = 3;
+                currentChallenge = 2;
+                stage = "ZonaDeAterrizaje";
+                break;
+              case "3401":
+                userCurrentStage = 3;
+                currentChallenge = 3;
+                stage = "ZonaDeAterrizaje";
+                break;
+
             }
 
             $scope.currentPage = 1;  
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"");
-            $rootScope.showFooter = true; 
-            $rootScope.showFooterRocks = false; 
+            $rootScope.showFooter = true;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
             $scope.statusObligatorios = 0; 
             var waitPreloader = 0;
             var hidePreloader = 0;
@@ -46,15 +91,14 @@ angular
             $scope.scrollToTop();
             //$scope.$emit('HidePreloader'); //hide preloader            
             var starsNoMandatory = 0;
-            var starsMandatory = 0;    
-            var userCurrentStage = localStorage.getItem("currentStage");            
+            var starsMandatory = 0;                
             var getcoursemoduleids = [];
             $scope.like_status = 1;
 
             if(!activities){
               var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
               $scope.fuenteDeEnergia = _.find(activitymanagers,function(a) { 
-                                  return a.coursemoduleid == moduleid
+                                  return a.activity_identifier == moduleid
                                   });                    
               getDataAsync();    
             }      
@@ -79,13 +123,16 @@ angular
                 else{
                   var activityContentCache = (JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
                   if(activityContentCache){                      
-                    $scope.fuenteDeEnergia.activities[i].activityContent = activityContentCache;
+                    $scope.fuenteDeEnergia.activities[i].activityContent = activityContentCache;                    
+
+                    setResources($scope.fuenteDeEnergia.activities[i]);
+                                        
                   }
                   else
                   {
-                    waitPreloader = 1;
+                    waitPreloader += 1;
                     
-                        moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);
+                    moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);
                     
                   }  
                 }
@@ -102,8 +149,12 @@ angular
                   var courseId = key.split('/')[1];
 
                   for(i = 0; i < $scope.fuenteDeEnergia.activities.length; i++){ 
-                    if($scope.fuenteDeEnergia.activities[i].coursemoduleid == courseId) {                      
-                      $scope.fuenteDeEnergia.activities[i].activityContent = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + courseId));
+                    var myActivity = $scope.fuenteDeEnergia.activities[i];
+                    if(myActivity.coursemoduleid == courseId) {                      
+                      myActivity.activityContent = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + courseId));                      
+                                                               
+                      setResources(myActivity);
+                      
                       hidePreloader += 1;
                       break;                      
                     }                    
@@ -120,12 +171,39 @@ angular
                   }  
               }
 
+              function setResources(myActivity){
+                if(myActivity.activityContent.thumbnail){
+                  myActivity.activityContent.thumbnail = myActivity.activityContent.thumbnail.fileurl + "&token=" + $scope.token;
+                }
+                else{
+                  myActivity.activityContent.thumbnail = "assets/images/svg/img_placeholder-01.svg";
+                }
+                if(myActivity.activity_type == 'resource'){
+                    myActivity.activityContent.content[0].fileurl = myActivity.activityContent.content[0].fileurl + "&token=" + $scope.token;
+                  if(myActivity.activityContent.content[0].fileurl.indexOf(".mp4") > -1){
+                    myActivity.activityintro = "video";
+                    myActivity.activity_type = "video";
+                    myActivity.activityContent.url = myActivity.activityContent.content[0].fileurl;
+                    myActivity.activityContent.thumbnail = myActivity.activityContent.content[1].fileurl + "&token=" + $scope.token;
+                  }    
+                  if(myActivity.activityContent.content[1]){//Si es una actividad con video y thumbnail
+                    myActivity.activityContent.content[1].fileurl = myActivity.activityContent.content[1].fileurl + "&token=" + $scope.token;
+                    if(myActivity.activityContent.content[1].fileurl.indexOf(".mp4") > -1){
+                      myActivity.activityintro = "video";
+                      myActivity.activity_type = "video";
+                      myActivity.activityContent.url = myActivity.activityContent.content[1].fileurl;
+                      myActivity.activityContent.thumbnail = myActivity.activityContent.content[0].fileurl;
+                    }
+                  }                                                                                                            
+                }                
+              }
+
             /*function getActivityInfoCallback() {
                 $scope.activities.push(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 80)));
                        
             }*/
-             function checkProgress(){
-              for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {              
+             function checkProgress(){              
+              for (var i=0; i<$scope.fuenteDeEnergia.activities.length; i++) {                              
                 if(!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status){                
                   $scope.statusObligatorios+=1; 
                   starsMandatory += 50;               
@@ -167,7 +245,7 @@ angular
             };
 
             function assingStars(isMandatory, coursemoduleid, stars){
-              profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile"));              
+              profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));              
               var data={
                 userId: profile.id,
                 stars: stars,
@@ -189,8 +267,8 @@ angular
             }
 
             $scope.back = function () {   
-            var userCurrentStage = localStorage.getItem("currentStage");              
-                $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + currentChallenge);
+              //var userCurrentStage = localStorage.getItem("currentStage");              
+              $location.path('/'+ stage +'/Dashboard/' + userCurrentStage + '/' + currentChallenge);
             };
 
             function getdate(){
@@ -208,7 +286,8 @@ angular
               return (n < 10 ? '0' : '') + n;
             }
 
-            function successfullCallBack(){              
+            function successfullCallBack(){
+                  _updateRewardStatus();
             }
 
             function errorCallback(){
@@ -216,9 +295,9 @@ angular
             }
 
             function successEndFuente(){
-              var userCurrentStage = localStorage.getItem("currentStage"); 
+              //var userCurrentStage = localStorage.getItem("currentStage"); 
               $scope.$emit('HidePreloader'); //hide preloader
-              $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + currentChallenge);
+              $location.path('/'+ stage +'/Dashboard/' + userCurrentStage + '/' + currentChallenge);
             }          
 
             $scope.finishActivity = function(){   
@@ -236,7 +315,7 @@ angular
                 var data = {userid :  currentUserId, like_status: like_status };
                 $scope.fuenteDeEnergia.status = 1;
                 // update activity status dictionary used for blocking activity links
-                updateActivityStatusDictionary(activityId);
+                updateActivityStatusDictionary($scope.fuenteDeEnergia.activity_identifier);
                 moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token,successEndFuente, function(){$scope.$emit('HidePreloader');});                                                                    
             }            
         }]);

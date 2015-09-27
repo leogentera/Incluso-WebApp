@@ -1,0 +1,53 @@
+<div class="incluso-app content-page-theme my-stars score-dashboard" id="site-wrapper">
+<!--   <article>
+    <section class="component">
+      <h3>Mis estrellas</h3>
+
+      <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateTo('ProgramaDashboard', 'sideToggle')">Regresar</a> 
+    </section>
+  </article> -->
+
+  <article class="starway">
+
+  	<section class="score centered txt-bigger lightgreen">
+  		<div id="totstars">{{profileStars}}</div>
+  	</section>
+  	<section class="centered" style="display:none">
+  		<div class="sharer">
+  			<i class="icomoon icon-share icon"></i><a href="#openModal1" class="modbut"><div class="txt">Compartir puntuación</div></a>
+  		</div>
+  	</section>
+  	<section class="modales" style="display:none">
+  		<div id="openModal1" class="modalDialog">
+  			<div>
+  				<a href="#close" title="Close" class="close"></a>
+  				<div class="txt-renglon txt-bigger">"Puntuación {{profileStars}} Estrellas"</div>
+  				<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value=""/></div>
+
+  				<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+  			</div>
+  		</div>
+  	</section>
+	<section class="starcontain">
+	  <div class="subtitle centered">Mis estrellas</div>
+	  <div class="part" ng-repeat="activity in activitiesCompleted" ng-show="qtyStarsByAcctivity()">
+		<div class="fl-left"><div class="date">{{activity.last_status_update*1000 | date :'fullDate'}}</div>{{activity.sectionname}} : {{activity.activityname}}</div><div class="fl-right sm-pill">{{activity.points}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+	  </div>
+	  <div class="part showmore" ng-click="showMore()" ng-show="showLoadMoreBar()">
+  			<i class="icomoon  icon-show-more fl-right"></i> Mostrar más estrellas...
+  		</div>
+	</section>  	
+  	<section class="starcontain">
+  		<div class="subtitle centered">Mis Recompensas</div>
+  		<div class="part" ng-repeat="reward in rewardsEarned" ng-show="qtyRewards()" ng-click="showRewardDetail(reward.id)">
+  			<div class="fl-left"><div class="date">{{reward.dateIssued | date: 'fullDate'}}</div>{{reward.name}}</div>
+  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
+  		</div>
+  		
+  		<div class="part showmore" ng-click="showMoreRewards()" ng-show="showMoreBarRewards()">
+  			<i class="icomoon  icon-show-more fl-right"></i> Mostrar más recompensas...
+  		</div>
+  	</section>
+  </article>
+
+</div>
