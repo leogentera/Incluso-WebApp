@@ -81,7 +81,7 @@ angular
                               $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                               var extraPointsCounter = getForumsExtraPointsCounter();
                               var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $routeParams.discussionId; });
-                              debugger;
+                              //debugger;
                               var extraPoints = $routeParams.extraPoints? extraPoints = $routeParams.extraPoints : extraPoints = 0;
                               updateUserStars($routeParams.activityId);
                               //$timeout(
@@ -98,7 +98,7 @@ angular
                               } else if(activityId == 2030 || activityId == 2026){
                                   $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                               } else if(activityId == 3304 || activityId == 3404){
-                                  $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                                  $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                               }
 
                           }, errorCallback);
