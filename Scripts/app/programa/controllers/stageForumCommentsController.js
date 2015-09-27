@@ -133,30 +133,39 @@ angular
                 var isActivityFinished = null;
                 var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2 && _.some($scope.currentDiscussionsIds, function(cdid) { return cdid === d.discussion_id; }) });
                 console.log("numberOfDiscussionsWithMoreThan2Replies " + numberOfDiscussionsWithMoreThan2Replies.length);
+
                 isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentDiscussionsIds.length);
 
                 var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
+                //debugger;
+                var extraPointsCounter = getForumsExtraPointsCounter();
+                var extraPoints = 0;
+                if(numberOfDiscussionsWithMoreThan2Replies){
+                    for(var i = 0 ; i < numberOfDiscussionsWithMoreThan2Replies.length ; i++){
+                        extraPoints += numberOfDiscussionsWithMoreThan2Replies[i].replies_counter - 2;
+                    }
+                }
 
                 if(activityFromTree.status == 1){
-
-                    //addExtraForumParticipation($scope.discussion.id);
-                    var extraPointsCounter = getForumsExtraPointsCounter();
-                    var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $scope.discussion.id; });
-                    if(currentDiscussionCounter.extra_replies_counter <= 10) {
-                        updateUserStars($routeParams.activityId, 50 );
+                    //debugger;
+                    if (activityFromTree && activityFromTree.status == 1) {
+                        if(extraPoints <= 10) {
+                            updateUserStars($routeParams.activityId, 50 );
+                        }
                     }
                 }
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
+                    extraPoints *= 50;
                     resetForumDiscussionsProgress();
                     switch ($scope.moodleId) {
                         case "179":
-                                $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178);
+                                $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178 +'/'+ extraPoints);
                             break;
                         case "85":
-                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId);
+                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ extraPoints);
                             break;
                         default :
-                            $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id);
+                            $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints);
                         $scope.scrollToTop();
                     }
                 } else {

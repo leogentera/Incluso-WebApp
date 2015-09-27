@@ -355,7 +355,7 @@
             controller: 'stageGameRetoMultipleResultsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId/:extraPoints', {
             templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -502,7 +502,7 @@
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:activityId', {
+        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:activityId/:extraPoints', {
             templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -615,7 +615,7 @@
             controller: 'stageQuizController'
         });
 
-        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activity_identifier/:activityId', {
+        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activity_identifier/:activityId/extraPoints', {
             templateUrl: 'Templates/ZonaDeAterrizaje/ForoCierre.html',
             controller: 'stageForumCloseController'
         });

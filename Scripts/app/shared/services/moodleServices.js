@@ -287,6 +287,7 @@
                 headers: { 'Content-Type': 'application/json', 'Authorization': token },
             }).success(function (data, status, headers, config) {
                 _setLocalStorageJsonItem(key,profile);
+                localStorage.setItem('currentForumsProgress', JSON.stringify(globalDiscussions));
                 successCallback();
             }).error(function (data, status, headers, config) {
                 _setLocalStorageJsonItem(key,profile);
