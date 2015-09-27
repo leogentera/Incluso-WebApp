@@ -81,9 +81,13 @@ angular
                               $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                               var extraPointsCounter = getForumsExtraPointsCounter();
                               var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $routeParams.discussionId; });
-                              //debugger;
+                              debugger;
                               var extraPoints = $routeParams.extraPoints? extraPoints = $routeParams.extraPoints : extraPoints = 0;
                               updateUserStars($routeParams.activityId);
+                              //$timeout(
+                              //    function() {
+                              //        updateUserStars($routeParams.activityId, extraPoints);
+                              //    },2000);
                               updateUserStars($routeParams.activityId, extraPoints);
 
 
