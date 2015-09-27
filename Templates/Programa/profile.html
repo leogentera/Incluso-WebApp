@@ -522,7 +522,7 @@
                                                             <div class="from-group">
                                                                 <label>¿Qué dispositivo sabes usar?</label>
                                                                 <ul class="block-list">
-                                                                    <li ng-repeat="s in model.knownDevices">
+                                                                    <li ng-repeat="s in model.knownDevices  track by $index">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>
@@ -531,7 +531,7 @@
                                                             <div class="from-group">
                                                                 <label>¿Con qué dispositivos móviles cuentas?</label>
                                                                 <ul class="block-list">
-                                                                    <li ng-repeat="s in model.ownDevices">
+                                                                    <li ng-repeat="s in model.ownDevices track by $index">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>
@@ -540,7 +540,7 @@
                                                             <div class="from-group">
                                                                 <label>¿Qué es lo que más haces con un celular?</label>
                                                                 <ul class="block-list">
-                                                                    <li ng-repeat="s in model.phoneUsage">
+                                                                    <li ng-repeat="s in model.phoneUsage track by $index">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>
@@ -563,12 +563,17 @@
                                                             </div>
                                                             <div class="from-group">
                                                                 <label>¿Qué tipo de videojuegos te gustan más?</label>
-                                                                <p ng-bind="model.kindOfVideogames"></p>
+                                                                <!--<p ng-bind="model.kindOfVideogames"></p>-->
+                                                                <ul class="block-list">
+                                                                    <li ng-repeat="s in model.kindOfVideogames track by $index">
+                                                                        <p ng-bind="s"></p>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
                                                             <div class="from-group">
                                                                 <label>¿Cuáles son tus juegos favoritos?</label>
                                                                 <ul class="block-list">
-                                                                    <li ng-repeat="s in model.favoriteGames">
+                                                                    <li ng-repeat="s in model.favoriteGames track by $index">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>

@@ -1178,14 +1178,14 @@
 												<section>
 													<h4>¿Qué dispositivo sabes usar?</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.knownDevices">
+														<li ng-repeat="s in model.knownDevices  track by $index">
 															<div class="form-group theme-form">
 																<h5>
 																	<span>Dispositivo {{model.knownDevices.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteKnownDevice($index);">
+																	<button class="btn btn-circle" ng-click="deleteKnownDevice(s);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
-																</h5>
+																</h5>                                                                
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.knownDevices[$index]" ng-options="item for item in knownDevicesList"
 																	ng-init="model.knownDevices == null" ng-class="{'selected': model.knownDevices[$index].length != 0 && model.knownDevices[$index] != null}">
@@ -1204,11 +1204,11 @@
 												<section>
 													<h4>¿Con qué dispositivos móviles cuentas?</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.ownDevices">
-															<div class="form-group theme-form">
+														<li ng-repeat="s in model.ownDevices  track by $index">
+															<div class="form-group theme-form">                                                                
 																<h5>
 																	<span>Dispositivo {{model.ownDevices.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteOwnDevice($index);">
+																	<button class="btn btn-circle" ng-click="deleteOwnDevice(s);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
@@ -1222,7 +1222,7 @@
 															</div>
 														</li>
 													</ul>
-													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addKnOwnDevice();">
+													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addOwnDevice();">
 														<span class="icomoon icon-plus"></span>Agregar dispositivo...
 													</button>
 												</section>
@@ -1230,11 +1230,11 @@
 												<section>
 													<h4>¿Qué es lo que más haces con un celular?</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.phoneUsage">
-															<div class="form-group theme-form">
+														<li ng-repeat="s in model.phoneUsage  track by $index">
+															<div class="form-group theme-form">                                                                
 																<h5>
 																	<span>Actividad {{model.phoneUsage.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deletePhoneUsage($index);">
+																	<button class="btn btn-circle" ng-click="deletePhoneUsage(s);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
@@ -1279,11 +1279,11 @@
 														<h5>Dispositivos</h5>
 														<h4>¿Qué dispositivo sabes usar?</h4>
 														<ul class="block-list">
-															<li ng-repeat="s in model.knownDevices">
+															<li ng-repeat="s in model.knownDevices  track by $index">
 																<div class="form-group theme-form">
 																	<h5>
 																		<span>Dispositivo {{model.knownDevices.indexOf(s) + 1}}</span>
-																		<button class="btn btn-circle" ng-click="deleteKnownDevice($index);">
+																		<button class="btn btn-circle" ng-click="deleteKnownDevice(s);">
 																			<span class="icomoon icon-cross"></span>
 																		</button>
 																	</h5>
@@ -1302,11 +1302,11 @@
 													<div class="old-code">
 														<h4>¿Con qué dispositivos móviles cuentas?</h4>
 														<ul class="block-list">
-															<li ng-repeat="s in model.ownDevices">
+															<li ng-repeat="s in model.ownDevices  track by $index">
 																<div class="form-group theme-form">
 																	<h5>
 																		<span>Dispositivo {{model.ownDevices.indexOf(s) + 1}}</span>
-																		<button class="btn btn-circle" ng-click="deleteOwnDevice($index);">
+																		<button class="btn btn-circle" ng-click="deleteOwnDevice(s);">
 																			<span class="icomoon icon-cross"></span>
 																		</button>
 																	</h5>
@@ -1325,7 +1325,7 @@
 													<div class="old-code">
 														<h4>¿Qué es lo que más haces con un celular?</h4>
 														<ul class="block-list">
-															<li ng-repeat="s in model.phoneUsage">
+															<li ng-repeat="s in model.phoneUsage  track by $index">
 																<div class="form-group theme-form">
 																	<h5>
 																		<span>Actividad {{model.phoneUsage.indexOf(s) + 1}}</span>
@@ -1406,12 +1406,12 @@
 												<section>
 													<h4>¿Qué tipo de videojuegos te gustan más?</h4>
 													<ul class="block-list">
-														<li ng-repeat="s in model.kindOfVideogames">
+														<li ng-repeat="s in model.kindOfVideogames  track by $index">
 															
-															<div class="form-group theme-form">
+															<div class="form-group theme-form">                                                                
 																<h5>
 																	<span>Videojuego {{model.kindOfVideogames.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteKindOfVideoGame($index);">
+																	<button class="btn btn-circle" ng-click="deleteKindOfVideoGame(s);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
@@ -1434,7 +1434,7 @@
 													<h4>¿Cuáles son tus juegos favoritos?</h4>
 													<ul class="block-list">
 														<li ng-repeat="p in model.favoriteGames track by $index">
-															<div class="form-group theme-form">
+															<div class="form-group theme-form">                                                                
 																<h5>
 																		<span>Juego {{model.favoriteGames.indexOf(p) + 1}}</span>
 																		<button class="btn btn-circle" ng-click="deleteFavoriteGame($index);">
