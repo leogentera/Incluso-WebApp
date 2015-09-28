@@ -223,8 +223,7 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
-                //TODO: Remove false from condition, only there to jump freely into activities in DEV
-                if(false && _activityBlocked[activity_identifier].disabled) return false;
+                if(_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
 
                 if (url) {
