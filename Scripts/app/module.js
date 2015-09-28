@@ -340,6 +340,11 @@
             controller: 'stageContentsController'
         });
     
+        $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultiple/:moodleid/:retry', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/RetoMultiple.html',
+            controller: 'stageGameRetoMultipleController'
+        });
+
         $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultiple/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/RetoMultiple.html',
             controller: 'stageGameRetoMultipleController'
@@ -527,6 +532,11 @@
             controller: 'stageTuEligesController'
         });
 
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/TuEliges/:moodleid/:retry', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEliges.html',
+            controller: 'stageTuEligesController'
+        });
+
         $routeProvider.when('/ZonaDeNavegacion/TuEliges/ResultadosTuEliges', {
             templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEligesResults.html',
             controller: 'stageTuEligesController'
@@ -542,8 +552,12 @@
             controller: 'stageQuizController'
         });
 
-
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html',
+            controller: 'stageMapaDeVidaController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/:moodleid/:retry', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html',
             controller: 'stageMapaDeVidaController'
         });
