@@ -23,7 +23,6 @@ angular
             $scope.like_status = 1;
             $rootScope.showFooterRocks = false;             
             var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
-
             $scope.idEtapa = 0;
             $scope.scrollToTop();            
             $scope.currentPage = 1;
@@ -85,18 +84,19 @@ angular
             $scope.goChat = function () {
                 $location.path('/Chat');
             };
-
-            if(treeActivity.status == 1){   
-             $location.path('/Chat'); 
-             }            
-
-            if(finishCabinaSoporte){
+            debugger;
+            if(finishCabinaSoporte && treeActivity.status != 1){
                $scope.navigateToPage(2);
                $scope.$emit('HidePreloader');            
             }                            
+
+            if(treeActivity.status == 1){   
+                $location.path('/Chat'); 
+            }            
             
 
             $scope.finishActivity = function () {
+                debugger;
                 $scope.$emit('ShowPreloader'); //show preloader
                 if(!treeActivity.status){
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
