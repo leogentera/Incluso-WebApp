@@ -425,15 +425,17 @@ var _closeChallenge = function (stageId) {
 }
 
 
-var _updateBadgeStatus = function (coursemoduleid, callback) {
+var _updateBadgeStatus = function (coursemoduleid, callback) {    
     moodleFactory.Services.GetAsyncProfile(moodleFactory.Services.GetCacheObject("userId"), function () {
         if (callback){callback();}
         var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+        console.log("update badge status"+ coursemoduleid);
         var badges = profile.badges;
         var activity = _getActivityByCourseModuleId(coursemoduleid);
         if (activity) {
           var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
           if (currentBadge) {
+            console.log("badge won");
               for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
                   if (badges[indexBadge].id == currentBadge.badgeId) {
                       profile.badges[indexBadge].status = "won";
