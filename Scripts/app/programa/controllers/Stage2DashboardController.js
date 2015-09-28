@@ -208,9 +208,7 @@ angular
             var user = JSON.parse(localStorage.getItem("profile/" + userid));
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
-            $scope.model = progress.course;
-            var userdata = progress.user;
-            _setLocalStorageJsonItem("profile/" + userid, userdata);
+            $scope.model = progress.course;           
             _setLocalStorageJsonItem("usercourse", $scope.model);
 
             $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;

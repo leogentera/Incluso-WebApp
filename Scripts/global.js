@@ -384,8 +384,7 @@ var _tryCloseStage = function(stageIndex){
     return false;
 };
 
-var _closeChallenge = function (stageId) {
-    console.log("isChallengeCompleted?");
+var _closeChallenge = function (stageId) {    
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));    
     var stageIndex = stageId;
@@ -426,14 +425,13 @@ var _closeChallenge = function (stageId) {
 
 
 var _updateBadgeStatus = function (coursemoduleid) {      
-    var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
-    console.log("update badge status"+ coursemoduleid);
+    var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));    
     var badges = profile.badges;
     var activity = _getActivityByCourseModuleId(coursemoduleid);
     if (activity) {
       var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
       if (currentBadge) {
-        console.log("badge won");
+        console.log("badge won" + currentBadge.badgeName + " " + coursemoduleid);
           for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
               if (badges[indexBadge].id == currentBadge.badgeId) {
                   profile.badges[indexBadge].status = "won";
