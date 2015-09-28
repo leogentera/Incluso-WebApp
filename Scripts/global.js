@@ -490,12 +490,30 @@ var _createNotification = function (activityId, triggerActivity) {
 };
 
 
-var _coachNotification = function () {
+var _coachNotification = function (stageIndex) {
+
+    var activity_identifier = "";
+    switch(stageIndex)
+    {
+      case 0:
+        activity_identifier = "1002";
+        break;
+      case 1:
+        activity_identifier = "2022";
+        break;
+      case 2:
+        activity_identifier = "3501";
+        break;
+      default:
+        activity_identifier = "1002";
+        break;
+    }
+    
 
     var notifications = JSON.parse(localStorage.getItem("notifications"));
     var userId = localStorage.getItem('userId');
     var notificationCoach = _.find(notifications, function (notif) {
-        if (notif.id == 4) {
+        if ((notif.id == 4 && stageIndex == 0) || (notif.id == 8 && stageIndex == 1) || (notif.id == 12 && stageIndex == 2)) {
             return notif;
         } else {
 
@@ -503,8 +521,7 @@ var _coachNotification = function () {
     });
 
     if (notificationCoach && !notificationCoach.timemodified) {
-        var activityId = 68;
-        var activity = _getActivityByCourseModuleId(activityId);
+        var activity = getActivityByActivity_identifier(activity_identifier);
         if ((activity)) {
 
             var triggerActivity = 3;

@@ -180,8 +180,8 @@ angular
             }
 
             var challengeCompletedId = _closeChallenge($scope.idEtapa);         
-
-            _coachNotification();
+            
+            _coachNotification($scope.idEtapa);
                                     
             //Exclude challenges initial and final from showing modal robot
             var challengeExploracionInicial = 140;
