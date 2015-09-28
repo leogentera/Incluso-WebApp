@@ -452,6 +452,7 @@ var _updateBadgeStatus = function (coursemoduleid, callback) {
 var _updateRewardStatus = function () {
 
     var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    console.log('Stars from rewards: ' + profile.stars);
     var totalRewards = profile.rewards;
     var profilePoints = profile.stars;
 
@@ -812,27 +813,32 @@ var getForumsExtraPointsCounter = function(){
 
 function updateUserStars(activityIdentifier, extraPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    console.log(profile);
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
     extraPoints ? '' : extraPoints = 0;
-
+debugger;
+    var stars = 0;
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
+        stars = extraPoints;
     } else {
         if (activityIdentifier == "2016") {
             profile.stars = Number(profile.stars) + Number(activity.activities[0].points) + Number(extraPoints);
         }
         else {
             profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+            stars = activity.points;
         }
     }
 
     console.log("Profile stars = " + profile.stars);
+    console.log("Forum stars to assign: " + stars);
 
     var data = {
         userId: profile.id,
-        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : Number(activity.points) + Number(extraPoints),
+        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : stars,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
