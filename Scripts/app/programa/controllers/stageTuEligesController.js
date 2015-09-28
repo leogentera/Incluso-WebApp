@@ -36,11 +36,13 @@ angular
 
             if ($routeParams.moodleid) {
 
-                try {
-                  cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
-                }
-                catch (e) {
-                    $scope.isInstalled = true;
+                if(!$routeParams.retry){
+                    try {
+                      cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+                    }
+                    catch (e) {
+                        $scope.isInstalled = true;
+                    }
                 }
 
                 if (!$scope.tuEligesActivities) {
@@ -236,6 +238,17 @@ angular
                 $location.path('/ZonaDeNavegacion/Dashboard/2/3');
             }
 
+            if($routeParams.retry){
+              try {
+                document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setTuEligesCallback", [])}, false);
+              }
+              catch (e) {
+                successGame(
+                    { "userid":$scope.user.id,"actividad":"Tú Eliges","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":105,"respuestaId":469},{"preguntaId":104,"respuestaId":466},{"preguntaId":106,"respuestaId":473},{"preguntaId":107,"respuestaId":476},{"preguntaId":108,"respuestaId":479},{"preguntaId":109,"respuestaId":481},{"preguntaId":110,"respuestaId":484},{"preguntaId":111,"respuestaId":487}] }
+                );
+              }
+            }
+            
             Array.prototype.getIndexBy = function (name, value) {
 			    for (var i = 0; i < this.length; i++) {
 			        if (this[i][name] == value) {
