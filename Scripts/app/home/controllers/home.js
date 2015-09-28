@@ -28,7 +28,7 @@
             };
 
             $scope.navigateTo = function(url,sideToggle,activityId){
-                if(activityId != undefined && activityId > 0 && _activityBlocked[activityId].disabled) {
+                if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
                     return false;
                 }
                 //$location.path(url + activityId);
