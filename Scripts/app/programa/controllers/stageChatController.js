@@ -84,7 +84,6 @@ angular
             $scope.goChat = function () {
                 $location.path('/Chat');
             };
-            debugger;
             if(finishCabinaSoporte && treeActivity.status != 1){
                $scope.navigateToPage(2);
                $scope.$emit('HidePreloader');            
@@ -96,7 +95,6 @@ angular
             
 
             $scope.finishActivity = function () {
-                debugger;
                 $scope.$emit('ShowPreloader'); //show preloader
                 if(!treeActivity.status){
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
