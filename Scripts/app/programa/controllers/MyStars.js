@@ -48,8 +48,11 @@ angular
                                 activity.last_status_update = activity.last_status_update*1000; 
                             }else{
                                 activity.last_status_update = dateupdate.getTime();
-                            }
-                            console.log(activity.last_status_update);                         
+                            }     
+
+                            //Adding challenge name
+                            activity.sectionname = currentChallenge.sectionname;
+                            
                             activitiesCompleted.push(activity);
                         }                                            
                     }                   
