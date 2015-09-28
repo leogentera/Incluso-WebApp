@@ -92,7 +92,6 @@ angular
             };
 
             function updateForumProgress() {
-                debugger;
                 var forumsCommentsCountCollection = getForumsProgress();
                 var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussion_id == $scope.discussion.id; });
                 if(alreadyCommented){

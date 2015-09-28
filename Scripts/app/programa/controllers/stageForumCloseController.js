@@ -74,13 +74,13 @@ angular
                               instanceType: 0,
                               date: new Date()
                           };
-                        debugger;
 
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
                             updateActivityStatus($routeParams.activityId);
                             _updateRewardStatus();
 
-                              debugger;
+                              profile.stars = Number(profile.stars) + Number(activityFromTree.points);
+                              _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),profile);
                               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
                               //$scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                               var extraPointsCounter = getForumsExtraPointsCounter();
