@@ -816,7 +816,7 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
             instanceType: 0,
             date: getdate()
         };
-        moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
+        moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){}, function(){});
         _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile)
         _setLocalStorageJsonItem("CurrentUser", currentUser)
     }
