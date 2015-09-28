@@ -397,7 +397,6 @@ var _closeChallenge = function (stageId) {
             var totalActivitiesByChallenge = currentChallenge.activities.length;
             var totalActivitiesCompletedByChallenge = (_.where(currentChallenge.activities, {status: 1})).length;
             if (totalActivitiesByChallenge == totalActivitiesCompletedByChallenge) {
-
                 //updateBadge
                 _updateBadgeStatus(currentChallenge.coursemoduleid);
                 userCourse.stages[stageIndex].challenges[challengeIndex].status = 1;
@@ -411,44 +410,42 @@ var _closeChallenge = function (stageId) {
                 };
                 moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallback);
                 success = currentActivityModuleId;
-                console.log("challengeCompleted true");
+                console.log("challengeCompleted true");                    
                 return success;
             } else {
-                success = 0;
+               success = 0;
             }
         } else {
             success = 0;
         }
-    }
-    ;
+    };
     return success;
 }
 
 
-var _updateBadgeStatus = function (coursemoduleid, callback) {    
-    moodleFactory.Services.GetAsyncProfile(moodleFactory.Services.GetCacheObject("userId"), function () {
-        if (callback){callback();}
-        var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
-        console.log("update badge status"+ coursemoduleid);
-        var badges = profile.badges;
-        var activity = _getActivityByCourseModuleId(coursemoduleid);
-        if (activity) {
-          var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
-          if (currentBadge) {
-            console.log("badge won");
-              for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
-                  if (badges[indexBadge].id == currentBadge.badgeId) {
-                      profile.badges[indexBadge].status = "won";
-                      _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
-                  } else {
-                      //This else statement is set to avoid errors on execution flows
-                  }
+
+
+var _updateBadgeStatus = function (coursemoduleid) {      
+    var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+    console.log("update badge status"+ coursemoduleid);
+    var badges = profile.badges;
+    var activity = _getActivityByCourseModuleId(coursemoduleid);
+    if (activity) {
+      var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
+      if (currentBadge) {
+        console.log("badge won");
+          for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
+              if (badges[indexBadge].id == currentBadge.badgeId) {
+                  profile.badges[indexBadge].status = "won";
+                  _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
+              } else {
+                  //This else statement is set to avoid errors on execution flows
               }
-          } else {//This else statement is set to avoid errors while debugging in firefox
           }
-        }else{          
-        }        
-    });
+      } else {//This else statement is set to avoid errors while debugging in firefox
+      }
+    }else{          
+    }    
 };
 
 var _updateRewardStatus = function () {
