@@ -65,11 +65,13 @@ angular
             $scope.stars = stars;
             $scope.isInstalled = false;
 
-            try {
-              cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
-            }
-            catch (e) {
-                $scope.isInstalled = true;
+            if(!$routeParams.retry){
+              try {
+                cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+              }
+              catch (e) {
+                  $scope.isInstalled = true;
+              }
             }
 
 

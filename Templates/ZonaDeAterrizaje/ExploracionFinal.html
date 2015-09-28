@@ -106,14 +106,12 @@
                                 <div class="tnf">
                                     <input id="tru1" type="radio" name="vf1"
                                            ng-model="exploracionFinalStage3[3]"
-                                           value="0"
-                                           ng-disabled="setReadOnly"/>
+                                           value="0" ng-disabled="setReadOnly"/>
                                     <label for="tru1">Sí</label>
 
                                     <input id="fols1" type="radio" name="vf1"
                                            ng-model="exploracionFinalStage3[3]"
-                                           value="1"
-                                           ng-disabled="setReadOnly"/>
+                                           value="1" ng-disabled="setReadOnly"/>
                                     <label for="fols1">No</label>
                                 </div>
                             </section>
@@ -191,19 +189,19 @@
                                     </div>
                                     <div id="results1" class="panel-body" collapse="!question1.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[0].firstOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[0].firstOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[0].firstOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[0].badAnswer && !exploracionFinalresult3[0].firstOptionWrong) || exploracionFinalresult3[0].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[0].firstOptionWrong"></span>
                                                 Las necesidades que tiene una comunidad
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[0].secondOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[0].secondOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[0].secondOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[0].badAnswer && exploracionFinalresult3[0].secondOptionWrong) || exploracionFinalresult3[0].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[0].secondOptionWrong"></span>
                                                 El dinero que tienes para realizarlo
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[0].thirdOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[0].thirdOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[0].thirdOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[0].badAnswer && exploracionFinalresult3[0].thirdOptionWrong) || exploracionFinalresult3[0].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[0].thirdOptionWrong"></span>
                                                 Que esté comprobado el éxito que tiene esa idea
                                             </li>
                                         </ul>
@@ -227,19 +225,19 @@
 
                                     <div id="results2" class="panel-body" collapse="!question2.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[1].firstOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[1].firstOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[1].firstOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[1].badAnswer && !exploracionFinalresult3[1].firstOptionWrong) || exploracionFinalresult3[1].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[1].firstOptionWrong"></span>
                                                 La idea que te deja más ganancias
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[1].secondOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[1].secondOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[1].secondOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[1].badAnswer && exploracionFinalresult3[1].secondOptionWrong) || exploracionFinalresult3[1].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[1].secondOptionWrong"></span>
                                                 Lo que te hace diferente y mejor que tu competencia
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[1].thirdOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[1].thirdOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[1].thirdOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[1].badAnswer && exploracionFinalresult3[1].thirdOptionWrong) || exploracionFinalresult3[1].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[1].thirdOptionWrong"></span>
                                                 La mejor idea que has tenido
                                             </li>
                                         </ul>
@@ -262,28 +260,23 @@
                                     <div id="results3" class="panel-body" collapse="!question3.isCollapsed">
                                         <ul>
                                             <li ng-class="{'failed clearfix': exploracionFinalresult3[2].firstOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[2].firstOptionWrong"></span>
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[2].firstOptionWrong"></span>
                                                 La necesidad que cubres
                                             </li>
                                             <li ng-class="{'failed clearfix': exploracionFinalresult3[2].secondOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[2].secondOptionWrong"></span>
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[2].secondOptionWrong"></span>
                                                 Tu público objetivo
                                             </li>
                                             <li ng-class="{'failed clearfix': exploracionFinalresult3[2].thirdOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[2].thirdOptionWrong"></span>
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[2].thirdOptionWrong"></span>
                                                 El canal de entrega
                                             </li>
                                             <li ng-class="{'failed clearfix': exploracionFinalresult3[2].thirdOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[2].thirdOptionWrong"></span>
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[2].thirdOptionWrong"></span>
                                                 Los recursos que necesitas
                                             </li>
                                             <li ng-class="{'failed clearfix': exploracionFinalresult3[2].thirdOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[2].thirdOptionWrong"></span>
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[2].thirdOptionWrong"></span>
                                                 Otro
                                             </li>
                                         </ul>
@@ -304,13 +297,15 @@
                                     </div>
                                     <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[3].trueOptionWrong}">
-                                                <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[3].trueOptionWrong"></span>Sí
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[3].trueOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[3].badAnswer && !exploracionFinalresult3[3].trueOptionWrong) || exploracionFinalresult3[3].badAnswer">
+                                                <span class="pull-left icomoon icon-wrong" ng-show="exploracionFinalresult3[3].trueOptionWrong"></span>
+                                                Sí
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[3].falseOptionWrong}">
-                                                <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[3].falseOptionWrong"></span>No
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[3].falseOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[3].badAnswer && exploracionFinalresult3[3].falseOptionWrong) || exploracionFinalresult3[3].badAnswer">
+                                                <span class="pull-left icomoon icon-wrong" ng-show="exploracionFinalresult3[3].falseOptionWrong"></span>
+                                                No
                                             </li>
                                         </ul>
                                     </div>
@@ -332,19 +327,19 @@
                                     </div>
                                     <div id="results5" class="panel-body" collapse="!question5.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[4].firstOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[4].firstOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[4].firstOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[4].badAnswer && !exploracionFinalresult3[4].firstOptionWrong) || exploracionFinalresult3[4].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[4].firstOptionWrong"></span>
                                                 Guardando lo que le sobra
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[4].secondOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[4].secondOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[4].secondOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[4].badAnswer && exploracionFinalresult3[4].secondOptionWrong) || exploracionFinalresult3[4].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[4].secondOptionWrong"></span>
                                                 Separando lo que va a ahorrar antes
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[4].thirdOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult3[4].thirdOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult3[4].thirdOptionWrong}"
+                                                ng-show="(!exploracionFinalresult3[4].badAnswer && exploracionFinalresult3[4].thirdOptionWrong) || exploracionFinalresult3[4].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult3[4].thirdOptionWrong"></span>
                                                 No gastando
                                             </li>
                                         </ul>

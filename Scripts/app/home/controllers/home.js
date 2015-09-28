@@ -28,8 +28,7 @@
             };
 
             $scope.navigateTo = function(url,sideToggle,activityId){
-                //TODO: Remove false from condition, only there to jump freely into activities in DEV
-                if(false && activityId!= undefined && activityId > 0 && _activityBlocked[activityId].disabled) {
+                if(activityId != undefined && activityId > 0 && _activityBlocked[activityId].disabled) {
                     return false;
                 }
                 //$location.path(url + activityId);

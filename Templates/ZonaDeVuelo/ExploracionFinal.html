@@ -156,11 +156,11 @@
                                     </div>
                                     <div id="results1" class="panel-body" collapse="!question1.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[0].trueOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[0].trueOptionWrong}" ng-show="exploracionFinalresult[0].showTrueAnswer">
                                                 <span class="pull-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[0].trueOptionWrong"></span>Verdadero
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[0].falseOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[0].falseOptionWrong}" ng-show="exploracionFinalresult[0].showFalseAnswer">
                                                 <span class="pull-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[0].falseOptionWrong"></span>Falso
                                             </li>
@@ -182,11 +182,11 @@
                                     </div>
                                     <div id="results2" class="panel-body" collapse="!question2.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].trueOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].trueOptionWrong}" ng-show="exploracionFinalresult[1].showTrueAnswer">
                                                 <span class="pull-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[1].trueOptionWrong"></span>Verdadero
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].falseOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[1].falseOptionWrong}" ng-show="exploracionFinalresult[1].showFalseAnswer">
                                                 <span class="pull-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[1].falseOptionWrong"></span>Falso
                                             </li>
@@ -206,11 +206,11 @@
                                     </div>
                                     <div id="results3" class="panel-body" collapse="!question3.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].trueOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].trueOptionWrong}" ng-show="exploracionFinalresult[2].showTrueAnswer">
                                                 <span class="pull-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[2].trueOptionWrong"></span>Verdadero
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].falseOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[2].falseOptionWrong}" ng-show="exploracionFinalresult[2].showFalseAnswer">
                                                 <span class="pull-left icomoon icon-wrong"
                                                       ng-show="exploracionFinalresult[2].falseOptionWrong"></span>Falso
                                             </li>
@@ -230,17 +230,17 @@
                                     </div>
                                     <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].firstOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].firstOptionWrong}"  ng-show="exploracionFinalresult[3].showFirstAnswer">
                                                 <span class="fl-left icomoon icon-wrong"
                                                    ng-show="exploracionFinalresult[3].firstOptionWrong"></span>
                                                 Es tu ejemplo a seguir y debes ser igual a él
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].secondOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].secondOptionWrong}" ng-show="exploracionFinalresult[3].showSecondAnswer">
                                                 <span class="fl-left icomoon icon-wrong"
                                                    ng-show="exploracionFinalresult[3].secondOptionWrong"></span>
                                                 Puedes aprender de su experiencia para alcanzar tus sueños
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].thirdOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[3].thirdOptionWrong}" ng-show="exploracionFinalresult[3].showThirdAnswer">
                                                 <span class="fl-left icomoon icon-wrong"
                                                    ng-show="exploracionFinalresult[3].thirdOptionWrong"></span>
                                                 Puede enseñarte cómo ganar dinero más fácil
@@ -262,17 +262,17 @@
                                     </div>
                                     <div id="results5" class="panel-body" collapse="!question5.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[4].firstOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[4].firstOptionWrong}" ng-show="exploracionFinalresult[4].showFirstAnswer">
                                                 <span class="fl-left icomoon icon-wrong"
                                                    ng-show="exploracionFinalresult[4].firstOptionWrong"></span>
                                                 Porque aprovechas mejor tus talentos y disfrutas lo que haces
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[4].secondOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[4].secondOptionWrong}" ng-show="exploracionFinalresult[4].showSecondAnswer">
                                                 <span class="fl-left icomoon icon-wrong"
                                                    ng-show="exploracionFinalresult[4].secondOptionWrong"></span>
                                                 Porque puedes ser más famoso y exitoso
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult[4].thirdOptionWrong}">
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult[4].thirdOptionWrong}" ng-show="exploracionFinalresult[4].showThirdAnswer">
                                                 <span class="fl-left icomoon icon-wrong"
                                                    ng-show="exploracionFinalresult[4].thirdOptionWrong"></span>
                                                 Porque debes hacer lo que quieras sin importar nada ni nadie
