@@ -1138,20 +1138,44 @@ angular
 
                     $scope.exploracionFinalresult =
                         [
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
-                            {"badAnswer": false, "trueOptionWrong": false, "falseOptionWrong": false},
                             {
                                 "badAnswer": false,
-                                "firstOptionWrong": false,
-                                "secondOptionWrong": false,
-                                "thirdOptionWrong": false
+                                "trueOptionWrong": false,
+                                "falseOptionWrong": false,
+                                "showTrueAnswer": true,
+                                "showFalseAnswer": true
+                            },
+                            {
+                                "badAnswer": false,
+                                "trueOptionWrong": false,
+                                "falseOptionWrong": false,
+                                "showTrueAnswer": true,
+                                "showFalseAnswer": true
+                            },
+                            {
+                                "badAnswer": false,
+                                "trueOptionWrong": false,
+                                "falseOptionWrong": false,
+                                "showTrueAnswer": true,
+                                "showFalseAnswer": true
                             },
                             {
                                 "badAnswer": false,
                                 "firstOptionWrong": false,
                                 "secondOptionWrong": false,
-                                "thirdOptionWrong": false
+                                "thirdOptionWrong": false,
+                                "showFirstAnswer": true,
+                                "showSecondAnswer": true,
+                                "showThirdAnswer": true
+                            },
+                            {
+                                "badAnswer": false,
+                                "firstOptionWrong": false,
+                                "secondOptionWrong": false,
+                                "thirdOptionWrong": false,
+                                "showFirstAnswer": true,
+                                "showSecondAnswer": true,
+                                "showThirdAnswer": true
                             }
                         ];
                     var _mathFloor = 0;
@@ -1175,13 +1199,38 @@ angular
                                         }
                                     }
                                     else {
+                                        if (answerIndex == 0) {
+                                            $scope.exploracionFinalresult[index].showTrueAnswer = true;
+                                            $scope.exploracionFinalresult[index].showFalseAnswer = false;
+                                        }
+                                        else {
+                                            $scope.exploracionFinalresult[index].showTrueAnswer = false;
+                                            $scope.exploracionFinalresult[index].showFalseAnswer = true;
+                                            
+                                        }
+                                        break;
                                     }
                                 }
                             }
                             else if (index == 3 || index == 4) {
                                 if (answerIndex == $scope.exploracionFinal[index]) {
-                                    if (Math.floor(questionAnswer.fraction) == 1) {
-
+                                    if (Math.floor(questionAnswer.fraction) == 1) {                                        
+                                        if (answerIndex == 0) {
+                                            $scope.exploracionFinalresult[index].showFirstAnswer = true;
+                                            $scope.exploracionFinalresult[index].showSecondAnswer = false;
+                                            $scope.exploracionFinalresult[index].showThirdAnswer = false;
+                                        }
+                                        else if (answerIndex == 1) {
+                                            $scope.exploracionFinalresult[index].showFirstAnswer = false;
+                                            $scope.exploracionFinalresult[index].showSecondAnswer = true;
+                                            $scope.exploracionFinalresult[index].showThirdAnswer = false;
+                                        }
+                                        else {
+                                            $scope.exploracionFinalresult[index].showFirstAnswer = false;
+                                            $scope.exploracionFinalresult[index].showSecondAnswer = false;
+                                            $scope.exploracionFinalresult[index].showThirdAnswer = true;
+                                        }
+                                        break;
                                     }
                                     else {
                                         $scope.exploracionFinalresult[index].badAnswer = true;
