@@ -18,6 +18,7 @@ angular
             var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
             _setLocalStorageItem('chatRead', "true");
             var userId = localStorage.getItem('userId');            
+            var messagesToRead = _getItem("currentStage") * 2;
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
             $scope.currentMessage = "";
@@ -130,10 +131,25 @@ angular
                 moodleFactory.Services.GetUserChat(_getItem("userId"),function() {                    
                     var chat = JSON.parse(localStorage.getItem('userChat'));
                     var userId = localStorage.getItem("userId");
+                    var messagesFlow = [];
+                    var messagesInterchange = 0;
+                    var messagesToRead = _getItem("currentStage") * 2;
                     
                     var chatAmount = _.countBy(chat,function(messages){
-                            return messages.senderid != userId;
+                            messagesFlow.push(messages.messagesenderid != userId);
+                            return messages.messagesenderid != userId;
                         });
+
+                    _.each(messagesFlow, function(m, i){
+                        if(i > 0 && m && m != messagesFlow[i - 1]){
+                            messagesInterchange++;
+                        }
+                    });
+
+                    if (messagesInterchange >= messagesToRead) {
+                        _setLocalStorageItem("finishCabinaSoporte", "true");
+                        localStorage.getItem('finishCabinaSoporte')
+                    }
                                                     
                     if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
                         _setLocalStorageItem('chatRead',"false");
