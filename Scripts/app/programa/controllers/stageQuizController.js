@@ -1478,7 +1478,8 @@ angular
                                     if (_mathFloor < 1) {//Fraction = 0
                                         $scope.exploracionFinalresult2[index].badAnswer = true;
                                         if (questionAnswerAnswer == 0) {//The bad answer is "Sí"
-                                            $scope.exploracionFinalresult2[index].falseOptionWrong = true;
+                                            //$scope.exploracionFinalresult2[index].falseOptionWrong = true;
+                                            $scope.exploracionFinalresult2[index].trueOptionWrong = true;
                                         } else if (questionAnswerAnswer == 1) {//The bad answer is "No"
                                             $scope.exploracionFinalresult2[index].falseOptionWrong = true;
                                         }
