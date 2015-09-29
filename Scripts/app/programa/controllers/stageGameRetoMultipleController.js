@@ -241,7 +241,8 @@ angular
 
                 //Updates the statuses of the subactivities completed - Status should always be updated because ending an activity updates the status anyway.
                 userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
-
+                userCourseUpdated.isMultipleChallengeActivityFinished = $scope.IsComplete;
+                
                 $scope.$emit('ShowPreloader');
                 for(i = 0; i < quizzesRequests.length; i++){
                   if (quizzesRequests[i].quiz_answered) {

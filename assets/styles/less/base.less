@@ -320,6 +320,12 @@ body {
         }
         a.menu-blue{
             color: @clr-bluemenu;
+            
+            + .submenu {
+                li:first-child {
+                    color: @clr-bluemenu;
+                }
+            }
         }
         a.menu-green{
             color: @clr-greenmenu;
@@ -334,6 +340,12 @@ body {
                     }
                 }   
             }
+
+            + .submenu {
+                li:first-child {
+                    color: @clr-greenmenu;
+                }
+            }
         }
         a.menu-pink{
             color: @clr-pinkmenu;
@@ -345,6 +357,11 @@ body {
                     }
                 }    
             }
+            + .submenu {
+                li:first-child {
+                    color: @clr-pinkmenu;
+                }
+            }
         }
 
         .submenu{
@@ -354,10 +371,10 @@ body {
             li {
                 margin: 1vh 0px; 
             }
-            li:first-child{
+            /*li:first-child{
                 color:  @clr-bluemenu;
-                /*text-transform: uppercase;*/
-            }
+                text-transform: uppercase;
+            }*/
             a{
                 color: white;
                 line-height: 20px;
