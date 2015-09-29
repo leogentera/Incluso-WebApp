@@ -30,6 +30,7 @@ angular
              $scope.activityPoints = activityFromTree.points;
              $scope.activityname = activityFromTree.activityname;
              $scope.like_status = 1;
+            $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
 
             $scope.$emit('HidePreloader');
 
@@ -77,19 +78,17 @@ angular
                           moodleFactory.Services.PutStars(model, profile, userToken, function() {
                             updateActivityStatus($routeParams.activityId);
                             _updateRewardStatus();
-                              $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
-                              $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
-                              var extraPointsCounter = getForumsExtraPointsCounter();
-                              var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $routeParams.discussionId; });
-                              //debugger;
-                              var extraPoints = $routeParams.extraPoints? extraPoints = $routeParams.extraPoints : extraPoints = 0;
-                              updateUserStars($routeParams.activityId);
-                              //$timeout(
-                              //    function() {
-                              //        updateUserStars($routeParams.activityId, extraPoints);
-                              //    },2000);
-                              updateUserStars($routeParams.activityId, extraPoints);
 
+                              profile.stars = Number(profile.stars) + Number(activityFromTree.points);
+                              _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),profile);
+                              $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
+                              //$scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
+                              var extraPointsCounter = getForumsExtraPointsCounter();
+                              var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.forumId == $scope.activity.forumid; });
+                              var extraPoints = currentDiscussionCounter? extraPoints = currentDiscussionCounter.extra_replies_counter : extraPoints = 0;
+                              extraPoints *= 50;
+                              //updateUserStars($routeParams.activityId);
+                              updateUserStars($routeParams.activityId, extraPoints);
 
                               $scope.$emit('HidePreloader');
                               var activityId = Number($routeParams.activityId);
@@ -110,7 +109,7 @@ angular
                         } else if(activityId == 2030 || activityId == 2026){
                             $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                         } else if(activityId == 3304 || activityId == 3404){
-                            $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                            $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                         }
                     });
 
@@ -121,6 +120,11 @@ angular
                 var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 endForumActivity(moodleId);
             }
+
+            var getForumsExtraPointsCounter = function(){
+                var forumExtraPointsCounter = JSON.parse( localStorage.getItem('extraPointsForums'));
+                return forumExtraPointsCounter;
+            };
 
 
 

@@ -16,6 +16,7 @@ angular
 
             $routeParams.activityId == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+            $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
 
              var redirectOnShield = function () {
                  var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
@@ -93,16 +94,17 @@ angular
             };
             var setExtraPointsCounters = function(){
                 var extraPointsCounter = [];
-                var discussions = $scope.activity.discussions;
+                //var discussions = $scope.activity.discussions;
 
-                for(var i=0 ; i< discussions.length; i++ ){
-                    var currentDiscussionCounter = discussions[i];
-
-                    var topic = _.where(extraPointsCounter, function(exCount){ return exCount.discussion == currentDiscussionCounter.id});
-                    if(!topic.length>0){
-                        extraPointsCounter.push({"discussion_id":currentDiscussionCounter.id, "extra_replies_counter":0});
-                    } else {}
-                }
+                //for(var i=0 ; i< discussions.length; i++ ){
+                //    var currentDiscussionCounter = discussions[i];
+                //
+                //    var topic = _.where(extraPointsCounter, function(exCount){ return exCount.discussion == currentDiscussionCounter.id});
+                //    if(!topic.length>0){
+                //        extraPointsCounter.push({"discussion_id":currentDiscussionCounter.id, "extra_replies_counter":0});
+                //    } else {}
+                //}
+                extraPointsCounter.push({"forumId":$scope.activity.forumid, "extra_replies_counter":0});
                 _setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
             };
 

@@ -40,7 +40,27 @@ angular
                     var currentChallenge = currentStage.challenges[j];
                     for(var k= 0; k < currentChallenge.activities.length; k++){
                         if (currentChallenge.activities[k].status == 1) {
-                            var activity = currentChallenge.activities[k];                            
+                            var activity = currentChallenge.activities[k];
+                            var subActivitiesPoints = 0;
+                            //Adding current date if date is null
+                            var dateupdate = new Date();
+                            if(activity.last_status_update){
+                                activity.last_status_update = activity.last_status_update*1000; 
+                            }else{
+                                activity.last_status_update = dateupdate.getTime();
+                            }
+                            
+                            //Add subactivity points when exists
+                            if (activity.points == 0 && activity.activities.length > 0) {
+                                for(var i = 0; i < activity.activities.length; i++ ){
+                                    subActivitiesPoints += activity.activities[i].points;
+                                }
+                                activity.points = subActivitiesPoints;
+                            }
+                            
+                            //Adding challenge name
+                            activity.sectionname = currentChallenge.sectionname;
+                            
                             activitiesCompleted.push(activity);
                         }                                            
                     }                   
@@ -48,7 +68,7 @@ angular
             }
             
             $scope.activitiesCompleted = activitiesCompleted;
-                        
+
             if (profile) {
                 $scope.profileStars = profile.stars;
             }else{

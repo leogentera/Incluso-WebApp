@@ -45,13 +45,13 @@ angular
 
                 switch (id) {                   
                     case 24:
-                        filename = "assets/images/CursosIngles.png";
+                        filename = "assets/images/cursos-ingles.jpg";
                         break;
                     case 25:
-                        filename = "assets/images/iphone.png";
+                        filename = "assets/images/smartphone.jpg";
                         break;                   
                     default:
-                        filename = "assets/images/CursosIngles.png";
+                        filename = "assets/images/cursos-ingles.png";
                 }
 
                 return filename;
