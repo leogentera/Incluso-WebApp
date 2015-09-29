@@ -10,7 +10,7 @@ var _httpFactory = null;
 var _timeout = null;
 var _location = null;
 
-var _activityStatus = [];
+var _activityStatus = null;
 
 var _activityDependencies=[
     //Stage 1 dependencies
@@ -294,7 +294,7 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
         activityStatus[activityIdentifierId] = 1;
     }
     _setLocalStorageJsonItem("activityStatus", activityStatus);
-    _activityStatus[activityIdentifierId] = 1;
+    _activityStatus = activityStatus;
     _loadActivityBlockStatus();
 };
 
@@ -1106,13 +1106,14 @@ var _activityRouteIds = [
 ];
 
 var _loadActivityBlockStatus = function () {
-
+    if(!_activityBlocked) _activityBlocked = {};
     var activityCount = _activityRouteIds.length;
     for(var i = 0; i < activityCount; i++ ) {
         _activityBlocked[_activityRouteIds[i]] ={
             disabled:!_canStartActivity(_activityRouteIds[i])
         };
     }
+    _setLocalStorageJsonItem("activityblocked",_activityBlocked);
 };
 
 //Helps defining if activity can be started
