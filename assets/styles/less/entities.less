@@ -483,7 +483,7 @@
                 color: rgb(8, 178, 144);
                 justify-content: flex-start;
                 font-size: 4.5vw;
-                i.icomoon{
+                .icomoon{
                     color: rgb(8, 178, 144);
                 }
             }
@@ -897,7 +897,7 @@
 
 
         /***********************************************************************
-         02. $my-progress
+         $my-progress
          Description: CSS for video gallery component
         ************************************************************************/        
         .my-progress {
@@ -942,7 +942,7 @@
 
 
         /***********************************************************************
-         03. $current-satge
+         $current-satge
          Description: CSS for video gallery component
         ************************************************************************/   
         .current-satge {
@@ -963,7 +963,7 @@
 
 
         /***********************************************************************
-         04. $my-badges
+         $my-badges
          Description: CSS for user badges component
         ************************************************************************/  
         .my-badges {
@@ -1018,7 +1018,7 @@
 
 
         /***********************************************************************
-         05. $user-avatar
+         $user-avatar
          Description: CSS to represent a user avatar picture with info
         ************************************************************************/  
         .user-avatar {
@@ -1096,7 +1096,7 @@
 
 
         /***********************************************************************
-         06. $user-data
+         $user-data
          Description: CSS to represent the user's data section beneath to avatar
         ************************************************************************/          
         .user-data {
@@ -1160,7 +1160,37 @@
                 position: relative;
             }
         }
-        /***********************************************************************/        
+        /***********************************************************************/
+
+
+        /***********************************************************************
+         $user-shield
+         Description: CSS to represent a user shield image
+        ************************************************************************/
+        .user-shield {
+            display: block;
+            overflow: visible;
+            position: relative;
+            padding: 0;
+            margin: 0 auto;
+            width:100%;
+            height: auto;
+
+            figure {
+                overflow: hidden;
+                background-color: transparent;
+                text-align: center;
+            }
+            img {
+                display: block;
+                padding: 0;
+                margin: 0 auto;
+                border: none;
+                max-width: 85%;
+                border-radius: 50%;
+            }
+        }
+        /***********************************************************************/
 
 
         /***********************************************************************
@@ -2699,7 +2729,199 @@
             }
         }
 
-        /***********************************************************************/        
+        /***********************************************************************/ 
+
+
+        /***********************************************************************
+         $social-share
+         Description: CSS to represent entities to be processed trough canvas 
+         scripting to generate an image and then shared it to social media.
+        ************************************************************************/
+        .social-share {
+            display: block;
+            width: 1200px;
+            height: 1200px;
+            padding: 0; 
+            margin: 0;
+
+            background-color: transparent;
+            background-attachment: scroll;
+            background-image: unset;
+            background-position: center top;
+            background-repeat: no-repeat;
+            .background-size(100%, auto);
+
+            //Instance: album
+            &.album {
+                background-image: url('@{url-images}/bg-share-album.jpg');
+                padding-top:205px;
+                padding-left: 70px;
+                padding-right:70px;
+                min-width: 1280px; 
+                min-height: 1329px;
+
+                .album-asset {
+                    display: block;
+                    width: auto;
+                    margin:0;
+                    padding: 1px 0;
+
+                    ul {
+                        padding-top: 42px;
+                    }
+                    li {
+                        margin-bottom: 9px;
+                    }
+                    p {
+                        padding: 0;
+                        margin: 0;
+                        color:@clr-white;
+                        font-size: 17px;
+                        font-weight: bold;
+                    } 
+
+                    &.avatar {
+                        position: relative;
+                        overflow: hidden;
+                        height: 264px;
+                        width: auto;
+                        padding-top: 53px;
+                        margin-left: 3px;
+                    }
+                    &.badge-distintion {
+                        height: 55px;
+                        margin-top: 32px;
+
+                        p {
+                            font-size: 14px;
+                            font-weight: normal;
+                        }
+                        span + span {
+                            color:@clr-green;
+                            font-weight: bold;
+                            text-transform: uppercase;
+                        }
+                    }
+                    &.habilities {
+                        height: 180px;
+                        margin-top: 49px;
+                    }
+                    &.preferences {
+                        height: 180px;
+                        margin-top: 56px;                     
+                    }
+                    &.qualities {
+                        height: 180px;
+                        margin-top: 47px;
+                    }
+                    &.impulse {
+                        height: 150px;
+                        ul {
+                            padding-top: 34px;
+                        }                       
+                    }
+                    &.dreams {
+                        height: 168px;
+                        margin-top: 39px;
+                    }
+                    &.plans {
+                        height: 171px;
+                        margin-top: 45px;
+
+                        p span {
+                            color:@clr-blueTurquoise;
+                        }
+                    }
+                    &.goals {
+                        height: 216px;
+                        margin-top: 36px;
+                        ul {
+                           padding-top: 32px; 
+                        }
+                    }
+                    &.knowledge {
+                        height: 162px;
+                        margin-top: 42px;
+                    }
+                    &.project {
+                        height: 90px;
+                        margin-top: 63px;
+                        margin-left: auto;
+                        margin-right: auto;
+                        width: 72%;
+
+                        p {
+                            font-size: 14px;
+                            font-weight: normal;
+                        }
+                    }
+                    &.participation {
+                        height: 840px;
+                        margin-top: 36px;
+
+                        li > p > span {
+                            color:@clr-gray-platinum;
+                        }
+                        .profile-data {
+                            margin: 30px 0 0;
+                            font-size:17px;
+
+                            h4 {
+                                margin:0;
+                                margin-top: 15px;
+                                padding:0;
+                                color:@clr-gray-platinum;
+                                font-size: inherit;
+                                text-transform: none;
+                            }
+                            .user-points {
+                                margin-top: 15px;
+                                padding: 1px 9pt;
+                                color:@clr-green;
+                                font-size: 23px;
+                                letter-spacing: 2px;
+                            }
+                            .user-badges {
+                                width: 79%;
+                                margin: 0 auto;
+                                margin-top: 18px;
+
+                                figure {
+                                    display: none;
+                                    margin-left: -10px;
+                                    margin-right: -10px;
+                                    margin-bottom: 9px;
+                                    padding: 1px 0;
+
+                                    &.show,
+                                    &.active {
+                                        display: block;
+                                    }
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+
+                .user-avatar {
+                    width: 60%;
+                    padding-left: 6px;
+                }
+                .user-shield {
+                    top: -72px;
+                    width: 72%; 
+                    height: 0;
+                    padding-left: 6px;
+                }
+            }
+
+            //Instance: acknowledgment
+            &.acknowledgment {}
+        }
+        /***********************************************************************/
+
+
 
         .transition (@value1,@value2:X,...) { @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`; -webkit-transition: @value; -moz-transition: @value; -ms-transition: @value; -o-transition: @value; transition: @value; }
         .transform (@value1,@value2:X,...) { @value: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`; transform:@value; -ms-transform:@value; -webkit-transform:@value; -o-transform:@value; -moz-transform:@value; }
@@ -2794,25 +3016,4 @@
         background-size: 100%;
     }
 
-}
-
-/* sm viewport */
-@media screen and (min-width: 768px) and (max-width: 991px) {
-    .ns-app {
-        
-    }    
-}
-
-/* md viewport */
-@media screen and (min-width: 992px) and (max-width: 1199px) {
-    .ns-app {
-        
-    }
-}
-
-/* lg viewport */
-@media screen and (min-width: 1200px) {
-    .ns-app {
-        
-    }
 }

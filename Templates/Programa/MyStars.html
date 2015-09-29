@@ -14,7 +14,7 @@
   	</section>
   	<section class="centered" style="display:none">
   		<div class="sharer">
-  			<i class="icomoon icon-share icon"></i><a href="#openModal1" class="modbut"><div class="txt">Compartir puntuación</div></a>
+  			<span class="icomoon icon-share icon"></span><a href="#openModal1" class="modbut"><div class="txt">Compartir puntuación</div></a>
   		</div>
   	</section>
   	<section class="modales" style="display:none">
@@ -22,7 +22,7 @@
   			<div>
   				<a href="#close" title="Close" class="close"></a>
   				<div class="txt-renglon txt-bigger">"Puntuación {{profileStars}} Estrellas"</div>
-  				<div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Agregar texto..." value=""/></div>
+  				<div class="add"><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar texto..." value=""/></div>
 
   				<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
   			</div>
@@ -31,21 +31,22 @@
 	<section class="starcontain">
 	  <div class="subtitle centered">Mis estrellas</div>
 	  <div class="part" ng-repeat="activity in activitiesCompleted" ng-show="qtyStarsByAcctivity()">
-		<div class="fl-left"><div class="date">{{activity.last_status_update | date :'dd MMMM yyyy - hh:mm a'}}</div>{{activity.sectionname}} : {{activity.activityname}}</div><div class="fl-right sm-pill">{{activity.points}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+		<div class="pull-left"><div class="date">{{activity.last_status_update | date :'dd MMMM yyyy - hh:mm a'}}</div>{{activity.sectionname}} : {{activity.activityname}}</div>
+    <div class="pull-right sm-pill"><span class="pull-left">{{activity.points}}&nbsp;&nbsp;</span><span class="icomoon icon-star pull-right"></span></div>
 	  </div>
 	  <div class="part showmore" ng-click="showMore()" ng-show="showLoadMoreBar()">
-  			<i class="icomoon  icon-show-more fl-right"></i> Mostrar más estrellas...
+  			<span class="icomoon  icon-show-more pull-right"></span> Mostrar más estrellas...
   		</div>
 	</section>  	
   	<section class="starcontain" style="display:none">
   		<div class="subtitle centered">Mis Recompensas</div>
   		<div class="part" ng-repeat="reward in rewardsEarned" ng-show="qtyRewards()" ng-click="showRewardDetail(reward.id)">
-  			<div class="fl-left"><div class="date">{{reward.dateIssued | date: 'fullDate'}}</div>{{reward.name}}</div>
-  			<i class="icomoon icon-arrow-bold-right fl-right"></i>
+  			<div class="pull-left"><div class="date">{{reward.dateIssued | date: 'fullDate'}}</div>{{reward.name}}</div>
+  			<span class="icomoon icon-arrow-bold-right pull-right"></span>
   		</div>
   		
   		<div class="part showmore" ng-click="showMoreRewards()" ng-show="showMoreBarRewards()">
-  			<i class="icomoon  icon-show-more fl-right"></i> Mostrar más recompensas...
+  			<span class="icomoon  icon-show-more pull-right"></span> Mostrar más recompensas...
   		</div>
   	</section>
   </article>
