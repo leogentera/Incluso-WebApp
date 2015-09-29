@@ -28,7 +28,7 @@
             };
 
             $scope.navigateTo = function(url,sideToggle,activityId){
-                if(activityId != undefined && activityId > 0 && _activityBlocked[activityId].disabled) {
+                if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
                     return false;
                 }
                 //$location.path(url + activityId);
@@ -208,6 +208,9 @@
 
             //Load activity block status into binding model
             $scope.resetActivityBlockedStatus = function () {
+                if(!_activityBlocked || !_activityBlocked.length || _activityBlocked.length <=0){
+                    _activityBlocked = moodleFactory.Services.GetCacheJson("activityblocked");
+                }
                $rootScope.activityBlocked = _activityBlocked;
             };
             $scope.resetActivityBlockedStatus();

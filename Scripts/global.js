@@ -10,7 +10,7 @@ var _httpFactory = null;
 var _timeout = null;
 var _location = null;
 
-var _activityStatus = [];
+var _activityStatus = null;
 
 var _activityDependencies=[
     //Stage 1 dependencies
@@ -294,7 +294,7 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
         activityStatus[activityIdentifierId] = 1;
     }
     _setLocalStorageJsonItem("activityStatus", activityStatus);
-    _activityStatus[activityIdentifierId] = 1;
+    _activityStatus = activityStatus;
     _loadActivityBlockStatus();
 };
 
@@ -384,8 +384,7 @@ var _tryCloseStage = function(stageIndex){
     return false;
 };
 
-var _closeChallenge = function (stageId) {
-    console.log("isChallengeCompleted?");
+var _closeChallenge = function (stageId) {    
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));    
     var stageIndex = stageId;
@@ -426,14 +425,13 @@ var _closeChallenge = function (stageId) {
 
 
 var _updateBadgeStatus = function (coursemoduleid) {      
-    var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
-    console.log("update badge status"+ coursemoduleid);
+    var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));    
     var badges = profile.badges;
     var activity = _getActivityByCourseModuleId(coursemoduleid);
     if (activity) {
       var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
       if (currentBadge) {
-        console.log("badge won");
+        console.log("badge won" + currentBadge.badgeName + " " + coursemoduleid);
           for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
               if (badges[indexBadge].id == currentBadge.badgeId) {
                   profile.badges[indexBadge].status = "won";
@@ -451,6 +449,7 @@ var _updateBadgeStatus = function (coursemoduleid) {
 var _updateRewardStatus = function () {
 
     var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    console.log('Stars from rewards: ' + profile.stars);
     var totalRewards = profile.rewards;
     var profilePoints = profile.stars;
 
@@ -828,27 +827,32 @@ var getForumsExtraPointsCounter = function(){
 
 function updateUserStars(activityIdentifier, extraPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    console.log(profile);
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
     extraPoints ? '' : extraPoints = 0;
-
+debugger;
+    var stars = 0;
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
+        stars = extraPoints;
     } else {
         if (activityIdentifier == "2016") {
             profile.stars = Number(profile.stars) + Number(activity.activities[0].points) + Number(extraPoints);
         }
         else {
             profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+            stars = activity.points;
         }
     }
 
     console.log("Profile stars = " + profile.stars);
+    console.log("Forum stars to assign: " + stars);
 
     var data = {
         userId: profile.id,
-        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : Number(activity.points) + Number(extraPoints),
+        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : stars,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
@@ -1102,13 +1106,14 @@ var _activityRouteIds = [
 ];
 
 var _loadActivityBlockStatus = function () {
-
+    if(!_activityBlocked) _activityBlocked = {};
     var activityCount = _activityRouteIds.length;
     for(var i = 0; i < activityCount; i++ ) {
         _activityBlocked[_activityRouteIds[i]] ={
             disabled:!_canStartActivity(_activityRouteIds[i])
         };
     }
+    _setLocalStorageJsonItem("activityblocked",_activityBlocked);
 };
 
 //Helps defining if activity can be started
