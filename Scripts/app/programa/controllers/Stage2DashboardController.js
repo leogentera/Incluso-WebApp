@@ -184,7 +184,7 @@ angular
 
             var challengeCompletedId = _closeChallenge($scope.idEtapa);
 
-            _coachNotification();
+            _coachNotification($scope.idEtapa);
 
             //Exclude initial and final challenges from showing modal robot
             var challengeExploracionInicial = 154;
@@ -206,10 +206,9 @@ angular
             //Update progress
             var userid = localStorage.getItem("userId");
             var user = JSON.parse(localStorage.getItem("profile/" + userid));
+            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
-            $scope.model = progress.course;
-            var userdata = progress.user;
-            _setLocalStorageJsonItem("profile/" + userid, userdata);
+            $scope.model = progress.course;           
             _setLocalStorageJsonItem("usercourse", $scope.model);
 
             $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
@@ -229,8 +228,7 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
-                //TODO: Remove false from condition, only there to jump freely into activities in DEV
-                if(false && _activityBlocked[activity_identifier]) return false;
+                if(_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
 
                 if (url) {

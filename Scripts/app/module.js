@@ -340,6 +340,11 @@
             controller: 'stageContentsController'
         });
     
+        $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultiple/:moodleid/:retry', { 
+            templateUrl: 'Templates/ZonaDeVuelo/Conocete/RetoMultiple.html',
+            controller: 'stageGameRetoMultipleController'
+        });
+
         $routeProvider.when('/ZonaDeVuelo/Conocete/RetoMultiple/:moodleid', { 
             templateUrl: 'Templates/ZonaDeVuelo/Conocete/RetoMultiple.html',
             controller: 'stageGameRetoMultipleController'
@@ -355,7 +360,7 @@
             controller: 'stageGameRetoMultipleResultsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId', {
+        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId/:extraPoints', {
             templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -502,7 +507,7 @@
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:activityId', {
+        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:activityId/:extraPoints', {
             templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -527,6 +532,11 @@
             controller: 'stageTuEligesController'
         });
 
+        $routeProvider.when('/ZonaDeNavegacion/TuEliges/TuEliges/:moodleid/:retry', {
+            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEliges.html',
+            controller: 'stageTuEligesController'
+        });
+
         $routeProvider.when('/ZonaDeNavegacion/TuEliges/ResultadosTuEliges', {
             templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/TuEligesResults.html',
             controller: 'stageTuEligesController'
@@ -542,8 +552,12 @@
             controller: 'stageQuizController'
         });
 
-
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/:moodleid', {
+            templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html',
+            controller: 'stageMapaDeVidaController'
+        });
+
+        $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/:moodleid/:retry', {
             templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html',
             controller: 'stageMapaDeVidaController'
         });
@@ -615,7 +629,7 @@
             controller: 'stageQuizController'
         });
 
-        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activity_identifier/:activityId', {
+        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activity_identifier/:activityId/extraPoints', {
             templateUrl: 'Templates/ZonaDeAterrizaje/ForoCierre.html',
             controller: 'stageForumCloseController'
         });

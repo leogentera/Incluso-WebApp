@@ -120,7 +120,7 @@
                 </div>
 
 
-                <div class=" page " ng-class="currentPage==2 ? 'active' : '' ">
+                <div class="page" ng-class="currentPage==2 ? 'active' : '' ">
                     <div id="finalized">
                         <section class="header-title ">
                             <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
@@ -149,13 +149,15 @@
                                     </div>
                                     <div id="results1" class="panel-body" collapse="!question1.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[0].trueOptionWrong}">
-                                                <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[0].trueOptionWrong"></span>Sí
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[0].trueOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[0].badAnswer && !exploracionFinalresult2[0].trueOptionWrong) || exploracionFinalresult2[0].badAnswer">
+                                                <span class="pull-left icomoon icon-wrong" ng-show="exploracionFinalresult2[0].trueOptionWrong"></span>
+                                                Sí
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[0].falseOptionWrong}">
-                                                <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[0].falseOptionWrong"></span>No
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[0].falseOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[0].badAnswer && exploracionFinalresult2[0].falseOptionWrong) || exploracionFinalresult2[0].badAnswer">
+                                                <span class="pull-left icomoon icon-wrong" ng-show="exploracionFinalresult2[0].falseOptionWrong"></span>
+                                                No
                                             </li>
                                         </ul>
                                     </div>
@@ -176,19 +178,19 @@
                                     </div>
                                     <div id="results2" class="panel-body" collapse="!question2.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[1].firstOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[1].firstOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[1].firstOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[1].badAnswer && !exploracionFinalresult2[1].firstOptionWrong) || exploracionFinalresult2[1].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult2[1].firstOptionWrong"></span>
                                                 Planear lo que puedes hacer hoy para lograrlo
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[1].secondOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[1].secondOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[1].secondOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[1].badAnswer && exploracionFinalresult2[1].secondOptionWrong) || exploracionFinalresult2[1].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult2[1].secondOptionWrong"></span>
                                                 Tener algo en que soñar
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[1].thirdOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[1].thirdOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[1].thirdOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[1].badAnswer && exploracionFinalresult2[1].thirdOptionWrong) || exploracionFinalresult2[1].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult2[1].thirdOptionWrong"></span>
                                                 Imaginar muchas cosas que te encantan
                                             </li>
                                         </ul>
@@ -210,19 +212,19 @@
                                     </div>
                                     <div id="results3" class="panel-body" collapse="!question3.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[2].firstOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[2].firstOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[2].firstOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[2].badAnswer && !exploracionFinalresult2[2].firstOptionWrong) || exploracionFinalresult2[2].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult2[2].firstOptionWrong"></span>
                                                 Eres capaz de hacer muchas cosas al mismo tiempo
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[2].secondOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[2].secondOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[2].secondOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[2].badAnswer && exploracionFinalresult2[2].secondOptionWrong) || exploracionFinalresult2[2].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult2[2].secondOptionWrong"></span>
                                                 Las demás personas creen que es importante
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[2].thirdOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[2].thirdOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[2].thirdOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[2].badAnswer && exploracionFinalresult2[2].thirdOptionWrong) || exploracionFinalresult2[2].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult2[2].thirdOptionWrong"></span>
                                                 Te ayuda a crecer de igual forma en todos las áreas de tu vida
                                             </li>
                                         </ul>
@@ -244,19 +246,19 @@
                                     </div>
                                     <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
                                         <ul>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[3].firstOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[3].firstOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[3].firstOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[3].badAnswer && !exploracionFinalresult2[3].firstOptionWrong) || exploracionFinalresult2[3].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult2[3].firstOptionWrong"></span>
                                                 Para poner una referencia y saber que lo has logrado
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[3].secondOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[3].secondOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[3].secondOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[3].badAnswer && exploracionFinalresult2[3].secondOptionWrong) || exploracionFinalresult2[3].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult2[3].secondOptionWrong"></span>
                                                 Para calificarme si lo hice bien o mal
                                             </li>
-                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[3].thirdOptionWrong}">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult2[3].thirdOptionWrong"></span>
+                                            <li ng-class="{'failed clearfix': exploracionFinalresult2[3].thirdOptionWrong}"
+                                                ng-show="(!exploracionFinalresult2[3].badAnswer && exploracionFinalresult2[3].thirdOptionWrong) || exploracionFinalresult2[3].badAnswer">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="exploracionFinalresult2[3].thirdOptionWrong"></span>
                                                 Para darme cuenta del trabajo que cuesta
                                             </li>
                                         </ul>

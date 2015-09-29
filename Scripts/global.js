@@ -9,7 +9,7 @@ var _httpFactory = null;
 var _timeout = null;
 var _location = null;
 
-var _activityStatus = [];
+var _activityStatus = null;
 
 var _activityDependencies=[
     //Stage 1 dependencies
@@ -293,7 +293,7 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
         activityStatus[activityIdentifierId] = 1;
     }
     _setLocalStorageJsonItem("activityStatus", activityStatus);
-    _activityStatus[activityIdentifierId] = 1;
+    _activityStatus = activityStatus;
     _loadActivityBlockStatus();
 };
 
@@ -383,8 +383,7 @@ var _tryCloseStage = function(stageIndex){
     return false;
 };
 
-var _closeChallenge = function (stageId) {
-    console.log("isChallengeCompleted?");
+var _closeChallenge = function (stageId) {    
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));    
     var stageIndex = stageId;
@@ -396,7 +395,6 @@ var _closeChallenge = function (stageId) {
             var totalActivitiesByChallenge = currentChallenge.activities.length;
             var totalActivitiesCompletedByChallenge = (_.where(currentChallenge.activities, {status: 1})).length;
             if (totalActivitiesByChallenge == totalActivitiesCompletedByChallenge) {
-
                 //updateBadge
                 _updateBadgeStatus(currentChallenge.coursemoduleid);
                 userCourse.stages[stageIndex].challenges[challengeIndex].status = 1;
@@ -410,47 +408,47 @@ var _closeChallenge = function (stageId) {
                 };
                 moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallback);
                 success = currentActivityModuleId;
-                console.log("challengeCompleted true");
+                console.log("challengeCompleted true");                    
                 return success;
             } else {
-                success = 0;
+               success = 0;
             }
         } else {
             success = 0;
         }
-    }
-    ;
+    };
     return success;
 }
 
 
-var _updateBadgeStatus = function (coursemoduleid, callback) {
-    moodleFactory.Services.GetAsyncProfile(moodleFactory.Services.GetCacheObject("userId"), function () {
-        if (callback){callback();}
-        var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
-        var badges = profile.badges;
-        var activity = _getActivityByCourseModuleId(coursemoduleid);
-        if (activity) {
-          var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
-          if (currentBadge) {
-              for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
-                  if (badges[indexBadge].id == currentBadge.badgeId) {
-                      profile.badges[indexBadge].status = "won";
-                      _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
-                  } else {
-                      //This else statement is set to avoid errors on execution flows
-                  }
+
+
+var _updateBadgeStatus = function (coursemoduleid) {      
+    var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));    
+    var badges = profile.badges;
+    var activity = _getActivityByCourseModuleId(coursemoduleid);
+    if (activity) {
+      var currentBadge = _.findWhere(_badgesPerChallenge, {activity_identifier: activity.activity_identifier});
+      if (currentBadge) {
+        console.log("badge won" + currentBadge.badgeName + " " + coursemoduleid);
+          for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
+              if (badges[indexBadge].id == currentBadge.badgeId) {
+                  profile.badges[indexBadge].status = "won";
+                  _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
+              } else {
+                  //This else statement is set to avoid errors on execution flows
               }
-          } else {//This else statement is set to avoid errors while debugging in firefox
           }
-        }else{          
-        }        
-    });
+      } else {//This else statement is set to avoid errors while debugging in firefox
+      }
+    }else{          
+    }    
 };
 
 var _updateRewardStatus = function () {
 
     var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    console.log('Stars from rewards: ' + profile.stars);
     var totalRewards = profile.rewards;
     var profilePoints = profile.stars;
 
@@ -489,12 +487,30 @@ var _createNotification = function (activityId, triggerActivity) {
 };
 
 
-var _coachNotification = function () {
+var _coachNotification = function (stageIndex) {
+
+    var activity_identifier = "";
+    switch(stageIndex)
+    {
+      case 0:
+        activity_identifier = "1002";
+        break;
+      case 1:
+        activity_identifier = "2022";
+        break;
+      case 2:
+        activity_identifier = "3501";
+        break;
+      default:
+        activity_identifier = "1002";
+        break;
+    }
+    
 
     var notifications = JSON.parse(localStorage.getItem("notifications"));
     var userId = localStorage.getItem('userId');
     var notificationCoach = _.find(notifications, function (notif) {
-        if (notif.id == 4) {
+        if ((notif.id == 4 && stageIndex == 0) || (notif.id == 8 && stageIndex == 1) || (notif.id == 12 && stageIndex == 2)) {
             return notif;
         } else {
 
@@ -502,8 +518,7 @@ var _coachNotification = function () {
     });
 
     if (notificationCoach && !notificationCoach.timemodified) {
-        var activityId = 68;
-        var activity = _getActivityByCourseModuleId(activityId);
+        var activity = getActivityByActivity_identifier(activity_identifier);
         if ((activity)) {
 
             var triggerActivity = 3;
@@ -798,7 +813,7 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
             instanceType: 0,
             date: getdate()
         };
-        moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
+        moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){}, function(){});
         _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile)
         _setLocalStorageJsonItem("CurrentUser", currentUser)
     }
@@ -811,27 +826,32 @@ var getForumsExtraPointsCounter = function(){
 
 function updateUserStars(activityIdentifier, extraPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    console.log(profile);
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
     extraPoints ? '' : extraPoints = 0;
-
+debugger;
+    var stars = 0;
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
+        stars = extraPoints;
     } else {
         if (activityIdentifier == "2016") {
             profile.stars = Number(profile.stars) + Number(activity.activities[0].points) + Number(extraPoints);
         }
         else {
             profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+            stars = activity.points;
         }
     }
 
     console.log("Profile stars = " + profile.stars);
+    console.log("Forum stars to assign: " + stars);
 
     var data = {
         userId: profile.id,
-        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : Number(activity.points) + Number(extraPoints),
+        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : stars,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
@@ -1085,13 +1105,14 @@ var _activityRouteIds = [
 ];
 
 var _loadActivityBlockStatus = function () {
-
+    if(!_activityBlocked) _activityBlocked = {};
     var activityCount = _activityRouteIds.length;
     for(var i = 0; i < activityCount; i++ ) {
         _activityBlocked[_activityRouteIds[i]] ={
             disabled:!_canStartActivity(_activityRouteIds[i])
         };
     }
+    _setLocalStorageJsonItem("activityblocked",_activityBlocked);
 };
 
 //Helps defining if activity can be started

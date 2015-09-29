@@ -31,13 +31,13 @@
 	<section class="starcontain">
 	  <div class="subtitle centered">Mis estrellas</div>
 	  <div class="part" ng-repeat="activity in activitiesCompleted" ng-show="qtyStarsByAcctivity()">
-		<div class="fl-left"><div class="date">{{activity.last_status_update*1000 | date :'fullDate'}}</div>{{activity.sectionname}} : {{activity.activityname}}</div><div class="fl-right sm-pill">{{activity.points}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+		<div class="fl-left"><div class="date">{{activity.last_status_update | date :'dd MMMM yyyy - hh:mm a'}}</div>{{activity.sectionname}} : {{activity.activityname}}</div><div class="fl-right sm-pill">{{activity.points}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
 	  </div>
 	  <div class="part showmore" ng-click="showMore()" ng-show="showLoadMoreBar()">
   			<i class="icomoon  icon-show-more fl-right"></i> Mostrar más estrellas...
   		</div>
 	</section>  	
-  	<section class="starcontain">
+  	<section class="starcontain" style="display:none">
   		<div class="subtitle centered">Mis Recompensas</div>
   		<div class="part" ng-repeat="reward in rewardsEarned" ng-show="qtyRewards()" ng-click="showRewardDetail(reward.id)">
   			<div class="fl-left"><div class="date">{{reward.dateIssued | date: 'fullDate'}}</div>{{reward.name}}</div>

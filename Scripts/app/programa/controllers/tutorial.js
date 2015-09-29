@@ -47,7 +47,6 @@ angular
 
                 moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
                 var m = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-
                 if (!m) {
                     $location.path('/');
                     return "";
@@ -126,7 +125,7 @@ angular
 
                 var avatarInfoForGameIntegration = {
                     "userid": $scope.model.id,
-                    "alias": $scope.model.username,
+                    "alias": $scope.model.alias,
                     "actividad": "Mi Avatar",
                     "estrellas": "100",
                     "pathimagen": "",
@@ -146,7 +145,7 @@ angular
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch(e) {
                     SuccessAvatar(
-                        {"userid":$scope.model.id,"actividad":"Mi Avatar","alias": $scope.model.username, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/05/2015 09:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
+                        {"userid":$scope.model.id,"actividad":"Mi Avatar","alias": $scope.model.alias, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/05/2015 09:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
                     );
                 }
             };
@@ -167,7 +166,7 @@ angular
                     "Te_gusto_la_actividad": data.Te_gusto_la_actividad,
                     "pathimagen": data.pathimagen,
                     "estrellas": "100",
-                    "alias": $scope.model.username,
+                    "alias": $scope.model.alias,
                     "escudo" : $scope.model.shield
                 }];
                 uploadAvatar($scope.avatarInfo);
