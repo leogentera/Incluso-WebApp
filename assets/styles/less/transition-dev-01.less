@@ -178,7 +178,7 @@ Parallel work file for UI Developer 01
 
             .icon-edit {
                 position: relative;
-                top: -7vw;
+                top: -10vw;
             }
 
             textarea {
@@ -213,6 +213,18 @@ Parallel work file for UI Developer 01
                    opacity: 1;  
                 }
             } 
+        } 
+
+        ul > li {
+            .part {
+                &.list {
+                    .add {
+                        .icon-edit {
+                            top: -10.5vw;
+                        }            
+                    }
+                }
+            }
         }       
 
         #finalized {
@@ -923,5 +935,45 @@ Parallel work file for UI Developer 01
         }
 
     } // reward
+
+    .my-stars {
+        
+        .starcontain {
+            
+            .subtitle {
+                text-transform: uppercase;
+                font-weight: bold;
+            }
+
+            .part {
+                margin: 1vh 5%;
+                width: 90%;                
+
+                div {
+                    font-weight: bold;
+
+                    &.sm-pill {
+                        border-width: 2px;
+                        font-size: 4vw;
+                        font-weight: bold;
+                        padding: 1vw 3vw;
+
+                        > span {
+                            display: inline-block;
+                            width: auto;
+
+                            &.icon-star {
+                                font-size: 3.5vw;
+                                position: relative;
+                                top: 2px;
+                                padding: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+    } //my-stars
 
 }
