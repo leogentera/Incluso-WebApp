@@ -233,6 +233,10 @@
                 // canvas is the final rendered <canvas> element
                 document.body.appendChild(canvas);
                 
+                
+                var img = new Image();
+                img.src =  canvas.toDataURL("image/png");
+                document.body.appendChild(img);
             }
         });
     </script>
