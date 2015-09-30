@@ -1,228 +1,219 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Share Album</title>
-	<link href="../../assets/styles/dev-css.css" rel='stylesheet' type='text/css' />
-	<style type="text/css">
-		
-	</style>
-</head>
-
-<body class="incluso-app">
-	<article class="social-share album unit-px">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-md-4">
-					<section class="album-asset avatar">
-						<div class="user-avatar">
-							<figure>
-								<img src="http://incluso.definityfirst.com/moodle/pluginfile.php/352/user/icon/f1" alt="Avatar" />
-							</figure>
-						</div>
-						<div class="user-shield">
-							<figure>
-								<img src="../../assets/images/badges/img-linguistica.svg" alt="">
-							</figure>
-						</div>
-					</section>
-					<section class="album-asset badge-distintion">
-						<p class="text-center">
-							<span class="center-block">El escudo que me distingue es:</span>
-							<span class="center-block">inteligencia lingüistica</span>
+<article id="temp" class="social-share album unit-px">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-4">
+				<section class="album-asset avatar">
+					<div class="user-avatar">
+						<figure>
+							<img src="http://incluso.definityfirst.com/moodle/pluginfile.php/352/user/icon/f1" alt="Avatar" />
+						</figure>
+					</div>
+					<div class="user-shield">
+						<figure>
+							<img src="../../assets/images/badges/img-linguistica.svg" alt="">
+						</figure>
+					</div>
+				</section>
+				<section class="album-asset badge-distintion">
+					<p class="text-center">
+						<span class="center-block">El escudo que me distingue es:</span>
+						<span class="center-block">{{album.shield==''?'Aún no tienes tu primer escudo':album.shield}}</span>
+					</p>
+				</section>
+				<section class="album-asset habilities">
+					<ul class="block-list">
+						<li ng-repeat="strengths in album.myStrengths">
+							<p class="text-center">{{strengths}}</p>
+						</li>
+					</ul>
+				</section>
+				<section class="album-asset preferences">
+					<ul class="block-list">
+						<li ng-repeat="likes in album.myLikes">
+							<p class="text-center">{{likes}}</p>
+						</li>
+					</ul>						
+				</section>
+				<section class="album-asset qualities">
+					<ul class="block-list">
+						<li ng-repeat="attributes in album.myAttributes">
+							<p class="text-center">{{attributes}}</p>
+						</li>
+					</ul>							
+				</section>
+			</div>
+			<div class="col-md-4">
+				<section class="album-asset impulse">
+					<ul class="block-list">
+						<li ng-repeat="ideas in album.myIdeas">
+							<p class="text-center">{{ideas}}</p>
+						</li>
+					</ul>
+				</section>
+				<section class="album-asset dreams">
+					<ul class="block-list">
+						<li ng-repeat="dreams in album.myDreams">
+							<p class="text-center">{{dreams}}</p>
+						</li>
+					</ul>
+				</section>
+				<section class="album-asset plans">
+					<ul class="block-list">
+						<li><p class="text-center"><span>1 año. </span>{{album.myPlans.oneYear == '' ? 'Comparte tu plan':album.myPlans.oneYear}}</p></li>
+						<li><p class="text-center"><span>2 años. </span>{{album.myPlans.threeYear == '' ? 'Comparte tu plan':album.myPlans.threeYear}}</p></li>
+						<li><p class="text-center"><span>5 años. </span>{{album.myPlans.fiveYear == '' ? 'Comparte tu plan':album.myPlans.fiveYear}}</p></li>
+					</ul>
+				</section>
+				<section class="album-asset goals">
+					<ul class="block-list">
+						<li ng-repeat="goals in album.myGoals">
+							<p class="text-center">{{goals}}</p>
+						</li>
+					</ul>
+				</section>
+				<section class="album-asset knowledge">
+					<ul class="block-list">
+						<li ng-repeat="iKnow in album.iKnowWhatIs">
+							<p class="text-center">{{iKnow}}</p>
+						</li>
+					</ul>
+				</section>
+			</div>
+			<div class="col-md-4">
+				<section class="album-asset project">
+					<p class="text-center" ng-repeat="proj in album.project">{{proj}}</p>
+				</section>
+				<section class="album-asset participation">
+					<ul class="block-list">
+						<li><p class="text-center"><span>Comunidad. </span>{{album.amountOfCommunityPosts}} entradas</p></li>
+						<li><p class="text-center"><span>Foros. </span>{{album.amountOfForumPosts}} entradas</p></li>
+					</ul>
+					<!-- <p class="text-center">Estrellas ganadas</p> -->
+					<div class="profile-data">
+						<h4 class="user-name">Estrellas ganadas</h4>
+						<p class="user-points">
+							<span class="ng-binding">{{album.starsEarned}}</span>
+							<span class="icomoon icon-star"></span>
 						</p>
-					</section>
-					<section class="album-asset habilities">
-						<ul class="block-list">
-							<li><p class="text-center">Musical</p></li>
-							<li><p class="text-center">Interpersonal</p></li>
-							<li><p class="text-center">Naturalista</p></li>
-						</ul>
-					</section>
-					<section class="album-asset preferences">
-						<ul class="block-list">
-							<li><p class="text-center">Tocar la batería</p></li>
-							<li><p class="text-center">Ir al cine con mi novia</p></li>
-							<li><p class="text-center">Jugar Fútbol</p></li>
-						</ul>						
-					</section>
-					<section class="album-asset qualities">
-						<ul class="block-list">
-							<li><p class="text-center">Amigable</p></li>
-							<li><p class="text-center">Responsable</p></li>
-							<li><p class="text-center">Inteligente</p></li>
-						</ul>							
-					</section>
-				</div>
-				<div class="col-md-4">
-					<section class="album-asset impulse">
-						<ul class="block-list">
-							<li><p class="text-center">Mi Familia</p></li>
-							<li><p class="text-center">Mis Amigos</p></li>
-							<li><p class="text-center">Mis Padres</p></li>
-						</ul>
-					</section>
-					<section class="album-asset dreams">
-						<ul class="block-list">
-							<li><p class="text-center">Amigable</p></li>
-							<li><p class="text-center">Responsable</p></li>
-							<li><p class="text-center">Inteligente</p></li>
-						</ul>
-					</section>
-					<section class="album-asset plans">
-						<ul class="block-list">
-							<li><p class="text-center"><span>1 año. </span>Terminar estudios</p></li>
-							<li><p class="text-center"><span>2 años. </span>Comprar mi casa ideal</p></li>
-							<li><p class="text-center"><span>5 años. </span>Ser futbolista</p></li>
-						</ul>
-					</section>
-					<section class="album-asset goals">
-						<ul class="block-list">
-							<li><p class="text-center">Estudiar para mis exámenes</p></li>
-							<li><p class="text-center">Aplicar a entrevistas de trabajo</p></li>
-							<li><p class="text-center">Seguir con el fútbol</p></li>
-							<li><p class="text-center">Estabilidad económica</p></li>
-							<li><p class="text-center">Tener tiempo para mí</p></li>
-						</ul>
-					</section>
-					<section class="album-asset knowledge">
-						<ul class="block-list">
-							<li><p class="text-center">Ahorro</p></li>
-							<li><p class="text-center">Préstamo</p></li>
-							<li><p class="text-center">Inversión</p></li>
-						</ul>
-					</section>
-				</div>
-				<div class="col-md-4">
-					<section class="album-asset project">
-						<p class="text-center">Seguir practicando fútbol y aplicar para las eliminatorias de selección de jugadores profesionales!</p>
-					</section>
-					<section class="album-asset participation">
-						<ul class="block-list">
-							<li><p class="text-center"><span>Comunidad. </span>34 entradas</p></li>
-							<li><p class="text-center"><span>Foros. </span>28 entradas</p></li>
-						</ul>
-						<!-- <p class="text-center">Estrellas ganadas</p> -->
-						<div class="profile-data">
-							<h4 class="user-name">Estrellas ganadas</h4>
-							<p class="user-points">
-								<span class="ng-binding" ng-bind="model.stars">1,000,000</span>
-								<span class="icomoon icon-star"></span>
-							</p>
-							<h4>Insignias obtenidas</h4>
-							<div class="user-badges">
-								<div class="container-fluid">
-									<div class="row">
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
+						<h4>Insignias obtenidas</h4>
+						<div class="user-badges">
+							<div class="container-fluid">
+								<div class="row">
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
 									</div>
-									<div class="row">
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
 									</div>
-									<div class="row">
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
 									</div>
-									<div class="row">
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
 									</div>
-									<div class="row">
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
 									</div>
-									<div class="row">
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-md-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
+									</div>
+									<div class="col-md-4">
+										<figure>
+											<img src="../../assets/images/badges/insignia-bloqueada.gif" />
+										</figure>
 									</div>
 								</div>
 							</div>
 						</div>
+					</div>
 
-					</section>
-				</div>
+				</section>
 			</div>
 		</div>
-	</article>
-</body>
-</html>
+	</div>
+</article>
+
+<!--html2canvas(document.getElementById("temp"), {
+	onrendered: function(canvas) {
+		// canvas is the final rendered <canvas> element
+		document.body.appendChild(canvas);
+		
+	}
+});-->
