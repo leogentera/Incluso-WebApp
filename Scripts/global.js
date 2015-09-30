@@ -470,7 +470,6 @@ var logStartActivityAction = function(activityId, timeStamp){
     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
     var data = {
         userid: currentUser.userId,
-        //datestarted: getdate(),
         datestarted: timeStamp,
         moduleid: treeActivity.coursemoduleid,
         updatetype: 0
