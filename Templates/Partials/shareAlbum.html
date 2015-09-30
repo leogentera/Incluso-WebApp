@@ -1,16 +1,11 @@
-<article id="temp" class="social-share album unit-px">
+<article id="share-mini-album" class="social-share album unit-px">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-4">
 				<section class="album-asset avatar">
 					<div class="user-avatar">
 						<figure>
-							<img src="http://incluso.definityfirst.com/moodle/pluginfile.php/352/user/icon/f1" alt="Avatar" />
-						</figure>
-					</div>
-					<div class="user-shield">
-						<figure>
-							<img src="../../assets/images/badges/img-linguistica.svg" alt="">
+							<img ng-src="{{album.profileimageurl}}" alt="Avatar" />
 						</figure>
 					</div>
 				</section>
@@ -59,9 +54,9 @@
 				</section>
 				<section class="album-asset plans">
 					<ul class="block-list">
-						<li><p class="text-center"><span>1 año. </span>{{album.myPlans.oneYear == '' ? 'Comparte tu plan':album.myPlans.oneYear}}</p></li>
-						<li><p class="text-center"><span>2 años. </span>{{album.myPlans.threeYear == '' ? 'Comparte tu plan':album.myPlans.threeYear}}</p></li>
-						<li><p class="text-center"><span>5 años. </span>{{album.myPlans.fiveYear == '' ? 'Comparte tu plan':album.myPlans.fiveYear}}</p></li>
+						<li><p class="text-center"><span>1 año. </span>{{album.myPlans.oneYear == '' ? '':album.myPlans.oneYear}}</p></li>
+						<li><p class="text-center"><span>2 años. </span>{{album.myPlans.threeYear == '' ? '':album.myPlans.threeYear}}</p></li>
+						<li><p class="text-center"><span>5 años. </span>{{album.myPlans.fiveYear == '' ? '':album.myPlans.fiveYear}}</p></li>
 					</ul>
 				</section>
 				<section class="album-asset goals">
@@ -209,11 +204,3 @@
 		</div>
 	</div>
 </article>
-
-<!--html2canvas(document.getElementById("temp"), {
-	onrendered: function(canvas) {
-		// canvas is the final rendered <canvas> element
-		document.body.appendChild(canvas);
-		
-	}
-});-->
