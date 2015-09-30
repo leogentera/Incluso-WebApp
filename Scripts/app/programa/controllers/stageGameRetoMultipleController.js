@@ -39,6 +39,7 @@ angular
                $scope.retoMultipleActivities = [];
                var retosMultipleChallenge = _.find($scope.activities, function(a) { return a.activity_identifier == $routeParams.moodleid});
                if (retosMultipleChallenge) {
+                  stars = retosMultipleChallenge.points;
                   retoMultipleArray = retosMultipleChallenge.activities;
                   for(i = 0; i < retosMultipleChallenge.activities.length; i++)
                   {
