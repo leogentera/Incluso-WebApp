@@ -77,7 +77,7 @@ angular
                     
                     $scope.discussion = data.discussions[0];
                     $scope.forumId = data.forumid;
-                    //generateAlbumImgSrc(postAlbumToCommunity);
+                    generateAlbumImgSrc(postAlbumToCommunity);
                     
                     }, function(data){
                         $scope.sharedAlbumMessage = null;
@@ -86,9 +86,8 @@ angular
                         $scope.$emit('HidePreloader');
                     }, true);
             } else {
-                //generateAlbumImgSrc(postAlbumToCommunity);
+                postAlbumToCommunity();
             }
-            
         };
         
         function getFileName(id) {
@@ -255,22 +254,16 @@ angular
         function generateAlbumImgSrc(callback) {
             
             if (albumSrc == null) {
-                    var svgString = new XMLSerializer().serializeToString(document.querySelector('svg'));
-                    var svg = new Blob([svgString], {type: "image/svg+xml;charset=utf-8"});
-                    var DOMURL = self.URL || self.webkitURL || self;
-                    var url = DOMURL.createObjectURL(svg);
-                    
-                    var canvas = document.getElementById("canvas");
-                    var ctx = canvas.getContext("2d");
-                    
-                    var img = new Image();
-                    img.onload = function() {
-                        ctx.drawImage(img, 0, 0);
+                html2canvas(document.getElementById("share-mini-album"), {
+                    height: 1329,
+                    width: 1280,
+                    onrendered: function(canvas) {
+                        // canvas is the final rendered <canvas> element
                         albumSrc = canvas.toDataURL("image/png");
                         callback();
-                    };
-                    img.src = url;
-            }else{
+                    }
+                });
+            }else {
                 callback();   
             }
         }

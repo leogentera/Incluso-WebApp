@@ -944,7 +944,7 @@
         return {
           restrict: 'E',
           scope: false,
-          templateUrl: 'Templates/Partials/sharedAlbum.html'
+          templateUrl: 'Templates/Partials/shareAlbum.html'
         };
     })
     .directive('shareReconocimiento', function(){
