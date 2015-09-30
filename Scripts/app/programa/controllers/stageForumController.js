@@ -30,8 +30,8 @@ angular
                      {name: 'Intrapersonal', category: 'logico'},
                      {name: 'Corporal', category: 'artistico'},
                      {name: 'Espacial', category: 'artistico'},
-                     {name: 'Matemática', category: 'logico'},
-                     {name: 'Lingüística', category: 'logico'},
+                     {name: 'Matematica', category: 'logico'},
+                     {name: 'Linguistica', category: 'logico'},
                  ];
                  var userId = JSON.parse(localStorage.getItem('userId'));
                  var shield = JSON.parse(localStorage.getItem('profile/' + userId )).shield;
