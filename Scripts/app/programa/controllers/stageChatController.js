@@ -46,40 +46,7 @@ angular
                     break;
 
             }
-            var treeActivity = getActivityByActivity_identifier(coursemoduleid, userCourse);            
-            $scope.activityPoints = treeActivity.points;
-            var cabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
-
-            $scope.navigateToPage = function (pageNumber) {
-                $scope.currentPage = pageNumber;
-            };
-
-             var startedActivityCabinaDeSoporte = (treeActivity.started || treeActivity.status) && cabinaDeSoporte;
-            // Start activity of 'cabina de soporte'                    
-            if (!startedActivityCabinaDeSoporte) {
-                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                var data = {
-                    userid: currentUser.userId,
-                    datestarted: getdate(),
-                    moduleid: treeActivity.coursemoduleid,
-                    updatetype: 0
-                };
-                
-                treeActivity.started = 1;
-                treeActivity.datestarted = data.datestarted; 
-                _setLocalStorageJsonItem('startedActivityCabinaDeSoporte', {$stage: $scope.idEtapa, $index: index, $parentIndex: parentIndex, $data: data});                    
-                _setLocalStorageJsonItem('usercourse', userCourse);
-
-                moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {                                            
-
-                    //trigger activity type 1 is sent when the activity starts.
-                    var triggerActivity = 1;
-                    _createNotification(treeActivity.coursemoduleid, triggerActivity);
-                    
-                },function(){
-                    console.log('Error callback');    
-                });
-            }
+            var treeActivity = getActivityByActivity_identifier(coursemoduleid, userCourse);
 
             $scope.goChat = function () {
                 $location.path('/Chat');
