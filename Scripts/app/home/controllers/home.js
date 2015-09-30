@@ -7,8 +7,9 @@
         '$anchorScroll',
         '$window',
         '$http',
+        '$filter',
         '$modal',
-        function ($rootScope, $scope, $location, $anchorScroll, $window, $http,$modal ) {
+        function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal ) {
         	// http://stackoverflow.com/questions/15033195/showing-spinner-gif-during-http-request-in-angular
 			// To handle page reloads		
 			_httpFactory = $http;
@@ -31,8 +32,14 @@
                 if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
                     return false;
                 }
-                //$location.path(url + activityId);
+
+                if(activityId) {
+                    var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
+                    logStartActivityAction(activityId, timeStamp);
+                }
+
                 $location.path(url);
+
                 if(sideToggle == "sideToggle")
                     $rootScope.sidebar = !$rootScope.sidebar;
             };

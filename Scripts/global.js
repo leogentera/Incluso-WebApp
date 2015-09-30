@@ -463,6 +463,33 @@ var _updateRewardStatus = function () {
     localStorage.setItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
 }
 
+var logStartActivityAction = function(activityId, timeStamp){
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    var treeActivity = getActivityByActivity_identifier(activityId, userCourse);
+
+    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+    var data = {
+        userid: currentUser.userId,
+        datestarted: timeStamp,
+        moduleid: treeActivity.coursemoduleid,
+        updatetype: 0
+    };
+
+    treeActivity.started = 1;
+    treeActivity.datestarted = data.datestarted;
+    _setLocalStorageJsonItem('usercourse', userCourse);
+
+    moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {
+
+        var triggerActivity = 1;
+        _createNotification(treeActivity.coursemoduleid, triggerActivity);
+        console.log('logStartSctivityAction Is working from dashboard');
+
+    },function(){
+        console.log('Error callback');
+    });
+}
+
 
 var _createNotification = function (activityId, triggerActivity) {
 
