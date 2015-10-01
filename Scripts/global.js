@@ -859,7 +859,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
     extraPoints ? '' : extraPoints = 0;
-debugger;
+
     var stars = 0;
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);

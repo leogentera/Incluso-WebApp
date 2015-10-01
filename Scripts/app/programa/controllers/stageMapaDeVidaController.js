@@ -30,12 +30,18 @@ angular
             $scope.user = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.mapaDeVidaActivities = moodleFactory.Services.GetCacheJson("mapaDeVidaActivities");
-            $scope.mapaDeVidaAnswers = moodleFactory.Services.GetCacheJson("mapaDeVidaAnswers");
+            $scope.mapaDeVidaAnswers = moodleFactory.Services.GetCacheJson("mapaDeVidaAnswers/" + $scope.user.id);
             $scope.stars = 0;
             $scope.isInstalled = false;
             $scope.pathImagenFicha = "";
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var activitiesPosted = 0;
+
+            for(var key in localStorage){  
+                if(key.indexOf("mapaDeVidaAnswers") > -1 && key.indexOf($scope.user.id) < 0){
+                    localStorage.removeItem(key);  
+                }
+            }
 
             if(!$routeParams.retry){
                 try {       
@@ -85,7 +91,7 @@ angular
                     $scope.mapaDeVidaAnswers.push(data);
                     $scope.mapaDeVidaAnswers[$scope.mapaDeVidaAnswers.length-1]["coursemoduleid"] = activityId;
                     if ($scope.mapaDeVidaAnswers.length == $scope.mapaDeVidaActivities.length) {
-                        _setLocalStorageJsonItem("mapaDeVidaAnswers", $scope.mapaDeVidaAnswers);
+                        _setLocalStorageJsonItem("mapaDeVidaAnswers/" + $scope.user.id, $scope.mapaDeVidaAnswers);
                         $scope.$emit('HidePreloader');
                     };
                 });
@@ -135,7 +141,7 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"userid":"103","actividad":"Proyecta tu Vida","duración":"5","imagenFicha":"assets/images/mapadevidaresultados/FichaProyectaTuVida.png","pathImagenFicha":"","fecha_inicio":"2015-09-15 14:23:12","fecha_fin":"2015-09-15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":147,"respuesta":"Dimension 1 1."},{"preguntaId":148,"respuesta":"Dimension 1 2."},{"preguntaId":149,"respuesta":["Dimension 1 3 1.","Dimension 1 3 2.","Dimension 1 3 3."]},{"preguntaId":150,"respuesta":["Dimension 1 4 1.","Dimension 1 4 2.","Dimension 1 4 3."]},{"preguntaId":151,"respuesta":"Dimension 1 5."},{"preguntaId":152,"respuesta":"Dimension 1 6."}]},{"dimensionId":243,"respuestas":[{"preguntaId":154,"respuesta":"Dimension 2 1."},{"preguntaId":155,"respuesta":"Dimension 2 2."},{"preguntaId":156,"respuesta":["Dimension 2 3 1","Dimension 2 3 2","Dimension 2 3 3"]},{"preguntaId":157,"respuesta":["Dimension 2 4 1","Dimension 2 4 2.","Dimension 2 4 3."]},{"preguntaId":158,"respuesta":"Dimension 2 5."},{"preguntaId":159,"respuesta":"Dimension 2 6."}]},{"dimensionId":244,"respuestas":[{"preguntaId":160,"respuesta":"Dimension 3 1."},{"preguntaId":161,"respuesta":"Dimension 3 2."},{"preguntaId":162,"respuesta":["Dimension 3 3 1.","Dimension 3 3 2.","Dimension 3 3 3."]},{"preguntaId":163,"respuesta":["Dimension 3 4 1.","Dimension 3 4 2.","Dimension 3 4 3."]},{"preguntaId":164,"respuesta":"Dimension 3 5."},{"preguntaId":165,"respuesta":"Dimension 3 6."}]},{"dimensionId":245,"respuestas":[{"preguntaId":166,"respuesta":"Dimension 4 1."},{"preguntaId":167,"respuesta":"Dimension 4 2."},{"preguntaId":168,"respuesta":["Dimension 4 3 1","Dimension 4 3 2","Dimension 4 3 3"]},{"preguntaId":169,"respuesta":["Dimension 4 4 1","Dimension 4 4 2","Dimension 4 4 3"]},{"preguntaId":170,"respuesta":"Dimension 4 5."},{"preguntaId":171,"respuesta":"Dimension 4 6."}]},{"dimensionId":246,"respuestas":[{"preguntaId":172,"respuesta":"Dimension 5 1"},{"preguntaId":173,"respuesta":"Dimension 5 2"},{"preguntaId":174,"respuesta":["Dimension 5 3 1","Dimension 5 3 2","Dimension 5 3 3"]},{"preguntaId":175,"respuesta":["Dimension 5 4 1","Dimension 5 4 2","Dimension 5 4 3"]},{"preguntaId":176,"respuesta":"Dimension 5 4"},{"preguntaId":177,"respuesta":"Dimension 5 5"}]}]}
+                        {"userid":"103","actividad":"Proyecta tu Vida","duración":"5","imagenFicha":"assets/images/results/FichaProyectaTuVida.png","pathImagenFicha":"","fecha_inicio":"2015-09-15 14:23:12","fecha_fin":"2015-09-15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":147,"respuesta":"Dimension 1 1."},{"preguntaId":148,"respuesta":"Dimension 1 2."},{"preguntaId":149,"respuesta":["Dimension 1 3 1.","Dimension 1 3 2.","Dimension 1 3 3."]},{"preguntaId":150,"respuesta":["Dimension 1 4 1.","Dimension 1 4 2.","Dimension 1 4 3."]},{"preguntaId":151,"respuesta":"Dimension 1 5."},{"preguntaId":152,"respuesta":"Dimension 1 6."}]},{"dimensionId":243,"respuestas":[{"preguntaId":154,"respuesta":"Dimension 2 1."},{"preguntaId":155,"respuesta":"Dimension 2 2."},{"preguntaId":156,"respuesta":["Dimension 2 3 1","Dimension 2 3 2","Dimension 2 3 3"]},{"preguntaId":157,"respuesta":["Dimension 2 4 1","Dimension 2 4 2.","Dimension 2 4 3."]},{"preguntaId":158,"respuesta":"Dimension 2 5."},{"preguntaId":159,"respuesta":"Dimension 2 6."}]},{"dimensionId":244,"respuestas":[{"preguntaId":160,"respuesta":"Dimension 3 1."},{"preguntaId":161,"respuesta":"Dimension 3 2."},{"preguntaId":162,"respuesta":["Dimension 3 3 1.","Dimension 3 3 2.","Dimension 3 3 3."]},{"preguntaId":163,"respuesta":["Dimension 3 4 1.","Dimension 3 4 2.","Dimension 3 4 3."]},{"preguntaId":164,"respuesta":"Dimension 3 5."},{"preguntaId":165,"respuesta":"Dimension 3 6."}]},{"dimensionId":245,"respuestas":[{"preguntaId":166,"respuesta":"Dimension 4 1."},{"preguntaId":167,"respuesta":"Dimension 4 2."},{"preguntaId":168,"respuesta":["Dimension 4 3 1","Dimension 4 3 2","Dimension 4 3 3"]},{"preguntaId":169,"respuesta":["Dimension 4 4 1","Dimension 4 4 2","Dimension 4 4 3"]},{"preguntaId":170,"respuesta":"Dimension 4 5."},{"preguntaId":171,"respuesta":"Dimension 4 6."}]},{"dimensionId":246,"respuestas":[{"preguntaId":172,"respuesta":"Dimension 5 1"},{"preguntaId":173,"respuesta":"Dimension 5 2"},{"preguntaId":174,"respuesta":["Dimension 5 3 1","Dimension 5 3 2","Dimension 5 3 3"]},{"preguntaId":175,"respuesta":["Dimension 5 4 1","Dimension 5 4 2","Dimension 5 4 3"]},{"preguntaId":176,"respuesta":"Dimension 5 4"},{"preguntaId":177,"respuesta":"Dimension 5 5"}]}]}
                     );
                }
             }
@@ -195,6 +201,7 @@ angular
                         quizzesRequests.push(logEntry);
                     }
                 }
+                _setLocalStorageJsonItem("mapaDeVidaAnswers/" + $scope.user.id, $scope.mapaDeVidaAnswers);
                 var quizzesAnswered = _.countBy($scope.mapaDeVidaActivities, function(a){
                     if (a.questions) {
                         var questionsAnswers = _.countBy(a.questions, function(q){
@@ -284,7 +291,6 @@ angular
                 _endActivity(activityModel, function(){
                     activitiesPosted++;
                     if (activitiesPosted == $scope.mapaDeVidaAnswers.length) {
-                        $scope.pathImagenFicha = ($scope.pathImagenFicha != "" ? $scope.pathImagenFicha : "assets/images/mapadevidaresultados/Dummy.jpg");                       
                         if ($scope.pathImagenFicha != "" && parentStatus) {
                             //var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                             var _course = moodleFactory.Services.GetCacheJson("course");
