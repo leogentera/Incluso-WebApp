@@ -464,6 +464,7 @@ var _updateRewardStatus = function () {
 }
 
 var logStartActivityAction = function(activityId, timeStamp){
+
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var treeActivity = getActivityByActivity_identifier(activityId, userCourse);
 
@@ -483,7 +484,12 @@ var logStartActivityAction = function(activityId, timeStamp){
 
         var triggerActivity = 1;
         _createNotification(treeActivity.coursemoduleid, triggerActivity);
-        console.log('logStartSctivityAction Is working from dashboard');
+        
+        if(_.find(_activitiesCabinaDeSoporte,function(id){return activityId==id})){
+            
+            _setLocalStorageJsonItem('startedActivityCabinaDeSoporte', {datestarted:getdate(), coursemoduleid: treeActivity.coursemoduleid});                                
+        }
+        console.log('logStartSctivityAction Is working from dashboard');        
 
     },function(){
         console.log('Error callback');
@@ -1091,6 +1097,8 @@ var _activityRoutes = [
 
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
 var _activityBlocked = [];
+
+var _activitiesCabinaDeSoporte = [1002,2022,3501];
 
 //This array contains all activity IDs that will be used for navigation
 var _activityRouteIds = [
