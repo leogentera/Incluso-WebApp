@@ -52,7 +52,7 @@ angular
                 $location.path('/Chat');
             };
             if(finishCabinaSoporte && treeActivity.status != 1){
-               $scope.navigateToPage(2);
+               $scope.currentPage = 2;
                $scope.$emit('HidePreloader');            
             }                            
 

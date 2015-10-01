@@ -34,7 +34,7 @@ angular
                 $anchorScroll();
             } 
             else 
-            {
+            {                
                 moodleFactory.Services.GetUserChat(userId, getUserRefreshChatCallback, errorCallback);             
                 interval = setInterval(getMessages,60000);                    
                 console.log('creating interval:' + interval);
@@ -43,6 +43,7 @@ angular
 
 
             function getUserRefreshChatCallback() {
+                
             $scope.$emit('HidePreloader'); //hide preloader
                 $scope.messages = JSON.parse(localStorage.getItem('userChat'));
                 validateCabinaDeSoporte();
@@ -54,15 +55,16 @@ angular
 
 
             function validateCabinaDeSoporte(){                
-                //$scope.scrollToTop('anchor-bottom');                       
+                //$scope.scrollToTop('anchor-bottom');   
+                debugger;                    
                 var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
                     var isStarted = _startedActivityCabinaDeSoporte;
-                    var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.$data.moduleid, _usercourse);    
+                    var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);    
 
                         if (!currentActivity.status) {
-                            var rawDate = isStarted.$data.datestarted.split(/:|\s|:/);
+                            var rawDate = isStarted.datestarted.split(/:|\s|:/);
                             var dateStarted = new Date(rawDate[0], rawDate[1] - 1, rawDate[2], rawDate[3], rawDate[4], rawDate[5]);
                             var latestMessages =  _.filter($scope.messages, function(msg) { 
                                 return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
@@ -77,7 +79,7 @@ angular
                 }
             }            
 
-            function getMessages(){
+            function getMessages(){                
                 var existingInterval = localStorage.getItem('Interval');
                  if($location.$$path != "/Chat"){
                     //Necesitamos volver a poner en marcha el refresh de notificaciones del chat
