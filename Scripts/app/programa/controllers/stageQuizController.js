@@ -318,17 +318,9 @@ angular
                         var localAnswers;
 
                         if (childActivity) {
-                            //localAnswers = JSON.parse(_getItem("activityAnswers/" + parentActivity.activities[0].coursemoduleid));
                             localAnswers = JSON.parse(_getItem("activityAnswers/" + childActivity.coursemoduleid));
                         } else {
-                            //localAnswers = JSON.parse(_getItem("activityAnswers/" + activity.coursemoduleid));
                             localAnswers = JSON.parse(_getItem("activityAnswers/" + parentActivity.coursemoduleid));
-                        }
-
-                        if (childActivity) {
-                            console.log("localAnswers = " + localAnswers + " - " + parentActivity.coursemoduleid + " - " + childActivity.coursemoduleid);
-                        } else {
-                            console.log("localAnswers = " + localAnswers + " - " + parentActivity.coursemoduleid);
                         }
 
                         //If...the activity quiz has a checkbox for the "Other" answer, then get it from Local Storage
@@ -351,7 +343,6 @@ angular
 
                         $scope.activityFinished = activityFinished;
 
-                        //console.log("localAnswers : " + localAnswers);
                         if (localAnswers == null) {// If activity not exists in Local Storage...get it from Server
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
                         }
@@ -498,11 +489,7 @@ angular
             $scope.finishActivity = function () {
                 //Activity completed
 
-
-                //$scope.$parent.loading = true;
-
                 $scope.$emit("ShowPreloader");
-                console.log("Start preloader");
 
                 //This is to avoid killing the preloader up starting
                 $timeout(function () {
@@ -521,24 +508,13 @@ angular
                         $scope.activity_status = 1;
                         console.log("Update Activity Log : " + $scope.activity_identifier);
 
-                        if ($scope.childActivity) {
-                            //updateUserStars($scope.childActivity.activity_identifier);
-                        } else {
-                            //updateUserStars($scope.parentActivity.activity_identifier);
-                        }
-
                         updateUserStars($scope.parentActivity.activity_identifier);
                         //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
                     }
 
-                    //if ($scope.activity.activities) {
                     if ($scope.childActivity) {
-                        console.log("Assignment with Quiz child; coursemoduleid = " + $scope.childActivity.coursemoduleid);
-                        //$scope.AnswersResult.activityidnumber = $scope.activity.activities[0].coursemoduleid;
                         $scope.AnswersResult.activityidnumber = $scope.childActivity.coursemoduleid;
                     } else {
-                        console.log("This activity has no child; coursemoduleid = " + $scope.parentActivity.coursemoduleid);
-                        //$scope.AnswersResult.activityidnumber = $scope.activity.coursemoduleid;
                         $scope.AnswersResult.activityidnumber = $scope.parentActivity.coursemoduleid;
                     }
 
@@ -602,7 +578,6 @@ angular
                     }
 
                     console.log("Ending activity...");
-                    //if ($scope.activity.activities) {
 
                     if ($scope.childActivity) {
                         updateActivityStatusDictionary($scope.childActivity.activity_identifier);
@@ -614,7 +589,6 @@ angular
 
                     var activityModel = {
                         "usercourse": updatedActivityOnUsercourse,
-                        //"coursemoduleid": $scope.activity.coursemoduleid,
                         "answersResult": $scope.AnswersResult,
                         "userId": $scope.userprofile.id,
                         "startingTime": $scope.startingTime,
@@ -668,7 +642,6 @@ angular
                     } else {
                         activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
                         activityModel.activityType = "Quiz";
-                        //_endActivity(activityModel, null, destinationPath); //
 
                         _endActivity(activityModel, function () {
                             updateProfile();
@@ -676,13 +649,10 @@ angular
                     }
 
 
-                    //if ($scope.activity.activities) {
                     if ($scope.childActivity) {
-                        //_setLocalStorageJsonItem("activityAnswers/" + $scope.activity.activities[0].coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("activityAnswers/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("UserTalents/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
                     } else {
-                        //_setLocalStorageJsonItem("activityAnswers/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("activityAnswers/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("UserTalents/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
                     }
@@ -696,12 +666,9 @@ angular
                         $scope.activity_identifier == '3101' ||
                         $scope.activity_identifier == '3601')) {
 
-                        //if ($scope.activity.activities) {
                         if ($scope.childActivity) {
-                            //_setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.activities[0].coursemoduleid, $scope.OtroAnswer);
                             _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.childActivity.coursemoduleid, $scope.OtroAnswer);
                         } else {
-                            //_setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswer);
                             _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.parentActivity.coursemoduleid, $scope.OtroAnswer);
                         }
                     }
@@ -709,11 +676,9 @@ angular
 
                 }, 2000);
 
-
-
-
-
             };
+
+
 
             function updateProfile() {
 
