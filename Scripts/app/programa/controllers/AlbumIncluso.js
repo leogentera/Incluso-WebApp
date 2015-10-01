@@ -32,10 +32,10 @@ angular
         $scope.discussion = null;
         $scope.forumId = null;
         
-        var canvas = document.getElementById('canvas');
+        var canvas = document.createElement('canvas');
         var ctx = canvas.getContext("2d");
-        //canvas.width = 1280;
-        //canvas.height = 1329;
+        canvas.width = 1280;
+        canvas.height = 1329;
 
         
         $scope.$emit('ShowPreloader');
@@ -259,110 +259,189 @@ angular
         function generateAlbumImgSrc(callback) {
             
             if (albumSrc == null) {
-                var imgBackground = new Image();
+                var imgBackground = new Image(),
+                    imgAvatar = new Image();
                 
-                imgBackground.onload = function(){
+                imgBackground.onload = function() {
                     ctx.drawImage(imgBackground, 0, 0, 1280, 1329);
-                    
-                    // Shield
-                    ctx.translate(140, 515);
-                    ctx.rotate(0.01);
-                    ctx.font = '16px Calibri';
-                    ctx.fillStyle = 'white';
-                    wrapText(ctx, "mi es escudo es este ejemplo po rquefk  ", 0, 0, 200, 15);
                     ctx.restore();
                     
-                    // mis habilidades
-                    ctx.translate(60, 150);
-                    ctx.rotate(0.03);
-                    wrapText(ctx, "habilidad 1", 0, 0, 200, 15);
-        
-                    ctx.translate(0, 35);
-                    ctx.rotate(-0.01);
-                    wrapText(ctx, "habilidad 2", 0, 0, 200, 15);
+                    imgAvatar.onload = function() {
+                        /* Avatar */
+                        ctx.drawImage(imgAvatar, 170, 240, 210, 210);
+                        ctx.restore();
+                        
+                        /* Shield */
+                        ctx.font = '14px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "center";
+                        wrapText(ctx, "El escudo que me distingue es:", 270, 515, 200, 15);
+                        ctx.restore();
+                        
+                        ctx.font = '14px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#BCD431';
+                        ctx.textAlign = "center";
+                        var shield = $scope.album.shield;
+                        wrapText(ctx, shield.toUpperCase(), 270, 535, 200, 15);
+                        ctx.restore();
+                        
+                        /* Strengths */
+                        var strengthsTemp = $scope.album.myStrengths;
+                        var strengthsTempYPosition = 670;
+                        
+                        ctx.font = 'bold 17px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "center";
+                        for(var st = 0; st < strengthsTemp.length; st++) {
+                            wrapText(ctx, strengthsTemp[st], 270, strengthsTempYPosition, 200, 15);
+                            strengthsTempYPosition += 34;
+                        }
+                        ctx.restore();
+                        
+                        /* What I like */
+                        var whatILikeTemp = $scope.album.myLikes;
+                        var whatILikeTempYPosition = 905;
+                        
+                        ctx.font = 'bold 17px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "center";
+                        for(var wil = 0; wil < whatILikeTemp.length; wil++) {
+                            wrapText(ctx, whatILikeTemp[wil], 270, whatILikeTempYPosition, 200, 15);
+                            whatILikeTempYPosition += 34;
+                        }
+                        ctx.restore();
+                        
+                        /* Qualities */
+                        var qualitiesTemp = $scope.album.myAttributes;
+                        var qualitiesYPosition = 1130;
+                        
+                        ctx.font = 'bold 17px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "center";
+                        for(var qt = 0; qt < qualitiesTemp.length; qt++) {
+                            wrapText(ctx, qualitiesTemp[qt], 270, qualitiesYPosition, 200, 15);
+                            qualitiesYPosition += 34;
+                        }
+                        ctx.restore();
+                        
+                        /* What pushes me */
+                        var whatPushesMeTemp = $scope.album.myIdeas;
+                        var whatPushesMeYPosition = 260;
+                        
+                        ctx.font = 'bold 17px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "center";
+                        for(var wpm = 0; wpm < whatPushesMeTemp.length; wpm++) {
+                            wrapText(ctx, whatPushesMeTemp[wpm], 650, whatPushesMeYPosition, 200, 15);
+                            whatPushesMeYPosition += 34;
+                        }
+                        ctx.restore();
+                        
+                        /* My Dreams */
+                        var myDreamsMeTemp = $scope.album.myDreams;
+                        var myDreamsYPosition = 457;
+                        
+                        ctx.font = 'bold 17px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "center";
+                        for(var my = 0; my < myDreamsMeTemp.length; my++) {
+                            wrapText(ctx, myDreamsMeTemp[my], 650, myDreamsYPosition, 200, 15);
+                            myDreamsYPosition += 34;
+                        }
+                        ctx.restore();
+                        
+                        /* My Plans */
+                        var myPlansTemp = $scope.album.myPlans;
+                        var myPlansProps = ["oneYear", "threeYear", "fiveYear"];
+                        var myPlansYears = ["1 año.", "2 años.", "5 años."];
+                        var myPlansYPosition = 670;
+                        
+                        
+                        ctx.font = 'bold 17px Play,sans-serif,Arial';
+                        ctx.textAlign = "center";
+                        for(var mp = 0; mp < myPlansYears.length; mp++) {
+                            ctx.fillStyle = '#08B290';
+                            wrapText(ctx, myPlansYears[mp], 550, myPlansYPosition, 200, 15);
+                            ctx.fillStyle = '#FFF';
+                            wrapText(ctx, myPlansTemp[myPlansProps[mp]], 670, myPlansYPosition, 200, 15);
+                            myPlansYPosition += 34;
+                        }
+                        ctx.restore();
+                        
+                        /* My Goals */
+                        var myGoalsTemp = $scope.album.myGoals;
+                        var myGoalsYPosition = 867;
+                        
+                        ctx.font = 'bold 17px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "center";
+                        for(var mg = 0; mg < myGoalsTemp.length; mg++) {
+                            wrapText(ctx, myGoalsTemp[mg], 650, myGoalsYPosition, 270, 15);
+                            myGoalsYPosition += 34;
+                        }
+                        ctx.restore();
+                        
+                        /* Now I Know */
+                        var nowIKnowTemp = $scope.album.iKnowWhatIs;
+                        var nowIKnowYPosition = 1135;
+                        
+                        ctx.font = 'bold 17px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "center";
+                        for(var nik = 0; nik < nowIKnowTemp.length; nik++) {
+                            wrapText(ctx, nowIKnowTemp[nik], 650, nowIKnowYPosition, 200, 15);
+                            nowIKnowYPosition += 34;
+                        }
+                        ctx.restore();
+                        
+                        /* One of my projects */
+                        ctx.font = '14px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "center";
+                        wrapText(ctx, $scope.album.project != null ? $scope.album.project[0] : "", 1020, 280, 240, 15);
+                        ctx.restore();
+                        
+                        /* My participation */
+                        ctx.font = 'bold 14px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "center";
+                        
+                        ctx.fillStyle = '#8098A0';
+                        wrapText(ctx, "Comunidad.", 970, 455, 240, 15);
+                        
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "right";
+                        wrapText(ctx, $scope.album.amountOfCommunityPosts + " entradas", 1095, 455, 240, 15);
+                        
+                        ctx.fillStyle = '#8098A0';
+                        ctx.textAlign = "center";
+                        wrapText(ctx, "Foros.", 970, 490, 240, 15);
+                        
+                        ctx.fillStyle = '#FFF';
+                        ctx.textAlign = "right";
+                        wrapText(ctx, $scope.album.amountOfForumPosts + " entradas", 1075, 490, 240, 15);
+                        
+                        ctx.fillStyle = '#8098A0';
+                        ctx.textAlign = "center";
+                        wrapText(ctx, "Estrellas Ganadas", 1020, 540, 240, 15);
+                        
+                        ctx.font = 'bold 23px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#BCD431';
+                        var numberOfStars = $scope.album.starsEarned.toString();
+                        wrapText(ctx, numberOfStars.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"), 1015, 583, 210, 15);
+                        
+                        ctx.font = 'bold 14px Play,sans-serif,Arial';
+                        ctx.fillStyle = '#8098A0';
+                        wrapText(ctx, "Insignias Obtenidas", 1020, 620, 240, 15);
+                        ctx.restore();
+
+                        printBadge(1, 1, 1, callback);
+                    };
                     
-                    // lo que me gusta
-                    ctx.translate(0, 199);
-                    ctx.rotate(0.01);
-                    wrapText(ctx, "Musica", 0, 0, 200, 15);
-                    
-                    ctx.translate(0, 37);
-                    ctx.rotate(0.01);
-                    wrapText(ctx, "Deportes", 0, 0, 200, 15);
-                    
-                    // Mis cualidades
-                    ctx.translate(5, 190);
-                    ctx.rotate(0.01);
-                    wrapText(ctx, "Cualidad 1", 0, 0, 200, 15);
-                    
-                    ctx.translate(0, 37);
-                    ctx.rotate(0.01);
-                    wrapText(ctx, "Cualidad 2", 0, 0, 200, 15);
-                    ctx.restore();
-                    
-                    // Lo que me impulsa
-                    ctx.translate(320, -935);
-                    ctx.rotate(0);
-                    wrapText(ctx, "Mi Familia", 0, 0, 200, 15);
-                    
-                    ctx.translate(0, 37);
-                    ctx.rotate(0);
-                    wrapText(ctx, "Mi trabajo", 0, 0, 200, 15);
-                    
-                    // Mis sue�os
-                    ctx.translate(20, 170);
-                    ctx.rotate(-0.1);
-                    wrapText(ctx, "Trabajar", 0, 0, 200, 15);
-                    
-                    ctx.translate(0, 37);
-                    ctx.rotate(0);
-                    wrapText(ctx, "Ser el mejor", 0, 0, 200, 15);
-                    
-                    // Mis planes a futuro
-                    ctx.translate(20, 170);
-                    ctx.rotate(0);
-                    wrapText(ctx, "plan a futuro 1", 0, 0, 200, 15);
-                    
-                    ctx.translate(0, 37);
-                    ctx.rotate(0);
-                    wrapText(ctx, "plan a futuro 2", 0, 0, 200, 15);
-                    
-                    // Mis metas son
-                    ctx.translate(-40, 160);
-                    ctx.rotate(0);
-                    wrapText(ctx, "meta 1", 0, 0, 200, 15);
-                    
-                    ctx.translate(0, 37);
-                    ctx.rotate(0);
-                    wrapText(ctx, "meta 2", 0, 0, 200, 15);
-                    
-                    ctx.translate(0, 37);
-                    ctx.rotate(0);
-                    wrapText(ctx, "meta 3", 0, 0, 200, 15);
-                    
-                    ctx.translate(0, 33);
-                    ctx.rotate(0);
-                    wrapText(ctx, "meta 4", 0, 0, 200, 15);
-                    
-                    // ahora se que es
-                    ctx.translate(0, 160);
-                    ctx.rotate(0);
-                    wrapText(ctx, "ahora se que es 1", 0, 0, 200, 15);
-                    
-                    ctx.translate(0, 37);
-                    ctx.rotate(0);
-                    wrapText(ctx, "ahora se que es 2", 0, 0, 200, 15);
-                    ctx.restore();
-                    
-                    // Uno de mis proyectos es
-                    ctx.translate(350, -870);
-                    ctx.rotate(0);
-                    wrapText(ctx, "Uno de mis proyectos es tener muchos proyectos para nunca dejar de tener proyectos", 0, 0, 300, 15);
-                    debugger;
-                    printBadge(1, callback);
+                    imgAvatar.src = "assets/avatar/default.png";
                 };
                 
-                imgBackground.src = "assets/images/bg-share-album.jpg" + "?rnd=" + new Date().getTime();
+                imgBackground.src = "assets/images/bg-share-album.jpg";
                 
                 
             }else {
@@ -402,24 +481,55 @@ angular
         }
         
         
-        function printBadge(position, callback) {
+        function printBadge(position, column, row, callback) {
             var myBadges = $scope.album.badges;
             
             if (myBadges.length >= position) {
                 
                 var imgBadge = new Image();
                 imgBadge.onload = function() {
-                    ctx.drawImage(imgBadge, -30, 320, 80, 80);
+                    
+                    var positionX = 0;
+                    var positionY = 560 + (80 * row) + (10 * row);
+                    
+                    switch(column) {
+                        case 1:
+                            positionX = 885;
+                            break;
+                        case 2:
+                            positionX = 980;
+                            break;
+                        case 3:
+                            positionX = 1075;
+                            break;
+                    }
+                    
+                    ctx.drawImage(imgBadge, positionX, positionY, 80, 80);
                     
                     if (myBadges.length == position) {
                         albumSrc = canvas.toDataURL("image/png");
-                        //callback();
+                        callback();
                     }else {
-                        printBadge(position + 1, callback);
+                        
+                        var newColumn = 1;
+                        switch(column){
+                            case 1:
+                                newColumn = 2;
+                                break;
+                            case 2:
+                                newColumn = 3;
+                                break;
+                            case 3:
+                                newColumn = 1;
+                                row += 1;
+                                break;
+                        }
+                        
+                        printBadge(position + 1, newColumn, row, callback);
                     }
                 };
                 
-                imgBadge.src = "assets/images/badges/" + getFileName(myBadges[position - 1].id) + "?rnd=" + new Date().getTime();
+                imgBadge.src = "assets/images/badges/" + getFileName(myBadges[position - 1].id);
             }
         }
         
@@ -442,5 +552,4 @@ angular
 			}
 			context.fillText(line, x, y);
 		  }
-
     }]);
