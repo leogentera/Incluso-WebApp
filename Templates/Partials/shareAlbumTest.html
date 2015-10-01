@@ -4,236 +4,156 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Share Album</title>
-	<link href="../../assets/styles/dev-css.css" rel='stylesheet' type='text/css' />
-	<style type="text/css"></style>
-	<script src="../../Scripts/Plugins/html2canvas.js"></script>
 </head>
 
 <body class="incluso-app">
-	<article id="temp" class="social-share album unit-px">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<section class="album-asset avatar">
-						<div class="user-avatar">
-							<figure>
-								<img src="http://incluso.definityfirst.com/moodle/pluginfile.php/352/user/icon/f1" alt="Avatar" />
-							</figure>
-						</div>
-						<div class="user-shield">
-							<figure>
-								<img src="../../assets/images/badges/img-linguistica.svg" alt="">
-							</figure>
-						</div>
-					</section>
-					<section class="album-asset badge-distintion">
-						<p class="text-center">
-							<span class="center-block">El escudo que me distingue es:</span>
-							<span class="center-block">inteligencia lingüística</span>
-						</p>
-					</section>
-					<section class="album-asset habilities">
-						<ul class="block-list">
-							<li><p class="text-center">Musical</p></li>
-							<li><p class="text-center">Interpersonal</p></li>
-							<li><p class="text-center">Naturalista</p></li>
-						</ul>
-					</section>
-					<section class="album-asset preferences">
-						<ul class="block-list">
-							<li><p class="text-center">Tocar la batería</p></li>
-							<li><p class="text-center">Ir al cine con mi novia</p></li>
-							<li><p class="text-center">Jugar Fúbol</p></li>
-						</ul>						
-					</section>
-					<section class="album-asset qualities">
-						<ul class="block-list">
-							<li><p class="text-center">Amigable</p></li>
-							<li><p class="text-center">Responsable</p></li>
-							<li><p class="text-center">Inteligente</p></li>
-						</ul>							
-					</section>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<section class="album-asset impulse">
-						<ul class="block-list">
-							<li><p class="text-center">Mi Familia</p></li>
-							<li><p class="text-center">Mis Amigos</p></li>
-							<li><p class="text-center">Mis Padres</p></li>
-						</ul>
-					</section>
-					<section class="album-asset dreams">
-						<ul class="block-list">
-							<li><p class="text-center">Amigable</p></li>
-							<li><p class="text-center">Responsable</p></li>
-							<li><p class="text-center">Inteligente</p></li>
-						</ul>
-					</section>
-					<section class="album-asset plans">
-						<ul class="block-list">
-							<li><p class="text-center"><span>1 año. </span>Terminar estudios</p></li>
-							<li><p class="text-center"><span>2 años. </span>Comprar mi casa ideal</p></li>
-							<li><p class="text-center"><span>5 años. </span>Ser futbolista</p></li>
-						</ul>
-					</section>
-					<section class="album-asset goals">
-						<ul class="block-list">
-							<li><p class="text-center">Estudiar para mis exámenes</p></li>
-							<li><p class="text-center">Aplicar a entrevistas de trabajo</p></li>
-							<li><p class="text-center">Seguir con el fútbol</p></li>
-							<li><p class="text-center">Estabilidad económica</p></li>
-							<li><p class="text-center">Tener tiempo para mi</p></li>
-						</ul>
-					</section>
-					<section class="album-asset knowledge">
-						<ul class="block-list">
-							<li><p class="text-center">Ahorro</p></li>
-							<li><p class="text-center">Préstamo</p></li>
-							<li><p class="text-center">Inversión</p></li>
-						</ul>
-					</section>
-				</div>
-				<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-					<section class="album-asset project">
-						<p class="text-center">Seguir practicando fútbol y aplicar para las eliminatorias de selección de jugadores profesionales!</p>
-					</section>
-					<section class="album-asset participation">
-						<ul class="block-list">
-							<li><p class="text-center"><span>Comunidad. </span>34 entradas</p></li>
-							<li><p class="text-center"><span>Foros. </span>28 entradas</p></li>
-						</ul>
-						<div class="profile-data">
-							<h4 class="user-name">Estrellas ganadas</h4>
-							<p class="user-points">
-								<span class="ng-binding" ng-bind="model.stars">1,000,000</span>
-								<span class="icomoon icon-star"></span>
-							</p>
-							<h4>Insignias obtenidas</h4>
-							<div class="user-badges">
-								<div class="container-fluid">
-									<div class="row">
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-										<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-											<figure>
-												<img src="../../assets/images/badges/insignia-bloqueada.gif" />
-											</figure>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</section>
-				</div>
-			</div>
-		</div>
-	</article>
+	
+	<canvas id="canvas" width="1280" height="1390"></canvas>
+	
     <script>
-	    document.addEventListener("DOMContentLoaded", function(event) { 
-		 	html2canvas(document.getElementById("temp"), {
-	            onrendered: function(canvas) {
-	                // canvas is the final rendered <canvas> element
-	                document.body.appendChild(canvas);
-	                
-	                var img = new Image();
-	                img.src =  canvas.toDataURL("image/png");
-	                document.body.appendChild(img);
-	            }
-	        });
-		});
+	    var canvas = document.getElementById("canvas");
+		var ctx = canvas.getContext("2d");
+		
+		var img = new Image();
+		
+		
+		img.onload = function(){
+			ctx.drawImage(img, 0, 0);
+			
+			// Shield
+			ctx.translate(140, 515);
+			ctx.rotate(0.01);
+			ctx.font = '16px Calibri';
+			ctx.fillStyle = 'white';
+			wrapText(ctx, "mi es escudo es este ejemplo po rquefk  ", 0, 0, 200, 15);
+			ctx.restore();
+			
+			
+			// mis habilidades
+			ctx.translate(60, 150);
+			ctx.rotate(0.03);
+			wrapText(ctx, "habilidad 1", 0, 0, 200, 15);
+
+			
+			ctx.translate(0, 35);
+			ctx.rotate(-0.01);
+			wrapText(ctx, "habilidad 2", 0, 0, 200, 15);
+			
+			// lo que me gusta
+			ctx.translate(0, 199);
+			ctx.rotate(0.01);
+			wrapText(ctx, "Musica", 0, 0, 200, 15);
+			
+			ctx.translate(0, 37);
+			ctx.rotate(0.01);
+			wrapText(ctx, "Deportes", 0, 0, 200, 15);
+			
+			// Mis cualidades
+			ctx.translate(5, 190);
+			ctx.rotate(0.01);
+			wrapText(ctx, "Cualidad 1", 0, 0, 200, 15);
+			
+			ctx.translate(0, 37);
+			ctx.rotate(0.01);
+			wrapText(ctx, "Cualidad 2", 0, 0, 200, 15);
+			ctx.restore();
+			
+			// Lo que me impulsa
+			ctx.translate(320, -935);
+			ctx.rotate(0);
+			wrapText(ctx, "Mi Familia", 0, 0, 200, 15);
+			
+			ctx.translate(0, 37);
+			ctx.rotate(0);
+			wrapText(ctx, "Mi trabajo", 0, 0, 200, 15);
+			
+			// Mis sueños
+			ctx.translate(20, 170);
+			ctx.rotate(-0.1);
+			wrapText(ctx, "Trabajar", 0, 0, 200, 15);
+			
+			ctx.translate(0, 37);
+			ctx.rotate(0);
+			wrapText(ctx, "Ser el mejor", 0, 0, 200, 15);
+			
+			// Mis planes a futuro
+			ctx.translate(20, 170);
+			ctx.rotate(0);
+			wrapText(ctx, "plan a futuro 1", 0, 0, 200, 15);
+			
+			ctx.translate(0, 37);
+			ctx.rotate(0);
+			wrapText(ctx, "plan a futuro 2", 0, 0, 200, 15);
+			
+			// Mis metas son
+			ctx.translate(-40, 160);
+			ctx.rotate(0);
+			wrapText(ctx, "meta 1", 0, 0, 200, 15);
+			
+			ctx.translate(0, 37);
+			ctx.rotate(0);
+			wrapText(ctx, "meta 2", 0, 0, 200, 15);
+			
+			ctx.translate(0, 37);
+			ctx.rotate(0);
+			wrapText(ctx, "meta 3", 0, 0, 200, 15);
+			
+			ctx.translate(0, 33);
+			ctx.rotate(0);
+			wrapText(ctx, "meta 4", 0, 0, 200, 15);
+			
+			// ahora se que es
+			ctx.translate(0, 160);
+			ctx.rotate(0);
+			wrapText(ctx, "ahora se que es 1", 0, 0, 200, 15);
+			
+			ctx.translate(0, 37);
+			ctx.rotate(0);
+			wrapText(ctx, "ahora se que es 2", 0, 0, 200, 15);
+			ctx.restore();
+			
+			// Uno de mis proyectos es
+			ctx.translate(350, -870);
+			ctx.rotate(0);
+			wrapText(ctx, "Uno de mis proyectos es tener muchos proyectos para nunca dejar de tener proyectos", 0, 0, 300, 15);
+			
+			
+			var badge = new Image();
+			
+			badge.onload = function() {
+				
+				ctx.drawImage(badge, -30, 320, 80, 80);
+				console.log(canvas.toDataURL("image/png"));
+			};
+			badge.src = "../../assets/images/badges/insignias-radar.gif" + "?rnd=" + new Date().getTime();
+			//console.log(canvas.toDataURL("image/png"));
+		};
+		
+		img.src = "../../assets/images/bg-share-album.jpg" + "?rnd=" + new Date().getTime();
+		
+		function wrapText(context, text, x, y, maxWidth, lineHeight) {
+			var words = text.split(' ');
+			var line = '';
+	
+			for(var n = 0; n < words.length; n++) {
+			  var testLine = line + words[n] + ' ';
+			  var metrics = context.measureText(testLine);
+			  var testWidth = metrics.width;
+			  if (testWidth > maxWidth && n > 0) {
+				context.fillText(line, x, y);
+				line = words[n] + ' ';
+				y += lineHeight;
+			  }
+			  else {
+				line = testLine;
+			  }
+			}
+			context.fillText(line, x, y);
+		  }
+		
+		
+		
+
     </script>
 </body>
 </html>

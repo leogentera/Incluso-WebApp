@@ -254,15 +254,128 @@ angular
         function generateAlbumImgSrc(callback) {
             
             if (albumSrc == null) {
-                html2canvas(document.getElementById("share-mini-album"), {
-                    height: 1329,
-                    width: 1280,
-                    onrendered: function(canvas) {
-                        // canvas is the final rendered <canvas> element
+                
+                var canvas = document.getElementById("canvas");
+                var ctx = canvas.getContext("2d");
+                
+                var img = new Image();
+                
+                
+                img.onload = function(){
+                    ctx.drawImage(img, 0, 0, 1280, 1329);
+                    
+                    // Shield
+                    ctx.translate(140, 515);
+                    ctx.rotate(0.01);
+                    ctx.font = '16px Calibri';
+                    ctx.fillStyle = 'white';
+                    wrapText(ctx, "mi es escudo es este ejemplo po rquefk  ", 0, 0, 200, 15);
+                    ctx.restore();
+                    
+                    
+                    // mis habilidades
+                    ctx.translate(60, 150);
+                    ctx.rotate(0.03);
+                    wrapText(ctx, "habilidad 1", 0, 0, 200, 15);
+        
+                    
+                    ctx.translate(0, 35);
+                    ctx.rotate(-0.01);
+                    wrapText(ctx, "habilidad 2", 0, 0, 200, 15);
+                    
+                    // lo que me gusta
+                    ctx.translate(0, 199);
+                    ctx.rotate(0.01);
+                    wrapText(ctx, "Musica", 0, 0, 200, 15);
+                    
+                    ctx.translate(0, 37);
+                    ctx.rotate(0.01);
+                    wrapText(ctx, "Deportes", 0, 0, 200, 15);
+                    
+                    // Mis cualidades
+                    ctx.translate(5, 190);
+                    ctx.rotate(0.01);
+                    wrapText(ctx, "Cualidad 1", 0, 0, 200, 15);
+                    
+                    ctx.translate(0, 37);
+                    ctx.rotate(0.01);
+                    wrapText(ctx, "Cualidad 2", 0, 0, 200, 15);
+                    ctx.restore();
+                    
+                    // Lo que me impulsa
+                    ctx.translate(320, -935);
+                    ctx.rotate(0);
+                    wrapText(ctx, "Mi Familia", 0, 0, 200, 15);
+                    
+                    ctx.translate(0, 37);
+                    ctx.rotate(0);
+                    wrapText(ctx, "Mi trabajo", 0, 0, 200, 15);
+                    
+                    // Mis sueños
+                    ctx.translate(20, 170);
+                    ctx.rotate(-0.1);
+                    wrapText(ctx, "Trabajar", 0, 0, 200, 15);
+                    
+                    ctx.translate(0, 37);
+                    ctx.rotate(0);
+                    wrapText(ctx, "Ser el mejor", 0, 0, 200, 15);
+                    
+                    // Mis planes a futuro
+                    ctx.translate(20, 170);
+                    ctx.rotate(0);
+                    wrapText(ctx, "plan a futuro 1", 0, 0, 200, 15);
+                    
+                    ctx.translate(0, 37);
+                    ctx.rotate(0);
+                    wrapText(ctx, "plan a futuro 2", 0, 0, 200, 15);
+                    
+                    // Mis metas son
+                    ctx.translate(-40, 160);
+                    ctx.rotate(0);
+                    wrapText(ctx, "meta 1", 0, 0, 200, 15);
+                    
+                    ctx.translate(0, 37);
+                    ctx.rotate(0);
+                    wrapText(ctx, "meta 2", 0, 0, 200, 15);
+                    
+                    ctx.translate(0, 37);
+                    ctx.rotate(0);
+                    wrapText(ctx, "meta 3", 0, 0, 200, 15);
+                    
+                    ctx.translate(0, 33);
+                    ctx.rotate(0);
+                    wrapText(ctx, "meta 4", 0, 0, 200, 15);
+                    
+                    // ahora se que es
+                    ctx.translate(0, 160);
+                    ctx.rotate(0);
+                    wrapText(ctx, "ahora se que es 1", 0, 0, 200, 15);
+                    
+                    ctx.translate(0, 37);
+                    ctx.rotate(0);
+                    wrapText(ctx, "ahora se que es 2", 0, 0, 200, 15);
+                    ctx.restore();
+                    
+                    // Uno de mis proyectos es
+                    ctx.translate(350, -870);
+                    ctx.rotate(0);
+                    wrapText(ctx, "Uno de mis proyectos es tener muchos proyectos para nunca dejar de tener proyectos", 0, 0, 300, 15);
+                    
+                    
+                    var badge = new Image();
+                    
+                    badge.onload = function() {
+                        
+                        ctx.drawImage(badge, -30, 320, 80, 80);
                         albumSrc = canvas.toDataURL("image/png");
                         callback();
-                    }
-                });
+                    };
+                    badge.src = "assets/images/badges/insignias-radar.gif" + "?rnd=" + new Date().getTime();
+                };
+                
+                img.src = "assets/images/bg-share-album.jpg" + "?rnd=" + new Date().getTime();
+                
+                
             }else {
                 callback();   
             }
@@ -298,5 +411,25 @@ angular
                     }
                 );
         }
+        
+        function wrapText(context, text, x, y, maxWidth, lineHeight) {
+			var words = text.split(' ');
+			var line = '';
+	
+			for(var n = 0; n < words.length; n++) {
+			  var testLine = line + words[n] + ' ';
+			  var metrics = context.measureText(testLine);
+			  var testWidth = metrics.width;
+			  if (testWidth > maxWidth && n > 0) {
+				context.fillText(line, x, y);
+				line = words[n] + ' ';
+				y += lineHeight;
+			  }
+			  else {
+				line = testLine;
+			  }
+			}
+			context.fillText(line, x, y);
+		  }
 
     }]);
