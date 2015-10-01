@@ -72,14 +72,14 @@ angular
                 var request = {
                     "userid": $scope.user.id,
                     "alias": $scope.user.username,
-                    "actividad": $scope.multiplicaTuDineroActivity.name,
-                    "estrellas":$scope.stars,
+                    "actividad": "Multiplica tu dinero",
+                    "estrellas": "" + $scope.stars,
                     "pathImagenes":"",
                     "preguntas": [],
-                    "introduccion": $scope.multiplicaTuDineroActivity.description,/* Ready to implement once all the retros are given by client
-                    "retro_aprobado":(_.max($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
-                    "retro_regular":(_.find($scope.tuEligesActivities.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
-                    "retro_reprobado":(_.min($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext*/
+                    "introduccion": $scope.multiplicaTuDineroActivity.description,
+                    "retro_aprobado":(_.max($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
+                    "retro_regular":(_.find($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
+                    "retro_reprobado":(_.min($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
                 }
                 for (var i = 0; i < $scope.multiplicaTuDineroActivity.questions.length; i++) {
                     var currentQuestion = $scope.multiplicaTuDineroActivity.questions[i];
@@ -87,7 +87,7 @@ angular
                         "orden": i + 1,
                         "preguntaId": currentQuestion.id,
                         "pregunta": currentQuestion.question,
-                        "imagen":"imagen" + currentQuestion.id + ".jpg",
+                        "imagen": currentQuestion.tag + ".jpg",
                         "respuestas":[],
                         "retro_resp_correcta":"",
                         "retro_resp_incorrecta":""
@@ -192,7 +192,7 @@ angular
                         }
                     }
                 }
-                $location.path('/ZonaDeAterrizaje/Dashboard/3/0');
+                $location.path('/ZonaDeAterrizaje/Dashboard/3/2');
             }
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
@@ -217,11 +217,11 @@ angular
             }
 
             var failureGame = function (data){
-              $location.path('/ZonaDeAterrizaje/Dashboard/3/0');
+              $location.path('/ZonaDeAterrizaje/Dashboard/3/2');
             }
 
             $scope.back = function () {
-                $location.path('/ZonaDeAterrizaje/Dashboard/3/0');
+                $location.path('/ZonaDeAterrizaje/Dashboard/3/2');
             }
 
             Array.prototype.getIndexBy = function (name, value) {
