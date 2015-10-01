@@ -28,11 +28,18 @@ angular
             $scope.user = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.mapaDeEmprendedorActivities = moodleFactory.Services.GetCacheJson("mapaDeEmprendedorActivities");
-            $scope.mapaDeEmprendedorAnswers = moodleFactory.Services.GetCacheJson("mapaDeEmprendedorAnswers");
+            $scope.mapaDeEmprendedorAnswers = moodleFactory.Services.GetCacheJson("mapaDeEmprendedorAnswers/" + $scope.user.id);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var activitiesPosted = 0;
             $scope.stars = 0;
             $scope.isInstalled = false;
+
+            //Removes answers of any other user previously logged in
+            for(var key in localStorage){  
+                if(key.indexOf("mapaDeEmprendedorAnswers") > -1 && key.indexOf($scope.user.id) < 0){
+                    localStorage.removeItem(key);  
+                }
+            }
 
             if(!$routeParams.retry) {
                 try {
@@ -92,7 +99,7 @@ angular
                     $scope.mapaDeEmprendedorAnswers.push(data);
                     $scope.mapaDeEmprendedorAnswers[$scope.mapaDeEmprendedorAnswers.length-1]["coursemoduleid"] = activityId;
                     if ($scope.mapaDeEmprendedorAnswers.length == $scope.mapaDeEmprendedorActivities.length) {
-                        _setLocalStorageJsonItem("mapaDeEmprendedorAnswers", $scope.mapaDeEmprendedorAnswers);
+                        _setLocalStorageJsonItem("mapaDeEmprendedorAnswers/" + $scope.user.id, $scope.mapaDeEmprendedorAnswers);
                         $scope.$emit('HidePreloader');
                     };
                 });
@@ -218,7 +225,7 @@ angular
                     }
                     quizzesRequests.push(logEntry);
                 }
-                _setLocalStorageJsonItem("mapaDeEmprendedorAnswers", $scope.mapaDeEmprendedorAnswers);
+                _setLocalStorageJsonItem("mapaDeEmprendedorAnswers/" + $scope.user.id, $scope.mapaDeEmprendedorAnswers);
                                 
                 var quizzesAnswered = _.countBy($scope.mapaDeEmprendedorActivities, function(a){
                     if (a.questions) {
