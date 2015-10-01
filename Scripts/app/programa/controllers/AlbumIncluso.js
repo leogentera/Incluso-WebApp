@@ -31,6 +31,11 @@ angular
         
         $scope.discussion = null;
         $scope.forumId = null;
+        
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext("2d");
+        //canvas.width = 1280;
+        //canvas.height = 1329;
 
         
         $scope.$emit('ShowPreloader');
@@ -254,15 +259,10 @@ angular
         function generateAlbumImgSrc(callback) {
             
             if (albumSrc == null) {
+                var imgBackground = new Image();
                 
-                var canvas = document.getElementById("canvas");
-                var ctx = canvas.getContext("2d");
-                
-                var img = new Image();
-                
-                
-                img.onload = function(){
-                    ctx.drawImage(img, 0, 0, 1280, 1329);
+                imgBackground.onload = function(){
+                    ctx.drawImage(imgBackground, 0, 0, 1280, 1329);
                     
                     // Shield
                     ctx.translate(140, 515);
@@ -272,13 +272,11 @@ angular
                     wrapText(ctx, "mi es escudo es este ejemplo po rquefk  ", 0, 0, 200, 15);
                     ctx.restore();
                     
-                    
                     // mis habilidades
                     ctx.translate(60, 150);
                     ctx.rotate(0.03);
                     wrapText(ctx, "habilidad 1", 0, 0, 200, 15);
         
-                    
                     ctx.translate(0, 35);
                     ctx.rotate(-0.01);
                     wrapText(ctx, "habilidad 2", 0, 0, 200, 15);
@@ -360,20 +358,11 @@ angular
                     ctx.translate(350, -870);
                     ctx.rotate(0);
                     wrapText(ctx, "Uno de mis proyectos es tener muchos proyectos para nunca dejar de tener proyectos", 0, 0, 300, 15);
-                    
-                    
-                    var badge = new Image();
-                    
-                    badge.onload = function() {
-                        
-                        ctx.drawImage(badge, -30, 320, 80, 80);
-                        albumSrc = canvas.toDataURL("image/png");
-                        callback();
-                    };
-                    badge.src = "assets/images/badges/insignias-radar.gif" + "?rnd=" + new Date().getTime();
+                    debugger;
+                    printBadge(1, callback);
                 };
                 
-                img.src = "assets/images/bg-share-album.jpg" + "?rnd=" + new Date().getTime();
+                imgBackground.src = "assets/images/bg-share-album.jpg" + "?rnd=" + new Date().getTime();
                 
                 
             }else {
@@ -410,6 +399,28 @@ angular
                         $scope.$emit('HidePreloader');
                     }
                 );
+        }
+        
+        
+        function printBadge(position, callback) {
+            var myBadges = $scope.album.badges;
+            
+            if (myBadges.length >= position) {
+                
+                var imgBadge = new Image();
+                imgBadge.onload = function() {
+                    ctx.drawImage(imgBadge, -30, 320, 80, 80);
+                    
+                    if (myBadges.length == position) {
+                        albumSrc = canvas.toDataURL("image/png");
+                        //callback();
+                    }else {
+                        printBadge(position + 1, callback);
+                    }
+                };
+                
+                imgBadge.src = "assets/images/badges/" + getFileName(myBadges[position - 1].id) + "?rnd=" + new Date().getTime();
+            }
         }
         
         function wrapText(context, text, x, y, maxWidth, lineHeight) {
