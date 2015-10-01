@@ -464,6 +464,7 @@ var _updateRewardStatus = function () {
 }
 
 var logStartActivityAction = function(activityId, timeStamp){
+    if(activityId) return false;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     var treeActivity = getActivityByActivity_identifier(activityId, userCourse);
 
