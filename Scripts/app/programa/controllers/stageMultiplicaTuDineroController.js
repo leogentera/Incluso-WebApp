@@ -33,11 +33,22 @@ angular
             $scope.stars = 0;
             $scope.isInstalled = false;
 
-            try {
-              cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
-            }
-            catch (e) {
-                $scope.isInstalled = true;
+            if (!$routeParams.retry) {
+                try {
+                  cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+                }
+                catch (e) {
+                    $scope.isInstalled = true;
+                }
+            }else{
+                try {
+                    document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setMultiplicaTuDineroCallback", [])}, false);
+                }
+                catch (e) {
+                    successGame(
+                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuesta":529},{"preguntaId":129,"respuesta":534},{"preguntaId":130,"respuesta":536},{"preguntaId":133,"respuesta":545},{"preguntaId":137,"respuesta":557},{"preguntaId":139,"respuesta":563},{"preguntaId":140,"respuesta":567},{"preguntaId":142,"respuesta":573}]}
+                    );
+                }
             }
 
             if (!$scope.multiplicaTuDineroActivity) {
@@ -231,4 +242,5 @@ angular
                     }
                 }
             }
+
         }]);
