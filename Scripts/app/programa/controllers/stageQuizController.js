@@ -38,11 +38,6 @@ angular
                 "like_status": 0
             };
 
-            /*        //For storing responses in "Exploración Inicial"
-             $scope.AnswersResult = {
-             "answers": [null, [false, false, false, false, false, ''], [], null, []]
-             };
-             */
             $scope.exploracionInicialOtroAnswer = [{
                 "questionid": 47,
                 "answers": ['']
@@ -108,49 +103,8 @@ angular
             var destinationPath = "";
 
             $scope.isDisabled = false;
-            var moduleid = parseInt($routeParams.moodleid);  //Gets the coursemoduleid from 'activity' object
-            switch (moduleid) {
-                case 150:
-                    currentChallenge = 0;
-                    stage = "ZonaDeVuelo";
-                    break;
-                case 71:
-                    currentChallenge = 3;
-                    stage = "ZonaDeVuelo";
-                    break;
-                case 70:
-                    currentChallenge = 3;
-                    stage = "ZonaDeVuelo";
-                    break;
-                case 72:
-                    currentChallenge = 3;
-                    stage = "ZonaDeVuelo";
-                    break;
-                case 86:
-                    currentChallenge = 5;
-                    stage = "ZonaDeVuelo";
-                    break;
-                case 75: //Exploración Inicial - Etapa 2
-                    currentChallenge = 0;
-                    stage = "ZonaDeNavegacion";
-                    break;
-                case 169: //Tus Ideas (Hija: 159) - Etapa 2
-                    currentChallenge = 4;
-                    stage = "ZonaDeNavegacion";
-                    break;
-                case 82:  //1,3 y 5 (Hija: "") - Etapa 2
-                    currentChallenge = 1;
-                    stage = "ZonaDeNavegacion";
-                    break;
-                case 86: //Exploración Final - Etapa 2
-                    currentChallenge = 2;
-                    stage = "ZonaDeAterrizaje";
-                    break;
-                case 213:
-                    currentChallenge = 3;
-                    stage = "ZonaDeAterrizaje";
-                    break;
-            }
+            //var moduleid = parseInt($routeParams.moodleid);  //Gets the coursemoduleid from 'activity' object
+
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -165,7 +119,7 @@ angular
                         $timeout(function () {
                             $scope.$emit('HidePreloader');
                         }, 1000);
-                        //$scope.$emit('HidePreloader');
+                        $scope.$emit('HidePreloader');
                     });
             };
 
@@ -542,17 +496,18 @@ angular
 
 
             //******************************************** CODE CALLED WHEN USER FINISHES ACTIVITY ************************
-
             $scope.finishActivity = function () {
                 //Activity completed
+
+
+                $scope.$parent.loading = true;
                 console.log("Start preloader");
-                $scope.$emit('ShowPreloader');
+
                 //$scope.activity.status = 1;  //Update status of Assignment ("parent") activity
                 if ($scope.childActivity) {
                     $scope.parentActivity.status = 1;
                     $scope.childActivity.status = 1;
                 } else {
-                    console.log($scope.parentActivity.sectionname);
                     $scope.parentActivity.status = 1;
                 }
 
@@ -695,7 +650,6 @@ angular
                 if ($scope.childActivity) {
                     activityModel.coursemoduleid = $scope.childActivity.coursemoduleid;
                     activityModel.activityType = "Quiz";
-                    //_endActivity(activityModel, null, destinationPath); //
 
                     _endActivity(activityModel, function () {
                         updateProfile();
@@ -703,7 +657,6 @@ angular
 
                     activityModel.activityType = "Assign";
                     activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid; //
-                    //_endActivity(activityModel, null, destinationPath); //
 
                     _endActivity(activityModel, function () {
                         updateProfile();
@@ -731,7 +684,6 @@ angular
                     _setLocalStorageJsonItem("UserTalents/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
                 }
 
-                //_setLocalStorageJsonItem("UserTalents/" + $scope.activity.coursemoduleid, $scope.AnswersResult.answers);
 
                 //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
                 if (($scope.activity_identifier == '1001' ||
@@ -752,8 +704,6 @@ angular
                 }
 
                 //$scope.$emit('HidePreloader'); //hide preloader
-
-
             };
 
             function updateProfile() {
@@ -781,15 +731,20 @@ angular
                 }
 
                 $scope.userId = moodleFactory.Services.GetCacheObject("userId");
+
                 moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
                     function (responseData) {
                         console.log('Update profile successful...');
                         console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
+                        //$scope.$parent.loading = false;
+                        //emit('HidePreloader');
+                        //$scope.spinnerVar = false;
                         $location.path(destinationPath);
                     },
                     function (responseData) {
                         console.log('Update profile fail...');
+                        //$scope.spinnerVar = false;
                     });
             }
 

@@ -168,7 +168,6 @@
             $scope.$on('ShowPreloader', _showPreloader);
             $scope.$on('HidePreloader', _hidePreloader);
 
-
 			$scope.showNotification = function(){
 				
 				if ($scope.pageName == 'Notificaciones') {
@@ -182,7 +181,7 @@
 				$rootScope.totalNotifications = countNotificationsUnread.length;
 				return  countNotificationsUnread.length > 0;
 				}
-			}
+			};
 			
 			$scope.showChatNotification = function(){
 				var readChatNotification = localStorage.getItem('chatRead');				
@@ -232,7 +231,7 @@
             $scope.showRight = function(e) {
                 $scope.rightVisible = true;
                 e.stopPropagation();
-            }
+            };
 
             $rootScope.$on("documentClicked", _close);
             $rootScope.$on("escapePressed", _close);
