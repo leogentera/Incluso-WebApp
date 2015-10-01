@@ -464,37 +464,46 @@ var _updateRewardStatus = function () {
 }
 
 var logStartActivityAction = function(activityId, timeStamp){
-    if(activityId) return false;
+    if( Number(activityId) == 50000 || typeof activityId == null){
+        return false;
+    } else{
 
-    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-    var treeActivity = getActivityByActivity_identifier(activityId, userCourse);
 
-    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-    var data = {
-        userid: currentUser.userId,
-        datestarted: timeStamp,
-        moduleid: treeActivity.coursemoduleid,
-        updatetype: 0
-    };
+        var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+        var treeActivity = getActivityByActivity_identifier(activityId, userCourse);
 
-    treeActivity.started = 1;
-    treeActivity.datestarted = data.datestarted;
-    _setLocalStorageJsonItem('usercourse', userCourse);
+        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+        var data = {
+            userid: currentUser.userId,
+            datestarted: timeStamp,
+            moduleid: treeActivity.coursemoduleid,
+            updatetype: 0
+        };
 
-    moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {
+        treeActivity.started = 1;
+        treeActivity.datestarted = data.datestarted;
+        _setLocalStorageJsonItem('usercourse', userCourse);
 
-        var triggerActivity = 1;
-        _createNotification(treeActivity.coursemoduleid, triggerActivity);
-        
-        if(_.find(_activitiesCabinaDeSoporte,function(id){return activityId==id})){
-            
-            _setLocalStorageJsonItem('startedActivityCabinaDeSoporte', {datestarted:getdate(), coursemoduleid: treeActivity.coursemoduleid});                                
-        }
-        console.log('logStartSctivityAction Is working from dashboard');        
+        moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {
 
-    },function(){
-        console.log('Error callback');
-    });
+            var triggerActivity = 1;
+            _createNotification(treeActivity.coursemoduleid, triggerActivity);
+
+            if (_.find(_activitiesCabinaDeSoporte, function (id) {
+                    return activityId == id
+                })) {
+
+                _setLocalStorageJsonItem('startedActivityCabinaDeSoporte', {
+                    datestarted: getdate(),
+                    coursemoduleid: treeActivity.coursemoduleid
+                });
+            }
+            console.log('logStartSctivityAction Is working from dashboard');
+
+        }, function () {
+            console.log('Error callback');
+        });
+    }
 }
 
 
