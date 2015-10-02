@@ -134,7 +134,9 @@
               <span class="icomoon icon-comment"></span> Comentar              
             </div>
           </div>
-
+          <div ng-click="reportModalClick(p.post_id)">
+            <span class="icomoon icon-pinch"></span> Reportar
+          </div>
         </div>
         <section class="modales">
             <!--<div id="openModal1" class="modalDialog" collapse="isCommentModalCollapsed[p.post_id]">-->
@@ -144,6 +146,22 @@
                     <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
 
                     <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
+                </div>
+            </div>
+            <div id="openModal5" class="modalDialog reportModal" ng-show="isReportedAbuseModalCollapsed['id' + p.post_id]">
+                <div>
+                    <a title="close" class="close"></a>
+                    <div class="add">¿Reportar contenido abusivo?</div>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="reportPost(p.post_id)">Si</a>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="isReportedAbuseModalCollapsed['id' + p.post_id] = false">No</a>
+                </div>
+            </div>
+              
+            <div id="openModal6" class="modalDialog reportModal" ng-show="isReportedAbuseSentModalCollapsed['id' + p.post_id]">
+                <div>
+                    <a title="close" class="close"></a>
+                    <div class="add">El contenido ha sido reportado exitosamente.</div>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="isReportedAbuseSentModalCollapsed['id' + p.post_id] = false">Ok</a>
                 </div>
             </div>
          </section>

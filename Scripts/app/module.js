@@ -141,6 +141,7 @@
         ///////// Stage 3 //////////
         $http.get('Templates/ZonaDeAterrizaje/dashboard.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html', {cache: $templateCache });
 
          document.addEventListener("keyup", function(e) {
@@ -656,6 +657,11 @@
 
         $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/:moodleid/:retry', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html',
+            controller: 'stageMultiplicaTuDineroController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/ResultadosMultiplicaTuDinero', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html',
             controller: 'stageMultiplicaTuDineroController'
         });
 
