@@ -96,9 +96,9 @@ angular
                                   //$location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                                   $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                               } else if(activityId == 2030 || activityId == 2026){
-                                  $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                                  $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                               } else if(activityId == 3304 || activityId == 3404){
-                                  $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                                  $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                               }
 
                           }, errorCallback);
@@ -106,11 +106,11 @@ angular
                     function(){
                         var activityId = Number($routeParams.activityId);
                         if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
-                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                         } else if(activityId == 2030 || activityId == 2026){
-                            $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                            $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                         } else if(activityId == 3304 || activityId == 3404){
-                            $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                            $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                         }
                     });
 
