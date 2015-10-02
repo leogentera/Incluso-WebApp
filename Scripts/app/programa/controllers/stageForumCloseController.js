@@ -14,7 +14,6 @@ angular
             _httpFactory = $http;
             _timeout = $timeout;
 
-            $scope.currentChallenge = 2;
              var userCourse = JSON.parse(localStorage.getItem('usercourse'));
             var parentActivity = getActivityByActivity_identifier($routeParams.activityId, userCourse);
             var activityFromTree;
@@ -82,22 +81,22 @@ angular
                               profile.stars = Number(profile.stars) + Number(activityFromTree.points);
                               _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),profile);
                               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
-                              //$scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                               var extraPointsCounter = getForumsExtraPointsCounter();
                               var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.forumId == $scope.activity.forumid; });
                               var extraPoints = currentDiscussionCounter? extraPoints = currentDiscussionCounter.extra_replies_counter : extraPoints = 0;
                               extraPoints *= 50;
-                              //updateUserStars($routeParams.activityId);
+
                               updateUserStars($routeParams.activityId, extraPoints);
 
                               $scope.$emit('HidePreloader');
                               var activityId = Number($routeParams.activityId);
+
                               if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
-                                  $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                                  $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                               } else if(activityId == 2030 || activityId == 2026){
-                                  $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                                  $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                               } else if(activityId == 3304 || activityId == 3404){
-                                  $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                                  $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                               }
 
                           }, errorCallback);
@@ -105,11 +104,11 @@ angular
                     function(){
                         var activityId = Number($routeParams.activityId);
                         if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
-                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                         } else if(activityId == 2030 || activityId == 2026){
-                            $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                            $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                         } else if(activityId == 3304 || activityId == 3404){
-                            $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
+                            $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                         }
                     });
 
@@ -117,7 +116,8 @@ angular
 
 
             $scope.finishActivity = function () {
-                var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+                var moodleId;
+                $routeParams.activityId == 1049? moodleId =$routeParams.moodleId : moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 endForumActivity(moodleId);
             }
 
