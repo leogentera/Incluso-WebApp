@@ -116,7 +116,8 @@ angular
 
 
             $scope.finishActivity = function () {
-                var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+                var moodleId;
+                $routeParams.activityId == 1049? moodleId =$routeParams.moodleId : moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 endForumActivity(moodleId);
             }
 

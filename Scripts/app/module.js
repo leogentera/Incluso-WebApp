@@ -361,7 +361,7 @@
             controller: 'stageGameRetoMultipleResultsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId/:extraPoints', {
+        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId/:extraPoints/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
