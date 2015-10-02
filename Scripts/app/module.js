@@ -661,7 +661,7 @@
         });
 
         $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/ResultadosMultiplicaTuDinero', {
-            templateUrl: 'Templates/ZonaDeNavegacion/TuElijes/MultiplicaTuDineroResults.html',
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html',
             controller: 'stageMultiplicaTuDineroController'
         });
 
