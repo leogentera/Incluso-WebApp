@@ -464,7 +464,7 @@ var _updateRewardStatus = function () {
 }
 
 var logStartActivityAction = function(activityId, timeStamp){
-    if( Number(activityId) == 50000 || typeof activityId == null){
+    if( Number(activityId) == 50000 || activityId == 'null'){
         return false;
     } else{
 
@@ -636,6 +636,32 @@ function getActivityByActivity_identifier(activity_identifier, usercourse) {
             break;
     }
     return matchingActivity;
+}
+
+function getChallengeByActivity_identifier(activity_identifier, usercourse) {
+    var matchingActivity = null;
+    var breakAll = false;
+    var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
+    for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+        var stage = userCourse.stages[stageIndex];
+        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+            var challenge = stage.challenges[challengeIndex];
+            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                var activity = challenge.activities[activityIndex];
+                //console.log(activity.activity_identifier + " : " + activity);
+                if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
+                    matchingChallengeIndex = challengeIndex;
+                    breakAll = true;
+                    break;
+                }
+            }
+            if (breakAll)
+                break;
+        }
+        if (breakAll)
+            break;
+    }
+    return matchingChallengeIndex;
 }
 
 function _getActivityByCourseModuleId(coursemoduleid, usercourse) {

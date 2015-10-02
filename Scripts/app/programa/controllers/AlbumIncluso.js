@@ -438,7 +438,12 @@ angular
                         printBadge(1, 1, 1, callback);
                     };
                     
-                    imgAvatar.src = "assets/avatar/default.png";
+                    var avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
+                    if(avatarInfo != null && avatarInfo.pathimagen != null) {
+                        imgAvatar.src = "assets/avatar/" + avatarInfo.pathimagen;
+                    }else {
+                        imgAvatar.src = "assets/avatar/default.png";
+                    }
                 };
                 
                 imgBackground.src = "assets/images/bg-share-album.jpg";
@@ -479,6 +484,11 @@ angular
                     }
                 );
         }
+        
+        $scope.shareAlbumClick = function() {
+            $scope.isShareCollapsed = !$scope.isShareCollapsed;
+            $scope.showSharedAlbum = false;
+        };
         
         
         function printBadge(position, column, row, callback) {

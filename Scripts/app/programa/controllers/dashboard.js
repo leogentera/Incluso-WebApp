@@ -194,9 +194,9 @@
                                                         
             function getCurrentStage(){
                 var currentStage = 1;
-
-                for(var i = 0; i < $scope.usercourse.stages.length; i++) {
-                    var uc = $scope.usercourse.stages[i];
+                var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+                for(var i = 0; i < userCourse.stages.length; i++) {
+                    var uc = userCourse.stages[i];
                     _setLocalStorageJsonItem("stage", uc);
                     $scope.stage = uc;
                     
@@ -207,7 +207,7 @@
                     currentStage++;
                 }
 
-                if(currentStage == $scope.usercourse.stages.length){
+                if(currentStage == userCourse.stages.length){
                     currentStage--;
                 }
                 return currentStage;
