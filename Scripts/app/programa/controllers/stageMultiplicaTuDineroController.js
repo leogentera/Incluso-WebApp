@@ -90,7 +90,7 @@ angular
                     "estrellas": "" + $scope.stars,
                     "pathImagenes":"",
                     "preguntas": [],
-                    "introduccion": $scope.multiplicaTuDineroActivity.description,
+                    "introducción": $scope.multiplicaTuDineroActivity.description,
                     "retro_aprobado":(_.max($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
                     "retro_regular":(_.find($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
                     "retro_reprobado":(_.min($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
