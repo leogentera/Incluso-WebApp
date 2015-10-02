@@ -72,7 +72,7 @@ angular
                     }
                 }
             }else{
-                $scope.emit('HidePreloader');
+                $scope.$emit('HidePreloader');
             }
 
             function assignCourseModuleId(asyncRequest, data){
