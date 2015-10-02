@@ -80,6 +80,7 @@ angular
 
                               profile.stars = Number(profile.stars) + Number(activityFromTree.points);
                               _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),profile);
+                              $routeParams.activityId == 1049? moodleid =$routeParams.moodleId : moodleid = getMoodleIdFromTreeActivity($routeParams.activityId);
                               $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
                               var extraPointsCounter = getForumsExtraPointsCounter();
                               var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.forumId == $scope.activity.forumid; });
@@ -116,8 +117,7 @@ angular
 
 
             $scope.finishActivity = function () {
-                var moodleId;
-                $routeParams.activityId == 1049? moodleId =$routeParams.moodleId : moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+                var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 endForumActivity(moodleId);
             }
 
