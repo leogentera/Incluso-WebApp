@@ -464,30 +464,46 @@ var _updateRewardStatus = function () {
 }
 
 var logStartActivityAction = function(activityId, timeStamp){
-    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-    var treeActivity = getActivityByActivity_identifier(activityId, userCourse);
+    if( Number(activityId) == 50000 || activityId == 'null'){
+        return false;
+    } else{
 
-    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-    var data = {
-        userid: currentUser.userId,
-        datestarted: timeStamp,
-        moduleid: treeActivity.coursemoduleid,
-        updatetype: 0
-    };
 
-    treeActivity.started = 1;
-    treeActivity.datestarted = data.datestarted;
-    _setLocalStorageJsonItem('usercourse', userCourse);
+        var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+        var treeActivity = getActivityByActivity_identifier(activityId, userCourse);
 
-    moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {
+        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+        var data = {
+            userid: currentUser.userId,
+            datestarted: timeStamp,
+            moduleid: treeActivity.coursemoduleid,
+            updatetype: 0
+        };
 
-        var triggerActivity = 1;
-        _createNotification(treeActivity.coursemoduleid, triggerActivity);
-        console.log('logStartSctivityAction Is working from dashboard');
+        treeActivity.started = 1;
+        treeActivity.datestarted = data.datestarted;
+        _setLocalStorageJsonItem('usercourse', userCourse);
 
-    },function(){
-        console.log('Error callback');
-    });
+        moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {
+
+            var triggerActivity = 1;
+            _createNotification(treeActivity.coursemoduleid, triggerActivity);
+
+            if (_.find(_activitiesCabinaDeSoporte, function (id) {
+                    return activityId == id
+                })) {
+
+                _setLocalStorageJsonItem('startedActivityCabinaDeSoporte', {
+                    datestarted: getdate(),
+                    coursemoduleid: treeActivity.coursemoduleid
+                });
+            }
+            console.log('logStartSctivityAction Is working from dashboard');
+
+        }, function () {
+            console.log('Error callback');
+        });
+    }
 }
 
 
@@ -1091,6 +1107,8 @@ var _activityRoutes = [
 
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
 var _activityBlocked = [];
+
+var _activitiesCabinaDeSoporte = [1002,2022,3501];
 
 //This array contains all activity IDs that will be used for navigation
 var _activityRouteIds = [
