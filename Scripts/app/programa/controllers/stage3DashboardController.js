@@ -9,7 +9,8 @@ angular
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+        '$filter',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
             /* $routeParams.stageId */
             _timeout = $timeout;
             _httpFactory = $http;
