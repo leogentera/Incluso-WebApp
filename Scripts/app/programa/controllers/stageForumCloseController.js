@@ -14,7 +14,6 @@ angular
             _httpFactory = $http;
             _timeout = $timeout;
 
-            $scope.currentChallenge = 2;
              var userCourse = JSON.parse(localStorage.getItem('usercourse'));
             var parentActivity = getActivityByActivity_identifier($routeParams.activityId, userCourse);
             var activityFromTree;
@@ -93,7 +92,6 @@ angular
                               var activityId = Number($routeParams.activityId);
 
                               if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
-                                  //$location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                                   $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                               } else if(activityId == 2030 || activityId == 2026){
                                   $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
