@@ -1,7 +1,8 @@
 //global variables
 
-var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";
-//var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}";
+//var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";          // Old
+var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
+//var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}"; //Other
 
 
 var _courseId = 4;
