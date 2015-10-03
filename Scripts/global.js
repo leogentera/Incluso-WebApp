@@ -464,7 +464,7 @@ var _updateRewardStatus = function () {
 }
 
 var logStartActivityAction = function(activityId, timeStamp){
-    if( Number(activityId) == 50000 || activityId == 'null'){
+    if( Number(activityId) == 50000 || activityId == 'null' || !activityId){
         return false;
     } else{
 
