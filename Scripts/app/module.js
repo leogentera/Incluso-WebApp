@@ -660,7 +660,7 @@
             controller: 'stageMultiplicaTuDineroController'
         });
 
-        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/ResultadosMultiplicaTuDinero', {
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html',
             controller: 'stageMultiplicaTuDineroController'
         });
