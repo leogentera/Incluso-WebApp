@@ -547,15 +547,11 @@
                         div{
                             display: inline-flex;
                             justify-content: space-around;
-                            padding: 3% 2%;
-                            width: 32.5%;
+                            padding: 3% 5%;
+                            width: 49%;
                             font-size:80%;
                             color: #08B190;
                             cursor: pointer;
-                            span {
-                                font-size: 5vw;
-                                padding: 0;
-                            }
                             &:nth-child(1){
                                 border-right: 2px solid rgba(255, 255, 255, 0.08);
                                 color:#08B190;
@@ -571,17 +567,6 @@
                                     color:#E80D81;
                                     margin: 0;
                                     padding:0;
-                                }
-                            }
-                            &:nth-child(3){
-                                border-right: 2px solid rgba(255, 255, 255, 0.08);
-                            }
-
-                            &:last-child{
-                                color: #dc300a;
-
-                                span {
-                                    color: #dc300a;
                                 }
                             }
                         }
@@ -2652,8 +2637,7 @@
             }
             .container{
                 padding: 2vh 6vw;
-                background-color: @clr-white;
-                margin-bottom: 4vh;
+                   background-color: @clr-white;
                    .border-radius(9px);
                     section {
                         .add {                            
@@ -2664,7 +2648,7 @@
                             border-bottom: 2px solid @clr-gray-platinum;
                             .icon-edit {                                
                                 position: relative;
-                                top: -16vw;
+                                top: -12vw;
                                 font-size: 80%;
                                 padding-left: 0px;
                                 padding-right: 1vw;
@@ -2674,6 +2658,7 @@
                                 width: 89%;
                                 height: 12vh;
                                 padding: 1.5vh 0px;
+                                
                                 resize: none;
                                 color: @clr-gray-platinum;
                                 font-size: 4.5vw;
@@ -2685,7 +2670,7 @@
                             .media-list {
                                 display: inline-block;
                                 width: 100%;
-                                padding: 2.5vh 0 .5vh 0;
+                                padding: 2.5vh 0px;
                                 clear: both;
                                 border-top: 2px solid @clr-gray-platinum;
                                 border-bottom: 2px solid @clr-gray-platinum;
@@ -2695,17 +2680,16 @@
                                     max-width: 31%;
                                     max-height: 11vh;
                                     margin-right: 1vh;
-                                    margin-bottom: 2vh;
                                     img {        
                                         
                                         .border-radius(6px);
                                     }
                                     .btn-circle {
                                         position: absolute;
-                                        width: 6vw;
-                                        height: 6vw;
-                                        margin: -0.5vh 0 0 17.5%;
-                                        padding: 1.1vw;
+                                        width: 8vw;
+                                        height: 8vw;
+                                        margin: -1vh 0px 0px 17%;
+                                        padding: 1.5vw;
                                         border: 0px none;
                                         .icon-cross {
                                             font-size: 2.7vw;
@@ -2715,13 +2699,11 @@
                                 }
                             }
                             .btn-add {
-                                border: 2px dashed;
-                                border-radius: 3vw;
                                 padding: 2vh 2vw;
                                 letter-spacing: 0vw;
                                 font-size: 4.8vw;
                                 line-height: 5vw;
-                                .icon-plus {
+                                .icon-plus{
                                     margin-right: 1vw;
                                 }
                             }
