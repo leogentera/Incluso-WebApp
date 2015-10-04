@@ -462,6 +462,49 @@ var _updateRewardStatus = function () {
     localStorage.setItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
 }
 
+var logStartActivityAction = function(activityId, timeStamp){
+    if( Number(activityId) == 50000 || activityId == 'null' || !activityId){
+        return false;
+    } else{
+
+
+        var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+        var treeActivity = getActivityByActivity_identifier(activityId, userCourse);
+
+        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+        var data = {
+            userid: currentUser.userId,
+            datestarted: timeStamp,
+            moduleid: treeActivity.coursemoduleid,
+            updatetype: 0
+        };
+
+        treeActivity.started = 1;
+        treeActivity.datestarted = data.datestarted;
+        _setLocalStorageJsonItem('usercourse', userCourse);
+
+        moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {
+
+            var triggerActivity = 1;
+            _createNotification(treeActivity.coursemoduleid, triggerActivity);
+
+            if (_.find(_activitiesCabinaDeSoporte, function (id) {
+                    return activityId == id
+                })) {
+
+                _setLocalStorageJsonItem('startedActivityCabinaDeSoporte', {
+                    datestarted: getdate(),
+                    coursemoduleid: treeActivity.coursemoduleid
+                });
+            }
+            console.log('logStartSctivityAction Is working from dashboard');
+
+        }, function () {
+            console.log('Error callback');
+        });
+    }
+}
+
 
 var _createNotification = function (activityId, triggerActivity) {
 
@@ -592,6 +635,32 @@ function getActivityByActivity_identifier(activity_identifier, usercourse) {
             break;
     }
     return matchingActivity;
+}
+
+function getChallengeByActivity_identifier(activity_identifier, usercourse) {
+    var matchingActivity = null;
+    var breakAll = false;
+    var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
+    for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+        var stage = userCourse.stages[stageIndex];
+        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+            var challenge = stage.challenges[challengeIndex];
+            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                var activity = challenge.activities[activityIndex];
+                //console.log(activity.activity_identifier + " : " + activity);
+                if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
+                    matchingChallengeIndex = challengeIndex;
+                    breakAll = true;
+                    break;
+                }
+            }
+            if (breakAll)
+                break;
+        }
+        if (breakAll)
+            break;
+    }
+    return matchingChallengeIndex;
 }
 
 function _getActivityByCourseModuleId(coursemoduleid, usercourse) {
@@ -831,7 +900,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
     extraPoints ? '' : extraPoints = 0;
-debugger;
+
     var stars = 0;
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
@@ -1063,6 +1132,8 @@ var _activityRoutes = [
 
 //This OBJECT is loaded with a flag indicating whether the link to an activity should be enabled or disabled. Each property is named with the activity ID.
 var _activityBlocked = [];
+
+var _activitiesCabinaDeSoporte = [1002,2022,3501];
 
 //This array contains all activity IDs that will be used for navigation
 var _activityRouteIds = [

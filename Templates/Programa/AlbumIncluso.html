@@ -10,7 +10,7 @@
                         <div class=" txt-renglon centered">
                             <div ng-bind-html="message"></div>
                         </div>
-                        <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}" ng-show="false">
+                        <a class="btn btn-icon-aside light centered" ng-click="shareAlbumClick()" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
                             </div>
@@ -27,7 +27,7 @@
                             <div>
                               <a title="close" class="close"></a>
                               <div class="add">Has compartido tú album.</div>
-                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>
+                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000', '', '5000')">Ir a Comunidad</a>
                               <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>
                             </div>
                         </div>
@@ -96,17 +96,25 @@
                         <div class=" txt-renglon centered">
                             <div ng-bind-html="message"></div>
                         </div>
-                        <a class="btn btn-icon-aside light centered" ng-show="false">
+                        <a class="btn btn-icon-aside light centered" ng-click="shareAlbumClick()" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
                             </div>
                             <span>Compartir mi album</span>
                             <span class="arrow-up"></span>
                         </a>
-                        <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
+                        <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed" ng-show="hasCommunityAccess">
                             <div>
-                                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+                                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>
+                            </div>
+                        </div>
+                        <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess">
+                            <div>
+                              <a title="close" class="close"></a>
+                              <div class="add">Has compartido tú album.</div>
+                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>
+                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>
                             </div>
                         </div>
                     </section>
@@ -198,17 +206,25 @@
                         <div class=" txt-renglon centered">
                             <div ng-bind-html="message"></div>
                         </div>
-                        <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}" ng-show="false">
+                        <a class="btn btn-icon-aside light centered" ng-click="shareAlbumClick()" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
                             </div>
                             <span>Compartir mi album</span>
                             <span class="arrow-up"></span>
                         </a>
-                        <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
+                        <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed" ng-show="hasCommunityAccess">
                             <div>
-                                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+                                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>
+                            </div>
+                        </div>
+                        <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess && isShareCollapsed">
+                            <div>
+                              <a title="close" class="close"></a>
+                              <div class="add">Has compartido tú album.</div>
+                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>
+                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>
                             </div>
                         </div>
                     </section>
@@ -310,17 +326,25 @@
                         <div class=" txt-renglon centered">
                             <div ng-bind-html="message"></div>
                         </div>
-                        <a class="btn btn-icon-aside light centered" ng-click="isShareCollapsed = !isShareCollapsed" ng-class="{'active': isShareCollapsed}" ng-show="false">
+                        <a class="btn btn-icon-aside light centered" ng-click="shareAlbumClick()" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
                             </div>
                             <span>Compartir mi album</span>
                             <span class="arrow-up"></span>
                         </a>
-                        <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed">
+                        <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed" ng-show="hasCommunityAccess">
                             <div>
-                                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+                                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>
+                            </div>
+                        </div>
+                        <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess && isShareCollapsed">
+                            <div>
+                              <a title="close" class="close"></a>
+                              <div class="add">Has compartido tú album.</div>
+                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>
+                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>
                             </div>
                         </div>
                     </section>

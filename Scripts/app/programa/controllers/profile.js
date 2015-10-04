@@ -29,11 +29,12 @@ angular
             
             $scope.setToolbar($location.$$path, "");
             $scope.currentPage = 1;
-            $rootScope.showFooter = true;
+            $rootScope.showFooter = false;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+			$rootScope.showProfileFooter = false;
             $scope.status = "";
             $scope.shareAchievementMessage = "";
             $scope.showShareAchievementMessage = false;

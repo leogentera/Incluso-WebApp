@@ -9,7 +9,8 @@ angular
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+        '$filter',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
             /* $routeParams.stageId */
             _timeout = $timeout;
             _httpFactory = $http;
@@ -245,6 +246,9 @@ angular
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
 
                 if (url) {
+                    var activityId = activity.activity_identifier;
+                    var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
+                    logStartActivityAction(activityId, timeStamp);
                     $location.path(url);
                 }
             };

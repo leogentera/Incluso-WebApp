@@ -141,6 +141,7 @@
         ///////// Stage 3 //////////
         $http.get('Templates/ZonaDeAterrizaje/dashboard.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html', {cache: $templateCache });
 
          document.addEventListener("keyup", function(e) {
@@ -360,7 +361,7 @@
             controller: 'stageGameRetoMultipleResultsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId/:extraPoints', {
+        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId/:extraPoints/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -654,12 +655,27 @@
             controller: 'stageMultiplicaTuDineroController'
         });
 
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/:moodleid/:retry', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html',
+            controller: 'stageMultiplicaTuDineroController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html',
+            controller: 'stageMultiplicaTuDineroController'
+        });
+
         $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/FuenteDeEnergia.html',
             controller: 'stageContentsController'
         });
 
         $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/:moodleid', {              
+            templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html',               
+            controller: 'stageMapaDelEmprendedorController'             
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor/:moodleid/:retry', {              
             templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html',               
             controller: 'stageMapaDelEmprendedorController'             
         });
@@ -944,7 +960,7 @@
         return {
           restrict: 'E',
           scope: false,
-          templateUrl: 'Templates/Partials/sharedAlbum.html'
+          templateUrl: 'Templates/Partials/shareAlbum.html'
         };
     })
     .directive('shareReconocimiento', function(){
