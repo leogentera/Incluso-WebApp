@@ -69,7 +69,7 @@ angular
             
             $scope.activitiesCompleted = activitiesCompleted;
 
-            if (profile) {
+            if (profile && profile.stars) {
                 $scope.profileStars = profile.stars;
             }else{
                 $scope.profileStars = 0;
