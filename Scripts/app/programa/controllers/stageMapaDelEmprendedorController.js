@@ -182,46 +182,32 @@ angular
                             "quiz_answered": true,
                             "at_least_one": false
                         };
-                        _.each($scope.mapaDeEmprendedorActivities, function(a){
-                            if(a.coursemoduleid == proyecto.proyectoId){
-                                //Sets user answer to emprendedoractivities just in case
-                                _.each(proyectoStructure, function(key){
-                                    var answerConcat = "";
-                                    for(var innerkey in proyecto){
-                                        if(key == innerkey.trim()){
-                                            var question = _.find(a.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
-                                            if(question){
-                                                question.userAnswer = getAnswer(proyecto[innerkey], true);
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    //Sets user answers to localStorage
-                                    var answerObj = _.find($scope.mapaDeEmprendedorAnswers, function(a){ return a.coursemoduleid == proyecto.proyectoId; });
-                                    if(answerObj){
-                                        var currentQuestion = _.find(answerObj.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
-                                        if (!answerObj.questions || !currentQuestion) {
-                                            var questionStructure = {
-                                                "question": key,
-                                                "title": key,
-                                                "userAnswer": getAnswer(proyecto[innerkey], true)
-                                            }
-                                            answerObj.questions = (!answerObj.questions ? [] : answerObj.questions );
-                                            answerObj.questions.push(questionStructure);
+                        var activity = _.find($scope.mapaDeEmprendedorActivities, function(a){ return a.coursemoduleid == proyecto.proyectoId; });
+                        if(activity){
+                            //Follows up a structure so, if json returns values out of place, it won't affect moodle questions order.
+                            _.each(proyectoStructure, function(key){
+                                var answer = _.find(proyecto, function(value, innerKey){ return key.toLowerCase() == innerKey.toLowerCase().trim(); });
+                                var question = _.find(activity.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
+                                if(question){
+                                    question.userAnswer = getAnswer(answer, true);
+                                    var activityCache = _.find($scope.mapaDeEmprendedorAnswers, function(a){ return a.coursemoduleid == proyecto.proyectoId; });
+                                    if(activityCache){
+                                        if(activityCache.questions && activityCache.questions.length == activity.questions.length){
+                                            var questionCache = _.find(activityCache.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
+                                            questionCache.userAnswer = question.userAnswer;
                                         }else{
-                                            currentQuestion.userAnswer = getAnswer(proyecto[innerkey],true);
+                                            activityCache.questions = (activityCache.questions ? activityCache.questions : [] );
+                                            activityCache.questions.push(question);
                                         }
+                                        logEntry.quiz_answered = answer != "" && logEntry.quiz_answered;
+                                        logEntry.at_least_one = answer != "" || logEntry.at_least_one;
+                                        logEntry.answers.push([getAnswer(answer, false)]);
                                     }
-                                    //Sets user answers to logEntry
-                                    logEntry.quiz_answered = proyecto[innerkey] != "" && logEntry.quiz_answered;
-                                    logEntry.at_least_one = proyecto[innerkey] != "" || logEntry.at_least_one;
-                                    return logEntry.answers.push([getAnswer(proyecto[innerkey], false)]);
-                                });
-                                return;
-                            }
-                        }); 
+                                }
+                            });
+                            quizzesRequests.push(logEntry);
+                        }
                     }
-                    quizzesRequests.push(logEntry);
                 }
                 _setLocalStorageJsonItem("mapaDeEmprendedorAnswers/" + $scope.user.id, $scope.mapaDeEmprendedorAnswers);
                                 
