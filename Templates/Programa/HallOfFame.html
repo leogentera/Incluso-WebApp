@@ -1,162 +1,389 @@
+<style>
+
+.incluso-app.hall-of-fame {
+    background-attachment: scroll;
+    background-image: url(../assets/images/bg-notifications-bottom.gif),url(../assets/images/bg-notifications-sky.gif);
+    background-position: -1px bottom;
+    background-repeat: no-repeat,repeat-y;
+    -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    background-size: 100% auto;
+    padding-bottom: 12vw;
+}
+.incluso-app.hall-of-fame .showcase-carousel {
+    position: relative;
+}
+.incluso-app.hall-of-fame .user-data {
+    background: none;
+}
+
+.incluso-app.hall-of-fame .showcase-carousel > div {
+    position: relative;
+}
+.control {
+    position: absolute;
+    top: 45%;
+    font-size: 300%;
+    color: #08b190;
+    text-decoration: none;
+}
+.control.back {
+    left: 6vw;
+}
+.control.next {
+    right: 6vw;
+}
+    
+.incluso-app.hall-of-fame .filter-section {
+    border-top: 1px solid rgba(255,255,255,.08);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    padding: 0;
+    margin: 0 10vw;
+    position: relative;
+}    
+.incluso-app.hall-of-fame .filter-section span {
+    font-size: 5vw;
+    display: inline-block;
+    vertical-align: middle;
+    color: #fff;
+}
+.incluso-app.hall-of-fame .filter-section select {
+    font-size: 5vw;
+    font-weight: 700;
+    color: #fff;
+    width: 92%;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    text-indent: 0!important;
+    padding-left: 1.4vw;
+}
+.incluso-app.hall-of-fame .filter-section .icon-arrow {
+    font-size: 3vw;
+    position: absolute;
+    top: 6vw;
+    right: 2vw;
+}
+    
+.user-progress-bar {
+    margin: 2vh auto;
+    display: inline-block;
+}   
+.user-progress-bar .container {
+    border: 2px solid #BFD33A;
+    width: 40vw;
+    border-radius: 1.5vw;
+    margin: 0;
+    display: flex;
+    padding: 2px;
+}
+.user-progress-bar > div {
+    display: flex;
+}
+.user-progress-bar .container .bar {
+    height: 6vw;
+    width: 5%;
+    margin: 0 1px;
+    background: #3C7896;
+    border-radius: .5vw;
+}
+.user-progress-bar .container .bar.active {
+    background-image: -webkit-gradient(
+	    linear,
+	    left top,
+	    left bottom,
+	    color-stop(0.44, #BFD33A),
+	    color-stop(0.88, #F9F5BC)
+    );
+    background-image: -o-linear-gradient(bottom, #BFD33A 44%, #F9F5BC 88%);
+    background-image: -moz-linear-gradient(bottom, #BFD33A 44%, #F9F5BC 88%);
+    background-image: -webkit-linear-gradient(bottom, #BFD33A 44%, #F9F5BC 88%);
+    background-image: -ms-linear-gradient(bottom, #BFD33A 44%, #F9F5BC 88%);
+    background-image: linear-gradient(to bottom, #BFD33A 44%, #F9F5BC 88%);
+}
+.user-progress-bar label {
+    line-height: 7vw!important;
+    padding: 0 2vw!important;
+    color: #BFD53A!important;
+    font-size: 4vw!important;
+}
+.incluso-app.hall-of-fame .ranking-list {
+    background-color: rgba(13,15,20,.5);
+    margin: 0 4vw;
+    border-radius: 4vw;
+}
+.incluso-app.hall-of-fame .ranking-list .user-stats {
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    padding: 4vw 0;
+    margin: 0 4vw;
+    text-align: left;
+}
+.incluso-app.hall-of-fame .ranking-list .user-stats:last-child {
+    border-bottom: 
+}
+    
+.incluso-app.hall-of-fame .ranking-list .user-avatar {
+    width: 30%;
+    display: inline-block;
+}
+.incluso-app.hall-of-fame .ranking-list .user-data {
+    width: 68%;
+    display: inline-block;
+    padding: 0;
+}
+.incluso-app.hall-of-fame .ranking-list .user-data h4 {
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    color: #bcd431;
+}
+.incluso-app.hall-of-fame .ranking-list .user-data .user-name {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+}
+.incluso-app.hall-of-fame .ranking-list figure {
+    vertical-align: middle;
+    display: inline-table;
+}
+.incluso-app.hall-of-fame .user-stats.by-stars .user-points {
+    margin: 4vw 0 6vw 0;
+}
+    
+.incluso-app.hall-of-fame .ranking-list .by-star .user-points{
+    margin: 3vw 0;
+}
+.incluso-app.hall-of-fame .ranking-list .by-star figure {
+    vertical-align: bottom;
+    display: inline-table;
+} 
+.incluso-app.hall-of-fame .ranking-list .by-star .list-records{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    text-align: left;
+    font-size: 18px;
+}
+.incluso-app.hall-of-fame .ranking-list .by-star .list-records span{
+    color: #bcd431;
+    font-size: 20px;
+}
+</style>
+
 <div class="incluso-app hall-of-fame" id="site-wrapper">
 	<article>
 		<section class="showcase-carousel">
 			<div class="owl-carousel-" id="top-users-statistics">
 				<div class="item">
-					<!-- <div class="showcase"> -->
-						<div class="user-stats by-stars component">
-							<h3>Top 5: <span>Estrellas</span></h3>
-							<div class="user-avatar">
-								<figure>
-									<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
-								</figure>
-							</div>
-							<div class="user-data">
-								<p class="user-name">Mis estrellas</p>
-								<p class="user-points">
-				                    <span>0</span>
-				                    <span class="icomoon icon-star"></span>
-				                </p>
-							</div>
+					<div class="user-stats by-progress component">
+						<h3>Top 5: <span>Avance</span></h3>
+						<div class="user-avatar">
+							<figure>
+								<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+							</figure>
 						</div>
-					<!-- </div> -->
+						<div class="user-data">
+							<p class="user-name">Mi Avance</p>
+							<div class="user-progress-bar" data-progress-bar="23">
+                                <div>
+                                    <div class="container"></div>
+                                    <label>23%</label>
+                                </div>
+				            </div>
+						</div>
+					</div>
 				</div>
-				<div class="item"></div>
-				<div class="item"></div>
-				<div class="item"></div>
-
-				<a class="control back" href="#" id="prev">
-					<span class="icomoon icon-arrow-bold-left"></span>
-				</a>
-				<a class="control next" href="#" id="next">
-					<span class="icomoon icon-arrow-bold-right"></span>
-				</a>
+				<div class="item">
+					<div class="user-stats by-stars component">
+						<h3>Top 5: <span>Estrellas</span></h3>
+						<div class="user-avatar">
+							<figure>
+								<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+							</figure>
+						</div>
+						<div class="user-data">
+							<p class="user-name">Mis Estrellas</p>
+                            <p class="user-points">
+                                <span>600</span>
+                                <span class="icomoon icon-star"></span>
+                            </p>
+						</div>
+					</div>
+				</div>
 			</div>
-		</section>
-
-		<section class="block-list">
-			
-		</section>
-		<section class="component">
-			<h3>Salón de la fama</h3>
-			<div></div>
+            <a class="control back" href="#" id="prev">
+				<span class="icomoon icon-arrow-bold-left"></span>
+			</a>
+			<a class="control next" href="#" id="next">
+				<span class="icomoon icon-arrow-bold-right"></span>
+			</a>
+        </section>
+        <section class="filter-section form">
+            <span class="icomoon icon-list"></span>
+            <select name="filter" class="form-control form-control-lg theme-default ng-pristine ng-untouched ng-valid" ng-model="filter">
+                <option value="" disabled="">Filtrar contenido por...</option>
+                <option value="">Ver Todo</option>
+                <option value="mexico">Cd. de México</option> 
+                <option value="monterrey">Monterrey</option> 
+                <option value="guadalajara">Guadalajara</option> 
+            </select>
+            <span class="icomoon icon-arrow"></span>
+        </section>
+		<section class="component" id="top-users-detail">
+			<div class="ranking-list">
+                <div class="user-stats by-progress component">
+					<div class="user-avatar">
+						<figure>
+							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+						</figure>
+					</div>
+					<div class="user-data">
+                        <h4>1er Lugar</h4>
+						<p class="user-name">Halcon Espacial</p>
+						<div class="user-progress-bar" data-progress-bar="80">
+                            <div>
+                                <div class="container"></div>
+                                <label>23%</label>
+                            </div>
+				        </div>
+					</div>
+				</div>
+                <div class="user-stats by-progress component">
+					<div class="user-avatar">
+						<figure>
+							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+						</figure>
+					</div>
+					<div class="user-data">
+                        <h4>2do Lugar</h4>
+						<p class="user-name">Halcon Espacial</p>
+						<div class="user-progress-bar" data-progress-bar="50">
+                            <div>
+                                <div class="container"></div>
+                                <label>23%</label>
+                            </div>
+				        </div>
+					</div>
+				</div>
+                <div class="user-stats by-progress component">
+					<div class="user-avatar">
+						<figure>
+							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+						</figure>
+					</div>
+					<div class="user-data">
+                        <h4>3er Lugar</h4>
+						<p class="user-name">Halcon Espacial</p>
+						<div class="user-progress-bar" data-progress-bar="35">
+                            <div>
+                                <div class="container"></div>
+                                <label>23%</label>
+                            </div>
+				        </div>
+					</div>
+				</div>
+            </div>
+            <div class="ranking-list">
+                <div class="user-stats by-star component">
+					<div class="user-avatar">
+						<figure>
+							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+						</figure>
+					</div>
+					<div class="user-data">
+                        <h4>1er Lugar</h4>
+						<p class="user-name">Halcon Espacial</p>
+						<p class="user-points">
+                            <span>600</span>
+                            <span class="icomoon icon-star"></span>
+                        </p>
+					</div>
+				</div>
+                <div class="user-stats by-star component">
+					<div class="user-avatar">
+						<figure>
+							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+						</figure>
+					</div>
+					<div class="user-data">
+                        <h4>2do Lugar</h4>
+						<p class="user-name">Halcon Espacial</p>
+                        <p class="list-records"><span>15</span> Multiplicaciones de foros</p>
+                        <p class="list-records"><span>30</span> Mensajes en chat</p>
+                        <p class="list-records"><span>20</span> Mensajes en comunidades</p>
+					</div>
+				</div>
+                <div class="user-stats by-star component">
+					<div class="user-avatar">
+						<figure>
+							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+						</figure>
+					</div>
+					<div class="user-data">
+                        <h4>1er Lugar</h4>
+						<p class="user-name">Halcon Espacial</p>
+						<p class="list-records"><span class="icomoon icon-badge"></span><span> 25</span> Insignias ganadas</p>
+					</div>
+				</div>
+            </div>
 		</section>
 	</article>
-	
-	<!-- <div id="carousel-example-generic2" class="carousel">
-		<div id="owl-demo2" class="owl-carousel">
-			<div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">                            
-				<figure class="item-image">
-					<img ng-src="{{retosIconos[reto.sectionname]}}" alt="{{reto.sectionname}}" />
-				</figure>
-				<h4 class="item-title" ng-bind="reto.sectionname"></h4>
-				<p class="item-description" ng-bind="reto.activityintro"></p>
-				<p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : 'Cada sueño en su lugar' "></p>
-
-				<div class="page-number">
-					<p class="text-center">
-						<span>{{model.stages[idEtapa].challenges.indexOf(reto) + 1}}</span>
-						<span>/</span>
-						<span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
-					</p>                    
-				</div>                               
-			</div>
-		</div>
-
-		<a class="control back" href="#" id="prev">
-			<span class="icomoon icon-arrow-bold-left"></span>
-		</a>
-		<a class="control next" href="#" id="next">
-			<span class="icomoon icon-arrow-bold-right"></span>
-		</a>                    
-	</div> -->
-
-  <!-- <div id="site-menu" >
-
-  </div> -->
-<!--   <div id="site-canvas">
-
-	<article>
-	  <div class="container">
-
-		<section class="component">
-		  <h3 ng-class="main-title">Salón de la fama</h3>
-				<p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-
-			  <p>Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. </p> 
-		</section>
-		s
-	  </div> 
-
-	</article>
-
-  </div>
- -->
 </div>
   
-// <script>
-//     $(document).ready(function () {
-//         function myController($scope) {
-//             $scope.challengeName = "MIS RETOS";
-//         }
+<script>
+    jQuery.fn.UserProgressBar = function () {
+        $.each(this, function () {
+            var base = $(this);
+            var p = parseInt(base.data("progress-bar"));
+            base.find("label").text(p + "%");
+            progress = Math.round(p / 5);
+            for (var i = 0; i < 20; i++) {
+                base.find(".container").append($("<div>", {
+                    "class": "bar" + (i < progress ? " active" : "")
+                }))
+            }
+        })
+    };
+    $(".user-progress-bar").UserProgressBar();
 
-//         setTimeout(function () {
-//             var hits = 1;
 
-//                 //Carrusel de retos
-//                 var owl2 = $("#owl-demo2");
+    $(document).ready(function () {
+        var topUsers = $("#top-users-statistics");
+        var topDetail = $("#top-users-detail");
+        topDetail.owlCarousel({
+            navigation: false,
+            pagination: false,
+            paginationSpeed: 1000,
+            goToFirstSpeed: 2000,
+            singleItem: true,
+            autoHeight: true,
+            touchDrag: false,
+            mouseDrag: false,
+            transitionStyle: "fade"
+        });
+        topUsers.owlCarousel({
+            navigation: false,
+            pagination: false,
+            paginationSpeed: 1000,
+            goToFirstSpeed: 2000,
+            singleItem: true,
+            autoHeight: true,
+            touchDrag: false,
+            mouseDrag: false,
+            transitionStyle: "fade"
+        });
+        $(".control.next").click(function (e) {
+            topUsers.trigger('owl.next');
+            topDetail.trigger('owl.next');
+            e.preventDefault();
+        })
+        $(".control.back").click(function (e) {
+            topUsers.trigger('owl.prev');
+            topDetail.trigger('owl.prev');
+            e.preventDefault();
+        })
+    });
 
-//                 owl2.owlCarousel({
-//                     navigation: false,
-//                     pagination: false,
-//                     //paginationSpeed: 1000,
-//                     goToFirstSpeed: 2000,
-//                     singleItem: true,
-//                     autoHeight: true,
-//                     touchDrag:false,
-//                     mouseDrag:false,
-//                     transitionStyle:"fade",
-//                     afterMove: callback1
-//                 });
 
-//                 //Carrusel de Actividades
-//                 var owl = $("#owl-demo");
-
-//                 owl.owlCarousel({
-//                     navigation: false,
-//                     pagination: false,
-//                     //paginationSpeed: 1000,
-//                     goToFirstSpeed: 2000,
-//                     singleItem: true,
-//                     autoHeight: true,
-//                     touchDrag:false,
-//                     mouseDrag:false,
-//                     transitionStyle:"fade",
-//                     afterMove: callback2
-//                 });
-
-//                 function callback1(event) {
-//                     var item = this.currentItem;
-//                     owl.trigger("owl.goTo", item);
-//                     $("span#index").text((item+1));
-//                 }
-
-//                 function callback2(event) {
-//                     var item = this.currentItem;
-//                     owl2.trigger("owl.goTo", item);
-//                     $("span#index").text((item+1));
-//                 }
-
-//                 $("#next").click(function (ev) {
-//                     owl.trigger('owl.next');
-//                     ev.preventDefault();
-
-//                 });
-
-//                 $("#prev").click(function (ev) {
-//                     owl.trigger('owl.prev');
-//                     ev.preventDefault();
-//                 });
-//             }, 1000);
-//     });
-// </script>
+</script>
