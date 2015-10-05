@@ -37,6 +37,7 @@ angular
 
             /* Helpers */
             var isConfirmedPasswordValid = false;
+            //$scope.theFormIsValid = $scope.recoverPasswordForm.$valid;
             $scope.currentPage = 1;
             $scope.successMessage = "";
             $scope.recoveredPassword = false;
@@ -51,16 +52,38 @@ angular
             $scope.securityquestionItems = ['¿Dónde crecí?','Nombre de mi mejor amigo','Nombre de mi mascota','Personaje favorito','Banda musical favorita'];
 
             /* Watchers */
+            /*
             $scope.$watch("recoverPasswordModel.confirmPassword", function(newValue, oldValue){
-                isConfirmedPasswordValid = (newValue === $scope.recoverPasswordModel.password);
-            });
-            $scope.$watch("recoverPasswordModel.password", function(newValue, oldValue){
-                isConfirmedPasswordValid = (newValue === $scope.recoverPasswordModel.confirmPassword);
-            });
-            $scope.$watch("recoverPasswordModel.modelState.errorMessages", function(newValue, oldValue){
-                $scope.recoverPasswordModel.modelState.isValid = (newValue.length === 0);
+                //isConfirmedPasswordValid = (newValue === $scope.recoverPasswordModel.password);
+                console.log("Watching confirmPassword, newValue= " + newValue + ", oldValue = " + oldValue + "confirmPassword === password: " + isConfirmedPasswordValid);
             });
 
+            $scope.$watch("recoverPasswordModel.password", function(newValue, oldValue){
+                //isConfirmedPasswordValid = (newValue === $scope.recoverPasswordModel.confirmPassword);
+                //console.log("Watching password, newValue= " + newValue + ", oldValue = " + oldValue + "confirmPassword === password: " + isConfirmedPasswordValid);
+                console.log(newValue);
+            });
+            */
+
+            $scope.$watch("recoverPasswordModel.code", function(newValue, oldValue){
+                //isConfirmedPasswordValid = (newValue === $scope.recoverPasswordModel.confirmPassword);
+                //console.log("Watching password, newValue= " + newValue + ", oldValue = " + oldValue + "confirmPassword === password: " + isConfirmedPasswordValid);
+                console.log(newValue);
+            });
+
+
+            $scope.$watch("recoverPasswordModel.modelState.errorMessages", function(newValue, oldValue){
+                $scope.recoverPasswordModel.modelState.isValid = (newValue.length === 0);
+                console.log("Validity: " + $scope.recoverPasswordModel.modelState.isValid);
+            });
+
+            function checkEqualityOfPasswords(password, confirmPassword) {
+                if (password === confirmPassword) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
 
             $scope.login = function() {
                 $location.path('/');
@@ -98,6 +121,7 @@ angular
                     }).success(function(data, status, headers, config) {
 
                         console.log('SUCCESS. code recovered'); //- debug
+                        console.log(JSON.stringify(data));
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.currentPage = 2;
                         $scope.successMessage = "Te hemos enviado un correo con un código para recuperar tu contraseña.";
@@ -117,24 +141,52 @@ angular
                         console.log('message: ' + errorMessage); //- debug
                         $scope.$emit('scrollTop'); //- scroll
                     });
-                }else{
+                } else {
                     console.log('errors: ' + errors.length); //- debug
                     console.log('End'); //- debug
                     $scope.$emit('scrollTop'); //- scroll
                 }
-            }
+            };
 
+            // For page 2/2
             $scope.recover = function() {
                 console.log('Start Password Reset'); //- debug
                 console.log('fetching errors list'); //- debug
                 var errors = [];
-                var passwordPolicy = "debe ser almenos de 8 caracterres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
-                if(!isConfirmedPasswordValid) { errors.push("Las contraseñas capturadas no coinciden."); }
-                if(!$scope.recoverPasswordForm.code.$valid){ errors.push("código requerido."); }
+                var passwordPolicy = "Debe ser almenos de 8 caracteres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
+
+                /*
+                if(!isConfirmedPasswordValid) {
+                    errors.push("Las contraseñas capturadas no coinciden.");
+                }
+                */
+                var passwordsHaveValidFormat = false;
+                var passwordsCoincide = false;
+
+                if ($scope.recoverPasswordModel.password && $scope.recoverPasswordModel.confirmPassword) {
+                    passwordsHaveValidFormat = true;
+                }
+
+                if (passwordsHaveValidFormat) {
+                    passwordsCoincide = checkEqualityOfPasswords($scope.recoverPasswordModel.password, $scope.recoverPasswordModel.confirmPassword);
+                }
+
+                if (!passwordsHaveValidFormat) {
+                    errors.push(passwordPolicy);
+                }
+
+                if (!passwordsCoincide) {
+                    errors.push("Las contraseñas capturadas no coinciden.");
+                }
+
+                if(!$scope.recoverPasswordForm.code.$valid){
+                    errors.push("Código requerido.");
+                }
+
                 $scope.recoverPasswordModel.modelState.errorMessages = errors;
 
                 console.log('validating'); //- debug
-                if(errors.length === 0){
+                if (errors.length === 0){
                     console.log('errors: ' + errors.length); //- debug
                     $scope.$emit('ShowPreloader'); //show preloader
 
@@ -175,7 +227,7 @@ angular
                         console.log('message: ' + errorMessage); //- debug
                         $scope.$emit('scrollTop'); //- scroll
                     });
-                }else{
+                } else{
                     console.log('errors: ' + errors.length); //- debug
                     console.log('End'); //- debug
                     $scope.$emit('scrollTop'); //- scroll

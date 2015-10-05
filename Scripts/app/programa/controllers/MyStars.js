@@ -51,7 +51,7 @@ angular
                             }
                             
                             //Add subactivity points when exists
-                            if (activity.points == 0 && activity.activities.length > 0) {
+                            if (activity.points == 0 && activity.activities && activity.activities.length > 0) {
                                 for(var i = 0; i < activity.activities.length; i++ ){
                                     subActivitiesPoints += activity.activities[i].points;
                                 }
@@ -69,7 +69,7 @@ angular
             
             $scope.activitiesCompleted = activitiesCompleted;
 
-            if (profile) {
+            if (profile && profile.stars) {
                 $scope.profileStars = profile.stars;
             }else{
                 $scope.profileStars = 0;

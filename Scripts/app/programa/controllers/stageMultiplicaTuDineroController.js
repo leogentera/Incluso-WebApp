@@ -46,30 +46,33 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuesta":529},{"preguntaId":129,"respuesta":534},{"preguntaId":130,"respuesta":536},{"preguntaId":133,"respuesta":545},{"preguntaId":137,"respuesta":557},{"preguntaId":139,"respuesta":563},{"preguntaId":140,"respuesta":567},{"preguntaId":142,"respuesta":573}]}
+                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuestaId":529},{"preguntaId":129,"respuestaId":534},{"preguntaId":130,"respuestaId":536},{"preguntaId":133,"respuestaId":545},{"preguntaId":137,"respuestaId":557},{"preguntaId":139,"respuestaId":563},{"preguntaId":140,"respuestaId":567},{"preguntaId":142,"respuestaId":573}]}
                     );
                 }
             }
-
-            if (!$scope.multiplicaTuDineroActivity) {
-                $scope.multiplicaTuDineroActivity = {};
-                var multiplicaTuDinero = _.find($scope.activities, function(a){ return a.activity_identifier == $routeParams.moodleid});
-                if (multiplicaTuDinero) {
-                    $scope.stars += multiplicaTuDinero.points;
-                    for (var i = 0; i < multiplicaTuDinero.activities.length; i++) {
-                        $scope.stars += multiplicaTuDinero.activities[i].points;
-                        var activity = moodleFactory.Services.GetCacheJson("activity/" + multiplicaTuDinero.activities[i].coursemoduleid);
-                        if (activity) {
-                            $scope.multiplicaTuDineroActivity = activity;
-                            assignCourseModuleId(false, multiplicaTuDinero.activities[i]);
-                        }else{
-                            moodleFactory.Services.GetAsyncActivity(multiplicaTuDinero.activities[i].coursemoduleid, function(data){
-                                $scope.multiplicaTuDineroActivity = data;
-                                assignCourseModuleId(true, data);
-                            })
-                        }
-                    };
+            if ($routeParams.moodleid) {
+                if (!$scope.multiplicaTuDineroActivity) {
+                    $scope.multiplicaTuDineroActivity = {};
+                    var multiplicaTuDinero = _.find($scope.activities, function(a){ return a.activity_identifier == $routeParams.moodleid});
+                    if (multiplicaTuDinero) {
+                        $scope.stars += multiplicaTuDinero.points;
+                        for (var i = 0; i < multiplicaTuDinero.activities.length; i++) {
+                            $scope.stars += multiplicaTuDinero.activities[i].points;
+                            var activity = moodleFactory.Services.GetCacheJson("activity/" + multiplicaTuDinero.activities[i].coursemoduleid);
+                            if (activity) {
+                                $scope.multiplicaTuDineroActivity = activity;
+                                assignCourseModuleId(false, multiplicaTuDinero.activities[i]);
+                            }else{
+                                moodleFactory.Services.GetAsyncActivity(multiplicaTuDinero.activities[i].coursemoduleid, function(data){
+                                    $scope.multiplicaTuDineroActivity = data;
+                                    assignCourseModuleId(true, data);
+                                })
+                            }
+                        };
+                    }
                 }
+            }else{
+                $scope.$emit('HidePreloader');
             }
 
             function assignCourseModuleId(asyncRequest, data){
@@ -87,7 +90,7 @@ angular
                     "estrellas": "" + $scope.stars,
                     "pathImagenes":"",
                     "preguntas": [],
-                    "introduccion": $scope.multiplicaTuDineroActivity.description,
+                    "introducción": $scope.multiplicaTuDineroActivity.description,
                     "retro_aprobado":(_.max($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
                     "retro_regular":(_.find($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
                     "retro_reprobado":(_.min($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
@@ -131,7 +134,7 @@ angular
                 catch (e) {
                     successGame(
                         /*Completo*/ //{"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si", "calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuesta":529},{"preguntaId":128,"respuesta":532},{"preguntaId":129,"respuesta":534},{"preguntaId":130,"respuesta":536},{"preguntaId":131,"respuesta":540},{"preguntaId":132,"respuesta":543},{"preguntaId":133,"respuesta":545},{"preguntaId":134,"respuesta":550},{"preguntaId":135,"respuesta":552},{"preguntaId":136,"respuesta":555},{"preguntaId":137,"respuesta":557},{"preguntaId":138,"respuesta":560},{"preguntaId":139,"respuesta":563},{"preguntaId":140,"respuesta":567},{"preguntaId":141,"respuesta":570},{"preguntaId":142,"respuesta":573},{"preguntaId":143,"respuesta":576},{"preguntaId":144,"respuesta":579},{"preguntaId":145,"respuesta":581},{"preguntaId":146,"respuesta":584}]}
-                        /*8 respuestas*/ {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuesta":529},{"preguntaId":129,"respuesta":534},{"preguntaId":130,"respuesta":536},{"preguntaId":133,"respuesta":545},{"preguntaId":137,"respuesta":557},{"preguntaId":139,"respuesta":563},{"preguntaId":140,"respuesta":567},{"preguntaId":142,"respuesta":573}]}
+                        /*8 respuestas*/ {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuestaId":529},{"preguntaId":129,"respuestaId":534},{"preguntaId":130,"respuestaId":536},{"preguntaId":133,"respuestaId":545},{"preguntaId":137,"respuestaId":557},{"preguntaId":139,"respuestaId":563},{"preguntaId":140,"respuestaId":567},{"preguntaId":142,"respuestaId":573}]}
                     );
                 }
             }
@@ -151,8 +154,8 @@ angular
                     var activity = $scope.multiplicaTuDineroActivity.questions[i];
                     _.each(data.respuestas, function(a){
                         if (a.preguntaId == activity.id) {
-                            activity.userAnswer = a.respuesta;
-                            var answerIndex = activity.answers.getIndexBy("id", a.respuesta);
+                            activity.userAnswer = a.respuestaId;
+                            var answerIndex = activity.answers.getIndexBy("id", a.respuestaId);
                             logEntry.answers.push(answerIndex);
                         }
                     });
@@ -165,11 +168,11 @@ angular
                 });
 
                 $scope.IsComplete = $scope.multiplicaTuDineroActivity && 
-                                    questionsAnswered.completed == data.respuestas.length &&
+                                    questionsAnswered.completed == data.respuestas.length; //&&
                                     //questionsAnswered.completed && 
                                     //questionsAnswered.completed >= $scope.multiplicaTuDineroActivity.questions.length &&
                                     //questionsAnswered.completed > 0 &&
-                                    quiz_finished;
+                                    //quiz_finished;
 
                 //save response
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
@@ -182,49 +185,49 @@ angular
                             activitiesCompleted++;
                         }
                     }
-
                     if ((activitiesCompleted == parentActivity.activities.length - 1) && $scope.IsComplete) {
                         parentActivity.status = 1;
                         _endActivity(parentActivity, function(){ });
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                     }
-                    if (parentActivity.activities) {
-                        //TODO: change for all activities in case there are other siblings completed
-                        subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
-                        updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
-                        for (var i = 0; i < subactivitiesCompleted.length; i++) {
-                            $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i]);
-                        };
-                        userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
-                        _setLocalStorageJsonItem("usercourse", userCourseUpdated);
-                        _setLocalStorageJsonItem("activityManagers", $scope.activities);
-                        if (parentActivity.activities[0].status == 0) {
-                            $scope.saveQuiz($scope.multiplicaTuDineroActivity, logEntry, userCourseUpdated);
-                        }
-                    }
                 }
-                $location.path('/ZonaDeAterrizaje/Dashboard/3/2');
+                if (parentActivity.activities) {
+                    //TODO: change for all activities in case there are other siblings completed
+                    subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
+                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
+                    for (var i = 0; i < subactivitiesCompleted.length; i++) {
+                        $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i]);
+                    };
+                    userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
+                    _setLocalStorageJsonItem("usercourse", userCourseUpdated);
+                    _setLocalStorageJsonItem("activityManagers", $scope.activities);
+                    $scope.saveQuiz($scope.multiplicaTuDineroActivity, logEntry, userCourseUpdated);
+                }
             }
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
-              //Update quiz on server
-              var results = {
-                "userid": currentUser.userId,
-                "answers": quiz.answers,
-                "like_status": quiz.like_status,
-                "activityidnumber": activity.coursemoduleid,
-                "dateStart": quiz.startingTime,
-                "dateEnd": quiz.endingTime
-              };
-              var activityModel = {
-                "usercourse": userCourseUpdated,
-                "coursemoduleid": activity.coursemoduleid,
-                "answersResult": results,
-                "userId": quiz.userid,
-                "token": currentUser.token,
-                "activityType": "Quiz"
-              };             
-              _endActivity(activityModel, function(){});
+                //Update quiz on server
+                var results = {
+                    "userid": currentUser.userId,
+                    "answers": quiz.answers,
+                    "like_status": quiz.like_status,
+                    "activityidnumber": activity.coursemoduleid,
+                    "dateStart": quiz.startingTime,
+                    "dateEnd": quiz.endingTime
+                };
+                var activityModel = {
+                    "usercourse": userCourseUpdated,
+                    "coursemoduleid": activity.coursemoduleid,
+                    "answersResult": results,
+                    "userId": quiz.userid,
+                    "token": currentUser.token,
+                    "activityType": "Quiz"
+                };  
+                $scope.$emit('ShowPreloader');          
+                _endActivity(activityModel, function(){
+                    $scope.$emit('HidePreloader');
+                    $location.path('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/ResultadosMultiplicaTuDinero');
+                });
             }
 
             var failureGame = function (data){

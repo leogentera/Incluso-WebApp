@@ -54,7 +54,7 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"userid":"103", "actividad":"Fábrica de emprendimiento","imagenFicha":"assets/images/results/FichaFabricaDeEmprendedor.png", "duración":"5", "fecha_inicio":"2015-07-15 14:23:12", "fecha_fin":"2015-07-15 14:28:12", "actividad_completa":"No", "gusta_actividad":"Si", "proyectos":[{ "proyectoId":249,"proyecto":"Proyecto 1", "necesidades":"Agua", "clientes":"Mamá", "propuestas_valor":"Dar agua", "actividades":["Embotellar agua","Contratar Jumapam"], "recursos":["Dinero"], "personas ":["Hijo","Hija"], "relacion ":["1 a 1"], "forma_entrega":["Botella","Potable","Garrafón"]},{"proyectoId":250,"proyecto":"Proyecto 2","necesidades":"Luz","clientes":"Papá","propuestas_valor":"Dar luz","actividades":["Construir panel solar","Contratar CFE"],"recursos":["Talento","Recursos"],"personas ":["Hija","Hijo"],"relacion ":["N a M","1 a N"],"forma_entrega":["Electricidad","Panel Solar"]},{"proyectoId":251,"proyecto":"Proyecto 3","necesidades":"Comida","clientes":"Hermanos","propuestas_valor":"Dar comida","actividades":["Preparar comida","Dar vales","Dar alimentos enlatados"],"recursos":["Tiempo","Talento","Dinero"],"personas":["Hermano","Hermana"],"relacion":["1 a 1"],"forma_entrega":["Valesdedespensa","Comidas","Dinero"]},{"proyectoId":252,"proyecto":"Proyecto4","necesidades":"Ropa","clientes":"Abuelos","propuestas_valor":"Dar ropa","actividades":["Comprar","Tejer"],"recursos":["Tesoro","Talento"],"personas":["Nieta","Nieto"],"relacion":["N a M","1 a N"],"forma_entrega":["Giftcard","Ropa"]},{"proyectoId":253,"proyecto":"Proyecto5","necesidades":"Casa","clientes":"Tíos","propuestas_valor":"Dar casa","actividades":["Construir","Reconstruir"],"recursos":["Dinero","Tiempo"],"personas":["Primo","Prima"],"relacion":["1 a N"],"forma_entrega":["Física","Emocional"]}]}
+                        {"userid":"103", "actividad":"Fábrica de emprendimiento","imagenFicha":"assets/images/results/FichaFabricaDeEmprendedor.png", "duración":"5", "fecha_inicio":"2015-07-15 14:23:12", "fecha_fin":"2015-07-15 14:28:12", "actividad_completa":"Si", "gusta_actividad":"Si", "proyectos":[{ "proyectoId":249,"proyecto":"Proyecto 1", "necesidades":"Agua", "clientes":"Mamá", "propuestas_valor":"Dar agua", "actividades":["Embotellar agua","Contratar Jumapam"], "recursos":["Dinero"], "personas ":["Hijo","Hija"], "relacion ":["1 a 1"], "forma_entrega":["Botella","Potable","Garrafón"]},{"proyectoId":250,"proyecto":"Proyecto 2","necesidades":"Luz","clientes":"Papá","propuestas_valor":"Dar luz","actividades":["Construir panel solar","Contratar CFE"],"recursos":["Talento","Recursos"],"personas ":["Hija","Hijo"],"relacion ":["N a M","1 a N"],"forma_entrega":["Electricidad","Panel Solar"]},{"proyectoId":251,"proyecto":"Proyecto 3","necesidades":"Comida","clientes":"Hermanos","propuestas_valor":"Dar comida","actividades":["Preparar comida","Dar vales","Dar alimentos enlatados"],"recursos":["Tiempo","Talento","Dinero"],"personas":["Hermano","Hermana"],"relacion":["1 a 1"],"forma_entrega":["Valesdedespensa","Comidas","Dinero"]},{"proyectoId":252,"proyecto":"Proyecto4","necesidades":"Ropa","clientes":"Abuelos","propuestas_valor":"Dar ropa","actividades":["Comprar","Tejer"],"recursos":["Tesoro","Talento"],"personas":["Nieta","Nieto"],"relacion":["N a M","1 a N"],"forma_entrega":["Giftcard","Ropa"]},{"proyectoId":253,"proyecto":"Proyecto5","necesidades":"Casa","clientes":"Tíos","propuestas_valor":"Dar casa","actividades":["Construir","Reconstruir"],"recursos":["Dinero","Tiempo"],"personas":["Primo","Prima"],"relacion":["1 a N"],"forma_entrega":["Física","Emocional"]}]}
                     );
                 }
             }
@@ -159,7 +159,7 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"userid":"103", "actividad":"Fábrica de emprendimiento","imagenFicha":"assets/images/results/FichaFabricaDeEmprendedor.png", "duración":"5", "fecha_inicio":"2015-07-15 14:23:12", "fecha_fin":"2015-07-15 14:28:12", "actividad_completa":"No", "gusta_actividad":"Si", "proyectos":[{ "proyectoId":249,"proyecto":"Proyecto 1", "necesidades":"Agua", "clientes":"Mamá", "propuestas_valor":"Dar agua", "actividades":["Embotellar agua","Contratar Jumapam"], "recursos":["Dinero"], "personas ":["Hijo","Hija"], "relacion ":["1 a 1"], "forma_entrega":["Botella","Potable","Garrafón"]},{"proyectoId":250,"proyecto":"Proyecto 2","necesidades":"Luz","clientes":"Papá","propuestas_valor":"Dar luz","actividades":["Construir panel solar","Contratar CFE"],"recursos":["Talento","Recursos"],"personas ":["Hija","Hijo"],"relacion ":["N a M","1 a N"],"forma_entrega":["Electricidad","Panel Solar"]},{"proyectoId":251,"proyecto":"Proyecto 3","necesidades":"Comida","clientes":"Hermanos","propuestas_valor":"Dar comida","actividades":["Preparar comida","Dar vales","Dar alimentos enlatados"],"recursos":["Tiempo","Talento","Dinero"],"personas":["Hermano","Hermana"],"relacion":["1 a 1"],"forma_entrega":["Valesdedespensa","Comidas","Dinero"]},{"proyectoId":252,"proyecto":"Proyecto4","necesidades":"Ropa","clientes":"Abuelos","propuestas_valor":"Dar ropa","actividades":["Comprar","Tejer"],"recursos":["Tesoro","Talento"],"personas":["Nieta","Nieto"],"relacion":["N a M","1 a N"],"forma_entrega":["Giftcard","Ropa"]},{"proyectoId":253,"proyecto":"Proyecto5","necesidades":"Casa","clientes":"Tíos","propuestas_valor":"Dar casa","actividades":["Construir","Reconstruir"],"recursos":["Dinero","Tiempo"],"personas":["Primo","Prima"],"relacion":["1 a N"],"forma_entrega":["Física","Emocional"]}]}
+                        {"userid":"103", "actividad":"Fábrica de emprendimiento","imagenFicha":"assets/images/results/FichaFabricaDeEmprendedor.png", "duración":"5", "fecha_inicio":"2015-07-15 14:23:12", "fecha_fin":"2015-07-15 14:28:12", "actividad_completa":"Si", "gusta_actividad":"Si", "proyectos":[{ "proyectoId":249,"proyecto":"Proyecto 1", "necesidades":"Agua", "clientes":"Mamá", "propuestas_valor":"Dar agua", "actividades":["Embotellar agua","Contratar Jumapam"], "recursos":["Dinero"], "personas ":["Hijo","Hija"], "relacion ":["1 a 1"], "forma_entrega":["Botella","Potable","Garrafón"]},{"proyectoId":250,"proyecto":"Proyecto 2","necesidades":"Luz","clientes":"Papá","propuestas_valor":"Dar luz","actividades":["Construir panel solar","Contratar CFE"],"recursos":["Talento","Recursos"],"personas ":["Hija","Hijo"],"relacion ":["N a M","1 a N"],"forma_entrega":["Electricidad","Panel Solar"]},{"proyectoId":251,"proyecto":"Proyecto 3","necesidades":"Comida","clientes":"Hermanos","propuestas_valor":"Dar comida","actividades":["Preparar comida","Dar vales","Dar alimentos enlatados"],"recursos":["Tiempo","Talento","Dinero"],"personas":["Hermano","Hermana"],"relacion":["1 a 1"],"forma_entrega":["Valesdedespensa","Comidas","Dinero"]},{"proyectoId":252,"proyecto":"Proyecto4","necesidades":"Ropa","clientes":"Abuelos","propuestas_valor":"Dar ropa","actividades":["Comprar","Tejer"],"recursos":["Tesoro","Talento"],"personas":["Nieta","Nieto"],"relacion":["N a M","1 a N"],"forma_entrega":["Giftcard","Ropa"]},{"proyectoId":253,"proyecto":"Proyecto5","necesidades":"Casa","clientes":"Tíos","propuestas_valor":"Dar casa","actividades":["Construir","Reconstruir"],"recursos":["Dinero","Tiempo"],"personas":["Primo","Prima"],"relacion":["1 a N"],"forma_entrega":["Física","Emocional"]}]}
                     );
                 }
             }
@@ -182,46 +182,32 @@ angular
                             "quiz_answered": true,
                             "at_least_one": false
                         };
-                        _.each($scope.mapaDeEmprendedorActivities, function(a){
-                            if(a.coursemoduleid == proyecto.proyectoId){
-                                //Sets user answer to emprendedoractivities just in case
-                                _.each(proyectoStructure, function(key){
-                                    var answerConcat = "";
-                                    for(var innerkey in proyecto){
-                                        if(key == innerkey.trim()){
-                                            var question = _.find(a.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
-                                            if(question){
-                                                question.userAnswer = getAnswer(proyecto[innerkey], true);
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    //Sets user answers to localStorage
-                                    var answerObj = _.find($scope.mapaDeEmprendedorAnswers, function(a){ return a.coursemoduleid == proyecto.proyectoId; });
-                                    if(answerObj){
-                                        var currentQuestion = _.find(answerObj.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
-                                        if (!answerObj.questions || !currentQuestion) {
-                                            var questionStructure = {
-                                                "question": key,
-                                                "title": key,
-                                                "userAnswer": getAnswer(proyecto[innerkey], true)
-                                            }
-                                            answerObj.questions = (!answerObj.questions ? [] : answerObj.questions );
-                                            answerObj.questions.push(questionStructure);
+                        var activity = _.find($scope.mapaDeEmprendedorActivities, function(a){ return a.coursemoduleid == proyecto.proyectoId; });
+                        if(activity){
+                            //Follows up a structure so, if json returns values out of place, it won't affect moodle questions order.
+                            _.each(proyectoStructure, function(key){
+                                var answer = _.find(proyecto, function(value, innerKey){ return key.toLowerCase() == innerKey.toLowerCase().trim(); });
+                                var question = _.find(activity.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
+                                if(question){
+                                    question.userAnswer = getAnswer(answer, true);
+                                    var activityCache = _.find($scope.mapaDeEmprendedorAnswers, function(a){ return a.coursemoduleid == proyecto.proyectoId; });
+                                    if(activityCache){
+                                        if(activityCache.questions && activityCache.questions.length == activity.questions.length){
+                                            var questionCache = _.find(activityCache.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
+                                            questionCache.userAnswer = question.userAnswer;
                                         }else{
-                                            currentQuestion.userAnswer = getAnswer(proyecto[innerkey],true);
+                                            activityCache.questions = (activityCache.questions ? activityCache.questions : [] );
+                                            activityCache.questions.push(question);
                                         }
+                                        logEntry.quiz_answered = answer != "" && logEntry.quiz_answered;
+                                        logEntry.at_least_one = answer != "" || logEntry.at_least_one;
+                                        logEntry.answers.push([getAnswer(answer, false)]);
                                     }
-                                    //Sets user answers to logEntry
-                                    logEntry.quiz_answered = proyecto[innerkey] != "" && logEntry.quiz_answered;
-                                    logEntry.at_least_one = proyecto[innerkey] != "" || logEntry.at_least_one;
-                                    return logEntry.answers.push([getAnswer(proyecto[innerkey], false)]);
-                                });
-                                return;
-                            }
-                        }); 
+                                }
+                            });
+                            quizzesRequests.push(logEntry);
+                        }
                     }
-                    quizzesRequests.push(logEntry);
                 }
                 _setLocalStorageJsonItem("mapaDeEmprendedorAnswers/" + $scope.user.id, $scope.mapaDeEmprendedorAnswers);
                                 
@@ -322,7 +308,7 @@ angular
                                         "modifiedtime": quiz.endingTime,
                                         "posttype": 4,
                                         "filecontent": b64,
-                                        "filename": 'mapa_de_vida_' + $scope.user.id + '.png',
+                                        "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.png',
                                         "picture_post_author": $scope.user.profileimageurlsmall
                                     };
                                     

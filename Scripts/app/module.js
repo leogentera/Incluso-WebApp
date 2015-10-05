@@ -141,6 +141,7 @@
         ///////// Stage 3 //////////
         $http.get('Templates/ZonaDeAterrizaje/dashboard.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html', { cache: $templateCache });
         $http.get('Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html', {cache: $templateCache });
 
          document.addEventListener("keyup", function(e) {
@@ -360,7 +361,7 @@
             controller: 'stageGameRetoMultipleResultsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId/:extraPoints', {
+        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId/:extraPoints/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -656,6 +657,11 @@
 
         $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/:moodleid/:retry', {
             templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html',
+            controller: 'stageMultiplicaTuDineroController'
+        });
+
+        $routeProvider.when('/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero', {
+            templateUrl: 'Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html',
             controller: 'stageMultiplicaTuDineroController'
         });
 
