@@ -226,7 +226,7 @@ angular
                 $scope.$emit('ShowPreloader');          
                 _endActivity(activityModel, function(){
                     $scope.$emit('HidePreloader');
-                    $location.path('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/ResultadosMultiplicaTuDinero');
+                    $location.path('/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero');
                 });
             }
 
