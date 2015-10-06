@@ -1,0 +1,56 @@
+<div class="incluso-app content-page-theme change-of-term" id="site-wrapper">
+    <article>
+        <div class="container">
+            <section class="component">
+                <h3 ng-class="main-title">Declaración de derechos y responsabilidades</h3>
+                <p>
+                Esta declaración de derechos y responsabilidades (en adelante la "Declaración" o "Condiciones") contiene las condiciones de los servicios de [Incluso] que rigen la relación entre [Incluso], los usuarios y con todos aquellos que interactúan en la “Plataforma Misión Incluso”.
+                </p>
+                <p>1. Contenido</p>
+                <ul class="alpha-list">
+                    <li>
+                    Todos los elementos que conforman el contenido de la aplicación de la Plataforma, identificada como “Misión Incluso”,  incluyendo de manera enunciativa más no limitativa.
+                    </li>
+                    <li>
+                    En virtud de lo anterior, salvo el uso que se llegue a dar para fines personales o privados, a los cuales se encuentra autorizado el usuario.
+                    </li>
+                </ul>
+                <p>
+                2. Privacidad
+                </p>
+                <p>  Los datos personales que recabaremos, serán utilizados para las siguientes finalidades:</p>
+                <ul>
+                    <li>Brindar a los adscritos al programa capacitación sobre el uso de dispositivo móvil, redes sociales y plataforma;</li>
+                    <li>Brindar  a   los   adscritos   al   programa   los conocimientos  teóricos  y  metodológicos  sobre  el modelo pedagógico;</li>
+                </ul>
+                <p>
+                Al utilizar los Servicios de la Plataforma o al acceder a ellos, nos permites recopilar y usar tu contenido..
+                </p>
+                <div class="checkbox checkbox-custom">
+                <label>
+                    <input type="checkbox" ng-disabled="isRegistered" name="termsAndConditions" ng-model="registerModel.termsAndConditions" class="ng-pristine ng-untouched ng-valid"> 
+                    <span>Acepto los términos y condiciones</span>
+                </label>
+                </div>
+                <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateTo('ProgramaDashboard', 'sideToggle')">Regresar</a> 
+            </section>
+        </div>
+    </article>
+    <!-- initial message -->
+    <script type="text/ng-template" id="openingStageModal.html">
+        <div class="modal-robot robot-lg closing-stage-modal user-help">
+            <span class="img-robot-lg"></span>
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">Terminos y condiciones</h3>
+                <p class="txt-renglon centered">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mattis turpis in ligula porta, et tincidunt mauris vehicula. Suspendisse in viverra sapien. Nulla vulputate, urna quis consequat mollis.
+                </p>
+            </div>
+        </div>
+    </script>
+</div>
