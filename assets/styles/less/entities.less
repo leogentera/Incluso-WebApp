@@ -547,11 +547,15 @@
                         div{
                             display: inline-flex;
                             justify-content: space-around;
-                            padding: 3% 5%;
-                            width: 49%;
+                            padding: 3% 2%;
+                            width: 32.5%;
                             font-size:80%;
                             color: #08B190;
                             cursor: pointer;
+                            span {
+                                font-size: 5vw;
+                                padding: 0;
+                            }
                             &:nth-child(1){
                                 border-right: 2px solid rgba(255, 255, 255, 0.08);
                                 color:#08B190;
@@ -567,6 +571,17 @@
                                     color:#E80D81;
                                     margin: 0;
                                     padding:0;
+                                }
+                            }
+                            &:nth-child(3){
+                                border-right: 2px solid rgba(255, 255, 255, 0.08);
+                            }
+
+                            &:last-child{
+                                color: #dc300a;
+
+                                span {
+                                    color: #dc300a;
                                 }
                             }
                         }
