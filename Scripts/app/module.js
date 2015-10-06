@@ -690,6 +690,10 @@
             controller: 'stageForumCommentsController'
         });
 
+        $routeProvider.when('/FAQs', {
+            templateUrl: 'Templates/Programa/faqs.html',
+        });
+
         $routeProvider.otherwise({
         	redirectTo: '/'
         });
