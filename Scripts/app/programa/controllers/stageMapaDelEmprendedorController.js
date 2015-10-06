@@ -31,17 +31,17 @@ angular
             $scope.mapaDeEmprendedorAnswers = moodleFactory.Services.GetCacheJson("mapaDeEmprendedorAnswers/" + $scope.user.id);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var activitiesPosted = 0;
+            var subactivitiesCompleted = [];
             $scope.stars = 0;
             $scope.isInstalled = false;
 
-            //Removes answers of any other user previously logged in
-            for(var key in localStorage){  
-                if(key.indexOf("mapaDeEmprendedorAnswers") > -1 && key.indexOf($scope.user.id) < 0){
-                    localStorage.removeItem(key);  
-                }
-            }
-
             if(!$routeParams.retry) {
+                //Removes answers of any other user previously logged in
+                for(var key in localStorage){  
+                    if(key.indexOf("mapaDeEmprendedorAnswers") > -1 && key.indexOf($scope.user.id) < 0){
+                        localStorage.removeItem(key);  
+                    }
+                }
                 try {
                   cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
                 }
@@ -54,7 +54,8 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"userid":"103", "actividad":"Fábrica de emprendimiento","imagenFicha":"assets/images/results/FichaFabricaDeEmprendedor.png", "duración":"5", "fecha_inicio":"2015-07-15 14:23:12", "fecha_fin":"2015-07-15 14:28:12", "actividad_completa":"Si", "gusta_actividad":"Si", "proyectos":[{ "proyectoId":249,"proyecto":"Proyecto 1", "necesidades":"Agua", "clientes":"Mamá", "propuestas_valor":"Dar agua", "actividades":["Embotellar agua","Contratar Jumapam"], "recursos":["Dinero"], "personas ":["Hijo","Hija"], "relacion ":["1 a 1"], "forma_entrega":["Botella","Potable","Garrafón"]},{"proyectoId":250,"proyecto":"Proyecto 2","necesidades":"Luz","clientes":"Papá","propuestas_valor":"Dar luz","actividades":["Construir panel solar","Contratar CFE"],"recursos":["Talento","Recursos"],"personas ":["Hija","Hijo"],"relacion ":["N a M","1 a N"],"forma_entrega":["Electricidad","Panel Solar"]},{"proyectoId":251,"proyecto":"Proyecto 3","necesidades":"Comida","clientes":"Hermanos","propuestas_valor":"Dar comida","actividades":["Preparar comida","Dar vales","Dar alimentos enlatados"],"recursos":["Tiempo","Talento","Dinero"],"personas":["Hermano","Hermana"],"relacion":["1 a 1"],"forma_entrega":["Valesdedespensa","Comidas","Dinero"]},{"proyectoId":252,"proyecto":"Proyecto4","necesidades":"Ropa","clientes":"Abuelos","propuestas_valor":"Dar ropa","actividades":["Comprar","Tejer"],"recursos":["Tesoro","Talento"],"personas":["Nieta","Nieto"],"relacion":["N a M","1 a N"],"forma_entrega":["Giftcard","Ropa"]},{"proyectoId":253,"proyecto":"Proyecto5","necesidades":"Casa","clientes":"Tíos","propuestas_valor":"Dar casa","actividades":["Construir","Reconstruir"],"recursos":["Dinero","Tiempo"],"personas":["Primo","Prima"],"relacion":["1 a N"],"forma_entrega":["Física","Emocional"]}]}
+                        //{"userid":"103", "actividad":"Fábrica de emprendimiento","imagenFicha":"assets/images/results/FichaFabricaDeEmprendedor.png", "duración":"5", "fecha_inicio":"2015-07-15 14:23:12", "fecha_fin":"2015-07-15 14:28:12", "actividad_completa":"Si", "gusta_actividad":"Si", "proyectos":[{ "proyectoId":249,"proyecto":"Proyecto 1", "necesidades":"Agua", "clientes":"Mamá", "propuestas_valor":"Dar agua", "actividades":["Embotellar agua","Contratar Jumapam"], "recursos":["Dinero"], "personas ":["Hijo","Hija"], "relacion ":["1 a 1"], "forma_entrega":["Botella","Potable","Garrafón"]},{"proyectoId":250,"proyecto":"Proyecto 2","necesidades":"Luz","clientes":"Papá","propuestas_valor":"Dar luz","actividades":["Construir panel solar","Contratar CFE"],"recursos":["Talento","Recursos"],"personas ":["Hija","Hijo"],"relacion ":["N a M","1 a N"],"forma_entrega":["Electricidad","Panel Solar"]},{"proyectoId":251,"proyecto":"Proyecto 3","necesidades":"Comida","clientes":"Hermanos","propuestas_valor":"Dar comida","actividades":["Preparar comida","Dar vales","Dar alimentos enlatados"],"recursos":["Tiempo","Talento","Dinero"],"personas":["Hermano","Hermana"],"relacion":["1 a 1"],"forma_entrega":["Valesdedespensa","Comidas","Dinero"]},{"proyectoId":252,"proyecto":"Proyecto4","necesidades":"Ropa","clientes":"Abuelos","propuestas_valor":"Dar ropa","actividades":["Comprar","Tejer"],"recursos":["Tesoro","Talento"],"personas":["Nieta","Nieto"],"relacion":["N a M","1 a N"],"forma_entrega":["Giftcard","Ropa"]},{"proyectoId":253,"proyecto":"Proyecto5","necesidades":"Casa","clientes":"Tíos","propuestas_valor":"Dar casa","actividades":["Construir","Reconstruir"],"recursos":["Dinero","Tiempo"],"personas":["Primo","Prima"],"relacion":["1 a N"],"forma_entrega":["Física","Emocional"]}]}
+                        {"gusta_actividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta_valor":"PRDCT","relacion":["DL"],"clientes":"PPL","personas":["TM"],"forma_entrega":["WF"],"actividades":["NSWR","QSTN"],"necesidades":"ND","proyecto":"DFNTYFRST","proyectoId":"249"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"250"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"251"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"252"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"253"}],"fecha_fin":"10\/06\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.png","actividad_completa":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fecha_inicio":"10\/06\/2015 12:22:52","duracion":"4"}
                     );
                 }
             }
@@ -186,7 +187,7 @@ angular
                         if(activity){
                             //Follows up a structure so, if json returns values out of place, it won't affect moodle questions order.
                             _.each(proyectoStructure, function(key){
-                                var answer = _.find(proyecto, function(value, innerKey){ return key.toLowerCase() == innerKey.toLowerCase().trim(); });
+                                var answer = _.find(proyecto, function(value, innerKey){ return key.indexOf(innerKey.toLowerCase().trim().split("_")[0]) > -1; });
                                 var question = _.find(activity.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
                                 if(question){
                                     question.userAnswer = getAnswer(answer, true);
@@ -199,8 +200,8 @@ angular
                                             activityCache.questions = (activityCache.questions ? activityCache.questions : [] );
                                             activityCache.questions.push(question);
                                         }
-                                        logEntry.quiz_answered = answer != "" && logEntry.quiz_answered;
-                                        logEntry.at_least_one = answer != "" || logEntry.at_least_one;
+                                        logEntry.quiz_answered = question.userAnswer != "" && logEntry.quiz_answered;
+                                        logEntry.at_least_one = question.userAnswer != "" || logEntry.at_least_one;
                                         logEntry.answers.push([getAnswer(answer, false)]);
                                     }
                                 }
@@ -227,8 +228,7 @@ angular
 
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
-                var subactivitiesCompleted = [];
-                var parentUpdated = false;
+                var parentUpdated = 0;
                 _.each(quizzesRequests, function(q){
                     if(q.quiz_answered){
                         subactivitiesCompleted.push(q.coursemoduleid);
@@ -236,7 +236,7 @@ angular
                 });
                 
                 if (parentActivity.status == 0  && $scope.IsComplete) {
-                    parentUpdated = true;
+                    parentUpdated = 1;
                     _endActivity(parentActivity);
                     parentActivity.status = 1;
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
@@ -248,7 +248,7 @@ angular
                     for (var i = 0; i < quizzesRequests.length; i++) {
                         if (quizzesRequests[i].at_least_one) {
                             var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                            $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, parentUpdated);
+                            $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, (parentUpdated == parentActivity.status));
                         }
                     }
                 }
@@ -272,7 +272,7 @@ angular
                 img.src = imageUri;
             };
 
-            $scope.saveQuiz = function(activity, quiz, userCourseUpdated, parentStatus) {
+            $scope.saveQuiz = function(activity, quiz, userCourseUpdated, canPost) {
                 //Update quiz on server
                 var results = {
                     "userid": currentUser.userId,
@@ -293,8 +293,8 @@ angular
                 $scope.$emit('ShowPreloader'); 
                 _endActivity(activityModel, function(){
                     activitiesPosted++;
-                    if (activitiesPosted == $scope.mapaDeEmprendedorAnswers.length) {                   
-                        if ($scope.pathImagenFicha != "" && parentStatus) {
+                    if (activitiesPosted == subactivitiesCompleted.length) {                   
+                        if ($scope.pathImagenFicha != "" && canPost) {
                             moodleFactory.Services.GetAsyncForumDiscussions(91, function(data, key) {
                                 var discussion = (data.discussions[1] ? data.discussions[1] : "");
 
