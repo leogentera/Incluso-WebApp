@@ -694,6 +694,10 @@
             templateUrl: 'Templates/Programa/faqs.html',
         });
 
+        $routeProvider.when('/ChangeOfTerm', {
+            templateUrl: 'Templates/Programa/ChangeOfTerm.htm',
+        });
+
         $routeProvider.otherwise({
         	redirectTo: '/'
         });
