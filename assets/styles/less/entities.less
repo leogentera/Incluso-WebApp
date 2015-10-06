@@ -3112,6 +3112,192 @@
         }
     }
 
+
+    ///////////////////////HallOfFame//////////////////////////
+    .incluso-app.hall-of-fame {
+        background-attachment: scroll;
+        background-image: url(../images/bg-notifications-bottom.gif),url(../images/bg-notifications-sky.gif);
+        background-position: -1px bottom;
+        background-repeat: no-repeat,repeat-y;
+        -webkit-background-size: 100% auto;
+        -moz-background-size: 100% auto;
+        background-size: 100% auto;
+        padding-bottom: 12vw!important;
+        .showcase-carousel {
+            position: relative;
+
+            & > div {
+                position: relative;
+            }
+        }
+
+
+        .user-data {
+            background: none;
+        }
+        .user-stats .user-points {
+            margin-top: 3vw!important;
+        }
+        .control {
+            position: absolute;
+            top: 45%;
+            font-size: 300%;
+            color: #08b190;
+            text-decoration: none;
+        }
+
+        .control.back {
+            left: 6vw;
+        }
+
+        .control.next {
+            right: 6vw;
+        }
+
+        .filter-section {
+            border-top: 1px solid rgba(255,255,255,.08);
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            padding: 0;
+            margin: 0 10vw;
+            position: relative;
+
+            span {
+                font-size: 5vw;
+                display: inline-block;
+                vertical-align: middle;
+                color: #fff;
+            }
+
+            select {
+                font-size: 5vw;
+                font-weight: 700;
+                color: #fff;
+                width: 92%;
+                display: inline-block;
+                vertical-align: middle;
+                position: relative;
+                text-indent: 0!important;
+                padding-left: 1.4vw;
+            }
+
+            .icon-arrow {
+                font-size: 3vw;
+                position: absolute;
+                top: 6vw;
+                right: 2vw;
+            }
+        }
+
+        .user-progress-bar {
+            margin: 2vh auto;
+            display: inline-block;
+
+            .container {
+                border: 2px solid #BFD33A;
+                width: 40vw;
+                border-radius: 1.5vw;
+                margin: 0;
+                display: flex;
+                padding: 2px;
+
+                .bar {
+                    height: 6vw;
+                    width: 5%;
+                    margin: 0 1px;
+                    background: #3C7896;
+                    border-radius: .5vw;
+
+                    &.active {
+                        background-image: -webkit-gradient( linear, left top, left bottom, color-stop(0.44, #BFD33A), color-stop(0.88, #F9F5BC) );
+                        background-image: -o-linear-gradient(bottom, #BFD33A 44%, #F9F5BC 88%);
+                        background-image: -moz-linear-gradient(bottom, #BFD33A 44%, #F9F5BC 88%);
+                        background-image: -webkit-linear-gradient(bottom, #BFD33A 44%, #F9F5BC 88%);
+                        background-image: -ms-linear-gradient(bottom, #BFD33A 44%, #F9F5BC 88%);
+                        background-image: linear-gradient(to bottom, #BFD33A 44%, #F9F5BC 88%);
+                    }
+                }
+            }
+
+            & > div {
+                display: flex;
+            }
+
+            label {
+                line-height: 7vw!important;
+                padding: 0 2vw!important;
+                color: #BFD53A!important;
+                font-size: 4vw!important;
+            }
+        }
+
+        .ranking-list {
+            background-color: rgba(13,15,20,.5);
+            margin: 0 4vw;
+            border-radius: 4vw;
+
+            .user-stats {
+                border-bottom: 1px solid rgba(255,255,255,.08);
+                padding: 4vw 0;
+                margin: 0 4vw;
+                text-align: left;
+                display: flex;
+                &:last-child {
+                    border-bottom:;
+                }
+            }
+
+            .user-avatar {
+                width: 30%!important;
+            }
+
+            .user-data {
+                width: 68%!important;
+                padding: 0;
+
+                h4 {
+                    text-align: left;
+                    margin: 0;
+                    padding: 0;
+                    color: #bcd431;
+                }
+
+                .user-name {
+                    margin: 0;
+                    padding: 0;
+                    width: 100%;
+                    text-align: left;
+                }
+            }
+
+            figure {
+                vertical-align: middle;
+            }
+
+            .by-star {
+                .user-points {
+                    margin: 3vw 0;
+                }
+                figure {
+                    vertical-align: bottom;
+                    display: inline-table;
+                }
+                .user-points {
+                    margin: 4vw 0 6vw 0;
+                }
+                .list-records {
+                    margin: 0;
+                    padding: 0;
+                    width: 100%;
+                    text-align: left;
+                    font-size: 16px;
+                    span {
+                        color: #bcd431;
+                        font-size: 18px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 /************************************************/
