@@ -692,7 +692,11 @@
         });
 
         $routeProvider.when('/FAQs', {
-            templateUrl: 'Templates/Programa/faqs.html',
+            templateUrl: 'Templates/Programa/faqs.html'
+        });
+
+        $routeProvider.when('/ChangeOfTerms', {
+            templateUrl: 'Templates/Programa/ChangeOfTerms.html'
         });
 
         $routeProvider.otherwise({
