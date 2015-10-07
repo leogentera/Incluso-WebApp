@@ -234,7 +234,7 @@ angular
                         subactivitiesCompleted.push(q.coursemoduleid);
                     }
                 });
-                
+
                 if (parentActivity.status == 0 && quizzesAnswered.completed > 0) {
                     parentUpdated = true;
                     _endActivity(parentActivity);
