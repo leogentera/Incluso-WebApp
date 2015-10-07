@@ -28,6 +28,8 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
 
+            var _userId = moodleFactory.Services.GetCacheObject("userId");
+
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
             $scope.moodleId;
@@ -211,6 +213,8 @@ angular
             };
 
             $scope.isCommentModalCollapsed= [];
+            $scope.isReportedAbuseModalCollapsed = new Array();
+            $scope.isReportedAbuseSentModalCollapsed = new Array();
             $scope.replyText = null;
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex){
 
@@ -302,9 +306,44 @@ angular
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
                     });
             };
+
+            $scope.reportPost = function(postId) {
+
+                //if ($scope.hasCommunityAccess) {
+                    var createdDate = (new Date().getTime() / 1000).toFixed(0);
+
+                    var requestData = {
+                        "postid": postId,
+                        "userid": _userId,
+                        "create": createdDate,
+                        "forumid": $scope.currentActivity.forumid,
+                        "discussionid": $scope.discussion.discussion,
+                    };
+
+                    $scope.$emit('ShowPreloader');
+                    moodleFactory.Services.PostAsyncReportAbuse(null, requestData, function(){
+
+                        $scope.$emit('HidePreloader');
+                        $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
+                        $scope.isReportedAbuseSentModalCollapsed["id" + postId] = true;
+
+                    }, function(){
+                        $scope.$emit('HidePreloader');
+                        $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
+                        $scope.isReportedAbuseSentModalCollapsed["id" + postId] = false;
+                    }, true);
+                //}
+            };
+
+            $scope.reportModalClick = function(postId) {
+                $scope.isReportedAbuseModalCollapsed['id' + postId] = !$scope.isReportedAbuseModalCollapsed['id' + postId];
+                $scope.isCommentModalCollapsed['id' + postId] = false;
+            };
+
             $scope.clickPostAttachment = function(){
                 clickPostAttachment();
             };
+
             clickPostAttachment = function(){
                 cordova.exec(SuccessAttachment, FailureAttachment, "CallToAndroid", "AttachPicture", []);
             };
@@ -369,6 +408,10 @@ angular
 
             var initializeCommentsData = function(element, index, array){
                 $scope.isCommentModalCollapsed[index] = false;
+                $scope.isReportedAbuseModalCollapsed["id" + element.post_id] = false;
+                $scope.isReportedAbuseSentModalCollapsed["id" + element.post_id] = false;
+                //$scope.isReportedAbuseModalCollapsed[index] = false;
+                //$scope.isReportedAbuseSentModalCollapsed[index] = false;
                 
                 if ($scope.showAllCommentsByPost['id' + element.post_id] != 1000000) {
                     $scope.showAllCommentsByPost['id' + element.post_id] = 3;   

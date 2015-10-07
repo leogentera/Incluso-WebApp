@@ -25,7 +25,8 @@
         'incluso.programa.leaderboard',
         'incluso.programa.comunidad',
         'incluso.programa.reconocimiento',
-        'incluso.programa.album',
+        'incluso.programa.album',        
+        //'incluso.programa.sharingExperience',
         'incluso.stage.dashboardcontroller',
         
         // TODO: Should be just one controller for all stage dashboards, will merge soon
@@ -298,13 +299,13 @@
             
        $routeProvider.when('/SharingExperience', { 
             templateUrl: 'Templates/Programa/sharingexperience.html',
-            controller: 'AlertsController'          //to do: add corresponding controller 
+            controller: 'sharingExperienceController'
         });  
 
        $routeProvider.when('/AlbumIncluso', {
             templateUrl: 'Templates/Programa/AlbumIncluso.html',
             controller: 'AlbumInclusoController'
-        });
+       });       
        
         $routeProvider.when('/Chat', { 
             templateUrl: 'Templates/Chat/index.html',
@@ -688,6 +689,14 @@
         $routeProvider.when('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/:activityId/:discussionId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios.html',
             controller: 'stageForumCommentsController'
+        });
+
+        $routeProvider.when('/FAQs', {
+            templateUrl: 'Templates/Programa/faqs.html'
+        });
+
+        $routeProvider.when('/ChangeOfTerms', {
+            templateUrl: 'Templates/Programa/ChangeOfTerms.html'
         });
 
         $routeProvider.otherwise({
