@@ -57,7 +57,7 @@ angular
                                 $scope.tuEligesActivities = activity;
                                 assignCourseModuleId(false, tuEligesActivity.activities[i]);
                             }else{
-                                moodleFactory.Services.GetAsyncActivity(tuEligesActivity.activities[i].coursemoduleid, function(data){
+                                moodleFactory.Services.GetAsyncActivity(tuEligesActivity.activities[i].coursemoduleid, currentUser.token, function(data){
                                     $scope.tuEligesActivities = data;
                                     assignCourseModuleId(true, data);
                                 });

@@ -63,7 +63,7 @@ angular
                                 $scope.multiplicaTuDineroActivity = activity;
                                 assignCourseModuleId(false, multiplicaTuDinero.activities[i]);
                             }else{
-                                moodleFactory.Services.GetAsyncActivity(multiplicaTuDinero.activities[i].coursemoduleid, function(data){
+                                moodleFactory.Services.GetAsyncActivity(multiplicaTuDinero.activities[i].coursemoduleid, currentUser.token, function(data){
                                     $scope.multiplicaTuDineroActivity = data;
                                     assignCourseModuleId(true, data);
                                 })

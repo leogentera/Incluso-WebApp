@@ -131,7 +131,7 @@ angular
                         else {
                             waitPreloader += 1;
 
-                            moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);
+                            moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.token, getActivityInfoCallback, getActivityErrorCallback);
 
                         }
                     }
@@ -224,7 +224,7 @@ angular
 
                             var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
                             _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
-                            _endActivity($scope.fuenteDeEnergia.activities[i]);
+                            _endActivity($scope.fuenteDeEnergia.activities[i]);                            
                             if (!$scope.fuenteDeEnergia.activities[i].optional) {
                                 $scope.statusObligatorios += 1;
                                 assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
@@ -300,6 +300,7 @@ angular
 
             function successEndFuente() {
                 //var userCurrentStage = localStorage.getItem("currentStage");
+                console.log("success end fuente");
                 $scope.$emit('HidePreloader'); //hide preloader
                 $location.path('/' + stage + '/Dashboard/' + userCurrentStage + '/' + currentChallenge);
             }
@@ -328,4 +329,20 @@ angular
                 }, 1000);
 
             }
+            
+            $scope.likeSubActivity = function(contentId){
+                  for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                    if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
+                                               
+                        var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;
+                        //var subActivityLiked = $scope.fuenteDeEnergia.activities[i].liked;
+                        var currentUserId = currentUser.userId;
+                        var isLike = $scope.fuenteDeEnergia.activities[i].activityContent.liked == 0 ? 1 : 0;
+                        $scope.fuenteDeEnergia.activities[i].activityContent.liked = isLike;
+                        var data = {userid: currentUserId, like_status: isLike, only_like: 1};
+                        moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, function(){}, errorCallback);
+                    }
+                }                                          
+            }
+            
         }]);

@@ -71,7 +71,7 @@ angular
                             $scope.mapaDeEmprendedorActivities.push(activity);
                             assignCourseModuleId(false, mapaDeEmprendedorActivity.activities[i]);
                         }else{
-                            moodleFactory.Services.GetAsyncActivity(mapaDeEmprendedorActivity.activities[i].coursemoduleid, function(data){
+                            moodleFactory.Services.GetAsyncActivity(mapaDeEmprendedorActivity.activities[i].coursemoduleid, currentUser.token, function(data){
                                 $scope.mapaDeEmprendedorActivities.push(data);
                                 assignCourseModuleId(true, data);
                             })
@@ -95,7 +95,7 @@ angular
             }
 
             function getUserData(activityId) {
-                moodleFactory.Services.GetAsyncActivity(activityId + "?userid=" + $scope.user.id, function(data){
+                moodleFactory.Services.GetAsyncActivity(activityId + "?userid=" + $scope.user.id, currentUser.token, function(data){
                     $scope.mapaDeEmprendedorAnswers.push(data);
                     $scope.mapaDeEmprendedorAnswers[$scope.mapaDeEmprendedorAnswers.length-1]["coursemoduleid"] = activityId;
                     if ($scope.mapaDeEmprendedorAnswers.length == $scope.mapaDeEmprendedorActivities.length) {
@@ -295,7 +295,7 @@ angular
                     activitiesPosted++;
                     if (activitiesPosted == $scope.mapaDeEmprendedorAnswers.length) {                   
                         if ($scope.pathImagenFicha != "" && parentStatus) {
-                            moodleFactory.Services.GetAsyncForumDiscussions(91, function(data, key) {
+                            moodleFactory.Services.GetAsyncForumDiscussions(91, currentUser.token, function(data, key) {
                                 var discussion = (data.discussions[1] ? data.discussions[1] : "");
 
                                 encodeImageUri($scope.pathImagenFicha, function (b64) {

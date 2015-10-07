@@ -25,6 +25,7 @@ angular
         var _course = moodleFactory.Services.GetCacheJson("course");
         var _userId = moodleFactory.Services.GetCacheObject("userId");
         var _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+        var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
         $scope.hasCommunityAccess = _hasCommunityAccessLegacy(_userProfile.communityAccess);
         var albumSrc = null;
         $scope.avatarSrc = null;
@@ -78,7 +79,7 @@ angular
                 
             if ($scope.discussion == null || $scope.forumId == null) {
                 
-                moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, function(data, key) {
+                moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, currentUser.token, function(data, key) {
                     
                     $scope.discussion = data.discussions[0];
                     $scope.forumId = data.forumid;
@@ -228,7 +229,7 @@ angular
 
             if ($scope.album == null) {
                 if ($scope.currentUser.userId != null) {
-                    moodleFactory.Services.GetAsyncAlbum($scope.currentUser.userId, successfullCallBack, errorCallback, true);
+                    moodleFactory.Services.GetAsyncAlbum($scope.currentUser.userId, $scope.currentUser.token, successfullCallBack, errorCallback, true);
                 }
                 else {
                     //Albun no reachable

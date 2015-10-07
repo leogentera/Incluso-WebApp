@@ -132,18 +132,19 @@
                 $scope.$emit('HidePreloader'); //hide preloader
 
                 getUserNotifications(function() { getUserChat(); });
-
+                        
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = getCurrentStage();                
                     _setLocalStorageItem("currentStage", $scope.currentStage);
 
-                    moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, function(){
+                    moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function(){
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.$emit('scrollTop'); //- scroll
-                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"), function() {}, function() {});
+                        
+                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"),$scope.user.token, function() {}, function() {});
                     }, errorCallback);
 
                 }, errorCallback);
@@ -214,11 +215,11 @@
             }
 
             function getUserNotifications(callback){
-                moodleFactory.Services.GetUserNotification(_getItem("userId"), callback, errorCallback);
+                moodleFactory.Services.GetUserNotification(_getItem("userId"), $scope.user.token, callback, errorCallback);
             }
 
             function getUserChat(callback) {                
-                moodleFactory.Services.GetUserChat(_getItem("userId"),function() {
+                moodleFactory.Services.GetUserChat(_getItem("userId"), $scope.user.token, function() {
                     if (callback) callback();
                     var chat = JSON.parse(localStorage.getItem('userChat'));
                     var userId = localStorage.getItem("userId");

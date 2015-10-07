@@ -110,7 +110,7 @@ angular
 
             function getDataAsync() {
                 console.log('Moodle ID on dataAsync: ' + $scope.moodleId);
-                $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
+                $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, currentUser.token, getForumDiscussionsCallback, null, true):'';
             }
             
             function getForumDiscussionsCallback() {
