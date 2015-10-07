@@ -28,7 +28,14 @@ angular
             $scope.myWindowOfOpportunities = new Array();
             
             $scope.setToolbar($location.$$path, "");
+
+            console.log($location + '- ' + $location.$$path);
+
             $scope.currentPage = 1;
+            if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
+                $scope.currentPage = 2;
+            }               
+            
             $rootScope.showFooter = false;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
@@ -759,11 +766,16 @@ angular
             };
 
             $scope.save = function () {
-                var validationResult = validateModel();  //Valid if validateModel() returns true
+                var isModelValid = true;
 
-                deleteRepeatedValues();
+                //If view is not privacySettings then validate model
+                if ($location.$$path != '/Perfil/ConfigurarPrivacidad') {
+                    var isModelValid = validateModel();  //Valid if validateModel() returns true
 
-                if (validationResult) {
+                    deleteRepeatedValues();
+                }                
+
+                if (isModelValid) {
                     $scope.$emit('ShowPreloader');
                     saveUser();
                 } else {

@@ -81,12 +81,12 @@
 													<h4>Mi información</h4>
 													<ul class="block-list">
 														<li class="form-group-control">
-															<div class="col-xs-9"> 
+															<div class="col-xs-9">                                                                 
 																<label>Datos Generales</label>
-																<span class="type-show" ng-class="{'private': !generalInfo}">{{generalInfo == true ? 'Público' : 'Privado'}}</span>
+																<span class="type-show" ng-class="{'private': !model.showGeneralData}">{{model.showGeneralData == true ? 'Público' : 'Privado'}}</span>
 															</div>
 															<div class="col-xs-3"> 										
-	    														<ui-switch ng-model="generalInfo">
+	    														<ui-switch ng-model="model.showGeneralData">
 	    															<div class="switch-handle"></div>
 	    														</ui-switch>
 	    													</div>
@@ -94,21 +94,21 @@
 														<li class="form-group-control">
 															<div class="col-xs-9"> 
 																<label>Educación</label>
-																<span class="type-show" ng-class="{'private': !schoolarship}">{{schoolarship == true ? 'Público' : 'Privado'}}</span>
+																<span class="type-show" ng-class="{'private': !model.showEducation}">{{model.showEducation == true ? 'Público' : 'Privado'}}</span>
 															</div>
 															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="schoolarship">
+	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showEducation">
 	    															<div class="switch-handle"></div>
 	    														</ui-switch>
 	    													</div>
 														</li>
 														<li class="form-group-control">
 															<div class="col-xs-9"> 
-																<label>Dirección</label>
-																<span class="type-show private">Privado</span>
+																<label>Dirección</label>																
+                                                                <span class="type-show" ng-class="{'private': !model.showAddress}">{{model.showAddress == true ? 'Público' : 'Privado'}}</span>
 															</div>
 															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="address">
+	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showAddress">
 	    															<div class="switch-handle"></div>
 	    														</ui-switch>
 	    													</div>
@@ -116,10 +116,10 @@
 														<li class="form-group-control">
 															<div class="col-xs-9"> 
 																<label>Teléfonos</label>
-																<span class="type-show">Público</span>
+                                                                <span class="type-show" ng-class="{'private': !model.showPhones}">{{model.showPhones == true ? 'Público' : 'Privado'}}</span>
 															</div>
 															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="phone">
+	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showPhones">
 	    															<div class="switch-handle active"></div>
 	    														</ui-switch>
 	    													</div>
@@ -127,10 +127,10 @@
 														<li class="form-group-control">
 															<div class="col-xs-9"> 
 																<label>Redes sociales</label>
-																<span class="type-show">Publico</span>
+                                                                <span class="type-show" ng-class="{'private': !model.showSocialNetworks}">{{model.showSocialNetworks == true ? 'Público' : 'Privado'}}</span>
 															</div>
 															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="socialNet">
+	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showSocialNetworks">
 	    															<div class="switch-handle"></div>
 	    														</ui-switch>
 	    													</div>
@@ -138,10 +138,10 @@
 														<li class="form-group-control">
 															<div class="col-xs-9"> 
 																<label>Familia compartamos</label>
-																<span class="type-show private">Privado</span>
+                                                                <span class="type-show" ng-class="{'private': !model.showFamiliaCompartamos}">{{model.showFamiliaCompartamos == true ? 'Público' : 'Privado'}}</span>
 															</div>
 															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="family">
+	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showFamiliaCompartamos">
 	    															<div class="switch-handle active"></div>
 	    														</ui-switch>
 	    													</div>
@@ -156,10 +156,10 @@
 														<li class="form-group-control">
 															<div class="col-xs-9"> 
 																<label>Mis gustos</label>
-																<span class="type-show">Público</span>
+                                                                <span class="type-show" ng-class="{'private': !model.showLikesAndPreferences}">{{model.showLikesAndPreferences == true ? 'Público' : 'Privado'}}</span>
 															</div>
 															<div class="col-xs-3"> 										
-	    														<ui-switch class="active" ng-model="generalInfo">
+	    														<ui-switch class="active" ng-model="model.showLikesAndPreferences">
 	    															<div class="switch-handle active"></div>
 	    														</ui-switch>
 	    													</div>
@@ -167,10 +167,10 @@
 														<li class="form-group-control">
 																<div class="col-xs-9"> 
 																	<label>Mis cualidades</label>
-																	<span class="type-show private">Privado</span>
+                                                                    <span class="type-show" ng-class="{'private': !model.showAttributesAndQualities}">{{model.showAttributesAndQualities == true ? 'Público' : 'Privado'}}</span>
 																</div>
 																<div class="col-xs-3"> 										
-		    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="schoolarship">
+		    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showAttributesAndQualities">
 		    															<div class="switch-handle"></div>
 		    														</ui-switch>
 		    													</div>
@@ -178,10 +178,10 @@
 														<li class="form-group-control">
 															<div class="col-xs-9"> 
 																<label>A quién admiro</label>
-																<span class="type-show private">Privado</span>
+                                                                <span class="type-show" ng-class="{'private': !model.showWhomAdmires}">{{model.showWhomAdmires == true ? 'Público' : 'Privado'}}</span>
 															</div>
 															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="address">
+	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showWhomAdmires">
 	    															<div class="switch-handle"></div>
 	    														</ui-switch>
 	    													</div>
@@ -195,10 +195,10 @@
 														<li class="form-group-control">
 															<div class="col-xs-9"> 
 																<label>Dispositivos</label>
-																<span class="type-show">Público</span>
+                                                                <span class="type-show" ng-class="{'private': !model.showDevices}">{{model.showDevices == true ? 'Público' : 'Privado'}}</span>
 															</div>
 															<div class="col-xs-3"> 										
-	    														<ui-switch class="active" ng-model="generalInfo">
+	    														<ui-switch class="active" ng-model="model.showDevices">
 	    															<div class="switch-handle active"></div>
 	    														</ui-switch>
 	    													</div>
@@ -206,10 +206,10 @@
 														<li class="form-group-control">
 																<div class="col-xs-9"> 
 																	<label>Videojuegos</label>
-																	<span class="type-show private">Privado</span>
+                                                                    <span class="type-show" ng-class="{'private': !model.showVideogames}">{{model.showVideogames == true ? 'Público' : 'Privado'}}</span>
 																</div>
 																<div class="col-xs-3"> 										
-		    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="schoolarship">
+		    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showVideogames">
 		    															<div class="switch-handle"></div>
 		    														</ui-switch>
 		    													</div>
