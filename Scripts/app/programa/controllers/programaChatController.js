@@ -17,7 +17,8 @@ angular
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
             var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
             _setLocalStorageItem('chatRead', "true");
-            var userId = localStorage.getItem('userId');            
+            var userId = localStorage.getItem('userId');
+            var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
             var messagesToRead = _getItem("currentStage") * 2;
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
@@ -35,7 +36,7 @@ angular
             } 
             else 
             {                
-                moodleFactory.Services.GetUserChat(userId, getUserRefreshChatCallback, errorCallback);             
+                moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback);
                 interval = setInterval(getMessages,60000);                    
                 console.log('creating interval:' + interval);
             }
@@ -96,7 +97,7 @@ angular
                         ClearLocalStorage("Interval");
                     }                
 
-                moodleFactory.Services.GetUserChat(userId,getUserRefreshChatCallback, errorCallback, true);                                                                                            
+                moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                                                                                            
             }
             }   
             

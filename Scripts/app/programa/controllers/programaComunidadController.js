@@ -69,7 +69,7 @@ angular
             function _initCommunity() {
                 
                 $scope.$emit('ShowPreloader');
-                moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, initCommunitySuccessCallback, initCommunityErrorCallback, true);
+                moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, $scope.userToken, initCommunitySuccessCallback, initCommunityErrorCallback, true);
                 
                 function initCommunitySuccessCallback (data, key) {
                     $scope.discussion = data.discussions[0];

@@ -127,7 +127,7 @@
                 
             if ($scope.discussion == null || $scope.forumId == null) {
                 
-                moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, function(data, key) {
+                moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, $scope.currentUser.token, function(data, key) {
                     
                     $scope.discussion = data.discussions[0];
                     $scope.forumId = data.forumid;

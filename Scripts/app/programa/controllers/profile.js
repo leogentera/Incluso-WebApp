@@ -22,7 +22,8 @@ angular
             
             $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
             $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
-            
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        
             $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
             $scope.myStrengths = new Array();
             $scope.myWindowOfOpportunities = new Array();
@@ -40,6 +41,7 @@ angular
             $scope.showShareAchievementMessage = false;
             $scope.showSharedAchievement = false;
             $scope.hasCommunityAccess = false;
+            
             
             $scope.$emit('ShowPreloader');
 
@@ -297,8 +299,9 @@ angular
 
 
             function getDataAsync(callback) {
-
-                moodleFactory.Services.GetAsyncProfile($scope.userId, function () {
+                
+                
+                moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
 
                     $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
                     if ($scope.model.profileimageurl) {
@@ -311,7 +314,7 @@ angular
                     
                     callback();
 
-                    moodleFactory.Services.GetAsyncAvatar($scope.userId, getAvatarInfoCallback, function () { }, true);
+                    moodleFactory.Services.GetAsyncAvatar($scope.userId, currentUser.token, getAvatarInfoCallback, function () { }, true);
 
                     if (!$scope.model) {
                         $location.path('/');
@@ -1306,7 +1309,7 @@ angular
                 
                     if ($scope.discussion == null || $scope.forumId == null) {
                         
-                        moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, function(data, key) {
+                        moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, currentUser.token, function(data, key) {
                             $scope.discussion = data.discussions[0];
                             $scope.forumId = data.forumid;
                             

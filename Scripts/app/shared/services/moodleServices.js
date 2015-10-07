@@ -2,8 +2,8 @@
     namespace('moodleFactory');
 
     moodleFactory.Services = (function () {
-        var _getAsyncProfile = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("profile/" + userId, API_RESOURCE.format('user/' + userId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncProfile = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("profile/" + userId, API_RESOURCE.format('user/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncProfile = function (userId, data, successCallback, errorCallback, forceRefresh) {
@@ -15,20 +15,20 @@
             _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback);
         };
 
-        var _getAsyncAvatarInfo = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("avatarInfo", API_RESOURCE.format('avatar/' + userId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncAvatarInfo = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("avatarInfo", API_RESOURCE.format('avatar/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncActivityInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _getAsyncForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
             _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
         
-        var _getAsyncForumDiscussions = function (coursemoduleid, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), successCallback, errorCallback, forceRefresh);
+        var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
         };
         
         var _getAsyncDiscussionPosts = function(token, discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
@@ -42,38 +42,38 @@
             _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + '/user/' + userId), successCallback, errorCallback);
         };
 
-        var _getAsyncActivitiesInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncActivitiesInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityQuizInfo = function (activityId, userId, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncActivityQuizInfo = function (activityId, userId, token, successCallback, errorCallback, forceRefresh) {
             if (userId != -1) {
-                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId + '?userid=' + userId), successCallback, errorCallback, forceRefresh);
+                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId + '?userid=' + userId), token, successCallback, errorCallback, forceRefresh);
             }
             else {
-                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
+                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
             }
         };
 
-        var _getAsyncActivityForumInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncActivityForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _getAsyncCourse = function (courseId, successCallback, errorCallback, forceRefresh) {
             successCallback();
         };
 
-        var _getAsyncLeaderboard = function (courseId, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncLeaderboard = function (courseId, token, successCallback, errorCallback, forceRefresh) {
             successCallback();
-            _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), successCallback, errorCallback, forceRefresh);
+            _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncQuiz = function (activityId, data, successCallback, errorCallback, forceRefresh) {
             _putAsyncData("activity/" + activityId, data, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };
 
-        var _getUserNotifications = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("notifications", API_RESOURCE.format('notification/' + userId), successCallback, errorCallback, forceRefresh);
+        var _getUserNotifications = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("notifications", API_RESOURCE.format('notification/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _postUserNotifications = function (userId, data, successCallback, errorCallback, forceRefresh) {
@@ -92,8 +92,8 @@
             _putAsyncData(null, data, API_RESOURCE.format('notification/') + notificationId, successCallback, errorCallback);
         };
 
-        var _getUserChat = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId), successCallback, errorCallback, forceRefresh);
+        var _getUserChat = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putUserChat = function (userId, data, successCallback, errorCallback) {
@@ -119,8 +119,8 @@
             _putDataNoCache(data, API_RESOURCE.format('forum/' + postId), successCallback, errorCallback);
         };
 
-        var _getAsyncAlbum = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncAlbum = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _getCacheObject = function (key) {
@@ -136,7 +136,7 @@
             }
         };
 
-        var _getAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {            
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
@@ -147,9 +147,10 @@
             _httpFactory({
                 method: 'GET',
                 url: url,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' , 'Authorization': token}
             }).success(function (data, status, headers, config) {
                 _setLocalStorageJsonItem(key, data);
+                console.log("success getAsyncData using token authorization");
                 successCallback(data, key);
             }).error(function (data, status, headers, config) {
                 errorCallback(data);

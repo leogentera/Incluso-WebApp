@@ -44,15 +44,15 @@ angular
             }];
 
             function getDataAsync() {
-
-                moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
-                var m = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-                if (!m) {
+                var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+                moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), currentUser.token , getAvatarInfoCallback);
+                
+                if (!currentUser) {
                     $location.path('/');
                     return "";
                 }
 
-                return m;
+                return currentUser;
             }
 
             function getAvatarInfoCallback(){
