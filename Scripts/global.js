@@ -817,7 +817,8 @@ function updateActivityStatus(activity_identifier) {
     return theUserCouerseUpdated;
 }
 
-function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId) {
+function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
+    firstActivityLock = (firstActivityLock === undefined ? true : firstActivityLock);
     var breakAll = false;
     var subactivitiesCompleted = 0;
     var theUserCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -828,10 +829,10 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
             for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                 var activity = challenge.activities[activityIndex];
                 if (activity.activities && activity.activity_identifier == parentActivity.activity_identifier) {
-                    if (activity.status == 1) {
+                    if (activity.status == 1 && firstActivityLock) {
                         breakAll = true;
                         break;
-                    } else if(activity.activities.length == subactivitiesCourseModuleId.length) {
+                    } else if(activity.activities.length == subactivitiesCourseModuleId.length || !firstActivityLock) {
                         activity.status = 1;
                     }
                     for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {
@@ -862,7 +863,7 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
     return theUserCourse;
 }
 
-function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId) {
+function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var stars = 0;
@@ -873,7 +874,7 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
             }
         }
     }
-    stars += (subactivitiesCourseModuleId.length == parentActivity.activities.length ? parentActivity.points : 0);
+    stars += (subactivitiesCourseModuleId.length == parentActivity.activities.length || !firstActivityLock ? parentActivity.points : 0);
     profile.stars = parseInt(profile.stars) + stars;
     currentUser.stars = profile.stars;
     if (stars > 0) {
