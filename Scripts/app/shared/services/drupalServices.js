@@ -7,7 +7,7 @@
         
         var _getContent = function (activityIdentifierId, sucessCallback, errorCallback, forceRefresh) {
             
-            _getAsyncData("drupal_content_" + activityIdentifierId, API_RESOURCE.format(activityIdentifierId), successCallback, errorCallback, forceRefresh);
+            _getAsyncData("drupal/content/" + activityIdentifierId, API_RESOURCE.format(activityIdentifierId), successCallback, errorCallback, forceRefresh);
         };
         
         var _getAsyncData = function (key, url, activityIdentifierId, successCallback, errorCallback, forceRefresh) {
