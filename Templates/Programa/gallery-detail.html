@@ -1,0 +1,98 @@
+<div class="incluso-app step-dashboard comments-forum gallery-detail" id="site-wrapper">
+    <article class="blueprint community">
+        <div class="title-section">
+            <h3>Foro Común</h3>
+        </div>
+        <section class="wall">
+            <div class="part post">
+                <div class="author">
+                    <img src="assets/images/img-avatar-placeholder.svg" alt="user" />
+                    <div>
+                        <a class="user-alias">Hector Martinez</a>
+                        <span>publicó:</span>
+                        <div>05 de octubre, 2015</div>
+                    </div>
+                </div>
+                <div class="block-not post-contents">
+                    <div>
+                        <p>¡Les comparto unas fotos que tomé!</p>
+                        <div class="achievement-badge" id="gallery-carousel">
+                            <div class="item">
+                                <img src="assets/images/ptr-video-0001.jpg"  alt="post" />
+                            </div>
+                            <div class="item">
+                                <img src="assets/images/ptr-video-0001.jpg"  alt="post" />
+                            </div>
+                            <div class="item">
+                                <img src="assets/images/ptr-video-0001.jpg"  alt="post" />
+                            </div>
+                        </div>
+                        <div class="control-panel">
+                            <a class="control back" href="#" id="prev">
+		                        <span class="icomoon icon-arrow-bold-left"></span>
+	                        </a>
+                            <p class="text-center">
+                                <span class="currentItem"></span>
+                                <span>/</span>
+                                <span class="total-number"></span>
+                            </p>
+	                        <a class="control next" href="#" id="next">
+		                        <span class="icomoon icon-arrow-bold-right"></span>
+	                        </a>
+                        </div>
+                    </div>           
+                </div>
+            </div>
+            <br>
+            <section>
+                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
+            </section>
+        </section>
+    </article>
+    <script>
+        $(document).ready(function () {
+            galleryFunctions = {
+                "init": function (gallery) {
+                    gallery.owlCarousel({
+                        navigation: false,
+                        pagination: false,
+                        paginationSpeed: 1000,
+                        goToFirstSpeed: 2000,
+                        singleItem: false,
+                        autoHeight: true,
+                        touchDrag: true,
+                        mouseDrag: false,
+                        transitionStyle: "fade",
+                        afterAction: galleryFunctions.afterAction,
+                        afterInit: galleryFunctions.initCarousel
+                    });
+                    $(".control.next").click(function (e) {
+                        if (!$(this).hasClass("disable"))
+                            gallery.trigger('owl.next');
+                        e.preventDefault();
+                    });
+                    $(".control.back").click(function (e) {
+                        if (!$(this).hasClass("disable"))
+                            gallery.trigger('owl.prev');
+                        e.preventDefault();
+                    });
+                },
+                "initCarousel": function () {
+                    $(".total-number").text(this.owl.owlItems.length);
+                },
+                "afterAction": function () {
+                    var item = this.owl.currentItem;
+                    var total = this.owl.owlItems.length;
+                    if (item === 0)
+                        $(".control.back").addClass("disable");
+                    else if (item === total - 1)
+                        $(".control.next").addClass("disable");
+                    else
+                        $(".control.back, .control.next").removeClass("disable");
+                    $(".currentItem").text(item + 1);
+                }
+            }
+            galleryFunctions.init($("#gallery-carousel"));
+        });
+</script>
+</div>

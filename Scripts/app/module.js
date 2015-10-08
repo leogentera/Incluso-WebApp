@@ -699,6 +699,10 @@
             templateUrl: 'Templates/Programa/ChangeOfTerms.html'
         });
 
+        $routeProvider.when('/GalleryDetail', {
+            templateUrl: 'Templates/Programa/gallery-detail.html'
+        });
+
         $routeProvider.otherwise({
         	redirectTo: '/'
         });
