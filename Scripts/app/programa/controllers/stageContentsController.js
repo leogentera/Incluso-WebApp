@@ -94,12 +94,15 @@ angular
             var starsMandatory = 0;
             var getcoursemoduleids = [];
             $scope.like_status = 1;
+            var activitymanagers = [];
 
             if (!activities) {
-                var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
+                activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
+
                 $scope.fuenteDeEnergia = _.find(activitymanagers, function (a) {
                     return a.activity_identifier == moduleid
                 });
+                console.log($scope.fuenteDeEnergia);
                 getDataAsync();
             }
             else {
@@ -217,13 +220,28 @@ angular
             }
 
             $scope.updateStatus = function (contentId) {
+                
                 for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                     if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                         if (!$scope.fuenteDeEnergia.activities[i].status) {
                             $scope.fuenteDeEnergia.activities[i].status = true;
+                            
+                            // Update activityManagers
+                            for (var am = 0; am < activitymanagers.length; am++) {
+                                 if (activitymanagers[am].activity_identifier == moduleid) {
+                                    var fuenteDeEnergiaManager = activitymanagers[am];
+                                    
+                                    for(var fem = 0; fem < fuenteDeEnergiaManager.activities.length; fem++){
+                                        if (fuenteDeEnergiaManager.activities[fem].groupid == contentId) {
+                                            fuenteDeEnergiaManager.activities[fem].status = true;
+                                        }
+                                    }
+                                 }
+                            }
 
                             var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
                             _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
+                            _setLocalStorageJsonItem("activityManagers", activitymanagers);
                             _endActivity($scope.fuenteDeEnergia.activities[i]);
                             if (!$scope.fuenteDeEnergia.activities[i].optional) {
                                 $scope.statusObligatorios += 1;

@@ -512,13 +512,13 @@ var _createNotification = function (activityId, triggerActivity) {
 
     var allNotifications = JSON.parse(localStorage.getItem("notifications"));
 
-    for (var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++) {
-        var currentNotification = allNotifications[indexNotifications];
+    for (var i = 0; i < allNotifications.length; i++) {
+        var currentNotification = allNotifications[i];
         if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId) {
-            allNotifications[indexNotifications].timemodified = new Date();
+            allNotifications[i].timemodified = new Date();
             _setLocalStorageJsonItem("notifications", allNotifications);
             var dataModelNotification = {
-                notificationid: allNotifications[indexNotifications].id,
+                notificationid: allNotifications[i].id,
                 timemodified: new Date(),
                 userid: currentUserId,
                 already_read: 0
@@ -587,6 +587,27 @@ var _coachNotification = function (stageIndex) {
     }
 };
 
+
+var _generalNotification = function(){  
+    var notifications = JSON.parse(localStorage.getItem("notifications"));
+    var userId = localStorage.getItem('userId');
+    //trigger activity 4: general notification
+    var triggerActivity = 4;
+    
+    var notificationGeneral = _.filter(notifications, function (notif) {
+        if (notif.id == 13 || notif.id == 14 || notif.id == 15) {
+            return notif;
+        } else {
+        }
+    });
+
+    for(var i = 0; i <= notificationGeneral.length; i++)
+    {
+      if (notificationGeneral[i] && !notificationGeneral[i].timemodified) {                          
+          _createNotification(notificationGeneral[i].activityidnumber, triggerActivity);
+      }
+    }  
+}
 
 var successPutStarsCallback = function (data) {
     _updateRewardStatus();
@@ -815,7 +836,8 @@ function updateActivityStatus(activity_identifier) {
     return theUserCouerseUpdated;
 }
 
-function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId) {
+function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
+    firstActivityLock = (firstActivityLock === undefined ? true : firstActivityLock);
     var breakAll = false;
     var subactivitiesCompleted = 0;
     var theUserCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -826,10 +848,10 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
             for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                 var activity = challenge.activities[activityIndex];
                 if (activity.activities && activity.activity_identifier == parentActivity.activity_identifier) {
-                    if (activity.status == 1) {
+                    if (activity.status == 1 && firstActivityLock) {
                         breakAll = true;
                         break;
-                    } else if(activity.activities.length == subactivitiesCourseModuleId.length) {
+                    } else if(activity.activities.length == subactivitiesCourseModuleId.length || !firstActivityLock) {
                         activity.status = 1;
                     }
                     for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {
@@ -860,7 +882,7 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
     return theUserCourse;
 }
 
-function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId) {
+function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var stars = 0;
@@ -871,7 +893,7 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
             }
         }
     }
-    stars += (subactivitiesCourseModuleId.length == parentActivity.activities.length ? parentActivity.points : 0);
+    stars += (subactivitiesCourseModuleId.length == parentActivity.activities.length || !firstActivityLock ? parentActivity.points : 0);
     profile.stars = parseInt(profile.stars) + stars;
     currentUser.stars = profile.stars;
     if (stars > 0) {

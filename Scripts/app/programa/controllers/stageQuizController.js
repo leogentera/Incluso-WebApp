@@ -503,14 +503,14 @@ angular
 
                     $scope.isDisabled = true;
 
-                    //Update Activity Log Service
-                    if ($scope.activity_status == 0) {
-                        $scope.activity_status = 1;
-                        console.log("Update Activity Log : " + $scope.activity_identifier);
+                    ////Update Activity Log Service
+                    //if ($scope.activity_status == 0) {
+                    //    $scope.activity_status = 1;
+                    //    console.log("Update Activity Log : " + $scope.activity_identifier);
 
-                        updateUserStars($scope.parentActivity.activity_identifier);
-                        //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
-                    }
+                    //    updateUserStars($scope.parentActivity.activity_identifier);
+                    //    //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
+                    //}
 
                     if ($scope.childActivity) {
                         $scope.AnswersResult.activityidnumber = $scope.childActivity.coursemoduleid;
@@ -714,6 +714,16 @@ angular
                         //$scope.$parent.loading = false;
                         //emit('HidePreloader');
                         //$scope.spinnerVar = false;
+
+                        //Update Activity Log Service
+                        if ($scope.activity_status == 0) {
+                            $scope.activity_status = 1;
+                            console.log("Update Activity Log : " + $scope.activity_identifier);
+
+                            updateUserStars($scope.parentActivity.activity_identifier);
+                            //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
+                        }
+
                         $location.path(destinationPath);
                     },
                     function (responseData) {
