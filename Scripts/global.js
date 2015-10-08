@@ -597,7 +597,7 @@ var _generalNotification = function(){
     var triggerActivity = 4;
     
     var notificationGeneral = _.filter(notifications, function (notif) {
-        if (notif.id == 13 || notif.id == 14 ) {
+        if (notif.id == 13 || notif.id == 14 || notif.id == 15) {
             return notif;
         } else {
         }
