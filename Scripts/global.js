@@ -514,13 +514,13 @@ var _createNotification = function (activityId, triggerActivity) {
 
     var allNotifications = JSON.parse(localStorage.getItem("notifications"));
 
-    for (var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++) {
-        var currentNotification = allNotifications[indexNotifications];
+    for (var i = 0; i < allNotifications.length; i++) {
+        var currentNotification = allNotifications[i];
         if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId) {
-            allNotifications[indexNotifications].timemodified = new Date();
+            allNotifications[i].timemodified = new Date();
             _setLocalStorageJsonItem("notifications", allNotifications);
             var dataModelNotification = {
-                notificationid: allNotifications[indexNotifications].id,
+                notificationid: allNotifications[i].id,
                 timemodified: new Date(),
                 userid: currentUserId,
                 already_read: 0
@@ -589,6 +589,27 @@ var _coachNotification = function (stageIndex) {
     }
 };
 
+
+var _generalNotification = function(){  
+    var notifications = JSON.parse(localStorage.getItem("notifications"));
+    var userId = localStorage.getItem('userId');
+    //trigger activity 4: general notification
+    var triggerActivity = 4;
+    
+    var notificationGeneral = _.filter(notifications, function (notif) {
+        if (notif.id == 13 || notif.id == 14 ) {
+            return notif;
+        } else {
+        }
+    });
+
+    for(var i = 0; i <= notificationGeneral.length; i++)
+    {
+      if (notificationGeneral[i] && !notificationGeneral[i].timemodified) {                          
+          _createNotification(notificationGeneral[i].activityidnumber, triggerActivity);
+      }
+    }  
+}
 
 var successPutStarsCallback = function (data) {
     _updateRewardStatus();

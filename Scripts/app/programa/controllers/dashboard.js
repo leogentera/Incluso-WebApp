@@ -214,7 +214,9 @@
             }
 
             function getUserNotifications(callback){
-                moodleFactory.Services.GetUserNotification(_getItem("userId"), callback, errorCallback);
+                moodleFactory.Services.GetUserNotification(_getItem("userId"), function(){
+                        _generalNotification();
+                    }, errorCallback);
             }
 
             function getUserChat(callback) {                
@@ -249,8 +251,8 @@
                     _setLocalStorageItem('chatAmountRead',chatAmount.true);
                 }, errorCallback, false);                
             }
+                                    
             
-
             //Open Welcome Message modal
             $scope.openModal = function (size) {
                     var modalInstance = $modal.open({
