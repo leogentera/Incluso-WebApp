@@ -125,10 +125,11 @@
 
                     </div>
                   </div>
-                  <div class="interact hidden">
-                    <div class="col-xs-6 like">
+                  <div class="interact">                    
+                    <div class="col-xs-6 like"  ng-click="likeSubActivity(activity.groupid)">
                       <span class="icomoon icon-like"></span>
-                      <span>Me gusta</span>
+                      <span ng-hide="activity.activityContent.liked">Me gusta</span>
+                      <span ng-show="activity.activityContent.liked">Ya no me gusta</span>
                     </div>
                     <div class="col-xs-6 comment">
                       <span class="icomoon icon-comment"></span>
