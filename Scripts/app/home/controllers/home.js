@@ -108,6 +108,10 @@
                 $location.hash(element);
                 $anchorScroll();      
             };
+			
+			$scope.getContentResources = function(activityIdentifierId, successCallback, errorCallback, forceRefresh) {
+				drupalFactory.Services.GetContent(activityIdentifierId, successCallback, errorCallback, forceRefresh);
+			};
             
             //*******************************************************************
             /*
