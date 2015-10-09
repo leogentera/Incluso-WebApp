@@ -131,7 +131,7 @@ angular
                             var questionAnswer = _.find(activityAnswer.questions, function (a) { return a.id == q.id });
                             if (questionAnswer) {
                                 var userAnswer = questionAnswer.userAnswer;
-                                respuesta.respuesta = ( userAnswer.indexOf(";") > -1 ? userAnswer.split(";") : userAnswer );
+                                respuesta.respuesta = ( userAnswer.indexOf(";") > -1 || i == 2 ? (userAnswer != "" ? userAnswer.split(";") : []) : userAnswer );
                             }
                         }
                         proyecto.respuestas.push(respuesta);
@@ -297,14 +297,14 @@ angular
                         if ($scope.pathImagenFicha != "" && parentStatus) {
                             //var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                             moodleFactory.Services.GetAsyncForumDiscussions(85, function(data, key) {
-                                $scope.discussion = data.discussions[0];
+                                var discussion = (data.discussions[1] ? data.discussions[1] : "");
                                 $scope.forumId = data.forumid;
 
                                 encodeImageUri($scope.pathImagenFicha, function (b64) {
                                     var requestData = {
                                         "userid": $scope.user.id,
-                                        "discussionid": $scope.discussion.discussion,
-                                        "parentid": $scope.discussion.id,
+                                        "discussionid": discussion.discussion,
+                                        "parentid": discussion.id,
                                         "message": "Mi mapa de vida",
                                         "createdtime": quiz.startingTime,
                                         "modifiedtime": quiz.endingTime,
