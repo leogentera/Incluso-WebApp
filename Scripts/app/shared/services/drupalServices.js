@@ -1,13 +1,15 @@
 (function () {
     namespace('drupalFactory');
+    
+    drupalFactory.NodesRelation = {
+        "1101": 22
+    };
 
     drupalFactory.Services = (function () {
         
-        var API_RESOURCE = "http://app.incluso.com.mx/drupal/rest/node/{0}"; /* Nora */
-        
         var _getContent = function (activityIdentifierId, sucessCallback, errorCallback, forceRefresh) {
             
-            _getAsyncData("drupal/content/" + activityIdentifierId, API_RESOURCE.format(activityIdentifierId), successCallback, errorCallback, forceRefresh);
+            _getAsyncData("drupal/content/" + activityIdentifierId, DRUPAL_API_RESOURCE.format(activityIdentifierId), successCallback, errorCallback, forceRefresh);
         };
         
         var _getAsyncData = function (key, url, activityIdentifierId, successCallback, errorCallback, forceRefresh) {
