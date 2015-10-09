@@ -143,25 +143,32 @@ angular
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     extraPoints *= 50;
                     resetForumDiscussionsProgress();
-                    switch ($scope.moodleId) {
-                        case "149":
+                    switch (Number($scope.moodleId)) {
+                        case 73:
+                            $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
+                            break;
+                        case 64:
+                            $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
+                            break;
+                        case 149:
                                 $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
                             break;
-                        case "148":
+                        case 148:
                                 $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
                             break;
-                        case "147":
+                        case 147:
                                 $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
                             break;
 
-                        case "179":
+                        case 179:
                                 $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178 +'/'+ extraPoints);
                             break;
-                        case "85":
+                        case 85:
                             $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ extraPoints);
                             break;
                         default :
                             $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints);
+                            break;
                         $scope.scrollToTop();
                     }
                 } else {

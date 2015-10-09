@@ -91,7 +91,7 @@
               <span ng-switch-default>{{ p.message }}</span>
               <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>
               <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
-              <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>
+              <span ng-switch-when="4"><a ng-href="{{p.fileurl + '?token=' + userToken}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>
             </span>
             <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
             </div>

@@ -135,8 +135,8 @@ angular
                             _.each(activityAnswers.questions, function(q){
                                 for (var key in proyecto) {
                                     if (key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 && key != "proyectoId") {
-                                        if(q.userAnswer.indexOf(";") > -1){
-                                            proyecto[key] = q.userAnswer.split(";");
+                                        if(q.userAnswer.indexOf(";") > -1 || typeof proyecto[key] == 'object'){
+                                            proyecto[key] = (q.userAnswer != "" ? q.userAnswer.split(";") : []);
                                             _.each(proyecto[key], function (a) { a.trim(); });
                                         }else{
                                             proyecto[key] = q.userAnswer;
