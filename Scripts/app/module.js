@@ -508,7 +508,7 @@
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:activityId/:extraPoints', {
+        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:extraPoints', {
             templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -630,7 +630,7 @@
             controller: 'stageQuizController'
         });
 
-        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activity_identifier/:activityId/extraPoints', {
+        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activityId/:discussionId/:extraPoints/:moodleId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
