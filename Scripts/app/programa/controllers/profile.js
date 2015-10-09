@@ -55,7 +55,7 @@ angular
 
             getDataAsync(function () {
 
-                getContent();
+                //getContent();
 
                 /////// privacy settings initial switches [boolean]/////////
                 $scope.generalInfo = true;
@@ -1385,8 +1385,12 @@ angular
                 console.log(drupalFactory);
                 var nodeRelation = drupalFactory.NodeRelation["7001"];
                 
-                $scope.getContentResources(nodeRelation, function (data, key) { console.log(data); }, function () { }, true);
-
+                $scope.getContentResources(nodeRelation,
+                    function (data, key) {
+                        console.log(data);
+                    },
+                    function () {
+                    }, true);
             }
             
             $scope.scrollToTop();
