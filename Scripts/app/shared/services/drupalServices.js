@@ -1,8 +1,9 @@
 (function () {
     namespace('drupalFactory');
     
-    drupalFactory.NodesRelation = {
-        "1101": 22
+    drupalFactory.NodeRelation = {
+        "1101": 22,
+        "7001": 26 //Profile
     };
 
     drupalFactory.Services = (function () {
