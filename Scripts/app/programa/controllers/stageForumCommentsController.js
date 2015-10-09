@@ -144,6 +144,9 @@ angular
                     extraPoints *= 50;
                     resetForumDiscussionsProgress();
                     switch (Number($scope.moodleId)) {
+                        case 73:
+                            $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
+                            break;
                         case 64:
                             $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
                             break;
