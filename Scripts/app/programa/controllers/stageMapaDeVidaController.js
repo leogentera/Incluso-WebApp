@@ -36,6 +36,7 @@ angular
             $scope.pathImagenFicha = "";
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var activitiesPosted = 0;
+            var activitiesAtLeastOne = 0;
 
             for(var key in localStorage){  
                 if(key.indexOf("mapaDeVidaAnswers") > -1 && key.indexOf($scope.user.id) < 0){
@@ -193,8 +194,8 @@ angular
                             	}
                             }
                             logEntry.answers.push([getAnswer(respuesta.respuesta, false)]);
-                            logEntry.at_least_one = ( ( respuesta.respuesta && respuesta.respuesta != "" ) || logEntry.at_least_one );
-                            logEntry.quiz_answered = ( respuesta.respuesta && respuesta.respuesta != "" && logEntry.quiz_answered );
+                            logEntry.at_least_one = ( ( respuesta.respuesta != undefined && respuesta.respuesta != "" ) || logEntry.at_least_one );
+                            logEntry.quiz_answered = ( respuesta.respuesta != undefined && respuesta.respuesta != "" && logEntry.quiz_answered );
                         };
                         logEntry.coursemoduleid = dimension.dimensionId;
                         logEntry.startingTime = data.fecha_inicio;
@@ -246,6 +247,7 @@ angular
                     $scope.$emit('ShowPreloader');
                     for (var i = 0; i < quizzesRequests.length; i++) {
                         if (quizzesRequests[i].at_least_one) {
+                            activitiesAtLeastOne++;
                             var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
                             $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, (parent_finished));
                         }
@@ -291,7 +293,7 @@ angular
                 };             
                 _endActivity(activityModel, function(){
                     activitiesPosted++;
-                    if (activitiesPosted == $scope.mapaDeVidaAnswers.length) {
+                    if (activitiesPosted == activitiesAtLeastOne) {
                         if ($scope.pathImagenFicha != "" && parentStatus) {
                             //var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                             moodleFactory.Services.GetAsyncForumDiscussions(85, function(data, key) {
