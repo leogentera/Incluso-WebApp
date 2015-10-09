@@ -344,7 +344,7 @@ angular
                         $scope.activityFinished = activityFinished;
 
                         if (localAnswers == null) {// If activity not exists in Local Storage...get it from Server
-                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, currentUser.token, successfullCallBack, errorCallback, true);
+                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, successfullCallBack, errorCallback, true);
                         }
                         else {//Angular-bind the answers in the respective HTML template
 
@@ -1049,7 +1049,7 @@ angular
 
                 if (quizIsValid) {
                     //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
-                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, currentUser.token, partialSuccessfullCallBack, partialErrorCallback, true);
+                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, partialSuccessfullCallBack, partialErrorCallback, true);
 
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
@@ -1349,7 +1349,7 @@ angular
                     $scope.scrollToTop();
                     //GET request to get activity; like for example: http://incluso.definityfirst.com/RestfulAPI/public/activity/159?userid=542
                     console.log("The coursemoduleid = " + $scope.coursemoduleid);
-                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, currentUser.token, partialSuccessfullCallBackStage2, partialErrorCallbackStage2, true);
+                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, partialSuccessfullCallBackStage2, partialErrorCallbackStage2, true);
                 } else {
                     $scope.showWarning = true;
                     $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
@@ -1554,7 +1554,7 @@ angular
                     $scope.scrollToTop();
                     //GET request to get activity; like for example: http://incluso.definityfirst.com/RestfulAPI/public/activity/159?userid=542
                     console.log("The coursemoduleid = " + $scope.coursemoduleid);
-                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, currentUser.token, partialSuccessfullCallBackStage3, partialErrorCallbackStage3, true);
+                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, partialSuccessfullCallBackStage3, partialErrorCallbackStage3, true);
                 } else {
                     $scope.showWarning = true;
                     $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";

@@ -1381,8 +1381,6 @@ angular
             };
 
             function getContent() {
-
-                console.log(drupalFactory);
                 var nodeRelation = drupalFactory.NodeRelation["7001"];
                 
                 $scope.getContentResources(nodeRelation,
