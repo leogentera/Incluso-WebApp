@@ -17,6 +17,9 @@ angular
             _timeout = $timeout;
             
             var _course = moodleFactory.Services.GetCacheJson("course");
+
+            var content = drupalFactory.Services.GetContent("7001");
+
             $scope.discussion = null;
             $scope.forumId = null;
             
