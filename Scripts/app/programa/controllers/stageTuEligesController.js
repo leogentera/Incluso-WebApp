@@ -185,7 +185,6 @@ angular
                         parentActivity.status = 1;
                         _endActivity(parentActivity, function(){ });
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
-                        debugger;
                         updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     }
                 }
