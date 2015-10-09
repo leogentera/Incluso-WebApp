@@ -508,7 +508,7 @@
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:extraPoints', {
+        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:discussionId/:extraPoints/:moodleId', {
             templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
             controller: 'stageForumCloseController'
         });

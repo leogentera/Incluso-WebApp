@@ -167,10 +167,10 @@ angular
                             $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178 +'/'+ extraPoints);
                             break;
                         case 197:
-                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ extraPoints);
+                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
                             break;
                         case 85:
-                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ extraPoints);
+                            $location.path('/ZonaDeNavegacion/ForoCierre/'+ $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
                             break;
                         default :
                             $location.path('/ZonaDeAterrizaje/ForoCierre/'+ $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
