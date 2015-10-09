@@ -1044,6 +1044,7 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
     ClearLocalStorage("activity");
+    ClearLocalStorage("drupal"); //If content must be refreshed every time user log in - TODO: Is better to not delete this info and create a process to uptated? 
     ClearLocalStorage("activitiesCache");
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
