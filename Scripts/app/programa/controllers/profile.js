@@ -326,7 +326,7 @@ angular
                     
                     callback();
 
-                    moodleFactory.Services.GetAsyncAvatar($scope.userId, currentUser.token, getAvatarInfoCallback, function () { }, true);
+                    moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () { }, true);
 
                     if (!$scope.model) {
                         $location.path('/');
