@@ -27,11 +27,15 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+            
+            console.log("moodle id" + $scope.moodleId);
 
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
             $scope.moodleId;
+            console.log($routeParams.activityId);
             Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId     : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+            console.log("$scope.moodleId" + $scope.moodleId);
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
             $scope.currentDiscussionsIds = loadCurrentDiscussions();
             $scope.currentDiscussionsExtraPoints;
@@ -140,9 +144,13 @@ angular
                             updateUserStars($routeParams.activityId, 50 );
                         }
                     }
+                    console.log("isActivityFinished " + isActivityFinished);
+                    console.log("activityFromTree.status " + activityFromTree.status);
+
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     extraPoints *= 50;
                     resetForumDiscussionsProgress();
+                    console.log("before switch " + $scope.moodleId);
                     switch (Number($scope.moodleId)) {
                         case 73:
                             $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
@@ -161,10 +169,12 @@ angular
                             break;
 
                         case 179:
-                                $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178 +'/'+ extraPoints);
+                                console.log("location path");
+                                $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
                             break;
                         case 178:
-                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ 178 +'/'+ extraPoints);
+                            console.log("location path 178");
+                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
                             break;
                         case 197:
                             $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ extraPoints +'/'+ $routeParams.moodleId);
