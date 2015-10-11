@@ -62,15 +62,30 @@ angular
                 console.log(activities);
                 
                 var finishChildCounter = 0;
-                if (activities) {
+                if (activities){
+                    
                     for(var i = 0; i < activities.length; i++) {
-                     moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
-                            finishChildCounter++;
+                        
+                        console.log("antes de if " + $routeParams.moodleId);
+                        console.log("iguales: " + (activities[i].coursemoduleid == $routeParams.moodleId));
+                        if ($routeParams.moodleId == 147 || $routeParams.moodleId == 148) {
                             
-                            if (finishChildCounter == activities.length) {
-                                endParentActivity();
+                            if (activities[i].coursemoduleid == $routeParams.moodleId) {
+                                moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
+                                    
+                                    endParentActivity();
+                                });
                             }
-                        });
+                            
+                        }else {
+                            moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
+                                finishChildCounter++;
+                                
+                                if (finishChildCounter == activities.length) {
+                                    endParentActivity();
+                                }
+                            });
+                        }
                     }
                 }else{
                     endParentActivity();
