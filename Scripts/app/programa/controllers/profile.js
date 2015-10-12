@@ -89,7 +89,7 @@ angular
                 $rootScope.showToolbar = true;
                 $rootScope.showFooter = true;
                 $scope.genderItems = ['Masculino', 'Femenino'];
-                $scope.countryItems = ['México', 'Guatemala', 'Costa Rica', 'Perú', 'Brasil'];
+                $scope.countryItems = ['México', 'Otro'];
                 $scope.cityItems = ['México D.F.', 'Guadalajara', 'Monterrey', 'Villa hermosa'];
                 $scope.stateItems = ['Distrito Federal', 'Coahuila', 'Jalisco', 'México', 'Nuevo León'];
                 $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
@@ -113,6 +113,7 @@ angular
                 $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora'];
                 $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
                 $scope.videoGamesFrecuencyList = ['Diario', '3 veces a la semana', '1 vez a la semana', '1 o 2 veces al mes', 'Nunca'];
+                $scope.videogamesHoursList = ['0-2', '2.5 a 4', '4.5 a 6', '6.5 a 8', 'Más de 8'];
                 $scope.kindOfVideoGamesList = ['Acción', 'Deportes', 'Violencia', 'Aventura', 'Reto', 'Estrategia', 'Educativos', 'Peleas'];
                 $scope.socialNetworksList = ['Facebook', 'Instagram', 'Twitter'];
                 $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política'];
