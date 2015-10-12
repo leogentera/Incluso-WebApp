@@ -60,8 +60,14 @@
       </div>
       <div id="openModal3" class="modalDialog" collapse="forumModals['isVideoCollapsed']">
         <div>
-          <div class="add"><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar ruta de tu peli..." value="" ng-model="videoToPost" /></div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postVideoToForum()" >Compartir</a>
+            <form name="postVideoUrlForm">
+                <div class="add">
+                  <span class="icomoon icon-edit"></span>
+                  <input type="url" name="videoUrlToPost" placeholder="Agregar tu enlace de video..." ng-model="videoToPost" required />
+                </div>
+                <div class="error txt-renglon" ng-show="postVideoUrlForm.videoUrlToPost.$error.url">Link invalido, introduzca una URL con el formato http://exemplo.com </div>
+                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postVideoToForum()" ng-disabled="!postVideoUrlForm.videoUrlToPost.$valid" >Compartir</a>
+            </form>
         </div>
       </div>
 
@@ -77,7 +83,9 @@
     <section class="wall">
       <div id="item{{$index}}" ng-repeat="p in posts">
         <div class="part">
-          <div class="author"><img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+          <div class="author">
+            <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" />
+            <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
             <div><a class="user-alias" ng-click="navigateTo('Profile/' + p.post_autor_id)">{{p.post_author}} </a> <span>publicó:</span>
               <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
             </div>
@@ -93,7 +101,9 @@
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
-            <div class="coment block"><img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+            <div class="coment block">
+              <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" />
+              <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
               <div><a class="user-alias" ng-click="navigateTo('Profile/' + r.post_autor_id)">{{r.post_author}} </a> <span>comentó:</span>   <div>{{r.message}}</div>
               </div>
             </div>
