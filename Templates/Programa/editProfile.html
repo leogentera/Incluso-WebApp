@@ -1399,8 +1399,17 @@
 														</select>
 														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 													</div>
-																										
-													<input type="text" class="form-control form-control-lg theme-form" placeholder="¿Cuántas horas juegas al día?" ng-model="model.videogamesHours" />
+																																							
+												</section>
+												<section>
+													<h4>¿Cuántas horas juegas al día?</h4>
+													<div class="form-group-control custom-caret-wrapper">
+														<select ng-model="model.videogamesHours" ng-options="item for item in videogamesHoursList" ng-init="model.videogamesHours == null" 
+														class="form-control form-control-lg theme-form">
+															<option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
+														</select>
+														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+													</div>																																					
 												</section>													
 												<section>
 													<h4>¿Qué tipo de videojuegos te gustan más?</h4>
