@@ -263,7 +263,7 @@ angular
                     ctx.drawImage(img, 0, 0);
 
                     if (typeof callback === 'function') {
-                        var dataURL = c.toDataURL("image/png");
+                        var dataURL = c.toDataURL("image/jpg");
                         callback(dataURL.slice(22, dataURL.length));
                     }
 
