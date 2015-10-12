@@ -85,7 +85,7 @@
         <div class="part post">
           <div class="author">
             <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> 
-            <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />
+            <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
             <div>
               <a class="user-alias" ng-click="navigateTo('Profile/' + p.post_autor_id)">{{p.post_author}} </a>
               <span>publicó:</span>
@@ -105,7 +105,7 @@
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
             <div class="coment block">
               <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> 
-              <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />              
+              <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />              
               <div>
                 <a class="user-alias" ng-click="navigateTo('Profile/' + r.post_autor_id)">{{r.post_author}} </a>
                 <span>comentó:</span>
