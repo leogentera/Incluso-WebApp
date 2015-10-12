@@ -36,7 +36,7 @@ angular
             else 
             {                
                 moodleFactory.Services.GetUserChat(userId, getUserRefreshChatCallback, errorCallback);             
-                interval = setInterval(getMessages,60000);                    
+                //interval = setInterval(getMessages,60000);                    
                 console.log('creating interval:' + interval);
             }
 
@@ -85,7 +85,7 @@ angular
                     //Necesitamos volver a poner en marcha el refresh de notificaciones del chat
                     if(!existingInterval){       
                     clearInterval(interval);
-                        interval = setInterval(getUserChat,180000);          
+                        //interval = setInterval(getUserChat,180000);          
                         _setLocalStorageItem('Interval', interval);
                     }                    
                  }
