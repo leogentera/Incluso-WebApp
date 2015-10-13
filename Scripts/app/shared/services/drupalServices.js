@@ -12,7 +12,8 @@
         "3201": 33, /* Zona de Aterrizaje - Cuarto de recursos - Fuente de energía */
         "3301": 34, /* Zona de Aterrizaje - Educación Financiera - Fuente de energía */
         "3401": 35, /* Zona de Aterrizaje - Mapa del Emprendedor - Fuente de energía */
-        "7001": 26 /* Profile */
+        "7001": 26, /* Profile */
+        "PrivacyNotice": 37 /* No tiene activity identifier */
     };
 
     drupalFactory.Services = (function () {

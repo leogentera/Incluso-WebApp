@@ -20,5 +20,17 @@ angular
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
             }
-            $scope.$emit('HidePreloader'); //hide preloader
+            
+            $scope.contentResources = {};
+            
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    
+                    $scope.contentResources = data.node;
+                    $scope.$emit('HidePreloader'); //hide preloader
+                    
+                    }, function () { $scope.$emit('HidePreloader'); }, true);
+            }
+
+            getContentResources("PrivacyNotice");
 }]);
