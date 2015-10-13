@@ -58,16 +58,6 @@ angular
             $scope.exploracionFinal = [null, null, null, null, null];
 
             // ********************************  Models for Quizzes - Stage #2
-            $scope.exploracionInicialStage2 = [null, null, null, [0, 0, 0, 0, 0]];
-            $scope.exploracionInicialStage2OtroAnswers = [
-                {
-                    "questionid": 97,
-                    "answers": ['']
-                }
-            ];
-
-            $scope.misIdeas = [[], []];
-            $scope.miFuturo = [[], [], []];
             $scope.exploracionFinalStage2 = [null, null, null, null];
 
             // ********************************      Models for Quizzes - Stage #3
@@ -231,6 +221,7 @@ angular
             function getDataAsync() {
                 $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
+
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
 
                 //Making up path to redirect user to the proper dashboard
@@ -275,7 +266,7 @@ angular
                     $scope.parentActivity = parentActivity;
                     $scope.childActivity = childActivity;
 
-                    if ($scope.activity_status == 1) {//If the activity is currently finished...
+                    if ($scope.activity_status == 1) {//If the activity is currently finished, try get it from Local Storage first...
                         activityFinished = true;
                         console.log("The activity status is FINISHED");
 
@@ -294,8 +285,6 @@ angular
                             activityObject = JSON.parse(_getItem("activityObject/" + parentActivity.coursemoduleid));
                         }
 
-                        $scope.activityObject = activityObject;
-
                         //If...the activity quiz has a checkbox for the "Other" answer, then get it from Local Storage
                         var localOtrosAnswers;
                         if (quizHasOther.indexOf($scope.activity_identifier) > -1) {
@@ -306,6 +295,7 @@ angular
                             }
                         }
 
+                        $scope.activityObject = activityObject;
                         $scope.OtroAnswers = localOtrosAnswers;
                         console.log("--------------------------------------------------------------");
                         console.log("localAnswers = " + JSON.stringify(localAnswers));
@@ -313,13 +303,14 @@ angular
                         //console.log("activityObject = " + JSON.stringify(activityObject));
                         console.log("--------------------------------------------------------------");
 
-                        $scope.activityFinished = activityFinished;
+                        //$scope.activityFinished = activityFinished;
 
-                        if (localAnswers == null || activityObject == null) {// If activity not exists in Local Storage...get it from Server
+                        if (localAnswers == null || activityObject == null) {// If activity data not exists in Local Storage...get it from Server
 
                             console.log("The info for the Quiz IS NOT within Local Storage");
+                            // GET request (example) - http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, successfullCallBack, errorCallback, true);
-
+                            console.log("The info has been taken from Service...");
                         } else {//Angular-bind the answers in the respective HTML template
 
                             console.log("The info for the Quiz is within Local Storage");
@@ -369,7 +360,10 @@ angular
                                     break;
                             }
                         }
-                    } else {//Bring text for questions for Quiz from the Service
+                    } else {
+                        // Bring text for questions for Quiz from the Service for First Time users.
+                        // The -1 is for the GET request without the userid:
+                        // http://incluso.definityfirst.com/RestfulAPI/public/activity/150
                         console.log("Bringing text for a not finished Quiz...");
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, successfullCallBack, errorCallback, true);
                     }
@@ -406,6 +400,13 @@ angular
                         $scope.OtroAnswers = [];
                     }
 
+                    $scope.placeholder = [];
+                    //var placeholder = localStorage.getItem("placeHolders/" + theCourseModuleId);
+
+                    //if (placeholder === null) {
+                      //  $scope.placeholder = [];
+                    //}
+
                     //Count the number of "Other" options in current Quiz.
                     for (var index = 0; index < activityObject.questions.length; index++) {
 
@@ -418,12 +419,20 @@ angular
                             hasOther = question.answers[questionNumOfChoices - 1].answer == "Otro";
                         }
 
+                        //if (placeholder === null) {//Fill in the $scope.placeholder array.
+                        $scope.placeholder[index] = question.tag;
+                        //}
+
                         var questionType = question.questionType || question.questiontype;   //Contains the type of question.
 
                         if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
                             $scope.numOfOthers2++;
                         }
                     }
+
+                    console.log("------------------ Placeholder = " + $scope.placeholder);
+
+                    //localStorage.setItem("placeHolders/" + theCourseModuleId, $scope.placeholder);
 
                     console.log(":::::::::: Número de preguntas con 'Otro' = " + $scope.numOfOthers2);
 
@@ -996,43 +1005,7 @@ angular
             };
 
 
-            $scope.validateMisSuenosAnsweredQuestions = function () {
-
-                var quizIsValid = true;
-                var numQuestions = $scope.misSuenosAnswers.length;
-                var i, b;
-
-                //Remove repeated entries and blanks in each of the 3 questions
-                for (i = 0; i < numQuestions; i++) {
-                    $scope.misSuenosAnswers[i] = $scope.misSuenosAnswers[i].filter(function (item, pos) {
-                        return item.trim().length > 0 && $scope.misSuenosAnswers[i].indexOf(item) == pos;
-                    });
-                }
-
-                //Correction for the '\n' reserved character
-                for (i = 0; i < numQuestions; i++) {
-                    for (b = 0; b < $scope.misSuenosAnswers[i].length; b++) {
-                        $scope.misSuenosAnswers[i][b] = $scope.misSuenosAnswers[i][b].replace(/\r?\n|\r/g, " ").trim();
-                    }
-                }
-
-                //Check is some of the questions has an invalid answer
-                for (i = 0; i < numQuestions; i++) {
-                    if ($scope.misSuenosAnswers[i].length == 0) {
-                        quizIsValid = false;
-                    }
-                }
-
-                if (quizIsValid) {
-                    $scope.showWarning = false;
-                    $scope.navigateToPage(2);
-                    $scope.scrollToTop();
-                } else {
-                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
-                    $scope.showWarning = true;
-                    showWarningAndGoToTop();
-                }
-            };
+            
 
 
             $scope.validateMisCualidadesAnsweredQuestions = function () {

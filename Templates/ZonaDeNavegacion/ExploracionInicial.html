@@ -64,7 +64,7 @@
                                             <div class="add">
                                                 <span class="icomoon icon-edit"></span>
                                                 <textarea class="form-control form-control-lg theme-form" row="2"
-                                                          name="{{'opciones' + $parent.$index + $index}}" placeholder="¿Qué has intentado?"
+                                                          name="{{'opciones' + $parent.$index + $index}}" placeholder="{{placeholder[$parent.$index]}}"
                                                           onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-model="OtroAnswers[position[$parent.$index]].answers[0]">
                                                 </textarea>
@@ -107,7 +107,7 @@
                                                 <span class="icomoon icon-edit"></span>
                                                 <textarea id="{{'essay' + $parent.$index + $index}}"
                                                           class="form-control form-control-lg theme-form" row="2"
-                                                          name="{{'essay' + $parent.$index + $index}}" placeholder="Nueva habilidad"
+                                                          name="{{'essay' + $parent.$index + $index}}" placeholder="{{placeholder[$parent.$index]}}"
                                                           ng-model="answers[$parent.$index][$index]"
                                                           onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-readonly="setReadOnly">
@@ -145,7 +145,7 @@
                                                 <span class="icomoon icon-edit"></span>
                                                 <textarea id="{{'textarea' + $parent.$index}}"
                                                           class="form-control form-control-lg theme-form" row="2"
-                                                          name="{{'txtAbierto' + $index}}" placeholder="Tu respuesta aquí..."
+                                                          name="{{'txtAbierto' + $index}}" placeholder="{{placeholder[$parent.$index]}}"
                                                           onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-model="answers[$parent.$index][$index]"
                                                           ng-readonly="setReadOnly">
