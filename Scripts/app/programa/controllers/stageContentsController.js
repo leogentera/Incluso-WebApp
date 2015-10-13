@@ -72,6 +72,8 @@ angular
                     break;
 
             }
+            
+            $scope.contentResources = {};
 
             $scope.currentPage = 1;
             $scope.$emit('ShowPreloader'); //show preloader
@@ -344,5 +346,16 @@ angular
                     }
                 }                                          
             }
+            
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    
+                    $scope.contentResources = data.node;
+                    $rootScope.pageName = $scope.contentResources.title_toolbar;
+                    
+                    }, function () {}, true);
+            }
+            console.log(moduleid);
+            getContentResources(moduleid);
             
         }]);

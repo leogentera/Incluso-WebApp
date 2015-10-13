@@ -18,8 +18,6 @@ angular
             
             var _course = moodleFactory.Services.GetCacheJson("course");
 
-            var content = drupalFactory.Services.GetContent("7001");
-
             $scope.discussion = null;
             $scope.forumId = null;
             
@@ -58,7 +56,7 @@ angular
 
             getDataAsync(function () {
 
-                //getContent();
+                getContent();
 
                 /////// privacy settings initial switches [boolean]/////////
                 $scope.generalInfo = true;
@@ -1384,13 +1382,9 @@ angular
             };
 
             function getContent() {
-                var nodeRelation = drupalFactory.NodeRelation["7001"];
-                
-                $scope.getContentResources(nodeRelation,
-                    function (data, key) {
+                drupalFactory.Services.GetContent("7001", function (data, key) {
                         console.log(data);
-                    },
-                    function () {
+                    }, function () {
                     }, true);
             }
             

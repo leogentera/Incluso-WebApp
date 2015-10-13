@@ -6,8 +6,8 @@
           <section>
             <div class="title-section">
               <div class="txt-renglon centered txt-bigger"></div> 
-              <div class="subtitle">Fuente de energía</div>
-              <span>Aquí podrás recargarte de información adicional</span>  
+              <div class="subtitle" ng-bind="contentResources.title"></div>
+              <span ng-bind-html="contentResources.instructions"></span>  
             </div>
           </section>
 
@@ -142,7 +142,7 @@
           </section>
 
           <section>
-            <a class="btn btn-primary btn-lg btn-cnt" ng-click="back()">Regresar</a>
+            <a class="btn btn-primary btn-lg btn-cnt" ng-click="back()" ng-bind="contentResources.title_back_button"></a>
             <div class="txt-renglon centered txt-bigger"></div> 
           </section>
         </div>

@@ -2,13 +2,22 @@
     namespace('drupalFactory');
     
     drupalFactory.NodeRelation = {
-        "1101": 22,
-        "7001": 26 //Profile
+        "1101": 22, /* Zona de Vuelo - Cuarto de recursos - Fuente de energía */
+        "1020": 19, /* Zona de Vuelo - Conócete - Fuente de energía  */
+        "1021": 20, /* Zona de Vuelo - Mis Sueños - Fuente de energía */
+        "2004": 31, /* Zona de Navegación - Cuarto de recursos - Fuente de energía  */
+        "2006": 32, /* Zona de Navegación - Transfórmate - Fuente de energía  */
+        "2011": 30, /* Zona de Navegación - Tú eliges - Fuente de energía */
+        "2015": 29, /* Zona de Navegación - Proyecta tu vida - Fuente de energía  */
+        "3201": 33, /* Zona de Aterrizaje - Cuarto de recursos - Fuente de energía */
+        "3301": 34, /* Zona de Aterrizaje - Educación Financiera - Fuente de energía */
+        "3401": 35, /* Zona de Aterrizaje - Mapa del Emprendedor - Fuente de energía */
+        "7001": 26 /* Profile */
     };
 
     drupalFactory.Services = (function () {
         
-        var _getContent = function (activityIdentifierId, sucessCallback, errorCallback, forceRefresh) {
+        var _getContent = function (activityIdentifierId, successCallback, errorCallback, forceRefresh) {
             
             _getAsyncData("drupal/content/" + activityIdentifierId, DRUPAL_API_RESOURCE.format(drupalFactory.NodeRelation[activityIdentifierId]), activityIdentifierId, successCallback, errorCallback, forceRefresh);
         };
