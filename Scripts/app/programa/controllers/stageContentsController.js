@@ -133,8 +133,7 @@ angular
                         else {
                             waitPreloader += 1;
 
-                            moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.token, getActivityInfoCallback, getActivityErrorCallback);
-
+                            moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.token, getActivityInfoCallback, getActivityErrorCallback);                            
                         }
                     }
 
@@ -345,6 +344,26 @@ angular
                         moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, function(){}, errorCallback);
                     }
                 }                                          
+            }
+            
+            $scope.commentSubActivity = function(contentId){
+                  for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                    if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                                          
+                        var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                          
+                        var currentUserId = currentUser.userId;
+                                                                       
+                        var data = {
+                              coursemoduleid: activityId,
+                              userid: 663,
+                              dateissued: new Date(),
+                              comment: "Mensaje de prueba"
+                        };
+                                                                  
+                        moodleFactory.Services.PostCommentActivity(activityId, data, function(){
+                              }, function(){                              
+                                    });                    
+                                          
+                    }
             }
             
             function getContentResources(activityIdentifierId) {

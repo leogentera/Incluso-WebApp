@@ -122,6 +122,10 @@
         var _getAsyncAlbum = function (userId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
+        
+        var _postCommentActivity = function(activityId,data,successCallback,errorCallback){
+            _postAsyncCommentToActivity('activityComment/' + activityId,data, API_RESOURCE.format('comment/'), successCallback, errorCallback );
+        };
 
         var _getCacheObject = function (key) {
             return localStorage.getItem(key);
@@ -262,6 +266,23 @@
             });
         };
 
+        var _postAsyncCommentToActivity = function(key,data,url,successCallback,errorCallback){
+          _httpFactory({
+                method: 'POST',
+                url: url,
+                data: data,
+                headers: {'Content-Type': 'application/json'}
+          }).success(function(){                
+                if (key != null) {
+                    _setLocalStorageJsonItem(key,data);
+                }
+                successCallback();                
+            }).error(function(){            
+                console.log(data);
+                errorCallback();                
+            });
+        };
+        
         var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
             _httpFactory({
                 method: 'PUT',
@@ -780,7 +801,8 @@
             GetAsyncForumDiscussions: _getAsyncForumDiscussions,
             PostAsyncReportAbuse: _postAsyncReportAbuse,
             GetAsyncAlbum: _getAsyncAlbum,
-            RefreshProgress: refreshProgress
+            RefreshProgress: refreshProgress,
+            PostCommentActivity: _postCommentActivity
         };
     })();
 }).call(this);
