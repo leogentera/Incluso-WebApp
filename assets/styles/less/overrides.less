@@ -1350,15 +1350,10 @@ section.part.inbloq{
                 font-size: 5vw;
             }
         }
-
-        
-
         &.by-progress {}
         &.by-stars {}
         &.by-publications {}
         &.by-badges {}
-
-
     }
 }
 
@@ -1374,10 +1369,8 @@ section.part.inbloq{
 
 ////////////////// Footer Profile /////////////
 .app-footer.theme-profile {
-	background-image: url('@{url-images}/Pattern-MetalBG.gif'), url("../images/Incluso-FooterBG.gif");
-	background-repeat: repeat, no-repeat;
+	background: url('@{url-images}/Pattern-MetalBG.gif') repeat-y;
 }
-
 
 ////////////////// FAQs //////////////////////
 
@@ -1428,9 +1421,11 @@ section.part.inbloq{
     right: 0;
     bottom: 0;
     display: none;
+
     &.active {
         display: block;
     }
+
     span {
         padding: 2vw!important;
         border: 2px solid #FFF;
@@ -1438,4 +1433,13 @@ section.part.inbloq{
         background-color: rgba(0,0,0,.5);
         color: #FFF!important;
     }
+}
+.use-terms {
+    background-attachment: scroll;
+    background-image: url(../images/bg-notifications-sky.gif);
+    background-position: center top;
+    background-repeat: repeat-y;
+    -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    background-size: 100% auto;
 }

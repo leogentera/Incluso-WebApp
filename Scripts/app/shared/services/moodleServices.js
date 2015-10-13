@@ -144,17 +144,33 @@
                 return returnValue;
             }
 
-            _httpFactory({
-                method: 'GET',
-                url: url,
-                headers: { 'Content-Type': 'application/json' , 'Authorization': token}
-            }).success(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key, data);
-                console.log("success getAsyncData using token authorization");
-                successCallback(data, key);
-            }).error(function (data, status, headers, config) {
-                errorCallback(data);
-            });
+            if (token) {
+                console.log("with authorization");
+                _httpFactory({
+                    method: 'GET',
+                    url: url,
+                    headers: { 'Content-Type': 'application/json' , 'Authorization': token}
+                }).success(function (data, status, headers, config) {
+                    _setLocalStorageJsonItem(key, data);
+                    console.log("success getAsyncData using token authorization");
+                    successCallback(data, key);
+                }).error(function (data, status, headers, config) {
+                    errorCallback(data);
+                });            
+            }else{
+                console.log("without authorization");
+                _httpFactory({
+                    method: 'GET',
+                    url: url,
+                    headers: { 'Content-Type': 'application/json'}
+                }).success(function (data, status, headers, config) {
+                    _setLocalStorageJsonItem(key, data);
+                    console.log("success getAsyncData using token authorization");
+                    successCallback(data, key);
+                }).error(function (data, status, headers, config) {
+                    errorCallback(data);
+                });                                 
+            }                                    
         };
         
         var _getAsyncForumDiscussionsData = function (key, url, token, successCallback, errorCallback, forceRefresh) {

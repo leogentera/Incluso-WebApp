@@ -59,6 +59,11 @@
             }
             img{
                 width:100%;
+                image-rendering: -moz-crisp-edges;
+                image-rendering:   -o-crisp-edges;
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+                -ms-interpolation-mode: nearest-neighbor;
             }
             .txt-title{
                 color: white;
@@ -3120,10 +3125,10 @@
                 color: #bcd431;
 
                 &.icon-arrow-slim-right {
-                    top: calc(50% - 3vw);
+                    top: 30%;
                     right: 0;
                     padding: 0 3vw 0 0;
-                    font-size: 6vw;
+                    font-size: 1.2em;
                     margin: initial;
                 }
             }
