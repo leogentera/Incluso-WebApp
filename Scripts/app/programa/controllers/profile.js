@@ -90,7 +90,7 @@ angular
                 $rootScope.showFooter = true;
                 $scope.genderItems = ['Masculino', 'Femenino'];
                 $scope.countryItems = ['México', 'Otro'];
-                $scope.cityItems = ['México D.F.', 'Guadalajara', 'Monterrey', 'Villa hermosa'];
+                $scope.cityItems = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','DF','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas'];
                 $scope.stateItems = ['Distrito Federal', 'Coahuila', 'Jalisco', 'México', 'Nuevo León'];
                 $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
                 /*unir1*/ $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
@@ -104,22 +104,23 @@ angular
                 $scope.iLiveWithList = ['Ambos padres', 'Padre', 'Madre', 'Tíos', 'Esposo(a)', 'Abuelos', 'Amigos'];
                 $scope.mainActivityList = ['Estudias', 'Trabajas', 'Ni estudias ni trabajas'];
                 /*unir1*/$scope.levelList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
-                $scope.gradeList = ['1er', '2do', '3ro', '4to', '5to', '6to'];
+                $scope.gradeList = ['1er', '2do', '3ro', '4to', '5to', '6to','7mo','8vo','9no','10mo'];
                 $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
                 $scope.yesNoList = ['Si', 'No'];
-                $scope.moneyIncomeList = ['Padres', 'Trabajo'];
+                $scope.moneyIncomeList = ['Padres', 'Trabajo','Becas / Apoyo del gobierno'];
                 $scope.medicalCoverageList = ['Sí', 'No', 'No sé'];
-                $scope.medicalInsuranceList = ['IMSS', 'Privado', 'Seguro Popular'];
+                $scope.medicalInsuranceList = ['IMSS', 'ISSTE', 'Privado', 'Seguro Popular'];
                 $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora'];
                 $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
                 $scope.videoGamesFrecuencyList = ['Diario', '3 veces a la semana', '1 vez a la semana', '1 o 2 veces al mes', 'Nunca'];
                 $scope.videogamesHoursList = ['0-2', '2.5 a 4', '4.5 a 6', '6.5 a 8', 'Más de 8'];
                 $scope.kindOfVideoGamesList = ['Acción', 'Deportes', 'Violencia', 'Aventura', 'Reto', 'Estrategia', 'Educativos', 'Peleas'];
-                $scope.socialNetworksList = ['Facebook', 'Instagram', 'Twitter'];
-                $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política'];
-                $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)'];
-
-                $scope.birthdate_Dateformat = formatDate($scope.model.birthday);
+                $scope.socialNetworksList = ['Twitter','Facebook','YouTube','Instagram','Snapchat','No tengo redes sociales'];
+                $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política','Otro'];
+                $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)','Otro'];
+                $scope.phoneTypeList = ['Celular','Casa','Trabajo','No tengo teléfono' ,'Otro'];
+                
+                $scope.birthdate_Dateformat = moment(formatDate($scope.model.birthday)).format("DD/MM/YYYY"); 
                 getAge();
                 $scope.showPlaceHolder = true;
 
@@ -368,7 +369,7 @@ angular
                 var splitDate = $scope.model.birthday.split("/");
 
                 if (splitDate != "") {
-                    var birthDate = new Date(splitDate[2], splitDate[0], splitDate[1]);
+                    var birthDate = new Date(splitDate[2], splitDate[0] - 1, splitDate[1]);
                     if (birthDate != null || birthDate != '') {
                         var cur = new Date();
                         var diff = cur - birthDate;
@@ -381,18 +382,18 @@ angular
                 }
             }
 
-            $scope.birthdayChanged = function (dateValue) {
-                var algo = dateValue;
-                var d = new Date($scope.birthdate_Dateformat),
-                    month = '' + (d.getMonth() + 1),
-                    day = '' + d.getDate(),
-                    year = d.getFullYear();
+            // $scope.birthdayChanged = function (dateValue) {
+            //     var algo = dateValue;
+            //     var d = new Date(formatDate($scope.birthdate_Dateformat)),
+            //         month = '' + (d.getMonth() + 1),
+            //         day = '' + d.getDate(),
+            //         year = d.getFullYear();
 
-                if (month.length < 2) month = '0' + month;
-                if (day.length < 2) day = '0' + day;
-                var newBirthday = [month, day, year].join('/');
-                $scope.model.birthday = newBirthday;
-            };
+            //     if (month.length < 2) month = '0' + month;
+            //     if (day.length < 2) day = '0' + day;
+            //     var newBirthday = [month, day, year].join('/');
+            //     $scope.model.birthday = newBirthday;
+            // };
 
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
@@ -444,14 +445,43 @@ angular
             }
 
             
-             $scope.showPlaceHolderBirthday = function(){                
-                var bd = $("input[name='date']").val();                
-                if(bd){
-                    $scope.showPlaceHolder = false;                    
-                }else{
-                    $scope.showPlaceHolder = true;                    
-                }
-            };            
+            //  $scope.showPlaceHolderBirthday = function(){                
+            //     var bd = $("input[name='date']").val();                
+            //     if(bd){
+            //         $scope.showPlaceHolder = false;                    
+            //     }else{
+            //         $scope.showPlaceHolder = true;                    
+            //     }
+            // };            
+
+            $scope.datePickerClick = function(){                            
+                cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='date']").val()]);                
+            };
+
+            function SuccessDatePicker(data){
+                $("input[name='date']").val(data); 
+                var splitDate = data.split("/");
+                var birthday = new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
+                $scope.model.birthday = moment(birthday).format("MM/DD/YYYY");  
+                alert('birthday ' + $scope.model.birthday);
+                alert('data ' + data);
+            }
+
+            function FailureDatePicker(data) {
+                
+            }
+
+            function isValidDate(date){                
+                var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
+                if (matches == null) return false;
+                var m = matches[1] -1;
+                var d = matches[2];
+                var y = matches[3];
+                var composedDate = new Date(y, m, d);
+                return composedDate.getDate() == d &&
+                        composedDate.getMonth() == m &&
+                        composedDate.getFullYear() == y;
+            }
 
             function validateModel() {
                 console.log('fetching editProfile errors list');
@@ -465,7 +495,7 @@ angular
                 if (!$scope.editForm.lastname.$valid) { errors.push("Formato de apellido paterno incorrecto."); }
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
                 // if (!$scope.editForm.alias.$valid) { errors.push("Formato de alias incorrecto."); }
-                if (!$scope.editForm.date.$valid) { errors.push("Ingrese la fecha de nacimiento."); }
+                if (!isValidDate($scope.model.birthday)) { errors.push("Ingrese la fecha de nacimiento."); }
 
                 //Validation of the $scope.model.familiaCompartamos array
                 //  a) Avoiding two persons having the same "Número de Cliente Compartamos"
@@ -557,8 +587,9 @@ angular
                 //phones
                 if ($scope.model.phones.length > 0) {
                     for (var i = 0; i < $scope.model.phones.length; i++) {
-                        if (typeof $scope.model.phones[i] === "undefined" ||
-                            $scope.model.phones[i].length === 0) {
+                        if (typeof $scope.model.phones[i].phone === "undefined" ||
+                            $scope.model.phones[i].length === 0||
+                            typeof $scope.model.phones[i].phoneId === "undefined") {
                             $scope.model.phones.splice(i, 1);
                             i = i - 1;
                         }
@@ -862,7 +893,7 @@ angular
                                                                 if ($scope.model.address.num_ext) {
                                                                     if ($scope.model.address.num_int) {
                                                                         if ($scope.model.address.colony) {
-                                                                            if ($scope.model.phones != 0) {
+                                                                            if ($scope.model.phones.length != 0) {
                                                                                 if ($scope.model.socialNetworks.length != 0) {
                                                                                     if ($scope.model.familiaCompartamos.length != 0) {
                                                                                         result = true;
@@ -986,15 +1017,14 @@ angular
             };
 
             $scope.addPhone = function () {
-                $scope.model.phones.push(new String());
+                $scope.model.phones.push({});
             };
 
             // $scope.deletePhone = function (index) {
             //     $scope.model.phones.splice(index, 1);
             // };
             
-            $scope.deletePhone = function (phone) {
-                var index = $scope.model.phones.indexOf(phone);
+            $scope.deletePhone = function (index) {
                 // var selectedPhone = $scope.model.phones[index];
                 
                 //$scope.model.phones.remove(phone)//Pailas
@@ -1002,6 +1032,13 @@ angular
                 $scope.model.phones.splice(index, 1);
                 // $scope.model.phones.splice(index, 1);
                 //SubTask.remove({ 'subtaskId': subtask.id });
+            };
+
+            $scope.addSocialNetwork = function () {
+                $scope.model.socialNetworks.push({});
+            };
+            $scope.deleteSocialNetwork = function (index) {
+                $scope.model.socialNetworks.splice(index, 1);
             };
 
             $scope.addFavoriteSports = function (index) {
@@ -1147,14 +1184,7 @@ angular
 
             $scope.deleteAdditionalEmails = function (index) {
                 $scope.model.additionalEmails.splice(index, 1);
-            };
-
-            $scope.addSocialNetwork = function () {
-                $scope.model.socialNetworks.push({});
-            };
-            $scope.deleteSocialNetwork = function (index) {
-                $scope.model.socialNetworks.splice(index, 1);
-            };
+            };        
 
             $scope.addFamiliaCompartamos = function () {
                 $scope.model.familiaCompartamos.push({});

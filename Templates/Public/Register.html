@@ -313,8 +313,8 @@
                     </p>                    
                     
                     <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
-                      <input type="date" ng-model="registerModel.birthday" name="birthday" ng-focus="showPlaceHolderBirthday()" class="form-control form-control-lg theme-default" aria-describedby="birthDateAddOn" minlength="10" maxlength="10" required />
-                      <span class="{{showPlaceHolder == true ? 'custom-placeholder form-control-lg show' : 'custom-placeholder form-control-lg hidden'}}" >Fecha de nacimiento</span>                      
+                      <input type="text" ng-model="registerModel.birthday" name="birthday" ng-click="datePickerClick()" ng-focus="showPlaceHolderBirthday()" class="form-control form-control-lg theme-default" aria-describedby="birthDateAddOn" minlength="10" maxlength="10" placeholder="Fecha de nacimiento" required />
+                      <!-- <span class="{{showPlaceHolder == true ? 'custom-placeholder form-control-lg show' : 'custom-placeholder form-control-lg hidden'}}" >Fecha de nacimiento</span> -->                      
                     </p>                    
                   </div>
                 </div>
