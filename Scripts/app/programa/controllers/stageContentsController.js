@@ -133,6 +133,7 @@ angular
                     //(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
                 }
                 if(activitiesData != ""){
+                    waitPreloader++;
                     activitiesData = activitiesData.slice(0,-1);
                     moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, getActivityInfoCallback, getActivityErrorCallback);
                 }
