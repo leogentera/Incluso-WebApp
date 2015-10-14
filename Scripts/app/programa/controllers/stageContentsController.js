@@ -133,7 +133,7 @@ angular
                         else {
                             waitPreloader += 1;
 
-                            moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.token, getActivityInfoCallback, getActivityErrorCallback);                            
+                            moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.token, getActivityInfoCallback, getActivityErrorCallback);                           
                         }
                     }
 
@@ -152,9 +152,21 @@ angular
                     var myActivity = $scope.fuenteDeEnergia.activities[i];
                     if (myActivity.coursemoduleid == courseId) {
                         myActivity.activityContent = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + courseId));
+                        
+                        moodleFactory.Services.GetCommentByActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,1,0,0,3, $scope.token, function(data){                                                            
+                              if (data.comments && data.comments.length > 0) {
+                                    myActivity.activityContent.comments = data.comments;
+                              }else{
+                                    myActivity.activityContent.comments = [];
+                              }
+                                                           
+                              
+                        }, function(){
+                              console.log("error getting comments in content controller");
+                        });                                            
 
-                        setResources(myActivity);
-
+                         setResources(myActivity);
+                        
                         hidePreloader += 1;
                         break;
                     }
@@ -162,6 +174,9 @@ angular
                 if (waitPreloader == hidePreloader) {
                     $scope.$emit('HidePreloader'); //hide preloader
                 }
+                
+                               
+                
             }
 
             function getActivityErrorCallback() {
@@ -342,28 +357,29 @@ angular
                         $scope.fuenteDeEnergia.activities[i].activityContent.liked = isLike;
                         var data = {userid: currentUserId, like_status: isLike, only_like: 1};
                         moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, function(){}, errorCallback);
+                        
                     }
                 }                                          
             }
             
             $scope.commentSubActivity = function(contentId){
                   for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
-                    if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                                          
-                        var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                          
-                        var currentUserId = currentUser.userId;
-                                                                       
-                        var data = {
-                              coursemoduleid: activityId,
-                              userid: 663,
-                              dateissued: new Date(),
-                              comment: "Mensaje de prueba"
-                        };
+                        if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                                          
+                              var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                          
+                              var currentUserId = currentUser.userId;
+                                                                        
+                              var data = {
+                                    coursemoduleid: activityId,
+                                    userid: 631,
+                                    dateissued: (new Date() / 1000 | 0),
+                                    comment: "Mensaje de prueba"
+                              };
                                                                   
-                        moodleFactory.Services.PostCommentActivity(activityId, data, function(){
-                              }, function(){                              
-                                    });                    
-                                          
-                    }
+                              moodleFactory.Services.PostCommentActivity(activityId, data, function(){
+                                    }, function(){                              
+                                          });
+                        }
+                  }
             }
             
             function getContentResources(activityIdentifierId) {

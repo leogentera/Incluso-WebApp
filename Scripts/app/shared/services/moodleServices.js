@@ -124,7 +124,13 @@
         };
         
         var _postCommentActivity = function(activityId,data,successCallback,errorCallback){
-            _postAsyncCommentToActivity('activityComment/' + activityId,data, API_RESOURCE.format('comment/'), successCallback, errorCallback );
+            _postAsyncCommentToActivity('activityComment/' + activityId,data, API_RESOURCE.format('comment'), successCallback, errorCallback );
+        };
+        
+        var _getCommentByActivity = function(activityId, first,since,to,count, token,successCallback, errorCallback){
+            
+            var url = 'comment/{0}?first={1}&since={2}&to={3}&count={4}'.format(activityId,first,since,to,count);
+            _getAsyncData('comment', API_RESOURCE.format(url), token, successCallback, errorCallback,true);
         };
 
         var _getCacheObject = function (key) {
@@ -802,7 +808,8 @@
             PostAsyncReportAbuse: _postAsyncReportAbuse,
             GetAsyncAlbum: _getAsyncAlbum,
             RefreshProgress: refreshProgress,
-            PostCommentActivity: _postCommentActivity
+            PostCommentActivity: _postCommentActivity,
+            GetCommentByActivity: _getCommentByActivity
         };
     })();
 }).call(this);
