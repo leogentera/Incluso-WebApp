@@ -238,11 +238,6 @@
                             messagesInterchange++;
                         }
                     });
-
-                    // if (messagesInterchange >= messagesToRead) {
-                    //     _setLocalStorageItem("finishCabinaSoporte", "true");
-                    //     localStorage.getItem('finishCabinaSoporte')
-                    // }
                                                     
                     if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
                         _setLocalStorageItem('chatRead',"false");

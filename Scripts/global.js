@@ -490,15 +490,20 @@ var logStartActivityAction = function(activityId, timeStamp){
             var triggerActivity = 1;
             _createNotification(treeActivity.coursemoduleid, triggerActivity);
 
-            if (_.find(_activitiesCabinaDeSoporte, function (id) {
-                    return activityId == id
-                })) {
-
-                _setLocalStorageJsonItem('startedActivityCabinaDeSoporte', {
-                    datestarted: getdate(),
-                    coursemoduleid: treeActivity.coursemoduleid
-                });
+            if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
+                 console.log("global");
+                var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
+                
+                if (localStorage.getItem(key) == null) {
+                    _setLocalStorageJsonItem(key, {
+                        datestarted: getdate(),
+                        coursemoduleid: treeActivity.coursemoduleid
+                    });
+                    
+                    localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                }
             }
+            
             console.log('logStartSctivityAction Is working from dashboard');
 
         }, function () {
