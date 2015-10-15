@@ -26,7 +26,7 @@
         'incluso.programa.comunidad',
         'incluso.programa.reconocimiento',
         'incluso.programa.album',        
-        //'incluso.programa.sharingExperience',
+        'incluso.programa.sharingExperience',
         'incluso.stage.dashboardcontroller',
         
         // TODO: Should be just one controller for all stage dashboards, will merge soon

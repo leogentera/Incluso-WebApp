@@ -23,6 +23,10 @@
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
+        var _getAsyncActivitiesEnergy = function (activityArray, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("activity/" + activityArray, API_RESOURCE.format('activity?' + activityArray), null,  successCallback, errorCallback, forceRefresh);
+        };
+
         var _getAsyncForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
             _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
@@ -121,6 +125,16 @@
 
         var _getAsyncAlbum = function (userId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), token, successCallback, errorCallback, forceRefresh);
+        };
+        
+        var _postCommentActivity = function(activityId,data,successCallback,errorCallback){
+            _postAsyncCommentToActivity('activityComment/' + activityId,data, API_RESOURCE.format('comment'), successCallback, errorCallback );
+        };
+        
+        var _getCommentByActivity = function(activityId, first,since,to,count, token,successCallback, errorCallback){
+            
+            var url = 'comment/{0}?first={1}&since={2}&to={3}&count={4}'.format(activityId,first,since,to,count);
+            _getAsyncData('comment', API_RESOURCE.format(url), token, successCallback, errorCallback,true);
         };
 
         var _getCacheObject = function (key) {
@@ -262,6 +276,23 @@
             });
         };
 
+        var _postAsyncCommentToActivity = function(key,data,url,successCallback,errorCallback){
+          _httpFactory({
+                method: 'POST',
+                url: url,
+                data: data,
+                headers: {'Content-Type': 'application/json'}
+          }).success(function(){                
+                if (key != null) {
+                    _setLocalStorageJsonItem(key,data);
+                }
+                successCallback();                
+            }).error(function(){            
+                console.log(data);
+                errorCallback();                
+            });
+        };
+        
         var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
             _httpFactory({
                 method: 'PUT',
@@ -759,6 +790,7 @@
             GetCacheObject: _getCacheObject,
             GetCacheJson: _getCacheJson,
             GetAsyncActivity: _getAsyncActivityInfo,
+            GetAsyncActivitiesEnergy: _getAsyncActivitiesEnergy,
             GetAsyncActivities: _getAsyncActivitiesInfo,
             GetAsyncActivityQuizInfo: _getAsyncActivityQuizInfo,
             PutAsyncQuiz: _putAsyncQuiz,
@@ -780,7 +812,9 @@
             GetAsyncForumDiscussions: _getAsyncForumDiscussions,
             PostAsyncReportAbuse: _postAsyncReportAbuse,
             GetAsyncAlbum: _getAsyncAlbum,
-            RefreshProgress: refreshProgress
+            RefreshProgress: refreshProgress,
+            PostCommentActivity: _postCommentActivity,
+            GetCommentByActivity: _getCommentByActivity
         };
     })();
 }).call(this);
