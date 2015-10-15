@@ -109,10 +109,10 @@ angular
 
             function createRequest(){
                 var request = {
-                    "userid": $scope.user.id,
+                    "userid": "" + $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": "Proyecta tu vida",
-                    "estrellas": $scope.stars,
+                    "estrellas": "" + $scope.stars,
                     "pathImagenFicha": "",
                     "imagenFicha": "",
                     "ficha_proyecto": []
@@ -120,12 +120,11 @@ angular
                 for (var i = 0; i < $scope.mapaDeVidaActivities.length; i++) {
                     var activity = $scope.mapaDeVidaActivities[i];
                     var proyecto = {
-                        //replaces all the strings to nothing
-                        "dimensionId": activity.coursemoduleid,
+                        "dimensionId": "" + activity.coursemoduleid,
                         "respuestas": []
                     }
                     _.each(activity.questions, function (q, i) {
-                        var respuesta = { "preguntaId": q.id, "respuesta": "" };
+                        var respuesta = { "preguntaId": "" + q.id, "respuesta": "" };
                         var activityAnswer = _.find($scope.mapaDeVidaAnswers, function(a){ return a.coursemoduleid == activity.coursemoduleid });
                         if (activityAnswer.questions) {
                             var questionAnswer = _.find(activityAnswer.questions, function (a) { return a.id == q.id });

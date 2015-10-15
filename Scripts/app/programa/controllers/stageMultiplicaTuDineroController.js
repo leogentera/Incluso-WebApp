@@ -84,7 +84,7 @@ angular
 
             function createRequest(){
                 var request = {
-                    "userid": $scope.user.id,
+                    "userid": "" + $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": "Multiplica tu dinero",
                     "estrellas": "" + $scope.stars,
@@ -98,8 +98,8 @@ angular
                 for (var i = 0; i < $scope.multiplicaTuDineroActivity.questions.length; i++) {
                     var currentQuestion = $scope.multiplicaTuDineroActivity.questions[i];
                     var question = {
-                        "orden": i + 1,
-                        "preguntaId": currentQuestion.id,
+                        "orden": "" + (i + 1),
+                        "preguntaId": "" + currentQuestion.id,
                         "pregunta": currentQuestion.question,
                         "imagen": currentQuestion.tag + ".jpg",
                         "respuestas":[],
@@ -109,7 +109,7 @@ angular
                     for(var j = 0; j < currentQuestion.answers.length; j++){
                         var currentAnswer = currentQuestion.answers[j];
                         var answer = {
-                            "respuestaId": currentAnswer.id,
+                            "respuestaId": "" + currentAnswer.id,
                             "respuesta": currentAnswer.answer,
                             "tipo": (currentAnswer.fraction == 0 ? "incorrecta" : "correcta")
                         }

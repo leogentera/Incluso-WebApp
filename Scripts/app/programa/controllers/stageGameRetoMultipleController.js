@@ -85,7 +85,7 @@ angular
 
 
                 var request = {
-                            "userid  ": $scope.user.id,
+                            "userid  ": "" + $scope.user.id,
                             "alias": $scope.user.username,
                             "actividad": "Reto múltiple",
                             "sub_actividades": []
@@ -93,7 +93,7 @@ angular
 
                 for(i = 0; i < $scope.retoMultipleActivities.length; i++) {
                     var subactivity = {
-                        "estrellas": 300,
+                        "estrellas": "300",
                         "sub_actividad": $scope.retoMultipleActivities[i].name
                     };
 

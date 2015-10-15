@@ -107,7 +107,7 @@ angular
 
             function createRequest(){
                 var request = {
-                    "userid": $scope.user.id,
+                    "userid": "" + $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": "Fábrica de emprendimiento",
                     "estrellas": "" + $scope.stars,
@@ -118,7 +118,7 @@ angular
                 for (var i = 0; i < $scope.mapaDeEmprendedorActivities.length; i++) {
                     var activity = $scope.mapaDeEmprendedorActivities[i];
                     var proyecto = {
-                        "proyectoId": activity.coursemoduleid,
+                        "proyectoId": "" + activity.coursemoduleid,
                         "proyecto": "",
                         "necesidades": "",
                         "clientes": "",

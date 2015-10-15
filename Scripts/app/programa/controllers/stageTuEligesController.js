@@ -78,12 +78,12 @@ angular
 
             function createRequest () {
             	var request = {
-            		"userid": $scope.user.id,
+            		"userid": "" + $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": $scope.tuEligesActivities.name,
-            		"pathImagenes":"",
-                    "estrellas":$scope.stars,
-                    "introduccion":$scope.tuEligesActivities.description,
+            		"pathImagenes": "",
+                    "estrellas": "" + $scope.stars,
+                    "introduccion": $scope.tuEligesActivities.description,
                     //TODO: Find a way to un-hardcode this.
                     "instrucciones":"Toma este reto y pon a prueba tu toma de decisiones. ¡Sólo tú decides el rumbo de tu vida!",
             		"preguntas": [],
@@ -94,8 +94,8 @@ angular
             	for (var i = 0; i < $scope.tuEligesActivities.questions.length; i++) {
             		var currentQuestion = $scope.tuEligesActivities.questions[i];
             		var question = {
-            			"orden": i + 1,
-            			"preguntaId": currentQuestion.id,
+            			"orden": "" + (i + 1),
+            			"preguntaId": "" + currentQuestion.id,
             			"pregunta": currentQuestion.question,
             			"imagen":"imagen"+currentQuestion.id+".jpg",
                         "respuestas": [],
@@ -105,7 +105,7 @@ angular
             		for(var j = 0; j < currentQuestion.answers.length; j++){
             			var currentAnswer = currentQuestion.answers[j];
 	            		var answer = {
-	            			"respuestaId": currentAnswer.id,
+	            			"respuestaId": "" + currentAnswer.id,
 	            			"respuesta": currentAnswer.answer,
                             "tipo": (currentAnswer.fraction == 0 ? "incorrecta" : "correcta")
 	            		}
