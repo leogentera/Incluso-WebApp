@@ -407,7 +407,7 @@ angular
                     for (var index = 0; index < activityObject.questions.length; index++) {
 
                         question = activityObject.questions[index];
-                        console.log("question no. " + index + ", question = " + JSON.stringify(question));
+                        console.log("question no. " + index);
                         numQuestions = activityObject.questions.length;
 
                         switch ($scope.activity_identifier) {
@@ -539,7 +539,6 @@ angular
                             break;
                         case "1006": //Mis Gustos - Etapa 1
                             $scope.AnswersResult.answers = $scope.answers;
-                            //$scope.OtroAnswers = $scope.misGustosOtroAnswers;
                             break;
                         case "1007": //Sueña - Etapa 1
                             $scope.AnswersResult.answers = $scope.answers;
@@ -549,7 +548,6 @@ angular
                             break;
                         case "2001": //Exploración Inicial - Etapa 2
                             $scope.AnswersResult.answers = $scope.answers;
-                            //$scope.OtroAnswers = $scope.exploracionInicialStage2OtroAnswers;
                             break;
                         case "2007": //Tus Ideas - Etapa 2
                             $scope.AnswersResult.answers = $scope.answers;
@@ -562,11 +560,9 @@ angular
                             break;
                         case "3101": //Exploración Inicial - Etapa 3
                             $scope.AnswersResult.answers = $scope.answers;
-                            //$scope.OtroAnswers = $scope.exploracionInicialStage3OtroAnswers;
                             break;
                         case "3601": //Exploración Final - Etapa 3
                             $scope.AnswersResult.answers = $scope.answers;
-                            //$scope.OtroAnswers = $scope.exploracionFinalStage3OtroAnswers;
                             break;
                         default:
                             break;
@@ -595,7 +591,6 @@ angular
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
 
                     if (quizHasOther.indexOf($scope.activity_identifier) > -1) {//Quiz with "Otro" answer option.
-                        console.log("This activity has 'Other' field: ");
                         activityModel.answersResult.others = $scope.OtroAnswers;
                     }
 
@@ -888,15 +883,14 @@ angular
                                 var userAnswer = cleanText(userAnswers[indexUserAnswers]).trim();
                                 for (index = 0; index < question.answers.length; index++) {
                                     var questionOption = cleanText(question.answers[index].answer).trim();
-                                    //$scope.answers[questionIndex][index] = 0;
 
                                     if (questionOption == userAnswer) {//For checked options...
                                         console.log("***  The user selected this: " + userAnswer);
                                         $scope.answers[questionIndex][index] = 1;
-                                        console.log("index = " + index + ", value = " + $scope.answers[questionIndex][index]);
+                                        //console.log("index = " + index + ", value = " + $scope.answers[questionIndex][index]);
                                         if (userAnswer == "Otro") {//The user checked the "Otros" option, among others...
 
-                                            console.log("The string in the 'Otro' field: " + question.other);
+                                            //console.log("The string in the 'Otro' field: " + question.other);
                                             $scope.OtroAnswers[$scope.position[questionIndex]].answers[0] = question.other;
                                             _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswers);
                                         }
@@ -1340,9 +1334,9 @@ angular
 
             $scope.cancel = function () {
                 if ($scope.childActivity) {
-                    localStorage.removeItem("activityOtrosAnswers/" + $scope.childActivity.coursemoduleid);
+                    //localStorage.removeItem("activityOtrosAnswers/" + $scope.childActivity.coursemoduleid);
                 } else {
-                    localStorage.removeItem("activityOtrosAnswers/" + $scope.parentActivity.coursemoduleid);
+                    //localStorage.removeItem("activityOtrosAnswers/" + $scope.parentActivity.coursemoduleid);
                 }
 
                 $scope.numOfMultichoiceQuestions = 0;
