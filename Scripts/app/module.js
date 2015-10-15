@@ -16,6 +16,7 @@
         'incluso.public.register',
         'incluso.programa.tutorial',
         'incluso.programa.acercaPrograma',
+        'incluso.programa.postPhotoGalleryDetailController',
         'incluso.juegos.avatar',
         'incluso.programa.dashboard',
         //'incluso.programa.dashboard.etapa',
@@ -700,7 +701,8 @@
         });
 
         $routeProvider.when('/GalleryDetail', {
-            templateUrl: 'Templates/Programa/gallery-detail.html'
+            templateUrl: 'Templates/Programa/gallery-detail.html',
+            controller: 'postPhotoGalleryDetailController'
         });
 
         $routeProvider.otherwise({
