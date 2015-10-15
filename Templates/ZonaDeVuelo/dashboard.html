@@ -5,7 +5,7 @@
                 <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
                     <h3>
                         <span class="icomoon icon-video-file"></span>
-                        <span>¿Y tú qué sueñas?</span>
+                        <span>{{contentResources.stage_video_title}}</span>
                         <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
                         <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
                     </h3>
@@ -26,7 +26,7 @@
         </section>
 
         <section class="component showcase-carousel pages">
-            <h3>Retos</h3>
+            <h3>{{contentResources.challenges_title}}</h3>
             <div id="carousel-example-generic2" class="carousel">
                 <div id="owl-demo2" class="owl-carousel">
                     <div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">                            
