@@ -87,12 +87,27 @@
             </div>
           </div>
           <div class="block">
-            <span ng-switch="p.post_type">
+            <div ng-switch="p.post_type">
               <span ng-switch-default>{{ p.message }}</span>
               <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>
               <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
-              <span ng-switch-when="4"><a ng-href="{{p.message}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>
-            </span>
+              <div ng-switch-when="4">
+                <p ng-bind="p.message"></p>
+                <div class="achievement-badge">
+                  <figure>
+                    <a ng-if="p.attachment.length > 1">
+                      <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
+                    <a ng-if="p.attachment.length == 1" href="{{p.attachment[0].fileurl + '?token=' + userToken}}">
+                      <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
+                  </figure>
+                    <a role="button" ng-click="goToGallery(p)" class="btn-gallery-detail {{p.attachment.length == 1 ? '' : 'active'}}">
+                        <span class="icomoon icon-photo-gallery"></span>
+                    </a>
+                </div>
+              </div>
+            </div>
             <div ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
             </div>
           </div>

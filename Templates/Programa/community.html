@@ -86,11 +86,14 @@
                 <p ng-bind="p.message"></p>
                 <div class="achievement-badge">
                   <figure>
-                    <a href="{{p.fileurl + '?token=' + userToken}}">
-                      <img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" />
+                    <a ng-if="p.attachment.length > 1">
+                      <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
+                    <a ng-if="p.attachment.length == 1" href="{{p.attachment[0].fileurl + '?token=' + userToken}}">
+                      <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
                     </a>
                   </figure>
-                    <a role="button" class="btn-gallery-detail">
+                    <a role="button" ng-click="goToGallery(p)" class="btn-gallery-detail {{p.attachment.length == 1 ? '' : 'active'}}">
                         <span class="icomoon icon-photo-gallery"></span>
                     </a>
                 </div>
