@@ -13,6 +13,7 @@
         "3301": 34, /* Zona de Aterrizaje - Educación Financiera - Fuente de energía */
         "3401": 35, /* Zona de Aterrizaje - Mapa del Emprendedor - Fuente de energía */
         "7001": 26, /* Profile */
+        "3000": 45, /* Zona de Vuelo - Dashboard*/
         "PrivacyNotice": 37, /* No tiene activity identifier */
         "AlertsDetail": 23, /* General - Detalle Notificación */
         "Alerts": 24 /* General - Notificaciones*/

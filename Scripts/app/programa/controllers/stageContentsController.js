@@ -383,6 +383,7 @@ angular
             }
             
             function getContentResources(activityIdentifierId) {
+                  console.log(activityIdentifierId);
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
                     
                     $scope.contentResources = data.node;
