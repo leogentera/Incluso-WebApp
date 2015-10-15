@@ -3,8 +3,7 @@
 		<div class="container">
 			<div class="dash-top">
 				<h1 class="text-center">
-					¡<span ng-show="{{user.gender == 'Masculino'}}">Bienvenido</span><span ng-show="{{user.gender == 'Femenino'}}">Bienvenida</span> 
-					a la misión, {{user.alias}}!
+					¡<span>{{user.gender == 'Masculino' ? contentResources.male_welcome : contentResources.female_welcome}}</span> {{user.alias}}!
 				</h1>
 
 				<section class="component" ng-controller="videoCollapsiblePanelController">
@@ -12,7 +11,7 @@
 						<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
 							<h3>
 								<span class="icomoon icon-video-file"></span>
-								<span>La travesía en Incluso</span>
+								<span>{{contentResources.video_title}}</span>
 								<span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
 								<span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
 							</h3>
@@ -33,7 +32,7 @@
 				</section>
 
 				<section class="component global-progress txt-renglon centered">
-					<h3>- MI AVANCE -</h3>
+					<h3>- {{contentResources.global_progress}} -</h3>
 					<div class="spinner">
 						<img src="assets/images/prcnt/{{usercourse == null ? 0 : usercourse.globalProgress}}.png" alt="progress" />
 						<div class="circle"></div>
@@ -45,14 +44,14 @@
 					<img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
 					<h3>- {{usercourse.stages[currentStage-1].sectionname}} -</h3>
 					<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()">
-						<span>{{usercourse.firsttime == 1 ? "INICIAR LA MISIÓN" : "CONTINUAR LA MISIÓN"}}</span>
+						<span>{{usercourse.firsttime == 1 ? contentResources.button_start_mission : contentResources.button_continue_mission }}</span>
 					</a>
 				</section>
 			</div>
 
 			<div class="dash-bottom">
 				<section class="component my-badges">
-					<h3>- MI ESCUDO -</h3>
+					<h3>- {{contentResources.shield_title}} -</h3>
 					<img src="assets/images/badges/{{user.shield ? 'img-' + user.shield + '.svg' : 'img-badge-placeholder.svg'}}" alt="badges" />
 				</section>
 				
@@ -159,7 +158,7 @@
 						<div class="user-data">
 							<div>
 								<p>
-									<span>Mi puntuación actual</span>
+									<span>{{contentResources.current_points}}</span>
 								</p>
 								<ul class="inline-list">
 									<li class="points"><span>{{user.stars}}</span> <i class="icomoon icon-star"></i></li>

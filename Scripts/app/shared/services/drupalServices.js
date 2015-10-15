@@ -1,7 +1,7 @@
 (function () {
     namespace('drupalFactory');
     
-    drupalFactory.NodeRelation = {
+    drupalFactory.NodeRelation = {        
         "1101": 22, /* Zona de Vuelo - Cuarto de recursos - Fuente de energía */
         "1020": 19, /* Zona de Vuelo - Conócete - Fuente de energía  */
         "1021": 20, /* Zona de Vuelo - Mis Sueños - Fuente de energía */
@@ -14,6 +14,7 @@
         "3401": 35, /* Zona de Aterrizaje - Mapa del Emprendedor - Fuente de energía */
         "7001": 26, /* Profile */
         "3000": 45, /* Zona de Vuelo - Dashboard*/
+        "0000": 57, /* Programa - Dashboard*/
         "PrivacyNotice": 37, /* No tiene activity identifier */
         "AlertsDetail": 23, /* General - Detalle Notificación */
         "Alerts": 24 /* General - Notificaciones*/

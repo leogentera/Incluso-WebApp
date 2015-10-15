@@ -15,7 +15,12 @@
             _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-
+            
+            var activity_identifier = "0000";
+            
+            getContentResources(activity_identifier);
+                        
+            
             if (!_getItem("userId")) {
                 $location.path('/');
                 return "";
@@ -266,6 +271,15 @@
                         windowClass: 'user-help-modal dashboard-programa'
                     });
             }
+            
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {                
+                    $scope.contentResources = data.node;                    
+                    loadController();
+                    
+                    }, function () {}, true);
+            }
+            
 
             //$scope.openModal();   //To open the modal no matter the value of 'firsttime'
         }])

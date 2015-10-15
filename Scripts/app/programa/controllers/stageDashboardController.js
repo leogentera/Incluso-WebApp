@@ -308,15 +308,10 @@ angular
                     $scope.openModal_CloseChallenge();
                 }
             }                        
-                        
+                                                                                    
             
-            
-             
-            
-            
-            
-            
-        } ]).controller('closingChallengeController', function ($scope, $modalInstance) {
+        } ])
+    .controller('closingChallengeController', function ($scope, $modalInstance) {
         
             console.log("controller closingChallenge");
             var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
@@ -327,7 +322,8 @@ angular
                 $modalInstance.dismiss('cancel');
             };
             
-        }).controller('closingStageController', function ($scope, $modalInstance, $location) {
+        })
+    .controller('closingStageController', function ($scope, $modalInstance, $location) {
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
