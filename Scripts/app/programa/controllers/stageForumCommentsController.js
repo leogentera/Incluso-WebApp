@@ -499,6 +499,19 @@ angular
                         break;
                 }
             };
+            
+            $scope.goToGallery = function(post) {
+                
+                var obj = {
+                    post_autor_id: post.post_autor_id,
+                    post_author: post.post_author,
+                    created: post.created,
+                    message: post.message,
+                    attachment: post.attachment
+                }
+                localStorage.setItem("galleryDetail", JSON.stringify(obj));
+                $scope.navigateTo("/GalleryDetail");
+            };
 
             function getDataAsync() {
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback, true);
