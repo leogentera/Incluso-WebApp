@@ -96,6 +96,7 @@ angular
             var starsMandatory = 0;
             var getcoursemoduleids = [];
             $scope.like_status = 1;
+            var activitiesData = "";
 
             if (!activities) {
                 var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
@@ -118,72 +119,56 @@ angular
 
             function getDataAsync() {
                 for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
-                    var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid));
+                    var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].activity_identifier));
                     if (activityCache) {
                         $scope.fuenteDeEnergia.activities[i] = activityCache;
                     }
-                    else {
-                        var activityContentCache = (JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
-                        if (activityContentCache) {
-                            $scope.fuenteDeEnergia.activities[i].activityContent = activityContentCache;
-
-                            setResources($scope.fuenteDeEnergia.activities[i]);
-
-                        }
-                        else {
-                            waitPreloader += 1;
-
-                            moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.token, getActivityInfoCallback, getActivityErrorCallback);                           
-                        }
+                    else {                       
+                            activitiesData += "activity["+i+"]="+$scope.fuenteDeEnergia.activities[i].coursemoduleid+"&";                            
+                            //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);                        
                     }
 
                     //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,successfullCallBack, errorCallback);
                     //(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
+                }
+                if(activitiesData != ""){
+                    waitPreloader++;
+                    activitiesData = activitiesData.slice(0,-1);
+                    console.log(activitiesData);
+                    moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, getActivityInfoCallback, getActivityErrorCallback);
                 }
                 if (waitPreloader == 0) {
                     $scope.$emit('HidePreloader');
                 }
             }
 
-            function getActivityInfoCallback(data, key) {
-                var courseId = key.split('/')[1];
-
+            function getActivityInfoCallback(data, key) {                
                 for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                     var myActivity = $scope.fuenteDeEnergia.activities[i];
-                    if (myActivity.coursemoduleid == courseId) {
-                        myActivity.activityContent = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + courseId));
+                    
+                    if(!myActivity.activityContent){
+
+                        myActivity.activityContent = data[i];
                         
                         moodleFactory.Services.GetCommentByActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,1,0,0,3, $scope.token, function(data){                                                            
                               if (data.comments && data.comments.length > 0) {
                                     myActivity.activityContent.comments = data.comments;
                               }else{
                                     myActivity.activityContent.comments = [];
-                              }
-                                                           
-                              
+                              }                                                                                         
                         }, function(){
                               console.log("error getting comments in content controller");
                         });                                            
 
                          setResources(myActivity);
                         
-                        hidePreloader += 1;
-                        break;
+                        $scope.$emit('HidePreloader'); //hide preloader
                     }
-                }
-                if (waitPreloader == hidePreloader) {
-                    $scope.$emit('HidePreloader'); //hide preloader
-                }
-                
-                               
-                
+                }                                                                        
             }
 
             function getActivityErrorCallback() {
-                hidePreloader += 1;
-                if (waitPreloader == hidePreloader) {
-                    $scope.$emit('HidePreloader'); //hide preloader
-                }
+                $scope.$emit('HidePreloader'); //hide preloader                
             }
 
             function setResources(myActivity) {
