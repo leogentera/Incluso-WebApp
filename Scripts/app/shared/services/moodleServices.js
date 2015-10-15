@@ -23,6 +23,10 @@
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
+        var _getAsyncActivitiesEnergy = function (activityArray, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("activity/" + activityArray, API_RESOURCE.format('activity?' + activityArray), null,  successCallback, errorCallback, forceRefresh);
+        };
+
         var _getAsyncForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
             _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
@@ -786,6 +790,7 @@
             GetCacheObject: _getCacheObject,
             GetCacheJson: _getCacheJson,
             GetAsyncActivity: _getAsyncActivityInfo,
+            GetAsyncActivitiesEnergy: _getAsyncActivitiesEnergy,
             GetAsyncActivities: _getAsyncActivitiesInfo,
             GetAsyncActivityQuizInfo: _getAsyncActivityQuizInfo,
             PutAsyncQuiz: _putAsyncQuiz,
