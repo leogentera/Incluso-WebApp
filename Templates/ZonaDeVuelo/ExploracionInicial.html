@@ -43,28 +43,32 @@
                         <!--   -----------------------   MULTICHOICE TYPE QUESTION   ------------------------------              -->
                         <div ng-show="questionTypeCode[$index] == 'multichoice'">
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
-                            <section class="form txt-renglon txt-bigger part list" id="{{'multichoiceSection' + $index}}">
+                            <section class="form txt-renglon txt-bigger part list"
+                                     id="{{'multichoiceSection' + $index}}">
                                 <div ng-repeat="answerObject in question.answers track by $index">
 
                                     <div ng-show="answerObject.answer != 'Otro'">
-                                        <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox" value="1" name="{{'multichoice' + $parent.$index + $index}}"
+                                        <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
+                                               value="1" name="{{'multichoice' + $parent.$index + $index}}"
                                                ng-true-value="1" ng-false-value="0"
                                                ng-click="updateOtherField($parent.$index, $index)"
                                                ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
                                         <label for="{{'multichoice' + $parent.$index + $index}}">{{answerObject.answer}}</label>
                                     </div>
                                     <div ng-show="answerObject.answer == 'Otro'">
-                                        <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox" value="1" name="{{'multichoice' + $parent.$index + $index}}"
+                                        <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
+                                               value="1" name="{{'multichoice' + $parent.$index + $index}}"
                                                ng-true-value="1" ng-false-value="0"
 
-                                               ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly" />
+                                               ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
                                         <label for="{{'multichoice' + $parent.$index + $index}}">{{answerObject.answer}}</label>
 
                                         <div class="form-group theme-form" ng-show="answers[$parent.$index][$index]">
                                             <div class="add">
                                                 <span class="icomoon icon-edit"></span>
                                                 <textarea class="form-control form-control-lg theme-form" row="2"
-                                                          name="{{'opciones' + $parent.$index + $index}}" placeholder="{{placeholder[$parent.$index]}}"
+                                                          name="{{'opciones' + $parent.$index + $index}}"
+                                                          placeholder="{{placeholder[$parent.$index]}}"
                                                           onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-model="OtroAnswers[position[$parent.$index]].answers[0]">
                                                 </textarea>
@@ -81,7 +85,8 @@
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div ng-repeat="answerObject in question.answers track by $index">
-                                    <input id="{{'simplechoice' + $parent.$index + $index}}" type="radio" value="{{$index}}" name="{{'simplechoice' + $parent.$index + $index}}"
+                                    <input id="{{'simplechoice' + $parent.$index + $index}}" type="radio"
+                                           value="{{$index}}" name="{{'simplechoice' + $parent.$index + $index}}"
                                            ng-model="answers[$parent.$index]" ng-disabled="setReadOnly"/>
                                     <label for="{{'simplechoice' + $parent.$index + $index}}">{{answerObject.answer}}</label>
                                 </div>
@@ -99,7 +104,8 @@
                                             <div class="clearfix">
                                                 <span>Habilidad {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                   ng-click="deleteAbility('essay' + $parent.$index, $parent.$index, $index)" ng-show="activity_status == 0">
+                                                   ng-click="deleteAbility('essay' + $parent.$index, $parent.$index, $index)"
+                                                   ng-show="activity_status == 0">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
@@ -107,7 +113,8 @@
                                                 <span class="icomoon icon-edit"></span>
                                                 <textarea id="{{'essay' + $parent.$index + $index}}"
                                                           class="form-control form-control-lg theme-form" row="2"
-                                                          name="{{'essay' + $parent.$index + $index}}" placeholder="{{placeholder[$parent.$index]}}"
+                                                          name="{{'essay' + $parent.$index + $index}}"
+                                                          placeholder="{{placeholder[$parent.$index]}}"
                                                           ng-model="answers[$parent.$index][$index]"
                                                           onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-readonly="setReadOnly">
@@ -119,7 +126,8 @@
                                 </li>
                             </ul>
                             <div class="txt-renglon">
-                                <a href="" class="btn btn-lg btn-block btn-add" ng-click="addAbility('essay' + $index, $index)"
+                                <a href="" class="btn btn-lg btn-block btn-add"
+                                   ng-click="addAbility('essay' + $index, $index)"
                                    ng-hide="setReadOnly">
                                     <span class="icomoon icon-plus"></span>Agregar nueva habilidad...
                                 </a>
@@ -137,7 +145,8 @@
                                             <div class="clearfix">
                                                 <span>Persona {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
-                                                   ng-click="deletePerson('shortanswer' + $parent.$index, $parent.$index, $index)" ng-show="activity_status == 0">
+                                                   ng-click="deletePerson('shortanswer' + $parent.$index, $parent.$index, $index)"
+                                                   ng-show="activity_status == 0">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
@@ -145,7 +154,8 @@
                                                 <span class="icomoon icon-edit"></span>
                                                 <textarea id="{{'textarea' + $parent.$index}}"
                                                           class="form-control form-control-lg theme-form" row="2"
-                                                          name="{{'txtAbierto' + $index}}" placeholder="{{placeholder[$parent.$index]}}"
+                                                          name="{{'txtAbierto' + $index}}"
+                                                          placeholder="{{placeholder[$parent.$index]}}"
                                                           onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-model="answers[$parent.$index][$index]"
                                                           ng-readonly="setReadOnly">
@@ -157,16 +167,14 @@
                                 </li>
                             </ul>
                             <div class="txt-renglon">
-                                <a href="" class="btn btn-lg btn-block btn-add" ng-click="addPerson('shortanswer' + $index, $index)"
+                                <a href="" class="btn btn-lg btn-block btn-add"
+                                   ng-click="addPerson('shortanswer' + $index, $index)"
                                    ng-hide="setReadOnly">
                                     <span class="icomoon icon-plus"></span>Agregar persona...
                                 </a>
                             </div>
                         </div>
-
-
                     </div>
-
 
 
                 </div>
@@ -187,9 +195,8 @@
                     </div>
                     <a class="btn btn-primary btn-lg btn-cnt"
                        id="save"
-                       href=""
                        ng-show="answerIndex == 1 && activity_status >= 0"
-                       ng-click="validateQuiz()">Guardar</a>
+                       ng-click="validateQuiz()">GUARDAR</a>
 
                     <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
                 </section>
@@ -202,154 +209,109 @@
                         <div class="subtitle centered min-pad ">{{activityname}}</div>
                         <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
                     </section>
-                    <section class="centered txt-bigger" ng-show="activityname != 'Final'">
+                    <section class="centered txt-bigger" ng-show="activityname != 'Exploración final'">
                         <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
                     </section>
 
 
                     <! -- ONLY FOR FINAL EXPLORATIONS --->
-                    <section class="txt-renglon pill" ng-show="activityname == 'Exploracion final'">
+                    <section class="txt-renglon pill" ng-show="activityname == 'Exploración final'">
                         <div class="pull-left">Mi puntuación</div>
-                        <div class="pull-right green-pill"><span>{{Score}}</span><span class="white">/100</span>
+                        <div class="pull-right green-pill"><span>{{score}}</span><span class="white">/100</span>
                         </div>
                     </section>
-                    <section class="question-parts" ng-show="activityname == 'Final'">
-                        <div id="question1">
-                            <div class="txt-renglon panel" ng-class="{'collapsed': question1.isCollapsed}">
-                                <div class="panel-heading clearfix"
-                                     ng-click="question1.isCollapsed = !question1.isCollapsed">
-                                        <span class="pull-left icomoon icon-wrong-join"
-                                              ng-class="{'active': exploracionFinalresult[0].badAnswer}"></span>
-                                    1. ¿Podemos desarrollar y fortalecer habilidades en las que no somos tan buenos?
-                                    <span class="pull-right icomoon icon-arrow" ng-show="!question1.isCollapsed"></span>
-                                    <span class="pull-right icomoon icon-arrow-up" ng-show="question1.isCollapsed"></span>
-                                </div>
-                                <div id="results1" class="panel-body" collapse="!question1.isCollapsed">
-                                    <ul>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[0].trueOptionWrong}" ng-show="exploracionFinalresult[0].showTrueAnswer">
-                                                <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[0].trueOptionWrong"></span>Verdadero
-                                        </li>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[0].falseOptionWrong}" ng-show="exploracionFinalresult[0].showFalseAnswer">
-                                                <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[0].falseOptionWrong"></span>Falso
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div id="question2">
-                            <div class="txt-renglon panel collapsed"
-                                 ng-class="{'collapsed': question2.isCollapsed}">
-                                <div class="panel-heading clearfix"
-                                     ng-click="question2.isCollapsed = !question2.isCollapsed">
-                                        <span class="pull-left icomoon icon-wrong-join "
-                                              ng-class="{'active': exploracionFinalresult[1].badAnswer}"></span>
-                                    2. ¿Tener un carro y formar una familia es un sueño de ser?
-                                    <span class="pull-right icomoon icon-arrow" ng-show="!question2.isCollapsed"></span>
-                                    <span class="pull-right icomoon icon-arrow-up" ng-show="question2.isCollapsed"></span>
-                                </div>
-                                <div id="results2" class="panel-body" collapse="!question2.isCollapsed">
-                                    <ul>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[1].trueOptionWrong}" ng-show="exploracionFinalresult[1].showTrueAnswer">
-                                                <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[1].trueOptionWrong"></span>Verdadero
-                                        </li>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[1].falseOptionWrong}" ng-show="exploracionFinalresult[1].showFalseAnswer">
-                                                <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[1].falseOptionWrong"></span>Falso
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="question3">
-                            <div class="txt-renglon panel" ng-class="{'collapsed': question3.isCollapsed}">
-                                <div class="panel-heading clearfix"
-                                     ng-click="question3.isCollapsed = !question3.isCollapsed">
-                                        <span class="pull-left icomoon icon-wrong-join"
-                                              ng-class="{'active': exploracionFinalresult[2].badAnswer}"></span>
-                                    3. ¿Tus sueños son metas que van dirigiendo tu camino?
-                                    <span class="pull-right icomoon icon-arrow" ng-show="!question3.isCollapsed"></span>
-                                    <span class="pull-right icomoon icon-arrow-up" ng-show="question3.isCollapsed"></span>
-                                </div>
-                                <div id="results3" class="panel-body" collapse="!question3.isCollapsed">
-                                    <ul>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[2].trueOptionWrong}" ng-show="exploracionFinalresult[2].showTrueAnswer">
-                                                <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[2].trueOptionWrong"></span>Verdadero
-                                        </li>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[2].falseOptionWrong}" ng-show="exploracionFinalresult[2].showFalseAnswer">
-                                                <span class="pull-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[2].falseOptionWrong"></span>Falso
-                                        </li>
-                                    </ul>
+
+                    <section class="question-parts" ng-show="activityname == 'Exploración final'">
+                        <div ng-repeat="question in activityObject.questions track by $index">
+
+                            <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'binary'">
+                                <div class="txt-renglon panel" ng-class="{collapsed: question$index.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': !questionIsCorrect[$index]}"></span>
+                                        {{questionText[$index]}}
+                                        <span class="pull-right icomoon icon-arrow" ng-show="!question$index.isCollapsed"></span>
+                                        <span class="pull-right icomoon icon-arrow-up" ng-show="question$index.isCollapsed"></span>
+                                    </div>
+                                    <div id="{{'results' + $index}}" class="panel-body" collapse="!question$index.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$index][0]}"
+                                                ng-show="!questionIsCorrect[$index] || questionIsCorrect[$index] && !chosenByUserAndWrong[$index][0]">
+                                                <span class="pull-left icomoon icon-wrong" ng-show="chosenByUserAndWrong[$index][0]"></span>
+                                                {{question.answers[0].answer}}
+                                            </li>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$index][1]}"
+                                                ng-show="!questionIsCorrect[$index] || questionIsCorrect[$index] && chosenByUserAndWrong[$index][1]">
+                                                <span class="pull-left icomoon icon-wrong" ng-show="chosenByUserAndWrong[$index][1]"></span>
+                                                {{question.answers[1].answer}}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="question4">
-                            <div class="txt-renglon panel" ng-class="{'collapsed': question4.isCollapsed}">
-                                <div class="panel-heading clearfix"
-                                     ng-click="question4.isCollapsed = !question4.isCollapsed">
-                                        <span class="pull-left icomoon icon-wrong-join"
-                                              ng-class="{'active': exploracionFinalresult[3].badAnswer}"></span>
-                                    4. Es importante tener una persona que te inspire porque:
-                                    <span class="pull-right icomoon icon-arrow" ng-show="!question4.isCollapsed"></span>
-                                    <span class="pull-right icomoon icon-arrow-up" ng-show="question4.isCollapsed"></span>
-                                </div>
-                                <div id="results4" class="panel-body" collapse="!question4.isCollapsed">
-                                    <ul>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[3].firstOptionWrong}"  ng-show="exploracionFinalresult[3].showFirstAnswer">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[3].firstOptionWrong"></span>
-                                            Es tu ejemplo a seguir y debes ser igual a él
-                                        </li>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[3].secondOptionWrong}" ng-show="exploracionFinalresult[3].showSecondAnswer">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[3].secondOptionWrong"></span>
-                                            Puedes aprender de su experiencia para alcanzar tus sueños
-                                        </li>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[3].thirdOptionWrong}" ng-show="exploracionFinalresult[3].showThirdAnswer">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[3].thirdOptionWrong"></span>
-                                            Puede enseñarte cómo ganar dinero más fácil
-                                        </li>
-                                    </ul>
+
+
+                            <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'simplechoice'">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': !questionIsCorrect[$index]}"></span>
+                                        {{questionText[$index]}}
+                                        <span class="pull-right icomoon icon-arrow" ng-show="!question$index.isCollapsed"></span>
+                                        <span class="pull-right icomoon icon-arrow-up" ng-show="question$index.isCollapsed"></span>
+                                    </div>
+                                    <div id="{{'results' + $index}}" class="panel-body" collapse="!question$index.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$parent.$index][$index]}"
+                                                ng-show="!questionIsCorrect[$parent.$index] || questionIsCorrect[$parent.$index] && $index == correctIndex[$parent.$index]"
+                                                ng-repeat="answerObject in question.answers track by $index">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="chosenByUserAndWrong[$parent.$index][$index]"></span>
+                                                {{answerObject.answer}}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div id="question5">
-                            <div class="txt-renglon panel" ng-class="{'collapsed': question5.isCollapsed}">
-                                <div class="panel-heading clearfix"
-                                     ng-click="question5.isCollapsed = !question5.isCollapsed">
-                                        <span class="pull-left icomoon icon-wrong-join"
-                                              ng-class="{'active': exploracionFinalresult[4].badAnswer}"></span>
-                                    5. ¿Porqué es importante que tus sueños se relacionen con lo que te gusta y para lo
-                                    que eres bueno?
-                                    <span class="pull-right icomoon icon-arrow" ng-show="!question5.isCollapsed"></span>
-                                    <span class="pull-right icomoon icon-arrow-up" ng-show="question5.isCollapsed"></span>
-                                </div>
-                                <div id="results5" class="panel-body" collapse="!question5.isCollapsed">
-                                    <ul>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[4].firstOptionWrong}" ng-show="exploracionFinalresult[4].showFirstAnswer">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[4].firstOptionWrong"></span>
-                                            Porque aprovechas mejor tus talentos y disfrutas lo que haces
-                                        </li>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[4].secondOptionWrong}" ng-show="exploracionFinalresult[4].showSecondAnswer">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[4].secondOptionWrong"></span>
-                                            Porque puedes ser más famoso y exitoso
-                                        </li>
-                                        <li ng-class="{'failed clearfix': exploracionFinalresult[4].thirdOptionWrong}" ng-show="exploracionFinalresult[4].showThirdAnswer">
-                                                <span class="fl-left icomoon icon-wrong"
-                                                      ng-show="exploracionFinalresult[4].thirdOptionWrong"></span>
-                                            Porque debes hacer lo que quieras sin importar nada ni nadie
-                                        </li>
-                                    </ul>
+
+                            <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'multichoice'">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': !questionIsCorrect[$index]}"></span>
+                                        {{questionText[$index]}}
+                                        <span class="pull-right icomoon icon-arrow" ng-show="!question$index.isCollapsed"></span>
+                                        <span class="pull-right icomoon icon-arrow-up" ng-show="question$index.isCollapsed"></span>
+                                    </div>
+                                    <div id="{{'results' + $index}}" class="panel-body" collapse="!question$index.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$parent.$index][$index]}"
+                                                ng-repeat="answerObject in question.answers track by $index">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="false"></span>
+                                                {{answerObject.answer}}
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'shortanswer'">
+                                <div class="txt-renglon panel" ng-class="{collapsed: question$index.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': !questionIsCorrect[$index]}"></span>
+                                        {{questionText[$index]}}
+                                        <span class="pull-right icomoon icon-arrow" ng-show="!question$index.isCollapsed"></span>
+                                        <span class="pull-right icomoon icon-arrow-up" ng-show="question$index.isCollapsed"></span>
+                                    </div>
+                                    <div id="{{'results' + $index}}" class="panel-body" collapse="!question$index.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$parent.$index][$index]}"
+                                                ng-show="answerIsCorrect[$index][0]">
+                                                <span class="pull-left icomoon icon-wrong" ng-show="false"></span>
+                                                {{question.userAnswer}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </section>
                     <! -- END OF SECTION FOR FINAL EXPLORATIONS --->
@@ -393,10 +355,10 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">Exploración inicial</h3>
+                <h3 class="subtitle text-center">Actividad</h3>
 
                 <p class="txt-renglon centered">
-                    Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad.
+                    Mensaje{{robotMessage}}
                 </p>
             </div>
         </div>
