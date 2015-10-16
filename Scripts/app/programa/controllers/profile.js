@@ -117,11 +117,12 @@ angular
                 $scope.kindOfVideoGamesList = ['Acción', 'Deportes', 'Violencia', 'Aventura', 'Reto', 'Estrategia', 'Educativos', 'Peleas'];
                 $scope.socialNetworksList = ['Twitter','Facebook','YouTube','Instagram','Snapchat','No tengo redes sociales'];
                 $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política','Otro'];
-                $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)','Otro'];
-                $scope.phoneTypeList = ['Celular','Casa','Trabajo','No tengo teléfono' ,'Otro'];
+                $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)','Otro'];                
+                
                 
                 $scope.birthdate_Dateformat = moment(formatDate($scope.model.birthday)).format("DD/MM/YYYY"); 
                 getAge();
+                console.log("Age loaded");
                 $scope.showPlaceHolder = true;
 
             });
@@ -319,7 +320,6 @@ angular
                         $location.path('/');
                         return "";
                     }
-
                     initFields($scope.model);
                     loadStrengths();
                     loadWindowOfOpportunities();
@@ -337,8 +337,7 @@ angular
                 if (m.address.postalCode == null) { m.address.postalCode = ""; }
             }
 
-            function getAvatarInfoCallback() {
-
+            function getAvatarInfoCallback() {                
                 $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
 
                 if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
@@ -587,9 +586,8 @@ angular
                 //phones
                 if ($scope.model.phones.length > 0) {
                     for (var i = 0; i < $scope.model.phones.length; i++) {
-                        if (typeof $scope.model.phones[i].phone === "undefined" ||
-                            $scope.model.phones[i].length === 0||
-                            typeof $scope.model.phones[i].phoneId === "undefined") {
+                        if (typeof $scope.model.phones[i] === "undefined" ||
+                            $scope.model.phones[i].length === 0) {
                             $scope.model.phones.splice(i, 1);
                             i = i - 1;
                         }
@@ -893,7 +891,7 @@ angular
                                                                 if ($scope.model.address.num_ext) {
                                                                     if ($scope.model.address.num_int) {
                                                                         if ($scope.model.address.colony) {
-                                                                            if ($scope.model.phones.length != 0) {
+                                                                            if ($scope.model.phones != 0) {
                                                                                 if ($scope.model.socialNetworks.length != 0) {
                                                                                     if ($scope.model.familiaCompartamos.length != 0) {
                                                                                         result = true;
@@ -1017,14 +1015,15 @@ angular
             };
 
             $scope.addPhone = function () {
-                $scope.model.phones.push({});
+                $scope.model.phones.push(new String());
             };
 
             // $scope.deletePhone = function (index) {
             //     $scope.model.phones.splice(index, 1);
             // };
             
-            $scope.deletePhone = function (index) {
+            $scope.deletePhone = function (phone) {
+                var index = $scope.model.phones.indexOf(phone);
                 // var selectedPhone = $scope.model.phones[index];
                 
                 //$scope.model.phones.remove(phone)//Pailas
