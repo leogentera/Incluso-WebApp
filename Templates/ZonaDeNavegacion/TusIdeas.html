@@ -102,7 +102,7 @@
                                         <div class="form-group theme-form">
 
                                             <div class="clearfix">
-                                                <span>Habilidad {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
+                                                <span>{{placeholder[$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
                                                    ng-click="deleteAbility('essay' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status == 0">
@@ -129,7 +129,7 @@
                                 <a href="" class="btn btn-lg btn-block btn-add"
                                    ng-click="addAbility('essay' + $index, $index)"
                                    ng-hide="setReadOnly">
-                                    <span class="icomoon icon-plus"></span>Agregar nueva habilidad...
+                                    <span class="icomoon icon-plus"></span>{{placeholder[$index]}}
                                 </a>
                             </div>
                         </div>
@@ -170,7 +170,7 @@
                                 <a href="" class="btn btn-lg btn-block btn-add"
                                    ng-click="addPerson('shortanswer' + $index, $index)"
                                    ng-hide="setReadOnly">
-                                    <span class="icomoon icon-plus"></span>Agregar persona...
+                                    <span class="icomoon icon-plus"></span>{{placeholder[$index]}}
                                 </a>
                             </div>
                         </div>
@@ -207,7 +207,7 @@
                     <section class="header-title">
                         <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
                         <div class="subtitle centered min-pad ">{{activityname}}</div>
-                        <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
+                        <div class="txt-renglon centered txt-bigger min-pad ">¡Bien hecho!</div>
                     </section>
                     <section class="centered txt-bigger" ng-show="activityname != 'Exploración final'">
                         <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
@@ -225,6 +225,8 @@
                     <section class="question-parts" ng-show="activityname == 'Exploración final'">
                         <div ng-repeat="question in activityObject.questions track by $index">
 
+
+                            <!--   -----------------------   BINARY TYPE QUESTION   ------------------------------              -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'binary'">
                                 <div class="txt-renglon panel" ng-class="{collapsed: question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -250,7 +252,7 @@
                                 </div>
                             </div>
 
-
+                            <!--   -----------------------   SIMPLECHOICE TYPE QUESTION   ------------------------------              -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'simplechoice'">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -272,6 +274,7 @@
                                 </div>
                             </div>
 
+                            <!--   -----------------------   MULTICHOICE TYPE QUESTION   ------------------------------              -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'multichoice'">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -292,6 +295,7 @@
                                 </div>
                             </div>
 
+                            <!--   -----------------------   SHORTANSWER TYPE QUESTION   ------------------------------              -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'shortanswer'">
                                 <div class="txt-renglon panel" ng-class="{collapsed: question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -356,9 +360,9 @@
             </div>
             <div class="modal-body">
                 <h3 class="subtitle text-center">Actividad</h3>
-
+                    Identifica tus límites y cambia el chip de tus ideas
                 <p class="txt-renglon centered">
-                    Mensaje{{robotMessage}}
+
                 </p>
             </div>
         </div>
