@@ -170,8 +170,9 @@
 
 													<div class="form-group theme-form">
 														<div class="form-group-control custom-placeholder-wrapper">
-															<input class="form-control form-control-lg theme-form" type="date" name="date" ng-model="birthdate_Dateformat" ng-change="birthdayChanged(this)" ng-focus="showPlaceHolderBirthday()" minlength="10" maxlength="10" aria-describedby="birthDateAddOn" required />
-															<span class="{{showPlaceHolder == true ? 'custom-placeholder form-control-lg show' : 'custom-placeholder form-control-lg hidden'}}" >Fecha de nacimiento</span>
+															<input class="form-control form-control-lg theme-form" type="text" name="date" ng-click="datePickerClick()" ng-model="birthdate_Dateformat"  minlength="10" maxlength="10" aria-describedby="birthDateAddOn" placeholder="Fecha de nacimiento" required />
+															<!-- ng-change="birthdayChanged(this)" -->
+															<!-- <span class="{{showPlaceHolder == true ? 'custom-placeholder form-control-lg show' : 'custom-placeholder form-control-lg hidden'}}" >Fecha de nacimiento</span> -->
 															     
 														</div>
 													</div>

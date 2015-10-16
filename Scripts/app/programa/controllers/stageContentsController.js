@@ -95,6 +95,7 @@ angular
             var getcoursemoduleids = [];
             $scope.like_status = 1;
             var activitymanagers = [];
+            var activitiesData = "";
 
             if (!activities) {
                 activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
@@ -119,58 +120,43 @@ angular
 
             function getDataAsync() {
                 for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
-                    var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid));
+                    var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].activity_identifier));
                     if (activityCache) {
                         $scope.fuenteDeEnergia.activities[i] = activityCache;
                     }
-                    else {
-                        var activityContentCache = (JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
-                        if (activityContentCache) {
-                            $scope.fuenteDeEnergia.activities[i].activityContent = activityContentCache;
-
-                            setResources($scope.fuenteDeEnergia.activities[i]);
-
-                        }
-                        else {
-                            waitPreloader += 1;
-
-                            moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);
-
-                        }
+                    else {                       
+                            activitiesData += "activity["+i+"]="+$scope.fuenteDeEnergia.activities[i].coursemoduleid+"&";                            
+                            //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);                        
                     }
 
                     //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,successfullCallBack, errorCallback);
                     //(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
+                }
+                if(activitiesData != ""){
+                    waitPreloader++;
+                    activitiesData = activitiesData.slice(0,-1);
+                    moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, getActivityInfoCallback, getActivityErrorCallback);
                 }
                 if (waitPreloader == 0) {
                     $scope.$emit('HidePreloader');
                 }
             }
 
-            function getActivityInfoCallback(data, key) {
-                var courseId = key.split('/')[1];
-
+            function getActivityInfoCallback(data, key) {                
                 for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                     var myActivity = $scope.fuenteDeEnergia.activities[i];
-                    if (myActivity.coursemoduleid == courseId) {
-                        myActivity.activityContent = JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + courseId));
+                    
+                    if(!myActivity.activityContent){
+                        myActivity.activityContent = data[i];
 
-                        setResources(myActivity);
-
-                        hidePreloader += 1;
-                        break;
-                    }
-                }
-                if (waitPreloader == hidePreloader) {
-                    $scope.$emit('HidePreloader'); //hide preloader
-                }
+                        setResources(myActivity);                                                            
+                    }                    
+                }                
+                    $scope.$emit('HidePreloader'); //hide preloader                
             }
 
             function getActivityErrorCallback() {
-                hidePreloader += 1;
-                if (waitPreloader == hidePreloader) {
-                    $scope.$emit('HidePreloader'); //hide preloader
-                }
+                $scope.$emit('HidePreloader'); //hide preloader                
             }
 
             function setResources(myActivity) {

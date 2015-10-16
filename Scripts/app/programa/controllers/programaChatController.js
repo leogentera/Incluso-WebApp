@@ -15,9 +15,9 @@ angular
             _timeout = $timeout;
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
-            var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
             _setLocalStorageItem('chatRead', "true");
-            var userId = localStorage.getItem('userId');            
+            var userId = localStorage.getItem('userId');
+            var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte/" + userId));
             var messagesToRead = _getItem("currentStage") * 2;
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
@@ -55,9 +55,8 @@ angular
 
 
             function validateCabinaDeSoporte(){                
-                //$scope.scrollToTop('anchor-bottom');   
-                debugger;                    
-                var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
+                 
+                var finishCabinaSoporte = localStorage.getItem("finishCabinaSoporte/" + userId);
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
                     var isStarted = _startedActivityCabinaDeSoporte;
@@ -70,9 +69,10 @@ angular
                                 return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
                             });
 
-                            if (latestMessages.length >= 2) { 
-                                localStorage.removeItem("startedActivityCabinaDeSoporte");   
-                                _setLocalStorageItem('finishCabinaSoporte', 'true');
+                            if (latestMessages.length >= 2) {
+
+                                localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
+                                _setLocalStorageItem("finishCabinaSoporte/" + userId, 'true');
                             }
                         }   
                     }                
@@ -149,8 +149,7 @@ angular
                     });
 
                     if (messagesInterchange >= messagesToRead) {
-                        _setLocalStorageItem("finishCabinaSoporte", "true");
-                        localStorage.getItem('finishCabinaSoporte')
+                        _setLocalStorageItem("finishCabinaSoporte/" + _getItem("userId"), "true");
                     }
                                                     
                     if (chatAmount.true != localStorage.getItem('chatAmountRead')) {

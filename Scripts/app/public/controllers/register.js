@@ -43,8 +43,8 @@ angular
             $scope.currentUserModel = {
                 token: "",
                 userId: ""
-            };
-
+            };                
+            
             
             /* Helpers */
             var isConfirmedPasswordValid = false;
@@ -73,11 +73,8 @@ angular
             });
             $scope.$watch("registerModel.modelState.errorMessages", function(newValue, oldValue){
                 $scope.registerModel.modelState.isValid = (newValue.length === 0);
-            });           
-               
-               
-                                
-            
+            });                                                                  
+
             $scope.register = function() {
                 console.log('register');
                 localStorage.removeItem("Credentials");
@@ -156,16 +153,35 @@ angular
                 $scope.currentPage = pageNumber;
                 $scope.$emit('scrollTop'); //- scroll
             };
+
+            function change(time) {
+                var r = time.match(/^\s*([0-9]+)\s*-\s*([0-9]+)\s*-\s*([0-9]+)(.*)$/);
+                return r[2]+"-"+r[3]+"-"+r[1]+r[4];
+            }
+
             //
             //ng-hide="registerModel.birthday.length != 0"
-            $scope.showPlaceHolderBirthday = function(){                
-                var bd = $("input[name='birthday']").val();                
-                if(bd){
-                    $scope.showPlaceHolder = false;                    
-                }else{
-                    $scope.showPlaceHolder = true;                    
-                }
+            // $scope.showPlaceHolderBirthday = function(){                
+            //     var bd = $("input[name='birthday']").val();
+            //     if(bd){                                                            
+            //         $scope.showPlaceHolder = false;                    
+            //     }else{
+            //         $scope.showPlaceHolder = true;                    
+            //     }
+            //     alert('focus' + $scope.showPlaceHolder);                                                        
+            // };
+
+            $scope.datePickerClick = function(){                            
+                cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='birthday']").val()]);                
             };
+
+            function SuccessDatePicker(data){
+                $("input[name='birthday']").val(data);                                                         
+            }
+
+            function FailureDatePicker(data) {
+                
+            }
                         
             var registerUser = function(){
                 
@@ -239,7 +255,7 @@ angular
 
             function validateModel(){                
                 var errors = [];
-                var datePickerValue =  $("input[name=birthday]").val();
+                var datePickerValue = $("input[name=birthday]").val();
                 dpValue = moment(datePickerValue).format("MM/DD/YYYY");
                 var age = calculate_age();
                 
