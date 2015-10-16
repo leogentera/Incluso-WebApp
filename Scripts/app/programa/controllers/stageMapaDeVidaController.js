@@ -57,7 +57,7 @@ angular
 	            }
 	            catch (e) {
 	                successGame(
-	                    {"userid":"103","actividad":"Proyecta tu Vida","duración":"5","imagenFicha":"assets/images/results/FichaProyectaTuVida.png","pathImagenFicha":"","fecha_inicio":"2015-09-15 14:23:12","fecha_fin":"2015-09-15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":147,"respuesta":"Dimension 1 1."},{"preguntaId":148,"respuesta":"Dimension 1 2."},{"preguntaId":149,"respuesta":["Dimension 1 3 1.","Dimension 1 3 2.","Dimension 1 3 3."]},{"preguntaId":150,"respuesta":"Dimension 1 4"},{"preguntaId":151,"respuesta":"Dimension 1 5."},{"preguntaId":152,"respuesta":"Dimension 1 6."}]},{"dimensionId":243,"respuestas":[{"preguntaId":154,"respuesta":"Dimension 2 1."},{"preguntaId":155,"respuesta":"Dimension 2 2."},{"preguntaId":156,"respuesta":["Dimension 2 3 1","Dimension 2 3 2","Dimension 2 3 3"]},{"preguntaId":157,"respuesta":"Dimension 2 4"},{"preguntaId":158,"respuesta":"Dimension 2 5."},{"preguntaId":159,"respuesta":"Dimension 2 6."}]},{"dimensionId":244,"respuestas":[{"preguntaId":160,"respuesta":"Dimension 3 1."},{"preguntaId":161,"respuesta":"Dimension 3 2."},{"preguntaId":162,"respuesta":["Dimension 3 3 1.","Dimension 3 3 2.","Dimension 3 3 3."]},{"preguntaId":163,"respuesta":"Dimension 3 4"},{"preguntaId":164,"respuesta":"Dimension 3 5."},{"preguntaId":165,"respuesta":"Dimension 3 6."}]},{"dimensionId":245,"respuestas":[{"preguntaId":166,"respuesta":"Dimension 4 1."},{"preguntaId":167,"respuesta":"Dimension 4 2."},{"preguntaId":168,"respuesta":["Dimension 4 3 1","Dimension 4 3 2","Dimension 4 3 3"]},{"preguntaId":169,"respuesta":"Dimension 4 4"},{"preguntaId":170,"respuesta":"Dimension 4 5."},{"preguntaId":171,"respuesta":"Dimension 4 6."}]},{"dimensionId":246,"respuestas":[{"preguntaId":172,"respuesta":"Dimension 5 1"},{"preguntaId":173,"respuesta":"Dimension 5 2"},{"preguntaId":174,"respuesta":["Dimension 5 3 1","Dimension 5 3 2","Dimension 5 3 3"]},{"preguntaId":175,"respuesta":"Dimension 5 4"},{"preguntaId":176,"respuesta":"Dimension 5 5"},{"preguntaId":177,"respuesta":"Dimension 5 6"}]}]}
+	                    {"userid":"103","actividad":"Proyecta tu Vida","duración":"5","imagenFicha":"assets/images/results/FichaProyectaTuVida.png","pathImagenFicha":"","fechaInicio":"2015-09-15 14:23:12","fechaFin":"2015-09-15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":147,"respuesta":"Dimension 1 1."},{"preguntaId":148,"respuesta":"Dimension 1 2."},{"preguntaId":149,"respuesta":["Dimension 1 3 1.","Dimension 1 3 2.","Dimension 1 3 3."]},{"preguntaId":150,"respuesta":"Dimension 1 4"},{"preguntaId":151,"respuesta":"Dimension 1 5."},{"preguntaId":152,"respuesta":"Dimension 1 6."}]},{"dimensionId":243,"respuestas":[{"preguntaId":154,"respuesta":"Dimension 2 1."},{"preguntaId":155,"respuesta":"Dimension 2 2."},{"preguntaId":156,"respuesta":["Dimension 2 3 1","Dimension 2 3 2","Dimension 2 3 3"]},{"preguntaId":157,"respuesta":"Dimension 2 4"},{"preguntaId":158,"respuesta":"Dimension 2 5."},{"preguntaId":159,"respuesta":"Dimension 2 6."}]},{"dimensionId":244,"respuestas":[{"preguntaId":160,"respuesta":"Dimension 3 1."},{"preguntaId":161,"respuesta":"Dimension 3 2."},{"preguntaId":162,"respuesta":["Dimension 3 3 1.","Dimension 3 3 2.","Dimension 3 3 3."]},{"preguntaId":163,"respuesta":"Dimension 3 4"},{"preguntaId":164,"respuesta":"Dimension 3 5."},{"preguntaId":165,"respuesta":"Dimension 3 6."}]},{"dimensionId":245,"respuestas":[{"preguntaId":166,"respuesta":"Dimension 4 1."},{"preguntaId":167,"respuesta":"Dimension 4 2."},{"preguntaId":168,"respuesta":["Dimension 4 3 1","Dimension 4 3 2","Dimension 4 3 3"]},{"preguntaId":169,"respuesta":"Dimension 4 4"},{"preguntaId":170,"respuesta":"Dimension 4 5."},{"preguntaId":171,"respuesta":"Dimension 4 6."}]},{"dimensionId":246,"respuestas":[{"preguntaId":172,"respuesta":"Dimension 5 1"},{"preguntaId":173,"respuesta":"Dimension 5 2"},{"preguntaId":174,"respuesta":["Dimension 5 3 1","Dimension 5 3 2","Dimension 5 3 3"]},{"preguntaId":175,"respuesta":"Dimension 5 4"},{"preguntaId":176,"respuesta":"Dimension 5 5"},{"preguntaId":177,"respuesta":"Dimension 5 6"}]}]}
 	                );
 	            }
             }
@@ -109,23 +109,22 @@ angular
 
             function createRequest(){
                 var request = {
-                    "userid": $scope.user.id,
+                    "userId": "" + $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": "Proyecta tu vida",
-                    "estrellas": $scope.stars,
+                    "estrellas": "" + $scope.stars,
                     "pathImagenFicha": "",
                     "imagenFicha": "",
-                    "ficha_proyecto": []
+                    "fichaProyecto": []
                 }
                 for (var i = 0; i < $scope.mapaDeVidaActivities.length; i++) {
                     var activity = $scope.mapaDeVidaActivities[i];
                     var proyecto = {
-                        //replaces all the strings to nothing
-                        "dimensionId": activity.coursemoduleid,
+                        "dimensionId": "" + activity.coursemoduleid,
                         "respuestas": []
                     }
                     _.each(activity.questions, function (q, i) {
-                        var respuesta = { "preguntaId": q.id, "respuesta": "" };
+                        var respuesta = { "preguntaId": "" + q.id, "respuesta": "" };
                         var activityAnswer = _.find($scope.mapaDeVidaAnswers, function(a){ return a.coursemoduleid == activity.coursemoduleid });
                         if (activityAnswer.questions) {
                             var questionAnswer = _.find(activityAnswer.questions, function (a) { return a.id == q.id });
@@ -136,9 +135,9 @@ angular
                         }
                         proyecto.respuestas.push(respuesta);
                     });
-                    request.ficha_proyecto.push(proyecto);
+                    request.fichaProyecto.push(proyecto);
                 }
-                request.ficha_proyecto = _.sortBy(request.ficha_proyecto,function(f){ return f.dimensionId; });
+                request.fichaProyecto = _.sortBy(request.fichaProyecto,function(f){ return f.dimensionId; });
                 return request;
             }
 
@@ -149,15 +148,15 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"userid":"103","actividad":"Proyecta tu Vida","duración":"5","imagenFicha":"assets/images/results/FichaProyectaTuVida.png","pathImagenFicha":"","fecha_inicio":"2015-09-15 14:23:12","fecha_fin":"2015-09-15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":147,"respuesta":"Dimension 1 1."},{"preguntaId":148,"respuesta":"Dimension 1 2."},{"preguntaId":149,"respuesta":["Dimension 1 3 1.","Dimension 1 3 2.","Dimension 1 3 3."]},{"preguntaId":150,"respuesta":"Dimension 1 4"},{"preguntaId":151,"respuesta":"Dimension 1 5."},{"preguntaId":152,"respuesta":"Dimension 1 6."}]},{"dimensionId":243,"respuestas":[{"preguntaId":154,"respuesta":"Dimension 2 1."},{"preguntaId":155,"respuesta":"Dimension 2 2."},{"preguntaId":156,"respuesta":["Dimension 2 3 1","Dimension 2 3 2","Dimension 2 3 3"]},{"preguntaId":157,"respuesta":"Dimension 2 4"},{"preguntaId":158,"respuesta":"Dimension 2 5."},{"preguntaId":159,"respuesta":"Dimension 2 6."}]},{"dimensionId":244,"respuestas":[{"preguntaId":160,"respuesta":"Dimension 3 1."},{"preguntaId":161,"respuesta":"Dimension 3 2."},{"preguntaId":162,"respuesta":["Dimension 3 3 1.","Dimension 3 3 2.","Dimension 3 3 3."]},{"preguntaId":163,"respuesta":"Dimension 3 4"},{"preguntaId":164,"respuesta":"Dimension 3 5."},{"preguntaId":165,"respuesta":"Dimension 3 6."}]},{"dimensionId":245,"respuestas":[{"preguntaId":166,"respuesta":"Dimension 4 1."},{"preguntaId":167,"respuesta":"Dimension 4 2."},{"preguntaId":168,"respuesta":["Dimension 4 3 1","Dimension 4 3 2","Dimension 4 3 3"]},{"preguntaId":169,"respuesta":"Dimension 4 4"},{"preguntaId":170,"respuesta":"Dimension 4 5."},{"preguntaId":171,"respuesta":"Dimension 4 6."}]},{"dimensionId":246,"respuestas":[{"preguntaId":172,"respuesta":"Dimension 5 1"},{"preguntaId":173,"respuesta":"Dimension 5 2"},{"preguntaId":174,"respuesta":["Dimension 5 3 1","Dimension 5 3 2","Dimension 5 3 3"]},{"preguntaId":175,"respuesta":"Dimension 5 4"},{"preguntaId":176,"respuesta":"Dimension 5 5"},{"preguntaId":177,"respuesta":"Dimension 5 6"}]}]}
+                        {"userid":"103","actividad":"Proyecta tu Vida","duración":"5","imagenFicha":"assets/images/results/FichaProyectaTuVida.png","pathImagenFicha":"","fechaInicio":"2015-09-15 14:23:12","fechaFin":"2015-09-15 14:28:12","actividadCompleta":"Si","gustaActividad":"Si","fichaProyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":147,"respuesta":"Dimension 1 1."},{"preguntaId":148,"respuesta":"Dimension 1 2."},{"preguntaId":149,"respuesta":["Dimension 1 3 1.","Dimension 1 3 2.","Dimension 1 3 3."]},{"preguntaId":150,"respuesta":"Dimension 1 4"},{"preguntaId":151,"respuesta":"Dimension 1 5."},{"preguntaId":152,"respuesta":"Dimension 1 6."}]},{"dimensionId":243,"respuestas":[{"preguntaId":154,"respuesta":"Dimension 2 1."},{"preguntaId":155,"respuesta":"Dimension 2 2."},{"preguntaId":156,"respuesta":["Dimension 2 3 1","Dimension 2 3 2","Dimension 2 3 3"]},{"preguntaId":157,"respuesta":"Dimension 2 4"},{"preguntaId":158,"respuesta":"Dimension 2 5."},{"preguntaId":159,"respuesta":"Dimension 2 6."}]},{"dimensionId":244,"respuestas":[{"preguntaId":160,"respuesta":"Dimension 3 1."},{"preguntaId":161,"respuesta":"Dimension 3 2."},{"preguntaId":162,"respuesta":["Dimension 3 3 1.","Dimension 3 3 2.","Dimension 3 3 3."]},{"preguntaId":163,"respuesta":"Dimension 3 4"},{"preguntaId":164,"respuesta":"Dimension 3 5."},{"preguntaId":165,"respuesta":"Dimension 3 6."}]},{"dimensionId":245,"respuestas":[{"preguntaId":166,"respuesta":"Dimension 4 1."},{"preguntaId":167,"respuesta":"Dimension 4 2."},{"preguntaId":168,"respuesta":["Dimension 4 3 1","Dimension 4 3 2","Dimension 4 3 3"]},{"preguntaId":169,"respuesta":"Dimension 4 4"},{"preguntaId":170,"respuesta":"Dimension 4 5."},{"preguntaId":171,"respuesta":"Dimension 4 6."}]},{"dimensionId":246,"respuestas":[{"preguntaId":172,"respuesta":"Dimension 5 1"},{"preguntaId":173,"respuesta":"Dimension 5 2"},{"preguntaId":174,"respuesta":["Dimension 5 3 1","Dimension 5 3 2","Dimension 5 3 3"]},{"preguntaId":175,"respuesta":"Dimension 5 4"},{"preguntaId":176,"respuesta":"Dimension 5 5"},{"preguntaId":177,"respuesta":"Dimension 5 6"}]}]}
                     );
                	}
             }
 
             function successGame(data){
                 var quizzesRequests = [];
-                $scope.pathImagenFicha = (!data.imagenFicha || data.imagenFicha == "" ? data.pathImagenFicha : data.imagenFicha );
-                for (var i = 0; i < data.ficha_proyecto.length; i++) {
+                $scope.pathImagenFicha = data.imagenFicha;
+                for (var i = 0; i < data.fichaProyecto.length; i++) {
                     var logEntry = {
                         "userid":$scope.user.id,
                         "answers": [],
@@ -168,7 +167,7 @@ angular
                         "quiz_answered": true,
                         "at_least_one": false
                     };
-                    var dimension = data.ficha_proyecto[i];
+                    var dimension = data.fichaProyecto[i];
                     if (dimension) {
                         for (var j = 0; j < dimension.respuestas.length; j++) {
                             var respuesta = dimension.respuestas[j];
@@ -198,9 +197,9 @@ angular
                             logEntry.quiz_answered = ( respuesta.respuesta != undefined && respuesta.respuesta != "" && logEntry.quiz_answered );
                         };
                         logEntry.coursemoduleid = dimension.dimensionId;
-                        logEntry.startingTime = data.fecha_inicio;
-                        logEntry.endingTime = data.fecha_fin;
-                        logEntry.like_status = (data.gusta_actividad == "Si" ? 1 : 0 );
+                        logEntry.startingTime = data.fechaInicio;
+                        logEntry.endingTime = data.fechaFin;
+                        logEntry.like_status = (data.gustaActividad == "Si" ? 1 : 0 );
                         quizzesRequests.push(logEntry);
                     }
                 }
