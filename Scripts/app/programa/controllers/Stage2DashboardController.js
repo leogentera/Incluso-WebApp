@@ -35,6 +35,8 @@ angular
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
+            
+            getContentResources($scope.thisStage.activity_identifier);
 
             setTimeout(function () {
                 var hits = 1;
@@ -176,45 +178,47 @@ angular
 
             };
 
+            
+            function loadController(){
             //If first time in stage, show modal with welcome message
-            if($scope.thisStage.firsttime){
-                $scope.openModal_StageFirstTime();
+                if($scope.thisStage.firsttime){
+                    $scope.openModal_StageFirstTime();
+    
+                    $scope.updateStageFirstTime();
+                }
+    
+                var challengeCompletedId = _closeChallenge($scope.idEtapa);
+    
+                _coachNotification($scope.idEtapa);
+    
+                //Exclude initial and final challenges from showing modal robot
+                var challengeExploracionInicial = 154;
+                var challengeExploracionFinal = 168;
+                if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){            
+                    _setLocalStorageItem("challengeMessageId",challengeCompletedId);
+                    showClosingChallengeRobot(challengeCompletedId);
+                }else{
+                    _setLocalStorageItem("challengeMessageId",0);
+                }
+    
+    
+                //Try to close stage. If stage is closed exactly in this attempt, show closing message.
+                if(_tryCloseStage($scope.idEtapa)){
+    
+                    $scope.openModal_CloseStage();
+                }
+    
+                //Update progress
+                var userid = localStorage.getItem("userId");
+                var user = JSON.parse(localStorage.getItem("profile/" + userid));
+                $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+                var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
+                $scope.model = progress.course;           
+                _setLocalStorageJsonItem("usercourse", $scope.model);
+    
+                $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
-                $scope.updateStageFirstTime();
             }
-
-            var challengeCompletedId = _closeChallenge($scope.idEtapa);
-
-            _coachNotification($scope.idEtapa);
-
-            //Exclude initial and final challenges from showing modal robot
-            var challengeExploracionInicial = 154;
-            var challengeExploracionFinal = 168;
-            if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){            
-                _setLocalStorageItem("challengeMessageId",challengeCompletedId);
-                $scope.openModal_CloseChallenge();
-            }else{
-                _setLocalStorageItem("challengeMessageId",0);
-            }
-
-
-            //Try to close stage. If stage is closed exactly in this attempt, show closing message.
-            if(_tryCloseStage($scope.idEtapa)){
-
-                $scope.openModal_CloseStage();
-            }
-
-            //Update progress
-            var userid = localStorage.getItem("userId");
-            var user = JSON.parse(localStorage.getItem("profile/" + userid));
-            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-            var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
-            $scope.model = progress.course;           
-            _setLocalStorageJsonItem("usercourse", $scope.model);
-
-            $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
-
-
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
             $scope.$on('$viewContentLoaded', function() {
                 //$scope.$emit('HidePreloader'); //hide preloader
@@ -245,44 +249,64 @@ angular
                 return activity.status;
             };
             
-        }]).controller('closingStageTwoChallengeController', function ($scope, $modalInstance) {
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {                
+                    $scope.contentResources = data.node;                    
+                    loadController();
+                    
+                    }, function () {}, true);
+            }
+            
+            
+            function showClosingChallengeRobot(challengeCompletedId){
+                                        
+                console.log("show closing challengeRobot");
+                $scope.robotMessages = [
+                                {
+                                    title: $scope.contentResources.robot_title_challenge_one,
+                                    message: $scope.contentResources.robot_challenge_one,
+                                    read: "false",
+                                    challengeId: 113
+                                },
+                                {
+                                    title: $scope.contentResources.robot_title_challenge_two,
+                                    message: $scope.contentResources.robot_challenge_two,
+                                    read: "false",
+                                    challengeId: 114
+                                },
+                                {
+                                    title: $scope.contentResources.robot_title_challenge_thre,
+                                    message: $scope.contentResources.robot_challenge_three,
+                                    read: "false",
+                                    challengeId: 115
+                                },
+                                {
+                                    title:  $scope.contentResources.robot_challenge_four,
+                                    message: $scope.contentResources.robot_challenge_four,
+                                    read: "false",
+                                    challengeId: 116
+                                }];
+            
+                
+                $scope.actualMessage = _.findWhere($scope.robotMessages, { read: "false", challengeId: challengeCompletedId });                
+                if($scope.actualMessage){                
+                    _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
+                    console.log($scope.actualMessage);
+                    $scope.openModal_CloseChallenge();
+                }
+            }
+                                                                                               
+        }])
+    .controller('closingStageTwoChallengeController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
                         
             var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
-                                                                    
-            $scope.robotMessages = [
-                    {
-                        title : "CUARTO DE RECURSOS",
-                        message : "¡Has recuperado un elemento más para atravesar los asteroides! Estas listo para tomar tus decisiones   y tener  nuevas ideas que te impulsen a lograr lo que te propongas.",
-                        read : "false",
-                        challengeId : 155},
-                    {
-                        title : "TRANSFÓRMATE",
-                        message : "¡Has recuperado un elemento más para atravesar los asteroides! Rompe con las ideas que te limitan y escucha a las que te impulsan para lograr tus sueños.",
-                        read : "false",
-                        challengeId : 157},
-                    {
-                        title : "TÚ ELIGES",
-                        message : "¡Has recuperado un elemento más para atravesar los asteroides! Ahora ya conoces más sobre como tomar mejores decisiones.",
-                        read : "false",
-                        challengeId : 160},
-                    {
-                        title: "PROYECTA TU VIDA",
-                        message : "¡Has recuperado un elemento más para atravesar los asteroides! La ruta para llegar a tus sueños esta trazada, ahora sólo depende de ti.",
-                        read : "false",
-                        challengeId : 81},
-                    {
-                        title: "CABINA DE SOPORTE",
-                        message: "¡Has recuperado un elemento más para atravesar los asteroides! Ya tienes lo necesario para seguir la ruta que has trazado, piensa en positivo y toma mejores decisiones.",
-                        read: "false",
-                        challengeId : 167}
-                        ];
+                                                                                        
              
-             $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});             
-             
-            }).controller('closingStageTwoController', function ($scope, $modalInstance,$location) {
+            })
+    .controller('closingStageTwoController', function ($scope, $modalInstance,$location) {
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');
                     };
