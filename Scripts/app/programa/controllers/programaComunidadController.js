@@ -91,7 +91,7 @@ angular
             
             $scope.showMorePosts = function() {
                 $scope.$emit('ShowPreloader');
-                moodleFactory.Services.GetAsyncDiscussionPosts(_currentUser.token, $scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 0, _currentFilter, getAsyncDiscussionPostsCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(_currentUser.token, $scope.discussion.id, $scope.discussion.discussion, $scope.forumId, _postPager.from, _postPager.to, 0, _currentFilter, getAsyncDiscussionPostsCallback, function(data) {$scope.$emit('HidePreloader');}, true);
             };
             
             var getAsyncDiscussionPostsCallback = function(data, key) {
