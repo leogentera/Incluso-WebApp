@@ -78,18 +78,17 @@ angular
 
             function createRequest () {
             	var request = {
-            		"userid": "" + $scope.user.id,
+            		"userId": "" + $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": $scope.tuEligesActivities.name,
             		"pathImagenes": "",
                     "estrellas": "" + $scope.stars,
-                    "introduccion": $scope.tuEligesActivities.description,
-                    //TODO: Find a way to un-hardcode this.
+                    "introducción": $scope.tuEligesActivities.description,
                     "instrucciones":"Toma este reto y pon a prueba tu toma de decisiones. ¡Sólo tú decides el rumbo de tu vida!",
             		"preguntas": [],
-                    "retro_aprobado":(_.max($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
-                    "retro_regular":(_.find($scope.tuEligesActivities.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
-                    "retro_reprobado":(_.min($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
+                    "retroAprobado":(_.max($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
+                    "retroRegular":(_.find($scope.tuEligesActivities.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
+                    "retroReprobado":(_.min($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
             	}
             	for (var i = 0; i < $scope.tuEligesActivities.questions.length; i++) {
             		var currentQuestion = $scope.tuEligesActivities.questions[i];
@@ -99,8 +98,8 @@ angular
             			"pregunta": currentQuestion.question,
             			"imagen":"imagen"+currentQuestion.id+".jpg",
                         "respuestas": [],
-                        "retro_resp_correcta":"",
-                        "retro_resp_incorrecta":""
+                        "retroRespCorrecta":"",
+                        "retroRespIncorrecta":""
             		}
             		for(var j = 0; j < currentQuestion.answers.length; j++){
             			var currentAnswer = currentQuestion.answers[j];
@@ -110,9 +109,9 @@ angular
                             "tipo": (currentAnswer.fraction == 0 ? "incorrecta" : "correcta")
 	            		}
                         if (currentAnswer.fraction == 0) {
-                            question.retro_resp_incorrecta = currentAnswer.feedback;
+                            question.retroRespIncorrecta = currentAnswer.feedback;
                         }else{
-                            question.retro_resp_correcta = currentAnswer.feedback;
+                            question.retroRespCorrecta = currentAnswer.feedback;
                         }
 	            		question.respuestas.push(answer);
             		}
@@ -139,9 +138,9 @@ angular
             		"userid":$scope.user.id,
             		"answers": [],
             		"coursemoduleid": $scope.tuEligesActivities.coursemoduleid,
-            		"like_status": (data.gusta_actividad == "Si" ? 1 : 0 ),
-            		"startingTime": data.fecha_inicio,
-            		"endingTime": data.fecha_fin
+            		"like_status": (data.gustaActividad == "Si" ? 1 : 0 ),
+            		"startingTime": data.fechaInicio,
+            		"endingTime": data.fechaFin
             	};
             	for (var i = 0; i < data.respuestas.length; i++) {
             		_.each($scope.tuEligesActivities.questions, function(q){
@@ -153,7 +152,7 @@ angular
             			}
             		});
             	}
-                var quiz_finished = (data.actividad_completa == "Si" ? true : false);
+                var quiz_finished = (data.actividadCompleta == "Si" ? true : false);
 
             	var questionsAnswered = _.countBy($scope.tuEligesActivities.questions, function(q) {
             		return (q.userAnswer && q.userAnswer != '' ? 'completed' : 'incompleted');
