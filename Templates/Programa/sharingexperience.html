@@ -41,7 +41,7 @@
 		
 			<div class="actions">
 				<div class="page-controls">													
-					<a type="button" class="btn btn-primary btn-lg btn-block" ng-click="shareToCommunity()" ng-show="hasCommunityAccess" ng-disabled="!hasCommunityAccess" ng-bind="contentResources.sec_btn_share"></a>
+					<a type="button" class="btn btn-primary btn-lg btn-block" ng-click="shareToCommunity()" ng-show="hasCommunityAccess" ng-disabled="!hasCommunityAccess && (limitPhotoSize == 6)" ng-bind="contentResources.sec_btn_share"></a>
 					<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateTo('/Dashboard')" ng-bind="contentResources.sec_btn_cancel"></a>
 				</div>
 				
