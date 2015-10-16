@@ -29,7 +29,7 @@
                                 	<span class="icomoon icon-cross white"></span>
 	                            </a>
                             </caption>
-							<img data-ng-src="attachedImage.displaySrc" alt="attachedImage.fileName" />
+							<img src="{{'data:image/' + attachedImage.fileExtension + ';base64,' + attachedImage.image}}" alt="attachedImage.fileName" />
 						</figure>
 					</li>
 				</ul>

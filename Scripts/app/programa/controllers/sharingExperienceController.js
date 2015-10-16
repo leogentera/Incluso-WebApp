@@ -53,7 +53,7 @@
         
         function attachImageSuccessCallback(data) {
                 var fileNameParts = data.fileName.split(".");
-                data.displaySrc = "data:image/" + fileNameParts[fileNameParts.length - 1] + ";base64," + data.image;
+                data.fileExtension = fileNameParts[fileNameParts.length - 1];
                 $scope.model.attachedImages.push(data);
                 $scope.$apply();
         }
@@ -62,9 +62,7 @@
         }
         
         function getCommunityData(callback) {
-                
                 moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, _currentUser.token, function(data, key) {
-
                     $scope.discussion = data.discussions[0];
                     $scope.forumId = data.forumid;
                     callback();
@@ -100,14 +98,14 @@
                                 "filename": fileNames
                         };
                         
-                        console.log(fileContents.length);
-                        console.log(fileNames.length);
+                        //alert(fileContents.length);
+                        //alert(fileNames.length);
                         moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                             function(){
                                 $scope.$emit('HidePreloader');
                                 $location.path("/Community/50000");
                             },
-                            function(){
+                            function(data){
                                 $scope.$emit('HidePreloader');
                             });
                 }
