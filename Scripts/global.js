@@ -119,7 +119,7 @@ var _activityDependencies=[
     //Stage 3 dependencies
     {
         id:3101,
-        dependsOn:[2023,-10]
+        dependsOn:[2023]
     },
     {
         id:3201,
