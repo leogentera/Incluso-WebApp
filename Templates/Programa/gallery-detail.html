@@ -6,27 +6,24 @@
         <section class="wall">
             <div class="part post">
                 <div class="author">
-                    <img src="assets/images/img-avatar-placeholder.svg" alt="user" />
+                    <img ng-click="navigateTo('Profile/' + model.post_autor_id)" ng-if="model.picture_post_author" ng-src="{{model.picture_post_author + '?token=' + userToken}}" alt="author" />
+					<img ng-click="navigateTo('Profile/' + model.post_autor_id)" ng-id="!model.picture_post_author" src="assets/avatar/default-2.png" />
                     <div>
-                        <a class="user-alias">Hector Martinez</a>
+                        <a class="user-alias" ng-click="navigateTo('Profile/' + model.post_autor_id)" ng-bind="model.post_author"></a>
                         <span>publicó:</span>
-                        <div>05 de octubre, 2015</div>
+                        <div>{{model.created * 1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
                     </div>
                 </div>
                 <div class="block-not post-contents">
                     <div>
-                        <p>¡Les comparto unas fotos que tomé!</p>
+                        <p ng-bind="model.message"></p>
+						
                         <div class="achievement-badge" id="gallery-carousel">
-                            <div class="item">
-                                <img src="assets/images/ptr-video-0001.jpg"  alt="post" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/images/ptr-video-0001.jpg"  alt="post" />
-                            </div>
-                            <div class="item">
-                                <img src="assets/images/ptr-video-0001.jpg"  alt="post" />
+                            <div class="item" ng-repeat="img in model.attachment">
+                                <img src="{{img.fileurl + '?token=' + userToken}}" alt="post" />
                             </div>
                         </div>
+						
                         <div class="control-panel">
                             <a class="control back" href="#" id="prev">
 		                        <span class="icomoon icon-arrow-bold-left"></span>
@@ -45,54 +42,8 @@
             </div>
             <br>
             <section>
-                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
+                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/5000')">Regresar</a>
             </section>
         </section>
     </article>
-    <script>
-        $(document).ready(function () {
-            galleryFunctions = {
-                "init": function (gallery) {
-                    gallery.owlCarousel({
-                        navigation: false,
-                        pagination: false,
-                        paginationSpeed: 1000,
-                        goToFirstSpeed: 2000,
-                        singleItem: true,
-                        autoHeight: true,
-                        touchDrag: true,
-                        mouseDrag: false,
-                        transitionStyle: "fade",
-                        afterAction: galleryFunctions.afterAction,
-                        afterInit: galleryFunctions.initCarousel
-                    });
-                    $(".control.next").click(function (e) {
-                        if (!$(this).hasClass("disable"))
-                            gallery.trigger('owl.next');
-                        e.preventDefault();
-                    });
-                    $(".control.back").click(function (e) {
-                        if (!$(this).hasClass("disable"))
-                            gallery.trigger('owl.prev');
-                        e.preventDefault();
-                    });
-                },
-                "initCarousel": function () {
-                    $(".total-number").text(this.owl.owlItems.length);
-                },
-                "afterAction": function () {
-                    var item = this.owl.currentItem;
-                    var total = this.owl.owlItems.length;
-                    if (item === 0)
-                        $(".control.back").addClass("disable");
-                    else if (item === total - 1)
-                        $(".control.next").addClass("disable");
-                    else
-                        $(".control.back, .control.next").removeClass("disable");
-                    $(".currentItem").text(item + 1);
-                }
-            }
-            galleryFunctions.init($("#gallery-carousel"));
-        });
-</script>
 </div>

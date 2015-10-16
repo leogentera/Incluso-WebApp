@@ -46,7 +46,7 @@ angular
             $scope.filter = "";
             
             /* View settings */
-            $rootScope.pageName = "Comunidad"
+            $rootScope.pageName = "Comunidad";
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
