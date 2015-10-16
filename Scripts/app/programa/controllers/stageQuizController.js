@@ -374,7 +374,7 @@ angular
                     }
 
                     console.log("Num of multichoice questions = " + $scope.numOfMultichoiceQuestions);
-                    localStorage.setItem("numOfOthers/" + theCourseModuleId, $scope.numOfMultichoiceQuestions);
+                    //localStorage.setItem("numOfOthers/" + theCourseModuleId, $scope.numOfMultichoiceQuestions);
 
                 }
 
@@ -837,53 +837,7 @@ angular
                 var numAnswered = 0;
                 var numQuestions = $scope.activityObject.questions.length;
 
-                //$scope.questionTypesArray = [];
-
                 for (index = 0; index < numQuestions; index++) {
-
-                    /*
-
-                    question = $scope.activityObject.questions[index]; //The n-th question
-
-                    var userAnswers = '';
-                    var otherObjectItem = {};
-                    var questionNumOfChoices = question.answers.length;
-                    var hasOther = false;
-
-                    if (questionNumOfChoices > 0) {
-                        hasOther = question.answers[questionNumOfChoices - 1].answer == "Otro";
-                    }
-
-                    var questionCode = "";
-                    var questionType = question.questionType || question.questiontype;   //Contains the type of question.
-
-                    if (questionType == "shortanswer") {
-                        questionCode = "shortanswer";
-                    }
-
-                    if (questionType == "essay") {
-                        questionCode = "essay";
-                    }
-
-                    if (questionType == "multichoice" && questionNumOfChoices == 2 || questionType == "truefalse") {
-                        questionCode = "binary";
-                    }
-
-                    if ($scope.OtroAnswers == null) {
-                        $scope.OtroAnswers = [];
-                    }
-
-                    if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
-                        questionCode = "multichoice";
-                    }
-
-                    if (questionType == "multichoice" && questionNumOfChoices > 2 && !hasOther) {
-                        questionCode = "simplechoice";
-                    }
-
-                    $scope.questionTypesArray.push(questionCode);
-                    console.log("index = " + index + ",questionTypeCode = " + questionCode);
-                    */
 
                     switch ($scope.questionTypeCode[index]) {
 
@@ -969,6 +923,7 @@ angular
 
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
+
                 } else {
                     $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                     $scope.showWarning = true;

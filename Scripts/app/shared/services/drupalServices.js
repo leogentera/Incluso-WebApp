@@ -17,7 +17,8 @@
         "0000": 57, /* Programa - Dashboard*/
         "PrivacyNotice": 37, /* No tiene activity identifier */
         "AlertsDetail": 23, /* General - Detalle Notificación */
-        "Alerts": 24 /* General - Notificaciones*/
+        "Alerts": 24, /* General - Notificaciones*/
+        "compartir-experiencia": 68 /* General - Compartir experiencia */
     };
 
     drupalFactory.Services = (function () {
