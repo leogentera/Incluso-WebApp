@@ -102,7 +102,7 @@
                                         <div class="form-group theme-form">
 
                                             <div class="clearfix">
-                                                <span>{{placeholder[$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
+                                                <span>{{placeholder[$parent.$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
                                                    ng-click="deleteAbility('essay' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status == 0">
@@ -143,7 +143,7 @@
                                         <div class="form-group theme-form">
 
                                             <div class="clearfix">
-                                                <span>{{placeholder[$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
+                                                <span>{{placeholder[$parent.$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
                                                    ng-click="deletePerson('shortanswer' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status == 0">

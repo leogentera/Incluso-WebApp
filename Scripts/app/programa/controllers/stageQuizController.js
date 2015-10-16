@@ -53,8 +53,7 @@ angular
 
             $scope.isDisabled = false;
             $scope.activity_identifier = parseInt($routeParams.activityIdentifier);  //Gets the coursemoduleid from 'activity' object
-            alert($scope.activity_identifier);
-
+            //alert($scope.activity_identifier);
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -76,63 +75,6 @@ angular
 
             $scope.robotMessage = "";
             //$scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
-
-            switch ($scope.activity_identifier) {
-                case "1001": //Exploración Inicial - Etapa 1
-                    //$scope.answers = localAnswers;
-                    //$scope.OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "x";
-                    break;
-                case "1005": //Mis Cualidades - Etapa 1
-                    //$scope.answers = localAnswers;
-                    //$scope.OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "x";
-                    break;
-                case "1006": //Mis Gustos - Etapa 1
-                    //$scope.answers = localAnswers;
-                    //$scope.OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "x";
-                    break;
-                case "1007": //Sueña - Etapa 1
-                    //$scope.answers = localAnswers; //Sueña
-                    $scope.robotMessage = "Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad.";
-                    break;
-                case "1009": //Exploración Final - Etapa 1
-                    //$scope.exploracionFinal = localAnswers;
-                    $scope.robotMessage = "Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad.";
-                    break;
-                case "2001": //Exploración Inicial - Etapa 2
-                    //$scope.answers = localAnswers;
-                    //$scope.exploracionInicialStage2OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "x";
-                    break;
-                case "2007": //Tus ideas - Etapa 2
-                    //$scope.answers = localAnswers;
-                    $scope.robotMessage = "x";
-                    break;
-                case "2016": //Mi futuro - Etapa 2
-                    //$scope.answers = localAnswers;
-                    $scope.robotMessage = "x";
-                    break;
-                case "2023": //Exploración Final - Etapa 2
-                    //$scope.exploracionFinalStage2 = localAnswers;
-                    $scope.robotMessage = "x";
-                    break;
-                case "3101": //Exploración Inicial - Etapa 3
-                    //$scope.answers = localAnswers;
-                    //$scope.exploracionInicialStage3OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "x";
-                    break;
-                case "3601": //Exploración Final - Etapa 3
-                    //$scope.exploracionFinalStage3 = localAnswers;
-                    //$scope.exploracionFinalStage3OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "x";
-                    break;
-                default:
-                    //$scope.currentChallenge = 0; //Default
-                    break;
-            }
-
 
             $scope.addCaptureField = function (value, check) {
                 if (check) {
@@ -301,7 +243,7 @@ angular
                         }
                     } else {
                         // Bring text for questions for Quiz from the Service for First Time users.
-                        // The -1 is for the GET request without the userid:
+                        // The -1 is for making up a GET request without the userid; for example:
                         // http://incluso.definityfirst.com/RestfulAPI/public/activity/150
                         console.log("Bringing text for a not finished Quiz...");
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, successfullCallBack, errorCallback, true);
@@ -577,7 +519,6 @@ angular
                     if ($scope.activity_status == 0) {
                         $scope.activity_status = 1;
                         console.log("Update Activity Log : " + $scope.activity_identifier);
-
                         updateUserStars($scope.parentActivity.activity_identifier);
                         //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
                     }
