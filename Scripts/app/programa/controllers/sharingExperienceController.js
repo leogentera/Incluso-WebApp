@@ -112,4 +112,15 @@
                             });
                 }
         }
+        
+        function getContentResources(nodeNameRelation) {
+                $scope.$emit('ShowPreloader');
+                drupalFactory.Services.GetContent(nodeNameRelation, function (data, key) {
+                        $scope.contentResources = data.node;
+                        $rootScope.pageName = $scope.contentResources.sec_title_toolbar;
+                        $scope.$emit('HidePreloader');
+                }, function () {}, true);
+        }
+        
+        getContentResources("compartir-experiencia");
     }]);
