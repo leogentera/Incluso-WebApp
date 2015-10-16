@@ -32,6 +32,8 @@
                 attachedImages: []
         };
         
+        $scope.limitPhotoSize = 0;
+        
         $scope.shareToCommunity = function() {
                 
                 $scope.$emit('ShowPreloader');
@@ -44,6 +46,9 @@
         };
         
         $scope.removeImage = function(index) {
+                
+                $scope.limitPhotoSize--;
+                
                 $scope.model.attachedImages.splice(index, 1);
         };
         
@@ -52,8 +57,13 @@
         };
         
         function attachImageSuccessCallback(data) {
+                
+                $scope.limitPhotoSize++;
+                
                 var fileNameParts = data.fileName.split(".");
                 data.fileExtension = fileNameParts[fileNameParts.length - 1];
+                data.fileName = _userId + Date.now() + "." + "data.fileExtension";
+                
                 $scope.model.attachedImages.push(data);
                 $scope.$apply();
         }
@@ -98,8 +108,6 @@
                                 "filename": fileNames
                         };
                         
-                        //alert(fileContents.length);
-                        //alert(fileNames.length);
                         moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                             function(){
                                 $scope.$emit('HidePreloader');
