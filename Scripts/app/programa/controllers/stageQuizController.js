@@ -52,7 +52,7 @@ angular
             var destinationPath = "";
 
             $scope.isDisabled = false;
-            var $scope.activity_identifier = parseInt($routeParams.activityIdentifier);  //Gets the coursemoduleid from 'activity' object
+            $scope.activity_identifier = parseInt($routeParams.activityIdentifier);  //Gets the coursemoduleid from 'activity' object
             alert($scope.activity_identifier);
 
 
