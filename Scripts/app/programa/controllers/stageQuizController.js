@@ -37,8 +37,8 @@ angular
             $scope.OtroAnswers = [];
             $scope.numOfMultichoiceQuestions = 0;
             $scope.position = {};
-            var nonEditableQuizzes = ["1001", "1009", "2001", "2023", "3101", "3601"];
-            var quizHasOther = ["1001", "1005", "1006", "2001", "2023", "3101", "3601"];
+            var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601];
+            //var quizHasOther = ["1001", "1005", "1006", "2001", "2023", "3101", "3601"];
             $scope.questionNumOfChoices = [];
             $scope.placeholder = [];
 
@@ -50,10 +50,14 @@ angular
             };
 
             var destinationPath = "";
-
             $scope.isDisabled = false;
             $scope.activity_identifier = parseInt($routeParams.activityIdentifier);  //Gets the coursemoduleid from 'activity' object
-            //alert($scope.activity_identifier);
+
+            if (nonEditableQuizzes.indexOf($scope.activity_identifier) == -1) {//This Quis is editable
+                $scope.quizIsEditable = true;
+            } else {
+                $scope.quizIsEditable = false;
+            }
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -71,9 +75,6 @@ angular
                     });
             };
 
-            //For 'shortanswer' and 'essay' type questions.
-
-            $scope.robotMessage = "";
             //$scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
             $scope.addCaptureField = function (value, check) {
@@ -210,8 +211,9 @@ angular
                             activityObject = JSON.parse(_getItem("activityObject/" + parentActivity.coursemoduleid));
                         }
 
-                        //If...the activity quiz has a checkbox for the "Other" answer, then get it from Local Storage
-                        var localOtrosAnswers;
+                        /*
+                        var localOtrosAnswers = null;
+
                         if (quizHasOther.indexOf($scope.activity_identifier) > -1) {
                             if (childActivity) {
                                 localOtrosAnswers = JSON.parse(_getItem("otherAnswQuiz/" + childActivity.coursemoduleid));
@@ -219,18 +221,16 @@ angular
                                 localOtrosAnswers = JSON.parse(_getItem("otherAnswQuiz/" + parentActivity.coursemoduleid));
                             }
                         }
+                        */
 
                         $scope.activityObject = activityObject;
-                        $scope.OtroAnswers = localOtrosAnswers;
                         console.log("localAnswers = " + JSON.stringify(localAnswers));
-                        console.log("OtroAnswers = " + JSON.stringify(localOtrosAnswers));
-
                         $scope.activityFinished = activityFinished;
 
-                        if (localAnswers == null || activityObject == null ) {// If activity data not exists in Local Storage...get it from Server
+                        if (localAnswers == null || activityObject == null) {// If activity data not exists in Local Storage...get it from Server
 
                             console.log("The info for the Quiz IS NOT within Local Storage");
-                            // GET request (example) - http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
+                            // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, loadModelVariables, errorCallback, true);
                             console.log("The info has been taken from Service...");
 
@@ -246,7 +246,7 @@ angular
                         // The -1 is for making up a GET request without the userid; for example:
                         // http://incluso.definityfirst.com/RestfulAPI/public/activity/150
                         console.log("Bringing text for a not finished Quiz...");
-                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, successfullCallBack, errorCallback, true);
+                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, loadModelVariables, errorCallback, true);
                     }
                 }
                 else {
@@ -274,13 +274,9 @@ angular
                 if (activityObject != null) {
 
                     var question = "";
-                    var numQuestions = 0;
+                    //var numQuestions = 0;
                     $scope.numOfOthers = 0;
-
-                    if ($scope.OtroAnswers == null) {
-                        $scope.OtroAnswers = [];
-                    }
-
+                    var localOtrosAnswers = null;
                     $scope.placeholder = [];
 
                     //Count the number of "Other" options in current Quiz.
@@ -294,9 +290,7 @@ angular
                             hasOther = question.answers[questionNumOfChoices - 1].answer == "Otro";
                         }
 
-                        //Set the values for the placeholder strings within UI textareas.
-                        $scope.placeholder[index] = question.tag;
-
+                        $scope.placeholder[index] = question.tag;  //Set the values for the placeholder strings within UI textareas.
                         var questionType = question.questionType || question.questiontype;   //Contains the type of question.
 
                         if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
@@ -304,24 +298,35 @@ angular
                         }
                     }
 
-                    console.log(":::::::::: Número de preguntas con 'Otro' = " + $scope.numOfOthers);
+                    if ($scope.numOfOthers > 0) {//If the current Quiz has questions including the 'Other' option, then get them from LS
+                        if ($scope.childActivity) {
+                            localOtrosAnswers = JSON.parse(_getItem("otherAnswQuiz/" + $scope.childActivity.coursemoduleid));
+                        } else {
+                            localOtrosAnswers = JSON.parse(_getItem("otherAnswQuiz/" + $scope.parentActivity.coursemoduleid));
+                        }
+                    }
+
+                    $scope.OtroAnswers = localOtrosAnswers;
+
+                    if ($scope.OtroAnswers == null) {
+                        $scope.OtroAnswers = [];
+                    }
+
+                    console.log(":: Número de preguntas con 'Otro' = " + $scope.numOfOthers);
+                    console.log("OtroAnswers = " + JSON.stringify($scope.OtroAnswers));
 
                     for (var index = 0; index < activityObject.questions.length; index++) {
 
                         question = activityObject.questions[index];
                         console.log("question no. " + index);
-                        numQuestions = activityObject.questions.length;
-
+                        //numQuestions = activityObject.questions.length;
                         renderQuestionsAndAnswers(index, question);
                         _setLocalStorageJsonItem("answersQuiz/" + theCourseModuleId, $scope.answers);
                     }
 
                     console.log("Num of multichoice questions = " + $scope.numOfMultichoiceQuestions);
-                    //localStorage.setItem("numOfOthers/" + theCourseModuleId, $scope.numOfMultichoiceQuestions);
 
-                }
-
-                else {
+                } else {
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
                     $scope.showWarning = true;
                 }
@@ -570,10 +575,29 @@ angular
 
                     activityModel.answersResult.dateStart = activityModel.startingTime;
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
+                    activityModel.answersResult.others = $scope.OtroAnswers;
+                    alert(JSON.stringify($scope.OtroAnswers));
 
-                    if (quizHasOther.indexOf($scope.activity_identifier) > -1) {//Quiz with "Otro" answer option.
-                        activityModel.answersResult.others = $scope.OtroAnswers;
+                    if ($scope.childActivity) {
+                        _setLocalStorageJsonItem("answersQuiz/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
+                        _setLocalStorageJsonItem("UserTalents/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
+                    } else {
+                        _setLocalStorageJsonItem("answersQuiz/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
+                        _setLocalStorageJsonItem("UserTalents/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
                     }
+                    alert("Saving thing to LS!!!");
+
+                    //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
+                    if ($scope.numOfOthers > 0) {alert(JSON.stringify($scope.OtroAnswers));
+
+                        if ($scope.childActivity) {
+                            _setLocalStorageJsonItem("otherAnswQuiz/" + $scope.childActivity.coursemoduleid, $scope.OtroAnswers);
+                        } else {
+                            _setLocalStorageJsonItem("otherAnswQuiz/" + $scope.parentActivity.coursemoduleid, $scope.OtroAnswers);
+                        }
+                    }
+
+
 
                     console.log("activityModel.answersResult = " + JSON.stringify(activityModel.answersResult));
                     console.log("activityModel.others = " + JSON.stringify(activityModel.others));
@@ -602,27 +626,8 @@ angular
                         }, destinationPath);
                     }
 
-                    if ($scope.childActivity) {
-                        _setLocalStorageJsonItem("answersQuiz/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
-                        _setLocalStorageJsonItem("UserTalents/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
-                    } else {
-                        _setLocalStorageJsonItem("answersQuiz/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
-                        _setLocalStorageJsonItem("UserTalents/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
-                    }
 
-
-                    //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
-                    if (quizHasOther.indexOf($scope.activity_identifier) > -1) {
-
-                        if ($scope.childActivity) {
-                            _setLocalStorageJsonItem("otherAnswQuiz/" + $scope.childActivity.coursemoduleid, $scope.OtroAnswers);
-                        } else {
-                            _setLocalStorageJsonItem("otherAnswQuiz/" + $scope.parentActivity.coursemoduleid, $scope.OtroAnswers);
-                        }
-                    }
-
-
-                }, 2000);
+                }, 500);
 
             };
 
