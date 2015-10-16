@@ -52,7 +52,8 @@ angular
             var destinationPath = "";
 
             $scope.isDisabled = false;
-            //var moduleid = parseInt($routeParams.moodleid);  //Gets the coursemoduleid from 'activity' object
+            var $scope.activity_identifier = parseInt($routeParams.activityIdentifier);  //Gets the coursemoduleid from 'activity' object
+            alert($scope.activity_identifier);
 
 
             $scope.openModal = function (size) {
@@ -73,8 +74,8 @@ angular
 
             //For 'shortanswer' and 'essay' type questions.
 
-            $scope.robotMessage = "bbb";
-            $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
+            $scope.robotMessage = "";
+            //$scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
             switch ($scope.activity_identifier) {
                 case "1001": //Exploración Inicial - Etapa 1
@@ -332,7 +333,7 @@ angular
 
                     var question = "";
                     var numQuestions = 0;
-                    $scope.numOfOthers2 = 0;
+                    $scope.numOfOthers = 0;
 
                     if ($scope.OtroAnswers == null) {
                         $scope.OtroAnswers = [];
@@ -357,11 +358,11 @@ angular
                         var questionType = question.questionType || question.questiontype;   //Contains the type of question.
 
                         if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
-                            $scope.numOfOthers2++;
+                            $scope.numOfOthers++;
                         }
                     }
 
-                    console.log(":::::::::: Número de preguntas con 'Otro' = " + $scope.numOfOthers2);
+                    console.log(":::::::::: Número de preguntas con 'Otro' = " + $scope.numOfOthers);
 
                     for (var index = 0; index < activityObject.questions.length; index++) {
 
@@ -437,7 +438,8 @@ angular
                     questionCode = "multichoice";
                     $scope.numOfMultichoiceQuestions++;
                     $scope.position[questionIndex] = $scope.numOfMultichoiceQuestions - 1;
-                    if ($scope.OtroAnswers.length < $scope.numOfOthers2) {//continue adding items to the array
+
+                    if ($scope.OtroAnswers.length < $scope.numOfOthers) {//continue adding items to the array
 
                         //Add {questionid: ##, answers: [""]} object for the multichoice question
                         otherObjectItem.questionid = question.id;
@@ -473,7 +475,7 @@ angular
                         break;
 
                     case "multichoice":
-                        //$scope.numOfMultichoiceQuestions++;
+
                         $scope.answers[questionIndex] = [];
                         var index;
                         if (question.userAnswer !== null && question.userAnswer.length > 0) {
@@ -732,7 +734,7 @@ angular
                     function (responseData) {
                         console.log('Update profile successful...');
 
-                        //Delete the 'activityOtrosAnswers' object.
+                        //Delete the 'otherAnswQuiz' object.
                         if ($scope.childActivity) {
                             //localStorage.removeItem("otherAnswQuiz/" + $scope.childActivity.coursemoduleid);
                         } else {
@@ -740,7 +742,7 @@ angular
                         }
 
                         $scope.numOfMultichoiceQuestions = 0;
-                        $scope.numOfOthers2 = 0;
+                        $scope.numOfOthers = 0;
 
                         console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
                         $location.path(destinationPath);
@@ -1169,6 +1171,7 @@ angular
                 }
 
                 $scope.numOfMultichoiceQuestions = 0;
+                $scope.numOfOthers = 0;
 
                 console.log(destinationPath);
                 $location.path(destinationPath);

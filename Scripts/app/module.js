@@ -323,7 +323,7 @@
             controller: 'stageDashboardController'
         });
 
-        $routeProvider.when('/ZonaDeVuelo/ExploracionInicial/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/ExploracionInicial/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeVuelo/ExploracionInicial.html',
             controller: 'stageQuizController'
         });
@@ -408,7 +408,7 @@
             controller: 'stageContentsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html',
             controller: 'stageQuizController'
         });
@@ -418,7 +418,7 @@
             controller: 'stageMessageController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustos.html',
             controller: 'stageQuizController'
         });
@@ -428,7 +428,7 @@
             controller: 'stageMessageController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/Suena.html',
             controller: 'stageQuizController'
         });
@@ -463,7 +463,7 @@
             controller: 'stageMessageController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/ExploracionFinal/:moodleid', { 
+        $routeProvider.when('/ZonaDeVuelo/ExploracionFinal/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeVuelo/ExploracionFinal.html',
             controller: 'stageQuizController'
         });
@@ -485,7 +485,7 @@
             controller: 'stage2DashboardController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicial.html',
             controller: 'stageQuizController'
         });
@@ -595,7 +595,7 @@
             controller: 'stageMessageController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/ExploracionFinal/:moodleid', {
+        $routeProvider.when('/ZonaDeNavegacion/ExploracionFinal/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeNavegacion/ExploracionFinal.html',
             controller: 'stageQuizController'
         });
@@ -622,12 +622,12 @@
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeAterrizaje/ExploracionInicial/:moodleid', {
+        $routeProvider.when('/ZonaDeAterrizaje/ExploracionInicial/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeAterrizaje/ExploracionInicial.html',
             controller: 'stageQuizController'
         });
 
-        $routeProvider.when('/ZonaDeAterrizaje/ExploracionFinal/:moodleid', {
+        $routeProvider.when('/ZonaDeAterrizaje/ExploracionFinal/:activityIdentifier', {
             templateUrl: 'Templates/ZonaDeAterrizaje/ExploracionFinal.html',
             controller: 'stageQuizController'
         });
