@@ -275,8 +275,6 @@
             function getContentResources(activityIdentifierId) {
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {                
                     $scope.contentResources = data.node;                    
-                    loadController();
-                    
                     }, function () {}, true);
             }
             
