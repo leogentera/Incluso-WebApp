@@ -7,7 +7,6 @@
         </div>
     </div>
 
-
     <article class="blueprint evaluation">
         <div class="pages">
             <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
@@ -15,13 +14,12 @@
                     <div class="subtitle">{{activityname}}</div>
                     <div class="txt-renglon">{{activityTitle}}</div>
                 </section>
-                <div id="owl" class="owl-carousel">
 
-
-                    <div ng-repeat="question in activityObject.questions track by $index">
+                <data-owl-carousel class="owl-carousel">
+                    <div owl-carousel-item="" ng-repeat="question in activityObject.questions track by $index" class="item">
 
                         <!--   -----------------------   BINARY TYPE QUESTION   ------------------------------              -->
-                        <div ng-show="questionTypeCode[$index] == 'binary'">
+                        <div ng-show="questionTypeCode[$index] == 'binary'" ng-class="{'theCurrent' : questionTypeCode[$index] == 'binary'}">
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
@@ -176,26 +174,26 @@
                         </div>
                     </div>
 
+                </data-owl-carousel>
 
-                </div>
 
                 <section id="controls" class="controls">
                     <div class="paginate">
-                        <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 1)">
+                        <a href="#" id="prev">
                             <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
                         </a>
-                        <a href="#" id="next" ng-click="addToAnswerIndex(1, 1)">
+                        <a href="#" id="next">
                             <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
                         </a>
 
                         <div class="centered">
-                            <span id="index" class="txt-bigger">1/</span>
-                            <span id="totalPages" class="white txt-bigger">1</span>
+                            <span id="index" class="txt-bigger">1</span>
+                            <span id="totalPages" class="white txt-bigger">/{{maxPages}}</span>
                         </div>
                     </div>
                     <a class="btn btn-primary btn-lg btn-cnt"
                        id="save"
-                       ng-show="answerIndex == 1 && (quizIsEditable == true || activity_status == 0)"
+                       ng-show="answerIndex == maxPages && (quizIsEditable == true || activity_status == 0)"
                        ng-click="validateQuiz()">GUARDAR</a>
 
                     <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
@@ -214,7 +212,7 @@
                     </section>
 
 
-                    <! -- ONLY FOR FINAL EXPLORATIONS --->
+                    <!-- ------------------------------   ONLY FOR FINAL EXPLORATIONS --------------------------------------     -->
                     <section class="txt-renglon pill" ng-show="activityname == 'Exploración final'">
                         <div class="pull-left">Mi puntuación</div>
                         <div class="pull-right green-pill"><span>{{score}}</span><span class="white">/100</span>
@@ -329,7 +327,7 @@
                         </div>
                     </section>
                     <section class="txt-renglon centered form">
-                        <div ng-show="activity_status >= 0">
+                        <div ng-show="activity_status == 0">
                             ¿Que opinas de ésta actividad?
                             <section class="txt-renglon txt-bigger clearfix">
                                 <div class="opinion">
@@ -362,8 +360,7 @@
                 <h3 class="subtitle text-center">Actividad</h3>
 
                 <p class="txt-renglon centered">
-                    Realmente ¿conoces cuáles son tus sueños? Visualizarlos te permite trazar la mejor ruta para llegar a ellos y disfrutar lo que haces cada día.
-                    Existen diferentes tipos de sueños, cónocelos y dale rumbo a tu vida.
+                    Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad
                 </p>
             </div>
         </div>
@@ -374,24 +371,12 @@
 
 <script>
     $(document).ready(function () {
-        var owl = $("#owl ");
-        owl.owlCarousel({
-            navigation: false,
-            pagination: false,
-            goToFirstSpeed: 2000,
-            singleItem: true,
-            autoHeight: true,
-            mouseDrag: false,
-            touchDrag: false,
-            transitionStyle: "fade",
-            afterMove: callback
+
+        var owl = $(".owl-carousel");
+
+        owl.on('translated.owl.carousel', function(event) {
         });
-
-        function callback(event) {
-            var item = this.currentItem;
-            $("#index").html(item + 1 + '/');
-        }
-
+        
         $("#next").click(function (evt) {
             owl.trigger('owl.next');
             evt.preventDefault();

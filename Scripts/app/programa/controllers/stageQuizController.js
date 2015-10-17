@@ -41,6 +41,7 @@ angular
             //var quizHasOther = ["1001", "1005", "1006", "2001", "2023", "3101", "3601"];
             $scope.questionNumOfChoices = [];
             $scope.placeholder = [];
+            $scope.maxPages = 0;
 
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial - Etapa 1"
                 "userid": 0,
@@ -75,6 +76,8 @@ angular
                     });
             };
 
+            $scope.items1 = [1,2,3,4,5];
+            $scope.items2 = [1,2,3,4,5,6,7,8,9,10];
             //$scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
             $scope.addCaptureField = function (value, check) {
@@ -278,6 +281,7 @@ angular
                     $scope.numOfOthers = 0;
                     var localOtrosAnswers = null;
                     $scope.placeholder = [];
+                    $scope.maxPages = activityObject.questions.length;console.log("***** maxPages = " + $scope.maxPages + " ***************");
 
                     //Count the number of "Other" options in current Quiz.
                     for (var index = 0; index < activityObject.questions.length; index++) {
@@ -997,20 +1001,7 @@ angular
                 $scope.$emit('scrollTop');
             }
 
-
             $scope.answerIndex = 1;
-
-            $scope.addToAnswerIndex = function (delta, maxPages) {
-                $scope.answerIndex = parseInt($('span#index').text());
-
-                if ($scope.answerIndex > maxPages) {
-                    $scope.answerIndex = 1;
-                }
-
-                if ($scope.answerIndex < 1) {
-                    $scope.answerIndex = maxPages;
-                }
-            };
 
             function addHeightConsulta(lista, elementQty) {
                 $scope.finalHeight = angular.element(lista).height() + (250 * (elementQty));
@@ -1124,6 +1115,7 @@ angular
             };
 
 
+
         }
     ])
     .
@@ -1137,5 +1129,64 @@ angular
     })
     .controller('videoCollapsiblePanelController', function ($scope) {
         $scope.isCollapsed = false;
-    });
+    }).
+    directive("owlCarousel", function() {
+        return {
+            restrict: 'E',
+            transclude: false,
+            link: function ($scope) {
+                $scope.initCarousel = function(element) {
+                    // provide any default options you want
+                    var currPage;
+                    var prevPage;
+                    var defaultOptions = {
+                        navigation: false,
+                        pagination: false,
+                        goToFirstSpeed: 2000,
+                        singleItem: true,
+                        autoHeight: true,
+                        mouseDrag: false,
+                        touchDrag: false,
+                        dots: false,
+                        navRewind: true,
+                        transitionStyle: "fade",
+                        afterAction: function(el){
+
+                            //add class active
+                            $scope.answerIndex = this.currentItem + 1;
+                            prevPage = $("#index").html();
+                            $("#index").html($scope.answerIndex);
+
+
+                        }
+                    };
+
+                    var customOptions = $scope.$eval({
+
+                    });
+
+                    // combine the two options objects
+                    for(var key in customOptions) {
+                        defaultOptions[key] = customOptions[key];
+                    }
+
+                    // init carousel
+                    $(element).owlCarousel(defaultOptions);
+                };
+            }
+        };
+    })
+    .directive('owlCarouselItem', [function() {
+        return {
+            restrict: 'A',
+            transclude: false,
+            link: function(scope, element) {
+                // wait for the last item in the ng-repeat then call init
+                if(scope.$last) {
+                    scope.initCarousel(element.parent());
+                }
+            }
+        };
+    }]);
+
 
