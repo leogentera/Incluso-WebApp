@@ -36,7 +36,8 @@ angular
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
             
-            getContentResources($scope.thisStage.activity_identifier);
+            var activity_identifier = "2000";
+            getContentResources(activity_identifier);
 
             setTimeout(function () {
                 var hits = 1;
@@ -266,25 +267,31 @@ angular
                                     title: $scope.contentResources.robot_title_challenge_one,
                                     message: $scope.contentResources.robot_challenge_one,
                                     read: "false",
-                                    challengeId: 113
+                                    challengeId: 155
                                 },
                                 {
                                     title: $scope.contentResources.robot_title_challenge_two,
                                     message: $scope.contentResources.robot_challenge_two,
                                     read: "false",
-                                    challengeId: 114
+                                    challengeId: 157
                                 },
                                 {
                                     title: $scope.contentResources.robot_title_challenge_thre,
                                     message: $scope.contentResources.robot_challenge_three,
                                     read: "false",
-                                    challengeId: 115
+                                    challengeId: 160
                                 },
                                 {
                                     title:  $scope.contentResources.robot_challenge_four,
                                     message: $scope.contentResources.robot_challenge_four,
                                     read: "false",
-                                    challengeId: 116
+                                    challengeId: 81
+                                },
+                                {
+                                    title:  $scope.contentResources.robot_challenge_five,
+                                    message: $scope.contentResources.robot_challenge_five,
+                                    read: "false",
+                                    challengeId: 167
                                 }];
             
                 
@@ -302,8 +309,9 @@ angular
                 $modalInstance.dismiss('cancel');
             };
                         
-            var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
-                                                                                        
+            var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
+                              
+            $scope.actualMessage = challengeMessage;                                                          
              
             })
     .controller('closingStageTwoController', function ($scope, $modalInstance,$location) {
