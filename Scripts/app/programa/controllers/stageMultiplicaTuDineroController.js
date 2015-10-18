@@ -84,40 +84,41 @@ angular
 
             function createRequest(){
                 var request = {
-                    "userid": $scope.user.id,
+                    "userId": "" + $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": "Multiplica tu dinero",
                     "estrellas": "" + $scope.stars,
                     "pathImagenes":"",
                     "preguntas": [],
                     "introducción": $scope.multiplicaTuDineroActivity.description,
-                    "retro_aprobado":(_.max($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
-                    "retro_regular":(_.find($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
-                    "retro_reprobado":(_.min($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
+                    "instrucciones": "Responde las siguientes preguntas, pon a prueba tus decisiones y conoce más acerca de cómo cuidar tus finanzas.",
+                    "retroAprobado":(_.max($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
+                    "retroRegular":(_.find($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
+                    "retroReprobado":(_.min($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
                 }
                 for (var i = 0; i < $scope.multiplicaTuDineroActivity.questions.length; i++) {
                     var currentQuestion = $scope.multiplicaTuDineroActivity.questions[i];
                     var question = {
-                        "orden": i + 1,
-                        "preguntaId": currentQuestion.id,
+                        "orden": "" + (i + 1),
+                        "preguntaId": "" + currentQuestion.id,
                         "pregunta": currentQuestion.question,
                         "imagen": currentQuestion.tag + ".jpg",
                         "respuestas":[],
-                        "retro_resp_correcta":"",
-                        "retro_resp_incorrecta":""
+                        "retroRespCorrecta":"",
+                        "retroRespIncorrecta":""
                     }
                     for(var j = 0; j < currentQuestion.answers.length; j++){
                         var currentAnswer = currentQuestion.answers[j];
                         var answer = {
-                            "respuestaId": currentAnswer.id,
+                            "respuestaId": "" + currentAnswer.id,
                             "respuesta": currentAnswer.answer,
                             "tipo": (currentAnswer.fraction == 0 ? "incorrecta" : "correcta")
                         }
                         question.respuestas.push(answer);
                         if (currentAnswer.fraction == 0) {
-                            question.retro_resp_incorrecta = currentAnswer.feedback;
+                            question.retroRespIncorrecta = currentAnswer.feedback;
                         }else{
-                            question.retro_resp_correcta = currentAnswer.feedback;
+                            question.retroRespCorrecta = currentAnswer.feedback;
                         }
                     }
                     request.preguntas.push(question);
@@ -142,14 +143,14 @@ angular
             function successGame(data){
                 //asign answers to the questions
                 var logEntry = {
-                    "userid":$scope.user.id,
+                    "userid": $scope.user.id,
                     "answers": [],
                     "coursemoduleid": $scope.multiplicaTuDineroActivity.coursemoduleid,
-                    "like_status": (data.gusta_actividad == "Si" ? 1 : 0 ),
-                    "startingTime": data.fecha_inicio,
-                    "endingTime": data.fecha_fin
+                    "like_status": (data.gustaActividad == "Si" ? 1 : 0 ),
+                    "startingTime": data.fechaInicio,
+                    "endingTime": data.fechaFin
                 };
-                var quiz_finished = (data.actividad_completa == "Si" ? true : false);
+                var quiz_finished = (data.actividadCompleta == "Si" ? true : false);
                 for(var i = 0; i < $scope.multiplicaTuDineroActivity.questions.length; i++){
                     var activity = $scope.multiplicaTuDineroActivity.questions[i];
                     _.each(data.respuestas, function(a){
