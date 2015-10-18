@@ -124,24 +124,37 @@
                       </section>
 
                     </div>
+                  </div>                  
+                  <div>
+                    <div ng-repeat="comment in activity.activityContent.comments">                      
+                      <div class="coment block">                                              
+                        <div>
+                          <a class="user-alias" ng-click="navigateTo('Profile/' + comment.id)">{{comment.alias}}</a>
+                          <span>comentó:</span>                          
+                          <div>{{comment.user_comment}}</div>
+                        </div>
+                      </div>
+                    </div>                  
                   </div>
+                  <div></div>
                   <div class="interact">
                     <div class="col-xs-6 like"  ng-click="likeSubActivity(activity.groupid)">
                       <span class="icomoon icon-like"></span>
                       <span ng-hide="activity.activityContent.liked">Me gusta</span>
                       <span ng-show="activity.activityContent.liked">Ya no me gusta</span>
                     </div>
+                    
                     <div class="col-xs-6 comment">
                       <span class="icomoon icon-comment"></span>
-                      <span>Comentar</span>
+                      <span ng-click="showCommentBox(activity.groupid)">Comentar</span>
                     </div>
                   </div>
                 </div>
-                 <section class="modales">                  
+                 <section class="modales" ng-show="activity.activityContent.showCommentBox">                  
                   <div id="openModal1" class="modalDialog" >
                     <div>
                         <span class="close"></span>
-                        <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ></textarea></div>      
+                        <div class="add" ><span class="icomoon icon-edit"></span><textarea ng-model="activity.activityContent.newComment" placeholder="Agregar texto..."  ></textarea></div>      
                         <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="commentSubActivity(activity.groupid)" >Compartir</a>
                     </div>
                   </div>                                                              

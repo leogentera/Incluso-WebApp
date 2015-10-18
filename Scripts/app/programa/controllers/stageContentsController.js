@@ -153,9 +153,13 @@ angular
                         moodleFactory.Services.GetCommentByActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,1,0,0,3, $scope.token, function(data){                                                            
                               if (data.comments && data.comments.length > 0) {
                                     myActivity.activityContent.comments = data.comments;
+                                    myActivity.activityContent.newComment = "";
+                                    myActivity.activityContent.showCommentBox = false;
                               }else{
                                     myActivity.activityContent.comments = [];
-                              }                                                                                         
+                                    myActivity.activityContent.newComment = "";
+                                    myActivity.activityContent.showCommentBox = false;
+                              }
                         }, function(){
                               console.log("error getting comments in content controller");
                         });                                            
@@ -350,21 +354,40 @@ angular
             $scope.commentSubActivity = function(contentId){
                   for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                                          
-                              var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                          
-                              var currentUserId = currentUser.userId;
-                                                                        
-                              var data = {
-                                    coursemoduleid: activityId,
-                                    userid: 631,
-                                    dateissued: (new Date() / 1000 | 0),
-                                    comment: "Mensaje de prueba"
+                            var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                          
+                            var currentUserId = currentUser.userId;                                
+                            var newComment = $scope.fuenteDeEnergia.activities[i].activityContent.newComment;                                                                                
+                            
+                            $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false; 
+                            var data = {
+                                coursemoduleid: activityId,
+                                userid: 631,
+                                dateissued: (new Date() / 1000 | 0),
+                                comment: newComment
                               };
-                                                                  
-                              moodleFactory.Services.PostCommentActivity(activityId, data, function(){
-                                    }, function(){                              
-                                          });
+                              
+                            var comment = {
+                                user_comment: newComment,
+                                dateissued: (new Date()/1000|0),
+                                alias: "usuario"                                
+                                
+                            };
+                            var comments = $scope.fuenteDeEnergia.activities[i].activityContent.comments;
+                            //comments.push(comment);
+                            $scope.fuenteDeEnergia.activities[i].activityContent.comments  = comments;
+                            moodleFactory.Services.PostCommentActivity(activityId, data, function(){
+                                }, function(){                              
+                            });
                         }
                   }
+            }
+            
+            $scope.showCommentBox = function(contentId){
+                for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                        if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                            
+                            $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = true;                            
+                        }
+                  }                                            
             }
             
             function getContentResources(activityIdentifierId) {
