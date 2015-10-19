@@ -119,15 +119,12 @@ angular
             };
 
             function getDataAsync() {
+                console.log("Obteniendo datos fuente de energia");
                 for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
-                    var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].activity_identifier));
-                    if (activityCache) {
-                        $scope.fuenteDeEnergia.activities[i] = activityCache;
-                    }
-                    else {                       
+                                          
                             activitiesData += "activity["+i+"]="+$scope.fuenteDeEnergia.activities[i].coursemoduleid+"&";                            
                             //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);                        
-                    }
+            
 
                     //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,successfullCallBack, errorCallback);
                     //(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
