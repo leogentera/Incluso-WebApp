@@ -259,7 +259,7 @@
                     <p class="input-group-addon" id="userNameAddOn">
                       <span class="icomoon icon-user"></span>
                     </p>
-                    <input type="text" ng-model="registerModel.username" name="userName" class="form-control form-control-lg theme-default" placeholder="Nombre de usuario" aria-describedby="userNameAddOn" pattern="[A-Za-z0-9]+" required />
+                    <input type="text" ng-model="registerModel.username" name="userName" class="form-control form-control-lg theme-default" placeholder="Nombre de usuario" aria-describedby="userNameAddOn" pattern="^(?=\S)[-\.@_a-z0-9]*\S$" required />
                   </div>
                 </div>
               </div>
