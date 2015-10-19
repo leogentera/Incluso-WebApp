@@ -260,14 +260,14 @@ angular
                 var age = calculate_age();
                 
                 var passwordPolicy = "debe ser almenos de 8 caracterres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
-                
+                var usernamePolicy = "El nombre de usuario puede contener los siguientes caracteres guión bajo (_), guión (-), punto(.) y arroba(@). El nombre de usuario no debe contener espacios.";
                 if(!$scope.registerForm.password.$valid){
                     errors.push("Formato de contraseña incorrecto. La contraseña " + passwordPolicy);
                 }else{                    
                     if(!isConfirmedPasswordValid) { errors.push("Las contraseñas capturadas no coinciden."); }
                 }                
                                 
-                if(!$scope.registerForm.userName.$valid){ errors.push("Formato de usuario incorrecto."); }
+                if(!$scope.registerForm.userName.$valid){ errors.push("Formato de usuario incorrecto. " + usernamePolicy); }
                 if(!$scope.registerForm.firstName.$valid){ errors.push("Formato de nombre incorrecto."); }
                 if(!$scope.registerForm.lastName.$valid){ errors.push("Formato de apellido paterno incorrecto."); }
                 if(!$scope.registerForm.motherName.$valid) {errors.push("Formato de apellido materno incorrecto."); }
