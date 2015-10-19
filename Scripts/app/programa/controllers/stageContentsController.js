@@ -122,6 +122,20 @@ angular
                     var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].activity_identifier));
                     if (activityCache) {
                         $scope.fuenteDeEnergia.activities[i] = activityCache;
+                        var comments = "";
+                                                
+                        moodleFactory.Services.GetCommentByActivity(myActivity.coursemoduleid, 1, 0, 0, 0, userToken, function(data){                                                            
+                            if (data.comments && data.comments.length > 0) {
+                                comments =   JSON.parse(data.comments);                                    
+                            }else{
+                                comments =  "";                                   
+                            }
+                            $scope.fuenteDeEnergia.activities[i].activityContent.comments = comments;
+                                                        
+                        }, function(){
+                            console.log("error on getting activity comments");
+                        });                                                                
+                        
                     }
                     else {                       
                             activitiesData += "activity["+i+"]="+$scope.fuenteDeEnergia.activities[i].coursemoduleid+"&";                            
@@ -149,22 +163,22 @@ angular
                     if(!myActivity.activityContent){
 
                         myActivity.activityContent = data[i];
+                                                                
+                        var userToken = $scope.token;
                         
-                        moodleFactory.Services.GetCommentByActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,1,0,0,3, $scope.token, function(data){                                                            
-                              if (data.comments && data.comments.length > 0) {
-                                    myActivity.activityContent.comments = data.comments;
-                                    myActivity.activityContent.newComment = "";
-                                    myActivity.activityContent.showCommentBox = false;
-                              }else{
-                                    myActivity.activityContent.comments = [];
-                                    myActivity.activityContent.newComment = "";
-                                    myActivity.activityContent.showCommentBox = false;
-                              }
+                        var comments = "";
+                        moodleFactory.Services.GetCommentByActivity(myActivity.coursemoduleid, 1, 0, 0, 0, userToken, function(data){                                                            
+                            if (data.comments && data.comments.length > 0) {
+                                comments =   JSON.parse(data.comments);                                    
+                            }else{
+                                comments =  "";                                   
+                            }
+                            myActivity.activityContent.comments = comments;
+                            
+                            setResources(myActivity);
                         }, function(){
-                              console.log("error getting comments in content controller");
-                        });                                            
-
-                         setResources(myActivity);
+                            console.log("error on getting activity comments");
+                        });                                                                
                         
                         $scope.$emit('HidePreloader'); //hide preloader
                     }
@@ -206,6 +220,8 @@ angular
              $scope.activities.push(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 80)));
 
              }*/
+                        
+            
             function checkProgress() {
                 for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                     if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status) {
@@ -374,6 +390,7 @@ angular
                             };
                             var comments = $scope.fuenteDeEnergia.activities[i].activityContent.comments;
                             //comments.push(comment);
+                            debugger;
                             $scope.fuenteDeEnergia.activities[i].activityContent.comments  = comments;
                             moodleFactory.Services.PostCommentActivity(activityId, data, function(){
                                 }, function(){                              
