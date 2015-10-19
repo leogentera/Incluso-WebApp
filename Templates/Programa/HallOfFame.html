@@ -7,37 +7,63 @@
 						<h3>Top 5: <span>Avance</span></h3>
 						<div class="user-avatar">
 							<figure>
-								<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+								<img ng-src="{{userStats.profileImageUrl}}" alt="avatar" />
 							</figure>
 						</div>
 						<div class="user-data">
 							<p class="user-name">Mi Avance</p>
-							<div class="user-progress-bar" data-progress-bar="23">
-                                <div>
-                                    <div class="container"></div>
-                                    <label>23%</label>
-                                </div>
-				            </div>
+                            <div class="user-progress-bar" progress-bar="{{userStats.progress}}"></div>
 						</div>
 					</div>
 				</div>
 				<div class="item">
-					<div class="user-stats by-stars component">
+					<div class="user-stats by-star component">
 						<h3>Top 5: <span>Estrellas</span></h3>
 						<div class="user-avatar">
 							<figure>
-								<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+                                <img ng-src="{{userStats.profileImageUrl}}" alt="avatar" />
 							</figure>
 						</div>
 						<div class="user-data">
 							<p class="user-name">Mis Estrellas</p>
                             <p class="user-points">
-                                <span>600</span>
+                                <span>{{userStats.stars}}</span>
                                 <span class="icomoon icon-star"></span>
                             </p>
 						</div>
 					</div>
 				</div>
+                <div class="item">
+                    <div class="user-stats by-star component">
+                        <h3>Top 5: <span>Participación</span></h3>
+                        <div class="user-avatar">
+                            <figure>
+                                <img ng-src="{{userStats.profileImageUrl}}" alt="avatar" />
+                            </figure>
+                        </div>
+                        <div class="user-data">
+                            <p class="user-name">Mi participación</p>
+                            <p class="list-records"><span style="color:#bcd431;font-size:1.2em">{{userStats.forum}}</span> publicaciones en foros</p>
+                            <p class="list-records"><span style="color:#bcd431;font-size:1.2em">{{userStats.messages}}</span> mensajes en chat</p>
+                            <p class="list-records"><span style="color:#bcd431;font-size:1.2em">{{userStats.comunity}}</span> mensajes en comunidad</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="user-stats by-star component">
+                        <h3>Top 5: <span>Insignias</span></h3>
+                        <div class="user-avatar">
+                            <figure>
+                                <img ng-src="{{userStats.profileImageUrl}}" alt="avatar" />
+                            </figure>
+                        </div>
+                        <div class="user-data">
+                            <p class="user-name">Mis insignias</p>
+                            <p class="list-records">
+                                <span class="icomoon icon-badge" style="color:#bcd431"></span><span style="color:#bcd431;font-size:1.2em">{{userStats.amount}}</span> Insignias ganadas</p>
+                        </div>
+                    </div>
+                </div>
 			</div>
             <a class="control back" href="#" id="prev">
 				<span class="icomoon icon-arrow-bold-left"></span>
@@ -48,109 +74,79 @@
         </section>
         <section class="filter-section form">
             <span class="icomoon icon-list"></span>
-            <select name="filter" class="form-control form-control-lg theme-default ng-pristine ng-untouched ng-valid" ng-model="filter">
+            <select name="filter" class="form-control form-control-lg theme-default ng-pristine ng-untouched ng-valid" ng-model="cities">
+                    <!--ng-options="obj as obj for obj in cities">-->
                 <option value="" disabled="">Filtrar contenido por...</option>
-                <option value="">Ver Todo</option>
-                <option value="mexico">Cd. de México</option> 
-                <option value="monterrey">Monterrey</option> 
-                <option value="guadalajara">Guadalajara</option> 
+                <!--<option value="">Ver Todo</option>-->
+                <!--<option value="mexico">Cd. de México</option> -->
+                <!--<option value="monterrey">Monterrey</option> -->
+                <!--<option value="guadalajara">Guadalajara</option> -->
             </select>
             <span class="icomoon icon-arrow"></span>
         </section>
 		<section class="component" id="top-users-detail">
 			<div class="ranking-list">
-                <div class="user-stats by-progress component">
-					<div class="user-avatar">
-						<figure>
-							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
-						</figure>
-					</div>
-					<div class="user-data">
-                        <h4>1er Lugar</h4>
-						<p class="user-name">Halcon Espacial</p>
-						<div class="user-progress-bar" data-progress-bar="80">
-                            <div>
-                                <div class="container"></div>
-                                <label>23%</label>
-                            </div>
-				        </div>
-					</div>
-				</div>
-                <div class="user-stats by-progress component">
-					<div class="user-avatar">
-						<figure>
-							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
-						</figure>
-					</div>
-					<div class="user-data">
-                        <h4>2do Lugar</h4>
-						<p class="user-name">Halcon Espacial</p>
-						<div class="user-progress-bar" data-progress-bar="50">
-                            <div>
-                                <div class="container"></div>
-                                <label>23%</label>
-                            </div>
-				        </div>
-					</div>
-				</div>
-                <div class="user-stats by-progress component">
-					<div class="user-avatar">
-						<figure>
-							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
-						</figure>
-					</div>
-					<div class="user-data">
-                        <h4>3er Lugar</h4>
-						<p class="user-name">Halcon Espacial</p>
-						<div class="user-progress-bar" data-progress-bar="35">
-                            <div>
-                                <div class="container"></div>
-                                <label>23%</label>
-                            </div>
-				        </div>
-					</div>
-				</div>
+                <div class="user-stats by-progress component" ng-repeat="userProgress in topProgress">
+                    <div class="user-avatar">
+                        <figure>
+                            <!--<img ng-src={{userProgress.profileimageurl}} alt="avatar">-->
+                            <img src="assets/avatar/default.png" alt="avatar"/>
+                        </figure>
+                    </div>
+                    <div class="user-data">
+                        <h4>{{userProgress.rank | numberToCardinal}} Lugar</h4>
+                        <p class="user-name">{{userProgress.alias}}</p>
+                        <div class="user-progress-bar" progress-bar={{userProgress.progress}}></div>
+                    </div>
+                </div>
             </div>
             <div class="ranking-list">
-                <div class="user-stats by-star component">
+                <div class="user-stats by-star component" ng-repeat="userStars in topStars">
 					<div class="user-avatar">
 						<figure>
-							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+                            <img src="assets/avatar/default.png" alt="avatar"/>
+							<!--<img ng-src={{userStars.profileimageurl}} alt="avatar" />-->
 						</figure>
 					</div>
 					<div class="user-data">
-                        <h4>1er Lugar</h4>
-						<p class="user-name">Halcon Espacial</p>
+                        <h4>{{userStars.rank | numberToCardinal}} Lugar</h4>
+						<p class="user-name">{{userStars.alias}}</p>
 						<p class="user-points">
-                            <span>600</span>
+                            <span>{{userStars.stars}}</span>
                             <span class="icomoon icon-star"></span>
                         </p>
 					</div>
 				</div>
-                <div class="user-stats by-star component">
+            </div>
+            <div class="ranking-list">
+                <div class="user-stats by-star component" ng-repeat="userContribution in topContribution">
 					<div class="user-avatar">
 						<figure>
-							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+                            <img src="assets/avatar/default.png" alt="avatar"/>
+							<!--<img ng-src={{userContribution.profileimageurl}} alt="avatar" />-->
 						</figure>
 					</div>
 					<div class="user-data">
-                        <h4>2do Lugar</h4>
-						<p class="user-name">Halcon Espacial</p>
-                        <p class="list-records"><span>15</span> Multiplicaciones de foros</p>
-                        <p class="list-records"><span>30</span> Mensajes en chat</p>
-                        <p class="list-records"><span>20</span> Mensajes en comunidades</p>
+                        <h4>{{userContribution.rank | numberToCardinal}} Lugar</h4>
+						<p class="user-name">{{userContribution.alias}}</p>
+                        <p class="list-records"><span>{{userContribution.forum}}</span> publicaciones en foros</p>
+                        <p class="list-records"><span>{{userContribution.messages}}</span> mensajes en chat</p>
+                        <p class="list-records"><span>{{userContribution.comunity}}</span> mensajes en comunidad</p>
 					</div>
 				</div>
-                <div class="user-stats by-star component">
+            </div>
+            <div class="ranking-list">
+                <div class="user-stats by-star component" ng-repeat="userBadges in topBadges">
 					<div class="user-avatar">
 						<figure>
-							<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
+                            <img src="assets/avatar/default.png" alt="avatar"/>
+							<!--<img ng-src={{userBadges.profileimageurl}}  alt="avatar" />-->
 						</figure>
 					</div>
 					<div class="user-data">
-                        <h4>1er Lugar</h4>
-						<p class="user-name">Halcon Espacial</p>
-						<p class="list-records"><span class="icomoon icon-badge"></span><span> 25</span> Insignias ganadas</p>
+                        <h4>{{userBadges.rank | numberToCardinal}} Lugar</h4>
+						<p class="user-name">{{userBadges.alias}}</p>
+						<p class="list-records"><span class="icomoon icon-badge"></span><span> {{userBadges.amount}}</span> Insignias ganadas</p>
 					</div>
 				</div>
             </div>
@@ -162,7 +158,9 @@
     jQuery.fn.UserProgressBar = function () {
         $.each(this, function () {
             var base = $(this);
+            //console.log(base.data("progress-bar"));
             var p = parseInt(base.data("progress-bar"));
+            //console.log(p);
             base.find("label").text(p + "%");
             progress = Math.round(p / 5);
             for (var i = 0; i < 20; i++) {
@@ -181,7 +179,7 @@
             paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
-            autoHeight: true,
+            autoHeight: false,
             touchDrag: false,
             mouseDrag: false,
             transitionStyle: "fade"
@@ -192,7 +190,7 @@
             paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
-            autoHeight: true,
+            autoHeight: false,
             touchDrag: false,
             mouseDrag: false,
             transitionStyle: "fade"
@@ -207,7 +205,7 @@
             topDetail.trigger('owl.prev');
             e.preventDefault();
         })
-        $(".user-progress-bar").UserProgressBar();
+        //$(".user-progress-bar").UserProgressBar();
     });
 
 

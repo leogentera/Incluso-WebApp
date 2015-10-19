@@ -58,11 +58,43 @@ angular
                 };
 
                 var userCurrentStage = localStorage.getItem("currentStage");
-               if (activities) {
-                 for(var i = 0; i < activities.length; i++) {
-                  moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {});
-                 }
-               }
+                console.log("childs");
+                console.log(activities);
+                
+                var finishChildCounter = 0;
+                if (activities){
+                    
+                    for(var i = 0; i < activities.length; i++) {
+                        
+                        console.log("antes de if " + $routeParams.moodleId);
+                        console.log("iguales: " + (activities[i].coursemoduleid == $routeParams.moodleId));
+                        if ($routeParams.moodleId == 147 || $routeParams.moodleId == 148) {
+                            
+                            if (activities[i].coursemoduleid == $routeParams.moodleId) {
+                                moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
+                                    
+                                    endParentActivity();
+                                });
+                            }
+                            
+                        }else {
+                            moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
+                                finishChildCounter++;
+                                
+                                if (finishChildCounter == activities.length) {
+                                    endParentActivity();
+                                }
+                            });
+                        }
+                    }
+                }else{
+                    endParentActivity();
+                }
+               
+               function endParentActivity(){
+               
+               console.log("parent");
+               console.log(parentActivity.coursemoduleid);
                 moodleFactory.Services.PutEndActivity(parentActivity.coursemoduleid, data, parentActivity, userToken,
                     function(response){
                           var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
@@ -112,6 +144,7 @@ angular
                             $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
                         }
                     });
+                }
 
             };
 
@@ -132,4 +165,4 @@ angular
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
-        });   
+        });  
