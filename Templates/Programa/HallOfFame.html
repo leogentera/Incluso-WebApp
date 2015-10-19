@@ -74,9 +74,9 @@
         </section>
         <section class="filter-section form">
             <span class="icomoon icon-list"></span>
-            <select name="filter" class="form-control form-control-lg theme-default ng-pristine ng-untouched ng-valid" ng-model="cities">
-                    <!--ng-options="obj as obj for obj in cities">-->
-                <option value="" disabled="">Filtrar contenido por...</option>
+            <select name="filter" class="form-control form-control-lg theme-default ng-pristine ng-untouched ng-valid" ng-model="selectedCity"
+                    ng-options="obj as obj for obj in cities" ng-change="updateByCity()">
+                <option value="">Filtrar contenido por...</option>
                 <!--<option value="">Ver Todo</option>-->
                 <!--<option value="mexico">Cd. de México</option> -->
                 <!--<option value="monterrey">Monterrey</option> -->
@@ -89,8 +89,8 @@
                 <div class="user-stats by-progress component" ng-repeat="userProgress in topProgress">
                     <div class="user-avatar">
                         <figure>
-                            <!--<img ng-src={{userProgress.profileimageurl}} alt="avatar">-->
-                            <img src="assets/avatar/default.png" alt="avatar"/>
+                            <img ng-src="{{userProgress.profileimageurl}}+ '?token='+ {{user.token}}" alt="avatar" ng-click="navigateTo('Profile/' + userProgress.userid)">
+                            <!--<img src="assets/avatar/default.png" alt="avatar" ng-click="navigateTo('Profile/' + userProgress.userid)"/>-->
                         </figure>
                     </div>
                     <div class="user-data">
@@ -104,8 +104,8 @@
                 <div class="user-stats by-star component" ng-repeat="userStars in topStars">
 					<div class="user-avatar">
 						<figure>
-                            <img src="assets/avatar/default.png" alt="avatar"/>
-							<!--<img ng-src={{userStars.profileimageurl}} alt="avatar" />-->
+                            <!--<img src="assets/avatar/default.png" alt="avatar" ng-click="navigateTo('Profile/' + userStars.userid)"/>-->
+							<img ng-src="{{userStars.profileimageurl}}+ '?token='+ {{user.token}} " alt="avatar" ng-click="navigateTo('Profile/' + userStars.userid)"/>
 						</figure>
 					</div>
 					<div class="user-data">
@@ -122,8 +122,8 @@
                 <div class="user-stats by-star component" ng-repeat="userContribution in topContribution">
 					<div class="user-avatar">
 						<figure>
-                            <img src="assets/avatar/default.png" alt="avatar"/>
-							<!--<img ng-src={{userContribution.profileimageurl}} alt="avatar" />-->
+                            <!--<img src="assets/avatar/default.png" alt="avatar" ng-click="navigateTo('Profile/' + userContribution.userid)"/>-->
+							<img ng-src="{{userContribution.profileimageurl}} + '?token='+ {{user.token}}"  alt="avatar" ng-click="navigateTo('Profile/' + userContribution.userid)"/>
 						</figure>
 					</div>
 					<div class="user-data">
@@ -139,8 +139,8 @@
                 <div class="user-stats by-star component" ng-repeat="userBadges in topBadges">
 					<div class="user-avatar">
 						<figure>
-                            <img src="assets/avatar/default.png" alt="avatar"/>
-							<!--<img ng-src={{userBadges.profileimageurl}}  alt="avatar" />-->
+                            <!--<img src="assets/avatar/default.png" alt="avatar" ng-click="navigateTo('Profile/' + userBadges.userid)"/>-->
+							<img ng-src="{{userBadges.profileimageurl}} + '?token='+ {{user.token}}"  alt="avatar" ng-click="navigateTo('Profile/' + userBadges.userid)"/>
 						</figure>
 					</div>
 					<div class="user-data">
