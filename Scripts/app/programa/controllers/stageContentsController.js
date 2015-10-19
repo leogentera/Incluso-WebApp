@@ -121,21 +121,18 @@ angular
                 for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                     var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].activity_identifier));
                     if (activityCache) {
-                        $scope.fuenteDeEnergia.activities[i] = activityCache;
-                        var comments = "";
-                                                
-                        moodleFactory.Services.GetCommentByActivity(myActivity.coursemoduleid, 1, 0, 0, 0, userToken, function(data){                                                            
-                            if (data.comments && data.comments.length > 0) {
-                                comments =   JSON.parse(data.comments);                                    
-                            }else{
-                                comments =  "";                                   
-                            }
-                            $scope.fuenteDeEnergia.activities[i].activityContent.comments = comments;
+                        $scope.fuenteDeEnergia.activities[i] = activityCache;                        
+                        moodleFactory.Services.GetCommentByActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, 1, 0, 0, 3, userToken, function(data){
+                              
+                              $scope.fuenteDeEnergia.activities[i].activityContent.comments = data.comments;
+                              if ($scope.fuenteDeEnergia.activities[i].activityContent.comments.length > 0) {                                  
+                                    console.log("scope comments");
+                                    console.log($scope.fuenteDeEnergia.activities[i]);
+                              }
                                                         
                         }, function(){
                             console.log("error on getting activity comments");
-                        });                                                                
-                        
+                        });
                     }
                     else {                       
                             activitiesData += "activity["+i+"]="+$scope.fuenteDeEnergia.activities[i].coursemoduleid+"&";                            
@@ -164,16 +161,14 @@ angular
 
                         myActivity.activityContent = data[i];
                                                                 
-                        var userToken = $scope.token;
-                        
-                        var comments = "";
-                        moodleFactory.Services.GetCommentByActivity(myActivity.coursemoduleid, 1, 0, 0, 0, userToken, function(data){                                                            
-                            if (data.comments && data.comments.length > 0) {
-                                comments =   JSON.parse(data.comments);                                    
-                            }else{
-                                comments =  "";                                   
-                            }
-                            myActivity.activityContent.comments = comments;
+                        var userToken = $scope.token;                                                                  
+                        moodleFactory.Services.GetCommentByActivity(myActivity.coursemoduleid, 1, 0, 0, 3, userToken, function(data){
+                              $scope.fuenteDeEnergia.activities[i].activityContent.comments = data.comments;
+                              if ($scope.fuenteDeEnergia.activities[i].activityContent.comments.length > 0) {
+                                    console.log("myActivity comments");
+                                    console.log($scope.fuenteDeEnergia.activities[i].activityContent);
+                                    console.log($scope.fuenteDeEnergia.activities[i].activityContent.comments);
+                              }
                             
                             setResources(myActivity);
                         }, function(){
@@ -371,7 +366,7 @@ angular
                   for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                                          
                             var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                          
-                            var currentUserId = currentUser.userId;                                
+                            var currentUserId = currentUser.userId;
                             var newComment = $scope.fuenteDeEnergia.activities[i].activityContent.newComment;                                                                                
                             
                             $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false; 
@@ -388,10 +383,15 @@ angular
                                 alias: "usuario"                                
                                 
                             };
-                            var comments = $scope.fuenteDeEnergia.activities[i].activityContent.comments;
-                            //comments.push(comment);
                             debugger;
-                            $scope.fuenteDeEnergia.activities[i].activityContent.comments  = comments;
+                            var comments = $scope.fuenteDeEnergia.activities[i].activityContent.comments;
+                            debugger;
+                            var commentsArray = new Array();
+                            for(var j=0;j < comments.length; j++){
+                              commentsArray.push(comments[j]);
+                            }
+                            commentsArray.push(newComment);
+                            $scope.fuenteDeEnergia.activities[i].activityContent.comments  = commentsArray;
                             moodleFactory.Services.PostCommentActivity(activityId, data, function(){
                                 }, function(){                              
                             });

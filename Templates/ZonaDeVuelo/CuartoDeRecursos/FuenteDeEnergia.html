@@ -126,12 +126,12 @@
                     </div>
                   </div>                  
                   <div>
-                    <div ng-repeat="comment in activity.activityContent.comments">                      
+                    <div ng-repeat="repeatComment in activity.activityContent.comments">                      
                       <div class="coment block">                                              
                         <div>
-                          <a class="user-alias" ng-click="navigateTo('Profile/' + comment.id)">{{comment.alias}}</a>
+                          <a class="user-alias" ng-click="navigateTo('Profile/' + comment.id)">{{repeatComment.alias}}</a>
                           <span>comentó:</span>                          
-                          <div>{{comment.user_comment}}</div>
+                          <div>{{repeatComment.user_comment}}</div>
                         </div>
                       </div>
                     </div>                  
