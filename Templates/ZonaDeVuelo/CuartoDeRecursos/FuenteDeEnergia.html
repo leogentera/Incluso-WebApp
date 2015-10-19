@@ -124,18 +124,27 @@
                       </section>
 
                     </div>
-                  </div>                  
+                  </div>
                   <div>
-                    <div ng-repeat="repeatComment in activity.activityContent.comments">                      
-                      <div class="coment block">                                              
+                    <div ng-repeat="repeatComment in activity.activityContent.comments ">                      
+                      <div class="coment block">
+                        <!--<img ng-click="navigateTo('Profile/' + comment.id)" ng-if="comment.picture_comment_author" ng-src="{{comment.picture_comment_author + '?token=' + userToken}}" alt="author" /> 
+                        <img ng-click="navigateTo('Profile/' + comment.id)" ng-if="!comment.picture_comment_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />-->
                         <div>
                           <a class="user-alias" ng-click="navigateTo('Profile/' + comment.id)">{{repeatComment.alias}}</a>
-                          <span>comentó:</span>                          
+                          <span>comentó:</span>
                           <div>{{repeatComment.user_comment}}</div>
                         </div>
                       </div>
-                    </div>                  
+                    </div>
+                    <!--<div class="coment block" ng-hide="false" >{{activity.activityContent.comments.length}}
+                      <div class="vermas">
+                        <span class="icomoon icon-show-more"></span>
+                        Mostrar más comentarios...
+                      </div>
+                    </div>-->
                   </div>
+                  
                   <div></div>
                   <div class="interact">
                     <div class="col-xs-6 like"  ng-click="likeSubActivity(activity.groupid)">

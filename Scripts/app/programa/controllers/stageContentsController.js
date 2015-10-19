@@ -122,12 +122,14 @@ angular
                     var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].activity_identifier));
                     if (activityCache) {
                         $scope.fuenteDeEnergia.activities[i] = activityCache;                        
-                        moodleFactory.Services.GetCommentByActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, 1, 0, 0, 3, userToken, function(data){
+                        moodleFactory.Services.GetCommentByActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, 1, 0, 0, 100, userToken, function(data){
                               
                               $scope.fuenteDeEnergia.activities[i].activityContent.comments = data.comments;
+                              //$scope.fuenteDeEnergia.activities[i].activityContent.commentsAmount = 3;
                               if ($scope.fuenteDeEnergia.activities[i].activityContent.comments.length > 0) {                                  
                                     console.log("scope comments");
-                                    console.log($scope.fuenteDeEnergia.activities[i]);
+                                    console.log($scope.fuenteDeEnergia.activities[i].activityContent.comments.length);
+                                    console.log($scope.fuenteDeEnergia.activities[i].activityContent.comments);
                               }
                                                         
                         }, function(){
@@ -160,20 +162,24 @@ angular
                     if(!myActivity.activityContent){
 
                         myActivity.activityContent = data[i];
-                                                                
+                        
+                        //$scope.fuenteDeEnergia.activities[i].activityContent.commentsAmount = 3;
+                        console.log($scope.fuenteDeEnergia.activities[i].activityContent.commentsAmount);
+                        
                         var userToken = $scope.token;                                                                  
-                        moodleFactory.Services.GetCommentByActivity(myActivity.coursemoduleid, 1, 0, 0, 3, userToken, function(data){
+                        moodleFactory.Services.GetCommentByActivity(myActivity.coursemoduleid, 1, 0, 0, 100, userToken, function(data){
                               $scope.fuenteDeEnergia.activities[i].activityContent.comments = data.comments;
+                              
                               if ($scope.fuenteDeEnergia.activities[i].activityContent.comments.length > 0) {
                                     console.log("myActivity comments");
-                                    console.log($scope.fuenteDeEnergia.activities[i].activityContent);
                                     console.log($scope.fuenteDeEnergia.activities[i].activityContent.comments);
+                                    console.log($scope.fuenteDeEnergia.activities[i].activityContent.comments.length);
                               }
-                            
-                            setResources(myActivity);
+
+                              setResources(myActivity);
                         }, function(){
                             console.log("error on getting activity comments");
-                        });                                                                
+                        });
                         
                         $scope.$emit('HidePreloader'); //hide preloader
                     }
@@ -385,7 +391,8 @@ angular
                             
                             $scope.fuenteDeEnergia.activities[i].activityContent.comments.push(newCommentObject);
                             
-                            moodleFactory.Services.PostCommentActivity(activityId, data, function(){
+                            $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
+                            moodleFactory.Services.PostCommentActivity(activityId, data, function(){                                    
                                 }, function(){                              
                             });
                         }
@@ -397,7 +404,15 @@ angular
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                            
                             $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = true;                            
                         }
-                  }                                            
+                  }
+            }
+            
+            $scope.showMoreComments = function(contentId){
+                for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                        if ($scope.fuenteDeEnergia.activities[i].groupid == contentId){
+                        
+                        }
+                  }
             }
             
             function getContentResources(activityIdentifierId) {
