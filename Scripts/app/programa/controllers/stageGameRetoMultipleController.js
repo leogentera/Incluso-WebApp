@@ -95,7 +95,7 @@ angular
                         "subactividad": $scope.retoMultipleActivities[i].name
                     };
 
-                    request.sub_actividades.push(subactivity);
+                    request.subactividades.push(subactivity);
                 }
                 return request;
 
