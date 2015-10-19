@@ -15,10 +15,8 @@
                     <div class="subtitle">{{activityname}}</div>
                     <div class="txt-renglon">{{activityTitle}}</div>
                 </section>
-                <div id="owl" class="owl-carousel">
-
-
-                    <div ng-repeat="question in activityObject.questions track by $index">
+                <data-owl-carousel class="owl-carousel">
+                    <div owl-carousel-item="" ng-repeat="question in activityObject.questions track by $index" class="item">
 
                         <!--   -----------------------   BINARY TYPE QUESTION   ------------------------------              -->
                         <div ng-show="questionTypeCode[$index] == 'binary'">
@@ -102,7 +100,7 @@
                                         <div class="form-group theme-form">
 
                                             <div class="clearfix">
-                                                <span>Habilidad {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
+                                                <span>{{placeholder[$parent.$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
                                                    ng-click="deleteAbility('essay' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status == 0">
@@ -129,7 +127,7 @@
                                 <a href="" class="btn btn-lg btn-block btn-add"
                                    ng-click="addAbility('essay' + $index, $index)"
                                    ng-hide="setReadOnly">
-                                    <span class="icomoon icon-plus"></span>Agregar nueva habilidad...
+                                    <span class="icomoon icon-plus"></span>{{placeholder[$index]}}
                                 </a>
                             </div>
                         </div>
@@ -143,7 +141,7 @@
                                         <div class="form-group theme-form">
 
                                             <div class="clearfix">
-                                                <span>Persona {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
+                                                <span>{{placeholder[$parent.$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
                                                    ng-click="deletePerson('shortanswer' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status == 0">
@@ -170,32 +168,32 @@
                                 <a href="" class="btn btn-lg btn-block btn-add"
                                    ng-click="addPerson('shortanswer' + $index, $index)"
                                    ng-hide="setReadOnly">
-                                    <span class="icomoon icon-plus"></span>Agregar persona...
+                                    <span class="icomoon icon-plus"></span>{{placeholder[$index]}}
                                 </a>
                             </div>
                         </div>
                     </div>
 
 
-                </div>
+                </data-owl-carousel>
 
                 <section id="controls" class="controls">
                     <div class="paginate">
-                        <a href="#" id="prev" ng-click="addToAnswerIndex(-1, 1)">
+                        <a href="#" id="prev">
                             <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
                         </a>
-                        <a href="#" id="next" ng-click="addToAnswerIndex(1, 1)">
+                        <a href="#" id="next">
                             <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
                         </a>
 
                         <div class="centered">
-                            <span id="index" class="txt-bigger">1/</span>
-                            <span id="totalPages" class="white txt-bigger">1</span>
+                            <span id="index" class="txt-bigger">1</span>
+                            <span id="totalPages" class="white txt-bigger">/{{maxPages}}</span>
                         </div>
                     </div>
                     <a class="btn btn-primary btn-lg btn-cnt"
                        id="save"
-                       ng-show="answerIndex == 1 && activity_status >= 0"
+                       ng-show="answerIndex == maxPages && (quizIsEditable == true || activity_status == 0)"
                        ng-click="validateQuiz()">GUARDAR</a>
 
                     <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
@@ -207,7 +205,7 @@
                     <section class="header-title">
                         <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
                         <div class="subtitle centered min-pad ">{{activityname}}</div>
-                        <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
+                        <div class="txt-renglon centered txt-bigger min-pad ">¡Bien hecho!</div>
                     </section>
                     <section class="centered txt-bigger" ng-show="activityname != 'Exploración final'">
                         <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
@@ -225,6 +223,8 @@
                     <section class="question-parts" ng-show="activityname == 'Exploración final'">
                         <div ng-repeat="question in activityObject.questions track by $index">
 
+
+                            <!--   -----------------------   BINARY TYPE QUESTION   ------------------------------              -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'binary'">
                                 <div class="txt-renglon panel" ng-class="{collapsed: question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -250,7 +250,7 @@
                                 </div>
                             </div>
 
-
+                            <!--   -----------------------   SIMPLECHOICE TYPE QUESTION   ------------------------------              -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'simplechoice'">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -272,6 +272,7 @@
                                 </div>
                             </div>
 
+                            <!--   -----------------------   MULTICHOICE TYPE QUESTION   ------------------------------              -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'multichoice'">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -292,6 +293,7 @@
                                 </div>
                             </div>
 
+                            <!--   -----------------------   SHORTANSWER TYPE QUESTION   ------------------------------              -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'shortanswer'">
                                 <div class="txt-renglon panel" ng-class="{collapsed: question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -325,7 +327,7 @@
                         </div>
                     </section>
                     <section class="txt-renglon centered form">
-                        <div ng-show="activity_status >= 0">
+                        <div ng-show="activity_status == 0">
                             ¿Que opinas de ésta actividad?
                             <section class="txt-renglon txt-bigger clearfix">
                                 <div class="opinion">
@@ -356,9 +358,9 @@
             </div>
             <div class="modal-body">
                 <h3 class="subtitle text-center">Actividad</h3>
-
+                    Recurre a tu imaginación y visualiza en dónde te gustaría estar en los siguientes años
                 <p class="txt-renglon centered">
-                    Mensaje{{robotMessage}}
+
                 </p>
             </div>
         </div>
@@ -369,23 +371,10 @@
 
 <script>
     $(document).ready(function () {
-        var owl = $("#owl ");
-        owl.owlCarousel({
-            navigation: false,
-            pagination: false,
-            goToFirstSpeed: 2000,
-            singleItem: true,
-            autoHeight: true,
-            mouseDrag: false,
-            touchDrag: false,
-            transitionStyle: "fade",
-            afterMove: callback
-        });
+        var owl = $(".owl-carousel");
 
-        function callback(event) {
-            var item = this.currentItem;
-            $("#index").html(item + 1 + '/');
-        }
+        owl.on('translated.owl.carousel', function(event) {
+        });
 
         $("#next").click(function (evt) {
             owl.trigger('owl.next');

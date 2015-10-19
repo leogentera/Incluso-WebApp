@@ -37,10 +37,11 @@ angular
             $scope.OtroAnswers = [];
             $scope.numOfMultichoiceQuestions = 0;
             $scope.position = {};
-            var nonEditableQuizzes = ["1001", "1009", "2001", "2023", "3101", "3601"];
-            var quizHasOther = ["1001", "1005", "1006", "2001", "2023", "3101", "3601"];
+            var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601];
+            //var quizHasOther = ["1001", "1005", "1006", "2001", "2023", "3101", "3601"];
             $scope.questionNumOfChoices = [];
             $scope.placeholder = [];
+            $scope.maxPages = 0;
 
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial - Etapa 1"
                 "userid": 0,
@@ -50,10 +51,14 @@ angular
             };
 
             var destinationPath = "";
-
             $scope.isDisabled = false;
-            //var moduleid = parseInt($routeParams.moodleid);  //Gets the coursemoduleid from 'activity' object
+            $scope.activity_identifier = parseInt($routeParams.activityIdentifier);  //Gets the coursemoduleid from 'activity' object
 
+            if (nonEditableQuizzes.indexOf($scope.activity_identifier) == -1) {//This Quis is editable
+                $scope.quizIsEditable = true;
+            } else {
+                $scope.quizIsEditable = false;
+            }
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -71,67 +76,9 @@ angular
                     });
             };
 
-            //For 'shortanswer' and 'essay' type questions.
-
-            $scope.robotMessage = "";
-            $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
-
-            switch ($scope.activity_identifier) {
-                case "1001": //Exploración Inicial - Etapa 1
-                    //$scope.answers = localAnswers;
-                    //$scope.OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "x";
-                    break;
-                case "1005": //Mis Cualidades - Etapa 1
-                    //$scope.answers = localAnswers;
-                    //$scope.OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "";
-                    break;
-                case "1006": //Mis Gustos - Etapa 1
-                    //$scope.answers = localAnswers;
-                    //$scope.OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "";
-                    break;
-                case "1007": //Sueña - Etapa 1
-                    //$scope.answers = localAnswers; //Sueña
-                    $scope.robotMessage = "Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad.";
-                    break;
-                case "1009": //Exploración Final - Etapa 1
-                    //$scope.exploracionFinal = localAnswers;
-                    $scope.robotMessage = "Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad.";
-                    break;
-                case "2001": //Exploración Inicial - Etapa 2
-                    //$scope.answers = localAnswers;
-                    //$scope.exploracionInicialStage2OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "";
-                    break;
-                case "2007": //Tus ideas - Etapa 2
-                    //$scope.answers = localAnswers;
-                    $scope.robotMessage = "";
-                    break;
-                case "2016": //Mi futuro - Etapa 2
-                    //$scope.answers = localAnswers;
-                    $scope.robotMessage = "";
-                    break;
-                case "2023": //Exploración Final - Etapa 2
-                    //$scope.exploracionFinalStage2 = localAnswers;
-                    $scope.robotMessage = "";
-                    break;
-                case "3101": //Exploración Inicial - Etapa 3
-                    //$scope.answers = localAnswers;
-                    //$scope.exploracionInicialStage3OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "";
-                    break;
-                case "3601": //Exploración Final - Etapa 3
-                    //$scope.exploracionFinalStage3 = localAnswers;
-                    //$scope.exploracionFinalStage3OtroAnswers = localOtrosAnswers;
-                    $scope.robotMessage = "";
-                    break;
-                default:
-                    //$scope.currentChallenge = 0; //Default
-                    break;
-            }
-
+            $scope.items1 = [1,2,3,4,5];
+            $scope.items2 = [1,2,3,4,5,6,7,8,9,10];
+            //$scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
 
             $scope.addCaptureField = function (value, check) {
                 if (check) {
@@ -260,90 +207,49 @@ angular
                         var activityObject;
 
                         if (childActivity) {
-                            localAnswers = JSON.parse(_getItem("activityAnswers/" + childActivity.coursemoduleid));
+                            localAnswers = JSON.parse(_getItem("answersQuiz/" + childActivity.coursemoduleid));
                             activityObject = JSON.parse(_getItem("activityObject/" + childActivity.coursemoduleid));
                         } else {
-                            localAnswers = JSON.parse(_getItem("activityAnswers/" + parentActivity.coursemoduleid));
+                            localAnswers = JSON.parse(_getItem("answersQuiz/" + parentActivity.coursemoduleid));
                             activityObject = JSON.parse(_getItem("activityObject/" + parentActivity.coursemoduleid));
                         }
 
-                        //If...the activity quiz has a checkbox for the "Other" answer, then get it from Local Storage
-                        var localOtrosAnswers;
+                        /*
+                        var localOtrosAnswers = null;
+
                         if (quizHasOther.indexOf($scope.activity_identifier) > -1) {
                             if (childActivity) {
-                                localOtrosAnswers = JSON.parse(_getItem("activityOtrosAnswers/" + childActivity.coursemoduleid));
+                                localOtrosAnswers = JSON.parse(_getItem("otherAnswQuiz/" + childActivity.coursemoduleid));
                             } else {
-                                localOtrosAnswers = JSON.parse(_getItem("activityOtrosAnswers/" + parentActivity.coursemoduleid));
+                                localOtrosAnswers = JSON.parse(_getItem("otherAnswQuiz/" + parentActivity.coursemoduleid));
                             }
                         }
+                        */
 
                         $scope.activityObject = activityObject;
-                        $scope.OtroAnswers = localOtrosAnswers;
                         console.log("localAnswers = " + JSON.stringify(localAnswers));
-                        console.log("OtroAnswers = " + JSON.stringify(localOtrosAnswers));
-
                         $scope.activityFinished = activityFinished;
 
                         if (localAnswers == null || activityObject == null) {// If activity data not exists in Local Storage...get it from Server
 
                             console.log("The info for the Quiz IS NOT within Local Storage");
-                            // GET request (example) - http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
-                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, successfullCallBack, errorCallback, true);
+                            // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
+                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, loadModelVariables, errorCallback, true);
                             console.log("The info has been taken from Service...");
+
                         } else {//Angular-bind the answers in the respective HTML template
 
                             console.log("The info for the Quiz is within Local Storage");
-                            successfullCallBack(activityObject);
-                            switch ($scope.activity_identifier) {
-                                case "1001": //Exploración Inicial - Etapa 1
-                                    $scope.answers = localAnswers;
-                                    //$scope.OtroAnswers = localOtrosAnswers;
-                                    break;
-                                case "1005": //Mis Cualidades - Etapa 1
-                                    $scope.answers = localAnswers;
-                                    //$scope.OtroAnswers = localOtrosAnswers;
-                                    break;
-                                case "1006": //Mis Gustos - Etapa 1
-                                    $scope.answers = localAnswers;
-                                    //$scope.OtroAnswers = localOtrosAnswers;
-                                    break;
-                                case "1007": //Sueña - Etapa 1
-                                    $scope.answers = localAnswers; //Sueña
-                                    break;
-                                case "1009": //Exploración Final - Etapa 1
-                                    $scope.answers = localAnswers;
-                                    break;
-                                case "2001": //Exploración Inicial - Etapa 2
-                                    $scope.answers = localAnswers;
-                                    //$scope.exploracionInicialStage2OtroAnswers = localOtrosAnswers;
-                                    break;
-                                case "2007": //Tus ideas - Etapa 2
-                                    $scope.answers = localAnswers;
-                                    break;
-                                case "2016": //Mi futuro - Etapa 2
-                                    $scope.answers = localAnswers;
-                                    break;
-                                case "2023": //Exploración Final - Etapa 2
-                                    $scope.answers = localAnswers;
-                                    break;
-                                case "3101": //Exploración Inicial - Etapa 3
-                                    $scope.answers = localAnswers;
-                                    //$scope.exploracionInicialStage3OtroAnswers = localOtrosAnswers;
-                                    break;
-                                case "3601": //Exploración Final - Etapa 3
-                                    $scope.answers = localAnswers;
-                                    break;
-                                default:
-                                    $scope.currentChallenge = 0; //Default
-                                    break;
-                            }
+                            loadModelVariables(activityObject);
+                            $scope.answers = localAnswers;
+
                         }
                     } else {
                         // Bring text for questions for Quiz from the Service for First Time users.
-                        // The -1 is for the GET request without the userid:
+                        // The -1 is for making up a GET request without the userid; for example:
                         // http://incluso.definityfirst.com/RestfulAPI/public/activity/150
                         console.log("Bringing text for a not finished Quiz...");
-                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, successfullCallBack, errorCallback, true);
+                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, loadModelVariables, errorCallback, true);
                     }
                 }
                 else {
@@ -354,7 +260,7 @@ angular
 
 
             //This callback is invoked for finished activities only
-            function successfullCallBack(activityObject) {
+            function loadModelVariables(activityObject) {
 
                 //The activityObject is an object the same type we get eith the following GET request:
                 //http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
@@ -371,14 +277,11 @@ angular
                 if (activityObject != null) {
 
                     var question = "";
-                    var numQuestions = 0;
-                    $scope.numOfOthers2 = 0;
-
-                    if ($scope.OtroAnswers == null) {
-                        $scope.OtroAnswers = [];
-                    }
-
+                    //var numQuestions = 0;
+                    $scope.numOfOthers = 0;
+                    var localOtrosAnswers = null;
                     $scope.placeholder = [];
+                    $scope.maxPages = activityObject.questions.length;console.log("***** maxPages = " + $scope.maxPages + " ***************");
 
                     //Count the number of "Other" options in current Quiz.
                     for (var index = 0; index < activityObject.questions.length; index++) {
@@ -386,87 +289,48 @@ angular
                         var question = activityObject.questions[index];
                         var questionNumOfChoices = question.answers.length;
                         var hasOther = false;
-                        //$scope.activityTitle = question.answers[0].title;
 
                         if (questionNumOfChoices > 0) {
                             hasOther = question.answers[questionNumOfChoices - 1].answer == "Otro";
                         }
 
-
-                        $scope.placeholder[index] = question.tag;
-
+                        $scope.placeholder[index] = question.tag;  //Set the values for the placeholder strings within UI textareas.
                         var questionType = question.questionType || question.questiontype;   //Contains the type of question.
 
                         if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
-                            $scope.numOfOthers2++;
+                            $scope.numOfOthers++;
                         }
                     }
 
-                    console.log(":::::::::: Número de preguntas con 'Otro' = " + $scope.numOfOthers2);
+                    if ($scope.numOfOthers > 0) {//If the current Quiz has questions including the 'Other' option, then get them from LS
+                        if ($scope.childActivity) {
+                            localOtrosAnswers = JSON.parse(_getItem("otherAnswQuiz/" + $scope.childActivity.coursemoduleid));
+                        } else {
+                            localOtrosAnswers = JSON.parse(_getItem("otherAnswQuiz/" + $scope.parentActivity.coursemoduleid));
+                        }
+                    }
+
+                    $scope.OtroAnswers = localOtrosAnswers;
+
+                    if ($scope.OtroAnswers == null) {
+                        $scope.OtroAnswers = [];
+                    }
+
+                    console.log(":: Número de preguntas con 'Otro' = " + $scope.numOfOthers);
+                    console.log("OtroAnswers = " + JSON.stringify($scope.OtroAnswers));
 
                     for (var index = 0; index < activityObject.questions.length; index++) {
 
                         question = activityObject.questions[index];
                         console.log("question no. " + index);
-                        numQuestions = activityObject.questions.length;
-
-                        switch ($scope.activity_identifier) {
-                            case "1001": //Exploración Inicial - Etapa 1
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            case "1005": //Mis Cualidades - Etapa 1
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            case "1006": //Mis Gustos - Etapa 1
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            case "1007": //Sueña - Etapa 1
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            case "1009": //Exploración Final - Etapa 1
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            case "2001": //Exploración Inicial - Etapa 2
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            case "2007": //Tus ideas - Etapa 2
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            case "2016": //Tu Futuro - Etapa 2
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            case "2023": //Exploración Final - Etapa 2
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            case "3101": //Exploración Inicial - Etapa 3
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            case "3601": //Exploración Final - Etapa 3
-                                renderQuestionsAndAnswers(index, question);
-                                _setLocalStorageJsonItem("activityAnswers/" + theCourseModuleId, $scope.answers);
-                                break;
-                            default:
-                                $scope.currentChallenge = 0; //Default
-                                break;
-                        }
+                        //numQuestions = activityObject.questions.length;
+                        renderQuestionsAndAnswers(index, question);
+                        _setLocalStorageJsonItem("answersQuiz/" + theCourseModuleId, $scope.answers);
                     }
 
                     console.log("Num of multichoice questions = " + $scope.numOfMultichoiceQuestions);
-                    //localStorage.setItem("numOfOthers/" + theCourseModuleId, $scope.numOfMultichoiceQuestions);
 
-                }
-
-                else {
+                } else {
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
                     $scope.showWarning = true;
                 }
@@ -475,6 +339,170 @@ angular
 
             function errorCallback() {
                 $scope.$emit('HidePreloader');
+            }
+
+
+            //#######################################  SECTION FOR DATA-BINDING FUNCTIONS ##################################
+
+            $scope.updateOtherField = function (index, otherIndex) {
+
+                if ($scope.questionNumOfChoices[index] - 1 == otherIndex) {
+                    if ($scope.answers[index][otherIndex] == 0) {
+                        $scope.OtroAnswers[$scope.position[index]].answers[0] = "";
+                        console.log(JSON.stringify($scope.OtroAnswers));
+                    }
+                }
+            };
+
+            function renderQuestionsAndAnswers(questionIndex, question) {
+                console.log("Entering the 'renderQuestionsAndAnswers' method...");
+                var userAnswers = '';
+                var otherObjectItem = {};
+
+                var questionNumOfChoices = question.answers.length;
+                $scope.questionNumOfChoices[questionIndex] = questionNumOfChoices;
+
+                var hasOther = false;
+
+                if (questionNumOfChoices > 0) {
+                    hasOther = question.answers[questionNumOfChoices - 1].answer == "Otro";
+                }
+
+                var questionCode = "";
+
+                var questionText = question.question; //Contains the text for question.
+                var questionType = question.questionType || question.questiontype;   //Contains the type of question.
+
+                if (questionType == "shortanswer") {
+                    questionCode = "shortanswer";
+                }
+
+                if (questionType == "essay") {
+                    questionCode = "essay";
+                }
+
+                if (questionType == "multichoice" && questionNumOfChoices == 2 || questionType == "truefalse") {
+                    questionCode = "binary";
+                }
+
+                if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
+                    questionCode = "multichoice";
+                    $scope.numOfMultichoiceQuestions++;
+                    $scope.position[questionIndex] = $scope.numOfMultichoiceQuestions - 1;
+
+                    if ($scope.OtroAnswers.length < $scope.numOfOthers) {//continue adding items to the array
+
+                        //Add {questionid: ##, answers: [""]} object for the multichoice question
+                        otherObjectItem.questionid = question.id;
+                        otherObjectItem.answers = [""];
+                        $scope.OtroAnswers.push(otherObjectItem);
+                    }
+
+                    console.log("$scope.OtroAnswers = " + $scope.OtroAnswers.toString());
+                }
+
+                if (questionType == "multichoice" && questionNumOfChoices > 2 && !hasOther) {
+                    questionCode = "simplechoice";
+                }
+
+                console.log("questionTypeCode = " + questionCode);
+                $scope.questionTypeCode.push(questionCode);
+                $scope.questionText.push(questionText);
+
+                switch (questionCode) {
+
+                    case "binary":
+
+                        if (question.answers[0].answer == question.userAnswer) {
+                            //The user answered the first option
+                            $scope.answers[questionIndex] = "0";
+                        }
+
+                        if (question.answers[1].answer == question.userAnswer) {
+                            //The user answered the second option
+                            $scope.answers[questionIndex] = "1";
+                        }
+
+                        break;
+
+                    case "multichoice":
+
+                        $scope.answers[questionIndex] = [];
+                        var index;
+                        if (question.userAnswer !== null && question.userAnswer.length > 0) {
+                            userAnswers = question.userAnswer.split(";");
+                            for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
+                                var userAnswer = cleanText(userAnswers[indexUserAnswers]).trim();
+                                for (index = 0; index < question.answers.length; index++) {
+                                    var questionOption = cleanText(question.answers[index].answer).trim();
+
+                                    if (questionOption == userAnswer) {//For checked options...
+                                        console.log("***  The user selected this: " + userAnswer);
+                                        $scope.answers[questionIndex][index] = 1;
+                                        //console.log("index = " + index + ", value = " + $scope.answers[questionIndex][index]);
+                                        if (userAnswer == "Otro") {//The user checked the "Otros" option, among others...
+
+                                            //console.log("The string in the 'Otro' field: " + question.other);
+                                            $scope.OtroAnswers[$scope.position[questionIndex]].answers[0] = question.other;
+                                            _setLocalStorageJsonItem("otherAnswQuiz/" + $scope.activity.coursemoduleid, $scope.OtroAnswers);
+                                        }
+                                    }
+                                }
+                            }
+
+                            for (index = 0; index < question.answers.length; index++) {
+                                if ($scope.answers[questionIndex][index] !== 1) {
+                                    $scope.answers[questionIndex][index] = 0;
+                                }
+                            }
+
+                            console.log("$scope.OtroAnswers = " + JSON.stringify($scope.OtroAnswers));
+                            console.log("Position = " + JSON.stringify($scope.position));
+                            console.log("Index, Position = " + questionIndex + " / " + $scope.position[questionIndex]);
+
+                        }
+
+                        break;
+
+                    case "shortanswer":
+                        $scope.answers[questionIndex] = [];
+                        if (question.userAnswer != null) {
+                            userAnswers = question.userAnswer.split('\n');
+
+                            for (var index = 0; index < userAnswers.length; index++) {
+                                var myAnswer = userAnswers[index];
+                                $scope.answers[questionIndex].push(myAnswer);
+                            }
+                        }
+                        console.log("shortanswer = " + $scope.answers[questionIndex]);
+                        break;
+
+                    case "simplechoice":
+                        userAnswer = question.userAnswer.replace("\n", "");
+
+                        for (var i = 0; i < questionNumOfChoices; i++) {
+                            if (question.answers[i].answer == question.userAnswer) {
+                                $scope.answers[questionIndex] = i;
+                            }
+                        }
+
+                        break;
+
+                    case "essay":
+                        $scope.answers[questionIndex] = [];
+                        if (question.userAnswer != null) {
+                            userAnswers = question.userAnswer.split(';');
+                            for (var index = 0; index < userAnswers.length; index++) {
+                                var myAnswer = userAnswers[index];
+                                $scope.answers[questionIndex].push(myAnswer);
+                            }
+                        }
+
+                        break;
+                    default:
+                        break;
+                }
+
             }
 
 
@@ -500,7 +528,6 @@ angular
                     if ($scope.activity_status == 0) {
                         $scope.activity_status = 1;
                         console.log("Update Activity Log : " + $scope.activity_identifier);
-
                         updateUserStars($scope.parentActivity.activity_identifier);
                         //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
                     }
@@ -529,44 +556,7 @@ angular
                     console.log("Your answers: " + $scope.answers);
                     console.log("Your other :" + JSON.stringify($scope.OtroAnswers));
 
-                    switch ($scope.activity_identifier) {
-                        case "1001": //Exploración Inicial - Etapa 1
-                            $scope.AnswersResult.answers = $scope.answers;
-                            break;
-                        case "1005": //Mis Cualidades - Etapa 1
-                            $scope.AnswersResult.answers = $scope.answers;
-                            //$scope.OtroAnswers = $scope.misCualidadesOtroAnswers;
-                            break;
-                        case "1006": //Mis Gustos - Etapa 1
-                            $scope.AnswersResult.answers = $scope.answers;
-                            break;
-                        case "1007": //Sueña - Etapa 1
-                            $scope.AnswersResult.answers = $scope.answers;
-                            break;
-                        case "1009": //Exploración Final - Etapa 1
-                            $scope.AnswersResult.answers = $scope.answers;
-                            break;
-                        case "2001": //Exploración Inicial - Etapa 2
-                            $scope.AnswersResult.answers = $scope.answers;
-                            break;
-                        case "2007": //Tus Ideas - Etapa 2
-                            $scope.AnswersResult.answers = $scope.answers;
-                            break;
-                        case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
-                            $scope.AnswersResult.answers = $scope.answers;
-                            break;
-                        case "2023": //Exploración Final - Etapa 2
-                            $scope.AnswersResult.answers = $scope.answers;
-                            break;
-                        case "3101": //Exploración Inicial - Etapa 3
-                            $scope.AnswersResult.answers = $scope.answers;
-                            break;
-                        case "3601": //Exploración Final - Etapa 3
-                            $scope.AnswersResult.answers = $scope.answers;
-                            break;
-                        default:
-                            break;
-                    }
+                    $scope.AnswersResult.answers = $scope.answers;
 
                     console.log("Ending activity...");
 
@@ -589,10 +579,29 @@ angular
 
                     activityModel.answersResult.dateStart = activityModel.startingTime;
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
+                    activityModel.answersResult.others = $scope.OtroAnswers;
+                    alert(JSON.stringify($scope.OtroAnswers));
 
-                    if (quizHasOther.indexOf($scope.activity_identifier) > -1) {//Quiz with "Otro" answer option.
-                        activityModel.answersResult.others = $scope.OtroAnswers;
+                    if ($scope.childActivity) {
+                        _setLocalStorageJsonItem("answersQuiz/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
+                        _setLocalStorageJsonItem("UserTalents/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
+                    } else {
+                        _setLocalStorageJsonItem("answersQuiz/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
+                        _setLocalStorageJsonItem("UserTalents/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
                     }
+                    alert("Saving thing to LS!!!");
+
+                    //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
+                    if ($scope.numOfOthers > 0) {alert(JSON.stringify($scope.OtroAnswers));
+
+                        if ($scope.childActivity) {
+                            _setLocalStorageJsonItem("otherAnswQuiz/" + $scope.childActivity.coursemoduleid, $scope.OtroAnswers);
+                        } else {
+                            _setLocalStorageJsonItem("otherAnswQuiz/" + $scope.parentActivity.coursemoduleid, $scope.OtroAnswers);
+                        }
+                    }
+
+
 
                     console.log("activityModel.answersResult = " + JSON.stringify(activityModel.answersResult));
                     console.log("activityModel.others = " + JSON.stringify(activityModel.others));
@@ -621,27 +630,8 @@ angular
                         }, destinationPath);
                     }
 
-                    if ($scope.childActivity) {
-                        _setLocalStorageJsonItem("activityAnswers/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
-                        _setLocalStorageJsonItem("UserTalents/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
-                    } else {
-                        _setLocalStorageJsonItem("activityAnswers/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
-                        _setLocalStorageJsonItem("UserTalents/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
-                    }
 
-
-                    //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
-                    if (quizHasOther.indexOf($scope.activity_identifier) > -1) {
-
-                        if ($scope.childActivity) {
-                            _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.childActivity.coursemoduleid, $scope.OtroAnswers);
-                        } else {
-                            _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.parentActivity.coursemoduleid, $scope.OtroAnswers);
-                        }
-                    }
-
-
-                }, 2000);
+                }, 500);
 
             };
 
@@ -694,15 +684,15 @@ angular
                     function (responseData) {
                         console.log('Update profile successful...');
 
-                        //Delete the 'activityOtrosAnswers' object.
+                        //Delete the 'otherAnswQuiz' object.
                         if ($scope.childActivity) {
-                            //localStorage.removeItem("activityOtrosAnswers/" + $scope.childActivity.coursemoduleid);
+                            //localStorage.removeItem("otherAnswQuiz/" + $scope.childActivity.coursemoduleid);
                         } else {
-                            //localStorage.removeItem("activityOtrosAnswers/" + $scope.parentActivity.coursemoduleid);
+                            //localStorage.removeItem("otherAnswQuiz/" + $scope.parentActivity.coursemoduleid);
                         }
 
                         $scope.numOfMultichoiceQuestions = 0;
-                        $scope.numOfOthers2 = 0;
+                        $scope.numOfOthers = 0;
 
                         console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
                         $location.path(destinationPath);
@@ -788,170 +778,6 @@ angular
                     }
                 }
             };
-
-
-
-            //#######################################  SECTION FOR DATA-BINDING FUNCTIONS ##################################
-
-            $scope.updateOtherField = function (index, otherIndex) {
-
-                if ($scope.questionNumOfChoices[index] - 1 == otherIndex) {
-                    if ($scope.answers[index][otherIndex] == 0) {
-                        $scope.OtroAnswers[$scope.position[index]].answers[0] = "";
-                        console.log(JSON.stringify($scope.OtroAnswers));
-                    }
-                }
-            };
-
-            function renderQuestionsAndAnswers(questionIndex, question) {
-                console.log("Entering the 'renderQuestionsAndAnswers' method...");
-                var userAnswers = '';
-                var otherObjectItem = {};
-
-                var questionNumOfChoices = question.answers.length;
-                $scope.questionNumOfChoices[questionIndex] = questionNumOfChoices;
-
-                var hasOther = false;
-
-                if (questionNumOfChoices > 0) {
-                    hasOther = question.answers[questionNumOfChoices - 1].answer == "Otro";
-                }
-
-                var questionCode = "";
-
-                var questionText = question.question; //Contains the text for question.
-                var questionType = question.questionType || question.questiontype;   //Contains the type of question.
-
-                if (questionType == "shortanswer") {
-                    questionCode = "shortanswer";
-                }
-
-                if (questionType == "essay") {
-                    questionCode = "essay";
-                }
-
-                if (questionType == "multichoice" && questionNumOfChoices == 2 || questionType == "truefalse") {
-                    questionCode = "binary";
-                }
-
-                if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
-                    questionCode = "multichoice";
-                    $scope.numOfMultichoiceQuestions++;
-                    $scope.position[questionIndex] = $scope.numOfMultichoiceQuestions - 1;
-                    if ($scope.OtroAnswers.length < $scope.numOfOthers2) {//continue adding items to the array
-
-                        //Add {questionid: ##, answers: [""]} object for the multichoice question
-                        otherObjectItem.questionid = question.id;
-                        otherObjectItem.answers = [""];
-                        $scope.OtroAnswers.push(otherObjectItem);
-                    }
-
-                    console.log("$scope.OtroAnswers = " + $scope.OtroAnswers.toString());
-                }
-
-                if (questionType == "multichoice" && questionNumOfChoices > 2 && !hasOther) {
-                    questionCode = "simplechoice";
-                }
-
-                console.log("questionTypeCode = " + questionCode);
-                $scope.questionTypeCode.push(questionCode);
-                $scope.questionText.push(questionText);
-
-                switch (questionCode) {
-
-                    case "binary":
-
-                        if (question.answers[0].answer == question.userAnswer) {
-                            //The user answered the first option
-                            $scope.answers[questionIndex] = "0";
-                        }
-
-                        if (question.answers[1].answer == question.userAnswer) {
-                            //The user answered the second option
-                            $scope.answers[questionIndex] = "1";
-                        }
-
-                        break;
-
-                    case "multichoice":
-                        //$scope.numOfMultichoiceQuestions++;
-                        $scope.answers[questionIndex] = [];
-                        var index;
-                        if (question.userAnswer !== null && question.userAnswer.length > 0) {
-                            userAnswers = question.userAnswer.split(";");
-                            for (var indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
-                                var userAnswer = cleanText(userAnswers[indexUserAnswers]).trim();
-                                for (index = 0; index < question.answers.length; index++) {
-                                    var questionOption = cleanText(question.answers[index].answer).trim();
-
-                                    if (questionOption == userAnswer) {//For checked options...
-                                        console.log("***  The user selected this: " + userAnswer);
-                                        $scope.answers[questionIndex][index] = 1;
-                                        //console.log("index = " + index + ", value = " + $scope.answers[questionIndex][index]);
-                                        if (userAnswer == "Otro") {//The user checked the "Otros" option, among others...
-
-                                            //console.log("The string in the 'Otro' field: " + question.other);
-                                            $scope.OtroAnswers[$scope.position[questionIndex]].answers[0] = question.other;
-                                            _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.activity.coursemoduleid, $scope.OtroAnswers);
-                                        }
-                                    }
-                                }
-                            }
-
-                            for (index = 0; index < question.answers.length; index++) {
-                                if ($scope.answers[questionIndex][index] !== 1) {
-                                    $scope.answers[questionIndex][index] = 0;
-                                }
-                            }
-
-                            console.log("$scope.OtroAnswers = " + JSON.stringify($scope.OtroAnswers));
-                            console.log("Position = " + JSON.stringify($scope.position));
-                            console.log("Index, Position = " + questionIndex + " / " + $scope.position[questionIndex]);
-
-                        }
-
-                        break;
-
-                    case "shortanswer":
-                        $scope.answers[questionIndex] = [];
-                        if (question.userAnswer != null) {
-                            userAnswers = question.userAnswer.split('\n');
-
-                            for (var index = 0; index < userAnswers.length; index++) {
-                                var myAnswer = userAnswers[index];
-                                $scope.answers[questionIndex].push(myAnswer);
-                            }
-                        }
-                        console.log("shortanswer = " + $scope.answers[questionIndex]);
-                        break;
-
-                    case "simplechoice":
-                        userAnswer = question.userAnswer.replace("\n", "");
-
-                        for (var i = 0; i < questionNumOfChoices; i++) {
-                            if (question.answers[i].answer == question.userAnswer) {
-                                $scope.answers[questionIndex] = i;
-                            }
-                        }
-
-                        break;
-
-                    case "essay":
-                        $scope.answers[questionIndex] = [];
-                        if (question.userAnswer != null) {
-                            userAnswers = question.userAnswer.split(';');
-                            for (var index = 0; index < userAnswers.length; index++) {
-                                var myAnswer = userAnswers[index];
-                                $scope.answers[questionIndex].push(myAnswer);
-                            }
-                        }
-
-                        break;
-                    default:
-                        break;
-                }
-
-            }
 
 
             // ##################################### VALIDATING USER ANSWERS ##################################################
@@ -1175,20 +1001,7 @@ angular
                 $scope.$emit('scrollTop');
             }
 
-
             $scope.answerIndex = 1;
-
-            $scope.addToAnswerIndex = function (delta, maxPages) {
-                $scope.answerIndex = parseInt($('span#index').text());
-
-                if ($scope.answerIndex > maxPages) {
-                    $scope.answerIndex = 1;
-                }
-
-                if ($scope.answerIndex < 1) {
-                    $scope.answerIndex = maxPages;
-                }
-            };
 
             function addHeightConsulta(lista, elementQty) {
                 $scope.finalHeight = angular.element(lista).height() + (250 * (elementQty));
@@ -1289,16 +1102,18 @@ angular
 
             $scope.cancel = function () {
                 if ($scope.childActivity) {
-                    //localStorage.removeItem("activityOtrosAnswers/" + $scope.childActivity.coursemoduleid);
+                    //localStorage.removeItem("otherAnswQuiz/" + $scope.childActivity.coursemoduleid);
                 } else {
-                    //localStorage.removeItem("activityOtrosAnswers/" + $scope.parentActivity.coursemoduleid);
+                    //localStorage.removeItem("otherAnswQuiz/" + $scope.parentActivity.coursemoduleid);
                 }
 
                 $scope.numOfMultichoiceQuestions = 0;
+                $scope.numOfOthers = 0;
 
                 console.log(destinationPath);
                 $location.path(destinationPath);
             };
+
 
 
         }
@@ -1314,5 +1129,64 @@ angular
     })
     .controller('videoCollapsiblePanelController', function ($scope) {
         $scope.isCollapsed = false;
-    });
+    }).
+    directive("owlCarousel", function() {
+        return {
+            restrict: 'E',
+            transclude: false,
+            link: function ($scope) {
+                $scope.initCarousel = function(element) {
+                    // provide any default options you want
+                    var currPage;
+                    var prevPage;
+                    var defaultOptions = {
+                        navigation: false,
+                        pagination: false,
+                        goToFirstSpeed: 2000,
+                        singleItem: true,
+                        autoHeight: true,
+                        mouseDrag: false,
+                        touchDrag: false,
+                        dots: false,
+                        navRewind: true,
+                        transitionStyle: "fade",
+                        afterAction: function(el){
+
+                            //add class active
+                            $scope.answerIndex = this.currentItem + 1;
+                            prevPage = $("#index").html();
+                            $("#index").html($scope.answerIndex);
+
+
+                        }
+                    };
+
+                    var customOptions = $scope.$eval({
+
+                    });
+
+                    // combine the two options objects
+                    for(var key in customOptions) {
+                        defaultOptions[key] = customOptions[key];
+                    }
+
+                    // init carousel
+                    $(element).owlCarousel(defaultOptions);
+                };
+            }
+        };
+    })
+    .directive('owlCarouselItem', [function() {
+        return {
+            restrict: 'A',
+            transclude: false,
+            link: function(scope, element) {
+                // wait for the last item in the ng-repeat then call init
+                if(scope.$last) {
+                    scope.initCarousel(element.parent());
+                }
+            }
+        };
+    }]);
+
 
