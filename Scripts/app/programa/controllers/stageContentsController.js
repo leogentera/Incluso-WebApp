@@ -367,7 +367,7 @@ angular
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                                          
                             var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                          
                             var currentUserId = currentUser.userId;
-                            var newComment = $scope.fuenteDeEnergia.activities[i].activityContent.newComment;                                                                                
+                            var newComment = $scope.fuenteDeEnergia.activities[i].activityContent.newComment;
                             
                             $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false; 
                             var data = {
@@ -376,22 +376,15 @@ angular
                                 dateissued: (new Date() / 1000 | 0),
                                 comment: newComment
                               };
-                              
-                            var comment = {
+
+                            var newCommentObject = {
                                 user_comment: newComment,
                                 dateissued: (new Date()/1000|0),
-                                alias: "usuario"                                
-                                
+                                alias: currentUser.alias
                             };
-                            debugger;
-                            var comments = $scope.fuenteDeEnergia.activities[i].activityContent.comments;
-                            debugger;
-                            var commentsArray = new Array();
-                            for(var j=0;j < comments.length; j++){
-                              commentsArray.push(comments[j]);
-                            }
-                            commentsArray.push(newComment);
-                            $scope.fuenteDeEnergia.activities[i].activityContent.comments  = commentsArray;
+                            
+                            $scope.fuenteDeEnergia.activities[i].activityContent.comments.push(newCommentObject);
+                            
                             moodleFactory.Services.PostCommentActivity(activityId, data, function(){
                                 }, function(){                              
                             });
