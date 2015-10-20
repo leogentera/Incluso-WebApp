@@ -461,9 +461,7 @@ angular
                 $("input[name='date']").val(data); 
                 var splitDate = data.split("/");
                 var birthday = new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
-                $scope.model.birthday = moment(birthday).format("MM/DD/YYYY");  
-                alert('birthday ' + $scope.model.birthday);
-                alert('data ' + data);
+                $scope.model.birthday = moment(birthday).format("MM/DD/YYYY");                  
             }
 
             function FailureDatePicker(data) {

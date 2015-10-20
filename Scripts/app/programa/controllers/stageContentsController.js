@@ -98,6 +98,7 @@ angular
             var activitiesData = "";
 
             if (!activities) {
+                console.log("obteniendo datos de servicio");
                 activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
 
                 $scope.fuenteDeEnergia = _.find(activitymanagers, function (a) {
@@ -107,6 +108,7 @@ angular
                 getDataAsync();
             }
             else {
+                console.log("datos obtenidos de cache");
                 $scope.fuenteDeEnergia = activities;
                 getDataAsync();
                 $scope.$emit('HidePreloader'); //hide preloader

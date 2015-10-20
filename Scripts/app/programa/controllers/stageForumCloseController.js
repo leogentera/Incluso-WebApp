@@ -14,37 +14,35 @@ angular
             _httpFactory = $http;
             _timeout = $timeout;
 
-             var userCourse = JSON.parse(localStorage.getItem('usercourse'));
+            var userCourse = JSON.parse(localStorage.getItem('usercourse'));
             var parentActivity = getActivityByActivity_identifier($routeParams.activityId, userCourse);
             var activityFromTree;
 
-             if (parentActivity.activities && parentActivity.activities.length) {
+            if (parentActivity.activities && parentActivity.activities.length) {
                 activityFromTree = parentActivity.activities[0];
-             } else {
+            } else {
                 activityFromTree = parentActivity;
-             }
+            }
 
-
-
-             $scope.activityPoints = activityFromTree.points;
-             $scope.activityname = activityFromTree.activityname;
-             $scope.like_status = 1;
+            $scope.activityPoints = activityFromTree.points;
+            $scope.activityname = activityFromTree.activityname;
+            $scope.like_status = 1;
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
 
             $scope.$emit('HidePreloader');
 
-            var endForumActivity = function(moodleid){
+            var endForumActivity = function(moodleid) {
                 console.log('Closing time: ' + moodleid);
                 $scope.$emit('ShowPreloader');
-               var activities = parentActivity.activities;
+                var activities = parentActivity.activities;
 
-               parentActivity.status = 1;
-               if (activities) {
-                 for(var i = 0; i < activities.length; i++) {
-                    activities[i].status = 1;
-                 }
-               }
-               _setLocalStorageJsonItem('usercourse', userCourse);
+                parentActivity.status = 1;
+                if (activities) {
+                    for(var i = 0; i < activities.length; i++) {
+                        activities[i].status = 1;
+                    }
+                }
+                _setLocalStorageJsonItem('usercourse', userCourse);
 
                 console.log('Finishing activity...');
                 var like_status = $scope.like_status;
@@ -154,7 +152,7 @@ angular
                 endForumActivity(moodleId);
             }
 
-            var getForumsExtraPointsCounter = function(){
+            var getForumsExtraPointsCounter = function() {
                 var forumExtraPointsCounter = JSON.parse( localStorage.getItem('extraPointsForums'));
                 return forumExtraPointsCounter;
             };

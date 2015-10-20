@@ -723,6 +723,7 @@ function getMoodleIdFromTreeActivity(activityId){
     var moodleId;
     var activityFromTree = getActivityByActivity_identifier(activityId);
     activityFromTree.activities ? moodleId = activityFromTree.activities[0].coursemoduleid : moodleId = activityFromTree.coursemoduleid;
+
     return moodleId;
 }
 

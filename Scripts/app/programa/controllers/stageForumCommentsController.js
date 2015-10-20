@@ -144,9 +144,10 @@ angular
                             updateUserStars($routeParams.activityId, 50 );
                         }
                     }
-                    console.log("isActivityFinished " + isActivityFinished);
-                    console.log("activityFromTree.status " + activityFromTree.status);
-
+                    
+                console.log("isActivityFinished " + isActivityFinished);
+                console.log("activityFromTree.status " + activityFromTree.status);
+                
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     extraPoints *= 50;
                     resetForumDiscussionsProgress();

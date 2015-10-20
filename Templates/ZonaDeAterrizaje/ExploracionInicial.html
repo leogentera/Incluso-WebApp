@@ -138,7 +138,7 @@
                             </div>
                         </div>
 
-                        <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 4"
+                        <a class="btn btn-primary btn-lg btn-cnt" id="save" ng-show="answerIndex == 4 && activity_status == 0"
                            ng-click="validateExploracionInicialStage3()">Guardar</a>
 
                         <div class="txt-renglon centered txt-bigger" ng-click="cancel()">Cancelar</div>
@@ -211,29 +211,41 @@
 <script>
     $(document).ready(function () {
         var owl = $("#owl ");
+        var page = 1;
+
         owl.owlCarousel({
             navigation: false,
             pagination: false,
-            paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
             autoHeight: true,
+            mouseDrag: false,
+            touchDrag: false,
+            transitionStyle: "fade",
             afterMove: callback
         });
 
         function callback(event) {
             var item = this.currentItem;
-            $("#index").html(item + 1 + '/');
+            $("#index").html(item + 1+ "/");
         }
 
-        $("#next").click(function () {
+        $("#next").click(function (evt) {
+
+            //page = parseInt($("#index").html());
+            //page++;
+            //if (page > 4) { page = 1; }
             owl.trigger('owl.next');
-            return false;
+            evt.preventDefault();
         });
 
-        $("#prev").click(function () {
+        $("#prev").click(function (evt) {
+
+            //page = parseInt($("#index").html());
+            //page--;
+            //if (page < 1) { page = 4; }
             owl.trigger('owl.prev');
-            return false;
+            evt.preventDefault();
         });
 
         // $("#save").click(function(){
