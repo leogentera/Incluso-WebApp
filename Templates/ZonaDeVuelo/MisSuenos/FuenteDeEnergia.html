@@ -126,7 +126,7 @@
                     </div>
                   </div>
                   <div>
-                    <div ng-repeat="repeatComment in activity.activityContent.comments ">                      
+                    <div ng-repeat="repeatComment in activity.activityContent.comments | limitTo: activity.activityContent.commentsQty">                      
                       <div class="coment block">
                         <!--<img ng-click="navigateTo('Profile/' + comment.id)" ng-if="comment.picture_comment_author" ng-src="{{comment.picture_comment_author + '?token=' + userToken}}" alt="author" /> 
                         <img ng-click="navigateTo('Profile/' + comment.id)" ng-if="!comment.picture_comment_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />-->
@@ -137,12 +137,12 @@
                         </div>
                       </div>
                     </div>
-                    <!--<div class="coment block" ng-hide="false" >{{activity.activityContent.comments.length}}
-                      <div class="vermas">
+                    <div class="coment block" ng-hide="(activity.activityContent.comments.length < 3 || activity.activityContent.comments.length == activity.activityContent.commentsQty)" >
+                      <div class="vermas" ng-click="showMoreComments(activity.groupid)">
                         <span class="icomoon icon-show-more"></span>
                         Mostrar más comentarios...
                       </div>
-                    </div>-->
+                    </div>
                   </div>
                   <div></div>
                   <div class="interact">                    
