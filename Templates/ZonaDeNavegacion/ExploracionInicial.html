@@ -19,7 +19,7 @@
                     <div owl-carousel-item="" ng-repeat="question in activityObject.questions track by $index" class="item">
 
                         <!--   -----------------------   BINARY TYPE QUESTION   ------------------------------              -->
-                        <div ng-show="questionTypeCode[$index] == 'binary'">
+                        <div ng-show="questionTypeCode[$index] == 'binary'" id="{{'binary' + $index}}">
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div class="tnf">
@@ -39,7 +39,7 @@
                         </div>
 
                         <!--   -----------------------   MULTICHOICE TYPE QUESTION   ------------------------------              -->
-                        <div ng-show="questionTypeCode[$index] == 'multichoice'">
+                        <div ng-show="questionTypeCode[$index] == 'multichoice'" id="{{'multichoice' + $index}}">
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
                             <section class="form txt-renglon txt-bigger part list"
                                      id="{{'multichoiceSection' + $index}}">
@@ -49,7 +49,7 @@
                                         <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
                                                value="1" name="{{'multichoice' + $parent.$index + $index}}"
                                                ng-true-value="1" ng-false-value="0"
-                                               ng-click="updateOtherField($parent.$index, $index)"
+                                               ng-click="updateOtherField($parent.$index, $index, answerObject.answer)"
                                                ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
                                         <label for="{{'multichoice' + $parent.$index + $index}}">{{answerObject.answer}}</label>
                                     </div>
@@ -57,7 +57,6 @@
                                         <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
                                                value="1" name="{{'multichoice' + $parent.$index + $index}}"
                                                ng-true-value="1" ng-false-value="0"
-
                                                ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
                                         <label for="{{'multichoice' + $parent.$index + $index}}">{{answerObject.answer}}</label>
 
@@ -65,7 +64,8 @@
                                             <div class="add">
                                                 <span class="icomoon icon-edit"></span>
                                                 <textarea class="form-control form-control-lg theme-form" row="2"
-                                                          name="{{'opciones' + $parent.$index + $index}}"
+                                                          id="{{'other' + $parent.$index + $index}}"
+                                                          name="{{'other' + $parent.$index + $index}}"
                                                           placeholder="{{placeholder[$parent.$index]}}"
                                                           onkeydown="if(event.keyCode == 13) event.preventDefault();"
                                                           ng-model="OtroAnswers[position[$parent.$index]].answers[0]">
@@ -78,8 +78,8 @@
                             </section>
                         </div>
 
-                        <!--   -----------------------   SIMPLECHOICE TYPE QUESTION   ------------------------------              -->
-                        <div ng-show="questionTypeCode[$index] == 'simplechoice'">
+                        <!--   -----------------------   SIMPLECHOICE TYPE QUESTION   ------------------------------      -->
+                        <div ng-show="questionTypeCode[$index] == 'simplechoice'" id="{{'simplechoice' + $index}}">
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
                             <section class="form txt-renglon txt-bigger part list">
                                 <div ng-repeat="answerObject in question.answers track by $index">
@@ -103,7 +103,7 @@
                                                 <span>{{placeholder[$parent.$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
                                                    ng-click="deleteAbility('essay' + $parent.$index, $parent.$index, $index)"
-                                                   ng-show="activity_status == 0">
+                                                   ng-show="activity_status >= 0">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
@@ -144,7 +144,7 @@
                                                 <span>{{placeholder[$parent.$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
                                                    ng-click="deletePerson('shortanswer' + $parent.$index, $parent.$index, $index)"
-                                                   ng-show="activity_status == 0">
+                                                   ng-show="activity_status >= 0">
                                                     <span class="icomoon icon-cross white"></span>
                                                 </a>
                                             </div>
