@@ -124,6 +124,7 @@ angular
 
 
             $scope.addCaptureField = function (value, check) {
+                var index;
                 if (check) {
                     addHeightForOther();
 
@@ -154,32 +155,32 @@ angular
 
                     switch (value) {
                         case "cualidades1":
-                            var index = $scope.userprofile.talents.indexOf($scope.misCualidadesOtroAnswers[0].answers[0]);
+                            index = $scope.userprofile.talents.indexOf($scope.misCualidadesOtroAnswers[0].answers[0]);
                             $scope.userprofile.talents.splice(index, 1);
                             $scope.misCualidadesOtroAnswers[0].answers[0] = '';
                             break;
                         case "cualidades2":
-                            var index = $scope.userprofile.values.indexOf($scope.misCualidadesOtroAnswers[1].answers[0]);
+                            index = $scope.userprofile.values.indexOf($scope.misCualidadesOtroAnswers[1].answers[0]);
                             $scope.userprofile.values.splice(index, 1);
                             $scope.misCualidadesOtroAnswers[1].answers[0] = '';
                             break;
                         case "cualidades3":
-                            var index = $scope.userprofile.habilities.indexOf($scope.misCualidadesOtroAnswers[2].answers[0]);
+                            index = $scope.userprofile.habilities.indexOf($scope.misCualidadesOtroAnswers[2].answers[0]);
                             $scope.userprofile.habilities.splice(index, 1);
                             $scope.misCualidadesOtroAnswers[2].answers[0] = '';
                             break;
                         case "gustos1":
-                            var index = $scope.userprofile.favoriteSports.indexOf($scope.misGustosOtroAnswers[0].answers[0]);
+                            index = $scope.userprofile.favoriteSports.indexOf($scope.misGustosOtroAnswers[0].answers[0]);
                             $scope.userprofile.favoriteSports.splice(index, 1);
                             $scope.misGustosOtroAnswers[0].answers[0] = '';
                             break;
                         case "gustos2":
-                            var index = $scope.userprofile.artisticActivities.indexOf($scope.misGustosOtroAnswers[1].answers[0]);
+                            index = $scope.userprofile.artisticActivities.indexOf($scope.misGustosOtroAnswers[1].answers[0]);
                             $scope.userprofile.artisticActivities.splice(index, 1);
                             $scope.misGustosOtroAnswers[1].answers[0] = '';
                             break;
                         case "gustos3":
-                            var index = $scope.userprofile.hobbies.indexOf($scope.misGustosOtroAnswers[2].answers[0]);
+                            index = $scope.userprofile.hobbies.indexOf($scope.misGustosOtroAnswers[2].answers[0]);
                             $scope.userprofile.hobbies.splice(index, 1);
                             $scope.misGustosOtroAnswers[2].answers[0] = '';
                             break;
@@ -199,15 +200,11 @@ angular
                 $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
-
                 console.log("Activity identifier: " + $scope.activity_identifier);
-
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
-
                 console.log("parentActivity = " + parentActivity);
-                //var activity = parentActivity.activities ? parentActivity.activities[0] : parentActivity; //Select "child" activity
-
                 var childActivity = null;
+
                 if (parentActivity.activities) {
                     childActivity = parentActivity.activities[0];
                 }
@@ -267,11 +264,6 @@ angular
                 }
 
                 if (parentActivity != null || childActivity != null) {
-                    /*
-                     if ($scope.activity_identifier == '1009') {
-                     $scope.AnswersResult.answers = [0, 0, 0, 0, 0];
-                     }
-                     */
 
                     if (childActivity) {//The activity HAS a "child" activity
                         $scope.coursemoduleid = childActivity.coursemoduleid;
@@ -293,7 +285,6 @@ angular
                     console.log("User profile = " + $scope.userprofile);
                     var activityFinished = false;
 
-                    //before: $scope.activity_status = activity.status;
                     console.log("Activity status = " + $scope.activity_status);
 
                     $scope.activity = parentActivity;
@@ -510,7 +501,6 @@ angular
 
                     //    updateUserStars($scope.parentActivity.activity_identifier);
                     //    //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
-                    //}
 
                     if ($scope.childActivity) {
                         $scope.AnswersResult.activityidnumber = $scope.childActivity.coursemoduleid;
@@ -679,96 +669,109 @@ angular
             };
 
 
-
             function updateProfile() {
 
-                if ($scope.misCualidadesOtroAnswers[0].answers[0] != '') {
-                    $scope.userprofile.talents.push($scope.misCualidadesOtroAnswers[0].answers[0]);
+                //if ($scope.activity_identifier == "1005" || $scope.activity_identifier == "1006") {
+
+                    //if (var !== undefined && var != "" ) {  }
+
+                    if ($scope.misCualidadesOtroAnswers[0].answers[0] != '') {
+                        $scope.userprofile.talents.push($scope.misCualidadesOtroAnswers[0].answers[0]);
+                    }
+
+                    if ($scope.misCualidadesOtroAnswers[1].answers[0] != '') {
+                        $scope.userprofile.values.push($scope.misCualidadesOtroAnswers[1].answers[0]);
+                    }
+
+                    if ($scope.misCualidadesOtroAnswers[2].answers[0] != '') {
+                        $scope.userprofile.habilities.push($scope.misCualidadesOtroAnswers[2].answers[0]);
+                    }
+
+                    if ($scope.misGustosOtroAnswers[0].answers[0] != '') {
+                        $scope.userprofile.favoriteSports.push($scope.misGustosOtroAnswers[0].answers[0]);
+                    }
+                    if ($scope.misGustosOtroAnswers[1].answers[0] != '') {
+                        $scope.userprofile.artisticActivities.push($scope.misGustosOtroAnswers[1].answers[0]);
+                    }
+                    if ($scope.misGustosOtroAnswers[2].answers[0] != '') {
+                        $scope.userprofile.hobbies.push($scope.misGustosOtroAnswers[2].answers[0]);
+                    }
+
+                    $scope.userId = moodleFactory.Services.GetCacheObject("userId");
+                    moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
+
+                        function (responseData) {
+                            console.log('Update profile successful...');
+                            console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
+
+                            //Update Activity Log Service
+                            if ($scope.activity_status == 0) {
+                                $scope.activity_status = 1;
+                                console.log("Update Activity Log : " + $scope.activity_identifier);
+                                updateUserStars($scope.parentActivity.activity_identifier);
+                                //updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);
+                            }
+
+                            $location.path(destinationPath);
+                        },
+                        function (responseData) {
+                            console.log('Update profile fail...');
+                        });
+
+                /*
+                } else {
+                    console.log("No user Profile Data; destinationPath = " + destinationPath);
+                    console.log(JSON.stringify($scope.userprofile));
+                    //Update Activity Log Service
+                    if ($scope.activity_status == 0) {//Update stars only for non-finished activities
+                        $scope.activity_status = 1;
+                        updateUserStars($scope.parentActivity.activity_identifier);
+                        //updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);  para 2016 unicamente
+                    }
+
+                    $location.path(destinationPath);
                 }
-
-                if ($scope.misCualidadesOtroAnswers[1].answers[0] != '') {
-                    $scope.userprofile.values.push($scope.misCualidadesOtroAnswers[1].answers[0]);
-                }
-
-                if ($scope.misCualidadesOtroAnswers[2].answers[0] != '') {
-                    $scope.userprofile.habilities.push($scope.misCualidadesOtroAnswers[2].answers[0]);
-                }
-
-                if ($scope.misGustosOtroAnswers[0].answers[0] != '') {
-                    $scope.userprofile.favoriteSports.push($scope.misGustosOtroAnswers[0].answers[0]);
-                }
-                if ($scope.misGustosOtroAnswers[1].answers[0] != '') {
-                    $scope.userprofile.artisticActivities.push($scope.misGustosOtroAnswers[1].answers[0]);
-                }
-                if ($scope.misGustosOtroAnswers[2].answers[0] != '') {
-                    $scope.userprofile.hobbies.push($scope.misGustosOtroAnswers[2].answers[0]);
-                }
-
-                $scope.userId = moodleFactory.Services.GetCacheObject("userId");
-
-                moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
-
-                    function (responseData) {
-                        console.log('Update profile successful...');
-                        console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
-                        //$scope.$parent.loading = false;
-                        //emit('HidePreloader');
-                        //$scope.spinnerVar = false;
-
-                        //Update Activity Log Service
-                        if ($scope.activity_status == 0) {
-                            $scope.activity_status = 1;
-                            console.log("Update Activity Log : " + $scope.activity_identifier);
-
-                            updateUserStars($scope.parentActivity.activity_identifier);
-                            //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
-                        }
-
-                        $location.path(destinationPath);
-                    },
-                    function (responseData) {
-                        console.log('Update profile fail...');
-                        //$scope.spinnerVar = false;
-                    });
+                */
             }
+
 
             $scope.toggleSelection = function toggleSelection(stringValue, isChecked, questionArray) {
                 var index = -1;
                 if (isChecked) {
                     switch (questionArray) {
                         case "talents":
-                            var index = $scope.userprofile.talents.indexOf(stringValue);
-                            if (index == -1){
+                            index = $scope.userprofile.talents.indexOf(stringValue);
+                            if (index == -1) {
                                 $scope.userprofile.talents.push(stringValue);
-                            }                            
+                            }
                             break;
                         case "values":
-                            var index = $scope.userprofile.values.indexOf(stringValue);
+                            index = $scope.userprofile.values.indexOf(stringValue);
                             if (index == -1) {
                                 $scope.userprofile.values.push(stringValue);
                             }
                             break;
                         case "habilities":
-                            var index = $scope.userprofile.habilities.indexOf(stringValue);
-                            if (index == -1){
+                            index = $scope.userprofile.habilities.indexOf(stringValue);
+                            if (index == -1) {
                                 $scope.userprofile.habilities.push(stringValue);
                             }
                             break;
                         case "favoriteSports":
-                            var index = $scope.userprofile.favoriteSports.indexOf(stringValue);
-                            if (index == -1){
+                            index = $scope.userprofile.favoriteSports.indexOf(stringValue);
+                            if (index == -1) {
                                 $scope.userprofile.favoriteSports.push(stringValue);
                             }
                             break;
                         case "artisticActivities":
-                            var index = $scope.userprofile.artisticActivities.indexOf(stringValue);
-                            if (index == -1){
+                            index = $scope.userprofile.artisticActivities.indexOf(stringValue);
+                            if (index == -1) {
                                 $scope.userprofile.artisticActivities.push(stringValue);
                             }
                             break;
                         case "hobbies":
-                            var index = $scope.userprofile.hobbies.indexOf(stringValue);
-                            if (index == -1){
+                            index = $scope.userprofile.hobbies.indexOf(stringValue);
+                            if (index == -1) {
                                 $scope.userprofile.hobbies.push(stringValue);
                             }
                             break;
@@ -779,27 +782,27 @@ angular
                 else {
                     switch (questionArray) {
                         case "talents":
-                            var index = $scope.userprofile.talents.indexOf(stringValue);
+                            index = $scope.userprofile.talents.indexOf(stringValue);
                             $scope.userprofile.talents.splice(index, 1);
                             break;
                         case "values":
-                            var index = $scope.userprofile.values.indexOf(stringValue);
+                            index = $scope.userprofile.values.indexOf(stringValue);
                             $scope.userprofile.values.splice(index, 1);
                             break;
                         case "habilities":
-                            var index = $scope.userprofile.habilities.indexOf(stringValue);
+                            index = $scope.userprofile.habilities.indexOf(stringValue);
                             $scope.userprofile.habilities.splice(index, 1);
                             break;
                         case "favoriteSports":
-                            var index = $scope.userprofile.favoriteSports.indexOf(stringValue);
+                            index = $scope.userprofile.favoriteSports.indexOf(stringValue);
                             $scope.userprofile.favoriteSports.splice(index, 1);
                             break;
                         case "artisticActivities":
-                            var index = $scope.userprofile.artisticActivities.indexOf(stringValue);
+                            index = $scope.userprofile.artisticActivities.indexOf(stringValue);
                             $scope.userprofile.artisticActivities.splice(index, 1);
                             break;
                         case "hobbies":
-                            var index = $scope.userprofile.hobbies.indexOf(stringValue);
+                            index = $scope.userprofile.hobbies.indexOf(stringValue);
                             $scope.userprofile.hobbies.splice(index, 1);
                             break;
                         default:
@@ -973,7 +976,7 @@ angular
 
                     //...and lastly, for the input value...
                     if ($scope.misCualidadesAnswers[a][11] == true) {
-                        //Get rid from carriage return                        
+                        //Get rid from carriage return
 
                         if ($scope.misCualidadesOtroAnswers[a].answers[0] != '') {
                             $scope.misCualidadesOtroAnswers[a].answers[0] = $scope.misCualidadesOtroAnswers[a].answers[0].replace(/\r?\n|\r/g, " ").trim();
@@ -1064,7 +1067,7 @@ angular
                     $scope.showWarning = false;
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
-                }  else {
+                } else {
                     $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
                     $scope.showWarning = true;
                     showWarningAndGoToTop();
@@ -1145,7 +1148,7 @@ angular
                                         else {
                                             $scope.exploracionFinalresult[index].showTrueAnswer = false;
                                             $scope.exploracionFinalresult[index].showFalseAnswer = true;
-                                            
+
                                         }
                                         break;
                                     }
@@ -1153,7 +1156,7 @@ angular
                             }
                             else if (index == 3 || index == 4) {
                                 if (answerIndex == $scope.exploracionFinal[index]) {
-                                    if (Math.floor(questionAnswer.fraction) == 1) {                                        
+                                    if (Math.floor(questionAnswer.fraction) == 1) {
                                         if (answerIndex == 0) {
                                             $scope.exploracionFinalresult[index].showFirstAnswer = true;
                                             $scope.exploracionFinalresult[index].showSecondAnswer = false;
@@ -1467,8 +1470,6 @@ angular
             //*********************************** VALIDATION OF USER ANSWERS FOR STAGE 3 **********************************
 
             $scope.validateExploracionInicialStage3 = function () {
-
-                var cont = $scope.exploracionInicialStage3.length;  //It should be equal to 4: Four questions.
                 var quizIsValid = true;
                 var userInput;
 
@@ -1701,7 +1702,7 @@ angular
 
             //********************************** DATA-BINDING FOR QUIZZES - STAGE 1 *****************************************
 
-            function updateSelectedAnswers(questionIndex, question) {//For "Exploración Inicial" only                
+            function updateSelectedAnswers(questionIndex, question) {//For "Exploración Inicial" only
                 var userAnswers = '';
                 switch (questionIndex) {
                     case 0:
@@ -2380,6 +2381,7 @@ angular
 
 
         }
+
     ])
     .
     controller('OpeningStageController', function ($scope, $modalInstance) {
