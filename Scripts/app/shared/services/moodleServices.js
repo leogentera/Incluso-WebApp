@@ -72,6 +72,19 @@
             _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), token, successCallback, errorCallback, forceRefresh);
         };
 
+        var _getAsyncHallOfFame = function (courseId,city,token,successCallback,errorCallback,forceRefresh){
+            var url = 'leaderboard/{0}?type=1'.format(courseId);
+            if(city != "Ver Todo")
+                url = url + "&city=" + city;
+            //else url = url + "&city=";
+            _getAsyncData("halloffame", API_RESOURCE.format(url), token, successCallback, errorCallback,forceRefresh);
+            //var url = 'comment/{0}?first={1}&since={2}&to={3}&count={4}'.format(activityId,first,since,to,count);
+        }
+
+        var _getAsyncCatalog = function (catalogname,token,successCallback,errorCallback,forceRefresh) {
+            _getAsyncData(catalogname,API_RESOURCE.format('catalog?catalogname='+catalogname),token,successCallback,errorCallback,forceRefresh);
+        }
+
         var _putAsyncQuiz = function (activityId, data, successCallback, errorCallback, forceRefresh) {
             _putAsyncData("activity/" + activityId, data, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };
@@ -150,7 +163,7 @@
             }
         };
 
-        var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {            
+        var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
@@ -801,6 +814,8 @@
             PostAsyncForumPost: _postAsyncForumPost,
             PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
             GetAsyncLeaderboard: _getAsyncLeaderboard,
+            GetAsyncHallOfFame: _getAsyncHallOfFame,
+            GetAsyncCatalog: _getAsyncCatalog,
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat,
             PutStars: _assignStars,

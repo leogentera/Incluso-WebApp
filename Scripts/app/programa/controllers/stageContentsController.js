@@ -17,7 +17,7 @@ angular
             var pagename;
             var currentChallenge;
             var stage;
-            var userCurrentStage;
+            var userCurrentStage;            
             switch (moduleid) {
 
                 case "1101":
@@ -121,9 +121,17 @@ angular
                 for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                     var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].activity_identifier));
                     if (activityCache) {
-                        $scope.fuenteDeEnergia.activities[i] = activityCache;
+                        $scope.fuenteDeEnergia.activities[i] = activityCache;                        
+                        //moodleFactory.Services.GetCommentByActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, 1, 0, 0, 100, userToken, function(data){
+                        //      
+                        //      $scope.fuenteDeEnergia.activities[i].activityContent.comments = data.comments;
+                        //      $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = 3;
+                        //                                
+                        //}, function(){
+                        //    console.log("error on getting activity comments");
+                        //});
                     }
-                    else {                       
+                    else {
                             activitiesData += "activity["+i+"]="+$scope.fuenteDeEnergia.activities[i].coursemoduleid+"&";                            
                             //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);                        
                     }
@@ -150,17 +158,17 @@ angular
 
                         myActivity.activityContent = data[i];
                         
-                        moodleFactory.Services.GetCommentByActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,1,0,0,3, $scope.token, function(data){                                                            
-                              if (data.comments && data.comments.length > 0) {
-                                    myActivity.activityContent.comments = data.comments;
-                              }else{
-                                    myActivity.activityContent.comments = [];
-                              }                                                                                         
-                        }, function(){
-                              console.log("error getting comments in content controller");
-                        });                                            
-
-                         setResources(myActivity);
+                        
+                        //var userToken = $scope.token;                                                                  
+                        //moodleFactory.Services.GetCommentByActivity(myActivity.coursemoduleid, 1, 0, 0, 100, userToken, function(data){
+                        //      $scope.fuenteDeEnergia.activities[i].activityContent.comments = data.comments;
+                        //      
+                        //      
+                        //
+                        setResources(myActivity);
+                        //}, function(){
+                        //    console.log("error on getting activity comments");
+                        //});
                         
                         $scope.$emit('HidePreloader'); //hide preloader
                     }
@@ -196,12 +204,15 @@ angular
                         }
                     }
                 }
+                myActivity.activityContent.commentsQty = 3;
             }
 
             /*function getActivityInfoCallback() {
              $scope.activities.push(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + 80)));
 
              }*/
+                        
+            
             function checkProgress() {
                 for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                     if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status) {
@@ -350,19 +361,47 @@ angular
             $scope.commentSubActivity = function(contentId){
                   for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                                          
-                              var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                          
-                              var currentUserId = currentUser.userId;
-                                                                        
-                              var data = {
-                                    coursemoduleid: activityId,
-                                    userid: 631,
-                                    dateissued: (new Date() / 1000 | 0),
-                                    comment: "Mensaje de prueba"
+                            var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                          
+                            var currentUserId = currentUser.userId;
+                            var newComment = $scope.fuenteDeEnergia.activities[i].activityContent.newComment;
+                            
+                            $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false; 
+                            var data = {
+                                coursemoduleid: activityId,
+                                userid: 631,
+                                dateissued: (new Date() / 1000 | 0),
+                                comment: newComment
                               };
-                                                                  
-                              moodleFactory.Services.PostCommentActivity(activityId, data, function(){
-                                    }, function(){                              
-                                          });
+
+                            var newCommentObject = {
+                                user_comment: newComment,
+                                dateissued: (new Date()/1000|0),
+                                alias: currentUser.alias
+                            };
+                            
+                            $scope.fuenteDeEnergia.activities[i].activityContent.comments.push(newCommentObject);
+                            
+                            $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
+                            $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty++; 
+                            moodleFactory.Services.PostCommentActivity(activityId, data, function(){                                   
+                                }, function(){                              
+                            });
+                        }
+                  }
+            }
+            
+            $scope.showCommentBox = function(contentId){
+                for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                        if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                            
+                            $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = true;                            
+                        }
+                  }
+            }
+            
+            $scope.showMoreComments = function(contentId){
+                for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                        if ($scope.fuenteDeEnergia.activities[i].groupid == contentId){
+                            $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = $scope.fuenteDeEnergia.activities[i].activityContent.comments.length;
                         }
                   }
             }
