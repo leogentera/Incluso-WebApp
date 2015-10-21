@@ -897,24 +897,25 @@ var getForumsExtraPointsCounter = function(){
     return forumExtraPointsCounter;
 };
 
-function updateUserStars(activityIdentifier, extraPoints) {
+function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     console.log(profile);
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
     extraPoints ? '' : extraPoints = 0;
+    quizPoints ? '' : quizPoints = 0;
 
     var stars = 0;
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
         stars = extraPoints;
     } else {
-        if (activityIdentifier == "2016") {
-            profile.stars = Number(profile.stars) + Number(activity.activities[0].points) + Number(extraPoints);
+        if (quizPoints > 0) {
+            profile.stars = Number(profile.stars) + Number(quizPoints);
         }
         else {
-            profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+            profile.stars = Number(profile.stars) + Number(activity.points);
             stars = activity.points;
         }
     }
@@ -924,7 +925,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
 
     var data = {
         userId: profile.id,
-        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : stars,
+        stars: quizPoints > 0 ? Number(quizPoints) + Number(extraPoints) : stars,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()

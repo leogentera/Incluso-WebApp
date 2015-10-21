@@ -616,7 +616,11 @@ angular
                     if ($scope.activity_status == 0) {
                         $scope.activity_status = 1;
 
-                        updateUserStars($scope.parentActivity.activity_identifier);
+                        if ($scope.childActivity) {console.log($scope.activityPoints);
+                            updateUserStars($scope.parentActivity.activity_identifier, null, $scope.activityPoints);
+                        } else {
+                            updateUserStars($scope.parentActivity.activity_identifier);
+                        }
                     }
 
                     if ($scope.childActivity) {
@@ -821,22 +825,35 @@ angular
                     console.log("hobbies: " + $scope.userprofile.hobbies);
                 }
 
-                $scope.userId = moodleFactory.Services.GetCacheObject("userId");
+                if ($scope.activity_identifier == "1005" || $scope.activity_identifier == "1006") {
+                    $scope.userId = moodleFactory.Services.GetCacheObject("userId");
 
-                moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
+                    moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
-                    function (responseData) {
-                        console.log('Update profile successful...');
-                        $scope.numOfMultichoiceQuestions = 0;
-                        $scope.numOfOthers = 0;
+                        function (responseData) {
+                            console.log('Update profile successful...');
+                            $scope.numOfMultichoiceQuestions = 0;
+                            $scope.numOfOthers = 0;
 
-                        console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
-                        $location.path(destinationPath);
-                    },
-                    function (responseData) {
-                        console.log('Update profile fail...');
-                        //$scope.spinnerVar = false;
-                    });
+                            console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
+                            $location.path(destinationPath);
+                        },
+                        function (responseData) {
+                            console.log('Update profile fail...');
+                            //$scope.spinnerVar = false;
+                        }
+                    );
+
+                } else {
+                    console.log('This activity has no profile...');
+                    $scope.numOfMultichoiceQuestions = 0;
+                    $scope.numOfOthers = 0;
+
+                    console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
+                    $location.path(destinationPath);
+                }
+
+
             }
 
             /*
@@ -1219,11 +1236,6 @@ angular
             };
 
             $scope.cancel = function () {
-                if ($scope.childActivity) {
-                    //localStorage.removeItem("otherAnswQuiz/" + $scope.childActivity.coursemoduleid);
-                } else {
-                    //localStorage.removeItem("otherAnswQuiz/" + $scope.parentActivity.coursemoduleid);
-                }
 
                 $scope.numOfMultichoiceQuestions = 0;
                 $scope.numOfOthers = 0;
