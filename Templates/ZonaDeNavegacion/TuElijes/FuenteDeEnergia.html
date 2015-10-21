@@ -7,7 +7,7 @@
             <div class="title-section">
               <div class="txt-renglon centered txt-bigger"></div> 
               <div class="subtitle" ng-bind="contentResources.title"></div>
-              <span ng-bind-html="contentResources.instructions"></span> 
+              <span ng-bind-html="contentResources.instructions"></span>    
             </div>
           </section>
 
@@ -125,7 +125,28 @@
 
                     </div>
                   </div>
-                  <div class="interact">
+                  <div>
+                    <div ng-repeat="repeatComment in activity.activityContent.comments | limitTo: activity.activityContent.commentsQty">                      
+                      <div class="coment block">
+                        <!--<img ng-click="navigateTo('Profile/' + comment.id)" ng-if="comment.picture_comment_author" ng-src="{{comment.picture_comment_author + '?token=' + userToken}}" alt="author" /> 
+                        <img ng-click="navigateTo('Profile/' + comment.id)" ng-if="!comment.picture_comment_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />-->
+                        <div>
+                          <a class="user-alias" ng-click="navigateTo('Profile/' + comment.id)">{{repeatComment.alias}}</a>
+                          <span>comentó:</span>
+                          <div>{{repeatComment.user_comment}}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="coment block" ng-hide="(activity.activityContent.comments.length < 3 || activity.activityContent.comments.length == activity.activityContent.commentsQty)" >
+                      <div class="vermas" ng-click="showMoreComments(activity.groupid)">
+                        <span class="icomoon icon-show-more"></span>
+                        Mostrar más comentarios...
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div></div>
+                  <div class="interact">                    
                     <div class="col-xs-6 like"  ng-click="likeSubActivity(activity.groupid)">
                       <span class="icomoon icon-like"></span>
                       <span ng-hide="activity.activityContent.liked">Me gusta</span>
@@ -133,14 +154,22 @@
                     </div>
                     <div class="col-xs-6 comment">
                       <span class="icomoon icon-comment"></span>
-                      <span>Comentar</span>
+                      <span ng-click="showCommentBox(activity.groupid)">Comentar</span>
                     </div>
                   </div>
                 </div>
+                <section class="modales" ng-show="activity.activityContent.showCommentBox">                  
+                  <div id="openModal1" class="modalDialog" >
+                    <div>
+                        <span class="close"></span>
+                        <div class="add" ><span class="icomoon icon-edit"></span><textarea ng-model="activity.activityContent.newComment" placeholder="Agregar texto..."  ></textarea></div>      
+                        <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="commentSubActivity(activity.groupid)" >Compartir</a>
+                    </div>
+                  </div>                                                              
+               </section>
               </div>
             </div>
           </section>
-
           <section>
             <a class="btn btn-primary btn-lg btn-cnt" ng-click="back()" ng-bind="contentResources.title_back_button"></a>
             <div class="txt-renglon centered txt-bigger"></div> 
