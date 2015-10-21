@@ -297,8 +297,7 @@ angular
                         if ($scope.pathImagenFicha != "" && parentStatus) {
                             //var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                             moodleFactory.Services.GetAsyncForumDiscussions(85, function(data, key) {
-                                var discussion = (data.discussions[1] ? data.discussions[1] : "");
-                                $scope.forumId = data.forumid;
+                                var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
 
                                 encodeImageUri($scope.pathImagenFicha, function (b64) {
                                     var requestData = {

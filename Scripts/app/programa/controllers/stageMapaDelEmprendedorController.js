@@ -295,7 +295,7 @@ angular
                     if (activitiesPosted == subactivitiesCompleted.length) {                   
                         if ($scope.pathImagenFicha != "" && canPost) {
                             moodleFactory.Services.GetAsyncForumDiscussions(91, function(data, key) {
-                                var discussion = (data.discussions[1] ? data.discussions[1] : "");
+                                var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
 
                                 encodeImageUri($scope.pathImagenFicha, function (b64) {
                                     var requestData = {
