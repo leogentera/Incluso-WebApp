@@ -671,9 +671,7 @@ angular
 
             function updateProfile() {
 
-                //if ($scope.activity_identifier == "1005" || $scope.activity_identifier == "1006") {
-
-                    //if (var !== undefined && var != "" ) {  }
+                if ($scope.activity_identifier == "1005" || $scope.activity_identifier == "1006") {
 
                     if ($scope.misCualidadesOtroAnswers[0].answers[0] != '') {
                         $scope.userprofile.talents.push($scope.misCualidadesOtroAnswers[0].answers[0]);
@@ -721,7 +719,7 @@ angular
                             console.log('Update profile fail...');
                         });
 
-                /*
+
                 } else {
                     console.log("No user Profile Data; destinationPath = " + destinationPath);
                     console.log(JSON.stringify($scope.userprofile));
@@ -734,7 +732,7 @@ angular
 
                     $location.path(destinationPath);
                 }
-                */
+                
             }
 
 
