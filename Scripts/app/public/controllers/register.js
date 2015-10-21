@@ -111,27 +111,17 @@ angular
                         _setToken(data.token);
                         _setId(data.id);
 
-                        $scope.$emit('HidePreloader'); //hide preloader
-                        console.log('Preparing preloader');
-                        $timeout(
-                            function() {
-                            $scope.$emit('ShowPreloader'); //Show preloader
-                            console.log('Preloader working...');
-                            }, 500);
-
                         console.log('preparing for syncAll');
 
-                        //succesful credentials
-                        _syncAll(function() {
-                            $timeout(
-                                function() {
-                                    //console.log('redirecting..');
-                                    //$location.path('/ProgramaDashboard');
-                                    $location.path('/Tutorial');
-                                    //HCG 01//sep/2015 hidepreloader added
-                                    $scope.$emit('HidePreloader');
-                                },1000);
-                        });
+                        moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
+                            
+                            $scope.$emit('HidePreloader');
+                            $location.path('/Tutorial');
+                            }, function() {
+                            
+                            $scope.$emit('HidePreloader');
+                            $location.path('/Tutorial');
+                            }, true);
 
                     }).error(function(data, status, headers, config) {
                         var errorMessage = window.atob(data.messageerror);
