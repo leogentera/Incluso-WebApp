@@ -690,9 +690,11 @@ angular
                     if ($scope.misGustosOtroAnswers[0].answers[0] != '') {
                         $scope.userprofile.favoriteSports.push($scope.misGustosOtroAnswers[0].answers[0]);
                     }
+
                     if ($scope.misGustosOtroAnswers[1].answers[0] != '') {
                         $scope.userprofile.artisticActivities.push($scope.misGustosOtroAnswers[1].answers[0]);
                     }
+
                     if ($scope.misGustosOtroAnswers[2].answers[0] != '') {
                         $scope.userprofile.hobbies.push($scope.misGustosOtroAnswers[2].answers[0]);
                     }
@@ -702,16 +704,17 @@ angular
 
                         function (responseData) {
                             console.log('Update profile successful...');
-                            console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
+                            console.log('This activity has ' + $scope.activityPoints);
 
                             //Update Activity Log Service
                             if ($scope.activity_status == 0) {
                                 $scope.activity_status = 1;
                                 console.log("Update Activity Log : " + $scope.activity_identifier);
                                 updateUserStars($scope.parentActivity.activity_identifier);
-                                //updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);
+                                //updateUserStars($scope.parentActivity.activity_identifier, null, $scope.activityPoints);
                             }
 
+                            console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
                             $location.path(destinationPath);
                         },
                         function (responseData) {
@@ -2382,17 +2385,14 @@ angular
 
         }
 
-    ])
-    .
-    controller('OpeningStageController', function ($scope, $modalInstance) {
+    ]).controller('OpeningStageController', function ($scope, $modalInstance) {
 
         $scope.cancel = function () {
             $scope.$emit('ShowPreloader');
             $modalInstance.dismiss('cancel');
         };
 
-    })
-    .controller('videoCollapsiblePanelController', function ($scope) {
+    }).controller('videoCollapsiblePanelController', function ($scope) {
         $scope.isCollapsed = false;
     });
 

@@ -1,6 +1,6 @@
 //global variables
 
-var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";          // Nora
+var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
 //var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}"; //Other
 
@@ -922,9 +922,8 @@ var getForumsExtraPointsCounter = function(){
     return forumExtraPointsCounter;
 };
 
-function updateUserStars(activityIdentifier, extraPoints) {
+function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
-    console.log(profile);
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
@@ -936,10 +935,10 @@ function updateUserStars(activityIdentifier, extraPoints) {
         stars = extraPoints;
     } else {
         if (activityIdentifier == "2016") {
-            profile.stars = Number(profile.stars) + Number(activity.activities[0].points) + Number(extraPoints);
+            profile.stars = Number(profile.stars) + Number(activity.activities[0].points);
         }
         else {
-            profile.stars = Number(profile.stars) + Number(activity.points) + Number(extraPoints);
+            profile.stars = Number(profile.stars) + Number(activity.points);
             stars = activity.points;
         }
     }
