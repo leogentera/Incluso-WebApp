@@ -732,7 +732,7 @@ angular
 
                     $location.path(destinationPath);
                 }
-                
+
             }
 
 
