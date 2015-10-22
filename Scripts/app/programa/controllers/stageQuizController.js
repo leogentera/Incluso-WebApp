@@ -210,56 +210,69 @@ angular
                 }
 
                 console.log("Activity = " + parentActivity.toString());
+                $rootScope.message = "";
 
                 //Making up path to redirect user to the proper dashboard
                 switch ($scope.activity_identifier) {
                     case "1001":  //Exploración Inicial - Etapa 1
                         $scope.currentChallenge = 0;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/0";
+                        $rootScope.message = "Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad.";
                         break;
                     case "1005":  //Mis Cualidades - Etapa 1
                         $scope.currentChallenge = 3;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        $rootScope.message = "Conocer qué talentos y habilidades tienes te permitirá aprovecharlas al máximo y hará más sencillo el camino para lograr lo que te propongas. Piensa: ¿Para qué tipo de actividades tienes facilidad?.";
                         break;
                     case "1006":  //Mis Gustos - Etapa 1
                         $scope.currentChallenge = 3;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        $rootScope.message = "Reconocer tus gustos y preferencias te ayudará a definir tus sueños. Responder ¿qué disfrutas hacer? puede llevarte a imaginar qué te gustaría hacer en un futuro.";
                         break;
                     case "1007":  //Sueña - Etapa 1
                         $scope.currentChallenge = 3;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/3";
+                        $rootScope.message = " Realmente ¿conoces cuáles son tus sueños? Visualizarlos te permite trazar la mejor ruta para llegar a ellos y disfrutar lo que haces cada día. Existen diferentes tipos de sueños, cónocelos y dale rumbo a tu vida.";
                         break;
                     case "1009": //Exploración Final - Etapa 1
                         $scope.currentChallenge = 5;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/5";
+                        $rootScope.message = "Explora qué tanto descubriste en la zona de vuelo.";
                         break;
                     case "2001": //Exploración Inicial - Etapa 2
                         $scope.currentChallenge = 0;
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/0";
+                        $rootScope.message = "Explora más sobre ti y sobre lo que te gustaría hacer en el futuro.";
                         break;
                     case "2007": //Tus Ideas - Etapa 2
                         $scope.currentChallenge = 2;
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/2";
+                        $rootScope.message = "Identifica tus límites y cambia el chip de tus ideas.";
                         break;
                     case "2016": //Mi Futuro 1, 3 y 5 - Etapa 2
                         $scope.currentChallenge = 4;
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/4";
+                        $rootScope.message = "Recurre a tu imaginación y visualiza en donde te gustaría estar en los siguientes años.";
                         break;
                     case "2023": //Exploración Final - Etapa 2
                         $scope.currentChallenge = 6;
                         destinationPath = "/ZonaDeNavegacion/Dashboard/2/6";
+                        $rootScope.message = "Explora qué tanto descubriste en la zona de navegación.";
                         break;
                     case "3101": //Exploración Inicial - Etapa 3
                         $scope.currentChallenge = 0;
                         destinationPath = "/ZonaDeAterrizaje/Dashboard/3/0";
+                        $rootScope.message = "Explora más de ti y de tu visión emprendedora.";
                         break;
                     case "3601": //Exploración Final - Etapa 3
                         $scope.currentChallenge = 5;
                         destinationPath = "/ZonaDeAterrizaje/Dashboard/3/5";
+                        $rootScope.message = "Explora qué tanto descubriste en la zona de aterrizaje.";
                         break;
                     default:
                         $scope.currentChallenge = 0;
                         destinationPath = "/ZonaDeVuelo/Dashboard/1/0";
+                        $rootScope.message = "";
                         break;
                 }
 
@@ -493,12 +506,6 @@ angular
                     }
 
                     $scope.isDisabled = true;
-
-                    ////Update Activity Log Service
-                    //if ($scope.activity_status == 0) {
-                    //    $scope.activity_status = 1;
-                    //    console.log("Update Activity Log : " + $scope.activity_identifier);
-
                     //    updateUserStars($scope.parentActivity.activity_identifier);
                     //    //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
 
