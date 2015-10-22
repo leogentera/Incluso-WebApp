@@ -13,7 +13,6 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             
-            $scope.$emit('ShowPreloader');
             _timeout = $timeout;
             _httpFactory = $http;
             $scope.scrollToTop();
@@ -72,7 +71,7 @@ angular
 
                 //autologin
                 if (currentUser && currentUser.token && currentUser.token != "") {
-                    
+                    $timeout(function(){ $scope.$emit('ShowPreloader'); }, 1500);
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
                             $scope.$emit('HidePreloader');
                             $location.path('/ProgramaDashboard');    
@@ -80,12 +79,10 @@ angular
                             $scope.$emit('HidePreloader');
                             $location.path('/ProgramaDashboard');
                         }, true);
+                }else {
+                    $scope.$emit('HidePreloader');
+                    console.log('preloader hidden');
                 }
-
-                //$scope.preloader.loading = false;  //- test
-                $scope.$emit('HidePreloader');
-                console.log('preloader hidden');
-
             }
 
             $scope.login = function (username, password) {  
