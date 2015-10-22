@@ -1,21 +1,95 @@
 <div class="modal-open">
-   <div class="pages">     
+   <div class="pages chat-support-modal">     
       <div class="page" ng-class="currentPage== 1 ? 'active' : '' ">
         <div class="user-help-modal chat">
           <div class="modal-robot robot-sm user-help">
             <img src="assets/images/img-robot-sm.svg">
             <div class="modal-body">
                 <h3 class="subtitle text-center">Cabina de Soporte</h3>
-                <p class="txt-renglon centered">
-                  Has iniciado esta actividad. En breve recibirás instrucciones de la torre de control.
-                </p>
-                <div class="txt-renglon">
-                  <button type="button" ng-click="goChat()" class="btn btn-primary btn-lg btn-cnt">Ir al chat</button>    
+                <div class="chat-help-modal">
+                    <div>
+                        <p class="txt-renglon centered">
+                        Bienvenido a Cabina de Soporte, el lugar para hacer contacto con la Tierra.
+                        </p>
+                    </div>
+                    <div>
+                        <p class="txt-renglon centered">
+                        Para terminar la actividad debes realizar al menos dos publicaciones al Coach y recibir dos respuestas de él. Toma en cuenta que la respuesta de los mensajes no es instantánea por lo que te pedimos estar atento.
+                        </p>
+                        <div class="txt-renglon">
+                          <button type="button" ng-click="goChat()" class="btn btn-primary btn-lg btn-cnt">Continuar</button>    
+                        </div>
+                    </div> 
                 </div>
-
             </div>
           </div>
+            <section id="controls" class="controls">
+                <div class="paginate">
+                    <a href="#" id="prev">
+                        <span class="icomoon icon-arrow-bold-left txt-bigger pull-left"></span>
+                    </a>
+                    <a href="#" id="next">
+                        <span class="icomoon icon-arrow-bold-right txt-bigger pull-right"></span>
+                    </a>
+
+                    <div class="centered">
+                        <span id="index" class="txt-bigger">1/</span><span class="white txt-bigger">2</span>
+                    </div>
+                </div>
+            </section>
         </div>
+        <script>
+            $("document").ready(function(){
+                galleryFunctions = {
+                    "init": function (gallery) {
+                        gallery.owlCarousel({
+                            navigation: false,
+                            pagination: false,
+                            paginationSpeed: 1000,
+                            goToFirstSpeed: 2000,
+                            singleItem: true,
+                            autoHeight: true,
+                            touchDrag: true,
+                            mouseDrag: false,
+                            transitionStyle: "fade",
+                            afterAction: galleryFunctions.afterAction,
+                            afterInit: galleryFunctions.initCarousel
+                        });
+                        $("#next").click(function (e) {
+                            if (!$(this).hasClass("disable"))
+                                gallery.trigger('owl.next');
+                            e.preventDefault();
+                        });
+                        $("#prev").click(function (e) {
+                            if (!$(this).hasClass("disable"))
+                                gallery.trigger('owl.prev');
+                            e.preventDefault();
+                        });
+                    },
+                    "initCarousel": function () {
+                        $(".total-number").text(this.owl.owlItems.length);
+                    },
+                    "afterAction": function () {
+                        var item = this.owl.currentItem;
+                        var total = this.owl.owlItems.length;
+                            
+                        if (total === 0) {
+                            $("#prev").addClass("disable");
+                            $("#next").addClass("disable"); 
+                        } else if (item === 0) {
+                            $("#prev").addClass("disable");
+                            $("#next").removeClass("disable"); 
+                        } else if (item === total - 1) {
+                            $("#prev").removeClass("disable");
+                            $("#next").addClass("disable"); 
+                        }
+
+                        $("#index").text(item + 1 + "/");
+                    }
+                }   
+                galleryFunctions.init($(".chat-help-modal"));   
+            })
+        </script>
       </div>
 
       <!-- activity closing  -->
@@ -52,4 +126,5 @@
             </section>
           </div>
       </div>    
+    </div>
 </div>

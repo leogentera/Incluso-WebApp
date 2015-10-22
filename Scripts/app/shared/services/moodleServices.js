@@ -12,7 +12,7 @@
 
         var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
-            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback);
+            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
         var _getAsyncAvatarInfo = function (userId, successCallback, errorCallback, forceRefresh) {

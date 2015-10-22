@@ -117,9 +117,9 @@ angular
                 $scope.kindOfVideoGamesList = ['Acción', 'Deportes', 'Violencia', 'Aventura', 'Reto', 'Estrategia', 'Educativos', 'Peleas'];
                 $scope.socialNetworksList = ['Twitter','Facebook','YouTube','Instagram','Snapchat','No tengo redes sociales'];
                 $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política','Otro'];
-                $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)','Otro'];                
-                
-                
+                $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)','Otro'];            
+                $scope.phoneTypeList = ['Celular','Casa','Trabajo','No tengo teléfono' ,'Otro'];                    
+
                 $scope.birthdate_Dateformat = moment(formatDate($scope.model.birthday)).format("DD/MM/YYYY"); 
                 getAge();
                 console.log("Age loaded");
@@ -585,7 +585,8 @@ angular
                 if ($scope.model.phones.length > 0) {
                     for (var i = 0; i < $scope.model.phones.length; i++) {
                         if (typeof $scope.model.phones[i] === "undefined" ||
-                            $scope.model.phones[i].length === 0) {
+                            $scope.model.phones[i].length === 0 ||
+                            typeof $scope.model.phones[i].phoneId == "undefined") {
                             $scope.model.phones.splice(i, 1);
                             i = i - 1;
                         }
@@ -889,7 +890,7 @@ angular
                                                                 if ($scope.model.address.num_ext) {
                                                                     if ($scope.model.address.num_int) {
                                                                         if ($scope.model.address.colony) {
-                                                                            if ($scope.model.phones != 0) {
+                                                                            if ($scope.model.phones.length != 0) {
                                                                                 if ($scope.model.socialNetworks.length != 0) {
                                                                                     if ($scope.model.familiaCompartamos.length != 0) {
                                                                                         result = true;
@@ -1013,7 +1014,7 @@ angular
             };
 
             $scope.addPhone = function () {
-                $scope.model.phones.push(new String());
+                $scope.model.phones.push({});
             };
 
             // $scope.deletePhone = function (index) {
@@ -1251,6 +1252,7 @@ angular
 
             $scope.avatar = function () {
                 //the next fields should match the integration document shared with the game app
+                var shield = ( $scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ( $scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield ));
                 var avatarInfoForGameIntegration = {
                     "userid": $scope.model.id,
                     "alias": $scope.model.username,
@@ -1264,7 +1266,7 @@ angular
                     "color_cabello": $scope.avatarInfo[0].color_cabello,
                     "traje_color_principal": $scope.avatarInfo[0].traje_color_principal,
                     "traje_color_secundario": $scope.avatarInfo[0].traje_color_secundario,
-                    "escudo": ""
+                    "escudo": shield
                 };
 
                 try {
@@ -1279,7 +1281,6 @@ angular
 
             function SuccessAvatar(data) {
                 //the next fields should match the database in moodle
-    
                 $scope.avatarInfo = [{
                     "userid": data.userid,
                     "aplicacion": data.actividad,

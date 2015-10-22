@@ -85,7 +85,7 @@ angular
             var waitPreloader = 0;
             var hidePreloader = 0;
             var profile;
-            var activities = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + moduleid));
+
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             $scope.token = currentUser.token;
             $scope.scrollToTop();
@@ -96,23 +96,15 @@ angular
             $scope.like_status = 1;
             var activitymanagers = [];
             var activitiesData = "";
+                    
+            activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
 
-            if (!activities) {
-                console.log("obteniendo datos de servicio");
-                activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
-
-                $scope.fuenteDeEnergia = _.find(activitymanagers, function (a) {
-                    return a.activity_identifier == moduleid
-                });
-                console.log($scope.fuenteDeEnergia);
-                getDataAsync();
-            }
-            else {
-                console.log("datos obtenidos de cache");
-                $scope.fuenteDeEnergia = activities;
-                getDataAsync();
-                $scope.$emit('HidePreloader'); //hide preloader
-            }
+            $scope.fuenteDeEnergia = _.find(activitymanagers, function (a) {
+                return a.activity_identifier == moduleid
+            });
+            console.log($scope.fuenteDeEnergia);
+            getDataAsync();
+            
 
             checkProgress();
 
@@ -313,6 +305,14 @@ angular
                 $timeout(function () {//This is to avoid killing the preloader beforehand
                     var updatedActivityOnUsercourse = updateActivityStatus($scope.fuenteDeEnergia.activity_identifier);  //actualizar arbol
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
+
+                    for (var am = 0; am < activitymanagers.length; am++) {
+                         if (activitymanagers[am].activity_identifier == moduleid) {
+                            activitymanagers[am].status = true;
+                            break;                                                                        
+                         }
+                    }
+                    _setLocalStorageJsonItem("activityManagers", activitymanagers);
                     //trigger activity type 2 is sent when the activity ends.
                     var triggerActivity = 2;
                     var currentUserId = currentUser.userId;

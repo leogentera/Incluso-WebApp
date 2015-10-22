@@ -208,7 +208,7 @@
                                                             </div>
 
                                                             <div class="from-group">
-                                                                <label>Ciudad</label>
+                                                                <label>Estado</label>
                                                                 <p ng-bind="model.address.city"></p>
                                                             </div>
 
@@ -243,8 +243,8 @@
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.phones">
                                                                     <div class="from-group">
-                                                                        <label>Teléfono {{model.phones.indexOf(s) + 1}}</label>
-                                                                        <p ng-bind="s"></p>
+                                                                        <label>Teléfono {{s.phone}}</label>
+                                                                        <p ng-bind="s.phoneId"></p>
                                                                     </div>
                                                                 </li>
                                                             </ul>

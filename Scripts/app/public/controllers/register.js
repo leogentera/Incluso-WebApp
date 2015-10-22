@@ -87,62 +87,36 @@ angular
                 }
             }
 
-            $scope.autologin = function(){
-                console.log('login in');
+            $scope.autologin = function(data) {
 
-                    $http(
-                    {
-                        method: 'POST',
-                        url: API_RESOURCE.format("authentication"), 
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                        data: $.param({username: $scope.registerModel.username, password: $scope.registerModel.password})
-                    }
-                    ).success(function(data, status, headers, config) {
+                //save token for further requests and autologin
+                $scope.currentUserModel = data;
+                $scope.currentUserModel.token = data.token;
+                $scope.currentUserModel.userId = data.id;
 
-                        console.log('successfully logged in');
+                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                _setToken(data.token);
+                _setId(data.id);
 
-                        //save token for further requests and autologin
-                        $scope.currentUserModel = data;
-                        $scope.currentUserModel.token = data.token;
-                        $scope.currentUserModel.userId = data.id;
-
-                        _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-
-                        _setToken(data.token);
-                        _setId(data.id);
-
-                        $scope.$emit('HidePreloader'); //hide preloader
-                        console.log('Preparing preloader');
-                        $timeout(
-                            function() {
-                            $scope.$emit('ShowPreloader'); //Show preloader
-                            console.log('Preloader working...');
-                            }, 500);
-
-                        console.log('preparing for syncAll');
-
-                        //succesful credentials
-                        _syncAll(function() {
-                            $timeout(
-                                function() {
-                                    //console.log('redirecting..');
-                                    //$location.path('/ProgramaDashboard');
-                                    $location.path('/Tutorial');
-                                    //HCG 01//sep/2015 hidepreloader added
-                                    $scope.$emit('HidePreloader');
-                                },1000);
-                        });
-
-                    }).error(function(data, status, headers, config) {
-                        var errorMessage = window.atob(data.messageerror);
-
-                        $scope.registerModel.modelState.errorMessages = [errorMessage];
-                        console.log(status + ": " + errorMessage);
-                        
-                        $scope.$emit('HidePreloader'); //hide preloader
-                        $scope.$emit('scrollTop'); //- scroll
-                    });
-
+                console.log('preparing for syncAll');
+                moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
+                    
+                        try {
+                            $scope.$emit('HidePreloader');
+                            $location.path('/Tutorial');
+                        }catch(e) {
+                            $location.path('/ProgramaDashboard');
+                        }
+                    
+                    }, function() {
+                    
+                        try {
+                            $scope.$emit('HidePreloader');
+                            $location.path('/Tutorial');
+                        } catch(e) {
+                            $location.path('/ProgramaDashboard');
+                        }
+                    }, true);
             }
 
             $scope.login = function() {
@@ -158,18 +132,6 @@ angular
                 var r = time.match(/^\s*([0-9]+)\s*-\s*([0-9]+)\s*-\s*([0-9]+)(.*)$/);
                 return r[2]+"-"+r[3]+"-"+r[1]+r[4];
             }
-
-            //
-            //ng-hide="registerModel.birthday.length != 0"
-            // $scope.showPlaceHolderBirthday = function(){                
-            //     var bd = $("input[name='birthday']").val();
-            //     if(bd){                                                            
-            //         $scope.showPlaceHolder = false;                    
-            //     }else{
-            //         $scope.showPlaceHolder = true;                    
-            //     }
-            //     alert('focus' + $scope.showPlaceHolder);                                                        
-            // };
 
             $scope.datePickerClick = function(){                            
                 cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='birthday']").val()]);                
@@ -201,18 +163,17 @@ angular
                             secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
                             secretquestion: $scope.registerModel.secretQuestion,
                             birthday: dpValue,
-                            gender: $scope.registerModel.gender
+                            gender: $scope.registerModel.gender,
+                            autologin: true
                         })
                     }).success(function(data, status, headers, config) {
 
                         $scope.isRegistered = true;
-                        //initModel();
 
-                        console.log('successfully register');
+                        console.log('successfully register and logged in');
                         $scope.$emit('scrollTop'); //- scroll
                         
-                        $scope.autologin();
-                        
+                        $scope.autologin(data);
 
                     }).error(function(data, status, headers, config) {
                         var errorMessage;
@@ -310,6 +271,26 @@ angular
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'termsAndConditionsModal.html',
+                    controller: 'termsAndConditionsController',
+                    size: size,
+                    windowClass: 'modal-theme-default terms-and-conditions', 
+                    backdrop: 'static'
+                });
+            };
+            $scope.openModalUsername = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'usernameInfoModal.html',
+                    controller: 'termsAndConditionsController',
+                    size: size,
+                    windowClass: 'modal-theme-default terms-and-conditions', 
+                    backdrop: 'static'
+                });
+            };
+            $scope.openModalPassword = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'passwordInfoModal.html',
                     controller: 'termsAndConditionsController',
                     size: size,
                     windowClass: 'modal-theme-default terms-and-conditions', 
