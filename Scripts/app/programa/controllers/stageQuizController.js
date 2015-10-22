@@ -727,102 +727,94 @@ angular
 
             function updateProfile() {
 
-                var i, location;
-                var userTalents = [];
-                var userValues = [];
-                var userHabilities = [];
-                var userFavoriteSports = [];
-                var userArtisticActivities = [];
-                var userHobbies = [];
+                var i;
+                $scope.userprofile.talents = [];
+                $scope.userprofile.values = [];
+                $scope.userprofile.habilities = [];
+                $scope.userprofile.favoriteSports = [];
+                $scope.userprofile.artisticActivities = [];
+                $scope.userprofile.hobbies = [];
 
                 if ($scope.activity_identifier == "1005") {//Mis Cualidades - Etapa 1
                     //Update Talents
                     for (i = 0; i < $scope.answers[0].length - 1; i++) {
                         if ($scope.answers[0][i]) {// The label is checked
-                            userTalents.push(talents[i]);
+                            $scope.userprofile.talents.push(talents[i]);
                         }
                     }
 
                     //Update Values
                     for (i = 0; i < $scope.answers[1].length - 1; i++) {
                         if ($scope.answers[1][i]) {// The label is checked
-                            userValues.push(values[i]);
+                            $scope.userprofile.values.push(values[i]);
                         }
                     }
 
                     //Update Habilities
                     for (i = 0; i < $scope.answers[2].length - 1; i++) {
                         if ($scope.answers[2][i]) {// The label is checked
-                            userHabilities.push(habilities[i]);
+                            $scope.userprofile.habilities.push(habilities[i]);
                         }
                     }
 
                     if ($scope.OtroAnswers[0].answers[0] != '') {
-                        userTalents.push($scope.OtroAnswers[0].answers[0]);
+                        $scope.userprofile.talents.push($scope.OtroAnswers[0].answers[0]);
                     }
 
                     if ($scope.OtroAnswers[1].answers[0] != '') {
-                        userValues.push($scope.OtroAnswers[1].answers[0]);
+                        $scope.userprofile.values.push($scope.OtroAnswers[1].answers[0]);
                     }
 
                     if ($scope.OtroAnswers[2].answers[0] != '') {
-                        userHabilities.push($scope.OtroAnswers[2].answers[0]);
+                        $scope.userprofile.habilities.push($scope.OtroAnswers[2].answers[0]);
                     }
-
-                    $scope.userprofile.talents = userTalents;
-                    $scope.userprofile.values = userValues;
-                    $scope.userprofile.habilities = userHabilities;
                 }
 
                 if ($scope.activity_identifier == "1006") {//Mis Gustos - Etapa 1
                     //Update favoriteSports
                     for (i = 0; i < $scope.answers[0].length - 1; i++) {
                         if ($scope.answers[0][i]) {// The label is checked
-                            userFavoriteSports.push(favoriteSports[i]);
+                            $scope.userprofile.favoriteSports.push(favoriteSports[i]);
                         }
                     }
 
                     //Update artisticActivities
                     for (i = 0; i < $scope.answers[1].length - 1; i++) {
                         if ($scope.answers[1][i]) {// The label is checked
-                            userArtisticActivities.push(artisticActivities[i]);
+                            $scope.userprofile.artisticActivities.push(artisticActivities[i]);
                         }
                     }
 
                     //Update Hobbies
                     for (i = 0; i < $scope.answers[2].length - 1; i++) {
                         if ($scope.answers[2][i]) {// The label is checked
-                            userHobbies.push(hobbies[i]);
+                            $scope.userprofile.hobbies.push(hobbies[i]);
                         }
                     }
 
                     if ($scope.OtroAnswers[0].answers[0] != '') {
-                        userFavoriteSports.push($scope.OtroAnswers[0].answers[0]);
+                        $scope.userprofile.favoriteSports.push($scope.OtroAnswers[0].answers[0]);
                     }
 
                     if ($scope.OtroAnswers[1].answers[0] != '') {
-                        userArtisticActivities.push($scope.OtroAnswers[1].answers[0]);
+                        $scope.userprofile.artisticActivities.push($scope.OtroAnswers[1].answers[0]);
                     }
 
                     if ($scope.OtroAnswers[2].answers[0] != '') {
-                        userHobbies.push($scope.OtroAnswers[2].answers[0]);
+                        $scope.userprofile.hobbies.push($scope.OtroAnswers[2].answers[0]);
                     }
-
-                    $scope.userprofile.favoriteSports = userFavoriteSports;
-                    $scope.userprofile.artisticActivities = userArtisticActivities;
-                    $scope.userprofile.hobbies = userHobbies;
                 }
 
                 if ($scope.activity_identifier == "1005") {
-                    console.log("Talents: " + $scope.userprofile.talents);
-                    console.log("Values: " + $scope.userprofile.values);
-                    console.log("Habilities: " + $scope.userprofile.habilities);
+                    console.log("Talents to Save: " + $scope.userprofile.talents);
+                    console.log("Values to Save: " + $scope.userprofile.values);
+                    console.log("Habilities to Save: " + $scope.userprofile.habilities);
                 }
 
                 if ($scope.activity_identifier == "1006") {
-                    console.log("favoriteSports: " + $scope.userprofile.favoriteSports);
-                    console.log("artisticActivities: " + $scope.userprofile.artisticActivities);
-                    console.log("hobbies: " + $scope.userprofile.hobbies);
+                    console.log("favoriteSports to Save: " + $scope.userprofile.favoriteSports);
+                    console.log("artisticActivities to Save: " + $scope.userprofile.artisticActivities);
+                    console.log("Hobbies to Save: " + $scope.userprofile.hobbies);
                 }
 
                 if ($scope.activity_identifier == "1005" || $scope.activity_identifier == "1006") {
@@ -855,83 +847,6 @@ angular
 
 
             }
-
-            /*
-            $scope.toggleSelection = function toggleSelection(stringValue, isChecked, questionArray) {
-                var index = -1;
-                if (isChecked) {
-                    switch (questionArray) {
-                        case "talents":
-                            index = $scope.userprofile.talents.indexOf(stringValue);
-                            if (index == -1) {
-                                $scope.userprofile.talents.push(stringValue);
-                            }
-                            break;
-                        case "values":
-                            index = $scope.userprofile.values.indexOf(stringValue);
-                            if (index == -1) {
-                                $scope.userprofile.values.push(stringValue);
-                            }
-                            break;
-                        case "habilities":
-                            index = $scope.userprofile.habilities.indexOf(stringValue);
-                            if (index == -1) {
-                                $scope.userprofile.habilities.push(stringValue);
-                            }
-                            break;
-                        case "favoriteSports":
-                            index = $scope.userprofile.favoriteSports.indexOf(stringValue);
-                            if (index == -1) {
-                                $scope.userprofile.favoriteSports.push(stringValue);
-                            }
-                            break;
-                        case "artisticActivities":
-                            index = $scope.userprofile.artisticActivities.indexOf(stringValue);
-                            if (index == -1) {
-                                $scope.userprofile.artisticActivities.push(stringValue);
-                            }
-                            break;
-                        case "hobbies":
-                            index = $scope.userprofile.hobbies.indexOf(stringValue);
-                            if (index == -1) {
-                                $scope.userprofile.hobbies.push(stringValue);
-                            }
-                            break;
-                        default:
-                            console.log('Unknow profile poperty');
-                    }
-                } else {
-                    switch (questionArray) {
-                        case "talents":
-                            index = $scope.userprofile.talents.indexOf(stringValue);
-                            $scope.userprofile.talents.splice(index, 1);
-                            break;
-                        case "values":
-                            index = $scope.userprofile.values.indexOf(stringValue);
-                            $scope.userprofile.values.splice(index, 1);
-                            break;
-                        case "habilities":
-                            index = $scope.userprofile.habilities.indexOf(stringValue);
-                            $scope.userprofile.habilities.splice(index, 1);
-                            break;
-                        case "favoriteSports":
-                            index = $scope.userprofile.favoriteSports.indexOf(stringValue);
-                            $scope.userprofile.favoriteSports.splice(index, 1);
-                            break;
-                        case "artisticActivities":
-                            index = $scope.userprofile.artisticActivities.indexOf(stringValue);
-                            $scope.userprofile.artisticActivities.splice(index, 1);
-                            break;
-                        case "hobbies":
-                            index = $scope.userprofile.hobbies.indexOf(stringValue);
-                            $scope.userprofile.hobbies.splice(index, 1);
-                            break;
-                        default:
-                            console.log('Unknow profile poperty');
-                    }
-                }
-            };
-            */
 
 
             // ##################################### VALIDATING USER ANSWERS ##################################################
