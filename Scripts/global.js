@@ -1,6 +1,6 @@
 //global variables
 
-var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";          // Nora
+var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
 //var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}"; //Other
 
