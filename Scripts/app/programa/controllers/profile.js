@@ -585,8 +585,7 @@ angular
                 if ($scope.model.phones.length > 0) {
                     for (var i = 0; i < $scope.model.phones.length; i++) {
                         if (typeof $scope.model.phones[i] === "undefined" ||
-                            $scope.model.phones[i].length === 0 ||
-                            typeof $scope.model.phones[i].phoneId == "undefined") {
+                            $scope.model.phones[i].length === 0 ) {
                             $scope.model.phones.splice(i, 1);
                             i = i - 1;
                         }
