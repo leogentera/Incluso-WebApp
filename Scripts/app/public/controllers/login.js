@@ -12,20 +12,17 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-
+            
+            $scope.$emit('ShowPreloader');
             _timeout = $timeout;
             _httpFactory = $http;
-            //$scope.PreloaderModalInstance = null;
-            //$scope.scrollToTop();
-            $scope.$emit('scrollTop'); //- scroll
+            $scope.scrollToTop();
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-            // $scope.preloader = angular.element(document.getElementById('spinner')).scope();
-            // $scope.preloader.loading = true;
 
             /* ViewModel */
             $scope.userCredentialsModel = {
@@ -75,7 +72,14 @@ angular
 
                 //autologin
                 if (currentUser && currentUser.token && currentUser.token != "") {
-                    $location.path('/ProgramaDashboard');
+                    
+                    moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
+                            $scope.$emit('HidePreloader');
+                            $location.path('/ProgramaDashboard');    
+                        }, function() {
+                            $scope.$emit('HidePreloader');
+                            $location.path('/ProgramaDashboard');
+                        }, true);
                 }
 
                 //$scope.preloader.loading = false;  //- test
@@ -149,10 +153,6 @@ angular
                 name = name.substring(0, name.length - 1);
                 cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
                 
-            }
-            
-            $scope.scrollToTop = function(){
-                $anchorScroll(0);
             }
 
             function FacebookLoginSuccess(data) {                

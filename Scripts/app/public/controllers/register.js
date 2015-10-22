@@ -115,12 +115,21 @@ angular
 
                         moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
                             
-                            $scope.$emit('HidePreloader');
-                            $location.path('/Tutorial');
+                                try {
+                                    $scope.$emit('HidePreloader');
+                                    $location.path('/Tutorial');
+                                }catch(e) {
+                                    $location.path('/ProgramaDashboard');
+                                }
+                            
                             }, function() {
                             
-                            $scope.$emit('HidePreloader');
-                            $location.path('/Tutorial');
+                                try {
+                                    $scope.$emit('HidePreloader');
+                                    $location.path('/Tutorial');
+                                }catch(e) {
+                                    $location.path('/ProgramaDashboard');
+                                }
                             }, true);
 
                     }).error(function(data, status, headers, config) {
