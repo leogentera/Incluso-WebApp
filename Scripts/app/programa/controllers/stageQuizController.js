@@ -196,16 +196,16 @@ angular
                 $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
-                console.log("Activity identifier: " + $scope.activity_identifier);
+                //console.log("Activity identifier: " + $scope.activity_identifier);
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
-                console.log("parentActivity = " + parentActivity);
+                //console.log("parentActivity = " + parentActivity);
                 var childActivity = null;
 
                 if (parentActivity.activities) {
                     childActivity = parentActivity.activities[0];
                 }
 
-                console.log("Activity = " + parentActivity.toString());
+                //console.log("Activity = " + parentActivity.toString());
                 $rootScope.message = "";
 
                 //Making up path to redirect user to the proper dashboard
@@ -277,21 +277,21 @@ angular
                     if (childActivity) {//The activity HAS a "child" activity
                         $scope.coursemoduleid = childActivity.coursemoduleid;
                         $scope.activityPoints = childActivity.points;
-                        console.log("Child points: " + childActivity.points);
+                        //console.log("Child points: " + childActivity.points);
                         $scope.activityname = childActivity.activityname;
                         $scope.activity_status = childActivity.status;
 
                     } else {//The activity has no "child" activity
                         $scope.coursemoduleid = parentActivity.coursemoduleid;
                         $scope.activityPoints = parentActivity.points;
-                        console.log("Parent points: " + parentActivity.points);
+                        //console.log("Parent points: " + parentActivity.points);
                         $scope.activityname = parentActivity.activityname;
                         $scope.activity_status = parentActivity.status;
                     }
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                    console.log("User profile = " + $scope.userprofile);
+                    //console.log("User profile = " + $scope.userprofile);
                     var activityFinished = false;
 
                     console.log("Activity status = " + $scope.activity_status);
@@ -1286,12 +1286,12 @@ angular
                 var numQuestions = $scope.miFuturo.length;
                 var numOfEntries = [];
                 var i, b;
-                console.log("numQuestions = " + numQuestions);
+                //console.log("numQuestions = " + numQuestions);
                 //Count how many items per question
                 //Remove repeated entries and blanks in each of the two questions
                 for (i = 0; i < numQuestions; i++) {
                     numOfEntries[i] = $scope.miFuturo[i].length;
-                    console.log(numOfEntries[i]);
+                    //console.log(numOfEntries[i]);
                 }
 
                 //Remove repeated entries and blanks in each of the two questions
@@ -1299,7 +1299,7 @@ angular
                     console.log("$scope.miFuturo[" + i + "].length = " + $scope.miFuturo[i].length);
                     for (b = 0; b < $scope.miFuturo[i].length; b++) {
                         var item = $scope.miFuturo[i][b].replace(/\r?\n|\r/g, " ").trim();
-                        console.log("Pregunta= " + i + " Resp= " + b + " item = " + item);
+                        //console.log("Pregunta= " + i + " Resp= " + b + " item = " + item);
                         /*
                          if (item == "") {
                          //$scope.deleteFuturo(b, i);
