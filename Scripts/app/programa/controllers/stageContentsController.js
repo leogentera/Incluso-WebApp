@@ -118,36 +118,19 @@ angular
             };
 
             function getDataAsync() {
-                for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
-                    var activityCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $scope.fuenteDeEnergia.activities[i].activity_identifier));
-                    if (activityCache) {
-                        $scope.fuenteDeEnergia.activities[i] = activityCache;                        
-                        //moodleFactory.Services.GetCommentByActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, 1, 0, 0, 100, userToken, function(data){
-                        //      
-                        //      $scope.fuenteDeEnergia.activities[i].activityContent.comments = data.comments;
-                        //      $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = 3;
-                        //                                
-                        //}, function(){
-                        //    console.log("error on getting activity comments");
-                        //});
-                    }
-                    else {
-                            activitiesData += "activity["+i+"]="+$scope.fuenteDeEnergia.activities[i].coursemoduleid+"&";                            
-                            //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid, getActivityInfoCallback, getActivityErrorCallback);                        
-                    }
-
-                    //moodleFactory.Services.GetAsyncActivity($scope.fuenteDeEnergia.activities[i].coursemoduleid,successfullCallBack, errorCallback);
-                    //(JSON.parse(moodleFactory.Services.GetCacheObject("activity/" + $scope.fuenteDeEnergia.activities[i].coursemoduleid)));
-                }
-                if(activitiesData != ""){
-                    waitPreloader++;
-                    activitiesData = activitiesData.slice(0,-1);
-                    console.log(activitiesData);
-                    moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, getActivityInfoCallback, getActivityErrorCallback);
-                }
-                if (waitPreloader == 0) {
-                    $scope.$emit('HidePreloader');
-                }
+                  for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                  
+                        activitiesData += "activity["+i+"]="+$scope.fuenteDeEnergia.activities[i].coursemoduleid+"&";
+                  }
+                  if(activitiesData != ""){
+                      waitPreloader++;
+                      activitiesData = activitiesData.slice(0,-1);
+                      console.log(activitiesData);
+                      moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, getActivityInfoCallback, getActivityErrorCallback);
+                  }
+                  if (waitPreloader == 0) {
+                      $scope.$emit('HidePreloader');
+                  }
             }
 
             function getActivityInfoCallback(data, key) {                
