@@ -12,8 +12,7 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-            //Turn on Preloader
-            $scope.$emit('ShowPreloader'); //show preloader
+
             _httpFactory = $http;
             _location = $location;
             _timeout = $timeout;
@@ -103,8 +102,6 @@ angular
             var destinationPath = "";
 
             $scope.isDisabled = false;
-            //var moduleid = parseInt($routeParams.moodleid);  //Gets the coursemoduleid from 'activity' object
-
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -116,11 +113,9 @@ angular
                     windowClass: 'user-help-modal opening-stage-modal'
                 }).result.finally(function () {
                         $scope.$emit('ShowPreloader');
-                        $timeout(function () {
-                            $scope.$emit('HidePreloader');
-                        }, 1000);
+                        $timeout(function () { $scope.$emit('HidePreloader'); }, 500);
                     });
-            };
+            };           
 
 
             $scope.addCaptureField = function (value, check) {
@@ -191,9 +186,10 @@ angular
             };
 
             //****************************************  STARTING POINT **************************************************
-
+            
             $scope.openModal();
             getDataAsync();
+            
 
             //***********************************************************************************************************
             function getDataAsync() {
@@ -404,16 +400,14 @@ angular
                 else {
                     console.log("Activity is NOT defined");
                 }
-                //$scope.$emit('HidePreloader');
+                $scope.$emit('HidePreloader');
             }
 
             //This callback is invoked for finished activities only
             function successfullCallBack(activityAnswers) {
-
-                //$scope.$emit('HidePreloader');
-                //console.log("activityAnswers = " + JSON.stringify(activityAnswers));
+                
                 if (activityAnswers != null) {
-                    // $scope.activity = activityAnswers;
+                    
                     for (var index = 0; index < activityAnswers.questions.length; index++) {
 
                         var question = activityAnswers.questions[index];
@@ -490,8 +484,7 @@ angular
 
 
             //******************************************** CODE CALLED WHEN USER FINISHES ACTIVITY ************************
-            $scope.finishActivity = function () {
-                //Activity completed
+            $scope.finishActivity = function () {//Activity completed                
 
                 $scope.$emit("ShowPreloader");
 
@@ -671,7 +664,7 @@ angular
                     }
 
 
-                }, 2000);
+                }, 0);
 
             };
 
@@ -1212,7 +1205,7 @@ angular
                 $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult.length;
             }
 
-            //$scope.$emit('HidePreloader'); //hide preloader
+            
             function partialErrorCallback(partialActivityAnswers) {
 
             }
@@ -1470,7 +1463,7 @@ angular
                 $scope.Score = goodAnswersQty * 100 / $scope.exploracionFinalresult2.length;
             }
 
-            //$scope.$emit('HidePreloader'); //hide preloader
+            
             function partialErrorCallbackStage2(partialActivityAnswers) {
 
             }

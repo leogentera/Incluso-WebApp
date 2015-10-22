@@ -275,7 +275,7 @@ angular
 
                 $timeout(function () {
                     $location.path('/' + stage + '/Dashboard/' + userCurrentStage + '/' + currentChallenge);
-                }, 1000);
+                }, 100);
             };
 
             function getdate() {
@@ -328,7 +328,7 @@ angular
                     moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, successEndFuente, function () {
                         $scope.$emit('HidePreloader');
                     });
-                }, 1000);
+                }, 100);
 
             }
         }]);
