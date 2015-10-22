@@ -7,7 +7,7 @@
             <div class="title-section">
               <div class="txt-renglon centered txt-bigger"></div> 
               <div class="subtitle" ng-bind="contentResources.title"></div>
-              <span ng-bind-html="contentResources.instructions"></span>    
+              <span ng-bind-html="contentResources.instructions"></span>  
             </div>
           </section>
 
@@ -20,7 +20,7 @@
               <option value="resource">Fotografías</option> 
               <option value="video">Videos</option> 
               <option value="page">Textos</option> 
-              <option value="Frases">Frases</option> 
+              <option value="label">Frases</option> 
               <option value="url">Enlaces</option> 
             </select>
             <span class="icomoon icon-arrow"></span>
@@ -63,7 +63,7 @@
                     </div>
                   </div>
                 </div>
-                <div ng-if="activity.activity_type == 'page'">
+                <div ng-if="activity.activity_type == 'label'">
                   <div class="type">
                     <div class="col-xs-1 type-icon">
                       <span class="icomoon icon-text"></span>
@@ -100,9 +100,9 @@
                 <div class="detail">  
                   <div>                    
                     <div class="message">
-                      <span ng-show="activity.status" ng-bind-html="activity.pageContent"></span>
-                      <span ng-bind-html="activity.file.pageContent"></span>
-                      <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'page' && !activity.status">Mostrar texto...</span>      
+                      <span ng-show="activity.status" ng-bind-html="activity.activityContent.labeltext"></span>
+                      <!--<span ng-bind-html="activity.file.pageContent"></span>-->
+                      <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'label' && !activity.status">Mostrar texto...</span>      
 
                       <div ng-if="activity.activity_type == 'resource'" class="image-container">
                         <a href="{{activity.activityContent.content[0].fileurl}}" target="blank"><img ng-click="updateStatus(activity.groupid)" ng-src="{{activity.status && activity.activityContent.content[0].fileurl || 'assets/images/svg/img_placeholder-01.svg'}}" class="image-element'"></a>
@@ -146,19 +146,20 @@
                   </div>
                   
                   <div></div>
-                  <div class="interact">                    
+                  <div class="interact">
                     <div class="col-xs-6 like"  ng-click="likeSubActivity(activity.groupid)">
                       <span class="icomoon icon-like"></span>
                       <span ng-hide="activity.activityContent.liked">Me gusta</span>
                       <span ng-show="activity.activityContent.liked">Ya no me gusta</span>
                     </div>
+                    
                     <div class="col-xs-6 comment">
                       <span class="icomoon icon-comment"></span>
                       <span ng-click="showCommentBox(activity.groupid)">Comentar</span>
                     </div>
                   </div>
                 </div>
-                <section class="modales" ng-show="activity.activityContent.showCommentBox">                  
+                 <section class="modales" ng-show="activity.activityContent.showCommentBox">                  
                   <div id="openModal1" class="modalDialog" >
                     <div>
                         <span class="close"></span>
