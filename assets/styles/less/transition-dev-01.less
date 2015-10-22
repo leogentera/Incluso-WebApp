@@ -7,7 +7,6 @@ Parallel work file for UI Developer 01
 
 
 .incluso-app {
-
     /********************************************************************************
     Base styles (if needed)
     ********************************************************************************/
@@ -23,29 +22,28 @@ Parallel work file for UI Developer 01
 
     .form .tnf input[type="radio"]:checked + label {
         color: white;
-    }  
-
+    }
     /********************************************************************************
     Entities styles (if needed)
     ********************************************************************************/
     /* Start writing base classes here */
     .evaluation {
 
-        .subtitle {            
+        .subtitle {
             padding-top: 60px;
             font-weight: bold;
 
             + .txt-renglon {
                 font-size: 4.5vw;
                 font-weight: normal;
-                padding: 2.5% 0;                
-            }            
+                padding: 2.5% 0;
+            }
         }
 
         .txt-renglon {
 
             &.txt-bigger {
-                font-size: 129%;                
+                font-size: 129%;
             }
 
             a, button {
@@ -59,15 +57,14 @@ Parallel work file for UI Developer 01
                     position: relative;
                     top: 1px;
                 }
-            }             
-
+            }
         }
 
-        .part {                    
+        .part {
             margin: 1vh 5%;
             width: 90%;
 
-            &.list {                
+            &.list {
                 padding: 5% 6%;
 
                 .add {
@@ -75,15 +72,15 @@ Parallel work file for UI Developer 01
                     font-size: 106%;
                     padding: 4% 0;
 
-                    .icomoon::before {                    
-                        padding-right: 3% !important;                    
+                    .icomoon::before {
+                        padding-right: 3% !important;
                     }
 
                     .icomoon {
                         font-size: 86% !important;
                         padding-left: 0px;
                         padding-right: 0 !important;
-                    }                    
+                    }
 
                     input, textarea {
                         width: 89% !important;
@@ -95,17 +92,16 @@ Parallel work file for UI Developer 01
                 .form-group {
                     margin-bottom: 8px;
                 }
-
             }
 
             span {
                 font-weight: bold;
 
-                +.icomoon {
+                + .icomoon {
                     color: white;
                     font-size: 92% !important;
                     padding-right: 0 !important;
-                }  
+                }
             }
 
             a, button {
@@ -114,12 +110,11 @@ Parallel work file for UI Developer 01
                     font-size: 82%;
                     position: relative;
                     top: 2px;
-                }                
+                }
             }
-
         }
 
-        .controls { 
+        .controls {
 
             .centered {
 
@@ -131,7 +126,7 @@ Parallel work file for UI Developer 01
 
                 &.txt-bigger {
                     font-size: 120%;
-                }                
+                }
             }
 
             .btn {
@@ -140,18 +135,19 @@ Parallel work file for UI Developer 01
             }
         }
 
-        .form {   
+        .form {
             label {
                 font-size: 4.5vw;
-                padding-left: 8vw;    
-                &::before{
+                padding-left: 8vw;
+
+                &::before {
                     font-size: 4vw;
                     height: 5vw;
                     width: 5vw;
                     line-height: 4.5vw;
                     margin-top: 3px;
-                }  
-            }      
+                }
+            }
 
             input[type="radio"] + label::before {
                 font-size: 9vw;
@@ -160,21 +156,21 @@ Parallel work file for UI Developer 01
                 line-height: 5vw;
                 margin-top: 1px;
             }
-
         }
 
-        .add {  
-             padding: 3% 0;
-             font-size: 115%;
+        .add {
+            padding: 3% 0;
+            font-size: 115%;
+
             &#agregar {
-                display:none;
-            }    
+                display: none;
+            }
 
             .icomoon::before {
                 color: white;
                 font-size: 92%;
                 padding-right: 3%;
-            }        
+            }
 
             .icon-edit {
                 position: relative;
@@ -195,25 +191,25 @@ Parallel work file for UI Developer 01
 
                 &::-webkit-input-placeholder {
                     color: white !important;
-                    opacity: 1; 
+                    opacity: 1;
                 }
 
                 &:-moz-placeholder {
-                 color: white !important;
-                 opacity: 1;   
+                    color: white !important;
+                    opacity: 1;
                 }
 
-                &::-moz-placeholder { 
-                   color: white !important;
-                   opacity: 1;   
+                &::-moz-placeholder {
+                    color: white !important;
+                    opacity: 1;
                 }
 
-                &:-ms-input-placeholder {  
-                   color: white !important; 
-                   opacity: 1;  
+                &:-ms-input-placeholder {
+                    color: white !important;
+                    opacity: 1;
                 }
-            } 
-        } 
+            }
+        }
 
         ul > li {
             .part {
@@ -221,11 +217,11 @@ Parallel work file for UI Developer 01
                     .add {
                         .icon-edit {
                             top: -10.5vw;
-                        }            
+                        }
                     }
                 }
             }
-        }       
+        }
 
         #finalized {
 
@@ -244,170 +240,164 @@ Parallel work file for UI Developer 01
 
             .txt-renglon {
 
-                    &.pill {
-                        font-weight: normal;
-                        font-size: 4.5vw;
-                        margin: 8vw 5vw 3vw;
-                        padding: 5vw 4vw 10vw 7vw;
-                        width: 90%;
+                &.pill {
+                    font-weight: normal;
+                    font-size: 4.5vw;
+                    margin: 8vw 5vw 3vw;
+                    padding: 5vw 4vw 10vw 7vw;
+                    width: 90%;
 
-                        .sm-pill,
-                        .green-pill {
-                            border-width: 2px;
-                            font-size: 5.4vw;
-                            font-weight: bold;
-                            padding: 0.7vw 3vw 1vw;
-                            position: relative;
-                            top: -6px;
+                    .sm-pill, .green-pill {
+                        border-width: 2px;
+                        font-size: 5.4vw;
+                        font-weight: bold;
+                        padding: 0.7vw 3vw 1vw;
+                        position: relative;
+                        top: -6px;
 
-                            > span {
-                                display: inline-block;
-                                width: auto;
+                        > span {
+                            display: inline-block;
+                            width: auto;
 
-                                &.icon-star {
-                                    font-size: 4.5vw;
-                                    position: relative;
-                                    top: 3px;
-                                }
+                            &.icon-star {
+                                font-size: 4.5vw;
+                                position: relative;
+                                top: 3px;
                             }
                         }
-
-                        .green-pill {
-                            margin: -0.3vw -1vw;
-                            padding: 0.7vw 2.3vw 1vw;                
-                        }            
                     }
 
-                    &.form {
-                        font-weight: normal;
-                        font-size: 4.5vw;
+                    .green-pill {
+                        margin: -0.3vw -1vw;
+                        padding: 0.7vw 2.3vw 1vw;
+                    }
+                }
 
-                        section {
+                &.form {
+                    font-weight: normal;
+                    font-size: 4.5vw;
+
+                    section {
+                        margin: 0;
+                        width: 100%;
+
+                        .opinion {
+                            display: inline-block;
+                            float: left;
+                            margin: 0 4.4vw;
+                        }
+
+                        label {
+                            width: auto;
                             margin: 0;
-                            width: 100%;
+                            display: inline-block;
+                        }
+                    }
 
-                            .opinion {
-                                display: inline-block;
-                                float: left;
-                                margin: 0 4.4vw;
-                            }
+                    .btn {
+                        width: 100%;
+                        margin: 3% 0 0;
+                    }
+                }
 
-                            label {
-                                width: auto;                    
-                                margin: 0;
-                                display: inline-block;
-                            }
+                &.panel {
+                    background-color: transparent;
+                    padding: 0;
+                    margin: 3% 2.5%;
+                    width: 95%;
+                    font-weight: normal;
+
+                    > .panel-heading {
+                        background: rgba(0, 0, 0, 0) radial-gradient(ellipse at center center, #1f2733 0%, #141921 100%) repeat scroll 0 0;
+                        .border-radius(1.5vw);
+                        padding: 2.5vw 9vw 2.5vw 13.6vw;
+                        font-size: 5vw;
+                        line-height: 1.4;
+                        position: relative;
+
+                        .icon-wrong-join {
+                            color: transparent;
+                            margin-right: 1.5vw;
+                            margin-top: 2px;
+                            font-size: 7vw;
+                            position: absolute;
+                            left: 4.5vw;
                         }
 
-                        .btn {
-                            width: 100%;
-                            margin: 3% 0 0;
+                        .icon-wrong-join.active {
+                            color: #ee4823;
                         }
-                    }                
 
-                    &.panel {
-                        background-color: transparent;
-                        padding: 0;
-                        margin: 3% 2.5%;
-                        width: 95%;
-                        font-weight: normal;
+                        .icon-arrow, .icon-arrow-up {
+                            position: absolute;
+                            right: 4.2vw;
+                            top: 41.5%;
+                        }
+                    }
+
+                    &.collapsed {
 
                         > .panel-heading {
-                            background: rgba(0, 0, 0, 0) radial-gradient(ellipse at center center , #1f2733 0%, #141921 100%) repeat scroll 0 0;
-                            .border-radius(1.5vw);
-                            padding: 2.5vw 9vw 2.5vw 13.6vw;
-                            font-size: 5vw;
-                            line-height: 1.4;
-                            position: relative;                      
-
-                            .icon-wrong-join {                                        
-                                color: transparent;
-                                margin-right: 1.5vw; 
-                                margin-top: 2px;
-                                font-size: 7vw;
-                                position: absolute;
-                                left: 4.5vw;
-                            }
-
-                            .icon-wrong-join.active {                                        
-                                color: #ee4823;                                   
-                            }
-
-                            .icon-arrow,
-                            .icon-arrow-up {
-                                position: absolute;
-                                right: 4.2vw;
-                                top: 41.5%;
-                            }                            
+                            border-radius: 1.5vw 1.5vw 0 0;
                         }
+                    }
 
-                        &.collapsed {
+                    .panel-body {
+                        background-color: rgba(13, 15, 20, 0.5);
+                        color: white;
+                        padding: 2.5vw 3vw 4.5vw;
+                        font-size: 5vw;
+                        font-weight: bold;
 
-                            > .panel-heading {                                
-                                border-radius: 1.5vw 1.5vw 0 0;
-                            }
+                        ul {
+                            list-style: none;
+                            padding: 0 3.7vw;
+                            margin: 0;
 
-                        } 
+                            li {
+                                padding: .2vw 0;
+                                padding-left: 7.2vw;
 
-                        .panel-body {
-                            background-color: rgba(13, 15, 20, 0.5);
-                            color: white;
-                            padding: 2.5vw 3vw 4.5vw;
-                            font-size: 5vw;
-                            font-weight: bold;
+                                &:first-child, &:last-child {
+                                    padding-bottom: 0;
+                                }
 
-                            ul {
-                                list-style: none;
-                                padding: 0 3.7vw;
-                                margin: 0;
+                                &::before {
+                                    font-size: 6vw;
+                                    content: "•";
+                                    padding-right: 3.3vw;
+                                    margin-left: -7.2vw;
+                                }
 
-                                li {
-                                    padding: .2vw 0;
-                                    padding-left: 7.2vw;
-
-                                    &:first-child, 
-                                    &:last-child {
-                                       
-                                        padding-bottom: 0;
-                                    }                   
+                                &.failed {
+                                    color: #ee4823;
 
                                     &::before {
-                                        font-size: 6vw;
-                                        content: "•";
-                                        padding-right: 3.3vw;
-                                        margin-left: -7.2vw;                     
+                                        content: "";
                                     }
 
-                                    &.failed {
-                                        color: #ee4823; 
-
-                                        &::before {
-                                            content: "";
-                                        }
-
-                                        .icon-wrong {
-                                            font-size: 4vw;
-                                            margin-left: -0.5vw;
-                                            margin-top: 1.65vw;
-                                            padding-right: 2.6vw;
-                                            position: absolute;
-                                            left: 9.5vw;                              
-                                        }
-                                    }                        
+                                    .icon-wrong {
+                                        font-size: 4vw;
+                                        margin-left: -0.5vw;
+                                        margin-top: 1.65vw;
+                                        padding-right: 2.6vw;
+                                        position: absolute;
+                                        left: 9.5vw;
+                                    }
                                 }
                             }
                         }
                     }
+                }
             }
 
             .question-parts {
                 margin: 8vw 0;
             }
         }
-    } //evaluation
-
-    .community, 
-    .forum {
+    }
+    //evaluation
+    .community, .forum {
 
         .txt-renglon {
             width: 90%;
@@ -433,7 +423,6 @@ Parallel work file for UI Developer 01
                             vertical-align: middle;
                         }
                     }
-
                 }
             }
 
@@ -478,14 +467,14 @@ Parallel work file for UI Developer 01
                     }
 
                     div {
-                        font-size: 3.5vw;                        
+                        font-size: 3.5vw;
                     }
                 }
             }
 
             .block {
                 .green {
-                     color: #e1e455 !important;
+                    color: #e1e455 !important;
                 }
 
                 img {
@@ -493,16 +482,16 @@ Parallel work file for UI Developer 01
                 }
 
                 .popularity {
-                     font-size: 3.5vw;
-                     font-weight: bold;
-                     padding: 1vh 0;
+                    font-size: 3.5vw;
+                    font-weight: bold;
+                    padding: 1vh 0;
                 }
 
                 &.coment {
-                    .vermas{                       
+                    .vermas {
                         background-color: rgba(13, 15, 20, 1);
                         border: none;
-                        color: #08b190;                        
+                        color: #08b190;
                         width: 100%;
                         font-size: 4.5vw;
                         font-weight: bold;
@@ -532,9 +521,8 @@ Parallel work file for UI Developer 01
                         font-size: 85%;
                         max-width: 75%;
                         word-wrap: break-word;
-                        
-                        span,
-                        > div {
+
+                        span, > div {
                             font-weight: normal;
                         }
 
@@ -548,11 +536,10 @@ Parallel work file for UI Developer 01
 
             .social {
 
-                div:nth-child(2){
+                div:nth-child(2) {
                     border-right: 2px solid rgba(255, 255, 255, 0.08);
                 }
             }
-
         }
 
         .icon-circle {
@@ -571,7 +558,7 @@ Parallel work file for UI Developer 01
 
         .subtitle {
             padding: 5% 5% 0;
-        }       
+        }
 
         .filter-section {
             color: white;
@@ -606,35 +593,33 @@ Parallel work file for UI Developer 01
                 top: 6vw;
                 right: 2vw;
             }
-
-        }       
-
-    } //community, forum
-
+        }
+    }
+    //community, forum
     /*Aplican sólo a Comunidad*/
     .community {
 
         .wall {
 
-            .part {                            
+            .part {
 
                 .social {
 
                     div {
                         padding: 3% 2%;
                         width: 32.5%;
-                        font-weight: bold;                       
-                        
+                        font-weight: bold;
+
                         span {
                             font-size: 5vw;
                             padding: 0;
                         }
 
-                        &:nth-child(3){
+                        &:nth-child(3) {
                             border-right: 2px solid rgba(255, 255, 255, 0.08);
                         }
 
-                        &:last-child{
+                        &:last-child {
                             color: #dc300a;
 
                             span {
@@ -642,48 +627,52 @@ Parallel work file for UI Developer 01
                             }
                         }
                     }
-                    .icomoon.icon-comment {color:@clr-commentButton;}
-                    .icomoon.icon-like {color:@clr-likeButton;padding-right: 5px;}
-                    .icomoon.icon-pinch {color:@clr-reportButton;}
+
+                    .icomoon.icon-comment {
+                        color: @clr-commentButton;
+                    }
+
+                    .icomoon.icon-like {
+                        color: @clr-likeButton;
+                        padding-right: 5px;
+                    }
+
+                    .icomoon.icon-pinch {
+                        color: @clr-reportButton;
+                    }
                 }
-            }            
+            }
         }
-    } //community
+    }
+    //community
+    .privacy-notice, .use-terms {
 
-    .privacy-notice,
-    .use-terms {
-        
         .component {
-
             padding: 0 7.5%!important;
 
             p, ul {
                 font-size: 1.1em;
                 text-align: left;
                 margin-right: 0;
-                margin-left: 0;               
+                margin-left: 0;
 
                 .subtitle-green {
                     color: #bcd431;
-                    font-size: 4.4vw; 
+                    font-size: 4.4vw;
                 }
-
             }
 
             h3 {
                 text-transform: uppercase;
-            }            
+            }
 
             ul {
                 padding-left: 4.3vw;
             }
-
         }
-
-    } //privacidad y condiciones
-
+    }
+    //privacidad y condiciones
     .award {
-
         padding: 25% 0 10%;
 
         .green-border {
@@ -694,21 +683,21 @@ Parallel work file for UI Developer 01
             position: relative;
 
             .logo {
-                background-image: url('@{url-images}/bg-notifications-sky.gif');                
-                background-position: 63% -74.7%;
+                background-image: url('@{url-images}/bg-notifications-sky.gif');
+                background-position: 63% - 74.7%;
                 background-size: auto auto;
                 left: 1%;
                 margin: 0 auto;
                 position: absolute;
                 right: 0;
                 top: -6.3%;
-                width: 89%;               
+                width: 89%;
             }
 
             img.medalla {
                 margin: 2% auto -9%;
             }
-            
+
             .txt-renglon {
                 margin-right: 0;
                 margin-left: 0;
@@ -725,11 +714,11 @@ Parallel work file for UI Developer 01
                 font-size: 148%;
                 font-weight: bold;
 
-                &.txt-bigger {                    
+                &.txt-bigger {
                     text-transform: uppercase;
                     font-size: 130%;
                 }
-            }            
+            }
 
             .username {
                 font-size: 165%;
@@ -743,7 +732,7 @@ Parallel work file for UI Developer 01
             .quote {
 
                 .subtitle {
-                    font-size: 110%
+                    font-size: 110%;
                 }
 
                 .author {
@@ -766,86 +755,94 @@ Parallel work file for UI Developer 01
                 .icomoon {
                     font-size: 9.5vw;
                 }
-            }            
+            }
         }
-
-
-    } //award
-
+    }
+    //award
     .post {
-        display:block;
+        display: block;
         width: auto;
-        height:auto;
-        padding:0;
+        height: auto;
+        padding: 0;
         margin: 3vw auto 0;
 
-        .post-head {}
+        .post-head {
+        }
+
         .post-contents {
-            display:block;
-            width:auto;
-            margin:0;
-            padding:3% 0;
+            display: block;
+            width: auto;
+            margin: 0;
+            padding: 3% 0;
             border-bottom: 0.1em solid rgba(255, 255, 255, 0.08);
 
             & > div {
-                display:block;
-                width:90%;
-                margin:0 auto;
-                padding:0;
+                display: block;
+                width: 90%;
+                margin: 0 auto;
+                padding: 0;
             }
 
             .achievement-badge {
-                display:block;
-                width:auto;
-                height:auto;
-                padding:0;
-                margin:0;    
+                display: block;
+                width: auto;
+                height: auto;
+                padding: 0;
+                margin: 0;
 
                 .badgename {
-                    display:block;
-                    width:auto;
-                    height:auto;
-                    padding:4vw 0 0;
+                    display: block;
+                    width: auto;
+                    height: auto;
+                    padding: 4vw 0 0;
                     margin: 0 0 3vw 0;
-                    color:white;
-                    font-family:Play;
-                    font-size:6.3vw;
+                    color: white;
+                    font-family: Play;
+                    font-size: 6.3vw;
                     font-weight: bold;
-                    line-height:7vw;
-                    text-align:center;
+                    line-height: 7vw;
+                    text-align: center;
                 }
+
                 figure {
-                    display:block;
+                    display: block;
                     width: 50vw;
                     height: 50vw;
-                    padding:0;
-                    margin:0 auto;
-                    overflow:hidden;
+                    padding: 0;
+                    margin: 0 auto;
+                    overflow: hidden;
                 }
+
                 img {
-                    display:block;
-                    width:auto;
-                    height:auto;
-                    padding:0;
-                    margin:0 auto;          
+                    display: block;
+                    width: auto;
+                    height: auto;
+                    padding: 0;
+                    margin: 0 auto;
                 }
+
                 figcaption {
-                    display:block;
-                    width:auto;
-                    height:auto;            
-                }                
+                    display: block;
+                    width: auto;
+                    height: auto;
+                }
             }
         }
-        .post-comments {}
-        .post-actions {}
+
+        .post-comments {
+        }
+
+        .post-actions {
+        }
+
         .user-alias {
-            color:@clr-white;
+            color: @clr-white;
             font-size: 4vw;
             font-weight: bold;
             text-decoration: none;
         }
-    } // post    
-
+    }
+    // post
     // .posts-list {
     //     display:block;
     //     width: auto;
@@ -853,10 +850,9 @@ Parallel work file for UI Developer 01
     //     padding:0;
     //     margin: 6vw auto 0;
     // }
-
     .reward {
 
-        .part.inbloq{
+        .part.inbloq {
             margin-bottom: 2vh;
 
             .notif-title {
@@ -868,14 +864,13 @@ Parallel work file for UI Developer 01
                 .alert-name {
                     text-transform: capitalize;
                 }
-        
             }
 
-           img {
-            width: 100%;
-            height: auto;
-            border-radius: 3px;
-           }
+            img {
+                width: 100%;
+                height: auto;
+                border-radius: 3px;
+            }
 
             .txt-renglon {
 
@@ -890,8 +885,7 @@ Parallel work file for UI Developer 01
                         width: auto;
                     }
 
-                    .sm-pill,
-                    .green-pill {
+                    .sm-pill, .green-pill {
                         border-width: 2px;
                         font-size: 4vw;
                         font-weight: bold;
@@ -914,8 +908,8 @@ Parallel work file for UI Developer 01
 
                     .green-pill {
                         margin: -0.3vw -1vw;
-                        padding: 0.7vw 2.3vw 1vw;                
-                    }            
+                        padding: 0.7vw 2.3vw 1vw;
+                    }
                 }
             }
 
@@ -931,15 +925,13 @@ Parallel work file for UI Developer 01
             .actions {
                 margin-top: 6vh;
             }
-
         }
-
-    } // reward
-
+    }
+    // reward
     .my-stars {
-        
+
         .starcontain {
-            
+
             .subtitle {
                 text-transform: uppercase;
                 font-weight: bold;
@@ -947,7 +939,7 @@ Parallel work file for UI Developer 01
 
             .part {
                 margin: 1vh 5%;
-                width: 90%;                
+                width: 90%;
 
                 div {
                     font-weight: bold;
@@ -973,7 +965,29 @@ Parallel work file for UI Developer 01
                 }
             }
         }
+    }
+    //my-stars
+    //Cabina de Soporte
+    .chat-support-modal {
+        .controls {
+            position: relative;
+            .centered {
 
-    } //my-stars
+                span {
+                    position: relative;
+                    top: -9px;
+                    font-weight: bold;
+                }
 
+                &.txt-bigger {
+                    font-size: 120%;
+                }
+            }
+
+            .btn {
+                margin-top: 4%;
+                margin-bottom: 4%;
+            }
+        }
+    }
 }
