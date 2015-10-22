@@ -1,4 +1,23 @@
 <div class="incluso-app content-page-theme" id="site-wrapper">
+    
+     <!-- initial message -->
+    <script type="text/ng-template" id="changeOfTerms.html">
+        <div class="modal-robot robot-lg closing-stage-modal user-help">
+            <span class="img-robot-lg"></span>
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">Terminos y condiciones</h3>
+                <p class="txt-renglon centered">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mattis turpis in ligula porta, et tincidunt mauris vehicula. Suspendisse in viverra sapien. Nulla vulputate, urna quis consequat mollis.
+                </p>
+            </div>
+        </div>
+    </script>
+
     <article>
       <div class="container">
         <section class="component">
@@ -201,6 +220,12 @@
               <p>
                 Al utilizar los Servicios de la Plataforma o al acceder a ellos, nos permites recopilar y usar tu contenido e información de acuerdo con nuestras políticas y Aviso de Privacidad, que se actualiza periódicamente.
               </p>
+                <div class="checkbox checkbox-custom change-of-term hide">
+                    <label>
+                        <input type="checkbox"  name="termsAndConditions" class="ng-pristine ng-untouched ng-valid"> 
+                        <span>Acepto los términos y condiciones</span>
+                    </label>
+                </div>
               <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateTo('ProgramaDashboard', 'sideToggle')">Regresar</a> 
         </section>
       </div>
