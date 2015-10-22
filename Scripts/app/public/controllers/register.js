@@ -301,6 +301,26 @@ angular
                     backdrop: 'static'
                 });
             };
+            $scope.openModalUsername = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'usernameInfoModal.html',
+                    controller: 'termsAndConditionsController',
+                    size: size,
+                    windowClass: 'modal-theme-default terms-and-conditions', 
+                    backdrop: 'static'
+                });
+            };
+            $scope.openModalPassword = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'passwordInfoModal.html',
+                    controller: 'termsAndConditionsController',
+                    size: size,
+                    windowClass: 'modal-theme-default terms-and-conditions', 
+                    backdrop: 'static'
+                });
+            };
         }])
         .controller('termsAndConditionsController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
