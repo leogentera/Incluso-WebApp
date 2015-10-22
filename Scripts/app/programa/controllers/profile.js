@@ -1251,6 +1251,7 @@ angular
 
             $scope.avatar = function () {
                 //the next fields should match the integration document shared with the game app
+                var shield = ( $scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ( $scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield ));
                 var avatarInfoForGameIntegration = {
                     "userid": $scope.model.id,
                     "alias": $scope.model.username,
@@ -1264,7 +1265,7 @@ angular
                     "color_cabello": $scope.avatarInfo[0].color_cabello,
                     "traje_color_principal": $scope.avatarInfo[0].traje_color_principal,
                     "traje_color_secundario": $scope.avatarInfo[0].traje_color_secundario,
-                    "escudo": ""
+                    "escudo": shield
                 };
 
                 try {
@@ -1279,7 +1280,6 @@ angular
 
             function SuccessAvatar(data) {
                 //the next fields should match the database in moodle
-    
                 $scope.avatarInfo = [{
                     "userid": data.userid,
                     "aplicacion": data.actividad,
