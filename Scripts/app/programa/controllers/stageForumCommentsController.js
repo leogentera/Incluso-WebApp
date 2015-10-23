@@ -91,7 +91,7 @@ angular
             }
 
             function getForumsProgress(){
-                var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : new Array();
+                var forumsProgress = localStorage.getItem('currentForumsProgress/' + localStorage.getItem("userId"))? JSON.parse(localStorage.getItem('currentForumsProgress/' + localStorage.getItem("userId"))) : new Array();
                 return forumsProgress;
             };
 
@@ -105,11 +105,11 @@ angular
                     forumsCommentsCountCollection.push({'discussion_id': $scope.discussion.id, 'replies_counter':1})
                 }
 
-                localStorage.setItem('currentForumsProgress', JSON.stringify(forumsCommentsCountCollection));
+                localStorage.setItem('currentForumsProgress/' + localStorage.getItem("userId"), JSON.stringify(forumsCommentsCountCollection));
             };
 
             var getForumsExtraPointsCounter = function(){
-                var forumExtraPointsCounter = JSON.parse(localStorage.getItem('extraPointsForums'));
+                var forumExtraPointsCounter = JSON.parse(localStorage.getItem('extraPointsForums/' + localStorage.getItem("userId")));
                 return forumExtraPointsCounter;
             };
 
@@ -122,7 +122,7 @@ angular
                     extraPointsCounter.push({'forumId':forumId, 'extra_replies_counter':1});
                 }
 
-                localStorage.setItem('extraPointsForums', JSON.stringify(extraPointsCounter));
+                localStorage.setItem('extraPointsForums/' + localStorage.getItem("userId"), JSON.stringify(extraPointsCounter));
             };
 
             var checkForumProgress = function(callback){
@@ -205,7 +205,7 @@ angular
                     }
                 }
                 
-                localStorage.setItem('currentForumsProgress', JSON.stringify(globalDiscussions));
+                localStorage.setItem('currentForumsProgress/' + localStorage.getItem("userId"), JSON.stringify(globalDiscussions));
             }
 
             var _uncollapse = function(element, elementsArray){

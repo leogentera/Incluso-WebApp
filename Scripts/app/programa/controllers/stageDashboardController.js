@@ -302,6 +302,5 @@ angular
                     $scope.navigateToDashboard = function () {                        
                         $modalInstance.dismiss('cancel');
                         $location.path('/ProgramaDashboard');
-                    };
-                    _setLocalStorageItem('robotEndStageShown',true);
+                    };                    
                 });
