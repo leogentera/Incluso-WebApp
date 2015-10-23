@@ -492,10 +492,11 @@ var logStartActivityAction = function(activityId, timeStamp){
                  console.log("global");
                 var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
                 
-                if (localStorage.getItem(key) == null) {
+                if (localStorage.getItem(key) == null && !treeActivity.status) {
                     _setLocalStorageJsonItem(key, {
                         datestarted: getdate(),
-                        coursemoduleid: treeActivity.coursemoduleid
+                        coursemoduleid: treeActivity.coursemoduleid,
+                        activity_identifier: treeActivity.activity_identifier
                     });
                     
                     localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
