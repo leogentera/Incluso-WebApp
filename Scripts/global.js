@@ -1069,7 +1069,13 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
+    localStorage.removeItem("tuEligesActivities");
+    localStorage.removeItem("reply");
+    localStorage.removeItem("Interval");
+    localStorage.removeItem("mapaDeVidaActivities");
     ClearLocalStorage("activity");
+    ClearLocalStorage("forum");
+    ClearLocalStorage("discussion");
     ClearLocalStorage("activitiesCache");
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    

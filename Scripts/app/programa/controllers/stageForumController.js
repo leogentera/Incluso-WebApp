@@ -17,6 +17,7 @@ angular
             Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
+            var userId = JSON.parse(localStorage.getItem('userId'));
 
              var redirectOnShield = function () {
                  var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
@@ -32,8 +33,7 @@ angular
                      {name: 'Espacial', category: 'artistico'},
                      {name: 'Matematica', category: 'logico'},
                      {name: 'Linguistica', category: 'logico'},
-                 ];
-                 var userId = JSON.parse(localStorage.getItem('userId'));
+                 ];                 
                  var shield = JSON.parse(localStorage.getItem('profile/' + userId )).shield;
                  if (shield && shield != '') {
 
@@ -70,7 +70,7 @@ angular
             $scope.scrollToTop();
 
            function getForumsProgress(){
-              var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : setForumsList();
+              var forumsProgress = localStorage.getItem('currentForumsProgress/'+ userId)? JSON.parse(localStorage.getItem('currentForumsProgress/'+ userId)) : setForumsList();
               return forumsProgress;
 
            };
@@ -86,10 +86,10 @@ angular
                         discussionsCollection.push({"discussion_id":currentDiscussion.id, "replies_counter":0});
                     } else {}
                 }
-                _setLocalStorageJsonItem('currentForumsProgress', discussionsCollection);
+                _setLocalStorageJsonItem('currentForumsProgress/'+ userId, discussionsCollection);
             }
             var getForumsExtraPointsCounter = function(){
-                var forumExtraPointsCounter = localStorage.getItem('extraPointsForums')? JSON.parse(localStorage.getItem('extraPointsForums')) : setExtraPointsCounters();
+                var forumExtraPointsCounter = localStorage.getItem('extraPointsForums/'+ userId)? JSON.parse(localStorage.getItem('extraPointsForums/'+ userId)) : setExtraPointsCounters();
                 return forumExtraPointsCounter;
             };
             var setExtraPointsCounters = function(){
@@ -105,7 +105,7 @@ angular
                 //    } else {}
                 //}
                 extraPointsCounter.push({"forumId":$scope.activity.forumid, "extra_replies_counter":0});
-                _setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
+                _setLocalStorageJsonItem('extraPointsForums/' + userId, extraPointsCounter);
             };
 
             function getDataAsync() {

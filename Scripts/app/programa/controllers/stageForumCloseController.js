@@ -153,7 +153,7 @@ angular
             }
 
             var getForumsExtraPointsCounter = function() {
-                var forumExtraPointsCounter = JSON.parse( localStorage.getItem('extraPointsForums'));
+                var forumExtraPointsCounter = JSON.parse( localStorage.getItem('extraPointsForums/'+ userId));
                 return forumExtraPointsCounter;
             };
 
