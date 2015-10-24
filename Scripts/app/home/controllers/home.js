@@ -29,19 +29,24 @@
             };
 
             $scope.navigateTo = function(url,sideToggle,activityId){
-                if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
-                    return false;
-                }
-
-                if(activityId) {
-                    var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
-                    logStartActivityAction(activityId, timeStamp);
-                }
-
-                $location.path(url);
-
-                if(sideToggle == "sideToggle")
-                    $rootScope.sidebar = !$rootScope.sidebar;
+				
+				if (!_compareSyncDeviceVersions()) {
+					$scope.openUpdateAppModal();
+				}else {
+					if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
+						return false;
+					}
+	
+					if(activityId) {
+						var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
+						logStartActivityAction(activityId, timeStamp);
+					}
+	
+					$location.path(url);
+	
+					if(sideToggle == "sideToggle")
+						$rootScope.sidebar = !$rootScope.sidebar;	
+				}
             };
 			
 			$scope.navigateToMyProfile = function(){
@@ -259,6 +264,22 @@
                         $scope.showDiploma = true;
                     }
                 }
+            }
+			
+			//Open Welcome Message modal
+            $scope.openUpdateAppModal = function (size) {
+                    var modalInstance = $modal.open({
+                        animation: $scope.animationsEnabled,
+                        templateUrl: 'updateApp.html',
+                        controller: function ($scope, $modalInstance) {
+							
+							$scope.updateApp = function() {
+								cordova.exec(function() {}, function() {}, "CallToAndroid", "restart", []);
+							};
+                        },
+                        size: size,
+                        windowClass: 'user-help-modal dashboard-programa'
+                    });
             }
 
         }]);

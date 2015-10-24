@@ -47,6 +47,20 @@
             <div class="app-body" ng-click="sideToggle('outside')">
                 <div class="app-content">
                     <ng-view></ng-view>
+                    
+                    
+                    <script type="text/ng-template" id="updateApp.html">
+                        <div class="modal-robot robot-lg user-help">
+                            <img src="assets/images/img-robot-lg.svg" alt="robot" />
+                            <div class="modal-header">
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="subtitle centered">Se ha detectado una una nueva versión para la aplicación</h3>
+                                <p class="centered">Presione el botón de confirmación para actualizar (se reiniciara la aplicación)</p>
+                                <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="updateApp()">Actualizar</a>
+                            </div>
+                        </div>
+                    </script>
                 </div>
             </div>
             <footer-component></footer-component>
