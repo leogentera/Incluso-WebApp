@@ -1,10 +1,9 @@
 //global variables
 
-
-//var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
+var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
 //var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}"; //Other
-var API_RESOURCE = "http://moodlemysql01.cloudapp.net/RestfulAPI/RestfulAPI/public/{0}"; //24/10 correo daniela
+//var API_RESOURCE = "http://moodlemysql01.cloudapp.net/RestfulAPI/RestfulAPI/public/{0}"; //24/10 correo daniela
 
 
 var _courseId = 4;
@@ -466,11 +465,11 @@ var _updateRewardStatus = function () {
     localStorage.setItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
 }
 
-var logStartActivityAction = function(activityId, timeStamp){
+var logStartActivityAction = function(activityId, timeStamp) {
+    
     if( Number(activityId) == 50000 || activityId == 'null' || !activityId){
-        return false;
-    } else{
-
+            return false;
+    } else {
 
         var userCourse = JSON.parse(localStorage.getItem("usercourse"));
         var treeActivity = getActivityByActivity_identifier(activityId, userCourse);
@@ -1071,8 +1070,7 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
     localStorage.removeItem("tuEligesActivities");
-    localStorage.removeItem("reply");
-    localStorage.removeItem("Interval");
+    localStorage.removeItem("reply");    
     localStorage.removeItem("mapaDeVidaActivities");
     ClearLocalStorage("activity");
     ClearLocalStorage("forum");
@@ -1081,7 +1079,12 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
     ClearLocalStorage("profile");
-    ClearLocalStorage("UserTalents");
+    ClearLocalStorage("UserTalents");    
+    var existingInterval = localStorage.getItem('Interval');
+    if(existingInterval){
+        clearInterval(existingInterval);
+        localStorage.removeItem("Interval");
+    }    
     $location.path('/');
 };
 
@@ -1288,3 +1291,75 @@ function onDeviceReady() {
 //
 function onBackKeyDown() {
 }
+
+var _getDeviceVersionAsync = function() {
+    
+    var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+    
+    if (deviceVersion != null) {
+        var currentDate = new Date();
+        var difTimeStamp = currentDate.getTime() - deviceVersion.lastTimeUpdated
+        
+        /* 60 minutes */
+        if ((difTimeStamp / 60000) >= 60) {
+            console.log("ya pasaron 2 minutos... a actualizar");
+            _updateDeviceVersionCache();
+        }
+    }else {
+        _updateDeviceVersionCache();
+    }
+};
+
+var _compareSyncDeviceVersions = function() {
+    var sync = false;
+    
+    if (localStorage.getItem("device-version") != null) {
+        var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+        
+        var localVSplit = deviceVersion.localVersion.split("."),
+            remoteVSplit = deviceVersion.remoteVersion.split(".");
+            
+        sync = Number(localVSplit[0]) === Number(remoteVSplit[0]) &&
+               Number(localVSplit[1]) === Number(remoteVSplit[1]) &&
+               Number(localVSplit[2]) === Number(remoteVSplit[2]);
+    }
+    
+    return sync;
+};
+
+
+var FLAG_DEVICE_VERSION_RUNNING = false;
+
+function _updateDeviceVersionCache () {
+    var currentDate = new Date();
+    
+    var deviceVersion = {
+        lastTimeUpdated: currentDate.getTime(),
+        localVersion: "0.0.0",
+        remoteVersion: "0.0.0"
+    };
+
+    if (localStorage.getItem("device-version") != null) {
+        deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+        deviceVersion.lastTimeUpdated = currentDate.getTime();
+    }
+    
+    if (cordova != null && typeof cordova.exec === "function") {
+        if (!FLAG_DEVICE_VERSION_RUNNING) {
+            FLAG_DEVICE_VERSION_RUNNING = true;
+            console.log("ejecutando device-version");
+            cordova.exec(function(data) {
+                deviceVersion.localVersion = data.currentVersion;
+                deviceVersion.remoteVersion = data.latestVersion;
+                localStorage.setItem("device-version", JSON.stringify(deviceVersion));
+                FLAG_DEVICE_VERSION_RUNNING = false;
+            }, function() { console.log("fail"); FLAG_DEVICE_VERSION_RUNNING = false }, "CallToAndroid", "getversion", []);
+        }
+    }
+}
+
+$(document).ready(function(){
+    setTimeout(function() {
+    _updateDeviceVersionCache();
+    }, 2000);
+});
