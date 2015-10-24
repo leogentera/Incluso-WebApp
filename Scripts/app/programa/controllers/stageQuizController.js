@@ -205,8 +205,8 @@ angular
                     childActivity = parentActivity.activities[0];
                 }
 
-                //console.log("Activity = " + parentActivity.toString());
-                $rootScope.message = "";
+                
+                $rootScope.message = ""; // Message for the robbot
 
                 //Making up path to redirect user to the proper dashboard
                 switch ($scope.activity_identifier) {
@@ -343,7 +343,7 @@ angular
 
                         $scope.activityFinished = activityFinished;
 
-                        if (localAnswers == null) {// If activity not exists in Local Storage...get it from Server
+                        if (localAnswers == null) {// If activity not exists in Local Storage...get it from Server                            
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
                         }
                         else {//Angular-bind the answers in the respective HTML template
@@ -613,7 +613,7 @@ angular
                             break;
                     }
 
-
+                    
                     if ($scope.childActivity) {
                         activityModel.coursemoduleid = $scope.childActivity.coursemoduleid;
                         activityModel.activityType = "Quiz";
@@ -1709,7 +1709,7 @@ angular
                                 var userAnswer = cleanText(userAnswers[indexUserAnswers]).trim();
                                 for (var index = 0; index < question.answers.length; index++) {
                                     var questionOption = cleanText(question.answers[index].answer).trim();
-                                    console.log(questionOption + " == " + userAnswer);
+                                    
                                     if (questionOption == userAnswer) {
                                         $scope.AnswersResult.answers[1][index] = 1;
                                         if (userAnswer == "Otro") {
