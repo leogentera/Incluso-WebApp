@@ -48,6 +48,8 @@ angular
 
             }
             var treeActivity = getActivityByActivity_identifier(coursemoduleid, userCourse);
+            
+            $scope.activityPoints = treeActivity.points;
 
             $scope.goChat = function () {
                 $location.path('/Chat');
@@ -75,7 +77,7 @@ angular
 
                 // Update activity in usercourse
                 treeActivity.status = 1;
-
+                localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
                 moodleFactory.Services.PutEndActivity(treeActivity.coursemoduleid, data, treeActivity, currentUser.token, function () {
                     _setLocalStorageJsonItem('usercourse', $scope.model);
                     var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));

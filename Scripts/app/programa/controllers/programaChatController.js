@@ -18,7 +18,9 @@ angular
             _setLocalStorageItem('chatRead', "true");
             var userId = localStorage.getItem('userId');
             var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte/" + userId));
-            var messagesToRead = _getItem("currentStage") * 2;
+            var userCurrentStage = localStorage.getItem("currentStage");
+            console.log(userCurrentStage);
+            var messagesToRead = userCurrentStage * 2;
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
             $scope.currentMessage = "";
@@ -70,9 +72,17 @@ angular
                             });
 
                             if (latestMessages.length >= 2) {
+                                var zone = '/ZonaDeVuelo';                                                            
 
+                                if(userCurrentStage == 2){
+                                    zone = '/ZonaDeNavegacion';                                    
+                                } 
+                                else if (userCurrentStage == 3){
+                                    zone = '/ZonaDeAterrizaje';                                    
+                                }
                                 localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
                                 _setLocalStorageItem("finishCabinaSoporte/" + userId, 'true');
+                                $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
                             }
                         }   
                     }                

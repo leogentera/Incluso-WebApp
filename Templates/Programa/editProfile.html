@@ -359,13 +359,23 @@
 															<div class="form-group theme-form">
 																<h5>
 																	<span>Teléfono {{$index + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deletePhone(p);">
+																	<button class="btn btn-circle" ng-click="deletePhone($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
+																<div class="form-group-control custom-caret-wrapper">
+																	<select class="form-control form-control-lg theme-form"  
+																		ng-model="model.phones[$index].phone"  
+																		ng-options="item for item in phoneTypeList"  
+																		ng-init="model.phone == null"  
+																		ng-class="{'selected': model.phones[$index].phone.length != 0 && model.phones[$index].phone != null}">
+																		<option value="" ng-disabled="!!model.phone">Tipo de teléfono</option>  
+																	</select>  
+																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>  
+																</div>  
+
 																<div class="form-group-control">
-																	<input type="text" class="form-control form-control-lg theme-form" placeholder="Número Telefónico" ng-model="model.phones[$index]"
-																	/>
+																	<input type="text" class="form-control form-control-lg theme-form" placeholder="Número Telefónico" ng-model="model.phones[$index].phoneId"/>
 																</div>
 															</div>
 														</li>

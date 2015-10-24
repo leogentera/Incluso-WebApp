@@ -107,19 +107,19 @@ angular
                 $scope.gradeList = ['1er', '2do', '3ro', '4to', '5to', '6to','7mo','8vo','9no','10mo'];
                 $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
                 $scope.yesNoList = ['Si', 'No'];
-                $scope.moneyIncomeList = ['Padres', 'Trabajo','Becas / Apoyo del gobierno'];
+                $scope.moneyIncomeList = ['Padres', 'Trabajo','Becas / Apoyo del gobierno','No tengo'];
                 $scope.medicalCoverageList = ['Sí', 'No', 'No sé'];
-                $scope.medicalInsuranceList = ['IMSS', 'ISSTE', 'Privado', 'Seguro Popular'];
-                $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora'];
+                $scope.medicalInsuranceList = ['IMSS', 'ISSTE', 'Privado', 'Seguro Popular', 'No tengo'];
+                $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora', 'Ninguno'];
                 $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
                 $scope.videoGamesFrecuencyList = ['Diario', '3 veces a la semana', '1 vez a la semana', '1 o 2 veces al mes', 'Nunca'];
                 $scope.videogamesHoursList = ['0-2', '2.5 a 4', '4.5 a 6', '6.5 a 8', 'Más de 8'];
                 $scope.kindOfVideoGamesList = ['Acción', 'Deportes', 'Violencia', 'Aventura', 'Reto', 'Estrategia', 'Educativos', 'Peleas'];
                 $scope.socialNetworksList = ['Twitter','Facebook','YouTube','Instagram','Snapchat','No tengo redes sociales'];
-                $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política','Otro'];
-                $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)','Otro'];                
-                
-                
+                $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política','No tengo', 'Otro'];
+                $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)','No tengo','Otro'];            
+                $scope.phoneTypeList = ['Celular','Casa','Trabajo','No tengo teléfono' ,'Otro'];                    
+
                 $scope.birthdate_Dateformat = moment(formatDate($scope.model.birthday)).format("DD/MM/YYYY"); 
                 getAge();
                 console.log("Age loaded");
@@ -585,7 +585,7 @@ angular
                 if ($scope.model.phones.length > 0) {
                     for (var i = 0; i < $scope.model.phones.length; i++) {
                         if (typeof $scope.model.phones[i] === "undefined" ||
-                            $scope.model.phones[i].length === 0) {
+                            $scope.model.phones[i].length === 0 ) {
                             $scope.model.phones.splice(i, 1);
                             i = i - 1;
                         }
@@ -595,8 +595,7 @@ angular
                 //socialNetworks               
                 if ($scope.model.socialNetworks.length > 0) {
                     for (var i = 0; i < $scope.model.socialNetworks.length; i++) {
-                        if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined" ||
-                            typeof $scope.model.socialNetworks[i].socialNetworkId === "undefined") {
+                        if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined" ) {
                             $scope.model.socialNetworks.splice(i, 1);
                             i = i - 1;
                         }
@@ -606,9 +605,7 @@ angular
                 //familiaCompartamos              
                 if ($scope.model.familiaCompartamos.length > 0) {
                     for (var i = 0; i < $scope.model.familiaCompartamos.length; i++) {
-                        if (typeof $scope.model.familiaCompartamos[i].idClient === "undefined" ||
-                            typeof $scope.model.familiaCompartamos[i].relativeName === "undefined" ||
-                            typeof $scope.model.familiaCompartamos[i].relationship === "undefined") {
+                        if (typeof $scope.model.familiaCompartamos[i].relationship === "undefined") {
                             $scope.model.familiaCompartamos.splice(i, 1);
                             i = i - 1;
                         }
@@ -687,8 +684,7 @@ angular
                 //inspirationalCharacters              
                 if ($scope.model.inspirationalCharacters.length > 0) {
                     for (var i = 0; i < $scope.model.inspirationalCharacters.length; i++) {
-                        if (typeof $scope.model.inspirationalCharacters[i].characterName === "undefined" ||
-                            typeof $scope.model.inspirationalCharacters[i].characterType === "undefined") {
+                        if (typeof $scope.model.inspirationalCharacters[i].characterType === "undefined") {
                             $scope.model.inspirationalCharacters.splice(i, 1);
                             i = i - 1;
                         }
@@ -889,7 +885,7 @@ angular
                                                                 if ($scope.model.address.num_ext) {
                                                                     if ($scope.model.address.num_int) {
                                                                         if ($scope.model.address.colony) {
-                                                                            if ($scope.model.phones != 0) {
+                                                                            if ($scope.model.phones.length != 0) {
                                                                                 if ($scope.model.socialNetworks.length != 0) {
                                                                                     if ($scope.model.familiaCompartamos.length != 0) {
                                                                                         result = true;
@@ -1013,7 +1009,7 @@ angular
             };
 
             $scope.addPhone = function () {
-                $scope.model.phones.push(new String());
+                $scope.model.phones.push({});
             };
 
             // $scope.deletePhone = function (index) {

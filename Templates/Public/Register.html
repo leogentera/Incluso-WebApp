@@ -228,6 +228,37 @@
       <div class="modal-footer"></div>
     </script>
 
+    <script type="text/ng-template" id="passwordInfoModal.html">
+	    <div class="modal-header">
+		    <h3 class="modal-title"> Contraseña </h3>
+		    <a role="button" class="icon icon-close btn btn-circle" ng-click="cancel()">
+			    <span class="icomoon icon-cross"></span>
+		    </a>
+	    </div>
+	    <div class="modal-body">
+		    <p>
+			    Es necesario que tu contraseña tenga 8 caracteres, en los cuales debe haber por lo menos un carácter especial, un número, una letra mayúscula y una minúscula.
+		    </p>	 
+	    </div>
+	    <div class="modal-footer"></div>
+    </script>
+
+    <script type="text/ng-template" id="usernameInfoModal.html">
+	    <div class="modal-header">
+		    <h3 class="modal-title"> Nombre de Usuario </h3>
+		    <a role="button" class="icon icon-close btn btn-circle" ng-click="cancel()">
+			    <span class="icomoon icon-cross"></span>
+		    </a>
+	    </div>
+	    <div class="modal-body">
+		    <p>
+			    Tu nombre de usuario puede contener caracteres especiales como guión bajo (_), guión (-), punto (.) y arroba (@ ) y no debe contener espacios.
+		    </p>		
+	    </div>
+	    <div class="modal-footer"></div>
+    </script>
+
+
     <header>
       <figure>
         <!-- <img src="assets/images/img-logo-gentera.svg" alt="" class="login-logo"> -->
@@ -260,6 +291,9 @@
                       <span class="icomoon icon-user"></span>
                     </p>
                     <input type="text" ng-model="registerModel.username" name="userName" class="form-control form-control-lg theme-default" placeholder="Nombre de usuario" aria-describedby="userNameAddOn" pattern="^(?=\S)[-\.@_a-z0-9]*\S$" required />
+                      <a class="input-group-addon btn-info" ng-click="openModalUsername()">
+                        <span class="icomoon icon-information"></span>
+                      </a>
                   </div>
                 </div>
               </div>
@@ -421,6 +455,9 @@
                       <span class="icomoon icon-lock"></span>
                     </p>
                     <input type="password" ng-disabled="isRegistered" ng-model="registerModel.password" name="password" class="form-control form-control-lg theme-default" placeholder="Contraseña" aria-describedby="accountPasswordAddOn" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W|_).{8,}" required />
+                    <a class="input-group-addon btn-info" ng-click="openModalPassword()">
+                    <span class="icomoon icon-information"></span>
+                    </a>
                   </div>
                 </div>
               </div>

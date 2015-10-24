@@ -51,21 +51,30 @@ angular
                             }
                             
                             //Add subactivity points when exists
-                            if (activity.points == 0 && activity.activities && activity.activities.length > 0) {
+                            if (activity.activities && activity.activities.length > 0) {
                                 for(var i = 0; i < activity.activities.length; i++ ){
-                                    subActivitiesPoints += activity.activities[i].points;
+                                    if (activity.activities[i].status == 1) {
+                                        subActivitiesPoints += activity.activities[i].points;                                        
+                                    }
                                 }
-                                activity.points = subActivitiesPoints;
+                                //Validate subactivitypoints limited to 10 optional activities (50 point each)
+                                if (subActivitiesPoints > 750) {
+                                    subActivitiesPoints == 750;
+                                }
+                                
+                                activity.points = subActivitiesPoints;                                
                             }
                             
                             //Adding challenge name
                             activity.sectionname = currentChallenge.sectionname;
                             
                             activitiesCompleted.push(activity);
-                        }                                            
-                    }                   
+                        }
+                    }
                 }
             }
+            
+            console.log(activitiesCompleted);
             
             $scope.activitiesCompleted = activitiesCompleted;
 

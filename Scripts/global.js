@@ -1,6 +1,7 @@
 //global variables
 
-var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";          // Nora
+var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
+
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
 //var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}"; //Other
 
@@ -494,10 +495,11 @@ var logStartActivityAction = function(activityId, timeStamp) {
                  console.log("global");
                 var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
                 
-                if (localStorage.getItem(key) == null) {
+                if (localStorage.getItem(key) == null && !treeActivity.status) {
                     _setLocalStorageJsonItem(key, {
                         datestarted: getdate(),
-                        coursemoduleid: treeActivity.coursemoduleid
+                        coursemoduleid: treeActivity.coursemoduleid,
+                        activity_identifier: treeActivity.activity_identifier
                     });
                     
                     localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
@@ -1068,12 +1070,22 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
+    localStorage.removeItem("tuEligesActivities");
+    localStorage.removeItem("reply");    
+    localStorage.removeItem("mapaDeVidaActivities");
     ClearLocalStorage("activity");
+    ClearLocalStorage("forum");
+    ClearLocalStorage("discussion");
     ClearLocalStorage("activitiesCache");
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
     ClearLocalStorage("profile");
-    ClearLocalStorage("UserTalents");
+    ClearLocalStorage("UserTalents");    
+    var existingInterval = localStorage.getItem('Interval');
+    if(existingInterval){
+        clearInterval(existingInterval);
+        localStorage.removeItem("Interval");
+    }    
     $location.path('/');
 };
 
