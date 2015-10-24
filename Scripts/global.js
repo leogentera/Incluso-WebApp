@@ -1,6 +1,7 @@
 //global variables
 
-//var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
+
+var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
 //var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}"; //Other
 var API_RESOURCE = "http://moodlemysql01.cloudapp.net/RestfulAPI/RestfulAPI/public/{0}"; //24/10 correo daniela
@@ -1069,7 +1070,13 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
+    localStorage.removeItem("tuEligesActivities");
+    localStorage.removeItem("reply");
+    localStorage.removeItem("Interval");
+    localStorage.removeItem("mapaDeVidaActivities");
     ClearLocalStorage("activity");
+    ClearLocalStorage("forum");
+    ClearLocalStorage("discussion");
     ClearLocalStorage("activitiesCache");
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
