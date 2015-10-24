@@ -226,8 +226,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": parentId,
                     "message": message,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": postType,
                     "fileToUpload":""
                 };
@@ -269,8 +269,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": message,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": postType,
                     "fileToUpload": attachment? attachment.base64 : null
                 };
@@ -347,8 +347,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": '',
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": 4,
                     "filecontent":$scope.attachmentToPost.image,
                     "filename": userId + $scope.attachmentToPost.fileName,
