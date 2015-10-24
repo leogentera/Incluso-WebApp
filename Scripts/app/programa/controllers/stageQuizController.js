@@ -717,6 +717,7 @@ angular
                         },
                         function (responseData) {
                             console.log('Update profile fail...');
+                            $scope.$emit('HidePreloader');
                         });
 
 
@@ -1298,22 +1299,7 @@ angular
                 for (i = 0; i < numQuestions; i++) {
                     console.log("$scope.miFuturo[" + i + "].length = " + $scope.miFuturo[i].length);
                     for (b = 0; b < $scope.miFuturo[i].length; b++) {
-                        var item = $scope.miFuturo[i][b].replace(/\r?\n|\r/g, " ").trim();
-                        //console.log("Pregunta= " + i + " Resp= " + b + " item = " + item);
-                        /*
-                         if (item == "") {
-                         //$scope.deleteFuturo(b, i);
-                         var listaId = i + 1;
-                         //removeHeight("#listaDinamica" + listaId);
-                         var listaHeight = $("#listaDinamica" + listaId).height();
-                         var outerWrapperHeight = $(".owl-wrapper-outer").height();
-                         console.log("#listaDinamica" + listaId + " height = " + listaHeight);
-                         $("#listaDinamica" + listaId).css('height', listaHeight - 145);
-                         $(".owl-wrapper-outer").css('height', outerWrapperHeight - 145);
-                         console.log("#listaDinamica" + listaId + " height after = " + listaHeight);
-                         $scope.miFuturo[i].splice(b, 1);
-                         }
-                         */
+                        var item = $scope.miFuturo[i][b].replace(/\r?\n|\r/g, " ").trim();                        
                     }
 
                     $scope.miFuturo[i] = $scope.miFuturo[i].filter(function (item, pos) {
