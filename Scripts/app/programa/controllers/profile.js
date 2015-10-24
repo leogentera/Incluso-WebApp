@@ -120,7 +120,14 @@ angular
                 $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)','No tengo','Otro'];            
                 $scope.phoneTypeList = ['Celular','Casa','Trabajo','No tengo teléfono' ,'Otro'];                    
 
-                $scope.birthdate_Dateformat = moment(formatDate($scope.model.birthday)).format("DD/MM/YYYY"); 
+                $scope.birthdate_Dateformat = formatDate($scope.model.birthday);
+                if($scope.birthdate_Dateformat instanceof Date) {
+                    $scope.birthdate_Dateformat = moment($scope.birthdate_Dateformat).format("DD/MM/YYYY");
+                }
+                else{
+                    $scope.birthdate_Dateformat = null;
+                }
+
                 getAge();
                 console.log("Age loaded");
                 $scope.showPlaceHolder = true;
@@ -367,7 +374,7 @@ angular
             function getAge() {
                 var splitDate = $scope.model.birthday.split("/");
 
-                if (splitDate != "") {
+                if (splitDate != "" || splitDate.length > 2) {
                     var birthDate = new Date(splitDate[2], splitDate[0] - 1, splitDate[1]);
                     if (birthDate != null || birthDate != '') {
                         var cur = new Date();

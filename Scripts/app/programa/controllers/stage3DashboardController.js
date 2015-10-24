@@ -227,10 +227,15 @@ angular
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
 
                 if (url) {
-                    var activityId = activity.activity_identifier;
-                    var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
-                    logStartActivityAction(activityId, timeStamp);
-                    $location.path(url);
+                    
+                    if (_compareSyncDeviceVersions()) {
+						var activityId = activity.activity_identifier;
+                        var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
+                        logStartActivityAction(activityId, timeStamp);
+                        $location.path(url);
+					}else {
+						$scope.openUpdateAppModal();
+					}
                 }
             };
 
