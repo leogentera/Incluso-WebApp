@@ -1,6 +1,6 @@
 //global variables
 
-var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
+var API_RESOURCE = "http://moodlemysql01.cloudapp.net/RestfulAPI/RestfulAPI/public/{0}";          // Nora
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
 //var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}"; //Other
 
@@ -1070,8 +1070,7 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
     localStorage.removeItem("tuEligesActivities");
-    localStorage.removeItem("reply");
-    localStorage.removeItem("Interval");
+    localStorage.removeItem("reply");    
     localStorage.removeItem("mapaDeVidaActivities");
     ClearLocalStorage("activity");
     ClearLocalStorage("forum");
@@ -1080,7 +1079,12 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
     ClearLocalStorage("profile");
-    ClearLocalStorage("UserTalents");
+    ClearLocalStorage("UserTalents");    
+    var existingInterval = localStorage.getItem('Interval');
+    if(existingInterval){
+        clearInterval(existingInterval);
+        localStorage.removeItem("Interval");
+    }    
     $location.path('/');
 };
 
