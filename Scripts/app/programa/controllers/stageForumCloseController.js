@@ -153,6 +153,7 @@ angular
             }
 
             var getForumsExtraPointsCounter = function() {
+                var userId = moodleFactory.Services.GetCacheObject("userId");
                 var forumExtraPointsCounter = JSON.parse( localStorage.getItem('extraPointsForums/'+ userId));
                 return forumExtraPointsCounter;
             };
