@@ -976,7 +976,7 @@ function updateUserForumStars(activityIdentifier, extraPoints) {
 
     var data = {
         userId: profile.id,
-        stars: profile.stars,
+        stars: extraPoints,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
