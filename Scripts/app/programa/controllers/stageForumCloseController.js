@@ -61,16 +61,13 @@ angular
                 
                 var finishChildCounter = 0;
                 if (activities){
-                    
                     for(var i = 0; i < activities.length; i++) {
-                        
-                        console.log("antes de if " + $routeParams.moodleId);
-                        console.log("iguales: " + (activities[i].coursemoduleid == $routeParams.moodleId));
                         if ($routeParams.moodleId == 147 || $routeParams.moodleId == 148) {
                             
                             if (activities[i].coursemoduleid == $routeParams.moodleId) {
                                 moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
                                     
+                                    console.log("end parent activity: segundo if");
                                     endParentActivity();
                                 });
                             }
@@ -80,12 +77,14 @@ angular
                                 finishChildCounter++;
                                 
                                 if (finishChildCounter == activities.length) {
+                                    console.log("end parent activity: else - if");
                                     endParentActivity();
                                 }
                             });
                         }
                     }
                 }else{
+                    console.log("end parent activity: else");
                     endParentActivity();
                 }
                
@@ -103,7 +102,8 @@ angular
                                 instanceType: 0,
                                 date: new Date()
                             };
-  
+                            
+                            console.log("asignar estrellas por termino de actividad");
                             moodleFactory.Services.PutStars(model, profile, userToken, function() {
                               updateActivityStatus($routeParams.activityId);
                               _updateRewardStatus();
@@ -114,10 +114,12 @@ angular
                                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
                                 var extraPointsCounter = getForumsExtraPointsCounter();
                                 var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.forumId == $scope.activity.forumid; });
-                                var extraPoints = currentDiscussionCounter? extraPoints = currentDiscussionCounter.extra_replies_counter : extraPoints = 0;
+                                var extraPoints = currentDiscussionCounter? currentDiscussionCounter.extra_replies_counter : 0;
                                 extraPoints *= 50;
-  
-                                updateUserStars($routeParams.activityId, extraPoints);
+                                
+                                if (extraPoints != 0) {
+                                    updateUserForumStars($routeParams.activityId, extraPoints);
+                                }
   
                                 $scope.$emit('HidePreloader');
                                 var activityId = Number($routeParams.activityId);
