@@ -59,6 +59,14 @@ angular
             function validateCabinaDeSoporte(){                
                  
                 var finishCabinaSoporte = localStorage.getItem("finishCabinaSoporte/" + userId);
+                var zone = '/ZonaDeVuelo';                                                            
+
+                if(userCurrentStage == 2){
+                    zone = '/ZonaDeNavegacion';                                    
+                } 
+                else if (userCurrentStage == 3){
+                    zone = '/ZonaDeAterrizaje';                                    
+                }
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
                     var isStarted = _startedActivityCabinaDeSoporte;
@@ -71,21 +79,16 @@ angular
                                 return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
                             });
 
-                            if (latestMessages.length >= 2) {
-                                var zone = '/ZonaDeVuelo';                                                            
-
-                                if(userCurrentStage == 2){
-                                    zone = '/ZonaDeNavegacion';                                    
-                                } 
-                                else if (userCurrentStage == 3){
-                                    zone = '/ZonaDeAterrizaje';                                    
-                                }
+                            if (latestMessages.length >= 2) {                                
                                 localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
                                 _setLocalStorageItem("finishCabinaSoporte/" + userId, 'true');
                                 $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
                             }
                         }   
                     }                
+                }
+                else{                    
+                    $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
                 }
             }            
 
