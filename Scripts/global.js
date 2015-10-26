@@ -333,7 +333,7 @@ var successQuizCallback = function () {
     var currentStage = localStorage.getItem("currentStage");
 
     if (_location) {
-        _location.path(_endActivityCurrentChallenge);
+        _endActivityCurrentChallenge ? _location.path(_endActivityCurrentChallenge) : "";
     }
 };
 
@@ -930,16 +930,17 @@ function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
     extraPoints ? '' : extraPoints = 0;
+    quizPoints ? '' : quizPoints = 0;
 
     var stars = 0;
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
         stars = extraPoints;
     } else {
+
         if (activityIdentifier == "2016") {
             profile.stars = Number(profile.stars) + Number(activity.activities[0].points);
-        }
-        else {
+        } else {
             profile.stars = Number(profile.stars) + Number(activity.points);
             stars = activity.points;
         }
@@ -950,13 +951,39 @@ function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
 
     var data = {
         userId: profile.id,
-        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : stars,
+        stars: activityIdentifier == "2016" ? parseInt(activity.activities[0].points) + Number(extraPoints) : stars,
+        instance: activity.coursemoduleid,
+        instanceType: 0,
+        date: getdate()
+    };
+
+    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
+}
+
+function updateUserForumStars(activityIdentifier, extraPoints) {
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+    var activity = getActivityByActivity_identifier(activityIdentifier);
+
+    var stars = 0;
+    if (extraPoints != 0) {
+        profile.stars = Number(profile.stars) + Number(extraPoints);
+        stars = extraPoints;
+    }
+
+    console.log("Profile stars = " + profile.stars);
+    console.log("Forum stars to assign: " + stars);
+
+    var data = {
+        userId: profile.id,
+        stars: extraPoints,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
     };
     moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
 }
+
 
 function updateUserStarsUsingExternalActivity(activity_identifier) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));

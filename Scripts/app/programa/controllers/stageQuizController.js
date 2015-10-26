@@ -28,6 +28,9 @@ angular
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
             $scope.like_status = 1;
+            $scope.tmpPath = "";
+            var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601];
+            var quizHasOther = [1001, 1005, 1006, 2001, 2023, 3101, 3601];
 
             // ********************************     Models for Quizzes - Stage #1
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial - Etapa 1"
@@ -304,15 +307,10 @@ angular
                     if ($scope.activity_status != 0) {//If the activity is currently finished...
                         activityFinished = true;
 
-                        if ($scope.activity_identifier == '1001' ||
-                            $scope.activity_identifier == '1009' ||
-                            $scope.activity_identifier == '2001' ||
-                            $scope.activity_identifier == '2023' ||
-                            $scope.activity_identifier == '3101' ||
-                            $scope.activity_identifier == '3601') {
-
-                            $scope.setReadOnly = true;  //The Quiz can not be edited
+                        if (nonEditableQuizzes.indexOf($scope.activity_identifier) > -1) {// If the Quiz is non editable, then...
+                            $scope.setReadOnly = true; //The Quiz can not be edited
                         }
+                        
                         console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
                         var localAnswers;
 
@@ -322,22 +320,15 @@ angular
                             localAnswers = JSON.parse(_getItem("activityAnswers/" + parentActivity.coursemoduleid));
                         }
 
-                        //If...the activity quiz has a checkbox for the "Other" answer, then get it from Local Storage
-                        if (( $scope.activity_identifier == '1001' ||
-                            $scope.activity_identifier == '1005' ||
-                            $scope.activity_identifier == '1006' ||
-                            $scope.activity_identifier == '2001' ||
-                            $scope.activity_identifier == '2023' ||
-                            $scope.activity_identifier == '3101' ||
-                            $scope.activity_identifier == '3601')) {
-
+                        // If the Quiz has an "Other" checkbox, then get it from Local Storage.
+                        if (quizHasOther.indexOf($scope.activity_identifier) > -1) {
+                            
                             var localOtrosAnswers;
                             if (childActivity) {
                                 localOtrosAnswers = JSON.parse(_getItem("activityOtrosAnswers/" + childActivity.coursemoduleid));
                             } else {
                                 localOtrosAnswers = JSON.parse(_getItem("activityOtrosAnswers/" + parentActivity.coursemoduleid));
                             }
-
                         }
 
                         $scope.activityFinished = activityFinished;
@@ -614,18 +605,24 @@ angular
 
                     
                     if ($scope.childActivity) {
-                        activityModel.coursemoduleid = $scope.childActivity.coursemoduleid;
+                        //Close the Quiz activity.
                         activityModel.activityType = "Quiz";
+                        activityModel.coursemoduleid = $scope.childActivity.coursemoduleid;                        
 
                         _endActivity(activityModel, function () {
                             updateProfile();
+                            $scope.tmpPath = "";
                         }, destinationPath);
 
+
+
+                        //Close the Assign activity.
                         activityModel.activityType = "Assign";
-                        activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid; //
+                        activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid; 
 
                         _endActivity(activityModel, function () {
                             updateProfile();
+                            $scope.tmpPath = destinationPath;
                         }, destinationPath);
 
                     } else {
@@ -647,21 +644,14 @@ angular
                     }
 
 
-                    //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
-                    if (($scope.activity_identifier == '1001' ||
-                        $scope.activity_identifier == '1005' ||
-                        $scope.activity_identifier == '1006' ||
-                        $scope.activity_identifier == '2001' ||
-                        $scope.activity_identifier == '3101' ||
-                        $scope.activity_identifier == '3601')) {
-
+                    //If the Quiz has an "Other" checkbox, then save it to Local Storage.
+                    if (quizHasOther.indexOf($scope.activity_identifier) > -1) {
                         if ($scope.childActivity) {
                             _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.childActivity.coursemoduleid, $scope.OtroAnswer);
                         } else {
                             _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.parentActivity.coursemoduleid, $scope.OtroAnswer);
                         }
                     }
-
 
                 }, 0);
 
@@ -707,8 +697,7 @@ angular
                             if ($scope.activity_status == 0) {
                                 $scope.activity_status = 1;
                                 console.log("Update Activity Log : " + $scope.activity_identifier);
-                                updateUserStars($scope.parentActivity.activity_identifier);
-                                //updateUserStars($scope.parentActivity.activity_identifier, null, $scope.activityPoints);
+                                updateUserStars($scope.parentActivity.activity_identifier);                                
                             }
 
                             console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
@@ -721,16 +710,25 @@ angular
 
 
                 } else {
-                    console.log("No user Profile Data; destinationPath = " + destinationPath);
-                    console.log(JSON.stringify($scope.userprofile));
+                    console.log("No user Profile Data; destinationPath = " + destinationPath);  
+
                     //Update Activity Log Service
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
                         $scope.activity_status = 1;
                         updateUserStars($scope.parentActivity.activity_identifier);
-                        //updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);  para 2016 unicamente
+
+                        /*
+                        if ($scope.childActivity) {
+                            console.log("Updating user stars for Quiz with child...");                            
+                            updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);  //For 2016 only.
+                        } else {
+                            console.log("Updating user stars for Quiz WITHOUT child...");
+                            updateUserStars($scope.parentActivity.activity_identifier);
+                        } 
+                        */                      
                     }
 
-                    $location.path(destinationPath);
+                    $location.path(destinationPath); 
                 }
 
             }
