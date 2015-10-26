@@ -18,7 +18,7 @@
                 <data-owl-carousel class="owl-carousel">
                     <div owl-carousel-item="" ng-repeat="question in activityObject.questions track by $index" class="item">
 
-                        <!--   -----------------------   BINARY TYPE QUESTION   ------------------------------              -->
+                        <!--      BINARY TYPE QUESTION                 -->
                         <div ng-show="questionTypeCode[$index] == 'binary'" id="{{'binary' + $index}}">
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
                             <section class="form txt-renglon txt-bigger part list">
@@ -38,7 +38,7 @@
                             </section>
                         </div>
 
-                        <!--   -----------------------   MULTICHOICE TYPE QUESTION   ------------------------------              -->
+                        <!--      MULTICHOICE TYPE QUESTION                -->
                         <div ng-show="questionTypeCode[$index] == 'multichoice'" id="{{'multichoice' + $index}}">
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
                             <section class="form txt-renglon txt-bigger part list"
@@ -78,7 +78,7 @@
                             </section>
                         </div>
 
-                        <!--   -----------------------   SIMPLECHOICE TYPE QUESTION   ------------------------------              -->
+                        <!--     SIMPLECHOICE TYPE QUESTION              -->
                         <div ng-show="questionTypeCode[$index] == 'simplechoice'" id="{{'simplechoice' + $index}}">
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
                             <section class="form txt-renglon txt-bigger part list">
@@ -91,7 +91,7 @@
                             </section>
                         </div>
 
-                        <!--   -----------------------   ESSAY TYPE QUESTION   ------------------------------              -->
+                        <!--     ESSAY TYPE QUESTION                -->
                         <div ng-show="questionTypeCode[$index] == 'essay'" id="{{'essay' + $index}}">
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
                             <ul class="block-list clearfix">
@@ -132,7 +132,7 @@
                             </div>
                         </div>
 
-                        <!--   -----------------------   SHORTANSWER TYPE QUESTION   ------------------------------              -->
+                        <!--     SHORTANSWER TYPE QUESTION                 -->
                         <div ng-show="questionTypeCode[$index] == 'shortanswer'" id="{{'shortanswer' + $index}}">
                             <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
                             <ul class="block-list clearfix">
@@ -212,7 +212,7 @@
                     </section>
 
 
-                    <! -- ONLY FOR FINAL EXPLORATIONS --->
+                    <!-- ONLY FOR FINAL EXPLORATIONS -->
                     <section class="txt-renglon pill" ng-show="activityname == 'Exploración final'">
                         <div class="pull-left">Mi puntuación</div>
                         <div class="pull-right green-pill"><span>{{score}}</span><span class="white">/100</span>
@@ -224,7 +224,7 @@
                         <div ng-repeat="question in activityObject.questions track by $index">
 
 
-                            <!--   -----------------------   BINARY TYPE QUESTION   ------------------------------              -->
+                            <!--      BINARY TYPE QUESTION                 -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'binary'">
                                 <div class="txt-renglon panel" ng-class="{collapsed: question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -250,7 +250,7 @@
                                 </div>
                             </div>
 
-                            <!--   -----------------------   SIMPLECHOICE TYPE QUESTION   ------------------------------              -->
+                            <!--      SIMPLECHOICE TYPE QUESTION                -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'simplechoice'">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -272,7 +272,7 @@
                                 </div>
                             </div>
 
-                            <!--   -----------------------   MULTICHOICE TYPE QUESTION   ------------------------------              -->
+                            <!--      MULTICHOICE TYPE QUESTION                 -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'multichoice'">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -293,7 +293,7 @@
                                 </div>
                             </div>
 
-                            <!--   -----------------------   SHORTANSWER TYPE QUESTION   ------------------------------              -->
+                            <!--      SHORTANSWER TYPE QUESTION                 -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'shortanswer'">
                                 <div class="txt-renglon panel" ng-class="{collapsed: question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
@@ -316,7 +316,7 @@
 
                         </div>
                     </section>
-                    <! -- END OF SECTION FOR FINAL EXPLORATIONS --->
+                    <!-- END OF SECTION FOR FINAL EXPLORATIONS -->
 
 
                     <section class="txt-renglon pill" ng-show="activityPoints > 0">

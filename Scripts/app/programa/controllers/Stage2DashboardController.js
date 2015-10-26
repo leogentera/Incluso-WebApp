@@ -237,6 +237,9 @@ angular
                 if(_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
 
+                //Store an Index of the chosen menu item.
+                _setLocalStorageJsonItem("owlQuizCurrentIndex", parentIndex);
+
                 if (url) {
                     var activityId = activity.activity_identifier;
                     var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');

@@ -911,8 +911,8 @@ function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
         stars = extraPoints;
     } else {
-        if (quizPoints > 0) {
-            profile.stars = Number(profile.stars) + Number(quizPoints);
+        if (activityIdentifier == "2016") {
+            profile.stars = Number(profile.stars) + Number(activity.activities[0].points);
         }
         else {
             profile.stars = Number(profile.stars) + Number(activity.points);
@@ -925,7 +925,7 @@ function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
 
     var data = {
         userId: profile.id,
-        stars: quizPoints > 0 ? Number(quizPoints) + Number(extraPoints) : stars,
+        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : stars,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()

@@ -545,11 +545,16 @@ angular
                     if ($scope.activity_status == 0) {
                         $scope.activity_status = 1;
 
-                        if ($scope.childActivity) {console.log($scope.activityPoints);
+                        updateUserStars($scope.parentActivity.activity_identifier);
+
+                        /*    
+                        if ($scope.childActivity) {
+                            console.log("Child Activity; Points = " + $scope.activityPoints);
                             updateUserStars($scope.parentActivity.activity_identifier, null, $scope.activityPoints);
                         } else {
                             updateUserStars($scope.parentActivity.activity_identifier);
                         }
+                        */
                     }
 
                     if ($scope.childActivity) {
@@ -625,13 +630,15 @@ angular
                     console.log("activityModel.others = " + JSON.stringify(activityModel.others));
 
                     if ($scope.childActivity) {
-                        activityModel.coursemoduleid = $scope.childActivity.coursemoduleid;
+                        //Close Quiz activity.
                         activityModel.activityType = "Quiz";
-
+                        activityModel.coursemoduleid = $scope.childActivity.coursemoduleid;   
+                        
                         _endActivity(activityModel, function () {
                             updateProfile();
                         }, destinationPath);
 
+                        //Close Assign activity.
                         activityModel.activityType = "Assign";
                         activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
 
@@ -649,7 +656,7 @@ angular
                     }
 
 
-                }, 500);
+                }, 1);
 
             };
 
@@ -761,7 +768,6 @@ angular
                         },
                         function (responseData) {
                             console.log('Update profile fail...');
-                            //$scope.spinnerVar = false;
                         }
                     );
 
