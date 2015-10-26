@@ -58,7 +58,7 @@ angular
             $rootScope.showStage3Footer = false;
             $scope.genderItems = ['Masculino', 'Femenino'];
             $scope.countryItems = ['México', 'OTRO'];
-            $scope.cityItems = ['México D.F', 'Estado de México', 'OTRO'];
+            $scope.cityItems = $scope.stateItems = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','DF','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas', 'OTRO'];
             $scope.securityquestionItems = ['¿Dónde crecí?','Nombre de mi mejor amigo','Nombre de mi mascota','Personaje favorito','Banda musical favorita'];
             $scope.showPlaceHolder = true;
             
