@@ -297,16 +297,6 @@
 													</div>
 
 													<div class="form-group theme-form">
-														<div class="form-group-control custom-caret-wrapper">
-															<select class="form-control form-control-lg theme-form" ng-model="model.address.city" ng-options="item for item in cityItems"
-															ng-init="model.address.city == null" ng-class="{'selected': model.address.city.length != 0 && model.address.city != null}">
-																<option value="" ng-disabled="!!model.address.city">Ciudad</option>
-															</select>
-															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
-														</div>
-													</div>
-
-													<div class="form-group theme-form">
 														<div class="form-group-control">
 															<input type="text" class="form-control form-control-lg theme-form" placeholder="Municipio / Delegación" ng-model="model.address.town"
 															/>
