@@ -2,8 +2,8 @@
 
 var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
-//var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}"; //Other
-//var API_RESOURCE = "http://moodlemysql01.cloudapp.net/RestfulAPI/RestfulAPI/public/{0}"; //24/10 correo daniela
+//var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; // Production
+
 
 
 var _courseId = 4;
@@ -959,6 +959,31 @@ function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
 
     moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
 }
+
+function updateUserForumStars(activityIdentifier, extraPoints) {
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+    var activity = getActivityByActivity_identifier(activityIdentifier);
+
+    var stars = 0;
+    if (extraPoints != 0) {
+        profile.stars = Number(profile.stars) + Number(extraPoints);
+        stars = extraPoints;
+    }
+
+    console.log("Profile stars = " + profile.stars);
+    console.log("Forum stars to assign: " + stars);
+
+    var data = {
+        userId: profile.id,
+        stars: extraPoints,
+        instance: activity.coursemoduleid,
+        instanceType: 0,
+        date: getdate()
+    };
+    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
+}
+
 
 function updateUserStarsUsingExternalActivity(activity_identifier) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
