@@ -2,8 +2,8 @@
 
 var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
-//var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}"; //Other
-//var API_RESOURCE = "http://moodlemysql01.cloudapp.net/RestfulAPI/RestfulAPI/public/{0}"; //24/10 correo daniela
+//var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; // Production
+
 
 
 var _courseId = 4;
