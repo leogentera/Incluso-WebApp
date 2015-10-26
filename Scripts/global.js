@@ -333,7 +333,7 @@ var successQuizCallback = function () {
     var currentStage = localStorage.getItem("currentStage");
 
     if (_location) {
-        _location.path(_endActivityCurrentChallenge);
+        _endActivityCurrentChallenge ? _location.path(_endActivityCurrentChallenge) : "";
     }
 };
 
@@ -938,8 +938,8 @@ function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
         stars = extraPoints;
     } else {
 
-        if (quizPoints > 0) {
-            profile.stars = Number(profile.stars) + Number(quizPoints);
+        if (activityIdentifier == "2016") {
+            profile.stars = Number(profile.stars) + Number(activity.activities[0].points);
         } else {
             profile.stars = Number(profile.stars) + Number(activity.points);
             stars = activity.points;
@@ -951,11 +951,12 @@ function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
 
     var data = {
         userId: profile.id,
-        stars: quizPoints > 0 ? parseInt(quizPoints) + Number(extraPoints) : stars,
+        stars: activityIdentifier == "2016" ? parseInt(activity.activities[0].points) + Number(extraPoints) : stars,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
     };
+
     moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
 }
 
