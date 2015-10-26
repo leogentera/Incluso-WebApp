@@ -30,7 +30,7 @@ angular
             $scope.like_status = 1;
             $scope.tmpPath = "";
             var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601];
-            var quizHasOther = [1001, 1005, 1006, 2001, 2023, 3101, 3601];
+            var quizHasOther = [1001, 1005, 1006, 2001, 3101, 3601];
 
             // ********************************     Models for Quizzes - Stage #1
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial - Etapa 1"
