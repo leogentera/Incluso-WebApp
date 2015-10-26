@@ -583,31 +583,7 @@ angular
                     // If the Quiz has an "Other" checkbox, then ...
                     if (quizHasOther.indexOf($scope.activity_identifier) > -1) {
                         activityModel.answersResult.others = activityModel.others;
-                    }
-                    /*
-                    switch ($scope.activity_identifier) {
-                        case "1001": //Exploración Inicial - Etapa 1
-                            activityModel.answersResult.others = activityModel.others;
-                            break;
-                        case "1005": //Mis Cualidades - Etapa 1
-                            activityModel.answersResult.others = activityModel.others;
-                            break;
-                        case "1006": //Mis Gustos - Etapa 1
-                            activityModel.answersResult.others = activityModel.others;
-                            break;
-                        case "2001": //Exploración Inicial - Etapa 2
-                            activityModel.answersResult.others = activityModel.others;
-                            break;
-                        case "3101": //Exploración Inicial - Etapa 3
-                            activityModel.answersResult.others = activityModel.others;
-                            break;
-                        case "3601": //Exploración Final - Etapa 3
-                            activityModel.answersResult.others = activityModel.others;
-                            break;
-                        default:
-                            break;
-                    }
-                    */
+                    }                   
 
                     
                     if ($scope.childActivity) {
@@ -617,7 +593,6 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                            $scope.tmpPath = "";
                         }, destinationPath);
 
 
@@ -628,7 +603,6 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                            $scope.tmpPath = destinationPath;
                         }, destinationPath);
 
                     } else {
@@ -718,7 +692,7 @@ angular
                 } else {
                     console.log("No user Profile Data; destinationPath = " + destinationPath);  
 
-                    //Update Activity Log Service
+                    //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
                         $scope.activity_status = 1;
                         updateUserStars($scope.parentActivity.activity_identifier);
