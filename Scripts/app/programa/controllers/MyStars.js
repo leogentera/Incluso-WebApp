@@ -41,17 +41,29 @@ angular
                     for(var k= 0; k < currentChallenge.activities.length; k++){
                         if (currentChallenge.activities[k].status == 1) {
                             var activity = currentChallenge.activities[k];
-                            var subActivitiesPoints = 0;
-                            //Adding current date if date is null
-                            var dateupdate = new Date();
                             if(activity.last_status_update){
+                                console.log(activity.last_status_update);
                                 activity.last_status_update = activity.last_status_update*1000; 
                             }else{
-                                activity.last_status_update = dateupdate.getTime();
+                                //activity.last_status_update = dateupdate.getTime();
+                                                                                            
+                                if (activity.activities && activity.activities.length > 0) {
+                                    var currentDate = 0;
+                                    for(var i = 0; i < activity.activities.length; i++ ){
+                                        console.log(activity.activities[i].last_status_update * 1000);
+                                        if (activity.activities[i].status == 1) {
+                                            if (currentDate < activity.activities[i].last_status_update) {
+                                                currentDate = activity.activities[i].last_status_update;
+                                            }
+                                        }
+                                    }
+                                    activity.last_status_update = currentDate * 1000;
+                                }
                             }
                             
                             //Add subactivity points when exists
                             if (activity.activities && activity.activities.length > 0) {
+                                var subActivitiesPoints = 0;
                                 for(var i = 0; i < activity.activities.length; i++ ){
                                     if (activity.activities[i].status == 1) {
                                         subActivitiesPoints += activity.activities[i].points;                                        
