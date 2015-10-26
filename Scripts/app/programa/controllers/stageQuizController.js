@@ -97,78 +97,7 @@ angular
             };
 
             //$scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
-
-            /*
-             $scope.addCaptureField = function (value, checked) {
-             alert(value);
-             if (checked) {//The checkbox is checked
-
-             //addHeightForOther();
-
-             //Original
-             switch (value) {
-             case "cualidades1":
-             $('#textoarea1').attr('readonly', false);
-             break;
-             case "cualidades2":
-             $('#textoarea2').attr('readonly', false);
-             break;
-             case "cualidades3":
-             $('#textoarea2').attr('readonly', false);
-             break;
-             case "gustos1":
-             $('#textoarea1').attr('readonly', false);
-             break;
-             case "gustos2":
-             $('#textoarea2').attr('readonly', false);
-             break;
-             case "gustos3":
-             $('#textoarea3').attr('readonly', false);
-             break;
-             default:
-             console.log('Unknow textArea');
-             }
-             } else {//The user unchecks the 'Other' checkbox.
-             //reduceHeightForOther();
-
-             switch (value) {
-             case "cualidades1":
-             var index = $scope.userprofile.talents.indexOf($scope.OtroAnswers[0].answers[0]);
-             $scope.userprofile.talents.splice(index, 1);
-             $scope.OtroAnswers[0].answers[0] = '';
-             break;
-             case "cualidades2":
-             var index = $scope.userprofile.values.indexOf($scope.OtroAnswers[1].answers[0]);
-             $scope.userprofile.values.splice(index, 1);
-             $scope.OtroAnswers[1].answers[0] = '';
-             break;
-             case "cualidades3":
-             var index = $scope.userprofile.habilities.indexOf($scope.OtroAnswers[2].answers[0]);
-             $scope.userprofile.habilities.splice(index, 1);
-             $scope.OtroAnswers[2].answers[0] = '';
-             break;
-             case "gustos1":
-             var index = $scope.userprofile.favoriteSports.indexOf($scope.OtroAnswers[0].answers[0]);
-             $scope.userprofile.favoriteSports.splice(index, 1);
-             $scope.OtroAnswers[0].answers[0] = '';
-             break;
-             case "gustos2":
-             var index = $scope.userprofile.artisticActivities.indexOf($scope.OtroAnswers[1].answers[0]);
-             $scope.userprofile.artisticActivities.splice(index, 1);
-             $scope.OtroAnswers[1].answers[0] = '';
-             break;
-             case "gustos3":
-             var index = $scope.userprofile.hobbies.indexOf($scope.OtroAnswers[2].answers[0]);
-             $scope.userprofile.hobbies.splice(index, 1);
-             $scope.OtroAnswers[2].answers[0] = '';
-             break;
-             default:
-             console.log('Unknow textArea');
-             }
-             }
-             };
-
-             */
+            
 
             //****************************************  STARTING POINT **************************************************
 
