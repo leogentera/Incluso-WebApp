@@ -143,7 +143,7 @@ angular
                             $('#textoarea3').attr('readonly', false);
                             break;
                         default:
-                            console.log('Unknow textArea');
+                            console.log('----------');
                     }
                 } else {
                     reduceHeightForOther();
@@ -180,13 +180,12 @@ angular
                             $scope.misGustosOtroAnswers[2].answers[0] = '';
                             break;
                         default:
-                            console.log('Unknow textArea');
+                            console.log('----------');
                     }
                 }
             };
 
-            //****************************************  STARTING POINT **************************************************
-            
+            //****************************************  STARTING POINT **************************************************            
             $scope.openModal();
             getDataAsync();
             
