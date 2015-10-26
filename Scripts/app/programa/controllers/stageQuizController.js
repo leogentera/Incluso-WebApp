@@ -580,6 +580,11 @@ angular
                     activityModel.answersResult.dateStart = activityModel.startingTime;
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
 
+                    // If the Quiz has an "Other" checkbox, then ...
+                    if (quizHasOther.indexOf($scope.activity_identifier) > -1) {
+                        activityModel.answersResult.others = activityModel.others;
+                    }
+                    /*
                     switch ($scope.activity_identifier) {
                         case "1001": //Exploración Inicial - Etapa 1
                             activityModel.answersResult.others = activityModel.others;
@@ -602,6 +607,7 @@ angular
                         default:
                             break;
                     }
+                    */
 
                     
                     if ($scope.childActivity) {
