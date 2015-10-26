@@ -102,7 +102,7 @@ angular
                     alreadyCommented.replies_counter++;
                     alreadyCommented.replies_counter > 2? addExtraForumParticipation($scope.currentActivity.forumid) : '';
                 } else {
-                    forumsCommentsCountCollection.push({'discussion_id': $scope.discussion.id, 'replies_counter':1})
+                    forumsCommentsCountCollection.push({'discussion_id': $scope.discussion.id, 'replies_counter':1});
                 }
 
                 localStorage.setItem('currentForumsProgress/' + localStorage.getItem("userId"), JSON.stringify(forumsCommentsCountCollection));
@@ -226,8 +226,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": parentId,
                     "message": message,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": postType,
                     "fileToUpload":""
                 };
@@ -269,8 +269,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": message,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": postType,
                     "fileToUpload": attachment? attachment.base64 : null
                 };
@@ -347,8 +347,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": '',
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss'),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": 4,
                     "filecontent":$scope.attachmentToPost.image,
                     "filename": userId + $scope.attachmentToPost.fileName,
@@ -377,6 +377,8 @@ angular
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                 
                 moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
+                
+                forceUpdateForumProgress($scope.discussion.id);
             }
             
             function getPostsDataCallback(data, key) {
@@ -437,6 +439,15 @@ angular
             };
 
             getTopicData();
+            
+            function forceUpdateForumProgress(discussionId) {
+                if (sessionStorage.getItem("updateForumProgress/" + discussionId) != null) {
+                    sessionStorage.removeItem("updateForumProgress/" + discussionId);
+                    
+                    updateForumProgress();
+                    checkForumProgress(refreshTopicData);
+                }
+            }
             
             $scope.showPreviousComments = function(postId) {
             
