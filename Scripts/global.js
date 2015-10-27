@@ -908,7 +908,7 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
     if (stars > 0) {
         var data = {
             userId: profile.id,
-            stars: stars + parentActivity.points,
+            stars: stars,
             instance: parentActivity.coursemoduleid,
             instanceType: 0,
             date: getdate()
