@@ -31,6 +31,7 @@ angular
             $scope.tmpPath = "";
             var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601];
             var quizHasOther = [1001, 1005, 1006, 2001, 3101, 3601];
+            var goBackToDashboard = false;
 
             // ********************************     Models for Quizzes - Stage #1
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial - Etapa 1"
@@ -593,9 +594,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        }, destinationPath);
-
-
+                        });
 
                         //Close the Assign activity.
                         activityModel.activityType = "Assign";
@@ -603,15 +602,15 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        }, destinationPath);
+                        });
 
                     } else {
-                        activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
                         activityModel.activityType = "Quiz";
+                        activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;                        
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        }, destinationPath);
+                        });
                     }
 
 
@@ -632,6 +631,9 @@ angular
                             _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.parentActivity.coursemoduleid, $scope.OtroAnswer);
                         }
                     }
+
+                    //console.log("Redirecting to Dashboard; destinationPath = " + destinationPath);
+                    //$location.path(destinationPath); 
 
                 }, 0);
 
@@ -690,17 +692,17 @@ angular
 
 
                 } else {
-                    console.log("No user Profile Data; destinationPath = " + destinationPath);  
+                    console.log("No user Profile Data");  
 
                     //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
                         $scope.activity_status = 1;
-                        updateUserStars($scope.parentActivity.activity_identifier);
+                        updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);
 
                         /*
-                        if ($scope.childActivity) {
+                        if ($scope.childActivity) {  //For 2016 only.
                             console.log("Updating user stars for Quiz with child...");                            
-                            updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);  //For 2016 only.
+                            updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);  
                         } else {
                             console.log("Updating user stars for Quiz WITHOUT child...");
                             updateUserStars($scope.parentActivity.activity_identifier);
@@ -708,7 +710,9 @@ angular
                         */                      
                     }
 
-                    $location.path(destinationPath); 
+                    console.log("Redirecting to Dashboard: " + destinationPath);
+                    $location.path(destinationPath);                   
+                    
                 }
 
             }
