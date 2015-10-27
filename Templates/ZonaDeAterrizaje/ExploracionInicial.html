@@ -56,7 +56,7 @@
                         <div>
                             <div class="txt-renglon txt-bigger">3. Para emprender un negocio ¿qué es importante considerar? Puedes elegir más de una:
                             </div>
-                            <section class="form txt-renglon txt-bigger part list">
+                            <section id="explInicialOtro" class="form txt-renglon txt-bigger part list">
                                 <input id="check4" type="checkbox" value="check4" name="check"
                                        ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[2][0]" ng-disabled="setReadOnly"/>
@@ -86,7 +86,7 @@
                                        ng-true-value="1" ng-false-value="0"
                                        ng-model="exploracionInicialStage3[2][5]" ng-disabled="setReadOnly"
                                        ng-change="exploracionInicialStage3OtroAnswers[0].answers[0] = exploracionInicialStage3[2][5] == false ? '' : exploracionInicialStage3OtroAnswers[0].answers[0]"
-                                       ng-click="addCaptureField(exploracionInicialStage3[2][5])"/>
+                                       ng-click="addCaptureField('explInicialOtro', exploracionInicialStage3[2][5])"/>
                                 <label for="check9">Otro</label>
 
                                 <div class="form-group theme-form" ng-show="exploracionInicialStage3[2][5]">
@@ -199,7 +199,7 @@
                     <h3 class="subtitle text-center">Exploración inicial</h3>
 
                     <p class="txt-renglon centered">
-                        Explora más de ti y de tu visión emprendedora
+                        {{message}}
                     </p>
                 </div>
             </div>

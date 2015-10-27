@@ -15,7 +15,6 @@ angular
             _timeout = $timeout;
             $scope.scrollToTop();
             $scope.model = getDataAsync();
-            $scope.$emit('ShowPreloader');
             $scope.currentPage = 1;
             $scope.loading = false;
             $rootScope.pageName = "Guia de uso"
@@ -45,17 +44,16 @@ angular
 
             function getDataAsync() {
 
-                moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), getAvatarInfoCallback);
                 var m = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 if (!m) {
                     $location.path('/');
                     return "";
                 }
+                $scope.$emit('HidePreloader');
 
                 return m;
             }
 
-            function getAvatarInfoCallback(){
                $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
                if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
                    $scope.avatarInfo = [{
@@ -74,8 +72,7 @@ angular
                        "imagen_recortada": "",
                    }];             
                }
-               $scope.$emit('HidePreloader');
-            }
+
 
             
           $scope.playVideo = function(videoAddress, videoName){                 

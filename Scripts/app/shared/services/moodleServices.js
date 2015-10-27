@@ -141,6 +141,8 @@
         };
 
         var _getAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
+            _getDeviceVersionAsync();
+            
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
@@ -161,6 +163,7 @@
         };
         
         var _getAsyncForumDiscussionsData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
+            _getDeviceVersionAsync();
             
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
@@ -187,6 +190,7 @@
         };
 
         var _getForumAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
+            _getDeviceVersionAsync();
 
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
@@ -209,6 +213,8 @@
         };
 
         var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
+            _getDeviceVersionAsync();
+            
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
@@ -229,6 +235,8 @@
         };
 
         var _postAsyncData = function (key, data, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'POST',
                 url: url,
@@ -250,6 +258,8 @@
         };
 
         var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'PUT',
                 url: url,
@@ -265,6 +275,8 @@
         };
 
         var _putDataNoCache = function (data, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'PUT',
                 url: url,
@@ -280,6 +292,7 @@
         };
 
         var _putAsyncStars = function (key, dataModel, profile, url, token, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
 
             //avoid sending null stars
             dataModel["stars"] = dataModel.stars ? dataModel.stars : 0;
@@ -299,6 +312,8 @@
         };
 
         var _putAsyncFirstTimeInfo = function (userId, dataModel, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'PUT',
                 url: API_RESOURCE.format('usercourse/' + userId),
@@ -309,24 +324,11 @@
             }).error(function (data, status, headers, config) {
                 errorCallback();
             });
-        };    
-
-        // var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
-        //     _httpFactory({                
-        //        method: 'PUT',
-        //        url: url,        
-        //        data: data,       
-        //        headers: {'Content-Type': 'application/json', 'Authorization': token},
-        //        }).success(function(data, status, headers, config) {
-        //            _setLocalStorageJsonItem(key,activityModel);
-        //            successCallback();
-        //        }).error(function(data, status, headers, config) {
-        //            _setLocalStorageJsonItem(key,activityModel);
-        //            errorCallback();
-        //    });
-        // };
+        };
         
         var _endActivity = function (key, data, userCourseModel, url, token, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'PUT',
                 url: url,
@@ -342,6 +344,8 @@
         };
 
         var _startActivity = function (data, activityModel, token, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'PUT',
                 url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),

@@ -144,6 +144,7 @@ angular
 
             $scope.downloadGame = function () {
                 var r = createRequest();
+                
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
@@ -319,6 +320,7 @@ angular
                                             $scope.isShareCollapsed = false;
                                             $scope.showSharedAlbum = true;
                                             $scope.$emit('HidePreloader');
+                                            sessionStorage.setItem("updateForumProgress/" + discussion.id , "1");
                                             $location.path('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/' + discussion.discussion);
                                         },
                                         function(){
