@@ -203,10 +203,10 @@ angular
             function getDataAsync() {
                 startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
-                $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
+                $scope.activity_identifier = parseInt($location.path().split("/")[$location.path().split("/").length - 1]);
                 //console.log("Activity identifier: " + $scope.activity_identifier);
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
-                //console.log("parentActivity = " + parentActivity);
+                console.log("parentActivity = " + parentActivity);
                 var childActivity = null;
 
                 if (parentActivity.activities) {
@@ -600,7 +600,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        });
+                        }, destinationPath);
 
                         //Close the Assign activity.
                         activityModel.activityType = "Assign";
@@ -608,7 +608,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        });
+                        }, destinationPath);
 
                     } else {
                         activityModel.activityType = "Quiz";
@@ -616,7 +616,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        });
+                        }, destinationPath);
                     }
 
 
@@ -636,10 +636,7 @@ angular
                         } else {
                             _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.parentActivity.coursemoduleid, $scope.OtroAnswer);
                         }
-                    }
-
-                    //console.log("Redirecting to Dashboard; destinationPath = " + destinationPath);
-                    //$location.path(destinationPath); 
+                    }                    
 
                 }, 0);
 
@@ -661,11 +658,12 @@ angular
                     if ($scope.misCualidadesOtroAnswers[2].answers[0] != '') {
                         $scope.userprofile.habilities.push($scope.misCualidadesOtroAnswers[2].answers[0]);
                     }
-/*
+
 
                     console.log("Otro 1: " + $scope.misGustosOtroAnswers[0].answers[0]);
                     console.log("Otro 2: " + $scope.misGustosOtroAnswers[1].answers[0]);
                     console.log("Otro 3: " + $scope.misGustosOtroAnswers[2].answers[0]);
+                    
                     if ($scope.misGustosOtroAnswers[0].answers[0] != "") {
                         $scope.userprofile.favoriteSports.push($scope.misGustosOtroAnswers[0].answers[0]);
                     }
@@ -676,14 +674,14 @@ angular
 
                     if ($scope.misGustosOtroAnswers[2].answers[0] != "") {
                         $scope.userprofile.hobbies.push($scope.misGustosOtroAnswers[2].answers[0]);
-                    };
-                    */
-                    alert("sending petition");
+                    };                   
+                    
 
                     $scope.userId = moodleFactory.Services.GetCacheObject("userId");
+                    console.log("sending petition " + $scope.userId);
                     moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
-                        function (responseData) {alert("response received");
+                        function (responseData) {
                             console.log('Update profile successful...');
                             console.log('This activity has ' + $scope.activityPoints);
 

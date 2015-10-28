@@ -853,7 +853,7 @@ angular
                                 break;
                         }
 
-                        console.log("Field Validation: " + result +  ", startingTime = " + startingTime);
+                        
                         if (result) {alert("Inside Result");
 
                             $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
@@ -891,7 +891,7 @@ angular
                             //Finish Activity.
                             _endActivity(activityModel);
 
-                            result = false;
+                            result = false;  //Restore 'result' value
                         }
                     }
                 }
@@ -1080,6 +1080,7 @@ angular
                 
             };
 
+            // ######################  Methods to add / delete data
 
             $scope.addStudy = function () {
                 $scope.model.studies.push({});
@@ -1266,6 +1267,8 @@ angular
             $scope.deleteFamiliaCompartamos = function (index) {
                 $scope.model.familiaCompartamos.splice(index, 1);
             };
+
+            //  ###########################################################################
 
             encodeImageUri = function (imageUri, callback) {
                 var c = document.createElement('canvas');
