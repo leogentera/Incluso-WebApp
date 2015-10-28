@@ -203,7 +203,7 @@ angular
             function getDataAsync() {
                 startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
-                $scope.activity_identifier = parseInt($location.path().split("/")[$location.path().split("/").length - 1]);
+                $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
                 //console.log("Activity identifier: " + $scope.activity_identifier);
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
                 console.log("parentActivity = " + parentActivity);
