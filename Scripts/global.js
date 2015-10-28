@@ -1,6 +1,7 @@
 //global variables
 
-var DRUPAL_API_RESOURCE = "http://incluso.definityfirst.com/content.php?node={0}"; /* Nora */
+//var DRUPAL_API_RESOURCE = "http://incluso.definityfirst.com/content.php?node={0}"; /* Nora */
+var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
 
 var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";          // Nora
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
