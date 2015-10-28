@@ -643,7 +643,7 @@ angular
             };
 
 
-            function updateProfile() {alert("update profile");
+            function updateProfile() {
 
                 if ($scope.activity_identifier == "1005" || $scope.activity_identifier == "1006") {
 
@@ -657,12 +657,7 @@ angular
 
                     if ($scope.misCualidadesOtroAnswers[2].answers[0] != '') {
                         $scope.userprofile.habilities.push($scope.misCualidadesOtroAnswers[2].answers[0]);
-                    }
-
-
-                    console.log("Otro 1: " + $scope.misGustosOtroAnswers[0].answers[0]);
-                    console.log("Otro 2: " + $scope.misGustosOtroAnswers[1].answers[0]);
-                    console.log("Otro 3: " + $scope.misGustosOtroAnswers[2].answers[0]);
+                    }                   
                     
                     if ($scope.misGustosOtroAnswers[0].answers[0] != "") {
                         $scope.userprofile.favoriteSports.push($scope.misGustosOtroAnswers[0].answers[0]);
