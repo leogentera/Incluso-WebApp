@@ -52,10 +52,12 @@ angular
             $scope.misCualidadesOtroAnswers = [{
                 "questionid": 16,
                 "answers": ['']
-            }, {
+            }, 
+            {
                 "questionid": 17,
                 "answers": ['']
-            }, {
+            }, 
+            {
                 "questionid": 18,
                 "answers": ['']
             }];
@@ -64,16 +66,17 @@ angular
             $scope.misGustosOtroAnswers = [{
                 "questionid": 43,
                 "answers": ['']
-            }, {
+            }, 
+            {
                 "questionid": 44,
                 "answers": ['']
-            }, {
+            }, 
+            {
                 "questionid": 45,
                 "answers": ['']
             }];
 
             $scope.misSuenosAnswers = [[], [], []];
-            //$scope.exploracionFinal = ['', '', '', '', ''];
             $scope.exploracionFinal = [null, null, null, null, null];
 
             // ********************************  Models for Quizzes - Stage #2
@@ -643,7 +646,7 @@ angular
             };
 
 
-            function updateProfile() {
+            function updateProfile() {alert("update profile");
 
                 if ($scope.activity_identifier == "1005" || $scope.activity_identifier == "1006") {
 
@@ -658,23 +661,29 @@ angular
                     if ($scope.misCualidadesOtroAnswers[2].answers[0] != '') {
                         $scope.userprofile.habilities.push($scope.misCualidadesOtroAnswers[2].answers[0]);
                     }
+/*
 
-                    if ($scope.misGustosOtroAnswers[0].answers[0] != '') {
+                    console.log("Otro 1: " + $scope.misGustosOtroAnswers[0].answers[0]);
+                    console.log("Otro 2: " + $scope.misGustosOtroAnswers[1].answers[0]);
+                    console.log("Otro 3: " + $scope.misGustosOtroAnswers[2].answers[0]);
+                    if ($scope.misGustosOtroAnswers[0].answers[0] != "") {
                         $scope.userprofile.favoriteSports.push($scope.misGustosOtroAnswers[0].answers[0]);
                     }
 
-                    if ($scope.misGustosOtroAnswers[1].answers[0] != '') {
+                    if ($scope.misGustosOtroAnswers[1].answers[0] != "") {
                         $scope.userprofile.artisticActivities.push($scope.misGustosOtroAnswers[1].answers[0]);
                     }
 
-                    if ($scope.misGustosOtroAnswers[2].answers[0] != '') {
+                    if ($scope.misGustosOtroAnswers[2].answers[0] != "") {
                         $scope.userprofile.hobbies.push($scope.misGustosOtroAnswers[2].answers[0]);
-                    }
+                    };
+                    */
+                    alert("sending petition");
 
                     $scope.userId = moodleFactory.Services.GetCacheObject("userId");
                     moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
-                        function (responseData) {
+                        function (responseData) {alert("response received");
                             console.log('Update profile successful...');
                             console.log('This activity has ' + $scope.activityPoints);
 
@@ -700,7 +709,7 @@ angular
                     //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
                         $scope.activity_status = 1;
-                        updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);
+                        updateUserStars($scope.parentActivity.activity_identifier);
 
                         /*
                         if ($scope.childActivity) {  //For 2016 only.
@@ -993,11 +1002,12 @@ angular
 
                 var validatedAnswers = [0, 0, 0];
                 var validateOther = [0, 0, 0];
+                var a, b;
 
-                for (var a = 0; a < $scope.misGustosAnswers.length; a++) {
+                for (a = 0; a < $scope.misGustosAnswers.length; a++) {
                     var cont = $scope.misGustosAnswers[a].length;  //It should be equal to 12
 
-                    for (var b = 0; b < cont; b++) { //Only the first 11 checkboxes
+                    for (b = 0; b < cont; b++) { //Only the first 11 checkboxes
                         var checked = $scope.misGustosAnswers[a][b];
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
@@ -1010,7 +1020,7 @@ angular
                     if ($scope.misGustosAnswers[a][10] == true) {
                         //Get rid from carriage return
 
-                        if ($scope.misGustosOtroAnswers[a].answers[0] != '') {
+                        if ($scope.misGustosOtroAnswers[a].answers[0] != "") {
                             $scope.misGustosOtroAnswers[a].answers[0] = $scope.misGustosOtroAnswers[a].answers[0].replace(/\r?\n|\r/g, " ").trim();
                             validateOther[a] = 1;
                         } else {
