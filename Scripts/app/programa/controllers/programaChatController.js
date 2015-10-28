@@ -20,7 +20,7 @@ angular
             var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte/" + userId));
             var userCurrentStage = localStorage.getItem("currentStage");
             console.log(userCurrentStage);
-            var messagesToRead = userCurrentStage * 2;
+            //var messagesToRead = userCurrentStage * 2;
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
             $scope.currentMessage = "";
@@ -69,7 +69,7 @@ angular
                 }
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
-                    var isStarted = _startedActivityCabinaDeSoporte;
+                    var isStarted = _startedActivityCabinaDeSoporte;                    
                     var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);    
 
                         if (!currentActivity.status) {
@@ -81,14 +81,14 @@ angular
 
                             if (latestMessages.length >= 2) {                                
                                 localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
-                                _setLocalStorageItem("finishCabinaSoporte/" + userId, 'true');
+                                _setLocalStorageItem("finishCabinaSoporte/" + userId, _startedActivityCabinaDeSoporte.activity_identifier);
                                 $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
                             }
                         }   
                     }                
                 }
                 else{                    
-                    $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
+                    $location.path(zone +'/CabinaDeSoporte/' + finishCabinaSoporte);
                 }
             }            
 
@@ -155,15 +155,15 @@ angular
                             return messages.messagesenderid != userId;
                         });
 
-                    _.each(messagesFlow, function(m, i){
-                        if(i > 0 && m && m != messagesFlow[i - 1]){
-                            messagesInterchange++;
-                        }
-                    });
+                    // _.each(messagesFlow, function(m, i){
+                    //     if(i > 0 && m && m != messagesFlow[i - 1]){
+                    //         messagesInterchange++;
+                    //     }
+                    // });
 
-                    if (messagesInterchange >= messagesToRead) {
-                        _setLocalStorageItem("finishCabinaSoporte/" + _getItem("userId"), "true");
-                    }
+                    // if (messagesInterchange >= messagesToRead) {
+                    //     _setLocalStorageItem("finishCabinaSoporte/" + _getItem("userId"), "true");
+                    // }
                                                     
                     if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
                         _setLocalStorageItem('chatRead',"false");
