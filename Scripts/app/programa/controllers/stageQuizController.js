@@ -32,6 +32,8 @@ angular
             var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601];
             var quizHasOther = [1001, 1005, 1006, 2001, 3101, 3601];
             var goBackToDashboard = false;
+            var startingTime;
+            var endingTime;
 
             // ********************************     Models for Quizzes - Stage #1
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial - Etapa 1"
@@ -196,7 +198,7 @@ angular
 
             //***********************************************************************************************************
             function getDataAsync() {
-                $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
+                startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
                 //console.log("Activity identifier: " + $scope.activity_identifier);
@@ -567,13 +569,14 @@ angular
                         updateActivityStatusDictionary($scope.parentActivity.activity_identifier);
                     }
 
+                    endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
                     var activityModel = {
                         "usercourse": updatedActivityOnUsercourse,
                         "answersResult": $scope.AnswersResult,
                         "userId": $scope.userprofile.id,
-                        "startingTime": $scope.startingTime,
-                        "endingTime": $scope.startingTime = moment().format('YYYY-MM-DD HH:mm:ss'),
+                        "startingTime": startingTime,
+                        "endingTime": endingTime,  // $scope.startingTime = moment().format('YYYY-MM-DD HH:mm:ss'),
                         "token": $scope.currentUser.token,
                         "others": $scope.OtroAnswer
                     };
@@ -711,11 +714,10 @@ angular
                     }
 
                     console.log("Redirecting to Dashboard: " + destinationPath);
-                    $location.path(destinationPath);                   
-                    
+                    $location.path(destinationPath); 
                 }
 
-            }
+            }           
 
 
             $scope.toggleSelection = function toggleSelection(stringValue, isChecked, questionArray) {
