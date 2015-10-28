@@ -495,7 +495,7 @@ var logStartActivityAction = function(activityId, timeStamp) {
                  console.log("global");
                 var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
                 
-                if (localStorage.getItem(key) == null && !treeActivity.status) {
+                if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
                     _setLocalStorageJsonItem(key, {
                         datestarted: getdate(),
                         coursemoduleid: treeActivity.coursemoduleid,
