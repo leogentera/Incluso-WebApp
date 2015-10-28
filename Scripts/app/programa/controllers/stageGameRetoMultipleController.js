@@ -216,7 +216,6 @@ angular
                                     completedActivities.completed > 1;
 
                 //save response
-                debugger;
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivityIdentifier = $routeParams.moodleid;
                 var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
