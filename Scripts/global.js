@@ -1,7 +1,7 @@
 //global variables
 
 var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
-//var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
+//var API_RESOURCE = "http://definityincluso.cloudapp.net:82/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Azure Development environment
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; // Production
 
 
@@ -495,7 +495,7 @@ var logStartActivityAction = function(activityId, timeStamp) {
                  console.log("global");
                 var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
                 
-                if (localStorage.getItem(key) == null && !treeActivity.status) {
+                if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
                     _setLocalStorageJsonItem(key, {
                         datestarted: getdate(),
                         coursemoduleid: treeActivity.coursemoduleid,
