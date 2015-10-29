@@ -11,6 +11,10 @@
         "2015": 29, /* Zona de Navegación - Proyecta tu vida - Fuente de energía  */
         "3201": 33, /* Zona de Aterrizaje - Cuarto de recursos - Fuente de energía */
         "3301": 34, /* Zona de Aterrizaje - Educación Financiera - Fuente de energía */
+        "1039": 78, /*Zona de Vuelo - Conócete - Reto Múltiple*/
+        "1039results": 79, /*Zona de Vuelo - Conócete - Reto Múltiple Resultados*/
+        "3303": 80, /*Zona de Aterrizaje - Educación Financiera - Multiplica tu dinero*/
+        "3303results": 81, /*Zona de Aterrizaje - Educación Financiera - Multiplica tu dinero - Resultados*/
         "3401": 35, /* Zona de Aterrizaje - Mapa del Emprendedor - Fuente de energía */
         "7001": 26, /* Profile */
         "3000": 45, /* Zona de Vuelo - Dashboard */
@@ -19,7 +23,15 @@
         "PrivacyNotice": 37, /* No tiene activity identifier */
         "AlertsDetail": 23, /* General - Detalle Notificación */
         "Alerts": 24, /* General - Notificaciones*/
-        "compartir-experiencia": 68 /* General - Compartir experiencia */
+        "compartir-experiencia": 68, /* General - Compartir experiencia */
+        "TermsAndConditions": 44, /*General - Términos y condiciones*/
+        "Recognition": 73, /*General - Reconocimiento*/
+        "Album": 72, /*General - Album*/
+        "MyStars": 72, /*General - Mis Estrellas*/
+        "Profile": 70, /*General - Perfil*/
+        "HallOfFame": 42,  /*General - Salón de la Fama*/
+        "FAQS":41 /*General - FAQS*/
+
     };
 
     drupalFactory.Services = (function () {

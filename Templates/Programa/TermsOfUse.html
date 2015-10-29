@@ -133,13 +133,13 @@
               <p>
                 Al utilizar los Servicios de la Plataforma o al acceder a ellos, nos permites recopilar y usar tu contenido e información de acuerdo con nuestras políticas y Aviso de Privacidad, que se actualiza periódicamente.
               </p>
-                <div class="checkbox checkbox-custom change-of-term hide">
+                <div class="checkbox checkbox-custom change-of-term" ng-show="showCheckbox">
                     <label>
-                        <input type="checkbox"  name="termsAndConditions" class="ng-pristine ng-untouched ng-valid"> 
+                        <input type="checkbox"  name="termsAndConditions" class="ng-pristine ng-untouched ng-valid" ng-model="acceptsNewTerms" ng-change="changeButton()">
                         <span>Acepto los términos y condiciones</span>
                     </label>
                 </div>
-              <a role="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="navigateTo('ProgramaDashboard', 'sideToggle')">Regresar</a> 
+                <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="accepted ? navigateTo('ProgramaDashboard', 'sideToggle'):processNewTerms()">{{ termsButtonText }}</a>
         </section>
       </div>
     </article>

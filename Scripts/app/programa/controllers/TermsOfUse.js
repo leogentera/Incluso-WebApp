@@ -20,5 +20,39 @@ angular
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
             }
+
+            $scope.$emit('ShowPreloader'); //show preloader
+
+            $scope.profile = JSON.parse(localStorage.getItem("profile/"+localStorage.getItem("userId")));
+            $scope.profile.termsAndConditions=true;
+            $scope.accepted = $scope.profile.termsAndConditions;
+
+            $scope.showCheckbox = !$scope.accepted;
+            $scope.acceptsNewTerms = $scope.accepted;
+            $scope.termsButtonText = $scope.accepted? "Regresar" : "Salir";
             $scope.$emit('HidePreloader'); //hide preloader
+            $scope.profile = null; //profile is not used in this page terms acceptance
+
+
+            $scope.processNewTerms = function()
+            {
+                if(!$scope.acceptsNewTerms)
+                    logout($scope, $location);
+                else
+                {
+                    //send new data to server
+                    $scope.navigateTo('ProgramaDashboard');
+                }
+
+            }
+
+            $scope.changeButton = function()
+            {
+                if($scope.acceptsNewTerms)
+                    $scope.termsButtonText =  "Continuar";
+                else
+                    $scope.termsButtonText = "Salir";
+            }
+
+
 }]);
