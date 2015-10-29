@@ -204,9 +204,9 @@ angular
                 startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
-                //console.log("Activity identifier: " + $scope.activity_identifier);
+                console.log("Activity identifier: " + $scope.activity_identifier);
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
-                console.log("parentActivity = " + parentActivity);
+                //console.log("parentActivity = " + parentActivity);
                 var childActivity = null;
 
                 if (parentActivity.activities) {
@@ -308,7 +308,7 @@ angular
                     $scope.parentActivity = parentActivity;
                     $scope.childActivity = childActivity;
 
-                    console.log("Starting... " + parentActivity.sectionname);
+                    console.log("Starting... " + parentActivity.activityname);
 
                     if ($scope.activity_status != 0) {//If the activity is currently finished...
                         activityFinished = true;
@@ -495,9 +495,7 @@ angular
                     }
 
                     $scope.isDisabled = true;
-                    //    updateUserStars($scope.parentActivity.activity_identifier);
-                    //    //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
-
+                    
                     if ($scope.childActivity) {
                         $scope.AnswersResult.activityidnumber = $scope.childActivity.coursemoduleid;
                     } else {
@@ -647,15 +645,15 @@ angular
 
                 if ($scope.activity_identifier == "1005" || $scope.activity_identifier == "1006") {
 
-                    if ($scope.misCualidadesOtroAnswers[0].answers[0] != '') {
+                    if ($scope.misCualidadesOtroAnswers[0].answers[0] != "") {
                         $scope.userprofile.talents.push($scope.misCualidadesOtroAnswers[0].answers[0]);
                     }
 
-                    if ($scope.misCualidadesOtroAnswers[1].answers[0] != '') {
+                    if ($scope.misCualidadesOtroAnswers[1].answers[0] != "") {
                         $scope.userprofile.values.push($scope.misCualidadesOtroAnswers[1].answers[0]);
                     }
 
-                    if ($scope.misCualidadesOtroAnswers[2].answers[0] != '') {
+                    if ($scope.misCualidadesOtroAnswers[2].answers[0] != "") {
                         $scope.userprofile.habilities.push($scope.misCualidadesOtroAnswers[2].answers[0]);
                     }                   
                     

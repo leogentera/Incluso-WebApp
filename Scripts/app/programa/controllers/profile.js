@@ -95,7 +95,7 @@ angular
                 $scope.cityItems = [];
                 $scope.stateItems = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','DF','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas', 'Otro'];
                 $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
-                /*unir1*/ $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
+                $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
                 $scope.educationStatusList = ['Terminada', 'En proceso', 'Inconclusa'];
                 $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'Fútbol Soccer', 'Basquetbol', 'Artes Marciales', 'Yoga', 'Natación', 'Futbol Americano', 'Basebol', 'Carreras'];
                 $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografia', 'Graffiti', 'Diseño Gráfico', 'Artesanías', 'Teatro', 'Modelado', 'Dibujo'];
@@ -105,7 +105,7 @@ angular
                 $scope.habilitiesList = ['Empatía', 'Creatividad', 'Liderazgo', 'Comunicación', 'Negociación', 'Trabajo en equipo', 'Innovación', 'Iniciativa', 'Toma de decisiones', 'Planeación', 'Organización'];
                 $scope.iLiveWithList = ['Ambos padres', 'Padre', 'Madre', 'Tíos', 'Esposo(a)', 'Abuelos', 'Amigos'];
                 $scope.mainActivityList = ['Estudias', 'Trabajas', 'Ni estudias ni trabajas'];
-                /*unir1*/$scope.levelList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
+                $scope.levelList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
                 $scope.gradeList = ['1er', '2do', '3ro', '4to', '5to', '6to','7mo','8vo','9no','10mo'];
                 $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
                 $scope.yesNoList = ['Si', 'No'];
@@ -151,6 +151,7 @@ angular
                 
                 $scope.myStrengths = strengthArray;
             }
+
             
             function loadWindowOfOpportunities() {
                 
@@ -383,6 +384,7 @@ angular
                 var splitDate = $scope.model.birthday.split("/");
 
                 if (splitDate != "" || splitDate.length > 2) {
+
                     var birthDate = new Date(splitDate[2], splitDate[0] - 1, splitDate[1]);
                     if (birthDate != null || birthDate != '') {
                         var cur = new Date();
@@ -390,8 +392,8 @@ angular
                         var age = Math.floor(diff / 31536000000);
                         $scope.model.age = age;
                     }
-                }
-                else {
+
+                } else {
                     $scope.model.age = null;
                 }
             }
@@ -451,9 +453,11 @@ angular
                 if (today_month < (birth_month - 1)) {
                     age--;
                 }
+
                 if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
                     age--;
                 }
+
                 return age;
             }
 
@@ -586,11 +590,13 @@ angular
 
 
             var validateEmptyItemsOnLists = function () {
+
+                // Mi Información -------------------------------------------------------------------------------------
+
                 //studies
                 if ($scope.model.studies.length > 0) {
                     for (var i = 0; i < $scope.model.studies.length; i++) {
-                        if (typeof $scope.model.studies[i].school === "undefined" ||
-                            typeof $scope.model.studies[i].levelOfStudies === "undefined") {
+                        if (typeof $scope.model.studies[i].school === "undefined" || typeof $scope.model.studies[i].levelOfStudies === "undefined") {
                             $scope.model.studies.splice(i, 1);
                             i = i - 1;
                         }
@@ -600,8 +606,7 @@ angular
                 //phones
                 if ($scope.model.phones.length > 0) {
                     for (var i = 0; i < $scope.model.phones.length; i++) {
-                        if (typeof $scope.model.phones[i] === "undefined" ||
-                            $scope.model.phones[i].length === 0 ) {
+                        if (typeof $scope.model.phones[i] === "undefined" || $scope.model.phones[i].length === 0 ) {
                             $scope.model.phones.splice(i, 1);
                             i = i - 1;
                         }
@@ -628,12 +633,12 @@ angular
                     }
                 }
                 
-                
+                // Mi Personalidad -------------------------------------------------------------------------------------
+
                 //favoriteSports              
                 if ($scope.model.favoriteSports.length > 0) {
                     for (var i = 0; i < $scope.model.favoriteSports.length; i++) {
-                        if (typeof $scope.model.favoriteSports[i] === "undefined" ||
-                            $scope.model.favoriteSports[i].length === 0) {
+                        if (typeof $scope.model.favoriteSports[i] === "undefined" || $scope.model.favoriteSports[i].length === 0) {
                             $scope.model.favoriteSports.splice(i, 1);
                             i = i - 1;
                         }
@@ -644,8 +649,7 @@ angular
                 //artisticActivities              
                 if ($scope.model.artisticActivities.length > 0) {
                     for (var i = 0; i < $scope.model.artisticActivities.length; i++) {
-                        if (typeof $scope.model.artisticActivities[i] === "undefined" ||
-                            $scope.model.artisticActivities[i].length === 0) {
+                        if (typeof $scope.model.artisticActivities[i] === "undefined" || $scope.model.artisticActivities[i].length === 0) {
                             $scope.model.artisticActivities.splice(i, 1);
                             i = i - 1;
                         }
@@ -655,8 +659,7 @@ angular
                 //hobbies              
                 if ($scope.model.hobbies.length > 0) {
                     for (var i = 0; i < $scope.model.hobbies.length; i++) {
-                        if (typeof $scope.model.hobbies[i] === "undefined" ||
-                            $scope.model.hobbies[i].length === 0) {
+                        if (typeof $scope.model.hobbies[i] === "undefined" || $scope.model.hobbies[i].length === 0) {
                             $scope.model.hobbies.splice(i, 1);
                             i = i - 1;
                         }
@@ -666,8 +669,7 @@ angular
                 //talents              
                 if ($scope.model.talents.length > 0) {
                     for (var i = 0; i < $scope.model.talents.length; i++) {
-                        if (typeof $scope.model.talents[i] === "undefined" ||
-                            $scope.model.talents[i].length === 0) {
+                        if (typeof $scope.model.talents[i] === "undefined" || $scope.model.talents[i].length === 0) {
                             $scope.model.talents.splice(i, 1);
                             i = i - 1;
                         }
@@ -678,8 +680,7 @@ angular
                 //values              
                 if ($scope.model.values.length > 0) {
                     for (var i = 0; i < $scope.model.values.length; i++) {
-                        if (typeof $scope.model.values[i] === "undefined" ||
-                            $scope.model.values[i].length === 0) {
+                        if (typeof $scope.model.values[i] === "undefined" || $scope.model.values[i].length === 0) {
                             $scope.model.values.splice(i, 1);
                             i = i - 1;
                         }
@@ -689,8 +690,7 @@ angular
                 //Habilities              
                 if ($scope.model.habilities.length > 0) {
                     for (var i = 0; i < $scope.model.habilities.length; i++) {
-                        if (typeof $scope.model.habilities[i] === "undefined" ||
-                            $scope.model.habilities[i].length === 0) {
+                        if (typeof $scope.model.habilities[i] === "undefined" || $scope.model.habilities[i].length === 0) {
                             $scope.model.habilities.splice(i, 1);
                             i = i - 1;
                         }
@@ -707,7 +707,7 @@ angular
                     }
                 }
 
-                // Socioeconomicos --------------------------------------------------------------------------------------
+                // Socioeconómicos --------------------------------------------------------------------------------------
 
                 //mainActivity              
                 if ($scope.model.mainActivity.length > 0) {
@@ -786,7 +786,7 @@ angular
             };            
 
 
-            $scope.save = function () {alert("save");
+            $scope.save = function () {
                 var validationResult = validateModel();  //Valid if validateModel() returns true
                 console.log("Model is valid: " +  validationResult);
 
@@ -806,7 +806,7 @@ angular
             };
 
 
-            var saveUser = function () {alert("Save User");
+            var saveUser = function () {
                 moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
 
                     function (data) {
@@ -855,19 +855,21 @@ angular
                                 result = false;
                                 break;
                         }
+                        
+                        console.log("Section has been completed: " + result);
 
                         
-                        if (result) {alert("Inside Result");
+                        if (result) {
 
                             $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
 
-                            usercourse.activities[activityIndex].status = 1;   //Update activity status.
+                            activity.status = 1;   //Update activity status.
 
                             //Get local user profile.
                             var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));
                             console.log("profile.stars (before): " + profile.stars);
                             
-                            var newPoints = Number(profile.stars) + Number(usercourse.activities[activityIndex].points);
+                            var newPoints = parseInt(profile.stars) + parseInt(activity.points);
                             
                             //Update the 'stars' key.
                             profile.stars = newPoints;  
@@ -892,7 +894,8 @@ angular
                             };
 
                             //Finish Activity.
-                            _endActivity(activityModel, function () {});
+                            _endActivity(activityModel, function () {//callback
+                            });
 
                             result = false;  //Restore 'result' value
                         }
@@ -909,7 +912,7 @@ angular
                             if ($scope.model.gender) {
                                 if ($scope.model.age) {
                                     if ($scope.model.maritalStatus) {
-                                        if ($scope.model.studies.length > 0) {
+                                        if ($scope.model.studies.length > 0) { // array of objects
                                             if ($scope.model.address.country) {
                                                 if ($scope.model.address.state) {                                                
                                                     if ($scope.model.address.town) {
@@ -918,9 +921,9 @@ angular
                                                                 if ($scope.model.address.num_ext) {
                                                                     if ($scope.model.address.num_int) {
                                                                         if ($scope.model.address.colony) {
-                                                                            if ($scope.model.phones.length > 0) {
-                                                                                if ($scope.model.socialNetworks.length > 0) {
-                                                                                    if ($scope.model.familiaCompartamos.length > 0) {
+                                                                            if ($scope.model.phones.length > 0) { //array
+                                                                                if ($scope.model.socialNetworks.length > 0) { //array of objects
+                                                                                    if ($scope.model.familiaCompartamos.length > 0) { //array of objects
                                                                                         result = true;
                                                                                     } 
                                                                                 }
@@ -952,7 +955,7 @@ angular
                             if ($scope.model.talents.length > 0) {  //array
                                 if ($scope.model.values.length > 0) {  //array
                                     if ($scope.model.habilities.length > 0) {  //array
-                                        if ($scope.model.inspirationalCharacters.length > 0) {  //array
+                                        if ($scope.model.inspirationalCharacters.length > 0) {  //array of objects
                                             result = true;
                                         }
                                     }
@@ -1060,7 +1063,6 @@ angular
                 // MODELS for "Uso de tecnologia"
                 $scope.model.knownDevices = $scope.model.knownDevices.filter(function (item, pos) {
                     return item.trim().length > 0 && $scope.model.knownDevices.indexOf(item) == pos;
-
                 });
 
                 $scope.model.ownDevices = $scope.model.ownDevices.filter(function (item, pos) {
