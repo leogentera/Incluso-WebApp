@@ -787,7 +787,7 @@ angular
             };            
 
 
-            $scope.save = function () {alert("save");
+            $scope.save = function () {
                 var validationResult = validateModel();  //Valid if validateModel() returns true
                 console.log("Model is valid: " +  validationResult);
 
@@ -807,7 +807,7 @@ angular
             };
 
 
-            var saveUser = function () {alert("Save User");
+            var saveUser = function () {
                 moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
 
                     function (data) {
@@ -854,7 +854,7 @@ angular
                         }
 
                         
-                        if (result) {alert("Inside Result");
+                        if (result) {
 
                             $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
 
