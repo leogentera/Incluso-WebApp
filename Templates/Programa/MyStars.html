@@ -31,7 +31,7 @@
 	<section class="starcontain">
 	  <div class="subtitle centered">Mis estrellas</div>
 	  <div class="part" ng-repeat="activity in activitiesCompleted" ng-show="qtyStarsByAcctivity()">
-		<div class="pull-left"><div class="date">{{activity.last_status_update | date :'dd MMMM yyyy - hh:mm a'}}</div>{{activity.sectionname}} : {{activity.activityname}}</div>
+		<div class="pull-left"><div class="date">{{activity.last_status_update * 1000| date :'dd MMMM yyyy - hh:mm a'}}</div>{{activity.sectionname}} : {{activity.activityname}}</div>
     <div class="pull-right sm-pill"><span class="pull-left">{{activity.points}}&nbsp;&nbsp;</span><span class="icomoon icon-star pull-right"></span></div>
 	  </div>
 	  <div class="part showmore" ng-click="showMore()" ng-show="showLoadMoreBar()">

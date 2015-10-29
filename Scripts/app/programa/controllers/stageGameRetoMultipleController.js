@@ -40,27 +40,24 @@ angular
             }
 
             function loadData(){
-              if (!$scope.retoMultipleActivities) {
-                 $scope.retoMultipleActivities = [];
-                 if ($scope.retosMultipleChallenge) {
-                    retoMultipleArray = $scope.retosMultipleChallenge.activities;
-                    for(i = 0; i < $scope.retosMultipleChallenge.activities.length; i++)
-                    {
-                      var activity = moodleFactory.Services.GetCacheJson("activity/" + $scope.retosMultipleChallenge.activities[i].coursemoduleid);
-                      if (activity) {
-                          $scope.retoMultipleActivities.push(activity);
-                      } else {
-                          moodleFactory.Services.GetAsyncActivity($scope.retosMultipleChallenge.activities[i].coursemoduleid, function(data) {
-                            $scope.retoMultipleActivities.push(data);
-                            assignCourseModuleId(true, data);
-                          });
-                      }
-                      if ($scope.retoMultipleActivities.length > 0) {
-                        assignCourseModuleId(false, $scope.retosMultipleChallenge.activities[i]);
-                      }
-                    }
-                    _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
-                 }
+              $scope.retoMultipleActivities = [];
+              if ($scope.retosMultipleChallenge) {
+                retoMultipleArray = $scope.retosMultipleChallenge.activities;
+                for(i = 0; i < $scope.retosMultipleChallenge.activities.length; i++){
+                  var activity = moodleFactory.Services.GetCacheJson("activity/" + $scope.retosMultipleChallenge.activities[i].coursemoduleid);
+                  if (activity) {
+                    $scope.retoMultipleActivities.push(activity);
+                  } else {
+                    moodleFactory.Services.GetAsyncActivity($scope.retosMultipleChallenge.activities[i].coursemoduleid, function(data) {
+                      $scope.retoMultipleActivities.push(data);
+                      assignCourseModuleId(true, data);
+                    });
+                  }
+                  if ($scope.retoMultipleActivities.length > 0) {
+                    assignCourseModuleId(false, $scope.retosMultipleChallenge.activities[i]);
+                  }
+                }
+                _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
               }
             }
             $scope.isInstalled = false;
@@ -91,15 +88,15 @@ angular
                             "sub_actividades": []
                         };
                 for(i = 0; i < $scope.retoMultipleActivities.length; i++) {
+                  if ($scope.retoMultipleActivities[i].name.toLowerCase().indexOf("puntaje") < 0) {
                     var subactivity = {
                         "estrellas": 300,
                         "sub_actividad": $scope.retoMultipleActivities[i].name
                     };
-
                     request.sub_actividades.push(subactivity);
+                  }
                 }
                 return request;
-
             }
 
             function assignCourseModuleId(asyncRequest, data){
@@ -107,6 +104,7 @@ angular
               ( asyncRequest ? _.find($scope.retosMultipleChallenge.activities, function(r){ return r.activityname == data.name }).coursemoduleid : data.coursemoduleid);
               if ($scope.retoMultipleActivities.length == $scope.retosMultipleChallenge.activities.length) {
                 $scope.$emit('HidePreloader');
+                $scope.retoMultipleActivities = _.sortBy($scope.retoMultipleActivities, function(r){ return r.coursemoduleid; });
                 var r = createRequest();
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
@@ -143,40 +141,63 @@ angular
                     }
                   }
                 }
-                //Assign results to answers.
-                for (var i = 0; i < data.resultado.length; i++) {
-                  var logEntry = {
-                    "userid": $scope.user.id,
-                    "answers": [],
-                    "coursemoduleid": "",
-                    "like_status": "",
-                    "startingTime":"",
-                    "endingTime": "",
-                    "quiz_answered": true
-                  };
-                  var activity = _.find($scope.retoMultipleActivities, function(a){ return a.name == data.resultado[i].subactividad; });
-                  if (activity) {
-                    var questionAnswers = _.countBy(activity.questions, function(q){
-                      return q.userAnswer && q.userAnswer != '' ? 'answered' : 'unanswered';
+                var scoreEntry = {
+                  "userid": $scope.user.id,
+                  "answers": [],
+                  "coursemoduleid": "",
+                  "like_status": 1,
+                  "startingTime": getdate(),
+                  "endingTime": getdate(),
+                  "quiz_answered": false
+                };
+                if (data.resultado) {
+                  _.each($scope.retoMultipleActivities, function(r){ 
+                    var inteligencia = _.find(data.resultado,function(a){
+                      return r.name.toLowerCase().indexOf(a.subactividad.toLowerCase()) > -1;
                     });
-                    for(var j = 0; j < data.resultado[i].preguntas.length - 1; j++){
-                      if (activity.questions[j] && data.resultado[i].preguntas[j].respuesta != "") {
-                          activity.questions[j]["userAnswer"] = data.resultado[i].preguntas[j].respuesta;
-                          logEntry.answers.push((j < data.resultado[i].preguntas.length - 2 ? data.resultado[i].preguntas[j+1].respuesta : data.resultado[i].preguntas[0].respuesta ));
-                      }
+                    if(inteligencia){
+                      scoreEntry.quiz_answered = scoreEntry.quiz_answered || inteligencia.puntaje_interno >= 0;
+                      scoreEntry.answers.push(inteligencia.puntaje_interno);
+                    }else{
+                      scoreEntry.coursemoduleid = r.coursemoduleid;
                     }
-                    var isAlto = _.find(predominantes, function(p) { return p == data.resultado[i].subactividad});
-                    activity.score = (isAlto) ? 3 : 1;
-                    activity.total_score = data.resultado[i].puntaje_interno;
-                    logEntry.quiz_answered = ( data.resultado[i].preguntas[j].respuesta != "" && logEntry.quiz_answered);
-                    logEntry.coursemoduleid = activity.coursemoduleid;
-                    logEntry.like_status = (data.resultado[i].preguntas[4].respuesta == "No" ? 0 : 1 );
-                    logEntry.startingTime = data.resultado[i].fecha_inicio;
-                    logEntry.endingTime = data.resultado[i].fecha_fin;
-                    quizzesRequests.push(logEntry);
+                  });
+                  quizzesRequests.push(scoreEntry);
+
+                  //Assign results to answers.
+                  for (var i = 0; i < data.resultado.length; i++) {
+                    var logEntry = {
+                      "userid": $scope.user.id,
+                      "answers": [],
+                      "coursemoduleid": "",
+                      "like_status": "",
+                      "startingTime":"",
+                      "endingTime": "",
+                      "quiz_answered": true
+                    };
+                    var activity = _.find($scope.retoMultipleActivities, function(a){ return a.name == data.resultado[i].subactividad; });
+                    if (activity) {
+                      var questionAnswers = _.countBy(activity.questions, function(q){
+                        return q.userAnswer && q.userAnswer != '' ? 'answered' : 'unanswered';
+                      });
+                      for(var j = 0; j < data.resultado[i].preguntas.length - 1; j++){
+                        if (activity.questions[j] && data.resultado[i].preguntas[j].respuesta != "") {
+                            activity.questions[j]["userAnswer"] = data.resultado[i].preguntas[j].respuesta;
+                            logEntry.answers.push((j < data.resultado[i].preguntas.length - 2 ? data.resultado[i].preguntas[j+1].respuesta : data.resultado[i].preguntas[0].respuesta ));
+                        }
+                      }
+                      var isAlto = _.find(predominantes, function(p) { return p == data.resultado[i].subactividad});
+                      activity.score = (isAlto) ? 3 : 1;
+                      activity.total_score = data.resultado[i].puntaje_interno;
+                      logEntry.quiz_answered = ( data.resultado[i].preguntas[j].respuesta != "" && logEntry.quiz_answered);
+                      logEntry.coursemoduleid = activity.coursemoduleid;
+                      logEntry.like_status = (data.resultado[i].preguntas[4].respuesta == "No" ? 0 : 1 );
+                      logEntry.startingTime = data.resultado[i].fecha_inicio;
+                      logEntry.endingTime = data.resultado[i].fecha_fin;
+                      quizzesRequests.push(logEntry);
+                    }
                   }
                 }
-
                 var completedActivities = _.countBy($scope.retoMultipleActivities, function(a) {
                     if (a.questions) {
                         var questionAnswers = _.countBy(a.questions, function(q) {
@@ -191,7 +212,7 @@ angular
                 $scope.IsComplete = $scope.retoMultipleActivities && 
                                     completedActivities.completed && 
                                     $scope.retoMultipleActivities && 
-                                    completedActivities.completed >= $scope.retoMultipleActivities.length &&
+                                    completedActivities.completed >= $scope.retoMultipleActivities.length - 1 &&
                                     completedActivities.completed > 1;
 
                 //save response

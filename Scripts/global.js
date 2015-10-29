@@ -3,6 +3,7 @@
 var API_RESOURCE = " http://moodlemysql01.cloudapp.net/{0}";
 
 
+
 var _courseId = 4;
 var _endActivityCurrentChallenge = null;
 var _httpFactory = null;
@@ -492,7 +493,7 @@ var logStartActivityAction = function(activityId, timeStamp) {
                  console.log("global");
                 var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
                 
-                if (localStorage.getItem(key) == null && !treeActivity.status) {
+                if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
                     _setLocalStorageJsonItem(key, {
                         datestarted: getdate(),
                         coursemoduleid: treeActivity.coursemoduleid,
