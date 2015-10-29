@@ -156,7 +156,7 @@ angular
                       return r.name.toLowerCase().indexOf(a.subactividad.toLowerCase()) > -1;
                     });
                     if(inteligencia){
-                      scoreEntry.quiz_answered = scoreEntry.quiz_answered || inteligencia.puntaje_interno > 0;
+                      scoreEntry.quiz_answered = scoreEntry.quiz_answered || inteligencia.puntaje_interno >= 0;
                       scoreEntry.answers.push(inteligencia.puntaje_interno);
                     }else{
                       scoreEntry.coursemoduleid = r.coursemoduleid;
