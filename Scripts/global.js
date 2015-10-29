@@ -1,10 +1,9 @@
 //global variables
 
-var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
+//var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; // Production
-
-
+var API_RESOURCE = "http://definityincluso.cloudapp.net:82/Incluso-RestfulAPI/RestfulAPI/public/{0}";
 
 var _courseId = 4;
 var _endActivityCurrentChallenge = null;

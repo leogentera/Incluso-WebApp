@@ -600,7 +600,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        }, destinationPath);
+                        });
 
                         //Close the Assign activity.
                         activityModel.activityType = "Assign";
@@ -608,7 +608,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        }, destinationPath);
+                        });
 
                     } else {
                         activityModel.activityType = "Quiz";
@@ -616,7 +616,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        }, destinationPath);
+                        });
                     }
 
 
