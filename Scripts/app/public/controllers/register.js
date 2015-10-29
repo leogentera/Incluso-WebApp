@@ -290,6 +290,7 @@ angular
 
             }
 
+
             /* open terms and conditions modal */
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -297,10 +298,12 @@ angular
                     templateUrl: 'termsAndConditionsModal.html',
                     controller: 'termsAndConditionsController',
                     size: size,
-                    windowClass: 'modal-theme-default terms-and-conditions', 
+                    windowClass: 'modal-theme-default terms-and-conditions',
                     backdrop: 'static'
                 });
             };
+
+
             $scope.openModalUsername = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
@@ -322,8 +325,14 @@ angular
                 });
             };
         }])
+
         .controller('termsAndConditionsController', function ($scope, $modalInstance) {
+        
+            drupalFactory.Services.GetContent("TermsAndConditions", function (data, key) { $scope.contentTandC = data.node; }, function () {}, false);
+
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
+
+
         });
