@@ -666,7 +666,7 @@ angular
 
                     if ($scope.misGustosOtroAnswers[2].answers[0] != "") {
                         $scope.userprofile.hobbies.push($scope.misGustosOtroAnswers[2].answers[0]);
-                    }       
+                    }
 
                     $scope.userId = moodleFactory.Services.GetCacheObject("userId");
                     console.log("sending petition " + $scope.userId);
