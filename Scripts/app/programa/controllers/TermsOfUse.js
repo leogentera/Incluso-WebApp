@@ -21,7 +21,9 @@ angular
                 $location.path('/ProgramaDashboard');
             }
 
-            $scope.$emit('ShowPreloader'); //show preloader
+
+
+            getContentResources("TermsAndConditions");
 
             $scope.profile = JSON.parse(localStorage.getItem("profile/"+localStorage.getItem("userId")));
             $scope.profile.termsAndConditions=true;
@@ -30,7 +32,6 @@ angular
             $scope.showCheckbox = !$scope.accepted;
             $scope.acceptsNewTerms = $scope.accepted;
             $scope.termsButtonText = $scope.accepted? "Regresar" : "Salir";
-            $scope.$emit('HidePreloader'); //hide preloader
             $scope.profile = null; //profile is not used in this page terms acceptance
 
 
@@ -52,6 +53,13 @@ angular
                     $scope.termsButtonText =  "Continuar";
                 else
                     $scope.termsButtonText = "Salir";
+            }
+
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    $scope.contentResources = data.node;
+                    $scope.$emit('HidePreloader'); //hide preloader
+                }, function () {}, false);
             }
 
 
