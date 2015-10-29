@@ -29,9 +29,8 @@ angular
             $scope.coursemoduleid = 0;
             $scope.like_status = 1;
             $scope.tmpPath = "";
-            var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601];
-            var quizHasOther = [1001, 1005, 1006, 2001, 3101, 3601];
-            var goBackToDashboard = false;
+            var nonEditableQuizzes = ["1001", "1009", "2001", "2023", "3101", "3601"];
+            var quizHasOther = ["1001", "1005", "1006", "2001", "3101", "3601"];
             var startingTime;
             var endingTime;
 
@@ -644,7 +643,7 @@ angular
             function updateProfile() {
 
                 if ($scope.activity_identifier == "1005" || $scope.activity_identifier == "1006") {
-
+                    
                     if ($scope.misCualidadesOtroAnswers[0].answers[0] != "") {
                         $scope.userprofile.talents.push($scope.misCualidadesOtroAnswers[0].answers[0]);
                     }
@@ -655,7 +654,7 @@ angular
 
                     if ($scope.misCualidadesOtroAnswers[2].answers[0] != "") {
                         $scope.userprofile.habilities.push($scope.misCualidadesOtroAnswers[2].answers[0]);
-                    }                   
+                    }                                       
                     
                     if ($scope.misGustosOtroAnswers[0].answers[0] != "") {
                         $scope.userprofile.favoriteSports.push($scope.misGustosOtroAnswers[0].answers[0]);
@@ -667,8 +666,7 @@ angular
 
                     if ($scope.misGustosOtroAnswers[2].answers[0] != "") {
                         $scope.userprofile.hobbies.push($scope.misGustosOtroAnswers[2].answers[0]);
-                    };                   
-                    
+                    }       
 
                     $scope.userId = moodleFactory.Services.GetCacheObject("userId");
                     console.log("sending petition " + $scope.userId);

@@ -151,7 +151,7 @@
 													<div class="form-group theme-form">
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" name="gender" ng-model="model.gender" ng-options="item for item in genderItems"
-															ng-init="model.gender = null" ng-class="{'selected': model.gender.length != 0 && model.gender != null}" required>
+															ng-init="model.gender == null" ng-class="{'selected': model.gender.length != 0 && model.gender != null}" required>
 																<option value="" ng-disabled="!!model.gender">Sexo</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -161,7 +161,7 @@
 													<div class="form-group theme-form">
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" ng-model="model.birthCountry" ng-options="item for item in countryItems"
-															ng-init="model.birthCountry = null" ng-class="{'selected': model.birthCountry.length != 0 && model.birthCountry != null}">
+															ng-init="model.birthCountry == null" ng-class="{'selected': model.birthCountry.length != 0 && model.birthCountry != null}">
 																<option value="" ng-disabled="!!model.birthCountry">País de nacimiento</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -186,7 +186,7 @@
 													<div class="form-group theme-form">
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" ng-model="model.maritalStatus" ng-options="item for item in maritalStatusItems"
-															ng-init="model.maritalStatus = null" ng-class="{'selected': model.maritalStatus.length != 0 && model.maritalStatus != null}">
+															ng-init="model.maritalStatus == null" ng-class="{'selected': model.maritalStatus.length != 0 && model.maritalStatus != null}">
 																<option value="" ng-disabled="!!model.maritalStatus">Estado civil </option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -209,7 +209,7 @@
 
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.studies[$index].school" ng-options="item for item in studiesList"
-																	ng-init="model.studies = null" ng-class="{'selected': model.studies[$index].school.length != 0 && model.studies[$index].school != null}">
+																	ng-init="model.studies == null" ng-class="{'selected': model.studies[$index].school.length != 0 && model.studies[$index].school != null}">
 																		<option value="" ng-disabled="!!model.studies">Nivel</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -217,7 +217,7 @@
 
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.studies[$index].levelOfStudies" ng-options="item for item in educationStatusList"
-																	ng-init="model.studies = null" ng-class="{'selected': model.studies[$index].levelOfStudies.length != 0 && model.studies[$index].levelOfStudies != null}">
+																	ng-init="model.studies == null" ng-class="{'selected': model.studies[$index].levelOfStudies.length != 0 && model.studies[$index].levelOfStudies != null}">
 																		<option value="" ng-disabled="!!model.studies">Estado</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -280,7 +280,7 @@
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" 
 															ng-model="model.address.country" ng-options="item for item in countryItems"
-															ng-init="model.address.country = null" ng-class="{'selected': model.address.country.length != 0 && model.address.country != null}">
+															ng-init="model.address.country == null" ng-class="{'selected': model.address.country.length != 0 && model.address.country != null}">
 																<option value="" ng-disabled="!!model.address.country">País</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -291,7 +291,7 @@
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" 
 															ng-model="model.address.state" ng-options="item for item in stateItems"
-															ng-init="model.address.state = null" ng-class="{'selected': model.address.state.length != 0 && model.address.state != null}">
+															ng-init="model.address.state == null" ng-class="{'selected': model.address.state.length != 0 && model.address.state != null}">
 																<option value="" ng-disabled="!!model.address.state">Estado</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -359,7 +359,7 @@
 																	<select class="form-control form-control-lg theme-form"  
 																		ng-model="model.phones[$index].phone"  
 																		ng-options="item for item in phoneTypeList"  
-																		ng-init="model.phone = null"  
+																		ng-init="model.phone == null"  
 																		ng-class="{'selected': model.phones[$index].phone.length != 0 && model.phones[$index].phone != null}">
 																		<option value="" ng-disabled="!!model.phone">Tipo de teléfono</option>  
 																	</select>  
@@ -395,7 +395,7 @@
 																	<select class="form-control form-control-lg theme-form"
 																			ng-model="model.socialNetworks[$index].socialNetwork"
 																			ng-options="item for item in socialNetworksList"
-																			ng-init="model.socialNetwork = null"
+																			ng-init="model.socialNetwork == null"
 																			ng-class="{'selected': model.socialNetworks[$index].socialNetwork.length != 0 && model.socialNetworks[$index].socialNetwork != null}">
 																		<option value="" ng-disabled="!!model.socialNetwork">Red social</option>
 																	</select>
@@ -479,7 +479,7 @@
 																</div>
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.familiaCompartamos[$index].relationship" ng-options="item for item in familiaCompartamosList"
-																	ng-init="model.familiaCompartamos.relationship = null" ng-class="{'selected': model.familiaCompartamos[$index].relationship.length != 0 && model.familiaCompartamos[$index].relationship != null}">
+																	ng-init="model.familiaCompartamos.relationship == null" ng-class="{'selected': model.familiaCompartamos[$index].relationship.length != 0 && model.familiaCompartamos[$index].relationship != null}">
 																		<option value="" ng-disabled="!!model.familiaCompartamos.relationship">Parentesco</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -548,7 +548,7 @@
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.favoriteSports[$index]" ng-options="item for item in favoritSportsList"
-																	ng-init="model.favoriteSports = null" ng-class="{'selected': model.favoriteSports[$index].length != 0 && model.favoriteSports[$index] != null}">
+																	ng-init="model.favoriteSports == null" ng-class="{'selected': model.favoriteSports[$index].length != 0 && model.favoriteSports[$index] != null}">
 																		<option value="" ng-disabled="!!model.favoriteSports">Deporte</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -576,7 +576,7 @@
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.artisticActivities[$index]" ng-options="item for item in artisticActivitiesList"
-																	ng-init="model.artisticActivities = null" ng-class="{'selected': model.artisticActivities[$index].length != 0 && model.artisticActivities[$index] != null}">
+																	ng-init="model.artisticActivities == null" ng-class="{'selected': model.artisticActivities[$index].length != 0 && model.artisticActivities[$index] != null}">
 																		<option value="" ng-disabled="!!model.artisticActivities">Actividades</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -603,7 +603,7 @@
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.hobbies[$index]" ng-options="item for item in hobbiesList"
-																	ng-init="model.hobbies = null" ng-class="{'selected': model.hobbies[$index].length != 0 && model.hobbies[$index] != null}">
+																	ng-init="model.hobbies == null" ng-class="{'selected': model.hobbies[$index].length != 0 && model.hobbies[$index] != null}">
 																		<option value="" ng-disabled="!!model.hobbies">Hobbies</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -671,7 +671,7 @@
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.talents[$index]" ng-options="item for item in talentsList"
-																	ng-init="model.talents = null" ng-class="{'selected': model.talents[$index].length != 0 && model.talents[$index] != null}">
+																	ng-init="model.talents == null" ng-class="{'selected': model.talents[$index].length != 0 && model.talents[$index] != null}">
 																		<option value="" ng-disabled="!!model.talents">Talentos</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -698,7 +698,7 @@
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.values[$index]" ng-options="item for item in valuesList"
-																	ng-init="model.values = null" ng-class="{'selected': model.values[$index].length != 0 && model.values[$index] != null}">
+																	ng-init="model.values == null" ng-class="{'selected': model.values[$index].length != 0 && model.values[$index] != null}">
 																		<option value="" ng-disabled="!!model.values">Valores</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -725,7 +725,7 @@
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.habilities[$index]" ng-options="item for item in habilitiesList"
-																	ng-init="model.habilities = null" ng-class="{'selected': model.habilities[$index].length != 0 && model.habilities[$index] != null}">
+																	ng-init="model.habilities == null" ng-class="{'selected': model.habilities[$index].length != 0 && model.habilities[$index] != null}">
 																		<option value="" ng-disabled="!!model.habilities">Habilidades</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -794,7 +794,7 @@
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.inspirationalCharacters[$index].characterType" ng-options="item for item in inspirationalCharactersList"
-																	ng-init="model.inspirationalCharacters = null" ng-class="{'selected': model.inspirationalCharacters[$index].characterType.length != 0 && model.inspirationalCharacters[$index].characterType != null}">
+																	ng-init="model.inspirationalCharacters == null" ng-class="{'selected': model.inspirationalCharacters[$index].characterType.length != 0 && model.inspirationalCharacters[$index].characterType != null}">
 																		<option value="" ng-disabled="!!model.inspirationalCharacters">Tipo de personaje</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -860,7 +860,7 @@
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form"
 															ng-model="model.iLiveWith" ng-options="item for item in iLiveWithList"
-															ng-init="model.iLiveWith = null" ng-class="{'selected': model.iLiveWith.length != 0 && model.iLiveWith != null}">
+															ng-init="model.iLiveWith == null" ng-class="{'selected': model.iLiveWith.length != 0 && model.iLiveWith != null}">
 																<option value="" ng-disabled="!!model.iLiveWith">Vivo con</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -875,12 +875,12 @@
 															<div class="form-group theme-form">                                                                
 																<h5>
 																	<span>Mi actividad principal {{model.mainActivity.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteMainActivity(s);">
+																	<button class="btn btn-circle" ng-click="deleteMainActivity($index)">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
 																<select class="form-control form-control-lg theme-form" 
-																ng-model="model.mainActivity[$index]" ng-options="item for item in mainActivityList" ng-init="model.mainActivity = null" ng-class="{'selected': model.mainActivity[$index].length != 0 && model.mainActivity[$index] != null}">
+																ng-model="model.mainActivity[$index]" ng-options="item for item in mainActivityList" ng-class="{'selected': model.mainActivity[$index].length != 0 && model.mainActivity[$index] != null}">
 																	<option value="" ng-disabled="!!model.mainActivity">Actividad principal</option>
 																</select>
 															</div>
@@ -899,7 +899,7 @@
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" 
 															ng-model="model.level" ng-options="item for item in levelList"
-															ng-init="model.level = null" ng-class="{'selected': model.level != null}">
+															ng-init="model.level == null" ng-class="{'selected': model.level != null}">
 																<option value="" ng-disabled="!!model.level">Nivel</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -908,7 +908,7 @@
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" 
 															ng-model="model.grade" ng-options="item for item in gradeList"
-															ng-init="model.grade = null" ng-class="{'selected': model.grade != null}">
+															ng-init="model.grade == null" ng-class="{'selected': model.grade != null}">
 																<option value="" ng-disabled="!!model.grade">Grado</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -917,7 +917,7 @@
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" 
 															ng-model="model.period" ng-options="item for item in periodList"
-															ng-init="model.period = null" ng-class="{'selected': model.period != null}">
+															ng-init="model.period == null" ng-class="{'selected': model.period != null}">
 																<option value="" ng-disabled="!!model.period">Periodo</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -973,7 +973,7 @@
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" 
 															ng-model="model.children" ng-options="item for item in yesNoList"
-															ng-init="model.children = null" ng-class="{'selected': model.children != null}">
+															ng-init="model.children == null" ng-class="{'selected': model.children != null}">
 																<option value="" ng-disabled="!!model.children">¿Tengo hijos?</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -987,7 +987,7 @@
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" 
 															ng-model="model.gotMoneyIncome" ng-options="item for item in yesNoList"
-															ng-init="model.gotMoneyIncome = null" ng-class="{'selected': model.gotMoneyIncome != null}">
+															ng-init="model.gotMoneyIncome == null" ng-class="{'selected': model.gotMoneyIncome != null}">
 																<option value="" ng-disabled="!!model.gotMoneyIncome">¿Recibo ingresos?</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1009,7 +1009,7 @@
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" 
 																	ng-model="model.moneyIncome[$index]" ng-options="item for item in moneyIncomeList"
-																	ng-init="model.moneyIncome = null" ng-class="{'selected': model.moneyIncome[$index].length != 0 && model.moneyIncome[$index] != null}">
+																	ng-init="model.moneyIncome == null" ng-class="{'selected': model.moneyIncome[$index].length != 0 && model.moneyIncome[$index] != null}">
 																		<option value="" ng-disabled="!!model.moneyIncome">Ingreso</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1028,7 +1028,7 @@
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" 
 															ng-model="model.medicalCoverage" ng-options="item for item in medicalCoverageList"
-															ng-init="model.medicalCoverage = null" ng-class="{'selected': model.medicalCoverage != null}">
+															ng-init="model.medicalCoverage == null" ng-class="{'selected': model.medicalCoverage != null}">
 																<option value="" ng-disabled="!!model.medicalCoverage">¿Cuento con seguro médico?</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1037,7 +1037,7 @@
 														<div class="form-group-control custom-caret-wrapper">
 															<select class="form-control form-control-lg theme-form" 
 															ng-model="model.medicalInsurance" ng-options="item for item in medicalInsuranceList"
-															ng-init="model.medicalInsurance = null" ng-class="{'selected': model.medicalInsurance != null}">
+															ng-init="model.medicalInsurance == null" ng-class="{'selected': model.medicalInsurance != null}">
 																<option value="" ng-disabled="!!model.medicalInsurance">Mi seguro es:</option>
 															</select>
 															<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1070,7 +1070,7 @@
 												<section class="old-code">
 													<div class="old-code">
 														<h5>Familiar</h5>
-														<select ng-model="model.children" ng-options="item for item in yesNoList" ng-init="model.children = null" class="form-control form-control-lg theme-form">
+														<select ng-model="model.children" ng-options="item for item in yesNoList" ng-init="model.children == null" class="form-control form-control-lg theme-form">
 															<option value="" ng-disabled="!!model.children">Familiar</option>
 														</select>
 													</div>
@@ -1078,7 +1078,7 @@
 													<div class="old-code">
 														<h5>Ingresos</h5>
 														<h4>¿Recibo ingresos?</h4>
-														<select ng-model="model.gotMoneyIncome" ng-options="item for item in yesNoList" ng-init="model.gotMoneyIncome = null" class="form-control form-control-lg theme-form">
+														<select ng-model="model.gotMoneyIncome" ng-options="item for item in yesNoList" ng-init="model.gotMoneyIncome == null" class="form-control form-control-lg theme-form">
 															<option value="" ng-disabled="!!model.gotMoneyIncome">¿Recibo ingresos?</option>
 														</select>
 													</div>
@@ -1094,7 +1094,7 @@
 																			<span class="icomoon icon-cross"></span>
 																		</button>
 																	</h5>
-																	<select ng-model="model.moneyIncome[$index]" ng-options="item for item in moneyIncomeList" ng-init="model.moneyIncome = null"
+																	<select ng-model="model.moneyIncome[$index]" ng-options="item for item in moneyIncomeList" ng-init="model.moneyIncome == null"
 																	class="form-control form-control-lg theme-form">
 																		<option value="" ng-disabled="!!model.moneyIncome">Ingreso</option>
 																	</select>
@@ -1109,7 +1109,7 @@
 													<div class="old-code">
 														<h5>Salud</h5>
 														<h4>¿Cuento con seguro médico?</h4>
-														<select ng-model="model.medicalCoverage" ng-options="item for item in yesNoList" ng-init="model.medicalCoverage = null"
+														<select ng-model="model.medicalCoverage" ng-options="item for item in yesNoList" ng-init="model.medicalCoverage == null"
 														class="form-control form-control-lg theme-form">
 															<option value="" ng-disabled="!!model.medicalCoverage">¿Cuento con seguro médico?</option>
 														</select>
@@ -1119,7 +1119,7 @@
 														<h4>Mi seguro es:</h4>
 														<input type="text" class="form-control form-control-lg theme-form" placeholder="Mi seguro es" ng-model="s.medicalInsurance"
 														/>
-														<select ng-model="model.medicalInsurance" ng-options="item for item in medicalInsuranceList" ng-init="model.medicalInsurance = null"
+														<select ng-model="model.medicalInsurance" ng-options="item for item in medicalInsuranceList" ng-init="model.medicalInsurance == null"
 														class="form-control form-control-lg theme-form">
 															<option value="" ng-disabled="!!model.medicalInsurance">Mi seguro es:</option>
 														</select>
@@ -1184,7 +1184,7 @@
 																</h5>                                                                
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.knownDevices[$index]" ng-options="item for item in knownDevicesList"
-																	ng-init="model.knownDevices = null" ng-class="{'selected': model.knownDevices[$index].length != 0 && model.knownDevices[$index] != null}">
+																	ng-init="model.knownDevices == null" ng-class="{'selected': model.knownDevices[$index].length != 0 && model.knownDevices[$index] != null}">
 																		<option value="" ng-disabled="!!model.knownDevices">Dispositivos</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1210,7 +1210,7 @@
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.ownDevices[$index]" ng-options="item for item in knownDevicesList"
-																	ng-init="model.ownDevices = null" ng-class="{'selected': model.ownDevices[$index].length != 0 && model.ownDevices[$index] != null}">
+																	ng-init="model.ownDevices == null" ng-class="{'selected': model.ownDevices[$index].length != 0 && model.ownDevices[$index] != null}">
 																		<option value="" ng-disabled="!!model.ownDevices">Dispositivos</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1236,7 +1236,7 @@
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
 																	<select class="form-control form-control-lg theme-form" ng-model="model.phoneUsage[$index]" ng-options="item for item in phoneUsageList"
-																	ng-init="model.phoneUsage = null" ng-class="{'selected': model.phoneUsage[$index].length != 0 && model.phoneUsage[$index] != null}">
+																	ng-init="model.phoneUsage == null" ng-class="{'selected': model.phoneUsage[$index].length != 0 && model.phoneUsage[$index] != null}">
 																		<option value="" ng-disabled="!!model.phoneUsage">Actividad</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1284,7 +1284,7 @@
 																			<span class="icomoon icon-cross"></span>
 																		</button>
 																	</h5>
-																	<select ng-model="model.knownDevices[$index]" ng-options="item for item in knownDevicesList" ng-init="model.knownDevices = null"
+																	<select ng-model="model.knownDevices[$index]" ng-options="item for item in knownDevicesList" ng-init="model.knownDevices == null"
 																	class="form-control form-control-lg theme-form">
 																		<option value="" ng-disabled="!!model.knownDevices">Dispositivos</option>
 																	</select>
@@ -1307,7 +1307,7 @@
 																			<span class="icomoon icon-cross"></span>
 																		</button>
 																	</h5>
-																	<select ng-model="model.ownDevices[$index]" ng-options="item for item in knownDevicesList" ng-init="model.ownDevices = null"
+																	<select ng-model="model.ownDevices[$index]" ng-options="item for item in knownDevicesList" ng-init="model.ownDevices == null"
 																	class="form-control form-control-lg theme-form">
 																		<option value="" ng-disabled="!!model.ownDevices">Dispositivos</option>
 																	</select>
@@ -1330,7 +1330,7 @@
 																			<span class="icomoon icon-cross"></span>
 																		</button>
 																	</h5>
-																	<select ng-model="model.phoneUsage[$index]" ng-options="item for item in phoneUsageList" ng-init="model.phoneUsage = null"
+																	<select ng-model="model.phoneUsage[$index]" ng-options="item for item in phoneUsageList" ng-init="model.phoneUsage == null"
 																	class="form-control form-control-lg theme-form">
 																		<option value="" ng-disabled="!!model.phoneUsage">Actividad</option>
 																	</select>
@@ -1383,7 +1383,7 @@
 												<section>
 													<h4>¿Juegas videojuegos?</h4>
 													<div class="form-group-control custom-caret-wrapper">
-														<select ng-model="model.playVideogames" ng-options="item for item in yesNoList" ng-init="model.playVideogames = null" class="form-control form-control-lg theme-form">
+														<select ng-model="model.playVideogames" ng-options="item for item in yesNoList" ng-init="model.playVideogames == null" class="form-control form-control-lg theme-form">
 															<option value="" ng-disabled="!!model.playVideogames">¿Juegas videojuegos?</option>
 														</select>
 														<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1393,7 +1393,7 @@
 												<section>
 													<h4>¿Con qué frecuencia juegas videojuegos?</h4>
 													<div class="form-group-control custom-caret-wrapper">
-														<select ng-model="model.videogamesFrecuency" ng-options="item for item in videoGamesFrecuencyList" ng-init="model.videogamesFrecuency = null" 
+														<select ng-model="model.videogamesFrecuency" ng-options="item for item in videoGamesFrecuencyList" ng-init="model.videogamesFrecuency == null" 
 														class="form-control form-control-lg theme-form">
 															<option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
 														</select>
@@ -1404,7 +1404,7 @@
 												<section>
 													<h4>¿Cuántas horas juegas al día?</h4>
 													<div class="form-group-control custom-caret-wrapper">
-														<select ng-model="model.videogamesHours" ng-options="item for item in videogamesHoursList" ng-init="model.videogamesHours = null" 
+														<select ng-model="model.videogamesHours" ng-options="item for item in videogamesHoursList" ng-init="model.videogamesHours == null" 
 														class="form-control form-control-lg theme-form">
 															<option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
 														</select>
@@ -1424,7 +1424,7 @@
 																	</button>
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
-																	<select ng-model="model.kindOfVideogames[$index]" ng-options="item for item in kindOfVideoGamesList" ng-init="model.kindOfVideogames = null"
+																	<select ng-model="model.kindOfVideogames[$index]" ng-options="item for item in kindOfVideoGamesList" ng-init="model.kindOfVideogames == null"
 																	class="form-control form-control-lg theme-form">
 																		<option value="" ng-disabled="!!model.kindOfVideogames">¿Qué tipo de videojuegos te gustan más?</option>
 																	</select>

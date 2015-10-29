@@ -93,7 +93,7 @@ angular
                 $scope.genderItems = ['Masculino', 'Femenino'];
                 $scope.countryItems = ['México', 'Otro'];
                 $scope.cityItems = [];
-                $scope.stateItems = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','DF','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas', 'Otro'];
+                $scope.stateItems = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','DF','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro', 'Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas', 'Otro'];
                 $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
                 $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
                 $scope.educationStatusList = ['Terminada', 'En proceso', 'Inconclusa'];
@@ -839,16 +839,16 @@ angular
                         var result;
 
                         switch (activity.activity_identifier) {
-                            case "3000":  // "Llenar mi informacion"
+                            case "3000":  // "Llenar mi informacion"; points = 400
                                 result = assignmentMiInformacion();
                                 break;
-                            case "3001":  // "Llenar Mi Personalidad"
+                            case "3001":  // "Llenar Mi Personalidad"; points = 400
                                 result = assignmentMiPersonalidad();
                                 break;
-                            case "3002":  // "Llenar Llenar Socioeconomicos"
+                            case "3002":  // "Llenar Llenar Socioeconomicos"; points = 400
                                 result = assignmentSocioeconomicos();
                                 break;
-                            case "3003":  // "Llenar Uso de la tecnologia"
+                            case "3003":  // "Llenar Uso de la tecnologia"; points = 400
                                 result = assignmentTecnologia();
                                 break;
                             default:
