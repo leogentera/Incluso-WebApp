@@ -44,6 +44,7 @@ hallOfFameModule
                 stars: JSON.parse(localStorage.getItem("CurrentUser")).stars,
                 amount: profile.badges.filter(function(value) { return (value !== undefined && value.status === "won") }).length,
             };
+            if(userStats.stars == "") userStats.stars = "0";
             $scope.userStats = userStats;
 
 
