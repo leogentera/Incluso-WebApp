@@ -6,29 +6,36 @@
                 <article class="album-page1">
                     <!-- description -->
                     <section class="centered section-description">
-                        <h2 class="subtitle centered text-uppercase">Mi album</h2>
+                        <h2 class="subtitle centered text-uppercase">{{contentResources.album_title}}</h2>
+                        <!--<h2 class="subtitle centered text-uppercase">Mi album</h2>-->
                         <div class=" txt-renglon centered">
-                            <div ng-bind-html="message"></div>
+                            <!--<div ng-bind-html="message"></div>-->
+                            <div ng-bind-html="contentResources.album_content.value"></div>
                         </div>
                         <a class="btn btn-icon-aside light centered" ng-click="shareAlbumClick()" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
                             </div>
-                            <span>Compartir mi album</span>
+                            <span>{{contentResources.album_share_button}}</span>
+                            <!--<span>Compartir mi album</span>-->
                             <span class="arrow-up"></span>
                         </a>
                         <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed" ng-show="hasCommunityAccess">
                             <div>
                                 <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>-->
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">{{contentResources.community_share_button}}</a>
                             </div>
                         </div>
                         <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess">
                             <div>
-                              <a title="close" class="close"></a>
-                              <div class="add">Has compartido tú album.</div>
-                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000', '', '5000')">Ir a Comunidad</a>
-                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>
+                                <a title="close" class="close"></a>
+                                <div class="add">{{contentResources.community_shared_message}}</div>
+                                <!--<div class="add">Has compartido tú album.</div>-->
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000', '', '5000')">Ir a Comunidad</a>-->
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000', '', '5000')">{{contentResources.go_to_community_button}}</a>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">{{contentResources.shared_close_button}}</a>
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>-->
                             </div>
                         </div>
                     </section>
@@ -41,7 +48,9 @@
                             <!-- shield -->
                             <section class="section-album section-shield-name centered">
                                 <div class="container">
-                                    <p>El escudo que me distingue es: </p>
+
+                                    <!--<p>El escudo que me distingue es: </p>-->
+                                    <p>{{contentResources.shield_message.value}}</p>
                                     <h4 class="subtitle centered text-uppercase">{{album.shield==''?'Aún no tienes tu primer escudo':album.shield}}</h4>
                                 </div>
                             </section>
@@ -92,29 +101,36 @@
                 <article class="album-page2">
                     <!-- description -->
                     <section class="centered section-description">
-                        <h2 class="subtitle centered text-uppercase">Mi album</h2>
+                        <!--<h2 class="subtitle centered text-uppercase">Mi album</h2>-->
+                        <h2 class="subtitle centered text-uppercase">{{contentResources.album_title}}</h2>
                         <div class=" txt-renglon centered">
-                            <div ng-bind-html="message"></div>
+                            <!--<div ng-bind-html="message"></div>-->
+                            <div ng-bind-html="contentResources.album_content.value"></div>
                         </div>
                         <a class="btn btn-icon-aside light centered" ng-click="shareAlbumClick()" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
                             </div>
-                            <span>Compartir mi album</span>
+                            <!--<span>Compartir mi album</span>-->
+                            <span>{{contentResources.album_share_button}}</span>
                             <span class="arrow-up"></span>
                         </a>
                         <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed" ng-show="hasCommunityAccess">
                             <div>
                                 <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>-->
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">{{contentResources.community_share_button}}</a>
                             </div>
                         </div>
                         <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess">
                             <div>
-                              <a title="close" class="close"></a>
-                              <div class="add">Has compartido tú album.</div>
-                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>
-                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>
+                                <a title="close" class="close"></a>
+                                <div class="add">{{contentResources.community_shared_message}}</div>
+                                <!--<div class="add">Has compartido tú album.</div>-->
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>-->
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">{{contentResources.go_to_community_button}}</a>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">{{contentResources.shared_close_button}}</a>
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>-->
                             </div>
                         </div>
                     </section>
@@ -202,29 +218,36 @@
                 <article class="album-page3">
                     <!-- description -->
                     <section class="centered section-description">
-                        <h2 class="subtitle centered text-uppercase">Mi album</h2>
+                        <!--<h2 class="subtitle centered text-uppercase">Mi album</h2>-->
+                        <h2 class="subtitle centered text-uppercase">{{contentResources.album_title}}</h2>
                         <div class=" txt-renglon centered">
-                            <div ng-bind-html="message"></div>
+                            <div ng-bind-html="contentResources.album_content.value"></div>
+                            <!--<div ng-bind-html="message"></div>-->
                         </div>
                         <a class="btn btn-icon-aside light centered" ng-click="shareAlbumClick()" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
                             </div>
-                            <span>Compartir mi album</span>
+                            <!--<span>Compartir mi album</span>-->
+                            <span>{{contentResources.album_share_button}}</span>
                             <span class="arrow-up"></span>
                         </a>
                         <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed" ng-show="hasCommunityAccess">
                             <div>
                                 <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>-->
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">{{contentResources.community_share_button}}</a>
                             </div>
                         </div>
                         <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess && isShareCollapsed">
                             <div>
-                              <a title="close" class="close"></a>
-                              <div class="add">Has compartido tú album.</div>
-                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>
-                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>
+                                <a title="close" class="close"></a>
+                                <div class="add">{{contentResources.community_shared_message}}</div>
+                                <!--<div class="add">Has compartido tú album.</div>-->
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">{{contentResources.go_to_community_button}}</a>
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>-->
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">{{contentResources.shared_close_button}}</a>
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>-->
                             </div>
                         </div>
                     </section>
@@ -232,9 +255,12 @@
                     <section class="section-album section-future-plans centered">
                         <div class="container">
                             <ul class="list-group">
-                                <li class="list-group-item"><span>1 año. </span><label>{{album.myPlans.oneYear == '' ? 'Comparte tu plan':album.myPlans.oneYear}}</label></li>
-                                <li class="list-group-item"><span>2 años. </span><label>{{album.myPlans.threeYear == '' ? 'Comparte tu plan':album.myPlans.threeYear}}</label></li>
-                                <li class="list-group-item"><span>5 años. </span><label>{{album.myPlans.fiveYear == '' ? 'Comparte tu plan':album.myPlans.fiveYear}}</label></li>
+                                <li class="list-group-item"><span>{{contentResources.lapse[0]}} </span><label>{{album.myPlans.oneYear == '' ? 'Comparte tu plan':album.myPlans.oneYear}}</label></li>
+                                <li class="list-group-item"><span>{{contentResources.lapse[1]}} </span><label>{{album.myPlans.threeYear == '' ? 'Comparte tu plan':album.myPlans.threeYear}}</label></li>
+                                <li class="list-group-item"><span>{{contentResources.lapse[2]}} </span><label>{{album.myPlans.fiveYear == '' ? 'Comparte tu plan':album.myPlans.fiveYear}}</label></li>
+                                <!--<li class="list-group-item"><span>1 año. </span><label>{{album.myPlans.oneYear == '' ? 'Comparte tu plan':album.myPlans.oneYear}}</label></li>-->
+                                <!--<li class="list-group-item"><span>2 años. </span><label>{{album.myPlans.threeYear == '' ? 'Comparte tu plan':album.myPlans.threeYear}}</label></li>-->
+                                <!--<li class="list-group-item"><span>5 años. </span><label>{{album.myPlans.fiveYear == '' ? 'Comparte tu plan':album.myPlans.fiveYear}}</label></li>-->
                             </ul>
                         </div>
                     </section>
@@ -322,29 +348,35 @@
                 <article class="album-page4">
                     <!-- description -->
                     <section class="centered section-description">
-                        <h2 class="subtitle centered text-uppercase">Mi album</h2>
+                        <h2 class="subtitle centered text-uppercase">{{contentResources.album_title}}</h2>
                         <div class=" txt-renglon centered">
-                            <div ng-bind-html="message"></div>
+                            <div ng-bind-html="contentResources.album_content.value"></div>
+                            <!--<div ng-bind-html="message"></div>-->
                         </div>
                         <a class="btn btn-icon-aside light centered" ng-click="shareAlbumClick()" ng-class="{'active': isShareCollapsed}">
                             <div class="btn-icon">
                                 <span class="icomoon icon-share"></span>
                             </div>
-                            <span>Compartir mi album</span>
+                            <!--<span>Compartir mi album</span>-->
+                            <span>{{contentResources.album_share_button}}</span>
                             <span class="arrow-up"></span>
                         </a>
                         <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed" ng-show="hasCommunityAccess">
                             <div>
                                 <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">{{contentResources.community_share_button}}</a>
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>-->
                             </div>
                         </div>
                         <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess && isShareCollapsed">
                             <div>
-                              <a title="close" class="close"></a>
-                              <div class="add">Has compartido tú album.</div>
-                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>
-                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>
+                                <a title="close" class="close"></a>
+                                <div class="add">{{contentResources.community_shared_message}}</div>
+                                <!--<div class="add">Has compartido tú album.</div>-->
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">{{contentResources.go_to_community_button}}</a>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">{{contentResources.shared_close_button}}</a>
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>-->
+                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>-->
                             </div>
                         </div>
                     </section>
@@ -352,12 +384,15 @@
                     <section class="section-album section-participation centered">
                         <div class="container">
                             <ul class="list-group">
-                                <li class="list-group-item"><span class="results-title">Comunidad </span><label>{{album.amountOfCommunityPosts}} entradas</label></li>
-                                <li class="list-group-item"><span class="results-title">Foros </span><label>{{album.amountOfForumPosts}} entradas</label></li>
+                                <!--<li class="list-group-item"><span class="results-title">Comunidad </span><label>{{album.amountOfCommunityPosts}} entradas</label></li>-->
+                                <!--<li class="list-group-item"><span class="results-title">Foros </span><label>{{album.amountOfForumPosts}} entradas</label></li>-->
+                                <li class="list-group-item"><span class="results-title">{{contentResources.community_label}} </span><label>{{album.amountOfCommunityPosts}} {{contentResources.posts_label}}</label></li>
+                                <li class="list-group-item"><span class="results-title">{{contentResources.forum_label}} </span><label>{{album.amountOfForumPosts}} {{contentResources.posts_label}}</label></li>
                             </ul>
                             <!-- won stars -->
                             <div class="txt-renglon">
-                                <h2 class="results-title">Estrellas ganadas</h2>
+                                <h2 class="results-title">{{contentResources.earned_stars}}</h2>
+                                <!--<h2 class="results-title">Estrellas ganadas</h2>-->
                                 <div class="sm-pill">
                                     <span class="ng-binding pull-left">{{album.starsEarned}}</span>
                                     <span class="icomoon icon-star pull-right"></span>
@@ -365,32 +400,33 @@
                             </div>
                             <!-- badges obtained -->
                             <div class="txt-renglon badges">
-                                <h2 class="results-title">Insignias obtenidas</h2>
-                                <div class="badge-item text-center">                                                                                                   
+                                <h2 class="results-title">{{contentResources.obtained_badges_label}}</h2>
+                                <!--<h2 class="results-title">Insignias obtenidas</h2>-->
+                                <div class="badge-item text-center">
                                     <img class="badgesviews" ng-src="assets/images/badges/{{ album.badges[0].filename}}" alt="{{ album.badges[0].alt}}" />
                                 </div>
-                                <div class="badge-item text-center">                                    
+                                <div class="badge-item text-center">
                                     <img class="badgesviews" ng-src="assets/images/badges/{{ album.badges[1].filename}}" alt="{{ album.badges[1].alt}}" />
                                 </div>
-                                <div class="badge-item text-center">                                    
+                                <div class="badge-item text-center">
                                     <img class="badgesviews" src="assets/images/badges/{{ album.badges[2].filename}}" alt="{{ album.badges[2].alt}}" />
                                 </div>
-                                <div class="badge-item text-center">                                
+                                <div class="badge-item text-center">
                                     <img class="badgesviews" src="assets/images/badges/{{ album.badges[3].filename}}" alt="{{ album.badges[3].alt}}" />
                                 </div>
-                                <div class="badge-item text-center">                                
+                                <div class="badge-item text-center">
                                     <img class="badgesviews" src="assets/images/badges/{{ album.badges[4].filename}}" alt="{{ album.badges[4].alt}}" />
                                 </div>
-                                <div class="badge-item text-center">                                    
+                                <div class="badge-item text-center">
                                     <img class="badgesviews" src="assets/images/badges/{{ album.badges[5].filename}}" alt="{{ album.badges[5].alt}}" />
                                 </div>
-                                <div class="badge-item text-center">                                    
+                                <div class="badge-item text-center">
                                     <img class="badgesviews" src="assets/images/badges/{{ album.badges[6].filename}}" alt="{{ album.badges[6].alt}}" />
                                 </div>
-                                <div class="badge-item text-center">                                    
+                                <div class="badge-item text-center">
                                     <img class="badgesviews" src="assets/images/badges/{{ album.badges[7].filename}}" alt="{{ album.badges[7].alt}}" />
                                 </div>
-                                <div class="badge-item text-center">                                    
+                                <div class="badge-item text-center">
                                     <img class="badgesviews" src="assets/images/badges/insignias-seemore.gif" alt="Ver más" />
                                 </div>
                             </div>
