@@ -1383,7 +1383,7 @@ angular
 
             function getContent() {
                 drupalFactory.Services.GetContent("7001", function (data, key) {
-                        console.log(data);
+                        $scope.contentResources = data.node;
                     }, function () {
                     }, true);
             }

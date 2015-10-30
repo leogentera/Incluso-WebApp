@@ -22,14 +22,16 @@
                     <div class="btn-icon">
                         <span class="icomoon icon-settings"></span>
                     </div>
-                    <span for="">Editar</span>
+                    <span for="">{{contentResources.profile_edit_button}}</span>
+                    <!--<span for="">Editar</span>-->
                 </a>
 
                 <a class="btn btn-icon-aside right" ng-click="navigateTo('/Perfil/ConfigurarPrivacidad', null, null, null)" ng-show="loggedUser">
                     <div class="btn-icon">
                         <span class="icomoon icon-lock"></span>
                     </div>
-                    <span for="">Privacidad</span>
+                    <!--<span for="">Privacidad</span>-->
+                    <span for="">{{contentResources.profile_privacy_button}}</span>
                 </a>
             </div>
         </section>
@@ -43,7 +45,8 @@
                                     <li class="list-group-item" ng-click="navigateToPage(2)"  ng-show="loggedUser?loggedUser:(model.showGeneralData || model.showEducation || model.showAddress || model.showPhones || model.showSocialNetworks || model.showFamiliaCompartamos)">
                                         <a href="">
                                             <span class="icomoon icon-information"></span>
-                                            <span>Mi Información</span>
+                                            <span>{{contentResources.profile_my_info_section}}</span>
+                                            <!--<span>Mi Información</span>-->
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
@@ -52,7 +55,8 @@
                                     <li class="list-group-item" ng-click="navigateToPage(3)"  ng-show="loggedUser?loggedUser:(model.showLikesAndPreferences || model.showAttributesAndQualities || model.showWhomAdmires)">
                                         <a href="">
                                             <span class="icomoon icon-star-clip"></span>
-                                            <span>Mi Personalidad</span>
+                                            <!--<span>Mi Personalidad</span>-->
+                                            <span>{{contentResources.profile_my_personality_sec}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
@@ -61,7 +65,8 @@
                                     <li class="list-group-item" ng-click="navigateToPage(4)" ng-show="loggedUser?loggedUser:false">
                                         <a href="">
                                             <span class="icomoon icon-wallet"></span>
-                                            <span>Socioeconómicos</span>
+                                            <span>{{contentResources.profile_socioeconomics_sec}}</span>
+                                            <!--<span>Socioeconómicos</span>-->
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
@@ -70,7 +75,8 @@
                                     <li class="list-group-item" ng-click="navigateToPage(5)" ng-show="loggedUser?loggedUser:( model.showDevices || model.showVideogames )">
                                         <a href="">
                                             <span class="icomoon icon-smartphone"></span>
-                                            <span>Uso Tecnología</span>
+                                            <!--<span>Uso Tecnología</span>-->
+                                            <span>{{contentResources.profile_technology_section}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
@@ -79,7 +85,8 @@
 
                                         <a href="">
                                             <span class="icomoon icon-badge"></span>
-                                            <span>Mis Logros</span>
+                                            <!--<span>Mis Logros</span>-->
+                                            <span>{{contentResources.profile_my_achievments_sec}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
@@ -89,7 +96,8 @@
                                     <li class="list-group-item no-badge" ng-click="navigateToPage(7)" ng-show="isMultipleChallengeActivityFinished">
                                         <a href="">
                                             <span class="icomoon icon-user"></span>
-                                            <span>Mis Habilidades</span>
+                                            <!--<span>Mis Habilidades</span>-->
+                                            <span>{{contentResources.profile_my_skills_section}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
@@ -99,7 +107,8 @@
                                     <li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="isMultipleChallengeActivityFinished">
                                         <a href="">
                                             <span class="icomoon icon-workman"></span>
-                                            <span>Mis Áreas de Oportunidad</span>
+                                            <!--<span>Mis Áreas de Oportunidad</span>-->
+                                            <span>{{contentResources.profile_window_of_opp_sect}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
@@ -109,7 +118,8 @@
                                     <li class="list-group-item no-badge" ng-click="navigateToPage(9)" ng-show="isMultipleChallengeActivityFinished">
                                         <a href="">
                                             <span class="icomoon icon-rocket"></span>
-                                            <span>Elige el Rumbo</span>
+                                            <!--<span>Elige el Rumbo</span>-->
+                                            <span>{{contentResources.profile_choose_the_way_sec}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
@@ -130,7 +140,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-information"></span>
-                                        <h3 class="panel-title">Mi Información</h3>
+                                        <!--<h3 class="panel-title">Mi Información</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_my_info_section}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -299,7 +310,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-star-clip"></span>
-                                        <h3 class="panel-title">Mi Personalidad</h3>
+                                        <!--<h3 class="panel-title">Mi Personalidad</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_my_personality_sec}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -405,7 +417,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-wallet"></span>
-                                        <h3 class="panel-title">Socioeconómicos</h3>
+                                        <!--<h3 class="panel-title">Socioeconómicos</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_socioeconomics_sec}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -507,7 +520,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-smartphone"></span>
-                                        <h3 class="panel-title">Uso Tecnología</h3>
+                                        <!--<h3 class="panel-title">Uso Tecnología</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_technology_section}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -599,7 +613,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-badge"></span>
-                                        <h3 class="panel-title">Mis Logros</h3>
+                                        <!--<h3 class="panel-title">Mis Logros</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_my_achievments_sec}}</h3>
                                     </div>
                                     <div class="panel-body">
 
@@ -648,7 +663,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-user"></span>
-                                        <h3 class="panel-title">Mis habilidades</h3>
+                                        <!--<h3 class="panel-title">Mis habilidades</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_my_skills_section}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -686,7 +702,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-workman"></span>
-                                        <h3 class="panel-title">Mis Áreas de Oportunidad</h3>
+                                        <!--<h3 class="panel-title">Mis Áreas de Oportunidad</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_window_of_opp_sect}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -723,7 +740,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-rocket"></span>
-                                        <h3 class="panel-title">Carreras Afines</h3>
+                                        <!--<h3 class="panel-title">Carreras Afines</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_choose_the_way_sec}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -756,7 +774,8 @@
                                     <div class="panel-heading">
                                         <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(6)"></span>
                                         <span class="icomoon icon-badge"></span>
-                                        <h3 class="panel-title">Detalle de Insignia</h3>
+                                        <h3 class="panel-title">{{contentResources.profile_badge_detail}}</h3>
+                                        <!--<h3 class="panel-title">Detalle de Insignia</h3>-->
                                     </div>
                                     <div class="panel-body">
 
@@ -796,7 +815,8 @@
                                                             <span class="icomoon icon-share"></span>
 
                                                         </span>
-                                                        <span class="share-text" ng-click="showShareAchievementMessage = !showShareAchievementMessage">Compartir Insignia</span>
+                                                        <!--<span class="share-text" ng-click="showShareAchievementMessage = !showShareAchievementMessage">Compartir Insignia</span>-->
+                                                        <span class="share-text" ng-click="showShareAchievementMessage = !showShareAchievementMessage">{{contentResources.profile_share_badge_button}}</span>
                                                     </div>
                                                     
                                                     <section class="modales" ng-show="status == 'won' && hasCommunityAccess">
@@ -818,7 +838,8 @@
                                                     </div>
                                                     </section>
 
-                                                    <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>
+                                                    <!--<a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>-->
+                                                    <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">{{contentResources.profile_back_button}}</a>
                                                     <div class="txt-renglon centered txt-bigger"></div>
                                                 </div>
 

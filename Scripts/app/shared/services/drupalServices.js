@@ -16,7 +16,7 @@
         "3303": 80, /*Zona de Aterrizaje - Educación Financiera - Multiplica tu dinero*/
         "3303results": 81, /*Zona de Aterrizaje - Educación Financiera - Multiplica tu dinero - Resultados*/
         "3401": 35, /* Zona de Aterrizaje - Mapa del Emprendedor - Fuente de energía */
-        "7001": 26, /* Profile */
+        "7001": 70, /* Profile */
         "3000": 45, /* Zona de Vuelo - Dashboard */
         "2000": 69, /* Zona de Navegación - Dashboard */
         "0000": 57, /* Programa - Dashboard */
@@ -28,7 +28,7 @@
         "Recognition": 73, /*General - Reconocimiento*/
         "Album": 72, /*General - Album*/
         "MyStars": 72, /*General - Mis Estrellas*/
-        "Profile": 70, /*General - Perfil*/
+        //"Profile": 70, /*General - Perfil*/
         "HallOfFame": 42,  /*General - Salón de la Fama*/
         "FAQS":41 /*General - FAQS*/
 
