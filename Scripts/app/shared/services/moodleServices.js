@@ -134,6 +134,10 @@
             _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
+        var _getAsyncStars = function(userId, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("userStars", API_RESOURCE.format('stars/'+ userId),successCallback, errorCallback, forceRefresh);
+        };
+        
         var _getCacheObject = function (key) {
             return localStorage.getItem(key);
         };
@@ -344,6 +348,8 @@
             });
         };
 
+        
+        
         var _putAsyncFirstTimeInfo = function (userId, dataModel, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
@@ -847,6 +853,7 @@
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat,
             PutStars: _assignStars,
+            GetAsyncStars: _getAsyncStars,
             PutStartActivity: _startActivity,
             PutEndActivity: _putEndActivity,
             PutEndActivityQuizes: _putEndActivityQuizes,

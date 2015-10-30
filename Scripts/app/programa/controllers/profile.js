@@ -40,6 +40,8 @@ angular
             $scope.showShareAchievementMessage = false;
             $scope.showSharedAchievement = false;
             $scope.hasCommunityAccess = false;
+            var startingTime;
+            var endingTime;
             
             $scope.$emit('ShowPreloader');
 
@@ -91,9 +93,9 @@ angular
                 $scope.genderItems = ['Masculino', 'Femenino'];
                 $scope.countryItems = ['México', 'Otro'];
                 $scope.cityItems = [];
-                $scope.stateItems = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','DF','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas', 'Otro'];
+                $scope.stateItems = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','DF','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro', 'Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas', 'Otro'];
                 $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
-                /*unir1*/ $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
+                $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
                 $scope.educationStatusList = ['Terminada', 'En proceso', 'Inconclusa'];
                 $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'Fútbol Soccer', 'Basquetbol', 'Artes Marciales', 'Yoga', 'Natación', 'Futbol Americano', 'Basebol', 'Carreras'];
                 $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografia', 'Graffiti', 'Diseño Gráfico', 'Artesanías', 'Teatro', 'Modelado', 'Dibujo'];
@@ -103,7 +105,7 @@ angular
                 $scope.habilitiesList = ['Empatía', 'Creatividad', 'Liderazgo', 'Comunicación', 'Negociación', 'Trabajo en equipo', 'Innovación', 'Iniciativa', 'Toma de decisiones', 'Planeación', 'Organización'];
                 $scope.iLiveWithList = ['Ambos padres', 'Padre', 'Madre', 'Tíos', 'Esposo(a)', 'Abuelos', 'Amigos'];
                 $scope.mainActivityList = ['Estudias', 'Trabajas', 'Ni estudias ni trabajas'];
-                /*unir1*/$scope.levelList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
+                $scope.levelList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
                 $scope.gradeList = ['1er', '2do', '3ro', '4to', '5to', '6to','7mo','8vo','9no','10mo'];
                 $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
                 $scope.yesNoList = ['Si', 'No'];
@@ -134,9 +136,10 @@ angular
 
             });
 
+            
             function  loadStrengths() {
                 
-                var strengthArray = new Array();
+                var strengthArray = [];
                 
                 for(var s = 0; s < $scope.model.strengths.length; s++) {
                     
@@ -148,10 +151,11 @@ angular
                 
                 $scope.myStrengths = strengthArray;
             }
+
             
             function loadWindowOfOpportunities() {
                 
-                var windowOfOpportunitiesArray = new Array();
+                var windowOfOpportunitiesArray = [];
                 
                 for(var s = 0; s < $scope.model.windowOfOpportunity.length; s++) {
                     
@@ -308,6 +312,8 @@ angular
 
             function getDataAsync(callback) {
 
+                startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
+
                 moodleFactory.Services.GetAsyncProfile($scope.userId, function () {
 
                     $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
@@ -327,9 +333,11 @@ angular
                         $location.path('/');
                         return "";
                     }
+
                     initFields($scope.model);
                     loadStrengths();
                     loadWindowOfOpportunities();
+
                 }, true);
             }
 
@@ -350,6 +358,7 @@ angular
                 if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
                     setEmptyAvatar();
                 }
+
                 $scope.$emit('HidePreloader');
             }
 
@@ -375,6 +384,7 @@ angular
                 var splitDate = $scope.model.birthday.split("/");
 
                 if (splitDate != "" || splitDate.length > 2) {
+
                     var birthDate = new Date(splitDate[2], splitDate[0] - 1, splitDate[1]);
                     if (birthDate != null || birthDate != '') {
                         var cur = new Date();
@@ -382,8 +392,8 @@ angular
                         var age = Math.floor(diff / 31536000000);
                         $scope.model.age = age;
                     }
-                }
-                else {
+
+                } else {
                     $scope.model.age = null;
                 }
             }
@@ -407,8 +417,7 @@ angular
 
             $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description, status) {
                 $scope.shareAchievementMessage = "";
-                $scope.showShareAchievementMessage = false;
-                
+                $scope.showShareAchievementMessage = false;                
                 $scope.currentPage = 10;
                 $scope.fileName = fileName;
                 $scope.badgeName = badgeName;
@@ -444,9 +453,11 @@ angular
                 if (today_month < (birth_month - 1)) {
                     age--;
                 }
+
                 if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
                     age--;
                 }
+
                 return age;
             }
 
@@ -498,7 +509,6 @@ angular
                 if (!$scope.editForm.firstname.$valid) { errors.push("Formato de nombre incorrecto."); }
                 if (!$scope.editForm.lastname.$valid) { errors.push("Formato de apellido paterno incorrecto."); }
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
-                // if (!$scope.editForm.alias.$valid) { errors.push("Formato de alias incorrecto."); }
                 if (!isValidDate($scope.model.birthday)) { errors.push("Ingrese la fecha de nacimiento."); }
 
                 //Validation of the $scope.model.familiaCompartamos array
@@ -514,8 +524,8 @@ angular
                     return arrayForIdClients.indexOf(item) == pos;
                 });
 
-                if (arrayForIdClients.length != filteredIdClient.length) {
-                    //Repeated idClients
+                //  Repeated idClients
+                if (arrayForIdClients.length != filteredIdClient.length) {                    
                     errors.push("El número de cliente Compartamos debe ser único.");
                 }
 
@@ -549,21 +559,22 @@ angular
 
                 if (arrayForUsername.length != filteredUsernames.length) {
                     //Repeated names for Social network
-                    console.log("Repeated Social NetWork");
                     errors.push("Nombre de Red social está repetido.");
                 }
 
-
                 //Validation of the $scope.model.studies array
                 var arrayForLevel = [];
+
 
                 $scope.model.studies.forEach(function (elem) {
                     arrayForLevel.push(elem.school.toLowerCase());
                 });
 
+
                 var filteredLevel = arrayForLevel.filter(function (item, pos) {
                     return arrayForLevel.indexOf(item) == pos;
                 });
+
 
                 if (arrayForLevel.length != filteredLevel.length) {
                     //Repeated names for Social network
@@ -571,17 +582,21 @@ angular
                     errors.push("El nivel de estudios está repetido.");
                 }
 
+
                 $scope.model.modelState.errorMessages = errors;
 
                 return (errors.length === 0);
             }
 
+
             var validateEmptyItemsOnLists = function () {
+
+                // Mi Información -------------------------------------------------------------------------------------
+
                 //studies
                 if ($scope.model.studies.length > 0) {
                     for (var i = 0; i < $scope.model.studies.length; i++) {
-                        if (typeof $scope.model.studies[i].school === "undefined" ||
-                            typeof $scope.model.studies[i].levelOfStudies === "undefined") {
+                        if (typeof $scope.model.studies[i].school === "undefined" || typeof $scope.model.studies[i].levelOfStudies === "undefined") {
                             $scope.model.studies.splice(i, 1);
                             i = i - 1;
                         }
@@ -591,8 +606,7 @@ angular
                 //phones
                 if ($scope.model.phones.length > 0) {
                     for (var i = 0; i < $scope.model.phones.length; i++) {
-                        if (typeof $scope.model.phones[i] === "undefined" ||
-                            $scope.model.phones[i].length === 0 ) {
+                        if (typeof $scope.model.phones[i] === "undefined" || $scope.model.phones[i].length === 0 ) {
                             $scope.model.phones.splice(i, 1);
                             i = i - 1;
                         }
@@ -619,12 +633,12 @@ angular
                     }
                 }
                 
-                
+                // Mi Personalidad -------------------------------------------------------------------------------------
+
                 //favoriteSports              
                 if ($scope.model.favoriteSports.length > 0) {
                     for (var i = 0; i < $scope.model.favoriteSports.length; i++) {
-                        if (typeof $scope.model.favoriteSports[i] === "undefined" ||
-                            $scope.model.favoriteSports[i].length === 0) {
+                        if (typeof $scope.model.favoriteSports[i] === "undefined" || $scope.model.favoriteSports[i].length === 0) {
                             $scope.model.favoriteSports.splice(i, 1);
                             i = i - 1;
                         }
@@ -635,8 +649,7 @@ angular
                 //artisticActivities              
                 if ($scope.model.artisticActivities.length > 0) {
                     for (var i = 0; i < $scope.model.artisticActivities.length; i++) {
-                        if (typeof $scope.model.artisticActivities[i] === "undefined" ||
-                            $scope.model.artisticActivities[i].length === 0) {
+                        if (typeof $scope.model.artisticActivities[i] === "undefined" || $scope.model.artisticActivities[i].length === 0) {
                             $scope.model.artisticActivities.splice(i, 1);
                             i = i - 1;
                         }
@@ -646,8 +659,7 @@ angular
                 //hobbies              
                 if ($scope.model.hobbies.length > 0) {
                     for (var i = 0; i < $scope.model.hobbies.length; i++) {
-                        if (typeof $scope.model.hobbies[i] === "undefined" ||
-                            $scope.model.hobbies[i].length === 0) {
+                        if (typeof $scope.model.hobbies[i] === "undefined" || $scope.model.hobbies[i].length === 0) {
                             $scope.model.hobbies.splice(i, 1);
                             i = i - 1;
                         }
@@ -657,8 +669,7 @@ angular
                 //talents              
                 if ($scope.model.talents.length > 0) {
                     for (var i = 0; i < $scope.model.talents.length; i++) {
-                        if (typeof $scope.model.talents[i] === "undefined" ||
-                            $scope.model.talents[i].length === 0) {
+                        if (typeof $scope.model.talents[i] === "undefined" || $scope.model.talents[i].length === 0) {
                             $scope.model.talents.splice(i, 1);
                             i = i - 1;
                         }
@@ -669,19 +680,17 @@ angular
                 //values              
                 if ($scope.model.values.length > 0) {
                     for (var i = 0; i < $scope.model.values.length; i++) {
-                        if (typeof $scope.model.values[i] === "undefined" ||
-                            $scope.model.values[i].length === 0) {
+                        if (typeof $scope.model.values[i] === "undefined" || $scope.model.values[i].length === 0) {
                             $scope.model.values.splice(i, 1);
                             i = i - 1;
                         }
                     }
                 }
                 
-                //Habilitie              
+                //Habilities              
                 if ($scope.model.habilities.length > 0) {
                     for (var i = 0; i < $scope.model.habilities.length; i++) {
-                        if (typeof $scope.model.habilities[i] === "undefined" ||
-                            $scope.model.habilities[i].length === 0) {
+                        if (typeof $scope.model.habilities[i] === "undefined" || $scope.model.habilities[i].length === 0) {
                             $scope.model.habilities.splice(i, 1);
                             i = i - 1;
                         }
@@ -698,7 +707,7 @@ angular
                     }
                 }
 
-                //Socioeconomicos
+                // Socioeconómicos --------------------------------------------------------------------------------------
 
                 //mainActivity              
                 if ($scope.model.mainActivity.length > 0) {
@@ -720,7 +729,7 @@ angular
                     }
                 }
 
-                //Uso de tecnologia
+                // Uso de tecnologia -------------------------------------------------------------------------------------
 
                 //knownDevices              
                 if ($scope.model.knownDevices.length > 0) {
@@ -774,23 +783,12 @@ angular
                 }
 
 
-            };
+            };            
 
-            var saveUser = function () {
-                moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
-
-                    function (data) {
-                        ValidatePointsPolicy();
-                        console.log('Save profile successful...');
-                        $scope.index();
-                    },
-                    function (date) {
-                        console.log('Save profile fail...');
-                    });
-            };
 
             $scope.save = function () {
                 var validationResult = validateModel();  //Valid if validateModel() returns true
+                console.log("Model is valid: " +  validationResult);
 
                 deleteRepeatedValues();
 
@@ -802,77 +800,108 @@ angular
                 }
             };
 
+
             $scope.clean = function () {
                 deleteRepeatedValues();
             };
 
+
+            var saveUser = function () {
+                moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
+
+                    function (data) {
+                        ValidatePointsPolicy();
+                        console.log('Save profile successful...');
+                        $scope.index();
+                    },
+
+                    function (date) {
+                        console.log('Save profile fail...');
+                    });
+            };
+
+
             function ValidatePointsPolicy() {
 
                 var usercourse = JSON.parse(localStorage.getItem("usercourse"));
-                //var profile = JSON.parse(localStorage.getItem("profile"));
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
                 for (var activityIndex = 0; activityIndex < usercourse.activities.length; activityIndex++) {
                     var activity = usercourse.activities[activityIndex];
 
-                    console.log("Activity Name: " + activity.activityname + " - Activity Points: " + activity.points + " - Activity Status: " + activity.status +
-                        " - Current Stars: " + $scope.model.stars + " - Stars to add: " + activity.points);
+                    console.log("Activity Name: " + activity.activityname);
+                    console.log("Activity Points: " + activity.points);
+                    console.log("Activity Status: " + activity.status);
+                    console.log("Current Stars: " + $scope.model.stars); 
+                    console.log("Stars to add: " + activity.points);
 
                     if (activity.status == 0) {
                         var result;
-                        switch (Number(activity.activity_identifier)) {
-                            case 3000:
+
+                        switch (activity.activity_identifier) {
+                            case "3000":  // "Llenar mi informacion"; points = 400
                                 result = assignmentMiInformacion();
                                 break;
-                            case 3001:
+                            case "3001":  // "Llenar Mi Personalidad"; points = 400
                                 result = assignmentMiPersonalidad();
                                 break;
-                            case 3002:
-                                result = false;
+                            case "3002":  // "Llenar Llenar Socioeconomicos"; points = 400
+                                result = assignmentSocioeconomicos();
                                 break;
-                            case 3003:
-                                result = false;
+                            case "3003":  // "Llenar Uso de la tecnologia"; points = 400
+                                result = assignmentTecnologia();
                                 break;
                             default:
+                                result = false;
                                 break;
                         }
+                        
+                        console.log("Section has been completed: " + result);
 
-                        console.log("Field Validation: " + result);
+                        
                         if (result) {
 
-                            $scope.model.stars += activity.points;
+                            $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
 
-                            usercourse.activities[activityIndex].status = 1;
+                            activity.status = 1;   //Update activity status.
 
-                            var profileBefore = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));
-                            console.log("profile.stars (before): " + profileBefore.stars);
+                            //Get local user profile.
+                            var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));
+                            console.log("profile.stars (before): " + profile.stars);
                             
-                            var newPoints = Number(profileBefore.stars) + Number(usercourse.activities[activityIndex].points);
-                            profileBefore.stars =newPoints;                       
-                            _setLocalStorageJsonItem("profile/" + $scope.userId,profileBefore);
+                            var newPoints = parseInt(profile.stars) + parseInt(activity.points);
+                            
+                            //Update the 'stars' key.
+                            profile.stars = newPoints;  
 
+                            //Save updated user profile to Local Storage.                     
+                            _setLocalStorageJsonItem("profile/" + $scope.userId, profile);
+
+                            //Update user profile in Moodle.
                             updateUserStarsUsingExternalActivity(activity.activity_identifier);
+
+                            endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
                             var activityModel = {
                                 "usercourse": usercourse,
                                 "coursemoduleid": activity.coursemoduleid,
                                 //"answersResult": "???",
                                 "userId": currentUser.userId,
-                                "startingTime": $scope.startingTime,
-                                "endingTime": new Date(),
-
-                                "token": currentUser.token
-                                , "activityType": "Assign"
+                                "startingTime": startingTime,
+                                "endingTime": endingTime,
+                                "token": currentUser.token,
+                                "activityType": "Assign"
                             };
 
-                            _endActivity(activityModel);
+                            //Finish Activity.
+                            _endActivity(activityModel, function () {//callback
+                            });
 
-                            result = false;
+                            result = false;  //Restore 'result' value
                         }
                     }
                 }
             }
-
 
 
             function assignmentMiInformacion() {
@@ -883,20 +912,20 @@ angular
                             if ($scope.model.gender) {
                                 if ($scope.model.age) {
                                     if ($scope.model.maritalStatus) {
-                                        if ($scope.model.address.country) {
-                                            if ($scope.model.address.state) {
-                                                if ($scope.model.address.city) {
+                                        if ($scope.model.studies.length > 0) { // array of objects
+                                            if ($scope.model.address.country) {
+                                                if ($scope.model.address.state) {                                                
                                                     if ($scope.model.address.town) {
                                                         if ($scope.model.address.postalCode) {
                                                             if ($scope.model.address.street) {
                                                                 if ($scope.model.address.num_ext) {
                                                                     if ($scope.model.address.num_int) {
                                                                         if ($scope.model.address.colony) {
-                                                                            if ($scope.model.phones.length != 0) {
-                                                                                if ($scope.model.socialNetworks.length != 0) {
-                                                                                    if ($scope.model.familiaCompartamos.length != 0) {
+                                                                            if ($scope.model.phones.length > 0) { //array
+                                                                                if ($scope.model.socialNetworks.length > 0) { //array of objects
+                                                                                    if ($scope.model.familiaCompartamos.length > 0) { //array of objects
                                                                                         result = true;
-                                                                                    } else { }
+                                                                                    } 
                                                                                 }
                                                                             }
                                                                         }
@@ -914,21 +943,20 @@ angular
                         }
                     }
                 }
+
                 return result;
             }
 
             function assignmentMiPersonalidad() {
                 var result = false;
-                if ($scope.model.favoriteSports) {
-                    if ($scope.model.favoriteSports) {
-                        if ($scope.model.artisticActivities) {
-                            if ($scope.model.hobbies) {
-                                if ($scope.model.talents) {
-                                    if ($scope.model.values) {
-                                        if ($scope.model.habilities) {
-                                            if ($scope.model.inspirationalCharacters.length != 0) {
-                                                result = true;
-                                            } else { }
+                if ($scope.model.favoriteSports.length > 0) {   //array                 
+                    if ($scope.model.artisticActivities.length > 0) {  //array
+                        if ($scope.model.hobbies.length > 0) {  //array
+                            if ($scope.model.talents.length > 0) {  //array
+                                if ($scope.model.values.length > 0) {  //array
+                                    if ($scope.model.habilities.length > 0) {  //array
+                                        if ($scope.model.inspirationalCharacters.length > 0) {  //array of objects
+                                            result = true;
                                         }
                                     }
                                 }
@@ -936,15 +964,65 @@ angular
                         }
                     }
                 }
+
                 return result;
             }
 
-            var deleteRepeatedValues = function () {
+            function assignmentSocioeconomicos() {
+                var result = false;
+                if ($scope.model.iLiveWith) {
+                    if ($scope.model.mainActivity.length > 0) {//array
+                        if ($scope.model.level) {
+                            if ($scope.model.grade) {
+                                if ($scope.model.period) {
+                                    if ($scope.model.children) {
+                                        if ($scope.model.gotMoneyIncome) {
+                                            if ($scope.model.moneyIncome.length > 0) {  //array
+                                                if ($scope.model.medicalCoverage) {
+                                                    if ($scope.model.medicalInsurance) {
+                                                        result = true;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
 
-                $scope.model.phones = $scope.model.phones.filter(function (item, pos) {
-                    return $scope.model.phones.indexOf(item) == pos;
-                });
+                return result;
+            }
 
+
+            function assignmentTecnologia() {
+                var result = false;
+                if ($scope.model.knownDevices.length > 0) { //array
+                    if ($scope.model.ownDevices.length > 0) {  //array
+                        if ($scope.model.phoneUsage.length > 0) {  //array
+                            if ($scope.model.playVideogames) {
+                                if ($scope.model.videogamesFrecuency) {
+                                    if ($scope.model.videogamesHours) {
+                                        if ($scope.model.kindOfVideogames.length > 0) {  //array
+                                            if ($scope.model.favoriteGames.length > 0) {  //array
+                                                result = true;
+                                            } 
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return result;
+            }
+
+
+            var deleteRepeatedValues = function () {                
+
+                // MODELS for "Mi Personalidad"
                 $scope.model.favoriteSports = $scope.model.favoriteSports.filter(function (item, pos) {
                     return item.trim().length > 0 && $scope.model.favoriteSports.indexOf(item) == pos;
                 });
@@ -967,50 +1045,50 @@ angular
 
                 $scope.model.habilities = $scope.model.habilities.filter(function (item, pos) {
                     return item.trim().length > 0 && $scope.model.habilities.indexOf(item) == pos;
-
                 });
 
-                //Uso de tecnologia
-                $scope.model.knownDevices = $scope.model.knownDevices.filter(function (item, pos) {
-                    return item.trim().length > 0 && $scope.model.knownDevices.indexOf(item) == pos;
 
-                });
+                // The model $scope.model.inspirationalCharacters must be validated in validateModel()
 
-                $scope.model.ownDevices = $scope.model.ownDevices.filter(function (item, pos) {
-                    return item.trim().length > 0 && $scope.model.ownDevices.indexOf(item) == pos;
-
-                });
-
-                $scope.model.phoneUsage = $scope.model.phoneUsage.filter(function (item, pos) {
-                    return item.trim().length > 0 && $scope.model.phoneUsage.indexOf(item) == pos;
-
-                });
-
-                $scope.model.kindOfVideogames = $scope.model.kindOfVideogames.filter(function (item, pos) {
-                    return item.trim().length > 0 && $scope.model.kindOfVideogames.indexOf(item) == pos;
-
-                });
-
-                $scope.model.favoriteGames = $scope.model.favoriteGames.filter(function (item, pos) {
-                    return item.trim().length > 0 && $scope.model.favoriteGames.indexOf(item) == pos;
-
-                });
-
-                //Socio Econimicos
+                // MODELS for "Socioeconómicos"  --> Some of them should be validated within validateModel()                
                 $scope.model.mainActivity = $scope.model.mainActivity.filter(function (item, pos) {
                     return item.trim().length > 0 && $scope.model.mainActivity.indexOf(item) == pos;
-
                 });
 
                 $scope.model.moneyIncome = $scope.model.moneyIncome.filter(function (item, pos) {
                     return item.trim().length > 0 && $scope.model.moneyIncome.indexOf(item) == pos;
-
                 });
+
+
+                // MODELS for "Uso de tecnologia"
+                $scope.model.knownDevices = $scope.model.knownDevices.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.knownDevices.indexOf(item) == pos;
+                });
+
+                $scope.model.ownDevices = $scope.model.ownDevices.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.ownDevices.indexOf(item) == pos;
+                });
+
+                $scope.model.phoneUsage = $scope.model.phoneUsage.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.phoneUsage.indexOf(item) == pos;
+                });
+
+                $scope.model.kindOfVideogames = $scope.model.kindOfVideogames.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.kindOfVideogames.indexOf(item) == pos;
+                });
+
+                $scope.model.favoriteGames = $scope.model.favoriteGames.filter(function (item, pos) {
+                    return item.trim().length > 0 && $scope.model.favoriteGames.indexOf(item) == pos;
+                });
+                
             };
 
+
+            // ######################  Methods to add / delete data  ############################
             $scope.addStudy = function () {
                 $scope.model.studies.push({});
             };
+
             $scope.deleteStudy = function (index) {
                 $scope.model.studies.splice(index, 1);
             };
@@ -1019,24 +1097,14 @@ angular
                 $scope.model.phones.push({});
             };
 
-            // $scope.deletePhone = function (index) {
-            //     $scope.model.phones.splice(index, 1);
-            // };
-            
-            $scope.deletePhone = function (phone) {
-                var index = $scope.model.phones.indexOf(phone);
-                // var selectedPhone = $scope.model.phones[index];
-                
-                //$scope.model.phones.remove(phone)//Pailas
-                // _.without($scope.model.phones, phone); //pailas
+            $scope.deletePhone = function (index) {
                 $scope.model.phones.splice(index, 1);
-                // $scope.model.phones.splice(index, 1);
-                //SubTask.remove({ 'subtaskId': subtask.id });
-            };
+            };            
 
             $scope.addSocialNetwork = function () {
                 $scope.model.socialNetworks.push({});
             };
+
             $scope.deleteSocialNetwork = function (index) {
                 $scope.model.socialNetworks.splice(index, 1);
             };
@@ -1189,9 +1257,12 @@ angular
             $scope.addFamiliaCompartamos = function () {
                 $scope.model.familiaCompartamos.push({});
             };
+
             $scope.deleteFamiliaCompartamos = function (index) {
                 $scope.model.familiaCompartamos.splice(index, 1);
             };
+
+            //  ###########################################################################
 
             encodeImageUri = function (imageUri, callback) {
                 var c = document.createElement('canvas');
@@ -1357,7 +1428,7 @@ angular
                                 $scope.showSharedAchievement = true;
                                 
                                 $scope.$emit('HidePreloader'); }, true);
-                    }else {
+                    } else {
                         postAchievement();
                     }
                 }

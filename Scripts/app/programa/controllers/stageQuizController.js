@@ -29,8 +29,10 @@ angular
             $scope.coursemoduleid = 0;
             $scope.like_status = 1;
             $scope.tmpPath = "";
-            var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601];
-            var quizHasOther = [1001, 1005, 1006, 2001, 3101, 3601];
+            var nonEditableQuizzes = ["1001", "1009", "2001", "2023", "3101", "3601"];
+            var quizHasOther = ["1001", "1005", "1006", "2001", "3101", "3601"];
+            var startingTime;
+            var endingTime;
 
             // ********************************     Models for Quizzes - Stage #1
             $scope.AnswersResult = { //For storing responses in "Exploración Inicial - Etapa 1"
@@ -49,10 +51,12 @@ angular
             $scope.misCualidadesOtroAnswers = [{
                 "questionid": 16,
                 "answers": ['']
-            }, {
+            }, 
+            {
                 "questionid": 17,
                 "answers": ['']
-            }, {
+            }, 
+            {
                 "questionid": 18,
                 "answers": ['']
             }];
@@ -61,16 +65,17 @@ angular
             $scope.misGustosOtroAnswers = [{
                 "questionid": 43,
                 "answers": ['']
-            }, {
+            }, 
+            {
                 "questionid": 44,
                 "answers": ['']
-            }, {
+            }, 
+            {
                 "questionid": 45,
                 "answers": ['']
             }];
 
             $scope.misSuenosAnswers = [[], [], []];
-            //$scope.exploracionFinal = ['', '', '', '', ''];
             $scope.exploracionFinal = [null, null, null, null, null];
 
             // ********************************  Models for Quizzes - Stage #2
@@ -195,10 +200,10 @@ angular
 
             //***********************************************************************************************************
             function getDataAsync() {
-                $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
+                startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
-                //console.log("Activity identifier: " + $scope.activity_identifier);
+                console.log("Activity identifier: " + $scope.activity_identifier);
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
                 //console.log("parentActivity = " + parentActivity);
                 var childActivity = null;
@@ -302,7 +307,7 @@ angular
                     $scope.parentActivity = parentActivity;
                     $scope.childActivity = childActivity;
 
-                    console.log("Starting... " + parentActivity.sectionname);
+                    console.log("Starting... " + parentActivity.activityname);
 
                     if ($scope.activity_status != 0) {//If the activity is currently finished...
                         activityFinished = true;
@@ -489,9 +494,7 @@ angular
                     }
 
                     $scope.isDisabled = true;
-                    //    updateUserStars($scope.parentActivity.activity_identifier);
-                    //    //updateUserStars($scope.parentActivity.activity_identifier, $scope.activityPoints);
-
+                    
                     if ($scope.childActivity) {
                         $scope.AnswersResult.activityidnumber = $scope.childActivity.coursemoduleid;
                     } else {
@@ -566,13 +569,14 @@ angular
                         updateActivityStatusDictionary($scope.parentActivity.activity_identifier);
                     }
 
+                    endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
                     var activityModel = {
                         "usercourse": updatedActivityOnUsercourse,
                         "answersResult": $scope.AnswersResult,
                         "userId": $scope.userprofile.id,
-                        "startingTime": $scope.startingTime,
-                        "endingTime": $scope.startingTime = moment().format('YYYY-MM-DD HH:mm:ss'),
+                        "startingTime": startingTime,
+                        "endingTime": endingTime,  // $scope.startingTime = moment().format('YYYY-MM-DD HH:mm:ss'),
                         "token": $scope.currentUser.token,
                         "others": $scope.OtroAnswer
                     };
@@ -593,9 +597,7 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        }, destinationPath);
-
-
+                        });
 
                         //Close the Assign activity.
                         activityModel.activityType = "Assign";
@@ -603,15 +605,15 @@ angular
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        }, destinationPath);
+                        });
 
                     } else {
-                        activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;
                         activityModel.activityType = "Quiz";
+                        activityModel.coursemoduleid = $scope.parentActivity.coursemoduleid;                        
 
                         _endActivity(activityModel, function () {
                             updateProfile();
-                        }, destinationPath);
+                        });
                     }
 
 
@@ -631,7 +633,7 @@ angular
                         } else {
                             _setLocalStorageJsonItem("activityOtrosAnswers/" + $scope.parentActivity.coursemoduleid, $scope.OtroAnswer);
                         }
-                    }
+                    }                    
 
                 }, 0);
 
@@ -641,32 +643,33 @@ angular
             function updateProfile() {
 
                 if ($scope.activity_identifier == "1005" || $scope.activity_identifier == "1006") {
-
-                    if ($scope.misCualidadesOtroAnswers[0].answers[0] != '') {
+                    
+                    if ($scope.misCualidadesOtroAnswers[0].answers[0] != "") {
                         $scope.userprofile.talents.push($scope.misCualidadesOtroAnswers[0].answers[0]);
                     }
 
-                    if ($scope.misCualidadesOtroAnswers[1].answers[0] != '') {
+                    if ($scope.misCualidadesOtroAnswers[1].answers[0] != "") {
                         $scope.userprofile.values.push($scope.misCualidadesOtroAnswers[1].answers[0]);
                     }
 
-                    if ($scope.misCualidadesOtroAnswers[2].answers[0] != '') {
+                    if ($scope.misCualidadesOtroAnswers[2].answers[0] != "") {
                         $scope.userprofile.habilities.push($scope.misCualidadesOtroAnswers[2].answers[0]);
-                    }
-
-                    if ($scope.misGustosOtroAnswers[0].answers[0] != '') {
+                    }                                       
+                    
+                    if ($scope.misGustosOtroAnswers[0].answers[0] != "") {
                         $scope.userprofile.favoriteSports.push($scope.misGustosOtroAnswers[0].answers[0]);
                     }
 
-                    if ($scope.misGustosOtroAnswers[1].answers[0] != '') {
+                    if ($scope.misGustosOtroAnswers[1].answers[0] != "") {
                         $scope.userprofile.artisticActivities.push($scope.misGustosOtroAnswers[1].answers[0]);
                     }
 
-                    if ($scope.misGustosOtroAnswers[2].answers[0] != '') {
+                    if ($scope.misGustosOtroAnswers[2].answers[0] != "") {
                         $scope.userprofile.hobbies.push($scope.misGustosOtroAnswers[2].answers[0]);
                     }
 
                     $scope.userId = moodleFactory.Services.GetCacheObject("userId");
+                    console.log("sending petition " + $scope.userId);
                     moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
                         function (responseData) {
@@ -690,7 +693,7 @@ angular
 
 
                 } else {
-                    console.log("No user Profile Data; destinationPath = " + destinationPath);  
+                    console.log("No user Profile Data");  
 
                     //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
@@ -698,9 +701,9 @@ angular
                         updateUserStars($scope.parentActivity.activity_identifier);
 
                         /*
-                        if ($scope.childActivity) {
+                        if ($scope.childActivity) {  //For 2016 only.
                             console.log("Updating user stars for Quiz with child...");                            
-                            updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);  //For 2016 only.
+                            updateUserStars($scope.parentActivity.activity_identifier, 0, $scope.activityPoints);  
                         } else {
                             console.log("Updating user stars for Quiz WITHOUT child...");
                             updateUserStars($scope.parentActivity.activity_identifier);
@@ -708,10 +711,11 @@ angular
                         */                      
                     }
 
+                    console.log("Redirecting to Dashboard: " + destinationPath);
                     $location.path(destinationPath); 
                 }
 
-            }
+            }           
 
 
             $scope.toggleSelection = function toggleSelection(stringValue, isChecked, questionArray) {
@@ -987,11 +991,12 @@ angular
 
                 var validatedAnswers = [0, 0, 0];
                 var validateOther = [0, 0, 0];
+                var a, b;
 
-                for (var a = 0; a < $scope.misGustosAnswers.length; a++) {
+                for (a = 0; a < $scope.misGustosAnswers.length; a++) {
                     var cont = $scope.misGustosAnswers[a].length;  //It should be equal to 12
 
-                    for (var b = 0; b < cont; b++) { //Only the first 11 checkboxes
+                    for (b = 0; b < cont; b++) { //Only the first 11 checkboxes
                         var checked = $scope.misGustosAnswers[a][b];
                         if (checked) {  //An option was checked by the user
                             validatedAnswers[a]++;
@@ -1004,7 +1009,7 @@ angular
                     if ($scope.misGustosAnswers[a][10] == true) {
                         //Get rid from carriage return
 
-                        if ($scope.misGustosOtroAnswers[a].answers[0] != '') {
+                        if ($scope.misGustosOtroAnswers[a].answers[0] != "") {
                             $scope.misGustosOtroAnswers[a].answers[0] = $scope.misGustosOtroAnswers[a].answers[0].replace(/\r?\n|\r/g, " ").trim();
                             validateOther[a] = 1;
                         } else {
