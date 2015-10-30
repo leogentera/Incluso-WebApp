@@ -15,6 +15,15 @@ angular
             _httpFactory = $http;
 
             $scope.$emit('ShowPreloader');
+
+            drupalFactory.Services.GetContent("3303", function (data, key) {
+                $scope.contentResources = data.node;
+            }, function () {}, false);
+
+            drupalFactory.Services.GetContent("3303results", function (data, key) {
+                $scope.contentResourcesResult = data.node;
+            }, function () {}, false);
+
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
