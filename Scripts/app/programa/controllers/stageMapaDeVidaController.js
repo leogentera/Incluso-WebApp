@@ -298,6 +298,14 @@ angular
                         if ($scope.pathImagenFicha != "" && parentStatus) {
                             //var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                             moodleFactory.Services.GetAsyncForumDiscussions(85, function(data, key) {
+                                
+                                var currentDiscussionIds = [];
+                                for(var d = 0; d < data.discussions.length; d++) {
+                                    currentDiscussionIds.push(data.discussions[d].discussion);
+                                }
+                                localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                                
+                                
                                 var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
 
                                 encodeImageUri($scope.pathImagenFicha, function (b64) {
@@ -320,7 +328,8 @@ angular
                                             $scope.isShareCollapsed = false;
                                             $scope.showSharedAlbum = true;
                                             $scope.$emit('HidePreloader');
-                                            sessionStorage.setItem("updateForumProgress/" + discussion.id , "1");
+                                            
+                                            checkForumExtraPoints();
                                             $location.path('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/' + discussion.discussion);
                                         },
                                         function(){
@@ -339,6 +348,24 @@ angular
                     }
                 });
             }
+            
+            var checkForumExtraPoints = function() {
+            
+                var activityFromTree = getActivityByActivity_identifier(2026);
+                
+                /* check over extra points */
+                var course = moodleFactory.Services.GetCacheJson("course");
+                var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+                
+                if (activityFromTree && activityFromTree.status == 1) {
+                    /* sumar uno extra al total */
+                    if (forumData.totalExtraPoints < 11) {
+                         updateUserForumStars($routeParams.activityId, 50, function (){
+                            successPutStarsCallback();
+                        });
+                    }
+                }
+            };
 
             var failureGame = function (data){
               $location.path('/ZonaDeNavegacion/Dashboard/2/4');

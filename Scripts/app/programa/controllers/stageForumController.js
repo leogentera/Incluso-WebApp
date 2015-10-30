@@ -69,55 +69,21 @@ angular
 
             $scope.scrollToTop();
 
-           function getForumsProgress(){
-              var forumsProgress = localStorage.getItem('currentForumsProgress/'+ userId)? JSON.parse(localStorage.getItem('currentForumsProgress/'+ userId)) : setForumsList();
-              return forumsProgress;
-
-           };
-            function setForumsList(){
-                var discussionsCollection = [];
-                var discussions = $scope.activity.discussions;
-
-                for(var i=0 ; i< discussions.length; i++ ){
-                    var currentDiscussion = discussions[i];
-
-                    var topic = _.where(discussionsCollection, function(d){ return d.discussion == currentDiscussion.id});
-                    if(!topic.length>0){
-                        discussionsCollection.push({"discussion_id":currentDiscussion.id, "replies_counter":0});
-                    } else {}
-                }
-                _setLocalStorageJsonItem('currentForumsProgress/'+ userId, discussionsCollection);
-            }
-            var getForumsExtraPointsCounter = function(){
-                var forumExtraPointsCounter = localStorage.getItem('extraPointsForums/'+ userId)? JSON.parse(localStorage.getItem('extraPointsForums/'+ userId)) : setExtraPointsCounters();
-                return forumExtraPointsCounter;
-            };
-            var setExtraPointsCounters = function(){
-                var extraPointsCounter = [];
-                //var discussions = $scope.activity.discussions;
-
-                //for(var i=0 ; i< discussions.length; i++ ){
-                //    var currentDiscussionCounter = discussions[i];
-                //
-                //    var topic = _.where(extraPointsCounter, function(exCount){ return exCount.discussion == currentDiscussionCounter.id});
-                //    if(!topic.length>0){
-                //        extraPointsCounter.push({"discussion_id":currentDiscussionCounter.id, "extra_replies_counter":0});
-                //    } else {}
-                //}
-                extraPointsCounter.push({"forumId":$scope.activity.forumid, "extra_replies_counter":0});
-                _setLocalStorageJsonItem('extraPointsForums/' + userId, extraPointsCounter);
-            };
-
             function getDataAsync() {
                 console.log('Moodle ID on dataAsync: ' + $scope.moodleId);
                 $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, getForumDiscussionsCallback, null, true):'';
             }
             
-            function getForumDiscussionsCallback() {
+            function getForumDiscussionsCallback(data, key) {
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
-                getForumsProgress();
-                getForumsExtraPointsCounter();
-               $scope.$emit('HidePreloader'); //hide preloader
+                
+                var currentDiscussionIds = [];
+                for(var d = 0; d < data.discussions.length; d++) {
+                    currentDiscussionIds.push(data.discussions[d].discussion);
+                }
+                localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                
+                $scope.$emit('HidePreloader'); //hide preloader
             }
 
             getDataAsync();
