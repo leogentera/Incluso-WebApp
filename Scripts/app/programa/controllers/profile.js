@@ -1,47 +1,47 @@
 // http://weblogs.asp.net/dwahlin/archive/2013/09/18/building-an-angularjs-modal-service.aspx
 angular
-    .module('incluso.programa.profile', [])
-    .controller('programaProfileController', [
-        '$q',
-        '$scope',
-        '$location',
-        '$routeParams',
-        '$timeout',
-        '$rootScope',
-        '$http',
-        '$filter',
-        '$route',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
+.module('incluso.programa.profile', [])
+.controller('programaProfileController', [
+    '$q',
+    '$scope',
+    '$location',
+    '$routeParams',
+    '$timeout',
+    '$rootScope',
+    '$http',
+    '$filter',
+    '$route',
+    function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
 
-            _httpFactory = $http;
-            _timeout = $timeout;            
-            var _course = moodleFactory.Services.GetCacheJson("course");
-            $scope.discussion = null;
-            $scope.forumId = null;            
-            $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
-            $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");            
-            $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
-            $scope.myStrengths = new Array();
-            $scope.myWindowOfOpportunities = new Array();            
-            $scope.setToolbar($location.$$path, "");
-            $scope.currentPage = 1;
-            $rootScope.showFooter = false;
-            $rootScope.showFooterRocks = false;
-            $rootScope.showStage1Footer = false;
-            $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false;
-			$rootScope.showProfileFooter = false;
-            $scope.status = "";
-            $scope.shareAchievementMessage = "";
-            $scope.showShareAchievementMessage = false;
-            $scope.showSharedAchievement = false;
-            $scope.hasCommunityAccess = false;
-            var startingTime;
-            var endingTime;            
-            $scope.$emit('ShowPreloader');
+        _httpFactory = $http;
+        _timeout = $timeout;            
+        var _course = moodleFactory.Services.GetCacheJson("course");
+        $scope.discussion = null;
+        $scope.forumId = null;            
+        $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
+        $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");            
+        $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
+        $scope.myStrengths = new Array();
+        $scope.myWindowOfOpportunities = new Array();            
+        $scope.setToolbar($location.$$path, "");
+        $scope.currentPage = 1;
+        $rootScope.showFooter = false;
+        $rootScope.showFooterRocks = false;
+        $rootScope.showStage1Footer = false;
+        $rootScope.showStage2Footer = false;
+        $rootScope.showStage3Footer = false;
+        $rootScope.showProfileFooter = false;
+        $scope.status = "";
+        $scope.shareAchievementMessage = "";
+        $scope.showShareAchievementMessage = false;
+        $scope.showSharedAchievement = false;
+        $scope.hasCommunityAccess = false;
+        var startingTime;
+        var endingTime;            
+        $scope.$emit('ShowPreloader');
 
 
-            getDataAsync(function () {
+        getDataAsync(function () {
 
                 /////// privacy settings initial switches [boolean]/////////
                 $scope.generalInfo = true;
@@ -131,237 +131,237 @@ angular
 
             });
 
-            
-            function  loadStrengths() {
-                
-                var strengthArray = [];
-                
-                for(var s = 0; s < $scope.model.strengths.length; s++) {
-                    
-                    var strength = $scope.model.strengths[s];
-                    var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == strength.replace("\r", ""); });
-                    
-                     strengthArray.push(result);
-                }
-                
-                $scope.myStrengths = strengthArray;
-            }
 
-            
-            function loadWindowOfOpportunities() {
-                
-                var windowOfOpportunitiesArray = [];
-                
-                for(var s = 0; s < $scope.model.windowOfOpportunity.length; s++) {
-                    
-                    var windowOfOpportunities = $scope.model.windowOfOpportunity[s];
-                    var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == windowOfOpportunities.replace("\r", ""); });
-                    
-                     windowOfOpportunitiesArray.push(result);
-                }
-                
-                $scope.myWindowOfOpportunities = windowOfOpportunitiesArray;
-            }
+function  loadStrengths() {
 
-            function getFileName(id) {
-                var filename = "";
+    var strengthArray = [];
 
-                switch (id) {
-                    case 2:
-                        filename = "insignias-combustible.gif";
-                        break;
-                    case 3:
-                        filename = "insignias-turbina.gif";
-                        break;
-                    case 4:
-                        filename = "insignias-ala.gif";
-                        break;
-                    case 5:
-                        filename = "insignias-sist-navegacion.gif";
-                        break;
-                    case 6:
-                        filename = "insignias-propulsor.gif";
-                        break;
-                    case 7:
-                        filename = "insignias-misiles.gif";
-                        break;
-                    case 8:
-                        filename = "insignias-campodefuerza.gif";
-                        break;
-                    case 9:
-                        filename = "insignias-radar.gif";
-                        break;
-                    case 10:
-                        filename = "insignias-tanqueoxigeno.gif";
-                        break;
-                    case 11:
-                        filename = "insignias-sondaespacial.gif";
-                        break;
-                    case 12:
-                        filename = "insignias-foro.gif";
-                        break;
-                    case 13:
-                        filename = "insignias-id.gif";
-                        break;
-                    case 14:
-                        filename = "insignias-participacion.gif";
-                        break;
-                    case 15:
-                        filename = "insignias-corazon.gif";
-                        break;
-                    case 16:
-                        filename = "insignias-casco.gif";
-                        break;
-                    case 17:
-                        filename = "insignias-radio.gif";
-                        break;
-                    case 18:
-                        filename = "insignias-turbo.gif";
-                        break;
-                    default:
-                        filename = "insignia-bloqueada.gif";
-                }
+    for(var s = 0; s < $scope.model.strengths.length; s++) {
 
-                return filename;
-            }
+        var strength = $scope.model.strengths[s];
+        var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == strength.replace("\r", ""); });
 
-            function getDescription(id) {
-                var description = "";
+        strengthArray.push(result);
+    }
 
-                switch (id) {
-                    case 2:
-                        description = "Has ganado el suficiente 'combustible' para seguir la aventura. ¡Buen  viaje!";
-                        break;
-                    case 3:
-                        description = "Has recuperado la 'Turbina C0N0-CT' ahora tienes un elemento más para lograr la misión";
-                        break;
-                    case 4:
-                        description = "Has recuperado la 'Turbina Ala Ctu-3000' ¡Continua el viaje!";
-                        break;
-                    case 5:
-                        description = "Has encontrado el 'Sistema de navegación' ¡No te detengas!";
-                        break;
-                    case 6:
-                        description = "Has recuperado el 'Propulsor' ¡Ahora, ve por más!";
-                        break;
-                    case 7:
-                        description = "Recuperaste los 'Misiles' ¡Bien hecho!";
-                        break;
-                    case 8:
-                        description = "El 'Campo de fuerza' es tuyo. ¡Lograste un reto más!";
-                        break;
-                    case 9:
-                        description = "Has obtenido el 'Radar' ¡Continúa la aventura!";
-                        break;
-                    case 10:
-                        description = "Lograste obtener el 'Tanque de oxígeno' ¡No te rindas!";
-                        break;
-                    case 11:
-                        description = "Es tuya la 'Sonda espacial' ¡Sigue así!";
-                        break;
-                    case 12:
-                        description = "Por participar activamente, has ganado la insignia 'Foro interplanetario'";
-                        break;
-                    case 13:
-                        description = "Por completar tu Perfil has ganado la insignia 'ID Intergaláctica'";
-                        break;
-                    case 14:
-                        description = "Por aportar activamente en la comunidad Incluso has ganado la insignia 'Participación eléctrica'";
-                        break;
-                    case 15:
-                        description = "Por obtener 30 likes en Foro o Comunidad has ganado la insignia 'Corazón digital'";
-                        break;
-                    case 16:
-                        description = "Has ganado el 'Casco'. Ahora, ¡ve por más!";
-                        break;
-                    case 17:
-                        description = "Has ganado el 'Radio de comunicación'. ¡Nunca te des por vencido!";
-                        break;
-                    case 18:
-                        description = "Ya es tuyo el 'Turbo' ¡no te rindas!";
-                        break;
-                    default:
-                        description = "";
-                }
-
-                return description;
-            }
+    $scope.myStrengths = strengthArray;
+}
 
 
-            $scope.changepage = function (delta) {
-                $scope.badgePage += delta;
-                $scope.normalBadgePage = $scope.badgePage + 1;
+function loadWindowOfOpportunities() {
 
-                if ($scope.badgePage < 0) {
-                    $scope.badgePage = 0;
-                    $scope.normalBadgePage = 1;
-                }
+    var windowOfOpportunitiesArray = [];
 
-                if ($scope.badgePage > $scope.totalBadgePages - 1) {
-                    $scope.badgePage = $scope.totalBadgePages - 1;
-                    $scope.normalBadgePage = $scope.badgePage + 1;
-                }
-            };
+    for(var s = 0; s < $scope.model.windowOfOpportunity.length; s++) {
+
+        var windowOfOpportunities = $scope.model.windowOfOpportunity[s];
+        var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == windowOfOpportunities.replace("\r", ""); });
+
+        windowOfOpportunitiesArray.push(result);
+    }
+
+    $scope.myWindowOfOpportunities = windowOfOpportunitiesArray;
+}
+
+function getFileName(id) {
+    var filename = "";
+
+    switch (id) {
+        case 2:
+        filename = "insignias-combustible.gif";
+        break;
+        case 3:
+        filename = "insignias-turbina.gif";
+        break;
+        case 4:
+        filename = "insignias-ala.gif";
+        break;
+        case 5:
+        filename = "insignias-sist-navegacion.gif";
+        break;
+        case 6:
+        filename = "insignias-propulsor.gif";
+        break;
+        case 7:
+        filename = "insignias-misiles.gif";
+        break;
+        case 8:
+        filename = "insignias-campodefuerza.gif";
+        break;
+        case 9:
+        filename = "insignias-radar.gif";
+        break;
+        case 10:
+        filename = "insignias-tanqueoxigeno.gif";
+        break;
+        case 11:
+        filename = "insignias-sondaespacial.gif";
+        break;
+        case 12:
+        filename = "insignias-foro.gif";
+        break;
+        case 13:
+        filename = "insignias-id.gif";
+        break;
+        case 14:
+        filename = "insignias-participacion.gif";
+        break;
+        case 15:
+        filename = "insignias-corazon.gif";
+        break;
+        case 16:
+        filename = "insignias-casco.gif";
+        break;
+        case 17:
+        filename = "insignias-radio.gif";
+        break;
+        case 18:
+        filename = "insignias-turbo.gif";
+        break;
+        default:
+        filename = "insignia-bloqueada.gif";
+    }
+
+    return filename;
+}
+
+function getDescription(id) {
+    var description = "";
+
+    switch (id) {
+        case 2:
+        description = "Has ganado el suficiente 'combustible' para seguir la aventura. ¡Buen  viaje!";
+        break;
+        case 3:
+        description = "Has recuperado la 'Turbina C0N0-CT' ahora tienes un elemento más para lograr la misión";
+        break;
+        case 4:
+        description = "Has recuperado la 'Turbina Ala Ctu-3000' ¡Continua el viaje!";
+        break;
+        case 5:
+        description = "Has encontrado el 'Sistema de navegación' ¡No te detengas!";
+        break;
+        case 6:
+        description = "Has recuperado el 'Propulsor' ¡Ahora, ve por más!";
+        break;
+        case 7:
+        description = "Recuperaste los 'Misiles' ¡Bien hecho!";
+        break;
+        case 8:
+        description = "El 'Campo de fuerza' es tuyo. ¡Lograste un reto más!";
+        break;
+        case 9:
+        description = "Has obtenido el 'Radar' ¡Continúa la aventura!";
+        break;
+        case 10:
+        description = "Lograste obtener el 'Tanque de oxígeno' ¡No te rindas!";
+        break;
+        case 11:
+        description = "Es tuya la 'Sonda espacial' ¡Sigue así!";
+        break;
+        case 12:
+        description = "Por participar activamente, has ganado la insignia 'Foro interplanetario'";
+        break;
+        case 13:
+        description = "Por completar tu Perfil has ganado la insignia 'ID Intergaláctica'";
+        break;
+        case 14:
+        description = "Por aportar activamente en la comunidad Incluso has ganado la insignia 'Participación eléctrica'";
+        break;
+        case 15:
+        description = "Por obtener 30 likes en Foro o Comunidad has ganado la insignia 'Corazón digital'";
+        break;
+        case 16:
+        description = "Has ganado el 'Casco'. Ahora, ¡ve por más!";
+        break;
+        case 17:
+        description = "Has ganado el 'Radio de comunicación'. ¡Nunca te des por vencido!";
+        break;
+        case 18:
+        description = "Ya es tuyo el 'Turbo' ¡no te rindas!";
+        break;
+        default:
+        description = "";
+    }
+
+    return description;
+}
+
+
+$scope.changepage = function (delta) {
+    $scope.badgePage += delta;
+    $scope.normalBadgePage = $scope.badgePage + 1;
+
+    if ($scope.badgePage < 0) {
+        $scope.badgePage = 0;
+        $scope.normalBadgePage = 1;
+    }
+
+    if ($scope.badgePage > $scope.totalBadgePages - 1) {
+        $scope.badgePage = $scope.totalBadgePages - 1;
+        $scope.normalBadgePage = $scope.badgePage + 1;
+    }
+};
 
 
 
-            function getDataAsync(callback) {
+function getDataAsync(callback) {
 
-                startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
+    startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
-                moodleFactory.Services.GetAsyncProfile($scope.userId, function () {
+    moodleFactory.Services.GetAsyncProfile($scope.userId, function () {
 
-                    $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
-                    if ($scope.model.profileimageurl) {
-                        $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
-                    }
-                    
-                    $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
-                    
-                    console.log("Profile current stars:" + $scope.model.stars);
-                    
-                    callback();
+        $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
+        if ($scope.model.profileimageurl) {
+            $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
+        }
 
-                    moodleFactory.Services.GetAsyncAvatar($scope.userId, getAvatarInfoCallback, function () { }, true);
+        $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
 
-                    if (!$scope.model) {
-                        $location.path('/');
-                        return "";
-                    }
+        console.log("Profile current stars:" + $scope.model.stars);
 
-                    initFields($scope.model);
-                    loadStrengths();
-                    loadWindowOfOpportunities();
+        callback();
 
-                }, true);
-            }
+        moodleFactory.Services.GetAsyncAvatar($scope.userId, getAvatarInfoCallback, function () { }, true);
 
-            function initFields(m) {
-                if (m.address.street == null) { m.address.street = ""; }
-                if (m.address.num_ext == null) { m.address.num_ext = ""; }
-                if (m.address.num_int == null) { m.address.num_int = ""; }
-                if (m.address.colony == null) { m.address.colony = ""; }
-                if (m.address.city == null) { m.address.city = ""; }
-                if (m.address.town == null) { m.address.town = ""; }
-                if (m.address.state == null) { m.address.state = ""; }
-                if (m.address.postalCode == null) { m.address.postalCode = ""; }
-            }
+        if (!$scope.model) {
+            $location.path('/');
+            return "";
+        }
 
-            function getAvatarInfoCallback() {                
-                $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
+        initFields($scope.model);
+        loadStrengths();
+        loadWindowOfOpportunities();
 
-                if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
-                    setEmptyAvatar();
-                }
+    }, true);
+}
 
-                $scope.$emit('HidePreloader');
-            }
+function initFields(m) {
+    if (m.address.street == null) { m.address.street = ""; }
+    if (m.address.num_ext == null) { m.address.num_ext = ""; }
+    if (m.address.num_int == null) { m.address.num_int = ""; }
+    if (m.address.colony == null) { m.address.colony = ""; }
+    if (m.address.city == null) { m.address.city = ""; }
+    if (m.address.town == null) { m.address.town = ""; }
+    if (m.address.state == null) { m.address.state = ""; }
+    if (m.address.postalCode == null) { m.address.postalCode = ""; }
+}
 
-            function formatDate(date) {
+function getAvatarInfoCallback() {                
+    $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
 
-                var userBirthDate;
-                if (date != "NaN/NaN/NaN" && date != "") {
-                    var splitDate = date.split("/");
+    if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
+        setEmptyAvatar();
+    }
+
+    $scope.$emit('HidePreloader');
+}
+
+function formatDate(date) {
+
+    var userBirthDate;
+    if (date != "NaN/NaN/NaN" && date != "") {
+        var splitDate = date.split("/");
 
                     //             var userBirthDate = new Date(splitDate[2], splitDate[0], splitDate[1]); 
                     //             var userBirthDate = new Date(splitDate[2], splitDate[0]-1, splitDate[1]);
@@ -478,7 +478,7 @@ angular
             }
 
             function FailureDatePicker(data) {
-                
+
             }
 
             function isValidDate(date){                
@@ -489,22 +489,42 @@ angular
                 var y = matches[3];
                 var composedDate = new Date(y, m, d);
                 return composedDate.getDate() == d &&
-                        composedDate.getMonth() == m &&
-                        composedDate.getFullYear() == y;
+                composedDate.getMonth() == m &&
+                composedDate.getFullYear() == y;
             }
 
-            function validateModel() {
+            function validateModel() {//This validates for the required fields
                 console.log('fetching editProfile errors list');
                 var errors = [];
 
                 validateEmptyItemsOnLists();
 
+                // ************************ The following are required fields. ****************************
                 var age = calculate_age();
                 if (age < 13) { errors.push("Debes ser mayor de 13 años para poder registrarte."); }
                 if (!$scope.editForm.firstname.$valid) { errors.push("Formato de nombre incorrecto."); }
                 if (!$scope.editForm.lastname.$valid) { errors.push("Formato de apellido paterno incorrecto."); }
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
+                if (!$scope.editForm.gender.$valid) { errors.push("Debe indicar su género."); }
                 if (!isValidDate($scope.model.birthday)) { errors.push("Ingrese la fecha de nacimiento."); }
+
+                // ************************ The following are not required fields. ****************************
+                //Here we validate only for consistency.
+                //Validation of the $scope.model.socialNetworks array
+                var arrayForUsername = [];
+
+                $scope.model.socialNetworks.forEach(function (elem) {
+                    arrayForUsername.push(elem.socialNetwork.toLowerCase());
+                });
+
+                var filteredUsernames = arrayForUsername.filter(function (item, pos) {
+                    return arrayForUsername.indexOf(item) == pos;
+                });
+
+                if (arrayForUsername.length != filteredUsernames.length) {
+                    //Repeated names for Social network
+                    errors.push("Nombre de Red social está repetido.");
+                }
 
                 //Validation of the $scope.model.familiaCompartamos array
                 //  a) Avoiding two persons having the same "Número de Cliente Compartamos"
@@ -537,25 +557,9 @@ angular
                 });
 
                 if (arrayForParentesco.length != filteredArray.length) {
-                    //Repeated idClients
+                                    //Repeated idClients
                     errors.push("El parentesco está repetido.");
-                }
-
-                //Validation of the $scope.model.socialNetworks array
-                var arrayForUsername = [];
-
-                $scope.model.socialNetworks.forEach(function (elem) {
-                    arrayForUsername.push(elem.socialNetwork.toLowerCase());
-                });
-
-                var filteredUsernames = arrayForUsername.filter(function (item, pos) {
-                    return arrayForUsername.indexOf(item) == pos;
-                });
-
-                if (arrayForUsername.length != filteredUsernames.length) {
-                    //Repeated names for Social network
-                    errors.push("Nombre de Red social está repetido.");
-                }
+                }                
 
                 //Validation of the $scope.model.studies array
                 var arrayForLevel = [];
@@ -576,7 +580,6 @@ angular
                     console.log("Repeated Level of Studies");
                     errors.push("El nivel de estudios está repetido.");
                 }
-
 
                 $scope.model.modelState.errorMessages = errors;
 
@@ -755,7 +758,7 @@ angular
                         }
                     }
                 }
-              
+
 
                 //kindOfVideogames              
                 if ($scope.model.kindOfVideogames.length > 0) {
@@ -782,6 +785,7 @@ angular
 
 
             $scope.save = function () {
+
                 var validationResult = validateModel();  //Valid if validateModel() returns true
                 console.log("Model is valid: " +  validationResult);
 
@@ -796,15 +800,12 @@ angular
             };
 
 
-            $scope.clean = function () {
-                deleteRepeatedValues();
-            };
-
-
-            var saveUser = function () {
+            function saveUser() {
+                //
                 moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
 
                     function (data) {
+
                         ValidatePointsPolicy();
                         console.log('Save profile successful...');
                         $scope.index();
@@ -813,7 +814,7 @@ angular
                     function (date) {
                         console.log('Save profile fail...');
                     });
-            };
+            }
 
 
             function ValidatePointsPolicy() {
@@ -835,20 +836,20 @@ angular
 
                         switch (activity.activity_identifier) {
                             case "3000":  // "Llenar mi informacion"; points = 400
-                                result = assignmentMiInformacion();
-                                break;
+                            result = assignmentMiInformacion();
+                            break;
                             case "3001":  // "Llenar Mi Personalidad"; points = 400
-                                result = assignmentMiPersonalidad();
-                                break;
+                            result = assignmentMiPersonalidad();
+                            break;
                             case "3002":  // "Llenar Llenar Socioeconomicos"; points = 400
-                                result = assignmentSocioeconomicos();
-                                break;
+                            result = assignmentSocioeconomicos();
+                            break;
                             case "3003":  // "Llenar Uso de la tecnologia"; points = 400
-                                result = assignmentTecnologia();
-                                break;
+                            result = assignmentTecnologia();
+                            break;
                             default:
-                                result = false;
-                                break;
+                            result = false;
+                            break;
                         }
                         
                         console.log("Section has been completed: " + result);
@@ -857,23 +858,14 @@ angular
                         if (result) {
 
                             $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
-
                             activity.status = 1;   //Update activity status.
 
                             //Get local user profile.
-                            var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));
-                            console.log("profile.stars (before): " + profile.stars);
-                            
-                            var newPoints = parseInt(profile.stars) + parseInt(activity.points);
-                            
-                            //Update the 'stars' key.
-                            profile.stars = newPoints;  
-
-                            //Save updated user profile to Local Storage.                     
-                            _setLocalStorageJsonItem("profile/" + $scope.userId, profile);
-
-                            //Update user profile in Moodle.
-                            updateUserStarsUsingExternalActivity(activity.activity_identifier);
+                            var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));                            
+                            var newPoints = parseInt(profile.stars) + parseInt(activity.points); //Update points 
+                            profile.stars = newPoints;  //Update the 'stars' key.
+                            _setLocalStorageJsonItem("profile/" + $scope.userId, profile); //Save updated profile to Local Storage.
+                            updateUserStarsUsingExternalActivity(activity.activity_identifier); //Update profile in Moodle.
 
                             endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
@@ -898,29 +890,137 @@ angular
                 }
             }
 
+            function phonesAreValid(phones) {
 
-            function assignmentMiInformacion() {
+                var validInfo = true;
+                var i;
+                var itemWithoutPhone = false;
+
+                if (phones.length > 0) {//There is at least one phone item.
+
+                    for (i = 0; i < phones.length; i++) {//For all items, if phone then something in phoneId too.
+
+                        if (phones[i].phone == "No tengo teléfono") {                            
+                             itemWithoutPhone = true;
+                        } else {
+                            if (phones[i].phoneId == "") {//The value must be nonempty numeric string of size 10.
+                                validInfo = false;
+                            }  
+                        }
+                    }
+
+                    if (validInfo) {
+
+                        if (itemWithoutPhone && phones.length > 1) {
+                            validInfo = false;
+                        }
+
+                    }
+
+                } else { //The user has not entered phone numbers.
+                    validInfo = false;
+                }
+                alert("phonesAreValid = " + validInfo);
+                return validInfo;
+            }
+
+
+            function socialNetsAreValid(nets) {
+
+                var validInfo = true;
+                var i;
+                var itemWithoutNet = false;
+
+                if (nets.length > 0) {//There is at least one social network item.
+
+                    for (i = 0; i < nets.length; i++) {//For all items, if phone then something in phoneId too.
+
+                        if (nets[i].socialNetwork == "No tengo redes sociales") {                            
+                             itemWithoutNet = true;
+                        } else {
+                            if (nets[i].socialNetworkId == "") {//The value must be a nonempty string.
+                                validInfo = false;
+                            }  
+                        }
+                    }
+
+                    if (validInfo) {
+
+                        if (itemWithoutNet && nets.length > 1) {
+                            validInfo = false;
+                        }
+
+                    }
+
+                } else { //The user has not entered social networks.
+                    validInfo = false;
+                }
+                alert("socialNetsAreValid = " + validInfo);
+                return validInfo;
+            }
+
+
+            function compartamosIsValid(data) {
+
+                var validInfo = true;
+                var i;
+                var itemWithoutCompartamos = false;
+
+                if (data.length > 0) {//There is at least one Compartamos relative item.
+
+                    for (i = 0; i < data.length; i++) {//For all items, if Compartamos relative then something in idClient and relativeName too.
+
+                        if (data[i].relationship == "No tengo") {                            
+                             itemWithoutCompartamos = true;
+                        } else {
+                            if (data[i].idClient == "" || data[i].relativeName == "") {//The values must be nonempty strings.
+                                validInfo = false;
+                            }  
+                        }
+                    }
+
+                    if (validInfo) {
+
+                        if (itemWithoutCompartamos && data.length > 1) {
+                            validInfo = false;
+                        }
+
+                    }
+
+                } else { //The user has not entered Compartamos relatives.
+                    validInfo = false;
+                }
+                alert("compartamosIsValid = " + validInfo);
+                return validInfo;
+            }
+
+
+
+            function assignmentMiInformacion() {//Asign 400 points if all fields are full.
                 var result = false;
-                if ($scope.model.firstname) {
-                    if ($scope.model.lastname) {
-                        if ($scope.model.mothername) {
-                            if ($scope.model.gender) {
-                                if ($scope.model.age) {
-                                    if ($scope.model.maritalStatus) {
-                                        if ($scope.model.studies.length > 0) { // array of objects
-                                            if ($scope.model.address.country) {
-                                                if ($scope.model.address.state) {                                                
-                                                    if ($scope.model.address.town) {
-                                                        if ($scope.model.address.postalCode) {
-                                                            if ($scope.model.address.street) {
-                                                                if ($scope.model.address.num_ext) {
-                                                                    if ($scope.model.address.num_int) {
-                                                                        if ($scope.model.address.colony) {
-                                                                            if ($scope.model.phones.length > 0) { //array
-                                                                                if ($scope.model.socialNetworks.length > 0) { //array of objects
-                                                                                    if ($scope.model.familiaCompartamos.length > 0) { //array of objects
-                                                                                        result = true;
-                                                                                    } 
+                
+                if ($scope.model.firstname) { //Requerido
+                    if ($scope.model.lastname) { //Requerido
+                        if ($scope.model.mothername) { //Requerido
+                            if ($scope.model.gender) { //Requerido  
+                                if ($scope.model.country) {
+                                    if ($scope.model.birthdate_Dateformat) { //Requerido                                             
+                                        if ($scope.model.address.age) {
+                                            if ($scope.model.maritalStatus) {
+                                                if ($scope.model.studies.length > 0) { // array of objects        
+                                                    if ($scope.model.address.state) {                                                
+                                                        if ($scope.model.address.town) {
+                                                            if ($scope.model.address.postalCode) {
+                                                                if ($scope.model.address.street) {
+                                                                    if ($scope.model.address.num_ext) {
+                                                                        if ($scope.model.address.num_int) {
+                                                                            if ($scope.model.address.colony) {
+                                                                                if (phonesAreValid($scope.model.phones)) { //array of objects
+                                                                                    if (socialNetsAreValid($scope.model.socialNetworks)) { //array of objects
+                                                                                        if (compartamosIsValid($scope.model.familiaCompartamos)) { //array of objects
+                                                                                            result = true;
+                                                                                        } 
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -942,6 +1042,40 @@ angular
                 return result;
             }
 
+            function charactersIsValid(data) {
+                var validInfo = true;
+                var i;
+                var itemWithoutCharacter = false;
+
+                if (data.length > 0) {//There is at least one social network item.
+
+                    for (i = 0; i < data.length; i++) {//For all items, if phone then something in phoneId too.
+
+                        if (data[i].characterType == "No tengo") {                            
+                             itemWithoutCharacter = true;
+                        } else {
+                            if (data[i].characterName == "") {//The value must be a nonempty string.
+                                validInfo = false;
+                            }  
+                        }
+                    }
+
+                    if (validInfo) {
+
+                        if (itemWithoutCharacter && data.length > 1) {
+                            validInfo = false;
+                        }
+
+                    }
+
+                } else { //The user has not entered social networks.
+                    validInfo = false;
+                }
+                alert("charactersIsValid = " + validInfo);
+                return validInfo;
+            }
+            
+
             function assignmentMiPersonalidad() {
                 var result = false;
                 if ($scope.model.favoriteSports.length > 0) {   //array                 
@@ -950,7 +1084,7 @@ angular
                             if ($scope.model.talents.length > 0) {  //array
                                 if ($scope.model.values.length > 0) {  //array
                                     if ($scope.model.habilities.length > 0) {  //array
-                                        if ($scope.model.inspirationalCharacters.length > 0) {  //array of objects
+                                        if (charactersIsValid($scope.model.inspirationalCharacters)) {  //array of objects
                                             result = true;
                                         }
                                     }
@@ -1285,12 +1419,12 @@ angular
                         url: API_RESOURCE.format('avatar'),
                         data: avatarInfo[0]
                     })
-                        .success(function () {
-                            avatarUploaded("Éxito");
-                        })
-                        .error(function () {
-                            avatarUploaded("Error");
-                        });
+                    .success(function () {
+                        avatarUploaded("Éxito");
+                    })
+                    .error(function () {
+                        avatarUploaded("Error");
+                    });
                 });
             }
 
@@ -1384,11 +1518,11 @@ angular
             function getdate() {
                 var currentdate = new Date();
                 var datetime = currentdate.getFullYear() + ":"
-                    + addZeroBefore((currentdate.getMonth() + 1)) + ":"
-                    + addZeroBefore(currentdate.getDate()) + " "
-                    + addZeroBefore(currentdate.getHours()) + ":"
-                    + addZeroBefore(currentdate.getMinutes()) + ":"
-                    + addZeroBefore(currentdate.getSeconds());
+                + addZeroBefore((currentdate.getMonth() + 1)) + ":"
+                + addZeroBefore(currentdate.getDate()) + " "
+                + addZeroBefore(currentdate.getHours()) + ":"
+                + addZeroBefore(currentdate.getMinutes()) + ":"
+                + addZeroBefore(currentdate.getSeconds());
                 return datetime;
             }
 
@@ -1397,24 +1531,24 @@ angular
             }
             
             $scope.shareAchievement = function() {
-                
+
                 if ($scope.hasCommunityAccess) {
                     $scope.$emit('ShowPreloader');
-                
+
                     if ($scope.discussion == null || $scope.forumId == null) {
-                        
+
                         moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, function(data, key) {
                             $scope.discussion = data.discussions[0];
                             $scope.forumId = data.forumid;
                             
                             postAchievement();
                             
-                            }, function(data){
-                                $scope.shareAchievementMessage = "";
-                                $scope.showShareAchievementMessage = false;
-                                $scope.showSharedAchievement = true;
-                                
-                                $scope.$emit('HidePreloader'); }, true);
+                        }, function(data){
+                            $scope.shareAchievementMessage = "";
+                            $scope.showShareAchievementMessage = false;
+                            $scope.showSharedAchievement = true;
+
+                            $scope.$emit('HidePreloader'); }, true);
                     } else {
                         postAchievement();
                     }
@@ -1457,7 +1591,7 @@ angular
                         
                         $scope.$emit('HidePreloader');
                     }
-                );
+                    );
             };
             
             $scope.scrollToTop();

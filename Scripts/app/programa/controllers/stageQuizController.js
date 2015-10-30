@@ -308,7 +308,6 @@ angular
                     $scope.childActivity = childActivity;
 
                     console.log("Starting... " + parentActivity.activityname);
-                    alert($scope.activity_status);
                     if ($scope.activity_status == 1) {//If the activity is currently finished...
                         activityFinished = true;
 
