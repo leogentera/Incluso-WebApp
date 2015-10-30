@@ -29,7 +29,6 @@ angular
             $rootScope.showStage3Footer = false;
             
             console.log("moodle id" + $scope.moodleId);
-            alert($routeParams.activityId);
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
             $scope.moodleId;
