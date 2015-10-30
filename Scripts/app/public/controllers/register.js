@@ -100,7 +100,9 @@ angular
 
                 console.log('preparing for syncAll');
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
-                    
+                        var course = moodleFactory.Services.GetCacheJson("course");
+                        moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, true);
+                        
                         try {
                             $scope.$emit('HidePreloader');
                             $location.path('/Tutorial');

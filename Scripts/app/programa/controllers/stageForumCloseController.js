@@ -56,8 +56,6 @@ angular
                 };
 
                 var userCurrentStage = localStorage.getItem("currentStage");
-                console.log("childs");
-                console.log(activities);
                 
                 var finishChildCounter = 0;
                 if (activities){
@@ -66,8 +64,6 @@ angular
                             
                             if (activities[i].coursemoduleid == $routeParams.moodleId) {
                                 moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
-                                    
-                                    console.log("end parent activity: segundo if");
                                     endParentActivity();
                                 });
                             }
@@ -77,21 +73,17 @@ angular
                                 finishChildCounter++;
                                 
                                 if (finishChildCounter == activities.length) {
-                                    console.log("end parent activity: else - if");
                                     endParentActivity();
                                 }
                             });
                         }
                     }
                 }else{
-                    console.log("end parent activity: else");
                     endParentActivity();
                 }
                
                function endParentActivity() {
-               
-                    console.log("parent");
-                    console.log(parentActivity.coursemoduleid);
+                
                     moodleFactory.Services.PutEndActivity(parentActivity.coursemoduleid, data, parentActivity, userToken,
                       function(response){
                             var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
@@ -112,14 +104,20 @@ angular
                                 _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),profile);
                                 $routeParams.activityId == 1049? moodleid =$routeParams.moodleId : moodleid = getMoodleIdFromTreeActivity($routeParams.activityId);
                                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
-                                var extraPointsCounter = getForumsExtraPointsCounter();
-                                var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.forumId == $scope.activity.forumid; });
-                                var extraPoints = currentDiscussionCounter? currentDiscussionCounter.extra_replies_counter : 0;
-                                extraPoints *= 50;
+                                
+                                var extraPoints = Number(moodleFactory.Services.GetCacheObject("starsToAssignedAfterFinishActivity"));
                                 
                                 if (extraPoints != 0) {
-                                    updateUserForumStars($routeParams.activityId, extraPoints);
+                                    updateUserForumStars($routeParams.activityId, extraPoints, function (){
+                                        successPutStarsCallback();
+                                        });
                                 }
+                                
+                                var course = moodleFactory.Services.GetCacheJson("course");
+                                var user = moodleFactory.Services.GetCacheJson("CurrentUser");
+                                moodleFactory.Services.GetAsyncUserPostCounter(user.token, course.courseid, function(){}, function() {}, true);
+                                
+                                localStorage.removeItem("starsToAssignedAfterFinishActivity");
   
                                 $scope.$emit('HidePreloader');
                                 var activityId = Number($routeParams.activityId);
@@ -153,12 +151,6 @@ angular
                 var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 endForumActivity(moodleId);
             }
-
-            var getForumsExtraPointsCounter = function() {
-                var userId = moodleFactory.Services.GetCacheObject("userId");
-                var forumExtraPointsCounter = JSON.parse( localStorage.getItem('extraPointsForums/'+ userId));
-                return forumExtraPointsCounter;
-            };
 
 
 
