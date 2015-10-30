@@ -317,8 +317,7 @@ function getDataAsync(callback) {
         }
 
         $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
-
-        console.log("Profile current stars:" + $scope.model.stars);
+        //console.log("Profile current stars:" + $scope.model.stars);
 
         callback();
 
@@ -494,7 +493,7 @@ function formatDate(date) {
             }
 
             function validateModel() {//This validates for the required fields
-                console.log('fetching editProfile errors list');
+                //console.log('fetching editProfile errors list');
                 var errors = [];
 
                 validateEmptyItemsOnLists();
@@ -577,7 +576,6 @@ function formatDate(date) {
 
                 if (arrayForLevel.length != filteredLevel.length) {
                     //Repeated names for Social network
-                    console.log("Repeated Level of Studies");
                     errors.push("El nivel de estudios está repetido.");
                 }
 
@@ -786,8 +784,7 @@ function formatDate(date) {
 
             $scope.save = function () {
 
-                var validationResult = validateModel();  //Valid if validateModel() returns true
-                console.log("Model is valid: " +  validationResult);
+                var validationResult = validateModel();  //Valid if validateModel() returns true                
 
                 deleteRepeatedValues();
 
@@ -824,12 +821,13 @@ function formatDate(date) {
 
                 for (var activityIndex = 0; activityIndex < usercourse.activities.length; activityIndex++) {
                     var activity = usercourse.activities[activityIndex];
-
+                    /*
                     console.log("Activity Name: " + activity.activityname);
                     console.log("Activity Points: " + activity.points);
                     console.log("Activity Status: " + activity.status);
                     console.log("Current Stars: " + $scope.model.stars); 
                     console.log("Stars to add: " + activity.points);
+                    */
 
                     if (activity.status == 0) {
                         var result;
@@ -852,7 +850,7 @@ function formatDate(date) {
                             break;
                         }
                         
-                        console.log("Section has been completed: " + result);
+                        //console.log("Activity " + activity.activity_identifier + " validation result: " + result);
 
                         
                         if (result) {
@@ -890,6 +888,7 @@ function formatDate(date) {
                 }
             }
 
+
             function phonesAreValid(phones) {
 
                 var validInfo = true;
@@ -920,7 +919,7 @@ function formatDate(date) {
                 } else { //The user has not entered phone numbers.
                     validInfo = false;
                 }
-                alert("phonesAreValid = " + validInfo);
+                
                 return validInfo;
             }
 
@@ -955,7 +954,7 @@ function formatDate(date) {
                 } else { //The user has not entered social networks.
                     validInfo = false;
                 }
-                alert("socialNetsAreValid = " + validInfo);
+                
                 return validInfo;
             }
 
@@ -987,10 +986,8 @@ function formatDate(date) {
 
                     }
 
-                } else { //The user has not entered Compartamos relatives.
-                    validInfo = false;
-                }
-                alert("compartamosIsValid = " + validInfo);
+                } 
+                
                 return validInfo;
             }
 
@@ -1003,19 +1000,19 @@ function formatDate(date) {
                     if ($scope.model.lastname) { //Requerido
                         if ($scope.model.mothername) { //Requerido
                             if ($scope.model.gender) { //Requerido  
-                                if ($scope.model.country) {
-                                    if ($scope.model.birthdate_Dateformat) { //Requerido                                             
-                                        if ($scope.model.address.age) {
+                                if ($scope.model.address.country) {
+                                    if ($scope.birthdate_Dateformat) { //Requerido                                             
+                                        if ($scope.model.age) {
                                             if ($scope.model.maritalStatus) {
                                                 if ($scope.model.studies.length > 0) { // array of objects        
-                                                    if ($scope.model.address.state) {                                                
+                                                    if ($scope.model.address.state) {                                               
                                                         if ($scope.model.address.town) {
                                                             if ($scope.model.address.postalCode) {
                                                                 if ($scope.model.address.street) {
                                                                     if ($scope.model.address.num_ext) {
                                                                         if ($scope.model.address.num_int) {
                                                                             if ($scope.model.address.colony) {
-                                                                                if (phonesAreValid($scope.model.phones)) { //array of objects
+                                                                                if (phonesAreValid($scope.model.phones)) {//array of objects
                                                                                     if (socialNetsAreValid($scope.model.socialNetworks)) { //array of objects
                                                                                         if (compartamosIsValid($scope.model.familiaCompartamos)) { //array of objects
                                                                                             result = true;
@@ -1047,9 +1044,9 @@ function formatDate(date) {
                 var i;
                 var itemWithoutCharacter = false;
 
-                if (data.length > 0) {//There is at least one social network item.
+                if (data.length > 0) {//There is at least one character item.
 
-                    for (i = 0; i < data.length; i++) {//For all items, if phone then something in phoneId too.
+                    for (i = 0; i < data.length; i++) {//For all items, if characterType then something in characterName too.
 
                         if (data[i].characterType == "No tengo") {                            
                              itemWithoutCharacter = true;
@@ -1071,7 +1068,7 @@ function formatDate(date) {
                 } else { //The user has not entered social networks.
                     validInfo = false;
                 }
-                alert("charactersIsValid = " + validInfo);
+                
                 return validInfo;
             }
             
@@ -1082,7 +1079,7 @@ function formatDate(date) {
                     if ($scope.model.artisticActivities.length > 0) {  //array
                         if ($scope.model.hobbies.length > 0) {  //array
                             if ($scope.model.talents.length > 0) {  //array
-                                if ($scope.model.values.length > 0) {  //array
+                                if ($scope.model.values.length > 0) { //array
                                     if ($scope.model.habilities.length > 0) {  //array
                                         if (charactersIsValid($scope.model.inspirationalCharacters)) {  //array of objects
                                             result = true;
@@ -1097,6 +1094,18 @@ function formatDate(date) {
                 return result;
             }
 
+            function checkMedicalServices() {
+                var validInfo = true;
+
+                if (($scope.model.medicalCoverage) = "Sí") {
+                    if ($scope.model.medicalInsurance == "No tengo") {
+                        validInfo = false;
+                    }
+                }
+               
+                return validInfo;
+            }
+
             function assignmentSocioeconomicos() {
                 var result = false;
                 if ($scope.model.iLiveWith) {
@@ -1106,12 +1115,10 @@ function formatDate(date) {
                                 if ($scope.model.period) {
                                     if ($scope.model.children) {
                                         if ($scope.model.gotMoneyIncome) {
-                                            if ($scope.model.moneyIncome.length > 0) {  //array
-                                                if ($scope.model.medicalCoverage) {
-                                                    if ($scope.model.medicalInsurance) {
-                                                        result = true;
-                                                    }
-                                                }
+                                            if ($scope.model.moneyIncome.length > 0) {  //array                                                
+                                                if (checkMedicalServices()) {
+                                                    result = true;
+                                                }                                                
                                             }
                                         }
                                     }
