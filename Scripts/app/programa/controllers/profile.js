@@ -14,19 +14,15 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
 
             _httpFactory = $http;
-            _timeout = $timeout;
-            
+            _timeout = $timeout;            
             var _course = moodleFactory.Services.GetCacheJson("course");
             $scope.discussion = null;
-            $scope.forumId = null;
-            
+            $scope.forumId = null;            
             $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
-            $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
-            
+            $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");            
             $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
             $scope.myStrengths = new Array();
-            $scope.myWindowOfOpportunities = new Array();
-            
+            $scope.myWindowOfOpportunities = new Array();            
             $scope.setToolbar($location.$$path, "");
             $scope.currentPage = 1;
             $rootScope.showFooter = false;
@@ -41,8 +37,7 @@ angular
             $scope.showSharedAchievement = false;
             $scope.hasCommunityAccess = false;
             var startingTime;
-            var endingTime;
-            
+            var endingTime;            
             $scope.$emit('ShowPreloader');
 
 

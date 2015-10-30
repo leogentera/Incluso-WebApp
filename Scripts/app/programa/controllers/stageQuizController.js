@@ -308,8 +308,8 @@ angular
                     $scope.childActivity = childActivity;
 
                     console.log("Starting... " + parentActivity.activityname);
-
-                    if ($scope.activity_status != 0) {//If the activity is currently finished...
+                    alert($scope.activity_status);
+                    if ($scope.activity_status == 1) {//If the activity is currently finished...
                         activityFinished = true;
 
                         if (nonEditableQuizzes.indexOf($scope.activity_identifier) > -1) {// If the Quiz is non editable, then...
@@ -339,9 +339,10 @@ angular
                         $scope.activityFinished = activityFinished;
 
                         if (localAnswers == null) {// If activity not exists in Local Storage...get it from Server                            
+
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
-                        }
-                        else {//Angular-bind the answers in the respective HTML template
+                            
+                        } else {//Angular-bind the answers in the respective HTML template
 
                             switch ($scope.activity_identifier) {
                                 case "1001": //Exploración Inicial - Etapa 1
@@ -391,8 +392,7 @@ angular
                     }
 
 
-                }
-                else {
+                } else {
                     console.log("Activity is NOT defined");
                 }
                 $scope.$emit('HidePreloader');
@@ -2343,7 +2343,6 @@ angular
 
             $scope.cancel = function () {
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
-                //$location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
                 console.log(destinationPath);
                 $location.path(destinationPath);
             };
