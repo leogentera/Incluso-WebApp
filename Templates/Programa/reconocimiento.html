@@ -3,21 +3,28 @@
         <article class="starway award">
             <div class="green-border">
                 <div class="logo"><img src="assets/images/reconocimiento-logo.gif"></div>
-                <section class="subtitle centered txt-renglon txt-bigger">Otorga el presente reconocimiento a</section>
+                <!--<section class="subtitle centered txt-renglon txt-bigger">Otorga el presente reconocimiento a</section>-->
+                <section class="subtitle centered txt-renglon txt-bigger">{{contentResources.recognition_title}}</section>
                 <img class="medalla" src="assets/images/badges/gold-medal.gif">
                 <section class="centered txt-renglon username">
                     <div>{{profile.firstname}}</div>
                     <div>{{profile.lastname + " " + profile.mothername}}</div>
                 </section>
                 <section class="centered txt-renglon">
-                    <div>Por su participación en la misión</div>
-                    <div class="subtitle">Incluso {{currentYear}}</div>
-                    <div>Para una inclusión Productiva Sana</div>
+                    <div>{{contentResources.cause}}</div>
+                    <div class="subtitle">{{contentResources.project_name}} {{currentYear}}</div>
+                    <div>{{contentResources.motivation}}</div>
+                    <!--<div>Por su participación en la misión</div>-->
+                    <!--<div class="subtitle">Incluso {{currentYear}}</div>-->
+                    <!--<div>Para una inclusión Productiva Sana</div>-->
                 </section>
                 <section class="centered txt-renglon quote">
-                    <div class="subtitle">Todos tenemos sueños</div>
-                    <div>pero para que se vuelvan realidad se necesita una gran determinación, autodisciplina y esfuerzo...</div>
-                    <div class="author">Jesse Owens</div>
+                    <div class="subtitle">{{contentResources.recognition_quote_title}}</div>
+                    <div>{{contentResources.recognition_quote_content}}</div>
+                    <div class="author">{{contentResources.recognition_quote_author}}</div>
+                    <!--<div class="subtitle">Todos tenemos sueños</div>-->
+                    <!--<div>pero para que se vuelvan realidad se necesita una gran determinación, autodisciplina y esfuerzo...</div>-->
+                    <!--<div class="author">Jesse Owens</div>-->
                 </section>
             </div>
             <section class="txt-renglon distribuido">
@@ -37,7 +44,8 @@
             <div id="shareAlbum" class="modalDialog" collapse="communityModalOpen" ng-show="hasCommunityAccess">
                 <div>
                     <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="textToCommunity"></textarea></div>
-                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareToCommunity()">Compartir en Comunidad</a>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareToCommunity()">{{contentResources.share_button}}</a>
+                    <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareToCommunity()">Compartir en Comunidad</a>-->
                 </div>
             </div>
             <div id="openModal2" class="modalDialog reportModal" ng-show="shareToCommunityOpen">

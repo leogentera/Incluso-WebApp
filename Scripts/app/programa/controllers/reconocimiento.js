@@ -11,7 +11,11 @@
 	'$modal',
     '$filter',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
-        
+
+		drupalFactory.Services.GetContent("Recognition", function (data, key) {
+			$scope.contentResources = data.node;
+		}, function () {}, true);
+
         var _course = moodleFactory.Services.GetCacheJson("course");
         var _userId = moodleFactory.Services.GetCacheObject("userId");
         var reconocimientoSrc = null;
