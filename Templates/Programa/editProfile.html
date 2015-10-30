@@ -225,7 +225,7 @@
 															</div>
 														</li>
 													</ul>
-													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addStudy();">
+													<button type="button" class="btn btn-lg btn-block btn-add" ng-click="addStudy()">
 														<span class="icomoon icon-plus"></span>Agregar nuevo estudio...
 													</button>
 												</section>
@@ -858,7 +858,7 @@
 													<h4>Vivienda</h4>
 													<div class="form-group theme-form">
 														<div class="form-group-control custom-caret-wrapper">
-															<select class="form-control form-control-lg theme-form" 
+															<select class="form-control form-control-lg theme-form"
 															ng-model="model.iLiveWith" ng-options="item for item in iLiveWithList"
 															ng-init="model.iLiveWith == null" ng-class="{'selected': model.iLiveWith.length != 0 && model.iLiveWith != null}">
 																<option value="" ng-disabled="!!model.iLiveWith">Vivo con</option>
@@ -875,12 +875,12 @@
 															<div class="form-group theme-form">                                                                
 																<h5>
 																	<span>Mi actividad principal {{model.mainActivity.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteMainActivity(s);">
+																	<button class="btn btn-circle" ng-click="deleteMainActivity($index)">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
 																<select class="form-control form-control-lg theme-form" 
-																ng-model="model.mainActivity[$index]" ng-options="item for item in mainActivityList" ng-init="model.mainActivity == null" ng-class="{'selected': model.mainActivity[$index].length != 0 && model.mainActivity[$index] != null}">
+																ng-model="model.mainActivity[$index]" ng-options="item for item in mainActivityList" ng-class="{'selected': model.mainActivity[$index].length != 0 && model.mainActivity[$index] != null}">
 																	<option value="" ng-disabled="!!model.mainActivity">Actividad principal</option>
 																</select>
 															</div>
@@ -1066,6 +1066,7 @@
                                                     <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
                                                 </div>
 
+                                                <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO  -->
 												<section class="old-code">
 													<div class="old-code">
 														<h5>Familiar</h5>
@@ -1144,6 +1145,8 @@
 														</div>
 													</div>
 												</section>
+												<!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO  -->
+
 											</fieldset>
 										</div>
 									</div>
@@ -1267,6 +1270,7 @@
                                                     <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
                                                 </div>
                                                 <!-- #######################################################################  -->
+                                                <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO  -->
 												<section class="old-code">
 													<div class="old-code">
 														<h5>Dispositivos</h5>
@@ -1353,7 +1357,8 @@
 														</div>
 													</div>
 												</section>
-												<!--  #################################################################  -->
+												<!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO  -->
+												
 											</fieldset>
 										</div>
 									</div>
