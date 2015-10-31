@@ -21,8 +21,9 @@ angular
             var userCourse = JSON.parse(localStorage.getItem("usercourse"));
             $scope.model = userCourse;
             $scope.like_status = 1;
-            $rootScope.showFooterRocks = false;             
-            var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
+            $rootScope.showFooterRocks = false;
+            var userId = localStorage.getItem('userId');
+            var finishCabinaSoporte = localStorage.getItem("finishCabinaSoporte/" + userId);
             $scope.idEtapa = 0;
             $scope.scrollToTop();            
             $scope.currentPage = 1;
@@ -47,6 +48,8 @@ angular
 
             }
             var treeActivity = getActivityByActivity_identifier(coursemoduleid, userCourse);
+            
+            $scope.activityPoints = treeActivity.points;
 
             $scope.goChat = function () {
                 $location.path('/Chat');
@@ -74,7 +77,7 @@ angular
 
                 // Update activity in usercourse
                 treeActivity.status = 1;
-
+                localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
                 moodleFactory.Services.PutEndActivity(treeActivity.coursemoduleid, data, treeActivity, currentUser.token, function () {
                     _setLocalStorageJsonItem('usercourse', $scope.model);
                     var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
@@ -101,17 +104,18 @@ angular
                 //create notification
                 _createNotification(treeActivity.coursemoduleid, triggerActivity);
                 //complete stage                
+
                 _updateBadgeStatus(treeActivity.coursemoduleid);
                 
                 _updateRewardStatus();
                 // update activity status dictionary used for blocking activity links
                 updateActivityStatusDictionary(treeActivity.activity_identifier);
-                
-                localStorage.removeItem("finishCabinaSoporte");
 
                 $scope.$emit('HidePreloader'); //hide preloader  
                 var userCurrentStage = localStorage.getItem("currentStage");
-
+                
+                localStorage.removeItem("finishCabinaSoporte/" + userId);
+                localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
                 $location.path('/'+ currentStage +'/Dashboard/' + userCurrentStage + '/' + currentChallenge); 
                 
             }

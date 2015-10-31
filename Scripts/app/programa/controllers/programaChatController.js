@@ -15,11 +15,13 @@ angular
             _timeout = $timeout;
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
-            var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte"));
             _setLocalStorageItem('chatRead', "true");
             var userId = localStorage.getItem('userId');
             var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
-            var messagesToRead = _getItem("currentStage") * 2;
+            var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte/" + userId));
+            var userCurrentStage = localStorage.getItem("currentStage");
+            console.log(userCurrentStage);
+            var messagesToRead = userCurrentStage * 2;
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
             $scope.currentMessage = "";
@@ -56,12 +58,19 @@ angular
 
 
             function validateCabinaDeSoporte(){                
-                //$scope.scrollToTop('anchor-bottom');   
-                debugger;                    
-                var finishCabinaSoporte = localStorage.getItem('finishCabinaSoporte');
+                 
+                var finishCabinaSoporte = localStorage.getItem("finishCabinaSoporte/" + userId);
+                var zone = '/ZonaDeVuelo';                                                            
+
+                if(userCurrentStage == 2){
+                    zone = '/ZonaDeNavegacion';                                    
+                } 
+                else if (userCurrentStage == 3){
+                    zone = '/ZonaDeAterrizaje';                                    
+                }
                 if(!finishCabinaSoporte){
                     if(_startedActivityCabinaDeSoporte) {
-                    var isStarted = _startedActivityCabinaDeSoporte;
+                    var isStarted = _startedActivityCabinaDeSoporte;                    
                     var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);    
 
                         if (!currentActivity.status) {
@@ -71,12 +80,16 @@ angular
                                 return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
                             });
 
-                            if (latestMessages.length >= 2) { 
-                                localStorage.removeItem("startedActivityCabinaDeSoporte");   
-                                _setLocalStorageItem('finishCabinaSoporte', 'true');
+                            if (latestMessages.length >= 2) {                                
+                                localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
+                                _setLocalStorageItem("finishCabinaSoporte/" + userId, _startedActivityCabinaDeSoporte.activity_identifier);
+                                $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
                             }
                         }   
                     }                
+                }
+                else{                    
+                    $location.path(zone +'/CabinaDeSoporte/' + finishCabinaSoporte);
                 }
             }            
 
@@ -143,16 +156,15 @@ angular
                             return messages.messagesenderid != userId;
                         });
 
-                    _.each(messagesFlow, function(m, i){
-                        if(i > 0 && m && m != messagesFlow[i - 1]){
-                            messagesInterchange++;
-                        }
-                    });
+                    // _.each(messagesFlow, function(m, i){
+                    //     if(i > 0 && m && m != messagesFlow[i - 1]){
+                    //         messagesInterchange++;
+                    //     }
+                    // });
 
-                    if (messagesInterchange >= messagesToRead) {
-                        _setLocalStorageItem("finishCabinaSoporte", "true");
-                        localStorage.getItem('finishCabinaSoporte')
-                    }
+                    // if (messagesInterchange >= messagesToRead) {
+                    //     _setLocalStorageItem("finishCabinaSoporte/" + _getItem("userId"), "true");
+                    // }
                                                     
                     if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
                         _setLocalStorageItem('chatRead',"false");

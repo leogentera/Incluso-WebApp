@@ -72,6 +72,13 @@ angular
                 moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, $scope.userToken, initCommunitySuccessCallback, initCommunityErrorCallback, true);
                 
                 function initCommunitySuccessCallback (data, key) {
+                    
+                    var currentDiscussionIds = [];
+                    for(var d = 0; d < data.discussions.length; d++) {
+                        currentDiscussionIds.push(data.discussions[d].discussion);
+                    }
+                    localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                    
                     $scope.discussion = data.discussions[0];
                     $scope.forumId = data.forumid;
 
@@ -199,6 +206,20 @@ angular
                 }
             };
             
+            var checkForumExtraPoints = function() {
+            
+                /* check over extra points */
+                var course = moodleFactory.Services.GetCacheJson("course");
+                var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+                var forum = _.find(forumData.forums, function(elem){ return elem.forumactivityid == "50000"; });
+                
+                if (Number(forum.discussion[0].total) <= 15) {
+                    updateUserForumStars("50000", 50, function (){
+                        successPutStarsCallback();
+                    });
+                }
+            };
+            
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex) {
                 
                 if ($scope.hasCommunityAccess) {
@@ -207,8 +228,8 @@ angular
                         "discussionid": $scope.discussion.discussion,
                         "parentid": parentId,
                         "message": that.replyText,
-                        "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                        "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "createdtime": moment(Date.now()).unix(),
+                        "modifiedtime": moment(Date.now()).unix(),
                         "posttype": 1,
                         "fileToUpload": ""
                     };
@@ -216,6 +237,9 @@ angular
                     $scope.$emit('ShowPreloader');
                     moodleFactory.Services.PostAsyncForumPost ('reply', requestData,
                         function(){
+                            
+                            checkForumExtraPoints();
+                            
                             $scope.replyText = null;
                             $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                             refreshTopicData();
@@ -236,8 +260,8 @@ angular
                         "discussionid": $scope.discussion.discussion,
                         "parentid": $scope.discussion.id,
                         "message": $scope.postTextValue,
-                        "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                        "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "createdtime": moment(Date.now()).unix(),
+                        "modifiedtime": moment(Date.now()).unix(),
                         "posttype": 1,
                         "fileToUpload": null
                     };
@@ -245,6 +269,9 @@ angular
                     $scope.$emit('ShowPreloader');
                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                         function() {
+                            
+                            checkForumExtraPoints();
+                            
                             $scope.postTextValue = null;
                             $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
                             refreshTopicData();
@@ -265,8 +292,8 @@ angular
                         "discussionid": $scope.discussion.discussion,
                         "parentid": $scope.discussion.id,
                         "message": $scope.postLinkValue,
-                        "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                        "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "createdtime": moment(Date.now()).unix(),
+                        "modifiedtime": moment(Date.now()).unix(),
                         "posttype": 2,
                         "fileToUpload": null
                     };
@@ -274,6 +301,9 @@ angular
                     $scope.$emit('ShowPreloader');
                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                         function() {
+                            
+                            checkForumExtraPoints();
+                            
                             $scope.postLinkValue = null;
                             $scope.collapseCommunityButtomsTrigger('isLinkCollapsed');
                             refreshTopicData();
@@ -293,14 +323,17 @@ angular
                         "discussionid": $scope.discussion.discussion,
                         "parentid": $scope.discussion.id,
                         "message": $scope.postVideoValue,
-                        "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                        "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "createdtime": moment(Date.now()).unix(),
+                        "modifiedtime": moment(Date.now()).unix(),
                         "posttype": 3,
                         "fileToUpload": null
                     };
                     
                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                         function() {
+                            
+                            checkForumExtraPoints();
+                            
                             $scope.postVideoValue = null;
                             $scope.collapseCommunityButtomsTrigger('isVideoCollapsed');
                             refreshTopicData();
@@ -320,8 +353,8 @@ angular
                         "discussionid": $scope.discussion.discussion,
                         "parentid": $scope.discussion.id,
                         "message": '',
-                        "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                        "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                        "createdtime": moment(Date.now()).unix(),
+                        "modifiedtime": moment(Date.now()).unix(),
                         "posttype": 4,
                         "filecontent":$scope.postAttachmentValue.image,
                         "filename": _userId + $scope.postAttachmentValue.fileName,
@@ -331,6 +364,9 @@ angular
                     $scope.$emit('ShowPreloader');
                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                         function() {
+                            
+                            checkForumExtraPoints();
+                            
                             $scope.postAttachmentValue = {};
                             $scope.collapseCommunityButtomsTrigger('isAttachmentCollapsed');
                             refreshTopicData();

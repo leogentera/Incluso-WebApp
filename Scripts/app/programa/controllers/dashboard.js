@@ -242,11 +242,6 @@
                             messagesInterchange++;
                         }
                     });
-
-                    // if (messagesInterchange >= messagesToRead) {
-                    //     _setLocalStorageItem("finishCabinaSoporte", "true");
-                    //     localStorage.getItem('finishCabinaSoporte')
-                    // }
                                                     
                     if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
                         _setLocalStorageItem('chatRead',"false");
@@ -255,8 +250,8 @@
                     _setLocalStorageItem('chatAmountRead',chatAmount.true);
                 }, errorCallback, false);                
             }
+                                    
             
-
             //Open Welcome Message modal
             $scope.openModal = function (size) {
                     var modalInstance = $modal.open({

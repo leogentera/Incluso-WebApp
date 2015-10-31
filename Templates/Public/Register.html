@@ -1,5 +1,5 @@
-<div class="incluso-app public" ng-app>
-  <article class="register" ng-controller="publicRegisterController">
+<div class="incluso-app public">
+  <article class="register">
 
     <div class="alert alert-warning" role="alert" ng-show="!registerModel.modelState.isValid && !isRegistered" ng-cloak>      
       <div class="alert-message">
@@ -173,7 +173,6 @@
 	    <div class="modal-footer"></div>
     </script>
 
-
     <header>
       <figure>
         <!-- <img src="assets/images/img-logo-gentera.svg" alt="" class="login-logo"> -->
@@ -262,8 +261,8 @@
                     </p>                    
                     
                     <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
-                      <input type="date" ng-model="registerModel.birthday" name="birthday" ng-focus="showPlaceHolderBirthday()" class="form-control form-control-lg theme-default" aria-describedby="birthDateAddOn" minlength="10" maxlength="10" required />
-                      <span class="{{showPlaceHolder == true ? 'custom-placeholder form-control-lg show' : 'custom-placeholder form-control-lg hidden'}}" >Fecha de nacimiento</span>                      
+                      <input type="text" ng-model="registerModel.birthday" name="birthday" ng-click="datePickerClick()" ng-focus="showPlaceHolderBirthday()" class="form-control form-control-lg theme-default" aria-describedby="birthDateAddOn" minlength="10" maxlength="10" placeholder="Fecha de nacimiento" required />
+                      <!-- <span class="{{showPlaceHolder == true ? 'custom-placeholder form-control-lg show' : 'custom-placeholder form-control-lg hidden'}}" >Fecha de nacimiento</span> -->                      
                     </p>                    
                   </div>
                 </div>

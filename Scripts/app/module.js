@@ -60,91 +60,94 @@
         'incluso.programa.evaluacionFormulario'
     ])
     .run(function ($templateCache, $http, $rootScope) {
-        $http.get('Templates/Public/Login.html', { cache: $templateCache });
-        $http.get('Templates/Public/RecoverPassword.html', { cache: $templateCache });
-        $http.get('Templates/Public/RecoverPasswordEmail.html', { cache: $templateCache });
-        $http.get('Templates/Public/Register.html', { cache: $templateCache });
-        $http.get('Templates/Programa/Dashboard.html', { cache: $templateCache });
+        
+
+        
+        $http.get('Templates/Public/Login.html', { cache: true });
+        $http.get('Templates/Public/RecoverPassword.html', { cache: true });
+        $http.get('Templates/Public/RecoverPasswordEmail.html', { cache: true });
+        $http.get('Templates/Public/Register.html', { cache: true });
+        $http.get('Templates/Programa/Dashboard.html', { cache: true });
         /*$http.get('Templates/Programa/Step.html', { cache: $templateCache });*/
-        $http.get('Templates/Programa/profile.html', { cache: $templateCache });
-        $http.get('Templates/Programa/editProfile.html', { cache: $templateCache });
+        $http.get('Templates/Programa/profile.html', { cache: true });
+        $http.get('Templates/Programa/editProfile.html', { cache: true });
         //$http.get('Templates/Programa/etapa.html', { cache: $templateCache });
-        $http.get('Templates/Programa/Tutorial.html', { cache: $templateCache });
-        $http.get('Templates/Programa/acercaPrograma.html', { cache: $templateCache });  
-        $http.get('Templates/Juegos/Avatar.html', { cache: $templateCache });
-        $http.get('Templates/Programa/Alerts.html', { cache: $templateCache });
-        $http.get('Templates/Programa/AlertsDetail.html', { cache: $templateCache });
-        $http.get('Templates/Programa/MyInterests.html', { cache: $templateCache });
-        $http.get('Templates/Programa/MyStrengths.html', { cache: $templateCache });
-        $http.get('Templates/Programa/HallOfFame.html', { cache: $templateCache });
-        $http.get('Templates/Programa/MyStars.html', { cache: $templateCache });
-        $http.get('Templates/Programa/RewardDetail.html',{ cache: $templateCache });
-        $http.get('Templates/Programa/PrivacyNotice.html', { cache: $templateCache });
-        $http.get('Templates/Programa/TermsOfUse.html', { cache: $templateCache });
-        $http.get('Templates/Programa/HelpAndSupport.html', { cache: $templateCache });
-        $http.get('Templates/Programa/ClosingStage.html', { cache: $templateCache });
-        $http.get('Templates/Programa/evaluacion.html', { cache: $templateCache });
-        $http.get('Templates/Programa/formulario.html', { cache: $templateCache });
-        $http.get('Templates/Programa/community.html', { cache: $templateCache });
-        $http.get('Templates/Programa/sharingexperience.html', { cache: $templateCache });  
-        $http.get('Templates/Programa/AlbumIncluso.html', { cache: $templateCache });  
-        $http.get('Templates/Programa/reconocimiento.html', { cache: $templateCache });
-        $http.get('Templates/Programa/RewardDetail.html', { cache: $templateCache });
+        $http.get('Templates/Programa/Tutorial.html', { cache: true });
+        $http.get('Templates/Programa/acercaPrograma.html', { cache: true });  
+        $http.get('Templates/Juegos/Avatar.html', { cache: true });
+        $http.get('Templates/Programa/Alerts.html', { cache: true });
+        $http.get('Templates/Programa/AlertsDetail.html', { cache: true });
+        $http.get('Templates/Programa/MyInterests.html', { cache: true });
+        $http.get('Templates/Programa/MyStrengths.html', { cache: true });
+        $http.get('Templates/Programa/HallOfFame.html', { cache: true });
+        $http.get('Templates/Programa/MyStars.html', { cache: true });
+        $http.get('Templates/Programa/RewardDetail.html',{ cache: true });
+        $http.get('Templates/Programa/PrivacyNotice.html', { cache: true });
+        $http.get('Templates/Programa/TermsOfUse.html', { cache: true });
+        $http.get('Templates/Programa/HelpAndSupport.html', { cache: true });
+        $http.get('Templates/Programa/ClosingStage.html', { cache: true });
+        $http.get('Templates/Programa/evaluacion.html', { cache: true });
+        $http.get('Templates/Programa/formulario.html', { cache: true });
+        $http.get('Templates/Programa/community.html', { cache: true });
+        $http.get('Templates/Programa/sharingexperience.html', { cache: true });  
+        $http.get('Templates/Programa/AlbumIncluso.html', { cache: true });  
+        $http.get('Templates/Programa/reconocimiento.html', { cache: true });
+        $http.get('Templates/Programa/RewardDetail.html', { cache: true });
 
-        $http.get('Templates/Juegos/Game.html', { cache: $templateCache });        
-        $http.get('Templates/NotificationDetails.html', { cache: $templateCache });  
-        $http.get('Templates/Programa/Dashboard.html', { cache: $templateCache });  
-        $http.get('Templates/Chat/index.html', { cache: $templateCache });
+        $http.get('Templates/Juegos/Game.html', { cache: true });        
+        $http.get('Templates/NotificationDetails.html', { cache: true });  
+        $http.get('Templates/Programa/Dashboard.html', { cache: true });  
+        $http.get('Templates/Chat/index.html', { cache: true });
 
-        $http.get('Templates/Leaderboard/index.html', { cache: $templateCache });          
-        $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/ExploracionInicial.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: $templateCache });  
+        $http.get('Templates/Leaderboard/index.html', { cache: true });          
+        $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/ExploracionInicial.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: true });  
         //$http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultiple.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleExternalApp.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultiple.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleExternalApp.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/PuntoDeEncuentro/Comentarios.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/dashboard.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html', { cache: true });  
         //$http.get('Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustos.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/Suena.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustos.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/MisGustosCierre.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/Suena.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: true });  
         //$http.get('Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporte.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporte.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporte.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: $templateCache });  
-        $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: $templateCache });  
+        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporte.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: true });
+        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporte.html', { cache: true });
+        $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporteCierre.html', { cache: true });
+        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporte.html', { cache: true });
+        $http.get('Templates/ZonaDeAterrizaje/CabinaDeSoporteCierre.html', { cache: true });
+        $http.get('Templates/ZonaDeVuelo/ExploracionFinal.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/ExploracionFinalCierre.html', { cache: true });  
+        $http.get('Templates/ZonaDeVuelo/Cierre.html', { cache: true });  
 
         ///////// Stage 2 //////////
-        $http.get('Templates/ZonaDeNavegacion/dashboard.html',{cache:$templateCache});
-        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEligesResults.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeNavegacion/dashboard.html',{cache:true});
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEliges.html', { cache: true });
+        $http.get('Templates/ZonaDeNavegacion/TuElijes/TuEligesResults.html', { cache: true });
+        $http.get('Templates/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/MapaDeVida.html', { cache: true });
 
         ///////// Stage 3 //////////
-        $http.get('Templates/ZonaDeAterrizaje/dashboard.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html', { cache: $templateCache });
-        $http.get('Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html', {cache: $templateCache });
+        $http.get('Templates/ZonaDeAterrizaje/dashboard.html', { cache: true });
+        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero.html', { cache: true });
+        $http.get('Templates/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDineroResults.html', { cache: true });
+        $http.get('Templates/ZonaDeAterrizaje/MapaDelEmprendedor/MapaDelEmprendedor.html', {cache: true });
 
          document.addEventListener("keyup", function(e) {
             if (e.keyCode === 27)
@@ -200,11 +203,6 @@
     
         $routeProvider.when('/', {
             templateUrl: 'Templates/Public/Login.html',
-            controller: 'publicLoginController'
-        });
-
-        $routeProvider.when('/Login/:stageId', {
-            templateUrl: function(params){ return 'Templates/Public/Login' + params.stageId + ".html"; },
             controller: 'publicLoginController'
         });
 
@@ -363,7 +361,7 @@
             controller: 'stageGameRetoMultipleResultsController'
         });
     
-        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId/:extraPoints/:moodleId', {
+        $routeProvider.when('/ZonaDeVuelo/ForoCierre/:activityId/:discussionId/:moodleId', {
             templateUrl: 'Templates/ZonaDeVuelo/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -510,7 +508,7 @@
             controller: 'stageContentsController'
         });
 
-        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:activityId/:extraPoints', {
+        $routeProvider.when('/ZonaDeNavegacion/ForoCierre/:activityId/:discussionId/:moodleId', {
             templateUrl: 'Templates/ZonaDeNavegacion/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -632,7 +630,7 @@
             controller: 'stageQuizController'
         });
 
-        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activity_identifier/:activityId/extraPoints', {
+        $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activityId/:discussionId/:moodleId', {
             templateUrl: 'Templates/ZonaDeAterrizaje/ForoCierre.html',
             controller: 'stageForumCloseController'
         });
@@ -706,8 +704,9 @@
         });
 
         $routeProvider.otherwise({
-        	redirectTo: '/'
+            redirectTo: '/'
         });
+
         $locationProvider.html5Mode(false);
 
         $("#menu #submenu").mouseleave(function() {

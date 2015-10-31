@@ -12,20 +12,16 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-
+            
             _timeout = $timeout;
             _httpFactory = $http;
-            //$scope.PreloaderModalInstance = null;
-            //$scope.scrollToTop();
-            $scope.$emit('scrollTop'); //- scroll
+            $scope.scrollToTop();
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-            // $scope.preloader = angular.element(document.getElementById('spinner')).scope();
-            // $scope.preloader.loading = true;
 
             /* ViewModel */
             $scope.userCredentialsModel = {
@@ -75,14 +71,19 @@ angular
 
                 //autologin
                 if (currentUser && currentUser.token && currentUser.token != "") {
-                    $location.path('/ProgramaDashboard');
+                    $timeout(function(){ $scope.$emit('ShowPreloader'); }, 1500);
+                    moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
+                            $scope.$emit('HidePreloader');
+                            $location.path('/ProgramaDashboard');    
+                        }, function() {
+                            $scope.$emit('HidePreloader');
+                            $location.path('/ProgramaDashboard');
+                        }, true);
+                }else {
+                    $scope.$emit('HidePreloader');
+                    console.log('preloader hidden');
                 }
-
-                //$scope.preloader.loading = false;  //- test
-                $scope.$emit('HidePreloader');
-                console.log('preloader hidden');
-
-            }
+            };
 
             $scope.login = function (username, password) {  
                                
@@ -110,11 +111,15 @@ angular
                             _setToken(data.token);
                             _setId(data.id);
 
-                            console.log('preparing for syncAll');                            
+                            console.log('preparing for syncAll');
                             
                             //succesful credentials
                             _syncAll(function () {
                                 console.log('came back from redirecting...');
+                                
+                                var course = moodleFactory.Services.GetCacheJson("course");
+                                moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){ }, function() {}, true);
+                                
                                 $timeout(
                                     function () {
                                         console.log('redirecting..');
@@ -150,10 +155,6 @@ angular
                 cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
                 
             }
-            
-            $scope.scrollToTop = function(){
-                $anchorScroll(0);
-            }
 
             function FacebookLoginSuccess(data) {                
                 console.log('successfully logged in ' + data);                
@@ -174,6 +175,10 @@ angular
                 //succesful credentials
                 _syncAll(function () {
                     console.log('came back from redirecting...');
+                    
+                    var course = moodleFactory.Services.GetCacheJson("course");
+                    moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, false);
+                    
                     $timeout(
                         function () {
                             console.log('redirecting..');

@@ -1,11 +1,10 @@
 //global variables
 
-//var DRUPAL_API_RESOURCE = "http://incluso.definityfirst.com/content.php?node={0}"; /* Nora */
+var API_RESOURCE = "http://definityincluso.cloudapp.net:82/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Azure Development environment
 var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
-
-var API_RESOURCE = "http://incluso.definityfirst.com/RestfulAPI/public/{0}";          // Nora
-//var API_RESOURCE = "http://definityincluso.cloudapp.net:82/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Azure Development environment
-//var API_RESOURCE = "http://incluso-api-prod.azurewebsites.net/RestfulAPI/public/{0}"; //Other
+//var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
+//var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
+//var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; // Production
 
 
 var _courseId = 4;
@@ -122,7 +121,7 @@ var _activityDependencies=[
     //Stage 3 dependencies
     {
         id:3101,
-        dependsOn:[2023,-10]
+        dependsOn:[2023]
     },
     {
         id:3201,
@@ -291,6 +290,41 @@ function syncCacheData() {
 
 }
 
+function updatePostCounter(discussionid) {
+    var course = moodleFactory.Services.GetCacheJson("course");
+    var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+    
+    var discussionFound = false;
+
+    for(var fd = 0; fd < forumData.forums.length; fd++) {
+        
+        var forum = forumData.forums[fd];
+        var discussions = forum.discussion;
+        
+        for(var fdd = 0; fdd < discussions.length; fdd++) {
+            
+            var discussion = discussions[fdd];
+            if (discussion.discussionid === discussionid) {
+                
+                if (forum.status == "1") {
+                    forumData.totalExtraPoints++;
+                }
+                
+                var newTotal = Number(discussion.total) + 1;
+                discussion.total = newTotal.toString();
+                discussionFound = true;
+                break;
+            }
+        }
+        
+        if (discussionFound) {
+            break;
+        }
+    }
+    
+    localStorage.setItem("postcounter/" + course.courseid, JSON.stringify(forumData));
+}
+
 //Update activity status for activity blocking binding
 var updateActivityStatusDictionary = function (activityIdentifierId) {
     var activityStatus = moodleFactory.Services.GetCacheJson("activityStatus");
@@ -335,7 +369,7 @@ var successQuizCallback = function () {
     var currentStage = localStorage.getItem("currentStage");
 
     if (_location) {
-        _location.path(_endActivityCurrentChallenge);
+        _endActivityCurrentChallenge ? _location.path(_endActivityCurrentChallenge) : "";
     }
 };
 
@@ -467,11 +501,11 @@ var _updateRewardStatus = function () {
     localStorage.setItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
 }
 
-var logStartActivityAction = function(activityId, timeStamp){
+var logStartActivityAction = function(activityId, timeStamp) {
+    
     if( Number(activityId) == 50000 || activityId == 'null' || !activityId){
-        return false;
-    } else{
-
+            return false;
+    } else {
 
         var userCourse = JSON.parse(localStorage.getItem("usercourse"));
         var treeActivity = getActivityByActivity_identifier(activityId, userCourse);
@@ -493,15 +527,21 @@ var logStartActivityAction = function(activityId, timeStamp){
             var triggerActivity = 1;
             _createNotification(treeActivity.coursemoduleid, triggerActivity);
 
-            if (_.find(_activitiesCabinaDeSoporte, function (id) {
-                    return activityId == id
-                })) {
-
-                _setLocalStorageJsonItem('startedActivityCabinaDeSoporte', {
-                    datestarted: getdate(),
-                    coursemoduleid: treeActivity.coursemoduleid
-                });
+            if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
+                 console.log("global");
+                var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
+                
+                if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
+                    _setLocalStorageJsonItem(key, {
+                        datestarted: getdate(),
+                        coursemoduleid: treeActivity.coursemoduleid,
+                        activity_identifier: treeActivity.activity_identifier
+                    });
+                    
+                    localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                }
             }
+            
             console.log('logStartSctivityAction Is working from dashboard');
 
         }, function () {
@@ -517,13 +557,13 @@ var _createNotification = function (activityId, triggerActivity) {
 
     var allNotifications = JSON.parse(localStorage.getItem("notifications"));
 
-    for (var indexNotifications = 0; indexNotifications < allNotifications.length; indexNotifications++) {
-        var currentNotification = allNotifications[indexNotifications];
+    for (var i = 0; i < allNotifications.length; i++) {
+        var currentNotification = allNotifications[i];
         if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId) {
-            allNotifications[indexNotifications].timemodified = new Date();
+            allNotifications[i].timemodified = new Date();
             _setLocalStorageJsonItem("notifications", allNotifications);
             var dataModelNotification = {
-                notificationid: allNotifications[indexNotifications].id,
+                notificationid: allNotifications[i].id,
                 timemodified: new Date(),
                 userid: currentUserId,
                 already_read: 0
@@ -593,6 +633,27 @@ var _coachNotification = function (stageIndex) {
 };
 
 
+var _generalNotification = function(){  
+    var notifications = JSON.parse(localStorage.getItem("notifications"));
+    var userId = localStorage.getItem('userId');
+    //trigger activity 4: general notification
+    var triggerActivity = 4;
+    
+    var notificationGeneral = _.filter(notifications, function (notif) {
+        if (notif.id == 13 || notif.id == 14 || notif.id == 15) {
+            return notif;
+        } else {
+        }
+    });
+
+    for(var i = 0; i <= notificationGeneral.length; i++)
+    {
+      if (notificationGeneral[i] && !notificationGeneral[i].timemodified) {                          
+          _createNotification(notificationGeneral[i].activityidnumber, triggerActivity);
+      }
+    }  
+}
+
 var successPutStarsCallback = function (data) {
     _updateRewardStatus();
 };
@@ -617,28 +678,35 @@ var _notificationExists = function () {
 };
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
+    
     var matchingActivity = null;
     var breakAll = false;
     var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
-    for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
-        var stage = userCourse.stages[stageIndex];
-        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
-            var challenge = stage.challenges[challengeIndex];
-            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                var activity = challenge.activities[activityIndex];
-                //console.log(activity.activity_identifier + " : " + activity);
-                if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
-                    matchingActivity = activity;
-                    breakAll = true;
-                    break;
+    
+    if (activity_identifier == "50000") {
+        matchingActivity = userCourse.community;
+    }else {
+        for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+            var stage = userCourse.stages[stageIndex];
+            for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+                var challenge = stage.challenges[challengeIndex];
+                for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                    var activity = challenge.activities[activityIndex];
+                    //console.log(activity.activity_identifier + " : " + activity);
+                    if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
+                        matchingActivity = activity;
+                        breakAll = true;
+                        break;
+                    }
                 }
+                if (breakAll)
+                    break;
             }
             if (breakAll)
                 break;
         }
-        if (breakAll)
-            break;
     }
+    
     return matchingActivity;
 }
 
@@ -820,7 +888,8 @@ function updateActivityStatus(activity_identifier) {
     return theUserCouerseUpdated;
 }
 
-function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId) {
+function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
+    firstActivityLock = (firstActivityLock === undefined ? true : firstActivityLock);
     var breakAll = false;
     var subactivitiesCompleted = 0;
     var theUserCourse = JSON.parse(localStorage.getItem("usercourse"));
@@ -831,10 +900,10 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
             for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
                 var activity = challenge.activities[activityIndex];
                 if (activity.activities && activity.activity_identifier == parentActivity.activity_identifier) {
-                    if (activity.status == 1) {
+                    if (activity.status == 1 && firstActivityLock) {
                         breakAll = true;
                         break;
-                    } else if(activity.activities.length == subactivitiesCourseModuleId.length) {
+                    } else if(activity.activities.length == subactivitiesCourseModuleId.length || !firstActivityLock) {
                         activity.status = 1;
                     }
                     for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {
@@ -865,7 +934,7 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
     return theUserCourse;
 }
 
-function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId) {
+function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var stars = 0;
@@ -876,13 +945,13 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
             }
         }
     }
-    stars += (subactivitiesCourseModuleId.length == parentActivity.activities.length ? parentActivity.points : 0);
+    stars += (subactivitiesCourseModuleId.length == parentActivity.activities.length || !firstActivityLock ? parentActivity.points : 0);
     profile.stars = parseInt(profile.stars) + stars;
     currentUser.stars = profile.stars;
     if (stars > 0) {
         var data = {
             userId: profile.id,
-            stars: stars + parentActivity.points,
+            stars: stars,
             instance: parentActivity.coursemoduleid,
             instanceType: 0,
             date: getdate()
@@ -893,14 +962,39 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
     }
 }
 
-var getForumsExtraPointsCounter = function(){
-    var forumExtraPointsCounter = JSON.parse(localStorage.getItem('extraPointsForums'));
-    return forumExtraPointsCounter;
+var getForumExtraPointsCounter = function(discussionIds) {
+    
+    var course = moodleFactory.Services.GetCacheJson("course");
+    var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+    
+    var tempDiscussionIds = [];
+    var tempDiscussions = {"status": 0, "discussions": []};
+    for(var f = 0; f < forumData.forums.length; f++) {
+        
+        var forum = forumData.forums[f];
+        var discussions = forum.discussion;
+        tempDiscussions.status = forum.status;
+        
+        for(var d = 0; d < discussions.length; d++) {
+            tempDiscussionIds.push(discussions[d].discussionid);
+            
+            tempDiscussions.discussions.push(discussions[d]);
+        }
+        
+        var diff = _.difference(discussionIds,tempDiscussionIds);
+        if (diff.length === 0) {
+            break;
+        }else {
+            tempDiscussionIds = [];
+            tempDiscussions.discussions = [];
+        }
+    }
+
+    return tempDiscussions;
 };
 
 function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
-    console.log(profile);
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
@@ -912,10 +1006,10 @@ function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
         stars = extraPoints;
     } else {
+
         if (activityIdentifier == "2016") {
             profile.stars = Number(profile.stars) + Number(activity.activities[0].points);
-        }
-        else {
+        } else {
             profile.stars = Number(profile.stars) + Number(activity.points);
             stars = activity.points;
         }
@@ -926,13 +1020,32 @@ function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
 
     var data = {
         userId: profile.id,
-        stars: activityIdentifier == "2016" ? Number(activity.activities[0].points) + Number(extraPoints) : stars,
+        stars: activityIdentifier == "2016" ? parseInt(activity.activities[0].points) + Number(extraPoints) : stars,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
     };
+
     moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
 }
+
+function updateUserForumStars(activityIdentifier, extraPoints, callback) {
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+    var activity = getActivityByActivity_identifier(activityIdentifier);
+    
+    profile.stars = Number(profile.stars) + Number(extraPoints);
+
+    var data = {
+        userId: profile.id,
+        stars: extraPoints,
+        instance: activity.coursemoduleid,
+        instanceType: 0,
+        date: getdate()
+    };
+    moodleFactory.Services.PutStars(data, profile, currentUser.token, callback, errorCallback);
+}
+
 
 function updateUserStarsUsingExternalActivity(activity_identifier) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
@@ -1049,13 +1162,26 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("otherAnswQuiz");
     localStorage.removeItem("halloffame");
     localStorage.removeItem("citiescatalog");
+    localStorage.removeItem("tuEligesActivities");
+    localStorage.removeItem("reply");    
+    localStorage.removeItem("mapaDeVidaActivities");
+    localStorage.removeItem("starsToAssignedAfterFinishActivity");
     ClearLocalStorage("activity");
     ClearLocalStorage("drupal"); //If content must be refreshed every time user log in - TODO: Is better to not delete this info and create a process to uptated? 
+    ClearLocalStorage("forum");
+    ClearLocalStorage("discussion");
     ClearLocalStorage("activitiesCache");
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
     ClearLocalStorage("profile");
     ClearLocalStorage("UserTalents");
+    ClearLocalStorage("postcounter");
+    ClearLocalStorage("currentDiscussionIds");
+    var existingInterval = localStorage.getItem('Interval');
+    if(existingInterval){
+        clearInterval(existingInterval);
+        localStorage.removeItem("Interval");
+    }    
     $location.path('/');
 };
 
@@ -1262,3 +1388,77 @@ function onDeviceReady() {
 //
 function onBackKeyDown() {
 }
+
+var _getDeviceVersionAsync = function() {
+    
+    var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+    
+    if (deviceVersion != null) {
+        var currentDate = new Date();
+        var difTimeStamp = currentDate.getTime() - deviceVersion.lastTimeUpdated
+        
+        /* 60 minutes */
+        if ((difTimeStamp / 60000) >= 60) {
+            console.log("ya pasaron 2 minutos... a actualizar");
+            _updateDeviceVersionCache();
+        }
+    }else {
+        _updateDeviceVersionCache();
+    }
+};
+
+var _compareSyncDeviceVersions = function() {
+    var sync = false;
+    
+    if (localStorage.getItem("device-version") != null) {
+        var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+        
+        var localVSplit = deviceVersion.localVersion.split("."),
+            remoteVSplit = deviceVersion.remoteVersion.split(".");
+            
+        sync = Number(localVSplit[0]) === Number(remoteVSplit[0]) &&
+               Number(localVSplit[1]) === Number(remoteVSplit[1]) &&
+               Number(localVSplit[2]) === Number(remoteVSplit[2]);
+    }else {
+        sync = true;
+    }
+    
+    return sync;
+};
+
+
+var FLAG_DEVICE_VERSION_RUNNING = false;
+
+function _updateDeviceVersionCache () {
+    var currentDate = new Date();
+    
+    var deviceVersion = {
+        lastTimeUpdated: currentDate.getTime(),
+        localVersion: "0.0.0",
+        remoteVersion: "0.0.0"
+    };
+
+    if (localStorage.getItem("device-version") != null) {
+        deviceVersion = JSON.parse(localStorage.getItem("device-version"));
+        deviceVersion.lastTimeUpdated = currentDate.getTime();
+    }
+    
+    if (cordova != null && typeof cordova.exec === "function") {
+        if (!FLAG_DEVICE_VERSION_RUNNING) {
+            FLAG_DEVICE_VERSION_RUNNING = true;
+            console.log("ejecutando device-version");
+            cordova.exec(function(data) {
+                deviceVersion.localVersion = data.currentVersion;
+                deviceVersion.remoteVersion = data.latestVersion;
+                localStorage.setItem("device-version", JSON.stringify(deviceVersion));
+                FLAG_DEVICE_VERSION_RUNNING = false;
+            }, function() { console.log("fail"); FLAG_DEVICE_VERSION_RUNNING = false }, "CallToAndroid", "getversion", []);
+        }
+    }
+}
+
+$(document).ready(function(){
+    setTimeout(function() {
+    _updateDeviceVersionCache();
+    }, 2000);
+});

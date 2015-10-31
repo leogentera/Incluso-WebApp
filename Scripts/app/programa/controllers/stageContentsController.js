@@ -96,6 +96,7 @@ angular
             var starsMandatory = 0;
             var getcoursemoduleids = [];
             $scope.like_status = 1;
+            var activitymanagers = [];
             var activitiesData = "";
 
             if (!activities) {
@@ -138,24 +139,12 @@ angular
                     var myActivity = $scope.fuenteDeEnergia.activities[i];
                     
                     if(!myActivity.activityContent){
-
                         myActivity.activityContent = data[i];
-                        
-                        
-                        //var userToken = $scope.token;                                                                  
-                        //moodleFactory.Services.GetCommentByActivity(myActivity.coursemoduleid, 1, 0, 0, 100, userToken, function(data){
-                        //      $scope.fuenteDeEnergia.activities[i].activityContent.comments = data.comments;
-                        //      
-                        //      
-                        //
-                        setResources(myActivity);
-                        //}, function(){
-                        //    console.log("error on getting activity comments");
-                        //});
-                        
-                        $scope.$emit('HidePreloader'); //hide preloader
-                    }
-                }                                                                        
+
+                        setResources(myActivity);                                                            
+                    }                    
+                }                
+                    $scope.$emit('HidePreloader'); //hide preloader                
             }
 
             function getActivityErrorCallback() {
@@ -212,14 +201,29 @@ angular
             }
 
             $scope.updateStatus = function (contentId) {
+                
                 for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                     if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                         if (!$scope.fuenteDeEnergia.activities[i].status) {
                             $scope.fuenteDeEnergia.activities[i].status = true;
+                            
+                            // Update activityManagers
+                            for (var am = 0; am < activitymanagers.length; am++) {
+                                 if (activitymanagers[am].activity_identifier == moduleid) {
+                                    var fuenteDeEnergiaManager = activitymanagers[am];
+                                    
+                                    for(var fem = 0; fem < fuenteDeEnergiaManager.activities.length; fem++){
+                                        if (fuenteDeEnergiaManager.activities[fem].groupid == contentId) {
+                                            fuenteDeEnergiaManager.activities[fem].status = true;
+                                        }
+                                    }
+                                 }
+                            }
 
                             var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
                             _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
-                            _endActivity($scope.fuenteDeEnergia.activities[i]);                            
+                            _setLocalStorageJsonItem("activityManagers", activitymanagers);
+                            _endActivity($scope.fuenteDeEnergia.activities[i]);
                             if (!$scope.fuenteDeEnergia.activities[i].optional) {
                                 $scope.statusObligatorios += 1;
                                 assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
@@ -306,6 +310,14 @@ angular
                 $timeout(function () {//This is to avoid killing the preloader beforehand
                     var updatedActivityOnUsercourse = updateActivityStatus($scope.fuenteDeEnergia.activity_identifier);  //actualizar arbol
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
+
+                    for (var am = 0; am < activitymanagers.length; am++) {
+                         if (activitymanagers[am].activity_identifier == moduleid) {
+                            activitymanagers[am].status = true;
+                            break;                                                                        
+                         }
+                    }
+                    _setLocalStorageJsonItem("activityManagers", activitymanagers);
                     //trigger activity type 2 is sent when the activity ends.
                     var triggerActivity = 2;
                     var currentUserId = currentUser.userId;

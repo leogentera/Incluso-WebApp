@@ -14,9 +14,10 @@ angular
             _httpFactory = $http;
             _timeout = $timeout;
 
-            $routeParams.activityId == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+            Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
+            var userId = JSON.parse(localStorage.getItem('userId'));
 
              var redirectOnShield = function () {
                  var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
@@ -32,8 +33,7 @@ angular
                      {name: 'Espacial', category: 'artistico'},
                      {name: 'Matematica', category: 'logico'},
                      {name: 'Linguistica', category: 'logico'},
-                 ];
-                 var userId = JSON.parse(localStorage.getItem('userId'));
+                 ];                 
                  var shield = JSON.parse(localStorage.getItem('profile/' + userId )).shield;
                  if (shield && shield != '') {
 
@@ -69,55 +69,21 @@ angular
 
             $scope.scrollToTop();
 
-           function getForumsProgress(){
-              var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : setForumsList();
-              return forumsProgress;
-
-           };
-            function setForumsList(){
-                var discussionsCollection = [];
-                var discussions = $scope.activity.discussions;
-
-                for(var i=0 ; i< discussions.length; i++ ){
-                    var currentDiscussion = discussions[i];
-
-                    var topic = _.where(discussionsCollection, function(d){ return d.discussion == currentDiscussion.id});
-                    if(!topic.length>0){
-                        discussionsCollection.push({"discussion_id":currentDiscussion.id, "replies_counter":0});
-                    } else {}
-                }
-                _setLocalStorageJsonItem('currentForumsProgress', discussionsCollection);
-            }
-            var getForumsExtraPointsCounter = function(){
-                var forumExtraPointsCounter = localStorage.getItem('extraPointsForums')? JSON.parse(localStorage.getItem('extraPointsForums')) : setExtraPointsCounters();
-                return forumExtraPointsCounter;
-            };
-            var setExtraPointsCounters = function(){
-                var extraPointsCounter = [];
-                //var discussions = $scope.activity.discussions;
-
-                //for(var i=0 ; i< discussions.length; i++ ){
-                //    var currentDiscussionCounter = discussions[i];
-                //
-                //    var topic = _.where(extraPointsCounter, function(exCount){ return exCount.discussion == currentDiscussionCounter.id});
-                //    if(!topic.length>0){
-                //        extraPointsCounter.push({"discussion_id":currentDiscussionCounter.id, "extra_replies_counter":0});
-                //    } else {}
-                //}
-                extraPointsCounter.push({"forumId":$scope.activity.forumid, "extra_replies_counter":0});
-                _setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
-            };
-
             function getDataAsync() {
                 console.log('Moodle ID on dataAsync: ' + $scope.moodleId);
                 $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, currentUser.token, getForumDiscussionsCallback, null, true):'';
             }
             
-            function getForumDiscussionsCallback() {
+            function getForumDiscussionsCallback(data, key) {
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
-                getForumsProgress();
-                getForumsExtraPointsCounter();
-               $scope.$emit('HidePreloader'); //hide preloader
+                
+                var currentDiscussionIds = [];
+                for(var d = 0; d < data.discussions.length; d++) {
+                    currentDiscussionIds.push(data.discussions[d].discussion);
+                }
+                localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                
+                $scope.$emit('HidePreloader'); //hide preloader
             }
 
             getDataAsync();

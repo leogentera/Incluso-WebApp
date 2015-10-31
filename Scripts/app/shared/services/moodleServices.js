@@ -12,7 +12,7 @@
 
         var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
-            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback);
+            _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
         var _getAsyncAvatarInfo = function (userId, token, successCallback, errorCallback, forceRefresh) {
@@ -27,12 +27,23 @@
             _getAsyncData("activity/" + activityArray, API_RESOURCE.format('activity?' + activityArray), null,  successCallback, errorCallback, forceRefresh);
         };
 
+        var _getAsyncActivitiesEnergy = function (activityArray, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("activity/" + activityArray, API_RESOURCE.format('activity?' + activityArray), successCallback, errorCallback, forceRefresh);
+        };
+
         var _getAsyncForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
             _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
         
         var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
+        };
+        
+        var _getAsyncUserPostCounter = function(token, courseId, successCallback, errorCallback, forceRefresh) {
+          var key = "postcounter/" + courseId;
+          var url = API_RESOURCE.format("postcounter/" + courseId);
+          
+          _getAsyncPostCounter(token, key, url, successCallback, errorCallback, forceRefresh);
         };
         
         var _getAsyncDiscussionPosts = function(token, discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
@@ -98,7 +109,7 @@
         };
 
         var _postAsyncForumPost = function (key, data, successCallback, errorCallback, forceRefresh) {
-            _postAsyncData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback);
+            _postAsyncForumPostData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback);
         };
         
         var _postAsyncReportAbuse = function (key, data, successCallback, errorCallback, forceRefresh) {
@@ -150,6 +161,10 @@
             _getAsyncData('comment', API_RESOURCE.format(url), token, successCallback, errorCallback,true);
         };
 
+        var _getAsyncStars = function(userId, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("userStars", API_RESOURCE.format('stars/'+ userId),successCallback, errorCallback, forceRefresh);
+        };
+        
         var _getCacheObject = function (key) {
             return localStorage.getItem(key);
         };
@@ -164,6 +179,7 @@
         };
 
         var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
+            _getDeviceVersionAsync();
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
@@ -201,6 +217,7 @@
         };
         
         var _getAsyncForumDiscussionsData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
+            _getDeviceVersionAsync();
             
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
@@ -227,6 +244,7 @@
         };
 
         var _getForumAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
+            _getDeviceVersionAsync();
 
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
@@ -249,6 +267,8 @@
         };
 
         var _getCourseAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
+            _getDeviceVersionAsync();
+            
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
@@ -269,6 +289,8 @@
         };
 
         var _postAsyncData = function (key, data, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'POST',
                 url: url,
@@ -305,8 +327,35 @@
                 errorCallback();                
             });
         };
+
+	var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
+            var discussionid = data.discussionid;
+            
+            _httpFactory({
+                method: 'POST',
+                url: url,
+                data: data,
+                headers: { 'Content-Type': 'application/json' },
+            }).success(function (data, status, headers, config) {
+                console.log('success');
+                
+                if (key != null) {
+                    _setLocalStorageJsonItem(key,data);
+                }
+                
+                updatePostCounter(discussionid);
+                successCallback();
+            }).error(function (data, status, headers, config) {
+                console.log(data);
+                _setLocalStorageJsonItem(key,data);
+                errorCallback();
+            });
+        };
         
         var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
             _httpFactory({
                 method: 'PUT',
                 url: url,
@@ -322,6 +371,8 @@
         };
 
         var _putDataNoCache = function (data, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'PUT',
                 url: url,
@@ -337,6 +388,7 @@
         };
 
         var _putAsyncStars = function (key, dataModel, profile, url, token, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
 
             //avoid sending null stars
             dataModel["stars"] = dataModel.stars ? dataModel.stars : 0;
@@ -355,7 +407,11 @@
             });
         };
 
+        
+        
         var _putAsyncFirstTimeInfo = function (userId, dataModel, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'PUT',
                 url: API_RESOURCE.format('usercourse/' + userId),
@@ -366,24 +422,11 @@
             }).error(function (data, status, headers, config) {
                 errorCallback();
             });
-        };    
-
-        // var _endActivity = function(key, data, activityModel, url, token, successCallback, errorCallback){
-        //     _httpFactory({                
-        //        method: 'PUT',
-        //        url: url,        
-        //        data: data,       
-        //        headers: {'Content-Type': 'application/json', 'Authorization': token},
-        //        }).success(function(data, status, headers, config) {
-        //            _setLocalStorageJsonItem(key,activityModel);
-        //            successCallback();
-        //        }).error(function(data, status, headers, config) {
-        //            _setLocalStorageJsonItem(key,activityModel);
-        //            errorCallback();
-        //    });
-        // };
+        };
         
         var _endActivity = function (key, data, userCourseModel, url, token, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'PUT',
                 url: url,
@@ -399,6 +442,8 @@
         };
 
         var _startActivity = function (data, activityModel, token, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
             _httpFactory({
                 method: 'PUT',
                 url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),
@@ -793,6 +838,56 @@
             _setLocalStorageJsonItem("usercourse", userCourse);
 
         };
+        
+        var _getAsyncPostCounter = function (token, key, url, successCallback, errorCallback, forceRefresh) {
+            _getDeviceVersionAsync();
+            
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+
+            if (returnValue) {
+                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                return returnValue;
+            }
+
+            _httpFactory({
+                method: 'GET',
+                url: url,
+                headers: { 'Content-Type': 'application/json', 'Authorization': token }
+            }).success(function (data, status, headers, config) {
+                
+                var obj = {
+                    forums: data,
+                    totalExtraPoints: 0
+                };
+                
+                _calculateForumExtraPoints(obj);
+                _setLocalStorageJsonItem(key, obj);
+                successCallback(data, key);
+            }).error(function (data, status, headers, config) {
+                errorCallback(data);
+            });
+        };
+        
+        var _calculateForumExtraPoints = function(data) {
+            
+            var totalExtraPoints = 0;
+            
+            for(var fo = 0; fo < data.forums.length; fo++) {
+                
+                var extraPoints = 0;
+                
+                if (data.forums[fo].status == "1") {
+                    
+                    _.each(data.forums[fo].discussion, function(element, index, list) {
+                            extraPoints = extraPoints + (Number(element.total) - 2);
+                        });
+                }
+                
+                totalExtraPoints += extraPoints;
+            }
+            
+            data.totalExtraPoints = totalExtraPoints;
+        }
 
         return {
             GetAsyncProfile: _getAsyncProfile,
@@ -805,6 +900,7 @@
             GetAsyncActivity: _getAsyncActivityInfo,
             GetAsyncActivitiesEnergy: _getAsyncActivitiesEnergy,
             GetAsyncActivities: _getAsyncActivitiesInfo,
+            GetAsyncActivitiesEnergy: _getAsyncActivitiesEnergy,
             GetAsyncActivityQuizInfo: _getAsyncActivityQuizInfo,
             PutAsyncQuiz: _putAsyncQuiz,
             GetAsyncForumInfo: _getAsyncForumInfo,
@@ -819,6 +915,7 @@
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat,
             PutStars: _assignStars,
+            GetAsyncStars: _getAsyncStars,
             PutStartActivity: _startActivity,
             PutEndActivity: _putEndActivity,
             PutEndActivityQuizes: _putEndActivityQuizes,
@@ -829,7 +926,8 @@
             GetAsyncAlbum: _getAsyncAlbum,
             RefreshProgress: refreshProgress,
             PostCommentActivity: _postCommentActivity,
-            GetCommentByActivity: _getCommentByActivity
+            GetCommentByActivity: _getCommentByActivity,
+            GetAsyncUserPostCounter: _getAsyncUserPostCounter
         };
     })();
 }).call(this);

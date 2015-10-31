@@ -151,7 +151,7 @@ angular
             function successGame(data){
                 //asign answers to the questions
                 var logEntry = {
-                    "userid":$scope.user.id,
+                    "userid": $scope.user.id,
                     "answers": [],
                     "coursemoduleid": $scope.multiplicaTuDineroActivity.coursemoduleid,
                     "like_status": (data.gusta_actividad == "Si" ? 1 : 0 ),
@@ -235,7 +235,7 @@ angular
                 $scope.$emit('ShowPreloader');          
                 _endActivity(activityModel, function(){
                     $scope.$emit('HidePreloader');
-                    $location.path('/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/ResultadosMultiplicaTuDinero');
+                    $location.path('/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero');
                 });
             }
 

@@ -13,67 +13,56 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"Mis estrellas");
             
+            $scope.activitiesCompleted = "";
             var starsByActivityQuantityInitial = 3;
             $scope.starsByActivityQuantity = starsByActivityQuantityInitial;
             
             var rewardsQuantityInitial = 3;
             $scope.rewardsQuantity = rewardsQuantityInitial;
             
-            $scope.userId = moodleFactory.Services.GetCacheObject("userId");
+            var userId = moodleFactory.Services.GetCacheObject("userId");
+            $scope.userId = userId;
             
-            var profile = JSON.parse(localStorage.getItem("profile/" + $scope.userId));
-            
-            //if (!profile) {
-            //    moodleFactory.Services.GetAsyncProfile($scope.userId, function () {                
-            //        var profile = JSON.parse(localStorage.getItem("profile/" + $scope.userId));
-            //    }, true);
-            //}
-                        
-                                                
-            var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-            
-            var activitiesCompleted = [];
-            
-            for(var i = 0; i < userCourse.stages.length; i++){
-                var currentStage = userCourse.stages[i];
-                for(var j=0; j < currentStage.challenges.length; j++){
-                    var currentChallenge = currentStage.challenges[j];
-                    for(var k= 0; k < currentChallenge.activities.length; k++){
-                        if (currentChallenge.activities[k].status == 1) {
-                            var activity = currentChallenge.activities[k];
-                            var subActivitiesPoints = 0;
-                            //Adding current date if date is null
-                            var dateupdate = new Date();
-                            if(activity.last_status_update){
-                                activity.last_status_update = activity.last_status_update*1000; 
-                            }else{
-                                activity.last_status_update = dateupdate.getTime();
-                            }
-                            
-                            //Add subactivity points when exists
-                            if (activity.points == 0 && activity.activities && activity.activities.length > 0) {
-                                for(var i = 0; i < activity.activities.length; i++ ){
-                                    subActivitiesPoints += activity.activities[i].points;
-                                }
-                                activity.points = subActivitiesPoints;
-                            }
-                            
-                            //Adding challenge name
-                            activity.sectionname = currentChallenge.sectionname;
-                            
-                            activitiesCompleted.push(activity);
-                        }                                            
-                    }                   
-                }
-            }
-            
-            $scope.activitiesCompleted = activitiesCompleted;
-
+             var profile = JSON.parse(localStorage.getItem("profile/" + $scope.userId));
+                    
             if (profile && profile.stars) {
                 $scope.profileStars = profile.stars;
             }else{
                 $scope.profileStars = 0;
+            }              
+                                       
+            var starsByActivity = moodleFactory.Services.GetAsyncStars(userId, function(data){
+                    if (data.length > 0) {
+                        addStarsByActivity(data);
+                    }                
+                }, function(){
+                    $scope.activitiesCompleted = [];
+                    }, true);
+            
+            function addStarsByActivity(data){
+                
+                var starsByActivity = [];                
+                for(var i=0; i < data.length; i++){
+                    console.log(data[i]);
+                    if (data[i].points != 0) {
+                        var courseModuleId = data[i].instance;                        
+                        var activityManagers = JSON.parse(localStorage.getItem("activityManagers"));                       
+                        for(j = 0; j < activityManagers.length; j++){                        
+                            for(k=0; k < activityManagers[j].activities.length; k++){
+                                if (activityManagers[j].activities[k].coursemoduleid == courseModuleId) {                                    
+                                    starsByActivity.push(activityManagers[j].activities[k]);
+                                }
+                            }                            
+                        }
+                    }       
+                }
+                                
+                $scope.activitiesCompleted = _.sortBy(starsByActivity, function(act){
+                    return act.last_status_update;
+                });
             }
+            
+            
             
             $scope.rewardsEarned = _.filter(profile.rewards, function(reward){
                     return reward.status == "won";
@@ -95,6 +84,7 @@ angular
                 return this.$index < $scope.rewardsQuantity;
                 
             }
+            
             $scope.showMoreRewards = function(){
                 $scope.rewardsQuantity = ($scope.rewardsQuantity + rewardsQuantityInitial);
             }
@@ -113,8 +103,10 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false; 
+            
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');
             }
+            
             $scope.$emit('HidePreloader'); //hide preloader
 }]);

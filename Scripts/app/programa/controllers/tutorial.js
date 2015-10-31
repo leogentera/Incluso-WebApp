@@ -15,7 +15,6 @@ angular
             _timeout = $timeout;
             $scope.scrollToTop();
             $scope.model = getDataAsync();
-            $scope.$emit('ShowPreloader');
             $scope.currentPage = 1;
             $scope.loading = false;
             $rootScope.pageName = "Guia de uso"
@@ -51,6 +50,7 @@ angular
                     $location.path('/');
                     return "";
                 }
+                $scope.$emit('HidePreloader');
 
                 return currentUser;
             }

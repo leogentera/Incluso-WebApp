@@ -43,8 +43,8 @@ angular
             $scope.currentUserModel = {
                 token: "",
                 userId: ""
-            };
-
+            };                
+            
             
             /* Helpers */
             var isConfirmedPasswordValid = false;
@@ -58,7 +58,7 @@ angular
             $rootScope.showStage3Footer = false;
             $scope.genderItems = ['Masculino', 'Femenino'];
             $scope.countryItems = ['México', 'OTRO'];
-            $scope.cityItems = ['México D.F', 'Estado de México', 'OTRO'];
+            $scope.cityItems = $scope.stateItems = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','DF','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas', 'OTRO'];
             $scope.securityquestionItems = ['¿Dónde crecí?','Nombre de mi mejor amigo','Nombre de mi mascota','Personaje favorito','Banda musical favorita'];
             $scope.showPlaceHolder = true;
             
@@ -73,11 +73,8 @@ angular
             });
             $scope.$watch("registerModel.modelState.errorMessages", function(newValue, oldValue){
                 $scope.registerModel.modelState.isValid = (newValue.length === 0);
-            });           
-               
-               
-                                
-            
+            });                                                                  
+
             $scope.register = function() {
                 console.log('register');
                 localStorage.removeItem("Credentials");
@@ -90,62 +87,38 @@ angular
                 }
             }
 
-            $scope.autologin = function(){
-                console.log('login in');
+            $scope.autologin = function(data) {
 
-                    $http(
-                    {
-                        method: 'POST',
-                        url: API_RESOURCE.format("authentication"), 
-                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                        data: $.param({username: $scope.registerModel.username, password: $scope.registerModel.password})
-                    }
-                    ).success(function(data, status, headers, config) {
+                //save token for further requests and autologin
+                $scope.currentUserModel = data;
+                $scope.currentUserModel.token = data.token;
+                $scope.currentUserModel.userId = data.id;
 
-                        console.log('successfully logged in');
+                _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                _setToken(data.token);
+                _setId(data.id);
 
-                        //save token for further requests and autologin
-                        $scope.currentUserModel = data;
-                        $scope.currentUserModel.token = data.token;
-                        $scope.currentUserModel.userId = data.id;
-
-                        _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-
-                        _setToken(data.token);
-                        _setId(data.id);
-
-                        $scope.$emit('HidePreloader'); //hide preloader
-                        console.log('Preparing preloader');
-                        $timeout(
-                            function() {
-                            $scope.$emit('ShowPreloader'); //Show preloader
-                            console.log('Preloader working...');
-                            }, 500);
-
-                        console.log('preparing for syncAll');
-
-                        //succesful credentials
-                        _syncAll(function() {
-                            $timeout(
-                                function() {
-                                    //console.log('redirecting..');
-                                    //$location.path('/ProgramaDashboard');
-                                    $location.path('/Tutorial');
-                                    //HCG 01//sep/2015 hidepreloader added
-                                    $scope.$emit('HidePreloader');
-                                },1000);
-                        });
-
-                    }).error(function(data, status, headers, config) {
-                        var errorMessage = window.atob(data.messageerror);
-
-                        $scope.registerModel.modelState.errorMessages = [errorMessage];
-                        console.log(status + ": " + errorMessage);
+                console.log('preparing for syncAll');
+                moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
+                        var course = moodleFactory.Services.GetCacheJson("course");
+                        moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, true);
                         
-                        $scope.$emit('HidePreloader'); //hide preloader
-                        $scope.$emit('scrollTop'); //- scroll
-                    });
-
+                        try {
+                            $scope.$emit('HidePreloader');
+                            $location.path('/Tutorial');
+                        }catch(e) {
+                            $location.path('/ProgramaDashboard');
+                        }
+                    
+                    }, function() {
+                    
+                        try {
+                            $scope.$emit('HidePreloader');
+                            $location.path('/Tutorial');
+                        } catch(e) {
+                            $location.path('/ProgramaDashboard');
+                        }
+                    }, true);
             }
 
             $scope.login = function() {
@@ -156,8 +129,7 @@ angular
                 $scope.currentPage = pageNumber;
                 $scope.$emit('scrollTop'); //- scroll
             };
-            //
-            //ng-hide="registerModel.birthday.length != 0"
+
             $scope.showPlaceHolderBirthday = function(){                
                 var bd = $("input[name='birthday']").val();                
                 if(bd){
@@ -166,6 +138,23 @@ angular
                     $scope.showPlaceHolder = true;                    
                 }
             };
+
+            function change(time) {
+                var r = time.match(/^\s*([0-9]+)\s*-\s*([0-9]+)\s*-\s*([0-9]+)(.*)$/);
+                return r[2]+"-"+r[3]+"-"+r[1]+r[4];
+            }
+
+            $scope.datePickerClick = function(){                            
+                cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='birthday']").val()]);                
+            };
+
+            function SuccessDatePicker(data){
+                $("input[name='birthday']").val(data);                                                         
+            }
+
+            function FailureDatePicker(data) {
+                
+            }
                         
             var registerUser = function(){
                 
@@ -185,18 +174,17 @@ angular
                             secretanswer: $scope.registerModel.secretAnswer.toString().toLowerCase(),
                             secretquestion: $scope.registerModel.secretQuestion,
                             birthday: dpValue,
-                            gender: $scope.registerModel.gender
+                            gender: $scope.registerModel.gender,
+                            autologin: true
                         })
                     }).success(function(data, status, headers, config) {
 
                         $scope.isRegistered = true;
-                        //initModel();
 
-                        console.log('successfully register');
+                        console.log('successfully register and logged in');
                         $scope.$emit('scrollTop'); //- scroll
                         
-                        $scope.autologin();
-                        
+                        $scope.autologin(data);
 
                     }).error(function(data, status, headers, config) {
                         var errorMessage;
@@ -239,13 +227,12 @@ angular
 
             function validateModel(){                
                 var errors = [];
-                var datePickerValue =  $("input[name=birthday]").val();
+                var datePickerValue = $("input[name=birthday]").val();
                 dpValue = moment(datePickerValue).format("MM/DD/YYYY");
                 var age = calculate_age();
                 
                 var passwordPolicy = "debe ser almenos de 8 caracterres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
-                var usernamePolicy = "El nombre de usuario puede contener los siguientes caracteres guión bajo (_), guión (-), punto(.) y arroba(@). El nombre de usuario no debe contener espacios.";
-
+                
                 if(!$scope.registerForm.password.$valid){
                     errors.push("Formato de contraseña incorrecto. La contraseña " + passwordPolicy);
                 }else{                    

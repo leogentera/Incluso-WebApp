@@ -356,11 +356,10 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">Actividad</h3>
+                <h3 class="subtitle text-center">Mis cualidades</h3>
 
                 <p class="txt-renglon centered">
-                    Conocer qué talentos y habilidades tienes te permitirá aprovecharlas al máximo y hará más sencillo el
-                    camino para lograr lo que te propongas. Piensa ¿para qué tipo de actividades tienes facilidad?
+                    {{message}}
                 </p>
             </div>
         </div>
@@ -375,6 +374,11 @@
 
         owl.on('translated.owl.carousel', function(event) {
         });
+
+        function callback(event) {
+            var item = this.currentItem;
+            $("#index").html(item + 1 + '/');
+        }
 
         $("#next").click(function (evt) {
             owl.trigger('owl.next');

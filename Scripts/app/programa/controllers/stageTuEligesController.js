@@ -81,9 +81,9 @@ angular
             		"userid": $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": $scope.tuEligesActivities.name,
-            		"pathImagenes":"",
+            		"pathImagenes": "",
                     "estrellas":$scope.stars,
-                    "introduccion":$scope.tuEligesActivities.description,
+                    "introduccion": $scope.tuEligesActivities.description,
                     //TODO: Find a way to un-hardcode this.
                     "instrucciones":"Toma este reto y pon a prueba tu toma de decisiones. ¡Sólo tú decides el rumbo de tu vida!",
             		"preguntas": [],
@@ -185,7 +185,6 @@ angular
                         parentActivity.status = 1;
                         _endActivity(parentActivity, function(){ });
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
-                        debugger;
                         updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     }
                 }
@@ -244,7 +243,7 @@ angular
               }
               catch (e) {
                 successGame(
-                    { "userid":$scope.user.id,"actividad":"Tú Eliges","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":105,"respuestaId":469},{"preguntaId":104,"respuestaId":466},{"preguntaId":106,"respuestaId":473},{"preguntaId":107,"respuestaId":476},{"preguntaId":108,"respuestaId":479},{"preguntaId":109,"respuestaId":481},{"preguntaId":110,"respuestaId":484},{"preguntaId":111,"respuestaId":487}] }
+                    { "userid":$scope.user.id,"actividad":"T� Eliges","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":105,"respuestaId":469},{"preguntaId":104,"respuestaId":466},{"preguntaId":106,"respuestaId":473},{"preguntaId":107,"respuestaId":476},{"preguntaId":108,"respuestaId":479},{"preguntaId":109,"respuestaId":481},{"preguntaId":110,"respuestaId":484},{"preguntaId":111,"respuestaId":487}] }
                 );
               }
             }

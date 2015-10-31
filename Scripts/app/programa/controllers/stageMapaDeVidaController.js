@@ -36,6 +36,7 @@ angular
             $scope.pathImagenFicha = "";
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var activitiesPosted = 0;
+            var activitiesAtLeastOne = 0;
 
             for(var key in localStorage){  
                 if(key.indexOf("mapaDeVidaAnswers") > -1 && key.indexOf($scope.user.id) < 0){
@@ -130,7 +131,7 @@ angular
                             var questionAnswer = _.find(activityAnswer.questions, function (a) { return a.id == q.id });
                             if (questionAnswer) {
                                 var userAnswer = questionAnswer.userAnswer;
-                                respuesta.respuesta = ( userAnswer.indexOf(";") > -1 ? userAnswer.split(";") : userAnswer );
+                                respuesta.respuesta = ( userAnswer.indexOf(";") > -1 || i == 2 ? (userAnswer != "" ? userAnswer.split(";") : []) : userAnswer );
                             }
                         }
                         proyecto.respuestas.push(respuesta);
@@ -143,12 +144,13 @@ angular
 
             $scope.downloadGame = function () {
                 var r = createRequest();
+                
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
                 catch (e) {
                     successGame(
-                        {"userid":"103","actividad":"Proyecta tu Vida","duración":"5","imagenFicha":"assets/images/results/FichaProyectaTuVida.png","pathImagenFicha":"","fecha_inicio":"2015-09-15 14:23:12","fecha_fin":"2015-09-15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":147,"respuesta":"Dimension 1 1."},{"preguntaId":148,"respuesta":"Dimension 1 2."},{"preguntaId":149,"respuesta":["Dimension 1 3 1.","Dimension 1 3 2.","Dimension 1 3 3."]},{"preguntaId":150,"respuesta":"Dimension 1 4"},{"preguntaId":151,"respuesta":"Dimension 1 5."},{"preguntaId":152,"respuesta":"Dimension 1 6."}]},{"dimensionId":243,"respuestas":[{"preguntaId":154,"respuesta":"Dimension 2 1."},{"preguntaId":155,"respuesta":"Dimension 2 2."},{"preguntaId":156,"respuesta":["Dimension 2 3 1","Dimension 2 3 2","Dimension 2 3 3"]},{"preguntaId":157,"respuesta":"Dimension 2 4"},{"preguntaId":158,"respuesta":"Dimension 2 5."},{"preguntaId":159,"respuesta":"Dimension 2 6."}]},{"dimensionId":244,"respuestas":[{"preguntaId":160,"respuesta":"Dimension 3 1."},{"preguntaId":161,"respuesta":"Dimension 3 2."},{"preguntaId":162,"respuesta":["Dimension 3 3 1.","Dimension 3 3 2.","Dimension 3 3 3."]},{"preguntaId":163,"respuesta":"Dimension 3 4"},{"preguntaId":164,"respuesta":"Dimension 3 5."},{"preguntaId":165,"respuesta":"Dimension 3 6."}]},{"dimensionId":245,"respuestas":[{"preguntaId":166,"respuesta":"Dimension 4 1."},{"preguntaId":167,"respuesta":"Dimension 4 2."},{"preguntaId":168,"respuesta":["Dimension 4 3 1","Dimension 4 3 2","Dimension 4 3 3"]},{"preguntaId":169,"respuesta":"Dimension 4 4"},{"preguntaId":170,"respuesta":"Dimension 4 5."},{"preguntaId":171,"respuesta":"Dimension 4 6."}]},{"dimensionId":246,"respuestas":[{"preguntaId":172,"respuesta":"Dimension 5 1"},{"preguntaId":173,"respuesta":"Dimension 5 2"},{"preguntaId":174,"respuesta":["Dimension 5 3 1","Dimension 5 3 2","Dimension 5 3 3"]},{"preguntaId":175,"respuesta":"Dimension 5 4"},{"preguntaId":176,"respuesta":"Dimension 5 5"},{"preguntaId":177,"respuesta":"Dimension 5 6"}]}]}
+                        {"userid":"103","actividad":"Proyecta tu Vida","duración":"5","imagenFicha":"assets/images/results/FichaProyectaTuVida.png","pathImagenFicha":"","fecha_inicio":"2015-09-15 14:23:12","fecha_fin":"2015-09-15 14:28:12","actividad_completa":"Si","gusta_actividad":"Si","ficha_proyecto":[{"dimensionId":242,"respuestas":[{"preguntaId":1,"respuesta":"Dimension 1 1."},{"preguntaId":2,"respuesta":"Dimension 1 2."},{"preguntaId":3,"respuesta":["Dimension 1 3 1.","Dimension 1 3 2.","Dimension 1 3 3."]},{"preguntaId":4,"respuesta":"Dimension 1 4"},{"preguntaId":5,"respuesta":"Dimension 1 5."},{"preguntaId":6,"respuesta":"Dimension 1 6."}]},{"dimensionId":243,"respuestas":[{"preguntaId":1,"respuesta":"Dimension 2 1."},{"preguntaId":2,"respuesta":"Dimension 2 2."},{"preguntaId":3,"respuesta":["Dimension 2 3 1","Dimension 2 3 2","Dimension 2 3 3"]},{"preguntaId":4,"respuesta":"Dimension 2 4"},{"preguntaId":5,"respuesta":"Dimension 2 5."},{"preguntaId":6,"respuesta":"Dimension 2 6."}]},{"dimensionId":244,"respuestas":[{"preguntaId":1,"respuesta":"Dimension 3 1."},{"preguntaId":2,"respuesta":"Dimension 3 2."},{"preguntaId":3,"respuesta":["Dimension 3 3 1.","Dimension 3 3 2.","Dimension 3 3 3."]},{"preguntaId":4,"respuesta":"Dimension 3 4"},{"preguntaId":5,"respuesta":"Dimension 3 5."},{"preguntaId":6,"respuesta":"Dimension 3 6."}]},{"dimensionId":245,"respuestas":[{"preguntaId":1,"respuesta":"Dimension 4 1."},{"preguntaId":2,"respuesta":"Dimension 4 2."},{"preguntaId":3,"respuesta":["Dimension 4 3 1","Dimension 4 3 2","Dimension 4 3 3"]},{"preguntaId":4,"respuesta":"Dimension 4 4"},{"preguntaId":5,"respuesta":"Dimension 4 5."},{"preguntaId":6,"respuesta":"Dimension 4 6."}]},{"dimensionId":246,"respuestas":[{"preguntaId":1,"respuesta":"Dimension 5 1"},{"preguntaId":2,"respuesta":"Dimension 5 2"},{"preguntaId":3,"respuesta":["Dimension 5 3 1","Dimension 5 3 2","Dimension 5 3 3"]},{"preguntaId":4,"respuesta":"Dimension 5 4"},{"preguntaId":5,"respuesta":"Dimension 5 5"},{"preguntaId":6,"respuesta":"Dimension 5 6"}]}]}
                     );
                	}
             }
@@ -193,8 +195,8 @@ angular
                             	}
                             }
                             logEntry.answers.push([getAnswer(respuesta.respuesta, false)]);
-                            logEntry.at_least_one = ( ( respuesta.respuesta && respuesta.respuesta != "" ) || logEntry.at_least_one );
-                            logEntry.quiz_answered = ( respuesta.respuesta && respuesta.respuesta != "" && logEntry.quiz_answered );
+                            logEntry.at_least_one = ( ( respuesta.respuesta != undefined && respuesta.respuesta != "" ) || logEntry.at_least_one );
+                            logEntry.quiz_answered = ( respuesta.respuesta != undefined && respuesta.respuesta != "" && logEntry.quiz_answered );
                         };
                         logEntry.coursemoduleid = dimension.dimensionId;
                         logEntry.startingTime = data.fecha_inicio;
@@ -246,6 +248,7 @@ angular
                     $scope.$emit('ShowPreloader');
                     for (var i = 0; i < quizzesRequests.length; i++) {
                         if (quizzesRequests[i].at_least_one) {
+                            activitiesAtLeastOne++;
                             var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
                             $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, (parent_finished));
                         }
@@ -291,18 +294,25 @@ angular
                 };             
                 _endActivity(activityModel, function(){
                     activitiesPosted++;
-                    if (activitiesPosted == $scope.mapaDeVidaAnswers.length) {
+                    if (activitiesPosted == activitiesAtLeastOne) {
                         if ($scope.pathImagenFicha != "" && parentStatus) {
                             //var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                             moodleFactory.Services.GetAsyncForumDiscussions(85, currentUser.token, function(data, key) {
-                                $scope.discussion = data.discussions[0];
+                                var currentDiscussionIds = [];
+                                for(var d = 0; d < data.discussions.length; d++) {
+                                    currentDiscussionIds.push(data.discussions[d].discussion);
+                                }
+                                localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                                
+                                
+                                var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
                                 $scope.forumId = data.forumid;
 
                                 encodeImageUri($scope.pathImagenFicha, function (b64) {
                                     var requestData = {
                                         "userid": $scope.user.id,
-                                        "discussionid": $scope.discussion.discussion,
-                                        "parentid": $scope.discussion.id,
+                                        "discussionid": discussion.discussion,
+                                        "parentid": discussion.id,
                                         "message": "Mi mapa de vida",
                                         "createdtime": quiz.startingTime,
                                         "modifiedtime": quiz.endingTime,
@@ -318,7 +328,9 @@ angular
                                             $scope.isShareCollapsed = false;
                                             $scope.showSharedAlbum = true;
                                             $scope.$emit('HidePreloader');
-                                            $location.path('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/19');
+                                            
+                                            checkForumExtraPoints();
+                                            $location.path('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/' + discussion.discussion);
                                         },
                                         function(){
                                             $scope.sharedAlbumMessage = null;
@@ -336,6 +348,24 @@ angular
                     }
                 });
             }
+            
+            var checkForumExtraPoints = function() {
+            
+                var activityFromTree = getActivityByActivity_identifier(2026);
+                
+                /* check over extra points */
+                var course = moodleFactory.Services.GetCacheJson("course");
+                var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+                
+                if (activityFromTree && activityFromTree.status == 1) {
+                    /* sumar uno extra al total */
+                    if (forumData.totalExtraPoints < 11) {
+                         updateUserForumStars($routeParams.activityId, 50, function (){
+                            successPutStarsCallback();
+                        });
+                    }
+                }
+            };
 
             var failureGame = function (data){
               $location.path('/ZonaDeNavegacion/Dashboard/2/4');
