@@ -43,7 +43,7 @@
         'incluso.stage.gameretomultipleexternalappcontroller',
         'incluso.stage.gameretomultipleresultscontroller',
         'incluso.stage.tueligesController',
-        'incluso.stage.quizcontroller',
+        /*'incluso.stage.quizcontroller',*/
         'incluso.stage.mapadevidaController',
         'incluso.stage.chatcontroller',
         'incluso.stage.multiplicatudineroController',
