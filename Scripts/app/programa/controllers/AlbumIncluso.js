@@ -11,7 +11,10 @@ angular
     '$modal',
     '$filter',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
-        
+        drupalFactory.Services.GetContent("Album", function (data, key) {
+            $scope.contentResources = data.node;
+        }, function () {}, true);
+
         $scope.setToolbar($location.$$path, "Album Incluso");
         $rootScope.showFooter = false;
         $rootScope.showFooterRocks = false;
