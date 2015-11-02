@@ -57,7 +57,8 @@
         'incluso.program.privacyNotice',
         'incluso.program.termsOfUse',
         'incluso.program.helpAndSupport',        
-        'incluso.programa.evaluacionFormulario'
+        'incluso.programa.evaluacionFormulario',
+        'incluso.program.FAQs'
     ])
     .run(function ($templateCache, $http, $rootScope) {
         $http.get('Templates/Public/Login.html', { cache: $templateCache });
@@ -693,7 +694,8 @@
         });
 
         $routeProvider.when('/FAQs', {
-            templateUrl: 'Templates/Programa/faqs.html'
+            templateUrl: 'Templates/Programa/faqs.html',
+            controller: 'FAQsController'
         });
 
         $routeProvider.when('/ChangeOfTerms', {

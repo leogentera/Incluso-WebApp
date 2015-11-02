@@ -13,6 +13,12 @@ hallOfFameModule
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
 
             $scope.$emit('ShowPreloader');
+
+            drupalFactory.Services.GetContent("HallOfFame", function (data, key) {
+                $scope.contentResources = data.node;
+            }, function () {
+            }, true);
+
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.setToolbar($location.$$path,"Incluso");
