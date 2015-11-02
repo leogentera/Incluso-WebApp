@@ -27,10 +27,11 @@
         "TermsAndConditions": 44, /*General - Términos y condiciones*/
         "Recognition": 73, /*General - Reconocimiento*/
         "Album": 72, /*General - Album*/
-        "MyStars": 72, /*General - Mis Estrellas*/
+        "MyStars": 71, /*General - Mis Estrellas*/
         //"Profile": 70, /*General - Perfil*/
         "HallOfFame": 42,  /*General - Salón de la Fama*/
-        "FAQS":41 /*General - FAQS*/
+        "FAQS":41, /*General - FAQS*/
+        "HelpAndSupport": 82 /*General - Ayuda y soporte*/
 
     };
 
