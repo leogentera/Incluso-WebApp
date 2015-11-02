@@ -483,7 +483,6 @@ angular
                         $scope.isShareCollapsed = false;
                         $scope.showSharedAlbum = true;
                         $scope.$emit('HidePreloader');
-                        checkForumExtraPoints();
                     },
                     function(){
                         $scope.sharedAlbumMessage = null;
@@ -493,20 +492,6 @@ angular
                     }
                 );
         }
-        
-        var checkForumExtraPoints = function() {
-            
-            /* check over extra points */
-            var course = moodleFactory.Services.GetCacheJson("course");
-            var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
-            var forum = _.find(forumData.forums, function(elem){ return elem.forumactivityid == "50000"; });
-            
-            if (Number(forum.discussion[0].total) <= 15) {
-                updateUserForumStars("50000", 50, function (){
-                    successPutStarsCallback();
-                });
-            }
-        };
         
         $scope.shareAlbumClick = function() {
             $scope.isShareCollapsed = !$scope.isShareCollapsed;

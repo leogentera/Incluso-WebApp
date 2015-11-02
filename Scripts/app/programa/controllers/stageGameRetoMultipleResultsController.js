@@ -14,6 +14,11 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
             $scope.$emit('ShowPreloader');
+
+            drupalFactory.Services.GetContent("1039results", function (data, key) {
+                $scope.contentResources = data.node;
+            }, function () {}, false);
+
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;

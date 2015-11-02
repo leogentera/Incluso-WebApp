@@ -11,6 +11,11 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             $scope.$emit('ShowPreloader'); //show preloader
+
+            drupalFactory.Services.GetContent("MyStars", function (data, key) {
+                $scope.contentResources = data.node;
+            }, function () {}, true);
+
             $scope.setToolbar($location.$$path,"Mis estrellas");
             
             $scope.activitiesCompleted = "";
