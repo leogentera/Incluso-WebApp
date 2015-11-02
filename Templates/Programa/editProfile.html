@@ -1002,7 +1002,7 @@
 															<div class="form-group theme-form">
 																<h5>
 																	<span>Ingreso {{model.moneyIncome.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteMoneyIncome(s);">
+																	<button class="btn btn-circle" ng-click="deleteMoneyIncome($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
@@ -1178,7 +1178,7 @@
 															<div class="form-group theme-form">
 																<h5>
 																	<span>Dispositivo {{model.knownDevices.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteKnownDevice(s);">
+																	<button class="btn btn-circle" ng-click="deleteKnownDevice($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>                                                                
@@ -1204,7 +1204,7 @@
 															<div class="form-group theme-form">                                                                
 																<h5>
 																	<span>Dispositivo {{model.ownDevices.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteOwnDevice(s);">
+																	<button class="btn btn-circle" ng-click="deleteOwnDevice($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
@@ -1230,7 +1230,7 @@
 															<div class="form-group theme-form">                                                                
 																<h5>
 																	<span>Actividad {{model.phoneUsage.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deletePhoneUsage(s);">
+																	<button class="btn btn-circle" ng-click="deletePhoneUsage($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
@@ -1419,7 +1419,7 @@
 															<div class="form-group theme-form">                                                                
 																<h5>
 																	<span>Videojuego {{model.kindOfVideogames.indexOf(s) + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteKindOfVideoGame(s);">
+																	<button class="btn btn-circle" ng-click="deleteKindOfVideoGame($index);">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>

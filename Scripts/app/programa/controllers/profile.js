@@ -14,25 +14,18 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
 
             _httpFactory = $http;
-            _timeout = $timeout;
-            
+            _timeout = $timeout;            
             var _course = moodleFactory.Services.GetCacheJson("course");
-
             $scope.discussion = null;
-            $scope.forumId = null;
-            
+            $scope.forumId = null;            
             $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
             $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
-            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));                        
             $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
             $scope.myStrengths = new Array();
-            $scope.myWindowOfOpportunities = new Array();
-            
+            $scope.myWindowOfOpportunities = new Array();            
             $scope.setToolbar($location.$$path, "");
-
-            console.log($location + '- ' + $location.$$path);
-
+            //console.log($location + '- ' + $location.$$path);
             $scope.currentPage = 1;
             if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
                 $scope.currentPage = 2;
@@ -336,6 +329,7 @@ angular
                     $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
                     
                     console.log("Profile current stars:" + $scope.model.stars);
+                    console.log("Profile Characters:" + $scope.model.inspirationalCharacters);
                     
                     callback();
 
@@ -521,7 +515,26 @@ angular
                 if (!$scope.editForm.firstname.$valid) { errors.push("Formato de nombre incorrecto."); }
                 if (!$scope.editForm.lastname.$valid) { errors.push("Formato de apellido paterno incorrecto."); }
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
+                if (!$scope.editForm.gender.$valid) { errors.push("Debe indicar su género."); }
                 if (!isValidDate($scope.model.birthday)) { errors.push("Ingrese la fecha de nacimiento."); }
+
+                 // ************************ The following are not required fields. ****************************
+                //Here we validate only for consistency.
+                //Validation of the $scope.model.socialNetworks array
+                var arrayForUsername = [];
+
+                $scope.model.socialNetworks.forEach(function (elem) {
+                    arrayForUsername.push(elem.socialNetwork.toLowerCase());
+                });
+
+                var filteredUsernames = arrayForUsername.filter(function (item, pos) {
+                    return arrayForUsername.indexOf(item) == pos;
+                });
+
+                if (arrayForUsername.length != filteredUsernames.length) {
+                    //Repeated names for Social network
+                    errors.push("Nombre de Red social está repetido.");
+                }
 
                 //Validation of the $scope.model.familiaCompartamos array
                 //  a) Avoiding two persons having the same "Número de Cliente Compartamos"
@@ -554,25 +567,9 @@ angular
                 });
 
                 if (arrayForParentesco.length != filteredArray.length) {
-                    //Repeated idClients
+                                    //Repeated idClients
                     errors.push("El parentesco está repetido.");
-                }
-
-                //Validation of the $scope.model.socialNetworks array
-                var arrayForUsername = [];
-
-                $scope.model.socialNetworks.forEach(function (elem) {
-                    arrayForUsername.push(elem.socialNetwork.toLowerCase());
-                });
-
-                var filteredUsernames = arrayForUsername.filter(function (item, pos) {
-                    return arrayForUsername.indexOf(item) == pos;
-                });
-
-                if (arrayForUsername.length != filteredUsernames.length) {
-                    //Repeated names for Social network
-                    errors.push("Nombre de Red social está repetido.");
-                }
+                }                
 
                 //Validation of the $scope.model.studies array
                 var arrayForLevel = [];
@@ -589,11 +586,9 @@ angular
 
 
                 if (arrayForLevel.length != filteredLevel.length) {
-                    //Repeated names for Social network
-                    console.log("Repeated Level of Studies");
+                    //Repeated names for level of studies
                     errors.push("El nivel de estudios está repetido.");
                 }
-
 
                 $scope.model.modelState.errorMessages = errors;
 
@@ -799,11 +794,11 @@ angular
 
 
             $scope.save = function () {
-                var isModelValid = true;
+                var isModelValid= false;
 
                 //If view is not privacySettings then validate model
                 if ($location.$$path != '/Perfil/ConfigurarPrivacidad') {
-                    var isModelValid = validateModel();  //Valid if validateModel() returns true
+                    isModelValid = validateModel();  //Valid if validateModel() returns true
 
                     deleteRepeatedValues();
                 }                
@@ -816,12 +811,7 @@ angular
                 }
             };
 
-
-            $scope.clean = function () {
-                deleteRepeatedValues();
-            };
-
-
+            
             var saveUser = function () {
                 moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
 
@@ -840,16 +830,19 @@ angular
             function ValidatePointsPolicy() {
 
                 var usercourse = JSON.parse(localStorage.getItem("usercourse"));
-                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                var activityIndex;
+                //var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
-                for (var activityIndex = 0; activityIndex < usercourse.activities.length; activityIndex++) {
+                for (activityIndex = 0; activityIndex < usercourse.activities.length; activityIndex++) {
                     var activity = usercourse.activities[activityIndex];
 
+                    /*
                     console.log("Activity Name: " + activity.activityname);
                     console.log("Activity Points: " + activity.points);
                     console.log("Activity Status: " + activity.status);
                     console.log("Current Stars: " + $scope.model.stars); 
                     console.log("Stars to add: " + activity.points);
+                    */
 
                     if (activity.status == 0) {
                         var result;
@@ -878,23 +871,14 @@ angular
                         if (result) {
 
                             $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
-
                             activity.status = 1;   //Update activity status.
 
                             //Get local user profile.
                             var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));
-                            console.log("profile.stars (before): " + profile.stars);
-                            
-                            var newPoints = parseInt(profile.stars) + parseInt(activity.points);
-                            
-                            //Update the 'stars' key.
-                            profile.stars = newPoints;  
-
-                            //Save updated user profile to Local Storage.                     
-                            _setLocalStorageJsonItem("profile/" + $scope.userId, profile);
-
-                            //Update user profile in Moodle.
-                            updateUserStarsUsingExternalActivity(activity.activity_identifier);
+                            var newPoints = parseInt(profile.stars) + parseInt(activity.points);  //Update points   
+                            profile.stars = newPoints;   //Update the 'stars' key.         
+                            _setLocalStorageJsonItem("profile/" + $scope.userId, profile); //Save updated profile to Local Storage.
+                            updateUserStarsUsingExternalActivity(activity.activity_identifier);  //Update profile in Moodle.
 
                             endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
@@ -920,28 +904,134 @@ angular
             }
 
 
-            function assignmentMiInformacion() {
+             function phonesAreValid(phones) {
+
+                var validInfo = true;
+                var i;
+                var itemWithoutPhone = false;
+
+                if (phones.length > 0) {//There is at least one phone item.
+
+                    for (i = 0; i < phones.length; i++) {//For all items, if phone then something in phoneId too.
+
+                        if (phones[i].phone == "No tengo teléfono") {                            
+                             itemWithoutPhone = true;
+                        } else {
+                            if (phones[i].phoneId == "") {//The value must be nonempty numeric string of size 10.
+                                validInfo = false;
+                            }  
+                        }
+                    }
+
+                    if (validInfo) {
+
+                        if (itemWithoutPhone && phones.length > 1) {
+                            validInfo = false;
+                        }
+
+                    }
+
+                } else { //The user has not entered phone numbers.
+                    validInfo = false;
+                }
+                
+                return validInfo;
+            }
+
+
+            function socialNetsAreValid(nets) {
+
+                var validInfo = true;
+                var i;
+                var itemWithoutNet = false;
+
+                if (nets.length > 0) {//There is at least one social network item.
+
+                    for (i = 0; i < nets.length; i++) {//For all items, if phone then something in phoneId too.
+
+                        if (nets[i].socialNetwork == "No tengo redes sociales") {                            
+                             itemWithoutNet = true;
+                        } else {
+                            if (nets[i].socialNetworkId == "") {//The value must be a nonempty string.
+                                validInfo = false;
+                            }  
+                        }
+                    }
+
+                    if (validInfo) {
+
+                        if (itemWithoutNet && nets.length > 1) {
+                            validInfo = false;
+                        }
+
+                    }
+
+                } else { //The user has not entered social networks.
+                    validInfo = false;
+                }
+                
+                return validInfo;
+            }
+
+
+            function compartamosIsValid(data) {
+
+                var validInfo = true;
+                var i;
+                var itemWithoutCompartamos = false;
+
+                if (data.length > 0) {//There is at least one Compartamos relative item.
+
+                    for (i = 0; i < data.length; i++) {//For all items, if Compartamos relative then something in idClient and relativeName too.
+
+                        if (data[i].relationship == "No tengo") {                            
+                             itemWithoutCompartamos = true;
+                        } else {
+                            if (data[i].idClient == "" || data[i].relativeName == "") {//The values must be nonempty strings.
+                                validInfo = false;
+                            }  
+                        }
+                    }
+
+                    if (validInfo) {
+
+                        if (itemWithoutCompartamos && data.length > 1) {
+                            validInfo = false;
+                        }
+
+                    }
+
+                } 
+                
+                return validInfo;
+            }
+
+
+            function assignmentMiInformacion() {//Asign 400 points if all fields are full.
                 var result = false;
-                if ($scope.model.firstname) {
-                    if ($scope.model.lastname) {
-                        if ($scope.model.mothername) {
-                            if ($scope.model.gender) {
-                                if ($scope.model.age) {
-                                    if ($scope.model.maritalStatus) {
-                                        if ($scope.model.studies.length > 0) { // array of objects
-                                            if ($scope.model.address.country) {
-                                                if ($scope.model.address.state) {                                                
-                                                    if ($scope.model.address.town) {
-                                                        if ($scope.model.address.postalCode) {
-                                                            if ($scope.model.address.street) {
-                                                                if ($scope.model.address.num_ext) {
-                                                                    if ($scope.model.address.num_int) {
-                                                                        if ($scope.model.address.colony) {
-                                                                            if ($scope.model.phones.length > 0) { //array
-                                                                                if ($scope.model.socialNetworks.length > 0) { //array of objects
-                                                                                    if ($scope.model.familiaCompartamos.length > 0) { //array of objects
-                                                                                        result = true;
-                                                                                    } 
+                
+                if ($scope.model.firstname) { //Requerido
+                    if ($scope.model.lastname) { //Requerido
+                        if ($scope.model.mothername) { //Requerido
+                            if ($scope.model.gender) { //Requerido  
+                                if ($scope.model.address.country) {
+                                    if ($scope.birthdate_Dateformat) { //Requerido                                             
+                                        if ($scope.model.age) {
+                                            if ($scope.model.maritalStatus) {
+                                                if ($scope.model.studies.length > 0) { // array of objects        
+                                                    if ($scope.model.address.state) {                                               
+                                                        if ($scope.model.address.town) {
+                                                            if ($scope.model.address.postalCode) {
+                                                                if ($scope.model.address.street) {
+                                                                    if ($scope.model.address.num_ext) {
+                                                                        if ($scope.model.address.num_int) {
+                                                                            if ($scope.model.address.colony) {
+                                                                                if (phonesAreValid($scope.model.phones)) {//array of objects
+                                                                                    if (socialNetsAreValid($scope.model.socialNetworks)) { //array of objects
+                                                                                        if (compartamosIsValid($scope.model.familiaCompartamos)) { //array of objects
+                                                                                            result = true;
+                                                                                        } 
+                                                                                    }
                                                                                 }
                                                                             }
                                                                         }
@@ -963,15 +1053,50 @@ angular
                 return result;
             }
 
+
+            function charactersIsValid(data) {
+                var validInfo = true;
+                var i;
+                var itemWithoutCharacter = false;
+
+                if (data.length > 0) {//There is at least one character item.
+
+                    for (i = 0; i < data.length; i++) {//For all items, if characterType then something in characterName too.
+
+                        if (data[i].characterType == "No tengo") {                            
+                             itemWithoutCharacter = true;
+                        } else {
+                            if (data[i].characterName == "") {//The value must be a nonempty string.
+                                validInfo = false;
+                            }  
+                        }
+                    }
+
+                    if (validInfo) {
+
+                        if (itemWithoutCharacter && data.length > 1) {
+                            validInfo = false;
+                        }
+
+                    }
+
+                } else { //The user has not entered social networks.
+                    validInfo = false;
+                }
+                
+                return validInfo;
+            }
+            
+
             function assignmentMiPersonalidad() {
                 var result = false;
                 if ($scope.model.favoriteSports.length > 0) {   //array                 
                     if ($scope.model.artisticActivities.length > 0) {  //array
                         if ($scope.model.hobbies.length > 0) {  //array
                             if ($scope.model.talents.length > 0) {  //array
-                                if ($scope.model.values.length > 0) {  //array
+                                if ($scope.model.values.length > 0) { //array
                                     if ($scope.model.habilities.length > 0) {  //array
-                                        if ($scope.model.inspirationalCharacters.length > 0) {  //array of objects
+                                        if (charactersIsValid($scope.model.inspirationalCharacters)) {  //array of objects
                                             result = true;
                                         }
                                     }
@@ -984,6 +1109,20 @@ angular
                 return result;
             }
 
+
+            function checkMedicalServices() {
+                var validInfo = true;
+
+                if (($scope.model.medicalCoverage) = "Sí") {
+                    if ($scope.model.medicalInsurance == "No tengo") {
+                        validInfo = false;
+                    }
+                }
+               
+                return validInfo;
+            }
+
+
             function assignmentSocioeconomicos() {
                 var result = false;
                 if ($scope.model.iLiveWith) {
@@ -993,12 +1132,10 @@ angular
                                 if ($scope.model.period) {
                                     if ($scope.model.children) {
                                         if ($scope.model.gotMoneyIncome) {
-                                            if ($scope.model.moneyIncome.length > 0) {  //array
-                                                if ($scope.model.medicalCoverage) {
-                                                    if ($scope.model.medicalInsurance) {
-                                                        result = true;
-                                                    }
-                                                }
+                                            if ($scope.model.moneyIncome.length > 0) {  //array                                                
+                                                if (checkMedicalServices()) {
+                                                    result = true;
+                                                }                                                
                                             }
                                         }
                                     }
@@ -1193,9 +1330,9 @@ angular
                 $scope.model.moneyIncome.push(new String());
             };
 
-            $scope.deleteMoneyIncome = function (moneyIncome) {
+            $scope.deleteMoneyIncome = function (index) {
                 //$scope.model.moneyIncome.splice(index, 1);
-                var index = $scope.model.moneyIncome.indexOf(moneyIncome);
+                //var index = $scope.model.moneyIncome.indexOf(moneyIncome);
                 $scope.model.moneyIncome.splice(index, 1);
             };
 
@@ -1203,9 +1340,9 @@ angular
                 $scope.model.knownDevices.push(new String());
             };
 
-            $scope.deleteKnownDevice = function (knownDevice) {
+            $scope.deleteKnownDevice = function (index) {
                 //$scope.model.knownDevices.splice(index, 1);
-                var index = $scope.model.knownDevices.indexOf(knownDevice);
+                //var index = $scope.model.knownDevices.indexOf(knownDevice);
                 $scope.model.knownDevices.splice(index, 1);
             };
 
@@ -1213,8 +1350,8 @@ angular
                 $scope.model.ownDevices.push(new String());
             };
 
-            $scope.deleteOwnDevice = function (ownDevices) {                
-                var index = $scope.model.ownDevices.indexOf(ownDevices);
+            $scope.deleteOwnDevice = function (index) {                
+                //var index = $scope.model.ownDevices.indexOf(ownDevices);
                 $scope.model.ownDevices.splice(index, 1);
             };
 
@@ -1222,8 +1359,8 @@ angular
                 $scope.model.phoneUsage.push(new String());
             };
 
-            $scope.deletePhoneUsage = function (phoneUsage) {                
-                var index = $scope.model.phoneUsage.indexOf(phoneUsage);
+            $scope.deletePhoneUsage = function (index) {                
+                //var index = $scope.model.phoneUsage.indexOf(phoneUsage);
                 $scope.model.phoneUsage.splice(index, 1);
             };
 
@@ -1231,14 +1368,14 @@ angular
                 $scope.model.kindOfVideogames.push(new String());
             };
 
-            $scope.deleteKindOfVideoGame = function (kindOfVideogames) {                
-                var index = $scope.model.kindOfVideogames.indexOf(kindOfVideogames);
+            $scope.deleteKindOfVideoGame = function (index) {                
+                //var index = $scope.model.kindOfVideogames.indexOf(kindOfVideogames);
                 $scope.model.kindOfVideogames.splice(index, 1);
             };
             
-            $scope.deleteMainActivity = function (mainActivity) {
+            $scope.deleteMainActivity = function (index) {
                 //$scope.model.mainActivity.splice(index, 1);
-                var index = $scope.model.mainActivity.indexOf(mainActivity);
+                //var index = $scope.model.mainActivity.indexOf(mainActivity);
                 $scope.model.mainActivity.splice(index, 1);
             };
             
@@ -1250,8 +1387,8 @@ angular
                 $scope.model.favoriteGames.push(new String());
             };
 
-            $scope.deleteFavoriteGame = function (favoriteGames) {                
-                var index = $scope.model.favoriteGames.indexOf(favoriteGames);
+            $scope.deleteFavoriteGame = function (index) {                
+                //var index = $scope.model.favoriteGames.indexOf(favoriteGames);
                 $scope.model.favoriteGames.splice(index, 1);
             };
 
