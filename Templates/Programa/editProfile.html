@@ -538,12 +538,12 @@
 												<section>
 													<h4>Mis deportes</h4>
 													<ul class="block-list">
-														<li ng-repeat="sn in model.favoriteSports track by $index">
+														<li ng-repeat="s in model.favoriteSports track by $index">
 															<div class="form-group theme-form">
 																<h5>
 																	<!-- <span>Deporte {{model.favoriteSports.indexOf(sn) + 1}}</span> -->
 																	<span>Deporte {{$index + 1}}</span>
-																	<button class="btn btn-circle" ng-click="deleteFavoriteSports($index);">
+																	<button class="btn btn-circle" ng-click="deleteFavoriteSports($index)">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>

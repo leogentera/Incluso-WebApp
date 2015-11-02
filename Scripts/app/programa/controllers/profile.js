@@ -13,18 +13,18 @@ angular
     '$route',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
 
-            _httpFactory = $http;
-            _timeout = $timeout;            
-            var _course = moodleFactory.Services.GetCacheJson("course");
-            $scope.discussion = null;
-            $scope.forumId = null;            
-            $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
-            $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
-            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));                        
-            $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
-            $scope.myStrengths = new Array();
-            $scope.myWindowOfOpportunities = new Array();            
-            $scope.setToolbar($location.$$path, "");
+        _httpFactory = $http;
+        _timeout = $timeout;            
+        var _course = moodleFactory.Services.GetCacheJson("course");
+        $scope.discussion = null;
+        $scope.forumId = null;            
+        $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
+        $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
+        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));                        
+        $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
+        $scope.myStrengths = new Array();
+        $scope.myWindowOfOpportunities = new Array();            
+        $scope.setToolbar($location.$$path, "");
             //console.log($location + '- ' + $location.$$path);
             $scope.currentPage = 1;
             if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
@@ -36,7 +36,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-			$rootScope.showProfileFooter = false;
+            $rootScope.showProfileFooter = false;
             $scope.status = "";
             $scope.shareAchievementMessage = "";
             $scope.showShareAchievementMessage = false;
@@ -49,7 +49,7 @@ angular
             $scope.$emit('ShowPreloader');
 
 
-        getDataAsync(function () {
+            getDataAsync(function () {
 
                 getContent();
 
@@ -327,8 +327,6 @@ function getDataAsync(callback) {
         }
 
         $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
-        //console.log("Profile current stars:" + $scope.model.stars);
-
 
         moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
 
@@ -353,34 +351,35 @@ function getDataAsync(callback) {
             loadWindowOfOpportunities();
 
         }, true);
-    }
-
-function initFields(m) {
-    if (m.address.street == null) { m.address.street = ""; }
-    if (m.address.num_ext == null) { m.address.num_ext = ""; }
-    if (m.address.num_int == null) { m.address.num_int = ""; }
-    if (m.address.colony == null) { m.address.colony = ""; }
-    if (m.address.city == null) { m.address.city = ""; }
-    if (m.address.town == null) { m.address.town = ""; }
-    if (m.address.state == null) { m.address.state = ""; }
-    if (m.address.postalCode == null) { m.address.postalCode = ""; }
+    });
 }
 
-function getAvatarInfoCallback() {                
-    $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
-
-    if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
-        setEmptyAvatar();
+    function initFields(m) {
+        if (m.address.street == null) { m.address.street = ""; }
+        if (m.address.num_ext == null) { m.address.num_ext = ""; }
+        if (m.address.num_int == null) { m.address.num_int = ""; }
+        if (m.address.colony == null) { m.address.colony = ""; }
+        if (m.address.city == null) { m.address.city = ""; }
+        if (m.address.town == null) { m.address.town = ""; }
+        if (m.address.state == null) { m.address.state = ""; }
+        if (m.address.postalCode == null) { m.address.postalCode = ""; }
     }
 
-    $scope.$emit('HidePreloader');
-}
+    function getAvatarInfoCallback() {                
+        $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
 
-function formatDate(date) {
+        if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
+            setEmptyAvatar();
+        }
 
-    var userBirthDate;
-    if (date != "NaN/NaN/NaN" && date != "") {
-        var splitDate = date.split("/");
+        $scope.$emit('HidePreloader');
+    }
+
+    function formatDate(date) {
+
+        var userBirthDate;
+        if (date != "NaN/NaN/NaN" && date != "") {
+            var splitDate = date.split("/");
 
                     //             var userBirthDate = new Date(splitDate[2], splitDate[0], splitDate[1]); 
                     //             var userBirthDate = new Date(splitDate[2], splitDate[0]-1, splitDate[1]);
@@ -561,7 +560,7 @@ function formatDate(date) {
 
                 //  Repeated idClients
                 if (arrayForIdClients.length != filteredIdClient.length) {                    
-                    errors.push("El número de cliente Compartamos debe ser único.");
+                                    errors.push("El número de cliente Compartamos debe ser único.");
                 }
 
                 //  b) Avoiding two persons having the same "Parentesco"
@@ -578,8 +577,8 @@ function formatDate(date) {
 
                 if (arrayForParentesco.length != filteredArray.length) {
                                     //Repeated idClients
-                    errors.push("El parentesco está repetido.");
-                }                
+                                    errors.push("El parentesco está repetido.");
+                                }                
 
                 //Validation of the $scope.model.studies array
                 var arrayForLevel = [];
@@ -918,7 +917,7 @@ function formatDate(date) {
 
 
 
-             function phonesAreValid(phones) {
+            function phonesAreValid(phones) {
 
                 var validInfo = true;
                 var i;
@@ -929,8 +928,8 @@ function formatDate(date) {
                     for (i = 0; i < phones.length; i++) {//For all items, if phone then something in phoneId too.
 
                         if (phones[i].phone == "No tengo teléfono") {                            
-                             itemWithoutPhone = true;
-                        } else {
+                           itemWithoutPhone = true;
+                       } else {
                             if (phones[i].phoneId == "") {//The value must be nonempty numeric string of size 10.
                                 validInfo = false;
                             }  
@@ -964,8 +963,8 @@ function formatDate(date) {
                     for (i = 0; i < nets.length; i++) {//For all items, if phone then something in phoneId too.
 
                         if (nets[i].socialNetwork == "No tengo redes sociales") {                            
-                             itemWithoutNet = true;
-                        } else {
+                           itemWithoutNet = true;
+                       } else {
                             if (nets[i].socialNetworkId == "") {//The value must be a nonempty string.
                                 validInfo = false;
                             }  
@@ -999,8 +998,8 @@ function formatDate(date) {
                     for (i = 0; i < data.length; i++) {//For all items, if Compartamos relative then something in idClient and relativeName too.
 
                         if (data[i].relationship == "No tengo") {                            
-                             itemWithoutCompartamos = true;
-                        } else {
+                           itemWithoutCompartamos = true;
+                       } else {
                             if (data[i].idClient == "" || data[i].relativeName == "") {//The values must be nonempty strings.
                                 validInfo = false;
                             }  
@@ -1078,8 +1077,8 @@ function formatDate(date) {
                     for (i = 0; i < data.length; i++) {//For all items, if characterType then something in characterName too.
 
                         if (data[i].characterType == "No tengo") {                            
-                             itemWithoutCharacter = true;
-                        } else {
+                           itemWithoutCharacter = true;
+                       } else {
                             if (data[i].characterName == "") {//The value must be a nonempty string.
                                 validInfo = false;
                             }  
@@ -1132,7 +1131,7 @@ function formatDate(date) {
                         validInfo = false;
                     }
                 }
-               
+
                 return validInfo;
             }
 
@@ -1574,7 +1573,7 @@ function formatDate(date) {
                     $scope.$emit('ShowPreloader');
 
                     if ($scope.discussion == null || $scope.forumId == null) {
-                        
+
                         moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, currentUser.token, function(data, key) {
 
                             var currentDiscussionIds = [];
@@ -1601,7 +1600,7 @@ function formatDate(date) {
             };
             
             var checkForumExtraPoints = function() {
-            
+
                 /* check over extra points */
                 var course = moodleFactory.Services.GetCacheJson("course");
                 var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
@@ -1655,9 +1654,9 @@ function formatDate(date) {
 
             function getContent() {
                 drupalFactory.Services.GetContent("7001", function (data, key) {
-                        $scope.contentResources = data.node;
-                    }, function () {
-                    }, true);
+                    $scope.contentResources = data.node;
+                }, function () {
+                }, true);
             }
             
             $scope.scrollToTop();
