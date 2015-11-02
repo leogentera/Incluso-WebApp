@@ -72,6 +72,13 @@ angular
                 moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, initCommunitySuccessCallback, initCommunityErrorCallback, true);
                 
                 function initCommunitySuccessCallback (data, key) {
+                    
+                    var currentDiscussionIds = [];
+                    for(var d = 0; d < data.discussions.length; d++) {
+                        currentDiscussionIds.push(data.discussions[d].discussion);
+                    }
+                    localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                    
                     $scope.discussion = data.discussions[0];
                     $scope.forumId = data.forumid;
 
@@ -199,6 +206,20 @@ angular
                 }
             };
             
+            var checkForumExtraPoints = function() {
+            
+                /* check over extra points */
+                var course = moodleFactory.Services.GetCacheJson("course");
+                var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+                var forum = _.find(forumData.forums, function(elem){ return elem.forumactivityid == "50000"; });
+                
+                if (Number(forum.discussion[0].total) <= 15) {
+                    updateUserForumStars("50000", 50, function (){
+                        successPutStarsCallback();
+                    });
+                }
+            };
+            
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex) {
                 
                 if ($scope.hasCommunityAccess) {
@@ -216,6 +237,9 @@ angular
                     $scope.$emit('ShowPreloader');
                     moodleFactory.Services.PostAsyncForumPost ('reply', requestData,
                         function(){
+                            
+                            checkForumExtraPoints();
+                            
                             $scope.replyText = null;
                             $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                             refreshTopicData();
@@ -245,6 +269,9 @@ angular
                     $scope.$emit('ShowPreloader');
                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                         function() {
+                            
+                            checkForumExtraPoints();
+                            
                             $scope.postTextValue = null;
                             $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
                             refreshTopicData();
@@ -274,6 +301,9 @@ angular
                     $scope.$emit('ShowPreloader');
                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                         function() {
+                            
+                            checkForumExtraPoints();
+                            
                             $scope.postLinkValue = null;
                             $scope.collapseCommunityButtomsTrigger('isLinkCollapsed');
                             refreshTopicData();
@@ -301,6 +331,9 @@ angular
                     
                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                         function() {
+                            
+                            checkForumExtraPoints();
+                            
                             $scope.postVideoValue = null;
                             $scope.collapseCommunityButtomsTrigger('isVideoCollapsed');
                             refreshTopicData();
@@ -331,6 +364,9 @@ angular
                     $scope.$emit('ShowPreloader');
                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                         function() {
+                            
+                            checkForumExtraPoints();
+                            
                             $scope.postAttachmentValue = {};
                             $scope.collapseCommunityButtomsTrigger('isAttachmentCollapsed');
                             refreshTopicData();

@@ -203,7 +203,7 @@ angular
                 startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
                 $scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
-                console.log("Activity identifier: " + $scope.activity_identifier);
+                //console.log("Activity identifier: " + $scope.activity_identifier);
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
                 //console.log("parentActivity = " + parentActivity);
                 var childActivity = null;
@@ -301,22 +301,21 @@ angular
                     //console.log("User profile = " + $scope.userprofile);
                     var activityFinished = false;
 
-                    console.log("Activity status = " + $scope.activity_status);
+                    //console.log("Activity status = " + $scope.activity_status);
 
                     $scope.activity = parentActivity;
                     $scope.parentActivity = parentActivity;
                     $scope.childActivity = childActivity;
 
-                    console.log("Starting... " + parentActivity.activityname);
-
-                    if ($scope.activity_status != 0) {//If the activity is currently finished...
+                    //console.log("Starting... " + parentActivity.activityname);
+                    if ($scope.activity_status == 1) {//If the activity is currently finished...
                         activityFinished = true;
 
                         if (nonEditableQuizzes.indexOf($scope.activity_identifier) > -1) {// If the Quiz is non editable, then...
                             $scope.setReadOnly = true; //The Quiz can not be edited
                         }
                         
-                        console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
+                        //console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
                         var localAnswers;
 
                         if (childActivity) {
@@ -339,9 +338,10 @@ angular
                         $scope.activityFinished = activityFinished;
 
                         if (localAnswers == null) {// If activity not exists in Local Storage...get it from Server                            
+
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, successfullCallBack, errorCallback, true);
-                        }
-                        else {//Angular-bind the answers in the respective HTML template
+                            
+                        } else {//Angular-bind the answers in the respective HTML template
 
                             switch ($scope.activity_identifier) {
                                 case "1001": //Exploración Inicial - Etapa 1
@@ -391,8 +391,7 @@ angular
                     }
 
 
-                }
-                else {
+                } else {
                     console.log("Activity is NOT defined");
                 }
                 $scope.$emit('HidePreloader');
@@ -560,7 +559,7 @@ angular
                             break;
                     }
 
-                    console.log("Ending activity...");
+                    //console.log("Ending activity...");
 
                     if ($scope.childActivity) {
                         updateActivityStatusDictionary($scope.childActivity.activity_identifier);
@@ -669,12 +668,11 @@ angular
                     }
 
                     $scope.userId = moodleFactory.Services.GetCacheObject("userId");
-                    console.log("sending petition " + $scope.userId);
                     moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
                         function (responseData) {
-                            console.log('Update profile successful...');
-                            console.log('This activity has ' + $scope.activityPoints);
+                            //console.log('Update profile successful...');
+                            //console.log('This activity has ' + $scope.activityPoints);
 
                             //Update Activity Log Service
                             if ($scope.activity_status == 0) {
@@ -683,17 +681,17 @@ angular
                                 updateUserStars($scope.parentActivity.activity_identifier);                                
                             }
 
-                            console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
+                            //console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
                             $location.path(destinationPath);
                         },
                         function (responseData) {
-                            console.log('Update profile fail...');
+                            //console.log('Update profile fail...');
                             $scope.$emit('HidePreloader');
                         });
 
 
                 } else {
-                    console.log("No user Profile Data");  
+                    //console.log("No user Profile Data");  
 
                     //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
@@ -711,7 +709,7 @@ angular
                         */                      
                     }
 
-                    console.log("Redirecting to Dashboard: " + destinationPath);
+                    //console.log("Redirecting to Dashboard: " + destinationPath);
                     $location.path(destinationPath); 
                 }
 
@@ -1044,8 +1042,7 @@ angular
                     quizIsValid = false;
                 }
 
-                if (quizIsValid) {
-                    //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, partialSuccessfullCallBack, partialErrorCallback, true);
+                if (quizIsValid) {                    
                     moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBack, partialErrorCallback, true);
 
                     $scope.showWarning = false;
@@ -1279,7 +1276,7 @@ angular
 
                 //Remove repeated entries and blanks in each of the two questions
                 for (i = 0; i < numQuestions; i++) {
-                    console.log("$scope.miFuturo[" + i + "].length = " + $scope.miFuturo[i].length);
+                    //console.log("$scope.miFuturo[" + i + "].length = " + $scope.miFuturo[i].length);
                     for (b = 0; b < $scope.miFuturo[i].length; b++) {
                         var item = $scope.miFuturo[i][b].replace(/\r?\n|\r/g, " ").trim();                        
                     }
@@ -1330,7 +1327,7 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                     //GET request to get activity; like for example: http://incluso.definityfirst.com/RestfulAPI/public/activity/159?userid=542
-                    console.log("The coursemoduleid = " + $scope.coursemoduleid);
+                    //console.log("The coursemoduleid = " + $scope.coursemoduleid);
                     moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBackStage2, partialErrorCallbackStage2, true);
                 } else {
                     $scope.showWarning = true;
@@ -1375,7 +1372,7 @@ angular
 
 
                             var questionAnswer = question.answers[answerIndex];
-                            console.log(index + " -- " + JSON.stringify(questionAnswer));
+                            //console.log(index + " -- " + JSON.stringify(questionAnswer));
                             if (index == 0) {
                                 var questionAnswerAnswer;
                                 if (questionAnswer.answer == "Sí") {
@@ -1512,19 +1509,19 @@ angular
                                         quizIsValid = false;
                                     }
 
-                                } else {//
+                                } else {
                                     quizIsValid = false;
                                 }
-                            } else {//
+                            } else {
                                 quizIsValid = false;
                             }
-                        } else {//
+                        } else {
                             quizIsValid = false;
                         }
-                    } else {//
+                    } else {
                         quizIsValid = false;
                     }
-                } else {//
+                } else {
                     quizIsValid = false;
                 }
 
@@ -1533,7 +1530,7 @@ angular
                     $scope.navigateToPage(2);
                     $scope.scrollToTop();
                     //GET request to get activity; like for example: http://incluso.definityfirst.com/RestfulAPI/public/activity/159?userid=542
-                    console.log("The coursemoduleid = " + $scope.coursemoduleid);
+                    //console.log("The coursemoduleid = " + $scope.coursemoduleid);
                     moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, partialSuccessfullCallBackStage3, partialErrorCallbackStage3, true);
                 } else {
                     $scope.showWarning = true;
@@ -1639,7 +1636,6 @@ angular
                                 $scope.exploracionFinalresult3[index].badAnswer = true;
                             }
 
-
                         }
 
                         if (!$scope.exploracionFinalresult3[index].badAnswer) {
@@ -1717,7 +1713,7 @@ angular
                                 $scope.AnswersResult.answers[2].push(myAnswer);
                             }
                         }
-                        //$scope.AnswersResult.answers[2] = question.userAnswer.trim();
+                        
                         break;
                     case 3:
 
@@ -1745,16 +1741,7 @@ angular
                                 var myAnswer = userAnswers[index];
                                 $scope.AnswersResult.answers[4].push(myAnswer);
                             }
-                        }
-                        /*
-                         if (question.userAnswer != null) {
-                         var userAnswers = cleanText(question.userAnswer);
-                         var userAnswerArray = userAnswers.split(";");
-                         for (var i = 0; i < userAnswerArray.length; i++) {
-                         $scope.AnswersResult.answers[4].push(userAnswerArray[i]);
-                         }
-                         }
-                         */
+                        }                        
 
                         break;
 
@@ -1940,7 +1927,7 @@ angular
                     case 3:
                         if (question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
-                            console.log(userAnswers);
+                            //console.log(userAnswers);
                             userAnswers.forEach(function (item) {
                                 var cleanedItem = item.trim();
                                 switch (cleanedItem) {
@@ -1973,7 +1960,7 @@ angular
             }
 
             function updateTusIdeasStage2Answers(index, question) {
-                console.log(question + "\n");
+                //console.log(question + "\n");
                 var userAnswersList = question.userAnswer.split(";");
                 userAnswersList.forEach(function (answer) {
                     $scope.misIdeas[index].push(answer);
@@ -1986,7 +1973,7 @@ angular
             }
 
             function updateTuFuturoStage2Answers(index, question) {
-                console.log(question + "\n");
+                //console.log(question + "\n");
                 var userAnswersList = question.userAnswer.split(";");
                 userAnswersList.forEach(function (answer) {
                     $scope.miFuturo[index].push(answer);
@@ -2000,7 +1987,7 @@ angular
 
             function updateExploracionFinalStage2Answers(index, question) {
                 var userAnswers = '';
-                console.log(question.userAnswer);
+                //console.log(question.userAnswer);
                 switch (index) {
                     case 0:
                         if (question.userAnswer == "Sí") {
@@ -2052,7 +2039,7 @@ angular
             //****************************************** DATA-BINDING FOR QUIZZES - STAGE 3 *******************************
 
             function updateExploracionInicialStage3Answers(index, question) {
-                console.log(question.userAnswer);
+                //console.log(question.userAnswer);
                 var userAnswers = '';
                 switch (index) {
                     case 0:
@@ -2130,9 +2117,9 @@ angular
 
 
             function updateExploracionFinalStage3Answers(index, question) {
-                console.log(question.userAnswer);
+                
                 var userAnswers = '';
-                console.log(question.userAnswer);
+                //console.log(question.userAnswer);
                 switch (index) {
                     case 0:
                         if (question.userAnswer == "Las necesidades que tiene una comunidad") {
@@ -2343,8 +2330,7 @@ angular
 
             $scope.cancel = function () {
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
-                //$location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
-                console.log(destinationPath);
+                //console.log(destinationPath);
                 $location.path(destinationPath);
             };
 
