@@ -165,8 +165,9 @@
             _getAsyncData('comment', API_RESOURCE.format(url), token, successCallback, errorCallback,true);
         };
 
-        var _getAsyncStars = function(userId, successCallback, errorCallback, forceRefresh){
-            _getAsyncData("userStars", API_RESOURCE.format('stars/'+ userId),successCallback, errorCallback, forceRefresh);
+        var _getAsyncStars = function(userId, token, successCallback, errorCallback, forceRefresh){
+            debugger;
+            _getAsyncData("userStars", API_RESOURCE.format('stars/'+ userId), token, successCallback, errorCallback, forceRefresh);
         };
         
         var _getCacheObject = function (key) {

@@ -1,7 +1,11 @@
 (function () {
     namespace('drupalFactory');
     
-    drupalFactory.NodeRelation = {        
+    drupalFactory.NodeRelation = {
+        "1002": 53, /* Zona de Vuelo - Cabina de Soporte - Chat */
+        "1010": 46, /* Zona de Vuelo - Conócete - Punto de Encuentro */
+        "1008": 48, /* Zona de Vuelo - Mis Sueños - Punto de Encuentro */
+        "1049": 47, /* Zona de Vuelo - Conócete - Zona de Contacto */
         "1101": 22, /* Zona de Vuelo - Cuarto de recursos - Fuente de energía */
         "1020": 19, /* Zona de Vuelo - Conócete - Fuente de energía  */
         "1021": 20, /* Zona de Vuelo - Mis Sueños - Fuente de energía */
@@ -9,13 +13,18 @@
         "2006": 32, /* Zona de Navegación - Transfórmate - Fuente de energía  */
         "2011": 30, /* Zona de Navegación - Tú eliges - Fuente de energía */
         "2015": 29, /* Zona de Navegación - Proyecta tu vida - Fuente de energía  */
+        "2022": 54, /* Zona de Navegación - Cabina de Soporte - Chat  */
+        "2026": 50, /* Zona de Navegación - Proyecta tu Vida- Punto de Encuentro */
+        "2030": 49, /* Zona de Navegación - Transfórmate - Punto de Encuentro  */
         "3201": 33, /* Zona de Aterrizaje - Cuarto de recursos - Fuente de energía */
         "3301": 34, /* Zona de Aterrizaje - Educación Financiera - Fuente de energía */
+        "3304": 51, /* Zona de Aterrizaje - Mapa del Emprendedor - Punto de Encuentro */
         "1039": 78, /*Zona de Vuelo - Conócete - Reto Múltiple*/
         "1039results": 79, /*Zona de Vuelo - Conócete - Reto Múltiple Resultados*/
         "3303": 80, /*Zona de Aterrizaje - Educación Financiera - Multiplica tu dinero*/
         "3303results": 81, /*Zona de Aterrizaje - Educación Financiera - Multiplica tu dinero - Resultados*/
         "3401": 35, /* Zona de Aterrizaje - Mapa del Emprendedor - Fuente de energía */
+        "3501": 55, /* Zona de Aterrizaje - Cabina de Soporte - Chat */
         "7001": 70, /* Profile */
         "3000": 45, /* Zona de Vuelo - Dashboard */
         "2000": 69, /* Zona de Navegación - Dashboard */

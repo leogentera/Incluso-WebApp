@@ -11,11 +11,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
             $scope.$emit('ShowPreloader'); //show preloader
-
-            drupalFactory.Services.GetContent("MyStars", function (data, key) {
-                $scope.contentResources = data.node;
-            }, function () {}, true);
-
+            
             $scope.setToolbar($location.$$path,"Mis estrellas");
             
             $scope.activitiesCompleted = "";
@@ -25,43 +21,35 @@ angular
             var rewardsQuantityInitial = 3;
             $scope.rewardsQuantity = rewardsQuantityInitial;
             
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            var token = currentUser.token;
             var userId = moodleFactory.Services.GetCacheObject("userId");
             $scope.userId = userId;
             
-             var profile = JSON.parse(localStorage.getItem("profile/" + $scope.userId));
-                    
+            var profile = JSON.parse(localStorage.getItem("profile/" + $scope.userId));
+            
             if (profile && profile.stars) {
                 $scope.profileStars = profile.stars;
             }else{
                 $scope.profileStars = 0;
-            }              
-                                       
-            var starsByActivity = moodleFactory.Services.GetAsyncStars(userId, function(data){
-                    if (data.length > 0) {
-                        addStarsByActivity(data);
+            }
+                        
+            drupalFactory.Services.GetContent("MyStars", function (data, key) {
+                $scope.contentResources = data.node;
+                                
+                var starsByActivity = moodleFactory.Services.GetAsyncStars(userId, token, function(dataStars){
+                    if (dataStars.length > 0) {
+                        addStarsByActivity(dataStars);
                     }                
                 }, function(){
                     $scope.activitiesCompleted = [];
                     }, true);
-            
+                
+            }, function () {}, true);
+                                                                                                                                                   
             function addStarsByActivity(data){
                 
-                var starsByActivity = [];                
-                //for(var i=0; i < data.length; i++){
-                //    console.log(data[i]);
-                //    if (data[i].points != 0) {
-                //        var courseModuleId = data[i].instance;                        
-                //        var activityManagers = JSON.parse(localStorage.getItem("activityManagers"));                       
-                //        for(j = 0; j < activityManagers.length; j++){
-                //            
-                //            for(k=0; k < activityManagers[j].activities.length; k++){
-                //                if (activityManagers[j].activities[k].coursemoduleid == courseModuleId) {                                    
-                //                    starsByActivity.push(activityManagers[j].activities[k]);
-                //                }
-                //            }                            
-                //        }
-                //    }       
-                //}
+                var starsByActivity = [];
                 var points=0;
                 for(var i=0; i< data.length; i++){
                     if (data[i].points != 0) {
@@ -75,13 +63,13 @@ angular
                                 var activities = challenges[k].activities;
                                 for(var l=0; l < activities.length; l++){
                                     var activity = activities[l];
-                                    if (activity.coursemoduleid == courseModuleId) {
+                                    if (activity.coursemoduleid == courseModuleId){
                                         activity.sectionname = challengeName;
                                         starsByActivity.push(activity);
                                         points = points + activity.points;
                                     }
                                     else{
-                                        if (activity.activities) {                                        
+                                        if (activity.activities) {
                                             for(var m=0; m< activity.activities.length; m++){
                                                 var subactivity = activity.activities[m];
                                                 if (subactivity.coursemoduleid == courseModuleId){
@@ -98,14 +86,32 @@ angular
                         }
                     }
                 }
-                console.log(points);
-                                
-                $scope.activitiesCompleted = _.sortBy(starsByActivity, function(act){
+                var groups = _.groupBy(starsByActivity, function(activity){
+                        return activity.activityname + '#' + activity.sectionname;
+                    });
+                
+                var groupedByActivity = _.map(groups,function(group){
+                       var pointsSum = 0;
+                       var lastDate = new Date('1999/01/01');
+                       for(var i=0; i< group.length; i++){
+                            pointsSum = pointsSum + group[i].points;
+                            var activityDate = new Date(group[i].last_status_update * 1000);
+                            if (lastDate < activityDate){
+                                lastDate = group[i].last_status_update;
+                            }
+                       }
+                       return {
+                            activityname: group[0].activityname,
+                            sectionname: group[0].sectionname,
+                            points: pointsSum,
+                            last_status_update: lastDate
+                       }
+                    });
+                
+                $scope.activitiesCompleted = _.sortBy(groupedByActivity, function(act){
                     return act.last_status_update;
                 });
-            }
-            
-            
+            }                        
             
             $scope.rewardsEarned = _.filter(profile.rewards, function(reward){
                     return reward.status == "won";

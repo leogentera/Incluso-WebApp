@@ -18,6 +18,7 @@ angular
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
             var userId = JSON.parse(localStorage.getItem('userId'));
+            getContentResources($routeParams.activityId);
 
              var redirectOnShield = function () {
                  var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
@@ -60,7 +61,7 @@ angular
             }
 
             $scope.$emit('ShowPreloader'); //show preloader
-            $scope.setToolbar($location.$$path,"");
+            //$scope.setToolbar($location.$$path,$scope.contentResources.tool_bar_title);
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
@@ -161,6 +162,14 @@ angular
               }                                      
               
             }
+
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    $scope.setToolbar($location.$$path,data.node.tool_bar_title);
+                    $scope.backButtonText = data.node.back_button_text;
+
+                }, function () {}, true);
+            };
 
         }]).controller('tutorialController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
