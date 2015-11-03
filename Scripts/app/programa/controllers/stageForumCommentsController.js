@@ -20,8 +20,9 @@ angular
             $rootScope.pageName = "Estación: Conócete"
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
-            
-            $scope.setToolbar($location.$$path,"");
+
+            getContentResources($routeParams.activityId);
+            //$scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
@@ -510,5 +511,14 @@ angular
 
                 $scope.$emit('scrollTop');
             }
+
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    $scope.setToolbar($location.$$path,data.node.tool_bar_title);
+                    $scope.backButtonText = data.node.back_button_text;
+
+                }, function () {}, true);
+            };
+
         }]);
 

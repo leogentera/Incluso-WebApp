@@ -71,7 +71,8 @@
                     $rootScope.navbarBlue = true;
                     $rootScope.navbarPink = false;
                     $rootScope.navbarGreen = false;
-                    $rootScope.pageName = "Zona de Vuelo";
+                    //$rootScope.pageName = "Zona de Vuelo";
+                    name != ''?  $rootScope.pageName = name : $rootScope.pageName = "Zona de Vuelo";
                     //$("#menuton span").text('Zona de Vuelo');
                 }//Stage 2 is green
                 if(url.indexOf("/ZonaDeNavegacion")=== 0){
@@ -79,14 +80,17 @@
                     $rootScope.navbarBlue = false;
                     $rootScope.navbarPink = false;
                     $rootScope.navbarGreen = true;
-                    $rootScope.pageName = "Zona de Navegación";
+                    //$rootScope.pageName = "Zona de Navegación";
+                    name != ''?  $rootScope.pageName = name : $rootScope.pageName = "Zona de Navegación";
+
                 }//Stage 3 is pink
                 if(url.indexOf("/ZonaDeAterrizaje")=== 0){
                     $rootScope.navbarOrange = false;
                     $rootScope.navbarBlue = false;
                     $rootScope.navbarPink = true;
                     $rootScope.navbarGreen = false;
-                    $rootScope.pageName = "Zona de Aterrizaje";
+                    //$rootScope.pageName = "Zona de Aterrizaje";
+                    name != ''?  $rootScope.pageName = name : $rootScope.pageName = "Zona de Aterrizaje";
                 }
 
             };
