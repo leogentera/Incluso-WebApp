@@ -102,8 +102,8 @@ angular
                 $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
                 $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
                 $scope.educationStatusList = ['Terminada', 'En proceso', 'Inconclusa'];
-                $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'Fútbol Soccer', 'Basquetbol', 'Artes Marciales', 'Yoga', 'Natación', 'Futbol Americano', 'Basebol', 'Carreras'];
-                $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografia', 'Graffiti', 'Diseño Gráfico', 'Artesanías', 'Teatro', 'Modelado', 'Dibujo'];
+                $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'Fútbol Soccer', 'Basquetbol', 'Artes marciales', 'Yoga', 'Natación', 'Futbol Americano', 'Basebol', 'Carreras'];
+                $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografía', 'Graffiti', 'Diseño Gráfico', 'Artesanías', 'Teatro', 'Modelado', 'Dibujo'];
                 $scope.hobbiesList = ['Ir a fiestas', 'Leer', 'Pasar tiempo con amigos', 'Cocinar', 'Jugar videojuegos', 'Visitar museos', 'Ver películas/series', 'Ver televisión', 'Modelado', 'Pasar tiempo en redes sociales'];
                 $scope.talentsList = ['Cantar', 'Llevar ritmos', 'Bailar', 'Hablar frente a otros', 'Dibujar', 'Hacer amigos', 'Hacer operaciones matemáticas', 'Aprender cosas rápido', 'Ubicar lugares', 'Memorizar', 'Hacer manualidades'];
                 $scope.valuesList = ['Tolerancia', 'Respeto', 'Honestidad', 'Responsabilidad', 'Confiabilidad', 'Solidaridad', 'Igualdad', 'Lealtad', 'Amistad', 'Generosidad', 'Esfuerzo'];
@@ -123,7 +123,7 @@ angular
                 $scope.videogamesHoursList = ['0-2', '2.5 a 4', '4.5 a 6', '6.5 a 8', 'Más de 8'];
                 $scope.kindOfVideoGamesList = ['Acción', 'Deportes', 'Violencia', 'Aventura', 'Reto', 'Estrategia', 'Educativos', 'Peleas'];
                 $scope.socialNetworksList = ['Twitter','Facebook','YouTube','Instagram','Snapchat','No tengo redes sociales'];
-                $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política','No tengo', 'Otro'];
+                $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política', 'No tengo', 'Otro'];
                 $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)','No tengo','Otro'];            
                 $scope.phoneTypeList = ['Celular','Casa','Trabajo','No tengo teléfono' ,'Otro'];                    
 
@@ -1281,7 +1281,7 @@ function formatDate(date) {
                 $scope.model.socialNetworks.splice(index, 1);
             };
 
-            $scope.addFavoriteSports = function (index) {
+            $scope.addFavoriteSports = function () {
                 $scope.model.favoriteSports.push("");
             };
 
@@ -1289,47 +1289,47 @@ function formatDate(date) {
                 $scope.model.favoriteSports.splice(index, 1);
             };
 
-            $scope.addArtisticActivities = function (index) {
-                $scope.model.artisticActivities.push(new String());
+            $scope.addArtisticActivities = function () {
+                $scope.model.artisticActivities.push("");
             };
 
             $scope.deleteArtisticActivities = function (index) {
                 $scope.model.artisticActivities.splice(index, 1);
             };
 
-            $scope.addHobbies = function (index) {
-                $scope.model.hobbies.push(new String());
+            $scope.addHobbies = function () {
+                $scope.model.hobbies.push("");
             };
 
             $scope.deleteHobbies = function (index) {
                 $scope.model.hobbies.splice(index, 1);
             };
 
-            $scope.addTalents = function (index) {
-                $scope.model.talents.push(new String());
+            $scope.addTalents = function () {
+                $scope.model.talents.push("");
             };
 
             $scope.deleteTalents = function (index) {
                 $scope.model.talents.splice(index, 1);
             };
 
-            $scope.addValue = function (index) {
-                $scope.model.values.push(new String());
+            $scope.addValue = function () {
+                $scope.model.values.push("");
             };
 
             $scope.deleteValue = function (index) {
                 $scope.model.values.splice(index, 1);
             };
 
-            $scope.addHabilitie = function (index) {
-                $scope.model.habilities.push(new String());
+            $scope.addHabilitie = function () {
+                $scope.model.habilities.push("");
             };
 
             $scope.deleteHabilitie = function (index) {
                 $scope.model.habilities.splice(index, 1);
             };
 
-            $scope.addInspirationalCharacter = function (index) {
+            $scope.addInspirationalCharacter = function () {
                 $scope.model.inspirationalCharacters.push({});
             };
 
@@ -1337,8 +1337,8 @@ function formatDate(date) {
                 $scope.model.inspirationalCharacters.splice(index, 1);
             };
 
-            $scope.addMainActivity = function (index) {
-                $scope.model.mainActivity.push(new String());
+            $scope.addMainActivity = function () {
+                $scope.model.mainActivity.push("");
             };
 
             $scope.deleteMainActivity = function (index) {
@@ -1355,8 +1355,8 @@ function formatDate(date) {
                 $scope.model.moneyIncome.splice(index, 1);
             };
 
-            $scope.addKnownDevice = function (index) {
-                $scope.model.knownDevices.push(new String());
+            $scope.addKnownDevice = function () {
+                $scope.model.knownDevices.push("");
             };
 
             $scope.deleteKnownDevice = function (index) {
@@ -1365,8 +1365,8 @@ function formatDate(date) {
                 $scope.model.knownDevices.splice(index, 1);
             };
 
-            $scope.addOwnDevice = function (index) {
-                $scope.model.ownDevices.push(new String());
+            $scope.addOwnDevice = function () {
+                $scope.model.ownDevices.push("");
             };
 
             $scope.deleteOwnDevice = function (index) {                
@@ -1374,8 +1374,8 @@ function formatDate(date) {
                 $scope.model.ownDevices.splice(index, 1);
             };
 
-            $scope.addPhoneUsage = function (index) {
-                $scope.model.phoneUsage.push(new String());
+            $scope.addPhoneUsage = function () {
+                $scope.model.phoneUsage.push("");
             };
 
             $scope.deletePhoneUsage = function (index) {                
@@ -1383,8 +1383,8 @@ function formatDate(date) {
                 $scope.model.phoneUsage.splice(index, 1);
             };
 
-            $scope.addKindOfVideoGame = function (index) {
-                $scope.model.kindOfVideogames.push(new String());
+            $scope.addKindOfVideoGame = function () {
+                $scope.model.kindOfVideogames.push("");
             };
 
             $scope.deleteKindOfVideoGame = function (index) {                
@@ -1402,8 +1402,8 @@ function formatDate(date) {
                 $scope.model.mainActivity.push(new String());
             };
 
-            $scope.addFavoriteGame = function (index) {
-                $scope.model.favoriteGames.push(new String());
+            $scope.addFavoriteGame = function () {
+                $scope.model.favoriteGames.push("");
             };
 
             $scope.deleteFavoriteGame = function (index) {                

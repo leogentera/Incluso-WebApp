@@ -31,7 +31,6 @@
         //"Profile": 70, /*General - Perfil*/
         "HallOfFame": 42,  /*General - Salón de la Fama*/
         "FAQS":41, /*General - FAQS*/
-
         "1001": 58, /* Zona de Vuelo - Exploración inicial */   
         "1005": 83, /* Zona de Vuelo - Mis Sueños - Mis Cualidades */     
         "1006": 60, /* Zona de Vuelo - Mis Sueños - Mis Gustos */
@@ -42,12 +41,10 @@
         "2025": 67, /* Zona de Navegación - Proyecta tu Vida - 1, 3 y 5 */
         "2023": 64, /* Zona de Navegación - Exploración Final */
         "3601": 66, /* Zona de Aterrizaje - Exploración Final */
-        "3101": 65 /* Zona de Aterrizaje - Exploración Inicial */
-
+        "3101": 65, /* Zona de Aterrizaje - Exploración Inicial */
         "HelpAndSupport": 82 /*General - Ayuda y soporte*/
-
-
     };
+    
 
     drupalFactory.Services = (function () {
         
