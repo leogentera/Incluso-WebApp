@@ -149,7 +149,18 @@
                         $scope.$emit('HidePreloader'); //hide preloader
                         $scope.$emit('scrollTop'); //- scroll
                         
-                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"),$scope.user.token, function() {}, function() {});
+                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"),$scope.user.token, function()
+                        {
+                            $scope.profile = JSON.parse(localStorage.getItem("profile/"+localStorage.getItem("userId")));
+                            if(!$scope.profile.termsAndConditions)
+                            {
+                                //console.log("Calling TermsModal");
+                                $scope.openTermsModal();
+                                $scope.navigateTo('TermsOfUse');
+
+
+                            }
+                        }, function() {});
                     }, errorCallback);
 
                 }, errorCallback);
@@ -272,8 +283,21 @@
                     $scope.contentResources = data.node;                    
                     }, function () {}, true);
             }
-            
 
+
+            $scope.openTermsModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'changeOfTerms.html',
+                    controller: function ($scope, $modalInstance) {
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    },
+                    size: size,
+                    windowClass: 'user-help-modal dashboard-programa'
+                });
+            }
             //$scope.openModal();   //To open the modal no matter the value of 'firsttime'
         }])
         .controller('videoCollapsiblePanelController', function ($scope) {
