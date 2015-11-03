@@ -35,6 +35,13 @@
             _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), successCallback, errorCallback, forceRefresh);
         };
         
+        var _getAsyncUserPostCounter = function(token, courseId, successCallback, errorCallback, forceRefresh) {
+          var key = "postcounter/" + courseId;
+          var url = API_RESOURCE.format("postcounter/" + courseId);
+          
+          _getAsyncPostCounter(token, key, url, successCallback, errorCallback, forceRefresh);
+        };
+        
         var _getAsyncDiscussionPosts = function(token, discussionId, discussion, forumId, sinceId, maxId, first, filter, successCallback, errorCallback, forceRefresh) {
             var key = "discussion/" + token + discussionId + discussion + forumId + sinceId + maxId + first + filter;
             var url = API_RESOURCE.format("discussion/" + discussionId + "?discussion=" + discussion + "&forumid=" + forumId + "&sinceid=" + sinceId + "&maxid=" + maxId + "&first=" + first + "&filter=" + filter);
@@ -85,7 +92,7 @@
         };
 
         var _postAsyncForumPost = function (key, data, successCallback, errorCallback, forceRefresh) {
-            _postAsyncData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback);
+            _postAsyncForumPostData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback);
         };
         
         var _postAsyncReportAbuse = function (key, data, successCallback, errorCallback, forceRefresh) {
@@ -253,6 +260,32 @@
                     _setLocalStorageJsonItem(key,data);
                 }
                 
+                successCallback();
+            }).error(function (data, status, headers, config) {
+                console.log(data);
+                _setLocalStorageJsonItem(key,data);
+                errorCallback();
+            });
+        };
+        
+        var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            
+            var discussionid = data.discussionid;
+            
+            _httpFactory({
+                method: 'POST',
+                url: url,
+                data: data,
+                headers: { 'Content-Type': 'application/json' },
+            }).success(function (data, status, headers, config) {
+                console.log('success');
+                
+                if (key != null) {
+                    _setLocalStorageJsonItem(key,data);
+                }
+                
+                updatePostCounter(discussionid);
                 successCallback();
             }).error(function (data, status, headers, config) {
                 console.log(data);
@@ -746,6 +779,56 @@
             _setLocalStorageJsonItem("usercourse", userCourse);
 
         };
+        
+        var _getAsyncPostCounter = function (token, key, url, successCallback, errorCallback, forceRefresh) {
+            _getDeviceVersionAsync();
+            
+            var returnValue = (forceRefresh) ? null : _getCacheJson(key);
+
+            if (returnValue) {
+                _timeout(function () { successCallback(returnValue, key) }, 1000);
+                return returnValue;
+            }
+
+            _httpFactory({
+                method: 'GET',
+                url: url,
+                headers: { 'Content-Type': 'application/json', 'Authorization': token }
+            }).success(function (data, status, headers, config) {
+                
+                var obj = {
+                    forums: data,
+                    totalExtraPoints: 0
+                };
+                
+                _calculateForumExtraPoints(obj);
+                _setLocalStorageJsonItem(key, obj);
+                successCallback(data, key);
+            }).error(function (data, status, headers, config) {
+                errorCallback(data);
+            });
+        };
+        
+        var _calculateForumExtraPoints = function(data) {
+            
+            var totalExtraPoints = 0;
+            
+            for(var fo = 0; fo < data.forums.length; fo++) {
+                
+                var extraPoints = 0;
+                
+                if (data.forums[fo].status == "1") {
+                    
+                    _.each(data.forums[fo].discussion, function(element, index, list) {
+                            extraPoints = extraPoints + (Number(element.total) - 2);
+                        });
+                }
+                
+                totalExtraPoints += extraPoints;
+            }
+            
+            data.totalExtraPoints = totalExtraPoints;
+        }
 
         return {
             GetAsyncProfile: _getAsyncProfile,
@@ -779,7 +862,8 @@
             GetAsyncForumDiscussions: _getAsyncForumDiscussions,
             PostAsyncReportAbuse: _postAsyncReportAbuse,
             GetAsyncAlbum: _getAsyncAlbum,
-            RefreshProgress: refreshProgress
+            RefreshProgress: refreshProgress,
+            GetAsyncUserPostCounter: _getAsyncUserPostCounter
         };
     })();
 }).call(this);

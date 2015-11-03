@@ -3,7 +3,6 @@
 var API_RESOURCE = " http://moodlemysql01.cloudapp.net/{0}";
 
 
-
 var _courseId = 4;
 var _endActivityCurrentChallenge = null;
 var _httpFactory = null;
@@ -285,6 +284,41 @@ var _setLocalStorageJsonItem = function (key, object) {
 
 function syncCacheData() {
 
+}
+
+function updatePostCounter(discussionid) {
+    var course = moodleFactory.Services.GetCacheJson("course");
+    var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+    
+    var discussionFound = false;
+
+    for(var fd = 0; fd < forumData.forums.length; fd++) {
+        
+        var forum = forumData.forums[fd];
+        var discussions = forum.discussion;
+        
+        for(var fdd = 0; fdd < discussions.length; fdd++) {
+            
+            var discussion = discussions[fdd];
+            if (discussion.discussionid === discussionid) {
+                
+                if (forum.status == "1") {
+                    forumData.totalExtraPoints++;
+                }
+                
+                var newTotal = Number(discussion.total) + 1;
+                discussion.total = newTotal.toString();
+                discussionFound = true;
+                break;
+            }
+        }
+        
+        if (discussionFound) {
+            break;
+        }
+    }
+    
+    localStorage.setItem("postcounter/" + course.courseid, JSON.stringify(forumData));
 }
 
 //Update activity status for activity blocking binding
@@ -640,28 +674,35 @@ var _notificationExists = function () {
 };
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
+    
     var matchingActivity = null;
     var breakAll = false;
     var userCourse = usercourse || JSON.parse(localStorage.getItem("usercourse"));
-    for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
-        var stage = userCourse.stages[stageIndex];
-        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
-            var challenge = stage.challenges[challengeIndex];
-            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
-                var activity = challenge.activities[activityIndex];
-                //console.log(activity.activity_identifier + " : " + activity);
-                if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
-                    matchingActivity = activity;
-                    breakAll = true;
-                    break;
+    
+    if (activity_identifier == "50000") {
+        matchingActivity = userCourse.community;
+    }else {
+        for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+            var stage = userCourse.stages[stageIndex];
+            for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+                var challenge = stage.challenges[challengeIndex];
+                for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                    var activity = challenge.activities[activityIndex];
+                    //console.log(activity.activity_identifier + " : " + activity);
+                    if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
+                        matchingActivity = activity;
+                        breakAll = true;
+                        break;
+                    }
                 }
+                if (breakAll)
+                    break;
             }
             if (breakAll)
                 break;
         }
-        if (breakAll)
-            break;
     }
+    
     return matchingActivity;
 }
 
@@ -917,9 +958,35 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
     }
 }
 
-var getForumsExtraPointsCounter = function(){
-    var forumExtraPointsCounter = JSON.parse(localStorage.getItem('extraPointsForums'));
-    return forumExtraPointsCounter;
+var getForumExtraPointsCounter = function(discussionIds) {
+    
+    var course = moodleFactory.Services.GetCacheJson("course");
+    var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+    
+    var tempDiscussionIds = [];
+    var tempDiscussions = {"status": 0, "discussions": []};
+    for(var f = 0; f < forumData.forums.length; f++) {
+        
+        var forum = forumData.forums[f];
+        var discussions = forum.discussion;
+        tempDiscussions.status = forum.status;
+        
+        for(var d = 0; d < discussions.length; d++) {
+            tempDiscussionIds.push(discussions[d].discussionid);
+            
+            tempDiscussions.discussions.push(discussions[d]);
+        }
+        
+        var diff = _.difference(discussionIds,tempDiscussionIds);
+        if (diff.length === 0) {
+            break;
+        }else {
+            tempDiscussionIds = [];
+            tempDiscussions.discussions = [];
+        }
+    }
+
+    return tempDiscussions;
 };
 
 function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
@@ -958,19 +1025,12 @@ function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
     moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
 }
 
-function updateUserForumStars(activityIdentifier, extraPoints) {
+function updateUserForumStars(activityIdentifier, extraPoints, callback) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
-
-    var stars = 0;
-    if (extraPoints != 0) {
-        profile.stars = Number(profile.stars) + Number(extraPoints);
-        stars = extraPoints;
-    }
-
-    console.log("Profile stars = " + profile.stars);
-    console.log("Forum stars to assign: " + stars);
+    
+    profile.stars = Number(profile.stars) + Number(extraPoints);
 
     var data = {
         userId: profile.id,
@@ -979,7 +1039,7 @@ function updateUserForumStars(activityIdentifier, extraPoints) {
         instanceType: 0,
         date: getdate()
     };
-    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
+    moodleFactory.Services.PutStars(data, profile, currentUser.token, callback, errorCallback);
 }
 
 
@@ -1097,6 +1157,7 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("tuEligesActivities");
     localStorage.removeItem("reply");    
     localStorage.removeItem("mapaDeVidaActivities");
+    localStorage.removeItem("starsToAssignedAfterFinishActivity");
     ClearLocalStorage("activity");
     ClearLocalStorage("forum");
     ClearLocalStorage("discussion");
@@ -1104,7 +1165,9 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
     ClearLocalStorage("profile");
-    ClearLocalStorage("UserTalents");    
+    ClearLocalStorage("UserTalents");
+    ClearLocalStorage("postcounter");
+    ClearLocalStorage("currentDiscussionIds");
     var existingInterval = localStorage.getItem('Interval');
     if(existingInterval){
         clearInterval(existingInterval);

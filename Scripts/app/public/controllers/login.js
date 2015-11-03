@@ -83,7 +83,7 @@ angular
                     $scope.$emit('HidePreloader');
                     console.log('preloader hidden');
                 }
-            }
+            };
 
             $scope.login = function (username, password) {  
                                
@@ -111,11 +111,15 @@ angular
                             _setToken(data.token);
                             _setId(data.id);
 
-                            console.log('preparing for syncAll');                            
+                            console.log('preparing for syncAll');
                             
                             //succesful credentials
                             _syncAll(function () {
                                 console.log('came back from redirecting...');
+                                
+                                var course = moodleFactory.Services.GetCacheJson("course");
+                                moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){ }, function() {}, true);
+                                
                                 $timeout(
                                     function () {
                                         console.log('redirecting..');
@@ -171,6 +175,10 @@ angular
                 //succesful credentials
                 _syncAll(function () {
                     console.log('came back from redirecting...');
+                    
+                    var course = moodleFactory.Services.GetCacheJson("course");
+                    moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, false);
+                    
                     $timeout(
                         function () {
                             console.log('redirecting..');
