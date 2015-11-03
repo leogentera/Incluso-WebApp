@@ -75,7 +75,7 @@
         };
 
         var _getAsyncLeaderboard = function (courseId, successCallback, errorCallback, forceRefresh) {
-            successCallback();
+            //successCallback();
             _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), successCallback, errorCallback, forceRefresh);
         };
 
