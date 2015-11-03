@@ -27,10 +27,40 @@ FAQsModule
             };
 
             drupalFactory.Services.GetContent("FAQS", function (data, key) {
-                $scope.contentResources = data.node;
-
+                $scope.content = data.node;
+                var questions = $scope.content.faqs_question;
+                var answers = $scope.content.faqs_answer;
+                $scope.showingList=true;
+                $scope.showingDetailIndex = -1;
+                $scope.FAQsContent = [];
+                var totalFaqs = questions.length < answers.length ? questions.length : answers.length;
+                for(var i=0;i<totalFaqs;i++)
+                {
+                    var newFaq =
+                    {
+                        question: questions[i],
+                        answer: answers[i],
+                        showingDetail: false
+                    };
+                    $scope.FAQsContent.push(newFaq);
+                }
                 $scope.$emit('HidePreloader');
             }, function () {
             }, false);
+
+            $scope.goToDetail = function(index)
+            {
+                $scope.showingList = false;
+                $scope.FAQsContent[index].showingDetail = true;
+                $scope.showingDetailIndex = index;
+            }
+
+            $scope.showList = function()
+            {
+                $scope.FAQsContent[$scope.showingDetailIndex].showingDetail = false;
+                $scope.showingDetailIndex = -1;
+                $scope.showingList = true;
+            }
+
 
 }]);
