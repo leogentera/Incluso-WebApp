@@ -352,34 +352,40 @@ function getDataAsync(callback) {
 
         }, true);
     });
+
+
 }
 
-    function initFields(m) {
-        if (m.address.street == null) { m.address.street = ""; }
-        if (m.address.num_ext == null) { m.address.num_ext = ""; }
-        if (m.address.num_int == null) { m.address.num_int = ""; }
-        if (m.address.colony == null) { m.address.colony = ""; }
-        if (m.address.city == null) { m.address.city = ""; }
-        if (m.address.town == null) { m.address.town = ""; }
-        if (m.address.state == null) { m.address.state = ""; }
-        if (m.address.postalCode == null) { m.address.postalCode = ""; }
+$scope.go = function() {
+    alert($scope.model.favoriteSports);
+}
+
+function initFields(m) {
+    if (m.address.street == null) { m.address.street = ""; }
+    if (m.address.num_ext == null) { m.address.num_ext = ""; }
+    if (m.address.num_int == null) { m.address.num_int = ""; }
+    if (m.address.colony == null) { m.address.colony = ""; }
+    if (m.address.city == null) { m.address.city = ""; }
+    if (m.address.town == null) { m.address.town = ""; }
+    if (m.address.state == null) { m.address.state = ""; }
+    if (m.address.postalCode == null) { m.address.postalCode = ""; }
+}
+
+function getAvatarInfoCallback() {                
+    $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
+
+    if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
+        setEmptyAvatar();
     }
 
-    function getAvatarInfoCallback() {                
-        $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
+    $scope.$emit('HidePreloader');
+}
 
-        if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
-            setEmptyAvatar();
-        }
+function formatDate(date) {
 
-        $scope.$emit('HidePreloader');
-    }
-
-    function formatDate(date) {
-
-        var userBirthDate;
-        if (date != "NaN/NaN/NaN" && date != "") {
-            var splitDate = date.split("/");
+    var userBirthDate;
+    if (date != "NaN/NaN/NaN" && date != "") {
+        var splitDate = date.split("/");
 
                     //             var userBirthDate = new Date(splitDate[2], splitDate[0], splitDate[1]); 
                     //             var userBirthDate = new Date(splitDate[2], splitDate[0]-1, splitDate[1]);
@@ -560,7 +566,7 @@ function getDataAsync(callback) {
 
                 //  Repeated idClients
                 if (arrayForIdClients.length != filteredIdClient.length) {                    
-                                    errors.push("El número de cliente Compartamos debe ser único.");
+                    errors.push("El número de cliente Compartamos debe ser único.");
                 }
 
                 //  b) Avoiding two persons having the same "Parentesco"
@@ -928,8 +934,8 @@ function getDataAsync(callback) {
                     for (i = 0; i < phones.length; i++) {//For all items, if phone then something in phoneId too.
 
                         if (phones[i].phone == "No tengo teléfono") {                            
-                           itemWithoutPhone = true;
-                       } else {
+                         itemWithoutPhone = true;
+                     } else {
                             if (phones[i].phoneId == "") {//The value must be nonempty numeric string of size 10.
                                 validInfo = false;
                             }  
@@ -963,8 +969,8 @@ function getDataAsync(callback) {
                     for (i = 0; i < nets.length; i++) {//For all items, if phone then something in phoneId too.
 
                         if (nets[i].socialNetwork == "No tengo redes sociales") {                            
-                           itemWithoutNet = true;
-                       } else {
+                         itemWithoutNet = true;
+                     } else {
                             if (nets[i].socialNetworkId == "") {//The value must be a nonempty string.
                                 validInfo = false;
                             }  
@@ -998,8 +1004,8 @@ function getDataAsync(callback) {
                     for (i = 0; i < data.length; i++) {//For all items, if Compartamos relative then something in idClient and relativeName too.
 
                         if (data[i].relationship == "No tengo") {                            
-                           itemWithoutCompartamos = true;
-                       } else {
+                         itemWithoutCompartamos = true;
+                     } else {
                             if (data[i].idClient == "" || data[i].relativeName == "") {//The values must be nonempty strings.
                                 validInfo = false;
                             }  
@@ -1077,8 +1083,8 @@ function getDataAsync(callback) {
                     for (i = 0; i < data.length; i++) {//For all items, if characterType then something in characterName too.
 
                         if (data[i].characterType == "No tengo") {                            
-                           itemWithoutCharacter = true;
-                       } else {
+                         itemWithoutCharacter = true;
+                     } else {
                             if (data[i].characterName == "") {//The value must be a nonempty string.
                                 validInfo = false;
                             }  
@@ -1276,7 +1282,7 @@ function getDataAsync(callback) {
             };
 
             $scope.addFavoriteSports = function (index) {
-                $scope.model.favoriteSports.push(new String());
+                $scope.model.favoriteSports.push("");
             };
 
             $scope.deleteFavoriteSports = function (index) {

@@ -546,14 +546,36 @@
 																	<button class="btn btn-circle" ng-click="deleteFavoriteSports($index)">
 																		<span class="icomoon icon-cross"></span>
 																	</button>
-																</h5>
+																</h5>	
 																<div class="form-group-control custom-caret-wrapper">
-																	<select class="form-control form-control-lg theme-form" ng-model="model.favoriteSports[$index]" ng-options="item for item in favoritSportsList"
-																	ng-init="model.favoriteSports == null" ng-class="{'selected': model.favoriteSports[$index].length != 0 && model.favoriteSports[$index] != null}">
+																<select class="form-control form-control-lg theme-form" 
+																ng-model="model.favoriteSports[$index]" 
+																ng-options="o for o in favoritSportsList"
+																ng-class="{'selected': model.favoriteSports.length != 0}"
+																ng-init="model.favoriteSports == null">
+															        <option value="" ng-disabled="!!model.favoriteSports">Deporte</option>
+															    </select>
+															    <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
+															    </div>
+															    <!--														
+																<div class="form-group-control custom-caret-wrapper">
+																	<select class="form-control form-control-lg theme-form" 
+																	ng-model="myselect" 
+																	ng-options="item for item in favoritSportsList track by item"
+																	ng-init="myselect = model.favoriteSports[$index]" 
+																	ng-class="{'selected': model.favoriteSports.length != 0}">
 																		<option value="" ng-disabled="!!model.favoriteSports">Deporte</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 																</div>
+																<select class="form-control form-control-lg theme-form" 
+																ng-model="model.artisticActivities[$index]" 
+																ng-options="item for item in artisticActivitiesList"
+																ng-init="model.artisticActivities == null" 
+																ng-class="{'selected': model.artisticActivities[$index].length != 0 && model.artisticActivities[$index] != null}">
+																		<option value="" ng-disabled="!!model.artisticActivities">Actividades</option>
+																	</select>
+																-->
 															</div>
 														</li>
 													</ul>
@@ -576,8 +598,11 @@
 																	</button>
 																</h5>
 																<div class="form-group-control custom-caret-wrapper">
-																	<select class="form-control form-control-lg theme-form" ng-model="model.artisticActivities[$index]" ng-options="item for item in artisticActivitiesList"
-																	ng-init="model.artisticActivities == null" ng-class="{'selected': model.artisticActivities[$index].length != 0 && model.artisticActivities[$index] != null}">
+																	<select class="form-control form-control-lg theme-form" 
+																	ng-model="model.artisticActivities[$index]" 
+																	ng-options="item for item in artisticActivitiesList"
+																	ng-init="model.artisticActivities == null" 
+																	ng-class="{'selected': model.artisticActivities[$index].length != 0 && model.artisticActivities[$index] != null}">
 																		<option value="" ng-disabled="!!model.artisticActivities">Actividades</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
