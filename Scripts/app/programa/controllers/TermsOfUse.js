@@ -25,15 +25,15 @@ angular
 
             getContentResources("TermsAndConditions");
 
-            $scope.profile = JSON.parse(localStorage.getItem("profile/"+localStorage.getItem("userId")));
-            $scope.profile.termsAndConditions=true;
+            $scope.userId=localStorage.getItem("userId");
+            $scope.profile = JSON.parse(localStorage.getItem("profile/"+ $scope.userId));
+            //$scope.profile.termsAndConditions=true;
             $scope.accepted = $scope.profile.termsAndConditions;
-
+            $rootScope.showToolbar = $scope.profile.termsAndConditions;
+            $rootScope.showFooter = $scope.profile.termsAndConditions;
             $scope.showCheckbox = !$scope.accepted;
             $scope.acceptsNewTerms = $scope.accepted;
             $scope.termsButtonText = $scope.accepted? "Regresar" : "Salir";
-            $scope.profile = null; //profile is not used in this page terms acceptance
-
 
             $scope.processNewTerms = function()
             {
@@ -42,7 +42,12 @@ angular
                 else
                 {
                     //send new data to server
-                    $scope.navigateTo('ProgramaDashboard');
+                    $scope.profile.termsAndConditions = true;
+                    moodleFactory.Services.PutAcceptTermsAndConditions($scope.userId,$scope.profile,function()
+                        {
+                                $scope.navigateTo('ProgramaDashboard');
+                        },function(){}, true )
+
                 }
 
             }
@@ -55,12 +60,14 @@ angular
                     $scope.termsButtonText = "Salir";
             }
 
+
             function getContentResources(activityIdentifierId) {
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
                     $scope.contentResources = data.node;
                     $scope.$emit('HidePreloader'); //hide preloader
                 }, function () {}, false);
             }
+
 
 
 }]);

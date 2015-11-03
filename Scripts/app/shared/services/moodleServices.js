@@ -10,6 +10,10 @@
             _putAsyncData("profile/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };
 
+        var _putAsyncAcceptTermsAndConditions = function (userId, data, successCallback, errorCallback, forceRefresh){
+            _putAsyncData("profile/" + userId, data, API_RESOURCE.format('user/' + userId +'?updateTermsAndConditions=1'), successCallback, errorCallback);
+        };
+
         var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
             _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback, forceRefresh);
@@ -79,7 +83,7 @@
         };
 
         var _getAsyncLeaderboard = function (courseId, token, successCallback, errorCallback, forceRefresh) {
-            successCallback();
+            //successCallback();
             _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), token, successCallback, errorCallback, forceRefresh);
         };
 
@@ -892,6 +896,7 @@
         return {
             GetAsyncProfile: _getAsyncProfile,
             PutAsyncProfile: _putAsyncProfile,
+            PutAcceptTermsAndConditions: _putAsyncAcceptTermsAndConditions,
             GetAsyncUserCourse: _getAsyncUserCourse,
             GetAsyncAvatar: _getAsyncAvatarInfo,
             GetAsyncCourse: _getAsyncCourse,
