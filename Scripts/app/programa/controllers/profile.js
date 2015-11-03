@@ -877,8 +877,7 @@ angular
                                     break;
                             }
 
-                            //console.log("Activity " + activity.activity_identifier + " validation result: " + result);
-
+                            console.log("Activity " + activity.activity_identifier + " - " + activity.activityname + ", validation result: " + result);
 
                             if (result) {
 
@@ -1122,7 +1121,7 @@ angular
                 function checkMedicalServices() {
                     var validInfo = true;
 
-                    if (($scope.model.medicalCoverage) = "Sí") {
+                    if (($scope.model.medicalCoverage) == "Sí") {
                         if ($scope.model.medicalInsurance == "No tengo") {
                             validInfo = false;
                         }
@@ -1135,13 +1134,13 @@ angular
                 function assignmentSocioeconomicos() {
                     var result = false;
                     if ($scope.model.iLiveWith) {
-                        if ($scope.model.mainActivity.length > 0) {//array
+                        if ($scope.model.mainActivity.length > 0) {      //array
                             if ($scope.model.level) {
                                 if ($scope.model.grade) {
                                     if ($scope.model.period) {
                                         if ($scope.model.children) {
                                             if ($scope.model.gotMoneyIncome) {
-                                                if ($scope.model.moneyIncome.length > 0) {  //array                                                
+                                                if ($scope.model.moneyIncome.length > 0) {      //array                                                
                                                     if (checkMedicalServices()) {
                                                         result = true;
                                                     }

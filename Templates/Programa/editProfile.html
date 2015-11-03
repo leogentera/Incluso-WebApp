@@ -4,7 +4,7 @@
          ng-cloak>
         <div class="alert-message">
             <div class="icomoon icon-warning"></div>
-            <p>¡Error! Verifica tus datos</p>
+            <p>Â¡Error! Verifica tus datos</p>
             <ul ng-if="model.modelState.errorMessages.length > 0">
                 <li ng-repeat="msg in model.modelState.errorMessages">{{msg}}</li>
             </ul>
@@ -95,7 +95,7 @@
                                         <div class="panel-heading with-icons" ng-click="navigateToPage(1)">
                                             <span class="icomoon icon-arrow-slim-left"></span>
                                             <span class="icomoon icon-information"></span>
-                                            <h3 class="panel-title">Mi Información</h3>
+                                            <h3 class="panel-title">Mi InformaciÃ³n</h3>
                                         </div>
                                         <div class="panel-body">
                                             <fieldset class="my-profile-form">
@@ -103,7 +103,7 @@
                                                 <div class="checkbox checkbox-custom">
                                                     <label>
                                                         <input type="checkbox" ng-model="model.allowToSendAdvertisement" name="allowToSendAdvertisement" />
-                                                        <span>Deseo recibir promoción y publicidad</span>
+                                                        <span>Deseo recibir promociÃ³n y publicidad</span>
                                                     </label>
                                                 </div>
 
@@ -173,7 +173,7 @@
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                         <select class="form-control form-control-lg theme-form" ng-model="model.birthCountry" ng-options="item for item in countryItems"
                                                                         ng-init="model.birthCountry == null" ng-class="{'selected': model.birthCountry.length != 0 && model.birthCountry != null}">
-                                                                                <option value="" ng-disabled="!!model.birthCountry">País de nacimiento</option>
+                                                                                <option value="" ng-disabled="!!model.birthCountry">PaÃ­s de nacimiento</option>
                                                                         </select>
                                                                         <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                                                                 </div>
@@ -307,7 +307,7 @@
                                                                 <select class="form-control form-control-lg theme-form" 
                                                                 ng-model="model.address.country" ng-options="item for item in countryItems"
                                                                 ng-init="model.address.country == null" ng-class="{'selected': model.address.country != ''}">
-                                                                        <option value="" ng-disabled="!!model.address.country">País</option>
+                                                                        <option value="" ng-disabled="!!model.address.country">PaÃ­s</option>
                                                                 </select>
                                                                 <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                                                         </div>
@@ -336,7 +336,7 @@
 
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control">
-                                                            <input type="text" class="form-control form-control-lg theme-form" placeholder="Municipio / Delegación" ng-model="model.address.town"
+                                                            <input type="text" class="form-control form-control-lg theme-form" placeholder="Municipio / DelegaciÃ³n" ng-model="model.address.town"
                                                                    />
                                                         </div>
                                                     </div>
@@ -381,12 +381,12 @@
                                                 </section>
 
                                                 <section>
-                                                    <h4>Tel�fono</h4>
+                                                    <h4>Teléfono</h4>
                                                     <ul class="block-list">
                                                         <li ng-repeat="p in model.phones track by $index">
                                                             <div class="form-group theme-form">
                                                                 <h5>
-                                                                    <span>Tel�fono {{$index + 1}}</span>
+                                                                    <span>Teléfono {{$index + 1}}</span>
                                                                     <button class="btn btn-circle" ng-click="deletePhone($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -397,7 +397,7 @@
                                                                             ng-options="item for item in phoneTypeList"  
                                                                             ng-init="model.phone == null"  
                                                                             ng-class="{'selected': model.phones[$index].phone.length != 0 && model.phones[$index].phone != null}">
-                                                                        <option value="" ng-disabled="!!model.phone">Tipo de tel�fono</option>  
+                                                                        <option value="" ng-disabled="!!model.phone">Tipo de teléfono</option>  
                                                                     </select>  
                                                                     <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>  
                                                                 </div>  
@@ -488,7 +488,7 @@
                                         <div class="panel-heading with-icons" ng-click="navigateToPage(1)">
                                             <span class="icomoon icon-arrow-slim-left"></span>
                                             <span class="icomoon icon-information"></span>
-                                            <h3 class="panel-title">Mi Información</h3>
+                                            <h3 class="panel-title">Mi InformaciÃ³n</h3>
                                         </div>
                                         <div class="panel-body">
                                             <fieldset class="my-profile-form">
@@ -898,7 +898,7 @@
                                         </div>
                                         <div class="panel-body">
                                             <fieldset class="my-profile-form">
-                                                <h5>A quién admiro</h5>
+                                                <h5>A quiÃ©n admiro</h5>
                                                 <section>
                                                     <h4>Personajes</h4>
                                                     <ul class="block-list">
@@ -1412,8 +1412,7 @@
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
-                                                                <input type="text" class="form-control form-control-lg theme-form" placeholder="Juego favorito" ng-model="model.favoriteGames[$index]"
-                                                                       />
+                                                                <input type="text" class="form-control form-control-lg theme-form" placeholder="Juego favorito" ng-model="model.favoriteGames[$index]"/>
                                                             </div>
                                                         </li>
                                                     </ul>
