@@ -15,16 +15,24 @@ angular
 
             _httpFactory = $http;
             _timeout = $timeout;
+            
             var _course = moodleFactory.Services.GetCacheJson("course");
+
             $scope.discussion = null;
             $scope.forumId = null;
+            
             $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
             $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        
             $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
             $scope.myStrengths = new Array();
             $scope.myWindowOfOpportunities = new Array();
+            
             $scope.setToolbar($location.$$path, "");
+
+            console.log($location + '- ' + $location.$$path);
+
             $scope.currentPage = 1;
             if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
                 $scope.currentPage = 2;
@@ -97,62 +105,6 @@ angular
                 $scope.genderItems = _getCatalogValuesBy("gender");
                 $scope.countryItems = _getCatalogValuesBy("country");
                 $scope.cityItems = [];
-                    $scope.stateItems = ['Aguascalientes', 'Baja California', 'Baja California Sur', 'Campeche', 'Chiapas', 'Chihuahua', 'Coahuila', 'Colima', 'DF', 'Durango', 'Estado de México', 'Guanajuato', 'Guerrero', 'Hidalgo', 'Jalisco', 'Michoacán', 'Morelos', 'Nayarit', 'Nuevo León', 'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco', 'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas', 'Otro'];
-                $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
-                $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
-                $scope.educationStatusList = ['Terminada', 'En proceso', 'Inconclusa'];
-                    $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'Fútbol Soccer', 'Basquetbol', 'Artes marciales', 'Yoga', 'Natación', 'Futbol Americano', 'Basebol', 'Carreras'];
-                    $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografía', 'Graffiti', 'Diseño Gráfico', 'Artesanías', 'Teatro', 'Modelado', 'Dibujo'];
-                $scope.hobbiesList = ['Ir a fiestas', 'Leer', 'Pasar tiempo con amigos', 'Cocinar', 'Jugar videojuegos', 'Visitar museos', 'Ver películas/series', 'Ver televisión', 'Modelado', 'Pasar tiempo en redes sociales'];
-                $scope.talentsList = ['Cantar', 'Llevar ritmos', 'Bailar', 'Hablar frente a otros', 'Dibujar', 'Hacer amigos', 'Hacer operaciones matemáticas', 'Aprender cosas rápido', 'Ubicar lugares', 'Memorizar', 'Hacer manualidades'];
-                $scope.valuesList = ['Tolerancia', 'Respeto', 'Honestidad', 'Responsabilidad', 'Confiabilidad', 'Solidaridad', 'Igualdad', 'Lealtad', 'Amistad', 'Generosidad', 'Esfuerzo'];
-                $scope.habilitiesList = ['Empatía', 'Creatividad', 'Liderazgo', 'Comunicación', 'Negociación', 'Trabajo en equipo', 'Innovación', 'Iniciativa', 'Toma de decisiones', 'Planeación', 'Organización'];
-                $scope.iLiveWithList = ['Ambos padres', 'Padre', 'Madre', 'Tíos', 'Esposo(a)', 'Abuelos', 'Amigos'];
-                $scope.mainActivityList = ['Estudias', 'Trabajas', 'Ni estudias ni trabajas'];
-                $scope.levelList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
-                    $scope.gradeList = ['1er', '2do', '3ro', '4to', '5to', '6to', '7mo', '8vo', '9no', '10mo'];
-                $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
-                $scope.yesNoList = ['Si', 'No'];
-                    $scope.moneyIncomeList = ['Padres', 'Trabajo', 'Becas / Apoyo del gobierno', 'No tengo'];
-                $scope.medicalCoverageList = ['Sí', 'No', 'No sé'];
-                $scope.medicalInsuranceList = ['IMSS', 'ISSTE', 'Privado', 'Seguro Popular', 'No tengo'];
-                $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora', 'Ninguno'];
-                $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
-                $scope.videoGamesFrecuencyList = ['Diario', '3 veces a la semana', '1 vez a la semana', '1 o 2 veces al mes', 'Nunca'];
-                $scope.videogamesHoursList = ['0-2', '2.5 a 4', '4.5 a 6', '6.5 a 8', 'Más de 8'];
-                $scope.kindOfVideoGamesList = ['Acción', 'Deportes', 'Violencia', 'Aventura', 'Reto', 'Estrategia', 'Educativos', 'Peleas'];
-                    $scope.socialNetworksList = ['Twitter', 'Facebook', 'YouTube', 'Instagram', 'Snapchat', 'No tengo redes sociales'];
-                    $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política', 'No tengo', 'Otro'];
-                    $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)', 'No tengo', 'Otro'];
-                    $scope.phoneTypeList = ['Celular', 'Casa', 'Trabajo', 'No tengo teléfono', 'Otro'];
-                $scope.stateItems = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','DF','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro', 'Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas', 'Otro'];
-                $scope.maritalStatusItems = ['Soltero(a)', 'Casado(a)', 'Unión libre'];
-                $scope.studiesList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
-                $scope.educationStatusList = ['Terminada', 'En proceso', 'Inconclusa'];
-                $scope.favoritSportsList = ['Ciclismo', 'Patinaje/skateboarding', 'Fútbol Soccer', 'Basquetbol', 'Artes Marciales', 'Yoga', 'Natación', 'Futbol Americano', 'Basebol', 'Carreras'];
-                $scope.artisticActivitiesList = ['Pintura', 'Música', 'Danza', 'Fotografia', 'Graffiti', 'Diseño Gráfico', 'Artesanías', 'Teatro', 'Modelado', 'Dibujo'];
-                $scope.hobbiesList = ['Ir a fiestas', 'Leer', 'Pasar tiempo con amigos', 'Cocinar', 'Jugar videojuegos', 'Visitar museos', 'Ver películas/series', 'Ver televisión', 'Modelado', 'Pasar tiempo en redes sociales'];
-                $scope.talentsList = ['Cantar', 'Llevar ritmos', 'Bailar', 'Hablar frente a otros', 'Dibujar', 'Hacer amigos', 'Hacer operaciones matemáticas', 'Aprender cosas rápido', 'Ubicar lugares', 'Memorizar', 'Hacer manualidades'];
-                $scope.valuesList = ['Tolerancia', 'Respeto', 'Honestidad', 'Responsabilidad', 'Confiabilidad', 'Solidaridad', 'Igualdad', 'Lealtad', 'Amistad', 'Generosidad', 'Esfuerzo'];
-                $scope.habilitiesList = ['Empatía', 'Creatividad', 'Liderazgo', 'Comunicación', 'Negociación', 'Trabajo en equipo', 'Innovación', 'Iniciativa', 'Toma de decisiones', 'Planeación', 'Organización'];
-                $scope.iLiveWithList = ['Ambos padres', 'Padre', 'Madre', 'Tíos', 'Esposo(a)', 'Abuelos', 'Amigos'];
-                $scope.mainActivityList = ['Estudias', 'Trabajas', 'Ni estudias ni trabajas'];
-                $scope.levelList = ['Primaria', 'Secundaria', 'Preparatoria', 'Universidad'];
-                $scope.gradeList = ['1er', '2do', '3ro', '4to', '5to', '6to','7mo','8vo','9no','10mo'];
-                $scope.periodList = ['Año', 'Semestre', 'Cuatrimestre', 'Trimestre', 'Bimestre'];
-                $scope.yesNoList = ['Si', 'No'];
-                $scope.moneyIncomeList = ['Padres', 'Trabajo','Becas / Apoyo del gobierno','No tengo'];
-                $scope.medicalCoverageList = ['Sí', 'No', 'No sé'];
-                $scope.medicalInsuranceList = ['IMSS', 'ISSTE', 'Privado', 'Seguro Popular', 'No tengo'];
-                $scope.knownDevicesList = ['Laptop', 'Tableta', 'Celular', 'Computadora', 'Ninguno'];
-                $scope.phoneUsageList = ['Hacer llamadas', 'Mensajes', 'Música', 'Videos', 'Fotos', 'Descargas', 'Investigación', 'Juegos', 'Redes sociales', 'Tomar selfies', 'Grabar videos'];
-                $scope.videoGamesFrecuencyList = ['Diario', '3 veces a la semana', '1 vez a la semana', '1 o 2 veces al mes', 'Nunca'];
-                $scope.videogamesHoursList = ['0-2', '2.5 a 4', '4.5 a 6', '6.5 a 8', 'Más de 8'];
-                $scope.kindOfVideoGamesList = ['Acción', 'Deportes', 'Violencia', 'Aventura', 'Reto', 'Estrategia', 'Educativos', 'Peleas'];
-                $scope.socialNetworksList = ['Twitter','Facebook','YouTube','Instagram','Snapchat','No tengo redes sociales'];
-                $scope.inspirationalCharactersList = ['Familiar', 'Artista', 'Deportista', 'Figura social', 'Figura política','No tengo', 'Otro'];
-                $scope.familiaCompartamosList = ['Madre', 'Padre', 'Tío(a)', 'Abuelo(a)', 'Primo(a)', 'Hermano(a)','No tengo','Otro'];            
-                $scope.phoneTypeList = ['Celular','Casa','Trabajo','No tengo teléfono' ,'Otro'];                    
                 $scope.stateItems = _getCatalogValuesBy("citiesCatalog")
                 $scope.maritalStatusItems = _getCatalogValuesBy("maritalStatus");
                 $scope.studiesList = _getCatalogValuesBy("studiesLevel");
@@ -186,10 +138,10 @@ angular
                 $scope.phoneTypeList = _getCatalogValuesBy("phoneType");                
 
                 $scope.birthdate_Dateformat = formatDate($scope.model.birthday);
-                    if ($scope.birthdate_Dateformat instanceof Date) {
+                if($scope.birthdate_Dateformat instanceof Date) {
                     $scope.birthdate_Dateformat = moment($scope.birthdate_Dateformat).format("DD/MM/YYYY");
                 }
-                    else {
+                else{
                     $scope.birthdate_Dateformat = null;
                 }
 
@@ -204,12 +156,10 @@ function  loadStrengths() {
 
     var strengthArray = [];
 
-                    for (var s = 0; s < $scope.model.strengths.length; s++) {
+    for(var s = 0; s < $scope.model.strengths.length; s++) {
 
         var strength = $scope.model.strengths[s];
-                        var result = _.find(_course.multipleChallenges, function (mc) {
-                            return mc.name == strength.replace("\r", "");
-                        });
+        var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == strength.replace("\r", ""); });
 
         strengthArray.push(result);
     }
@@ -222,12 +172,10 @@ function loadWindowOfOpportunities() {
 
     var windowOfOpportunitiesArray = [];
 
-                    for (var s = 0; s < $scope.model.windowOfOpportunity.length; s++) {
+    for(var s = 0; s < $scope.model.windowOfOpportunity.length; s++) {
 
         var windowOfOpportunities = $scope.model.windowOfOpportunity[s];
-                        var result = _.find(_course.multipleChallenges, function (mc) {
-                            return mc.name == windowOfOpportunities.replace("\r", "");
-                        });
+        var result = _.find(_course.multipleChallenges, function(mc) { return mc.name == windowOfOpportunities.replace("\r", ""); });
 
         windowOfOpportunitiesArray.push(result);
     }
@@ -302,55 +250,55 @@ function getDescription(id) {
 
     switch (id) {
         case 2:
-        description = "Has ganado el suficiente 'combustible' para seguir la aventura. Â¡Buen  viaje!";
+        description = "Has ganado el suficiente 'combustible' para seguir la aventura. ¡Buen  viaje!";
         break;
         case 3:
-        description = "Has recuperado la 'Turbina C0N0-CT' ahora tienes un elemento mÃ¡s para lograr la misiÃ³n";
+        description = "Has recuperado la 'Turbina C0N0-CT' ahora tienes un elemento más para lograr la misión";
         break;
         case 4:
-        description = "Has recuperado la 'Turbina Ala Ctu-3000' Â¡Continua el viaje!";
+        description = "Has recuperado la 'Turbina Ala Ctu-3000' ¡Continua el viaje!";
         break;
         case 5:
-        description = "Has encontrado el 'Sistema de navegaciÃ³n' Â¡No te detengas!";
+        description = "Has encontrado el 'Sistema de navegación' ¡No te detengas!";
         break;
         case 6:
-        description = "Has recuperado el 'Propulsor' Â¡Ahora, ve por mÃ¡s!";
+        description = "Has recuperado el 'Propulsor' ¡Ahora, ve por más!";
         break;
         case 7:
-        description = "Recuperaste los 'Misiles' Â¡Bien hecho!";
+        description = "Recuperaste los 'Misiles' ¡Bien hecho!";
         break;
         case 8:
-        description = "El 'Campo de fuerza' es tuyo. Â¡Lograste un reto mÃ¡s!";
+        description = "El 'Campo de fuerza' es tuyo. ¡Lograste un reto más!";
         break;
         case 9:
-        description = "Has obtenido el 'Radar' Â¡ContinÃºa la aventura!";
+        description = "Has obtenido el 'Radar' ¡Continúa la aventura!";
         break;
         case 10:
-        description = "Lograste obtener el 'Tanque de oxÃ­geno' Â¡No te rindas!";
+        description = "Lograste obtener el 'Tanque de oxígeno' ¡No te rindas!";
         break;
         case 11:
-        description = "Es tuya la 'Sonda espacial' Â¡Sigue asÃ­!";
+        description = "Es tuya la 'Sonda espacial' ¡Sigue así!";
         break;
         case 12:
         description = "Por participar activamente, has ganado la insignia 'Foro interplanetario'";
         break;
         case 13:
-        description = "Por completar tu Perfil has ganado la insignia 'ID IntergalÃ¡ctica'";
+        description = "Por completar tu Perfil has ganado la insignia 'ID Intergaláctica'";
         break;
         case 14:
-        description = "Por aportar activamente en la comunidad Incluso has ganado la insignia 'ParticipaciÃ³n elÃ©ctrica'";
+        description = "Por aportar activamente en la comunidad Incluso has ganado la insignia 'Participación eléctrica'";
         break;
         case 15:
-        description = "Por obtener 30 likes en Foro o Comunidad has ganado la insignia 'CorazÃ³n digital'";
+        description = "Por obtener 30 likes en Foro o Comunidad has ganado la insignia 'Corazón digital'";
         break;
         case 16:
-        description = "Has ganado el 'Casco'. Ahora, Â¡ve por mÃ¡s!";
+        description = "Has ganado el 'Casco'. Ahora, ¡ve por más!";
         break;
         case 17:
-        description = "Has ganado el 'Radio de comunicaciÃ³n'. Â¡Nunca te des por vencido!";
+        description = "Has ganado el 'Radio de comunicación'. ¡Nunca te des por vencido!";
         break;
         case 18:
-        description = "Ya es tuyo el 'Turbo' Â¡no te rindas!";
+        description = "Ya es tuyo el 'Turbo' ¡no te rindas!";
         break;
         default:
         description = "";
@@ -389,10 +337,11 @@ function getDataAsync(callback) {
         }
 
         $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
+        //console.log("Profile current stars:" + $scope.model.stars);
 
         callback();
 
-                        moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () {}, true);
+                    moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () { }, true);
 
         if (!$scope.model) {
             $location.path('/');
@@ -404,35 +353,18 @@ function getDataAsync(callback) {
         loadWindowOfOpportunities();
 
     }, true);
-                };                
-
+}
 
 function initFields(m) {
-                    if (m.address.street == null) {
-                        m.address.street = "";
+    if (m.address.street == null) { m.address.street = ""; }
+    if (m.address.num_ext == null) { m.address.num_ext = ""; }
+    if (m.address.num_int == null) { m.address.num_int = ""; }
+    if (m.address.colony == null) { m.address.colony = ""; }
+    if (m.address.city == null) { m.address.city = ""; }
+    if (m.address.town == null) { m.address.town = ""; }
+    if (m.address.state == null) { m.address.state = ""; }
+    if (m.address.postalCode == null) { m.address.postalCode = ""; }
 }
-                    if (m.address.num_ext == null) {
-                        m.address.num_ext = "";
-                    }
-                    if (m.address.num_int == null) {
-                        m.address.num_int = "";
-                    }
-                    if (m.address.colony == null) {
-                        m.address.colony = "";
-                    }
-                    if (m.address.city == null) {
-                        m.address.city = "";
-                    }
-                    if (m.address.town == null) {
-                        m.address.town = "";
-                    }
-                    if (m.address.state == null) {
-                        m.address.state = "";
-                    }
-                    if (m.address.postalCode == null) {
-                        m.address.postalCode = "";
-                    }
-                }
 
 function getAvatarInfoCallback() {                
     $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
@@ -449,8 +381,13 @@ function formatDate(date) {
     var userBirthDate;
     if (date != "NaN/NaN/NaN" && date != "") {
         var splitDate = date.split("/");
+
+                    //             var userBirthDate = new Date(splitDate[2], splitDate[0], splitDate[1]); 
+                    //             var userBirthDate = new Date(splitDate[2], splitDate[0]-1, splitDate[1]);
+
                     userBirthDate = new Date(splitDate[2], splitDate[0] - 1, splitDate[1]);
-                    } else {
+                }
+                else {
                     userBirthDate = null;
                 }
 
@@ -474,6 +411,19 @@ function formatDate(date) {
                     $scope.model.age = null;
                 }
             }
+
+            // $scope.birthdayChanged = function (dateValue) {
+            //     var algo = dateValue;
+            //     var d = new Date(formatDate($scope.birthdate_Dateformat)),
+            //         month = '' + (d.getMonth() + 1),
+            //         day = '' + d.getDate(),
+            //         year = d.getFullYear();
+
+            //     if (month.length < 2) month = '0' + month;
+            //     if (day.length < 2) day = '0' + day;
+            //     var newBirthday = [month, day, year].join('/');
+            //     $scope.model.birthday = newBirthday;
+            // };
 
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
@@ -526,12 +476,20 @@ function formatDate(date) {
             }
 
             
+            //  $scope.showPlaceHolderBirthday = function(){                
+            //     var bd = $("input[name='date']").val();                
+            //     if(bd){
+            //         $scope.showPlaceHolder = false;                    
+            //     }else{
+            //         $scope.showPlaceHolder = true;                    
+            //     }
+            // };            
 
-                $scope.datePickerClick = function () {
+            $scope.datePickerClick = function(){                            
                 cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='date']").val()]);                
             };
 
-                function SuccessDatePicker(data) {
+            function SuccessDatePicker(data){
                 $("input[name='date']").val(data); 
                 var splitDate = data.split("/");
                 var birthday = new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
@@ -542,11 +500,10 @@ function formatDate(date) {
 
             }
 
-                function isValidDate(date) {
+            function isValidDate(date){                
                 var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
-                    if (matches == null)
-                        return false;
-                    var m = matches[1] - 1;
+                if (matches == null) return false;
+                var m = matches[1] -1;
                 var d = matches[2];
                 var y = matches[3];
                 var composedDate = new Date(y, m, d);
@@ -569,30 +526,6 @@ function formatDate(date) {
                 if (!$scope.editForm.mothername.$valid) { errors.push("Formato de apellido materno incorrecto."); }
                 if (!$scope.editForm.gender.$valid) { errors.push("Debe indicar su género."); }
                 if (!isValidDate($scope.model.birthday)) { errors.push("Ingrese la fecha de nacimiento."); }
-
-                    if (age < 13) {
-                        errors.push("Debes ser mayor de 13 años para poder registrarte.");
-                    }
-
-                    if (!$scope.editForm.firstname.$valid) {
-                        errors.push("Formato de nombre incorrecto.");
-                    }
-
-                    if (!$scope.editForm.lastname.$valid) {
-                        errors.push("Formato de apellido paterno incorrecto.");
-                    }
-
-                    if (!$scope.editForm.mothername.$valid) {
-                        errors.push("Formato de apellido materno incorrecto.");
-                    }
-                    
-                    if (!$scope.model.gender) {
-                        errors.push("Debe indicar su género.");
-                    }
-
-                    if (!isValidDate($scope.model.birthday)) {
-                        errors.push("Ingrese la fecha de nacimiento.");
-                    }
 
                 // ************************ The following are not required fields. ****************************
                 //Here we validate only for consistency.
@@ -662,7 +595,7 @@ function formatDate(date) {
 
 
                 if (arrayForLevel.length != filteredLevel.length) {
-                        //Repeated names for level of studies
+                    //Repeated names for Social network
                     errors.push("El nivel de estudios está repetido.");
                 }
 
@@ -689,7 +622,7 @@ function formatDate(date) {
                 //phones
                 if ($scope.model.phones.length > 0) {
                     for (var i = 0; i < $scope.model.phones.length; i++) {
-                            if (typeof $scope.model.phones[i] === "undefined" || $scope.model.phones[i].length === 0) {
+                        if (typeof $scope.model.phones[i] === "undefined" || $scope.model.phones[i].length === 0 ) {
                             $scope.model.phones.splice(i, 1);
                             i = i - 1;
                         }
@@ -699,7 +632,7 @@ function formatDate(date) {
                 //socialNetworks               
                 if ($scope.model.socialNetworks.length > 0) {
                     for (var i = 0; i < $scope.model.socialNetworks.length; i++) {
-                            if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined") {
+                        if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined" ) {
                             $scope.model.socialNetworks.splice(i, 1);
                             i = i - 1;
                         }
@@ -817,7 +750,7 @@ function formatDate(date) {
                 //knownDevices              
                 if ($scope.model.knownDevices.length > 0) {
                     for (var i = 0; i < $scope.model.knownDevices.length; i++) {
-                            if (typeof $scope.model.knownDevices[i] === "undefined") {
+                        if (typeof $scope.model.knownDevices[i] === "undefined" ) {
                             $scope.model.knownDevices.splice(i, 1);
                             i = i - 1;
                         }
@@ -871,15 +804,11 @@ function formatDate(date) {
 
             $scope.save = function () {
 
-                    var isModelValid = false;
+                var validationResult = validateModel();  //Valid if validateModel() returns true                
 
-                    //If view is not privacySettings then validate model
-                    if ($location.$$path != '/Perfil/ConfigurarPrivacidad') {
-                        isModelValid = validateModel();  //Valid if validateModel() returns true
                 deleteRepeatedValues();
-                    }
 
-                    if (isModelValid) {
+                if (validationResult) {
                     $scope.$emit('ShowPreloader');
                     saveUser();
                 } else {
@@ -888,17 +817,18 @@ function formatDate(date) {
             };
 
 
+            function saveUser() {
+                //
+                moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
 
-                function saveUser() {                //
-
-                    moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
                     function (data) {
 
                         ValidatePointsPolicy();
                         console.log('Save profile successful...');
                         $scope.index();
                     },
-                            function (data) {
+
+                    function (date) {
                         console.log('Save profile fail...');
                     });
             }
@@ -907,12 +837,10 @@ function formatDate(date) {
             function ValidatePointsPolicy() {
 
                 var usercourse = JSON.parse(localStorage.getItem("usercourse"));
-                    var activityIndex;
-                    //var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
-                    for (activityIndex = 0; activityIndex < usercourse.activities.length; activityIndex++) {
+                for (var activityIndex = 0; activityIndex < usercourse.activities.length; activityIndex++) {
                     var activity = usercourse.activities[activityIndex];
-
                     /*
                     console.log("Activity Name: " + activity.activityname);
                     console.log("Activity Points: " + activity.points);
@@ -942,17 +870,21 @@ function formatDate(date) {
                             break;
                         }
                         
-                            console.log("Activity " + activity.activity_identifier + " - " + activity.activityname + ", validation result: " + result);
+                        //console.log("Activity " + activity.activity_identifier + " validation result: " + result);
 
+                        
                         if (result) {
 
                             $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
                             activity.status = 1;   //Update activity status.
-                                var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId)); //Get local user profile.
-                                var newPoints = parseInt(profile.stars) + parseInt(activity.points);  //Update points   
-                                profile.stars = newPoints;   //Update the 'stars' key.         
+
+                            //Get local user profile.
+                            var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));                            
+                            var newPoints = parseInt(profile.stars) + parseInt(activity.points); //Update points 
+                            profile.stars = newPoints;  //Update the 'stars' key.
                             _setLocalStorageJsonItem("profile/" + $scope.userId, profile); //Save updated profile to Local Storage.
-                                updateUserStarsUsingExternalActivity(activity.activity_identifier);  //Update profile in Moodle.
+                            updateUserStarsUsingExternalActivity(activity.activity_identifier); //Update profile in Moodle.
+
                             endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
                             var activityModel = {
@@ -987,7 +919,7 @@ function formatDate(date) {
 
                     for (i = 0; i < phones.length; i++) {//For all items, if phone then something in phoneId too.
 
-                        if (phones[i].phone == "No tengo telÃ©fono") {                            
+                        if (phones[i].phone == "No tengo teléfono") {                            
                              itemWithoutPhone = true;
                         } else {
                             if (phones[i].phoneId == "") {//The value must be nonempty numeric string of size 10.
@@ -1182,11 +1114,10 @@ function formatDate(date) {
                 return result;
             }
 
-
             function checkMedicalServices() {
                 var validInfo = true;
 
-                    if (($scope.model.medicalCoverage) == "Sí") {
+                if (($scope.model.medicalCoverage) = "Sí") {
                     if ($scope.model.medicalInsurance == "No tengo") {
                         validInfo = false;
                     }
@@ -1195,17 +1126,16 @@ function formatDate(date) {
                 return validInfo;
             }
 
-
             function assignmentSocioeconomicos() {
                 var result = false;
                 if ($scope.model.iLiveWith) {
-                        if ($scope.model.mainActivity.length > 0) {      //array
+                    if ($scope.model.mainActivity.length > 0) {//array
                         if ($scope.model.level) {
                             if ($scope.model.grade) {
                                 if ($scope.model.period) {
                                     if ($scope.model.children) {
                                         if ($scope.model.gotMoneyIncome) {
-                                                if ($scope.model.moneyIncome.length > 0) {      //array                                                
+                                            if ($scope.model.moneyIncome.length > 0) {  //array                                                
                                                 if (checkMedicalServices()) {
                                                     result = true;
                                                 }                                                
@@ -1276,7 +1206,7 @@ function formatDate(date) {
 
                 // The model $scope.model.inspirationalCharacters must be validated in validateModel()
 
-                // MODELS for "SocioeconÃ³micos"  --> Some of them should be validated within validateModel()                
+                // MODELS for "Socioeconómicos"  --> Some of them should be validated within validateModel()                
                 $scope.model.mainActivity = $scope.model.mainActivity.filter(function (item, pos) {
                     return item.trim().length > 0 && $scope.model.mainActivity.indexOf(item) == pos;
                 });
@@ -1335,55 +1265,55 @@ function formatDate(date) {
                 $scope.model.socialNetworks.splice(index, 1);
             };
 
-                $scope.addFavoriteSports = function () {
-                    $scope.model.favoriteSports.push("");
+            $scope.addFavoriteSports = function (index) {
+                $scope.model.favoriteSports.push(new String());
             };
 
             $scope.deleteFavoriteSports = function (index) {
                 $scope.model.favoriteSports.splice(index, 1);
             };
 
-                $scope.addArtisticActivities = function () {
-                    $scope.model.artisticActivities.push("");
+            $scope.addArtisticActivities = function (index) {
+                $scope.model.artisticActivities.push(new String());
             };
 
             $scope.deleteArtisticActivities = function (index) {
                 $scope.model.artisticActivities.splice(index, 1);
             };
 
-                $scope.addHobbies = function () {
-                    $scope.model.hobbies.push("");
+            $scope.addHobbies = function (index) {
+                $scope.model.hobbies.push(new String());
             };
 
             $scope.deleteHobbies = function (index) {
                 $scope.model.hobbies.splice(index, 1);
             };
 
-                $scope.addTalents = function () {
-                    $scope.model.talents.push("");
+            $scope.addTalents = function (index) {
+                $scope.model.talents.push(new String());
             };
 
             $scope.deleteTalents = function (index) {
                 $scope.model.talents.splice(index, 1);
             };
 
-                $scope.addValue = function () {
-                    $scope.model.values.push("");
+            $scope.addValue = function (index) {
+                $scope.model.values.push(new String());
             };
 
             $scope.deleteValue = function (index) {
                 $scope.model.values.splice(index, 1);
             };
 
-                $scope.addHabilitie = function () {
-                    $scope.model.habilities.push("");
+            $scope.addHabilitie = function (index) {
+                $scope.model.habilities.push(new String());
             };
 
             $scope.deleteHabilitie = function (index) {
                 $scope.model.habilities.splice(index, 1);
             };
 
-                $scope.addInspirationalCharacter = function () {
+            $scope.addInspirationalCharacter = function (index) {
                 $scope.model.inspirationalCharacters.push({});
             };
 
@@ -1391,8 +1321,8 @@ function formatDate(date) {
                 $scope.model.inspirationalCharacters.splice(index, 1);
             };
 
-                $scope.addMainActivity = function () {
-                    $scope.model.mainActivity.push("");
+            $scope.addMainActivity = function (index) {
+                $scope.model.mainActivity.push(new String());
             };
 
             $scope.deleteMainActivity = function (index) {
@@ -1403,65 +1333,65 @@ function formatDate(date) {
                 $scope.model.moneyIncome.push(new String());
             };
 
-                $scope.deleteMoneyIncome = function (index) {
+            $scope.deleteMoneyIncome = function (moneyIncome) {
                 //$scope.model.moneyIncome.splice(index, 1);
-                    //var index = $scope.model.moneyIncome.indexOf(moneyIncome);
+                var index = $scope.model.moneyIncome.indexOf(moneyIncome);
                 $scope.model.moneyIncome.splice(index, 1);
             };
 
-                $scope.addKnownDevice = function () {
-                    $scope.model.knownDevices.push("");
+            $scope.addKnownDevice = function (index) {
+                $scope.model.knownDevices.push(new String());
             };
 
-                $scope.deleteKnownDevice = function (index) {
+            $scope.deleteKnownDevice = function (knownDevice) {
                 //$scope.model.knownDevices.splice(index, 1);
-                    //var index = $scope.model.knownDevices.indexOf(knownDevice);
+                var index = $scope.model.knownDevices.indexOf(knownDevice);
                 $scope.model.knownDevices.splice(index, 1);
             };
 
-                $scope.addOwnDevice = function () {
-                    $scope.model.ownDevices.push("");
+            $scope.addOwnDevice = function (index) {
+                $scope.model.ownDevices.push(new String());
             };
 
-                $scope.deleteOwnDevice = function (index) {
-                    //var index = $scope.model.ownDevices.indexOf(ownDevices);
+            $scope.deleteOwnDevice = function (ownDevices) {                
+                var index = $scope.model.ownDevices.indexOf(ownDevices);
                 $scope.model.ownDevices.splice(index, 1);
             };
 
-                $scope.addPhoneUsage = function () {
-                    $scope.model.phoneUsage.push("");
+            $scope.addPhoneUsage = function (index) {
+                $scope.model.phoneUsage.push(new String());
             };
 
-                $scope.deletePhoneUsage = function (index) {
-                    //var index = $scope.model.phoneUsage.indexOf(phoneUsage);
+            $scope.deletePhoneUsage = function (phoneUsage) {                
+                var index = $scope.model.phoneUsage.indexOf(phoneUsage);
                 $scope.model.phoneUsage.splice(index, 1);
             };
 
-                $scope.addKindOfVideoGame = function () {
-                    $scope.model.kindOfVideogames.push("");
+            $scope.addKindOfVideoGame = function (index) {
+                $scope.model.kindOfVideogames.push(new String());
             };
 
-                $scope.deleteKindOfVideoGame = function (index) {
-                    //var index = $scope.model.kindOfVideogames.indexOf(kindOfVideogames);
+            $scope.deleteKindOfVideoGame = function (kindOfVideogames) {                
+                var index = $scope.model.kindOfVideogames.indexOf(kindOfVideogames);
                 $scope.model.kindOfVideogames.splice(index, 1);
             };
             
-                $scope.deleteMainActivity = function (index) {
+            $scope.deleteMainActivity = function (mainActivity) {
                 //$scope.model.mainActivity.splice(index, 1);
-                    //var index = $scope.model.mainActivity.indexOf(mainActivity);
+                var index = $scope.model.mainActivity.indexOf(mainActivity);
                 $scope.model.mainActivity.splice(index, 1);
             };
             
-                $scope.addMainActivity = function () {
+            $scope.addMainActivity = function() {
                 $scope.model.mainActivity.push(new String());
             };
 
-                $scope.addFavoriteGame = function () {
-                    $scope.model.favoriteGames.push("");
+            $scope.addFavoriteGame = function (index) {
+                $scope.model.favoriteGames.push(new String());
             };
 
-                $scope.deleteFavoriteGame = function (index) {
-                    //var index = $scope.model.favoriteGames.indexOf(favoriteGames);
+            $scope.deleteFavoriteGame = function (favoriteGames) {                
+                var index = $scope.model.favoriteGames.indexOf(favoriteGames);
                 $scope.model.favoriteGames.splice(index, 1);
             };
 
@@ -1517,7 +1447,7 @@ function formatDate(date) {
                         data: avatarInfo[0]
                     })
                     .success(function () {
-                        avatarUploaded("Ã?xito");
+                        avatarUploaded("Éxito");
                     })
                     .error(function () {
                         avatarUploaded("Error");
@@ -1525,7 +1455,7 @@ function formatDate(date) {
                 });
             }
 
-                function avatarUploaded(message) {
+            function avatarUploaded(message){
                 console.log(message + " al subir la foto!");
                 $location.path('/Profile/' + $scope.userId);
                 $route.reload();
@@ -1551,7 +1481,7 @@ function formatDate(date) {
 
             $scope.avatar = function () {
                 //the next fields should match the integration document shared with the game app
-                    var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield));
+                var shield = ( $scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ( $scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield ));
                 var avatarInfoForGameIntegration = {
                     "userid": $scope.model.id,
                     "alias": $scope.model.username,
@@ -1573,7 +1503,7 @@ function formatDate(date) {
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch (e) {
                     SuccessAvatar(
-                                {"userid": $scope.model.id, "actividad": "Mi Avatar", "alias": $scope.model.username, "genero": "Hombre", "rostro": "Preocupado", "color_de_piel": "E6C8B0", "estilo_cabello": "Cabello02", "color_cabello": "694027", "traje_color_principal": "00A0FF", "traje_color_secundario": "006192", "imagen_recortada": "app/initializr/media", "fecha_modificacion": "09/05/2015 08:32:04", "Te_gusto_la_actividad": null, "pathimagen": "default.png"}
+                        { "userid": $scope.model.id, "actividad": "Mi Avatar", "alias": $scope.model.username, "genero": "Hombre", "rostro": "Preocupado", "color_de_piel": "E6C8B0", "estilo_cabello": "Cabello02", "color_cabello": "694027", "traje_color_principal": "00A0FF", "traje_color_secundario": "006192", "imagen_recortada": "app/initializr/media", "fecha_modificacion": "09/05/2015 08:32:04", "Te_gusto_la_actividad": null, "pathimagen": "default.png" }
                         );
                 }
             };
@@ -1627,17 +1557,17 @@ function formatDate(date) {
                 return (n < 10 ? '0' : '') + n;
             }
             
-                $scope.shareAchievement = function () {
+            $scope.shareAchievement = function() {
 
                 if ($scope.hasCommunityAccess) {
                     $scope.$emit('ShowPreloader');
 
                     if ($scope.discussion == null || $scope.forumId == null) {
                         
-                            moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, currentUser.token, function (data, key) {
+                        moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, currentUser.token, function(data, key) {
 
                             var currentDiscussionIds = [];
-                                for (var d = 0; d < data.discussions.length; d++) {
+                            for(var d = 0; d < data.discussions.length; d++) {
                                 currentDiscussionIds.push(data.discussions[d].discussion);
                             }
                             localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
@@ -1646,13 +1576,12 @@ function formatDate(date) {
                             
                             postAchievement();
                             
-                            }, function (data) {
+                        }, function(data){
                             $scope.shareAchievementMessage = "";
                             $scope.showShareAchievementMessage = false;
                             $scope.showSharedAchievement = true;
 
-                                $scope.$emit('HidePreloader');
-                            }, true);
+                            $scope.$emit('HidePreloader'); }, true);
                     } else {
                         postAchievement();
                     }
@@ -1660,17 +1589,15 @@ function formatDate(date) {
 
             };
             
-                var checkForumExtraPoints = function () {
+            var checkForumExtraPoints = function() {
             
                 /* check over extra points */
                 var course = moodleFactory.Services.GetCacheJson("course");
                 var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
-                    var forum = _.find(forumData.forums, function (elem) {
-                        return elem.forumactivityid == "50000";
-                    });
+                var forum = _.find(forumData.forums, function(elem){ return elem.forumactivityid == "50000"; });
                 
                 if (Number(forum.discussion[0].total) <= 15) {
-                        updateUserForumStars("50000", 50, function () {
+                    updateUserForumStars("50000", 50, function (){
                         successPutStarsCallback();
                     });
                 }
@@ -1696,8 +1623,8 @@ function formatDate(date) {
                     "fileToUpload": null
                 };
                 
-                    moodleFactory.Services.PostAsyncForumPost('new_post', requestData,
-                            function () {
+                moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                    function() {
                         $scope.shareAchievementMessage = "";
                         $scope.showShareAchievementMessage = false;
                         $scope.showSharedAchievement = true;
@@ -1705,7 +1632,7 @@ function formatDate(date) {
                         $scope.$emit('HidePreloader');
                         checkForumExtraPoints();
                     },
-                            function () {
+                    function(){
                         $scope.shareAchievementMessage = "";
                         $scope.showShareAchievementMessage = false;
                         $scope.showSharedAchievement = false;
@@ -1713,8 +1640,7 @@ function formatDate(date) {
                         $scope.$emit('HidePreloader');
                     }
                     );
-                }
-                ;
+            };
 
             function getContent() {
                 drupalFactory.Services.GetContent("7001", function (data, key) {
