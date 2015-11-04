@@ -13,7 +13,23 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             _httpFactory = $http;
             _timeout = $timeout;
+            
 
+            //Closing message content from drupal
+            var closingActivityId = $routeParams.activityId;
+            var stageClosingContent = "";
+            if(closingActivityId > 999 && closingActivityId < 2000)
+                stageClosingContent = "ZonaDeVueloClosing";
+            else if(closingActivityId > 1999 && closingActivityId < 3000)
+                stageClosingContent = "ZonaDeNavegacionClosing";
+            else
+                stageClosingContent = "ZonaDeAterrizajeClosing";
+            drupalFactory.Services.GetContent(stageClosingContent, function (data, key)
+            {
+                $scope.closingContent = data.node;
+            }, function () { }, true);
+            //finish getting content
+            
             var userCourse = JSON.parse(localStorage.getItem('usercourse'));
             var parentActivity = getActivityByActivity_identifier($routeParams.activityId, userCourse);
             var activityFromTree;
