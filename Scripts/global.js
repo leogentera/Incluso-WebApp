@@ -15,6 +15,42 @@ var _httpFactory = null;
 var _timeout = null;
 var _location = null;
 
+var _catalogNames = ["sports",
+    "arts",
+    "hobbiescatalog",
+    "talentscatalog",
+    "valuescatalog",
+    "habilitiescatalog",
+    "relativeOrTutor",
+    "activity",
+    "studiesLevel",
+    "studiesGrade",
+    "periodOfStudies",
+    "moneyInComecatalog",
+    "medicalInsurancecatalog",
+    "devices",
+    "phoneActivity",
+    "videogamesFrecuencycatalog",
+    "videogamesHourscatalog",
+    "kindOfVideogamescatalog",
+    "educationStatus",
+    "phoneType",
+    "socialNetworkType",
+    "kindOfCharacter",
+    "relationship",
+    "citiescatalog",
+    "secretquestion",
+    "country",
+    "maritalStatus",
+    "medicalCoverage",
+    "children",
+    "gotMoneyIncome",
+    "playVideogames",
+    "communityAccess",
+    "citiesCatalog",
+    "gender"
+];
+
 var _activityStatus = null;
 
 var _activityDependencies=[
@@ -1459,8 +1495,25 @@ function _updateDeviceVersionCache () {
     }
 }
 
+var _getCatalogValuesBy = function (catalogName) {
+    
+    var catalogs = moodleFactory.Services.GetCacheJson("catalogs");
+    var catalog = _.filter(catalogs, function(c) { return c.catalog === catalogName; });
+    
+    return (catalog != null && catalog[0].values.length) > 0 ? catalog[0].values : [];
+};
+
 $(document).ready(function(){
     setTimeout(function() {
     _updateDeviceVersionCache();
+    
+    (function() {
+        /* Load catalogs */
+        
+        var requestData = {"catalog": _catalogNames};
+        
+        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { }, function(){  });
+    })();
+    
     }, 2000);
 });

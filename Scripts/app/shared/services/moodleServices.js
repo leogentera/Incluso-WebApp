@@ -11,7 +11,7 @@
         };
 
         var _putAsyncAcceptTermsAndConditions = function (userId, data, successCallback, errorCallback, forceRefresh){
-            _putAsyncData("profile/" + userId, data, API_RESOURCE.format('user/' + userId +'?updateTermsAndConditions=1'), successCallback, errorCallback);
+            _putAsyncData("profile/" + userId, data, API_RESOURCE.format('user/' + userId +'?termsAndConditionsUpdated=true&termsAndConditions=true'), successCallback, errorCallback);
         };
 
         var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
@@ -91,6 +91,10 @@
             _getAsyncData("halloffame", API_RESOURCE.format(url), token, successCallback, errorCallback,forceRefresh);
             //var url = 'comment/{0}?first={1}&since={2}&to={3}&count={4}'.format(activityId,first,since,to,count);
         }
+
+        var _getAsyncCatalogs = function(data, succesCallback, errorCallback, forceRefresh) {
+            _postAsyncData("catalogs", data, API_RESOURCE.format('catalog'), successCallback, errorCallback);
+        };
 
         var _getAsyncCatalog = function (catalogname,token,successCallback,errorCallback,forceRefresh) {
             _getAsyncData(catalogname,API_RESOURCE.format('catalog?catalogname='+catalogname),token,successCallback,errorCallback,forceRefresh);
@@ -304,10 +308,9 @@
                     _setLocalStorageJsonItem(key,data);
                 }
                 
-                successCallback();
+                successCallback(key, data);
             }).error(function (data, status, headers, config) {
                 console.log(data);
-                _setLocalStorageJsonItem(key,data);
                 errorCallback();
             });
         };
@@ -928,7 +931,8 @@
             RefreshProgress: refreshProgress,
             PostCommentActivity: _postCommentActivity,
             GetCommentByActivity: _getCommentByActivity,
-            GetAsyncUserPostCounter: _getAsyncUserPostCounter
+            GetAsyncUserPostCounter: _getAsyncUserPostCounter,
+            GetAsyncCatalogs: _getAsyncCatalogs
         };
     })();
 }).call(this);
