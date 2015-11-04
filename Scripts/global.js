@@ -3,7 +3,7 @@
 //var API_RESOURCE = "http://definityincluso.cloudapp.net:82/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Azure Development environment
 var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
 //var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
-var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-0/RestfulAPI/public/{0}";
+var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-1/RestfulAPI/public/{0}";
 //var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-0/RestfulAPI/public/{0}";
 //var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; // Production
@@ -14,6 +14,42 @@ var _endActivityCurrentChallenge = null;
 var _httpFactory = null;
 var _timeout = null;
 var _location = null;
+
+var _catalogNames = ["sports",
+    "arts",
+    "hobbiescatalog",
+    "talentscatalog",
+    "valuescatalog",
+    "habilitiescatalog",
+    "relativeOrTutor",
+    "activity",
+    "studiesLevel",
+    "studiesGrade",
+    "periodOfStudies",
+    "moneyInComecatalog",
+    "medicalInsurancecatalog",
+    "devices",
+    "phoneActivity",
+    "videogamesFrecuencycatalog",
+    "videogamesHourscatalog",
+    "kindOfVideogamescatalog",
+    "educationStatus",
+    "phoneType",
+    "socialNetworkType",
+    "kindOfCharacter",
+    "relationship",
+    "citiescatalog",
+    "secretquestion",
+    "country",
+    "maritalStatus",
+    "medicalCoverage",
+    "children",
+    "gotMoneyIncome",
+    "playVideogames",
+    "communityAccess",
+    "citiesCatalog",
+    "gender"
+];
 
 var _activityStatus = null;
 
@@ -1459,8 +1495,25 @@ function _updateDeviceVersionCache () {
     }
 }
 
+var _getCatalogValuesBy = function (catalogName) {
+    
+    var catalogs = moodleFactory.Services.GetCacheJson("catalogs");
+    var catalog = _.filter(catalogs, function(c) { return c.catalog === catalogName; });
+    
+    return (catalog != null && catalog[0].values.length) > 0 ? catalog[0].values : [];
+};
+
 $(document).ready(function(){
     setTimeout(function() {
     _updateDeviceVersionCache();
+    
+    (function() {
+        /* Load catalogs */
+        
+        var requestData = {"catalog": _catalogNames};
+        
+        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { }, function(){  });
+    })();
+    
     }, 2000);
 });

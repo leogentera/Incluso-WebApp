@@ -56,10 +56,10 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-            $scope.genderItems = ['Masculino', 'Femenino'];
-            $scope.countryItems = ['México', 'OTRO'];
-            $scope.cityItems = $scope.stateItems = ['Aguascalientes','Baja California','Baja California Sur','Campeche','Chiapas','Chihuahua','Coahuila','Colima','DF','Durango','Estado de México','Guanajuato','Guerrero','Hidalgo','Jalisco','Michoacán','Morelos','Nayarit','Nuevo León','Oaxaca','Puebla','Querétaro','Quintana Roo','San Luis Potosí','Sinaloa','Sonora','Tabasco','Tamaulipas','Tlaxcala','Veracruz','Yucatán','Zacatecas', 'OTRO'];
-            $scope.securityquestionItems = ['¿Dónde crecí?','Nombre de mi mejor amigo','Nombre de mi mascota','Personaje favorito','Banda musical favorita'];
+            $scope.genderItems = _getCatalogValuesBy("gender");
+            $scope.countryItems = _getCatalogValuesBy("country");
+            $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
+            $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
             $scope.showPlaceHolder = true;
             
             $scope.$emit('HidePreloader'); //- hide preloader

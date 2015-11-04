@@ -49,7 +49,7 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
             
-            $scope.securityquestionItems = ['¿Dónde crecí?','Nombre de mi mejor amigo','Nombre de mi mascota','Personaje favorito','Banda musical favorita'];
+            $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
 
             /* Watchers */
             /*
