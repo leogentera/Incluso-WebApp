@@ -11,7 +11,7 @@
         };
 
         var _putAsyncAcceptTermsAndConditions = function (userId, data, successCallback, errorCallback, forceRefresh){
-            _putAsyncData("profile/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
+            _putAsyncData("termsAndConditions/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };
 
         var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
