@@ -43,7 +43,12 @@ angular
                 {
                     //send new data to server
                     $scope.profile.termsAndConditions = true;
-                    moodleFactory.Services.PutAcceptTermsAndConditions($scope.userId,$scope.profile,function()
+                    var dataToSend =
+                    {
+                        termsAndConditionsUpdated: true,
+                        termsAndConditions: true
+                    };
+                    moodleFactory.Services.PutAcceptTermsAndConditions($scope.userId, dataToSend ,function()
                         {
                                 $scope.navigateTo('ProgramaDashboard');
                         },function(){}, true )
