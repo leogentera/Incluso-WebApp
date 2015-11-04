@@ -29,6 +29,9 @@
         "3000": 45, /* Zona de Vuelo - Dashboard */
         "2000": 69, /* Zona de Navegación - Dashboard */
         "0000": 57, /* Programa - Dashboard */
+        "ZonaDeVueloClosing":85,    /*Zona de Vuelo - Cierra de Actividad*/
+        "ZonaDeNavegacionClosing":86,   /*Zona de Navegación - Cierre de Actividad*/
+        "ZonaDeAterrizajeClosing":87,   /*Zona de Aterrizaje - Cierre de Actividad*/
         "PrivacyNotice": 37, /* No tiene activity identifier */
         "AlertsDetail": 23, /* General - Detalle Notificación */
         "Alerts": 24, /* General - Notificaciones*/

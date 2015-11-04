@@ -77,7 +77,7 @@ angular
 
             $scope.currentPage = 1;
             $scope.$emit('ShowPreloader'); //show preloader
-            $scope.setToolbar($location.$$path, "");
+            getContentResources(moduleid);
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
@@ -405,12 +405,27 @@ angular
                   console.log(activityIdentifierId);
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
                     
-                    $scope.contentResources = data.node;
-                    $rootScope.pageName = $scope.contentResources.title_toolbar;
+                    $scope.setToolbar($location.$$path, data.node.title_toolbar);
+                    $scope.back_button_text = data.node.title_back_button ;
+                    $scope.title = data.node.title ;
+                    $scope.instructions = data.node.instructions ;
                     
                     }, function () {}, true);
+
+                /*Closing message content*/
+                var stageClosingContent = "";
+                if(activityIdentifierId > 999 && activityIdentifierId < 2000)
+                    stageClosingContent = "ZonaDeVueloClosing";
+                else if(activityIdentifierId > 1999 && activityIdentifierId < 3000)
+                    stageClosingContent = "ZonaDeNavegacionClosing";
+                else
+                    stageClosingContent = "ZonaDeAterrizajeClosing";
+
+                drupalFactory.Services.GetContent(stageClosingContent, function (data, key)
+                {
+                    $scope.closingContent = data.node;
+                }, function () { }, true);
             }
             console.log(moduleid);
-            getContentResources(moduleid);
             
         }]);

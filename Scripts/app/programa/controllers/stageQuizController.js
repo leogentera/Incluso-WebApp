@@ -74,6 +74,9 @@ angular
             $scope.isDisabled = false;
             $scope.activity_identifier = parseInt($routeParams.activityIdentifier);  //Gets the coursemoduleid from 'activity' object
 
+            getContentAsync();   //get content from drupal
+
+
             if (nonEditableQuizzes.indexOf($scope.activity_identifier) == -1) {//This Quiz is editable
                 $scope.quizIsEditable = true;
             } else {
@@ -146,6 +149,24 @@ angular
             getDataAsync();
 
             //***********************************************************************************************************
+
+            function getContentAsync()
+            {
+                /*IMPORTANT: It gets content only for the closing message*/
+                var stageContent = "";
+                if($scope.activity_identifier > 999 && $scope.activity_identifier < 2000)
+                    stageContent = "ZonaDeVueloClosing";
+                else if($scope.activity_identifier > 1999 && $scope.activity_identifier < 3000)
+                    stageContent = "ZonaDeNavegacionClosing";
+                else
+                    stageContent = "ZonaDeAterrizajeClosing";
+
+                drupalFactory.Services.GetContent(stageContent, function (data, key)
+                {
+                    $scope.closingContent = data.node;
+                }, function () { }, true);
+            }
+
             function getDataAsync() {
                 $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
