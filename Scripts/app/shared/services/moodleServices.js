@@ -31,10 +31,6 @@
             _getAsyncData("activity/" + activityArray, API_RESOURCE.format('activity?' + activityArray), null,  successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivitiesEnergy = function (activityArray, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("activity/" + activityArray, API_RESOURCE.format('activity?' + activityArray), successCallback, errorCallback, forceRefresh);
-        };
-
         var _getAsyncForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
             _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
@@ -95,7 +91,7 @@
             _getAsyncData("halloffame", API_RESOURCE.format(url), token, successCallback, errorCallback,forceRefresh);
             //var url = 'comment/{0}?first={1}&since={2}&to={3}&count={4}'.format(activityId,first,since,to,count);
         }
-        
+
         var _getAsyncCatalogs = function(data, succesCallback, errorCallback, forceRefresh) {
             _postAsyncData("catalogs", data, API_RESOURCE.format('catalog'), successCallback, errorCallback);
         };
@@ -909,7 +905,6 @@
             GetAsyncActivity: _getAsyncActivityInfo,
             GetAsyncActivitiesEnergy: _getAsyncActivitiesEnergy,
             GetAsyncActivities: _getAsyncActivitiesInfo,
-            GetAsyncActivitiesEnergy: _getAsyncActivitiesEnergy,
             GetAsyncActivityQuizInfo: _getAsyncActivityQuizInfo,
             PutAsyncQuiz: _putAsyncQuiz,
             GetAsyncForumInfo: _getAsyncForumInfo,

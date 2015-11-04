@@ -5,16 +5,19 @@
           <div class="modal-robot robot-sm user-help">
             <img src="assets/images/img-robot-sm.svg">
             <div class="modal-body">
-                <h3 class="subtitle text-center">Cabina de Soporte</h3>
+                <!--<h3 class="subtitle text-center">Cabina de Soporte</h3>-->
+                <h3 class="subtitle text-center">{{title}}</h3>
                 <div class="chat-help-modal">
                     <div>
                         <p class="txt-renglon centered">
-                        Bienvenido a Cabina de Soporte, el lugar para hacer contacto con la Tierra.
+                        <!--Bienvenido a Cabina de Soporte, el lugar para hacer contacto con la Tierra.-->
+                            {{welcome}}
                         </p>
                     </div>
                     <div>
                         <p class="txt-renglon centered">
-                        Para terminar la actividad debes realizar al menos dos publicaciones al Coach y recibir dos respuestas de él. Toma en cuenta que la respuesta de los mensajes no es instantánea por lo que te pedimos estar atento.
+                        <!--Para terminar la actividad debes realizar al menos dos publicaciones al Coach y recibir dos respuestas de él. Toma en cuenta que la respuesta de los mensajes no es instantánea por lo que te pedimos estar atento.-->
+                            {{description}}
                         </p>
                         <div class="txt-renglon">
                           <button type="button" ng-click="goChat()" class="btn btn-primary btn-lg btn-cnt">Continuar</button>    
@@ -102,33 +105,40 @@
       <div class="page blueprint evaluation" ng-class="currentPage == 2 ? 'active' : ''">
         <div id="finalized">
             <section class="header-title">
-                <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
+                <!--<div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>-->
+                <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message}}</div>
                 <div class="subtitle centered min-pad ">"Cabina de soporte"</div>
-                <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
+                <!--<div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>-->
+                <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message_congrats}}</div>
             </section>
             <section class="centered txt-bigger ">
                 <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
             </section>
             <section class="txt-renglon pill">
-                <div class="pull-left">Estrellas ganadas:</div>
+                <div class="pull-left">{{closingContent.earned_stars}}</div>
+                <!--<div class="pull-left">Estrellas ganadas:</div>-->
                 <div class="pull-right sm-pill">
                   <span class="pull-left">{{activityPoints}}</span>
                   <span class="icomoon icon-star pull-right"></span>
                 </div>
             </section>
             <section class="txt-renglon centered form ">
-                ¿Que opinas de ésta actividad?
+                <!--¿Que opinas de ésta actividad?-->
+                {{closingContent.activity_rating_label}}
                 <section class="txt-renglon txt-bigger clearfix">
                     <div class="opinion">
                         <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                        <label for="like">Me gusta</label>
+                        <!--<label for="like">Me gusta</label>-->
+                        <label for="like">{{closingContent.like_label}}</label>
                     </div>
                     <div class="opinion">
                         <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                        <label for="dislike">No me gusta</label>
+                        <label for="dislike">{{closingContent.not_like_label}}</label>
+                        <!--<label for="dislike">No me gusta</label>-->
                     </div>
                 </section>
-                <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">TERMINAR</a>
+                <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</a>
+                <!--<a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">TERMINAR</a>-->
             </section>
           </div>
       </div>    
