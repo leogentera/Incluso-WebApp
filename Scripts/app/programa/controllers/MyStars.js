@@ -158,4 +158,5 @@ angular
             }
             
             $scope.$emit('HidePreloader'); //hide preloader
+
 }]);
