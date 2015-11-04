@@ -5,16 +5,19 @@
           <div class="modal-robot robot-sm user-help">
             <img src="assets/images/img-robot-sm.svg">
             <div class="modal-body">
-                <h3 class="subtitle text-center">Cabina de Soporte</h3>
+                <!--<h3 class="subtitle text-center">Cabina de Soporte</h3>-->
+                <h3 class="subtitle text-center">{{title}}</h3>
                 <div class="chat-help-modal">
                     <div>
                         <p class="txt-renglon centered">
-                        Bienvenido a Cabina de Soporte, el lugar para hacer contacto con la Tierra.
+                        <!--Bienvenido a Cabina de Soporte, el lugar para hacer contacto con la Tierra.-->
+                            {{welcome}}
                         </p>
                     </div>
                     <div>
                         <p class="txt-renglon centered">
-                        Para terminar la actividad debes realizar al menos dos publicaciones al Coach y recibir dos respuestas de él. Toma en cuenta que la respuesta de los mensajes no es instantánea por lo que te pedimos estar atento.
+                        <!--Para terminar la actividad debes realizar al menos dos publicaciones al Coach y recibir dos respuestas de él. Toma en cuenta que la respuesta de los mensajes no es instantánea por lo que te pedimos estar atento.-->
+                            {{description}}
                         </p>
                         <div class="txt-renglon">
                           <button type="button" ng-click="goChat()" class="btn btn-primary btn-lg btn-cnt">Continuar</button>    

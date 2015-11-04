@@ -12,8 +12,10 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {        
             _timeout = $timeout;
-            $scope.setToolbar($location.$$path,"");
-            $rootScope.showFooter = false; 
+
+            //$scope.setToolbar($location.$$path,"");
+            getContentResources($routeParams.moodleid);
+            $rootScope.showFooter = false;
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
@@ -138,4 +140,15 @@ angular
             function addZeroBefore(n) {
               return (n < 10 ? '0' : '') + n;
             }
+
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    $scope.setToolbar($location.$$path,data.node.tool_bar_title);
+                    $scope.title = data.node.chat_title;
+                    $scope.welcome = data.node.chat_welcome ;
+                    $scope.description = data.node.chat_instructions ;
+
+                }, function () {}, true);
+            };
+
         }]);
