@@ -16,12 +16,12 @@
             <select name="filter" class="form-control form-control-lg theme-default" ng-model="filter">
               <option value="" disabled>Filtrar contenido por...</option>
               <option value="">Ver Todo</option>
-              <option value="Obligatorio">Obligatorio</option> 
-              <option value="resource">Fotografías</option> 
-              <option value="video">Videos</option> 
-              <option value="page">Textos</option> 
-              <option value="label">Frases</option> 
-              <option value="url">Enlaces</option> 
+              <option value="Obligatorio">Obligatorio</option>
+              <option value="resource">Fotografías</option>
+              <option value="video">Videos</option>
+              <option value="page">Textos</option>
+              <option value="label">Frases</option>
+              <option value="url">Enlaces</option>
             </select>
             <span class="icomoon icon-arrow"></span>
           </section>
@@ -102,6 +102,7 @@
                     <div class="message">
                       <span ng-show="activity.status" ng-bind-html="activity.activityContent.labeltext"></span>
                       <!--<span ng-bind-html="activity.file.pageContent"></span>-->
+                      <span class="htmlContent" ng-show="activity.status" ng-bind-html="activity.activityContent.pagecontent"></span>
                       <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'label' && !activity.status">Mostrar texto...</span>      
 
                       <div ng-if="activity.activity_type == 'resource'" class="image-container">
