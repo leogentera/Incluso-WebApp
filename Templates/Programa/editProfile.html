@@ -1346,7 +1346,8 @@
                                                 <section>
                                                     <h4>¿Juegas videojuegos?</h4>
                                                     <div class="form-group-control custom-caret-wrapper">
-                                                        <select ng-model="model.playVideogames" ng-options="item for item in yesNoList" ng-init="model.playVideogames == null" class="form-control form-control-lg theme-form">
+                                                        <select ng-model="model.playVideogames" ng-options="item for item in yesNoList" ng-init="model.playVideogames == null" class="form-control form-control-lg theme-form"
+                                                        	ng-class="{'selected': model.playVideogames != ''}">
                                                             <option value="" ng-disabled="!!model.playVideogames">¿Juegas videojuegos?</option>
                                                         </select>
                                                         <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1357,7 +1358,8 @@
                                                     <h4>¿Con qué frecuencia juegas videojuegos?</h4>
                                                     <div class="form-group-control custom-caret-wrapper">
                                                         <select ng-model="model.videogamesFrecuency" ng-options="item for item in videoGamesFrecuencyList" ng-init="model.videogamesFrecuency == null" 
-                                                                class="form-control form-control-lg theme-form">
+                                                                class="form-control form-control-lg theme-form"
+                                                                ng-class="{'selected': model.videogamesFrecuency != ''}">
                                                             <option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
                                                         </select>
                                                         <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1368,7 +1370,8 @@
                                                     <h4>¿Cuántas horas juegas al día?</h4>
                                                     <div class="form-group-control custom-caret-wrapper">
                                                         <select ng-model="model.videogamesHours" ng-options="item for item in videogamesHoursList" ng-init="model.videogamesHours == null" 
-                                                                class="form-control form-control-lg theme-form">
+                                                                class="form-control form-control-lg theme-form"
+                                                                ng-class="{'selected': model.videogamesHours != null}">
                                                             <option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
                                                         </select>
                                                         <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1388,7 +1391,8 @@
                                                                 </h5>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select ng-model="model.kindOfVideogames[$index]" ng-options="item for item in kindOfVideoGamesList" ng-init="model.kindOfVideogames == null"
-                                                                            class="form-control form-control-lg theme-form">
+                                                                            class="form-control form-control-lg theme-form"
+                                                                            ng-class="{'selected': model.kindOfVideogames[$index] != null}">
                                                                         <option value="" ng-disabled="!!model.kindOfVideogames">¿Qué tipo de videojuegos te gustan más?</option>
                                                                     </select>
                                                                     <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
