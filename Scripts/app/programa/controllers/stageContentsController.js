@@ -409,6 +409,20 @@ angular
                     $rootScope.pageName = $scope.contentResources.title_toolbar;
                     
                     }, function () {}, true);
+
+                /*Closing message content*/
+                var stageClosingContent = "";
+                if(activityIdentifierId > 999 && activityIdentifierId < 2000)
+                    stageClosingContent = "ZonaDeVueloClosing";
+                else if(activityIdentifierId > 1999 && activityIdentifierId < 3000)
+                    stageClosingContent = "ZonaDeNavegacionClosing";
+                else
+                    stageClosingContent = "ZonaDeAterrizajeClosing";
+
+                drupalFactory.Services.GetContent(stageClosingContent, function (data, key)
+                {
+                    $scope.closingContent = data.node;
+                }, function () { }, true);
             }
             console.log(moduleid);
             getContentResources(moduleid);
