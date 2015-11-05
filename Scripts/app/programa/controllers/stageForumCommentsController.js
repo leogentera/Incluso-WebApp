@@ -112,6 +112,10 @@ angular
                     var extraPointsCounter = 0;
                     var extraPoints = 0;
                     
+                    /* check over extra points */
+                    var course = moodleFactory.Services.GetCacheJson("course");
+                    var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+                    
                     /* sumar uno extra al total */
                     if (forumData.totalExtraPoints < 11) {
                          _.each(historicalDiscussions.discussions, function(elem, index, list) {
@@ -205,11 +209,22 @@ angular
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){
                         $scope.textToPost=null;
-                        //$scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
                         $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         checkForumExtraPoints();
-                        checkForumProgress(refreshTopicData);
+                        checkForumProgress(function(){
+                        
+                            var currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
+                            $scope.posts[isCommentModalCollapsedIndex].replies.push({
+                                "message": dataObejct.message,
+                                "post_autor_id": currentUser.id,
+                                "post_author": currentUser.alias,
+                                "picture_post_author": currentUser.profileimageurl
+                            });
+                            
+                            $scope.$emit('HidePreloader');
+                        
+                        });
                     },
                     function(){
                         $scope.textToPost=null;
