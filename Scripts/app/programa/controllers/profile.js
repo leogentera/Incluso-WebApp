@@ -810,29 +810,37 @@ function formatDate(date) {
 
                 if (validationResult) {
                     $scope.$emit('ShowPreloader');
-                    saveUser();
+                    saveUser();                    
                 } else {
                     $scope.$emit('scrollTop');
                 }
             };
 
+            
+            function validateAllFieldsCompleted(){
+                return true;                            
+            }
 
             function saveUser() {
                 //
                 moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
-
                     function (data) {
-
                         ValidatePointsPolicy();
                         console.log('Save profile successful...');
                         $scope.index();
+                        if (validateAllFieldsCompleted()) {
+                            
+                        }
                     },
-
                     function (date) {
                         console.log('Save profile fail...');
                     });
             }
 
+            function assignBadge(){
+                //function to asign badge to a user
+            }
+            
 
             function ValidatePointsPolicy() {
 
@@ -980,38 +988,28 @@ function formatDate(date) {
 
 
             function compartamosIsValid(data) {
-
                 var validInfo = true;
                 var i;
                 var itemWithoutCompartamos = false;
 
                 if (data.length > 0) {//There is at least one Compartamos relative item.
-
                     for (i = 0; i < data.length; i++) {//For all items, if Compartamos relative then something in idClient and relativeName too.
-
-                        if (data[i].relationship == "No tengo") {                            
+                        if (data[i].relationship == "No tengo"){
                              itemWithoutCompartamos = true;
                         } else {
                             if (data[i].idClient == "" || data[i].relativeName == "") {//The values must be nonempty strings.
                                 validInfo = false;
-                            }  
+                            }
                         }
                     }
-
                     if (validInfo) {
-
                         if (itemWithoutCompartamos && data.length > 1) {
                             validInfo = false;
                         }
-
                     }
-
-                } 
-                
+                }                
                 return validInfo;
             }
-
-
 
             function assignmentMiInformacion() {//Asign 400 points if all fields are full.
                 var result = false;
@@ -1117,7 +1115,7 @@ function formatDate(date) {
             function checkMedicalServices() {
                 var validInfo = true;
 
-                if (($scope.model.medicalCoverage) = "Sí") {
+                if (($scope.model.medicalCoverage) == "Sí") {
                     if ($scope.model.medicalInsurance == "No tengo") {
                         validInfo = false;
                     }
