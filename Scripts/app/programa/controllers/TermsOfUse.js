@@ -41,6 +41,7 @@ angular
                     logout($scope, $location);
                 else
                 {
+                    $scope.$emit('ShowPreloader'); //show preloader
                     //send new data to server
                     $scope.profile.termsAndConditions = true;
                     var dataToSend =
@@ -50,7 +51,12 @@ angular
                     };
                     moodleFactory.Services.PutAcceptTermsAndConditions($scope.userId, dataToSend ,function()
                         {
-                                $scope.navigateTo('ProgramaDashboard');
+                            var userId = moodleFactory.Services.GetCacheObject("userId");
+                            var profile = moodleFactory.Services.GetCacheJson("profile/" + userId);
+                            profile.termsAndConditions = true;
+                            _setLocalStorageJsonItem("profile/" + userId, profile);
+                            $scope.$emit('HidePreloader'); //show preloader
+                            $scope.navigateTo('ProgramaDashboard');
                         },function(){}, true )
 
                 }

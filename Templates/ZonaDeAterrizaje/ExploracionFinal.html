@@ -204,9 +204,11 @@
             <div class="page" ng-class="currentPage==2 ? 'active' : '' ">
                 <div id="finalized">
                     <section class="header-title">
-                        <div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>
+                        <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message}}</div>
+                        <!--<div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>-->
                         <div class="subtitle centered min-pad ">{{activityname}}</div>
-                        <div class="txt-renglon centered txt-bigger min-pad ">¡Bien hecho!</div>
+                        <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message_congrats}}</div>
+                        <!--<div class="txt-renglon centered txt-bigger min-pad ">¡Bien hecho!</div>-->
                     </section>
                     <section class="centered txt-bigger" ng-show="activityname != 'Exploración final'">
                         <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
@@ -320,7 +322,8 @@
 
 
                     <section class="txt-renglon pill" ng-show="activityPoints > 0">
-                        <div class="pull-left">Estrellas ganadas:</div>
+                        <div class="pull-left">{{closingContent.earned_stars}}</div>
+                        <!--<div class="pull-left">Estrellas ganadas:</div>-->
                         <div class="pull-right sm-pill">
                             <span class="pull-left">{{activityPoints}}</span>
                             <span class="icomoon icon-star pull-right"></span>
@@ -328,19 +331,23 @@
                     </section>
                     <section class="txt-renglon centered form">
                         <div ng-show="activity_status == 0">
-                            ¿Que opinas de ésta actividad?
+                            <!--¿Que opinas de ésta actividad?-->
+                            {{closingContent.activity_rating_label}}
                             <section class="txt-renglon txt-bigger clearfix">
                                 <div class="opinion">
                                     <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                                    <label for="like">Me gusta</label>
+                                    <label for="like">{{closingContent.like_label}}</label>
+                                    <!--<label for="like">Me gusta</label>-->
                                 </div>
                                 <div class="opinion">
                                     <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                                    <label for="dislike">No me gusta</label>
+                                    <label for="dislike">{{closingContent.not_like_label}}</label>
+                                    <!--<label for="dislike">No me gusta</label>-->
                                 </div>
                             </section>
                         </div>
-                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR</a>
+                        <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">{{closingContent.finish_button}}</a>
+                        <!--<a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR</a>-->
                     </section>
                 </div>
             </div>
