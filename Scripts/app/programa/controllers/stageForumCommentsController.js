@@ -203,11 +203,22 @@ angular
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){
                         $scope.textToPost=null;
-                        //$scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
                         $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         checkForumExtraPoints();
-                        checkForumProgress(refreshTopicData);
+                        checkForumProgress(function(){
+                        
+                            var currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
+                            $scope.posts[isCommentModalCollapsedIndex].replies.push({
+                                "message": dataObejct.message,
+                                "post_autor_id": currentUser.id,
+                                "post_author": currentUser.alias,
+                                "picture_post_author": currentUser.profileimageurl
+                            });
+                            
+                            $scope.$emit('HidePreloader');
+                        
+                        });
                     },
                     function(){
                         $scope.textToPost=null;
