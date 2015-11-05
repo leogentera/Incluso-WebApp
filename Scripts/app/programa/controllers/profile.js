@@ -135,7 +135,8 @@ angular
                 $scope.socialNetworksList = _getCatalogValuesBy("socialNetworkType");
                 $scope.inspirationalCharactersList = _getCatalogValuesBy("kindOfCharacter");
                 $scope.familiaCompartamosList = _getCatalogValuesBy("relationship");
-                $scope.phoneTypeList = _getCatalogValuesBy("phoneType");                
+                $scope.phoneTypeList = _getCatalogValuesBy("phoneType");
+                $scope.yesNoList = ['Si', 'No'];
 
                 $scope.birthdate_Dateformat = formatDate($scope.model.birthday);
                 if($scope.birthdate_Dateformat instanceof Date) {
@@ -818,6 +819,21 @@ function formatDate(date) {
 
             
             function validateAllFieldsCompleted(){
+                var usercourse = JSON.parse(localStorage.getItem("usercourse"));
+                if(usercourse && usercourse.activities){
+                    var activitiesCompleted = _.where(usercourse.activities, {status : 1});
+                    console.log(activitiesCompleted);
+                    if (activitiesCompleted && activitiesCompleted.length == usercourse.activities.length) {
+                        console.log("create badge");
+                        var badgeModel = {
+                            badgeid: 13
+                            };
+                        moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function(){
+                            },function(){
+                                });
+                    }
+                }
+                
                 return true;                            
             }
 
@@ -827,10 +843,7 @@ function formatDate(date) {
                     function (data) {
                         ValidatePointsPolicy();
                         console.log('Save profile successful...');
-                        $scope.index();
-                        if (validateAllFieldsCompleted()) {
-                            
-                        }
+                        $scope.index();                        
                     },
                     function (date) {
                         console.log('Save profile fail...');
@@ -907,7 +920,8 @@ function formatDate(date) {
                             };
 
                             //Finish Activity.
-                            _endActivity(activityModel, function () {//callback
+                            _endActivity(activityModel, function () {
+                                validateAllFieldsCompleted();
                             });
 
                             result = false;  //Restore 'result' value

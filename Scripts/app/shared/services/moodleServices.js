@@ -69,6 +69,12 @@
                 _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
             }
         };
+        
+        var _postBadgeToUser = function(userId,badgeModel){
+            
+            var url = 'badges/' + userId;
+            _postAsyncData("badges", API_RESOURCE.format(url), successCallback, errorCallback);            
+        };
 
         var _getAsyncActivityForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
@@ -930,6 +936,7 @@
             GetAsyncAlbum: _getAsyncAlbum,
             RefreshProgress: refreshProgress,
             PostCommentActivity: _postCommentActivity,
+            PostBadgeToUser: _postBadgeToUser,
             GetCommentByActivity: _getCommentByActivity,
             GetAsyncUserPostCounter: _getAsyncUserPostCounter,
             GetAsyncCatalogs: _getAsyncCatalogs
