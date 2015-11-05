@@ -241,8 +241,16 @@ angular
                             checkForumExtraPoints();
                             
                             $scope.replyText = null;
-                            $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
-                            refreshTopicData();
+                            $scope.isCommentModalCollapsed["id" + parentId] = false;
+                            
+                            $scope.posts[isCommentModalCollapsedIndex].replies.push({
+                                "message": requestData.message,
+                                "post_autor_id": _currentUser.id,
+                                "post_author": _currentUser.alias,
+                                "picture_post_author": _currentUser.profileimageurl
+                            });
+                            
+                            $scope.$emit('HidePreloader');
                         },
                         function(){
                             $scope.replyText = null;
