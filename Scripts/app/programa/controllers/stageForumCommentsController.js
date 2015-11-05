@@ -108,6 +108,10 @@ angular
                     var extraPointsCounter = 0;
                     var extraPoints = 0;
                     
+                    /* check over extra points */
+                    var course = moodleFactory.Services.GetCacheJson("course");
+                    var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+                    
                     /* sumar uno extra al total */
                     if (forumData.totalExtraPoints < 11) {
                          _.each(historicalDiscussions.discussions, function(elem, index, list) {
