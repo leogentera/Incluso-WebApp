@@ -1043,7 +1043,7 @@ function formatDate(date) {
                                                             if ($scope.model.address.postalCode) {
                                                                 if ($scope.model.address.street) {
                                                                     if ($scope.model.address.num_ext) {
-                                                                        if ($scope.model.address.num_int) {
+                                                                        
                                                                             if ($scope.model.address.colony) {
                                                                                 if (phonesAreValid($scope.model.phones)) {//array of objects
                                                                                     if (socialNetsAreValid($scope.model.socialNetworks)) { //array of objects
@@ -1053,7 +1053,7 @@ function formatDate(date) {
                                                                                     }
                                                                                 }
                                                                             }
-                                                                        }
+                                                                        
                                                                     }
                                                                 }
                                                             }
