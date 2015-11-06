@@ -70,10 +70,9 @@
             }
         };
         
-        var _postBadgeToUser = function(userId,badgeModel){
-            
-            var url = 'badges/' + userId;
-            _postAsyncData("badges", API_RESOURCE.format(url), successCallback, errorCallback);            
+        var _postBadgeToUser = function(userId,badgeModel,successCallback,errroCallback){
+                        
+            _putAsyncData("badges", badgeModel, API_RESOURCE.format('badges/' + userId), successCallback, errorCallback);            
         };
 
         var _getAsyncActivityForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {

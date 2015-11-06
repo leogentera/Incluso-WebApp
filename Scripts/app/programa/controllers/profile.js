@@ -826,9 +826,10 @@ function formatDate(date) {
                     if (activitiesCompleted && activitiesCompleted.length == usercourse.activities.length) {
                         console.log("create badge");
                         var badgeModel = {
-                            badgeid: 13
+                            badgeid: 13 //badge earned when a user completes his profile.
                             };
                         moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function(){
+                            console.log("created badge successfully");
                             },function(){
                                 });
                     }
