@@ -99,14 +99,50 @@ angular
                 }
             };
 
+            var forumBadgeReached = function(){
+                var profileBadges = profile.badges;
+                var badgeForum = _.where(profileBadges, { name: "Foro interplanetario"});
+                if (badgeForum && badgeForum.status == "pending") {
+                    var postCounter = 0;
+                    var courseId = $scope.usercourse.courseid;
+                    var postCounterForums = JSON.parse(logalStorage.getItem("postcounter/"+ courseId));
+                    if (postCounterForums.forums) {
+                        for(var i = 0; i < postCounterForums.forums.length; i++){
+                            var discussions = postCounterForums.forums[i].discussions;
+                            for(var j=0; j < discussions.lenght; j++){
+                                var comments = discussions[j].total;
+                                postCounter = postCounter + parseInt(discussions[j].total);
+                                console.log(postCounter);
+                            }
+                        }
+                    }
+                    
+                    if (postCounter >= 40) {
+                        
+                        var badgeModel = {
+                            badgeid: badgeForum.id //badge earned when a user completes his profile.
+                            };
+                        moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function(){
+                            console.log("created badge successfully");
+                            },function(){
+                                });
+                        
+                    }
+                }
+            };
+            
+            
             var checkForumProgress = function(callback){
                 
                 var historicalDiscussions = getForumExtraPointsCounter($scope.currentDiscussionsIds);
-                var historicalDiscussionsFinished = _.filter(historicalDiscussions.discussions, function(hd){ return hd.total >= 2; });     
+                var historicalDiscussionsFinished = _.filter(historicalDiscussions.discussions, function(hd){ return hd.total >= 2; });
                 
                 var isActivityFinished = (historicalDiscussionsFinished.length === $scope.currentDiscussionsIds.length);
                 var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
+                                            
                 
+                forumBadgeReached();
+                                            
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     
                     var extraPointsCounter = 0;
