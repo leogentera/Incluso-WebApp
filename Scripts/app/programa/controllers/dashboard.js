@@ -282,6 +282,7 @@
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {                
                     $scope.contentResources = data.node;                    
                     }, function () {}, true);
+                
             }
 
 
@@ -290,6 +291,9 @@
                     animation: $scope.animationsEnabled,
                     templateUrl: 'changeOfTerms.html',
                     controller: function ($scope, $modalInstance) {
+                        drupalFactory.Services.GetContent('TermsAndConditions', function(data,key) {
+                            $scope.termsContent = data.node;
+                            }, function(){},true);
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };
