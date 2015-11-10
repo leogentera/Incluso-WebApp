@@ -405,10 +405,8 @@ angular
                   console.log(activityIdentifierId);
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
                     
-                    $scope.setToolbar($location.$$path, data.node.title_toolbar);
-                    $scope.back_button_text = data.node.title_back_button ;
-                    $scope.title = data.node.title ;
-                    $scope.instructions = data.node.instructions ;
+                    $scope.contentResources = data.node;
+                    $rootScope.pageName = $scope.contentResources.title_toolbar;
                     
                     }, function () {}, true);
 
