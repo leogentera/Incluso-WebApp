@@ -100,7 +100,7 @@
                                         <div class="form-group theme-form">
 
                                             <div class="clearfix">
-                                                <span>{{placeholder[$parent.$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
+                                                <span>{{placeholder[$parent.$index]}} {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
                                                    ng-click="deleteAbility('essay' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status >= 0">
@@ -141,7 +141,7 @@
                                         <div class="form-group theme-form">
 
                                             <div class="clearfix">
-                                                <span>{{placeholder[$parent.$index]}} {{answers[$parent.$index][$index] === "" ? $index + 1 : answers[$parent.$index].indexOf(ability) + 1}}</span>
+                                                <span>{{placeholder[$parent.$index]}} {{$index + 1}}</span>
                                                 <a class="btn btn-circle pull-right"
                                                    ng-click="deletePerson('shortanswer' + $parent.$index, $parent.$index, $index)"
                                                    ng-show="activity_status >= 0">
@@ -240,7 +240,7 @@
                                             <li ng-class="{'failed clearfix': chosenByUserAndWrong[$index][0]}"
                                                 ng-show="!questionIsCorrect[$index] || questionIsCorrect[$index] && !chosenByUserAndWrong[$index][0]">
                                                 <span class="pull-left icomoon icon-wrong" ng-show="chosenByUserAndWrong[$index][0]"></span>
-                                                {{question.answers[0].answer}}
+                                                {{question.answers[0].answer}} 2222
                                             </li>
                                             <li ng-class="{'failed clearfix': chosenByUserAndWrong[$index][1]}"
                                                 ng-show="!questionIsCorrect[$index] || questionIsCorrect[$index] && chosenByUserAndWrong[$index][1]">
@@ -321,7 +321,7 @@
                     <! -- END OF SECTION FOR FINAL EXPLORATIONS --->
 
 
-                    <section class="txt-renglon pill" ng-show="activityPoints > 0">
+                    <section class="txt-renglon pill" ng-show="activityPoints > 0 && activity_status == 0">
                         <div class="pull-left">{{closingContent.earned_stars}}</div>
                         <!--<div class="pull-left">Estrellas ganadas:</div>-->
                         <div class="pull-right sm-pill">
@@ -365,10 +365,10 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">Exploración inicial</h3>
+                <h3 class="subtitle text-center">{{title}}</h3>
 
                 <p class="txt-renglon centered">
-                    {{message}}
+                    {{instructions}}
                 </p>
             </div>
         </div>

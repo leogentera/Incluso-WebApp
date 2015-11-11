@@ -411,7 +411,7 @@
 
             //avoid sending null stars
             dataModel["stars"] = dataModel.stars ? dataModel.stars : 0;
-
+            
             _httpFactory({
                 method: 'PUT',
                 url: url,
