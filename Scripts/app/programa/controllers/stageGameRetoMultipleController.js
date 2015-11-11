@@ -32,7 +32,7 @@ angular
             $scope.$emit('HidePreloader');
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var activitiesPosted = 0;
-	    var stars = 0;
+	    //var stars = 0;
             _setLocalStorageItem("retoMultipleActivities", null);
             $scope.user = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
@@ -68,7 +68,7 @@ angular
               }
             }
 
-            $scope.stars = stars;
+            //$scope.stars = stars;
             $scope.isInstalled = false;
 
             if(!$routeParams.retry){
