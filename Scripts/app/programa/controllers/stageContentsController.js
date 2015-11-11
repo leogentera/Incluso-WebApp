@@ -127,7 +127,7 @@ angular
                       waitPreloader++;
                       activitiesData = activitiesData.slice(0,-1);
                       console.log(activitiesData);
-                      moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, getActivityInfoCallback, getActivityErrorCallback);
+                      moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, $scope.token, getActivityInfoCallback, getActivityErrorCallback);
                   }
                   if (waitPreloader == 0) {
                       $scope.$emit('HidePreloader');

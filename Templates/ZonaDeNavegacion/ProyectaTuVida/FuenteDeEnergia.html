@@ -150,8 +150,8 @@
                   <div class="interact">
                     <div class="col-xs-6 like"  ng-click="likeSubActivity(activity.groupid)">
                       <span class="icomoon icon-like"></span>
-                      <span ng-hide="activity.activityContent.liked">Me gusta</span>
-                      <span ng-show="activity.activityContent.liked">Ya no me gusta</span>
+                        <span ng-show="activity.activityContent.liked == 0">Me gusta</span>
+                        <span ng-show="activity.activityContent.liked == 1">Ya no me gusta</span>
                     </div>
                     
                     <div class="col-xs-6 comment">
