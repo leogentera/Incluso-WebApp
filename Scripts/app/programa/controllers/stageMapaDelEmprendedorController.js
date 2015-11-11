@@ -19,7 +19,12 @@ angular
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false; 
+            $rootScope.showStage3Footer = false;
+            
+            drupalFactory.Services.GetContent("MapaDelEmprendedor", function (data, key) {
+                $scope.content = data.node;
+                }, function () {
+            }, true);
 
             $scope.scrollToTop();
 
