@@ -27,13 +27,13 @@
                                            ng-model="answers[$index]"
                                            value="0"
                                            ng-disabled="setReadOnly"/>
-                                    <label for="{{'true' + $index}}">{{question.answers[0].answer}}</label>
+                                    <label for="{{'true' + $index}}">{{question.answers[0].answer == "True" ? "Verdadero" : question.answers[0].answer}}</label>
 
                                     <input id="{{'fols' + $index}}" type="radio" name="{{'binary' + $index}}"
                                            ng-model="answers[$index]"
                                            value="1"
                                            ng-disabled="setReadOnly"/>
-                                    <label for="{{'fols' + $index}}">{{question.answers[1].answer}}</label>
+                                    <label for="{{'fols' + $index}}">{{question.answers[1].answer == "False" ? "Falso" : question.answers[1].answer}}</label>
                                 </div>
                             </section>
                         </div>
