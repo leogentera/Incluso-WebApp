@@ -804,16 +804,20 @@ function formatDate(date) {
 
 
             $scope.save = function () {
+                
+                if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
+                    saveUser();
+                }else {
+                    var validationResult = validateModel();  //Valid if validateModel() returns true                
 
-                var validationResult = validateModel();  //Valid if validateModel() returns true                
-
-                deleteRepeatedValues();
-
-                if (validationResult) {
-                    $scope.$emit('ShowPreloader');
-                    saveUser();                    
-                } else {
-                    $scope.$emit('scrollTop');
+                    deleteRepeatedValues();
+    
+                    if (validationResult) {
+                        $scope.$emit('ShowPreloader');
+                        saveUser();                    
+                    } else {
+                        $scope.$emit('scrollTop');
+                    }
                 }
             };
 

@@ -9,7 +9,7 @@
                         <ul class="list-group separate-items">
                             <li class="list-group-item" ng-repeat="faqQuestion in FAQsContent">
                                 <a href="" ng-click="goToDetail($index)">
-                                    <spa>{{faqQuestion.question}}</spa>
+                                    <span>{{faqQuestion.question}}</span>
                                     <span class="icomoon icon-arrow-slim-right"></span>
                                 </a>
                             </li>
@@ -21,7 +21,7 @@
                         <div class="container">
                             <section class="component">
                                 <h3 ng-class="main-title">{{content.faqs_title}}</h3>
-                                <p class="subtitle">{{faqDetail.question}}</p>
+                                <p class="subtitle"><b>{{faqDetail.question}}</b></p>
                                 <p>
                                     {{faqDetail.answer}}
                                 </p>
