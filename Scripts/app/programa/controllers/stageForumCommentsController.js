@@ -241,6 +241,7 @@ angular
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex){
 
                 var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
+                that.replyText = '';
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                     function(){

@@ -24,6 +24,7 @@
         "3303": 80, /*Zona de Aterrizaje - Educación Financiera - Multiplica tu dinero*/
         "3303results": 81, /*Zona de Aterrizaje - Educación Financiera - Multiplica tu dinero - Resultados*/
         "3401": 35, /* Zona de Aterrizaje - Mapa del Emprendedor - Fuente de energía */
+        "MapaDelEmprendedor": 88, /* Zona de Aterrizaje - Mapa del Emprendedor - Mapa del emprendedor */
         "3501": 55, /* Zona de Aterrizaje - Cabina de Soporte - Chat */
         "7001": 70, /* Profile */
         "3000": 45, /* Zona de Vuelo - Dashboard */
