@@ -63,7 +63,7 @@ hallOfFameModule
             {
                 $scope.cities = moodleFactory.Services.GetCacheJson(citiesCatalogKey);
                 //FIND ME Temporary
-                $scope.cities = ["M\u00e9xico D.F","Estado de M\u00e9xico","OTRO"];
+                //$scope.cities = ["M\u00e9xico D.F","Estado de M\u00e9xico","OTRO"];
                 $scope.cities.unshift("Ver Todo");
 
 
