@@ -1,4 +1,5 @@
 //##############################   Controller for Quizzes   ##############################
+//##############################          Version 2.1       ##############################
 angular
     .module('incluso.stage.quizcontroller', [])
     .controller('stageQuizController', [
@@ -142,7 +143,7 @@ angular
                     break;
             }
 
-            //$scope.activity_identifier = $location.path().split("/")[$location.path().split("/").length - 1];
+            
             //#######################################  STARTING POINT ##################################
 
             $scope.openModal();
@@ -686,7 +687,6 @@ angular
                             _setLocalStorageJsonItem("otherAnswQuiz/" + $scope.parentActivity.coursemoduleid, $scope.OtroAnswers);
                         }
                     }
-
 
                     console.log("activityModel.answersResult = " + JSON.stringify(activityModel.answersResult));
                     console.log("activityModel.others = " + JSON.stringify(activityModel.others));
