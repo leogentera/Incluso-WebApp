@@ -311,6 +311,21 @@ angular
                     backdrop: 'static'
                 });
             };
+            
+            
+            var waitForCatalogsLoaded = setInterval(waitForCatalogsLoadedTimer, 1500);
+            function waitForCatalogsLoadedTimer() {
+                
+                if (_catalogsLoaded != null) {
+                    clearInterval(waitForCatalogsLoaded);
+                    $scope.genderItems = _getCatalogValuesBy("gender");
+                    $scope.countryItems = _getCatalogValuesBy("country");
+                    $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
+                    $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
+                    $scope.$apply();
+                }
+            }
+            
         }])
 
         .controller('termsAndConditionsController', function ($scope, $modalInstance) {

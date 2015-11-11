@@ -14,6 +14,7 @@ var _endActivityCurrentChallenge = null;
 var _httpFactory = null;
 var _timeout = null;
 var _location = null;
+var _catalogsLoaded = null;
 
 var _catalogNames = ["sports",
     "arts",
@@ -1499,9 +1500,13 @@ function _updateDeviceVersionCache () {
 var _getCatalogValuesBy = function (catalogName) {
     
     var catalogs = moodleFactory.Services.GetCacheJson("catalogs");
-    var catalog = _.filter(catalogs, function(c) { return c.catalog === catalogName; });
     
-    return (catalog != null && catalog[0].values.length) > 0 ? catalog[0].values : [];
+    if (catalogs != null) {
+        var catalog = _.filter(catalogs, function(c) { return c.catalog === catalogName; });
+        return (catalog != null && catalog[0].values.length) > 0 ? catalog[0].values : [];
+    }else{
+        return [];
+    }
 };
 
 $(document).ready(function(){
@@ -1510,10 +1515,8 @@ $(document).ready(function(){
     
     (function() {
         /* Load catalogs */
-        
         var requestData = {"catalog": _catalogNames};
-        
-        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { }, function(){  });
+        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { _catalogsLoaded = true; }, function(){ _catalogsLoaded = false; });
     })();
     
     }, 2000);

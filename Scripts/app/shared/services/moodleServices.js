@@ -97,8 +97,8 @@
             //var url = 'comment/{0}?first={1}&since={2}&to={3}&count={4}'.format(activityId,first,since,to,count);
         }
 
-        var _getAsyncCatalogs = function(data, succesCallback, errorCallback, forceRefresh) {
-            _postAsyncData("catalogs", data, API_RESOURCE.format('catalog'), successCallback, errorCallback);
+        var _getAsyncCatalogs = function(data, succesCb, errorCb, forceRefresh) {
+            _postAsyncData("catalogs", data, API_RESOURCE.format('catalog'), succesCb, errorCb);
         };
 
         var _getAsyncCatalog = function (catalogname,token,successCallback,errorCallback,forceRefresh) {
@@ -298,7 +298,7 @@
             });
         };
 
-        var _postAsyncData = function (key, data, url, successCallback, errorCallback) {
+        var _postAsyncData = function (key, data, url, successCb, errorCb) {
             _getDeviceVersionAsync();
             
             _httpFactory({
@@ -313,10 +313,20 @@
                     _setLocalStorageJsonItem(key,data);
                 }
                 
-                successCallback(key, data);
+                if (typeof successCb === "function") {
+                    successCb(key, data);
+                }else{
+                    successCallback(key, data);
+                }
+                
             }).error(function (data, status, headers, config) {
                 console.log(data);
-                errorCallback();
+                
+                if (typeof errorCb === "function") {
+                    errorCb();
+                }else {
+                    errorCallback();
+                }
             });
         };
 

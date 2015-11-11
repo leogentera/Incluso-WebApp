@@ -41,7 +41,8 @@ angular
             }
 
             $scope.activityPoints = activityFromTree.points;
-            $scope.activityname = activityFromTree.activityname;
+            console.log($routeParams.moodleId);
+            $scope.activityname = Number($routeParams.moodleId) == 148? "Foro Artístico": activityFromTree.activityname;
             $scope.like_status = 1;
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
 
@@ -115,7 +116,7 @@ angular
                             moodleFactory.Services.PutStars(model, profile, userToken, function() {
                               updateActivityStatus($routeParams.activityId);
                               _updateRewardStatus();
-  
+
                                 profile.stars = Number(profile.stars) + Number(activityFromTree.points);
                                 _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),profile);
                                 $routeParams.activityId == 1049? moodleid =$routeParams.moodleId : moodleid = getMoodleIdFromTreeActivity($routeParams.activityId);
