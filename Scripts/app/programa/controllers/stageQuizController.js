@@ -101,37 +101,38 @@ angular
             };
 
             //Making up robot's initial message.
+            /*
             $rootScope.message = "";
 
             switch ($scope.activity_identifier) {
-                case 1001:  //Exploración Inicial - Etapa 1                        
+                case 1001:  //Exploración Inicial - Etapa 1 ****                       
                     $rootScope.message = "Explora más sobre ti y tus sueños e identifica qué has estado haciendo para hacerlos realidad.";
                     break;
-                case 1005:  //Mis Cualidades - Etapa 1                        
+                case 1005:  //Mis Cualidades - Etapa 1 ****                       
                     $rootScope.message = "Conocer qué talentos y habilidades tienes te permitirá aprovecharlas al máximo y hará más sencillo el camino para lograr lo que te propongas. Piensa: ¿Para qué tipo de actividades tienes facilidad?.";
                     break;
-                case 1006:  //Mis Gustos - Etapa 1
+                case 1006:  //Mis Gustos - Etapa 1 ****
                     $rootScope.message = "Reconocer tus gustos y preferencias te ayudará a definir tus sueños. Responder ¿qué disfrutas hacer? puede llevarte a imaginar qué te gustaría hacer en un futuro.";
                     break;
-                case 1007:  //Sueña - Etapa 1
+                case 1007:  //Sueña - Etapa 1 ****
                     $rootScope.message = " Realmente ¿conoces cuáles son tus sueños? Visualizarlos te permite trazar la mejor ruta para llegar a ellos y disfrutar lo que haces cada día. Existen diferentes tipos de sueños, cónocelos y dale rumbo a tu vida.";
                     break;
-                case 1009: //Exploración Final - Etapa 1
+                case 1009: //Exploración Final - Etapa 1 ****
                     $rootScope.message = "Explora qué tanto descubriste en la zona de vuelo.";
                     break;
-                case 2001: //Exploración Inicial - Etapa 
+                case 2001: //Exploración Inicial - Etapa 2 ****
                     $rootScope.message = "Explora más sobre ti y sobre lo que te gustaría hacer en el futuro.";
                     break;
-                case 2007: //Tus Ideas - Etapa 2
+                case 2007: //Tus Ideas - Etapa 2 ****
                     $rootScope.message = "Identifica tus límites y cambia el chip de tus ideas.";
                     break;
-                case 2016: //Mi Futuro 1, 3 y 5 - Etapa 2
+                case 2016: //Mi Futuro 1, 3 y 5 - Etapa 2 ****
                     $rootScope.message = "Recurre a tu imaginación y visualiza en donde te gustaría estar en los siguientes años.";
                     break;
-                case 2023: //Exploración Final - Etapa 2
+                case 2023: //Exploración Final - Etapa 2 ****
                     $rootScope.message = "Explora qué tanto descubriste en la zona de navegación.";
                     break;
-                case 3101: //Exploración Inicial - Etapa 3
+                case 3101: //Exploración Inicial - Etapa 3 ****
                     $rootScope.message = "Explora más de ti y de tu visión emprendedora.";
                     break;
                 case 3601: //Exploración Final - Etapa 3
@@ -142,6 +143,7 @@ angular
                     destinationPath = "/ZonaDeVuelo/Dashboard/1/0";                        
                     break;
             }
+            */
 
             
             //#######################################  STARTING POINT ##################################
@@ -170,7 +172,7 @@ angular
 
             function getDataAsync() {
                 $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
-                var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route
+                var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route (INT)
 
                 //Making up path to redirect user to the proper dashboard
                 var stageNameFromURL = $location.path().split("/")[1];
@@ -230,7 +232,10 @@ angular
                             activityObject = JSON.parse(_getItem("activityObject/" + parentActivity.coursemoduleid));
                         }
 
-                        $scope.activityObject = activityObject;
+                        if (activityObject !== null) {
+                            $scope.activityObject = activityObject;
+                        } 
+
                         console.log("localAnswers = " + JSON.stringify(localAnswers));
                         $scope.activityFinished = activityFinished;
 
@@ -242,7 +247,7 @@ angular
                             console.log("The info has been taken from Service...");
 
                         } else {//Angular-bind the answers in the respective HTML template
-
+                            
                             console.log("The info for the Quiz is within Local Storage");
                             loadModelVariables(activityObject);
                             $scope.answers = localAnswers;
@@ -606,9 +611,11 @@ angular
 
                     //Update Activity Log Service
                     if ($scope.activity_status == 0) {
-                        $scope.activity_status = 1;
+                        //$scope.activity_status = 1;
 
-                        updateUserStars($scope.parentActivity.activity_identifier);
+                        //updateUserStars($scope.parentActivity.activity_identifier);
+
+
 
                         /*    
                         if ($scope.childActivity) {
@@ -822,8 +829,16 @@ angular
 
                         function (responseData) {
                             console.log('Update profile successful...');
+                            console.log('This activity has ' + $scope.activityPoints);
                             $scope.numOfMultichoiceQuestions = 0;
                             $scope.numOfOthers = 0;
+
+                            //Update Activity Log Service
+                            if ($scope.activity_status == 0) {
+                                $scope.activity_status = 1;
+                                console.log("Update Activity Log : " + $scope.activity_identifier);
+                                updateUserStars($scope.parentActivity.activity_identifier);                                
+                            }
 
                             console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
                             $location.path(destinationPath);
@@ -837,6 +852,13 @@ angular
                     console.log('This activity has no profile...');
                     $scope.numOfMultichoiceQuestions = 0;
                     $scope.numOfOthers = 0;
+
+                    //Update Activity Log Service.
+                    if ($scope.activity_status == 0) {//Update stars only for non-finished activities
+                        alert("To Finish Activity");
+                        $scope.activity_status = 1;
+                        updateUserStars($scope.parentActivity.activity_identifier);                                             
+                    }
 
                     console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
                     $location.path(destinationPath);
@@ -1157,7 +1179,11 @@ angular
 
         }
     ]).
-    controller('OpeningStageController', function ($scope, $modalInstance) {
+    controller('OpeningStageController', function ($scope, $modalInstance, $routeParams) {
+
+        drupalFactory.Services.GetContent($routeParams.activityIdentifier, function (data, key) {
+                        $scope.title = data.node.titulo_quiz;
+                        $scope.instructions = data.node.instrucciones; }, function () { }, true); 
 
         $scope.cancel = function () {
             $scope.$emit('ShowPreloader');
