@@ -39,7 +39,7 @@ angular
                  if (shield && shield != '') {
 
                      var shieldCategory = _.find(shields, function (s) {
-                         return s.name == shield;
+                         return s.name.toUpperCase() == shield.toUpperCase();
                      });
                      if (shieldCategory) {
                        if (shieldCategory.category == "logico") {
