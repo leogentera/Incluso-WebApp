@@ -855,7 +855,6 @@ angular
 
                     //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
-                        alert("To Finish Activity");
                         $scope.activity_status = 1;
                         updateUserStars($scope.parentActivity.activity_identifier);                                             
                     }

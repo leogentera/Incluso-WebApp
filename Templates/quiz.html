@@ -240,12 +240,12 @@
                                             <li ng-class="{'failed clearfix': chosenByUserAndWrong[$index][0]}"
                                                 ng-show="!questionIsCorrect[$index] || questionIsCorrect[$index] && !chosenByUserAndWrong[$index][0]">
                                                 <span class="pull-left icomoon icon-wrong" ng-show="chosenByUserAndWrong[$index][0]"></span>
-                                                {{question.answers[0].answer}} 2222
+                                                {{question.answers[0].answer == "True" ? "Verdadero" : question.answers[0].answer}} 
                                             </li>
                                             <li ng-class="{'failed clearfix': chosenByUserAndWrong[$index][1]}"
                                                 ng-show="!questionIsCorrect[$index] || questionIsCorrect[$index] && chosenByUserAndWrong[$index][1]">
                                                 <span class="pull-left icomoon icon-wrong" ng-show="chosenByUserAndWrong[$index][1]"></span>
-                                                {{question.answers[1].answer}}
+                                                {{question.answers[1].answer == "False" ? "Falso" : question.answers[1].answer}}
                                             </li>
                                         </ul>
                                     </div>
