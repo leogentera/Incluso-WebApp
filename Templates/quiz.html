@@ -47,7 +47,7 @@
 
                                     <div ng-show="answerObject.answer != 'Otro'">
                                         <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
-                                               value="1" name="{{'multichoice' + $parent.$index + $index}}"
+                                               name="{{'multichoice' + $parent.$index + $index}}"
                                                ng-true-value="1" ng-false-value="0"
                                                ng-click="updateOtherField($parent.$index, $index, answerObject.answer)"
                                                ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
@@ -55,7 +55,7 @@
                                     </div>
                                     <div ng-show="answerObject.answer == 'Otro'">
                                         <input id="{{'multichoice' + $parent.$index + $index}}" type="checkbox"
-                                               value="1" name="{{'multichoice' + $parent.$index + $index}}"
+                                               name="{{'multichoice' + $parent.$index + $index}}"
                                                ng-true-value="1" ng-false-value="0"
                                                ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
                                         <label for="{{'multichoice' + $parent.$index + $index}}">{{answerObject.answer}}</label>
@@ -77,6 +77,25 @@
                                 </div>
                             </section>
                         </div>
+
+
+                        <!--   -----------------------   MULTICHOICE WITHOUT OTHER TYPE QUESTION   --------------------   -->
+                        <div ng-show="questionTypeCode[$index] == 'multichoicewo'" id="{{'multichoicewo' + $index}}">
+                            <div class="txt-renglon txt-bigger">{{questionText[$index]}}</div>
+                            <section class="form txt-renglon txt-bigger part list"
+                                     id="{{'multichoiceSectionwo' + $index}}">
+                                <div ng-repeat="answerObject in question.answers track by $index">
+                                    
+                                        <input id="{{'multichoicewo' + $parent.$index + $index}}" type="checkbox"
+                                               name="{{'multichoicewo' + $parent.$index + $index}}"
+                                               ng-true-value="1" ng-false-value="0"                                               
+                                               ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
+                                        <label for="{{'multichoicewo' + $parent.$index + $index}}">{{answerObject.answer}}</label>
+
+                                </div>
+                            </section>
+                        </div>
+
 
                         <!--   -----------------------   SIMPLECHOICE TYPE QUESTION   ------------------------------              -->
                         <div ng-show="questionTypeCode[$index] == 'simplechoice'" id="{{'simplechoice' + $index}}">
@@ -276,6 +295,27 @@
 
                             <!--   -----------------------   MULTICHOICE TYPE QUESTION   ------------------------------              -->
                             <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'multichoice'">
+                                <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
+                                    <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
+                                        <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': !questionIsCorrect[$index]}"></span>
+                                        {{questionText[$index]}}
+                                        <span class="pull-right icomoon icon-arrow" ng-show="!question$index.isCollapsed"></span>
+                                        <span class="pull-right icomoon icon-arrow-up" ng-show="question$index.isCollapsed"></span>
+                                    </div>
+                                    <div id="{{'results' + $index}}" class="panel-body" collapse="!question$index.isCollapsed">
+                                        <ul>
+                                            <li ng-class="{'failed clearfix': chosenByUserAndWrong[$parent.$index][$index]}"
+                                                ng-repeat="answerObject in question.answers track by $index">
+                                                <span class="fl-left icomoon icon-wrong" ng-show="false"></span>
+                                                {{answerObject.answer}}
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--   -----------------------   MULTICHOICE WITHOUT OTHER TYPE QUESTION   ------------------------------              -->
+                            <div id="{{'question' + $index}}" ng-show="questionTypeCode[$index] == 'multichoicewo'">
                                 <div class="txt-renglon panel" ng-class="{'collapsed': question$index.isCollapsed}">
                                     <div class="panel-heading clearfix" ng-click="question$index.isCollapsed = !question$index.isCollapsed">
                                         <span class="pull-left icomoon icon-wrong-join" ng-class="{'active': !questionIsCorrect[$index]}"></span>
