@@ -1218,17 +1218,7 @@ angular
             $scope.deleteAbility = function (elem, index, innerIndex) {
                 removeHeightEssay(elem);
                 $scope.answers[index].splice(innerIndex, 1);
-            };
-
-            $scope.addPerson = function (elem, index) {
-                addHeight(elem);
-                $scope.answers[index].push("");
-            };
-
-            $scope.deletePerson = function (elem, index, innerIndex) {
-                removeHeight(elem);
-                $scope.answers[index].splice(innerIndex, 1);
-            };
+            };            
 
             $scope.hideWarning = function () {
                 $scope.showWarning = false;
