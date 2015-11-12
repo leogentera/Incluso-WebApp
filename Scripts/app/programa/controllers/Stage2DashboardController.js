@@ -131,8 +131,6 @@ angular
                 });
             };
 
-
-
             $scope.openModal_CloseChallenge = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
@@ -195,17 +193,14 @@ angular
                 //Exclude initial and final challenges from showing modal robot
                 var challengeExploracionInicial = 154;
                 var challengeExploracionFinal = 168;
-                if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){            
-                    _setLocalStorageItem("challengeMessageId",challengeCompletedId);
+                if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){
                     showClosingChallengeRobot(challengeCompletedId);
                 }else{
-                    _setLocalStorageItem("challengeMessageId",0);
-                }
-    
+                    localStorage.removeItem("challengeMessage");
+                }    
     
                 //Try to close stage. If stage is closed exactly in this attempt, show closing message.
-                if(_tryCloseStage($scope.idEtapa)){
-    
+                if(_tryCloseStage($scope.idEtapa)){    
                     $scope.openModal_CloseStage();
                 }
     
@@ -319,9 +314,9 @@ angular
                         
             var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
                               
-            $scope.actualMessage = challengeMessage;                                                          
+            $scope.actualMessage = challengeMessage;
              
-            })
+    })
     .controller('closingStageTwoController', function ($scope, $modalInstance,$location) {
                     $scope.cancel = function () {
                         $modalInstance.dismiss('cancel');

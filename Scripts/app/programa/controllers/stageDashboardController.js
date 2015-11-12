@@ -130,19 +130,17 @@ angular
                     windowClass: 'user-help-modal dashboard-stage-intro'
                 });
             };
-
-
-
+            
             $scope.openModal_CloseChallenge = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'ClosingChallengeModal.html',
                     controller: 'closingChallengeController',
                     size: size,
-                    windowClass: 'closing-stage-modal user-help-modal'
+                    windowClass: 'closing-stage-modal user-help-modal'                    
                 });
             };
-
+            
             $scope.openModal_CloseStage = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
@@ -177,41 +175,7 @@ angular
 
                 moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () { }, function () { });
 
-            };
-
-            if($scope.thisStage.firsttime){
-                $scope.openModal_StageFirstTime();
-                $scope.updateStageFirstTime();
-            }
-
-            var challengeCompletedId = _closeChallenge($scope.idEtapa);         
-            
-            _coachNotification($scope.idEtapa);
-                                    
-            //Exclude challenges initial and final from showing modal robot
-            var challengeExploracionInicial = 140;
-            var challengeExploracionFinal = 152;
-            if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){            
-                _setLocalStorageItem("challengeMessageId",challengeCompletedId);
-                $scope.openModal_CloseChallenge();
-            }else{
-                _setLocalStorageItem("challengeMessageId",0);
-            }
-                        
-
-            if(_tryCloseStage($scope.idEtapa)) {
-               $scope.openModal_CloseStage();
-            }
-
-            //Update progress
-            var userid = localStorage.getItem("userId");
-            var user = JSON.parse(localStorage.getItem("profile/" + userid));
-            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-            var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
-            $scope.model = progress.course;            
-            _setLocalStorageJsonItem("usercourse", $scope.model);
-
-            $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
+            };                    
             
             //Load challenges images
             $scope.retosIconos = {
@@ -270,6 +234,7 @@ angular
                 var activity = _getActivityByCourseModuleId(coursemoduleid);
                 return activity.status;
             };
+            
             function loadController() {
                 if ($scope.thisStage.firsttime) {
                     $scope.openModal_StageFirstTime();
@@ -356,35 +321,9 @@ angular
                 $modalInstance.dismiss('cancel');
             };
                         
-            var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
-            
-            $scope.robotMessages = [
-                    {
-                        title : "CUARTO DE RECURSOS",
-                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave! Ahora sabes que los sueños son el motor que te impulsa a avanzar y llegar cada vez más lejos.",
-                        read : "false",
-                        challengeId: 113},
-                    {
-                        title : "CONÓCETE",
-                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave! Haz de tus habilidades una fortaleza y pónlas en acción cada día.",
-                        read : "false",
-                        challengeId: 114},
-                    {
-                        title : "MIS SUEÑOS",
-                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave! Lograste descubrir cuáles son tus más grandes sueños, ahora sabes hacia dónde te diriges.",
-                        read : "false",
-                        challengeId: 115},
-                    {
-                        title : "CABINA DE SOPORTE",
-                        message : "¡Has recuperado con éxito una de las piezas para reparar la nave!  Lograste unir los puntos clave para definir un sueño: pasión, habilidades y talentos. ¡Sólo falta ponerlos en acción para lograr lo que te propongas!",
-                        read : "false",
-                        challengeId: 116}];
-                          
-             $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});
-
-$scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };            
+            var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
+                              
+            $scope.actualMessage = challengeMessage;
              
             }).controller('closingStageController', function ($scope, $modalInstance,$location) {
                     $scope.cancel = function () {

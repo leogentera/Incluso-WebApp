@@ -34,6 +34,9 @@ angular
             $scope.thisStage = $scope.model.stages[$scope.idEtapa];
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
+            
+            var activity_identifier = "1000";
+            getContentResources(activity_identifier);            
 
             setTimeout(function () {
                 var hits = 1;
@@ -128,7 +131,6 @@ angular
             };
 
 
-
             $scope.openModal_CloseChallenge = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
@@ -175,40 +177,52 @@ angular
 
             };
 
-            if($scope.thisStage.firsttime){
-                $scope.openModal_StageFirstTime();
-                $scope.updateStageFirstTime();
+            function loadController(){
+                
+                if($scope.thisStage.firsttime){
+                    $scope.openModal_StageFirstTime();
+                    $scope.updateStageFirstTime();
+                }
+    
+                var challengeCompletedId = _closeChallenge($scope.idEtapa);
+    
+                _coachNotification($scope.idEtapa);
+    
+                //Exclude challenges initial and final from showing modal robot
+                var challengeExploracionInicial = 205;
+                var challengeExploracionFinal = 218;
+                if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){
+                    _setLocalStorageItem("challengeMessageId",challengeCompletedId);
+                    showClosingChallengeRobot(challengeCompletedId);
+                }else{
+                    _setLocalStorageItem("challengeMessageId",0);
+                }
+    
+                //Try to close stage. If stage is closed exactly in this attempt, show closing message.
+                if(_tryCloseStage($scope.idEtapa)){
+                    $scope.openModal_CloseStage();
+                }
+    
+                //Update progress
+                var userid = localStorage.getItem("userId");
+                var user = JSON.parse(localStorage.getItem("profile/" + userid));
+                $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+                var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
+                $scope.model = progress.course;            
+                _setLocalStorageJsonItem("usercourse", $scope.model);
+    
+                $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
+            
             }
-
-            var challengeCompletedId = _closeChallenge($scope.idEtapa);
-
-            _coachNotification($scope.idEtapa);
-
-            //Exclude challenges initial and final from showing modal robot
-            var challengeExploracionInicial = 205;
-            var challengeExploracionFinal = 218;
-            if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){
-                _setLocalStorageItem("challengeMessageId",challengeCompletedId);
-                $scope.openModal_CloseChallenge();
-            }else{
-                _setLocalStorageItem("challengeMessageId",0);
+            
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {                
+                    $scope.contentResources = data.node;                    
+                    loadController();
+                    
+                    }, function () {}, true);
             }
-
-            //Try to close stage. If stage is closed exactly in this attempt, show closing message.
-            if(_tryCloseStage($scope.idEtapa)){
-                $scope.openModal_CloseStage();
-            }
-
-            //Update progress
-            var userid = localStorage.getItem("userId");
-            var user = JSON.parse(localStorage.getItem("profile/" + userid));
-            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-            var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
-            $scope.model = progress.course;            
-            _setLocalStorageJsonItem("usercourse", $scope.model);
-
-            $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
-
+            
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
             $scope.$on('$viewContentLoaded', function() {
                 //$scope.$emit('HidePreloader'); //hide preloader
@@ -246,45 +260,56 @@ angular
                 var activity = _getActivityByCourseModuleId(coursemoduleid);
                 return activity.status;
             };
+            
+            function showClosingChallengeRobot(challengeCompletedId){
+                                        
+                 $scope.robotMessages = [                    
+                    {
+                        title: $scope.contentResources.robot_title_challenge_one,
+                        message: $scope.contentResources.robot_challenge_one,
+                        read: "false",
+                        challengeId: 206
+                    },
+                    {
+                        title: $scope.contentResources.robot_title_challenge_two,
+                        message: $scope.contentResources.robot_challenge_two,
+                        read: "false",
+                        challengeId: 208
+                    },
+                    {
+                        title: $scope.contentResources.robot_title_challenge_thre,
+                        message: $scope.contentResources.robot_challenge_three,
+                        read: "false",
+                        challengeId: 90
+                    },
+                    {
+                        title:  $scope.contentResources.robot_challenge_four,
+                        message: $scope.contentResources.robot_challenge_four,
+                        read: "false",
+                        challengeId: 217
+                    }];
+
+                $scope.actualMessage = _.findWhere($scope.robotMessages, { read: "false", challengeId: challengeCompletedId });                
+                if($scope.actualMessage){                
+                    _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
+                    console.log($scope.actualMessage);
+                    $scope.openModal_CloseChallenge();
+                }
+            }
 
         }]).controller('closingStageThreeChallengeController', function ($scope, $modalInstance) {
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
     
-            var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
-    
-            $scope.robotMessages = [
-                    {
-                        title : "CUARTO DE RECURSOS",
-                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Recuerda, un emprendedor ve oportunidades donde otros ven problemas.",                        
-                        read : "false",
-                        challengeId : 206},
-                    {
-                        title : "EDUCACI\u00D3N FINANCIERA",
-                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Est\u00E1s listo para conseguir lo que te propongas, ahorrar puede ayudarte a reunir los recursos que necesitas para lograrlo.",
-                        read : "false",
-                        challengeId : 208},
-                    {
-                        title : "MAPA DEL EMPRENDEDOR",
-                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Todos podemos ser emprendedores, s\u00F3lo hace falta creer en nuestras ideas y tomar las acciones necesarias para hacerlas realidad.",
-                        read : "false",
-                        challengeId : 90},
-                    {
-                        title : "CABINA DE SOPORTE",
-                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! El mapa de tu idea de negocio esta completo, ya tienes todas las piezas para volverlo realidad, ahora s\u00F3lo depende de ti.",
-                        read : "false",
-                        challengeId : 217
-                    }];
-
-        $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});
+            var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
+                              
+            $scope.actualMessage = challengeMessage;
 
     }).controller('closingStageThreeController', function ($scope, $modalInstance,$location) {
         $scope.cancel = function () {
             $modalInstance.dismiss('cancel');
         };
-
-
 
         $scope.navigateToDashboard = function () {
             $modalInstance.dismiss('cancel');
