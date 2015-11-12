@@ -100,19 +100,22 @@ angular
             };
 
             var forumBadgeReached = function(){
+                
                 var profileBadges = profile.badges;
                 var badgeForum = _.where(profileBadges, { name: "Foro interplanetario"});
-                if (badgeForum && badgeForum.status == "pending") {
+                if (badgeForum && badgeForum[0].status == "pending") {
                     var postCounter = 0;
                     var courseId = $scope.usercourse.courseid;
-                    var postCounterForums = JSON.parse(logalStorage.getItem("postcounter/"+ courseId));
+                    var postCounterForums = JSON.parse(localStorage.getItem("postcounter/"+ courseId));
                     if (postCounterForums.forums) {
-                        for(var i = 0; i < postCounterForums.forums.length; i++){
-                            var discussions = postCounterForums.forums[i].discussions;
-                            for(var j=0; j < discussions.lenght; j++){
-                                var comments = discussions[j].total;
-                                postCounter = postCounter + parseInt(discussions[j].total);
-                                console.log(postCounter);
+                        for(var i = 0; i < postCounterForums.forums.length; i++){                            
+                            if (postCounterForums.forums[i].forumactivityid != "50000") {                                                        
+                                var discussions = postCounterForums.forums[i].discussion;
+                                for(var j=0; j < discussions.length; j++){
+                                    var comments = discussions[j].total;
+                                    postCounter = postCounter + parseInt(discussions[j].total);
+                                    console.log(postCounter);
+                                }
                             }
                         }
                     }
@@ -120,13 +123,12 @@ angular
                     if (postCounter >= 40) {
                         
                         var badgeModel = {
-                            badgeid: badgeForum.id //badge earned when a user completes his profile.
+                            badgeid: badgeForum[0].id //badge earned when a user completes his profile.
                             };
                         moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function(){
                             console.log("created badge successfully");
                             },function(){
                                 });
-                        
                     }
                 }
             };
