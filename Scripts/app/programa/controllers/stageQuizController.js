@@ -37,7 +37,7 @@ angular
             $scope.OtroAnswers = [];
             $scope.numOfMultichoiceQuestions = 0;
             $scope.position = {};
-            var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3601];
+            var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601];
             //var quizHasOther = ["1001", "1005", "1006", "2001", "2023", "3101", "3601"];
             $scope.questionNumOfChoices = [];
             $scope.placeholder = [];
