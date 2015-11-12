@@ -231,7 +231,9 @@
             }
 
             function getUserNotifications(callback){
-                moodleFactory.Services.GetUserNotification(_getItem("userId"), $scope.user.token, callback, errorCallback);
+                moodleFactory.Services.GetUserNotification(_getItem("userId"), $scope.user.token, function(){
+                        _generalNotification();
+                    }, errorCallback);
             }
 
             function getUserChat(callback) {                
