@@ -518,7 +518,7 @@
                         }
                     }
                     .block{
-                        border-top: 2px solid rgba(255, 255, 255, 0.08);
+                        border-bottom: 2px solid rgba(255, 255, 255, 0.08);
                         margin: 0 5%;
                         padding: 3% 0;
                         width:90%;
@@ -600,7 +600,18 @@
                                     border-top: 0;
                                 }
                             }
+                            & > div:nth-last-child(2) {
+                                .block {
+                                    border-bottom: 0;
+                                }
+                            
+                            }
+                            & > div.coment.block {
+                                border-bottom: 0;
+                                border-top: 2px solid rgba(255, 255, 255, 0.08); 
+                            }
                         }
+                        
                     }
                     
                     }

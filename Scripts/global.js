@@ -1033,7 +1033,7 @@ var getForumExtraPointsCounter = function(discussionIds) {
     return tempDiscussions;
 };
 
-function updateUserStars(activityIdentifier, extraPoints) {alert("update stars: " + activityIdentifier);
+function updateUserStars(activityIdentifier, extraPoints) {
     var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
@@ -1046,7 +1046,7 @@ function updateUserStars(activityIdentifier, extraPoints) {alert("update stars: 
         stars = extraPoints;
     } else {
 
-        if (activityIdentifier == "2016") {alert("Activity 2016");
+        if (activityIdentifier == "2016") {
             profile.stars = parseInt(profile.stars) + parseInt(activity.activities[0].points);
         } else {
             profile.stars = Number(profile.stars) + Number(activity.points);
