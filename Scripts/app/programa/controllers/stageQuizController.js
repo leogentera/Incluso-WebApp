@@ -43,7 +43,6 @@ angular
             $scope.placeholder = [];
             $scope.maxPages = 0;
             $scope.modelIsLoaded = false;
-
             $scope.userprofile = {};
             $scope.userprofile.talents = [];
             $scope.userprofile.values = [];
@@ -106,7 +105,7 @@ angular
             $scope.openModal();
             getDataAsync();
 
-            //***********************************************************************************************************
+            //********************************************************************************************
 
             function getContentAsync()
             {
@@ -186,8 +185,7 @@ angular
                         } else {
                             localAnswers = JSON.parse(_getItem("answersQuiz/" + parentActivity.coursemoduleid));
                             activityObject = JSON.parse(_getItem("activityObject/" + parentActivity.coursemoduleid));
-                        }
-                        
+                        }                        
 
                         if (activityObject !== null) {
                             $scope.activityObject = activityObject;
@@ -421,7 +419,7 @@ angular
 
                 var questionText = question.question; //Contains the text for question.
                 var questionType = question.questionType || question.questiontype;   //Contains the type of question.
-                console.log("this is " + questionType);
+                
                 if (questionType == "shortanswer") {
                     questionCode = "shortanswer";
                 }
@@ -456,7 +454,6 @@ angular
                 if (questionType == "multichoice" && question.id == 124) {
                     questionCode = "multichoicewo";
                 }
-
 
                 if (questionType == "multichoice" && question.id == 120) {
                     questionCode = "multichoicewo";
@@ -493,8 +490,7 @@ angular
 
                         if ($scope.answers[questionIndex] == undefined) {
                             $scope.answers[questionIndex] = [];
-                        };
-                        
+                        };                        
 
                         var index;
                         var indexUserAnswers;
@@ -523,19 +519,7 @@ angular
                                         }
                                     }
                                 }
-                            }
-                            /*
-                            for (index = 0; index < question.answers.length; index++) {
-                                if ($scope.answers[questionIndex][index] !== 1) {
-                                    $scope.answers[questionIndex][index] = 0;
-                                }
-                            }
-                            */
-
-                            //console.log("$scope.OtroAnswers = " + JSON.stringify($scope.OtroAnswers));
-                            //console.log("Position = " + JSON.stringify($scope.position));
-                            //console.log("Index, Position = " + questionIndex + " / " + $scope.position[questionIndex]);
-
+                            }  
                         }
 
                         break;
@@ -614,12 +598,7 @@ angular
                         var i;
                         var myAnswer;
                         var userAnswers;
-
-                        /*
-                        if ($scope.answers[questionIndex] == undefined) {
-                            $scope.answers[questionIndex] = [];
-                        };
-                        */
+                        
                         console.log("user answer essay = " + question.userAnswer);
 
                         if ($scope.answers[questionIndex]  === undefined) {
@@ -766,7 +745,6 @@ angular
                         }, destinationPath);
                     }
 
-
                 }, 1);
 
             };
@@ -905,7 +883,6 @@ angular
                     $location.path(destinationPath);
                 }
 
-
             }
 
 
@@ -962,7 +939,6 @@ angular
                                     $scope.answers[index][i] = 0;                                        
                                 } 
                             }
-
 
                         break;
 
@@ -1060,7 +1036,6 @@ angular
                         $scope.answerIsCorrect[i] = [];
 
                         for (j = 0; j < questionObj.answers.length; j++) {
-
 
                             if ($scope.questionTypeCode[i] == 'binary') {
                                 //Add item for binary object to finalResult array
@@ -1167,20 +1142,35 @@ angular
             function addHeight(elem) {
                 var elemHeight = angular.element(elem).height();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
-                console.log(containerHeight);
+                
                 if (containerHeight < 627) {
                     angular.element(".owl-wrapper-outer").css('height', containerHeight + 100);
                     angular.element(elem).css('height', elemHeight + 100);
                 }
             }
 
+            function removeHeight(elem) {
+                var listaHeight = angular.element(elem).height();
+                var containerHeight = angular.element('div.owl-wrapper-outer').height();
+                //angular.element("div.owl-wrapper-outer").css('height', listaHeight - 127);
+                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 100);
+            }
+
             function addHeightEssay(elem) {
                 var elemHeight = angular.element(elem).height();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
-                console.log(containerHeight);
+                
                 angular.element(".owl-wrapper-outer").css('height', containerHeight + 147);
                 angular.element(elem).css('height', elemHeight + 147);
             }
+
+            function removeHeightEssay(elem) {
+                var listaHeight = angular.element(elem).height();
+                var containerHeight = angular.element('div.owl-wrapper-outer').height();
+                //angular.element("div.owl-wrapper-outer").css('height', listaHeight - 127);
+                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 127);
+            }
+
 
             function addHeightForOther() {
                 console.log("We are inside addHeightForOther");
@@ -1191,22 +1181,7 @@ angular
             function reduceHeightForOther() {
                 $scope.finalHeight = angular.element('.owl-wrapper-outer').height() - 100;
                 angular.element(".owl-wrapper-outer").css('height', $scope.finalHeight);
-            }
-
-            function removeHeight(elem) {
-                var listaHeight = angular.element(elem).height();
-                var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                //angular.element("div.owl-wrapper-outer").css('height', listaHeight - 127);
-                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 100);
-            }
-
-            function removeHeightEssay(elem) {
-                var listaHeight = angular.element(elem).height();
-                var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                //angular.element("div.owl-wrapper-outer").css('height', listaHeight - 127);
-                angular.element("div.owl-wrapper-outer").css('height', containerHeight - 127);
-            }
-
+            } 
 
             //This function is activated from Template, with ESSAY type questions
             $scope.addAbility = function (elem, index) {
@@ -1284,8 +1259,6 @@ angular
                             $scope.answerIndex = this.currentItem + 1;
                             prevPage = $("#index").html();
                             $("#index").html($scope.answerIndex);
-
-
                         }
                     };
 
