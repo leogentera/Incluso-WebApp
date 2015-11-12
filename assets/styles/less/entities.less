@@ -600,14 +600,18 @@
                                     border-top: 0;
                                 }
                             }
-                        }
-                        & > div:not(.ng-hide):last-child {
-                            border-bottom: 0;
-                            .block {
-                                border-bottom: 0;
-                            }
+                            & > div:nth-last-child(2) {
+                                .block {
+                                    border-bottom: 0;
+                                }
                             
+                            }
+                            & > div.coment.block {
+                                border-bottom: 0;
+                                border-top: 2px solid rgba(255, 255, 255, 0.08); 
+                            }
                         }
+                        
                     }
                     
                     }
