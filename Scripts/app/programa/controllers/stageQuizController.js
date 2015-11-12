@@ -234,7 +234,7 @@ angular
                 $scope.modelIsLoaded = true;
                 var index;
 
-                //The activityObject is an object the same type we get eith the following GET request:
+                //The activityObject is an object the same type we get with the following GET request:
                 //http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
                 var theCourseModuleId;
                 if ($scope.childActivity) {
@@ -331,11 +331,7 @@ angular
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
                             hobbies.push(answerLabel);
-                        }
-
-                        console.log(favoriteSports);
-                        console.log(artisticActivities);
-                        console.log(hobbies);
+                        }                        
                     }
 
 
@@ -629,11 +625,11 @@ angular
 
 
             //############################## CODE CALLED WHEN USER FINISHES ACTIVITY ###################################
+            //Tasks to do when the user presses the "Terminar" button.
             $scope.finishActivity = function () {
-                //Tasks to do when the user presses the "Terminar" button.
+                
                 console.log("$scope.answers = " + JSON.stringify($scope.answers));
-                $scope.$emit("ShowPreloader");
-                //$scope.answers = ["0", "1", ["0", "1", "1", "0", "0"], "1"];
+                $scope.$emit("ShowPreloader");                
 
                 //This is to avoid killing the preloader up starting.
                 $timeout(function () {
@@ -641,18 +637,13 @@ angular
                     if ($scope.childActivity) {
                         $scope.parentActivity.status = 1;
                         $scope.childActivity.status = 1;
-                    } else {
-                        $scope.parentActivity.status = 1;
-                    }
-
-                    $scope.isDisabled = true;
-                    
-                    if ($scope.childActivity) {
                         $scope.AnswersResult.activityidnumber = $scope.childActivity.coursemoduleid;
                     } else {
+                        $scope.parentActivity.status = 1;
                         $scope.AnswersResult.activityidnumber = $scope.parentActivity.coursemoduleid;
                     }
 
+                    $scope.isDisabled = true; 
                     $scope.AnswersResult.userid = $scope.userprofile.id;
                     $scope.AnswersResult.like_status = $scope.like_status;
                     $scope.AnswersResult.updatetype = 1;
@@ -667,10 +658,7 @@ angular
                     updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
 
                     //Update local storage and activities status array
-                    _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
-                    console.log("Your answers: " + $scope.answers.toString());
-                    console.log("Your other :" + JSON.stringify($scope.OtroAnswers));
-
+                    _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse); 
                     $scope.AnswersResult.answers = $scope.answers;
 
                     console.log("Ending activity...");
@@ -828,19 +816,7 @@ angular
                     if ($scope.OtroAnswers[2].answers[0] != '') {
                         $scope.userprofile.hobbies.push($scope.OtroAnswers[2].answers[0]);
                     }
-                }
-
-                if ($scope.activity_identifier === 1005) {
-                    console.log("Talents to Save: " + $scope.userprofile.talents);
-                    console.log("Values to Save: " + $scope.userprofile.values);
-                    console.log("Habilities to Save: " + $scope.userprofile.habilities);
-                }
-
-                if ($scope.activity_identifier === 1006) {
-                    console.log("favoriteSports to Save: " + $scope.userprofile.favoriteSports);
-                    console.log("artisticActivities to Save: " + $scope.userprofile.artisticActivities);
-                    console.log("Hobbies to Save: " + $scope.userprofile.hobbies);
-                }
+                }                
 
                 if ($scope.activity_identifier === 1005 || $scope.activity_identifier === 1006) {
                     $scope.userId = moodleFactory.Services.GetCacheObject("userId");
@@ -941,7 +917,6 @@ angular
                             }
 
                         break;
-
                         
                         case "shortanswer":
                             var b;
@@ -1104,10 +1079,7 @@ angular
 
                         }
                     }
-
-                    //console.log("$scope.questionIsCorrect = " + $scope.questionIsCorrect);
-                    //console.log("$scope.chosenByUserAndWrong = " + $scope.chosenByUserAndWrong);
-                    //console.log("$scope.answerIsCorrect = " + $scope.correctIndex);
+                    
                     console.log("attainedScore / totalScore = " + attainedScore + " / " + totalScore);
                     $scope.score = attainedScore * 100 / totalScore;
                 }
@@ -1170,7 +1142,6 @@ angular
                 //angular.element("div.owl-wrapper-outer").css('height', listaHeight - 127);
                 angular.element("div.owl-wrapper-outer").css('height', containerHeight - 127);
             }
-
 
             function addHeightForOther() {
                 console.log("We are inside addHeightForOther");
