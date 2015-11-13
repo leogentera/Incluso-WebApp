@@ -28,6 +28,7 @@
         "MapaDelEmprendedor": 88, /* Zona de Aterrizaje - Mapa del Emprendedor - Mapa del emprendedor */
         "3501": 55, /* Zona de Aterrizaje - Cabina de Soporte - Chat */
         "7001": 70, /* Profile */
+        "1000": 91, /* Zona de Aterrizaje - Dashboard*/
         "3000": 45, /* Zona de Vuelo - Dashboard */
         "2000": 69, /* Zona de Navegaci�n - Dashboard */
         "0000": 57, /* Programa - Dashboard */
