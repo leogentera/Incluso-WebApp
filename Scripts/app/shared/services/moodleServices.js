@@ -196,6 +196,55 @@
                 _timeout(function () { successCallback(returnValue, key) }, 1000);
                 return returnValue;
             }
+            else if(forceRefresh){
+                if (token) {
+                    console.log("with authorization");
+                    _httpFactory({
+                        method: 'GET',
+                        url: url,
+                        headers: { 'Content-Type': 'application/json' , 'Authorization': token}
+                    }).success(function (data, status, headers, config) {
+                        _setLocalStorageJsonItem(key, data);
+                        console.log("success getAsyncData using token authorization");
+                        successCallback(data, key);
+                    }).error(function (data, status, headers, config) {
+                        errorCallback(data);
+                    });            
+                }else{
+                    console.log("without authorization");
+                    _httpFactory({
+                        method: 'GET',
+                        url: url,
+                        headers: { 'Content-Type': 'application/json'}
+                    }).success(function (data, status, headers, config) {
+                        _setLocalStorageJsonItem(key, data);
+                        console.log("success getAsyncData using token authorization");
+                        successCallback(data, key);
+                    }).error(function (data, status, headers, config) {
+                        errorCallback(data);
+                    });                                 
+                } 
+            }
+            else{
+                console.log('putting in Queue');
+                if(token){
+                    addRequestToQueue(key, {
+                    method: 'GET',
+                    url: url,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                    });
+                }
+                else{
+                    addRequestToQueue(key, {
+                    method: 'GET',
+                    url: url,
+                    headers: { 'Content-Type': 'application/json'}                    
+                    });   
+                }
+                if(successCallback){
+                    successCallback(); 
+                }
+            } 
 
             if (token) {
                 console.log("with authorization");
@@ -906,6 +955,56 @@
             }
             
             data.totalExtraPoints = totalExtraPoints;
+        }
+
+        function addRequestToQueue(key, data){
+            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
+            requestQueue = requestQueue || [];
+            data.retryCount = 0;
+            data.key = key;
+            requestQueue.push(data);
+
+            _setLocalStorageJsonItem("RequestQueue", requestQueue);
+         
+            if(requestQueue.length==1){
+                doRequest(requestQueue); 
+            }
+            
+        }
+
+        function doRequest(){            
+            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");        
+
+            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0){
+                
+                var data = requestQueue[0];
+                console.log("Procesando Request " + data.url)
+                if(data.retryCount<5){
+                        _httpFactory(
+                        data
+                    ).success(function (response) {
+                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
+                        console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
+                        requestQueue.shift();  
+                        _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                        if(data.method == 'GET'){
+                            _setLocalStorageJsonItem(data.key, response); 
+                        }
+                        _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                        doRequest();                                 
+                    }).error(function (response) {
+                        if(navigator.onLine){
+                           requestQueue[0].retryCount++;
+                           doRequest();
+                        }                        
+                    });
+                }  
+                else{
+                    requestQueue.shift();
+                    _setLocalStorageJsonItem("RequestQueue", requestQueue);
+                    doRequest();
+                }               
+            }
         }
 
         return {

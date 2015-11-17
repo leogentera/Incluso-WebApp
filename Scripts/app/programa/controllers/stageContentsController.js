@@ -127,7 +127,7 @@ angular
                       waitPreloader++;
                       activitiesData = activitiesData.slice(0,-1);
                       console.log(activitiesData);
-                      moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, $scope.token, getActivityInfoCallback, getActivityErrorCallback);
+                      moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, $scope.token, getActivityInfoCallback, getActivityErrorCallback, true);
                   }
                   if (waitPreloader == 0) {
                       $scope.$emit('HidePreloader');
@@ -423,6 +423,8 @@ angular
                 {
                     $scope.closingContent = data.node;
                 }, function () { }, true);
+
+                
             }
             console.log(moduleid);
             
