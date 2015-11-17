@@ -37,7 +37,7 @@ angular
             $scope.OtroAnswers = [];
             $scope.numOfMultichoiceQuestions = 0;
             $scope.position = {};
-            var nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601];
+            var nonEditableQuizzes = [1009, 2001, 2023, 3101, 3601];
             //var quizHasOther = ["1001", "1005", "1006", "2001", "2023", "3101", "3601"];
             $scope.questionNumOfChoices = [];
             $scope.placeholder = [];
@@ -300,11 +300,7 @@ angular
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
                             habilities.push(answerLabel);
-                        }
-
-                        console.log("Talents to Choose: " + talents);
-                        console.log("Values to Choose: " + values);
-                        console.log("Habilities to Choose: " + habilities);
+                        }                       
                     }
 
                     if ($scope.activity_identifier === 1006) {
@@ -566,14 +562,19 @@ angular
                         if ($scope.answers[questionIndex] === undefined) {
                             console.log("Adding room for first answer");
                             $scope.answers[questionIndex] = [];
-                        }
+                        }                        
 
-                        if (question.userAnswer != "") {
-                            userAnswers = question.userAnswer.split('\n');
+                        if (question.userAnswer != "") {                            
 
-                            for (i = 0; i < userAnswers.length; i++) {
-                                $scope.answers[questionIndex].push(userAnswers[i]);
+                            userAnswers = question.userAnswer.split(';');
+
+                            if ($scope.answers[questionIndex].length < userAnswers.length) {
+
+                                for (i = 0; i < userAnswers.length; i++) {                                
+                                    $scope.answers[questionIndex].push(userAnswers[i]);
+                                }
                             }
+                            
                         }
 
                         break;
@@ -1205,6 +1206,9 @@ angular
         $scope.isCollapsed = false;
     }).
     directive("owlCarousel", function () {
+        //Source: 
+        //http://stackoverflow.com/questions/29157623/owl-carousel-not-identifying-elements-of-ng-repeat
+        //
         return {
             restrict: 'E',
             transclude: false,
@@ -1214,17 +1218,17 @@ angular
                     var currPage;
                     var prevPage;
                     var defaultOptions = {
-                        navigation: false,
-                        pagination: false,
-                        goToFirstSpeed: 2000,
-                        singleItem: true,
-                        autoHeight: true,
-                        mouseDrag: false,
-                        touchDrag: false,
-                        dots: false,
-                        navRewind: true,
-                        transitionStyle: "fade",
-                        afterAction: function (el) {
+                            navigation: false,
+                            pagination: false,
+                            goToFirstSpeed: 2000,
+                            singleItem: true,
+                            autoHeight: true,
+                            mouseDrag: false,
+                            touchDrag: false,
+                            dots: false,
+                            navRewind: true,
+                            transitionStyle: "fade",
+                            afterAction: function (el) {
 
                             //add class active
                             $scope.answerIndex = this.currentItem + 1;
