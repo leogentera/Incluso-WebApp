@@ -220,6 +220,43 @@ angular
                 }
             };
             
+            
+            var communityBadgeReached = function(){
+                                
+                var profileBadges = _userProfile.badges;
+                var badgeForum = _.where(profileBadges, { name: "Participación eléctrica\n"});
+                if (badgeForum && badgeForum[0].status == "pending") {
+                    var postCounter = 0;
+                    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+                    var courseId = userCourse.courseid;
+                    var postCounterForums = JSON.parse(localStorage.getItem("postcounter/"+ courseId));
+                    if (postCounterForums.forums) {
+                        for(var i = 0; i < postCounterForums.forums.length; i++){                            
+                            if (postCounterForums.forums[i].forumactivityid == "50000") {                                                        
+                                var discussions = postCounterForums.forums[i].discussion;
+                                for(var j=0; j < discussions.length; j++){
+                                    var comments = discussions[j].total;
+                                    postCounter = postCounter + parseInt(discussions[j].total);
+                                    console.log(postCounter);
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (postCounter >= 40) {
+                        
+                        var badgeModel = {
+                            badgeid: badgeForum[0].id //badge earned when a user completes his profile.
+                            };
+                        moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){
+                            console.log("created badge successfully");
+                            },function(){
+                                });
+                    }
+                }
+            };
+            
+            
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex) {
                 
                 if ($scope.hasCommunityAccess) {
@@ -249,6 +286,8 @@ angular
                                 "post_author": _currentUser.alias,
                                 "picture_post_author": _currentUser.profileimageurl
                             });
+                            
+                            communityBadgeReached();
                             
                             $scope.$emit('HidePreloader');
                         },
@@ -282,7 +321,8 @@ angular
                             
                             $scope.postTextValue = null;
                             $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
-                            refreshTopicData();
+                            communityBadgeReached();
+                            refreshTopicData();                                            
                         },
                         function(){
                             $scope.postTextValue = null;
@@ -314,6 +354,7 @@ angular
                             
                             $scope.postLinkValue = null;
                             $scope.collapseCommunityButtomsTrigger('isLinkCollapsed');
+                            communityBadgeReached();
                             refreshTopicData();
                         },
                         function() {
@@ -344,6 +385,7 @@ angular
                             
                             $scope.postVideoValue = null;
                             $scope.collapseCommunityButtomsTrigger('isVideoCollapsed');
+                            communityBadgeReached();
                             refreshTopicData();
                         },
                         function() {
@@ -377,6 +419,7 @@ angular
                             
                             $scope.postAttachmentValue = {};
                             $scope.collapseCommunityButtomsTrigger('isAttachmentCollapsed');
+                            communityBadgeReached();
                             refreshTopicData();
                         },
                         function() {
