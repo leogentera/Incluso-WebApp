@@ -523,7 +523,7 @@
                         padding: 3% 0;
                         width:90%;
                     }
-                    > div:last-child {
+                    > div:nth-last-child(2) {
                         border: 0px none;
                     }
                     .coment{
@@ -547,7 +547,7 @@
                     }
                     .social{
                         width: 100%; 
-                        border-top: 2px solid rgba(255, 255, 255, 0.08); 
+                        border-top: 2px solid rgba(255, 255, 255, 0.08)!important; 
                         display: inline-block;
                         div{
                             display: inline-flex;
@@ -3190,9 +3190,13 @@
         }
         .user-data {
             background: none;
+            p {
+                font-size: 1em;
+            }
         }
         .user-stats .user-points {
             margin-top: 3vw!important;
+            color: #bcd431;
         }
         .control {
             position: absolute;
@@ -3320,16 +3324,19 @@
                 }
                 .user-points {
                     margin: 4vw 0 6vw 0;
+                    span {
+                        color: #bcd431;
+                    }
                 }
                 .list-records {
                     margin: 0;
                     padding: 0;
                     width: 100%;
                     text-align: left;
-                    font-size: 1em;
+                    font-size: .9em;
                     span {
                         color: #bcd431;
-                        font-size: 1.2em;
+                        font-size: 1.1em;
                     }
                 }
             }
