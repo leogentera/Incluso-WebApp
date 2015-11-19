@@ -249,9 +249,9 @@ angular
                 if(!$scope.registerForm.email.$valid){ errors.push("Formato de correo incorrecto."); }                
                 if(!$scope.registerModel.secretQuestion){ errors.push("Pregunta secreta inválida."); }
                 if(!$scope.registerForm.secretAnswer.$valid){ errors.push("Respuesta secreta inválida."); }
-                if(!$scope.registerModel.termsAndConditions){ errors.push("Debe aceptar los términos y condiciones."); }                
+                if(!$scope.registerModel.termsAndConditions){ errors.push("Debe aceptar los términos y condiciones."); }
+                if(isNaN(age) || age < 13){ errors.push("Debes ser mayor de 13 años para poder registrarte."); }
                 $scope.registerModel.modelState.errorMessages = errors;
-                if(age < 13){ errors.push("Debes ser mayor de 13 años para poder registrarte."); }
                 return (errors.length === 0);
             }
 
