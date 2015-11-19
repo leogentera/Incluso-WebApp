@@ -86,7 +86,8 @@ angular
             };
 
             $scope.login = function (username, password) {
-                $scope.validateConnection(loginConnectedCallback, offlineCallback);
+                loginConnectedCallback();
+                //$scope.validateConnection(loginConnectedCallback, offlineCallback);
             }
             
             function loginConnectedCallback() {
@@ -212,10 +213,8 @@ angular
             }
             
             function offlineCallback() {
-                $scope.$apply(function() {
-                    $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
-                    $scope.$emit('scrollTop'); //- scroll
-                });
+                $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
+                $scope.$emit('scrollTop'); //- scroll
             }
             
 

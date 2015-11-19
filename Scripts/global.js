@@ -20,10 +20,6 @@ var _catalogsLoaded = null;
 /* Prototypes */
 var _isDeviceOnline = null;
 
-function updateConnectionStatus(isConnected) {
-    _isDeviceOnline = isConnected;
-}
-
 var _catalogNames = ["sports",
     "arts",
     "hobbiescatalog",
