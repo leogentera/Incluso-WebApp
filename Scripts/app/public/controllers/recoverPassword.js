@@ -34,6 +34,8 @@ angular
                     errorMessages: []
                 }
             };
+            
+            $scope.validateConnection(function () {}, offlineCallback);
 
             /* Helpers */
             var isConfirmedPasswordValid = false;
@@ -51,32 +53,17 @@ angular
             
             $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
 
-            /* Watchers */
-            /*
-            $scope.$watch("recoverPasswordModel.confirmPassword", function(newValue, oldValue){
-                //isConfirmedPasswordValid = (newValue === $scope.recoverPasswordModel.password);
-                console.log("Watching confirmPassword, newValue= " + newValue + ", oldValue = " + oldValue + "confirmPassword === password: " + isConfirmedPasswordValid);
-            });
-
-            $scope.$watch("recoverPasswordModel.password", function(newValue, oldValue){
-                //isConfirmedPasswordValid = (newValue === $scope.recoverPasswordModel.confirmPassword);
-                //console.log("Watching password, newValue= " + newValue + ", oldValue = " + oldValue + "confirmPassword === password: " + isConfirmedPasswordValid);
-                console.log(newValue);
-            });
-            */
-
-            $scope.$watch("recoverPasswordModel.code", function(newValue, oldValue){
-                //isConfirmedPasswordValid = (newValue === $scope.recoverPasswordModel.confirmPassword);
-                //console.log("Watching password, newValue= " + newValue + ", oldValue = " + oldValue + "confirmPassword === password: " + isConfirmedPasswordValid);
-                console.log(newValue);
-            });
-
-
             $scope.$watch("recoverPasswordModel.modelState.errorMessages", function(newValue, oldValue){
                 $scope.recoverPasswordModel.modelState.isValid = (newValue.length === 0);
                 console.log("Validity: " + $scope.recoverPasswordModel.modelState.isValid);
             });
 
+            
+            function offlineCallback() {
+                $scope.recoverPasswordModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
+                $scope.$emit('scrollTop'); //- scroll
+            }
+            
             function checkEqualityOfPasswords(password, confirmPassword) {
                 if (password === confirmPassword) {
                     return true;
@@ -95,6 +82,11 @@ angular
             };
 
             $scope.getPasswordRecoveryCode = function() {
+                
+                $scope.validateConnection(getPasswordRecoveryCodeConnectedCallback, offlineCallback);
+            };
+            
+            function getPasswordRecoveryCodeConnectedCallback() {
                 console.log('Start Code Recovery'); //- debug
                 console.log('fetching errors list'); //- debug
                 var errors = [];
@@ -146,10 +138,15 @@ angular
                     console.log('End'); //- debug
                     $scope.$emit('scrollTop'); //- scroll
                 }
-            };
+            }
 
             // For page 2/2
             $scope.recover = function() {
+                
+                $scope.validateConnection(recoverConnectedCallback, offlineCallback);
+            };
+            
+            function recoverConnectedCallback() {
                 console.log('Start Password Reset'); //- debug
                 console.log('fetching errors list'); //- debug
                 var errors = [];
@@ -232,5 +229,5 @@ angular
                     console.log('End'); //- debug
                     $scope.$emit('scrollTop'); //- scroll
                 }
-            };      
+            }
         }]);
