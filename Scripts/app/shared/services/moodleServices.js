@@ -170,8 +170,7 @@
             _getAsyncData('comment', API_RESOURCE.format(url), token, successCallback, errorCallback,true);
         };
 
-        var _getAsyncStars = function(userId, token, successCallback, errorCallback, forceRefresh){
-            debugger;
+        var _getAsyncStars = function(userId, token, successCallback, errorCallback, forceRefresh){            
             _getAsyncData("userStars", API_RESOURCE.format('stars/'+ userId), token, successCallback, errorCallback, forceRefresh);
         };
         
@@ -245,34 +244,7 @@
                     successCallback(); 
                 }
             } 
-
-            if (token) {
-                console.log("with authorization");
-                _httpFactory({
-                    method: 'GET',
-                    url: url,
-                    headers: { 'Content-Type': 'application/json' , 'Authorization': token}
-                }).success(function (data, status, headers, config) {
-                    _setLocalStorageJsonItem(key, data);
-                    console.log("success getAsyncData using token authorization");
-                    successCallback(data, key);
-                }).error(function (data, status, headers, config) {
-                    errorCallback(data);
-                });            
-            }else{
-                console.log("without authorization");
-                _httpFactory({
-                    method: 'GET',
-                    url: url,
-                    headers: { 'Content-Type': 'application/json'}
-                }).success(function (data, status, headers, config) {
-                    _setLocalStorageJsonItem(key, data);
-                    console.log("success getAsyncData using token authorization");
-                    successCallback(data, key);
-                }).error(function (data, status, headers, config) {
-                    errorCallback(data);
-                });                                 
-            }                                    
+                        
         };
         
         var _getAsyncForumDiscussionsData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
@@ -350,33 +322,16 @@
         var _postAsyncData = function (key, data, url, successCb, errorCb) {
             _getDeviceVersionAsync();
             
-            _httpFactory({
+            addRequestToQueue(key, {
                 method: 'POST',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json' },
-            }).success(function (data, status, headers, config) {
-                console.log('success');
-                
-                if (key != null) {
-                    _setLocalStorageJsonItem(key,data);
-                }
-                
-                if (typeof successCb === "function") {
-                    successCb(key, data);
-                }else{
-                    successCallback(key, data);
-                }
-                
-            }).error(function (data, status, headers, config) {
-                console.log(data);
-                
-                if (typeof errorCb === "function") {
-                    errorCb();
-                }else {
-                    errorCallback();
-                }
+                headers: { 'Content-Type': 'application/json' }
             });
+
+            if(successCallback){
+                successCallback(); 
+            }
         };
 
         var _postAsyncCommentToActivity = function(key,data,url,successCallback,errorCallback){
@@ -424,18 +379,17 @@
         
         var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
-            _httpFactory({
+            addRequestToQueue(key, {
                 method: 'PUT',
                 url: url,
                 data: dataModel,
-                headers: { 'Content-Type': 'application/json' },
-            }).success(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,dataModel);
-                successCallback();
-            }).error(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,dataModel);
-                errorCallback();
+                headers: { 'Content-Type': 'application/json' }
             });
+            _setLocalStorageJsonItem(key,dataModel);
+
+            if(successCallback){
+                successCallback(); 
+            }
         };
 
         var _putDataNoCache = function (data, url, successCallback, errorCallback) {
@@ -461,18 +415,17 @@
             //avoid sending null stars
             dataModel["stars"] = dataModel.stars ? dataModel.stars : 0;
             
-            _httpFactory({
+            addRequestToQueue(key, {
                 method: 'PUT',
                 url: url,
                 data: dataModel,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token },
-            }).success(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,profile);
-                successCallback();
-            }).error(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,profile);
-                errorCallback();
+                headers: { 'Content-Type': 'application/json', 'Authorization': token }
             });
+
+            _setLocalStorageJsonItem(key,profile);
+            if(successCallback){
+                successCallback(); 
+            }
         };
 
         
@@ -495,33 +448,31 @@
         var _endActivity = function (key, data, userCourseModel, url, token, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
-            _httpFactory({
+            addRequestToQueue(key, {
                 method: 'PUT',
                 url: url,
                 data: data,
                 headers: { 'Content-Type': 'application/json', 'Authorization': token }
-            }).success(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,userCourseModel);
-                successCallback(data);
-            }).error(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,userCourseModel);
-                errorCallback();
             });
+
+            _setLocalStorageJsonItem(key,userCourseModel);
+            if(successCallback){
+                successCallback(data);
+            }
         };
 
         var _startActivity = function (data, activityModel, token, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
-            _httpFactory({
+            addRequestToQueue('activity/' + activityModel.coursemoduleid, {
                 method: 'PUT',
                 url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),
                 data: data,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token },
-            }).success(function (data, status, headers, config) {
-                successCallback();
-            }).error(function (data, status, headers, config) {
-                errorCallback();
+                headers: { 'Content-Type': 'application/json', 'Authorization': token }
             });
+            if(successCallback){
+                successCallback();
+            }            
         };
 
         var createPostsTree = function(posts) {
