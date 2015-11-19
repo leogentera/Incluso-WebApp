@@ -17,6 +17,13 @@ var _timeout = null;
 var _location = null;
 var _catalogsLoaded = null;
 
+/* Prototypes */
+var _isDeviceOnline = null;
+
+function updateConnectionStatus(isConnected) {
+    _isDeviceOnline = isConnected;
+}
+
 var _catalogNames = ["sports",
     "arts",
     "hobbiescatalog",
@@ -52,6 +59,7 @@ var _catalogNames = ["sports",
     "citiesCatalog",
     "gender"
 ];
+
 
 var _activityStatus = null;
 
@@ -1495,6 +1503,13 @@ function _updateDeviceVersionCache () {
             }, function() { console.log("fail"); FLAG_DEVICE_VERSION_RUNNING = false }, "CallToAndroid", "getversion", []);
         }
     }
+}
+
+function _forceUpdateConnectionStatus(callback) {
+    cordova.exec(function(data) {
+        _isDeviceOnline = data.online;
+        callback();
+    }, function() {  }, "CallToAndroid", "isonline", []);
 }
 
 var _getCatalogValuesBy = function (catalogName) {

@@ -11,7 +11,7 @@
         '$modal',
         function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal ) {
         	// http://stackoverflow.com/questions/15033195/showing-spinner-gif-during-http-request-in-angular
-			// To handle page reloads		
+			// To handle page reloads
 			_httpFactory = $http;
         	if ($location.$$path.split('/')[1]) {
         		$scope.loading = true;
@@ -241,6 +241,16 @@
                         windowClass: 'user-help-modal dashboard-programa'
                     });
             }
-
-
+			
+			$scope.validateConnection = function(connectedCallback, offlineCallback) {
+				 _forceUpdateConnectionStatus(function() {
+					
+					if (_isDeviceOnline) {
+						connectedCallback();
+					}else {
+						offlineCallback();
+					}
+					
+				});
+			};
         }]);

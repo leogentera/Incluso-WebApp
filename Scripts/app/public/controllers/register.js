@@ -62,6 +62,8 @@ angular
             $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
             $scope.showPlaceHolder = true;
             
+            $scope.validateConnection(function () {}, offlineCallback);
+            
             $scope.$emit('HidePreloader'); //- hide preloader
 
             /* Watchers */
@@ -76,6 +78,11 @@ angular
             });                                                                  
 
             $scope.register = function() {
+                
+                $scope.validateConnection(registerConnectedCallback, offlineCallback);
+            }
+            
+            function registerConnectedCallback () {
                 console.log('register');
                 localStorage.removeItem("Credentials");
                 
@@ -85,6 +92,11 @@ angular
                 }else{
                     $scope.$emit('scrollTop'); //- scroll
                 }
+            }
+            
+            function offlineCallback() {
+                $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
+                $scope.$emit('scrollTop'); //- scroll
             }
 
             $scope.autologin = function(data) {

@@ -6,6 +6,7 @@
         'ui.bootstrap',
         'ui.bootstrap.tpls',
         'inlcuso.shared.mainNavigation',
+        'incluso.shared.offlineController',
         'incluso.home',
         // One module per controller. If we wanted to use one module for several controllers we would need to load dependencies of
         // one controller for all controllers in the module, and we would also need a variable to keep track of the modules:
@@ -703,6 +704,11 @@
         $routeProvider.when('/GalleryDetail', {
             templateUrl: 'Templates/Programa/gallery-detail.html',
             controller: 'postPhotoGalleryDetailController'
+        });
+        
+        $routeProvider.when('/Offline', {
+            templateUrl: 'Templates/Shared/offline.html',
+            controller: 'offlineController'
         });
 
         $routeProvider.otherwise({
