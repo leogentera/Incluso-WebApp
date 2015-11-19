@@ -95,8 +95,10 @@ angular
             }
             
             function offlineCallback() {
-                $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
-                $scope.$emit('scrollTop'); //- scroll
+                $scope.$apply(function(){
+                    $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
+                    $scope.$emit('scrollTop'); //- scroll
+                });
             }
 
             $scope.autologin = function(data) {

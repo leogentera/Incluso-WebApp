@@ -60,8 +60,10 @@ angular
 
             
             function offlineCallback() {
-                $scope.recoverPasswordModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
-                $scope.$emit('scrollTop'); //- scroll
+                $scope.$apply(function() {
+                    $scope.recoverPasswordModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
+                    $scope.$emit('scrollTop'); //- scroll
+                });
             }
             
             function checkEqualityOfPasswords(password, confirmPassword) {

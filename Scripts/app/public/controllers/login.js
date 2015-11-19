@@ -85,75 +85,81 @@ angular
                 }
             };
 
-            $scope.login = function (username, password) {  
-                               
-                    // reflect loading state at UI
-                    $scope.$emit('ShowPreloader'); //show preloader
-                    console.log('preloading...'); //- debug
+            $scope.login = function (username, password) {
+                $scope.validateConnection(loginConnectedCallback, offlineCallback);
+            }
+            
+            function loginConnectedCallback() {
+                // reflect loading state at UI
+                $scope.$emit('ShowPreloader'); //show preloader
+                console.log('preloading...'); //- debug
 
-                    $http(
-                        {
-                            method: 'POST',
-                            url: API_RESOURCE.format("authentication"),
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            data: $.param({ username: $scope.userCredentialsModel.username.toString().toLowerCase(), password: $scope.userCredentialsModel.password })
-                        }
-                        ).success(function (data, status, headers, config) {
+                $http(
+                    {
+                        method: 'POST',
+                        url: API_RESOURCE.format("authentication"),
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        data: $.param({ username: $scope.userCredentialsModel.username.toString().toLowerCase(), password: $scope.userCredentialsModel.password })
+                    }
+                    ).success(function (data, status, headers, config) {
 
-                            console.log('successfully logged in');
+                        console.log('successfully logged in');
 
-                            //save token for further requests and autologin
-                            $scope.currentUserModel = data;
-                            $scope.currentUserModel.userId = data.id;
+                        //save token for further requests and autologin
+                        $scope.currentUserModel = data;
+                        $scope.currentUserModel.userId = data.id;
 
-                            _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                        _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
 
-                            _setToken(data.token);
-                            _setId(data.id);
+                        _setToken(data.token);
+                        _setId(data.id);
 
-                            console.log('preparing for syncAll');
+                        console.log('preparing for syncAll');
+                        
+                        //succesful credentials
+                        _syncAll(function () {
+                            console.log('came back from redirecting...');
                             
-                            //succesful credentials
-                            _syncAll(function () {
-                                console.log('came back from redirecting...');
-                                
-                                var course = moodleFactory.Services.GetCacheJson("course");
-                                moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){ }, function() {}, true);
-                                
-                                $timeout(
-                                    function () {
-                                        console.log('redirecting..');
-                                        $scope.$emit('HidePreloader'); //hide preloader
-                                        $location.path('/ProgramaDashboard');
-                                    }, 1000);
-                            });
-
-                            if ($scope.userCredentialsModel.rememberCredentials) {
-                                _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
-                            } else {
-                                localStorage.removeItem("Credentials");
-                            }
-
-                        }).error(function (data, status, headers, config) { 
-                            $scope.$emit('HidePreloader'); //hide preloader
-
-                            var errorMessage = window.atob(data.messageerror);                            
-                            $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
-                            console.log(status + ": " + errorMessage);
-                            //$scope.scrollToTop();
-                            $scope.$emit('scrollTop'); //- scroll
-                            $scope.isLogginIn = false;
+                            var course = moodleFactory.Services.GetCacheJson("course");
+                            moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){ }, function() {}, true);
+                            
+                            $timeout(
+                                function () {
+                                    console.log('redirecting..');
+                                    $scope.$emit('HidePreloader'); //hide preloader
+                                    $location.path('/ProgramaDashboard');
+                                }, 1000);
                         });
-               
+
+                        if ($scope.userCredentialsModel.rememberCredentials) {
+                            _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
+                        } else {
+                            localStorage.removeItem("Credentials");
+                        }
+
+                    }).error(function (data, status, headers, config) { 
+                        $scope.$emit('HidePreloader'); //hide preloader
+
+                        var errorMessage = window.atob(data.messageerror);                            
+                        $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
+                        console.log(status + ": " + errorMessage);
+                        //$scope.scrollToTop();
+                        $scope.$emit('scrollTop'); //- scroll
+                        $scope.isLogginIn = false;
+                    });
             }
 
             $scope.loginWithFacebook = function () {
+                
+                $scope.validateConnection(loginWithFacebookConnectedCallback, offlineCallback);
+            }
+            
+            function loginWithFacebookConnectedCallback() {
                 $scope.$emit('ShowPreloader'); //show preloader
                 //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
                 cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
-                
             }
 
             function FacebookLoginSuccess(data) {                
@@ -203,6 +209,13 @@ angular
                 console.log(status + ": " + errorMessage);
                 //$scope.scrollToTop();
                 $scope.$emit('scrollTop'); //- scroll
+            }
+            
+            function offlineCallback() {
+                $scope.$apply(function() {
+                    $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
+                    $scope.$emit('scrollTop'); //- scroll
+                });
             }
             
 
