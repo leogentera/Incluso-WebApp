@@ -34,99 +34,113 @@
         
         $scope.limitPhotoSize = 0;
         
-        $scope.shareToCommunity = function() {
-                
-                $scope.$emit('ShowPreloader');
-
-                if ($scope.discussion == null || $scope.forumId == null) {
-                        getCommunityData(shareToCommunityAndRedirect);
-                }else{
-                        shareToCommunityAndRedirect();
-                }
-        };
+        $scope.validateConnection(initController, offlineCallback);
         
-        $scope.removeImage = function(index) {
-                
-                $scope.limitPhotoSize--;
-                
-                $scope.model.attachedImages.splice(index, 1);
-        };
-        
-        $scope.attachImage = function() {
-                cordova.exec(attachImageSuccessCallback, attachImageErrorCallback, "CallToAndroid", "AttachPicture", []);
-        };
-        
-        function attachImageSuccessCallback(data) {
-                
-                $scope.limitPhotoSize++;
-                
-                var fileNameParts = data.fileName.split(".");
-                data.fileExtension = fileNameParts[fileNameParts.length - 1];
-                data.fileName = _userId + Date.now() + "." + "data.fileExtension";
-                
-                $scope.model.attachedImages.push(data);
-                $scope.$apply();
+        function offlineCallback() {
+                $location.path("/Offline");
         }
         
-        function attachImageErrorCallback() {
-        }
-        
-        function getCommunityData(callback) {
-                moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, _currentUser.token, function(data, key) {
-                    $scope.discussion = data.discussions[0];
-                    $scope.forumId = data.forumid;
-                    callback();
-                    
-                    }, function(data){
-                        $scope.$emit('HidePreloader');
-                    }, true);
-        }
-        
-        function shareToCommunityAndRedirect() {
-                if ($scope.hasCommunityAccess) {
+        function initController() {
+                $scope.shareToCommunity = function() {
                         
-                        var fileContents = [],
-                            fileNames = [];
+                        $scope.validateConnection(function() {
+                        
+                                $scope.$emit('ShowPreloader');
+                
+                                if ($scope.discussion == null || $scope.forumId == null) {
+                                        getCommunityData(shareToCommunityAndRedirect);
+                                }else{
+                                        shareToCommunityAndRedirect();
+                                }
+                        
+                        }, offlineCallback);
+                        
+                };
+                
+                $scope.removeImage = function(index) {
+                        
+                        $scope.limitPhotoSize--;
+                        
+                        $scope.model.attachedImages.splice(index, 1);
+                };
+                
+                $scope.attachImage = function() {
+                        cordova.exec(attachImageSuccessCallback, attachImageErrorCallback, "CallToAndroid", "AttachPicture", []);
+                };
+                
+                function attachImageSuccessCallback(data) {
+                        
+                        $scope.limitPhotoSize++;
+                        
+                        var fileNameParts = data.fileName.split(".");
+                        data.fileExtension = fileNameParts[fileNameParts.length - 1];
+                        data.fileName = _userId + Date.now() + "." + "data.fileExtension";
+                        
+                        $scope.model.attachedImages.push(data);
+                        $scope.$apply();
+                }
+                
+                function attachImageErrorCallback() {
+                }
+                
+                function getCommunityData(callback) {
+                        moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, _currentUser.token, function(data, key) {
+                            $scope.discussion = data.discussions[0];
+                            $scope.forumId = data.forumid;
+                            callback();
                             
-                        for(var ai = 0; ai < $scope.model.attachedImages.length; ai++) {
-                        
-                                var attachedImage = $scope.model.attachedImages[ai];
-                                
-                                fileContents.push(attachedImage.image);
-                                fileNames.push(attachedImage.fileName);
-                        }
-
-                        var requestData = {
-                                "userid": _userId,
-                                "discussionid": $scope.discussion.discussion,
-                                "parentid": $scope.discussion.id,
-                                "message": $scope.model.testimony,
-                                "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                                "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                                "posttype": 5,
-                                "filecontent": fileContents,
-                                "filename": fileNames
-                        };
-                        
-                        moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                            function(){
+                            }, function(data){
                                 $scope.$emit('HidePreloader');
-                                $location.path("/Community/50000");
-                            },
-                            function(data){
-                                $scope.$emit('HidePreloader');
-                            });
+                            }, true);
                 }
+                
+                function shareToCommunityAndRedirect() {
+                        if ($scope.hasCommunityAccess) {
+                                
+                                var fileContents = [],
+                                    fileNames = [];
+                                    
+                                for(var ai = 0; ai < $scope.model.attachedImages.length; ai++) {
+                                
+                                        var attachedImage = $scope.model.attachedImages[ai];
+                                        
+                                        fileContents.push(attachedImage.image);
+                                        fileNames.push(attachedImage.fileName);
+                                }
+        
+                                var requestData = {
+                                        "userid": _userId,
+                                        "discussionid": $scope.discussion.discussion,
+                                        "parentid": $scope.discussion.id,
+                                        "message": $scope.model.testimony,
+                                        "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                                        "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                                        "posttype": 5,
+                                        "filecontent": fileContents,
+                                        "filename": fileNames
+                                };
+                                
+                                moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                                    function(){
+                                        $scope.$emit('HidePreloader');
+                                        $location.path("/Community/50000");
+                                    },
+                                    function(data){
+                                        $scope.$emit('HidePreloader');
+                                    });
+                        }
+                }
+                
+                function getContentResources(nodeNameRelation) {
+                        $scope.$emit('ShowPreloader');
+                        drupalFactory.Services.GetContent(nodeNameRelation, function (data, key) {
+                                $scope.contentResources = data.node;
+                                $rootScope.pageName = $scope.contentResources.sec_title_toolbar;
+                                $scope.$emit('HidePreloader');
+                        }, function () {}, true);
+                }
+                
+                getContentResources("compartir-experiencia");
         }
         
-        function getContentResources(nodeNameRelation) {
-                $scope.$emit('ShowPreloader');
-                drupalFactory.Services.GetContent(nodeNameRelation, function (data, key) {
-                        $scope.contentResources = data.node;
-                        $rootScope.pageName = $scope.contentResources.sec_title_toolbar;
-                        $scope.$emit('HidePreloader');
-                }, function () {}, true);
-        }
-        
-        getContentResources("compartir-experiencia");
     }]);
