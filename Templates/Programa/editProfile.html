@@ -626,7 +626,7 @@
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
-
+																	<!--
 																<div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form" 
                                                                             ng-model="model.artisticActivities[$index]"
@@ -636,19 +636,18 @@
                                                                     </select>
                                                                     <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                                                                 </div>
-                                                                <!--
-                                                                    <div class="form-group-control custom-caret-wrapper">
+                                                                 -->
+                                                                <div class="form-group-control custom-caret-wrapper">
                                                                             <select class="form-control form-control-lg theme-form" 
                                                                             ng-model="model.artisticActivities[$index]" 
                                                                             ng-options="item for item in artisticActivitiesList"
-                                                                            ng-init="model.artisticActivities == null" 
-                                                                            ng-class="{'selected': model.artisticActivities[$index].length != 0 && model.artisticActivities[$index] != null}">
+                                                                            ng-init="" 
+                                                                            ng-class="{'selected': model.artisticActivities[$index].length != 0}">
 																		<option value="" ng-disabled="!!model.artisticActivities">Actividades</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 																</div>
-
-                                                                -->
+                                                               
 															</div>
 														</li>
 													</ul>
