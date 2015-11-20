@@ -44,6 +44,10 @@ angular
         
         $scope.$emit('ShowPreloader');
         
+        function offlineCallback() {
+            $location.path("/Offline");
+        }
+        
         $timeout(function () {
             //apply carousel to album layout
             var owlAlbum = $("#owlAlbum");
@@ -78,32 +82,37 @@ angular
         
         $scope.postTextToCommunity = function(){
             
-            $scope.$emit('ShowPreloader');
-                
-            if ($scope.discussion == null || $scope.forumId == null) {
-                
-                moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, currentUser.token, function(data, key) {
+            $scope.validateConnection(function() {
+            
+                $scope.$emit('ShowPreloader');
                     
-                    var currentDiscussionIds = [];
-                    for(var d = 0; d < data.discussions.length; d++) {
-                        currentDiscussionIds.push(data.discussions[d].discussion);
-                    }
-                    localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                if ($scope.discussion == null || $scope.forumId == null) {
                     
-                    
-                    $scope.discussion = data.discussions[0];
-                    $scope.forumId = data.forumid;
-                    generateAlbumImgSrc(postAlbumToCommunity);
-                    
-                    }, function(data){
-                        $scope.sharedAlbumMessage = null;
-                        $scope.isShareCollapsed = false;
-                        $scope.showSharedAlbum = false;
-                        $scope.$emit('HidePreloader');
-                    }, true);
-            } else {
-                postAlbumToCommunity();
-            }
+                    moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, currentUser.token, function(data, key) {
+                        
+                        var currentDiscussionIds = [];
+                        for(var d = 0; d < data.discussions.length; d++) {
+                            currentDiscussionIds.push(data.discussions[d].discussion);
+                        }
+                        localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                        
+                        
+                        $scope.discussion = data.discussions[0];
+                        $scope.forumId = data.forumid;
+                        generateAlbumImgSrc(postAlbumToCommunity);
+                        
+                        }, function(data){
+                            $scope.sharedAlbumMessage = null;
+                            $scope.isShareCollapsed = false;
+                            $scope.showSharedAlbum = false;
+                            $scope.$emit('HidePreloader');
+                        }, true);
+                } else {
+                    postAlbumToCommunity();
+                }
+            
+            }, offlineCallback);
+            
         };
         
         function getFileName(id) {
@@ -497,8 +506,14 @@ angular
         }
         
         $scope.shareAlbumClick = function() {
-            $scope.isShareCollapsed = !$scope.isShareCollapsed;
-            $scope.showSharedAlbum = false;
+            
+            $scope.validateConnection(function(){
+            
+                $scope.isShareCollapsed = !$scope.isShareCollapsed;
+                $scope.showSharedAlbum = false;
+            
+            }, offlineCallback);
+            
         };
         
         
