@@ -59,6 +59,10 @@
             oText.username = $scope.profile.firstname + " " + $scope.profile.lastname + " " + $scope.profile.mothername;
         }
         
+        function offlineCallback() {
+            $location.path("/Offline");
+        }
+        
         function generateReconocimientoImgSrc(callback) {
 
             if (reconocimientoSrc == null) {
@@ -93,37 +97,55 @@
         };
         
         $scope.shareByEmail = function() {
-            $scope.$emit('ShowPreloader');
             
-            generateReconocimientoImgSrc(function() {
-                cordova.exec(function() {
-                    $scope.shareToEmailOpen = true;
-                    $scope.$emit('HidePreloader');
-                }, function() {
-                    $scope.shareToEmailOpen = false;
-                    $scope.$emit('HidePreloader');
-                },
-                "CallToAndroid","shareByMail", [reconocimientoSrc, "reconocimiento.png", "mi reconocimiento"]);
-            });
+            $scope.validateConnection(function() {
+            
+                $scope.$emit('ShowPreloader');
+            
+                generateReconocimientoImgSrc(function() {
+                    cordova.exec(function() {
+                        $scope.shareToEmailOpen = true;
+                        $scope.$emit('HidePreloader');
+                    }, function() {
+                        $scope.shareToEmailOpen = false;
+                        $scope.$emit('HidePreloader');
+                    },
+                    "CallToAndroid","shareByMail", [reconocimientoSrc, "reconocimiento.png", "mi reconocimiento"]);
+                });
+            
+            }, offlineCallback);
+            
         };
         
         $scope.shareToSocialNetworks = function() {
-            $scope.$emit('ShowPreloader');
             
-            generateReconocimientoImgSrc(function() {
-                cordova.exec(function() {
-                    $scope.shareToSocialNetworksOpen = true;
-                    $scope.$emit('HidePreloader');
-                }, function() {
-                    $scope.shareToSocialNetworksOpen = false;
-                    $scope.$emit('HidePreloader');
-                },
-                "CallToAndroid", "share", [reconocimientoSrc]);
-            });
+            $scope.validateConnection(function() {
+            
+                $scope.$emit('ShowPreloader');
+                
+                generateReconocimientoImgSrc(function() {
+                    cordova.exec(function() {
+                        $scope.shareToSocialNetworksOpen = true;
+                        $scope.$emit('HidePreloader');
+                    }, function() {
+                        $scope.shareToSocialNetworksOpen = false;
+                        $scope.$emit('HidePreloader');
+                    },
+                    "CallToAndroid", "share", [reconocimientoSrc]);
+                });
+            
+            }, offlineCallback);
+            
         };
         
         $scope.shareToCommunity = function() {
-            generateReconocimientoImgSrc(shareToCommunityCallback);
+            
+            $scope.validateConnection(function() {
+            
+                generateReconocimientoImgSrc(shareToCommunityCallback);
+            
+            }, offlineCallback);
+            
         };
         
         function shareToCommunityCallback() {
@@ -197,7 +219,13 @@
         }
               
         $scope.shareToCommunityClick = function() {
+            
+            $scope.validateConnection(function() {
+                
             $scope.communityModalOpen = !$scope.communityModalOpen;
+            
+            }, offlineCallback);
+
         }
         
         var drawBackgroundSky = function(ctx) {
