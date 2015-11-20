@@ -20,6 +20,7 @@
                 </div>
             </section>
             <section class="txt-renglon centered form ">
+<<<<<<< HEAD
                 <!--<p>¿Que opinas de ésta actividad?</p>-->
                 <p>{{closingContent.activity_rating_label}}</p>
                     <div class="opinion pull-left">
@@ -32,6 +33,19 @@
                         <!--<label for="dislike">No me gusta</label>-->
                         <label for="dislike">{{closingContent.not_like_label}}</label>
                     </div>                            
+=======
+                <p>¿Que opinas de ésta actividad?</p>
+                    <div>
+                        <div class="opinion col-xs-6">
+                            <input id="like" type="radio" value="1" name="like" ng-model="like_status">
+                            <label for="like" class="no-margin text-left">Me gusta</label>
+                        </div>
+                        <div class="opinion col-xs-6">
+                            <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
+                            <label for="dislike" class="no-margin text-left">No me gusta</label>
+                        </div>
+                    </div>                          
+>>>>>>> 35f34dc... INC-3251: Zona de vuelo - Punto de encuentro y Zona de contacto - Pantalla actividad terminada
             </section>
             <p class="actions">
                 <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</a>
