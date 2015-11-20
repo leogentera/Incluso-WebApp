@@ -309,6 +309,12 @@ body {
             }
             & > .icomoon {
                 margin-right: 1vw;
+                &.icon-asterodis {
+                    img {
+                        height: 6vw;
+                        width: 6vw;
+                    }
+                }
             }  
             & > .glyphicon {
                 margin-right: 1vw;
@@ -359,7 +365,7 @@ body {
             }
             + .submenu {
                 li:first-child {
-                    color: @clr-yellowmenu;
+                    color: @clr-pinkmenu;
                 }
             }
         }
@@ -1396,6 +1402,63 @@ body {
     }
     /***************************************************************************/    
 
+    
+    /***************************************************************************
+    Modal connection error
+    ****************************************************************************/
+    
+    .error-connection {
+        background-color: #151922!important;
+        position: absolute!important;
+        z-index: 1050;
+
+        h3.subtitle {
+            font-size: 180%;
+            color: #B1D468;
+            font-weight: bold;
+            letter-spacing: 4px;
+            padding-top: 10%;
+        }
+
+        ul {
+            margin: 0;
+            width: 100%;
+            padding: 0;
+            display: flex;
+            list-style: none;
+
+            li {
+                width: 33.3%;
+                border-top: 1px solid #55666B;
+
+                &:nth-child(2) {
+                    border-top: 0;
+                }
+            }
+        }
+
+        img {
+            position: absolute;
+            top: 12vh!important;
+            width: 10vh;
+            height: 10vh;
+            left: 20vh;
+        }
+
+        .user-help {
+            border-top: 0!important;
+            margin-top: 30vw!important;
+        }
+
+        p {
+            font-weight: normal!important;
+        }
+    }
+    
+    
+    
+    
+    
 
     /****************************************************************************
      $navbar
