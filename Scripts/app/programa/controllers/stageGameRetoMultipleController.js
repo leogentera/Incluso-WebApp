@@ -55,7 +55,7 @@ angular
                   if (activity) {
                     $scope.retoMultipleActivities.push(activity);
                   } else {
-                    moodleFactory.Services.GetAsyncActivity($scope.retosMultipleChallenge.activities[i].coursemoduleid, function(data) {
+                    moodleFactory.Services.GetAsyncActivity($scope.retosMultipleChallenge.activities[i].coursemoduleid, currentUser.token, function(data) {
                       $scope.retoMultipleActivities.push(data);
                       assignCourseModuleId(true, data);
                     });

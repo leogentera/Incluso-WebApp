@@ -170,9 +170,12 @@
             _getAsyncData('comment', API_RESOURCE.format(url), token, successCallback, errorCallback,true);
         };
 
-        var _getAsyncStars = function(userId, token, successCallback, errorCallback, forceRefresh){
-            debugger;
+        var _getAsyncStars = function(userId, token, successCallback, errorCallback, forceRefresh){            
             _getAsyncData("userStars", API_RESOURCE.format('stars/'+ userId), token, successCallback, errorCallback, forceRefresh);
+        };
+        
+        var _countLikesByUser = function(courseId, token, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("likesByUser", API_RESOURCE.format('postcounter/'+ courseId + '?likes=true'), token, successCallback, errorCallback, forceRefresh);
         };
         
         var _getCacheObject = function (key) {
@@ -948,7 +951,8 @@
             PostBadgeToUser: _postBadgeToUser,
             GetCommentByActivity: _getCommentByActivity,
             GetAsyncUserPostCounter: _getAsyncUserPostCounter,
-            GetAsyncCatalogs: _getAsyncCatalogs
+            GetAsyncCatalogs: _getAsyncCatalogs,
+            CountLikesByUser: _countLikesByUser
         };
     })();
 }).call(this);

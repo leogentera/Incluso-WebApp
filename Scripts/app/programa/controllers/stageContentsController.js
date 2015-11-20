@@ -347,10 +347,32 @@ angular
                         var isLike = $scope.fuenteDeEnergia.activities[i].activityContent.liked == 0 ? 1 : 0;
                         $scope.fuenteDeEnergia.activities[i].activityContent.liked = isLike;
                         var data = {userid: currentUserId, like_status: isLike, only_like: 1};
-                        moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, function(){}, errorCallback);
-                        
+                        moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, countLikesByUser, errorCallback);                        
                     }
                 }                                          
+            }
+            
+            function countLikesByUser() {
+                  
+                  var userCourse = JSON.parse(localStorage.getItem("usercourse"));                  
+                  moodleFactory.Services.CountLikesByUser(userCourse.courseid,currentUser.token,function(data){
+                              if (data) {
+                                    var likes = parseInt(data.likes);
+                                    if (likes > 13) {
+                                          assignLikesBadge();
+                                    }
+                              }
+                        },function(){},true);                  
+            }
+            
+            function assignLikesBadge(){
+                  var badgeModel = {
+                            badgeid: 15 //badge earned when a user completes his profile.
+                            };
+                            
+                  moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function(){
+                        console.log("created badge successfully");
+                        },function(){});                  
             }
             
             $scope.commentSubActivity = function(contentId){

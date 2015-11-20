@@ -414,7 +414,7 @@ angular
             };
 
             function getTopicData() {
-
+                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId ));
                 $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                 

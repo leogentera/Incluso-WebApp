@@ -1286,7 +1286,7 @@ function formatDate(date) {
                 $scope.model.favoriteSports.push(new String());
             };
 
-            $scope.deleteFavoriteSports = function (index) {
+            $scope.deleteFavoriteSports = function (index) {                
                 $scope.model.favoriteSports.splice(index, 1);
             };
 

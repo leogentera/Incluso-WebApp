@@ -582,31 +582,28 @@
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
-
+																	<!--		
 																<div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form" 
                                                                             ng-model="model.favoriteSports[$index]"
-                                                                            ng-class="{'selected': model.favoriteSports[$index] !== ''}">
-                                                                        <option value="" ng-disabled="model.favoriteSports[$index] == ''">Deporte</option>
-                                                                        <option ng-repeat="obj in favoritSportsList" value="{{obj}}"
-                                                                                ng-selected="obj == s"
-                                                                                >{{obj}}</option>
-                                                                    </select>
+                                                                            ng-init="" 
+                                                                            ng-class="{'selected': model.favoriteSports[$index].length !== 0}">
+                                                                        <option value="" ng-disabled="model.favoriteSports[$index].length !== 0">Deporte</option>
+                                                                        <option ng-repeat="obj in favoritSportsList" value="{{obj}}" ng-selected="obj == s">{{obj}}</select>
                                                                     <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                                                                 </div>
-
-                                                                <!--												
+                                                                		 -->									
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                         <select class="form-control form-control-lg theme-form" 
                                                                         ng-model="model.favoriteSports[$index]" 
                                                                         ng-options="item for item in favoritSportsList"
                                                                         ng-init="" 
-                                                                        ng-class="{'selected': model.favoriteSports[$index].length != 0 && model.favoriteSports[$index] != null}">
+                                                                        ng-class="{'selected': model.favoriteSports[$index].length !== 0}">
 																		<option value="" ng-disabled="!!model.favoriteSports">Deporte</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 																</div>
-                                                                -->
+                                                               
 
 															</div>
 														</li>
@@ -629,7 +626,7 @@
 																		<span class="icomoon icon-cross"></span>
 																	</button>
 																</h5>
-
+																	<!--
 																<div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form" 
                                                                             ng-model="model.artisticActivities[$index]"
@@ -639,19 +636,18 @@
                                                                     </select>
                                                                     <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                                                                 </div>
-                                                                <!--
-                                                                    <div class="form-group-control custom-caret-wrapper">
+                                                                 -->
+                                                                <div class="form-group-control custom-caret-wrapper">
                                                                             <select class="form-control form-control-lg theme-form" 
                                                                             ng-model="model.artisticActivities[$index]" 
                                                                             ng-options="item for item in artisticActivitiesList"
-                                                                            ng-init="model.artisticActivities == null" 
-                                                                            ng-class="{'selected': model.artisticActivities[$index].length != 0 && model.artisticActivities[$index] != null}">
+                                                                            ng-init="" 
+                                                                            ng-class="{'selected': model.artisticActivities[$index].length != 0}">
 																		<option value="" ng-disabled="!!model.artisticActivities">Actividades</option>
 																	</select>
 																	<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 																</div>
-
-                                                                -->
+                                                               
 															</div>
 														</li>
 													</ul>
@@ -898,7 +894,7 @@
 										</div>
 										<div class="panel-body">
 											<fieldset class="my-profile-form">
-                                                <h5>A quiÃ©n admiro</h5>
+                                                <h5>A quién admiro</h5>
 												<section>
 													<h4>Personajes</h4>
 													<ul class="block-list">
