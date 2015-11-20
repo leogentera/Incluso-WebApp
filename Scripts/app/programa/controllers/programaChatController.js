@@ -69,13 +69,12 @@ angular
                     zone = '/ZonaDeAterrizaje';                                    
                 }
                 if(!finishCabinaSoporte){
-                    if(_startedActivityCabinaDeSoporte) {
-                    var isStarted = _startedActivityCabinaDeSoporte;                    
+                    if(_startedActivityCabinaDeSoporte) {                                
                     var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);    
 
-                        if (!currentActivity.status) {
-                            var rawDate = isStarted.datestarted.split(/:|\s|:/);
-                            var dateStarted = new Date(rawDate[0], rawDate[1] - 1, rawDate[2], rawDate[3], rawDate[4], rawDate[5]);
+                        if (!currentActivity.status) {                            
+                            var dateStarted = new Date(_startedActivityCabinaDeSoporte.datestarted * 1000);
+                            console.log(dateStarted);
                             var latestMessages =  _.filter($scope.messages, function(msg) { 
                                 return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
                             });
