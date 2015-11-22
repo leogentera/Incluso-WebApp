@@ -14,7 +14,7 @@ angular
             var userNotifications = JSON.parse(localStorage.getItem("notifications"));
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.notifications = _.filter(userNotifications, function(notif){
-                    return notif.timemodified != null;
+                    return notif.status != "pending";
                 });
 
             //Quantity of notifications to show in an initial load
@@ -35,6 +35,7 @@ angular
             $scope.myInterval = 5000;
             $scope.noWrapSlides = false;
             var slides = $scope.slides = [];
+            
             $scope.addSlide = function() {
                 var newWidth = 600 + slides.length + 1;
                 slides.push({
@@ -44,14 +45,11 @@ angular
                 });
                 $scope.$emit('HidePreloader'); //hide preloader
             };
+            
             for (var i=0; i<4; i++) {
                 $scope.addSlide();
             }
 
-            $scope.read = function(item){
-                return item.read == read;
-            }
-            
             $scope.qty = function(type){
                 switch(type){
                     case 'All':
@@ -86,10 +84,10 @@ angular
                 case 'All':
                     return !($scope.notificationsQuantity >= $scope.notifications.length);
                 case 'Read':                    
-                    return !($scope.notificationsQuantityRead >= _.where($scope.notifications, {read: true}).length);
+                    return !($scope.notificationsQuantityRead >= _.where($scope.notifications, {seen_date: !null}).length);
                     break;
                 default :
-                    return !($scope.notificationsQuantityUnread >= _.where($scope.notifications, {read: false }).length);
+                    return !($scope.notificationsQuantityUnread >= _.where($scope.notifications, {seen_date: null }).length);
                     break;
                 }
             }
@@ -103,17 +101,18 @@ angular
             $scope.showAlertDetail = function (notificationId) {
                 var userId = localStorage.getItem('userId');                
                 
-                for(var indexNotification = 0; indexNotification < $scope.notifications.length; indexNotification ++){                    
-                    if ($scope.notifications[indexNotification].id == notificationId) {
-                        $scope.notifications[indexNotification].read = true;
+                var seen_date_now = new Date();
+                for(var indexNotification = 0; indexNotification < userNotifications.length; indexNotification ++){                    
+                    if (userNotifications[indexNotification].id == notificationId) {
+                        userNotifications[indexNotification].seen_date = seen_date_now;
                     }else{
                         
                     }                    
                 }
                 
                 
-                _setLocalStorageJsonItem("notifications", $scope.notifications);
-                _readNotification(userId,notificationId);
+                _setLocalStorageJsonItem("notifications", userNotifications);
+                //_readNotification(userId,notificationId);
 
                 $scope.navigateTo('/AlertsDetail/' + notificationId, 'null');            
             
