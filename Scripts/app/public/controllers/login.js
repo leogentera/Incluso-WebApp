@@ -156,9 +156,10 @@ angular
                 
             }
 
-            function FacebookLoginSuccess(data) {                
+            function FacebookLoginSuccess(data) {                                 
                 console.log('successfully logged in ' + data);                
                 var userFacebook = JSON.parse(data);
+                alert(userFacebook.is_new);
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = userFacebook;
@@ -173,19 +174,23 @@ angular
                 console.log('preparing for syncAll');
 
                 //succesful credentials
-                _syncAll(function () {
-                    console.log('came back from redirecting...');
-                    
-                    var course = moodleFactory.Services.GetCacheJson("course");
-                    moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, false);
-                    
-                    $timeout(
-                        function () {
-                            console.log('redirecting..');
-                            $location.path('/ProgramaDashboard');
-                            //$scope.$emit('HidePreloader');
-                        }, 1000);
-                });
+                _syncAll(function () {
+                    console.log('came back from redirecting...');
+                    
+                    var course = moodleFactory.Services.GetCacheJson("course");
+                    moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, false);
+                    
+                    $timeout(
+                        function () {
+                            console.log('redirecting..');
+                            if(userFacebook.is_new == true){
+                                $location.path('/Tutorial');
+                            }else{
+                                $location.path('/ProgramaDashboard');
+                            }
+                            //$scope.$emit('HidePreloader');
+                        }, 1000);
+                }); 
 
                 if ($scope.userCredentialsModel.rememberCredentials) {
                     _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
