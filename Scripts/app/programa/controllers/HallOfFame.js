@@ -13,86 +13,97 @@ hallOfFameModule
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
 
             $scope.$emit('ShowPreloader');
-
-            drupalFactory.Services.GetContent("HallOfFame", function (data, key) {
-                $scope.contentResources = data.node;
-            }, function () {
-            }, true);
-
-            _httpFactory = $http;
-            _timeout = $timeout;
-            $scope.setToolbar($location.$$path,"Incluso");
-            $rootScope.showFooter = true;
-            $rootScope.showFooterRocks = false;
-            $rootScope.showStage1Footer = false;
-            $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false; 
-            $scope.back = function () {
-                $location.path('/ProgramaDashboard');
-            };
-            var citiesCatalogKey = "citiescatalog";
-            $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");
-            $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-            moodleFactory.Services.GetAsyncCatalog(citiesCatalogKey,$scope.user.token,getCitiesCatalogCallback,function(data){console.log(data)},true);
-            $scope.default = true;
-            getTop5("Ver Todo");
-            var userId = localStorage.getItem("userId");
-            var profileKey = "profile/" + userId;
-            var jsonProfile = localStorage.getItem(profileKey);
-            var profile = JSON.parse(jsonProfile);
-            var imageUrl = $scope.user.profileimageurl;
-            var userStats =
-            {
-                profileImageUrl: imageUrl,
-                alias: profile.alias,
-                rank: profile.rank,
-                progress: JSON.parse(localStorage.getItem("usercourse")).globalProgress,
-                stars: JSON.parse(localStorage.getItem("CurrentUser")).stars,
-                amount: profile.badges.filter(function(value) { return (value !== undefined && value.status === "won") }).length,
-            };
-            if(userStats.stars == "") userStats.stars = "0";
-            $scope.userStats = userStats;
-
-
-            function getTop5(city)
-            {
-                moodleFactory.Services.GetAsyncHallOfFame($scope.usercourse.courseid,city,$scope.user.token,getTop5Callback, function(data){console.log(data)},true)
+            
+            $scope.validateConnection(initController, offlineCallback);
+            
+            function offlineCallback() {
+                $location.path("/Offline");
             }
-
-            function getCitiesCatalogCallback()
-            {
-                $scope.cities = moodleFactory.Services.GetCacheJson(citiesCatalogKey);
-                //FIND ME Temporary
-                //$scope.cities = ["M\u00e9xico D.F","Estado de M\u00e9xico","OTRO"];
-                $scope.cities.unshift("Ver Todo");
-
-
-            }
-
-            function getTop5Callback()
-            {
-                var allTop5 = moodleFactory.Services.GetCacheJson("halloffame");
-                $scope.topProgress = allTop5.progress;
-                $scope.topStars = allTop5.stars;
-                $scope.topBadges = allTop5.badges;
-                $scope.topContribution = allTop5.activity;
-
-
-                $scope.userStats.forum = allTop5.current_user_activity.forum;
-                $scope.userStats.messages = allTop5.current_user_activity.messages;
-                $scope.userStats.comunity = allTop5.current_user_activity.comunity;
-                $scope.$emit('HidePreloader');
-            }
-
-            $scope.updateByCity = function()
-            {
-                if($scope.selectedCity != "Ver Todo" || !$scope.default)
+            
+            function initController() {
+                
+                drupalFactory.Services.GetContent("HallOfFame", function (data, key) {
+                    $scope.contentResources = data.node;
+                }, function () {
+                }, true);
+    
+                _httpFactory = $http;
+                _timeout = $timeout;
+                $scope.setToolbar($location.$$path,"Incluso");
+                $rootScope.showFooter = true;
+                $rootScope.showFooterRocks = false;
+                $rootScope.showStage1Footer = false;
+                $rootScope.showStage2Footer = false;
+                $rootScope.showStage3Footer = false; 
+                $scope.back = function () {
+                    $location.path('/ProgramaDashboard');
+                };
+                var citiesCatalogKey = "citiescatalog";
+                $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");
+                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
+                moodleFactory.Services.GetAsyncCatalog(citiesCatalogKey,$scope.user.token,getCitiesCatalogCallback,function(data){console.log(data)},true);
+                $scope.default = true;
+                getTop5("Ver Todo");
+                var userId = localStorage.getItem("userId");
+                var profileKey = "profile/" + userId;
+                var jsonProfile = localStorage.getItem(profileKey);
+                var profile = JSON.parse(jsonProfile);
+                var imageUrl = $scope.user.profileimageurl;
+                var userStats =
                 {
-                    $scope.$emit('ShowPreloader');
-                    getTop5($scope.selectedCity);
-                    $scope.default = false;
+                    profileImageUrl: imageUrl,
+                    alias: profile.alias,
+                    rank: profile.rank,
+                    progress: JSON.parse(localStorage.getItem("usercourse")).globalProgress,
+                    stars: JSON.parse(localStorage.getItem("CurrentUser")).stars,
+                    amount: profile.badges.filter(function(value) { return (value !== undefined && value.status === "won") }).length,
+                };
+                if(userStats.stars == "") userStats.stars = "0";
+                $scope.userStats = userStats;
+    
+    
+                function getTop5(city)
+                {
+                    $scope.validateConnection(function() {
+                        moodleFactory.Services.GetAsyncHallOfFame($scope.usercourse.courseid,city,$scope.user.token,getTop5Callback, function(data){console.log(data)},true);
+                    }, offlineCallback);
                 }
-
+    
+                function getCitiesCatalogCallback()
+                {
+                    $scope.cities = moodleFactory.Services.GetCacheJson(citiesCatalogKey);
+                    //FIND ME Temporary
+                    //$scope.cities = ["M\u00e9xico D.F","Estado de M\u00e9xico","OTRO"];
+                    $scope.cities.unshift("Ver Todo");
+    
+    
+                }
+    
+                function getTop5Callback()
+                {
+                    var allTop5 = moodleFactory.Services.GetCacheJson("halloffame");
+                    $scope.topProgress = allTop5.progress;
+                    $scope.topStars = allTop5.stars;
+                    $scope.topBadges = allTop5.badges;
+                    $scope.topContribution = allTop5.activity;
+    
+    
+                    $scope.userStats.forum = allTop5.current_user_activity.forum;
+                    $scope.userStats.messages = allTop5.current_user_activity.messages;
+                    $scope.userStats.comunity = allTop5.current_user_activity.comunity;
+                    $scope.$emit('HidePreloader');
+                }
+    
+                $scope.updateByCity = function()
+                {
+                    if($scope.selectedCity != "Ver Todo" || !$scope.default)
+                    {
+                        $scope.$emit('ShowPreloader');
+                        getTop5($scope.selectedCity);
+                        $scope.default = false;
+                    }
+    
+                }
             }
 }]);
 
