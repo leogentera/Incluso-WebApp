@@ -16,11 +16,6 @@
 </head>
 <body ng-app>
 <div class="incluso-app notif-dashboard" id="site-wrapper">
-  <div id="site-menu" >
-<!--#include file="menu.html" -->
-  </div>
-  <div id="site-canvas">
-
    
   <article class="starway">
 
@@ -34,7 +29,6 @@ Nulla vitae elit libero, a pharetra augue. Duis mollis, est non commodo luctus, 
   </article>
 
 
-		</div>
 		</div>
   <!-- html -->
   <!-- scripts -->
