@@ -59,9 +59,7 @@ angular
             $scope.validateConnection(initController, offlineCallback);
         
             function offlineCallback() {
-                if (!$scope.loggedUser) {
-                    $location.path("/Offline");
-                }
+                $location.path("/Offline");
             }
             
             function initController() {

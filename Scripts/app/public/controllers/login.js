@@ -86,8 +86,7 @@ angular
             };
 
             $scope.login = function (username, password) {
-                loginConnectedCallback();
-                //$scope.validateConnection(loginConnectedCallback, offlineCallback);
+                $scope.validateConnection(loginConnectedCallback, offlineCallback);
             }
             
             function loginConnectedCallback() {

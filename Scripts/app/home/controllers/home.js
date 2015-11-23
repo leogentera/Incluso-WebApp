@@ -243,14 +243,6 @@
             }
 			
 			$scope.validateConnection = function(connectedCallback, offlineCallback) {
-				 _forceUpdateConnectionStatus(function() {
-					
-					if (_isDeviceOnline) {
-						connectedCallback();
-					}else {
-						offlineCallback();
-					}
-					
-				});
+				offlineCallback();
 			};
         }]);
