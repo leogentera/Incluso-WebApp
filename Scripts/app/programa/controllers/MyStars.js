@@ -1,6 +1,6 @@
-angular
-    .module('incluso.program.myStars', [])
-    .controller('MyStarsController', [
+var myStarsModule = angular.module('incluso.program.myStars', []);
+
+myStarsModule.controller('MyStarsController', [
         '$q',
         '$scope',
         '$location',
@@ -160,3 +160,9 @@ angular
             $scope.$emit('HidePreloader'); //hide preloader
 
 }]);
+
+myStarsModule.filter('Capitalize', function() {
+    return function(input) {
+      return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+    }
+});
