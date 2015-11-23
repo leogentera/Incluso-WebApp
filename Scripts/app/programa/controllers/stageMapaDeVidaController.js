@@ -345,7 +345,7 @@ angular
                                     });
                                 }, function(){}, true);
                             
-                            }, offlineCallback);
+                            }, function(){});
                             
                         }else{
                             $location.path('/ZonaDeNavegacion/Dashboard/2/4');
@@ -355,7 +355,7 @@ angular
             }
             
             function offlineCallback() {
-                $location.path("/Offline");
+                return $location.path("/Offline");
             }
             
             var checkForumExtraPoints = function() {

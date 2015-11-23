@@ -45,7 +45,7 @@ angular
         $scope.$emit('ShowPreloader');
         
         function offlineCallback() {
-            $location.path("/Offline");
+            return $location.path("/Offline");
         }
         
         $timeout(function () {

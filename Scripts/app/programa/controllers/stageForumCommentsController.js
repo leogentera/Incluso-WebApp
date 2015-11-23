@@ -13,21 +13,22 @@ angular
         '$filter',
         'MoodleIds',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $filter, MoodleIds) {
-
-            _httpFactory = $http;
-            _timeout = $timeout;
-            $scope.$emit('ShowPreloader');
-            $rootScope.pageName = "Estación: Conócete"
-            $rootScope.navbarBlue = true;
-            $rootScope.showToolbar = true;
             
             $scope.validateConnection(initController, offlineCallback);
             
             function offlineCallback() {
-                $location.path("/Offline");
+                return $location.path("/Offline");
             }
             
             function initController() {
+                
+                _httpFactory = $http;
+                _timeout = $timeout;
+                $scope.$emit('ShowPreloader');
+                $rootScope.pageName = "Estación: Conócete"
+                $rootScope.navbarBlue = true;
+                $rootScope.showToolbar = true;
+                
                 getContentResources($routeParams.activityId);
                 //$scope.setToolbar($location.$$path,"");
                 $rootScope.showFooter = true;

@@ -12,35 +12,38 @@
     '$filter',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
         
-        var _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
-        var _course = moodleFactory.Services.GetCacheJson("course");
-        var _currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-        var _userId = moodleFactory.Services.GetCacheObject("userId");
-    
-        $scope.setToolbar($location.$$path, "Album Incluso");
-        $rootScope.showFooter = false;
-        $rootScope.showFooterRocks = false;
-        $rootScope.showStage1Footer = false;
-        $rootScope.showStage2Footer = false;
-        $rootScope.showStage3Footer = false;
-        $scope.hasCommunityAccess = _hasCommunityAccessLegacy(_userProfile.communityAccess);
-        $scope.discussion = null;
-        $scope.forumId = null;
-        
-        $scope.model = {
-                testimony: "",
-                attachedImages: []
-        };
-        
-        $scope.limitPhotoSize = 0;
         
         $scope.validateConnection(initController, offlineCallback);
         
         function offlineCallback() {
-                $location.path("/Offline");
+                return $location.path("/Offline");
         }
         
         function initController() {
+                
+                var _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+                var _course = moodleFactory.Services.GetCacheJson("course");
+                var _currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+                var _userId = moodleFactory.Services.GetCacheObject("userId");
+            
+                $scope.setToolbar($location.$$path, "Album Incluso");
+                $rootScope.showFooter = false;
+                $rootScope.showFooterRocks = false;
+                $rootScope.showStage1Footer = false;
+                $rootScope.showStage2Footer = false;
+                $rootScope.showStage3Footer = false;
+                $scope.hasCommunityAccess = _hasCommunityAccessLegacy(_userProfile.communityAccess);
+                $scope.discussion = null;
+                $scope.forumId = null;
+                
+                $scope.model = {
+                        testimony: "",
+                        attachedImages: []
+                };
+                
+                $scope.limitPhotoSize = 0;
+                
+                
                 $scope.shareToCommunity = function() {
                         
                         $scope.validateConnection(function() {

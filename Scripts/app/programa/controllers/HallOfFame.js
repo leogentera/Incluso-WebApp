@@ -17,7 +17,7 @@ hallOfFameModule
             $scope.validateConnection(initController, offlineCallback);
             
             function offlineCallback() {
-                $location.path("/Offline");
+                return $location.path("/Offline");
             }
             
             function initController() {

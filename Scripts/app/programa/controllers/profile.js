@@ -12,59 +12,55 @@ angular
     '$filter',
     '$route',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
-
-            _httpFactory = $http;
-            _timeout = $timeout;
-            
-            var _course = moodleFactory.Services.GetCacheJson("course");
-
-            $scope.discussion = null;
-            $scope.forumId = null;
-            
-            $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
-            $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
-            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        
-            $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
-            $scope.myStrengths = new Array();
-            $scope.myWindowOfOpportunities = new Array();
-            
-            $scope.setToolbar($location.$$path, "");
-
-            console.log($location + '- ' + $location.$$path);
-
-            $scope.currentPage = 1;
-            if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
-                $scope.currentPage = 2;
-            }               
-            
-            $rootScope.showFooter = false;
-            $rootScope.showFooterRocks = false;
-            $rootScope.showStage1Footer = false;
-            $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false;
-			$rootScope.showProfileFooter = false;
-            $scope.status = "";
-            $scope.shareAchievementMessage = "";
-            $scope.showShareAchievementMessage = false;
-            $scope.showSharedAchievement = false;
-            $scope.hasCommunityAccess = false;
-            var startingTime;
-            var endingTime;
-            
             
             $scope.$emit('ShowPreloader');
-            
             
             $scope.validateConnection(initController, offlineCallback);
         
             function offlineCallback() {
-                if (!$scope.loggedUser) {
-                    $location.path("/Offline");
-                }
+                return $location.path("/Offline");
             }
             
             function initController() {
+                
+                _httpFactory = $http;
+                _timeout = $timeout;
+                
+                var _course = moodleFactory.Services.GetCacheJson("course");
+    
+                $scope.discussion = null;
+                $scope.forumId = null;
+                
+                $scope.loggedUser = ($routeParams.id == moodleFactory.Services.GetCacheObject("userId"));
+                $scope.userId = $routeParams.id != null ? $routeParams.id : moodleFactory.Services.GetCacheObject("userId");
+                var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                            
+                $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
+                $scope.myStrengths = new Array();
+                $scope.myWindowOfOpportunities = new Array();
+                
+                $scope.setToolbar($location.$$path, "");
+    
+                console.log($location + '- ' + $location.$$path);
+    
+                $scope.currentPage = 1;
+                if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
+                    $scope.currentPage = 2;
+                }               
+                
+                $rootScope.showFooter = false;
+                $rootScope.showFooterRocks = false;
+                $rootScope.showStage1Footer = false;
+                $rootScope.showStage2Footer = false;
+                $rootScope.showStage3Footer = false;
+                $rootScope.showProfileFooter = false;
+                $scope.status = "";
+                $scope.shareAchievementMessage = "";
+                $scope.showShareAchievementMessage = false;
+                $scope.showSharedAchievement = false;
+                $scope.hasCommunityAccess = false;
+                var startingTime;
+                var endingTime;
                 
                 getDataAsync(function () {
 

@@ -346,7 +346,7 @@ angular
                                 }, function(){}, true);
                             
                             
-                            }, offlineCallback);
+                            }, function(){});
 
                         }else{
                             $location.path('/ZonaDeAterrizaje/Dashboard/3/3');

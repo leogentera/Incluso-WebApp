@@ -11,80 +11,83 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-            _timeout = $timeout;
-            _httpFactory = $http;
-            var moduleid = $routeParams.moodleid;
-            var pagename;
-            var currentChallenge;
-            var stage;
-            var userCurrentStage;            
-            switch (moduleid) {
-
-                case "1101":
-                    userCurrentStage = 1;
-                    currentChallenge = 1;
-                    stage = "ZonaDeVuelo";
-                    break;
-                case "1020":
-                    userCurrentStage = 1;
-                    currentChallenge = 2;
-                    stage = "ZonaDeVuelo";
-                    break;
-                case "1021":
-                    userCurrentStage = 1;
-                    currentChallenge = 3;
-                    stage = "ZonaDeVuelo";
-                    break;
-                case "2004":
-                    userCurrentStage = 2;
-                    currentChallenge = 1;
-                    stage = "ZonaDeNavegacion";
-                    break;
-                case "2006":
-                    userCurrentStage = 2;
-                    currentChallenge = 2;
-                    stage = "ZonaDeNavegacion";
-                    break;
-                case "2011":
-                    userCurrentStage = 2;
-                    currentChallenge = 3;
-                    stage = "ZonaDeNavegacion";
-                    break;
-                case "2015":
-                    userCurrentStage = 2;
-                    currentChallenge = 4;
-                    stage = "ZonaDeNavegacion";
-                    break;
-                case "3201":
-                    userCurrentStage = 3;
-                    currentChallenge = 1;
-                    stage = "ZonaDeAterrizaje";
-                    break;
-                case "3301":
-                    userCurrentStage = 3;
-                    currentChallenge = 2;
-                    stage = "ZonaDeAterrizaje";
-                    break;
-                case "3401":
-                    userCurrentStage = 3;
-                    currentChallenge = 3;
-                    stage = "ZonaDeAterrizaje";
-                    break;
-
-            }
             
-            $scope.contentResources = {};
-
-            $scope.currentPage = 1;
             $scope.$emit('ShowPreloader'); //show preloader
             
             $scope.validateConnection(initController, offlineCallback);
             
             function offlineCallback() {
-                $location.path("/Offline");
+                return $location.path("/Offline");
             }
             
             function initController() {
+                
+                _timeout = $timeout;
+                _httpFactory = $http;
+                var moduleid = $routeParams.moodleid;
+                var pagename;
+                var currentChallenge;
+                var stage;
+                var userCurrentStage;            
+                switch (moduleid) {
+    
+                    case "1101":
+                        userCurrentStage = 1;
+                        currentChallenge = 1;
+                        stage = "ZonaDeVuelo";
+                        break;
+                    case "1020":
+                        userCurrentStage = 1;
+                        currentChallenge = 2;
+                        stage = "ZonaDeVuelo";
+                        break;
+                    case "1021":
+                        userCurrentStage = 1;
+                        currentChallenge = 3;
+                        stage = "ZonaDeVuelo";
+                        break;
+                    case "2004":
+                        userCurrentStage = 2;
+                        currentChallenge = 1;
+                        stage = "ZonaDeNavegacion";
+                        break;
+                    case "2006":
+                        userCurrentStage = 2;
+                        currentChallenge = 2;
+                        stage = "ZonaDeNavegacion";
+                        break;
+                    case "2011":
+                        userCurrentStage = 2;
+                        currentChallenge = 3;
+                        stage = "ZonaDeNavegacion";
+                        break;
+                    case "2015":
+                        userCurrentStage = 2;
+                        currentChallenge = 4;
+                        stage = "ZonaDeNavegacion";
+                        break;
+                    case "3201":
+                        userCurrentStage = 3;
+                        currentChallenge = 1;
+                        stage = "ZonaDeAterrizaje";
+                        break;
+                    case "3301":
+                        userCurrentStage = 3;
+                        currentChallenge = 2;
+                        stage = "ZonaDeAterrizaje";
+                        break;
+                    case "3401":
+                        userCurrentStage = 3;
+                        currentChallenge = 3;
+                        stage = "ZonaDeAterrizaje";
+                        break;
+    
+                }
+                
+                $scope.contentResources = {};
+    
+                $scope.currentPage = 1;
+                
                 
                 getContentResources(moduleid);
                 $rootScope.showFooter = true;
