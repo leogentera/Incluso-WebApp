@@ -213,6 +213,8 @@ angular
                 _setLocalStorageJsonItem("usercourse", $scope.model);
     
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
+                
+                _progressNotification($scope.idEtapa, $scope.stageProgress);
 
             }
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes

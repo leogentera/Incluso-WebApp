@@ -267,6 +267,13 @@ var _IsOffline = function () {
     return false;
 };
 
+var notificationTypes = {
+    progressNotifications: 4,
+    activityNotifications: 3,
+    profileNotifications: 2,
+    generalNotifications: 1
+};
+
 var _syncAll = function (callback) {
     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), callback, function() {} );
 };
@@ -696,6 +703,26 @@ var _generalNotification = function(){
           _createNotification(notificationGeneral[i].activityidnumber, triggerActivity);
       }
     }  
+}
+
+
+var _progressNotification = function(indexStageId, currentProgress){
+    
+    var notifications = JSON.parse(localStorage.getItem("notifications"));
+    
+    var progressNotifications = _.where(notifications, { type: notificationTypes.progressNotifications });
+    
+    var stageId = indexStageId + 1 ;
+    
+    for(i = 0; i < progressNotifications.length; i++){
+        var currentNotification = progressNotifications[i];
+        if (currentNotification.status != "won" && currentProgress >= currentNotification.progressmin
+            && currentProgress <= currentNotification.progressmax && stageId == currentNotification.stageid) {
+            console.log("progress notification created" + currentNotification.name);
+            //Add create notification logic.
+        }        
+    }
+        
 }
 
 var successPutStarsCallback = function (data) {

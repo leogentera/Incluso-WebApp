@@ -200,6 +200,8 @@
                 
                 $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);
                 
+                _progressNotification(currentStage, $scope.stageProgress);
+                
             }
 
             function errorCallback(data){
