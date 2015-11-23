@@ -325,10 +325,11 @@ angular
                               
             $scope.actualMessage = challengeMessage;
              
-            }).controller('closingStageController', function ($scope, $modalInstance,$location) {
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
+        }).controller('closingStageController', function ($scope, $modalInstance, $location) {
+            $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                    $location.path('/ProgramaDashboard');  //POSSIBLE SOLUTION TO INC-3247
+              };
                     
                     $scope.robotMessages = {
                         title: "Cierre Zona de Vuelo",
@@ -340,4 +341,4 @@ angular
                         $location.path('/ProgramaDashboard');
                     };
                     _setLocalStorageItem('robotEndStageShown',true);
-                });
+        });

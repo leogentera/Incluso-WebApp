@@ -177,6 +177,16 @@
         var _countLikesByUser = function(courseId, token, successCallback, errorCallback, forceRefresh){
             _getAsyncData("likesByUser", API_RESOURCE.format('postcounter/'+ courseId + '?likes=true'), token, successCallback, errorCallback, forceRefresh);
         };
+
+        var _getServerDate = function(successCallback){
+            _httpFactory({
+                    method: 'GET',
+                    url: API_RESOURCE.format('date'),
+                    headers: { 'Content-Type': 'application/json'}
+                }).success(function (data) {                                        
+                    successCallback(data);
+                });            
+        };
         
         var _getCacheObject = function (key) {
             return localStorage.getItem(key);
@@ -952,7 +962,8 @@
             GetCommentByActivity: _getCommentByActivity,
             GetAsyncUserPostCounter: _getAsyncUserPostCounter,
             GetAsyncCatalogs: _getAsyncCatalogs,
-            CountLikesByUser: _countLikesByUser
+            CountLikesByUser: _countLikesByUser,
+            GetServerDate: _getServerDate
         };
     })();
 }).call(this);

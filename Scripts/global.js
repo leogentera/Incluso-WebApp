@@ -569,16 +569,17 @@ var logStartActivityAction = function(activityId, timeStamp) {
 
             if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
                  console.log("global");
-                var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
-                
+                var key = "startedActivityCabinaDeSoporte/" + currentUser.id;                            
                 if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
+                    moodleFactory.Services.GetServerDate(function(date){
                     _setLocalStorageJsonItem(key, {
-                        datestarted: getdate(),
+                        datestarted: date.time,
                         coursemoduleid: treeActivity.coursemoduleid,
                         activity_identifier: treeActivity.activity_identifier
                     });
                     
                     localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                    })                    
                 }
             }
             

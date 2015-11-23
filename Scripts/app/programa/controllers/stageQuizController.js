@@ -896,7 +896,7 @@ angular
                             }
 
                             for (i = 0; i < $scope.activityObject.questions[index].answers.length; i++) {
-                                console.log("Validating " + $scope.activityObject.questions[index].answers.length + " options in MC");
+                                //console.log("Validating " + $scope.activityObject.questions[index].answers.length + " options in MC");
                                 if ($scope.answers[index][i] != 1) {                                     
                                     $scope.answers[index][i] = 0;                                        
                                 } 

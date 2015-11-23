@@ -323,7 +323,7 @@
         });
 
         $routeProvider.when('/ZonaDeVuelo/ExploracionInicial/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeVuelo/ExploracionInicial.html',
+            templateUrl: 'Templates/quiz.html', 
             controller: 'stageQuizController'
         });
     
@@ -408,7 +408,7 @@
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html',
+            templateUrl: 'Templates/quiz.html', 
             controller: 'stageQuizController'
         });
 
@@ -418,7 +418,7 @@
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/MisGustos.html',
+            templateUrl: 'Templates/quiz.html', 
             controller: 'stageQuizController'
         });
 
@@ -428,7 +428,7 @@
         });
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeVuelo/MisSuenos/Suena.html',
+            templateUrl: 'Templates/quiz.html', 
             controller: 'stageQuizController'
         });
 
@@ -463,7 +463,7 @@
         });
     
         $routeProvider.when('/ZonaDeVuelo/ExploracionFinal/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeVuelo/ExploracionFinal.html',
+            templateUrl: 'Templates/quiz.html', 
             controller: 'stageQuizController'
         });
 
@@ -485,7 +485,7 @@
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeNavegacion/ExploracionInicial.html',
+            templateUrl: 'Templates/quiz.html', 
             controller: 'stageQuizController'
         });
 
@@ -500,7 +500,7 @@
         });
 
         $routeProvider.when('/ZonaDeNavegacion/Transformate/TusIdeas/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeNavegacion/TusIdeas.html',
+            templateUrl: 'Templates/quiz.html', 
             controller: 'stageQuizController'
         });
 
@@ -550,7 +550,7 @@
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeNavegacion/ProyectaTuVida/13y5.html',
+            templateUrl: 'Templates/quiz.html',
             controller: 'stageQuizController'
         });
 
@@ -595,7 +595,7 @@
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionFinal/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeNavegacion/ExploracionFinal.html',
+            templateUrl: 'Templates/quiz.html', 
             controller: 'stageQuizController'
         });
 
@@ -615,19 +615,18 @@
             controller: 'stage3DashboardController'
         });
 
-
         $routeProvider.when('/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia/:moodleid', {
             templateUrl: 'Templates/ZonaDeAterrizaje/CuartoDeRecursos/FuenteDeEnergia.html',
             controller: 'stageContentsController'
         });
 
         $routeProvider.when('/ZonaDeAterrizaje/ExploracionInicial/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeAterrizaje/ExploracionInicial.html',
+            templateUrl: 'Templates/quiz.html', 
             controller: 'stageQuizController'
         });
 
         $routeProvider.when('/ZonaDeAterrizaje/ExploracionFinal/:activityIdentifier', {
-            templateUrl: 'Templates/quiz.html', //templateUrl: 'Templates/ZonaDeAterrizaje/ExploracionFinal.html',
+            templateUrl: 'Templates/quiz.html', 
             controller: 'stageQuizController'
         });
 

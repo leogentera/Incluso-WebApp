@@ -22,16 +22,16 @@
             <section class="txt-renglon centered form ">
                 <!--<p>¿Que opinas de ésta actividad?</p>-->
                 <p>{{closingContent.activity_rating_label}}</p>
-                    <div class="opinion pull-left">
+                <div>
+                    <div class="opinion col-xs-6">
                         <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                        <!--<label for="like">Me gusta</label>-->
-                        <label for="like">{{closingContent.like_label}}</label>
+                        <label for="like" class="no-margin text-left">{{closingContent.like_label}}</label>
                     </div>
-                    <div class="opinion pull-left">
+                    <div class="opinion col-xs-6">
                         <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                        <!--<label for="dislike">No me gusta</label>-->
-                        <label for="dislike">{{closingContent.not_like_label}}</label>
-                    </div>                            
+                        <label for="dislike" class="no-margin text-left">{{closingContent.not_like_label}}</label>
+                    </div>
+                </div>                          
             </section>
             <p class="actions">
                 <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</a>

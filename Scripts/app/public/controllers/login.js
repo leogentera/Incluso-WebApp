@@ -173,24 +173,22 @@ angular
                 console.log('preparing for syncAll');
 
                 //succesful credentials
-                _syncAll(function () {
-                    console.log('came back from redirecting...');
-                    
-                    var course = moodleFactory.Services.GetCacheJson("course");
-                    moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, false);
-                    
-                    $timeout(
-                        function () {
-                            console.log('redirecting..');
-                            //$location.path('/ProgramaDashboard');
-                            //$scope.$emit('HidePreloader');
-                            if(data.is_new == true) {
-                                $scope.$emit('HidePreloader');
-                                $location.path('/Tutorial');
-                            } else {
-                                $location.path('/ProgramaDashboard');
-                            }
-                            }, 1000);
+                _syncAll(function () {
+                    console.log('came back from redirecting...');
+                    
+                    var course = moodleFactory.Services.GetCacheJson("course");
+                    moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, false);
+                    
+                    $timeout(
+                        function () {
+                            console.log('redirecting..');
+                            if(userFacebook.is_new == true){
+                                $location.path('/Tutorial');
+                            }else{
+                                $location.path('/ProgramaDashboard');
+                            }
+                            //$scope.$emit('HidePreloader');
+                        }, 1000);
                 });
 
                 if ($scope.userCredentialsModel.rememberCredentials) {
