@@ -347,6 +347,15 @@ angular
                         var isLike = $scope.fuenteDeEnergia.activities[i].activityContent.liked == 0 ? 1 : 0;
                         $scope.fuenteDeEnergia.activities[i].activityContent.liked = isLike;
                         var data = {userid: currentUserId, like_status: isLike, only_like: 1};
+
+                        var likes = Number($scope.fuenteDeEnergia.activities[i].activityContent.likes);
+                        if($scope.fuenteDeEnergia.activities[i].activityContent.liked == 0){
+                            likes -= 1;
+                        }else{
+                            likes += 1;
+                        }
+                        $scope.fuenteDeEnergia.activities[i].activityContent.likes = likes;
+
                         moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, countLikesByUser, errorCallback);                        
                     }
                 }                                          
