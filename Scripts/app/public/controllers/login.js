@@ -182,9 +182,15 @@ angular
                     $timeout(
                         function () {
                             console.log('redirecting..');
-                            $location.path('/ProgramaDashboard');
+                            //$location.path('/ProgramaDashboard');
                             //$scope.$emit('HidePreloader');
-                        }, 1000);
+                            if(data.is_new == true) {
+                                $scope.$emit('HidePreloader');
+                                $location.path('/Tutorial');
+                            } else {
+                                $location.path('/ProgramaDashboard');
+                            }
+                            }, 1000);
                 });
 
                 if ($scope.userCredentialsModel.rememberCredentials) {
