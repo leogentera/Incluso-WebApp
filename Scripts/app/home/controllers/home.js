@@ -145,13 +145,13 @@
 				if ($scope.pageName == 'Notificaciones') {
 					return false;
 				}else{
-				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
-				//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
-				var countNotificationsUnread = _.filter(userNotifications, function(notif){
-                    return (notif.timemodified != null && notif.read != true);
-                });				
-				$rootScope.totalNotifications = countNotificationsUnread.length;
-				return  countNotificationsUnread.length > 0;
+					var userNotifications = JSON.parse(localStorage.getItem('notifications'));
+					//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
+					var countNotificationsUnread = _.filter(userNotifications, function(notif){
+						return (notif.timemodified != null && notif.read != true);
+					});				
+					$rootScope.totalNotifications = countNotificationsUnread.length;
+					return  countNotificationsUnread.length > 0;
 				}
 			};
 			

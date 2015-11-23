@@ -267,11 +267,11 @@ var _IsOffline = function () {
     return false;
 };
 
-var notificationTypes = {
-    progressNotifications: 4,
-    activityNotifications: 3,
-    profileNotifications: 2,
-    generalNotifications: 1
+var notificationTypes = {    
+    activityNotifications: 1,
+    generalNotifications: 2,
+    profileNotifications: 3,
+    progressNotifications: 4
 };
 
 var _syncAll = function (callback) {
@@ -396,7 +396,7 @@ var _endActivity = function (activityModel, callback, pathCh) {
     var activityId = activityModel.coursemoduleid;
     callback = callback || successCallback;
     //create notification
-    _createNotification(activityId, triggerActivity);
+    _activityNotification(activityId, triggerActivity);
     if (activityModel.activityType == "Quiz") {
         _endActivityCurrentChallenge = pathCh;
         //activityModel.answersResult.dateStart = activityModel.startingTime;
@@ -511,8 +511,6 @@ var _closeChallenge = function (stageId) {
 }
 
 
-
-
 var _updateBadgeStatus = function (coursemoduleid) {      
     var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));    
     var badges = profile.badges;
@@ -576,7 +574,7 @@ var logStartActivityAction = function(activityId, timeStamp) {
         moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {
 
             var triggerActivity = 1;
-            _createNotification(treeActivity.coursemoduleid, triggerActivity);
+            _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
             if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
                  console.log("global");
@@ -602,7 +600,7 @@ var logStartActivityAction = function(activityId, timeStamp) {
 }
 
 
-var _createNotification = function (activityId, triggerActivity) {
+var _activityNotification = function (activityId, triggerActivity) {
 
     currentUserId = localStorage.getItem("userId");
 
@@ -611,16 +609,22 @@ var _createNotification = function (activityId, triggerActivity) {
     for (var i = 0; i < allNotifications.length; i++) {
         var currentNotification = allNotifications[i];
         if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId) {
-            allNotifications[i].timemodified = new Date();
-            _setLocalStorageJsonItem("notifications", allNotifications);
-            var dataModelNotification = {
-                notificationid: allNotifications[i].id,
-                timemodified: new Date(),
-                userid: currentUserId,
-                already_read: 0
-            };
-            moodleFactory.Services.PostUserNoitifications(currentUserId, dataModelNotification, successCallback, errorCallback);
+            
+            //Create activityNotification
+            
+            //allNotifications[i].timemodified = new Date();            
+            //_setLocalStorageJsonItem("notifications", allNotifications);
+            //
+            //var dataModelNotification = {
+            //    notificationid: allNotifications[i].id,
+            //    timemodified: new Date(),
+            //    userid: currentUserId,
+            //    already_read: 0
+            //};
+            //moodleFactory.Services.PostUserNoitifications(currentUserId, dataModelNotification, successCallback, errorCallback);
+            //
         } else {
+          
         }
     }
 };
@@ -628,39 +632,20 @@ var _createNotification = function (activityId, triggerActivity) {
 
 var _coachNotification = function (stageIndex) {
 
-    var activity_identifier = "";
-    switch(stageIndex)
-    {
-      case 0:
-        activity_identifier = "1002";
-        break;
-      case 1:
-        activity_identifier = "2022";
-        break;
-      case 2:
-        activity_identifier = "3501";
-        break;
-      default:
-        activity_identifier = "1002";
-        break;
-    }
-    
-
     var notifications = JSON.parse(localStorage.getItem("notifications"));
+    
     var userId = localStorage.getItem('userId');
+        
     var notificationCoach = _.find(notifications, function (notif) {
-        if ((notif.id == 4 && stageIndex == 0) || (notif.id == 8 && stageIndex == 1) || (notif.id == 12 && stageIndex == 2)) {
-            return notif;
-        } else {
-
-        }
+        if (notif.type == notificationTypes.activityNotifications && notif.trigger_condition == 3) {
+          return notif; 
+        }      
     });
-
-    if (notificationCoach && !notificationCoach.timemodified) {
-        var activity = getActivityByActivity_identifier(activity_identifier);
-        if ((activity)) {
-
-            var triggerActivity = 3;
+        
+    if (notificationCoach && notificationCoach.status == "pending") {      
+        var activity = getActivityByActivity_identifier(notificationCoach.activityidnumber);
+        
+        if ((activity)) {          
             var chatUser = JSON.parse(localStorage.getItem("userChat"));
             if (chatUser && chatUser.length > 0) {
                 var lastChat = _.max(chatUser, function (chat) {
@@ -670,11 +655,12 @@ var _coachNotification = function (stageIndex) {
                 });
 
                 //'minutes'- 'days'
-                var lastDateChat = moment(new Date(lastChat.messagedate)).add(2, 'days');
+                var daysOfNoChat = notificationCoach.days;
+                var lastDateChat = moment(new Date(lastChat.messagedate)).add(daysOfNoChat, 'days');
 
                 var today = new Date();
                 if (lastDateChat < today) {
-                    _createNotification(activity.coursemoduleid, triggerActivity);
+                    //Create chat notification
                 } else {
                     return false;
                 }
@@ -684,26 +670,26 @@ var _coachNotification = function (stageIndex) {
 };
 
 
-var _generalNotification = function(){  
-    var notifications = JSON.parse(localStorage.getItem("notifications"));
-    var userId = localStorage.getItem('userId');
-    //trigger activity 4: general notification
-    var triggerActivity = 4;
-    
-    var notificationGeneral = _.filter(notifications, function (notif) {
-        if (notif.id == 13 || notif.id == 14 || notif.id == 15) {
-            return notif;
-        } else {
-        }
-    });
-
-    for(var i = 0; i <= notificationGeneral.length; i++)
-    {
-      if (notificationGeneral[i] && !notificationGeneral[i].timemodified) {                          
-          _createNotification(notificationGeneral[i].activityidnumber, triggerActivity);
-      }
-    }  
-}
+//var _generalNotification = function(){
+//    var notifications = JSON.parse(localStorage.getItem("notifications"));
+//    var userId = localStorage.getItem('userId');
+//    //trigger activity 4: general notification
+//    var triggerActivity = 4;
+//    
+//    var notificationGeneral = _.filter(notifications, function (notif) {
+//        if (notif.id == 13 || notif.id == 14 || notif.id == 15) {
+//            return notif;
+//        } else {
+//        }
+//    });
+//
+//    for(var i = 0; i <= notificationGeneral.length; i++)
+//    {
+//      if (notificationGeneral[i] && !notificationGeneral[i].timemodified) {
+//          _activityNotification(notificationGeneral[i].activityidnumber, triggerActivity);
+//      }
+//    }
+//}
 
 
 var _progressNotification = function(indexStageId, currentProgress){
@@ -722,7 +708,6 @@ var _progressNotification = function(indexStageId, currentProgress){
             //Add create notification logic.
         }        
     }
-        
 }
 
 var successPutStarsCallback = function (data) {
@@ -734,18 +719,6 @@ var successCallback = function (data) {
 };
 
 var errorCallback = function (data) {
-};
-
-var _notificationExists = function () {
-
-    var userNotifications = JSON.parse(localStorage.getItem('notifications'));
-    //var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
-    var countNotificationsUnread = _.filter(userNotifications, function (notif) {
-        return (notif.timemodified != null && notif.read != true);
-    });
-    var totalNotifications = countNotificationsUnread.length;
-    return totalNotifications;
-
 };
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {

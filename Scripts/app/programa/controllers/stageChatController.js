@@ -104,7 +104,7 @@ angular
                 var triggerActivity = 2;   
 
                 //create notification
-                _createNotification(treeActivity.coursemoduleid, triggerActivity);
+                _activityNotification(treeActivity.coursemoduleid, triggerActivity);
                 //complete stage                
 
                 _updateBadgeStatus(treeActivity.coursemoduleid);

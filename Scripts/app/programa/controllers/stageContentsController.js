@@ -347,7 +347,7 @@ angular
                             var currentUserId = currentUser.userId;
                             var activityId = $scope.fuenteDeEnergia.coursemoduleid;
                             //create notification
-                            _createNotification(activityId, triggerActivity);
+                            _activityNotification(activityId, triggerActivity);
                             //complete stage
                             var like_status = $scope.like_status;
                             var data = {userid: currentUserId, like_status: like_status};
