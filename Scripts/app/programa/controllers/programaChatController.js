@@ -20,7 +20,7 @@ angular
             }
             
             function initController() {
-                
+                alert("1");
                 _timeout = $timeout;
                 _httpFactory = $http;
                 var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
@@ -42,11 +42,13 @@ angular
                 $rootScope.showStage3Footer = false; 
                 var interval = -1;
                 if ($location.hash() == 'top') {
+                    alert("2");
                 $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
                     $anchorScroll();
                 } 
                 else 
                 {
+                    alert("3");
                     moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback);
                     interval = setInterval(getMessages,60000);                    
                     console.log('creating interval:' + interval);

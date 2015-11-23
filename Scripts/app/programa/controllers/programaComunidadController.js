@@ -18,44 +18,6 @@ angular
             _httpFactory = $http;
             _timeout = $timeout;
             
-            /* local view variables */
-            var _userProfile;
-            var _currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
-            var _userId = moodleFactory.Services.GetCacheObject("userId");
-            var _course = moodleFactory.Services.GetCacheJson("course");
-            var _postPager = { from: 0, to: 0 };
-            var _currentFilter = "default";
-            $scope.hasCommunityAccess = false;
-            
-            $scope.userToken = _currentUser.token;
-            $scope.moodleId = $routeParams.moodleid;
-            $scope.forumId = 0;
-            $scope.discussion = null;
-            $scope.communityModals = _initCommunityModals();
-            $scope.morePendingPosts = true;
-            $scope.posts = new Array();
-            $scope.showedCommentsByPost = new Array();
-            $scope.isCommentModalCollapsed = new Array();
-            $scope.isReportedAbuseModalCollapsed = new Array();
-            $scope.isReportedAbuseSentModalCollapsed = new Array();
-            $scope.replyText = null;
-            $scope.postTextValue = null;
-            $scope.postLinkValue = null;
-            $scope.postVideoValue = null;
-            $scope.postAttachmentValue = null;
-            $scope.filter = "";
-            
-            /* View settings */
-            $rootScope.pageName = "Comunidad";
-            $rootScope.navbarBlue = false;
-            $rootScope.showToolbar = true;
-            $rootScope.showFooter = true;
-            $rootScope.showFooterRocks = false;
-            $rootScope.showStage1Footer = false;
-            $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false;
-            $scope.setToolbar($location.$$path,"Comunidad");
-            
             $scope.validateConnection(initController, offlineCallback);
             
             function offlineCallback() {
@@ -63,6 +25,45 @@ angular
             }
             
             function initController() {
+                
+                /* local view variables */
+                var _userProfile;
+                var _currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
+                var _userId = moodleFactory.Services.GetCacheObject("userId");
+                var _course = moodleFactory.Services.GetCacheJson("course");
+                var _postPager = { from: 0, to: 0 };
+                var _currentFilter = "default";
+                $scope.hasCommunityAccess = false;
+                
+                $scope.userToken = _currentUser.token;
+                $scope.moodleId = $routeParams.moodleid;
+                $scope.forumId = 0;
+                $scope.discussion = null;
+                $scope.communityModals = _initCommunityModals();
+                $scope.morePendingPosts = true;
+                $scope.posts = new Array();
+                $scope.showedCommentsByPost = new Array();
+                $scope.isCommentModalCollapsed = new Array();
+                $scope.isReportedAbuseModalCollapsed = new Array();
+                $scope.isReportedAbuseSentModalCollapsed = new Array();
+                $scope.replyText = null;
+                $scope.postTextValue = null;
+                $scope.postLinkValue = null;
+                $scope.postVideoValue = null;
+                $scope.postAttachmentValue = null;
+                $scope.filter = "";
+                
+                /* View settings */
+                $rootScope.pageName = "Comunidad";
+                $rootScope.navbarBlue = false;
+                $rootScope.showToolbar = true;
+                $rootScope.showFooter = true;
+                $rootScope.showFooterRocks = false;
+                $rootScope.showStage1Footer = false;
+                $rootScope.showStage2Footer = false;
+                $rootScope.showStage3Footer = false;
+                $scope.setToolbar($location.$$path,"Comunidad");
+                
                 
                 function _initCommunityModals() {
                     return {
