@@ -52,7 +52,7 @@ angular
                     goToFirstSpeed: 2000,
                     singleItem: true,
                     autoHeight: true,
-                    touchDrag:false,
+                    touchDrag:true,
                     mouseDrag:false,
                     transitionStyle:"fade",
                     afterMove: callback1
@@ -68,7 +68,7 @@ angular
                     goToFirstSpeed: 2000,
                     singleItem: true,
                     autoHeight: true,
-                    touchDrag:false,
+                    touchDrag:true,
                     mouseDrag:false,
                     transitionStyle:"fade",
                     afterMove: callback2
@@ -86,13 +86,14 @@ angular
                     var item = this.currentItem;
                     currentItem = parseInt(this.owl.currentItem);
                     owl2.trigger("owl.goTo", item);
-                    $("span#index").text((item+1));
+                    owl.trigger("owl.goTo", item);
+                    $("span#index").text((item + 1));
                 }
-
                 function callback2(event) {
                     item = this.currentItem;
                     owl.trigger("owl.goTo", item);
-                    $("span#index").text((item+1));
+                    owl2.trigger("owl.goTo", item);
+                    $("span#index").text((item + 1));
                 }
 
                 $("#prev").click(function (ev) {
