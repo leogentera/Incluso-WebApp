@@ -299,54 +299,64 @@ angular
                     activitiesPosted++;
                     if (activitiesPosted == $scope.mapaDeEmprendedorAnswers.length) {                   
                         if ($scope.pathImagenFicha != "" && parentStatus) {
-                            moodleFactory.Services.GetAsyncForumDiscussions(91, currentUser.token, function(data, key) {
-                                var currentDiscussionIds = [];
-                                for(var d = 0; d < data.discussions.length; d++) {
-                                    currentDiscussionIds.push(data.discussions[d].discussion);
-                                }
-                                localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
-                                
-                                var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
-
-                                encodeImageUri($scope.pathImagenFicha, function (b64) {
-                                    var requestData = {
-                                        "userid": $scope.user.id,
-                                        "discussionid": discussion.discussion,
-                                        "parentid": discussion.id,
-                                        "message": "Mi mapa del emprendedor",
-                                        "createdtime": quiz.startingTime,
-                                        "modifiedtime": quiz.endingTime,
-                                        "posttype": 4,
-                                        "filecontent": b64,
-                                        "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.png',
-                                        "picture_post_author": $scope.user.profileimageurlsmall
-                                    };
+                            
+                            $scope.validateConnection(function() {
+                            
+                                moodleFactory.Services.GetAsyncForumDiscussions(91, currentUser.token, function(data, key) {
+                                    var currentDiscussionIds = [];
+                                    for(var d = 0; d < data.discussions.length; d++) {
+                                        currentDiscussionIds.push(data.discussions[d].discussion);
+                                    }
+                                    localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
                                     
-                                    moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                                        function() {
-                                            $scope.sharedAlbumMessage = null;
-                                            $scope.isShareCollapsed = false;
-                                            $scope.showSharedAlbum = true;
-                                            $scope.$emit('HidePreloader');
-                                            checkForumExtraPoints();
-                                            $location.path('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/3404/' + discussion.discussion);
-                                        },
-                                        function(){
-                                            $scope.sharedAlbumMessage = null;
-                                            $scope.isShareCollapsed = false;
-                                            $scope.showSharedAlbum = false;
-                                            $scope.$emit('HidePreloader');
-                                            $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
-                                        }
-                                    );
-                                });
-                            }, function(){}, true);
+                                    var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
+    
+                                    encodeImageUri($scope.pathImagenFicha, function (b64) {
+                                        var requestData = {
+                                            "userid": $scope.user.id,
+                                            "discussionid": discussion.discussion,
+                                            "parentid": discussion.id,
+                                            "message": "Mi mapa del emprendedor",
+                                            "createdtime": quiz.startingTime,
+                                            "modifiedtime": quiz.endingTime,
+                                            "posttype": 4,
+                                            "filecontent": b64,
+                                            "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.png',
+                                            "picture_post_author": $scope.user.profileimageurlsmall
+                                        };
+                                        
+                                        moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                                            function() {
+                                                $scope.sharedAlbumMessage = null;
+                                                $scope.isShareCollapsed = false;
+                                                $scope.showSharedAlbum = true;
+                                                $scope.$emit('HidePreloader');
+                                                checkForumExtraPoints();
+                                                $location.path('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/3404/' + discussion.discussion);
+                                            },
+                                            function(){
+                                                $scope.sharedAlbumMessage = null;
+                                                $scope.isShareCollapsed = false;
+                                                $scope.showSharedAlbum = false;
+                                                $scope.$emit('HidePreloader');
+                                                $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                            }
+                                        );
+                                    });
+                                }, function(){}, true);
+                            
+                            
+                            }, offlineCallback);
 
                         }else{
                             $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
                         }
                     }
                 });
+            }
+            
+            function offlineCallback() {
+                $location.path("/Offline");
             }
             
             var checkForumExtraPoints = function() {

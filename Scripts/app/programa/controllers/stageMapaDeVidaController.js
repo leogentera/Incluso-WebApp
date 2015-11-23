@@ -296,57 +296,66 @@ angular
                     activitiesPosted++;
                     if (activitiesPosted == activitiesAtLeastOne) {
                         if ($scope.pathImagenFicha != "" && parentStatus) {
-                            //var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
-                            moodleFactory.Services.GetAsyncForumDiscussions(85, currentUser.token, function(data, key) {
-                                var currentDiscussionIds = [];
-                                for(var d = 0; d < data.discussions.length; d++) {
-                                    currentDiscussionIds.push(data.discussions[d].discussion);
-                                }
-                                localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
-                                
-                                
-                                var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
-                                $scope.forumId = data.forumid;
-
-                                encodeImageUri($scope.pathImagenFicha, function (b64) {
-                                    var requestData = {
-                                        "userid": $scope.user.id,
-                                        "discussionid": discussion.discussion,
-                                        "parentid": discussion.id,
-                                        "message": "Mi mapa de vida",
-                                        "createdtime": quiz.startingTime,
-                                        "modifiedtime": quiz.endingTime,
-                                        "posttype": 4,
-                                        "filecontent": b64,
-                                        "filename": 'mapa_de_vida_' + $scope.user.id + '.png',
-                                        "picture_post_author": $scope.user.profileimageurlsmall
-                                    };
+                            
+                            $scope.validateConnection(function() {
+                            
+                                moodleFactory.Services.GetAsyncForumDiscussions(85, currentUser.token, function(data, key) {
+                                    var currentDiscussionIds = [];
+                                    for(var d = 0; d < data.discussions.length; d++) {
+                                        currentDiscussionIds.push(data.discussions[d].discussion);
+                                    }
+                                    localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
                                     
-                                    moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                                        function() {
-                                            $scope.sharedAlbumMessage = null;
-                                            $scope.isShareCollapsed = false;
-                                            $scope.showSharedAlbum = true;
-                                            $scope.$emit('HidePreloader');
-                                            
-                                            checkForumExtraPoints();
-                                            $location.path('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/' + discussion.discussion);
-                                        },
-                                        function(){
-                                            $scope.sharedAlbumMessage = null;
-                                            $scope.isShareCollapsed = false;
-                                            $scope.showSharedAlbum = false;
-                                            $scope.$emit('HidePreloader');
-                                            $location.path('/ZonaDeNavegacion/Dashboard/2/4');
-                                        }
-                                    );
-                                });
-                            }, function(){}, true);
+                                    
+                                    var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
+                                    $scope.forumId = data.forumid;
+    
+                                    encodeImageUri($scope.pathImagenFicha, function (b64) {
+                                        var requestData = {
+                                            "userid": $scope.user.id,
+                                            "discussionid": discussion.discussion,
+                                            "parentid": discussion.id,
+                                            "message": "Mi mapa de vida",
+                                            "createdtime": quiz.startingTime,
+                                            "modifiedtime": quiz.endingTime,
+                                            "posttype": 4,
+                                            "filecontent": b64,
+                                            "filename": 'mapa_de_vida_' + $scope.user.id + '.png',
+                                            "picture_post_author": $scope.user.profileimageurlsmall
+                                        };
+                                        
+                                        moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                                            function() {
+                                                $scope.sharedAlbumMessage = null;
+                                                $scope.isShareCollapsed = false;
+                                                $scope.showSharedAlbum = true;
+                                                $scope.$emit('HidePreloader');
+                                                
+                                                checkForumExtraPoints();
+                                                $location.path('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/' + discussion.discussion);
+                                            },
+                                            function(){
+                                                $scope.sharedAlbumMessage = null;
+                                                $scope.isShareCollapsed = false;
+                                                $scope.showSharedAlbum = false;
+                                                $scope.$emit('HidePreloader');
+                                                $location.path('/ZonaDeNavegacion/Dashboard/2/4');
+                                            }
+                                        );
+                                    });
+                                }, function(){}, true);
+                            
+                            }, offlineCallback);
+                            
                         }else{
                             $location.path('/ZonaDeNavegacion/Dashboard/2/4');
                         }
                     }
                 });
+            }
+            
+            function offlineCallback() {
+                $location.path("/Offline");
             }
             
             var checkForumExtraPoints = function() {
