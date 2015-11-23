@@ -125,8 +125,8 @@
             _postAsyncData(key, data, API_RESOURCE.format('reportabuse'), successCallback, errorCallback);
         };
 
-        var _putUserNotificationRead = function (notificationId, data, successCallback, errorCallback, forceRefresh) {
-            _putAsyncData(null, data, API_RESOURCE.format('notification/') + notificationId, successCallback, errorCallback);
+        var _putUserNotificationRead = function (userId, data, successCallback, errorCallback, forceRefresh) {
+            _putAsyncData(null, data, API_RESOURCE.format('notification/') + userId, successCallback, errorCallback);
         };
 
         var _getUserChat = function (userId, token, successCallback, errorCallback, forceRefresh) {

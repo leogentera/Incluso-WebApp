@@ -297,18 +297,6 @@ var _getItem = function (key) {
     return localStorage.getItem(key);
 };
 
-var _readNotification = function (currentUserId, currentNotificationId) {
-
-    var data = {
-        userid: currentUserId,
-        notificationid: currentNotificationId
-    };
-
-    moodleFactory.Services.PutUserNotificationRead(currentNotificationId, data, function () {
-    }, function () {
-    });
-};
-
 var _setLocalStorageItem = function (key, value) {
     try {
         localStorage.setItem(key, value);
@@ -670,26 +658,26 @@ var _coachNotification = function (stageIndex) {
 };
 
 
-//var _generalNotification = function(){
-//    var notifications = JSON.parse(localStorage.getItem("notifications"));
-//    var userId = localStorage.getItem('userId');
-//    //trigger activity 4: general notification
-//    var triggerActivity = 4;
-//    
-//    var notificationGeneral = _.filter(notifications, function (notif) {
-//        if (notif.id == 13 || notif.id == 14 || notif.id == 15) {
-//            return notif;
-//        } else {
-//        }
-//    });
-//
-//    for(var i = 0; i <= notificationGeneral.length; i++)
-//    {
-//      if (notificationGeneral[i] && !notificationGeneral[i].timemodified) {
-//          _activityNotification(notificationGeneral[i].activityidnumber, triggerActivity);
-//      }
-//    }
-//}
+var _generalNotification = function(){
+    //var notifications = JSON.parse(localStorage.getItem("notifications"));
+    //var userId = localStorage.getItem('userId');
+    ////trigger activity 4: general notification
+    //var triggerActivity = 4;
+    //
+    //var notificationGeneral = _.filter(notifications, function (notif) {
+    //    if (notif.id == 13 || notif.id == 14 || notif.id == 15) {
+    //        return notif;
+    //    } else {
+    //    }
+    //});
+    //
+    //for(var i = 0; i <= notificationGeneral.length; i++)
+    //{
+    //  if (notificationGeneral[i] && !notificationGeneral[i].timemodified) {
+    //      _activityNotification(notificationGeneral[i].activityidnumber, triggerActivity);
+    //  }
+    //}
+}
 
 
 var _progressNotification = function(indexStageId, currentProgress){
@@ -1502,10 +1490,11 @@ function _updateDeviceVersionCache () {
 }
 
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
-    cordova.exec(function(data) {
-        _isDeviceOnline = data.online;
+    //cordova.exec(function(data) {
+       // _isDeviceOnline = data.online;
+        _isDeviceOnline = true;
         callback();
-    }, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
+    //}, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
 }
 
 var _getCatalogValuesBy = function (catalogName) {

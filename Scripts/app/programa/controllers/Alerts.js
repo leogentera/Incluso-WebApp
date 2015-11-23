@@ -112,11 +112,23 @@ angular
                 
                 
                 _setLocalStorageJsonItem("notifications", userNotifications);
-                //_readNotification(userId,notificationId);
+                _readNotification(userId,notificationId);
 
                 $scope.navigateTo('/AlertsDetail/' + notificationId, 'null');            
             
             }
             
+            var _readNotification = function (currentUserId, currentNotificationId) {
+                var seen_date_now = new Date();
+            
+                var data = {                    
+                    notificationid: currentNotificationId,
+                    seen_date: seen_date_now                    
+                };
+            
+                moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
+                }, function () {
+                });
+            };        
         }
 ]);
