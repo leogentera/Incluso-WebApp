@@ -1528,11 +1528,11 @@ function _updateDeviceVersionCache () {
     }
 }
 
-function _forceUpdateConnectionStatus(callback) {
+function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
     cordova.exec(function(data) {
         _isDeviceOnline = data.online;
         callback();
-    }, function() {  }, "CallToAndroid", "isonline", []);
+    }, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
 }
 
 var _getCatalogValuesBy = function (catalogName) {
@@ -1545,6 +1545,10 @@ var _getCatalogValuesBy = function (catalogName) {
     }else{
         return [];
     }
+};
+
+var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCallback) {
+    _forceUpdateConnectionStatus(sucessIsOnlineCallback, errorIsOnlineCallback);
 };
 
 $(document).ready(function(){
