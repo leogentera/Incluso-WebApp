@@ -297,8 +297,8 @@ angular
                 $scope.$emit('ShowPreloader'); 
                 _endActivity(activityModel, function(){
                     activitiesPosted++;
-                    if (activitiesPosted == $scope.mapaDeEmprendedorAnswers.length) {                   
-                        if ($scope.pathImagenFicha != "" && parentStatus) {
+                    if (activitiesPosted == subactivitiesCompleted.length) {                   
+                        if ($scope.pathImagenFicha != "" && canPost) {
                             moodleFactory.Services.GetAsyncForumDiscussions(91, currentUser.token, function(data, key) {
                                 var currentDiscussionIds = [];
                                 for(var d = 0; d < data.discussions.length; d++) {
@@ -314,8 +314,8 @@ angular
                                         "discussionid": discussion.discussion,
                                         "parentid": discussion.id,
                                         "message": "Mi mapa del emprendedor",
-                                        "createdtime": quiz.startingTime,
-                                        "modifiedtime": quiz.endingTime,
+                                        "createdtime": ((new Date(quiz.startingTime).getTime()) / 1000),
+                                        "modifiedtime": ((new Date(quiz.endingTime).getTime()) / 1000),
                                         "posttype": 4,
                                         "filecontent": b64,
                                         "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.jpg',
@@ -360,7 +360,7 @@ angular
                 if (activityFromTree && activityFromTree.status == 1) {
                     /* sumar uno extra al total */
                     if (forumData.totalExtraPoints < 11) {
-                         updateUserForumStars($routeParams.activityId, 50, function (){
+                         updateUserForumStars($routeParams.moodleid, 50, function (){
                             successPutStarsCallback();
                         });
                     }
