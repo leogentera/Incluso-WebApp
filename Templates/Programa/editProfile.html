@@ -46,7 +46,7 @@
 							<div class="row">
 								<div class="col-xs-12">
 									<ul class="list-group separate-items">
-										<li class="list-group-item" ng-click="navigateToPage(2)">
+										<li class="list-group-item" ng-click="navigateToSection(2)">
 											<a href="">
 												<span class="icomoon icon-information"></span>
 												<span>Mi Información</span>
@@ -55,7 +55,7 @@
 											</a>
 										</li>
 
-										<li class="list-group-item" ng-click="navigateToPage(5)">
+										<li class="list-group-item" ng-click="navigateToSection(5)">
 											<a href="">
 												<span class="icomoon icon-star-clip"></span>
 												<span>Mi Personalidad</span>
@@ -64,7 +64,7 @@
 											</a>
 										</li>
 
-										<li class="list-group-item" ng-click="navigateToPage(8)">
+										<li class="list-group-item" ng-click="navigateToSection(8)">
 											<a href="">
 												<span class="icomoon icon-wallet"></span>
 												<span>Socioeconómicos</span>
@@ -95,7 +95,7 @@
 										<div class="panel-heading with-icons" ng-click="navigateToPage(1)">
 											<span class="icomoon icon-arrow-slim-left"></span>
 											<span class="icomoon icon-information"></span>
-											<h3 class="panel-title">Mi InformaciÃ³n</h3>
+											<h3 class="panel-title">Mi Información</h3>
 										</div>
 										<div class="panel-body">
 											<fieldset class="my-profile-form">
@@ -103,7 +103,7 @@
 												<div class="checkbox checkbox-custom">
 													<label>
 														<input type="checkbox" ng-model="model.allowToSendAdvertisement" name="allowToSendAdvertisement" />
-														<span>Deseo recibir promociÃ³n y publicidad</span>
+														<span>Deseo recibir promoción y publicidad</span>
 													</label>
 												</div>
 
@@ -311,7 +311,7 @@
 
 						<div class="form-group theme-form">
 							<div class="form-group-control">
-								<input type="text" class="form-control form-control-lg theme-form" placeholder="Municipio / DelegaciÃ³n" ng-model="model.address.town"
+								<input type="text" class="form-control form-control-lg theme-form" placeholder="Municipio / Delegación" ng-model="model.address.town"
 								/>
 							</div>
 						</div>
@@ -463,7 +463,7 @@
 					<div class="panel-heading with-icons" ng-click="navigateToPage(1)">
 						<span class="icomoon icon-arrow-slim-left"></span>
 						<span class="icomoon icon-information"></span>
-						<h3 class="panel-title">Mi InformaciÃ³n</h3>
+						<h3 class="panel-title">Mi Información</h3>
 					</div>
 					<div class="panel-body">
 						<fieldset class="my-profile-form">
@@ -904,7 +904,7 @@
 									<div class="form-group-control custom-caret-wrapper">
 										<select class="form-control form-control-lg theme-form"
 										ng-model="model.iLiveWith" ng-options="item for item in iLiveWithList"
-										ng-init="model.iLiveWith == null" ng-class="{'selected': model.iLiveWith.length != 0 && model.iLiveWith != null}">
+										ng-init="" ng-class="{'selected': model.iLiveWith.length != 0 && model.iLiveWith != null}">
 										<option value="" ng-disabled="!!model.iLiveWith">Vivo con</option>
 									</select>
 									<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -924,7 +924,8 @@
 											</button>
 										</h5>
 										<select class="form-control form-control-lg theme-form" 
-										ng-model="model.mainActivity[$index]" ng-options="item for item in mainActivityList" ng-class="{'selected': model.mainActivity[$index].length != 0 && model.mainActivity[$index] != null}">
+										ng-model="model.mainActivity[$index]" ng-options="item for item in mainActivityList" 
+										ng-class="{'selected': model.mainActivity[$index].length != 0 && model.mainActivity[$index] != null}">
 										<option value="" ng-disabled="!!model.mainActivity">Actividad principal</option>
 									</select>
 								</div>
@@ -1017,7 +1018,7 @@
 									<div class="form-group-control custom-caret-wrapper">
 										<select class="form-control form-control-lg theme-form" 
 										ng-model="model.children" ng-options="item for item in childrenList"
-										ng-init="model.children == null" ng-class="{'selected': model.children != null}">
+										ng-init="" ng-class="{'selected': model.children != ''}">
 										<option value="" ng-disabled="!!model.children">¿Tengo hijos?</option>
 									</select>
 									<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1031,7 +1032,7 @@
 								<div class="form-group-control custom-caret-wrapper">
 									<select class="form-control form-control-lg theme-form" 
 									ng-model="model.gotMoneyIncome" ng-options="item for item in gotMoneyIncomeList"
-									ng-init="model.gotMoneyIncome == null" ng-class="{'selected': model.gotMoneyIncome != null}">
+									ng-init="" ng-class="{'selected': model.gotMoneyIncome != ''}">
 									<option value="" ng-disabled="!!model.gotMoneyIncome">¿Recibo ingresos?</option>
 								</select>
 								<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1072,7 +1073,7 @@
 						<div class="form-group-control custom-caret-wrapper">
 							<select class="form-control form-control-lg theme-form" 
 							ng-model="model.medicalCoverage" ng-options="item for item in medicalCoverageList"
-							ng-init="model.medicalCoverage == null" ng-class="{'selected': model.medicalCoverage != null}">
+							ng-init="model.medicalCoverage == null" ng-class="{'selected': model.medicalCoverage != ''}">
 							<option value="" ng-disabled="!!model.medicalCoverage">¿Cuento con seguro médico?</option>
 						</select>
 						<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1081,7 +1082,7 @@
 					<div class="form-group-control custom-caret-wrapper">
 						<select class="form-control form-control-lg theme-form" 
 						ng-model="model.medicalInsurance" ng-options="item for item in medicalInsuranceList"
-						ng-init="model.medicalInsurance == null" ng-class="{'selected': model.medicalInsurance != null}">
+						ng-init="model.medicalInsurance == null" ng-class="{'selected': model.medicalInsurance != ''}">
 						<option value="" ng-disabled="!!model.medicalInsurance">Mi seguro es:</option>
 					</select>
 					<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
@@ -1276,7 +1277,7 @@
 								<select ng-model="model.videogamesFrecuency" ng-options="item for item in videoGamesFrecuencyList" ng-init="model.videogamesFrecuency == null" 
 								class="form-control form-control-lg theme-form"
 								ng-class="{'selected': model.videogamesFrecuency != ''}">
-								<option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
+								<option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas?</option>
 							</select>
 							<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 						</div>
@@ -1288,7 +1289,7 @@
 							<select ng-model="model.videogamesHours" ng-options="item for item in videogamesHoursList" ng-init="model.videogamesHours == null" 
 							class="form-control form-control-lg theme-form"
 							ng-class="{'selected': model.videogamesHours != ''}">
-							<option value="" ng-disabled="!!model.videogamesFrecuency">¿Con qué frecuencia juegas videojuegos?</option>
+							<option value="" ng-disabled="!!model.videogamesFrecuency">¿Cuántas horas juegas?</option>
 						</select>
 						<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 					</div>																																					
@@ -1309,7 +1310,7 @@
 									<select ng-model="model.kindOfVideogames[$index]" ng-options="item for item in kindOfVideoGamesList" ng-init="model.kindOfVideogames == null"
 									class="form-control form-control-lg theme-form"
 									ng-class="{'selected': model.kindOfVideogames[$index] != ''}">
-									<option value="" ng-disabled="!!model.kindOfVideogames">¿Qué tipo de videojuegos te gustan más?</option>
+									<option value="" ng-disabled="!!model.kindOfVideogames">¿Qué videojuegos te gustan más?</option>
 								</select>
 								<span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
 							</div>																
@@ -1375,20 +1376,19 @@
 <div class="page" ng-class="currentPage == 12 ? 'active' : '' ">
 	<div id="finalized">
 		<section class="header-title">
-			<!--<div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>-->
-			<div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message}}</div>
+			<div class="txt-renglon centered txt-bigger min-pad ">Has completado tu perfil</div>
+			<!--<div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message}}</div>-->
 			<div class="subtitle centered min-pad ">{{activityname}}</div>
-			<!--<div class="txt-renglon centered txt-bigger min-pad ">¡Bien hecho!</div>-->
-			<div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message_congrats}}</div>
+			<div class="txt-renglon centered txt-bigger min-pad ">¡Bien hecho!</div>
+			<!--<div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message_congrats}}</div>-->
 		</section>
 		<section class="centered txt-bigger" ng-show="activityname != 'Exploración final'">
 			<span class="icomoon icon-checked-join txt-bigger green-giant"></span>
 		</section>	
 
-
 		<section class="txt-renglon pill" ng-show="activityPoints > 0 && activity_status == 0">
-			<div class="pull-left">{{closingContent.earned_stars}}</div>
-			<!--<div class="pull-left">Estrellas ganadas:</div>-->
+			<!--<div class="pull-left">{{closingContent.earned_stars}}</div>-->
+			<div class="pull-left">Estrellas ganadas:</div>
 			<div class="pull-right sm-pill">
 				<span class="pull-left">{{activityPoints}}</span>
 				<span class="icomoon icon-star pull-right"></span>
@@ -1396,23 +1396,23 @@
 		</section>
 		<section class="txt-renglon centered form">
 			<div ng-show="activity_status == 0">
-				<!--¿Que opinas de ésta actividad?-->
-				{{closingContent.activity_rating_label}}
+				¿Que opinas de ésta actividad?
+				<!--{{closingContent.activity_rating_label}}-->
 				<section class="txt-renglon txt-bigger clearfix">
 					<div class="opinion">
 						<input id="like" type="radio" value="1" name="like" ng-model="like_status">
-						<!--<label for="like">Me gusta</label>-->
-						<label for="like">{{closingContent.like_label}}</label>
+						<label for="like">Me gusta</label>
+						<!--<label for="like">{{closingContent.like_label}}</label>-->
 					</div>
 					<div class="opinion">
 						<input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-						<!--<label for="dislike">No me gusta</label>-->
-						<label for="dislike">{{closingContent.not_like_label}}</label>
+						<label for="dislike">No me gusta</label>
+						<!--<label for="dislike">{{closingContent.not_like_label}}</label>-->
 					</div>
 				</section>
 			</div>
-			<!--<a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR</a>-->
-			<a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">{{closingContent.finish_button}}</a>
+			<a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">TERMINAR</a>
+			<!--<a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()" ng-disabled="isDisabled">{{closingContent.finish_button}}</a>-->
 		</section>
 	</div>
 </div>

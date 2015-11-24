@@ -330,28 +330,28 @@ function getDataAsync(callback) {
 
     startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
-                moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
+        moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
 
-        $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
-        if ($scope.model.profileimageurl) {
-            $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
-        }
+            $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
+            if ($scope.model.profileimageurl) {
+                $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
+            }
 
-        $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
-        //console.log("Profile current stars:" + $scope.model.stars);
+            $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
+            //console.log("Profile current stars:" + $scope.model.stars);
 
-        callback();
+            callback();
 
-                    moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () { }, true);
+                        moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () { }, true);
 
-        if (!$scope.model) {
-            $location.path('/');
-            return "";
-        }
+            if (!$scope.model) {
+                $location.path('/');
+                return "";
+            }
 
-        initFields($scope.model);
-        loadStrengths();
-        loadWindowOfOpportunities();
+            initFields($scope.model);
+            loadStrengths();
+            loadWindowOfOpportunities();
 
     }, true);
 }
@@ -426,9 +426,39 @@ function formatDate(date) {
             //     $scope.model.birthday = newBirthday;
             // };
 
+            $scope.navigateToSection = function (pageNumber) {
+                $scope.currentPage = pageNumber;
+                var profileIndex;
+
+                switch (pageNumber) {
+                    
+                    case 2:  // "Llenar mi informacion"; points = 400
+                        //$scope.activityIdentifier = 3000;
+                        $scope.profileIndex = 0;
+                        break;
+                    case 5:  // "Llenar Mi Personalidad"; points = 400
+                        //$scope.activityIdentifier = 3001;
+                        $scope.profileIndex = 1;
+                        break;
+                    case 8:  // "Llenar Llenar Socioeconomicos"; points = 400
+                        //$scope.activityIdentifier = 3002;
+                        $scope.profileIndex = 2;
+                        break;
+                    case 10:  // "Llenar Uso de la tecnologia"; points = 400
+                        //$scope.activityIdentifier = 3003;
+                        $scope.profileIndex = 3;
+                        break;
+                    default:
+                        //$scope.currentPage = 1;
+                        break;
+                    }                   
+
+            };
+
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
-            };
+                console.log($scope.profileIndex);
+            }
 
             $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description, status) {
                 $scope.shareAchievementMessage = "";
@@ -513,7 +543,7 @@ function formatDate(date) {
                 composedDate.getFullYear() == y;
             }
 
-            function validateModel() {//This validates for the required fields
+            function validateRestrictions() {//This validates for the required fields
                 //console.log('fetching editProfile errors list');
                 var errors = [];
 
@@ -584,16 +614,13 @@ function formatDate(date) {
                 //Validation of the $scope.model.studies array
                 var arrayForLevel = [];
 
-
                 $scope.model.studies.forEach(function (elem) {
                     arrayForLevel.push(elem.school.toLowerCase());
                 });
 
-
                 var filteredLevel = arrayForLevel.filter(function (item, pos) {
                     return arrayForLevel.indexOf(item) == pos;
                 });
-
 
                 if (arrayForLevel.length != filteredLevel.length) {
                     //Repeated names for Social network
@@ -808,7 +835,7 @@ function formatDate(date) {
                 if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
                     saveUser();
                 }else {
-                    var validationResult = validateModel();  //Valid if validateModel() returns true                
+                    var validationResult = validateRestrictions();  //Validates for required restrictions               
 
                     deleteRepeatedValues();
     
@@ -819,28 +846,8 @@ function formatDate(date) {
                         $scope.$emit('scrollTop');
                     }
                 }
-            };
-
+            };            
             
-            function validateAllFieldsCompleted(){
-                var usercourse = JSON.parse(localStorage.getItem("usercourse"));
-                if(usercourse && usercourse.activities){
-                    var activitiesCompleted = _.where(usercourse.activities, {status : 1});
-                    console.log(activitiesCompleted);
-                    if (activitiesCompleted && activitiesCompleted.length == usercourse.activities.length) {
-                        console.log("create badge");
-                        var badgeModel = {
-                            badgeid: 13 //badge earned when a user completes his profile.
-                            };
-                        moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function(){
-                            console.log("created badge successfully");
-                            },function(){
-                                });
-                    }
-                }
-                
-                return true;                            
-            }
 
             function saveUser() {
                 //
@@ -850,7 +857,7 @@ function formatDate(date) {
                         console.log('Save profile successful...');
                         $scope.index();                        
                     },
-                    function (date) {
+                    function (data) {
                         console.log('Save profile fail...');
                     });
             }
@@ -865,8 +872,9 @@ function formatDate(date) {
                 var usercourse = JSON.parse(localStorage.getItem("usercourse"));
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
-                for (var activityIndex = 0; activityIndex < usercourse.activities.length; activityIndex++) {
-                    var activity = usercourse.activities[activityIndex];
+                //for (var activityIndex = 0; activityIndex < usercourse.activities.length; activityIndex++) {
+                    //var activity = usercourse.activities[activityIndex];
+                    var activity = usercourse.activities[$scope.profileIndex];
                     /*
                     console.log("Activity Name: " + activity.activityname);
                     console.log("Activity Points: " + activity.points);
@@ -896,25 +904,35 @@ function formatDate(date) {
                             break;
                         }
                         
-                        //console.log("Activity " + activity.activity_identifier + " validation result: " + result);
+                        //console.log("Activity " + activity.activity_identifier + " validation result: " + result);                        
+                        if (result) {//The user has successfully completed a profile's section.
+                            //Show closing view for the given section
+                            $scope.pageNumber = 12;
+                        }
+                    }
+                }
 
-                        
-                        if (result) {
+                function finishActivity() {
 
-                            $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
-                            activity.status = 1;   //Update activity status.
+                    var usercourse = JSON.parse(localStorage.getItem("usercourse"));
+                    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                    var activity = usercourse.activities[$scope.profileIndex];
 
-                            //Get local user profile.
-                            var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));                            
-                            var newPoints = parseInt(profile.stars) + parseInt(activity.points); //Update points 
-                            profile.stars = newPoints;  //Update the 'stars' key.
-                            _setLocalStorageJsonItem("profile/" + $scope.userId, profile); //Save updated profile to Local Storage.
-                            updateUserStarsUsingExternalActivity(activity.activity_identifier); //Update profile in Moodle.
+                    $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
+                    activity.status = 1;   //Update activity status.
 
-                            endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
+                    //Get local user profile.
+                    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));                            
+                    var newPoints = parseInt(profile.stars) + parseInt(activity.points); //Update points 
+                    profile.stars = newPoints;  //Update the 'stars' key.
+                            
+                    _setLocalStorageJsonItem("profile/" + $scope.userId, profile); //Save updated profile to Local Storage.
+                    updateUserStarsUsingExternalActivity(activity.activity_identifier); //Update profile in Moodle.
 
-                            var activityModel = {
-                                "usercourse": usercourse,
+                    endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
+
+                    var activityModel = {
+                              "usercourse": usercourse,
                                 "coursemoduleid": activity.coursemoduleid,
                                 //"answersResult": "???",
                                 "userId": currentUser.userId,
@@ -922,17 +940,38 @@ function formatDate(date) {
                                 "endingTime": endingTime,
                                 "token": currentUser.token,
                                 "activityType": "Assign"
-                            };
+                    };
 
-                            //Finish Activity.
-                            _endActivity(activityModel, function () {
+                    //Finish Activity.
+                    _endActivity(activityModel, function () {
+                                $scope.currentPage = 12;
                                 validateAllFieldsCompleted();
-                            });
+                    });
 
-                            result = false;  //Restore 'result' value
-                        }
+
+                    result = false;  //Restore 'result' value
+
+                }
+                
+
+            function validateAllFieldsCompleted(){
+                var usercourse = JSON.parse(localStorage.getItem("usercourse"));
+                if(usercourse && usercourse.activities){
+                    var activitiesCompleted = _.where(usercourse.activities, {status : 1});
+                    console.log(activitiesCompleted);
+                    if (activitiesCompleted && activitiesCompleted.length == usercourse.activities.length) {
+                        console.log("create badge");
+                        var badgeModel = {
+                            badgeid: 13 //badge earned when a user completes his profile.
+                            };
+                        moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function(){
+                            console.log("created badge successfully");
+                            },function(){
+                                });
                     }
                 }
+                
+                return true;                            
             }
 
 
