@@ -356,7 +356,7 @@ angular
             }
             
             function offlineCallback() {
-                $location.path("/Offline");
+                $timeout(function() { $location.path("/Offline"); }, 1000);
             }
             
             var checkForumExtraPoints = function() {

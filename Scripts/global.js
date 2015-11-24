@@ -1510,11 +1510,13 @@ function _updateDeviceVersionCache () {
 }
 
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
-    //cordova.exec(function(data) {
-       // _isDeviceOnline = data.online;
-        _isDeviceOnline = true;
+
+    console.log("Cordova");
+    cordova.exec(function(data) {
+        _isDeviceOnline = data.online;
+        //console.log(_isDeviceOnline);
         callback();
-    //}, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
+    }, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
 }
 
 var _getCatalogValuesBy = function (catalogName) {
