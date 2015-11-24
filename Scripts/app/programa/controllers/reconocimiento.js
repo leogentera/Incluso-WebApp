@@ -60,7 +60,7 @@
         }
         
         function offlineCallback() {
-            return $location.path("/Offline");
+            $timeout(function() { $location.path("/Offline"); }, 1000);
         }
         
         function generateReconocimientoImgSrc(callback) {
