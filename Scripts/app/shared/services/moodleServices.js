@@ -926,8 +926,7 @@
         function doRequest(){            
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");        
 
-            _updateConnectionStatus(function(){
-                debugger;
+            _updateConnectionStatus(function(){                
                 if(_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length>0){
                     
                     var data = requestQueue[0];
