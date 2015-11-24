@@ -245,7 +245,7 @@ angular
                 if(!$scope.registerForm.motherName.$valid) {errors.push("Formato de apellido materno incorrecto."); }
                 if(!$scope.registerModel.gender){ errors.push("Género inválido."); }
                 if(!$scope.registerModel.country){ errors.push("País inválido."); }
-                if(!$scope.registerModel.city){ errors.push("Ciudad inválida."); }
+                if(!$scope.registerModel.city){ errors.push("Estado inválido."); }
                 if(!$scope.registerForm.email.$valid){ errors.push("Formato de correo incorrecto."); }                
                 if(!$scope.registerModel.secretQuestion){ errors.push("Pregunta secreta inválida."); }
                 if(!$scope.registerForm.secretAnswer.$valid){ errors.push("Respuesta secreta inválida."); }
