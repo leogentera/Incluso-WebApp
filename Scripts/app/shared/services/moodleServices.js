@@ -109,8 +109,8 @@
             _putAsyncData("activity/" + activityId, data, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };
 
-        var _getUserNotifications = function (userId, token, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("notifications", API_RESOURCE.format('notification/' + userId), token, successCallback, errorCallback, forceRefresh);
+        var _getUserNotifications = function (userId, courseId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("notifications", API_RESOURCE.format('notification/' + userId + '?courseid=' + courseId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _postUserNotifications = function (userId, data, successCallback, errorCallback, forceRefresh) {
@@ -975,7 +975,7 @@
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
             PutUserNotificationRead: _putUserNotificationRead,
-            PostUserNoitifications: _postUserNotifications,
+            PostUserNotifications: _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
             PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
             GetAsyncLeaderboard: _getAsyncLeaderboard,

@@ -133,9 +133,10 @@
                 //Load UserCourse structure into model
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
 
+                
                 $scope.$emit('HidePreloader'); //hide preloader
 
-                getUserNotifications(function() { getUserChat(); });
+                
                         
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
@@ -143,6 +144,7 @@
                     $scope.currentStage = getCurrentStage();                
                     _setLocalStorageItem("currentStage", $scope.currentStage);
 
+                    
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function(){
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         $scope.$emit('HidePreloader'); //hide preloader
@@ -151,6 +153,9 @@
                         moodleFactory.Services.GetAsyncProfile(_getItem("userId"),$scope.user.token, function()
                         {
                             $scope.profile = JSON.parse(localStorage.getItem("profile/"+localStorage.getItem("userId")));
+                            
+                            getUserNotifications($scope.course.courseid);
+                            
                             if(!$scope.profile.termsAndConditions)
                             {
                                 //console.log("Calling TermsModal");
@@ -159,6 +164,9 @@
 
 
                             }
+                            console.log("getUserNotifications");
+                            
+                            
                         }, function() {}, true);
                     }, errorCallback);
 
@@ -231,9 +239,12 @@
                 return currentStage;
             }
 
-            function getUserNotifications(callback){
-                moodleFactory.Services.GetUserNotification(_getItem("userId"), $scope.user.token, function(){
-                        _generalNotification();
+            function getUserNotifications(courseid){
+                var courseId = courseid;
+                var userId = _getItem("userId");
+                moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function(){
+                    getUserChat()
+                    _generalNotification();
                     }, errorCallback);
             }
 
