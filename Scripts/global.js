@@ -1529,8 +1529,10 @@ function _updateDeviceVersionCache () {
 }
 
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
+    console.log("Cordova");
     cordova.exec(function(data) {
         _isDeviceOnline = data.online;
+        console.log(_isDeviceOnline);
         callback();
     }, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
 }

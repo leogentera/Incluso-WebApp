@@ -926,36 +926,40 @@
         function doRequest(){            
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");        
 
-            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0){
-                
-                var data = requestQueue[0];
-                console.log("Procesando Request " + data.url)
-                if(data.retryCount<5){
-                        _httpFactory(
-                        data
-                    ).success(function (response) {
-                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
-                        console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
-                        requestQueue.shift();  
-                        _setLocalStorageJsonItem("RequestQueue", requestQueue); 
-                        if(data.method == 'GET'){
-                            _setLocalStorageJsonItem(data.key, response); 
-                        }
-                        _setLocalStorageJsonItem("RequestQueue", requestQueue); 
-                        doRequest();                                 
-                    }).error(function (response) {
-                        if(navigator.onLine){
-                           requestQueue[0].retryCount++;
-                           doRequest();
-                        }                        
-                    });
-                }  
-                else{
-                    requestQueue.shift();
-                    _setLocalStorageJsonItem("RequestQueue", requestQueue);
-                    doRequest();
-                }               
-            }
+            _updateConnectionStatus(function(){
+                debugger;
+                if(_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length>0){
+                    
+                    var data = requestQueue[0];
+                    console.log("Procesando Request " + data.url)
+                    if(data.retryCount<5){
+                            _httpFactory(
+                            data
+                        ).success(function (response) {
+                            requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
+                            console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
+                            requestQueue.shift();  
+                            _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                            if(data.method == 'GET'){
+                                _setLocalStorageJsonItem(data.key, response); 
+                            }
+                            _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                            doRequest();                                 
+                        }).error(function (response) {
+                            if(_isDeviceOnline){
+                               requestQueue[0].retryCount++;
+                               doRequest();
+                            }                        
+                        });
+                    }  
+                    else{
+                        requestQueue.shift();
+                        _setLocalStorageJsonItem("RequestQueue", requestQueue);
+                        doRequest();
+                    }               
+                }
+            }, function(){                
+            });            
         }
 
         return {
