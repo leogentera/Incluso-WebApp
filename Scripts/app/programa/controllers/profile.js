@@ -330,10 +330,11 @@
         function getDataAsync(callback) {
 
             startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
-
+                console.log("Request...");
                 moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
 
                     $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
+
                     if ($scope.model.profileimageurl) {
                         $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                     }
@@ -343,7 +344,7 @@
 
                     callback();
 
-                                moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () { }, true);
+                    moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () { }, true);
 
                     if (!$scope.model) {
                         $location.path('/');
@@ -353,6 +354,14 @@
                     initFields($scope.model);
                     loadStrengths();
                     loadWindowOfOpportunities();
+
+                    $scope.model.level = $scope.model.currentStudies["level"];
+                    $scope.model.grade = $scope.model.currentStudies["grade"];
+                    $scope.model.period = $scope.model.currentStudies["period"];
+                    console.log($scope.model.level);
+                    console.log($scope.model.grade);
+                    console.log($scope.model.period);
+
 
             }, true);
         }
@@ -819,6 +828,14 @@
 
 
                     $scope.save = function () {
+
+                        
+                        //"currentStudies":{"level":"Secundaria","grade":"3ro","period":"Año"}, 
+
+                        $scope.model.currentStudies = {};
+                        $scope.model.currentStudies.level = $scope.model.level;
+                        $scope.model.currentStudies.grade = $scope.model.grade;
+                        $scope.model.currentStudies.period = $scope.model.period;                       
                         
                         if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
                             saveUser();
