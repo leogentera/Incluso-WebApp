@@ -14,8 +14,12 @@ angular
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
             
             $scope.$emit('ShowPreloader');
-
-            $scope.validateConnection(initController, offlineCallback);
+            
+            if ($routeParams.id != moodleFactory.Services.GetCacheObject("userId")) {
+                $scope.validateConnection(initController, offlineCallback);
+            }else {
+                initController();
+            }
         
             function offlineCallback() {
                 $timeout(function() { $location.path("/Offline"); }, 1000);
