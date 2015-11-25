@@ -245,7 +245,7 @@
                 moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function(){
                     getUserChat()
                     _generalNotification();
-                    }, errorCallback);
+                    }, errorCallback,true);
             }
 
             function getUserChat(callback) {                
