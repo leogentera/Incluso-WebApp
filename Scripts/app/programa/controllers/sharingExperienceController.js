@@ -101,8 +101,8 @@
                                 "discussionid": $scope.discussion.discussion,
                                 "parentid": $scope.discussion.id,
                                 "message": $scope.model.testimony,
-                                "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                                "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                                "createdtime": moment(Date.now()).unix(),//$filter("date")(new Date(), "MM/dd/yyyy"),
+                                "modifiedtime": moment(Date.now()).unix(),//$filter("date")(new Date(), "MM/dd/yyyy"),
                                 "posttype": 5,
                                 "filecontent": fileContents,
                                 "filename": fileNames
