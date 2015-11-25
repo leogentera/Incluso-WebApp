@@ -239,7 +239,7 @@
                     headers: { 'Content-Type': 'application/json'}                    
                     });   
                 }
-                _setLocalStorageJsonItem(key, data);
+                //_setLocalStorageJsonItem(key, data); Esto ya se hace en la lógica del offline
                 if(successCallback){
                     successCallback(); 
                 }
