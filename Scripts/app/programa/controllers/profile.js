@@ -52,7 +52,7 @@
                     var startingTime;
                     var endingTime;
 
-                    $scope.indexesForCompletedSections = [];                    
+                    $scope.completedSections = [];                    
                     
                     $scope.$emit('ShowPreloader');
 
@@ -918,7 +918,7 @@
                                     sectionObject.name = activity.activityname.substring(7);
                                     sectionObject.points = activity.points;
 
-                                    $scope.indexesForCompletedSections.push(sectionObject);
+                                    $scope.completedSections.push(sectionObject);
 
                                     $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
                                     activity.status = 1;   //Update activity status.
