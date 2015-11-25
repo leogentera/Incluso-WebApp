@@ -23,6 +23,8 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
 
+            _isCellPhone = $routeParams.imacellphone;
+
             /* ViewModel */
             $scope.userCredentialsModel = {
                 username: "",

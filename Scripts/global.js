@@ -19,6 +19,8 @@ var _catalogsLoaded = null;
 
 /* Prototypes */
 var _isDeviceOnline = null;
+var _isCellPhone = null;
+var _queuePaused = false;
 
 var _catalogNames = ["sports",
     "arts",
@@ -1510,13 +1512,17 @@ function _updateDeviceVersionCache () {
 }
 
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
-
-    console.log("Cordova");
-    cordova.exec(function(data) {
+    if(_isCellPhone){
+        cordova.exec(function(data) {
         _isDeviceOnline = data.online;
         //console.log(_isDeviceOnline);
         callback();
-    }, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
+        }, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
+    }    
+    else{
+        _isDeviceOnline = true;
+        callback();
+    }
 }
 
 var _getCatalogValuesBy = function (catalogName) {
