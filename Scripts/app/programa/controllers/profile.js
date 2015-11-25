@@ -829,9 +829,6 @@
 
                     $scope.save = function () {
 
-                        
-                        //"currentStudies":{"level":"Secundaria","grade":"3ro","period":"Año"}, 
-
                         $scope.model.currentStudies = {};
                         $scope.model.currentStudies.level = $scope.model.level;
                         $scope.model.currentStudies.grade = $scope.model.grade;
@@ -845,7 +842,6 @@
                             deleteRepeatedValues();  //Removes empty entries.
             
                             if (validationResult) {
-                                console.log("All restrictions are OK");
                                 $scope.$emit('ShowPreloader');
                                 saveUser();                    
                             } else {
@@ -858,8 +854,7 @@
                     function saveUser() { //Save the current state of profile variables.
                         moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
                             function (data) {
-                                updateStarsForCompletedSections();
-                                console.log("End of all checks");                                
+                                updateStarsForCompletedSections();                                                             
                                 console.log('Save profile successful...');
                                 $scope.$emit('HidePreloader');
                                 $scope.index();                        
