@@ -11,6 +11,8 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             _httpFactory = $http;
             _timeout = $timeout;
             
@@ -26,8 +28,10 @@ angular
                 stageClosingContent = "ZonaDeAterrizajeClosing";
             drupalFactory.Services.GetContent(stageClosingContent, function (data, key)
             {
+                _loadedResources = true;
                 $scope.closingContent = data.node;
-            }, function () { }, true);
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+            }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
             //finish getting content
             
             var userCourse = JSON.parse(localStorage.getItem('usercourse'));
@@ -46,7 +50,7 @@ angular
             $scope.like_status = 1;
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
 
-            $scope.$emit('HidePreloader');
+            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
 
             var endForumActivity = function(moodleid) {
                 console.log('Closing time: ' + moodleid);

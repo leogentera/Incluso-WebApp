@@ -10,8 +10,11 @@ angular
         '$http',
         '$anchorScroll',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {        
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             _timeout = $timeout;
+            $scope.$emit('ShowPreloader');
             $scope.validateConnection(initController, offlineCallback);
             
             function offlineCallback() {
@@ -155,12 +158,14 @@ angular
     
                 function getContentResources(activityIdentifierId) {
                     drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                        _loadedResources = true;
                         $scope.setToolbar($location.$$path,data.node.tool_bar_title);
                         $scope.title = data.node.chat_title;
                         $scope.welcome = data.node.chat_welcome ;
                         $scope.description = data.node.chat_instructions ;
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
     
-                    }, function () {}, true);
+                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
     
                     var stageClosingContent = "";
                     if(activityIdentifierId > 999 && activityIdentifierId < 2000)
@@ -172,8 +177,9 @@ angular
     
                     drupalFactory.Services.GetContent(stageClosingContent, function (data, key)
                     {
+                        _loadedResources = true;
                         $scope.closingContent = data.node;
-                    }, function () { }, true);
+                    }, function () { _loadedResources = true; }, false);
                 };
                 
             }

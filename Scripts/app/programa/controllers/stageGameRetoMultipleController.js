@@ -11,6 +11,8 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+         var _loadedResources = false;
+         var _pageLoaded = true;
 
             _timeout = $timeout;
             _httpFactory = $http;
@@ -18,8 +20,10 @@ angular
             $scope.$emit('ShowPreloader');
 
             drupalFactory.Services.GetContent("1039", function (data, key) {
+               _loadedResources = true;
                 $scope.contentResources = data.node;
-            }, function () {}, false);
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+            }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
 
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
@@ -29,7 +33,7 @@ angular
             $rootScope.showStage3Footer = false;
 
             $scope.scrollToTop();
-            $scope.$emit('HidePreloader');
+            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var activitiesPosted = 0;
 	    //var stars = 0;

@@ -10,6 +10,8 @@ angular
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = false;
             $scope.$emit('ShowPreloader'); //show preloader
             
             $scope.setToolbar($location.$$path,"Mis estrellas");
@@ -35,6 +37,7 @@ angular
             }
                         
             drupalFactory.Services.GetContent("MyStars", function (data, key) {
+                _loadedResources = true;
                 $scope.contentResources = data.node;
                                 
                 var starsByActivity = moodleFactory.Services.GetAsyncStars(userId, token, function(dataStars){
@@ -45,7 +48,11 @@ angular
                     $scope.activitiesCompleted = [];
                     }, true);
                 
-            }, function () {}, true);
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+            }, function () {
+                _loadedResources = true;
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                }, false);
                                                                                                                                                    
             function addStarsByActivity(data){
                 
@@ -157,6 +164,7 @@ angular
                 $location.path('/ProgramaDashboard');
             }
             
-            $scope.$emit('HidePreloader'); //hide preloader
+            _pageLoaded = true;
+            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
 
 }]);

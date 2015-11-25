@@ -11,6 +11,8 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = false;
             
             $scope.$emit('ShowPreloader'); //show preloader
             
@@ -121,7 +123,6 @@ angular
                 else {
                     $scope.fuenteDeEnergia = activities;
                     getDataAsync();
-                    $scope.$emit('HidePreloader'); //hide preloader
                 }
     
                 checkProgress();
@@ -142,7 +143,8 @@ angular
                           moodleFactory.Services.GetAsyncActivitiesEnergy(activitiesData, $scope.token, getActivityInfoCallback, getActivityErrorCallback, true);
                       }
                       if (waitPreloader == 0) {
-                          $scope.$emit('HidePreloader');
+                         _pageLoaded = true;
+                          if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
                       }
                 }
     
@@ -156,11 +158,13 @@ angular
                             setResources(myActivity);                                                            
                         }                    
                     }                
-                        $scope.$emit('HidePreloader'); //hide preloader                
+                        _pageLoaded = true;
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};             
                 }
     
                 function getActivityErrorCallback() {
-                    $scope.$emit('HidePreloader'); //hide preloader                
+                    _pageLoaded = true;
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};            
                 }
     
                 function setResources(myActivity) {
@@ -446,11 +450,12 @@ angular
                 function getContentResources(activityIdentifierId) {
                       console.log(activityIdentifierId);
                     drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
-                        
+                        _loadedResources = true;
                         $scope.contentResources = data.node;
                         $rootScope.pageName = $scope.contentResources.title_toolbar;
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                         
-                        }, function () {}, true);
+                        }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
     
                     /*Closing message content*/
                     var stageClosingContent = "";
@@ -463,8 +468,9 @@ angular
     
                     drupalFactory.Services.GetContent(stageClosingContent, function (data, key)
                     {
+                        _loadedResources = true;
                         $scope.closingContent = data.node;
-                    }, function () { }, true);
+                    }, function () { _loadedResources = true; }, false);
     
                     
                 }

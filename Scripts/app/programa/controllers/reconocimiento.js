@@ -11,10 +11,14 @@
 	'$modal',
     '$filter',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+        var _loadedResources = false;
+        var _pageLoaded = true;
 
 		drupalFactory.Services.GetContent("Recognition", function (data, key) {
+            _loadedResources = true;
 			$scope.contentResources = data.node;
-		}, function () {}, true);
+            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+		}, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
 
         var _course = moodleFactory.Services.GetCacheJson("course");
         var _userId = moodleFactory.Services.GetCacheObject("userId");

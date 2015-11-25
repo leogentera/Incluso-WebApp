@@ -72,6 +72,7 @@ angular
                 //autologin
                 if (currentUser && currentUser.token && currentUser.token != "") {
                     $timeout(function(){ $scope.$emit('ShowPreloader'); }, 1500);
+                    $timeout(function(){ $scope.validateConnection(function() { _loadDrupalResources(); }, function(){}); }, 2000);
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
                             $scope.$emit('HidePreloader');
                             $location.path('/ProgramaDashboard');    
@@ -93,6 +94,8 @@ angular
                 // reflect loading state at UI
                 $scope.$emit('ShowPreloader'); //show preloader
                 console.log('preloading...'); //- debug
+                
+                _loadDrupalResources();
 
                 $http(
                     {
@@ -165,6 +168,8 @@ angular
             function FacebookLoginSuccess(data) {                
                 console.log('successfully logged in ' + data);                
                 var userFacebook = JSON.parse(data);
+                
+                _loadDrupalResources();
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = userFacebook;

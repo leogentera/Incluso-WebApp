@@ -10,6 +10,8 @@ angular
         '$anchorScroll',
         '$modal',
         function ($scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
 
             _timeout = $timeout;
             _httpFactory = $http;
@@ -22,9 +24,13 @@ angular
             $rootScope.showStage3Footer = false;
             
             drupalFactory.Services.GetContent("MapaDelEmprendedor", function (data, key) {
+                _loadedResources = true;
                 $scope.content = data.node;
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                 }, function () {
-            }, true);
+                    _loadedResources = true;
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+            }, false);
 
             $scope.scrollToTop();
 

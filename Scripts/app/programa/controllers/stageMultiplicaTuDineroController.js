@@ -10,6 +10,8 @@ angular
         '$anchorScroll',
         '$modal',
         function ($scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
 
             _timeout = $timeout;
             _httpFactory = $http;
@@ -17,12 +19,15 @@ angular
             $scope.$emit('ShowPreloader');
 
             drupalFactory.Services.GetContent("3303", function (data, key) {
+                _loadedResources = true;
                 $scope.contentResources = data.node;
-            }, function () {}, false);
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+            }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
 
             drupalFactory.Services.GetContent("3303results", function (data, key) {
+                _loadedResources = true;
                 $scope.contentResourcesResult = data.node;
-            }, function () {}, false);
+            }, function () { _loadedResources = true; }, false);
 
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;

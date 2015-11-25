@@ -13,6 +13,8 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             //Turn on Preloader
             $scope.$emit('ShowPreloader'); //show preloader
             _httpFactory = $http;
@@ -120,8 +122,10 @@ angular
 
                 drupalFactory.Services.GetContent(stageContent, function (data, key)
                 {
+                    _loadedResources = true;
                     $scope.closingContent = data.node;
-                }, function () { }, true);
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
             }
 
 
@@ -1189,12 +1193,13 @@ angular
     controller('OpeningStageController', function ($scope, $modalInstance, $routeParams) {
 
         drupalFactory.Services.GetContent($routeParams.activityIdentifier, function (data, key) {
+            _loadedResources = true;
 
             if (data.node != null) {
                 $scope.title = data.node.titulo_quiz;
                 $scope.instructions = data.node.instrucciones; 
             }
-                        }, function () { }, true); 
+                        }, function () { _loadedResources = true; }, false); 
 
         $scope.cancel = function () {
             $scope.$emit('ShowPreloader');

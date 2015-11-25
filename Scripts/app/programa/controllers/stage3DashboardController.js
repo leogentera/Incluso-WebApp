@@ -11,6 +11,8 @@ angular
         '$modal',
         '$filter',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             /* $routeParams.stageId */
             _timeout = $timeout;
             _httpFactory = $http;
@@ -218,11 +220,13 @@ angular
             }
             
             function getContentResources(activityIdentifierId) {
-                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {                
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    _loadedResources = true;
                     $scope.contentResources = data.node;                    
                     loadController();
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                     
-                    }, function () {}, true);
+                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }}, false);
             }
             
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes

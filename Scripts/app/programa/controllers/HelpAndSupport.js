@@ -10,10 +10,13 @@ angular
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             $scope.setToolbar($location.$$path,"Incluso");
             $scope.$emit('ShowPreloader');
 
             drupalFactory.Services.GetContent("HelpAndSupport", function (data, key) {
+                _loadedResources = true;
                 $scope.contentResources = data.node;
                 var sectionsContents = $scope.contentResources.section_content;
                 var sectionSubtitles = $scope.contentResources.section_subtitle;
@@ -29,8 +32,10 @@ angular
                     $scope.contentObjects.push(newContent);
                 }
 
-                $scope.$emit('HidePreloader');
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
             }, function () {
+                _loadedResources = true;
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
             }, false);
 
             $rootScope.showFooter = true;

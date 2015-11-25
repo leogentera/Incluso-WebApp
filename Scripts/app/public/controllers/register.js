@@ -102,6 +102,8 @@ angular
             }
 
             $scope.autologin = function(data) {
+                
+                _loadDrupalResources();
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = data;
@@ -344,7 +346,9 @@ angular
 
         .controller('termsAndConditionsController', function ($scope, $modalInstance) {
         
-            drupalFactory.Services.GetContent("TermsAndConditions", function (data, key) { $scope.contentTandC = data.node; }, function () {}, false);
+            drupalFactory.Services.GetContent("TermsAndConditions", function (data, key) {
+                $scope.contentTandC = data.node;
+                }, function () {  }, false);
 
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
