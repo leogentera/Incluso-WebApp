@@ -21,9 +21,7 @@ angular
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false;
-
-            _isCellPhone = $routeParams.imacellphone;
+            $rootScope.showStage3Footer = false;        
 
             /* ViewModel */
             $scope.userCredentialsModel = {

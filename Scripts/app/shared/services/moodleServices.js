@@ -918,8 +918,8 @@
 
             _setLocalStorageJsonItem("RequestQueue", requestQueue);
             if(requestQueue.length==1 || _queuePaused){
-                if(_isCellPhone){
-                    doRequestforCellphone(); 
+                if(typeof _isCellPhone !== 'undefined'){                    
+                        doRequestforCellphone();                     
                 }                
                 else{
                     doRequestforWeb(); 
