@@ -224,8 +224,7 @@
                     });                                 
                 } 
             }
-            else{
-                console.log('putting in Queue');
+            else{                
                 if(token){
                     addRequestToQueue(key, {
                     method: 'GET',
@@ -240,6 +239,7 @@
                     headers: { 'Content-Type': 'application/json'}                    
                     });   
                 }
+                //_setLocalStorageJsonItem(key, data); Esto ya se hace en la lógica del offline
                 if(successCallback){
                     successCallback(); 
                 }
@@ -913,17 +913,56 @@
             requestQueue = requestQueue || [];
             data.retryCount = 0;
             data.key = key;
+            console.log('putting in queue ' + key);
             requestQueue.push(data);
 
             _setLocalStorageJsonItem("RequestQueue", requestQueue);
-         
-            if(requestQueue.length==1){
-                doRequest(requestQueue); 
+            if(requestQueue.length==1 || _queuePaused){
+                if(_isCellPhone){
+                    doRequestforCellphone(); 
+                }                
+                else{
+                    doRequestforWeb(); 
+                }                
             }
-            
         }
 
-        function doRequest(){            
+        function doRequestforWeb(){     
+            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
+            console.log(requestQueue);
+            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0){
+                    
+                    var data = requestQueue[0];
+                    console.log("Procesando Request " + data.url)
+                    if(data.retryCount<5){
+                            _httpFactory(
+                            data
+                        ).success(function (response) {
+                            requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
+                            console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
+                            requestQueue.shift();  
+                            _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                            if(data.method == 'GET'){
+                                _setLocalStorageJsonItem(data.key, response); 
+                            }
+                            _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                            doRequestforWeb();                                 
+                        }).error(function (response) {
+                            if(navigator.onLine){
+                               requestQueue[0].retryCount++;
+                               doRequestforWeb();
+                            }                        
+                        });
+                    }  
+                    else{
+                        requestQueue.shift();
+                        _setLocalStorageJsonItem("RequestQueue", requestQueue);
+                        doRequestforWeb();
+                    }               
+                }
+        }
+
+        function doRequestforCellphone(requestQueue){            
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");        
 
             _updateConnectionStatus(function(){                
@@ -943,23 +982,26 @@
                                 _setLocalStorageJsonItem(data.key, response); 
                             }
                             _setLocalStorageJsonItem("RequestQueue", requestQueue); 
-                            doRequest();                                 
+                            doRequestforCellphone();                                 
                         }).error(function (response) {
                             if(_isDeviceOnline){
                                requestQueue[0].retryCount++;
-                               doRequest();
+                               doRequestforCellphone();
                             }                        
                         });
                     }  
                     else{
                         requestQueue.shift();
                         _setLocalStorageJsonItem("RequestQueue", requestQueue);
-                        doRequest();
+                        doRequestforCellphone();
                     }               
                 }
-            }, function(){                
+                else if(!_isDeviceOnline){
+                    _queuePaused = true;
+                }
+            }, function(){                           
             });            
-        }
+        }    
 
         return {
             GetAsyncProfile: _getAsyncProfile,
