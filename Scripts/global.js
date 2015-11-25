@@ -1257,7 +1257,7 @@ var _badgesPerChallenge = [
     {badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 116, activity_identifier : "1002"},
     {badgeId: 6, badgeName: "Propulsor", challengeId: 155, activity_identifier : "2003"},
     {badgeId: 7, badgeName: "Misiles", challengeId: 157, activity_identifier : "2005"},
-    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81, activity_identifier : "2014"},
+    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81, activity_identifier : "2010"},
     {badgeId: 9, badgeName: "Radar", challengeId: 167, activity_identifier : "2020"},
     {badgeId: 18, badgeName: "Turbo", challengeId: 160, activity_identifier : "2010"},
     {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206, activity_identifier : "3200"},
