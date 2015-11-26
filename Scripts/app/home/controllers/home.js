@@ -28,29 +28,27 @@
                     $rootScope.sidebar = false;                
             };
 
-            $scope.navigateTo = function(url,sideToggle,activityId){
-				
-                /*
-				if (!_compareSyncDeviceVersions()) {
-					$scope.openUpdateAppModal();
-				}else {*/
-					if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
-						return false;
-					}
-	
-					if(activityId) {
-						var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
-						logStartActivityAction(activityId, timeStamp);
-					}
-	
-					$location.path(url);
-	
-					if(sideToggle == "sideToggle")
-						$rootScope.sidebar = !$rootScope.sidebar;	
-				}
-                /*
+            $scope.navigateTo = function(url,sideToggle,activityId){                
+                
+                if (!_compareSyncDeviceVersions()) {
+                    $scope.openUpdateAppModal();
+                } else {
+                    if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
+                        return false;
+                    }
+    
+                    if(activityId) {
+                        var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
+                        logStartActivityAction(activityId, timeStamp);
+                    }
+    
+                    $location.path(url);
+    
+                    if(sideToggle == "sideToggle")
+                        $rootScope.sidebar = !$rootScope.sidebar;   
+                }
+                
             };
-            */
 			
 			$scope.navigateToMyProfile = function(){
 				$location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
