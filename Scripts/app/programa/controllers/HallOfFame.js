@@ -11,6 +11,8 @@ hallOfFameModule
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = false;
 
             $scope.$emit('ShowPreloader');
             
@@ -23,9 +25,13 @@ hallOfFameModule
             function initController() {
                 
                 drupalFactory.Services.GetContent("HallOfFame", function (data, key) {
+                    _loadedResources = true;
                     $scope.contentResources = data.node;
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                 }, function () {
-                }, true);
+                    _loadedResources = true;
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                }, false);
     
                 _httpFactory = $http;
                 _timeout = $timeout;
@@ -41,7 +47,7 @@ hallOfFameModule
                 var citiesCatalogKey = "citiescatalog";
                 $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-                moodleFactory.Services.GetAsyncCatalog(citiesCatalogKey,$scope.user.token,getCitiesCatalogCallback,function(data){console.log(data)},true);
+                moodleFactory.Services.GetAsyncCatalog(citiesCatalogKey,$scope.user.token,getCitiesCatalogCallback,function(data){console.log(data)},false);
                 $scope.default = true;
                 getTop5("Ver Todo");
                 var userId = localStorage.getItem("userId");
@@ -91,7 +97,8 @@ hallOfFameModule
                     $scope.userStats.forum = allTop5.current_user_activity.forum;
                     $scope.userStats.messages = allTop5.current_user_activity.messages;
                     $scope.userStats.comunity = allTop5.current_user_activity.comunity;
-                    $scope.$emit('HidePreloader');
+                    _pageLoaded = true;
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                 }
     
                 $scope.updateByCity = function()

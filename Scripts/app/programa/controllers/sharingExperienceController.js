@@ -11,7 +11,9 @@
     '$modal',
     '$filter',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
-        
+        var _loadedResources = false;
+        var _pageLoaded = true;
+        $scope.$emit('ShowPreloader');
         
         $scope.validateConnection(initController, offlineCallback);
         
@@ -137,10 +139,14 @@
                 function getContentResources(nodeNameRelation) {
                         $scope.$emit('ShowPreloader');
                         drupalFactory.Services.GetContent(nodeNameRelation, function (data, key) {
+                                _loadedResources = true;
                                 $scope.contentResources = data.node;
                                 $rootScope.pageName = $scope.contentResources.sec_title_toolbar;
-                                $scope.$emit('HidePreloader');
-                        }, function () {}, true);
+                                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                        }, function () {
+                                _loadedResources = true;
+                                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                                }, false);
                 }
                 
                 getContentResources("compartir-experiencia");

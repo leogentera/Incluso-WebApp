@@ -11,8 +11,11 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = false;
             _httpFactory = $http;
             _timeout = $timeout;
+            $scope.$emit('ShowPreloader');
             
             $scope.validateConnection(initController, offlineCallback);
             
@@ -67,7 +70,6 @@ angular
                   redirectOnShield();
                 }
     
-                $scope.$emit('ShowPreloader'); //show preloader
                 //$scope.setToolbar($location.$$path,$scope.contentResources.tool_bar_title);
                 $rootScope.showFooter = true;
                 $rootScope.showFooterRocks = false;
@@ -79,7 +81,12 @@ angular
     
                 function getDataAsync() {
                     console.log('Moodle ID on dataAsync: ' + $scope.moodleId);
-                    $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, currentUser.token, getForumDiscussionsCallback, null, true):'';
+                    $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, currentUser.token, getForumDiscussionsCallback, function() {_pageLoaded = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};}, true):'';
+                    
+                    if ($scope.moodleId == 149) {
+                        _pageLoaded = true;
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
+                    }
                 }
                 
                 function getForumDiscussionsCallback(data, key) {
@@ -91,7 +98,8 @@ angular
                     }
                     localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
                     
-                    $scope.$emit('HidePreloader'); //hide preloader
+                    _pageLoaded = true;
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
                 }
     
                 getDataAsync();
@@ -175,10 +183,12 @@ angular
     
                 function getContentResources(activityIdentifierId) {
                     drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                        _loadedResources = true;
                         $scope.setToolbar($location.$$path,data.node.tool_bar_title);
                         $scope.backButtonText = data.node.back_button_text;
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
     
-                    }, function () {}, true);
+                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
                 };   
             }
 

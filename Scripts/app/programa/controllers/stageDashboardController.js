@@ -11,6 +11,8 @@ angular
         '$modal',
         '$filter',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             /* $routeParams.stageId */
             _timeout = $timeout;
             _httpFactory = $http;
@@ -202,7 +204,7 @@ angular
             });
             // this is the dirty way to hide owl's carousel rendering process while user waits
             $timeout(function () {
-                $scope.$emit('HidePreloader'); //hide preloader
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
             }, 2000);
 
             $scope.playVideo = function (videoAddress, videoName) {
@@ -273,11 +275,13 @@ angular
             }
                         
             function getContentResources(activityIdentifierId) {
-                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {                
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    _loadedResources = true;
                     $scope.contentResources = data.node;                    
                     loadController();
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                     
-                    }, function () {}, true);
+                    }, function () { _loadedResources = true;  if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
             }
                         
             function showClosingChallengeRobot(challengeCompletedId){

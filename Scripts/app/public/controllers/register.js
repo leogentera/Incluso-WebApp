@@ -102,6 +102,8 @@ angular
             }
 
             $scope.autologin = function(data) {
+                
+                _loadDrupalResources();
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = data;
@@ -221,6 +223,7 @@ angular
                 var birth_month = dpValue.substring(0,2);
                 var birth_day = dpValue.substring(3,5);
                 var birth_year = dpValue.substring(6,10);
+                dpValue = birth_month + '/'+ birth_day + '/' + birth_year;
                 today_date = new Date();
                 today_year = today_date.getFullYear();
                 today_month = today_date.getMonth();
@@ -242,7 +245,8 @@ angular
             function validateModel(){                
                 var errors = [];
                 var datePickerValue = $("input[name=birthday]").val();
-                dpValue = moment(datePickerValue).format("MM/DD/YYYY");
+                dpValue = datePickerValue;
+                //dpValue = moment(datePickerValue).format("MM/DD/YYYY");
                 var age = calculate_age();
                 
                 var passwordPolicy = "debe ser almenos de 8 caracterres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
@@ -344,7 +348,9 @@ angular
 
         .controller('termsAndConditionsController', function ($scope, $modalInstance) {
         
-            drupalFactory.Services.GetContent("TermsAndConditions", function (data, key) { $scope.contentTandC = data.node; }, function () {}, false);
+            drupalFactory.Services.GetContent("TermsAndConditions", function (data, key) {
+                $scope.contentTandC = data.node;
+                }, function () {  }, false);
 
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');

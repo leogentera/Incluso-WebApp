@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="dash-top">
 				<h1 class="text-center">
-					¡<span>{{user.gender == 'Masculino' ? contentResources.male_welcome : contentResources.female_welcome}}</span> {{user.alias}}!
+					¡<span ng-bind="user.gender == 'Masculino' ? contentResources.male_welcome + ' ' + user.alias : contentResources.female_welcome + ' ' + user.alias"></span>!
 				</h1>
 
 				<section class="component" ng-controller="videoCollapsiblePanelController">
@@ -11,7 +11,7 @@
 						<div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
 							<h3>
 								<span class="icomoon icon-video-file"></span>
-								<span>{{contentResources.video_title}}</span>
+								<span ng-bind="contentResources.video_title"></span>
 								<span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
 								<span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
 							</h3>
@@ -32,26 +32,26 @@
 				</section>
 
 				<section class="component global-progress txt-renglon centered">
-					<h3>- {{contentResources.global_progress}} -</h3>
+					<h3 ng-bind="'- ' + contentResources.global_progress + ' -'"></h3>
 					<div class="spinner">
 						<img src="assets/images/prcnt/{{usercourse == null ? 0 : usercourse.globalProgress}}.png" alt="progress" />
 						<div class="circle"></div>
-						<div class="text">{{usercourse.globalProgress|| 0}}%</div>
+						<div class="text" ng-bind="usercourse.globalProgress != null ? usercourse.globalProgress + '%' : '0%'"></div>
 					</div>
 				</section>		
 
 				<section class="component current-satge">
 					<img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
-					<h3>- {{usercourse.stages[currentStage-1].sectionname}} -</h3>
+					<h3 ng-bind="'- ' + usercourse.stages[currentStage-1].sectionname + ' -'"></h3>
 					<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()">
-						<span>{{usercourse.firsttime == 1 ? contentResources.button_start_mission : contentResources.button_continue_mission }}</span>
+						<span ng-bind="usercourse.firsttime == 1 ? contentResources.button_start_mission : contentResources.button_continue_mission"></span>
 					</a>
 				</section>
 			</div>
 
 			<div class="dash-bottom">
 				<section class="component my-badges">
-					<h3>- {{contentResources.shield_title}} -</h3>
+					<h3 ng-bind="'- ' + contentResources.shield_title + ' -'"></h3>
 					<img src="assets/images/badges/{{user.shield ? 'img-' + user.shield + '.svg' : 'img-badge-placeholder.svg'}}" alt="badges" />
 				</section>
 				
@@ -76,11 +76,11 @@
 								<div>
 									<p>
 										<label for="">1er. Lugar: </label>
-										<span ng-click="course.leaderboard[0] != null ? navigateTo('Profile/' + course.leaderboard[0].userId) : ''">{{course.leaderboard[0] ? course.leaderboard[0].alias : ""}}</span>
+										<span ng-click="course.leaderboard[0] != null ? navigateTo('Profile/' + course.leaderboard[0].userId) : ''" ng-bind="course.leaderboard[0] ? course.leaderboard[0].alias : ''"></span>
 									</p>
 									<ul class="inline-list">
-										<li class="points"><span>{{course.leaderboard[0] ? course.leaderboard[0].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-										<li><span>{{course.leaderboard[0] ? course.leaderboard[0].progress : 0}}%</span></li>
+										<li class="points"><span ng-bind="course.leaderboard[0] ? course.leaderboard[0].stars : 0"></span> <i class="icomoon icon-star"></i></li>
+										<li><span ng-bind="course.leaderboard[0] ? course.leaderboard[0].progress + '%' : '0%'"></span></li>
 									</ul>
 								</div>
 							</div>
@@ -102,11 +102,11 @@
 							<div>
 								<p>
 									<label for="">2do. Lugar: </label>
-									<span ng-click="course.leaderboard[1] != null ? navigateTo('Profile/' + course.leaderboard[1].userId) : ''">{{course.leaderboard[1] ? course.leaderboard[1].alias : ""}}</span>
+									<span ng-click="course.leaderboard[1] != null ? navigateTo('Profile/' + course.leaderboard[1].userId) : ''" ng-bind="course.leaderboard[1] ? course.leaderboard[1].alias : ''"></span>
 								</p>
 								<ul class="inline-list">
-									<li class="points"><span>{{course.leaderboard[1] ? course.leaderboard[1].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-									<li><span>{{course.leaderboard[1] ? course.leaderboard[1].progress : 0}}%</span></li>
+									<li class="points"><span ng-bind="course.leaderboard[1] ? course.leaderboard[1].stars : 0"></span> <i class="icomoon icon-star"></i></li>
+									<li><span ng-bind="course.leaderboard[1] ? course.leaderboard[1].progress + '%' : '0%'"></span></li>
 								</ul>
 							</div>
 						</div>
@@ -128,11 +128,11 @@
 								<div>
 									<p>
 										<label for="">3er. Lugar: </label>
-										<span ng-click="course.leaderboard[2] != null ? navigateTo('Profile/' + course.leaderboard[2].userId) : ''">{{course.leaderboard[2] ? course.leaderboard[2].alias : ""}}</span>
+										<span ng-click="course.leaderboard[2] != null ? navigateTo('Profile/' + course.leaderboard[2].userId) : ''" ng-bind="course.leaderboard[2] ? course.leaderboard[2].alias : ''"></span>
 									</p>
 									<ul class="inline-list">
-										<li class="points"><span>{{course.leaderboard[2] ? course.leaderboard[2].stars : 0}}</span> <i class="icomoon icon-star"></i></li>
-										<li><span>{{course.leaderboard[2] ? course.leaderboard[2].progress : 0}}%</span></li>
+										<li class="points"><span ng-bind="course.leaderboard[2] ? course.leaderboard[2].stars : 0"></span> <i class="icomoon icon-star"></i></li>
+										<li><span ng-bind="course.leaderboard[2] ? course.leaderboard[2].progress + '%' : '0%'"></span></li>
 									</ul>
 								</div>
 							</div>
@@ -148,7 +148,7 @@
 											<!-- <img ng-src="{{user.profileimageurlsmall || 'svg/img-avatar-placeholder.svg'}}" alt="avatar" /> -->
 											<!-- <img src="assets/images/svg/img-avatar-placeholder.svg" alt="avatar" /> -->
 											<img ng-src="{{user.profileimageurl}}" alt="avatar"/>
-											<figcaption>{{user.rank}}</figcaption>
+											<figcaption ng-bind="user.rank"></figcaption>
 										</figure>
 									</div>
 								</a>
@@ -158,11 +158,11 @@
 						<div class="user-data">
 							<div>
 								<p>
-									<span>{{contentResources.current_points}}</span>
+									<span ng-bind="contentResources.current_points"></span>
 								</p>
 								<ul class="inline-list">
-									<li class="points"><span>{{user.stars}}</span> <i class="icomoon icon-star"></i></li>
-									<li><span>{{ usercourse.globalProgress || 0}}%</span></li>
+									<li class="points"><span ng-bind="user.stars"></span> <i class="icomoon icon-star"></i></li>
+									<li><span ng-bind="usercourse.globalProgress != null ? usercourse.globalProgress + '%' : '0%'"></span></li>
 								</ul>
 							</div>
 						</div>
@@ -203,9 +203,8 @@
 					</a>
 				</div>
 				<div class="modal-body">
-					<h3 class="subtitle text-center">{{termsContent.new_terms_title}}</h3>
-					<p class="txt-renglon centered">
-						{{termsContent.new_terms_content}}
+					<h3 class="subtitle text-center" ng-bind="termsContent.new_terms_title"></h3>
+					<p class="txt-renglon centered" ng-bind="termsContent.new_terms_content">
 					</p>
 				</div>
 			</div>

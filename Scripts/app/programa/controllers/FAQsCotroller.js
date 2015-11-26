@@ -11,6 +11,8 @@ FAQsModule
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
 
             $scope.$emit('ShowPreloader');
 
@@ -27,6 +29,7 @@ FAQsModule
             };
 
             drupalFactory.Services.GetContent("FAQS", function (data, key) {
+                _loadedResources = true;
                 $scope.content = data.node;
                 var questions = $scope.content.faqs_question;
                 var answers = $scope.content.faqs_answer;
@@ -44,8 +47,10 @@ FAQsModule
                     };
                     $scope.FAQsContent.push(newFaq);
                 }
-                $scope.$emit('HidePreloader');
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
             }, function () {
+                _loadedResources = true;
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
             }, false);
 
             $scope.goToDetail = function(index)

@@ -17,7 +17,7 @@ angular
             /* global variables */
             _httpFactory = $http;
             _timeout = $timeout;
-            
+            $scope.$emit('ShowPreloader');
             $scope.validateConnection(initController, offlineCallback);
             
             function offlineCallback() {

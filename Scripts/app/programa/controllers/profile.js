@@ -12,10 +12,16 @@ angular
     '$filter',
     '$route',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
+        var _loadedResources = false;
+        var _pageLoaded = false;
             
             $scope.$emit('ShowPreloader');
-
-            $scope.validateConnection(initController, offlineCallback);
+            
+            if ($routeParams.id != moodleFactory.Services.GetCacheObject("userId")) {
+                $scope.validateConnection(initController, offlineCallback);
+            }else {
+                initController();
+            }
         
             function offlineCallback() {
                 $timeout(function() { $location.path("/Offline"); }, 1000);
@@ -348,7 +354,7 @@ angular
     
             callback();
     
-                        moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () { }, true);
+                        moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () { _pageLoaded = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')}; }, true);
     
             if (!$scope.model) {
                 $location.path('/');
@@ -379,8 +385,9 @@ angular
         if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
             setEmptyAvatar();
         }
-    
-        $scope.$emit('HidePreloader');
+        
+        _pageLoaded = true;
+        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
     }
     
     function formatDate(date) {
@@ -1667,9 +1674,13 @@ angular
     
                 function getContent() {
                     drupalFactory.Services.GetContent("7001", function (data, key) {
+                        _loadedResources = true;
                             $scope.contentResources = data.node;
+                            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                         }, function () {
-                        }, true);
+                                _loadedResources = true;
+                                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                        }, false);
                 }
                 
                 $scope.scrollToTop();

@@ -13,6 +13,9 @@ angular
         '$filter',
         'MoodleIds',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $filter, MoodleIds) {
+            var _loadedResources = false;
+            var _pageLoaded = false;
+            $scope.$emit('ShowPreloader');
             
             $scope.validateConnection(initController, offlineCallback);
             
@@ -24,7 +27,6 @@ angular
                 
                 _httpFactory = $http;
                 _timeout = $timeout;
-                $scope.$emit('ShowPreloader');
                 $rootScope.pageName = "Estación: Conócete"
                 $rootScope.navbarBlue = true;
                 $rootScope.showToolbar = true;
@@ -452,7 +454,7 @@ angular
                     $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId ));
                     $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                     
-                    moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
+                    moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, function(){}, true);
                     
                     forceUpdateForumProgress();
                 }
@@ -466,7 +468,9 @@ angular
                     $scope.morePendingPosts = posts.length === 10;
                     posts.forEach(initializeCommentsData);
                     $scope.posts.sort(function(a, b) { return Number(b.post_id) - Number(a.post_id); });
-                    $scope.$emit('HidePreloader');
+                    
+                    _pageLoaded = true;
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
                 }
     
                 var initializeCommentsData = function(element, index, array){
@@ -608,10 +612,12 @@ angular
     
                 function getContentResources(activityIdentifierId) {
                     drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                        _loadedResources = true;
                         $scope.setToolbar($location.$$path,data.node.tool_bar_title);
                         $scope.backButtonText = data.node.back_button_text;
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
     
-                    }, function () {}, true);
+                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
                 };
             }
 

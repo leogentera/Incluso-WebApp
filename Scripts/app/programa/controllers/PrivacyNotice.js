@@ -10,6 +10,8 @@ angular
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.setToolbar($location.$$path,"Incluso");
             $rootScope.showFooter = true;
@@ -25,11 +27,12 @@ angular
             
             function getContentResources(activityIdentifierId) {
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    _loadedResources = true;
                     
                     $scope.contentResources = data.node;
-                    $scope.$emit('HidePreloader'); //hide preloader
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                     
-                    }, function () { $scope.$emit('HidePreloader'); }, true);
+                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
             }
 
             getContentResources("PrivacyNotice");

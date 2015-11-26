@@ -19,6 +19,7 @@ var _catalogsLoaded = null;
 
 /* Prototypes */
 var _isDeviceOnline = null;
+var _queuePaused = false;
 
 var _catalogNames = ["sports",
     "arts",
@@ -1481,11 +1482,17 @@ function _updateDeviceVersionCache () {
 
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
 
-    console.log("Cordova");
-    cordova.exec(function(data) {
-     _isDeviceOnline = data.online;    
+    if(_isCellPhone){
+        cordova.exec(function(data) {
+            _isDeviceOnline = data.online;
+
+            callback();
+        }, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
+    }
+    else{
+        _isDeviceOnline = true;
         callback();
-    }, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
+    }
 }
 
 var _getCatalogValuesBy = function (catalogName) {
@@ -1504,6 +1511,22 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
     _forceUpdateConnectionStatus(sucessIsOnlineCallback, errorIsOnlineCallback);
 };
 
+var _loadedDrupalResources = false;
+var _loadDrupalResources = function() {
+    _loadedDrupalResources = false;
+    var propCounter = 0;
+    
+    for (var prop in drupalFactory.NodeRelation) {
+        drupalFactory.Services.GetContent(prop, function() {
+            propCounter++;
+            _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
+            }, function(){
+                propCounter++;
+                _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
+                }, true);
+    }
+}
+
 $(document).ready(function(){
     setTimeout(function() {
     _updateDeviceVersionCache();
@@ -1511,7 +1534,7 @@ $(document).ready(function(){
     (function() {
         /* Load catalogs */
         var requestData = {"catalog": _catalogNames};
-        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { _catalogsLoaded = true; }, function(){ _catalogsLoaded = false; });
+        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { _catalogsLoaded = true; }, function(){ _catalogsLoaded = false; }, true);
     })();
     
     }, 2000);

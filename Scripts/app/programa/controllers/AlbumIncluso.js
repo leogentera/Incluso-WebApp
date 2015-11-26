@@ -11,9 +11,14 @@ angular
     '$modal',
     '$filter',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+        var _loadedResources = false;
+        var _pageLoaded = false;
+        
         drupalFactory.Services.GetContent("Album", function (data, key) {
             $scope.contentResources = data.node;
-        }, function () {}, true);
+            _loadedResources = true;
+            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+        }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
 
         $scope.setToolbar($location.$$path, "Album Incluso");
         $rootScope.showFooter = false;
@@ -255,11 +260,13 @@ angular
                 }
             }
             else {
-                $scope.$emit('HidePreloader');
+                _pageLoaded = true;
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
             }
         }
 
         function successfullCallBack(albumData) {
+            _pageLoaded = true;
             if (albumData != null) {
                 _setLocalStorageJsonItem("album", albumData);
                 //get names for badges
@@ -269,7 +276,7 @@ angular
                 }
 
                 $scope.album = albumData;
-                $scope.$emit('HidePreloader');
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
             }
             else {
                 //Albun no reachable

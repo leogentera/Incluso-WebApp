@@ -10,6 +10,10 @@
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+            
+            var _loadedResources = false;
+            var _pageLoaded = false;
+            
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.Math = window.Math;
@@ -55,7 +59,6 @@
             }
             catch (e) {
                 console.log(e);
-                $scope.$emit('HidePreloader'); //hide preloader
                 $scope.$emit('scrollTop'); //- scroll
             }
 
@@ -132,22 +135,18 @@
             function getDataAsyncCallback(){
                 //Load UserCourse structure into model
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-
-                
-                $scope.$emit('HidePreloader'); //hide preloader
-
-                
                         
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
                     $scope.course = JSON.parse(localStorage.getItem("course"));
                     $scope.currentStage = getCurrentStage();                
                     _setLocalStorageItem("currentStage", $scope.currentStage);
-
+                    
+                    _pageLoaded = true;
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
                     
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function(){
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
-                        $scope.$emit('HidePreloader'); //hide preloader
                         $scope.$emit('scrollTop'); //- scroll
                         
                         moodleFactory.Services.GetAsyncProfile(_getItem("userId"),$scope.user.token, function()
@@ -214,7 +213,8 @@
 
             function errorCallback(data){
                 console.log(data);
-                $scope.$emit('HidePreloader'); //hide preloader
+                _pageLoaded = true;
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
                 $scope.$emit('scrollTop'); //- scroll
             }
                                                         
@@ -292,9 +292,16 @@
             }
             
             function getContentResources(activityIdentifierId) {
-                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {                
-                    $scope.contentResources = data.node;                    
-                    }, function () {}, true);
+                
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    _loadedResources = true;
+                    $scope.contentResources = data.node;
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                    
+                    }, function () {
+                        _loadedResources = true;
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                    }, false);
                 
             }
 
@@ -306,7 +313,7 @@
                     controller: function ($scope, $modalInstance) {
                         drupalFactory.Services.GetContent('TermsAndConditions', function(data,key) {
                             $scope.termsContent = data.node;
-                            }, function(){},true);
+                            }, function(){ },false);
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };

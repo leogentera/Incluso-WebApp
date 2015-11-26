@@ -2,6 +2,7 @@
     namespace('drupalFactory');
     
     drupalFactory.NodeRelation = {
+        "0000": 57, /* Programa - Dashboard */
         "1002": 53, /* Zona de Vuelo - Cabina de Soporte - Chat */
         "1010": 46, /* Zona de Vuelo - Con�cete - Punto de Encuentro */
         "1008": 48, /* Zona de Vuelo - Mis Sue�os - Punto de Encuentro */
@@ -31,7 +32,6 @@
         "1000": 91, /* Zona de Aterrizaje - Dashboard*/
         "3000": 45, /* Zona de Vuelo - Dashboard */
         "2000": 69, /* Zona de Navegaci�n - Dashboard */
-        "0000": 57, /* Programa - Dashboard */
         "ZonaDeVueloClosing":85,    /*Zona de Vuelo - Cierra de Actividad*/
         "ZonaDeNavegacionClosing":86,   /*Zona de Navegaci�n - Cierre de Actividad*/
         "ZonaDeAterrizajeClosing":87,   /*Zona de Aterrizaje - Cierre de Actividad*/
@@ -85,7 +85,12 @@
                 _setLocalStorageJsonItem(key, data);
                 successCallback(data, key);
             }).error(function (data, status, headers, config) {
-                errorCallback(data);
+                
+                if (returnValue != null) {
+                    successCallback(returnValue, key);
+                }else {
+                    errorCallback(data);   
+                }
             });
         };
         
