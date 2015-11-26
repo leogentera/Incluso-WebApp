@@ -1511,7 +1511,7 @@ function _updateDeviceVersionCache () {
 }
 
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
-    if(typeof _isCellPhone !== 'undefined'){
+    if(_isCellPhone){
         cordova.exec(function(data) {
             _isDeviceOnline = data.online;
 

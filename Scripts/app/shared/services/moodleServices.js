@@ -322,16 +322,33 @@
         var _postAsyncData = function (key, data, url, successCb, errorCb) {
             _getDeviceVersionAsync();
             
-            addRequestToQueue(key, {
+            _httpFactory({
                 method: 'POST',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' },
+            }).success(function (data, status, headers, config) {
+                console.log('success');
+                
+                if (key != null) {
+                    _setLocalStorageJsonItem(key,data);
+                }
+                
+                if (typeof successCb === "function") {
+                    successCb(key, data);
+                }else{
+                    successCallback(key, data);
+                }
+                
+            }).error(function (data, status, headers, config) {
+                console.log(data);
+                
+                if (typeof errorCb === "function") {
+                    errorCb();
+                }else {
+                    errorCallback();
+                }
             });
-
-            if(successCallback){
-                successCallback(); 
-            }
         };
 
         var _postAsyncCommentToActivity = function(key,data,url,successCallback,errorCallback){
