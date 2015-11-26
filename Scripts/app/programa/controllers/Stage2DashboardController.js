@@ -234,7 +234,7 @@ angular
                 var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
 
                 //Store an Index of the chosen menu item.
-                _setLocalStorageJsonItem("owlQuizCurrentIndex", parentIndex);
+                _setLocalStorageJsonItem("owlIndex", parentIndex);
 
                 if (url) {
                     

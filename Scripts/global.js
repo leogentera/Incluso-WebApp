@@ -1183,6 +1183,14 @@ var logout = function ($scope, $location) {
             }
         );
     }
+
+    //Deleting objects from Quizes
+    ClearLocalStorage("answersQuiz/");
+    ClearLocalStorage("otherAnswerQuiz/");
+    ClearLocalStorage("activityObject/");
+    ClearLocalStorage("owlIndex");
+    //-------------------------------
+
     localStorage.removeItem("CurrentUser");    
     localStorage.removeItem("course");
     localStorage.removeItem("stage");
@@ -1198,8 +1206,6 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
-    localStorage.removeItem("answersQuiz");
-    localStorage.removeItem("otherAnswQuiz");
     localStorage.removeItem("halloffame");
     localStorage.removeItem("citiescatalog");
     localStorage.removeItem("tuEligesActivities");
