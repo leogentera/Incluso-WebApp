@@ -588,37 +588,29 @@ var logStartActivityAction = function(activityId, timeStamp) {
 }
 
 
-var _activityNotification = function (activityId, triggerActivity) {
+var _activityNotification = function (courseModuleId, triggerActivity) {
 
     currentUserId = localStorage.getItem("userId");
 
     var allNotifications = JSON.parse(localStorage.getItem("notifications"));
 
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    var activity = _getActivityByCourseModuleId(courseModuleId, userCourse );
+    
+    
     for (var i = 0; i < allNotifications.length; i++) {
         var currentNotification = allNotifications[i];
-        if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId) {
-            
-            //Create activityNotification
-            
-            //allNotifications[i].timemodified = new Date();            
-            //_setLocalStorageJsonItem("notifications", allNotifications);
-            //
-            //var dataModelNotification = {
-            //    notificationid: allNotifications[i].id,
-            //    timemodified: new Date(),
-            //    userid: currentUserId,
-            //    already_read: 0
-            //};
-            //moodleFactory.Services.PostUserNoitifications(currentUserId, dataModelNotification, successCallback, errorCallback);
-            //
+        if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
+                        
           var dataModelNotification = {
-            notificationid : notificationId,
-            userid: userId
+            notificationid : String(currentNotification.id),
+            userid: currentUserId
           };
 
-          moodleFactory.Services.PostUserNotifications(currentUserId, dataModelNotification, function(){
+          moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
               console.log("create notification successful");
-          }, errorCallback);
+          }, errorCallback, true);
             
         } else {
           
@@ -663,11 +655,11 @@ var _coachNotification = function (stageIndex) {
                     var dataModelNotification = {
                         notificationid : notificationId,
                         userid: userId                        
-                      };
+                      };                                            
                     
-                    moodleFactory.Services.PostUserNotifications(currentUserId, dataModelNotification, function(){
+                    moodleFactory.Services.PostUserNotifications( dataModelNotification, function(){
                         console.log("create notification successful");
-                      }, errorCallback);
+                      }, errorCallback,true);
                     
                 } else {
                     return false;
@@ -676,28 +668,6 @@ var _coachNotification = function (stageIndex) {
         }
     }
 };
-
-
-var _generalNotification = function(){
-    //var notifications = JSON.parse(localStorage.getItem("notifications"));
-    //var userId = localStorage.getItem('userId');
-    ////trigger activity 4: general notification
-    //var triggerActivity = 4;
-    //
-    //var notificationGeneral = _.filter(notifications, function (notif) {
-    //    if (notif.id == 13 || notif.id == 14 || notif.id == 15) {
-    //        return notif;
-    //    } else {
-    //    }
-    //});
-    //
-    //for(var i = 0; i <= notificationGeneral.length; i++)
-    //{
-    //  if (notificationGeneral[i] && !notificationGeneral[i].timemodified) {
-    //      _activityNotification(notificationGeneral[i].activityidnumber, triggerActivity);
-    //  }
-    //}
-}
 
 
 var _progressNotification = function(indexStageId, currentProgress){
@@ -1513,8 +1483,7 @@ function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
 
     console.log("Cordova");
     cordova.exec(function(data) {
-        _isDeviceOnline = data.online;
-        //console.log(_isDeviceOnline);
+     _isDeviceOnline = data.online;    
         callback();
     }, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
 }
