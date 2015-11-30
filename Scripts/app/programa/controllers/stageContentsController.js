@@ -218,48 +218,48 @@ angular
 
             $scope.updateStatus = function (contentId) {
                 
-                    $scope.validateConnection(function() {
+                $scope.validateConnection(function() {
                         
-                for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
-                    if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
-                        if (!$scope.fuenteDeEnergia.activities[i].status) {
-                            $scope.fuenteDeEnergia.activities[i].status = true;
-                            
-                            // Update activityManagers
-                            for (var am = 0; am < activitymanagers.length; am++) {
-                                 if (activitymanagers[am].activity_identifier == moduleid) {
-                                    var fuenteDeEnergiaManager = activitymanagers[am];
-                                    
-                                    for(var fem = 0; fem < fuenteDeEnergiaManager.activities.length; fem++){
-                                        if (fuenteDeEnergiaManager.activities[fem].groupid == contentId) {
-                                            fuenteDeEnergiaManager.activities[fem].status = true;
+                    for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                        if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
+                            if (!$scope.fuenteDeEnergia.activities[i].status) {
+                                $scope.fuenteDeEnergia.activities[i].status = true;
+                                
+                                // Update activityManagers
+                                for (var am = 0; am < activitymanagers.length; am++) {
+                                     if (activitymanagers[am].activity_identifier == moduleid) {
+                                        var fuenteDeEnergiaManager = activitymanagers[am];
+                                        
+                                        for(var fem = 0; fem < fuenteDeEnergiaManager.activities.length; fem++){
+                                            if (fuenteDeEnergiaManager.activities[fem].groupid == contentId) {
+                                                fuenteDeEnergiaManager.activities[fem].status = true;
+                                            }
                                         }
+                                     }
+                                }
+    
+                                var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
+                                _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
+                                _setLocalStorageJsonItem("activityManagers", activitymanagers);
+                                _endActivity($scope.fuenteDeEnergia.activities[i]);
+                                if (!$scope.fuenteDeEnergia.activities[i].optional) {
+                                    $scope.statusObligatorios += 1;
+                                    assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
+                                    starsMandatory += 50;
+                                    if ($scope.statusObligatorios >= 5 && !$scope.fuenteDeEnergia.status) {
+                                        $scope.navigateToPage(2);
                                     }
-                                 }
-                            }
-
-                            var updatedActivityOnUsercourse = updateSubActivityStatus($scope.fuenteDeEnergia.activities[i].coursemoduleid);  //actualizar arbol
-                            _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
-                            _setLocalStorageJsonItem("activityManagers", activitymanagers);
-                            _endActivity($scope.fuenteDeEnergia.activities[i]);
-                            if (!$scope.fuenteDeEnergia.activities[i].optional) {
-                                $scope.statusObligatorios += 1;
-                                assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
-                                starsMandatory += 50;
-                                if ($scope.statusObligatorios >= 5 && !$scope.fuenteDeEnergia.status) {
-                                    $scope.navigateToPage(2);
+                                }
+                                else {
+                                    assingStars(false, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
+                                    starsNoMandatory += 50;
                                 }
                             }
-                            else {
-                                assingStars(false, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
-                                starsNoMandatory += 50;
-                            }
+                            break;
                         }
-                        break;
                     }
-                }
                         
-                    }, offlineCallback);
+                }, offlineCallback);
                     
             };
 

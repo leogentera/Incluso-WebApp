@@ -101,31 +101,29 @@ angular
                 }
             }            
 
-            function getMessages(){                
+            function getMessages() {                
                     
-                    $scope.validateConnection(function() {
-                        
-                var existingInterval = localStorage.getItem('Interval');
-                 if($location.$$path != "/Chat"){
-                    //Necesitamos volver a poner en marcha el refresh de notificaciones del chat
-                    if(!existingInterval){       
-                    clearInterval(interval);
-                        interval = setInterval(getUserChat,180000);          
-                        _setLocalStorageItem('Interval', interval);
-                    }                    
-                 }
-                 else{
-                     //Si ya existe un intervalo hay que borrarlo                    
-                    if(existingInterval){
-                        clearInterval(parseInt(existingInterval));
-                        ClearLocalStorage("Interval");
-                    }                
+                $scope.validateConnection(function() {
+                    
+                    var existingInterval = localStorage.getItem('Interval');
+                    if($location.$$path != "/Chat"){
+                        //Necesitamos volver a poner en marcha el refresh de notificaciones del chat
+                        if(!existingInterval){       
+                            clearInterval(interval);
+                            interval = setInterval(getUserChat,180000);          
+                            _setLocalStorageItem('Interval', interval);
+                        }                    
+                    } else {
+                        //Si ya existe un intervalo hay que borrarlo                    
+                       if(existingInterval) {
+                           clearInterval(parseInt(existingInterval));
+                           ClearLocalStorage("Interval");
+                       }                
 
-                moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                                                                                            
-            }
-                        
-                        
-                    }, offlineCallback);
+                        moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                                                                                            
+                    }
+                    
+                }, offlineCallback);
                     
             }   
             
@@ -136,68 +134,58 @@ angular
 
             $scope.sendMessage = function() {
                     
-                     $scope.validateConnection(function() {
+                $scope.validateConnection(function() {
                     
-                if($scope.currentMessage.trim() != ""){                    
-                    triggerAndroidKeyboardHide();
- 
-                    var newMessage = {
-                    messagetext: $scope.currentMessage,
-                    messagesenderid: $scope.senderId,                    
-                    messagedate: new Date()
-                    };
-                
-                    /* time out to avoid android lag on fully hiding keyboard */
-                    $timeout(function() {
-                        $scope.messages.push(newMessage);
-                        $scope.currentMessage = "";
-                        var newMessages = JSON.stringify($scope.messages);                
-                        _setLocalStorageItem('userChat',newMessages);
-                        $anchorScroll();
-                                                       
-                        moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
-                    }, 1000);
-                }                
+                    if($scope.currentMessage.trim() != "") {                    
+                        triggerAndroidKeyboardHide();
+     
+                        var newMessage = {
+                        messagetext: $scope.currentMessage,
+                        messagesenderid: $scope.senderId,                    
+                        messagedate: new Date()
+                        };
+                    
+                        /* time out to avoid android lag on fully hiding keyboard */
+                        $timeout(function() {
+                            $scope.messages.push(newMessage);
+                            $scope.currentMessage = "";
+                            var newMessages = JSON.stringify($scope.messages);                
+                            _setLocalStorageItem('userChat',newMessages);
+                            $anchorScroll();
+                                                           
+                            moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
+                        }, 1000);
+                    }                
                     
                     
-                    }, offlineCallback);        
+                }, offlineCallback);        
             };
             
             function getUserChat() {     
                        
-                     $scope.validateConnection(function() {
+                $scope.validateConnection(function() {
                     
-                moodleFactory.Services.GetUserChat(_getItem("userId"),function() {                    
-                    var chat = JSON.parse(localStorage.getItem('userChat'));
-                    var userId = localStorage.getItem("userId");
-                    var messagesFlow = [];
-                    var messagesInterchange = 0;
-                    var messagesToRead = _getItem("currentStage") * 2;
-                    
-                    var chatAmount = _.countBy(chat,function(messages){
-                            messagesFlow.push(messages.messagesenderid != userId);
-                            return messages.messagesenderid != userId;
-                        });
-
-                    // _.each(messagesFlow, function(m, i){
-                    //     if(i > 0 && m && m != messagesFlow[i - 1]){
-                    //         messagesInterchange++;
-                    //     }
-                    // });
-
-                    // if (messagesInterchange >= messagesToRead) {
-                    //     _setLocalStorageItem("finishCabinaSoporte/" + _getItem("userId"), "true");
-                    // }
-                                                    
-                    if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
-                        _setLocalStorageItem('chatRead',"false");
-                    }
-
-                    _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                }, errorCallback, true);                
+                    moodleFactory.Services.GetUserChat(_getItem("userId"),function() {                    
+                        var chat = JSON.parse(localStorage.getItem('userChat'));
+                        var userId = localStorage.getItem("userId");
+                        var messagesFlow = [];
+                        var messagesInterchange = 0;
+                        var messagesToRead = _getItem("currentStage") * 2;
+                        
+                        var chatAmount = _.countBy(chat,function(messages){
+                                messagesFlow.push(messages.messagesenderid != userId);
+                                return messages.messagesenderid != userId;
+                            });
+                                                        
+                        if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
+                            _setLocalStorageItem('chatRead',"false");
+                        }
+    
+                        _setLocalStorageItem('chatAmountRead',chatAmount.true);
+                    }, errorCallback, true);                
                     
                     
-                    }, function() {});
+                }, function() {});
                            
                                    
             }
