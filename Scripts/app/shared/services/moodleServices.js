@@ -935,7 +935,7 @@
 
             _setLocalStorageJsonItem("RequestQueue", requestQueue);
             if(requestQueue.length==1 || _queuePaused){
-                if(typeof _isCellPhone !== 'undefined'){                    
+                if(window.mobilecheck()){                    
                         doRequestforCellphone();                     
                 }                
                 else{
