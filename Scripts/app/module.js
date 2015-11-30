@@ -163,7 +163,7 @@
     })
     .config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 
-        $routeProvider.when('/Perfil/Editar', {
+        $routeProvider.when('/Perfil/Editar/:id', {
             templateUrl: 'Templates/Programa/editProfile.html',
             controller: 'programaProfileController'
         });

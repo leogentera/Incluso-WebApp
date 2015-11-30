@@ -98,6 +98,11 @@
                 if(path.constructor === Array){
                     classdisable = "";
                     for(i= 0; i < path.length; i++){
+						
+						if (path[i] === "/Perfil/Editar") {
+							path[i] = path[i] + "/" + moodleFactory.Services.GetCacheObject("userId");
+						}
+						
                         if($location.path() === path[i] || $location.path().substr(0, 8) === path[i]){
                             classdisable = "active disabled";
                         }

@@ -469,7 +469,7 @@ function formatDate(date) {
             };
 
             $scope.edit = function () {
-                $location.path('/Perfil/Editar');
+                $location.path('/Perfil/Editar/' + moodleFactory.Services.GetCacheObject("userId"));
             };
 
 
