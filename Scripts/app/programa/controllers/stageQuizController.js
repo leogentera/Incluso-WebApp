@@ -90,7 +90,7 @@ angular
             $scope.openModal();  // turns on robot
             getDataAsync();      // get Quiz data from service
 
-            //###########################################################################################
+            //##########################################################################################
 
             function getContentAsync()
             {
@@ -107,7 +107,7 @@ angular
             }
 
             function getDataAsync() {
-
+                // Quizes: 1001, 1005, 1006, 1007, 1009; 2001, 2009, 2025, 2023; 3101, 3601.
                 // nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601]
                 // quizHasOther = [1001, 1005, 1006, 2001, 2023, 3101, 3601]
 
@@ -1216,7 +1216,7 @@ angular
             link: function ($scope) {
                 $scope.initCarousel = function (element) {
                     // provide any default options you want
-                    var currPage;
+
                     var prevPage;
                     var defaultOptions = {
                             navigation: false,

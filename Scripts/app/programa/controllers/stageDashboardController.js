@@ -149,8 +149,8 @@ angular
                     size: size,
                     windowClass: 'closing-stage-modal user-help-modal'
                 });
-            };
 
+            };
 
             //Updated stage first time flag in scope, local storage and server
             $scope.updateStageFirstTime = function () {
@@ -253,8 +253,8 @@ angular
                 } else {
                     localStorage.removeItem("challengeMessage");
                 }
-    
-    
+
+
                 if (_tryCloseStage($scope.idEtapa)) {
                     $scope.openModal_CloseStage();
                 }
@@ -329,16 +329,16 @@ angular
             $scope.cancel = function () {
                     $modalInstance.dismiss('cancel');
                     $location.path('/ProgramaDashboard');  //Redirect to dashboard inicio.
-              };
+            };
                     
-                    $scope.robotMessages = {
-                        title: "Cierre Zona de Vuelo",
-                        message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
-                    };
+            $scope.robotMessages = {
+                title: "Cierre Zona de Vuelo",
+                message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
+            };
                     
-                    $scope.navigateToDashboard = function () {                        
-                        $modalInstance.dismiss('cancel');
+            $scope.navigateToDashboard = function () {                        
+                $modalInstance.dismiss('cancel');
                         $location.path('/ProgramaDashboard');
-                    };
-                    _setLocalStorageItem('robotEndStageShown',true);
+             };
+             _setLocalStorageItem('robotEndStageShown', true);
         });
