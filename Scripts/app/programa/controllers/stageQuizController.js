@@ -103,7 +103,13 @@ angular
                 else
                     stageContent = "ZonaDeAterrizajeClosing";
 
-                drupalFactory.Services.GetContent(stageContent, function (data, key) { $scope.closingContent = data.node; }, function () { }, true);
+                drupalFactory.Services.GetContent(stageContent, function (data, key) {
+                        //_loadedResources = true;
+                        $scope.closingContent = data.node;
+                        //if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                    }, function () {},
+                    //function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } },
+                    true);  //put to false
             }
 
             function getDataAsync() {
@@ -1190,12 +1196,12 @@ angular
     controller('OpeningStageController', function ($scope, $modalInstance, $routeParams) {
 
         drupalFactory.Services.GetContent($routeParams.activityIdentifier, function (data, key) {
-
+            //_loadedResources = true;
             if (data.node != null) {
                 $scope.title = data.node.titulo_quiz;
                 $scope.instructions = data.node.instrucciones; 
             }
-                        }, function () { }, true); 
+                        }, function () { }, true);  //put to:   function () { _loadedResources = true; }, false);
 
         $scope.cancel = function () {
             $scope.$emit('ShowPreloader');
