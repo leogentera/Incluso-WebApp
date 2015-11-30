@@ -949,7 +949,7 @@
 
             _setLocalStorageJsonItem("RequestQueue", requestQueue);
             if(requestQueue.length==1 || _queuePaused){
-                if(typeof _isCellPhone !== 'undefined'){                    
+                if(window.mobilecheck()){                    
                         doRequestforCellphone();                     
                 }                
                 else{
@@ -998,7 +998,7 @@
 
             _updateConnectionStatus(function(){                
                 if(_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length>0){
-                    
+                    _queuePaused = false;
                     var data = requestQueue[0];
                     console.log("Procesando Request " + data.url)
                     if(data.retryCount<5){
