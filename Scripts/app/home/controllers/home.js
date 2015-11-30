@@ -11,7 +11,7 @@
         '$modal',
         function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal ) {
         	// http://stackoverflow.com/questions/15033195/showing-spinner-gif-during-http-request-in-angular
-			// To handle page reloads
+			// To handle page reloads		
 			_httpFactory = $http;
         	if ($location.$$path.split('/')[1]) {
         		$scope.loading = true;
@@ -28,28 +28,28 @@
                     $rootScope.sidebar = false;                
             };
 
-            $scope.navigateTo = function(url,sideToggle,activityId){                
-                
-                if (!_compareSyncDeviceVersions()) {
-                    $scope.openUpdateAppModal();
+            $scope.navigateTo = function(url,sideToggle,activityId){
+				
+				if (!_compareSyncDeviceVersions()) {
+					$scope.openUpdateAppModal();
                 } else {
-                    if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
-                        return false;
-                    }
-    
-                    if(activityId) {
-                        var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
-                        logStartActivityAction(activityId, timeStamp);
-                    }
-    
-                    $location.path(url);
-    
-                    if(sideToggle == "sideToggle")
-                        $rootScope.sidebar = !$rootScope.sidebar;   
-                }
+					if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
+						return false;
+					}
+	
+					if(activityId) {
+						var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
+						logStartActivityAction(activityId, timeStamp);
+					}
+	
+					$location.path(url);
+	
+					if(sideToggle == "sideToggle")
+						$rootScope.sidebar = !$rootScope.sidebar;	
+				}
                 
             };
-            
+			
 			
 			$scope.navigateToMyProfile = function(){
 				$location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
@@ -144,13 +144,13 @@
 				if ($scope.pageName == 'Notificaciones') {
 					return false;
 				}else{
-					var userNotifications = JSON.parse(localStorage.getItem('notifications'));
-					//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
-					var countNotificationsUnread = _.filter(userNotifications, function(notif){
-						return (notif.timemodified != null && notif.read != true);
-					});				
-					$rootScope.totalNotifications = countNotificationsUnread.length;
-					return  countNotificationsUnread.length > 0;
+				var userNotifications = JSON.parse(localStorage.getItem('notifications'));
+				//var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
+				var countNotificationsUnread = _.filter(userNotifications, function(notif){
+                    return (notif.timemodified != null && notif.read != true);
+                });				
+				$rootScope.totalNotifications = countNotificationsUnread.length;
+				return  countNotificationsUnread.length > 0;
 				}
 			};
 			
@@ -234,7 +234,7 @@
 							
 							$scope.updateApp = function() {
 								if (window.mobilecheck()) {
-									cordova.exec(function() {}, function() {}, "CallToAndroid", "restart", []);
+								cordova.exec(function() {}, function() {}, "CallToAndroid", "restart", []);
 								}
 							};
                         },
@@ -242,7 +242,7 @@
                         windowClass: 'user-help-modal dashboard-programa'
                     });
             }
-			
+
 			$scope.validateConnection = function(connectedCallback, offlineCallback) {
 				 _forceUpdateConnectionStatus(function() {
 

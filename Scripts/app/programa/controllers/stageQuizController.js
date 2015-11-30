@@ -39,8 +39,6 @@ angular
             $scope.OtroAnswers = [];
             $scope.numOfMultichoiceQuestions = 0;
             $scope.position = {};
-            var nonEditableQuizzes = [1009, 2001, 2023, 3101, 3601];
-            //var quizHasOther = ["1001", "1005", "1006", "2001", "2023", "3101", "3601"];
             $scope.questionNumOfChoices = [];
             $scope.placeholder = [];
             $scope.maxPages = 0;
@@ -52,12 +50,7 @@ angular
             $scope.userprofile.favoriteSports = [];
             $scope.userprofile.artisticActivities = [];
             $scope.userprofile.hobbies = [];
-            var userTalents = [];
-            var userValues = [];
-            var userHabilities = [];
-            var userFavoriteSports = [];
-            var userArtisticActivities = [];
-            var userHobbies = [];
+
             var talents = [];
             var values = [];
             var habilities = [];
@@ -75,15 +68,6 @@ angular
             var destinationPath = "";
             $scope.isDisabled = false;
             $scope.activity_identifier = parseInt($routeParams.activityIdentifier);  //Gets the coursemoduleid from 'activity' object
-
-            getContentAsync();   //get content from drupal
-
-
-            if (nonEditableQuizzes.indexOf($scope.activity_identifier) == -1) {//This Quiz is editable
-                $scope.quizIsEditable = true;
-            } else {
-                $scope.quizIsEditable = false;
-            }
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -104,10 +88,11 @@ angular
                         
             //#######################################  STARTING POINT ##################################
 
-            $scope.openModal();
-            getDataAsync();
+            getContentAsync();   // get content from drupal
+            $scope.openModal();  // turns on robot
+            getDataAsync();      // get Quiz data from service
 
-            //********************************************************************************************
+            //###########################################################################################
 
             function getContentAsync()
             {
@@ -128,27 +113,29 @@ angular
                 }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
             }
 
-
             function getDataAsync() {
+
+                // nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601]
+                // quizHasOther = [1001, 1005, 1006, 2001, 2023, 3101, 3601]
+
                 $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);  //activity_identifier taken from URL route (INT)
 
                 //Making up path to redirect user to the proper dashboard
                 var stageNameFromURL = $location.path().split("/")[1];
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
-                var owlQuizCurrentIndex = localStorage.getItem("owlQuizCurrentIndex");
-                destinationPath = "/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + owlQuizCurrentIndex;
+                var owlIndex = localStorage.getItem("owlIndex");
+                destinationPath = "/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + owlIndex;
                 console.log("Activity identifier: " + $scope.activity_identifier);
                 //console.log("parentActivity = " + JSON.stringify(parentActivity));
 
                 var childActivity = null;
-                if (parentActivity.activities) {
-                    childActivity = parentActivity.activities[0];
-                }
 
-                if (parentActivity != null || childActivity != null) {
+                if (parentActivity != null) {
 
-                    if (childActivity) {//The activity HAS a "child" activity
+                    if (parentActivity.activities) {//The activity HAS a "child" activity
+
+                        childActivity = parentActivity.activities[0];
                         $scope.coursemoduleid = childActivity.coursemoduleid;
                         $scope.activityPoints = childActivity.points;
                         $scope.activityname = childActivity.activityname;
@@ -160,34 +147,25 @@ angular
                         $scope.activityname = parentActivity.activityname;
                         $scope.activity_status = parentActivity.status;
                     }
+
                     console.log("activityname = " + $scope.activityname);
                     console.log("Activity status = " + $scope.activity_status);
+                    console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
 
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
                     console.log("Starting... " + parentActivity.sectionname);
-
-                    var activityFinished = false;
 
                     $scope.activity = parentActivity;
                     $scope.parentActivity = parentActivity;
                     $scope.childActivity = childActivity;
 
-                    if ($scope.activity_status == 1) {//If the activity is currently finished, try get it from Local Storage first...
-                        activityFinished = true;
-                        console.log("The activity status is FINISHED");
-
-                        if (nonEditableQuizzes.indexOf($scope.activity_identifier) > -1) {// If the Quiz is non editable, then...
-                            $scope.setReadOnly = true;
-                        }
-                        console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
-                        var localAnswers;
-                        var activityObject;
+                    //Try to get Questions from Local Storage.
+                    var localAnswers = null;
+                    var activityObject = null;
 
                         if (childActivity) {
-                            localAnswers = JSON.parse(_getItem("answersQuiz/" + childActivity.coursemoduleid));
                             activityObject = JSON.parse(_getItem("activityObject/" + childActivity.coursemoduleid));
                         } else {
-                            localAnswers = JSON.parse(_getItem("answersQuiz/" + parentActivity.coursemoduleid));
                             activityObject = JSON.parse(_getItem("activityObject/" + parentActivity.coursemoduleid));
                         }                        
 
@@ -195,45 +173,71 @@ angular
                             $scope.activityObject = activityObject;
                         } 
 
+                    console.log("recovered Local Object: " + $scope.activityObject);
+                    //console.log("User profile Id: " + $scope.userprofile.id);
+                    //console.log("Current user token: " + $scope.currentUser.token);
+
+                    if ($scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...
+
+                        console.log("The activity status is FINISHED");
+                        //Try to recover Answers from Local Storage.
+                        if (childActivity) {
+                            localAnswers = JSON.parse(_getItem("answersQuiz/" + childActivity.coursemoduleid));
+                        } else {
+                            localAnswers = JSON.parse(_getItem("answersQuiz/" + parentActivity.coursemoduleid));
+                        }
+
                         if (localAnswers !== null) {
                             $scope.answers = localAnswers;
                         }
 
                         console.log("recovered Local Answers: " + $scope.answers);
                         
-                        $scope.activityFinished = activityFinished;
-
-                        if (localAnswers == null || activityObject == null) {// If activity data not exists in Local Storage...get it from Server
+                        //$scope.activityFinished = activityFinished;
+                        if (localAnswers == null || activityObject == null) {// If activity does not exists in Local Storage...get it from Server
 
                             console.log("The info for the Quiz IS NOT within Local Storage");
                             // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, loadModelVariables, errorCallback, true);
                             console.log("The info has been taken from Service...");
 
-                        } else {//Angular-bind the answers in the respective HTML template
+                        } else {//Both Questions and Answer are on Local Storage; Angular-bind the object in the respective HTML template
                             
                             console.log("The info for the Quiz is within Local Storage");
                             loadModelVariables(activityObject);
-                            $scope.answers = localAnswers;  //******************************************
+                            $scope.answers = localAnswers; 
 
                         }
-                    } else {
-                        // Bring text for questions for Quiz from the Service for First Time users.
-                        // The -1 is for making up a GET request without the userid; for example:
+
+                    } else {//The Quiz has not been finished yet.
+                        console.log("This Quiz has not been finished yet ...");
+                        if (activityObject === null) {//If the questions are not in Local Storage, then...
+                            // ...bring the questions from the Service. The -1 is for making up a GET request without the userid; for example:
                         // http://incluso.definityfirst.com/RestfulAPI/public/activity/150
-                        console.log("Bringing text for a not finished Quiz...");
+                            console.log("Bringing text from Service for a not finished Quiz...");
                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, loadModelVariables, errorCallback, true);
+                        } else {//The questions were found in Local Storage.
+                            console.log("Bringing text from Local Storage for an unfinished Quiz...");
+                            loadModelVariables(activityObject);
                     }
                 }
-                else {
+
+                } else {
+                    // When parentActivity == null AND childActivity == null
                     console.log("Activity is NOT defined");
+                    $location.path("/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + 0);
                 }
-                //$scope.$emit('HidePreloader');
+
             }
 
 
             //####################################        ####################################
             function loadModelVariables(activityObject) {
+
+                // Check if the Quiz is non editable (attempts == 1) AND it has been finished.
+                if (activityObject.attempts === 1 && $scope.activity_status === 1) {
+                    $scope.setReadOnly = true;
+                }
 
                 $scope.modelIsLoaded = true;
                 var index;
@@ -254,21 +258,22 @@ angular
 
                     var question;
                     var i, index;
-                    //var numQuestions = 0;
+                    
                     $scope.numOfOthers = 0;
                     var localOtrosAnswers = null;
                     $scope.placeholder = [];
-                    $scope.maxPages = activityObject.questions.length;
+                    var numQuestions = activityObject.questions.length;
+                    $scope.maxPages = numQuestions;  //Important. Used in View to know the total number of questions.
 
                     //Count the number of "Other" options in current Quiz.
-                    for (index = 0; index < $scope.maxPages; index++) {
+                    for (index = 0; index < numQuestions; index++) {
 
                         question = activityObject.questions[index];
                         var questionNumOfChoices = question.answers.length;
                         var hasOther = false;
 
                         if (questionNumOfChoices > 0) {
-                            hasOther = question.answers[questionNumOfChoices - 1].answer == "Otro";
+                            hasOther = question.answers[questionNumOfChoices - 1].answer == "Otro"; //the last question.answers object.
                         }
 
                         $scope.placeholder[index] = question.tag;  //Set the values for the placeholder strings within UI textareas.
@@ -352,7 +357,7 @@ angular
                     //console.log("Número de preguntas con 'Otro' = " + $scope.numOfOthers);
                     //console.log("OtroAnswers = " + JSON.stringify($scope.OtroAnswers));
 
-                    for (index = 0; index < $scope.maxPages; index++) {
+                    for (index = 0; index < numQuestions; index++) {
 
                         question = activityObject.questions[index];
                         
@@ -482,10 +487,8 @@ angular
 
                     case "multichoice":
 
-                        console.log($scope.answers);
-
                         if ($scope.answers[questionIndex] == undefined) {
-                            $scope.answers[questionIndex] = [];
+                            $scope.answers[questionIndex] = []; //Adding room for first answer
                         };                        
 
                         var index;
@@ -504,7 +507,6 @@ angular
                                     questionOption = cleanText(question.answers[index].answer).trim();
 
                                     if (questionOption == userAnswer) {//For checked options...
-                                        //console.log("***  The user selected this: " + userAnswer);
                                         $scope.answers[questionIndex][index] = 1;
 
                                         if (userAnswer == "Otro") {//The user checked the "Otros" option, among others...
@@ -518,12 +520,19 @@ angular
                             }  
                         }
 
+                        for (index = 0; index < question.answers.length; index++) {
+                          if ($scope.answers[questionIndex][index] !== 1) {
+                              $scope.answers[questionIndex][index] = 0;
+                          }
+                        }
+
+                        console.log("Model loaded = " + $scope.answers[questionIndex]);
                         break;
 
                     case "multichoicewo":
 
                         if ($scope.answers[questionIndex] == undefined) {
-                            $scope.answers[questionIndex] = [];
+                            $scope.answers[questionIndex] = [];  //Adding room for first answer
                         };
 
                         var index;
@@ -534,7 +543,7 @@ angular
 
                         if (question.userAnswer !== null && question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
-                            console.log("userAnswers = " + userAnswers);
+
                             for (indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
                                 
                                 userAnswer = cleanText(userAnswers[indexUserAnswers]).trim(); //Get each selected option
@@ -542,20 +551,20 @@ angular
                                 for (index = 0; index < question.answers.length; index++) {
                                     questionOption = cleanText(question.answers[index].answer).trim();
 
-                                    //$scope.answers[questionIndex][index] = 0;
-                                    console.log("???  questionOption / userAnswer: " + questionOption + "/" + userAnswer);
                                     if (questionOption == userAnswer) {//For checked options...
-                                        console.log("***  questionOption / userAnswer: " + questionOption + "/" + userAnswer);
                                         $scope.answers[questionIndex][index] = 1;                                        
                                     } 
                                 }
                             }
+                        }
 
-                            console.log("Total de opciones en la MULTICHOICEWO: " + question.answers.length);
+                        for (index = 0; index < question.answers.length; index++) {
+                            if ($scope.answers[questionIndex][index] !== 1) {
+                                $scope.answers[questionIndex][index] = 0;
+                        }
                         }
 
                         console.log("rendering this answers: " + $scope.answers[questionIndex]);
-
                         break;
                                            
 
@@ -564,8 +573,7 @@ angular
                         var userAnswers;
 
                         if ($scope.answers[questionIndex] === undefined) {
-                            console.log("Adding room for first answer");
-                            $scope.answers[questionIndex] = [];
+                            $scope.answers[questionIndex] = []; //Adding room for first answer
                         }                        
 
                         if (question.userAnswer != "") {                            
@@ -578,7 +586,6 @@ angular
                                     $scope.answers[questionIndex].push(userAnswers[i]);
                                 }
                             }
-                            
                         }
 
                         break;
@@ -603,8 +610,7 @@ angular
                         console.log("user answer essay = " + question.userAnswer);
 
                         if ($scope.answers[questionIndex]  === undefined) {
-                            console.log("Adding room for first answer");
-                            $scope.answers[questionIndex] = [];
+                            $scope.answers[questionIndex] = [];   //Adding room for first answer
                         }
 
                         if (question.userAnswer != "") {                            
@@ -617,7 +623,6 @@ angular
                                     $scope.answers[questionIndex].push(userAnswers[i]);
                                 }
                             }
-                            
                         }
 
                         break;
@@ -630,7 +635,6 @@ angular
 
 
             //############################## CODE CALLED WHEN USER FINISHES ACTIVITY ###################################
-            //Tasks to do when the user presses the "Terminar" button.
             $scope.finishActivity = function () {
                 
                 console.log("$scope.answers = " + JSON.stringify($scope.answers));
@@ -689,7 +693,7 @@ angular
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
                     activityModel.answersResult.others = $scope.OtroAnswers;                    
 
-                    if ($scope.childActivity) {
+                    if ($scope.childActivity) {// Write Questions and Answers to Local Storage
                         _setLocalStorageJsonItem("answersQuiz/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("UserTalents/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
                     } else {
@@ -899,13 +903,14 @@ angular
                                 }
                             }
 
+                            //Unanswered questions should be equal to 0.
                             for (i = 0; i < $scope.activityObject.questions[index].answers.length; i++) {
-                                console.log("Validating " + $scope.activityObject.questions[index].answers.length + " options in MC");
+                                //console.log("Validating " + $scope.activityObject.questions[index].answers.length + " options in MC");
                                 if ($scope.answers[index][i] != 1) {                                     
                                     $scope.answers[index][i] = 0;                                        
                                 } 
                             }
-
+                            console.log($scope.answers[index]);
                             break;
 
                         case "multichoicewo":
@@ -1136,7 +1141,6 @@ angular
             function addHeightEssay(elem) {
                 var elemHeight = angular.element(elem).height();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
-                
                 angular.element(".owl-wrapper-outer").css('height', containerHeight + 147);
                 angular.element(elem).css('height', elemHeight + 147);
             }

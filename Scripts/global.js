@@ -574,15 +574,16 @@ var logStartActivityAction = function(activityId, timeStamp) {
             if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
                  console.log("global");
                 var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
-                
                 if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
+                    moodleFactory.Services.GetServerDate(function(date){
                     _setLocalStorageJsonItem(key, {
-                        datestarted: getdate(),
+                        datestarted: date.time,
                         coursemoduleid: treeActivity.coursemoduleid,
                         activity_identifier: treeActivity.activity_identifier
                     });
                     
                     localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                    })                    
                 }
             }
             
@@ -618,10 +619,10 @@ var _activityNotification = function (activityId, triggerActivity) {
             //};
             //moodleFactory.Services.PostUserNoitifications(currentUserId, dataModelNotification, successCallback, errorCallback);
             //
-          var dataModelNotification = {
+            var dataModelNotification = {
             notificationid : notificationId,
             userid: userId
-          };
+            };
 
           moodleFactory.Services.PostUserNotifications(currentUserId, dataModelNotification, function(){
               console.log("create notification successful");
@@ -642,13 +643,13 @@ var _coachNotification = function (stageIndex) {
         
     var notificationCoach = _.find(notifications, function (notif) {
         if (notif.type == notificationTypes.activityNotifications && notif.trigger_condition == 3) {
-          return notif; 
-        }      
+            return notif;
+        }
     });
-        
+
     if (notificationCoach && notificationCoach.status == "pending") {      
         var activity = getActivityByActivity_identifier(notificationCoach.activityidnumber);
-                
+
         var notificationId = notificationCoach.id;        
         if ((activity)) {          
             var chatUser = JSON.parse(localStorage.getItem("userChat"));
@@ -685,7 +686,7 @@ var _coachNotification = function (stageIndex) {
 };
 
 
-var _generalNotification = function(){
+var _generalNotification = function(){  
     //var notifications = JSON.parse(localStorage.getItem("notifications"));
     //var userId = localStorage.getItem('userId');
     ////trigger activity 4: general notification
@@ -712,7 +713,7 @@ var _progressNotification = function(indexStageId, currentProgress){
     var notifications = JSON.parse(localStorage.getItem("notifications"));
     
     var progressNotifications = _.where(notifications, { type: notificationTypes.progressNotifications });
-    
+
     var stageId = indexStageId + 1 ;
     
     for(i = 0; i < progressNotifications.length; i++){
@@ -721,8 +722,8 @@ var _progressNotification = function(indexStageId, currentProgress){
             && currentProgress <= currentNotification.progressmax && stageId == currentNotification.stageid) {
             console.log("progress notification created" + currentNotification.name);
             //Add create notification logic.
-        }        
-    }
+      }
+    }  
 }
 
 var successPutStarsCallback = function (data) {
@@ -1201,6 +1202,14 @@ var logout = function ($scope, $location) {
             }
         );
     }
+
+    //Deleting objects from Quizes
+    ClearLocalStorage("answersQuiz/");
+    ClearLocalStorage("otherAnswerQuiz/");
+    ClearLocalStorage("activityObject/");
+    ClearLocalStorage("owlIndex");
+    //-------------------------------
+
     localStorage.removeItem("CurrentUser");    
     localStorage.removeItem("course");
     localStorage.removeItem("stage");
@@ -1216,8 +1225,6 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
-    localStorage.removeItem("answersQuiz");
-    localStorage.removeItem("otherAnswQuiz");
     localStorage.removeItem("halloffame");
     localStorage.removeItem("citiescatalog");
     localStorage.removeItem("tuEligesActivities");
@@ -1258,7 +1265,7 @@ playVideo = function (videoAddress, videoName) {
     //var videoAddress = "assets/media";
     //var videoName = "TutorialTest2.mp4";
     if (window.mobilecheck()) {
-        cordova.exec(SuccessVideo, FailureVideo, "CallToAndroid", "PlayLocalVideo", [videoAddress, videoName]);
+    cordova.exec(SuccessVideo, FailureVideo, "CallToAndroid", "PlayLocalVideo", [videoAddress, videoName]);
     }
 };
 
@@ -1271,19 +1278,19 @@ function FailureVideo() {
 }
 
 var _badgesPerChallenge = [
-    {badgeId: 2, badgeName: "Combustible", activity_identifier : "1100"},
-    {badgeId: 3, badgeName: "Turbina C0N0-CT", activity_identifier : "1200"},
-    {badgeId: 4, badgeName: "Ala Ctu-3000", activity_identifier : "1300"},
-    {badgeId: 5, badgeName: "Sistema de Navegación",  activity_identifier : "1002"},
-    {badgeId: 6, badgeName: "Propulsor",  activity_identifier : "2003"},
-    {badgeId: 7, badgeName: "Misiles",  activity_identifier : "2005"},
-    {badgeId: 8, badgeName: "Campo de fuerza",  activity_identifier : "2014"},
-    {badgeId: 9, badgeName: "Radar", activity_identifier : "2020"},
-    {badgeId: 18, badgeName: "Turbo",  activity_identifier : "2010"},
-    {badgeId: 10, badgeName: "Tanque de oxígeno", activity_identifier : "3200"},
-    {badgeId: 16, badgeName: "Casco espacial", activity_identifier : "3300"},
-    {badgeId: 11, badgeName: "Sonda espacial", activity_identifier : "3400"},
-    {badgeId: 17, badgeName: "Radio de comunicación", activity_identifier : "3500"}
+    {badgeId: 2, badgeName: "Combustible", challengeId: 113, activity_identifier : "1100"},
+    {badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114, activity_identifier : "1200"},
+    {badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115, activity_identifier : "1300"},
+    {badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 116, activity_identifier : "1002"},
+    {badgeId: 6, badgeName: "Propulsor", challengeId: 155, activity_identifier : "2003"},
+    {badgeId: 7, badgeName: "Misiles", challengeId: 157, activity_identifier : "2005"},
+    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81, activity_identifier : "2010"},
+    {badgeId: 9, badgeName: "Radar", challengeId: 167, activity_identifier : "2020"},
+    {badgeId: 18, badgeName: "Turbo", challengeId: 160, activity_identifier : "2010"},
+    {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206, activity_identifier : "3200"},
+    {badgeId: 16, badgeName: "Casco espacial", challengeId: 208, activity_identifier : "3300"},
+    {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90, activity_identifier : "3400"},
+    {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217, activity_identifier : "3500"}
 ];
 
 //This array is a dictionary of activities and their route in the application
@@ -1567,7 +1574,7 @@ var _loadDrupalResources = function() {
 $(document).ready(function(){
     setTimeout(function() {
     _updateDeviceVersionCache();
-
+    
     (function() {
         /* Load catalogs */
         var requestData = {"catalog": _catalogNames};

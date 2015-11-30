@@ -212,12 +212,12 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
-                localStorage.setItem("owlQuizCurrentIndex", parentIndex);
+                
                 if (_activityBlocked[activity.activity_identifier].disabled) return false;
                 var url = _.filter(_activityRoutes, function (x) { return x.id == activity.activity_identifier })[0].url;
 
                 //Store an Index of the chosen menu item.
-                _setLocalStorageJsonItem("owlQuizCurrentIndex", parentIndex);
+                _setLocalStorageJsonItem("owlIndex", parentIndex);
 
                 if (url) {
                     
@@ -331,10 +331,11 @@ angular
                               
             $scope.actualMessage = challengeMessage;
              
-            }).controller('closingStageController', function ($scope, $modalInstance,$location) {
-                    $scope.cancel = function () {
-                        $modalInstance.dismiss('cancel');
-                    };
+        }).controller('closingStageController', function ($scope, $modalInstance, $location) {
+            $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                    $location.path('/ProgramaDashboard');  //Redirect to dashboard inicio.
+              };
                     
                     $scope.robotMessages = {
                         title: "Cierre Zona de Vuelo",
@@ -346,4 +347,4 @@ angular
                         $location.path('/ProgramaDashboard');
                     };
                     _setLocalStorageItem('robotEndStageShown',true);
-                });
+        });

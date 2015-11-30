@@ -125,6 +125,8 @@
                       </section>
 
                     </div>
+                      <div class="block popularity" ng-show="activity.activityContent.likes != 0" >A <span class="green">{{activity.activityContent.likes || 0}}</span> jóven<span ng-hide="activity.activityContent.likes < 2" >es</span> le<span ng-hide="activity.activityContent.likes < 2" >s</span> gusta esto
+                      </div>
                   </div>
                   <div>
                     <div ng-repeat="repeatComment in activity.activityContent.comments | limitTo: activity.activityContent.commentsQty">                      

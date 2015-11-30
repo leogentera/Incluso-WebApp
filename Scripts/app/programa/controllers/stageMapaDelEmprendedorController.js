@@ -65,7 +65,7 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"gusta_actividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta_valor":"PRDCT","relacion":["DL"],"clientes":"PPL","personas":["TM"],"forma_entrega":["WF"],"actividades":["NSWR","QSTN"],"necesidades":"ND","proyecto":"DFNTYFRST","proyectoId":"249"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"250"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"251"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"252"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"253"}],"fecha_fin":"10\/06\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.png","actividad_completa":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fecha_inicio":"10\/06\/2015 12:22:52","duracion":"4"}
+                        {"gusta_actividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta_valor":"PRDCT","relacion":["DL"],"clientes":"PPL","personas":["TM"],"forma_entrega":["WF"],"actividades":["NSWR","QSTN"],"necesidades":"ND","proyecto":"DFNTYFRST","proyectoId":"249"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"250"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"251"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"252"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"253"}],"fecha_fin":"10\/06\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividad_completa":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fecha_inicio":"10\/06\/2015 12:22:52","duracion":"4"}
                     );
                 }
             }
@@ -170,7 +170,7 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"gusta_actividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta_valor":"PPST","relacion":["RLCN"],"clientes":"CLNTS","personas":["PRSNS"],"forma_entrega":["NTRG"],"actividades":["NSWR","QSTN"],"necesidades":"NCSDDS","proyecto":"DFNTY FRST","proyectoId":"249"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"250"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"251"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"252"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"253"}],"fecha_fin":"10\/07\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.png","actividad_completa":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fecha_inicio":"10\/07\/2015 12:22:52","duracion":"4"}
+                        {"gusta_actividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta_valor":"PPST","relacion":["RLCN"],"clientes":"CLNTS","personas":["PRSNS"],"forma_entrega":["NTRG"],"actividades":["NSWR","QSTN"],"necesidades":"NCSDDS","proyecto":"DFNTY FRST","proyectoId":"249"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"250"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"251"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"252"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"253"}],"fecha_fin":"10\/07\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividad_completa":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fecha_inicio":"10\/07\/2015 12:22:52","duracion":"4"}
                     );
                 }
             }
@@ -303,54 +303,54 @@ angular
                 $scope.$emit('ShowPreloader'); 
                 _endActivity(activityModel, function(){
                     activitiesPosted++;
-                    if (activitiesPosted == $scope.mapaDeEmprendedorAnswers.length) {                   
-                        if ($scope.pathImagenFicha != "" && parentStatus) {
+                    if (activitiesPosted == subactivitiesCompleted.length) {                   
+                        if ($scope.pathImagenFicha != "" && canPost) {
                             
                             $scope.validateConnection(function() {
                             
-                                moodleFactory.Services.GetAsyncForumDiscussions(91, currentUser.token, function(data, key) {
-                                    var currentDiscussionIds = [];
-                                    for(var d = 0; d < data.discussions.length; d++) {
-                                        currentDiscussionIds.push(data.discussions[d].discussion);
-                                    }
-                                    localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                            moodleFactory.Services.GetAsyncForumDiscussions(91, currentUser.token, function(data, key) {
+                                var currentDiscussionIds = [];
+                                for(var d = 0; d < data.discussions.length; d++) {
+                                    currentDiscussionIds.push(data.discussions[d].discussion);
+                                }
+                                localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                                
+                                var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
+
+                                encodeImageUri($scope.pathImagenFicha, function (b64) {
+                                    var requestData = {
+                                        "userid": $scope.user.id,
+                                        "discussionid": discussion.discussion,
+                                        "parentid": discussion.id,
+                                        "message": "Mi mapa del emprendedor",
+                                        "createdtime": ((new Date(quiz.startingTime).getTime()) / 1000),
+                                        "modifiedtime": ((new Date(quiz.endingTime).getTime()) / 1000),
+                                        "posttype": 4,
+                                        "filecontent": b64,
+                                        "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.jpg',
+                                        "picture_post_author": $scope.user.profileimageurlsmall
+                                    };
                                     
-                                    var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
-    
-                                    encodeImageUri($scope.pathImagenFicha, function (b64) {
-                                        var requestData = {
-                                            "userid": $scope.user.id,
-                                            "discussionid": discussion.discussion,
-                                            "parentid": discussion.id,
-                                            "message": "Mi mapa del emprendedor",
-                                            "createdtime": quiz.startingTime,
-                                            "modifiedtime": quiz.endingTime,
-                                            "posttype": 4,
-                                            "filecontent": b64,
-                                            "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.png',
-                                            "picture_post_author": $scope.user.profileimageurlsmall
-                                        };
-                                        
-                                        moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                                            function() {
-                                                $scope.sharedAlbumMessage = null;
-                                                $scope.isShareCollapsed = false;
-                                                $scope.showSharedAlbum = true;
-                                                $scope.$emit('HidePreloader');
-                                                checkForumExtraPoints();
-                                                $location.path('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/3404/' + discussion.discussion);
-                                            },
-                                            function(){
-                                                $scope.sharedAlbumMessage = null;
-                                                $scope.isShareCollapsed = false;
-                                                $scope.showSharedAlbum = false;
-                                                $scope.$emit('HidePreloader');
-                                                $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
-                                            }
-                                        );
-                                    });
-                                }, function(){}, true);
-                            
+                                    moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                                        function() {
+                                            $scope.sharedAlbumMessage = null;
+                                            $scope.isShareCollapsed = false;
+                                            $scope.showSharedAlbum = true;
+                                            $scope.$emit('HidePreloader');
+                                            checkForumExtraPoints();
+                                            $location.path('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/3404/' + discussion.discussion);
+                                        },
+                                        function(){
+                                            $scope.sharedAlbumMessage = null;
+                                            $scope.isShareCollapsed = false;
+                                            $scope.showSharedAlbum = false;
+                                            $scope.$emit('HidePreloader');
+                                            $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                        }
+                                    );
+                                });
+                            }, function(){}, true);
+
                             
                             }, function(){});
 
@@ -376,7 +376,7 @@ angular
                 if (activityFromTree && activityFromTree.status == 1) {
                     /* sumar uno extra al total */
                     if (forumData.totalExtraPoints < 11) {
-                         updateUserForumStars($routeParams.activityId, 50, function (){
+                         updateUserForumStars($routeParams.moodleid, 50, function (){
                             successPutStarsCallback();
                         });
                     }

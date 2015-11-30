@@ -93,7 +93,7 @@ angular
                     $scope.$emit('scrollTop'); //- scroll
                 }
             }
-            
+
             function offlineCallback() {
                 $scope.$apply(function(){
                     $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
@@ -102,7 +102,7 @@ angular
             }
 
             $scope.autologin = function(data) {
-                
+
                 _loadDrupalResources();
 
                 //save token for further requests and autologin
@@ -160,9 +160,9 @@ angular
                 return r[2]+"-"+r[3]+"-"+r[1]+r[4];
             }
 
-            $scope.datePickerClick = function(){
+            $scope.datePickerClick = function(){                            
                 if (window.mobilecheck()) {
-                    cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='birthday']").val()]);   
+                cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='birthday']").val()]);                
                 }    
             };
 
@@ -225,7 +225,7 @@ angular
                 var birth_month = dpValue.substring(0,2);
                 var birth_day = dpValue.substring(3,5);
                 var birth_year = dpValue.substring(6,10);
-                dpValue = birth_month + '/'+ birth_day + '/' + birth_year;
+                dpValue = birth_month + '/'+ birth_day + '/' + birth_year;                
                 today_date = new Date();
                 today_year = today_date.getFullYear();
                 today_month = today_date.getMonth();
@@ -252,6 +252,7 @@ angular
                 var age = calculate_age();
                 
                 var passwordPolicy = "debe ser almenos de 8 caracterres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
+                var usernamePolicy = "El nombre de usuario puede contener los siguientes caracteres guión bajo (_), guión (-), punto(.) y arroba(@). El nombre de usuario no debe contener espacios."; 
                 
                 if(!$scope.registerForm.password.$valid){
                     errors.push("Formato de contraseña incorrecto. La contraseña " + passwordPolicy);
@@ -265,7 +266,7 @@ angular
                 if(!$scope.registerForm.motherName.$valid) {errors.push("Formato de apellido materno incorrecto."); }
                 if(!$scope.registerModel.gender){ errors.push("Género inválido."); }
                 if(!$scope.registerModel.country){ errors.push("País inválido."); }
-                if(!$scope.registerModel.city){ errors.push("Ciudad inválida."); }
+                if(!$scope.registerModel.city){ errors.push("Estado inválido."); }
                 if(!$scope.registerForm.email.$valid){ errors.push("Formato de correo incorrecto."); }                
                 if(!$scope.registerModel.secretQuestion){ errors.push("Pregunta secreta inválida."); }
                 if(!$scope.registerForm.secretAnswer.$valid){ errors.push("Respuesta secreta inválida."); }
