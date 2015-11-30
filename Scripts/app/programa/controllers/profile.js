@@ -1540,7 +1540,7 @@ function formatDate(date) {
                     "alias": $scope.model.username,
                     "aplicacion": "Mi Avatar",
                     "estrellas": $scope.model.stars,
-                    "PathImagen": "",
+                    "pathimagen": "",
                     "color_cabello": "",
                     "estilo_cabello": "",
                     "traje_color_principal": "",
@@ -1556,26 +1556,24 @@ function formatDate(date) {
                 //the next fields should match the integration document shared with the game app
                 var shield = ( $scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ( $scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield ));
                 var avatarInfoForGameIntegration = {
-                    "userid": $scope.model.id,
+                    "userId": "" + $scope.model.id,
                     "alias": $scope.model.username,
                     "actividad": "Mi Avatar",
                     "estrellas": "100",
-                    "pathimagen": "",
+                    "pathImagen": "",
                     "genero": $scope.avatarInfo[0].imagen_recortada,
                     "rostro": $scope.avatarInfo[0].rostro,
-                    "color_de_piel": $scope.avatarInfo[0].color_de_piel,
-                    "estilo_cabello": $scope.avatarInfo[0].estilo_cabello,
-                    "color_cabello": $scope.avatarInfo[0].color_cabello,
-                    "traje_color_principal": $scope.avatarInfo[0].traje_color_principal,
-                    "traje_color_secundario": $scope.avatarInfo[0].traje_color_secundario,
+                    "colorPiel": $scope.avatarInfo[0].color_de_piel,
+                    "estiloCabello": $scope.avatarInfo[0].estilo_cabello,
+                    "colorCabello": $scope.avatarInfo[0].color_cabello,
+                    "trajeColorPrincipal": $scope.avatarInfo[0].traje_color_principal,
+                    "trajeColorSecundario": $scope.avatarInfo[0].traje_color_secundario,
                     "escudo": shield
                 };
 
                 try {
-                        if (window.mobilecheck()) {
                     $scope.$emit('ShowPreloader');
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
-                        }
                 } catch (e) {
                     SuccessAvatar(
                         { "userid": $scope.model.id, "actividad": "Mi Avatar", "alias": $scope.model.username, "genero": "Hombre", "rostro": "Preocupado", "color_de_piel": "E6C8B0", "estilo_cabello": "Cabello02", "color_cabello": "694027", "traje_color_principal": "00A0FF", "traje_color_secundario": "006192", "imagen_recortada": "app/initializr/media", "fecha_modificacion": "09/05/2015 08:32:04", "Te_gusto_la_actividad": null, "pathimagen": "default.png" }
@@ -1586,19 +1584,19 @@ function formatDate(date) {
             function SuccessAvatar(data) {
                 //the next fields should match the database in moodle
                 $scope.avatarInfo = [{
-                    "userid": data.userid,
+                    "userid": data.userId,
                     "aplicacion": data.actividad,
                     "genero": data.genero,
                     "rostro": data.rostro,
-                    "color_de_piel": data.color_de_piel,
-                    "estilo_cabello": data.estilo_cabello,
-                    "color_cabello": data.color_cabello,
-                    "traje_color_principal": data.traje_color_principal,
-                    "traje_color_secundario": data.traje_color_secundario,
+                    "color_de_piel": data.colorPiel,
+                    "estilo_cabello": data.estiloCabello,
+                    "color_cabello": data.colorCabello,
+                    "traje_color_principal": data.trajeColorPrincipal,
+                    "traje_color_secundario": data.trajeColorSecundario,
                     "imagen_recortada": data.genero,
-                    "ultima_modificacion": data.fecha_modificacion,
-                    "Te_gusto_la_actividad": data.Te_gusto_la_actividad,
-                    "pathimagen": data.pathimagen,
+                    "ultima_modificacion": data["fechaModificación"],
+                    "Te_gusto_la_actividad": data.gustaActividad,
+                    "pathimagen": data.pathImagen,
                     "estrellas": "100",
                     "alias": $scope.model.username,
                     "escudo": $scope.model.shield

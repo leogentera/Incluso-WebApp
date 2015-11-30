@@ -695,7 +695,7 @@
                     if (assign) {
                         course.stages[i].coursemoduleid = assign.coursemoduleid;
                         course.stages[i].points = assign.points;
-                        course.stages[i].status = assign.status;
+                        //course.stages[i].status = assign.status;
                         course.stages[i].activityintro = assign.activityintro;
                         course.stages[i].activity_identifier = assign.activity_identifier;
                     }
@@ -780,7 +780,7 @@
                     }
                 }
 
-                /* Conocete - reto múltiple */ 
+                /* Conocete - reto mï¿½ltiple */ 
                 var multipleChallengeActivityId = _.filter(_activityRoutes, function (ar){
                     return ar.name == "Reto Multiple";
                 });

@@ -25,6 +25,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false; 
+            $scope.isInstalled = false;
 
             $scope.avatarInfo = [{
                 "userid": "",//$scope.user.UserId,
@@ -41,6 +42,13 @@ angular
                 "escudo:": "",
                 "imagen_recortada": "",
             }];
+
+            try {
+              cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+            }
+            catch (e) {
+                $scope.isInstalled = true;
+            }
 
             function getDataAsync() {
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
@@ -124,18 +132,18 @@ angular
             $scope.avatar = function () {
 
                 var avatarInfoForGameIntegration = {
-                    "userid": $scope.model.id,
+                    "userId": "" + $scope.model.id,
                     "alias": $scope.model.alias,
                     "actividad": "Mi Avatar",
                     "estrellas": "100",
-                    "pathimagen": "",
+                    "pathImagen": "",
                     "genero": $scope.avatarInfo[0].imagen_recortada,
                     "rostro": $scope.avatarInfo[0].rostro,
-                    "color_de_piel": $scope.avatarInfo[0].color_de_piel,
-                    "estilo_cabello": $scope.avatarInfo[0].estilo_cabello,
-                    "color_cabello": $scope.avatarInfo[0].color_cabello,
-                    "traje_color_principal": $scope.avatarInfo[0].traje_color_principal,
-                    "traje_color_secundario": $scope.avatarInfo[0].traje_color_secundario,
+                    "colorPiel": $scope.avatarInfo[0].color_de_piel,
+                    "estiloCabello": $scope.avatarInfo[0].estilo_cabello,
+                    "colorCabello": $scope.avatarInfo[0].color_cabello,
+                    "trajeColorPrincipal": $scope.avatarInfo[0].traje_color_principal,
+                    "trajeColorSecundario": $scope.avatarInfo[0].traje_color_secundario,
                     "escudo": ""
                 };   
 
@@ -158,19 +166,19 @@ angular
             
             function SuccessAvatar(data) {
                 $scope.avatarInfo = [{
-                    "userid": data.userid,
+                    "userid": data.userId,
                     "aplicacion": data.actividad,
                     "genero": data.genero,
                     "rostro": data.rostro,
-                    "color_de_piel": data.color_de_piel,
-                    "estilo_cabello": data.estilo_cabello,
-                    "color_cabello": data.color_cabello,
-                    "traje_color_principal": data.traje_color_principal,
-                    "traje_color_secundario": data.traje_color_secundario,
+                    "color_de_piel": data.colorPiel,
+                    "estilo_cabello": data.estiloCabello,
+                    "color_cabello": data.colorCabello,
+                    "traje_color_principal": data.trajeColorPrincipal,
+                    "traje_color_secundario": data.trajeColorSecundario,
                     "imagen_recortada": data.genero,
-                    "ultima_modificacion": data.fecha_modificacion,
-                    "Te_gusto_la_actividad": data.Te_gusto_la_actividad,
-                    "pathimagen": data.pathimagen,
+                    "ultima_modificacion": data["fechaModificación"],
+                    "Te_gusto_la_actividad": data.gustaActividad,
+                    "pathimagen": data.pathImagen,
                     "estrellas": "100",
                     "alias": $scope.model.alias,
                     "escudo" : $scope.model.shield

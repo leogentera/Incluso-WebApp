@@ -59,15 +59,6 @@ angular
                 catch (e) {
                     $scope.isInstalled = true;
                 }
-            }else{
-                try {
-                    document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setFabricaDeEmprendimientoCallback", [])}, false);
-                }
-                catch (e) {
-                    successGame(
-                        {"gusta_actividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta_valor":"PRDCT","relacion":["DL"],"clientes":"PPL","personas":["TM"],"forma_entrega":["WF"],"actividades":["NSWR","QSTN"],"necesidades":"ND","proyecto":"DFNTYFRST","proyectoId":"249"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"250"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"251"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"252"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"253"}],"fecha_fin":"10\/06\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividad_completa":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fecha_inicio":"10\/06\/2015 12:22:52","duracion":"4"}
-                    );
-                }
             }
 
             if (!$scope.mapaDeEmprendedorActivities) {
@@ -118,7 +109,7 @@ angular
 
             function createRequest(){
                 var request = {
-                    "userid": $scope.user.id,
+                    "userId": "" + $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": "Fábrica de emprendimiento",
                     "estrellas": "" + $scope.stars,
@@ -126,19 +117,22 @@ angular
                     "proyectos": []
                 } 
                 //set proyectos
+                $scope.projectMap = [];
+                $scope.mapaDeEmprendedorActivities = _.sortBy($scope.mapaDeEmprendedorActivities, function(a){ return a.coursemoduleid });
                 for (var i = 0; i < $scope.mapaDeEmprendedorActivities.length; i++) {
                     var activity = $scope.mapaDeEmprendedorActivities[i];
+                    $scope.projectMap.push({ "projectId": "" + activity.coursemoduleid, "orderId": "" + (i + 1)  });
                     var proyecto = {
-                        "proyectoId": activity.coursemoduleid,
+                        "proyectoId": "" + (i + 1),
                         "proyecto": "",
                         "necesidades": "",
                         "clientes": "",
-                        "propuestas_valor": "",
+                        "propuesta": "",
                         "actividades": [],
                         "recursos": [],
                         "personas": [],
                         "relacion": [],
-                        "forma_entrega": []
+                        "formaEntrega": []
                     }
                     for(var j=0; j < $scope.mapaDeEmprendedorAnswers.length; j++){
                         var activityAnswers = $scope.mapaDeEmprendedorAnswers[j];
@@ -159,7 +153,7 @@ angular
                     }
                     request.proyectos.push(proyecto);
                 }
-                request.proyectos = _.sortBy(request.proyectos, function(p){ return p.proyectoId; });
+                _setLocalStorageJsonItem("mapaDelEmprendedorProjectsMap", $scope.projectMap);
                 return request;
             }
 
@@ -170,41 +164,43 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"gusta_actividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta_valor":"PPST","relacion":["RLCN"],"clientes":"CLNTS","personas":["PRSNS"],"forma_entrega":["NTRG"],"actividades":["NSWR","QSTN"],"necesidades":"NCSDDS","proyecto":"DFNTY FRST","proyectoId":"249"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"250"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"251"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"252"},{"recursos":[],"propuesta_valor":"","relacion":[],"clientes":"","personas":[],"forma_entrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"253"}],"fecha_fin":"10\/07\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividad_completa":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fecha_inicio":"10\/07\/2015 12:22:52","duracion":"4"}
+                        {"gustaActividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta":"PPST","relacion":["RLCN"],"clientes":"CLNTS","personas":["PRSNS"],"formaEntrega":["NTRG"],"actividades":["NSWR","QSTN"],"necesidades":"NCSDDS","proyecto":"DFNTY FRST","proyectoId":"1"},{"recursos":["rcs","sds"],"propuesta":"2propuesta","relacion":["rlc2"],"clientes":"papa","personas":["PRSNS","mama"],"formaEntrega":["NTRG","sdas"],"actividades":["NSWR","act2"],"necesidades":"nccsds","proyecto":"definity","proyectoId":"2"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"3"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"4"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"5"}],"fechaFin":"10\/07\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividadCompleta":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fechaInicio":"10\/07\/2015 12:22:52","duracion":"4"}
                     );
                 }
             }
 
             function successGame(data){
                 var quizzesRequests = [];
+                $scope.projectMap = ($scope.dimensionMap ? $scope.dimensionMap : moodleFactory.Services.GetCacheJson("mapaDelEmprendedorProjectsMap"));
                 $scope.pathImagenFicha = (!data.imagenFicha || data.imagenFicha == "" ? data.pathImagenFicha : data.imagenFicha );
                 //Structure of questions defined in case response messes up with the order.
-                var proyectoStructure = ["proyecto", "necesidades", "clientes", "propuestas_valor", "actividades", "recursos", "personas", "relacion", "forma_entrega"];
+                var proyectoStructure = ["proyecto", "necesidades", "clientes", "propuesta", "actividades", "recursos", "personas", "relacion", "formaEntrega"];
                 for (var i = 0; i < data.proyectos.length; i++) {
                     var proyecto = data.proyectos[i];
                     if(proyecto){
+                        var proyectoId = _.find($scope.projectMap, function(p){ return p.orderId == proyecto.proyectoId }).projectId;
                         var logEntry = {
                             "userid":$scope.user.id,
                             "answers": [],
-                            "coursemoduleid": proyecto.proyectoId,
-                            "like_status": (data.gusta_actividad == "Si" ? 1 : 0 ),
-                            "startingTime": data.fecha_inicio,
-                            "endingTime": data.fecha_fin,
+                            "coursemoduleid": proyectoId,
+                            "like_status": (data.gustaActividad == "Si" ? 1 : 0 ),
+                            "startingTime": data.fechaInicio,
+                            "endingTime": data.fechaFin,
                             "quiz_answered": true,
                             "at_least_one": false
                         };
-                        var activity = _.find($scope.mapaDeEmprendedorActivities, function(a){ return a.coursemoduleid == proyecto.proyectoId; });
+                        var activity = _.find($scope.mapaDeEmprendedorActivities, function(a){ return a.coursemoduleid == proyectoId; });
                         if(activity){
                             //Follows up a structure so, if json returns values out of place, it won't affect moodle questions order.
                             _.each(proyectoStructure, function(key){
-                                var answer = _.find(proyecto, function(value, innerKey){ return key.indexOf(innerKey.toLowerCase().trim().split("_")[0]) > -1; });
-                                var question = _.find(activity.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
+                                var answer = _.find(proyecto, function(value, innerKey){ return key.toLowerCase().indexOf(innerKey.toLowerCase().trim()) > -1; });
+                                var question = _.find(activity.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)[0].slice(0, -1)) > -1 });
                                 if(question){
                                     question.userAnswer = getAnswer(answer, true);
-                                    var activityCache = _.find($scope.mapaDeEmprendedorAnswers, function(a){ return a.coursemoduleid == proyecto.proyectoId; });
+                                    var activityCache = _.find($scope.mapaDeEmprendedorAnswers, function(a){ return a.coursemoduleid == proyectoId; });
                                     if(activityCache){
                                         if(activityCache.questions && activityCache.questions.length == activity.questions.length){
-                                            var questionCache = _.find(activityCache.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)) > -1 });
+                                            var questionCache = _.find(activityCache.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)[0].slice(0, -1)) > -1 });
                                             questionCache.userAnswer = question.userAnswer;
                                         }else{
                                             activityCache.questions = (activityCache.questions ? activityCache.questions : [] );
@@ -221,7 +217,6 @@ angular
                     }
                 }
                 _setLocalStorageJsonItem("mapaDeEmprendedorAnswers/" + $scope.user.id, $scope.mapaDeEmprendedorAnswers);
-                                
                 var quizzesAnswered = _.countBy($scope.mapaDeEmprendedorActivities, function(a){
                     if (a.questions) {
                         var questionsAnswers = _.countBy(a.questions, function(q){
@@ -350,10 +345,6 @@ angular
                                     );
                                 });
                             }, function(){}, true);
-
-                            
-                            }, function(){});
-
                         }else{
                             $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
                         }
@@ -420,4 +411,14 @@ angular
                 return result;
             }
 
+            if($routeParams.retry){
+                try {
+                    document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setFabricaDeEmprendimientoCallback", [])}, false);
+                }
+                catch (e) {
+                    successGame(
+                        {"gustaActividad":"Si","proyectos":[{"recursos":["RSRCS"],"propuesta":"PPST","relacion":["RLCN"],"clientes":"CLNTS","personas":["PRSNS"],"formaEntrega":["NTRG"],"actividades":["NSWR","QSTN"],"necesidades":"NCSDDS","proyecto":"DFNTY FRST","proyectoId":"1"},{"recursos":["rcs","sds"],"propuesta":"2propuesta","relacion":["rlc2"],"clientes":"papa","personas":["PRSNS","mama"],"formaEntrega":["NTRG","sdas"],"actividades":["NSWR","act2"],"necesidades":"nccsds","proyecto":"definity","proyectoId":"2"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"3"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"4"},{"recursos":[],"propuesta":"","relacion":[],"clientes":"","personas":[],"formaEntrega":[],"actividades":[],"necesidades":"","proyecto":"","proyectoId":"5"}],"fechaFin":"10\/07\/2015 12:26:02","imagenFicha":"assets/images/results/FichaEmprendimiento.jpg","actividadCompleta":"Si","actividad":"Fábrica de emprendimiento","userid":"293","fechaInicio":"10\/07\/2015 12:22:52","duracion":"4"}
+                    );
+                }
+            }
         }]);
