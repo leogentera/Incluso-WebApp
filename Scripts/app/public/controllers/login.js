@@ -162,7 +162,9 @@ angular
                 //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
-                cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
+                if (window.mobilecheck()) {
+                    cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
+                }
             }
 
             function FacebookLoginSuccess(data) {                

@@ -142,7 +142,13 @@ angular
                 $scope.$emit('ShowPreloader');
 
                 try {
-                    cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                    if (window.mobilecheck()) {
+                        cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                    }else{
+                       SuccessAvatar(
+                        {"userid":$scope.model.id,"actividad":"Mi Avatar","alias": $scope.model.alias, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/05/2015 09:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
+                    ); 
+                    }
                 } catch(e) {
                     SuccessAvatar(
                         {"userid":$scope.model.id,"actividad":"Mi Avatar","alias": $scope.model.alias, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/05/2015 09:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
