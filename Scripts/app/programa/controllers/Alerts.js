@@ -128,7 +128,7 @@ angular
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
                 }, function () {
-                });
+                },true);
             };        
         }
 ]);

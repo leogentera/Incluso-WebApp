@@ -604,9 +604,11 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
         var currentNotification = allNotifications[i];
         if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
                         
+          var wonDate = new Date();                        
           var dataModelNotification = {
             notificationid : String(currentNotification.id),
-            userid: currentUserId
+            userid: currentUserId,
+            wondate : wonDate
           };
 
           moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
@@ -1481,7 +1483,7 @@ function _updateDeviceVersionCache () {
 }
 
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
-
+var _isCellPhone = false;
     if(_isCellPhone){
         cordova.exec(function(data) {
             _isDeviceOnline = data.online;
