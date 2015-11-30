@@ -605,25 +605,28 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
     
     var activity = _getActivityByCourseModuleId(courseModuleId, userCourse );
     
+    if (activity) {
+      //code
     
-    for (var i = 0; i < allNotifications.length; i++) {
-        var currentNotification = allNotifications[i];
-        if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
-                        
-          var wonDate = new Date();                        
-          var dataModelNotification = {
-            notificationid : String(currentNotification.id),
-            userid: currentUserId,
-            wondate : wonDate
-          };
-
-          moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
-              console.log("create notification successful");
-          }, errorCallback, true);
+      for (var i = 0; i < allNotifications.length; i++) {
+          var currentNotification = allNotifications[i];
+          if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
+                          
+            var wonDate = new Date();                        
+            var dataModelNotification = {
+              notificationid : String(currentNotification.id),
+              userid: currentUserId,
+              wondate : wonDate
+            };
+  
+            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
+                console.log("create notification successful");
+            }, errorCallback, true);
+              
+          } else {
             
-        } else {
-          
-        }
+          }
+      }
     }
 };
 

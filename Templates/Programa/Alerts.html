@@ -1,9 +1,9 @@
 <div class="incluso-app notif-dashboard" id="site-wrapper">
   <article class="starway">
 	<tabset class="notifications txt-renglon green-lantern-theme">          
-	  <tab heading="Todas" class="item">    
-		<ul class="green-lantern-theme">              
-		  <li class="{{notif.wondate != 'null' ? 'list-item rounded-item' : 'rounded-item list-item highlight'}}" ng-repeat="notif in notifications | orderBy: 'description'" ng-show="qty('All')" ng-click="showAlertDetail(notif.id)">
+	  <tab heading="Todas" class="item">
+		<ul class="green-lantern-theme">
+		  <li class="{{notif.seen_date != null ? 'list-item rounded-item' : 'list-item rounded-item highlight'}}" ng-repeat="notif in notifications | orderBy: 'description'" ng-show="qty('All')" ng-click="showAlertDetail(notif.id)">
 			<span class="icomoon icon-antena pull-left no-padding pink"></span>
 			<div class="pull-left">
 			  <span class="date">{{ notif.wondate | date: 'fullDate'}}</span>
@@ -12,7 +12,7 @@
 			<span class="{{notif.seen_date != null ? 'icomoon icon-checked-join pull-right no-padding green' : 'icomoon icon-gauge pull-right no-padding gray'}}"></span>
 		  </li>
 		  <li class="list-item rounded-item showmore" ng-show="showLoadMoreBar('All')">
-			<span class="icomoon icon-show-more"></span> 
+			<span class="icomoon icon-show-more"></span>
 			<div ng-click="showMore('All')" >Mostrar más notificaciones...</div>
 		  </li>
 		</ul>
