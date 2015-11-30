@@ -233,7 +233,9 @@
                         controller: function ($scope, $modalInstance) {
 							
 							$scope.updateApp = function() {
-								cordova.exec(function() {}, function() {}, "CallToAndroid", "restart", []);
+								if (window.mobilecheck()) {
+									cordova.exec(function() {}, function() {}, "CallToAndroid", "restart", []);
+								}
 							};
                         },
                         size: size,
@@ -250,6 +252,6 @@
 				 		offlineCallback();
 				 	}
 				 	
-				 });
+				 }, function() { offlineCallback(); } );
 			};
         }]);

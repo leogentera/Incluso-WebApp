@@ -160,8 +160,10 @@ angular
                 return r[2]+"-"+r[3]+"-"+r[1]+r[4];
             }
 
-            $scope.datePickerClick = function(){                            
-                cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='birthday']").val()]);                
+            $scope.datePickerClick = function(){
+                if (window.mobilecheck()) {
+                    cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='birthday']").val()]);   
+                }    
             };
 
             function SuccessDatePicker(data){

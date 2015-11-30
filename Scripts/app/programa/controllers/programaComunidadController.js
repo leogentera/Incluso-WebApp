@@ -14,9 +14,6 @@ angular
         'MoodleIds',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $filter, MoodleIds) {
             
-            /* global variables */
-            _httpFactory = $http;
-            _timeout = $timeout;
             $scope.$emit('ShowPreloader');
             $scope.validateConnection(initController, offlineCallback);
             
@@ -25,6 +22,9 @@ angular
             }
             
             function initController() {
+                /* global variables */
+                _httpFactory = $http;
+                _timeout = $timeout;
                 
                 /* local view variables */
                 var _userProfile;
@@ -76,12 +76,12 @@ angular
                 };
                 
                 function _initCommunity() {
-                    
+
                     $scope.$emit('ShowPreloader');
                     moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, $scope.userToken, initCommunitySuccessCallback, initCommunityErrorCallback, true);
                     
                     function initCommunitySuccessCallback (data, key) {
-                        
+
                         var currentDiscussionIds = [];
                         for(var d = 0; d < data.discussions.length; d++) {
                             currentDiscussionIds.push(data.discussions[d].discussion);
@@ -489,7 +489,9 @@ angular
                 };
                 
                 clickPostAttachment = function(){
-                    cordova.exec(SuccessAttachment, FailureAttachment, "CallToAndroid", "AttachPicture", []);
+                    if (window.mobilecheck()) {
+                        cordova.exec(SuccessAttachment, FailureAttachment, "CallToAndroid", "AttachPicture", []);
+                    }
                 };
     
                 var SuccessAttachment = function (data) {
