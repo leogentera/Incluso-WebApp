@@ -1479,121 +1479,121 @@
 
                     //  ###########################################################################
 
-                    encodeImageUri = function (imageUri, callback) {
-                        var c = document.createElement('canvas');
-                        var ctx = c.getContext("2d");
-                        var img = new Image();
-                        img.onload = function () {
-                            c.width = this.width;
-                            c.height = this.height;
-                            ctx.drawImage(img, 0, 0);
+            encodeImageUri = function (imageUri, callback) {
+                var c = document.createElement('canvas');
+                var ctx = c.getContext("2d");
+                var img = new Image();
+                img.onload = function () {
+                    c.width = this.width;
+                    c.height = this.height;
+                    ctx.drawImage(img, 0, 0);
 
-                            if (typeof callback === 'function') {
-                                var dataURL = c.toDataURL("image/png");
-                                callback(dataURL.slice(22, dataURL.length));
-                            }
-                        };
-                        img.src = imageUri;
-                    };
-
-                    uploadAvatar = function (avatarInfo) {
-                        var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
-                        encodeImageUri(pathimagen, function (b64) {
-                            avatarInfo[0]["filecontent"] = b64;
-                            $http({
-                                method: 'POST',
-                                url: API_RESOURCE.format('avatar'),
-                                data: avatarInfo[0]
-                            })
-                            .success(function () {
-                                avatarUploaded("Éxito");
-                            })
-                            .error(function () {
-                                avatarUploaded("Error");
-                            });
-                        });
+                    if (typeof callback === 'function') {
+                        var dataURL = c.toDataURL("image/png");
+                        callback(dataURL.slice(22, dataURL.length));
                     }
+                };
+                img.src = imageUri;
+            };
 
-                    function avatarUploaded(message){
-                        console.log(message + " al subir la foto!");
-                        $location.path('/Profile/' + $scope.userId);
-                        $route.reload();
-                    }
-
-                    function setEmptyAvatar() {
-                        $scope.avatarInfo = [{
-                            "userid": $scope.model.UserId,
-                            "alias": $scope.model.username,
-                            "aplicacion": "Mi Avatar",
-                            "estrellas": $scope.model.stars,
-                            "PathImagen": "",
-                            "color_cabello": "",
-                            "estilo_cabello": "",
-                            "traje_color_principal": "",
-                            "traje_color_secundario": "",
-                            "rostro": "",
-                            "color_de_piel": "",
-                            "escudo:": "",
-                            "imagen_recortada": "",
-                        }];
-                    }
-
-                    $scope.avatar = function () {
-                        //the next fields should match the integration document shared with the game app
-                        var shield = ( $scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ( $scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield ));
-                        var avatarInfoForGameIntegration = {
-                            "userid": $scope.model.id,
-                            "alias": $scope.model.username,
-                            "actividad": "Mi Avatar",
-                            "estrellas": "100",
-                            "pathimagen": "",
-                            "genero": $scope.avatarInfo[0].imagen_recortada,
-                            "rostro": $scope.avatarInfo[0].rostro,
-                            "color_de_piel": $scope.avatarInfo[0].color_de_piel,
-                            "estilo_cabello": $scope.avatarInfo[0].estilo_cabello,
-                            "color_cabello": $scope.avatarInfo[0].color_cabello,
-                            "traje_color_principal": $scope.avatarInfo[0].traje_color_principal,
-                            "traje_color_secundario": $scope.avatarInfo[0].traje_color_secundario,
-                            "escudo": shield
-                        };
-
-                        try {
-                            $scope.$emit('ShowPreloader');
-                            cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
-                        } catch (e) {
-                            SuccessAvatar(
-                                { "userid": $scope.model.id, "actividad": "Mi Avatar", "alias": $scope.model.username, "genero": "Hombre", "rostro": "Preocupado", "color_de_piel": "E6C8B0", "estilo_cabello": "Cabello02", "color_cabello": "694027", "traje_color_principal": "00A0FF", "traje_color_secundario": "006192", "imagen_recortada": "app/initializr/media", "fecha_modificacion": "09/05/2015 08:32:04", "Te_gusto_la_actividad": null, "pathimagen": "default.png" }
-                                );
-                        }
-                    };
-
-                    function SuccessAvatar(data) {
-                        //the next fields should match the database in moodle
-                        $scope.avatarInfo = [{
-                            "userid": data.userid,
-                            "aplicacion": data.actividad,
-                            "genero": data.genero,
-                            "rostro": data.rostro,
-                            "color_de_piel": data.color_de_piel,
-                            "estilo_cabello": data.estilo_cabello,
-                            "color_cabello": data.color_cabello,
-                            "traje_color_principal": data.traje_color_principal,
-                            "traje_color_secundario": data.traje_color_secundario,
-                            "imagen_recortada": data.genero,
-                            "ultima_modificacion": data.fecha_modificacion,
-                            "Te_gusto_la_actividad": data.Te_gusto_la_actividad,
-                            "pathimagen": data.pathimagen,
-                            "estrellas": "100",
-                            "alias": $scope.model.username,
-                            "escudo": $scope.model.shield
-                        }];
-                        uploadAvatar($scope.avatarInfo);
-                        _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
-                    }
-
-                    function FailureAvatar(data) {
+            uploadAvatar = function (avatarInfo) {
+                var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
+                encodeImageUri(pathimagen, function (b64) {
+                    avatarInfo[0]["filecontent"] = b64;
+                    $http({
+                        method: 'POST',
+                        url: API_RESOURCE.format('avatar'),
+                        data: avatarInfo[0]
+                    })
+                    .success(function () {
+                        avatarUploaded("Éxito");
+                    })
+                    .error(function () {
                         avatarUploaded("Error");
-                    }
+                    });
+                });
+            }
+
+            function avatarUploaded(message){
+                console.log(message + " al subir la foto!");
+                $location.path('/Profile/' + $scope.userId);
+                $route.reload();
+            }
+
+            function setEmptyAvatar() {
+                $scope.avatarInfo = [{
+                    "userid": $scope.model.UserId,
+                    "alias": $scope.model.username,
+                    "aplicacion": "Mi Avatar",
+                    "estrellas": $scope.model.stars,
+                    "pathimagen": "",
+                    "color_cabello": "",
+                    "estilo_cabello": "",
+                    "traje_color_principal": "",
+                    "traje_color_secundario": "",
+                    "rostro": "",
+                    "color_de_piel": "",
+                    "escudo:": "",
+                    "imagen_recortada": "",
+                }];
+            }
+
+            $scope.avatar = function () {
+                //the next fields should match the integration document shared with the game app
+                var shield = ( $scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ( $scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : $scope.model.shield ));
+                var avatarInfoForGameIntegration = {
+                    "userId": "" + $scope.model.id,
+                    "alias": $scope.model.username,
+                    "actividad": "Mi Avatar",
+                    "estrellas": "100",
+                    "pathImagen": "",
+                    "genero": $scope.avatarInfo[0].imagen_recortada,
+                    "rostro": $scope.avatarInfo[0].rostro,
+                    "colorPiel": $scope.avatarInfo[0].color_de_piel,
+                    "estiloCabello": $scope.avatarInfo[0].estilo_cabello,
+                    "colorCabello": $scope.avatarInfo[0].color_cabello,
+                    "trajeColorPrincipal": $scope.avatarInfo[0].traje_color_principal,
+                    "trajeColorSecundario": $scope.avatarInfo[0].traje_color_secundario,
+                    "escudo": shield
+                };
+
+                try {
+                    $scope.$emit('ShowPreloader');
+                    cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
+                } catch (e) {
+                    SuccessAvatar(
+                        { "userid": $scope.model.id, "actividad": "Mi Avatar", "alias": $scope.model.username, "genero": "Hombre", "rostro": "Preocupado", "color_de_piel": "E6C8B0", "estilo_cabello": "Cabello02", "color_cabello": "694027", "traje_color_principal": "00A0FF", "traje_color_secundario": "006192", "imagen_recortada": "app/initializr/media", "fecha_modificacion": "09/05/2015 08:32:04", "Te_gusto_la_actividad": null, "pathimagen": "default.png" }
+                        );
+                }
+            };
+
+            function SuccessAvatar(data) {
+                //the next fields should match the database in moodle
+                $scope.avatarInfo = [{
+                    "userid": data.userId,
+                    "aplicacion": data.actividad,
+                    "genero": data.genero,
+                    "rostro": data.rostro,
+                    "color_de_piel": data.colorPiel,
+                    "estilo_cabello": data.estiloCabello,
+                    "color_cabello": data.colorCabello,
+                    "traje_color_principal": data.trajeColorPrincipal,
+                    "traje_color_secundario": data.trajeColorSecundario,
+                    "imagen_recortada": data.genero,
+                    "ultima_modificacion": data["fechaModificación"],
+                    "Te_gusto_la_actividad": data.gustaActividad,
+                    "pathimagen": data.pathImagen,
+                    "estrellas": "100",
+                    "alias": $scope.model.username,
+                    "escudo": $scope.model.shield
+                }];
+                uploadAvatar($scope.avatarInfo);
+                _setLocalStorageJsonItem("avatarInfo", $scope.avatarInfo);
+            }
+
+            function FailureAvatar(data) {
+                avatarUploaded("Error");
+            }
 
                     var $selects = $('select.form-control');
                     $selects.change(function () {
