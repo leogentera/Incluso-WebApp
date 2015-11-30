@@ -113,8 +113,8 @@
             _getAsyncData("notifications", API_RESOURCE.format('notification/' + userId + '?courseid=' + courseId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _postUserNotifications = function (userId, data, successCallback, errorCallback, forceRefresh) {
-            _postAsyncData(null, data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+        var _postUserNotifications = function ( data, successCallback, errorCallback, forceRefresh) {
+            _postAsyncData("", data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
         var _postAsyncForumPost = function (key, data, successCallback, errorCallback, forceRefresh) {

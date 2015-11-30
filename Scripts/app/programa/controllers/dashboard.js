@@ -243,9 +243,8 @@
                 var courseId = courseid;
                 var userId = _getItem("userId");
                 moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function(){
-                    getUserChat()
-                    _generalNotification();
-                    }, errorCallback);
+                    getUserChat();                    
+                    }, errorCallback,true);
             }
 
             function getUserChat(callback) {                

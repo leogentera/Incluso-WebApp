@@ -14,7 +14,7 @@ angular
             var userNotifications = JSON.parse(localStorage.getItem("notifications"));
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.notifications = _.filter(userNotifications, function(notif){
-                    return notif.status != "pending";
+                    return (notif.status != "pending" && notif.wondate != null);
                 });
 
             //Quantity of notifications to show in an initial load
@@ -128,7 +128,7 @@ angular
             
                 moodleFactory.Services.PutUserNotificationRead(currentUserId, data, function () {
                 }, function () {
-                });
+                },true);
             };        
         }
 ]);

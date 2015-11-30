@@ -596,37 +596,31 @@ var logStartActivityAction = function(activityId, timeStamp) {
 }
 
 
-var _activityNotification = function (activityId, triggerActivity) {
+var _activityNotification = function (courseModuleId, triggerActivity) {
 
     currentUserId = localStorage.getItem("userId");
 
     var allNotifications = JSON.parse(localStorage.getItem("notifications"));
 
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    var activity = _getActivityByCourseModuleId(courseModuleId, userCourse );
+    
+    
     for (var i = 0; i < allNotifications.length; i++) {
         var currentNotification = allNotifications[i];
-        if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId) {
+        if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
             
-            //Create activityNotification
-            
-            //allNotifications[i].timemodified = new Date();            
-            //_setLocalStorageJsonItem("notifications", allNotifications);
-            //
-            //var dataModelNotification = {
-            //    notificationid: allNotifications[i].id,
-            //    timemodified: new Date(),
-            //    userid: currentUserId,
-            //    already_read: 0
-            //};
-            //moodleFactory.Services.PostUserNoitifications(currentUserId, dataModelNotification, successCallback, errorCallback);
-            //
-            var dataModelNotification = {
-            notificationid : notificationId,
-            userid: userId
-            };
+          var wonDate = new Date();                        
+          var dataModelNotification = {
+            notificationid : String(currentNotification.id),
+            userid: currentUserId,
+            wondate : wonDate
+          };
 
-          moodleFactory.Services.PostUserNotifications(currentUserId, dataModelNotification, function(){
+          moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
               console.log("create notification successful");
-          }, errorCallback);
+          }, errorCallback, true);
             
         } else {
           
@@ -643,13 +637,13 @@ var _coachNotification = function (stageIndex) {
         
     var notificationCoach = _.find(notifications, function (notif) {
         if (notif.type == notificationTypes.activityNotifications && notif.trigger_condition == 3) {
-            return notif;
-        }
+          return notif; 
+        }      
     });
-
+        
     if (notificationCoach && notificationCoach.status == "pending") {      
         var activity = getActivityByActivity_identifier(notificationCoach.activityidnumber);
-
+                
         var notificationId = notificationCoach.id;        
         if ((activity)) {          
             var chatUser = JSON.parse(localStorage.getItem("userChat"));
@@ -673,9 +667,9 @@ var _coachNotification = function (stageIndex) {
                         userid: userId                        
                       };
                     
-                    moodleFactory.Services.PostUserNotifications(currentUserId, dataModelNotification, function(){
+                    moodleFactory.Services.PostUserNotifications( dataModelNotification, function(){
                         console.log("create notification successful");
-                      }, errorCallback);
+                      }, errorCallback,true);
                     
                 } else {
                     return false;
@@ -686,34 +680,12 @@ var _coachNotification = function (stageIndex) {
 };
 
 
-var _generalNotification = function(){  
-    //var notifications = JSON.parse(localStorage.getItem("notifications"));
-    //var userId = localStorage.getItem('userId');
-    ////trigger activity 4: general notification
-    //var triggerActivity = 4;
-    //
-    //var notificationGeneral = _.filter(notifications, function (notif) {
-    //    if (notif.id == 13 || notif.id == 14 || notif.id == 15) {
-    //        return notif;
-    //    } else {
-    //    }
-    //});
-    //
-    //for(var i = 0; i <= notificationGeneral.length; i++)
-    //{
-    //  if (notificationGeneral[i] && !notificationGeneral[i].timemodified) {
-    //      _activityNotification(notificationGeneral[i].activityidnumber, triggerActivity);
-    //  }
-    //}
-}
-
-
 var _progressNotification = function(indexStageId, currentProgress){
     
     var notifications = JSON.parse(localStorage.getItem("notifications"));
     
     var progressNotifications = _.where(notifications, { type: notificationTypes.progressNotifications });
-
+    
     var stageId = indexStageId + 1 ;
     
     for(i = 0; i < progressNotifications.length; i++){
@@ -722,8 +694,8 @@ var _progressNotification = function(indexStageId, currentProgress){
             && currentProgress <= currentNotification.progressmax && stageId == currentNotification.stageid) {
             console.log("progress notification created" + currentNotification.name);
             //Add create notification logic.
-      }
-    }  
+        }        
+    }
 }
 
 var successPutStarsCallback = function (data) {
@@ -1265,7 +1237,7 @@ playVideo = function (videoAddress, videoName) {
     //var videoAddress = "assets/media";
     //var videoName = "TutorialTest2.mp4";
     if (window.mobilecheck()) {
-    cordova.exec(SuccessVideo, FailureVideo, "CallToAndroid", "PlayLocalVideo", [videoAddress, videoName]);
+        cordova.exec(SuccessVideo, FailureVideo, "CallToAndroid", "PlayLocalVideo", [videoAddress, videoName]);
     }
 };
 
@@ -1526,12 +1498,13 @@ function _updateDeviceVersionCache () {
 }
 
 function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
+
     if(window.mobilecheck()){
         cordova.exec(function(data) {
             _isDeviceOnline = data.online;
 
             callback();
-        }, function() { errorIsOnlineCallback();  }, "CallToAndroid", "isonline", []);
+        }, function() { errorIsOnlineCallback();}, "CallToAndroid", "isonline", []);
     }
     else{
         _isDeviceOnline = true;
@@ -1574,7 +1547,7 @@ var _loadDrupalResources = function() {
 $(document).ready(function(){
     setTimeout(function() {
     _updateDeviceVersionCache();
-    
+
     (function() {
         /* Load catalogs */
         var requestData = {"catalog": _catalogNames};
