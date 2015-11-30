@@ -415,7 +415,7 @@ angular
                         },function(){},true);                  
             }
             
-            function assignLikesBadge(){
+            function assignLikesBadge() {
                   var badgeModel = {
                             badgeid: 15 //badge earned when a user completes his profile.
                             };
@@ -425,11 +425,11 @@ angular
                         },function(){});                  
             }
             
-            $scope.commentSubActivity = function(contentId){
+            $scope.commentSubActivity = function(contentId) {
                     
-                     $scope.validateConnection(function() {
+                $scope.validateConnection(function() {
                         
-                  for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                    for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                                          
                             var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                          
                             var currentUserId = currentUser.userId;
@@ -457,13 +457,13 @@ angular
                                 }, function(){                              
                             });
                         }
-                  }
+                    }
                         
-                    }, offlineCallback);
+                }, offlineCallback);
                     
             }
             
-            $scope.showCommentBox = function(contentId){
+            $scope.showCommentBox = function(contentId) {
                 for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                            
                             $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = true;                            
@@ -471,7 +471,7 @@ angular
                   }
             }
             
-            $scope.showMoreComments = function(contentId){
+            $scope.showMoreComments = function(contentId) {
                 for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId){
                             $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = $scope.fuenteDeEnergia.activities[i].activityContent.comments.length;
@@ -480,7 +480,7 @@ angular
             }
             
             function getContentResources(activityIdentifierId) {
-                  console.log(activityIdentifierId);
+                console.log(activityIdentifierId);
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
                         _loadedResources = true;
                     $scope.contentResources = data.node;
@@ -498,16 +498,10 @@ angular
                 else
                     stageClosingContent = "ZonaDeAterrizajeClosing";
 
-                drupalFactory.Services.GetContent(stageClosingContent, function (data, key)
-                {
-                        _loadedResources = true;
+                drupalFactory.Services.GetContent(stageClosingContent, function (data, key) {
+                    _loadedResources = true;
                     $scope.closingContent = data.node;
-                    }, function () { _loadedResources = true; }, false);
-    
-                    
-            }
-            console.log(moduleid);
-            
+                }, function () { _loadedResources = true; }, false);
             }
             
         }]);
