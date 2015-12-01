@@ -264,7 +264,7 @@ angular
                                     console.log('redirecting..');
                                     $scope.$emit('HidePreloader'); //hide preloader
                                     $location.path('/ProgramaDashboard');
-                                }, 5000);
+                                }, 1000);
                         });
 
                         if ($scope.userCredentialsModel.rememberCredentials) {
