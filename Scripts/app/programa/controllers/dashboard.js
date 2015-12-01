@@ -13,6 +13,7 @@
             
             var _loadedResources = false;
             var _pageLoaded = false;
+            var hidePreloader = false;
             
             _httpFactory = $http;
             _timeout = $timeout;
@@ -144,13 +145,6 @@
                     
                     _pageLoaded = true;
                     if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
-
-
-
-
-
-
-
                     
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function(){
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
@@ -167,14 +161,13 @@
                                 //console.log("Calling TermsModal");
                                 $scope.openTermsModal();
                                 $scope.navigateTo('TermsOfUse');
-
-
                             }
                             console.log("getUserNotifications");
-
-
+                            /*
                             console.log("---------------------------------------------------------------------------");
                             //Load Quizzes assets
+                            $scope.$emit('ShowPreloader'); //show preloader
+
                             var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
                             var i;
                             var parentActivity;
@@ -184,6 +177,10 @@
                             $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
 
                             for (i = 0; i < quizIdentifiers.length; i++) {
+
+                                if (i == quizIdentifiers.length - 1) {
+                                    hidePreloader = true;
+                                }
                                 parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
 
                                 if (parentActivity != null) {
@@ -216,6 +213,7 @@
 
                                     if ($scope.activity_status === 1) {//If the activity is currently finished
                                         console.log("The activity status is FINISHED");
+
                                         // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
                                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, storeQuiz, errorCallQuiz, true);
 
@@ -232,7 +230,7 @@
                             }
 
                             //-----------------------------------------------------------------------------------------------
-                            
+                            */
                             
                         }, function() {}, true);
                     }, errorCallback);
@@ -247,11 +245,16 @@
 
 
             function storeQuiz(quizObject) {
+                /*
                 if ($scope.childActivity) {// Write Questions and Answers to Local Storage
                     console.log("Storing: " + $scope.coursemoduleid);
                     _setLocalStorageJsonItem("activityObject/" + $scope.coursemoduleid, quizObject);
                 } else {
                     _setLocalStorageJsonItem("activityObject/" + $scope.coursemoduleid, quizObject);
+                }
+                */
+                if (hidePreloader) {
+                    $scope.$emit('HidePreloader');
                 }
             }
 

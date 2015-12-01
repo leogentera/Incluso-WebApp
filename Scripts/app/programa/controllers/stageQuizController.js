@@ -32,7 +32,6 @@ angular
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
             $scope.like_status = 1;
-
             $scope.questionTypeCode = [];
             $scope.questionText = [];
             $scope.answers = [];
@@ -253,7 +252,7 @@ angular
                 }
 
                 $scope.activityObject = activityObject;
-                _setLocalStorageJsonItem("activityObject/" + theCourseModuleId, activityObject);
+                _setLocalStorageJsonItem("activity/" + theCourseModuleId, activityObject);
 
                 if (activityObject != null) {
 

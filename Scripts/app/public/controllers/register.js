@@ -17,6 +17,7 @@ angular
             _httpFactory = $http;            
             var dpValue;
             $scope.$emit('scrollTop'); //- scroll
+            var hidePreloader = false;
 
             /* ViewModel */
             $scope.registerModel = {
@@ -103,11 +104,17 @@ angular
 
 
             function storeQuiz(quizObject) {
+                /*
                 if ($scope.childActivity) {// Write Questions and Answers to Local Storage
 
                     _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, quizObject);
                 } else {
                     _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, quizObject);
+                }
+                */
+
+                if (hidePreloader) {
+                    $scope.$emit('HidePreloader');
                 }
             }
 
@@ -140,9 +147,12 @@ angular
                             var parentActivity;
                             var childActivity = null;
 
-                            alert(data.token + " - " + data.id);
-
                             for (i = 0; i < quizIdentifiers.length; i++) {
+
+                                if (i == quizIdentifiers.length - 1) {
+                                    hidePreloader = true;
+                                }
+
                                 parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
 
                                 if (parentActivity != null) {
