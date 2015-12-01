@@ -206,7 +206,6 @@ angular
 
                                 for (i = 0; i < quizIdentifiers.length; i++) {
 
-
                                     parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
 
                                     if (parentActivity != null) {
