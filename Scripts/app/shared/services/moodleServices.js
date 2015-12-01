@@ -926,6 +926,17 @@
             data.totalExtraPoints = totalExtraPoints;
         }
 
+        var _executeQueue = function(){
+
+            if(window.mobilecheck()){                    
+                    doRequestforCellphone();                     
+            }                
+            else{
+                doRequestforWeb(); 
+            }                
+        
+        }
+
         function addRequestToQueue(key, data){
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
             requestQueue = requestQueue || [];
@@ -1061,7 +1072,8 @@
             PostBadgeToUser: _postBadgeToUser,
             GetCommentByActivity: _getCommentByActivity,
             GetAsyncUserPostCounter: _getAsyncUserPostCounter,
-            GetAsyncCatalogs: _getAsyncCatalogs
+            GetAsyncCatalogs: _getAsyncCatalogs,
+            ExecuteQueue: _executeQueue
         };
     })();
 }).call(this);
