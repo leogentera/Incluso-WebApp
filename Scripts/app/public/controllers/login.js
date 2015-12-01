@@ -22,6 +22,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+            
 
             /* ViewModel */
             $scope.userCredentialsModel = {
@@ -153,11 +154,11 @@ angular
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);
                 cordova.exec(FacebookLoginSuccess, FacebookLoginFailure, "SayHelloPlugin", "connectWithFacebook", [name]);
-                
+                //FacebookLoginFailure("Correo repetido");
             }
 
             function FacebookLoginSuccess(data) {                
-                console.log('successfully logged in ' + data);                
+                console.log('successfully logged in ' + data);
                 var userFacebook = JSON.parse(data);
 
                 //save token for further requests and autologin
@@ -199,9 +200,11 @@ angular
             }
 
             function FacebookLoginFailure(data) {
+                
                 $scope.$emit('HidePreloader');
                 var errorMessage = window.atob(data.messageerror);
-                $timeout(function () {                                                            
+                
+                $timeout(function () {
                     $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
                 }, 1000);                
                 console.log(status + ": " + errorMessage);
@@ -209,7 +212,7 @@ angular
                 $scope.$emit('scrollTop'); //- scroll
             }
             
-
+            $scope.$emit('scrollTop');
             $scope.loadCredentials();
 
         }]);
