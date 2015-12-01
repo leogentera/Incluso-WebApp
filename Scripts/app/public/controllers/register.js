@@ -101,6 +101,20 @@ angular
                 });
             }
 
+
+            function storeQuiz(quizObject) {
+                if ($scope.childActivity) {// Write Questions and Answers to Local Storage
+
+                    _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, quizObject);
+                } else {
+                    _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, quizObject);
+                }
+            }
+
+            function errorCallQuiz() {
+
+            }
+
             $scope.autologin = function(data) {
                 
                 _loadDrupalResources();
@@ -117,7 +131,65 @@ angular
                 console.log('preparing for syncAll');
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
                         var course = moodleFactory.Services.GetCacheJson("course");
-                        moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, true);
+                        moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){
+
+                            console.log("---------------------------------------------------------------------------");
+                            //Load Quizzes assets
+                            var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
+                            var i;
+                            var parentActivity;
+                            var childActivity = null;
+
+                            alert(data.token + " - " + data.id);
+
+                            for (i = 0; i < quizIdentifiers.length; i++) {
+                                parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
+
+                                if (parentActivity != null) {
+
+                                    if (parentActivity.activities) {//The activity HAS a "child" activity
+
+                                        childActivity = parentActivity.activities[0];
+                                        $scope.coursemoduleid = childActivity.coursemoduleid;
+                                        $scope.activityname = childActivity.activityname;
+                                        $scope.activity_status = childActivity.status;
+
+                                    } else {//The activity has no "child" activity
+                                        $scope.coursemoduleid = parentActivity.coursemoduleid;
+                                        $scope.activityname = parentActivity.activityname;
+                                        $scope.activity_status = parentActivity.status;
+                                    }
+
+                                    console.log("activityname = " + $scope.activityname);
+                                    console.log("Activity status = " + $scope.activity_status);
+                                    console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
+
+                                    //$scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
+
+                                    $scope.activity = parentActivity;
+                                    $scope.parentActivity = parentActivity;
+                                    $scope.childActivity = childActivity;
+
+                                    if ($scope.activity_status === 1) {//If the activity is currently finished
+                                        console.log("The activity status is FINISHED");
+                                        // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
+                                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, storeQuiz, errorCallQuiz, true);
+
+                                    } else {
+                                        console.log("The activity HAS NOT BEEN FINISHED");
+                                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, data.token, storeQuiz, errorCallQuiz, true);
+                                    }
+
+                                } else {
+                                    // When parentActivity == null AND childActivity == null
+                                    console.log("Activity is NOT defined");
+                                    //$location.path("/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + 0);
+                                }
+                            }
+
+                            //-----------------------------------------------------------------------------------------------
+
+                        }, function() {}, true);
                         
                         try {
                             $scope.$emit('HidePreloader');

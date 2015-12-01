@@ -1,5 +1,5 @@
 //##############################   Controller for Quizzes   ##############################
-//##############################          Version 2.1       ##############################
+//##############################          Version 2.2       ##############################
 angular
     .module('incluso.stage.quizcontroller', [])
     .controller('stageQuizController', [
@@ -13,6 +13,8 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             //Turn on Preloader
             $scope.$emit('ShowPreloader'); //show preloader
             _httpFactory = $http;
@@ -30,7 +32,7 @@ angular
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
             $scope.like_status = 1;
-            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+
             $scope.questionTypeCode = [];
             $scope.questionText = [];
             $scope.answers = [];
@@ -83,6 +85,8 @@ angular
                 });
             };
 
+            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+
 
             //#######################################  STARTING POINT ##################################
 
@@ -113,7 +117,7 @@ angular
             }
 
             function getDataAsync() {
-                // Quizes: 1001, 1005, 1006, 1007, 1009; 2001, 2009, 2025, 2023; 3101, 3601.
+                // Quizes: 1001, 1005, 1006, 1007, 1009; 2001, 2007, 2016, 2023; 3101, 3601.
                 // nonEditableQuizzes = [1001, 1009, 2001, 2023, 3101, 3601]
                 // quizHasOther = [1001, 1005, 1006, 2001, 2023, 3101, 3601]
 
@@ -126,7 +130,6 @@ angular
                 var owlIndex = localStorage.getItem("owlIndex");
                 destinationPath = "/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + owlIndex;
                 console.log("Activity identifier: " + $scope.activity_identifier);
-                //console.log("parentActivity = " + JSON.stringify(parentActivity));
 
                 var childActivity = null;
 
@@ -163,16 +166,15 @@ angular
                     var activityObject = null;
 
                     if (childActivity) {
-                        activityObject = JSON.parse(_getItem("activityObject/" + childActivity.coursemoduleid));
+                        activityObject = JSON.parse(_getItem("activity/" + childActivity.coursemoduleid));
                     } else {
-                        activityObject = JSON.parse(_getItem("activityObject/" + parentActivity.coursemoduleid));
+                        activityObject = JSON.parse(_getItem("activity/" + parentActivity.coursemoduleid));
                     }
 
                     if (activityObject !== null) {
                         $scope.activityObject = activityObject;
                     }
 
-                    console.log("recovered Local Object: " + $scope.activityObject);
                     //console.log("User profile Id: " + $scope.userprofile.id);
                     //console.log("Current user token: " + $scope.currentUser.token);
 
@@ -193,7 +195,7 @@ angular
                         console.log("recovered Local Answers: " + $scope.answers);
 
                         //$scope.activityFinished = activityFinished;
-                        if (localAnswers == null || activityObject == null) {// If activity does not exists in Local Storage...get it from Server
+                        if (activityObject == null) {// If activity does not exists in Local Storage...get it from Server
 
                             console.log("The info for the Quiz IS NOT within Local Storage");
                             // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
@@ -204,7 +206,7 @@ angular
 
                             console.log("The info for the Quiz is within Local Storage");
                             loadModelVariables(activityObject);
-                            $scope.answers = localAnswers;
+                            //$scope.answers = localAnswers;
 
                         }
 
@@ -481,7 +483,7 @@ angular
                             //The user answered the second option
                             $scope.answers[questionIndex] = "1";
                         }
-
+                        console.log("Binary Model = " + $scope.answers[questionIndex]);
                         break;
 
                     case "multichoice":

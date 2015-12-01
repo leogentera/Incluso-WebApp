@@ -52,7 +52,6 @@ angular
                 var currentUser = null;
 
                 console.log('loading..');
-                
 
                 if (txtCredentials) {
                     userCredentials = JSON.parse(txtCredentials);
@@ -80,7 +79,7 @@ angular
                             $scope.$emit('HidePreloader');
                             $location.path('/ProgramaDashboard');
                         }, true);
-                }else {
+                } else {
                     $scope.$emit('HidePreloader');
                     console.log('preloader hidden');
                 }
@@ -89,6 +88,22 @@ angular
             $scope.login = function (username, password) {
                 $scope.validateConnection(loginConnectedCallback, offlineCallback);
             }
+
+
+            function storeQuiz(quizObject) {
+                if ($scope.childActivity) {// Write Questions and Answers to Local Storage
+                    console.log("Storing: " + $scope.coursemoduleid);
+                    _setLocalStorageJsonItem("activityObject/" + $scope.coursemoduleid, quizObject);
+                    //_setLocalStorageJsonItem("UserTalents/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
+                } else {
+                    _setLocalStorageJsonItem("activityObject/" + $scope.coursemoduleid, quizObject);
+                    //_setLocalStorageJsonItem("UserTalents/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
+                }
+            }
+
+            function errorCallQuiz() {
+
+            }
             
             function loginConnectedCallback() {
                 // reflect loading state at UI
@@ -96,6 +111,7 @@ angular
                 console.log('preloading...'); //- debug
                 
                 _loadDrupalResources();
+                //console.log(getActivityByActivity_identifier(1001));
 
                 $http(
                     {
