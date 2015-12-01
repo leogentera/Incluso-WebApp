@@ -235,8 +235,9 @@ angular
             function loadModelVariables(activityObject) {
 
                 // Check if the Quiz is non editable (attempts == 1) AND it has been finished.
+                //alert(activityObject.attempts);
                 if (activityObject.attempts === 1 && $scope.activity_status === 1) {
-                    $scope.setReadOnly = true;
+                    //$scope.setReadOnly = true;
                 }
 
                 $scope.modelIsLoaded = true;
