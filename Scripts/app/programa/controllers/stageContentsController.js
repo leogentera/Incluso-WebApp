@@ -419,7 +419,13 @@ angular
             $scope.showCommentBox = function(contentId){
                 for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {                            
-                            $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = true;                            
+                            //$scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = true;
+                            if($scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox != true){
+                                $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = true;
+                            } else {
+                                $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false;
+                            }
+                            $scope.fuenteDeEnergia.activities[i].activityContent.newComment = '';
                         }
                   }
             }
