@@ -532,8 +532,8 @@ angular
             function isValidDate(date) {
                 var matches = /^(\d{2})[-\/](\d{2})[-\/](\d{4})$/.exec(date);
                 if (matches == null) return false;
-                var m = matches[1] - 1;
-                var d = matches[2];
+                var m = matches[2] - 1;
+                var d = matches[1];
                 var y = matches[3];
                 var composedDate = new Date(y, m, d);
                 return composedDate.getDate() == d &&
@@ -550,7 +550,7 @@ angular
                 // ************************ The following are required fields. ****************************
                 var age = calculate_age();
                 if (age < 13) {
-                    errors.push("Debes ser mayor de 13 a�os para poder registrarte.");
+                    errors.push("Debes ser mayor de 13 años para poder registrarte.");
                 }
                 if (!$scope.editForm.firstname.$valid) {
                     errors.push("Formato de nombre incorrecto.");
@@ -562,9 +562,9 @@ angular
                     errors.push("Formato de apellido materno incorrecto.");
                 }
                 if (!$scope.model.gender) {
-                    errors.push("Debe indicar su g�nero.");
+                    errors.push("Debe indicar su género.");
                 }
-                if (!isValidDate($scope.model.birthday)) {
+                if (!isValidDate($scope.model.birthday)) {alert($scope.model.birthday);
                     errors.push("Ingrese la fecha de nacimiento.");
                 }
 
@@ -583,7 +583,7 @@ angular
 
                 if (arrayForUsername.length != filteredUsernames.length) {
                     //Repeated names for Social network
-                    errors.push("Nombre de Red social est� repetido.");
+                    errors.push("Nombre de Red social está repetido.");
                 }
 
                 //Validation of the $scope.model.familiaCompartamos array
@@ -601,7 +601,7 @@ angular
 
                 //  Repeated idClients
                 if (arrayForIdClients.length != filteredIdClient.length) {
-                    errors.push("El n�mero de cliente Compartamos debe ser �nico.");
+                    errors.push("El número de cliente Compartamos debe ser único.");
                 }
 
                 //  b) Avoiding two persons having the same "Parentesco"
@@ -618,7 +618,7 @@ angular
 
                 if (arrayForParentesco.length != filteredArray.length) {
                     //Repeated idClients
-                    errors.push("El parentesco est� repetido.");
+                    errors.push("El parentesco está repetido.");
                 }
 
                 //Validation of the $scope.model.studies array
@@ -634,7 +634,7 @@ angular
 
                 if (arrayForLevel.length != filteredLevel.length) {
                     //Repeated names for Social network
-                    errors.push("El nivel de estudios est� repetido.");
+                    errors.push("El nivel de estudios está repetido.");
                 }
 
                 $scope.model.modelState.errorMessages = errors;
