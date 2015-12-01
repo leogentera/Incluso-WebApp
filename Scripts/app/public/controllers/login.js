@@ -74,6 +74,9 @@ angular
                     $timeout(function(){ $scope.validateConnection(function() {
                         _loadDrupalResources();
 
+                        //Run queue
+                        moodleFactory.Services.ExecuteQueue();
+
                         //Load Quizzes assets
                         console.log("---------------------------------------------------------------------------");
                         $scope.$emit('ShowPreloader'); //show preloader
@@ -174,6 +177,8 @@ angular
                         data: $.param({ username: $scope.userCredentialsModel.username.toString().toLowerCase(), password: $scope.userCredentialsModel.password })
                     }
                     ).success(function (data, status, headers, config) {
+                        //Run queue
+                        moodleFactory.Services.ExecuteQueue();
 
                         console.log('successfully logged in');
 
@@ -299,6 +304,9 @@ angular
                 var userFacebook = JSON.parse(data);
                 
                 _loadDrupalResources();
+
+                //Run queue
+                moodleFactory.Services.ExecuteQueue();
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = userFacebook;
