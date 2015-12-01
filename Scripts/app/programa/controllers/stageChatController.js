@@ -104,7 +104,7 @@ angular
                             };
         
                             profile.stars = parseInt(profile.stars) + treeActivity.points;
-                            moodleFactory.Services.PutStars(model, profile, currentUser.token, successfullCallBack, errorCallback);                    
+                            moodleFactory.Services.PutStars(model, profile, currentUser.token, successfullCallBack, errorCallback, true);                    
                         }, function(){
                             $scope.$emit('HidePreloader'); //hide preloader  
                         });
