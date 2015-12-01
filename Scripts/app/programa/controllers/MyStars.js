@@ -78,10 +78,18 @@ angular
                                     }
                                     else{
                                         if (activity.activities) {
-                                            for(var m=0; m< activity.activities.length; m++){
+                                            var extraCounter = 0;
+                                            for(var m=0; m < activity.activities.length; m++){
                                                 var subactivity = activity.activities[m];
-                                                var extraPointsName = extra ? "Puntos extra" + activity.activityname : activity.activityname;
+                                                var extraPointsName = activity.activityname;
+                                                                                             
+                                                //var extraPointsName = extra ? "Puntos extra " + activity.activityname + idSubactivity : activity.activityname ;
                                                 if (subactivity.coursemoduleid == courseModuleId){
+                                                    if(extra){
+                                                        extraCounter = extraCounter + 1;
+                                                        extraPointsName = "Puntos extra " + extraCounter + " " + activity.activityname;
+                                                    }   
+                                                    
                                                     subactivity.sectionname = challengeName;
                                                     subactivity.activityname = extraPointsName;
                                                     starsByActivity.push(subactivity)
