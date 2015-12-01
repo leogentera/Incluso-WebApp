@@ -459,7 +459,7 @@ angular
 
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
-            }
+            };
 
             $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description, status) {
                 $scope.shareAchievementMessage = "";
@@ -1561,7 +1561,7 @@ angular
                     "rostro": "",
                     "color_de_piel": "",
                     "escudo:": "",
-                    "imagen_recortada": "",
+                    "imagen_recortada": ""
                 }];
             }
 
