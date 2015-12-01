@@ -1068,14 +1068,20 @@ function updateUserForumStars(activityIdentifier, extraPoints, callback) {
     var activity = getActivityByActivity_identifier(activityIdentifier);
     
     profile.stars = Number(profile.stars) + Number(extraPoints);
-
+    
     var data = {
         userId: profile.id,
         stars: extraPoints,
         instance: activity.coursemoduleid,
         instanceType: 0,
-        date: getdate()
+        date: getdate(),
+        is_extra: false
     };
+    
+    if (extraPoints) {
+        data.is_extra = true;
+    }
+    
     moodleFactory.Services.PutStars(data, profile, currentUser.token, callback, errorCallback);
 }
 
