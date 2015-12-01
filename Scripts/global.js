@@ -606,11 +606,13 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
     
     var activity = _getActivityByCourseModuleId(courseModuleId, userCourse );
     
+    if (activity) {
+      //code
     
     for (var i = 0; i < allNotifications.length; i++) {
         var currentNotification = allNotifications[i];
         if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
-            
+                        
           var wonDate = new Date();                        
           var dataModelNotification = {
             notificationid : String(currentNotification.id),
@@ -625,6 +627,7 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
         } else {
           
         }
+    }
     }
 };
 
@@ -665,7 +668,7 @@ var _coachNotification = function (stageIndex) {
                     var dataModelNotification = {
                         notificationid : notificationId,
                         userid: userId                        
-                      };
+                      };                                            
                     
                     moodleFactory.Services.PostUserNotifications( dataModelNotification, function(){
                         console.log("create notification successful");
@@ -682,6 +685,8 @@ var _coachNotification = function (stageIndex) {
 
 var _progressNotification = function(indexStageId, currentProgress){
     
+    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+    
     var notifications = JSON.parse(localStorage.getItem("notifications"));
     
     var progressNotifications = _.where(notifications, { type: notificationTypes.progressNotifications });
@@ -690,10 +695,23 @@ var _progressNotification = function(indexStageId, currentProgress){
     
     for(i = 0; i < progressNotifications.length; i++){
         var currentNotification = progressNotifications[i];
+        
         if (currentNotification.status != "won" && currentProgress >= currentNotification.progressmin
-            && currentProgress <= currentNotification.progressmax && stageId == currentNotification.stageid) {
+            && stageId == currentNotification.stageid || stageId > currentNotification.stageid) {
             console.log("progress notification created" + currentNotification.name);
             //Add create notification logic.
+            
+            var wonDate = new Date();
+            var dataModelNotification = {
+              notificationid : String(currentNotification.id),
+              userid: currentUser.id,
+              wondate : wonDate
+            };
+  
+            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
+                console.log("progress notification created" + currentNotification.name);
+            }, errorCallback, true);
+            
         }        
     }
 }
@@ -1072,8 +1090,14 @@ function updateUserForumStars(activityIdentifier, extraPoints, callback) {
         stars: extraPoints,
         instance: activity.coursemoduleid,
         instanceType: 0,
-        date: getdate()
+        date: getdate(),
+        is_extra: false
     };
+    
+    if (extraPoints) {
+        data.is_extra = true;
+    }
+    
     moodleFactory.Services.PutStars(data, profile, currentUser.token, callback, errorCallback);
 }
 
@@ -1180,6 +1204,7 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("otherAnswerQuiz/");
     ClearLocalStorage("activityObject/");
     ClearLocalStorage("owlIndex");
+     ClearLocalStorage("activity");
     //-------------------------------
 
     localStorage.removeItem("CurrentUser");    

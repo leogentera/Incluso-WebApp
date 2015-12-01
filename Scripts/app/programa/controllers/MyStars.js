@@ -61,6 +61,7 @@ myStarsModule.controller('MyStarsController', [
                 for(var i=0; i< data.length; i++){
                     if (data[i].points != 0) {
                         var courseModuleId = data[i].instance;
+                        var extra = data[i].is_extra;
                         var userCourse = JSON.parse(localStorage.getItem("usercourse"));
                         var stages = userCourse.stages;
                         for(var j=0; j < stages.length; j++){
@@ -77,11 +78,20 @@ myStarsModule.controller('MyStarsController', [
                                     }
                                     else{
                                         if (activity.activities) {
-                                            for(var m=0; m< activity.activities.length; m++){
+                                            var extraCounter = 0;
+                                            for(var m=0; m < activity.activities.length; m++){
                                                 var subactivity = activity.activities[m];
+                                                var extraPointsName = activity.activityname;
+                                                                                             
+                                                //var extraPointsName = extra ? "Puntos extra " + activity.activityname + idSubactivity : activity.activityname ;
                                                 if (subactivity.coursemoduleid == courseModuleId){
+                                                    if(extra){
+                                                        extraCounter = extraCounter + 1;
+                                                        extraPointsName = "Puntos extra " + extraCounter + " " + activity.activityname;
+                                                    }   
+                                                    
                                                     subactivity.sectionname = challengeName;
-                                                    subactivity.activityname = activity.activityname;
+                                                    subactivity.activityname = extraPointsName;
                                                     starsByActivity.push(subactivity)
                                                     points = points + subactivity.points;
                                                 }
@@ -93,6 +103,7 @@ myStarsModule.controller('MyStarsController', [
                         }
                     }
                 }
+                
                 var groups = _.groupBy(starsByActivity, function(activity){
                         return activity.activityname + '#' + activity.sectionname;
                     });

@@ -667,6 +667,7 @@
                     section: activities[0].section,
                     courseid: activities[0].courseid,
                     firsttime: activities[0].firsttime,
+                    max_resources: activities[0].max_resources,
                     globalProgress: 0,
                     stages: _.filter(activities, function (a) {
                         return a.parentsection == activities[0].section && a.section != activities[0].section && a.activity_type == 'ActivityManager'
@@ -939,6 +940,17 @@
             data.totalExtraPoints = totalExtraPoints;
         }
 
+        var _executeQueue = function(){
+
+            if(window.mobilecheck()){                    
+                    doRequestforCellphone();                     
+            }                
+            else{
+                doRequestforWeb(); 
+            }                
+        
+        }
+
         function addRequestToQueue(key, data){
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
             requestQueue = requestQueue || [];
@@ -1076,7 +1088,8 @@
             GetAsyncUserPostCounter: _getAsyncUserPostCounter,
             GetAsyncCatalogs: _getAsyncCatalogs,
             CountLikesByUser: _countLikesByUser,
-            GetServerDate: _getServerDate
+            GetServerDate: _getServerDate,
+            ExecuteQueue: _executeQueue       
         };
     })();
 }).call(this);
