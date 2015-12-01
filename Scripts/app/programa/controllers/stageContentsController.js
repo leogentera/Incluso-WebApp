@@ -273,7 +273,8 @@ angular
                             stars: stars,
                             instance: coursemoduleid,
                             instanceType: 0,
-                            date: getdate()
+                            date: getdate(),
+                            is_extra: false
                         };
                         console.log("Updating Stars");
                         if (starsMandatory < 250 && isMandatory) {
@@ -282,6 +283,9 @@ angular
                             moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
                         }
                         else if (starsNoMandatory < 500) {
+                            
+                            data.is_extra = true;
+                            
                             profile.stars = parseInt(profile.stars) + stars;
                             //_setLocalStorageJsonItem('profile', profile);
                             moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
