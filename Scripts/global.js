@@ -1481,9 +1481,9 @@ var _compareSyncDeviceVersions = function() {
         var localVSplit = deviceVersion.localVersion.split("."),
             remoteVSplit = deviceVersion.remoteVersion.split(".");
             
-        sync = Number(localVSplit[0]) === Number(remoteVSplit[0]) &&
-               Number(localVSplit[1]) === Number(remoteVSplit[1]) &&
-               Number(localVSplit[2]) === Number(remoteVSplit[2]);
+        sync = Number(localVSplit[0]) >= Number(remoteVSplit[0]) &&
+               Number(localVSplit[1]) >= Number(remoteVSplit[1]) &&
+               Number(localVSplit[2]) >= Number(remoteVSplit[2]);
     }else {
         sync = true;
     }
