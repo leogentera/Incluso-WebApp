@@ -873,7 +873,6 @@ angular
             // ##################################### VALIDATING USER ANSWERS ##################################################
             $scope.validateQuiz = function () {
 
-                var question = "";
                 var index, i;
                 var numAnswered = 0;
                 var numQuestions = $scope.activityObject.questions.length;
@@ -1114,11 +1113,6 @@ angular
             }
 
             $scope.answerIndex = 1;
-
-            function addHeightConsulta(lista, elementQty) {//NO USADO
-                $scope.finalHeight = angular.element(lista).height() + (250 * (elementQty));
-                angular.element(".owl-wrapper-outer").css('height', $scope.finalHeight);
-            }
 
             function addHeight(elem) {
                 var elemHeight = angular.element(elem).height();
