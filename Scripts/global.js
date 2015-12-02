@@ -1258,6 +1258,8 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("reply");    
     localStorage.removeItem("mapaDeVidaActivities");
     localStorage.removeItem("starsToAssignedAfterFinishActivity");
+    localStorage.removeItem("userStars");
+    localStorage.removeItem("likesByUser");
     ClearLocalStorage("termsAndConditions");
     ClearLocalStorage("activity");
     ClearLocalStorage("drupal"); //If content must be refreshed every time user log in - TODO: Is better to not delete this info and create a process to uptated? 
