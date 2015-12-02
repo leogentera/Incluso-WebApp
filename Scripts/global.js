@@ -1077,7 +1077,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
             stars = activity.points;
         }
     }
-
+      
     console.log("Profile stars = " + profile.stars);
     console.log("Forum stars to assign: " + stars);
 
@@ -1088,6 +1088,22 @@ function updateUserStars(activityIdentifier, extraPoints) {
         instanceType: 0,
         date: getdate()
     };
+    
+    var userStars = JSON.parse(localStorage.getItem("userStars"));
+                        
+    var localStorageStarsData = {
+          dateissued : (new Date() / 1000 | 0),
+          instance : data.instance,
+          instance_type: data.instanceType,
+          message: "",
+          is_extra: false,
+          points: data.stars,
+          userid: parseInt(data.userId)
+    };
+                        
+    userStars.push(localStorageStarsData);
+                        
+    localStorage.setItem("userStars", JSON.stringify(userStars));
 
     moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
 }
