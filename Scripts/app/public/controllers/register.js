@@ -96,10 +96,10 @@ angular
             }
 
             function offlineCallback() {
-                $scope.$apply(function(){
+                $timeout(function(){
                     $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
                     $scope.$emit('scrollTop'); //- scroll
-                });
+                }, 1000);
             }
 
 

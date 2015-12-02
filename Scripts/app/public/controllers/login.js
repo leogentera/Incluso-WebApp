@@ -423,6 +423,7 @@ angular
             function offlineCallback() {
                 $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
                 $scope.$emit('scrollTop'); //- scroll
+                $scope.$emit('HidePreloader');
             }
 
             $scope.loadCredentials();
