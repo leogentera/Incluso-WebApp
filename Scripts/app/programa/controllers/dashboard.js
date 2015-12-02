@@ -13,7 +13,6 @@
             
             var _loadedResources = false;
             var _pageLoaded = false;
-            var hidePreloader = false;
             
             _httpFactory = $http;
             _timeout = $timeout;

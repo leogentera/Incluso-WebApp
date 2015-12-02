@@ -182,7 +182,7 @@ angular
                         }
                         
                         //$scope.activityFinished = activityFinished;
-                        if (localAnswers == null || activityObject == null) {// If activity does not exists in Local Storage...get it from Server
+                        if (activityObject == null) {// If activity does not exists in Local Storage...get it from Server
 
                             console.log("The info for the Quiz IS NOT within Local Storage");
                             // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
