@@ -952,13 +952,15 @@
         }
 
         function addRequestToQueue(key, data){
-            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
-            requestQueue = requestQueue || [];
+            var requestQueue = [];
+            var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue");            
+            if(cacheQueue instanceof Array){
+                requestQueue = cacheQueue;
+            } 
             data.retryCount = 0;
             data.key = key;
             console.log('putting in queue ' + key);
             requestQueue.push(data);
-
             _setLocalStorageJsonItem("RequestQueue", requestQueue);
             if(requestQueue.length==1 || _queuePaused){
                 if(window.mobilecheck()){                    
@@ -983,7 +985,7 @@
                         ).success(function (response) {
                             requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
                             console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
-                            requestQueue.shift();  
+                            requestQueue = requestQueue.shift();   
                             _setLocalStorageJsonItem("RequestQueue", requestQueue); 
                             if(data.method == 'GET'){
                                 _setLocalStorageJsonItem(data.key, response); 
@@ -992,13 +994,14 @@
                             doRequestforWeb();                                 
                         }).error(function (response) {
                             if(navigator.onLine){
-                               requestQueue[0].retryCount++;
+                               requestQueue[0].retryCount++;                               
+                                _setLocalStorageJsonItem("RequestQueue", requestQueue);
                                doRequestforWeb();
                             }                        
                         });
                     }  
                     else{
-                        requestQueue.shift();
+                        requestQueue = requestQueue.shift();  
                         _setLocalStorageJsonItem("RequestQueue", requestQueue);
                         doRequestforWeb();
                     }               
@@ -1019,7 +1022,7 @@
                         ).success(function (response) {
                             requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
                             console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
-                            requestQueue.shift();  
+                            requestQueue = requestQueue.shift();  
                             _setLocalStorageJsonItem("RequestQueue", requestQueue); 
                             if(data.method == 'GET'){
                                 _setLocalStorageJsonItem(data.key, response); 
@@ -1028,13 +1031,14 @@
                             doRequestforCellphone();                                 
                         }).error(function (response) {
                             if(_isDeviceOnline){
-                               requestQueue[0].retryCount++;
+                               requestQueue[0].retryCount++;                               
+                                _setLocalStorageJsonItem("RequestQueue", requestQueue);
                                doRequestforCellphone();
                             }                        
                         });
                     }  
                     else{
-                        requestQueue.shift();
+                        requestQueue = requestQueue.shift();  
                         _setLocalStorageJsonItem("RequestQueue", requestQueue);
                         doRequestforCellphone();
                     }               
