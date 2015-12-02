@@ -939,8 +939,11 @@
             
             data.totalExtraPoints = totalExtraPoints;
         }
+        
+        var _callback;
 
-        var _executeQueue = function(){
+        var _executeQueue = function(callback){
+            _callback = callback;
 
             if(window.mobilecheck()){                    
                     doRequestforCellphone();                     
@@ -948,7 +951,7 @@
             else{
                 doRequestforWeb(); 
             }                
-        
+            
         }
 
         function addRequestToQueue(key, data){
@@ -972,6 +975,7 @@
             }
         }
 
+
         function doRequestforWeb(){     
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
             console.log(requestQueue);
@@ -990,6 +994,10 @@
                                 _setLocalStorageJsonItem(data.key, response); 
                             }
                             _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                            if(requestQueue.length == 0 && _callback != null){
+                                _callback();
+                                _callback = null;
+                            }   
                             doRequestforWeb();                                 
                         }).error(function (response) {
                             if(navigator.onLine){
@@ -1002,12 +1010,20 @@
                     else{
                         requestQueue.shift();  
                         _setLocalStorageJsonItem("RequestQueue", requestQueue);
+                        if(requestQueue.length == 0 && _callback != null){
+                            _callback();
+                            _callback = null;
+                        }   
                         doRequestforWeb();
                     }               
-                }
+            }
+            else if (_callback != null){
+                _callback();
+                _callback = null;
+            }
         }
 
-        function doRequestforCellphone(requestQueue){            
+        function doRequestforCellphone(){            
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");        
 
             _updateConnectionStatus(function(){                
@@ -1021,12 +1037,16 @@
                         ).success(function (response) {
                             requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
                             console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
-                            requestQueue.shift();                              
+                            requestQueue.shift();                             
                             if(data.method == 'GET'){
                                 _setLocalStorageJsonItem(data.key, response); 
                             }
                             _setLocalStorageJsonItem("RequestQueue", requestQueue); 
-                            doRequestforCellphone();                                 
+                            if(requestQueue.length == 0 && _callback != null){
+                                _callback();
+                                _callback = null;
+                            }                           
+                            doRequestforCellphone();                                                            
                         }).error(function (response) {
                             if(_isDeviceOnline){
                                requestQueue[0].retryCount++;                               
@@ -1038,11 +1058,19 @@
                     else{
                         requestQueue.shift();  
                         _setLocalStorageJsonItem("RequestQueue", requestQueue);
+                        if(requestQueue.length == 0 && _callback != null){
+                            _callback();
+                            _callback = null;
+                        }
                         doRequestforCellphone();
                     }               
                 }
                 else if(!_isDeviceOnline){
                     _queuePaused = true;
+                }
+                else if (_callback != null){
+                    _callback();
+                    _callback = null;
                 }
             }, function(){                           
             });            
