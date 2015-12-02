@@ -152,7 +152,7 @@ angular
                             var newMessages = JSON.stringify($scope.messages);                
                             _setLocalStorageItem('userChat',newMessages);
                             $anchorScroll();
-                                                           
+                            
                             moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
                         }, 1000);
                     }                
