@@ -959,7 +959,7 @@
             } 
             data.retryCount = 0;
             data.key = key;
-            console.log('putting in queue ' + key);
+            console.log('putting in queue ' + key);            
             requestQueue.push(data);
             _setLocalStorageJsonItem("RequestQueue", requestQueue);
             if(requestQueue.length==1 || _queuePaused){
@@ -978,13 +978,13 @@
             if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0){
                     
                     var data = requestQueue[0];
-                    console.log("Procesando Request " + data.url)
+                    console.log("Procesando Request " + data.url);                    
                     if(data.retryCount<5){
                             _httpFactory(
                             data
                         ).success(function (response) {
                             requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
-                            console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
+                            console.log("Quitando primer elemento de arreglo " + requestQueue[0].url);
                             requestQueue.shift();                               
                             if(data.method == 'GET'){
                                 _setLocalStorageJsonItem(data.key, response); 
