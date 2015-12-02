@@ -859,8 +859,12 @@ angular
                 };
 
                 $scope.index = function () {//Redirect to editing profile again.
-                    $scope.currentPage = 12;
-                    //$location.path("Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
+
+                    if ($location.$$path != '/Perfil/ConfigurarPrivacidad') {
+                        $scope.currentPage = 12;
+                    }
+
+                    $location.path("Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
                 };
 
                 $scope.save = function () {
