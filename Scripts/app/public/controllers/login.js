@@ -21,8 +21,7 @@ angular
             $rootScope.showFooterRocks = false;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false;        
-            var hidePreloader = false;
+            $rootScope.showStage3Footer = false;
 
             /* ViewModel */
             $scope.userCredentialsModel = {
@@ -53,7 +52,7 @@ angular
                 var currentUser = null;
 
                 console.log('loading..');
-                
+
                 if (txtCredentials) {
                     userCredentials = JSON.parse(txtCredentials);
 
@@ -143,7 +142,7 @@ angular
                             $scope.$emit('HidePreloader');
                             $location.path('/ProgramaDashboard');
                         }, true);
-                } else {
+                }else {
                     $scope.$emit('HidePreloader');
                     console.log('preloader hidden');
                 }
@@ -157,15 +156,15 @@ angular
 
             function storeQuiz(quizObject) {
             }
-            
+
             function errorCallQuiz() {
             }
-            
+
             function loginConnectedCallback() {
                 // reflect loading state at UI
                 //$scope.$emit('ShowPreloader'); //show preloader
                 console.log('preloading...'); //- debug
-                
+
                 _loadDrupalResources();
 
                 $http(
@@ -179,23 +178,23 @@ angular
                         //Run queue
                         moodleFactory.Services.ExecuteQueue();
 
-                        console.log('successfully logged in');
+                            console.log('successfully logged in');
 
-                        //save token for further requests and autologin
-                        $scope.currentUserModel = data;
-                        $scope.currentUserModel.userId = data.id;
+                            //save token for further requests and autologin
+                            $scope.currentUserModel = data;
+                            $scope.currentUserModel.userId = data.id;
 
-                        _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                            _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
 
-                        _setToken(data.token);
-                        _setId(data.id);
+                            _setToken(data.token);
+                            _setId(data.id);
 
                         console.log('preparing for syncAll');
-                        
+
                         //succesful credentials
                         _syncAll(function () {
                             console.log('came back from redirecting...');
-                            
+
                             var course = moodleFactory.Services.GetCacheJson("course");
                             moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){
 
@@ -226,7 +225,7 @@ angular
                                             $scope.activityname = parentActivity.activityname;
                                             $scope.activity_status = parentActivity.status;
                                         }
-                            
+
                                         console.log("activityname = " + $scope.activityname);
                                         console.log("Activity status = " + $scope.activity_status);
                                         console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
@@ -256,7 +255,7 @@ angular
 
 
                             }, function() {}, true);
-                            
+
                             $timeout(
                                 function () {
                                     console.log('redirecting..');
@@ -265,16 +264,16 @@ angular
                                 }, 1000);
                         });
 
-                        if ($scope.userCredentialsModel.rememberCredentials) {
-                            _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
-                        } else {
-                            localStorage.removeItem("Credentials");
-                        }
+                            if ($scope.userCredentialsModel.rememberCredentials) {
+                                _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
+                            } else {
+                                localStorage.removeItem("Credentials");
+                            }
 
-                    }).error(function (data, status, headers, config) { 
-                        $scope.$emit('HidePreloader'); //hide preloader
+                        }).error(function (data, status, headers, config) { 
+                            $scope.$emit('HidePreloader'); //hide preloader
 
-                        var errorMessage = window.atob(data.messageerror);                            
+                        var errorMessage = window.atob(data.messageerror);
                         $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
                         console.log(status + ": " + errorMessage);
                         //$scope.scrollToTop();
@@ -286,7 +285,7 @@ angular
             $scope.loginWithFacebook = function () {
                 $scope.validateConnection(loginWithFacebookConnectedCallback, offlineCallback);
             };
-            
+
             function loginWithFacebookConnectedCallback() {
                 $scope.$emit('ShowPreloader'); //show preloader
                 //$location.path('/ProgramaDashboard');                
@@ -300,7 +299,7 @@ angular
             function FacebookLoginSuccess(data) {                
                 console.log('successfully logged in ' + data);                
                 var userFacebook = JSON.parse(data);
-                
+
                 _loadDrupalResources();
 
                 //Run queue
@@ -312,6 +311,7 @@ angular
                 $scope.currentUserModel.userId = userFacebook.id;
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+
                 _setToken(userFacebook.token);
                 _setId(userFacebook.id);
 
@@ -384,7 +384,7 @@ angular
                             }
                         }
 
-                        //-----------------------------------------------------------------------------------------------                        
+                        //-----------------------------------------------------------------------------------------------
 
 
                     
@@ -408,6 +408,7 @@ angular
             }
 
             function FacebookLoginFailure(data) {
+
                 $scope.$emit('HidePreloader');
                 var errorMessage = window.atob(data.messageerror);
                 $timeout(function () {                                                            
@@ -418,11 +419,12 @@ angular
                 $scope.$emit('scrollTop'); //- scroll
             }
             
+            $scope.$emit('scrollTop');
             function offlineCallback() {
                 $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
                 $scope.$emit('scrollTop'); //- scroll
             }
-            
+
             $scope.loadCredentials();
 
         }]);
