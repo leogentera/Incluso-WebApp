@@ -268,6 +268,8 @@ angular
 
                     $scope.validateConnection(function() {
 
+                        
+                        
                         profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
                         var data = {
                             userId: profile.id,
@@ -288,10 +290,27 @@ angular
                             data.is_extra = true;
 
                             profile.stars = parseInt(profile.stars) + stars;
-                            //_setLocalStorageJsonItem('profile', profile);
+                            //_setLocalStorageJsonItem('profile', profile);                                                                      
+                            
+                            
                             moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
                         }
-
+                        
+                        var userStars = JSON.parse(localStorage.getItem("userStars"));
+                        
+                        var localStorageStarsData = {
+                              dateissued : (new Date() / 1000 | 0),
+                              instance : data.instance,
+                              instance_type: data.instanceType,
+                              message: "",
+                              is_extra: data.is_extra,
+                              points: data.stars,
+                              userid: parseInt(data.userId)
+                        };
+                        
+                        userStars.push(localStorageStarsData);
+                        
+                        localStorage.setItem("userStars", JSON.stringify(userStars));
 
                     }, offlineCallback);
 

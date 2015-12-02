@@ -13,7 +13,7 @@
         </select>
         <span class="icomoon icon-arrow"></span>
     </section>
-    <section class="txt-renglon distribuido" ng-show="hasCommunityAccess">
+    <section class="txt-renglon distribuido" ng-disabled="!hasCommunityAccess">
       <a href="" class="icon-circle" ng-click="collapseCommunityButtomsTrigger('isTextCollapsed')" ng-class="{'active': !communityModals['isTextCollapsed']}">
         <span class="icomoon icon-text text-bigger"></span>
         <span class="arrow-up"></span>

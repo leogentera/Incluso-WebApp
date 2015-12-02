@@ -40,16 +40,25 @@ myStarsModule.controller('MyStarsController', [
                 _loadedResources = true;
                 $scope.contentResources = data.node;
                                 
-                var starsByActivity = moodleFactory.Services.GetAsyncStars(userId, token, function(dataStars){
-                    if (dataStars.length > 0) {
-                        addStarsByActivity(dataStars);
-                    }                
-                }, function(){
-                    $scope.activitiesCompleted = [];
-                    }, true);
+                var starsFromLocalStorage = JSON.parse(localStorage.getItem("userStars"));
+
+                if(starsFromLocalStorage)
+                {
+                    addStarsByActivity(starsFromLocalStorage);                
+                }
+                else
+                {
+                    moodleFactory.Services.GetAsyncStars(userId, token, function(dataStars){
+                        if (dataStars.length > 0) {
+                            addStarsByActivity(dataStars);
+                        }
+                    }, function(){$scope.activitiesCompleted = [];}, true);
+                }
                 
                 if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                
             }, function () {
+                
                 _loadedResources = true;
                 if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                 }, false);
