@@ -72,6 +72,10 @@ myStarsModule.controller('MyStarsController', [
                                 for(var l=0; l < activities.length; l++){
                                     var activity = activities[l];
                                     if (activity.coursemoduleid == courseModuleId){
+                                        if (extra) {                                              
+                                            activity.activityname = "Puntos extra " + activity.activityname;  
+                                        }  
+
                                         activity.sectionname = challengeName;
                                         starsByActivity.push(activity);
                                         points = points + activity.points;
