@@ -152,6 +152,22 @@ angular
                 $scope.$emit('ShowPreloader');
                 $scope.validateConnection(loginConnectedCallback, offlineCallback);
             };
+            
+            $scope.navigateToRegister = function (username, password) {
+                $scope.$emit('ShowPreloader');
+                $scope.validateConnection(function() {
+                    $scope.$emit('HidePreloader');
+                    $location.path('/Register');
+                }, offlineCallback);
+            };
+            
+            $scope.navigateToRecoverPassword = function (username, password) {
+                $scope.$emit('ShowPreloader');
+                $scope.validateConnection(function() {
+                    $scope.$emit('HidePreloader');
+                    $location.path('/RecoverPassword');
+                }, offlineCallback);
+            };
 
 
             function storeQuiz(quizObject) {
