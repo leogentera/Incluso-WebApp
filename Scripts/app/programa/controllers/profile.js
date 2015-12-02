@@ -70,31 +70,6 @@ angular
                 $scope.completedSections = [];
 
                 getDataAsync(function () {
-                    $scope.currentPage = 1;
-                    if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
-                        $scope.currentPage = 2;
-                    }
-
-                    $rootScope.showFooter = false;
-                    $rootScope.showFooterRocks = false;
-                    $rootScope.showStage1Footer = false;
-                    $rootScope.showStage2Footer = false;
-                    $rootScope.showStage3Footer = false;
-                    $rootScope.showProfileFooter = false;
-                    $scope.status = "";
-                    $scope.shareAchievementMessage = "";
-                    $scope.showShareAchievementMessage = false;
-                    $scope.showSharedAchievement = false;
-                    $scope.hasCommunityAccess = false;
-                    var startingTime;
-                    var endingTime;
-
-                    $scope.completedSections = [];
-
-                    $scope.$emit('ShowPreloader');
-
-
-                    getDataAsync(function () {
 
                         getContent();
 
@@ -1781,7 +1756,7 @@ angular
                     $scope.scrollToTop();
 
 
-            });
+
             }
         }
             ]);
