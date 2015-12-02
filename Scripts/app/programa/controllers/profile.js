@@ -345,30 +345,21 @@ angular
 
                     startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
                     console.log("Request...");
-                    moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
 
-                        $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
+                    //Try to get user profile data from Local Storage.
+                    $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
 
+                    if ($scope.model !== null) {
+                        console.log("Profile from LOCAL STORAGE");
                         if ($scope.model.profileimageurl) {
                             $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                         }
 
                         $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
-                        //console.log("Profile current stars:" + $scope.model.stars);
 
                         callback();
-
-                        moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () {
-                            _pageLoaded = true;
-                            if (_loadedResources && _pageLoaded) {
-                                $scope.$emit('HidePreloader')
-                            }
-                        }, true);
-
-                        if (!$scope.model) {
-                            $location.path('/');
-                            return "";
-                        }
+                        //Get avatar info from Local Storage.
+                        $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
 
                         initFields($scope.model);
                         loadStrengths();
@@ -378,7 +369,43 @@ angular
                         $scope.model.grade = $scope.model.currentStudies["grade"];
                         $scope.model.period = $scope.model.currentStudies["period"];
 
-                    }, true);
+                        $scope.$emit('HidePreloader');
+
+                    } else {//Try to get user profile data from Service.
+
+                        moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
+
+                            if ($scope.model.profileimageurl) {
+                                $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
+                            }
+
+                            $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
+                            //console.log("Profile current stars:" + $scope.model.stars);
+
+                            callback();
+
+                            moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () {
+                                _pageLoaded = true;
+                                if (_loadedResources && _pageLoaded) {
+                                    $scope.$emit('HidePreloader');
+                                }
+                            }, true);
+
+                            if (!$scope.model) {
+                                $location.path('/');
+                                return "";
+                            }
+
+                            initFields($scope.model);
+                            loadStrengths();
+                            loadWindowOfOpportunities();
+
+                            $scope.model.level = $scope.model.currentStudies["level"];
+                            $scope.model.grade = $scope.model.currentStudies["grade"];
+                            $scope.model.period = $scope.model.currentStudies["period"];
+
+                        }, true);
+                    }
                 }
 
                 function initFields(m) {
