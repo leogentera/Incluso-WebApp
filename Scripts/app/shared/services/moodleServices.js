@@ -985,8 +985,7 @@
                         ).success(function (response) {
                             requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
                             console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
-                            requestQueue = requestQueue.shift();   
-                            _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                            requestQueue.shift();                               
                             if(data.method == 'GET'){
                                 _setLocalStorageJsonItem(data.key, response); 
                             }
@@ -1001,7 +1000,7 @@
                         });
                     }  
                     else{
-                        requestQueue = requestQueue.shift();  
+                        requestQueue.shift();  
                         _setLocalStorageJsonItem("RequestQueue", requestQueue);
                         doRequestforWeb();
                     }               
@@ -1022,7 +1021,7 @@
                         ).success(function (response) {
                             requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
                             console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
-                            requestQueue = requestQueue.shift();  
+                            requestQueue.shift();  
                             _setLocalStorageJsonItem("RequestQueue", requestQueue); 
                             if(data.method == 'GET'){
                                 _setLocalStorageJsonItem(data.key, response); 
@@ -1038,7 +1037,7 @@
                         });
                     }  
                     else{
-                        requestQueue = requestQueue.shift();  
+                        requestQueue.shift();  
                         _setLocalStorageJsonItem("RequestQueue", requestQueue);
                         doRequestforCellphone();
                     }               
