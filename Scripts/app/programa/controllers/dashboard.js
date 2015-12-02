@@ -10,7 +10,7 @@
         '$http',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
-            
+
             var _loadedResources = false;
             var _pageLoaded = false;
             
@@ -166,7 +166,7 @@
 
                             
                         }, function() {}, true);
-                    }, errorCallback);
+                    }, errorCallback, true);
 
                 }, errorCallback);
 
