@@ -20,7 +20,7 @@ angular
             }
             
             function initController() {
-                alert("1");
+            //alert("1");
             _timeout = $timeout;
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
