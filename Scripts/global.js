@@ -718,9 +718,9 @@ var _progressNotification = function(indexStageId, currentProgress){
               wondate : wonDate
             };
             
-            allNotifications[i].wondate = wonDate;
-            allNotifications[i].status = "won"
-            localStorage.setItem("notifications",JSON.stringify(allNotifications));
+            progressNotifications[i].wondate = wonDate;
+            progressNotifications[i].status = "won";
+            localStorage.setItem("notifications", JSON.stringify(progressNotifications));
   
             moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
                 console.log("progress notification created" + currentNotification.name);
