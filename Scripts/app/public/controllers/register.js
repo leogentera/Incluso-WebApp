@@ -104,18 +104,6 @@ angular
 
 
             function storeQuiz(quizObject) {
-                /*
-                if ($scope.childActivity) {// Write Questions and Answers to Local Storage
-
-                    _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, quizObject);
-                } else {
-                    _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, quizObject);
-                }
-                */
-
-                if (hidePreloader) {
-                    $scope.$emit('HidePreloader');
-                }
             }
 
             function errorCallQuiz() {
@@ -140,18 +128,13 @@ angular
                         var course = moodleFactory.Services.GetCacheJson("course");
                         moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){
 
-                            console.log("---------------------------------------------------------------------------");
-                            //Load Quizzes assets
+                            //Load Quizzes assets ----------------------------------------------------------------------
                             var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
                             var i;
                             var parentActivity;
                             var childActivity = null;
 
                             for (i = 0; i < quizIdentifiers.length; i++) {
-
-                                if (i == quizIdentifiers.length - 1) {
-                                    hidePreloader = true;
-                                }
 
                                 parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
 
@@ -170,15 +153,7 @@ angular
                                         $scope.activity_status = parentActivity.status;
                                     }
 
-                                    console.log("activityname = " + $scope.activityname);
-                                    console.log("Activity status = " + $scope.activity_status);
-                                    console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
-
-                                    //$scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
-
-                                    $scope.activity = parentActivity;
-                                    $scope.parentActivity = parentActivity;
-                                    $scope.childActivity = childActivity;
+                                    console.log("activityname = " + $scope.activityname + "; Activity status = " + $scope.activity_status + "; Coursemoduleid = " + $scope.coursemoduleid);
 
                                     if ($scope.activity_status === 1) {//If the activity is currently finished
                                         console.log("The activity status is FINISHED");
@@ -191,12 +166,11 @@ angular
                                     }
 
                                 } else {
-                                    // When parentActivity == null AND childActivity == null
+                                    // When parentActivity == null.
                                     console.log("Activity is NOT defined");
-                                    //$location.path("/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + 0);
+                                    $location.path('/');
                                 }
                             }
-
                             //-----------------------------------------------------------------------------------------------
 
                         }, function() {}, true);
