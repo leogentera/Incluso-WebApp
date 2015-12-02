@@ -384,7 +384,7 @@ angular
 
                     }, offlineCallback);
 
-                }
+                };
 
                 $scope.likeSubActivity = function (contentId) {
 
@@ -412,130 +412,128 @@ angular
                             }
                         }
 
-                        offlineCallback
+                    }, offlineCallback);
 
-
-                }
-                    )
-            }
-
-            function countLikesByUser() {
-
-                var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-                moodleFactory.Services.CountLikesByUser(userCourse.courseid, currentUser.token, function (data) {
-                    if (data) {
-                        var likes = parseInt(data.likes);
-                        if (likes > 13) {
-                            assignLikesBadge();
-                        }
-                    }
-                }, function () {
-                }, true);
-            }
-
-            function assignLikesBadge() {
-                var badgeModel = {
-                    badgeid: 15 //badge earned when a user completes his profile.
                 };
 
-                moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
-                    console.log("created badge successfully");
-                }, function () {
-                });
-            }
+                function countLikesByUser() {
 
-            $scope.commentSubActivity = function (contentId) {
+                    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+                    moodleFactory.Services.CountLikesByUser(userCourse.courseid, currentUser.token, function (data) {
+                        if (data) {
+                            var likes = parseInt(data.likes);
+                            if (likes > 13) {
+                                assignLikesBadge();
+                            }
+                        }
+                    }, function () {
+                    }, true);
+                }
 
-                $scope.validateConnection(function () {
+                function assignLikesBadge() {
+                    var badgeModel = {
+                        badgeid: 15 //badge earned when a user completes his profile.
+                    };
 
+                    moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
+                        console.log("created badge successfully");
+                    }, function () {
+                    });
+                }
+
+                $scope.commentSubActivity = function (contentId) {
+
+                    $scope.validateConnection(function () {
+
+                        for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                            if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
+                                var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;
+                                var currentUserId = currentUser.userId;
+                                var newComment = $scope.fuenteDeEnergia.activities[i].activityContent.newComment;
+
+                                $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false;
+                                var data = {
+                                    coursemoduleid: activityId,
+                                    userid: 631,
+                                    dateissued: (new Date() / 1000 | 0),
+                                    comment: newComment
+                                };
+
+                                var newCommentObject = {
+                                    user_comment: newComment,
+                                    dateissued: (new Date() / 1000 | 0),
+                                    alias: currentUser.alias
+                                };
+
+                                $scope.fuenteDeEnergia.activities[i].activityContent.comments.push(newCommentObject);
+
+                                $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
+                                $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty++;
+                                moodleFactory.Services.PostCommentActivity(activityId, data, function () {
+                                }, function () {
+                                });
+                            }
+                        }
+
+                    }, offlineCallback);
+
+                }
+
+                $scope.showCommentBox = function (contentId) {
                     for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
-                            var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;
-                            var currentUserId = currentUser.userId;
-                            var newComment = $scope.fuenteDeEnergia.activities[i].activityContent.newComment;
+                            if ($scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox != true) {
+                                $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = true;
+                            } else {
+                                $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false;
+                            }
+                            $scope.fuenteDeEnergia.activities[i].activityContent.newComment = '';
 
-                            $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false;
-                            var data = {
-                                coursemoduleid: activityId,
-                                userid: 631,
-                                dateissued: (new Date() / 1000 | 0),
-                                comment: newComment
-                            };
-
-                            var newCommentObject = {
-                                user_comment: newComment,
-                                dateissued: (new Date() / 1000 | 0),
-                                alias: currentUser.alias
-                            };
-
-                            $scope.fuenteDeEnergia.activities[i].activityContent.comments.push(newCommentObject);
-
-                            $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
-                            $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty++;
-                            moodleFactory.Services.PostCommentActivity(activityId, data, function () {
-                            }, function () {
-                            });
                         }
                     }
+                }
 
-                }, offlineCallback);
-
-            }
-
-            $scope.showCommentBox = function (contentId) {
-                for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
-                    if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
-                        if ($scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox != true) {
-                            $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = true;
-                        } else {
-                            $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false;
+                $scope.showMoreComments = function (contentId) {
+                    for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                        if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
+                            $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = $scope.fuenteDeEnergia.activities[i].activityContent.comments.length;
                         }
-                        $scope.fuenteDeEnergia.activities[i].activityContent.newComment = '';
-
                     }
                 }
-            }
 
-            $scope.showMoreComments = function (contentId) {
-                for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
-                    if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
-                        $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = $scope.fuenteDeEnergia.activities[i].activityContent.comments.length;
-                    }
+                function getContentResources(activityIdentifierId) {
+                    console.log(activityIdentifierId);
+                    drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                        _loadedResources = true;
+                        $scope.contentResources = data.node;
+                        $rootScope.pageName = $scope.contentResources.title_toolbar;
+                        if (_loadedResources && _pageLoaded) {
+                            $scope.$emit('HidePreloader');
+                        }
+
+                    }, function () {
+                        _loadedResources = true;
+                        if (_loadedResources && _pageLoaded) {
+                            $scope.$emit('HidePreloader');
+                        }
+                    }, false);
+
+                    /*Closing message content*/
+                    var stageClosingContent = "";
+                    if (activityIdentifierId > 999 && activityIdentifierId < 2000)
+                        stageClosingContent = "ZonaDeVueloClosing";
+                    else if (activityIdentifierId > 1999 && activityIdentifierId < 3000)
+                        stageClosingContent = "ZonaDeNavegacionClosing";
+                    else
+                        stageClosingContent = "ZonaDeAterrizajeClosing";
+
+                    drupalFactory.Services.GetContent(stageClosingContent, function (data, key) {
+                        _loadedResources = true;
+                        $scope.closingContent = data.node;
+                    }, function () {
+                        _loadedResources = true;
+                    }, false);
                 }
-            }
-
-            function getContentResources(activityIdentifierId) {
-                console.log(activityIdentifierId);
-                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
-                    _loadedResources = true;
-                    $scope.contentResources = data.node;
-                    $rootScope.pageName = $scope.contentResources.title_toolbar;
-                    if (_loadedResources && _pageLoaded) {
-                        $scope.$emit('HidePreloader');
-                    }
-
-                }, function () {
-                    _loadedResources = true;
-                    if (_loadedResources && _pageLoaded) {
-                        $scope.$emit('HidePreloader');
-                    }
-                }, false);
-
-                /*Closing message content*/
-                var stageClosingContent = "";
-                if (activityIdentifierId > 999 && activityIdentifierId < 2000)
-                    stageClosingContent = "ZonaDeVueloClosing";
-                else if (activityIdentifierId > 1999 && activityIdentifierId < 3000)
-                    stageClosingContent = "ZonaDeNavegacionClosing";
-                else
-                    stageClosingContent = "ZonaDeAterrizajeClosing";
-
-                drupalFactory.Services.GetContent(stageClosingContent, function (data, key) {
-                    _loadedResources = true;
-                    $scope.closingContent = data.node;
-                }, function () {
-                    _loadedResources = true;
-                }, false);
             }
 
         }]);
