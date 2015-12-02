@@ -442,11 +442,11 @@ angular
                                 var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;
                                 var currentUserId = currentUser.userId;
                                 var newComment = $scope.fuenteDeEnergia.activities[i].activityContent.newComment;
-
+                                
                                 $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false;
                                 var data = {
                                     coursemoduleid: activityId,
-                                    userid: 631,
+                                    userid: currentUserId,
                                     dateissued: (new Date() / 1000 | 0),
                                     comment: newComment
                                   };
