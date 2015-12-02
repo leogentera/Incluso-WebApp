@@ -146,22 +146,19 @@ angular
             };
 
             $scope.login = function (username, password) {
-                $scope.$emit('ShowPreloader');
-                $scope.validateConnection(loginConnectedCallback, offlineCallback);
+                $scope.validateConnection(function(){
+                    loginConnectedCallback();
+                }, offlineCallback);
             };
             
-            $scope.navigateToRegister = function (username, password) {
-                $scope.$emit('ShowPreloader');
-                $scope.validateConnection(function() {
-                    $scope.$emit('HidePreloader');
+            $scope.navigateToRegister = function (username, password) {                
+                $scope.validateConnection(function() {                    
                     $location.path('/Register');
                 }, offlineCallback);
             };
             
-            $scope.navigateToRecoverPassword = function (username, password) {
-                $scope.$emit('ShowPreloader');
-                $scope.validateConnection(function() {
-                    $scope.$emit('HidePreloader');
+            $scope.navigateToRecoverPassword = function (username, password) {                
+                $scope.validateConnection(function() {                    
                     $location.path('/RecoverPassword');
                 }, offlineCallback);
             };
@@ -196,7 +193,6 @@ angular
                             $scope.currentUserModel.userId = data.id;
 
                             _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-
                             _setToken(data.token);
                             _setId(data.id);
 

@@ -13,6 +13,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             var _loadedResources = false;
             var _pageLoaded = false;
+            var currentUser;
 
             $scope.$emit('ShowPreloader'); //show preloader
 
@@ -102,7 +103,7 @@ angular
                 var hidePreloader = 0;
                 var profile;
                 var activities = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + moduleid));
-                var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+                currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 $scope.token = currentUser.token;
                 $scope.scrollToTop();
                 //$scope.$emit('HidePreloader'); //hide preloader
