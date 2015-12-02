@@ -77,7 +77,7 @@ angular
                         moodleFactory.Services.ExecuteQueue();
 
                         //Load Quizzes assets
-                        console.log("---------------------------------------------------------------------------");
+                        //---------------------------------------------------------------------------
                         $scope.$emit('ShowPreloader'); //show preloader
 
                         var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];

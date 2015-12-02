@@ -165,7 +165,6 @@ angular
 
                     activityObject = JSON.parse(_getItem("activity/" + $scope.coursemoduleid));
 
-
                     if (activityObject !== null) {
                         $scope.activityObject = activityObject;
                     }
@@ -180,8 +179,7 @@ angular
                         if (localAnswers !== null) {
                             $scope.answers = localAnswers;
                         }
-                        
-                        //$scope.activityFinished = activityFinished;
+
                         if (activityObject == null) {// If activity does not exists in Local Storage...get it from Server
 
                             console.log("The info for the Quiz IS NOT within Local Storage");

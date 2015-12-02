@@ -468,7 +468,7 @@ angular
 
                     }, offlineCallback);
 
-                }
+                };
 
             $scope.showCommentBox = function(contentId) {
                     for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
