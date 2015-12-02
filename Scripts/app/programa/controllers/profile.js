@@ -913,11 +913,13 @@ angular
                     var usercourse = JSON.parse(localStorage.getItem("usercourse"));
                     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
+                    $scope.userCourse = usercourse;
+
                     for (sectionIndex = 0; sectionIndex < usercourse.activities.length; sectionIndex++) {
                         var activity = usercourse.activities[sectionIndex];
 
-                        if (activity.status == 0) {
-                            //Only for profile sections not previously fulfilled.
+                        if (activity.status == 0) {//Only for profile sections not previously fulfilled.
+
                             var result;
 
                             switch (activity.activity_identifier) {
@@ -938,17 +940,12 @@ angular
                                     break;
                             }
 
-
                             if (result) {
                                 //The user has successfully completed a profile's section.
                                 //Show closing view for the given section
-                                console.log(activity.activityname);
-
                                 var sectionObject = {};
-
                                 sectionObject.name = activity.activityname.substring(7);
                                 sectionObject.points = activity.points;
-
                                 $scope.completedSections.push(sectionObject);
 
                                 $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
@@ -986,14 +983,13 @@ angular
                 }
 
                 function validateAllFieldsCompleted() {
-                    var usercourse = JSON.parse(localStorage.getItem("usercourse"));
 
-                    if (usercourse && usercourse.activities) {
+                    if ($scope.userCourse && $scope.userCourse.activities) {
 
-                        var activitiesCompleted = _.where(usercourse.activities, {status: 1});
+                        var activitiesCompleted = _.where($scope.userCourse.activities, {status: 1});
                         console.log(activitiesCompleted);
 
-                        if (activitiesCompleted && activitiesCompleted.length == usercourse.activities.length) {
+                        if (activitiesCompleted && activitiesCompleted.length == $scope.userCourse.activities.length) {
                             console.log("create badge");
                             var badgeModel = {
                                 badgeid: 13 //badge earned when a user completes his profile.
