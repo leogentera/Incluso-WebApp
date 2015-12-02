@@ -150,22 +150,19 @@ angular
             };
 
             $scope.login = function (username, password) {
-                $scope.$emit('ShowPreloader');
-                $scope.validateConnection(loginConnectedCallback, offlineCallback);
+                $scope.validateConnection(function(){
+                    loginConnectedCallback();
+                }, offlineCallback);
             };
             
-            $scope.navigateToRegister = function (username, password) {
-                $scope.$emit('ShowPreloader');
-                $scope.validateConnection(function() {
-                    $scope.$emit('HidePreloader');
+            $scope.navigateToRegister = function (username, password) {                
+                $scope.validateConnection(function() {                    
                     $location.path('/Register');
                 }, offlineCallback);
             };
             
-            $scope.navigateToRecoverPassword = function (username, password) {
-                $scope.$emit('ShowPreloader');
-                $scope.validateConnection(function() {
-                    $scope.$emit('HidePreloader');
+            $scope.navigateToRecoverPassword = function (username, password) {                
+                $scope.validateConnection(function() {                    
                     $location.path('/RecoverPassword');
                 }, offlineCallback);
             };
@@ -216,7 +213,7 @@ angular
                                 moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){
 
                                     //Load Quizzes assets
-                                    console.log("---------------------------------------------------------------------------");
+                                    //---------------------------------------------------------------------------
                                     $scope.$emit('ShowPreloader'); //show preloader
 
                                     var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
