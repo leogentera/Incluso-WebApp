@@ -20,7 +20,7 @@ angular
             }
             
             function initController() {
-                alert("1");
+            //alert("1");
             _timeout = $timeout;
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
@@ -152,7 +152,7 @@ angular
                             var newMessages = JSON.stringify($scope.messages);                
                             _setLocalStorageItem('userChat',newMessages);
                             $anchorScroll();
-                                                           
+                            newMessage.messagedate = null; //Don't send system date to services
                             moodleFactory.Services.PutUserChat($scope.senderId, newMessage, getUserChatCallback, errorCallback);
                         }, 1000);
                     }                
