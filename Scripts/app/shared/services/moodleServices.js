@@ -1021,8 +1021,7 @@
                         ).success(function (response) {
                             requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
                             console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
-                            requestQueue.shift();  
-                            _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                            requestQueue.shift();                              
                             if(data.method == 'GET'){
                                 _setLocalStorageJsonItem(data.key, response); 
                             }
