@@ -425,7 +425,6 @@ var _hasCommunityAccessLegacy = function(value) {
 
 //This function updates in localStorage the status of the stage when completed
 var _updateStageStatus = function () {
-    console.log("update stage status");
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     
     var stageCompleted = false;
@@ -492,8 +491,7 @@ var _closeChallenge = function (stageId) {
                     activity_identifier: currentChallenge.activity_identifier
                 };
                 moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallback);
-                success = currentActivityModuleId;
-                console.log("challengeCompleted true");                    
+                success = currentActivityModuleId;                  
                 return success;
             } else {
                success = 0;
@@ -572,7 +570,6 @@ var logStartActivityAction = function(activityId, timeStamp) {
             _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
             if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
-                 console.log("global");
                 var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
                 if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
                     moodleFactory.Services.GetServerDate(function(date){
@@ -587,7 +584,6 @@ var logStartActivityAction = function(activityId, timeStamp) {
                 }
             }
             
-            console.log('logStartSctivityAction Is working from dashboard');
 
         }, function () {
             console.log('Error callback');
