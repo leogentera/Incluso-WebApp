@@ -159,40 +159,33 @@ angular
 
                     activityObject = JSON.parse(_getItem("activity/" + $scope.coursemoduleid));
 
-
                     if (activityObject !== null) {
                         $scope.activityObject = activityObject;
                     }
 
                     if ($scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...
-
-
                         //Try to recover Answers from Local Storage.
-
                         localAnswers = JSON.parse(_getItem("answersQuiz/" + $scope.coursemoduleid));
 
                         if (localAnswers !== null) {
                             $scope.answers = localAnswers;
                         }
-                        
-                        //$scope.activityFinished = activityFinished;
-                        if (activityObject == null) {// If activity does not exists in Local Storage...get it from Server
 
+                        if (activityObject == null) {// If activity does not exists in Local Storage...get it from Server.
                             // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
-                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, loadModelVariables, errorCallback, true);
+                            //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, loadModelVariables, errorCallback, true);
+                            $location.path('/');
 
-                        } else {//Both Questions and Answer are on Local Storage; Angular-bind the object in the respective HTML template
-                            
+                        } else {//Both Questions and Answer SHOULD BE in Local Storage; Angular-bind the object in the respective HTML template
                             loadModelVariables(activityObject);
-                            $scope.answers = localAnswers; 
-
                         }
 
                     } else {//The Quiz has not been finished yet.
                         if (activityObject === null) {//If the questions are not in Local Storage, then...
                             // ...bring the questions from the Service. The -1 is for making up a GET request without the userid; for example:
                             // http://incluso.definityfirst.com/RestfulAPI/public/activity/150
-                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, loadModelVariables, errorCallback, true);
+                            //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, loadModelVariables, errorCallback, true);
+                            $location.path('/');
                         } else {//The questions were found in Local Storage.
                             loadModelVariables(activityObject);
                         }
@@ -216,16 +209,9 @@ angular
                 }
 
                 $scope.modelIsLoaded = true;
-                var index;
 
                 //The activityObject is an object the same type we get with the following GET request:
                 //http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
-                var theCourseModuleId;
-                if ($scope.childActivity) {
-                    theCourseModuleId = $scope.childActivity.coursemoduleid;
-                } else {
-                    theCourseModuleId = $scope.parentActivity.coursemoduleid;
-                }
 
                 $scope.activityObject = activityObject;
                 _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, activityObject);
@@ -317,11 +303,7 @@ angular
 
 
                     if ($scope.numOfOthers > 0) {//If the current Quiz has questions including the 'Other' option, then get them from LS
-                        if ($scope.childActivity) {
-                            localOtrosAnswers = JSON.parse(_getItem("otherAnswerQuiz/" + $scope.childActivity.coursemoduleid));
-                        } else {
-                            localOtrosAnswers = JSON.parse(_getItem("otherAnswerQuiz/" + $scope.parentActivity.coursemoduleid));
-                        }
+                        localOtrosAnswers = JSON.parse(_getItem("otherAnswerQuiz/" + $scope.coursemoduleid));
                     }
 
                     $scope.OtroAnswers = localOtrosAnswers;
@@ -332,11 +314,9 @@ angular
 
                     //console.log("Número de preguntas con 'Otro' = " + $scope.numOfOthers);
                     //console.log("OtroAnswers = " + JSON.stringify($scope.OtroAnswers));
-
                     for (index = 0; index < numQuestions; index++) {
 
                         question = activityObject.questions[index];
-                        
                         renderQuestionsAndAnswers(index, question);
                         _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, $scope.answers);
                     }
