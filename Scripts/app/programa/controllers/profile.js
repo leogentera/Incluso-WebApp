@@ -154,8 +154,7 @@ angular
                     $scope.birthdate_Dateformat = formatDate($scope.model.birthday);
                     if ($scope.birthdate_Dateformat instanceof Date) {
                         $scope.birthdate_Dateformat = moment($scope.birthdate_Dateformat).format("DD/MM/YYYY");
-                    }
-                    else {
+                    } else {
                         $scope.birthdate_Dateformat = null;
                     }
 
@@ -267,55 +266,55 @@ angular
 
                     switch (id) {
                         case 2:
-                            description = "Has ganado el suficiente 'combustible' para seguir la aventura. �Buen  viaje!";
+                            description = "Has ganado el suficiente 'combustible' para seguir la aventura. ¡Buen  viaje!";
                             break;
                         case 3:
-                            description = "Has recuperado la 'Turbina C0N0-CT' ahora tienes un elemento m�s para lograr la misi�n";
+                            description = "Has recuperado la 'Turbina C0N0-CT' ahora tienes un elemento más para lograr la misión";
                             break;
                         case 4:
-                            description = "Has recuperado la 'Turbina Ala Ctu-3000' �Continua el viaje!";
+                            description = "Has recuperado la 'Turbina Ala Ctu-3000' ¡Continua el viaje!";
                             break;
                         case 5:
-                            description = "Has encontrado el 'Sistema de navegaci�n' �No te detengas!";
+                            description = "Has encontrado el 'Sistema de navegación' ¡No te detengas!";
                             break;
                         case 6:
-                            description = "Has recuperado el 'Propulsor' �Ahora, ve por m�s!";
+                            description = "Has recuperado el 'Propulsor' ¡Ahora, ve por más!";
                             break;
                         case 7:
-                            description = "Recuperaste los 'Misiles' �Bien hecho!";
+                            description = "Recuperaste los 'Misiles' ¡Bien hecho!";
                             break;
                         case 8:
-                            description = "El 'Campo de fuerza' es tuyo. �Lograste un reto m�s!";
+                            description = "El 'Campo de fuerza' es tuyo. ¡Lograste un reto más!";
                             break;
                         case 9:
-                            description = "Has obtenido el 'Radar' �Contin�a la aventura!";
+                            description = "Has obtenido el 'Radar' ¡Continúa la aventura!";
                             break;
                         case 10:
-                            description = "Lograste obtener el 'Tanque de ox�geno' �No te rindas!";
+                            description = "Lograste obtener el 'Tanque de oxígeno' ¡No te rindas!";
                             break;
                         case 11:
-                            description = "Es tuya la 'Sonda espacial' �Sigue as�!";
+                            description = "Es tuya la 'Sonda espacial' ¡Sigue así!";
                             break;
                         case 12:
                             description = "Por participar activamente, has ganado la insignia 'Foro interplanetario'";
                             break;
                         case 13:
-                            description = "Por completar tu Perfil has ganado la insignia 'ID Intergal�ctica'";
+                            description = "Por completar tu Perfil has ganado la insignia 'ID Intergaláctica'";
                             break;
                         case 14:
-                            description = "Por aportar activamente en la comunidad Incluso has ganado la insignia 'Participaci�n el�ctrica'";
+                            description = "Por aportar activamente en la comunidad Incluso has ganado la insignia 'Participación eléctrica'";
                             break;
                         case 15:
-                            description = "Por obtener 30 likes en Foro o Comunidad has ganado la insignia 'Coraz�n digital'";
+                            description = "Por obtener 30 likes en Foro o Comunidad has ganado la insignia 'Corazón digital'";
                             break;
                         case 16:
-                            description = "Has ganado el 'Casco'. Ahora, �ve por m�s!";
+                            description = "Has ganado el 'Casco'. Ahora, ¡ve por más!";
                             break;
                         case 17:
                             description = "Has ganado el 'Radio de comunicación'. ¡Nunca te des por vencido!";
                             break;
                         case 18:
-                            description = "Ya es tuyo el 'Turbo' �no te rindas!";
+                            description = "Ya es tuyo el 'Turbo' ¡no te rindas!";
                             break;
                         default:
                             description = "";
@@ -349,7 +348,7 @@ angular
                     //Try to get user profile data from Local Storage.
                     $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
 
-                    if ($scope.model !== null) {
+                    if ($scope.model !== null) {// If profile existes in Local Storage, then...
                         console.log("Profile from LOCAL STORAGE");
                         if ($scope.model.profileimageurl) {
                             $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
@@ -602,7 +601,6 @@ angular
                     });
 
                     if (arrayForUsername.length != filteredUsernames.length) {
-                        //Repeated names for Social network
                         errors.push("Nombre de Red social está repetido.");
                     }
 
@@ -612,7 +610,6 @@ angular
 
                     $scope.model.familiaCompartamos.forEach(function (elem) {
                         arrayForIdClients.push(elem.idClient.toLowerCase());
-
                     });
 
                     var filteredIdClient = arrayForIdClients.filter(function (item, pos) {
@@ -629,15 +626,13 @@ angular
 
                     $scope.model.familiaCompartamos.forEach(function (elem) {
                         arrayForParentesco.push(elem.relationship.toLowerCase());
-
                     });
 
                     var filteredArray = arrayForParentesco.filter(function (item, pos) {
                         return arrayForParentesco.indexOf(item) == pos;
                     });
 
-                    if (arrayForParentesco.length != filteredArray.length) {
-                        //Repeated idClients
+                    if (arrayForParentesco.length != filteredArray.length) { //Repeated idClients
                         errors.push("El parentesco está repetido.");
                     }
 
@@ -652,8 +647,7 @@ angular
                         return arrayForLevel.indexOf(item) == pos;
                     });
 
-                    if (arrayForLevel.length != filteredLevel.length) {
-                        //Repeated names for Social network
+                    if (arrayForLevel.length != filteredLevel.length) { //Repeated names for Social network
                         errors.push("El nivel de estudios está repetido.");
                     }
 
@@ -665,7 +659,7 @@ angular
 
                 var validateEmptyItemsOnLists = function () {
 
-                    // Mi Informaci�n -------------------------------------------------------------------------------------
+                    // Mi Información -------------------------------------------------------------------------------------
 
                     //studies
                     if ($scope.model.studies.length > 0) {
@@ -749,7 +743,6 @@ angular
                             }
                         }
                     }
-
 
                     //values
                     if ($scope.model.values.length > 0) {
@@ -835,7 +828,6 @@ angular
                         }
                     }
 
-
                     //kindOfVideogames
                     if ($scope.model.kindOfVideogames.length > 0) {
                         for (var i = 0; i < $scope.model.kindOfVideogames.length; i++) {
@@ -856,16 +848,7 @@ angular
                         }
                     }
 
-
                 };
-
-                $scope.returnToProfile = function () {//After pressing "Terminar" button.
-                    $scope.$emit('ShowPreloader');
-                    $timeout(function () {
-                        $scope.$emit('ShowPreloader');
-                        $location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
-                    }, 1);
-                }
 
                 $scope.returnToProfile = function () {//After pressing "Terminar" button.
                     $scope.$emit('ShowPreloader');
@@ -877,18 +860,8 @@ angular
 
                 $scope.index = function () {//Redirect to editing profile again.
                     $scope.currentPage = 12;
-
-                    $location.path("Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
-
+                    //$location.path("Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
                 };
-
-                $scope.index = function () {//Redirect to editing profile again.
-
-                    $scope.currentPage = 12;
-                    //$location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
-                    $location.path("/Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
-                };
-
 
                 $scope.save = function () {
 

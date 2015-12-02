@@ -71,16 +71,16 @@ angular
                             $scope.activity_status = parentActivity.status;
                         }
 
-                        console.log("activityname = " + $scope.activityname + "; Activity status = " + $scope.activity_status + "; Coursemoduleid = " + $scope.coursemoduleid);
+                        //console.log("activityname = " + $scope.activityname + "; Activity status = " + $scope.activity_status + "; Coursemoduleid = " + $scope.coursemoduleid);
 
                         if ($scope.activity_status === 1) {//If the activity is currently finished
-                            console.log("The activity status is FINISHED");
+                            //console.log("The activity status is FINISHED");
 
                             // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, storeQuiz, errorCallQuiz, true);
 
                         } else {
-                            console.log("The activity HAS NOT BEEN FINISHED");
+                            //console.log("The activity HAS NOT BEEN FINISHED");
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, userToken, storeQuiz, errorCallQuiz, true);
                         }
 
