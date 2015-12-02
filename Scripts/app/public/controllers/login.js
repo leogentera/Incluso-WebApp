@@ -129,6 +129,7 @@ angular
                         $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                         $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
                         loadQuizesAssets($scope.userprofile.id, $scope.currentUser.token);
+                        GetExternalAppData();
                         //----------------------------------------------------------------------------------------------
 
                     }, function(){}); }, 2000);
@@ -209,6 +210,7 @@ angular
 
                                     //Load Quizzes assets --------------------------------------------------------------
                                     loadQuizesAssets(data.id, data.token);
+                                    GetExternalAppData();
                                     //----------------------------------------------------------------------------------
 
                                 }, function() {}, true);
@@ -283,6 +285,7 @@ angular
 
                             //Load Quizzes assets ----------------------------------------------------------------------
                             loadQuizesAssets(userFacebook.id, userFacebook.token);
+                            GetExternalAppData();
                             //------------------------------------------------------------------------------------------
                         
                         $timeout(
