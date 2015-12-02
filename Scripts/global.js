@@ -605,25 +605,29 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
     if (activity) {
       //code
     
-    for (var i = 0; i < allNotifications.length; i++) {
-        var currentNotification = allNotifications[i];
-        if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
-                        
-          var wonDate = new Date();                        
-          var dataModelNotification = {
-            notificationid : String(currentNotification.id),
-            userid: currentUserId,
-            wondate : wonDate
-          };
-
-          moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
-              console.log("create notification successful");
-          }, errorCallback, true);
+      for (var i = 0; i < allNotifications.length; i++) {
+          var currentNotification = allNotifications[i];
+          if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
+                          
+            var wonDate = new Date();                        
+            var dataModelNotification = {
+              notificationid : String(currentNotification.id),
+              userid: currentUserId,
+              wondate : wonDate
+            };
+  
+            allNotifications[i].wondate = wonDate;
+            allNotifications[i].status = "won"
+            localStorage.setItem("notifications",JSON.stringify(allNotifications));
             
-        } else {
-          
-        }
-    }
+            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){              
+                console.log("create notification successful");
+            }, errorCallback, true);
+              
+          } else {
+            
+          }
+      }
     }
 };
 
@@ -658,14 +662,24 @@ var _coachNotification = function (stageIndex) {
                 var lastDateChat = moment(new Date(lastChat.messagedate)).add(daysOfNoChat, 'days');
 
                 var today = new Date();
-                if (lastDateChat < today) {
+                if (lastDateChat <= today) {
                     //Create chat notification
                     //moodleFactory.services.createNotification(userId,notificationId, function(){},function(){});
+                    var wonDate = new Date();   
                     var dataModelNotification = {
                         notificationid : notificationId,
-                        userid: userId                        
+                        userid: userId,
+                        wondate: wonDate
                       };                                            
-                    
+                                                             
+                    for (var i = 0; i< notifications.length; i++) {
+                      if (notifications[i].id == notificationId) {
+                          notifications[i].wondate = wonDate;
+                          notifications[i].status = "won";
+                      }
+                    }
+                    localStorage.setItem("notifications",JSON.stringify(notifications));
+            
                     moodleFactory.Services.PostUserNotifications( dataModelNotification, function(){
                         console.log("create notification successful");
                       }, errorCallback,true);
@@ -703,6 +717,10 @@ var _progressNotification = function(indexStageId, currentProgress){
               userid: currentUser.id,
               wondate : wonDate
             };
+            
+            allNotifications[i].wondate = wonDate;
+            allNotifications[i].status = "won"
+            localStorage.setItem("notifications",JSON.stringify(allNotifications));
   
             moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
                 console.log("progress notification created" + currentNotification.name);
