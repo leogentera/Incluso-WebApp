@@ -1386,7 +1386,7 @@ var _loadActivityBlockStatus = function () {
 
 //Helps defining if activity can be started
 var _canStartActivity = function(activityIdentifier){
-    console.log('canStartActivity');
+    //console.log('canStartActivity');
 
     //If activity tree has not been loaded, return false.
     var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
