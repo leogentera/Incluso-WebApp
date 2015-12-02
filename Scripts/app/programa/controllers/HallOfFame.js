@@ -15,7 +15,7 @@ hallOfFameModule
             var _pageLoaded = false;
 
             $scope.$emit('ShowPreloader');
-            
+            var citiesCatalogKey = "citiescatalog";
             $scope.validateConnection(initController, offlineCallback);
             
             function offlineCallback() {
@@ -44,10 +44,13 @@ hallOfFameModule
                 $scope.back = function () {
                     $location.path('/ProgramaDashboard');
                 };
-                var citiesCatalogKey = "citiescatalog";
+                
                 $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-                moodleFactory.Services.GetAsyncCatalog(citiesCatalogKey,$scope.user.token,getCitiesCatalogCallback,function(data){console.log(data)},false);
+                
+                //moodleFactory.Services.GetAsyncCatalog(citiesCatalogKey,$scope.user.token,getCitiesCatalogCallback,function(data){console.log(data)},false);
+                $scope.cities = _.find(moodleFactory.Services.GetCacheJson("catalogs"), function(object){return object.catalog=="citiesCatalog";} ).values;
+                $scope.cities.unshift("Ver Todo");
                 $scope.default = true;
                 getTop5("Ver Todo");
                 var userId = localStorage.getItem("userId");
@@ -81,8 +84,6 @@ hallOfFameModule
                     //FIND ME Temporary
                     //$scope.cities = ["M\u00e9xico D.F","Estado de M\u00e9xico","OTRO"];
                     $scope.cities.unshift("Ver Todo");
-    
-    
                 }
     
                 function getTop5Callback()
