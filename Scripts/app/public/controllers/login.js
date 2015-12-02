@@ -74,7 +74,8 @@ angular
                         _loadDrupalResources();
 
                         //Run queue
-                        moodleFactory.Services.ExecuteQueue();
+                        moodleFactory.Services.ExecuteQueue(function(){
+                        });
 
                         //Load Quizzes assets
                         //---------------------------------------------------------------------------
@@ -190,9 +191,7 @@ angular
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                         data: $.param({ username: $scope.userCredentialsModel.username.toString().toLowerCase(), password: $scope.userCredentialsModel.password })
                     }
-                    ).success(function (data, status, headers, config) {
-                        //Run queue
-                        moodleFactory.Services.ExecuteQueue();
+                    ).success(function (data, status, headers, config) {                        
 
                             console.log('successfully logged in');
 
@@ -205,80 +204,83 @@ angular
                             _setToken(data.token);
                             _setId(data.id);
 
-                        console.log('preparing for syncAll');
+                        //Run queue
+                        moodleFactory.Services.ExecuteQueue(function (){
+                           console.log('preparing for syncAll');
 
-                        //succesful credentials
-                        _syncAll(function () {
-                            console.log('came back from redirecting...');
+                            //succesful credentials
+                            _syncAll(function () {
+                                console.log('came back from redirecting...');
 
-                            var course = moodleFactory.Services.GetCacheJson("course");
-                            moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){
+                                var course = moodleFactory.Services.GetCacheJson("course");
+                                moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){
 
-                                //Load Quizzes assets
-                                console.log("---------------------------------------------------------------------------");
-                                $scope.$emit('ShowPreloader'); //show preloader
+                                    //Load Quizzes assets
+                                    console.log("---------------------------------------------------------------------------");
+                                    $scope.$emit('ShowPreloader'); //show preloader
 
-                                var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
-                                var i;
-                                var parentActivity;
-                                var childActivity = null;
+                                    var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
+                                    var i;
+                                    var parentActivity;
+                                    var childActivity = null;
 
-                                for (i = 0; i < quizIdentifiers.length; i++) {
+                                    for (i = 0; i < quizIdentifiers.length; i++) {
 
-                                    parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
+                                        parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
 
-                                    if (parentActivity != null) {
+                                        if (parentActivity != null) {
 
-                                        if (parentActivity.activities) {//The activity HAS a "child" activity
+                                            if (parentActivity.activities) {//The activity HAS a "child" activity
 
-                                            childActivity = parentActivity.activities[0];
-                                            $scope.coursemoduleid = childActivity.coursemoduleid;
-                                            $scope.activityname = childActivity.activityname;
-                                            $scope.activity_status = childActivity.status;
+                                                childActivity = parentActivity.activities[0];
+                                                $scope.coursemoduleid = childActivity.coursemoduleid;
+                                                $scope.activityname = childActivity.activityname;
+                                                $scope.activity_status = childActivity.status;
 
-                                        } else {//The activity has no "child" activity
-                                            $scope.coursemoduleid = parentActivity.coursemoduleid;
-                                            $scope.activityname = parentActivity.activityname;
-                                            $scope.activity_status = parentActivity.status;
-                                        }
+                                            } else {//The activity has no "child" activity
+                                                $scope.coursemoduleid = parentActivity.coursemoduleid;
+                                                $scope.activityname = parentActivity.activityname;
+                                                $scope.activity_status = parentActivity.status;
+                                            }
 
-                                        console.log("activityname = " + $scope.activityname);
-                                        console.log("Activity status = " + $scope.activity_status);
-                                        console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
+                                            console.log("activityname = " + $scope.activityname);
+                                            console.log("Activity status = " + $scope.activity_status);
+                                            console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
 
-                                        $scope.activity = parentActivity;
-                                        $scope.parentActivity = parentActivity;
-                                        $scope.childActivity = childActivity;
+                                            $scope.activity = parentActivity;
+                                            $scope.parentActivity = parentActivity;
+                                            $scope.childActivity = childActivity;
 
-                                        if ($scope.activity_status === 1) {//If the activity is currently finished
-                                            console.log("The activity status is FINISHED");
+                                            if ($scope.activity_status === 1) {//If the activity is currently finished
+                                                console.log("The activity status is FINISHED");
 
-                                            // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
-                                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, storeQuiz, errorCallQuiz, true);
+                                                // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
+                                                moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, storeQuiz, errorCallQuiz, true);
+
+                                            } else {
+                                                console.log("The activity HAS NOT BEEN FINISHED");
+                                                moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, data.token, storeQuiz, errorCallQuiz, true);
+                                            }
 
                                         } else {
-                                            console.log("The activity HAS NOT BEEN FINISHED");
-                                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, data.token, storeQuiz, errorCallQuiz, true);
+                                            // When parentActivity == null AND childActivity == null
+                                            console.log("Activity is NOT defined");
                                         }
-
-                                    } else {
-                                        // When parentActivity == null AND childActivity == null
-                                        console.log("Activity is NOT defined");
                                     }
-                                }
 
-                                //-----------------------------------------------------------------------------------------------
+                                    //-----------------------------------------------------------------------------------------------
 
 
-                            }, function() {}, true);
+                                }, function() {}, true);
 
-                            $timeout(
-                                function () {
-                                    console.log('redirecting..');
-                                    $scope.$emit('HidePreloader'); //hide preloader
-                                    $location.path('/ProgramaDashboard');
-                                }, 1000);
-                        });
+                                $timeout(
+                                    function () {
+                                        console.log('redirecting..');
+                                        $scope.$emit('HidePreloader'); //hide preloader
+                                        $location.path('/ProgramaDashboard');
+                                    }, 1000);
+                            }); 
+                        });                    
 
                             if ($scope.userCredentialsModel.rememberCredentials) {
                                 _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
@@ -316,10 +318,7 @@ angular
                 console.log('successfully logged in ' + data);                
                 var userFacebook = JSON.parse(data);
 
-                _loadDrupalResources();
-
-                //Run queue
-                moodleFactory.Services.ExecuteQueue();
+                _loadDrupalResources();            
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = userFacebook;
@@ -331,90 +330,93 @@ angular
                 _setToken(userFacebook.token);
                 _setId(userFacebook.id);
 
-                console.log('preparing for syncAll');
+                //Run queue
+                moodleFactory.Services.ExecuteQueue(function(){
+                    console.log('preparing for syncAll');
 
-                //succesful credentials
-                _syncAll(function () {
-                    console.log('came back from redirecting...');
-                    
-                    var course = moodleFactory.Services.GetCacheJson("course");
-                    moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, false);
+                    //succesful credentials
+                    _syncAll(function () {
+                        console.log('came back from redirecting...');
+                        
+                        var course = moodleFactory.Services.GetCacheJson("course");
+                        moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, false);
 
 
-                         //Load Quizzes assets
-                        console.log("---------------------------------------------------------------------------");
-                        $scope.$emit('ShowPreloader'); //show preloader
+                             //Load Quizzes assets
+                            console.log("---------------------------------------------------------------------------");
+                            $scope.$emit('ShowPreloader'); //show preloader
 
-                        var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
-                        var i;
-                        var parentActivity;
-                        var childActivity = null;
+                            var quizIdentifiers = [1001, 1005, 1006, 1007, 1009, 2001, 2007, 2016, 2023, 3101, 3601];
+                            var i;
+                            var parentActivity;
+                            var childActivity = null;
 
-                        for (i = 0; i < quizIdentifiers.length; i++) {
+                            for (i = 0; i < quizIdentifiers.length; i++) {
 
-                            if (i == quizIdentifiers.length - 1) {
-                                hidePreloader = true;
-                            }
-                            parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
-
-                            if (parentActivity != null) {
-
-                                if (parentActivity.activities) {//The activity HAS a "child" activity
-
-                                    childActivity = parentActivity.activities[0];
-                                    $scope.coursemoduleid = childActivity.coursemoduleid;
-                                    $scope.activityname = childActivity.activityname;
-                                    $scope.activity_status = childActivity.status;
-
-                                } else {//The activity has no "child" activity
-                                    $scope.coursemoduleid = parentActivity.coursemoduleid;
-                                    $scope.activityname = parentActivity.activityname;
-                                    $scope.activity_status = parentActivity.status;
+                                if (i == quizIdentifiers.length - 1) {
+                                    hidePreloader = true;
                                 }
+                                parentActivity = getActivityByActivity_identifier(quizIdentifiers[i]);
 
-                                console.log("activityname = " + $scope.activityname);
-                                console.log("Activity status = " + $scope.activity_status);
-                                console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
+                                if (parentActivity != null) {
 
-                                //$scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
+                                    if (parentActivity.activities) {//The activity HAS a "child" activity
 
-                                $scope.activity = parentActivity;
-                                $scope.parentActivity = parentActivity;
-                                $scope.childActivity = childActivity;
+                                        childActivity = parentActivity.activities[0];
+                                        $scope.coursemoduleid = childActivity.coursemoduleid;
+                                        $scope.activityname = childActivity.activityname;
+                                        $scope.activity_status = childActivity.status;
 
-                                if ($scope.activity_status === 1) {//If the activity is currently finished
-                                    console.log("The activity status is FINISHED");
+                                    } else {//The activity has no "child" activity
+                                        $scope.coursemoduleid = parentActivity.coursemoduleid;
+                                        $scope.activityname = parentActivity.activityname;
+                                        $scope.activity_status = parentActivity.status;
+                                    }
 
-                                    // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userFacebook.id, userFacebook.token, storeQuiz, errorCallQuiz, true);
+                                    console.log("activityname = " + $scope.activityname);
+                                    console.log("Activity status = " + $scope.activity_status);
+                                    console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
+
+                                    //$scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
+
+                                    $scope.activity = parentActivity;
+                                    $scope.parentActivity = parentActivity;
+                                    $scope.childActivity = childActivity;
+
+                                    if ($scope.activity_status === 1) {//If the activity is currently finished
+                                        console.log("The activity status is FINISHED");
+
+                                        // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
+                                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userFacebook.id, userFacebook.token, storeQuiz, errorCallQuiz, true);
+
+                                    } else {
+                                        console.log("The activity HAS NOT BEEN FINISHED");
+                                        moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, userFacebook.token, storeQuiz, errorCallQuiz, true);
+                                    }
 
                                 } else {
-                                    console.log("The activity HAS NOT BEEN FINISHED");
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, userFacebook.token, storeQuiz, errorCallQuiz, true);
+                                    // When parentActivity == null AND childActivity == null
+                                    console.log("Activity is NOT defined");
+                                    //$location.path("/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + 0);
                                 }
-
-                            } else {
-                                // When parentActivity == null AND childActivity == null
-                                console.log("Activity is NOT defined");
-                                //$location.path("/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + 0);
                             }
-                        }
 
-                        //-----------------------------------------------------------------------------------------------
+                            //-----------------------------------------------------------------------------------------------
 
 
-                    
-                    $timeout(
-                        function () {
-                            console.log('redirecting..');
-                            if(userFacebook.is_new == true){
-                                $location.path('/Tutorial');
-                            }else{
-                                $location.path('/ProgramaDashboard');
-                            }
-                            //$scope.$emit('HidePreloader');
-                        }, 1000);
-                });
+                        
+                        $timeout(
+                            function () {
+                                console.log('redirecting..');
+                                if(userFacebook.is_new == true){
+                                    $location.path('/Tutorial');
+                                }else{
+                                    $location.path('/ProgramaDashboard');
+                                }
+                                //$scope.$emit('HidePreloader');
+                            }, 1000);
+                    });
+                });                            
 
                 if ($scope.userCredentialsModel.rememberCredentials) {
                     _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
