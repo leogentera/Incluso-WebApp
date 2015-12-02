@@ -20,7 +20,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-            $scope.$emit('HidePreloader');
+            
             /* ViewModel */
             $scope.recoverPasswordModel = {
                 email: "",
@@ -35,6 +35,7 @@ angular
                 }
             };
             
+            $scope.$emit('HidePreloader');
             $scope.validateConnection(function () {}, offlineCallback);
 
             /* Helpers */
@@ -60,10 +61,10 @@ angular
 
             
             function offlineCallback() {
-                $scope.$apply(function() {
+                $timeout(function(){
                     $scope.recoverPasswordModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
                     $scope.$emit('scrollTop'); //- scroll
-                });
+                }, 1000);
             }
             
             function checkEqualityOfPasswords(password, confirmPassword) {
