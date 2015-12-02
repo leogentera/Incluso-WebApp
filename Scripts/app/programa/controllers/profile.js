@@ -475,7 +475,7 @@ angular
                 };
 
                 $scope.edit = function () {
-                    $location.path('/Perfil/Editar');
+                    $location.path("/Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
                 };
 
                 $scope.navigateToDashboard = function () {
@@ -850,6 +850,7 @@ angular
 
                 $scope.index = function () {//Redirect to editing profile again.
                     $scope.currentPage = 12;
+
                     $location.path("Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
 
                 };
@@ -858,7 +859,7 @@ angular
 
                     $scope.currentPage = 12;
                     //$location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
-                    $location.path("Perfil/Editar");
+                    $location.path("/Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
                 };
 
 

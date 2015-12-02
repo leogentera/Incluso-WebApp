@@ -24,6 +24,8 @@ angular
             }
             
             function initController() {
+                var selectedDiscussionId = null;
+                
                 Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
@@ -105,10 +107,13 @@ angular
                 getDataAsync();
     
                 $scope.showComentarios = function (discussionId) {
+                    selectedDiscussionId = discussionId;
                     $scope.validateConnection(showComentariosConnectedCallback, offlineCallback);
                 }
                 
-                function showComentariosConnectedCallback(discussionId) {
+                function showComentariosConnectedCallback() {
+                    
+                    var discussionId = selectedDiscussionId;
                     var moodleId = $routeParams.moodleId;
                     console.log('Moodle ID: ' + $routeParams.moodleId);
                     !moodleId? moodleId = getMoodleIdFromTreeActivity($routeParams.activityId): '';

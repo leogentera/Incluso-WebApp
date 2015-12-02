@@ -127,7 +127,6 @@ angular
                 var userCurrentStage = localStorage.getItem("userCurrentStage");
                 var owlIndex = localStorage.getItem("owlIndex");
                 destinationPath = "/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + owlIndex;
-                console.log("Activity identifier: " + $scope.activity_identifier);
 
                 var childActivity = null;               
 
@@ -148,12 +147,7 @@ angular
                         $scope.activity_status = parentActivity.status;
                     }
 
-                    console.log("activityname = " + $scope.activityname);
-                    console.log("Activity status = " + $scope.activity_status);
-                    console.log("Coursemoduleid de la actividad = " + $scope.coursemoduleid);
-
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
-                    console.log("Starting... " + parentActivity.sectionname);
 
                     $scope.activity = parentActivity;
                     $scope.parentActivity = parentActivity;
@@ -171,7 +165,7 @@ angular
 
                     if ($scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...
 
-                        console.log("The activity status is FINISHED");
+
                         //Try to recover Answers from Local Storage.
 
                         localAnswers = JSON.parse(_getItem("answersQuiz/" + $scope.coursemoduleid));
@@ -182,35 +176,28 @@ angular
 
                         if (activityObject == null) {// If activity does not exists in Local Storage...get it from Server
 
-                            console.log("The info for the Quiz IS NOT within Local Storage");
                             // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, $scope.userprofile.id, $scope.currentUser.token, loadModelVariables, errorCallback, true);
-                            console.log("The info has been taken from Service...");
 
                         } else {//Both Questions and Answer are on Local Storage; Angular-bind the object in the respective HTML template
                             
-                            console.log("The info for the Quiz is within Local Storage");
                             loadModelVariables(activityObject);
                             $scope.answers = localAnswers; 
 
                         }
 
                     } else {//The Quiz has not been finished yet.
-                        console.log("This Quiz has not been finished yet ...");
                         if (activityObject === null) {//If the questions are not in Local Storage, then...
                             // ...bring the questions from the Service. The -1 is for making up a GET request without the userid; for example:
                             // http://incluso.definityfirst.com/RestfulAPI/public/activity/150
-                            console.log("Bringing text from Service for a not finished Quiz...");
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, loadModelVariables, errorCallback, true);
                         } else {//The questions were found in Local Storage.
-                            console.log("Bringing text from Local Storage for an unfinished Quiz...");
                             loadModelVariables(activityObject);
                         }
                     }
 
                 } else {
                     // When parentActivity == null AND childActivity == null
-                    console.log("Activity is NOT defined");
                     $location.path("/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + 0);
                 }
 
@@ -352,7 +339,6 @@ angular
                         _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, $scope.answers);
                     }
 
-                    console.log("Num of multichoice questions = " + $scope.numOfMultichoiceQuestions);
 
                 } else {
                     $scope.warningMessage = "Las respuestas del quiz no se pueden mostrar en este momento";
@@ -370,17 +356,17 @@ angular
             $scope.updateOtherField = function (index, otherIndex, checkLabel) {
 
                 var multichoiceIndex = $scope.position[index];
-                console.log("answers: # " + $scope.answers[index]);
+
 
                 // The checkbox for 'Other' is clicked.
                 if ($scope.answers[index][otherIndex] && $scope.questionNumOfChoices[index] - 1 == otherIndex) {
-                    console.log("The 'Other' checkbox is ON");
+
                     //Add room for the TextArea
                     addHeight($("multichoice" + index)); //should be addHeight($("multichoice" + multichoiceIndex));
                 }
 
                 if ($scope.answers[index][otherIndex] == 0 && $scope.questionNumOfChoices[index] - 1 == otherIndex) {
-                    console.log("The 'Other' checkbox is OFF");
+
                     $scope.OtroAnswers[multichoiceIndex].answers[0] = "";
                     removeHeight($("multichoice" + index));
                 }
@@ -420,7 +406,7 @@ angular
 
                 if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
                     questionCode = "multichoice";
-                    console.log("inside multichoice");
+
                     $scope.numOfMultichoiceQuestions++;
                     $scope.position[questionIndex] = $scope.numOfMultichoiceQuestions - 1;
 
@@ -452,7 +438,6 @@ angular
                 //console.log("questionTypeCode = " + questionCode);
                 $scope.questionTypeCode.push(questionCode);
                 $scope.questionText.push(questionText);
-                console.log(questionIndex + " Code = " + questionCode);
 
                 switch (questionCode) {
 
@@ -511,7 +496,6 @@ angular
                           }
                         }
 
-                        console.log("Model loaded = " + $scope.answers[questionIndex]);
                         break;
 
                     case "multichoicewo":
@@ -549,7 +533,6 @@ angular
                             }
                         }
 
-                        console.log("rendering this answers: " + $scope.answers[questionIndex]);
                         break;
                                            
 
@@ -592,7 +575,6 @@ angular
                         var myAnswer;
                         var userAnswers;
                         
-                        console.log("user answer essay = " + question.userAnswer);
 
                         if ($scope.answers[questionIndex]  === undefined) {
                             $scope.answers[questionIndex] = [];   //Adding room for first answer
@@ -622,7 +604,7 @@ angular
             //############################## CODE CALLED WHEN USER FINISHES ACTIVITY ###################################
             $scope.finishActivity = function () {
                 
-                console.log("$scope.answers = " + JSON.stringify($scope.answers));
+
                 $scope.$emit("ShowPreloader");                
 
                 //This is to avoid killing the preloader up starting.
@@ -655,7 +637,6 @@ angular
                     _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse); 
                     $scope.AnswersResult.answers = $scope.answers;
 
-                    console.log("Ending activity...");
 
                     if ($scope.childActivity) {
                         updateActivityStatusDictionary($scope.childActivity.activity_identifier);
@@ -686,7 +667,7 @@ angular
                         _setLocalStorageJsonItem("UserTalents/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("activity/" + $scope.childActivity.coursemoduleid, activityObject);
                     } else {
-                        console.log("storing answers: " + $scope.AnswersResult.answers + " " + $scope.parentActivity.coursemoduleid);
+
                         _setLocalStorageJsonItem("answersQuiz/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("UserTalents/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("activity/" + $scope.parentActivity.coursemoduleid, activityObject);
@@ -694,7 +675,6 @@ angular
 
                     //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
                     if ($scope.numOfOthers > 0) {
-                        console.log(JSON.stringify($scope.OtroAnswers));
 
                         if ($scope.childActivity) {
                             _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.childActivity.coursemoduleid, $scope.OtroAnswers);
@@ -703,8 +683,7 @@ angular
                         }
                     }
 
-                    console.log("activityModel.answersResult = " + JSON.stringify(activityModel.answersResult));
-                    console.log("activityModel.others = " + JSON.stringify(activityModel.others));
+
 
                     if ($scope.childActivity) {
                         //Close Quiz activity.
@@ -823,28 +802,27 @@ angular
                     moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
                         function (responseData) {
-                            console.log('Update profile successful...');
-                            console.log('This activity has ' + $scope.activityPoints);
+
                             $scope.numOfMultichoiceQuestions = 0;
                             $scope.numOfOthers = 0;
 
                             //Update Activity Log Service
                             if ($scope.activity_status == 0) {
                                 $scope.activity_status = 1;
-                                console.log("Update Activity Log : " + $scope.activity_identifier);
+
                                 updateUserStars($scope.parentActivity.activity_identifier);                                
                             }
 
-                            console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
+
                             $location.path(destinationPath);
                         },
                         function (responseData) {
-                            console.log('Update profile fail...');
+
                         }
                     );
 
                 } else {
-                    console.log('This activity has no profile...');
+
                     $scope.numOfMultichoiceQuestions = 0;
                     $scope.numOfOthers = 0;
 
@@ -854,7 +832,6 @@ angular
                         updateUserStars($scope.parentActivity.activity_identifier);                                             
                     }
 
-                    console.log("Redirecting to dashboard; destinationPath = " + destinationPath);
                     $location.path(destinationPath);
                 }
 
@@ -867,7 +844,6 @@ angular
                 var index, i;
                 var numAnswered = 0;
                 var numQuestions = $scope.activityObject.questions.length;
-                console.log("Starting validation of " + numQuestions + " questions");
 
                 for (index = 0; index < numQuestions; index++) {
 
@@ -882,7 +858,7 @@ angular
                             break;
 
                         case "multichoice":
-                            console.log("--------- " + JSON.stringify($scope.answers));
+
                             //Validation: the multichoice must have some 'true' value...
                             if (  ($scope.answers[index]).indexOf(1)   >   -1   ) {
                                 //...and Other is 'true' and has a non empty string in the input
@@ -899,7 +875,7 @@ angular
                                     $scope.answers[index][i] = 0;                                        
                                 } 
                             }
-                            console.log($scope.answers[index]);
+
                             break;
 
                         case "multichoicewo":
@@ -909,7 +885,7 @@ angular
                             }
 
                             for (i = 0; i < $scope.activityObject.questions[index].answers.length; i++) {
-                                console.log("Validating " + $scope.activityObject.questions[index].answers.length + " options wo");
+
                                 if ($scope.answers[index][i] != 1) {                                     
                                     $scope.answers[index][i] = 0;                                        
                                 } 
@@ -1063,7 +1039,7 @@ angular
                                 $scope.chosenByUserAndWrong[i][j] = false;
 
                                 if (1 === parseInt($scope.answers[i][j])) {//The j-th checkbox was selected.
-                                    console.log(parseFloat(questionObj.answers[j].fraction));
+
                                     attainedScore = attainedScore + parseFloat(questionObj.answers[j].fraction);
                                 }
                             }
@@ -1079,7 +1055,6 @@ angular
                         }
                     }
                     
-                    console.log("attainedScore / totalScore = " + attainedScore + " / " + totalScore);
                     $scope.score = attainedScore * 100 / totalScore;
                 }
             }
@@ -1137,7 +1112,7 @@ angular
             }
 
             function addHeightForOther() {
-                console.log("We are inside addHeightForOther");
+
                 var containerHeight = angular.element('div.owl-wrapper-outer').height();
                 angular.element("div.owl-wrapper-outer").css('height', containerHeight + 100);
             }
@@ -1172,7 +1147,6 @@ angular
                 $scope.numOfMultichoiceQuestions = 0;
                 $scope.numOfOthers = 0;
 
-                console.log(destinationPath);
                 $location.path(destinationPath);
             };
 

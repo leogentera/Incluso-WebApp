@@ -134,7 +134,7 @@ angular
                         var badgeModel = {
                             badgeid: badgeForum[0].id //badge earned when a user completes his profile.
                             };
-                        moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function(){
+                        moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){
                             console.log("created badge successfully");
                             },function(){
                                 });
