@@ -15,7 +15,7 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
             var _loadedResources = false;
             var _pageLoaded = true;
-            //Turn on Preloader
+
             $scope.$emit('ShowPreloader'); //show preloader
             _httpFactory = $http;
             _location = $location;
@@ -163,11 +163,8 @@ angular
                     var localAnswers = null;
                     var activityObject = null;
 
-                    if (childActivity) {
-                        activityObject = JSON.parse(_getItem("activityObject/" + childActivity.coursemoduleid));
-                    } else {
-                        activityObject = JSON.parse(_getItem("activityObject/" + parentActivity.coursemoduleid));
-                    }
+                    activityObject = JSON.parse(_getItem("activity/" + $scope.coursemoduleid));
+
 
                     if (activityObject !== null) {
                         $scope.activityObject = activityObject;
@@ -177,17 +174,12 @@ angular
 
                         console.log("The activity status is FINISHED");
                         //Try to recover Answers from Local Storage.
-                        if (childActivity) {
-                            localAnswers = JSON.parse(_getItem("answersQuiz/" + childActivity.coursemoduleid));
-                        } else {
-                            localAnswers = JSON.parse(_getItem("answersQuiz/" + parentActivity.coursemoduleid));
-                        }
+
+                        localAnswers = JSON.parse(_getItem("answersQuiz/" + $scope.coursemoduleid));
 
                         if (localAnswers !== null) {
                             $scope.answers = localAnswers;
                         }
-
-                        console.log("recovered Local Answers: " + $scope.answers);
                         
                         //$scope.activityFinished = activityFinished;
                         if (localAnswers == null || activityObject == null) {// If activity does not exists in Local Storage...get it from Server
@@ -379,8 +371,6 @@ angular
             //#######################################  SECTION FOR DATA-BINDING FUNCTIONS ##################################
             $scope.updateOtherField = function (index, otherIndex, checkLabel) {
 
-                var indexChoice;
-                var capacity;
                 var multichoiceIndex = $scope.position[index];
                 console.log("answers: # " + $scope.answers[index]);
 
