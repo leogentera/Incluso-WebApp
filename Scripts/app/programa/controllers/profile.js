@@ -586,7 +586,7 @@ angular
                         errors.push("Formato de apellido paterno incorrecto.");
                     }
 
-                    if (!$scope.model.mothername == '') {
+                    if ($scope.model.mothername == '') {
                         errors.push("Formato de apellido materno incorrecto.");
                     }
 
@@ -924,20 +924,14 @@ angular
 
                 $scope.save = function () {
 
-                    //$scope.$emit('ShowPreloader');
-                    if (!$scope.accessedSubsection && $location.$$path !== '/Perfil/ConfigurarPrivacidad') {
+                    var fromPath = $location.$$path;
+                    console.log($location.$$path + " / " + $scope.accessedSubsection);
+                    var fromPrivacy = fromPath.indexOf("/Perfil/ConfigurarPrivacidad") > -1;
+                    if (!$scope.accessedSubsection && !fromPrivacy) {
+                        console.log("Not PRIVACY SETTINGS");
                         $location.path("Profile/" + userId);
+                        return;
                     }
-
-                    /*
-                    $timeout(function () {
-                        //$scope.$emit('ShowPreloader');
-                        if (!$scope.accessedSubsection && $location.$$path !== '/Perfil/ConfigurarPrivacidad') {
-                            $location.path("Profile/" + userId);
-                        }
-
-                    }, 0);
-                    */
 
                     $scope.model.currentStudies = {};
                     $scope.model.currentStudies.level = $scope.model.level;
@@ -1061,6 +1055,7 @@ angular
                     } // End of: for (sectionIndex = 0; ...
                 }
 
+
                 function validateAllFieldsCompleted() {
 
                     if ($scope.userCourse && $scope.userCourse.activities) {
@@ -1081,6 +1076,7 @@ angular
                         }
                     }
                 }
+
 
                 function phonesAreValid(phones) {
 
@@ -1144,7 +1140,6 @@ angular
                             if (itemWithoutNet && nets.length > 1) {
                                 validInfo = false;
                             }
-
                         }
 
                     } else { //The user has not entered social networks.
@@ -1196,7 +1191,6 @@ angular
                                                                 if ($scope.model.address.postalCode) {
                                                                     if ($scope.model.address.street) {
                                                                         if ($scope.model.address.num_ext) {
-
                                                                             if ($scope.model.address.colony) {
                                                                                 if (phonesAreValid($scope.model.phones)) {//array of objects
                                                                                     if (socialNetsAreValid($scope.model.socialNetworks)) { //array of objects
