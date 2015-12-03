@@ -860,7 +860,8 @@ angular
                     }, 1);
                 };
 
-                $scope.index = function () {//Redirect to editing profile again.
+                $scope.index = function () {
+                    //Redirect to editing profile again.
                     $scope.currentPage = 12;
                     //$location.path("Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
                 };
@@ -895,7 +896,7 @@ angular
                             updateStarsForCompletedSections();
                             console.log('Save profile successful...');
                             $scope.$emit('HidePreloader');
-                            $scope.index();
+                            $location.path("/Profile/" + $scope.userId);
                         },
                         function (data) {
                             console.log('Save profile fail...');
