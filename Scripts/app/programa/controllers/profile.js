@@ -14,8 +14,12 @@ angular
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $filter, $route) {
             var _loadedResources = false;
             var _pageLoaded = false;
+            var showResultsPage = false;
+            $scope.accessedSubsection = false;
 
             $scope.$emit('ShowPreloader');
+
+            var userId = moodleFactory.Services.GetCacheObject("userId");
 
             if ($routeParams.id != moodleFactory.Services.GetCacheObject("userId")) {
                 $scope.validateConnection(initController, offlineCallback);
@@ -480,14 +484,6 @@ angular
                     }
                 }
 
-                $scope.navigateToSection = function (pageNumber) {
-                    $scope.currentPage = pageNumber;
-                };
-
-                $scope.navigateToPage = function (pageNumber) {
-                    $scope.currentPage = pageNumber;
-                };
-
                 $scope.showDetailBadge = function (fileName, badgeName, badgeDateIssued, earnedTimes, description, status) {
                     $scope.shareAchievementMessage = "";
                     $scope.showShareAchievementMessage = false;
@@ -501,7 +497,7 @@ angular
                 };
 
                 $scope.edit = function () {
-                    $location.path("/Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
+                    $location.path("/Perfil/Editar/" + userId);
                 };
 
                 $scope.navigateToDashboard = function () {
@@ -850,24 +846,85 @@ angular
 
                 };
 
+                $scope.navigateToSection = function (pageNumber) {
+                    $scope.currentPage = pageNumber;
+                    $scope.accessedSubsection = true;
+
+                    $scope.origin = "";
+
+                    switch (pageNumber) {
+                        case 2:  // "Llenar mi informacion"; points to assign: 400
+                            $scope.origin = "3000";
+                            break;
+                        case 5:  // "Llenar Mi Personalidad"; points to assign: 400
+                            $scope.origin = "3001";
+                            break;
+                        case 8:  // "Llenar Llenar Socioeconomicos"; points to assign: 400
+                            $scope.origin = "3002";
+                            break;
+                        case 10:  // "Llenar Uso de la tecnologia"; points to assign: 400
+                            $scope.origin = "3003";
+                            break;
+                        default:
+                            result = false;
+                            break;
+                    }
+                };
+
+
+                $scope.navigateToPage = function (pageNumber) {
+                    $scope.currentPage = pageNumber;
+                };
+
+
                 $scope.returnToProfile = function () {//After pressing "Terminar" button.
+
                     $scope.$emit('ShowPreloader');
                     $timeout(function () {
                         $scope.$emit('ShowPreloader');
-                        $location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
+                        $location.path("Profile/" + userId); // moodleFactory.Services.GetCacheObject("userId"));
                     }, 1);
                 };
 
                 $scope.index = function () {//Redirect to editing profile again.
-
-                    if ($location.$$path != '/Perfil/ConfigurarPrivacidad') {
-                        $scope.currentPage = 12;
+                    console.log("*************" + $location.$$path + " / " + showResultsPage);
+                    if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && showResultsPage) {
+                        $scope.currentPage = 12; //Show results page
                     }
 
-                    $location.path("Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
+                    if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && !showResultsPage) {
+                        $location.path("Profile/" + userId);   //Return to Profile.
+                    }
+
+                    if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
+                        $location.path("Profile/" + userId); // moodleFactory.Services.GetCacheObject("userId"));
+                    }
+
+                    $scope.accessedSubsection = false;
+                    showResultsPage = false;
+                    //$location.path("Profile/" + userId); // moodleFactory.Services.GetCacheObject("userId"));
                 };
 
                 $scope.save = function () {
+
+                    $scope.$emit('ShowPreloader');
+
+
+                        $timeout(function () {
+                            //$scope.$emit('ShowPreloader');
+
+                            if (!$scope.accessedSubsection && $location.$$path !== '/Perfil/ConfigurarPrivacidad') {
+                                $location.path("Profile/" + userId);
+                            }
+
+
+                        }, 0);
+
+
+
+
+
+
 
                     $scope.model.currentStudies = {};
                     $scope.model.currentStudies.level = $scope.model.level;
@@ -921,8 +978,9 @@ angular
 
                     for (sectionIndex = 0; sectionIndex < usercourse.activities.length; sectionIndex++) {
                         var activity = usercourse.activities[sectionIndex];
+                        console.log("status = " + activity.status + " / " + activity.activity_identifier);
 
-                        if (activity.status == 0) {//Only for profile sections not previously fulfilled.
+                        if (activity.status == 0) {//The section has not been filled.
 
                             var result;
 
@@ -951,6 +1009,8 @@ angular
                                 sectionObject.name = activity.activityname.substring(7);
                                 sectionObject.points = activity.points;
                                 $scope.completedSections.push(sectionObject);
+
+                                showResultsPage = true; //Show page 12
 
                                 $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
                                 activity.status = 1;   //Update activity status.
@@ -981,6 +1041,11 @@ angular
                                 });
 
                                 result = false;  //Restore 'result' value
+                            } else { showResultsPage = false; }
+                        } else { //The subsection has been previously completed.
+
+                            if (activity.activity_identifier == $scope.origin) {
+                                showResultsPage = true;
                             }
                         } //End of: if (activity.status == 0) ...
                     } // End of: for (sectionIndex = 0; ...
