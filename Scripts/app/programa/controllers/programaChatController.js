@@ -47,7 +47,7 @@ angular
             } 
             else 
             {                
-                moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback);
+                moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
                 interval = setInterval(getMessages,60000);                    
                 console.log('creating interval:' + interval);
             }
