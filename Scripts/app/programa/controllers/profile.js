@@ -50,7 +50,7 @@ angular
                 $scope.setToolbar($location.$$path, "");
 
                 $scope.currentPage = 1;
-                if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
+                if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                     $scope.currentPage = 2;
                 }
 
@@ -505,6 +505,10 @@ angular
                 $scope.edit = function () {
                     $location.path("/Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
                 };
+                
+                $scope.privacySettings = function() {
+                        $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null)      
+                };
 
                 $scope.navigateToDashboard = function () {
                     $location.path('/ProgramaDashboard');
@@ -860,7 +864,8 @@ angular
                     }, 1);
                 };
 
-                $scope.index = function () {//Redirect to editing profile again.
+                $scope.index = function () {
+                    //Redirect to editing profile again.
                     $scope.currentPage = 12;
                     //$location.path("Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
                 };
@@ -872,7 +877,7 @@ angular
                     $scope.model.currentStudies.grade = $scope.model.grade;
                     $scope.model.currentStudies.period = $scope.model.period;
 
-                    if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
+                    if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                         saveUser();
                     } else {
                         var validationResult = validateRestrictions();  //Valid if validateModel() returns true
@@ -895,7 +900,7 @@ angular
                             updateStarsForCompletedSections();
                             console.log('Save profile successful...');
                             $scope.$emit('HidePreloader');
-                            $scope.index();
+                            $location.path("/Profile/" + $scope.userId);
                         },
                         function (data) {
                             console.log('Save profile fail...');
