@@ -409,7 +409,8 @@ angular
                             $scope.model.grade = $scope.model.currentStudies["grade"];
                             $scope.model.period = $scope.model.currentStudies["period"];
 
-                        },function(){}, true);
+                        }, function () {
+                        }, true);
                     }
                 }
 
@@ -501,9 +502,9 @@ angular
                 $scope.edit = function () {
                     $location.path("/Perfil/Editar/" + userId);
                 };
-                
-                $scope.privacySettings = function() {
-                        $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null)      
+
+                $scope.privacySettings = function () {
+                    $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null)
                 };
 
                 $scope.navigateToDashboard = function () {
@@ -911,28 +912,24 @@ angular
                     showResultsPage = false;
                     //$location.path("Profile/" + userId); // moodleFactory.Services.GetCacheObject("userId"));
                 };
-                
+
 
                 $scope.save = function () {
 
-                    $scope.$emit('ShowPreloader');
+                    //$scope.$emit('ShowPreloader');
+                    if (!$scope.accessedSubsection && $location.$$path !== '/Perfil/ConfigurarPrivacidad') {
+                        $location.path("Profile/" + userId);
+                    }
 
+                    /*
+                    $timeout(function () {
+                        //$scope.$emit('ShowPreloader');
+                        if (!$scope.accessedSubsection && $location.$$path !== '/Perfil/ConfigurarPrivacidad') {
+                            $location.path("Profile/" + userId);
+                        }
 
-                        $timeout(function () {
-                            //$scope.$emit('ShowPreloader');
-
-                            if (!$scope.accessedSubsection && $location.$$path !== '/Perfil/ConfigurarPrivacidad') {
-                                $location.path("Profile/" + userId);
-                            }
-
-
-                        }, 0);
-
-
-
-
-
-
+                    }, 0);
+                    */
 
                     $scope.model.currentStudies = {};
                     $scope.model.currentStudies.level = $scope.model.level;
@@ -969,10 +966,6 @@ angular
                         });
                 }
 
-                function assignBadge() {
-                    //function to asign badge to a user
-                }
-
 
                 function updateStarsForCompletedSections() {
                     //Here we look for completed profile sections;
@@ -986,7 +979,6 @@ angular
 
                     for (sectionIndex = 0; sectionIndex < usercourse.activities.length; sectionIndex++) {
                         var activity = usercourse.activities[sectionIndex];
-                        console.log("status = " + activity.status + " / " + activity.activity_identifier);
 
                         if (activity.status == 0) {//The section has not been filled.
 
@@ -1049,9 +1041,11 @@ angular
                                 });
 
                                 result = false;  //Restore 'result' value
-                            } else { showResultsPage = false; }
+                            } else {
+                                showResultsPage = false;
+                            }
                         } else { //The subsection has been previously completed.
-
+                            console.log(activity.activity_identifier + " - " + $scope.origin);
                             if (activity.activity_identifier == $scope.origin) {
                                 showResultsPage = true;
                             }
