@@ -19,8 +19,8 @@ angular
                 $timeout(function() { $location.path("/Offline"); }, 1000);
             }
             
-            function initController() {
-            //alert("1");
+            function initController() {   
+
             _timeout = $timeout;
             _httpFactory = $http;
             var _usercourse = JSON.parse(localStorage.getItem('usercourse'));
@@ -41,13 +41,15 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false; 
             var interval = -1;
+            moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                
             if ($location.hash() == 'top') {
+                //alert("2");
             $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
                 $anchorScroll();
             } 
             else 
-            {                
-                moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);
+            {      
+            //alert("3");                                  
                 interval = setInterval(getMessages,60000);                    
                 console.log('creating interval:' + interval);
             }
