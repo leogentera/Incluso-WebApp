@@ -75,6 +75,7 @@ myStarsModule.controller('MyStarsController', [
                         var stages = userCourse.stages;
                         for(var j=0; j < stages.length; j++){
                             var challenges = stages[j].challenges;
+                            var stageName = stages[j].sectionname;
                             for(var k = 0; k < challenges.length ; k++){
                                 var challengeName = challenges[k].activityname;
                                 var activities = challenges[k].activities;
@@ -83,9 +84,8 @@ myStarsModule.controller('MyStarsController', [
                                     if (activity.coursemoduleid == courseModuleId){
                                         if (extra) {                                              
                                             activity.activityname = "Puntos extra " + activity.activityname;  
-                                        }  
-
-                                        activity.sectionname = challengeName;
+                                        }                                          
+                                        activity.sectionname = stageName + " - " + challengeName;
                                         starsByActivity.push(activity);
                                         points = points + activity.points;
                                     }
@@ -102,7 +102,7 @@ myStarsModule.controller('MyStarsController', [
                                                         extraPointsName = "Puntos extra " + activity.activityname;
                                                     }
                                                     
-                                                    subactivity.sectionname = challengeName;
+                                                    subactivity.sectionname = stageName + " - " + challengeName;
                                                     subactivity.activityname = extraPointsName;
                                                     starsByActivity.push(subactivity)
                                                     points = points + subactivity.points;
