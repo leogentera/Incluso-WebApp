@@ -702,15 +702,15 @@ var _progressNotification = function(indexStageId, currentProgress){
     
     var notifications = JSON.parse(localStorage.getItem("notifications"));
     
-    var progressNotifications = _.where(notifications, { type: notificationTypes.progressNotifications });
+    //var progressNotifications = _.where(notifications, { type: notificationTypes.progressNotifications });
     
     var stageId = indexStageId + 1 ;
     
-    for(i = 0; i < progressNotifications.length; i++){
-        var currentNotification = progressNotifications[i];
+    for(i = 0; i < notifications.length; i++){
+        var currentNotification = notifications[i];
         
-        if (currentNotification.status != "won" && currentProgress >= currentNotification.progressmin
-            && stageId == currentNotification.stageid || stageId > currentNotification.stageid) {
+        if (currentNotification.type == notificationTypes.progressNotifications && currentNotification.status != "won" && currentProgress >= currentNotification.progressmin
+            && stageId == currentNotification.stageid) {
             console.log("progress notification created" + currentNotification.name);
             //Add create notification logic.
             
@@ -721,9 +721,9 @@ var _progressNotification = function(indexStageId, currentProgress){
               wondate : wonDate
             };
             
-            progressNotifications[i].wondate = wonDate;
-            progressNotifications[i].status = "won";
-            localStorage.setItem("notifications", JSON.stringify(progressNotifications));
+            notifications[i].wondate = wonDate;
+            notifications[i].status = "won";
+            localStorage.setItem("notifications", JSON.stringify(notifications));
   
             moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
                 console.log("progress notification created" + currentNotification.name);
