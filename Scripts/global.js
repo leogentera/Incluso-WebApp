@@ -638,8 +638,10 @@ var _coachNotification = function (stageIndex) {
     
     var userId = localStorage.getItem('userId');
         
+    var stageId = stageIndex + 1;
+            
     var notificationCoach = _.find(notifications, function (notif) {
-        if (notif.type == notificationTypes.activityNotifications && notif.trigger_condition == 3) {
+        if (notif.type == notificationTypes.activityNotifications && notif.trigger_condition == 3 && notif.activityidnumber.substring(0,1) == stageId) {
           return notif; 
         }      
     });
@@ -647,8 +649,9 @@ var _coachNotification = function (stageIndex) {
     if (notificationCoach && notificationCoach.status == "pending") {      
         var activity = getActivityByActivity_identifier(notificationCoach.activityidnumber);
                 
-        var notificationId = notificationCoach.id;        
-        if ((activity)) {          
+                        
+        var notificationId = notificationCoach.id;
+        if ((activity)) {
             var chatUser = JSON.parse(localStorage.getItem("userChat"));
             if (chatUser && chatUser.length > 0) {
                 var lastChat = _.max(chatUser, function (chat) {
@@ -662,15 +665,15 @@ var _coachNotification = function (stageIndex) {
                 var lastDateChat = moment(new Date(lastChat.messagedate)).add(daysOfNoChat, 'days');
 
                 var today = new Date();
-                if (lastDateChat <= today) {
+                if (lastDateChat < today) {
                     //Create chat notification
                     //moodleFactory.services.createNotification(userId,notificationId, function(){},function(){});
-                    var wonDate = new Date();   
+                    var wonDate = new Date();
                     var dataModelNotification = {
                         notificationid : notificationId,
                         userid: userId,
                         wondate: wonDate
-                      };                                            
+                      };
                                                              
                     for (var i = 0; i< notifications.length; i++) {
                       if (notifications[i].id == notificationId) {
