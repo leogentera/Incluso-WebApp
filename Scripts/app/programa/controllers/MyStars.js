@@ -98,10 +98,9 @@ myStarsModule.controller('MyStarsController', [
                                                                                              
                                                 //var extraPointsName = extra ? "Puntos extra " + activity.activityname + idSubactivity : activity.activityname ;
                                                 if (subactivity.coursemoduleid == courseModuleId){
-                                                    if(extra){
-                                                        extraCounter = extraCounter + 1;
-                                                        extraPointsName = "Puntos extra " + extraCounter + " " + activity.activityname;
-                                                    }   
+                                                    if(extra){                                                        
+                                                        extraPointsName = "Puntos extra " + activity.activityname;
+                                                    }
                                                     
                                                     subactivity.sectionname = challengeName;
                                                     subactivity.activityname = extraPointsName;
@@ -118,7 +117,9 @@ myStarsModule.controller('MyStarsController', [
                 }
                 
                 var groups = _.groupBy(starsByActivity, function(activity){
-                        return activity.activityname + '#' + activity.sectionname;
+                        if (!activity.activityname.indexOf("Puntos extra") > -1  ) {
+                            return activity.activityname + '#' + activity.sectionname;
+                        }
                     });
                 
                 var groupedByActivity = _.map(groups,function(group){
