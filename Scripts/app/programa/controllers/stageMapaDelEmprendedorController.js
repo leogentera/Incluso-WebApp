@@ -300,7 +300,9 @@ angular
                 
                 $scope.$emit('ShowPreloader');
                 _endActivity(activityModel, function() {
-                    
+                    if ($routeParams.retry) {
+                        moodleFactory.Services.ExecuteQueue();
+                    }    
                     activitiesPosted++;
                     if (activitiesPosted == subactivitiesCompleted.length) {                   
                         if ($scope.pathImagenFicha != "" && canPost) {
