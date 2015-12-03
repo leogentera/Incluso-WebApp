@@ -574,7 +574,13 @@ angular
                     if (age < 13) {
                         errors.push("Debes ser mayor de 13 años para poder registrarte.");
                     }
+                    /*
                     if (!$scope.editForm.firstname.$valid) {
+                        errors.push("Formato de nombre incorrecto.");
+                    }
+                    */
+
+                    if ($scope.editForm.firstname != '') {
                         errors.push("Formato de nombre incorrecto.");
                     }
                     if (!$scope.editForm.lastname.$valid) {
@@ -959,7 +965,7 @@ angular
                             updateStarsForCompletedSections();
                             console.log('Save profile successful...');
                             $scope.$emit('HidePreloader');
-                            $location.path("/Profile/" + $scope.userId);
+                            $scope.index();
                         },
                         function (data) {
                             console.log('Save profile fail...');
