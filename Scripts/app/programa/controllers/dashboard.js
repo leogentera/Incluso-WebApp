@@ -33,7 +33,7 @@
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
             $scope.user.profileimageurl = $scope.user.profileimageurl + "?rnd=" + new Date().getTime();
 
-            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheJson("CurrentUser")); //profile is not used in this page, it is only used for stars.
+            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + $scope.user.id); //profile is not used in this page, it is only used for stars.
 
             if ($scope.profile && $scope.profile.stars) {
                 //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
