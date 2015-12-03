@@ -30,7 +30,7 @@
                 </p>
             </div>
             <div class="profile-settings">
-                <a class="btn btn-icon-aside left active" ng-click="save();">
+                <a class="btn btn-icon-aside left active" ng-click="save()">
                     <div class="btn-icon">
                         <span class="icomoon icon-settings"></span>
                     </div>
@@ -356,11 +356,11 @@
                                                     <div class="form-group theme-form">
                                                         <div class="form-group-control custom-caret-wrapper">
                                                             <select class="form-control form-control-lg theme-form"
-                                                                    ng-model="model.address.state"
+                                                                    ng-model="model.address.city"
                                                                     ng-options="item for item in stateItems"
-                                                                    ng-init="model.address.state == null"
-                                                                    ng-class="{'selected': model.address.state.length != 0 && model.address.state != null}">
-                                                                <option value="" ng-disabled="!!model.address.state">
+                                                                    ng-init="model.address.city == null"
+                                                                    ng-class="{'selected': model.address.city.length != 0 && model.address.city != ''}">
+                                                                <option value="" ng-disabled="!!model.address.city">
                                                                     Estado
                                                                 </option>
                                                             </select>
