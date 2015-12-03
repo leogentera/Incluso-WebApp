@@ -541,7 +541,9 @@ angular
                     _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
                     
                     if (_userProfile != null) {
-                        $scope.hasCommunityAccess = _hasCommunityAccessLegacy(_userProfile.communityAccess);
+                        $timeout(function() {
+                            $scope.hasCommunityAccess = _hasCommunityAccessLegacy(_userProfile.communityAccess);
+                        }, 1000);
                         clearInterval(waitForProfileLoaded);
                     }
                 }
