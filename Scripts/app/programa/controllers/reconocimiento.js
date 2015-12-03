@@ -47,7 +47,7 @@
             ctx = canvas.getContext('2d');
         canvas.width = 1200;
         canvas.height = 1200;
-        document.body.appendChild(canvas);
+        
         var oText = {
 			username: '',
 			title: 'OTORGA EL PRESENTE RECONOCIMIENTO A',
