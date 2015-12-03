@@ -32,7 +32,6 @@ angular
             $scope.showWarning = false;
             $scope.coursemoduleid = 0;
             $scope.like_status = 1;
-            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             $scope.questionTypeCode = [];
             $scope.questionText = [];
             $scope.answers = [];
@@ -42,7 +41,6 @@ angular
             $scope.questionNumOfChoices = [];
             $scope.placeholder = [];
             $scope.maxPages = 0;
-            $scope.modelIsLoaded = false;
             $scope.userprofile = {};
             $scope.userprofile.talents = [];
             $scope.userprofile.values = [];
@@ -147,6 +145,7 @@ angular
                         $scope.activity_status = parentActivity.status;
                     }
 
+                    $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
 
                     $scope.activity = parentActivity;
@@ -207,8 +206,6 @@ angular
                 if (activityObject.attempts === 1 && $scope.activity_status === 1) {
                     $scope.setReadOnly = true;
                 }
-
-                $scope.modelIsLoaded = true;
 
                 //The activityObject is an object the same type we get with the following GET request:
                 //http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
