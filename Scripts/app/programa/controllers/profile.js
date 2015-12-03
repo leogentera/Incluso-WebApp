@@ -409,7 +409,8 @@ angular
                             $scope.model.grade = $scope.model.currentStudies["grade"];
                             $scope.model.period = $scope.model.currentStudies["period"];
 
-                        },function(){}, true);
+                        }, function () {
+                        }, true);
                     }
                 }
 
@@ -501,9 +502,10 @@ angular
                 $scope.edit = function () {
                     $location.path("/Perfil/Editar/" + userId);
                 };
-                
-                $scope.privacySettings = function() {
-                        $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null);      
+
+                $scope.privacySettings = function () {
+                    $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null)
+
                 };
 
                 $scope.navigateToDashboard = function () {
@@ -569,22 +571,29 @@ angular
                     validateEmptyItemsOnLists();
 
                     // ************************ The following are required fields. ****************************
+
                     var age = calculate_age();
+
                     if (age < 13) {
                         errors.push("Debes ser mayor de 13 años para poder registrarte.");
                     }
-                    if (!$scope.editForm.firstname.$valid) {
+
+                    if ($scope.model.firstname == '') {
                         errors.push("Formato de nombre incorrecto.");
                     }
-                    if (!$scope.editForm.lastname.$valid) {
+
+                    if ($scope.model.lastname == '') {
                         errors.push("Formato de apellido paterno incorrecto.");
                     }
-                    if (!$scope.editForm.mothername.$valid) {
+
+                    if ($scope.model.mothername == '') {
                         errors.push("Formato de apellido materno incorrecto.");
                     }
+
                     if (!$scope.model.gender) {
                         errors.push("Debe indicar su género.");
                     }
+
                     if (!isValidDate($scope.model.birthday)) {
                         errors.push("Ingrese la fecha de nacimiento.");
                     }
@@ -911,28 +920,18 @@ angular
                     showResultsPage = false;
                     //$location.path("Profile/" + userId); // moodleFactory.Services.GetCacheObject("userId"));
                 };
-                
+
 
                 $scope.save = function () {
 
-                    $scope.$emit('ShowPreloader');
-
-
-                        $timeout(function () {
-                            //$scope.$emit('ShowPreloader');
-
-                            if (!$scope.accessedSubsection && $location.$$path !== '/Perfil/ConfigurarPrivacidad') {
-                                $location.path("Profile/" + userId);
-                            }
-
-
-                        }, 0);
-
-
-
-
-
-
+                    var fromPath = $location.$$path;
+                    console.log($location.$$path + " / " + $scope.accessedSubsection);
+                    var fromPrivacy = fromPath.indexOf("/Perfil/ConfigurarPrivacidad") > -1;
+                    if (!$scope.accessedSubsection && !fromPrivacy) {
+                        console.log("Not PRIVACY SETTINGS");
+                        $location.path("Profile/" + userId);
+                        return;
+                    }
 
                     $scope.model.currentStudies = {};
                     $scope.model.currentStudies.level = $scope.model.level;
@@ -962,15 +961,11 @@ angular
                             updateStarsForCompletedSections();
                             console.log('Save profile successful...');
                             $scope.$emit('HidePreloader');
-                            $location.path("/Profile/" + $scope.userId);
+                            $scope.index();
                         },
                         function (data) {
                             console.log('Save profile fail...');
                         });
-                }
-
-                function assignBadge() {
-                    //function to asign badge to a user
                 }
 
 
@@ -986,7 +981,6 @@ angular
 
                     for (sectionIndex = 0; sectionIndex < usercourse.activities.length; sectionIndex++) {
                         var activity = usercourse.activities[sectionIndex];
-                        console.log("status = " + activity.status + " / " + activity.activity_identifier);
 
                         if (activity.status == 0) {//The section has not been filled.
 
@@ -1049,15 +1043,18 @@ angular
                                 });
 
                                 result = false;  //Restore 'result' value
-                            } else { showResultsPage = false; }
+                            } else {
+                                showResultsPage = false;
+                            }
                         } else { //The subsection has been previously completed.
-
+                            console.log(activity.activity_identifier + " - " + $scope.origin);
                             if (activity.activity_identifier == $scope.origin) {
                                 showResultsPage = true;
                             }
                         } //End of: if (activity.status == 0) ...
                     } // End of: for (sectionIndex = 0; ...
                 }
+
 
                 function validateAllFieldsCompleted() {
 
@@ -1079,6 +1076,7 @@ angular
                         }
                     }
                 }
+
 
                 function phonesAreValid(phones) {
 
@@ -1142,7 +1140,6 @@ angular
                             if (itemWithoutNet && nets.length > 1) {
                                 validInfo = false;
                             }
-
                         }
 
                     } else { //The user has not entered social networks.
@@ -1194,7 +1191,6 @@ angular
                                                                 if ($scope.model.address.postalCode) {
                                                                     if ($scope.model.address.street) {
                                                                         if ($scope.model.address.num_ext) {
-
                                                                             if ($scope.model.address.colony) {
                                                                                 if (phonesAreValid($scope.model.phones)) {//array of objects
                                                                                     if (socialNetsAreValid($scope.model.socialNetworks)) { //array of objects
