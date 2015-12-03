@@ -239,6 +239,9 @@ angular
                 };  
                 $scope.$emit('ShowPreloader');          
                 _endActivity(activityModel, function(){
+                    if ($routeParams.retry) {
+                        moodleFactory.Services.ExecuteQueue();
+                    }
                     $scope.$emit('HidePreloader');
                     $location.path('/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero');
                 });

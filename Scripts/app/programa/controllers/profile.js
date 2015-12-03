@@ -363,6 +363,9 @@ angular
                         callback();
                         //Get avatar info from Local Storage.
                         $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
+                        _forceUpdateConnectionStatus(function(){
+                            $scope.model.profileimageurl = (_isDeviceOnline ? $scope.model.profileimageurl : 'assets/avatar/default-2.png');
+                        }, function(){});
 
                         initFields($scope.model);
                         loadStrengths();
@@ -383,7 +386,10 @@ angular
                             if ($scope.model.profileimageurl) {
                                 $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                             }
-
+                            _forceUpdateConnectionStatus(function(){
+                                $scope.model.profileimageurl = (_isDeviceOnline ? $scope.model.profileimageurl : 'assets/avatar/default-2.png');
+                            }, function(){});
+                            
                             $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
                             //console.log("Profile current stars:" + $scope.model.stars);
 
@@ -1599,6 +1605,8 @@ angular
                     var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                     encodeImageUri(pathimagen, function (b64) {
                         avatarInfo[0]["filecontent"] = b64;
+                        moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function(){avatarUploaded("Éxito")}, function(){avatarUploaded("Error")});
+                        /*
                         $http({
                             method: 'POST',
                             url: API_RESOURCE.format('avatar'),
@@ -1607,7 +1615,7 @@ angular
                             avatarUploaded("�?xito");
                         }).error(function () {
                             avatarUploaded("Error");
-                        });
+                        });*/
                     });
                 };
 
@@ -1693,7 +1701,7 @@ angular
                         "traje_color_principal": data.trajeColorPrincipal,
                         "traje_color_secundario": data.trajeColorSecundario,
                         "imagen_recortada": data.genero,
-                        "ultima_modificacion": data["fechaModificaci�n"],
+                        "ultima_modificacion": data["fechaModificación"],
                         "Te_gusto_la_actividad": data.gustaActividad,
                         "pathimagen": data.pathImagen,
                         "estrellas": "100",
@@ -1814,7 +1822,7 @@ angular
                             $scope.$emit('HidePreloader');
                         }
                     );
-                };
+                }
 
                 function getContent() {
                     drupalFactory.Services.GetContent("7001", function (data, key) {

@@ -291,6 +291,9 @@ angular
                 _endActivity(activityModel, function(){
                     activitiesPosted++;
                     if (activitiesPosted == activitiesAtLeastOne) {
+                        if ($routeParams.retry) {
+                            moodleFactory.Services.ExecuteQueue();
+                        }    
                         if ($scope.pathImagenFicha != "" && parentStatus) {
                             
                             $scope.validateConnection(function() {

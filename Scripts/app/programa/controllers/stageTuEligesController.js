@@ -229,6 +229,9 @@ angular
                 };             
                 $scope.$emit('ShowPreloader');
                 _endActivity(activityModel, function(){
+                    if ($routeParams.retry) {
+                        moodleFactory.Services.ExecuteQueue();
+                    }      
                     $scope.$emit('HidePreloader');
                     if ($scope.IsComplete) {
                         $location.path('/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
