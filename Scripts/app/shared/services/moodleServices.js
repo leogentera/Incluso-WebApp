@@ -945,7 +945,8 @@
 
         var _executeQueue = function(callback){
             _callback = callback;
-
+            _currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            
             if(window.mobilecheck()){                    
                     doRequestforCellphone();                     
             }                
