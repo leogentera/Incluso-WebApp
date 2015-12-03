@@ -571,28 +571,29 @@ angular
                     validateEmptyItemsOnLists();
 
                     // ************************ The following are required fields. ****************************
+
                     var age = calculate_age();
+
                     if (age < 13) {
                         errors.push("Debes ser mayor de 13 años para poder registrarte.");
                     }
-                    /*
-                    if (!$scope.editForm.firstname.$valid) {
-                        errors.push("Formato de nombre incorrecto.");
-                    }
-                    */
 
-                    if ($scope.editForm.firstname != '') {
+                    if ($scope.model.firstname == '') {
                         errors.push("Formato de nombre incorrecto.");
                     }
-                    if (!$scope.editForm.lastname.$valid) {
+
+                    if ($scope.model.lastname == '') {
                         errors.push("Formato de apellido paterno incorrecto.");
                     }
-                    if (!$scope.editForm.mothername.$valid) {
+
+                    if (!$scope.model.mothername == '') {
                         errors.push("Formato de apellido materno incorrecto.");
                     }
+
                     if (!$scope.model.gender) {
                         errors.push("Debe indicar su género.");
                     }
+
                     if (!isValidDate($scope.model.birthday)) {
                         errors.push("Ingrese la fecha de nacimiento.");
                     }
