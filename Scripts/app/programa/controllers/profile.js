@@ -374,6 +374,8 @@ angular
 
                         moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
 
+                            $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
+
                             if ($scope.model.profileimageurl) {
                                 $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                             }
@@ -403,7 +405,7 @@ angular
                             $scope.model.grade = $scope.model.currentStudies["grade"];
                             $scope.model.period = $scope.model.currentStudies["period"];
 
-                        }, true);
+                        },function(){}, true);
                     }
                 }
 
