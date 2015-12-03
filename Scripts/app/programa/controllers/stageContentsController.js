@@ -14,6 +14,10 @@ angular
             var _loadedResources = false;
             var _pageLoaded = false;
             var currentUser;
+            var activitiesFromCache=false;
+            var fuentesDeEnergiaIds;
+            var totalOptionalPoints;
+            var activitymanagers;
 
             $scope.$emit('ShowPreloader'); //show preloader
 
@@ -32,6 +36,7 @@ angular
                 var currentChallenge;
                 var stage;
                 var userCurrentStage;
+                fuentesDeEnergiaIds = ["1101", "1020", "1021", "2004", "2006", "2011", "2015", "3201", "3301", "3401"];
                 switch (moduleid) {
 
                     case "1101":
@@ -109,13 +114,14 @@ angular
                 //$scope.$emit('HidePreloader'); //hide preloader
                 var starsNoMandatory = 0;
                 var starsMandatory = 0;
+                totalOptionalPoints = 0;
                 var getcoursemoduleids = [];
                 $scope.like_status = 1;
                 var activitymanagers = [];
                 var activitiesData = "";
-
+                
+                activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
                 if (!activities) {
-                    var activitymanagers = JSON.parse(moodleFactory.Services.GetCacheObject("activityManagers"));
                     $scope.fuenteDeEnergia = _.find(activitymanagers, function (a) {
                         return a.activity_identifier == moduleid
                     });
@@ -123,6 +129,7 @@ angular
                 }
                 else {
                     $scope.fuenteDeEnergia = activities;
+                    activitiesFromCache = true;
                     getDataAsync();
                 }
 
@@ -203,14 +210,35 @@ angular
 
 
                 function checkProgress() {
+                    /* Calculates total points got from optional activities in all "Fuentes de energía" */
+                    for (var i = 0; i < activitymanagers.length; i++) {
+                        if (fuentesDeEnergiaIds.indexOf(activitymanagers[i].activity_identifier) != -1) {
+                            //console.log("Calculating optional points from " + activitymanagers[i].activity_identifier );
+                            //console.log("Max resources for this " + activitymanagers[i].max_resources);
+                            var subactivities = activitymanagers[i].activities;
+                            for (var j = 0; j < subactivities.length; j++) {
+                                //if (subactivities[j].optional) console.log("Points of this optional subactivity "+ subactivities[j].points);
+                                //console.log("Done? "+ subactivities[j].status);
+                                if (subactivities[j].optional && subactivities[j].status) {
+                                    totalOptionalPoints += subactivities[j].points;
+                                }
+    
+                            }
+                        }
+    
+                    }
+                    //Not all were actually aearned (if more than max resources) but if less than max_resources the user will be able to earn more
+                    
                     for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status) {
                             $scope.statusObligatorios += 1;
                             starsMandatory += 50;
                         }
+                        /*
                         else if (!$scope.fuenteDeEnergia.activities[i].optional && $scope.fuenteDeEnergia.activities[i].status) {
                             starsNoMandatory += 50;
                         }
+                        */
                     }
                     if ($scope.statusObligatorios >= 5 && $scope.fuenteDeEnergia.status == 0) {
                         $scope.currentPage = 2;
@@ -225,7 +253,9 @@ angular
                             if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                                 if (!$scope.fuenteDeEnergia.activities[i].status) {
                                     $scope.fuenteDeEnergia.activities[i].status = true;
-
+                                    if(activitiesFromCache)
+                                        _setLocalStorageJsonItem("activitiesCache/" + moduleid, $scope.fuenteDeEnergia);
+                                    
                                     // Update activityManagers
                                     for (var am = 0; am < activitymanagers.length; am++) {
                                          if (activitymanagers[am].activity_identifier == moduleid) {
@@ -280,20 +310,25 @@ angular
                             is_extra: false
                         };
                         console.log("Updating Stars");
+                        //console.log("Optional stars before adding.. "+ totalOptionalPoints);
                         if (starsMandatory < 250 && isMandatory) {
                             profile.stars = parseInt(profile.stars) + stars;
                             //_setLocalStorageJsonItem('profile', profile);
                             moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
                         }
-                        else if (starsNoMandatory < 500) {
-
+                        //else if (starsNoMandatory < 500) {
+                        else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources) {
+                            if (totalOptionalPoints + stars > $scope.fuenteDeEnergia.max_resources) {
+                                stars = $scope.fuenteDeEnergia.max_resources - totalOptionalPoints;
+                            }
                             data.is_extra = true;
 
                             profile.stars = parseInt(profile.stars) + stars;
                             //_setLocalStorageJsonItem('profile', profile);                                                                      
                             
-                            
                             moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
+                            totalOptionalPoints += stars;
+                            //console.log("Optional stars after adding.. "+ totalOptionalPoints);
                         }
                         
                         var userStars = JSON.parse(localStorage.getItem("userStars"));

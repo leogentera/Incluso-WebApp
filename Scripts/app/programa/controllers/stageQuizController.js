@@ -1066,7 +1066,7 @@ angular
                 var elemHeight = angular.element(elem).height();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
                 
-                if (containerHeight < 627) {
+                if (containerHeight < 750) {
                     angular.element(".owl-wrapper-outer").css('height', containerHeight + 100);
                     angular.element(elem).css('height', elemHeight + 100);
                 }

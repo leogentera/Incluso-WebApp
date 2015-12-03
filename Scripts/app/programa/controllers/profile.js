@@ -54,7 +54,7 @@ angular
                 $scope.setToolbar($location.$$path, "");
 
                 $scope.currentPage = 1;
-                if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
+                if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                     $scope.currentPage = 2;
                 }
 
@@ -378,6 +378,8 @@ angular
 
                         moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
 
+                            $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
+
                             if ($scope.model.profileimageurl) {
                                 $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                             }
@@ -407,7 +409,7 @@ angular
                             $scope.model.grade = $scope.model.currentStudies["grade"];
                             $scope.model.period = $scope.model.currentStudies["period"];
 
-                        }, true);
+                        },function(){}, true);
                     }
                 }
 
@@ -498,6 +500,10 @@ angular
 
                 $scope.edit = function () {
                     $location.path("/Perfil/Editar/" + userId);
+                };
+                
+                $scope.privacySettings = function() {
+                        $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null)      
                 };
 
                 $scope.navigateToDashboard = function () {
@@ -886,6 +892,7 @@ angular
                     }, 1);
                 };
 
+
                 $scope.index = function () {//Redirect to editing profile again.
                     console.log("*************" + $location.$$path + " / " + showResultsPage);
                     if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && showResultsPage) {
@@ -904,6 +911,7 @@ angular
                     showResultsPage = false;
                     //$location.path("Profile/" + userId); // moodleFactory.Services.GetCacheObject("userId"));
                 };
+                
 
                 $scope.save = function () {
 
@@ -931,7 +939,7 @@ angular
                     $scope.model.currentStudies.grade = $scope.model.grade;
                     $scope.model.currentStudies.period = $scope.model.period;
 
-                    if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
+                    if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                         saveUser();
                     } else {
                         var validationResult = validateRestrictions();  //Valid if validateModel() returns true
@@ -954,7 +962,7 @@ angular
                             updateStarsForCompletedSections();
                             console.log('Save profile successful...');
                             $scope.$emit('HidePreloader');
-                            $scope.index();
+                            $location.path("/Profile/" + $scope.userId);
                         },
                         function (data) {
                             console.log('Save profile fail...');

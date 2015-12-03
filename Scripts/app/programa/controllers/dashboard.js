@@ -275,9 +275,20 @@
                     }
 
                     _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                }, errorCallback, false);                
+                    
+                    getUserStarsByPoints();
+                    
+                }, errorCallback, false);
             }
-                                    
+            
+            function getUserStarsByPoints(){
+                
+                 moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token,function(dataStars){
+                        if (dataStars.length > 0) {
+                            localStorage.setItem("userStars", JSON.stringify(dataStars));
+                        }
+                    }, function(){$scope.activitiesCompleted = [];}, true);                                            
+            }
             
             //Open Welcome Message modal
             $scope.openModal = function (size) {
