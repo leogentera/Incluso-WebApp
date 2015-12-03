@@ -91,10 +91,10 @@
             generateReconocimientoImgSrc(function() {
                 cordova.exec(function() {
                     $scope.shareToDownloadOpen = true;
-                    $scope.$emit('HidePreloader');
+                    $timeout(function(){ $scope.$emit('HidePreloader'); }, 1000);
                 }, function() {
                     $scope.shareToDownloadOpen = false;
-                    $scope.$emit('HidePreloader');
+                    $timeout(function(){ $scope.$emit('HidePreloader'); }, 1000);
                 },
                 "CallToAndroid", "download", [reconocimientoSrc]);
             });

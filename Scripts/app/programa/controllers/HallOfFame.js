@@ -70,7 +70,21 @@ hallOfFameModule
                 if(userStats.stars == "") userStats.stars = "0";
                 $scope.userStats = userStats;
     
-    
+                $scope.userProgressBars = [];
+                
+                var step = Math.round(userStats.progress / 5 );
+                for(var i=0;i<20;i++)
+                {
+                    var classObjectActive = i < step ? "bar active" : "bar";
+                    var classObject = {
+                            objectClass : classObjectActive
+                        };
+                    
+                    $scope.userProgressBars.push(classObject);
+                    
+                }
+               
+                
                 function getTop5(city)
                 {
                     $scope.validateConnection(function() {
@@ -98,7 +112,10 @@ hallOfFameModule
                     $scope.userStats.forum = allTop5.current_user_activity.forum;
                     $scope.userStats.messages = allTop5.current_user_activity.messages;
                     $scope.userStats.comunity = allTop5.current_user_activity.comunity;
+                                                            
                     _pageLoaded = true;
+                    
+                                       
                     if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                 }
     
