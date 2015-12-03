@@ -359,8 +359,11 @@ angular
 
             function renderQuestionsAndAnswers(questionIndex, question) {
                 var i, index;
-                var userAnswers = '';
+                var userAnswers;
+                var userAnswer;
                 var otherObjectItem = {};
+                var indexUserAnswers;
+                var questionOption;
 
                 var questionNumOfChoices = question.answers.length;
                 $scope.questionNumOfChoices[questionIndex] = questionNumOfChoices;
@@ -443,11 +446,6 @@ angular
                             $scope.answers[questionIndex] = []; //Adding room for first answer
                         }
 
-                        var indexUserAnswers;
-                        var userAnswer;
-                        var userAnswers;
-                        var questionOption;
-
                         if (question.userAnswer !== null && question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
 
@@ -485,11 +483,6 @@ angular
                             $scope.answers[questionIndex] = [];  //Adding room for first answer
                         }
 
-                        var indexUserAnswers;
-                        var userAnswer;
-                        var userAnswers;
-                        var questionOption;
-
                         if (question.userAnswer !== null && question.userAnswer.length > 0) {
                             userAnswers = question.userAnswer.split(";");
 
@@ -518,8 +511,6 @@ angular
 
                     case "shortanswer":
 
-                        var userAnswers;
-
                         if ($scope.answers[questionIndex] === undefined) {
                             $scope.answers[questionIndex] = []; //Adding room for first answer
                         }                        
@@ -529,7 +520,6 @@ angular
                             userAnswers = question.userAnswer.split(';');
 
                             if ($scope.answers[questionIndex].length < userAnswers.length) {
-
                                 for (i = 0; i < userAnswers.length; i++) {                                
                                     $scope.answers[questionIndex].push(userAnswers[i]);
                                 }
@@ -551,9 +541,6 @@ angular
 
                     case "essay":
 
-                        var myAnswer;
-                        var userAnswers;
-
                         if ($scope.answers[questionIndex]  === undefined) {
                             $scope.answers[questionIndex] = [];   //Adding room for first answer
                         }
@@ -563,7 +550,6 @@ angular
                             userAnswers = question.userAnswer.split(';');
 
                             if ($scope.answers[questionIndex].length < userAnswers.length) {
-
                                 for (i = 0; i < userAnswers.length; i++) {                                
                                     $scope.answers[questionIndex].push(userAnswers[i]);
                                 }
@@ -710,7 +696,6 @@ angular
 
                     var numOfTalents = $scope.answers[0].length;
                     if ($scope.answers[0][numOfTalents - 1] === 1) {//Other option was selected by the user.
-                        //alert($scope.OtroAnswers[0].answers[0]);
                         $scope.userprofile.talents.push($scope.OtroAnswers[0].answers[0]);
                     }
 
@@ -723,7 +708,6 @@ angular
 
                     var numOfValues = $scope.answers[1].length;
                     if ($scope.answers[1][numOfValues - 1] === 1) {//Other option was selected by the user.
-                        //alert($scope.OtroAnswers[1].answers[0]);
                         $scope.userprofile.values.push($scope.OtroAnswers[1].answers[0]);
                     }
 
@@ -736,7 +720,6 @@ angular
 
                     var numOfHabilities = $scope.answers[2].length;
                     if ($scope.answers[2][numOfHabilities - 1] === 1) {//Other option was selected by the user.
-                        //alert($scope.OtroAnswers[2].answers[0]);
                         $scope.userprofile.habilities.push($scope.OtroAnswers[2].answers[0]);
                     }
 
@@ -753,7 +736,6 @@ angular
 
                     var numOfFavoriteSports = $scope.answers[0].length;
                     if ($scope.answers[0][numOfFavoriteSports - 1] === 1) {//Other option was selected by the user.
-                        //alert($scope.OtroAnswers[2].answers[0]);
                         $scope.userprofile.favoriteSports.push($scope.OtroAnswers[0].answers[0]);
                     }
 
@@ -766,7 +748,6 @@ angular
 
                     var numOfArtisticActivities = $scope.answers[1].length;
                     if ($scope.answers[1][numOfArtisticActivities - 1] === 1) {//Other option was selected by the user.
-                        //alert($scope.OtroAnswers[1].answers[0]);
                         $scope.userprofile.artisticActivities.push($scope.OtroAnswers[1].answers[0]);
                     }
 
@@ -779,7 +760,6 @@ angular
 
                     var numOfHobbies = $scope.answers[2].length;
                     if ($scope.answers[2][numOfHobbies - 1] === 1) {//Other option was selected by the user.
-                        //alert($scope.OtroAnswers[2].answers[0]);
                         $scope.userprofile.hobbies.push($scope.OtroAnswers[2].answers[0]);
                     }
 
@@ -858,7 +838,6 @@ angular
 
                             //Unanswered questions should be equal to 0.
                             for (i = 0; i < $scope.activityObject.questions[index].answers.length; i++) {
-                                //console.log("Validating " + $scope.activityObject.questions[index].answers.length + " options in MC");
                                 if ($scope.answers[index][i] != 1) {                                     
                                     $scope.answers[index][i] = 0;                                        
                                 } 
@@ -901,8 +880,7 @@ angular
                             break;
 
                         case "simplechoice":
-                            if ($scope.answers[index] != null) {
-                                //The user filled in the question.
+                            if ($scope.answers[index] != null) {  //The user filled in the question.
                                 numAnswered++;
                             }
 
@@ -1048,12 +1026,7 @@ angular
             //################################################## UTILITY FUNCTIONS #########################################
             function cleanText(userAnswer) {
 
-                var result = userAnswer.replace("\r", "");
-                result = userAnswer.replace("<br>", "");
-                result = userAnswer.replace("<p>", "");
-                result = userAnswer.replace("</p>", "");
-                result = userAnswer.replace("\n", "");
-                result = userAnswer.replace("\r", "");
+                var result = userAnswer.replace(/\r/g, "").replace(/<br>/g, "").replace(/<p>/g, "").replace(/<\/p>/g, "").replace(/\n/g, "");
 
                 return result;
             }
