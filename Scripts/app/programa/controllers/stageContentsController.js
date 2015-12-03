@@ -14,7 +14,6 @@ angular
             var _loadedResources = false;
             var _pageLoaded = false;
             var currentUser;
-            var activitiesFromCache=false;
             var fuentesDeEnergiaIds;
             var totalOptionalPoints;
             var activitymanagers;
@@ -129,7 +128,6 @@ angular
                 }
                 else {
                     $scope.fuenteDeEnergia = activities;
-                    activitiesFromCache = true;
                     getDataAsync();
                 }
 
@@ -253,8 +251,8 @@ angular
                             if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                                 if (!$scope.fuenteDeEnergia.activities[i].status) {
                                     $scope.fuenteDeEnergia.activities[i].status = true;
-                                    if(activitiesFromCache)
-                                        _setLocalStorageJsonItem("activitiesCache/" + moduleid, $scope.fuenteDeEnergia);
+                                    _setLocalStorageJsonItem("activitiesCache/" + moduleid, $scope.fuenteDeEnergia);
+                                    //Update cache even if not read from the loading, the cache object could have been created by interaction with anoother element such as "like"
                                     
                                     // Update activityManagers
                                     for (var am = 0; am < activitymanagers.length; am++) {
