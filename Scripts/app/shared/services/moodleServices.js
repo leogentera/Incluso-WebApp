@@ -147,6 +147,10 @@
 
         };
 
+        var _postAsyncAvatar = function (data, successCallback, errorCallback){
+            _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
+        }
+
         var _putEndActivityQuizes = function (activityId, data, userCourseModel, token, successCallback, errorCallback, forceRefresh) {
             _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
 
@@ -416,6 +420,22 @@
                 data: dataModel,
                 headers: { 'Content-Type': 'application/json' }
             });
+            _setLocalStorageJsonItem(key,dataModel);
+
+            if(successCallback){
+                successCallback(); 
+            }
+        };
+
+        var _postAsyncDataOffline = function (key, dataModel, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            addRequestToQueue(key, {
+                method: 'POST',
+                url: url,
+                data: dataModel,
+                headers: { 'Content-Type': 'application/json' }
+            });
+            dataModel = (key == "avatarInfo" ? [dataModel] : dataModel );
             _setLocalStorageJsonItem(key,dataModel);
 
             if(successCallback){
@@ -1129,7 +1149,8 @@
             GetAsyncCatalogs: _getAsyncCatalogs,
             CountLikesByUser: _countLikesByUser,
             GetServerDate: _getServerDate,
-            ExecuteQueue: _executeQueue       
+            ExecuteQueue: _executeQueue,
+            PostAsyncAvatar: _postAsyncAvatar       
         };
     })();
 }).call(this);

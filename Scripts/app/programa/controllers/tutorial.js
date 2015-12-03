@@ -113,20 +113,18 @@ angular
                 var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen;
                 encodeImageUri(pathimagen, function(b64) {
                     avatarInfo[0]["filecontent"] = b64;
-                    $http({
-                        method: 'POST',
-                        url: API_RESOURCE.format('avatar'),
-                        data: avatarInfo[0]
-                    })
-                    .success(function(){
-                        console.log('Foto guardada exitosamente!');
-                        $location.path('/ProgramaDashboard');
-                    })
-                    .error(function(){
-                        console.log('Error al subir la foto!');
-                        $location.path('/ProgramaDashboard');
-                    });
+                    moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], successCallback, errorCallback);
                 });
+            }
+
+            var successCallback = function(){
+                console.log('Foto guardada exitosamente!');
+                $location.path('/ProgramaDashboard');
+            }
+
+            var errorCallback = function(){
+                console.log('Error al subir la foto!');
+                $location.path('/ProgramaDashboard');
             }
             
             $scope.avatar = function () {
