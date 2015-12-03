@@ -1814,7 +1814,7 @@ angular
                             $scope.$emit('HidePreloader');
                         }
                     );
-                };
+                }
 
                 function getContent() {
                     drupalFactory.Services.GetContent("7001", function (data, key) {
