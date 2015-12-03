@@ -19,7 +19,7 @@ angular
 
             $scope.$emit('ShowPreloader');
 
-            var userId = moodleFactory.Services.GetCacheObject("userId");
+            //var userId = moodleFactory.Services.GetCacheObject("userId");
 
             if ($routeParams.id != moodleFactory.Services.GetCacheObject("userId")) {
                 $scope.validateConnection(initController, offlineCallback);
@@ -506,7 +506,7 @@ angular
                 };
 
                 $scope.edit = function () {
-                    $location.path("/Perfil/Editar/" + userId);
+                    $location.path("/Perfil/Editar/" + $scope.userId);
                 };
 
                 $scope.privacySettings = function () {
@@ -903,7 +903,7 @@ angular
                     $scope.$emit('ShowPreloader');
                     $timeout(function () {
                         $scope.$emit('ShowPreloader');
-                        $location.path("Profile/" + userId); // moodleFactory.Services.GetCacheObject("userId"));
+                        $location.path("Profile/" + $scope.userId);
                     }, 1);
                 };
 
@@ -915,16 +915,15 @@ angular
                     }
 
                     if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && !showResultsPage) {
-                        $location.path("Profile/" + userId);   //Return to Profile.
+                        $location.path("Profile/" + $scope.userId);   //Return to Profile.
                     }
 
                     if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
-                        $location.path("Profile/" + userId); // moodleFactory.Services.GetCacheObject("userId"));
+                        $location.path("Profile/" + $scope.userId);
                     }
 
                     $scope.accessedSubsection = false;
                     showResultsPage = false;
-                    //$location.path("Profile/" + userId); // moodleFactory.Services.GetCacheObject("userId"));
                 };
 
 
@@ -932,10 +931,10 @@ angular
 
                     var fromPath = $location.$$path;
                     console.log($location.$$path + " / " + $scope.accessedSubsection);
-                    var fromPrivacy = fromPath.indexOf("/Perfil/ConfigurarPrivacidad") > -1;
+                    var fromPrivacy = fromPath == "/Perfil/ConfigurarPrivacidad/" + $scope.userId;
                     if (!$scope.accessedSubsection && !fromPrivacy) {
-                        console.log("Not PRIVACY SETTINGS");
-                        $location.path("Profile/" + userId);
+                        console.log("Not fromPRIVACY SETTINGS");
+                        $location.path("Profile/" + $scope.userId);
                         return;
                     }
 
