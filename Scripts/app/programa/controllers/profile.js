@@ -505,6 +505,7 @@ angular
 
                 $scope.privacySettings = function () {
                     $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null)
+
                 };
 
                 $scope.navigateToDashboard = function () {
