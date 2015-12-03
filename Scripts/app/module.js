@@ -173,7 +173,7 @@
             controller: 'programaProfileController'
         });
 
-        $routeProvider.when('/Perfil/ConfigurarPrivacidad', {
+        $routeProvider.when('/Perfil/ConfigurarPrivacidad/:id', {
             templateUrl: 'Templates/Programa/privacySettings.html',
             controller: 'programaProfileController'
         });

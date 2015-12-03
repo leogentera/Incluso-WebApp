@@ -278,7 +278,7 @@
                     
                     getUserStarsByPoints();
                     
-                }, errorCallback, false);                
+                }, errorCallback, false);
             }
             
             function getUserStarsByPoints(){

@@ -50,7 +50,7 @@ angular
                 $scope.setToolbar($location.$$path, "");
 
                 $scope.currentPage = 1;
-                if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
+                if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                     $scope.currentPage = 2;
                 }
 
@@ -505,6 +505,10 @@ angular
                 $scope.edit = function () {
                     $location.path("/Perfil/Editar/" + moodleFactory.Services.GetCacheObject("userId"));
                 };
+                
+                $scope.privacySettings = function() {
+                        $scope.navigateTo('/Perfil/ConfigurarPrivacidad/' + moodleFactory.Services.GetCacheObject("userId"), null, null, null)      
+                };
 
                 $scope.navigateToDashboard = function () {
                     $location.path('/ProgramaDashboard');
@@ -873,7 +877,7 @@ angular
                     $scope.model.currentStudies.grade = $scope.model.grade;
                     $scope.model.currentStudies.period = $scope.model.period;
 
-                    if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
+                    if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                         saveUser();
                     } else {
                         var validationResult = validateRestrictions();  //Valid if validateModel() returns true
