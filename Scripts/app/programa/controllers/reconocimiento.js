@@ -47,7 +47,7 @@
             ctx = canvas.getContext('2d');
         canvas.width = 1200;
         canvas.height = 1200;
-        document.body.appendChild(canvas);
+        
         var oText = {
 			username: '',
 			title: 'OTORGA EL PRESENTE RECONOCIMIENTO A',
@@ -61,6 +61,17 @@
             $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.profile.communityAccess);
             
             oText.username = $scope.profile.firstname + " " + $scope.profile.lastname + " " + $scope.profile.mothername;
+            
+            if ($scope.profile.awards.title == "") {
+                var stars = Number($scope.profile.stars);
+                if (stars < 6000) {
+                    $scope.profile.awards.title = "copper";
+                }else if (stars < 12000) {
+                    $scope.profile.awards.title = "silver";
+                }else {
+                    $scope.profile.awards.title = "gold";
+                }
+            }
         }
         
         function offlineCallback() {
@@ -76,25 +87,27 @@
                     drawInclusoLogo(ctx);
                     drawDiplomaFrame(ctx);
                     drawStripesDeco(ctx);
+                    console.log($scope.profile.awards.title);
                     drawMedal(ctx, $scope.profile.awards.title);
                     renderText(ctx, oText);
                     
                     reconocimientoSrc = canvas.toDataURL("image/png");
+                    var indexComma = reconocimientoSrc.indexOf(',');
+                    reconocimientoSrc = reconocimientoSrc.substring(indexComma + 1, reconocimientoSrc.length);
             }
             
             callback();
         }
               
         $scope.download = function() {
-            $scope.$emit('ShowPreloader');
             
             generateReconocimientoImgSrc(function() {
                 cordova.exec(function() {
                     $scope.shareToDownloadOpen = true;
-                    $timeout(function(){ $scope.$emit('HidePreloader'); }, 1000);
+                    $timeout(function(){ $scope.shareToDownloadOpen = true; }, 1000);
                 }, function() {
                     $scope.shareToDownloadOpen = false;
-                    $timeout(function(){ $scope.$emit('HidePreloader'); }, 1000);
+                    $timeout(function(){ $scope.shareToDownloadOpen = false; }, 1000);
                 },
                 "CallToAndroid", "download", [reconocimientoSrc]);
             });
@@ -104,15 +117,9 @@
             
             $scope.validateConnection(function() {
             
-                $scope.$emit('ShowPreloader');
-            
                 generateReconocimientoImgSrc(function() {
                     cordova.exec(function() {
-                        $scope.shareToEmailOpen = true;
-                        $scope.$emit('HidePreloader');
                     }, function() {
-                        $scope.shareToEmailOpen = false;
-                        $scope.$emit('HidePreloader');
                     },
                     "CallToAndroid","shareByMail", [reconocimientoSrc, "reconocimiento.png", "mi reconocimiento"]);
                 });
@@ -124,16 +131,10 @@
         $scope.shareToSocialNetworks = function() {
             
             $scope.validateConnection(function() {
-            
-                $scope.$emit('ShowPreloader');
                 
                 generateReconocimientoImgSrc(function() {
                     cordova.exec(function() {
-                        $scope.shareToSocialNetworksOpen = true;
-                        $scope.$emit('HidePreloader');
                     }, function() {
-                        $scope.shareToSocialNetworksOpen = false;
-                        $scope.$emit('HidePreloader');
                     },
                     "CallToAndroid", "share", [reconocimientoSrc]);
                 });
@@ -197,8 +198,8 @@
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": $scope.textToCommunity,
-                    "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                    "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": 4,
                     "filecontent":reconocimientoSrc.replace("data:image/png;base64", ""),
                     "filename": 'reconocimiento.png',
@@ -226,7 +227,7 @@
             
             $scope.validateConnection(function() {
                 
-            $scope.communityModalOpen = !$scope.communityModalOpen;
+                $timeout(function() { $scope.communityModalOpen = !$scope.communityModalOpen; }, 500);
             
             }, offlineCallback);
 
@@ -3014,8 +3015,8 @@
 				ctx.bezierCurveTo(488,616,488,551,528,511);
 				ctx.bezierCurveTo(567,472,632,472,671,511);
 				ctx.fill();
-			} else if(color == 'bronze') {
-				// bronze
+			} else if(color == 'copper') {
+				// copper
 				var grd = ctx.createLinearGradient(490,583,709,583);
 				grd.addColorStop(0,'rgba(107,65,29,1)');
 				grd.addColorStop(0.1,'rgba(107,65,29,1)');
