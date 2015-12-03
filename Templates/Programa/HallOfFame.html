@@ -12,7 +12,14 @@
 						</div>
 						<div class="user-data">
 							<p class="user-name">Mi Avance</p>
-                            <div class="user-progress-bar" progress-bar="{{userStats.progress}}"></div>
+                            <div class="user-progress-bar">
+								<div>
+									<div class="container">
+										<div class="{{classObject.objectClass}}" ng-repeat="classObject in userProgressBars"></div>										
+									</div>
+									<label>{{userStats.progress}}%</label>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

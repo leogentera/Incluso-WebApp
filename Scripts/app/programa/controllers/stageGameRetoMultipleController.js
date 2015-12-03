@@ -374,6 +374,9 @@ angular
               _endActivity(activityModel, function(){
                 activitiesPosted++;
                 if (activitiesPosted == activitiesFinished.length) {
+                  if ($routeParams.retry) {
+                    moodleFactory.Services.ExecuteQueue();
+                  }                  
                   $scope.$emit('HidePreloader');
                   if ($scope.IsComplete) {
                     $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  

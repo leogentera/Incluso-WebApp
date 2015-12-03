@@ -147,6 +147,10 @@
 
         };
 
+        var _postAsyncAvatar = function (data, successCallback, errorCallback){
+            _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
+        }
+
         var _putEndActivityQuizes = function (activityId, data, userCourseModel, token, successCallback, errorCallback, forceRefresh) {
             _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
 
@@ -416,6 +420,22 @@
                 data: dataModel,
                 headers: { 'Content-Type': 'application/json' }
             });
+            _setLocalStorageJsonItem(key,dataModel);
+
+            if(successCallback){
+                successCallback(); 
+            }
+        };
+
+        var _postAsyncDataOffline = function (key, dataModel, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            addRequestToQueue(key, {
+                method: 'POST',
+                url: url,
+                data: dataModel,
+                headers: { 'Content-Type': 'application/json' }
+            });
+            dataModel = (key == "avatarInfo" ? [dataModel] : dataModel );
             _setLocalStorageJsonItem(key,dataModel);
 
             if(successCallback){
@@ -941,10 +961,12 @@
         }
         
         var _callback;
+        var _currentUser;
 
         var _executeQueue = function(callback){
             _callback = callback;
-
+            _currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            
             if(window.mobilecheck()){                    
                     doRequestforCellphone();                     
             }                
@@ -955,12 +977,14 @@
         }
 
         function addRequestToQueue(key, data){
+            _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
             var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue");            
             if(cacheQueue instanceof Array){
                 requestQueue = cacheQueue;
             } 
             data.retryCount = 0;
+            data.userID = _currentUser.userId //Necesitamos guardar el request en la cola con el usuario actual
             data.key = key;
             console.log('putting in queue ' + key);            
             requestQueue.push(data);
@@ -979,11 +1003,12 @@
         function doRequestforWeb(){     
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
             console.log(requestQueue);
-            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0){
-                    
-                    var data = requestQueue[0];
+            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0){                    
+                var data = requestQueue[0];
+                if(data.userID == _currentUser.userId){ //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
                     console.log("Procesando Request " + data.url);                    
-                    if(data.retryCount<5){
+                    if(data.retryCount<5){                            
+                            data.headers.Authorization = _currentUser.token; //Reemplazamos el token con el token actual
                             _httpFactory(
                             data
                         ).success(function (response) {
@@ -1015,7 +1040,8 @@
                             _callback = null;
                         }   
                         doRequestforWeb();
-                    }               
+                    } 
+                }                                  
             }
             else if (_callback != null){
                 _callback();
@@ -1028,42 +1054,46 @@
 
             _updateConnectionStatus(function(){                
                 if(_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length>0){
-                    _queuePaused = false;
                     var data = requestQueue[0];
-                    console.log("Procesando Request " + data.url)
-                    if(data.retryCount<5){
-                            _httpFactory(
-                            data
-                        ).success(function (response) {
-                            requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
-                            console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
-                            requestQueue.shift();                             
-                            if(data.method == 'GET'){
-                                _setLocalStorageJsonItem(data.key, response); 
-                            }
-                            _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                    if(data.userID == _currentUser.userId){ //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
+                        _queuePaused = false;
+                        var data = requestQueue[0];
+                        console.log("Procesando Request " + data.url)
+                        if(data.retryCount<5){
+                                data.headers.Authorization = _currentUser.token; //Reemplazamos el token con el token actual
+                                _httpFactory(
+                                data
+                            ).success(function (response) {
+                                requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
+                                console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
+                                requestQueue.shift();                             
+                                if(data.method == 'GET'){
+                                    _setLocalStorageJsonItem(data.key, response); 
+                                }
+                                _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                                if(requestQueue.length == 0 && _callback != null){
+                                    _callback();
+                                    _callback = null;
+                                }                           
+                                doRequestforCellphone();                                                            
+                            }).error(function (response) {
+                                if(_isDeviceOnline){
+                                   requestQueue[0].retryCount++;                               
+                                    _setLocalStorageJsonItem("RequestQueue", requestQueue);
+                                   doRequestforCellphone();
+                                }                        
+                            });
+                        }  
+                        else{
+                            requestQueue.shift();  
+                            _setLocalStorageJsonItem("RequestQueue", requestQueue);
                             if(requestQueue.length == 0 && _callback != null){
                                 _callback();
                                 _callback = null;
-                            }                           
-                            doRequestforCellphone();                                                            
-                        }).error(function (response) {
-                            if(_isDeviceOnline){
-                               requestQueue[0].retryCount++;                               
-                                _setLocalStorageJsonItem("RequestQueue", requestQueue);
-                               doRequestforCellphone();
-                            }                        
-                        });
-                    }  
-                    else{
-                        requestQueue.shift();  
-                        _setLocalStorageJsonItem("RequestQueue", requestQueue);
-                        if(requestQueue.length == 0 && _callback != null){
-                            _callback();
-                            _callback = null;
-                        }
-                        doRequestforCellphone();
-                    }               
+                            }
+                            doRequestforCellphone();
+                        } 
+                    }                                
                 }
                 else if(!_isDeviceOnline){
                     _queuePaused = true;
@@ -1119,7 +1149,8 @@
             GetAsyncCatalogs: _getAsyncCatalogs,
             CountLikesByUser: _countLikesByUser,
             GetServerDate: _getServerDate,
-            ExecuteQueue: _executeQueue       
+            ExecuteQueue: _executeQueue,
+            PostAsyncAvatar: _postAsyncAvatar       
         };
     })();
 }).call(this);
