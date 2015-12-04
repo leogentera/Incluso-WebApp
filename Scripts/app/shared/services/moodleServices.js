@@ -13,6 +13,10 @@
         var _putAsyncAcceptTermsAndConditions = function (userId, data, successCallback, errorCallback, forceRefresh){
             _putAsyncData("termsAndConditions/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };
+        
+        var _putAsyncAward = function (userId, data, successCallback, errorCallback) {
+            _putAsyncData("usercourseaward", data, API_RESOURCE.format('usercourse/' + userId), successCallback, errorCallback);
+        };
 
         var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
             //the next needs to refactored.  usedid is being passed to the course resource. it should point to usercourse.
@@ -1150,7 +1154,8 @@
             CountLikesByUser: _countLikesByUser,
             GetServerDate: _getServerDate,
             ExecuteQueue: _executeQueue,
-            PostAsyncAvatar: _postAsyncAvatar       
+            PostAsyncAvatar: _postAsyncAvatar,
+            PutAsyncAward: _putAsyncAward
         };
     })();
 }).call(this);

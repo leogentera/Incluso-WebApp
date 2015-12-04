@@ -467,6 +467,38 @@ var _tryCloseStage = function(stageIndex){
     return false;
 };
 
+var _tryAssignAward = function() {
+  
+  var userid = localStorage.getItem("userId");
+  var user = JSON.parse(localStorage.getItem("profile/" + userid));
+  
+  // assign award
+  if (!user.awards.title) {
+      var awardData = {
+          "award": true,
+          "dataissued": moment().format("YYYY/MM/DD h:mm:ss")
+      };
+      moodleFactory.Services.PutAsyncAward(userid, awardData, function(){}, function(){});
+      
+      // update profile
+      var awards = _getAwards();
+      if (awards) {
+        
+        var stars = Number(user.stars);
+        
+        for (a = 0; a < awards.length; a++) {
+          var award = awards[a];
+          
+          if (stars >= award.min_points_range && stars <= award.max_points_range) {
+            user.awards.title = award.title;
+            localStorage.setItem("profile/" + userid, JSON.stringify(user));
+            break;
+          }
+        }
+      }
+  }
+};
+
 var _closeChallenge = function (stageId) {    
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));    
@@ -1576,11 +1608,23 @@ var _getCatalogValuesBy = function (catalogName) {
     
     var catalogs = moodleFactory.Services.GetCacheJson("catalogs");
     
-    if (catalogs != null) {
-        var catalog = _.filter(catalogs, function(c) { return c.catalog === catalogName; });
+    if (catalogs) {
+        var catalog = _.filter(catalogs, function(c) { return c.type === "catalogs" && c.catalog === catalogName; });
         return (catalog != null && catalog[0].values.length) > 0 ? catalog[0].values : [];
     }else{
         return [];
+    }
+};
+
+var _getAwards = function () {
+    
+    var catalogs = moodleFactory.Services.GetCacheJson("catalogs");
+    
+    if (catalogs) {
+        var awards = _.filter(catalogs, function(c) { return c.type === "award" });
+        return (awards != null && awards[0].values.length) > 0 ? awards[0].values : null;
+    }else{
+        return null;
     }
 };
 

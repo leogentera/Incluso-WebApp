@@ -62,16 +62,7 @@
             
             oText.username = $scope.profile.firstname + " " + $scope.profile.lastname + " " + $scope.profile.mothername;
             
-            if ($scope.profile.awards.title == "") {
-                var stars = Number($scope.profile.stars);
-                if (stars < 6000) {
-                    $scope.profile.awards.title = "copper";
-                }else if (stars < 12000) {
-                    $scope.profile.awards.title = "silver";
-                }else {
-                    $scope.profile.awards.title = "gold";
-                }
-            }
+            
         }
         
         function offlineCallback() {
