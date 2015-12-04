@@ -50,7 +50,6 @@ angular
             $scope.isInstalled = false;
 
             if(!$routeParams.retry){
-              //Removes answers of any other user previously logged in
               for(var key in localStorage){  
                   if(key.indexOf("retoMultipleScores") > -1 && key.indexOf($scope.user.id) < 0){
                       localStorage.removeItem(key);  
@@ -70,7 +69,6 @@ angular
                 retoMultipleArray = $scope.retosMultipleChallenge.activities;
                 for(i = 0; i < $scope.retosMultipleChallenge.activities.length; i++){
                   var activity = moodleFactory.Services.GetCacheJson("activity/" + $scope.retosMultipleChallenge.activities[i].coursemoduleid);
-                  //Requesting data
                   if (activity) {
                     $scope.retoMultipleActivities.push(activity);
                   } else {
@@ -87,7 +85,6 @@ angular
             }
 
             var assignCourseModuleId = function(asyncRequest, data){
-              //Assignation of coursemoduleid to activities and once it finishes it creates request
               $scope.retoMultipleActivities[$scope.retoMultipleActivities.length - 1]["coursemoduleid"] = 
               ( asyncRequest ? _.find($scope.retosMultipleChallenge.activities, function(r){ return r.activityname == data.name }).coursemoduleid : data.coursemoduleid);
               if ($scope.retoMultipleActivities.length == $scope.retosMultipleChallenge.activities.length) {
@@ -98,7 +95,6 @@ angular
             }
 
             var createRequest = function() {
-              //Basic structure of request
                 var request = {
                   "userId": "" + $scope.user.id,
                   "alias": $scope.user.username,
@@ -108,7 +104,6 @@ angular
                 };
                 var scoresActivity;
                 _.each($scope.retoMultipleActivities, function(activity){
-                  //Assigns all quizzes other than the score quiz
                   if (activity.name.toLowerCase().indexOf("puntaje") < 0 && activity.name.toLowerCase().indexOf("resultados") < 0) {
                     var subactivity = {
                         "estrellas": "300",
@@ -121,7 +116,6 @@ angular
                     scoresActivity = activity;
                   }
                 });
-                //Gets the score quiz from caché and if it doesn't exist gets it from API
                 var activityAnswers = moodleFactory.Services.GetCacheJson("retoMultipleScores/" + $scope.user.id);
                 if (activityAnswers) {
                   setUserAnswers(request, activityAnswers, scoresActivity);
@@ -175,7 +169,6 @@ angular
 
             $scope.downloadGame = function () {
               $scope.$emit('ShowPreloader');
-              //Starts loading data
               loadData();
             }
             
@@ -235,7 +228,6 @@ angular
                   });
                   _setLocalStorageJsonItem("retoMultipleScores/" + $scope.user.id, scoreQuiz);
                   quizzesRequests.push(scoreEntry);
-                  //Assign results to answers.
                   for (var i = 0; i < data.resultado.length; i++) {
                     var logEntry = {
                       "userid": $scope.user.id,
@@ -253,7 +245,6 @@ angular
                           logEntry.answers.push(data.resultado[i].preguntas[j].respuesta);
                           logEntry.quiz_answered = (data.resultado[i].preguntas[j].respuesta != "" && logEntry.quiz_answered);
                       }
-                      //activity.questions[3]["userAnswer"] = data.resultado[i].nivelInteligencia;
 
                       logEntry.answers.push(data.resultado[i].nivelInteligencia);
                       var isAlto = _.find(predominantes, function(p) {
@@ -286,22 +277,18 @@ angular
                                     completedActivities.completed >= $scope.activitiesLength  &&
                                     completedActivities.completed > 1;
 
-                //save response
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivityIdentifier = $routeParams.moodleid;
                 var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
                 var subactivitiesCompleted = [];
-                //Searches for the quizzes completed
                 _.each(quizzesRequests, function(q){
                   if(q.quiz_answered){
                     subactivitiesCompleted.push(q.coursemoduleid);
                   }
                 });
 
-                //Shield and stars are only assigned if parent activity has neved been completed and all quizzes were answered
                 if (parentActivity.status == 0 && $scope.IsComplete) {
                   if (shield != "" && $scope.profile) {
-                    //update profile
                     $scope.profile["shield"] = shield;
                     currentUser.shield = shield;
                     var careers = {
@@ -333,11 +320,9 @@ angular
                   _endActivity(parentActivity, function(){});
                   parentActivity.status = 1;
                   if (parentActivity.activities) {
-                    //Posts the stars of the finished subactivities and if they're all finished, posts the stars of the parent
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                   }
                 }
-                //Updates the statuses of the subactivities completed - Status should always be updated because ending an activity updates the status anyway.
                 userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
                 userCourseUpdated.isMultipleChallengeActivityFinished = $scope.IsComplete;
                 
@@ -354,7 +339,6 @@ angular
 
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated, activitiesFinished) {
-              //Update quiz on server
               var results = {
                 "userid": currentUser.userId,
                 "answers": quiz.answers,
@@ -431,7 +415,7 @@ angular
             function getdatenow() {
                 var date = new Date(),
                     year = date.getFullYear(),
-                    month = formatValue(date.getMonth() + 1), // months are zero indexed
+                    month = formatValue(date.getMonth() + 1),
                     day = formatValue(date.getDate()),
                     hour = formatValue(date.getHours()),
                     minute = formatValue(date.getMinutes()),

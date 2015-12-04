@@ -47,7 +47,6 @@ angular
             $scope.isInstalled = false;
 
             if(!$routeParams.retry) {
-                //Removes answers of any other user previously logged in
                 for(var key in localStorage){  
                     if(key.indexOf("mapaDeEmprendedorAnswers") > -1 && key.indexOf($scope.user.id) < 0){
                         localStorage.removeItem(key);  
@@ -116,7 +115,6 @@ angular
                     "pathImagenFicha": "",
                     "proyectos": []
                 } 
-                //set proyectos
                 $scope.projectMap = [];
                 $scope.mapaDeEmprendedorActivities = _.sortBy($scope.mapaDeEmprendedorActivities, function(a){ return a.coursemoduleid });
                 for (var i = 0; i < $scope.mapaDeEmprendedorActivities.length; i++) {
@@ -173,7 +171,6 @@ angular
                 var quizzesRequests = [];
                 $scope.projectMap = ($scope.dimensionMap ? $scope.dimensionMap : moodleFactory.Services.GetCacheJson("mapaDelEmprendedorProjectsMap"));
                 $scope.pathImagenFicha = (!data.imagenFicha || data.imagenFicha == "" ? data.pathImagenFicha : data.imagenFicha );
-                //Structure of questions defined in case response messes up with the order.
                 var proyectoStructure = ["proyecto", "necesidades", "clientes", "propuesta", "actividades", "recursos", "personas", "relacion", "formaEntrega"];
                 for (var i = 0; i < data.proyectos.length; i++) {
                     var proyecto = data.proyectos[i];
@@ -191,7 +188,6 @@ angular
                         };
                         var activity = _.find($scope.mapaDeEmprendedorActivities, function(a){ return a.coursemoduleid == proyectoId; });
                         if(activity){
-                            //Follows up a structure so, if json returns values out of place, it won't affect moodle questions order.
                             _.each(proyectoStructure, function(key){
                                 var answer = _.find(proyecto, function(value, innerKey){ return key.toLowerCase().indexOf(innerKey.toLowerCase().trim()) > -1; });
                                 var question = _.find(activity.questions, function(q){ return key.indexOf(q.title.toLowerCase().split(" ", 1)[0].slice(0, -1)) > -1 });
@@ -226,7 +222,6 @@ angular
                     }
                 });
 
-                //There is no need to know if the activity is completed or not ATM. I'm leaving this var in case in the near future a requirement needs it.
                 $scope.IsComplete = $scope.mapaDeEmprendedorActivities &&
                                     $scope.mapaDeEmprendedorAnswers &&
                                     quizzesAnswered.completed &&
@@ -278,8 +273,6 @@ angular
             };
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated, canPost) {
-                
-                //Update quiz on server
                 var results = {
                     "userid": currentUser.userId,
                     "answers": quiz.answers,
@@ -370,12 +363,10 @@ angular
             
                 var activityFromTree = getActivityByActivity_identifier(3404);
                 
-                /* check over extra points */
                 var course = moodleFactory.Services.GetCacheJson("course");
                 var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
                 
                 if (activityFromTree && activityFromTree.status == 1) {
-                    /* sumar uno extra al total */
                     if (forumData.totalExtraPoints < 11) {
                          updateUserForumStars($routeParams.moodleid, 50, function (){
                             successPutStarsCallback();

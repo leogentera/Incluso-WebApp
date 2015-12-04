@@ -11,7 +11,7 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-            $scope.$emit('ShowPreloader'); //show preloader
+            $scope.$emit('ShowPreloader');
             _timeout = $timeout;
             $scope.scrollToTop();
             $scope.model = getDataAsync();
@@ -28,10 +28,10 @@ angular
             $scope.isInstalled = false;
 
             $scope.avatarInfo = [{
-                "userid": "",//$scope.user.UserId,
-                "alias": "", //$scope.user.username,
+                "userid": "",
+                "alias": "",
                 "aplicacion": "Mi Avatar",
-                "estrellas": 0,//$scope.user.stars,
+                "estrellas": 0,
                 "PathImagen": "Android/data/<app-id>/images",
                 "color_cabello": "amarillo",
                 "estilo_cabello": "",
@@ -67,10 +67,10 @@ angular
                $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
                if ($scope.avatarInfo == null || $scope.avatarInfo.length == 0) {
                    $scope.avatarInfo = [{
-                       "userid": "",//$scope.user.UserId,
-                       "alias": "", //$scope.user.username,
+                       "userid": "",
+                       "alias": "",
                        "aplicacion": "Mi Avatar",
-                       "estrellas": 0,//$scope.user.stars,
+                       "estrellas": 0,
                        "PathImagen": "Android/data/<app-id>/images",
                        "color_cabello": "amarillo",
                        "estilo_cabello": "",
@@ -86,9 +86,7 @@ angular
             }
 
             
-          $scope.playVideo = function(videoAddress, videoName){                 
-                 //var videoAddress = "assets/media";
-                 //var videoName = "TutorialTest2.mp4";
+          $scope.playVideo = function(videoAddress, videoName){
                 playVideo(videoAddress, videoName);
             };
 
@@ -100,7 +98,6 @@ angular
                     c.width = this.width;
                     c.height = this.height;
                     ctx.drawImage(img, 0, 0);
-
                     if(typeof callback === 'function'){
                         var dataURL = c.toDataURL("image/png");
                         callback(dataURL.slice(22, dataURL.length));
@@ -118,12 +115,10 @@ angular
             }
 
             var successCallback = function(){
-                console.log('Foto guardada exitosamente!');
                 $location.path('/ProgramaDashboard');
             }
 
             var errorCallback = function(){
-                console.log('Error al subir la foto!');
                 $location.path('/ProgramaDashboard');
             }
             
@@ -186,7 +181,6 @@ angular
             }
         
             function FailureAvatar(data) {
-                console.log("Couldn't retrieve avatar");
                 $location.path('/ProgramaDashboard');
             }
 

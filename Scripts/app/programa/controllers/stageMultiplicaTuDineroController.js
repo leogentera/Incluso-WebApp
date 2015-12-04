@@ -144,14 +144,12 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        /*Completo*/ //{"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si", "calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuesta":529},{"preguntaId":128,"respuesta":532},{"preguntaId":129,"respuesta":534},{"preguntaId":130,"respuesta":536},{"preguntaId":131,"respuesta":540},{"preguntaId":132,"respuesta":543},{"preguntaId":133,"respuesta":545},{"preguntaId":134,"respuesta":550},{"preguntaId":135,"respuesta":552},{"preguntaId":136,"respuesta":555},{"preguntaId":137,"respuesta":557},{"preguntaId":138,"respuesta":560},{"preguntaId":139,"respuesta":563},{"preguntaId":140,"respuesta":567},{"preguntaId":141,"respuesta":570},{"preguntaId":142,"respuesta":573},{"preguntaId":143,"respuesta":576},{"preguntaId":144,"respuesta":579},{"preguntaId":145,"respuesta":581},{"preguntaId":146,"respuesta":584}]}
-                        /*8 respuestas*/ {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":1,"respuestaId":2},{"preguntaId":2,"respuestaId":6},{"preguntaId":3,"respuestaId":8},{"preguntaId":4,"respuestaId":11},{"preguntaId":10,"respuestaId":29},{"preguntaId":11,"respuestaId":33},{"preguntaId":15,"respuestaId":44},{"preguntaId":18,"respuestaId":52}]}
+                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":1,"respuestaId":2},{"preguntaId":2,"respuestaId":6},{"preguntaId":3,"respuestaId":8},{"preguntaId":4,"respuestaId":11},{"preguntaId":10,"respuestaId":29},{"preguntaId":11,"respuestaId":33},{"preguntaId":15,"respuestaId":44},{"preguntaId":18,"respuestaId":52}]}
                     );
                 }
             }
 
             function successGame(data){
-                //asign answers to the questions
                 $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("multiplicaTuDineroQuestionMap"));
                 var logEntry = {
                     "userid": $scope.user.id,
@@ -183,12 +181,8 @@ angular
                 });
 
                 $scope.IsComplete = $scope.multiplicaTuDineroActivity && 
-                                    questionsAnswered.completed == data.respuestas.length; //&&
-                                    //questionsAnswered.completed && 
-                                    //questionsAnswered.completed >= $scope.multiplicaTuDineroActivity.questions.length &&
-                                    //questionsAnswered.completed > 0 &&
-                                    //quiz_finished;
-                //save response
+                                    questionsAnswered.completed == data.respuestas.length;
+
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
                 var subactivitiesCompleted = [];
@@ -206,7 +200,6 @@ angular
                     }
                 }
                 if (parentActivity.activities) {
-                    //TODO: change for all activities in case there are other siblings completed
                     subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     for (var i = 0; i < subactivitiesCompleted.length; i++) {
@@ -220,7 +213,6 @@ angular
             }
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
-                //Update quiz on server
                 var results = {
                     "userid": currentUser.userId,
                     "answers": quiz.answers,

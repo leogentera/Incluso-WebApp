@@ -132,14 +132,12 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        //{ "userid":$scope.user.id,"actividad":"Tu Eliges","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":1,"respuestaId":1},{"preguntaId":2,"respuestaId":5},{"preguntaId":3,"respuestaId":9},{"preguntaId":4,"respuestaId":10},{"preguntaId":5,"respuestaId":14},{"preguntaId":6,"respuestaId":18},{"preguntaId":7,"respuestaId":21},{"preguntaId":8,"respuestaId":22}] }
                         {"respuestas":[{"preguntaId":"1", "respuestaId":"2"}, {"preguntaId":"2", "respuestaId":"5"},{"preguntaId":"3", "respuestaId":"7"},{"preguntaId":"4", "respuestaId":"11"},{"preguntaId":"5", "respuestaId":"14"},{"preguntaId":"6", "respuestaId":"17"},{"preguntaId":"7", "respuestaId":"20"},{"preguntaId":"8", "respuestaId":"23"}],"userId":"645","actividad":"Tú Eliges", "duracion":"0", "fechaInicio":"2015-11-30 11:45:13","fechaFin":"2015-11-30 11:45:55","actividadCompleta":"Si", "calificación":"Regular", "gustaActividad":"Si"}
                     );
                 } 
             }
 
             function successGame(data){
-            	//asign answers to the questions
                 $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("tuEligesQuestionMap"));
             	var logEntry = {
             		"userid":$scope.user.id,
@@ -155,7 +153,6 @@ angular
             			if (q.id == questionMap.questionId) {
                             var answerMap = _.find(questionMap.answers, function(a){ return a.orderId == data.respuestas[i].respuestaId});
             				q.userAnswer = data.respuestas[i].respuestaId;
-            				//finds index of answer to insert it into array of logentry
             				var answerIndex = q.answers.getIndexBy("id", answerMap.answerId);
             				logEntry.answers.push(answerIndex);
             			}
@@ -174,7 +171,6 @@ angular
                                     questionsAnswered.completed > 0 &&
                                     quiz_finished ;
 
-                //save response
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
                 var subactivitiesCompleted = [];
@@ -182,14 +178,12 @@ angular
 
                 subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
 
-                //It only ends activity once but saves all later attempts
                 if (parentActivity.status == 0) {
                     for (var i = 0; i < parentActivity.activities.length; i++) {
                         if(parentActivity.activities[i].status == 1 && i != 0){
                             activitiesCompleted++;
                         }
                     }
-                    //Checks if siblings activities are finished and ends parent activity
                     if ($scope.IsComplete && activitiesCompleted == parentActivity.activities.length - 1) {
                         parentActivity.status = 1;
                         _endActivity(parentActivity, function(){ });
@@ -210,7 +204,6 @@ angular
 
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
-                //Update quiz on server
                 var results = {
                     "userid": currentUser.userId,
                     "answers": quiz.answers,
