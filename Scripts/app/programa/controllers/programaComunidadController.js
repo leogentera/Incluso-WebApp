@@ -538,7 +538,7 @@ angular
                 var waitForProfileLoaded = setInterval(waitForProfileLoadedTimer, 1500);
                 
                 function waitForProfileLoadedTimer() {
-                    _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+                    _userProfile = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
                     
                     if (_userProfile != null) {
                         $timeout(function() {

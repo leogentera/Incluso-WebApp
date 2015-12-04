@@ -3,11 +3,11 @@
 
     moodleFactory.Services = (function () {
         var _getAsyncProfile = function (userId, token, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("profile/" + userId, API_RESOURCE.format('user/' + userId), token, successCallback, errorCallback, forceRefresh);
+            _getAsyncData("Perfil/" + userId, API_RESOURCE.format('user/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncProfile = function (userId, data, successCallback, errorCallback, forceRefresh) {
-            _putAsyncData("profile/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
+            _putAsyncData("Perfil/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
         };
 
         var _putAsyncAcceptTermsAndConditions = function (userId, data, successCallback, errorCallback, forceRefresh){
@@ -140,7 +140,7 @@
 
         var _assignStars = function (data, profile, token, successCallback, errorCallback, forceRefresh) {
 
-            _putAsyncStars("profile/" + data.userId, data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
+            _putAsyncStars("Perfil/" + data.userId, data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
         var _putEndActivity = function (activityId, data, activityModel, token, successCallback, errorCallback) {
@@ -254,6 +254,7 @@
                     headers: { 'Content-Type': 'application/json'}                    
                     });   
                 }
+
                 if(successCallback){
                     successCallback(); 
                 }
@@ -812,14 +813,14 @@
                     started: generalCommunity.started
                 };
 
-                var user = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+                var user = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
                 var progress = refreshProgress(course, user);
                 course = progress.course;
                 course.community = community;
                 course.multipleChallenges = multipleChallengesArray;
                 course.isMultipleChallengeActivityFinished = (multipleChallengeActivity[0].status === 1);
                 user = progress.user;
-                _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),user);
+                _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"),user);
                 _setLocalStorageJsonItem("usercourse",course);
                 //reload activty status dictionary
                 _loadActivityStatus();

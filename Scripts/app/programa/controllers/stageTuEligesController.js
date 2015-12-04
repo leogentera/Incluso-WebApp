@@ -26,7 +26,7 @@ angular
 
             _setLocalStorageItem("tuEligesActivities", null);
 
-            $scope.user = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+            $scope.user = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.tuEligesActivities = moodleFactory.Services.GetCacheJson("tuEligesActivities");
             $scope.stars = 0;

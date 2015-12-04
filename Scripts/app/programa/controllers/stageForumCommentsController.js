@@ -62,7 +62,7 @@ angular
                 "isVideoCollapsed":true,
                 "isAttachmentCollapsed":true
             };
-            var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+            var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
 
                 $scope.clickLikeButton = function(postId) {
                     

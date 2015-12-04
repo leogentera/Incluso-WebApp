@@ -470,7 +470,7 @@ var _tryCloseStage = function(stageIndex){
 var _tryAssignAward = function() {
   
   var userid = localStorage.getItem("userId");
-  var user = JSON.parse(localStorage.getItem("profile/" + userid));
+  var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
   
   // assign award
   if (!user.awards.title) {
@@ -491,7 +491,7 @@ var _tryAssignAward = function() {
           
           if (stars >= award.min_points_range && stars <= award.max_points_range) {
             user.awards.title = award.title;
-            localStorage.setItem("profile/" + userid, JSON.stringify(user));
+            localStorage.setItem("Perfil/" + userid, JSON.stringify(user));
             break;
           }
         }
@@ -537,7 +537,7 @@ var _closeChallenge = function (stageId) {
 
 
 var _updateBadgeStatus = function (coursemoduleid) {      
-    var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));    
+    var profile = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
     var badges = profile.badges;
     var activity = _getActivityByCourseModuleId(coursemoduleid);
     if (activity) {
@@ -547,7 +547,7 @@ var _updateBadgeStatus = function (coursemoduleid) {
           for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
               if (badges[indexBadge].id == currentBadge.badgeId) {
                   profile.badges[indexBadge].status = "won";
-                  _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
+                  _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile);
               } else {
                   //This else statement is set to avoid errors on execution flows
               }
@@ -560,7 +560,7 @@ var _updateBadgeStatus = function (coursemoduleid) {
 
 var _updateRewardStatus = function () {
 
-    var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     console.log('Stars from rewards: ' + profile.stars);
     var totalRewards = profile.rewards;
     var profilePoints = profile.stars;
@@ -572,7 +572,7 @@ var _updateRewardStatus = function () {
             profile.rewards[i].dateIssued = new Date();
         }
     }
-    localStorage.setItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
+    localStorage.setItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
 }
 
 var logStartActivityAction = function(activityId, timeStamp) {
@@ -1034,7 +1034,7 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
 }
 
 function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var stars = 0;
     for (var i = 0; i < parentActivity.activities.length; i++) {
@@ -1056,7 +1056,7 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
             date: getdate()
         };
         moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){}, function(){});
-        _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile)
+        _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile)
         _setLocalStorageJsonItem("CurrentUser", currentUser)
     }
 }
@@ -1093,7 +1093,7 @@ var getForumExtraPointsCounter = function(discussionIds) {
 };
 
 function updateUserStars(activityIdentifier, extraPoints) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
@@ -1144,7 +1144,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
 }
 
 function updateUserForumStars(activityIdentifier, extraPoints, callback) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
     
@@ -1168,7 +1168,7 @@ function updateUserForumStars(activityIdentifier, extraPoints, callback) {
 
 
 function updateUserStarsUsingExternalActivity(activity_identifier) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getExtActivityByActivity_identifier(activity_identifier);
     //profile.stars = Number(profile.stars) +  Number(activity.points);

@@ -28,7 +28,7 @@ angular
             getContentResources("TermsAndConditions");
 
             $scope.userId=localStorage.getItem("userId");
-            $scope.profile = JSON.parse(localStorage.getItem("profile/"+ $scope.userId));
+            $scope.profile = JSON.parse(localStorage.getItem("Perfil/"+ $scope.userId));
             //$scope.profile.termsAndConditions=true;
             $scope.accepted = $scope.profile.termsAndConditions;
             $rootScope.showToolbar = $scope.profile.termsAndConditions;
@@ -54,9 +54,9 @@ angular
                     moodleFactory.Services.PutAcceptTermsAndConditions($scope.userId, dataToSend ,function()
                         {
                             var userId = moodleFactory.Services.GetCacheObject("userId");
-                            var profile = moodleFactory.Services.GetCacheJson("profile/" + userId);
+                            var profile = moodleFactory.Services.GetCacheJson("Perfil/" + userId);
                             profile.termsAndConditions = true;
-                            _setLocalStorageJsonItem("profile/" + userId, profile);
+                            _setLocalStorageJsonItem("Perfil/" + userId, profile);
                             $scope.$emit('HidePreloader'); //show preloader
                             $scope.navigateTo('ProgramaDashboard');
                         },function(){}, true )

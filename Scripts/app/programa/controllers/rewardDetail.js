@@ -21,7 +21,7 @@ angular
                                                 
             //var userNotifications = JSON.parse(localStorage.getItem("notifications"));
               
-            var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+            var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
             
                                 
             $scope.rewardDetail = _.find(profile.rewards, function(d){return d.id == $routeParams.id; });

@@ -119,7 +119,7 @@ angular
 
                         //Load Quizzes assets --------------------------------------------------------------------------
                         $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
+                        $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                         loadQuizesAssets($scope.userprofile.id, $scope.currentUser.token);
                         GetExternalAppData();
                         //----------------------------------------------------------------------------------------------

@@ -182,7 +182,7 @@ angular
 
             function loadController(){
                 var userid = localStorage.getItem("userId");
-                var user = JSON.parse(localStorage.getItem("profile/" + userid));
+                var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
                 
                 if($scope.thisStage.firsttime){
                     $scope.openModal_StageFirstTime();
