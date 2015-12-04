@@ -219,27 +219,23 @@
             }
             else if(forceRefresh){
                 if (token) {
-                    console.log("with authorization");
                     _httpFactory({
                         method: 'GET',
                         url: url,
                         headers: { 'Content-Type': 'application/json' , 'Authorization': token}
                     }).success(function (data, status, headers, config) {
                         _setLocalStorageJsonItem(key, data);
-                        console.log("success getAsyncData using token authorization");
                         successCallback(data, key);
                     }).error(function (data, status, headers, config) {
                         errorCallback(data);
                     });            
                 }else{
-                    console.log("without authorization");
                     _httpFactory({
                         method: 'GET',
                         url: url,
                         headers: { 'Content-Type': 'application/json'}
                     }).success(function (data, status, headers, config) {
                         _setLocalStorageJsonItem(key, data);
-                        console.log("success getAsyncData using token authorization");
                         successCallback(data, key);
                     }).error(function (data, status, headers, config) {
                         errorCallback(data);
@@ -261,7 +257,7 @@
                     headers: { 'Content-Type': 'application/json'}                    
                     });   
                 }
-                //_setLocalStorageJsonItem(key, data); Esto ya se hace en la lógica del offline
+                //_setLocalStorageJsonItem(key, data); Esto ya se hace en la lï¿½gica del offline
                 if(successCallback){
                     successCallback(); 
                 }
@@ -350,8 +346,7 @@
                 data: data,
                 headers: { 'Content-Type': 'application/json' },
             }).success(function (data, status, headers, config) {
-                console.log('success');
-                
+
                 if (key != null) {
                     _setLocalStorageJsonItem(key,data);
                 }
@@ -363,8 +358,7 @@
                 }
                 
             }).error(function (data, status, headers, config) {
-                console.log(data);
-                
+
                 if (typeof errorCb === "function") {
                     errorCb();
                 }else {
@@ -385,8 +379,7 @@
                 }
                 successCallback();                
             }).error(function(){            
-                console.log(data);
-                errorCallback();                
+                errorCallback();
             });
         };
 
@@ -401,8 +394,7 @@
                 data: data,
                 headers: { 'Content-Type': 'application/json' },
             }).success(function (data, status, headers, config) {
-                console.log('success');
-                
+
                 if (key != null) {
                     _setLocalStorageJsonItem(key,data);
                 }
@@ -410,7 +402,6 @@
                 updatePostCounter(discussionid);
                 successCallback();
             }).error(function (data, status, headers, config) {
-                console.log(data);
                 _setLocalStorageJsonItem(key,data);
                 errorCallback();
             });
@@ -892,7 +883,6 @@
             }
             _setLocalStorageJsonItem("activityStatus",activityStatus);
             _activityStatus = activityStatus;
-            console.log("Loaded activityStatus");
         };
 
         //This function updates the status of each stage in local status
@@ -990,7 +980,6 @@
             data.retryCount = 0;
             data.userID = _currentUser.userId //Necesitamos guardar el request en la cola con el usuario actual
             data.key = key;
-            console.log('putting in queue ' + key);            
             requestQueue.push(data);
             _setLocalStorageJsonItem("RequestQueue", requestQueue);
             if(requestQueue.length==1 || _queuePaused){
@@ -1006,19 +995,16 @@
 
         function doRequestforWeb(){     
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
-            console.log(requestQueue);
-            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0){                    
+            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0){
                 var data = requestQueue[0];
                 if(data.userID == _currentUser.userId){ //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
-                    console.log("Procesando Request " + data.url);                    
-                    if(data.retryCount<5){                            
+                    if(data.retryCount<5){
                             data.headers.Authorization = _currentUser.token; //Reemplazamos el token con el token actual
                             _httpFactory(
                             data
                         ).success(function (response) {
                             requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
-                            console.log("Quitando primer elemento de arreglo " + requestQueue[0].url);
-                            requestQueue.shift();                               
+                            requestQueue.shift();
                             if(data.method == 'GET'){
                                 _setLocalStorageJsonItem(data.key, response); 
                             }
@@ -1062,15 +1048,13 @@
                     if(data.userID == _currentUser.userId){ //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
                         _queuePaused = false;
                         var data = requestQueue[0];
-                        console.log("Procesando Request " + data.url)
                         if(data.retryCount<5){
                                 data.headers.Authorization = _currentUser.token; //Reemplazamos el token con el token actual
                                 _httpFactory(
                                 data
                             ).success(function (response) {
                                 requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
-                                console.log("Quitando primer elemento de arreglo " + requestQueue[0].url)
-                                requestQueue.shift();                             
+                                requestQueue.shift();
                                 if(data.method == 'GET'){
                                     _setLocalStorageJsonItem(data.key, response); 
                                 }
