@@ -35,9 +35,9 @@ angular
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
             var activitiesPosted = 0;
             _setLocalStorageItem("retoMultipleActivities", null);
-            $scope.user = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+            $scope.user = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
-            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+            $scope.profile = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
             $scope.retosMultipleChallenge = _.find($scope.activities, function(a) { return a.activity_identifier == $routeParams.moodleid});
             if ($scope.retosMultipleChallenge) {
@@ -312,7 +312,7 @@ angular
                       }
                     });
 
-                    _setLocalStorageJsonItem("profile/" + $scope.user.id, $scope.profile);
+                    _setLocalStorageJsonItem("Perfil/" + $scope.user.id, $scope.profile);
                     _setLocalStorageJsonItem("CurrentUser", currentUser)
 
                     $scope.saveUser();

@@ -143,7 +143,7 @@ angular
                     }
 
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                    $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
+                    $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
 
                     $scope.activity = parentActivity;
                     $scope.parentActivity = parentActivity;

@@ -54,7 +54,7 @@ hallOfFameModule
                 $scope.default = true;
                 getTop5("Ver Todo");
                 var userId = localStorage.getItem("userId");
-                var profileKey = "profile/" + userId;
+                var profileKey = "Perfil/" + userId;
                 var jsonProfile = localStorage.getItem(profileKey);
                 var profile = JSON.parse(jsonProfile);
                 var imageUrl = $scope.user.profileimageurl;

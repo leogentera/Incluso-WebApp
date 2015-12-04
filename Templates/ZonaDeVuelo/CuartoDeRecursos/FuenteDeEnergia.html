@@ -131,10 +131,10 @@
                   <div>
                     <div ng-repeat="repeatComment in activity.activityContent.comments | limitTo: activity.activityContent.commentsQty">                      
                       <div class="coment block">
-                        <!--<img ng-click="navigateTo('Profile/' + comment.id)" ng-if="comment.picture_comment_author" ng-src="{{comment.picture_comment_author + '?token=' + userToken}}" alt="author" /> 
-                        <img ng-click="navigateTo('Profile/' + comment.id)" ng-if="!comment.picture_comment_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />-->
+                        <!--<img ng-click="navigateTo('Perfil/' + comment.id)" ng-if="comment.picture_comment_author" ng-src="{{comment.picture_comment_author + '?token=' + userToken}}" alt="author" />
+                        <img ng-click="navigateTo('Perfil/' + comment.id)" ng-if="!comment.picture_comment_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />-->
                         <div>
-                          <a class="user-alias" ng-click="navigateTo('Profile/' + comment.id)">{{repeatComment.alias}}</a>
+                          <a class="user-alias" ng-click="navigateTo('Perfil/' + comment.id)">{{repeatComment.alias}}</a>
                           <span>comentó:</span>
                           <div>{{repeatComment.user_comment}}</div>
                         </div>

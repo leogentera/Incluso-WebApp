@@ -349,7 +349,7 @@ angular
                     startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
                     //Try to get user profile data from Local Storage.
-                    $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
+                    $scope.model = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.userId);
 
                     if ($scope.model !== null) {// If profile existes in Local Storage, then...
                         if ($scope.model.profileimageurl) {
@@ -379,7 +379,7 @@ angular
 
                         moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
 
-                            $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
+                            $scope.model = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.userId);
 
                             if ($scope.model.profileimageurl) {
                                 $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
@@ -899,7 +899,7 @@ angular
                     $scope.$emit('ShowPreloader');
                     $timeout(function () {
                         $scope.$emit('ShowPreloader');
-                        $location.path("Profile/" + $scope.userId);
+                        $location.path("Perfil/" + $scope.userId);
                     }, 1);
                 };
 
@@ -910,11 +910,11 @@ angular
                     }
 
                     if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && !showResultsPage) {
-                        $location.path("Profile/" + $scope.userId);   //Return to Profile.
+                        $location.path("Perfil/" + $scope.userId);   //Return to Profile.
                     }
 
                     if ($location.$$path == '/Perfil/ConfigurarPrivacidad') {
-                        $location.path("Profile/" + $scope.userId);
+                        $location.path("Perfil/" + $scope.userId);
                     }
 
                     $scope.accessedSubsection = false;
@@ -927,7 +927,7 @@ angular
                     var fromPath = $location.$$path;
                     var fromPrivacy = fromPath == "/Perfil/ConfigurarPrivacidad/" + $scope.userId;
                     if (!$scope.accessedSubsection && !fromPrivacy) {
-                        $location.path("Profile/" + $scope.userId);
+                        $location.path("Perfil/" + $scope.userId);
                         return;
                     }
 
@@ -1014,11 +1014,11 @@ angular
                                 activity.status = 1;   //Update activity status.
 
                                 //Get local user profile.
-                                var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + $scope.userId));
+                                var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + $scope.userId));
                                 var newPoints = parseInt(profile.stars) + parseInt(activity.points); //Update points
                                 profile.stars = newPoints;  //Update the 'stars' key.
 
-                                _setLocalStorageJsonItem("profile/" + $scope.userId, profile); //Save updated profile to Local Storage.
+                                _setLocalStorageJsonItem("Perfil/" + $scope.userId, profile); //Save updated profile to Local Storage.
                                 updateUserStarsUsingExternalActivity(activity.activity_identifier); //Update profile in Moodle.
 
                                 endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
@@ -1585,7 +1585,7 @@ angular
                 };
 
                 function avatarUploaded(message) {
-                    $location.path('/Profile/' + $scope.userId);
+                    $location.path('/Perfil/' + $scope.userId);
                     $route.reload();
                 }
 

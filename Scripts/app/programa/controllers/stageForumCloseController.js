@@ -107,7 +107,7 @@ angular
                 
                     moodleFactory.Services.PutEndActivity(parentActivity.coursemoduleid, data, parentActivity, userToken,
                       function(response){
-                            var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+                            var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
                             var model = {
                                 userId: userId,
                                 stars: activityFromTree.points,
@@ -122,7 +122,7 @@ angular
                               _updateRewardStatus();
 
                                 profile.stars = Number(profile.stars) + Number(activityFromTree.points);
-                                _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),profile);
+                                _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"),profile);
                                 $routeParams.activityId == 1049? moodleid =$routeParams.moodleId : moodleid = getMoodleIdFromTreeActivity($routeParams.activityId);
                                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
                                 
