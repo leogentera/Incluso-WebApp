@@ -181,7 +181,6 @@ angular
                             $scope.currentUserModel.userId = data.id;
 
                             _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-                            _setToken(data.token);
                             _setId(data.id);
 
                         //Run queue
@@ -252,7 +251,6 @@ angular
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
 
-                _setToken(userFacebook.token);
                 _setId(userFacebook.id);
 
                 //Run queue
