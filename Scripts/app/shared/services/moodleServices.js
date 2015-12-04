@@ -88,7 +88,6 @@
         };
 
         var _getAsyncLeaderboard = function (courseId, token, successCallback, errorCallback, forceRefresh) {
-            //successCallback();
             _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), token, successCallback, errorCallback, forceRefresh);
         };
 
@@ -96,9 +95,7 @@
             var url = 'leaderboard/{0}?type=1'.format(courseId);
             if(city != "Ver Todo")
                 url = url + "&city=" + city;
-            //else url = url + "&city=";
             _getAsyncData("halloffame", API_RESOURCE.format(url), token, successCallback, errorCallback,forceRefresh);
-            //var url = 'comment/{0}?first={1}&since={2}&to={3}&count={4}'.format(activityId,first,since,to,count);
         }
 
         var _getAsyncCatalogs = function(data, succesCb, errorCb, forceRefresh) {
@@ -257,7 +254,6 @@
                     headers: { 'Content-Type': 'application/json'}                    
                     });   
                 }
-                //_setLocalStorageJsonItem(key, data); Esto ya se hace en la l�gica del offline
                 if(successCallback){
                     successCallback(); 
                 }
@@ -447,10 +443,8 @@
                 data: data,
                 headers: { 'Content-Type': 'application/json' },
             }).success(function (data, status, headers, config) {
-                //_setLocalStorageJsonItem(key,dataModel);
                 successCallback();
             }).error(function (data, status, headers, config) {
-                //_setLocalStorageJsonItem(key,dataModel);
                 errorCallback();
             });
         };
@@ -616,24 +610,7 @@
 
                                 if (usercourse.stages[i].challenges[j].activities) {
                                     for (k = 0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
-                                        //activities
 
-                                        /*if (usercourse.stages[i].challenges[j].activities[k].activities) {
-                                            for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
-                                                if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
-                                                {
-                                                    globalActivities++;
-                                                    stageActivities++;
-                                                    if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
-                                                        globalCompletedActivities++;
-                                                        stageCompletedActivities++;
-                                                        globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].activities[l].points;
-                                                    }
-                                                }
-                                            }
-                                        } 
-                                        else
-                                        {*/
                                         globalActivities++;
                                         stageActivities++;
 
@@ -642,7 +619,6 @@
                                             stageCompletedActivities++;
                                             globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].points;
                                         }
-                                        //}
 
                                     }
                                 }
@@ -662,7 +638,6 @@
                     }
                 }
             }
-            //usercourse.globalProgress = Math.floor(100.0 * globalCompletedActivities / globalActivities, 0);
             usercourse.globalProgress = Math.floor(100*globalProgress/300);
             if (user) {
                 user.stars = globalPointsAchieved;
@@ -711,13 +686,9 @@
                     if (assign) {
                         course.stages[i].coursemoduleid = assign.coursemoduleid;
                         course.stages[i].points = assign.points;
-                        //course.stages[i].status = assign.status;
                         course.stages[i].activityintro = assign.activityintro;
                         course.stages[i].activity_identifier = assign.activity_identifier;
                     }
-
-
-
 
                     //challenges
                     for (j = 0; j < course.stages[i].challenges.length; j++) {
