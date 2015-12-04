@@ -299,7 +299,7 @@ angular
 
 
 
-                        profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+                        profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
                         var data = {
                             userId: profile.id,
                             stars: stars,

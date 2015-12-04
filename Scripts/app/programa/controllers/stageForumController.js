@@ -47,7 +47,7 @@ angular
                          {name: 'Matematica', category: 'logico'},
                          {name: 'Linguistica', category: 'logico'},
                      ];                 
-                     var shield = JSON.parse(localStorage.getItem('profile/' + userId )).shield;
+                     var shield = JSON.parse(localStorage.getItem('Perfil/' + userId )).shield;
                      if (shield && shield != '') {
     
                          var shieldCategory = _.find(shields, function (s) {

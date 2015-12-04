@@ -54,7 +54,7 @@ angular
 			
 			/* redirect to profile */
 			$scope.navigateToMyProfile = function(){
-				$location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
+				$location.path("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             };
 
             $scope.setToolbar = function(url,name){
