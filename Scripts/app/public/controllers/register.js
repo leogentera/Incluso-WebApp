@@ -16,7 +16,7 @@ angular
             _timeout = $timeout;
             _httpFactory = $http;            
             var dpValue;
-            $scope.$emit('scrollTop'); //- scroll
+            $scope.$emit('scrollTop');
             var hidePreloader = false;
 
             /* ViewModel */
@@ -65,7 +65,7 @@ angular
             
             $scope.validateConnection(function () {}, offlineCallback);
             
-            $scope.$emit('HidePreloader'); //- hide preloader
+            $scope.$emit('HidePreloader');
 
             /* Watchers */
             $scope.$watch("registerModel.confirmPassword", function(newValue, oldValue){
@@ -79,26 +79,25 @@ angular
             });                                                                  
 
             $scope.register = function() {
-                
                 $scope.validateConnection(registerConnectedCallback, offlineCallback);
-            }
+            };
             
             function registerConnectedCallback () {
-                console.log('register');
+                //Register.
                 localStorage.removeItem("Credentials");
                 
                 if(validateModel()){
-                    $scope.$emit('ShowPreloader'); //show preloader
+                    $scope.$emit('ShowPreloader');
                     registerUser();
-                }else{
-                    $scope.$emit('scrollTop'); //- scroll
+                } else {
+                    $scope.$emit('scrollTop');
                 }
             }
 
             function offlineCallback() {
                 $timeout(function(){
                     $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
-                    $scope.$emit('scrollTop'); //- scroll
+                    $scope.$emit('scrollTop');
                 }, 1000);
             }
 
@@ -123,7 +122,7 @@ angular
                 _setToken(data.token);
                 _setId(data.id);
 
-                console.log('preparing for syncAll');
+
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
                         var course = moodleFactory.Services.GetCacheJson("course");
                         moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){
@@ -153,21 +152,16 @@ angular
                                         $scope.activity_status = parentActivity.status;
                                     }
 
-                                    console.log("activityname = " + $scope.activityname + "; Activity status = " + $scope.activity_status + "; Coursemoduleid = " + $scope.coursemoduleid);
 
                                     if ($scope.activity_status === 1) {//If the activity is currently finished
-                                        console.log("The activity status is FINISHED");
                                         // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
                                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, storeQuiz, errorCallQuiz, true);
 
                                     } else {
-                                        console.log("The activity HAS NOT BEEN FINISHED");
                                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, data.token, storeQuiz, errorCallQuiz, true);
                                     }
 
                                 } else {
-                                    // When parentActivity == null.
-                                    console.log("Activity is NOT defined");
                                     $location.path('/');
                                 }
                             }
@@ -191,11 +185,11 @@ angular
                             $location.path('/ProgramaDashboard');
                         }
                     }, true);
-            }
+            };
 
             $scope.login = function() {
                 $location.path('/');
-            }
+            };
 
             $scope.navigateToPage = function(pageNumber){
                 $scope.currentPage = pageNumber;
@@ -206,7 +200,7 @@ angular
                 var bd = $("input[name='birthday']").val();                
                 if(bd){
                     $scope.showPlaceHolder = false;                    
-                }else{
+                } else {
                     $scope.showPlaceHolder = true;                    
                 }
             };
@@ -255,8 +249,8 @@ angular
 
                         $scope.isRegistered = true;
 
-                        console.log('successfully register and logged in');
-                        $scope.$emit('scrollTop'); //- scroll
+                        //Successfully register and logged in.
+                        $scope.$emit('scrollTop');
                         
                         $scope.autologin(data);
 
@@ -271,8 +265,8 @@ angular
 
                         $scope.registerModel.modelState.errorMessages = [errorMessage];                        
                         
-                        $scope.$emit('HidePreloader'); //hide preloader
-                        $scope.$emit('scrollTop'); //- scroll
+                        $scope.$emit('HidePreloader');
+                        $scope.$emit('scrollTop');
                     });
             };
 
@@ -304,7 +298,6 @@ angular
                 var errors = [];
                 var datePickerValue = $("input[name=birthday]").val();
                 dpValue = datePickerValue;
-                //dpValue = moment(datePickerValue).format("MM/DD/YYYY");
                 var age = calculate_age();
                 
                 var passwordPolicy = "debe ser almenos de 8 caracterres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";

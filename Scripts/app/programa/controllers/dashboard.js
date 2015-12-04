@@ -13,23 +13,23 @@
 
             var _loadedResources = false;
             var _pageLoaded = false;
-            
+
             _httpFactory = $http;
             _timeout = $timeout;
             $scope.Math = window.Math;
             $scope.$emit('ShowPreloader'); //show preloader
-            
+
             var activity_identifier = "0000";
-            
+
             getContentResources(activity_identifier);
-            
+
             if (!_getItem("userId")) {
                 $location.path('/');
                 return "";
             }
 
-            $scope.stageProgress=0;
-            
+            $scope.stageProgress = 0;
+
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
             $scope.user.profileimageurl = $scope.user.profileimageurl + "?rnd=" + new Date().getTime();
 
@@ -43,76 +43,74 @@
             }
 
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
-            $scope.setToolbar($location.$$path,"Misión Incluso"); //set global toolbar properties
+            $scope.setToolbar($location.$$path, "Misión Incluso"); //set global toolbar properties
             $rootScope.showFooter = true;
-            $rootScope.showFooterRocks = true; 
+            $rootScope.showFooterRocks = true;
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
 
-            try {
-                //Get stage from local storage
-                if(moodleFactory.Services.GetCacheObject("stage")){
+            try {//Get stage from local storage
+
+                if (moodleFactory.Services.GetCacheObject("stage")) {
                     $scope.stage = JSON.parse(moodleFactory.Services.GetCacheObject("stage"));
-                }else{                
+                } else {
                     $scope.stage = {};
                 }
             }
             catch (e) {
-                console.log(e);
-                $scope.$emit('scrollTop'); //- scroll
+                $scope.$emit('scrollTop');
             }
 
             $(".navbar").removeClass("etapa-uno");
             getDataAsync();
 
-            $scope.logout = function(){
+            $scope.logout = function () {
                 logout($http, $scope, $location);
-            };                    
-          
+            };
 
 
-            $scope.navigateToStage = function(){
+            $scope.navigateToStage = function () {
                 //Check if first time with course
                 if ($scope.usercourse.firsttime) { // 1 (true) : it is first time; 0 : it is not firsttime
                     $scope.openModal();
                     //Update firsttime value
                     $scope.updateProgramFirstTime();
                 }
-                
+
                 //Update current stage
                 var stage = _getItem("currentStage");
                 if (stage) {
                     $scope.currentStage = stage;
-                }else{
+                } else {
                     $scope.currentStage = getCurrentStage();
                 }
 
                 //redirect user to stage 1 dashboard after closing modal
                 var zone = '/ZonaDeVuelo/Dashboard/';
-                var activityId=1001;
+                var activityId = 1001;
                 //Depend of section is the zone to redirect
-                if($scope.currentStage == 2){
+                if ($scope.currentStage == 2) {
                     zone = '/ZonaDeNavegacion/Dashboard/';
                     activityId = 2001;
-                } 
-                if ($scope.currentStage == 3){
+                }
+                if ($scope.currentStage == 3) {
                     zone = '/ZonaDeAterrizaje/Dashboard/';
                     activityId = 3101;
                 }
-                $scope.navigateTo(zone + $scope.currentStage + '/0',false,activityId);
 
+                $scope.navigateTo(zone + $scope.currentStage + '/0', false, activityId);
             };
 
             //Updates firsttime flag for program in model, localstorage and server
-            $scope.updateProgramFirstTime = function() {
+            $scope.updateProgramFirstTime = function () {
                 //Update model
                 $scope.usercourse.firsttime = 0;
                 //Update local storage
                 var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
-                if(userCourse!={}) {
+                if (userCourse != {}) {
                     userCourse.firsttime = 0;
-                    _setLocalStorageJsonItem("usercourse",userCourse);
+                    _setLocalStorageJsonItem("usercourse", userCourse);
                 }
                 //Update back-end
                 var dataModel = {
@@ -120,10 +118,12 @@
                     courseId: $scope.usercourse.courseid
                 };
 
-                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function(){}, function(){});
+                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
+                }, function () {
+                });
             };
 
-            $scope.playVideo = function(videoAddress, videoName){
+            $scope.playVideo = function (videoAddress, videoName) {
                 playVideo(videoAddress, videoName);
             };
 
@@ -133,63 +133,58 @@
             }
 
             //Callback function for UserCourse call
-            function getDataAsyncCallback(){
+            function getDataAsyncCallback() {
                 //Load UserCourse structure into model
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-                        
+
                 //Load Course from server
-                moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function(){
+                moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function () {
                     $scope.course = JSON.parse(localStorage.getItem("course"));
-                    $scope.currentStage = getCurrentStage();                
+                    $scope.currentStage = getCurrentStage();
                     _setLocalStorageItem("currentStage", $scope.currentStage);
-                    
+
                     _pageLoaded = true;
-                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
-                    
-                    moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function(){
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader')
+                    }
+
+                    moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
-                        $scope.$emit('scrollTop'); //- scroll
-                        
-                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"),$scope.user.token, function()
-                        {
-                            $scope.profile = JSON.parse(localStorage.getItem("profile/"+localStorage.getItem("userId")));
-                            
+                        $scope.$emit('scrollTop');
+
+                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, function () {
+                            $scope.profile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
+
                             getUserNotifications($scope.course.courseid);
-                            
-                            if(!$scope.profile.termsAndConditions)
-                            {
-                                //console.log("Calling TermsModal");
+
+                            if (!$scope.profile.termsAndConditions) {
                                 $scope.openTermsModal();
                                 $scope.navigateTo('TermsOfUse');
                             }
-                            console.log("getUserNotifications");
 
-                            
-                        }, function() {}, true);
+                        }, function () {
+                        }, true);
                     }, errorCallback, true);
 
                 }, errorCallback);
 
-
-
-
                 calculateTotalProgress();
             }
 
-            
-            function calculateTotalProgress(){
-                var currentStage = _getItem("currentStage");                
+
+            function calculateTotalProgress() {
+                var currentStage = _getItem("currentStage");
                 if (!currentStage) {
                     currentStage = getCurrentStage();
                 }
                 currentStage = currentStage - 1;
                 var usercourses = $scope.usercourse;
-                
+
                 var stageProgressBuffer = 0;
                 var stageTotalActivities = 0; //Attainment of user in the current Stage
                 var stageChallengesCount = usercourses.stages[currentStage].challenges.length;
-    
-                var i, j,k;
+
+                var i, j, k;
                 for (i = 0; i < stageChallengesCount; i++) {
                     var challenge = usercourses.stages[currentStage].challenges[i];
                     var challengeActivitiesCount = challenge.activities.length;
@@ -197,137 +192,98 @@
                         var activity = challenge.activities[j];
                         stageProgressBuffer += activity.status;
                         stageTotalActivities++;
-                        /*if(activity.activities) {
-                            var subActivitiesCount = activity.activities.length;
-                            for (k = 0; k < subActivitiesCount; k++) {
-                                var subActivity = activity.activities[k];
-                                stageProgressBuffer += subActivity.status;
-                                stageTotalActivities++;
-                            }
-                        }*/
                     }
                 }
-                
-                $scope.stageProgress = Math.floor((stageProgressBuffer  / stageTotalActivities)*100);
-                
-                //_progressNotification(currentStage, $scope.stageProgress);
-                
+
+                $scope.stageProgress = Math.floor((stageProgressBuffer / stageTotalActivities) * 100);
             }
 
-            function errorCallback(data){
-                console.log(data);
+            function errorCallback(data) {
                 _pageLoaded = true;
-                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
+
+                if (_loadedResources && _pageLoaded) {
+                    $scope.$emit('HidePreloader')
+                }
+
                 $scope.$emit('scrollTop'); //- scroll
             }
-                                                        
-            function getCurrentStage(){
+
+            function getCurrentStage() {
                 var currentStage = 1;
                 var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
-                for(var i = 0; i < userCourse.stages.length; i++) {
+                for (var i = 0; i < userCourse.stages.length; i++) {
                     var uc = userCourse.stages[i];
                     _setLocalStorageJsonItem("stage", uc);
                     $scope.stage = uc;
-                    
-                    if(uc.status === 0){
+
+                    if (uc.status === 0) {
                         break;
                     }
 
                     currentStage++;
                 }
 
-                if(currentStage == userCourse.stages.length){
+                if (currentStage == userCourse.stages.length) {
                     currentStage--;
                 }
                 return currentStage;
             }
 
-            function getUserNotifications(courseid){
+            function getUserNotifications(courseid) {
                 var courseId = courseid;
                 var userId = _getItem("userId");
-                moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function(){
-                    getUserChat();                    
-                    }, errorCallback,true);
+                moodleFactory.Services.GetUserNotification(userId, courseId, $scope.user.token, function () {
+                    getUserChat();
+                }, errorCallback, true);
             }
 
-            function getUserChat(callback) {                
-                moodleFactory.Services.GetUserChat(_getItem("userId"), $scope.user.token, function() {
+            function getUserChat(callback) {
+                moodleFactory.Services.GetUserChat(_getItem("userId"), $scope.user.token, function () {
                     if (callback) callback();
                     var chat = JSON.parse(localStorage.getItem('userChat'));
                     var userId = localStorage.getItem("userId");
                     var messagesFlow = [];
                     var messagesInterchange = 0;
-                    var messagesToRead = _getItem("currentStage") * 2;
 
-                    var chatAmount = _.countBy(chat,function(messages){
-                            messagesFlow.push(messages.messagesenderid != userId);
-                            return messages.messagesenderid != userId;
-                        });
+                    var chatAmount = _.countBy(chat, function (messages) {
+                        messagesFlow.push(messages.messagesenderid != userId);
+                        return messages.messagesenderid != userId;
+                    });
 
-                    _.each(messagesFlow, function(m, i){
-                        if(i > 0 && m && m != messagesFlow[i - 1]){
+                    _.each(messagesFlow, function (m, i) {
+                        if (i > 0 && m && m != messagesFlow[i - 1]) {
                             messagesInterchange++;
                         }
                     });
-                                                    
+
                     if (chatAmount.true != localStorage.getItem('chatAmountRead')) {
-                        _setLocalStorageItem('chatRead',"false");
+                        _setLocalStorageItem('chatRead', "false");
                     }
 
-                    _setLocalStorageItem('chatAmountRead',chatAmount.true);
-                    
+                    _setLocalStorageItem('chatAmountRead', chatAmount.true);
+
                     getUserStarsByPoints();
-                    
+
                 }, errorCallback, false);
             }
-            
-            function getUserStarsByPoints(){
-                
-                 moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token,function(dataStars){
-                        if (dataStars.length > 0) {
-                            localStorage.setItem("userStars", JSON.stringify(dataStars));
-                        }
-                    }, function(){$scope.activitiesCompleted = [];}, true);                                            
+
+            function getUserStarsByPoints() {
+
+                moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token, function (dataStars) {
+                    if (dataStars.length > 0) {
+                        localStorage.setItem("userStars", JSON.stringify(dataStars));
+                    }
+                }, function () {
+                    $scope.activitiesCompleted = [];
+                }, true);
             }
-            
+
             //Open Welcome Message modal
             $scope.openModal = function (size) {
-                    var modalInstance = $modal.open({
-                        animation: $scope.animationsEnabled,
-                        templateUrl: 'programWelcome.html',
-                        controller: function ($scope, $modalInstance) {
-                            $scope.cancel = function () {
-                                $modalInstance.dismiss('cancel');
-                            };
-                        },
-                        size: size,
-                        windowClass: 'user-help-modal dashboard-programa'
-                    });
-            };
-            
-            function getContentResources(activityIdentifierId) {
-                
-                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
-                    _loadedResources = true;
-                    $scope.contentResources = data.node;
-                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
-                    
-                    }, function () {
-                        _loadedResources = true;
-                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
-                    }, false);
-                
-            }
-
-
-            $scope.openTermsModal = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'changeOfTerms.html',
+                    templateUrl: 'programWelcome.html',
                     controller: function ($scope, $modalInstance) {
-                        drupalFactory.Services.GetContent('TermsAndConditions', function(data,key) {
-                            $scope.termsContent = data.node;
-                            }, function(){ },false);
                         $scope.cancel = function () {
                             $modalInstance.dismiss('cancel');
                         };
@@ -336,8 +292,45 @@
                     windowClass: 'user-help-modal dashboard-programa'
                 });
             };
-            //$scope.openModal();   //To open the modal no matter the value of 'firsttime'
+
+            function getContentResources(activityIdentifierId) {
+
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    _loadedResources = true;
+                    $scope.contentResources = data.node;
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
+
+                }, function () {
+                    _loadedResources = true;
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
+                }, false);
+
+            }
+
+
+            $scope.openTermsModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'changeOfTerms.html',
+                    controller: function ($scope, $modalInstance) {
+                        drupalFactory.Services.GetContent('TermsAndConditions', function (data, key) {
+                            $scope.termsContent = data.node;
+                        }, function () {
+                        }, false);
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    },
+                    size: size,
+                    windowClass: 'user-help-modal dashboard-programa'
+                });
+            };
+
         }])
-        .controller('videoCollapsiblePanelController', function ($scope) {
-          $scope.isCollapsed = false;
-        });
+    .controller('videoCollapsiblePanelController', function ($scope) {
+        $scope.isCollapsed = false;
+    });
