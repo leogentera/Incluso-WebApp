@@ -35,7 +35,6 @@
                         </figure>
                         <h4 class="item-title" ng-bind="reto.sectionname"></h4>
                         <p class="item-description" ng-bind="reto.activityintro"></p>
-                        <!-- <p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : 'Cada sueño en su lugar' "></p> -->
 
                         <div class="page-number">
                             <p class="text-center">
@@ -75,14 +74,13 @@
         <section class="progreso">
             <div class="spinner">
                 <span ng-bind="puntosObtenidos"></span>
-                <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png" alt="progress" /> <!-- <img src="" alt=""> -->
+                <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png" alt="progress" />
 
                 <div class="circle"></div>
                 <div class="text">{{stageProgress}}%</div>
             </div>
             <div>
-                <!--<p class="title">Mi avance</p>
-                <p>en la zona</p>-->
+
                 <p class="title">{{contentResources.progress}}</p>
             </div>
         </section>
