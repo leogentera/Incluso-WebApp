@@ -39,16 +39,12 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
             
-            console.log("moodle id" + $scope.moodleId);
-
             var _userId = moodleFactory.Services.GetCacheObject("userId");
 
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
             $scope.moodleId;
-            console.log($routeParams.activityId);
             Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId     : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
-            console.log("$scope.moodleId" + $scope.moodleId);
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
             $scope.currentDiscussionsIds = moodleFactory.Services.GetCacheJson("currentDiscussionIds");
             $scope.currentDiscussionsExtraPoints;
@@ -123,7 +119,6 @@ angular
                                 for(var j=0; j < discussions.length; j++){
                                     var comments = discussions[j].total;
                                     postCounter = postCounter + parseInt(discussions[j].total);
-                                    console.log(postCounter);
                                 }
                             }
                         }
@@ -135,7 +130,6 @@ angular
                             badgeid: badgeForum[0].id //badge earned when a user completes his profile.
                             };
                         moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){
-                            console.log("created badge successfully");
                             },function(){
                                 });
                     }
@@ -278,7 +272,6 @@ angular
                     },
                     function(){
                         $scope.textToPost=null;
-                        //$scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
                         $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                         $scope.$emit('HidePreloader');
                     });
@@ -477,9 +470,7 @@ angular
                 $scope.isCommentModalCollapsed[index] = false;
                 $scope.isReportedAbuseModalCollapsed["id" + element.post_id] = false;
                 $scope.isReportedAbuseSentModalCollapsed["id" + element.post_id] = false;
-                //$scope.isReportedAbuseModalCollapsed[index] = false;
-                //$scope.isReportedAbuseSentModalCollapsed[index] = false;
-                
+
                 if ($scope.showAllCommentsByPost['id' + element.post_id] != 1000000) {
                     $scope.showAllCommentsByPost['id' + element.post_id] = 3;   
                 }
@@ -500,7 +491,6 @@ angular
             };
 
             var refreshTopicData = function(){
-                console.log("refreshTopicData");
                 moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
             };
 

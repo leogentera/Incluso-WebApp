@@ -45,7 +45,6 @@ angular
             }
 
             $scope.activityPoints = activityFromTree.points;
-            console.log($routeParams.moodleId);
             $scope.activityname = Number($routeParams.moodleId) == 148? "Foro Artístico": activityFromTree.activityname;
             $scope.like_status = 1;
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
@@ -53,7 +52,6 @@ angular
             if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
 
             var endForumActivity = function(moodleid) {
-                console.log('Closing time: ' + moodleid);
                 $scope.$emit('ShowPreloader');
                 var activities = parentActivity.activities;
 
@@ -65,7 +63,6 @@ angular
                 }
                 _setLocalStorageJsonItem('usercourse', userCourse);
 
-                console.log('Finishing activity...');
                 var like_status = $scope.like_status;
 
                 var userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
@@ -116,7 +113,6 @@ angular
                                 date: new Date()
                             };
                             
-                            console.log("asignar estrellas por termino de actividad");
                             moodleFactory.Services.PutStars(model, profile, userToken, function() {
                               updateActivityStatus($routeParams.activityId);
                               _updateRewardStatus();
