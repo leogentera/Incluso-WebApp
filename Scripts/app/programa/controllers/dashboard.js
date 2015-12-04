@@ -244,6 +244,7 @@
                     var userId = localStorage.getItem("userId");
                     var messagesFlow = [];
                     var messagesInterchange = 0;
+                    var messagesToRead = _getItem("currentStage") * 2;
 
                     var chatAmount = _.countBy(chat, function (messages) {
                         messagesFlow.push(messages.messagesenderid != userId);
