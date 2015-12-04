@@ -1,4 +1,5 @@
-﻿angular
+﻿/* Main controller, all other controllers inherit from this one */
+angular
     .module('incluso.home', [])
     .controller('homeCtrl', [
         '$rootScope',
@@ -10,7 +11,6 @@
         '$filter',
         '$modal',
         function ($rootScope, $scope, $location, $anchorScroll, $window, $http, $filter, $modal ) {
-        	// http://stackoverflow.com/questions/15033195/showing-spinner-gif-during-http-request-in-angular
 			// To handle page reloads		
 			_httpFactory = $http;
         	if ($location.$$path.split('/')[1]) {
@@ -27,9 +27,11 @@
                 else
                     $rootScope.sidebar = false;                
             };
-
+			
+			/* redirect to another page */
             $scope.navigateTo = function(url,sideToggle,activityId){
 				
+				/* Check if current version is the most recent */
 				if (!_compareSyncDeviceVersions()) {
 					$scope.openUpdateAppModal();
                 } else {
@@ -50,9 +52,9 @@
                 
             };
 			
-			
+			/* redirect to profile */
 			$scope.navigateToMyProfile = function(){
-				$location.path("Profile/" + moodleFactory.Services.GetCacheObject("userId"));
+				$location.path("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             };
 
             $scope.setToolbar = function(url,name){
@@ -115,7 +117,8 @@
                         return "";
                 }
             };
-           
+            
+			/* play video from main dashboard */
 			$scope.playVideo = function(videoAddress, videoName){
                  playVideo(videoAddress, videoName);
             };
@@ -135,11 +138,9 @@
             /* Preloader default callbacks and listeners */
             var _showPreloader = function() {
                 $scope.loading = true;
-                //$scope.modalTransitionIn = true;
             };
             var _hidePreloader = function() {
                 $scope.loading = false;
-                //$scope.modalTransitionIn = false;
             };
             $scope.$on('ShowPreloader', _showPreloader);
             $scope.$on('HidePreloader', _hidePreloader);
@@ -190,7 +191,6 @@
             };
             $scope.resetActivityBlockedStatus();
 
-            //// new menu behavior ////
             $scope.leftVisible = false;
             $scope.rightVisible = false;
 
@@ -247,7 +247,9 @@
                         windowClass: 'user-help-modal dashboard-programa'
                     });
             }
-
+			
+			
+			/* checks if user has internet connection */
 			$scope.validateConnection = function(connectedCallback, offlineCallback) {
 				 _forceUpdateConnectionStatus(function() {
 

@@ -1,4 +1,5 @@
-﻿angular
+﻿/* Controller to handle offline redirections */
+angular
 .module('incluso.shared.offlineController', ['GlobalAppConstants'])
 .controller('offlineController', [
         '$q',
@@ -14,6 +15,8 @@
         'MoodleIds',
     function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $filter, MoodleIds) {
         $scope.$emit('HidePreloader');
+        
+        /* header and footer configuration */
         $rootScope.pageName = "Sin conexión";
         $rootScope.navbarBlue = false;
         $rootScope.showToolbar = true;
@@ -24,6 +27,7 @@
         $rootScope.showStage3Footer = false;
         $scope.setToolbar("/ProgramaDashboard","Misión Incluso");
         
+        /* Shows offline message to prevent a user from using a section that requires connection */
         $("#offlineModal").addClass("show");
         
         $scope.$on("$destroy", function() {

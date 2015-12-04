@@ -119,7 +119,6 @@ angular
                 $scope.currentUserModel.userId = data.id;
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-                _setToken(data.token);
                 _setId(data.id);
 
 

@@ -57,7 +57,7 @@
 
         function controllerInit() {
             $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-            $scope.profile = JSON.parse(localStorage.getItem("profile/" + $scope.currentUser.id));
+            $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + $scope.currentUser.id));
             $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.profile.communityAccess);
             
             oText.username = $scope.profile.firstname + " " + $scope.profile.lastname + " " + $scope.profile.mothername;
