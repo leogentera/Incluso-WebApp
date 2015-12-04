@@ -1,4 +1,5 @@
-// http://weblogs.asp.net/dwahlin/archive/2013/09/18/building-an-angularjs-modal-service.aspx
+//##############################   Controller for Profile   ##############################
+//##############################        Version 2.2.1       ##############################
 angular
     .module('incluso.programa.profile', [])
     .controller('programaProfileController', [
@@ -77,14 +78,13 @@ angular
 
                     getContent();
 
-                    /////// privacy settings initial switches [boolean]/////////
+                    //privacy settings initial switches [boolean]
                     $scope.generalInfo = true;
                     $scope.schoolarship = false;
                     $scope.address = false;
                     $scope.phone = true;
                     $scope.socialNet = true;
                     $scope.family = false;
-                    /////////////////////////////////////////////////////////////
 
                     $scope.totalBadges = $scope.model.badges.length;  //Number of items in the 'badges' array
                     $scope.totalBadgePages = Math.ceil($scope.totalBadges / 12);
@@ -1003,7 +1003,6 @@ angular
 
                             if (result) {
                                 //The user has successfully completed a profile's section.
-                                //Show closing view for the given section
                                 var sectionObject = {};
                                 sectionObject.name = activity.activityname.substring(7);
                                 sectionObject.points = activity.points;
@@ -1047,8 +1046,8 @@ angular
                             if (activity.activity_identifier == $scope.origin) {
                                 showResultsPage = true;
                             }
-                        } //End of: if (activity.status == 0) ...
-                    } // End of: for (sectionIndex = 0; ...
+                        }
+                    }
                 }
 
 
@@ -1059,8 +1058,8 @@ angular
                         var activitiesCompleted = _.where($scope.userCourse.activities, {status: 1});
 
                         if (activitiesCompleted && activitiesCompleted.length == $scope.userCourse.activities.length) {
-                            //create badge.
-                            var badgeModel = {
+
+                            var badgeModel = {//create badge.
                                 badgeid: 13 //badge earned when a user completes his profile.
                             };
 
@@ -1095,15 +1094,12 @@ angular
                         }
 
                         if (validInfo) {
-
                             if (itemWithoutPhone && phones.length > 1) {
                                 validInfo = false;
                             }
-
                         }
 
-                    } else {
-                        //The user has not entered phone numbers.
+                    } else {//The user has not entered phone numbers.
                         validInfo = false;
                     }
 
@@ -1131,7 +1127,6 @@ angular
                         }
 
                         if (validInfo) {
-
                             if (itemWithoutNet && nets.length > 1) {
                                 validInfo = false;
                             }
@@ -1172,12 +1167,12 @@ angular
                 function assignmentMiInformacion() {//Asign 400 points if all fields are full.
                     var result = false;
 
-                    if ($scope.model.firstname) { //Requerido
-                        if ($scope.model.lastname) { //Requerido
-                            if ($scope.model.mothername) { //Requerido
-                                if ($scope.model.gender) { //Requerido  
+                    if ($scope.model.firstname) { //Required
+                        if ($scope.model.lastname) { //Required
+                            if ($scope.model.mothername) { //Required
+                                if ($scope.model.gender) { //Required
                                     if ($scope.model.address.country) {
-                                        if ($scope.birthdate_Dateformat) { //Requerido                                             
+                                        if ($scope.birthdate_Dateformat) { //Required
                                             if ($scope.model.age) {
                                                 if ($scope.model.maritalStatus) {
                                                     if ($scope.model.studies.length > 0) { // array of objects        
@@ -1490,8 +1485,6 @@ angular
 
                 $scope.deleteMoneyIncome = function (index) {
                     $scope.model.moneyIncome.splice(index, 1);
-                    //var index = $scope.model.moneyIncome.indexOf(moneyIncome);
-                    //$scope.model.moneyIncome.splice(index, 1);
                 };
 
                 $scope.addKnownDevice = function () {
@@ -1500,8 +1493,6 @@ angular
 
                 $scope.deleteKnownDevice = function (index) {
                     $scope.model.knownDevices.splice(index, 1);
-                    //var index = $scope.model.knownDevices.indexOf(knownDevice);
-                    //$scope.model.knownDevices.splice(index, 1);
                 };
 
                 $scope.addOwnDevice = function () {
@@ -1510,8 +1501,6 @@ angular
 
                 $scope.deleteOwnDevice = function (index) {
                     $scope.model.ownDevices.splice(index, 1);
-                    //var index = $scope.model.ownDevices.indexOf(ownDevices);
-                    //$scope.model.ownDevices.splice(index, 1);
                 };
 
                 $scope.addPhoneUsage = function () {
@@ -1532,8 +1521,6 @@ angular
 
                 $scope.deleteMainActivity = function (index) {
                     $scope.model.mainActivity.splice(index, 1);
-                    //var index = $scope.model.mainActivity.indexOf(mainActivity);
-                    //$scope.model.mainActivity.splice(index, 1);
                 };
 
                 $scope.addMainActivity = function () {
@@ -1544,7 +1531,7 @@ angular
                     $scope.model.favoriteGames.push(new String());
                 };
 
-                $scope.deleteFavoriteGame = function (favoriteGames) {
+                $scope.deleteFavoriteGame = function (index) {
                     $scope.model.favoriteGames.splice(index, 1);
                 };
 
@@ -1571,7 +1558,6 @@ angular
                     $scope.model.familiaCompartamos.splice(index, 1);
                 };
 
-                //  ###########################################################################
 
                 encodeImageUri = function (imageUri, callback) {
                     var c = document.createElement('canvas');
@@ -1595,16 +1581,6 @@ angular
                     encodeImageUri(pathimagen, function (b64) {
                         avatarInfo[0]["filecontent"] = b64;
                         moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function(){avatarUploaded("Éxito")}, function(){avatarUploaded("Error")});
-                        /*
-                        $http({
-                            method: 'POST',
-                            url: API_RESOURCE.format('avatar'),
-                            data: avatarInfo[0]
-                        }).success(function () {
-                            avatarUploaded("�?xito");
-                        }).error(function () {
-                            avatarUploaded("Error");
-                        });*/
                     });
                 };
 
