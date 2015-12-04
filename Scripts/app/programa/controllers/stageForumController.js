@@ -72,7 +72,6 @@ angular
                   redirectOnShield();
                 }
     
-                //$scope.setToolbar($location.$$path,$scope.contentResources.tool_bar_title);
                 $rootScope.showFooter = true;
                 $rootScope.showFooterRocks = false;
                 $rootScope.showStage1Footer = false;
@@ -82,7 +81,6 @@ angular
                 $scope.scrollToTop();
     
                 function getDataAsync() {
-                    console.log('Moodle ID on dataAsync: ' + $scope.moodleId);
                     $scope.moodleId != 149? moodleFactory.Services.GetAsyncForumDiscussions($scope.moodleId, currentUser.token, getForumDiscussionsCallback, function() {_pageLoaded = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};}, true):'';
                     
                     if ($scope.moodleId == 149) {
@@ -115,7 +113,6 @@ angular
                     
                     var discussionId = selectedDiscussionId;
                     var moodleId = $routeParams.moodleId;
-                    console.log('Moodle ID: ' + $routeParams.moodleId);
                     !moodleId? moodleId = getMoodleIdFromTreeActivity($routeParams.activityId): '';
                   switch (Number(moodleId)){
                       case 64:

@@ -3,17 +3,14 @@
         <div id="finalized">
             <section class="txt-renglon header-title">
                 <div class="centered txt-bigger min-pad ">{{closingContent.closing_message}}</div>
-                <!--<div class="centered txt-bigger min-pad ">Has completado la actividad</div>-->
                 <div class="subtitle centered min-pad ">{{activityname}}</div>
                 <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message_congrats}}</div>
-                <!--<div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>-->
             </section>
             <section class="centered txt-bigger ">
                 <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
             </section>
             <section class="txt-renglon pill">
                 <div class="pull-left">{{closingContent.earned_stars}}</div>
-                <!--<div class="pull-left">Estrellas ganadas:</div>-->
                 <div class="pull-right sm-pill">
                   <span class="pull-left">{{activityPoints}}</span>
                   <span class="icomoon icon-star pull-right"></span>
@@ -21,7 +18,6 @@
             </section>
             <section class="txt-renglon centered form ">
                 <p>{{activity_rating_label}}</p>
-                <!--<p>¿Que opinas de ésta actividad?</p>-->
                 <div>
                     <div class="opinion col-xs-6">
                         <input id="like" type="radio" value="1" name="like" ng-model="like_status">
@@ -36,7 +32,6 @@
 
             <p class="actions">
                 <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</a>
-                <!--<a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">TERMINAR</a>-->
             </p>
 
         </div>
