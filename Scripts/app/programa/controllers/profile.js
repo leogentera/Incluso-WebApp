@@ -347,13 +347,11 @@ angular
                 function getDataAsync(callback) {
 
                     startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
-                    console.log("Request...");
 
                     //Try to get user profile data from Local Storage.
                     $scope.model = moodleFactory.Services.GetCacheJson("profile/" + $scope.userId);
 
                     if ($scope.model !== null) {// If profile existes in Local Storage, then...
-                        console.log("Profile from LOCAL STORAGE");
                         if ($scope.model.profileimageurl) {
                             $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                         }
@@ -391,7 +389,6 @@ angular
                             }, function(){});
                             
                             $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
-                            //console.log("Profile current stars:" + $scope.model.stars);
 
                             callback();
 
@@ -571,7 +568,6 @@ angular
                 }
 
                 function validateRestrictions() {//This validates for the required fields
-                    //console.log('fetching editProfile errors list');
                     var errors = [];
 
                     validateEmptyItemsOnLists();
@@ -909,7 +905,6 @@ angular
 
 
                 $scope.index = function () {//Redirect to editing profile again.
-                    console.log("*************" + $location.$$path + " / " + showResultsPage);
                     if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && showResultsPage) {
                         $scope.currentPage = 12; //Show results page
                     }
@@ -930,10 +925,8 @@ angular
                 $scope.save = function () {
 
                     var fromPath = $location.$$path;
-                    console.log($location.$$path + " / " + $scope.accessedSubsection);
                     var fromPrivacy = fromPath == "/Perfil/ConfigurarPrivacidad/" + $scope.userId;
                     if (!$scope.accessedSubsection && !fromPrivacy) {
-                        console.log("Not fromPRIVACY SETTINGS");
                         $location.path("Profile/" + $scope.userId);
                         return;
                     }
@@ -964,12 +957,11 @@ angular
                     moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.model,
                         function (data) {
                             updateStarsForCompletedSections();
-                            console.log('Save profile successful...');
-                            $scope.$emit('HidePreloader');
+                            $scope.$emit('HidePreloader');   //Save profile successful...
                             $scope.index();
                         },
                         function (data) {
-                            console.log('Save profile fail...');
+                            //Save profile fail...
                         });
                 }
 
@@ -1052,7 +1044,6 @@ angular
                                 showResultsPage = false;
                             }
                         } else { //The subsection has been previously completed.
-                            console.log(activity.activity_identifier + " - " + $scope.origin);
                             if (activity.activity_identifier == $scope.origin) {
                                 showResultsPage = true;
                             }
@@ -1066,16 +1057,15 @@ angular
                     if ($scope.userCourse && $scope.userCourse.activities) {
 
                         var activitiesCompleted = _.where($scope.userCourse.activities, {status: 1});
-                        console.log(activitiesCompleted);
 
                         if (activitiesCompleted && activitiesCompleted.length == $scope.userCourse.activities.length) {
-                            console.log("create badge");
+                            //create badge.
                             var badgeModel = {
                                 badgeid: 13 //badge earned when a user completes his profile.
                             };
 
                             moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function () {
-                                console.log("created badge successfully");
+                                //Created badge successfully.
                             }, function () {
                             });
                         }
@@ -1619,7 +1609,6 @@ angular
                 };
 
                 function avatarUploaded(message) {
-                    console.log(message + " al subir la foto!");
                     $location.path('/Profile/' + $scope.userId);
                     $route.reload();
                 }
