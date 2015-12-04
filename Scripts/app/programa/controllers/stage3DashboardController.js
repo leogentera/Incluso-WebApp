@@ -181,6 +181,8 @@ angular
             };
 
             function loadController(){
+                var userid = localStorage.getItem("userId");
+                var user = JSON.parse(localStorage.getItem("profile/" + userid));
                 
                 if($scope.thisStage.firsttime){
                     $scope.openModal_StageFirstTime();
@@ -203,12 +205,11 @@ angular
     
                 //Try to close stage. If stage is closed exactly in this attempt, show closing message.
                 if(_tryCloseStage($scope.idEtapa)){
+                    _tryAssignAward();
                     $scope.openModal_CloseStage();
                 }
     
                 //Update progress
-                var userid = localStorage.getItem("userId");
-                var user = JSON.parse(localStorage.getItem("profile/" + userid));
                 $scope.model = JSON.parse(localStorage.getItem("usercourse"));
                 var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
                 $scope.model = progress.course;            
