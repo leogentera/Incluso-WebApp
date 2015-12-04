@@ -216,12 +216,10 @@ angular
                 
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
-                //had to concat unused activity cause if all quizzes were finished parentactivity wouldnt be marked as finished
                 var subactivitiesCompleted = [];
                 var activitiesCompleted = 0;
                 var parent_finished = false;
 
-                //counts how many quizzes were answered
                 _.each(quizzesRequests, function(q){
                     if(q.quiz_answered){
                         subactivitiesCompleted.push(q.coursemoduleid);
@@ -271,7 +269,6 @@ angular
             };
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated, parentStatus) {
-                //Update quiz on server
                 var results = {
                     "userid": currentUser.userId,
                     "answers": quiz.answers,
@@ -304,7 +301,6 @@ angular
                                     currentDiscussionIds.push(data.discussions[d].discussion);
                                 }
                                 localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
-                                
                                 
                                 var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
 
@@ -360,12 +356,10 @@ angular
             
                 var activityFromTree = getActivityByActivity_identifier(2026);
                 
-                /* check over extra points */
                 var course = moodleFactory.Services.GetCacheJson("course");
                 var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
                 
                 if (activityFromTree && activityFromTree.status == 1) {
-                    /* sumar uno extra al total */
                     if (forumData.totalExtraPoints < 11) {
                          updateUserForumStars($routeParams.moodleid, 50, function (){
                             successPutStarsCallback();
