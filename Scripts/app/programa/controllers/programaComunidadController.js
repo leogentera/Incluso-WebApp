@@ -262,7 +262,6 @@ angular
                                     for(var j=0; j < discussions.length; j++){
                                         var comments = discussions[j].total;
                                         postCounter = postCounter + parseInt(discussions[j].total);
-                                        console.log(postCounter);
                                     }
                                 }
                             }
@@ -273,10 +272,7 @@ angular
                             var badgeModel = {
                                 badgeid: badgeForum[0].id //badge earned when a user completes his profile.
                                 };
-                            moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){
-                                console.log("created badge successfully");
-                                },function(){
-                                    });
+                            moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){},function(){});
                         }
                     }
                 };

@@ -23,13 +23,10 @@ angular
                 $location.path('/ProgramaDashboard');
             }
 
-
-
             getContentResources("TermsAndConditions");
 
             $scope.userId=localStorage.getItem("userId");
             $scope.profile = JSON.parse(localStorage.getItem("Perfil/"+ $scope.userId));
-            //$scope.profile.termsAndConditions=true;
             $scope.accepted = $scope.profile.termsAndConditions;
             $rootScope.showToolbar = $scope.profile.termsAndConditions;
             $rootScope.showFooter = $scope.profile.termsAndConditions;
@@ -44,7 +41,6 @@ angular
                 else
                 {
                     $scope.$emit('ShowPreloader'); //show preloader
-                    //send new data to server
                     $scope.profile.termsAndConditions = true;
                     var dataToSend =
                     {
@@ -81,7 +77,5 @@ angular
                     if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                 }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
             }
-
-
 
 }]);
