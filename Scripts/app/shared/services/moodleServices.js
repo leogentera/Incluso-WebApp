@@ -321,11 +321,12 @@
                 _timeout(function () { successCallback(returnValue, key) }, 1000);
                 return returnValue;
             }
-
+            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             _httpFactory({
                 method: 'GET',
                 url: url,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                            Authorization:currentUser.token },
             }).success(function (data, status, headers, config) {
                 createTree(data);
                 successCallback();
