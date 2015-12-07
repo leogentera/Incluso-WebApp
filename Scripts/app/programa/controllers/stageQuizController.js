@@ -157,7 +157,7 @@ angular
                         $scope.activityObject = activityObject;
                     }
 
-                    console.log($scope.activityObject);
+                    //console.log($scope.activityObject);
 
                     if ($scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...
                         localAnswers = JSON.parse(_getItem("answersQuiz/" + $scope.coursemoduleid));
@@ -334,19 +334,21 @@ angular
                 }
 
                 if (checkLabel === "Otro" && $scope.answers[index][otherIndex]) {//The "Otro" checkbox has been checked.
-                    console.log($scope.answers[index]);
-                    console.log($scope.activityObject.questions[index].userAnswer);
+                    //console.log($scope.answers[index]);
+                    //console.log($scope.activityObject.questions[index].userAnswer);
                 }
 
                 if (checkLabel === "Otro" && !$scope.answers[index][otherIndex]) {//The "Otro" checkbox has been unchecked.
-                    console.log($scope.answers[index]);
-                    console.log($scope.activityObject.questions[index].userAnswer);
-                    $scope.activityObject.questions[index].other = "";
-                    //Delete "; Otro" from userAnswer key
-                    var indexOfOtro = $scope.activityObject.questions[index].userAnswer.indexOf("; Otro");
+                    //console.log($scope.answers[index]);
+                    //console.log($scope.activityObject.questions[index].userAnswer);
+
+                    //Update status in $scope.activityObject
+                    $scope.activityObject.questions[index].other = "";  //First, do "other=''" for the respective questions object.
+                    var indexOfOtro = $scope.activityObject.questions[index].userAnswer.indexOf("; Otro"); //Second, remove "Otro" value from the "userAnswer" for the respective questions object.
                     $scope.activityObject.questions[index].userAnswer = $scope.activityObject.questions[index].userAnswer.substring(0, indexOfOtro);
-                    $scope.OtroAnswers[multichoiceIndex].answers[0] = "";
-                    removeHeight($("multichoice" + index));
+                    $scope.OtroAnswers[multichoiceIndex].answers[0] = ""; //Third, delete user answer from the OtroAnswers object.
+
+                    removeHeight($("multichoice" + index)); //Finally, adjust the size of the UI.
                 }
 
                 if ($scope.answers[index][otherIndex] == 0 && $scope.questionNumOfChoices[index] - 1 == otherIndex) {
@@ -602,28 +604,31 @@ angular
                     }
 
                     $scope.AnswersResult.answers = $scope.answers;
-                    console.log($scope.AnswersResult.answers);
+                    //console.log($scope.AnswersResult.answers);
 
                     var activityModel = {
                         "usercourse": updatedActivityOnUsercourse,
                         "answersResult": $scope.AnswersResult,
                         "userId": $scope.userprofile.id,
                         "startingTime": $scope.startingTime,
-                        "endingTime": moment(Date.now()).unix(), //$scope.startingTime = moment().format('YYYY-MM-DD HH:mm:ss'),
+                        "endingTime": moment().format('YYYY-MM-DD HH:mm:ss'),
                         "token": $scope.currentUser.token,
                         "others": $scope.OtroAnswers
                     };
 
                     activityModel.answersResult.dateStart = activityModel.startingTime;
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
-                    activityModel.answersResult.others = $scope.OtroAnswers;                    
+                    activityModel.answersResult.others = $scope.OtroAnswers;
+
+                    //console.log("Ending Time: " + moment(Date.now()).unix());
                     console.log("Ending Time: " + moment().format('YYYY-MM-DD HH:mm:ss'));
                     //var activityObject = JSON.parse(_getItem("activity/" + $scope.coursemoduleid));
                     //activityObject.status = 1;
 
                     $scope.activityObject.status = 1;
 
-                    if ($scope.childActivity) {// Write Questions and Answers to Local Storage
+                    // Write Updated objects to Local Storage for later recovery.
+                    if ($scope.childActivity) {
                         _setLocalStorageJsonItem("answersQuiz/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("UserTalents/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("activity/" + $scope.childActivity.coursemoduleid, $scope.activityObject);  //SAVE activity with status 1.
@@ -635,7 +640,6 @@ angular
 
                     //If the activity quiz has a checkbox for the "Otro" answer, then save it to Local Storage
                     if ($scope.numOfOthers > 0) {
-                        console.log("Saving Others " + JSON.stringify($scope.OtroAnswers)  );
                         if ($scope.childActivity) {
                             _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.childActivity.coursemoduleid, $scope.OtroAnswers);
                         } else {
