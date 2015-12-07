@@ -174,7 +174,6 @@ angular
                     }
                     ).success(function (data, status, headers, config) {
                             //save token for further requests and autologin
-                        console.log(data);
                             $scope.currentUserModel = data;
                             $scope.currentUserModel.userId = data.id;
 
