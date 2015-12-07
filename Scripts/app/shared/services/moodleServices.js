@@ -2,6 +2,8 @@
     namespace('moodleFactory');
 
     moodleFactory.Services = (function () {
+        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+
         var _getAsyncProfile = function (userId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("Perfil/" + userId, API_RESOURCE.format('user/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
@@ -251,7 +253,7 @@
                     addRequestToQueue(key, {
                     method: 'GET',
                     url: url,
-                    headers: { 'Content-Type': 'application/json'}                    
+                    headers: { 'Content-Type': 'application/json'}
                     });   
                 }
 
@@ -342,7 +344,8 @@
                 method: 'POST',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                             Authorization:currentUser.token },
             }).success(function (data, status, headers, config) {
 
                 if (key != null) {
@@ -390,7 +393,8 @@
                 method: 'POST',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                            'Authorization': currentUser.token},
             }).success(function (data, status, headers, config) {
 
                 if (key != null) {
@@ -443,7 +447,8 @@
                 method: 'PUT',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                            'Authorization': currentUser.token},
             }).success(function (data, status, headers, config) {
                 successCallback();
             }).error(function (data, status, headers, config) {
