@@ -69,11 +69,9 @@
         $http.get('Templates/Public/RecoverPassword.html', { cache: true });
         $http.get('Templates/Public/RecoverPasswordEmail.html', { cache: true });
         $http.get('Templates/Public/Register.html', { cache: true });
-        $http.get('Templates/Programa/Dashboard.html', { cache: true });
-        /*$http.get('Templates/Programa/Step.html', { cache: $templateCache });*/
+        $http.get('Templates/Programa/Dashboard.html', { cache: true });        
         $http.get('Templates/Programa/profile.html', { cache: true });
-        $http.get('Templates/Programa/editProfile.html', { cache: true });
-        //$http.get('Templates/Programa/etapa.html', { cache: $templateCache });
+        $http.get('Templates/Programa/editProfile.html', { cache: true });        
         $http.get('Templates/Programa/Tutorial.html', { cache: true });
         $http.get('Templates/Programa/acercaPrograma.html', { cache: true });  
         $http.get('Templates/Juegos/Avatar.html', { cache: true });
@@ -105,8 +103,7 @@
         $http.get('Templates/ZonaDeVuelo/dashboard.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/ExploracionInicial.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/ExploracionInicialCierre.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: true });  
-        //$http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/MensajeDeCierre.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeVuelo/CuartoDeRecursos/FuenteDeEnergia.html', { cache: true });          
         $http.get('Templates/ZonaDeVuelo/Conocete/FuenteDeEnergia.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultiple.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/RetoMultipleExternalApp.html', { cache: true });  
@@ -117,8 +114,7 @@
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Topicos.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Logicos/Comentarios.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html', { cache: true });  
-        //$http.get('Templates/ZonaDeVuelo/Conocete/MensajeDeCierre.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Comentarios.html', { cache: true });          
         $http.get('Templates/ZonaDeVuelo/MisSuenos/FuenteDeEnergia.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidades.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/MisCualidadesCierre.html', { cache: true });  
@@ -127,8 +123,7 @@
         $http.get('Templates/ZonaDeVuelo/MisSuenos/Suena.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/SuenaCierre.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos.html', { cache: true });  
-        $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: true });  
-        //$http.get('Templates/ZonaDeVuelo/MisSuenos/MensajeDeCierre.html', { cache: $templateCache });
+        $http.get('Templates/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Comentarios.html', { cache: true });          
         $http.get('Templates/ZonaDeVuelo/CabinaDeSoporte.html', { cache: true });  
         $http.get('Templates/ZonaDeVuelo/CabinaDeSoporteCierre.html', { cache: true });
         $http.get('Templates/ZonaDeNavegacion/CabinaDeSoporte.html', { cache: true });
