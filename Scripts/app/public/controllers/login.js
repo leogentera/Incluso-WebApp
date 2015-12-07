@@ -12,7 +12,6 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
-            
             _timeout = $timeout;
             _httpFactory = $http;
             $scope.scrollToTop();
@@ -293,7 +292,6 @@ angular
                 $scope.$emit('scrollTop');
             }
             
-            $scope.$emit('scrollTop');
             function offlineCallback() {
                 $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
                 $scope.$emit('scrollTop');
