@@ -157,6 +157,8 @@ angular
                         $scope.activityObject = activityObject;
                     }
 
+                    //console.log($scope.activityObject);
+
                     if ($scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...
                         localAnswers = JSON.parse(_getItem("answersQuiz/" + $scope.coursemoduleid));
 
@@ -170,7 +172,7 @@ angular
                             $location.path('/');
 
                         } else {//Both Questions and Answer SHOULD BE in Local Storage; Angular-bind the object in the respective HTML template
-                            loadModelVariables(activityObject);
+                            loadModelVariables($scope.activityObject);
                         }
 
                     } else {//The Quiz has not been finished yet.
@@ -180,7 +182,7 @@ angular
                             //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, loadModelVariables, errorCallback, true);
                             $location.path('/');
                         } else {//The questions were found in Local Storage.
-                            loadModelVariables(activityObject);
+                            loadModelVariables($scope.activityObject);
                         }
                     }
 
@@ -193,16 +195,17 @@ angular
 
             function loadModelVariables(activityObject) {
 
+                $scope.activityObject = activityObject;
+
                 // Check if the Quiz is non editable (attempts == 1) AND it has been finished.
-                $scope.attempts = activityObject.attempts;
-                if (activityObject.attempts === 1 && $scope.activity_status === 1) {
+                $scope.attempts = $scope.activityObject.attempts;
+                if ($scope.attempts === 1 && $scope.activity_status === 1) {
                     $scope.setReadOnly = true;
                 }
 
-                $scope.activityObject = activityObject;
-                _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, activityObject);
+                _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, $scope.activityObject);
 
-                if (activityObject != null) {
+                if ($scope.activityObject != null) {
 
                     var question;
                     var i, index;
@@ -211,13 +214,13 @@ angular
                     $scope.numOfOthers = 0;
                     var localOtrosAnswers = null;
                     $scope.placeholder = [];
-                    var numQuestions = activityObject.questions.length;
+                    var numQuestions = $scope.activityObject.questions.length;
                     $scope.maxPages = numQuestions;  //Important. Used in View to know the total number of questions.
 
                     //Count the number of "Other" options in current Quiz.
                     for (index = 0; index < numQuestions; index++) {
 
-                        question = activityObject.questions[index];
+                        question = $scope.activityObject.questions[index];
                         questionNumOfChoices = question.answers.length;
                         var hasOther = false;
 
@@ -239,7 +242,7 @@ angular
                     if ($scope.activity_identifier === 1005) {
 
                         //Load array for Talents
-                        question = activityObject.questions[0];  //First question
+                        question = $scope.activityObject.questions[0];  //First question
                         questionNumOfChoices = question.answers.length;  //Number of choices
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
@@ -247,7 +250,7 @@ angular
                         }
 
                         //Load array  for Values
-                        question = activityObject.questions[1];  //First question
+                        question = $scope.activityObject.questions[1];  //First question
                         questionNumOfChoices = question.answers.length;  //Number of choices
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
@@ -255,7 +258,7 @@ angular
                         }
 
                         //Load array for Habilities
-                        question = activityObject.questions[2];  //First question
+                        question = $scope.activityObject.questions[2];  //First question
                         questionNumOfChoices = question.answers.length;  //Number of choices
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
@@ -266,7 +269,7 @@ angular
                     if ($scope.activity_identifier === 1006) {
 
                         //Load array for favoriteSports
-                        question = activityObject.questions[0];  //First question
+                        question = $scope.activityObject.questions[0];  //First question
                         questionNumOfChoices = question.answers.length;  //Number of choices
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
@@ -274,7 +277,7 @@ angular
                         }
 
                         //Load array  for artisticActivities
-                        question = activityObject.questions[1];  //First question
+                        question = $scope.activityObject.questions[1];  //First question
                         questionNumOfChoices = question.answers.length;  //Number of choices
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
@@ -282,7 +285,7 @@ angular
                         }
 
                         //Load array for Hobbies
-                        question = activityObject.questions[2];  //First question
+                        question = $scope.activityObject.questions[2];  //First question
                         questionNumOfChoices = question.answers.length;  //Number of choices
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
@@ -301,10 +304,8 @@ angular
                         $scope.OtroAnswers = [];
                     }
 
-
                     for (index = 0; index < numQuestions; index++) {
-
-                        question = activityObject.questions[index];
+                        question = $scope.activityObject.questions[index];
                         renderQuestionsAndAnswers(index, question);
                         _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, $scope.answers);
                     }
@@ -329,14 +330,30 @@ angular
 
                 // The checkbox for 'Other' is clicked.
                 if ($scope.answers[index][otherIndex] && $scope.questionNumOfChoices[index] - 1 == otherIndex) {
+                    addHeight($("multichoice" + index)); //Add room for the TextArea
+                }
 
-                    //Add room for the TextArea
-                    addHeight($("multichoice" + index)); //should be addHeight($("multichoice" + multichoiceIndex));
+                if (checkLabel === "Otro" && $scope.answers[index][otherIndex]) {//The "Otro" checkbox has been checked.
+                    //console.log($scope.answers[index]);
+                    //console.log($scope.activityObject.questions[index].userAnswer);
+                }
+
+                if (checkLabel === "Otro" && !$scope.answers[index][otherIndex]) {//The "Otro" checkbox has been unchecked.
+                    //console.log($scope.answers[index]);
+                    //console.log($scope.activityObject.questions[index].userAnswer);
+
+                    //Update status in $scope.activityObject
+                    $scope.activityObject.questions[index].other = "";  //First, do "other=''" for the respective questions object.
+                    var indexOfOtro = $scope.activityObject.questions[index].userAnswer.indexOf("; Otro"); //Second, remove "Otro" value from the "userAnswer" for the respective questions object.
+                    $scope.activityObject.questions[index].userAnswer = $scope.activityObject.questions[index].userAnswer.substring(0, indexOfOtro);
+                    $scope.OtroAnswers[multichoiceIndex].answers[0] = ""; //Third, delete user answer from the OtroAnswers object.
+
+                    removeHeight($("multichoice" + index)); //Finally, adjust the size of the UI.
                 }
 
                 if ($scope.answers[index][otherIndex] == 0 && $scope.questionNumOfChoices[index] - 1 == otherIndex) {
-                    $scope.OtroAnswers[multichoiceIndex].answers[0] = "";
-                    removeHeight($("multichoice" + index));
+                    //$scope.OtroAnswers[multichoiceIndex].answers[0] = "";
+                    //removeHeight($("multichoice" + index));
                 }
 
             };
@@ -448,7 +465,7 @@ angular
                                 }
                             }  
                         }
-
+                        //alert($scope.answers[2][11]);
                         for (index = 0; index < question.answers.length; index++) {
                           if ($scope.answers[questionIndex][index] !== 1) {
                               $scope.answers[questionIndex][index] = 0;
@@ -577,9 +594,7 @@ angular
                     updatedActivityOnUsercourse = updateActivityStatus($scope.activity_identifier);
 
                     //Update local storage and activities status array
-                    _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse); 
-                    $scope.AnswersResult.answers = $scope.answers;
-
+                    _setLocalStorageJsonItem("usercourse", updatedActivityOnUsercourse);
 
                     if ($scope.childActivity) {
                         updateActivityStatusDictionary($scope.childActivity.activity_identifier);
@@ -588,36 +603,37 @@ angular
                         updateActivityStatusDictionary($scope.parentActivity.activity_identifier);
                     }
 
+                    $scope.AnswersResult.answers = $scope.answers;
+
                     var activityModel = {
                         "usercourse": updatedActivityOnUsercourse,
                         "answersResult": $scope.AnswersResult,
                         "userId": $scope.userprofile.id,
                         "startingTime": $scope.startingTime,
-                        "endingTime": $scope.startingTime = moment().format('YYYY-MM-DD HH:mm:ss'),
+                        "endingTime": moment().format('YYYY-MM-DD HH:mm:ss'),
                         "token": $scope.currentUser.token,
                         "others": $scope.OtroAnswers
                     };
 
                     activityModel.answersResult.dateStart = activityModel.startingTime;
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
-                    activityModel.answersResult.others = $scope.OtroAnswers;                    
+                    activityModel.answersResult.others = $scope.OtroAnswers;
 
-                    var activityObject = JSON.parse(_getItem("activity/" + $scope.coursemoduleid));
-                    activityObject.status = 1;
+                    $scope.activityObject.status = 1;
 
-                    if ($scope.childActivity) {// Write Questions and Answers to Local Storage
+                    // Write Updated objects to Local Storage for later recovery.
+                    if ($scope.childActivity) {
                         _setLocalStorageJsonItem("answersQuiz/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("UserTalents/" + $scope.childActivity.coursemoduleid, $scope.AnswersResult.answers);
-                        _setLocalStorageJsonItem("activity/" + $scope.childActivity.coursemoduleid, activityObject);
+                        _setLocalStorageJsonItem("activity/" + $scope.childActivity.coursemoduleid, $scope.activityObject);  //SAVE activity with status 1.
                     } else {
                         _setLocalStorageJsonItem("answersQuiz/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
                         _setLocalStorageJsonItem("UserTalents/" + $scope.parentActivity.coursemoduleid, $scope.AnswersResult.answers);
-                        _setLocalStorageJsonItem("activity/" + $scope.parentActivity.coursemoduleid, activityObject);
+                        _setLocalStorageJsonItem("activity/" + $scope.parentActivity.coursemoduleid, $scope.activityObject); //SAVE activity with status 1.
                     }
 
-                    //If...the activity quiz has a checkbox for the "Other" answer, then save it to Local Storage
+                    //If the activity quiz has a checkbox for the "Otro" answer, then save it to Local Storage
                     if ($scope.numOfOthers > 0) {
-
                         if ($scope.childActivity) {
                             _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.childActivity.coursemoduleid, $scope.OtroAnswers);
                         } else {
@@ -1003,9 +1019,7 @@ angular
 
             //################################################## UTILITY FUNCTIONS #########################################
             function cleanText(userAnswer) {
-
                 var result = userAnswer.replace(/\r/g, "").replace(/<br>/g, "").replace(/<p>/g, "").replace(/<\/p>/g, "").replace(/\n/g, "");
-
                 return result;
             }
 
@@ -1040,7 +1054,6 @@ angular
 
             function removeHeightEssay(elem) {
                 var containerHeight = angular.element('div.owl-wrapper-outer').height();
-                //angular.element("div.owl-wrapper-outer").css('height', listaHeight - 127);
                 angular.element("div.owl-wrapper-outer").css('height', containerHeight - 127);
             }
 
@@ -1080,7 +1093,7 @@ angular
                 $scope.title = data.node.titulo_quiz;
                 $scope.instructions = data.node.instrucciones; 
             }
-        }, function () { _loadedResources = true; }, false);  //function () { }, true);  //put to:
+        }, function () { _loadedResources = true; }, false);  //BEFORE OFLINE: function () { }, true);  //put to:
 
         $scope.cancel = function () {
             $scope.$emit('ShowPreloader');
@@ -1092,8 +1105,7 @@ angular
         $scope.isCollapsed = false;
     }).
     directive("owlCarousel", function () {
-        //Source: 
-        //http://stackoverflow.com/questions/29157623/owl-carousel-not-identifying-elements-of-ng-repeat
+        //Source: http://stackoverflow.com/questions/29157623/owl-carousel-not-identifying-elements-of-ng-repeat
 
         return {
             restrict: 'E',
