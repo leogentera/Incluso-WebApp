@@ -43,7 +43,7 @@ angular
                   text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
                     ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
                 });
-                $scope.$emit('HidePreloader'); //hide preloader
+                $scope.$emit('HidePreloader');
             };
             
             for (var i=0; i<4; i++) {
