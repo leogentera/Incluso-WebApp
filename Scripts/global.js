@@ -1436,8 +1436,7 @@ var _loadActivityBlockStatus = function () {
 };
 
 //Helps defining if activity can be started
-var _canStartActivity = function(activityIdentifier){
-    //console.log('canStartActivity');
+var _canStartActivity = function(activityIdentifier){    
 
     //If activity tree has not been loaded, return false.
     var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
@@ -1556,7 +1555,7 @@ function _updateDeviceVersionCache () {
     if (window.mobilecheck()) {
         if (!FLAG_DEVICE_VERSION_RUNNING) {
             FLAG_DEVICE_VERSION_RUNNING = true;
-            console.log("ejecutando device-version");
+            //console.log("ejecutando device-version");
             cordova.exec(function(data) {
                 deviceVersion.localVersion = data.currentVersion;
                 deviceVersion.remoteVersion = data.latestVersion;
