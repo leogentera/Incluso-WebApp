@@ -373,7 +373,8 @@
                 method: 'POST',
                 url: url,
                 data: data,
-                headers: {'Content-Type': 'application/json'}
+                headers: {'Content-Type': 'application/json',
+                    'Authorization': currentUser.token},
           }).success(function(){                
                 if (key != null) {
                     _setLocalStorageJsonItem(key,data);
