@@ -71,8 +71,7 @@ angular
                         }
 
                         if ($scope.activity_status === 1) {//If the activity is currently finished
-
-                            // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
+                            
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, storeQuiz, errorCallQuiz, true);
 
                         } else {//The activity HAS NOT BEEN FINISHED
@@ -117,12 +116,11 @@ angular
                         moodleFactory.Services.ExecuteQueue(function(){
                         });
 
-                        //Load Quizzes assets --------------------------------------------------------------------------
+                        //Load Quizzes assets
                         $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        $scope.userprofile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
+                        $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                         loadQuizesAssets($scope.userprofile.id, $scope.currentUser.token);
-                        GetExternalAppData();
-                        //----------------------------------------------------------------------------------------------
+                        GetExternalAppData();                        
 
                     }, function(){}); }, 2000);
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
@@ -181,7 +179,6 @@ angular
                             $scope.currentUserModel.userId = data.id;
 
                             _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-                            _setToken(data.token);
                             _setId(data.id);
 
                         //Run queue
@@ -194,10 +191,9 @@ angular
                                 var course = moodleFactory.Services.GetCacheJson("course");
                                 moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){
 
-                                    //Load Quizzes assets --------------------------------------------------------------
+                                    //Load Quizzes assets
                                     loadQuizesAssets(data.id, data.token);
-                                    GetExternalAppData();
-                                    //----------------------------------------------------------------------------------
+                                    GetExternalAppData();                                    
 
                                 }, function() {}, true);
 
@@ -252,7 +248,6 @@ angular
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
 
-                _setToken(userFacebook.token);
                 _setId(userFacebook.id);
 
                 //Run queue
@@ -265,10 +260,9 @@ angular
                         var course = moodleFactory.Services.GetCacheJson("course");
                         moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, false);
 
-                            //Load Quizzes assets ----------------------------------------------------------------------
+                            //Load Quizzes assets
                             loadQuizesAssets(userFacebook.id, userFacebook.token);
-                            GetExternalAppData();
-                            //------------------------------------------------------------------------------------------
+                            GetExternalAppData();                            
                         
                         $timeout(
                             function () {
@@ -308,8 +302,7 @@ angular
 
             var GetExternalAppData = function(){
                 var user = $scope.currentUserModel.userId;
-                var token = $scope.currentUserModel.token;
-                //userId, token, successCallback, errorCallback, forceRefresh
+                var token = $scope.currentUserModel.token;                
                 moodleFactory.Services.GetAsyncAvatar(user, null, function () {
                     //Success
                 }, function(){

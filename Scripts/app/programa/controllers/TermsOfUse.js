@@ -23,13 +23,10 @@ angular
                 $location.path('/ProgramaDashboard');
             }
 
-
-
             getContentResources("TermsAndConditions");
 
             $scope.userId=localStorage.getItem("userId");
-            $scope.profile = JSON.parse(localStorage.getItem("profile/"+ $scope.userId));
-            //$scope.profile.termsAndConditions=true;
+            $scope.profile = JSON.parse(localStorage.getItem("Perfil/"+ $scope.userId));
             $scope.accepted = $scope.profile.termsAndConditions;
             $rootScope.showToolbar = $scope.profile.termsAndConditions;
             $rootScope.showFooter = $scope.profile.termsAndConditions;
@@ -44,7 +41,6 @@ angular
                 else
                 {
                     $scope.$emit('ShowPreloader'); //show preloader
-                    //send new data to server
                     $scope.profile.termsAndConditions = true;
                     var dataToSend =
                     {
@@ -54,9 +50,9 @@ angular
                     moodleFactory.Services.PutAcceptTermsAndConditions($scope.userId, dataToSend ,function()
                         {
                             var userId = moodleFactory.Services.GetCacheObject("userId");
-                            var profile = moodleFactory.Services.GetCacheJson("profile/" + userId);
+                            var profile = moodleFactory.Services.GetCacheJson("Perfil/" + userId);
                             profile.termsAndConditions = true;
-                            _setLocalStorageJsonItem("profile/" + userId, profile);
+                            _setLocalStorageJsonItem("Perfil/" + userId, profile);
                             $scope.$emit('HidePreloader'); //show preloader
                             $scope.navigateTo('ProgramaDashboard');
                         },function(){}, true )
@@ -81,7 +77,5 @@ angular
                     if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
                 }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
             }
-
-
 
 }]);

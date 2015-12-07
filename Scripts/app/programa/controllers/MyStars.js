@@ -28,7 +28,7 @@ myStarsModule.controller('MyStarsController', [
             var userId = moodleFactory.Services.GetCacheObject("userId");
             $scope.userId = userId;
             
-            var profile = JSON.parse(localStorage.getItem("profile/" + $scope.userId));
+            var profile = JSON.parse(localStorage.getItem("Perfil/" + $scope.userId));
             
             if (profile && profile.stars) {
                 $scope.profileStars = profile.stars;

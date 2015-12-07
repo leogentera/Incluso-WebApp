@@ -100,8 +100,7 @@
                 <div class="detail">  
                   <div>                    
                     <div class="message">
-                      <span ng-show="activity.status" ng-bind-html="activity.activityContent.labeltext"></span>
-                      <!--<span ng-bind-html="activity.file.pageContent"></span>-->
+                      <span ng-show="activity.status" ng-bind-html="activity.activityContent.labeltext"></span>                      
                       <span class="htmlContent" ng-show="activity.status" ng-bind-html="activity.activityContent.pagecontent"></span>
                       <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'label' && !activity.status">Mostrar texto...</span>      
 
@@ -130,11 +129,9 @@
                   </div>
                   <div>
                     <div ng-repeat="repeatComment in activity.activityContent.comments | limitTo: activity.activityContent.commentsQty">                      
-                      <div class="coment block">
-                        <!--<img ng-click="navigateTo('Profile/' + comment.id)" ng-if="comment.picture_comment_author" ng-src="{{comment.picture_comment_author + '?token=' + userToken}}" alt="author" /> 
-                        <img ng-click="navigateTo('Profile/' + comment.id)" ng-if="!comment.picture_comment_author" src="http://incluso.sieenasoftware.com/moodle/pluginfile.php/209/user/icon/f1" alt="user" />-->
+                      <div class="coment block">                        
                         <div>
-                          <a class="user-alias" ng-click="navigateTo('Profile/' + comment.id)">{{repeatComment.alias}}</a>
+                          <a class="user-alias" ng-click="navigateTo('Perfil/' + comment.id)">{{repeatComment.alias}}</a>
                           <span>comentó:</span>
                           <div>{{repeatComment.user_comment}}</div>
                         </div>
@@ -183,41 +180,34 @@
       <!-- activity closing  -->
       <div class="page evaluation" ng-class="currentPage == 2 ? 'active' : ''">
         <div id="finalized">
-            <section class="header-title">
-                <!--<div class="txt-renglon centered txt-bigger min-pad ">Has completado la actividad</div>-->
+            <section class="header-title">                
                 <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message}}</div>
-                <div class="subtitle centered min-pad ">"Fuente de energía"</div>
-                <!--<div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>-->
+                <div class="subtitle centered min-pad ">"Fuente de energía"</div>                
                 <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message_congrats}}</div>
             </section>
             <section class="centered txt-bigger ">
                 <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
             </section>
             <section class="txt-renglon pill">
-                <div class="pull-left">{{closingContent.earned_stars}}</div>
-                <!--<div class="pull-left">Estrellas ganadas:</div>-->
+                <div class="pull-left">{{closingContent.earned_stars}}</div>                
                 <div class="pull-right sm-pill">
                   <span class="pull-left">250</span>
                   <span class="icomoon icon-star pull-right"></span>
                 </div>
             </section>
             <section class="txt-renglon centered form ">
-                {{closingContent.activity_rating_label}}
-                <!--¿Que opinas de ésta actividad?-->
+                {{closingContent.activity_rating_label}}                
                 <section class="txt-renglon txt-bigger clearfix">
                     <div class="opinion">
-                        <input id="like" type="radio" value="1" name="like" ng-model="like_status">
-                        <!--<label for="like">Me gusta</label>-->
+                        <input id="like" type="radio" value="1" name="like" ng-model="like_status">                        
                         <label for="like">{{closingContent.like_label}}</label>
                     </div>
                     <div class="opinion">
-                        <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">
-                        <!--<label for="dislike">No me gusta</label>-->
+                        <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">                        
                         <label for="dislike">{{closingContent.not_like_label}}</label>
                     </div>
                 </section>
-                <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</a>
-                <!--<a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">TERMINAR</a>-->
+                <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</a>                
             </section>
           </div>
       </div>

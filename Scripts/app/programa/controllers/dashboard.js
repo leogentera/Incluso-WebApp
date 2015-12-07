@@ -33,7 +33,7 @@
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
             $scope.user.profileimageurl = $scope.user.profileimageurl + "?rnd=" + new Date().getTime();
 
-            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + $scope.user.id); //profile is not used in this page, it is only used for stars.
+            $scope.profile = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is not used in this page, it is only used for stars.
 
             if ($scope.profile && $scope.profile.stars) {
                 //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
@@ -153,7 +153,7 @@
                         $scope.$emit('scrollTop');
 
                         moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, function () {
-                            $scope.profile = JSON.parse(localStorage.getItem("profile/" + localStorage.getItem("userId")));
+                            $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
 
                             getUserNotifications($scope.course.courseid);
 
@@ -244,6 +244,7 @@
                     var userId = localStorage.getItem("userId");
                     var messagesFlow = [];
                     var messagesInterchange = 0;
+                    var messagesToRead = _getItem("currentStage") * 2;
 
                     var chatAmount = _.countBy(chat, function (messages) {
                         messagesFlow.push(messages.messagesenderid != userId);

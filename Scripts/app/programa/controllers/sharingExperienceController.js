@@ -23,7 +23,7 @@
         
         function initController() {
                 
-        var _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+        var _userProfile = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
         var _course = moodleFactory.Services.GetCacheJson("course");
         var _currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
         var _userId = moodleFactory.Services.GetCacheObject("userId");

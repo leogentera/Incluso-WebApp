@@ -32,7 +32,7 @@ angular
         
         var _course = moodleFactory.Services.GetCacheJson("course");
         var _userId = moodleFactory.Services.GetCacheObject("userId");
-        var _userProfile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+        var _userProfile = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
         var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
         $scope.hasCommunityAccess = _hasCommunityAccessLegacy(_userProfile.communityAccess);
         var albumSrc = null;

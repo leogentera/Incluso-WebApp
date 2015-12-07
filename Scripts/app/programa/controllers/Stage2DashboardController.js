@@ -209,7 +209,7 @@ angular
     
                 //Update progress
                 var userid = localStorage.getItem("userId");
-                var user = JSON.parse(localStorage.getItem("profile/" + userid));
+                var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
                 $scope.model = JSON.parse(localStorage.getItem("usercourse"));
                 var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
                 $scope.model = progress.course;           

@@ -1,14 +1,6 @@
-//global variables
-
+//global variables and functions
 var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-2/RestfulAPI/public/{0}"; //Azure Development environment
-//var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
 var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
-//var API_RESOURCE = "http://incluso.definityfirst.com/v1-2/RestfulAPI/public/{0}";          // Nora
-//var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-0/RestfulAPI/public/{0}";
-//var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-0/RestfulAPI/public/{0}";
-//var API_RESOURCE = "http://apidevelopment.azurewebsites.net/RestfulAPI/public/{0}";     // Definity Azure
-//var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; // Production
-
 
 var _courseId = 4;
 var _endActivityCurrentChallenge = null;
@@ -16,6 +8,9 @@ var _httpFactory = null;
 var _timeout = null;
 var _location = null;
 var _catalogsLoaded = null;
+var _isDeviceOnline = null;
+var _queuePaused = false;
+var _activityStatus = null;
 
 /* Prototypes */
 window.mobilecheck = function() {
@@ -24,9 +19,7 @@ window.mobilecheck = function() {
   return check;
 }
 
-var _isDeviceOnline = null;
-var _queuePaused = false;
-
+/* catalog keys from moodle */
 var _catalogNames = ["sports",
     "arts",
     "hobbiescatalog",
@@ -62,9 +55,6 @@ var _catalogNames = ["sports",
     "citiesCatalog",
     "gender"
 ];
-
-
-var _activityStatus = null;
 
 var _activityDependencies=[
     //Stage 1 dependencies
@@ -270,10 +260,6 @@ var _activityDependenciesLegacy = [
     }
 ];
 
-var _IsOffline = function () {
-    return false;
-};
-
 var notificationTypes = {    
     activityNotifications: 1,
     generalNotifications: 2,
@@ -281,6 +267,7 @@ var notificationTypes = {
     progressNotifications: 4
 };
 
+/* sync course after logging */
 var _syncAll = function (callback) {
     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), callback, function() {} );
 };
@@ -289,21 +276,18 @@ var allServicesCallback = function () {
     _syncCallback();
 };
 
-var _setToken = function (token) {
-    $.ajaxSetup({
-        headers: {'Access_token': token.token}
-    });
-};
-
+/* save user id in cache */
 var _setId = function (userId) {
     _setLocalStorageItem("userId", userId);
 
 };
 
+/* get data from cache */
 var _getItem = function (key) {
     return localStorage.getItem(key);
 };
 
+/* save data in cache */
 var _setLocalStorageItem = function (key, value) {
     try {
         localStorage.setItem(key, value);
@@ -321,6 +305,7 @@ var _setLocalStorageItem = function (key, value) {
     }
 }
 
+/* save json data in cache */
 var _setLocalStorageJsonItem = function (key, object) {
     try {
         localStorage.setItem(key, JSON.stringify(object));
@@ -332,10 +317,7 @@ var _setLocalStorageJsonItem = function (key, object) {
     }
 }
 
-function syncCacheData() {
-
-}
-
+/* updates counter per discussion after posting in forums */
 function updatePostCounter(discussionid) {
     var course = moodleFactory.Services.GetCacheJson("course");
     var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
@@ -382,6 +364,7 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
     _loadActivityBlockStatus();
 };
 
+/* ends an activity */
 var _endActivity = function (activityModel, callback, pathCh) {
 
     //trigger activity type 2 is sent when the activity ends.
@@ -394,9 +377,6 @@ var _endActivity = function (activityModel, callback, pathCh) {
     _activityNotification(activityId, triggerActivity);
     if (activityModel.activityType == "Quiz") {
         _endActivityCurrentChallenge = pathCh;
-        //activityModel.answersResult.dateStart = activityModel.startingTime;
-        //activityModel.answersResult.dateEnd = activityModel.endingTime;
-        //activityModel.answersResult.others = activityModel.others;
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
     }
     else if (activityModel.activityType == "Assign") {
@@ -411,6 +391,7 @@ var _endActivity = function (activityModel, callback, pathCh) {
     }
 };
 
+/* callback from quiz request with status 200 */
 var successQuizCallback = function () {
     var currentStage = localStorage.getItem("currentStage");
 
@@ -419,6 +400,7 @@ var successQuizCallback = function () {
     }
 };
 
+/* convert community access value to bool */
 var _hasCommunityAccessLegacy = function(value) {
     return (value == "Enable" || value == "1");
 };
@@ -467,10 +449,11 @@ var _tryCloseStage = function(stageIndex){
     return false;
 };
 
+/* assigns an award after finishing the course */
 var _tryAssignAward = function() {
   
   var userid = localStorage.getItem("userId");
-  var user = JSON.parse(localStorage.getItem("profile/" + userid));
+  var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
   
   // assign award
   if (!user.awards.title) {
@@ -491,7 +474,7 @@ var _tryAssignAward = function() {
           
           if (stars >= award.min_points_range && stars <= award.max_points_range) {
             user.awards.title = award.title;
-            localStorage.setItem("profile/" + userid, JSON.stringify(user));
+            localStorage.setItem("Perfil/" + userid, JSON.stringify(user));
             break;
           }
         }
@@ -537,7 +520,7 @@ var _closeChallenge = function (stageId) {
 
 
 var _updateBadgeStatus = function (coursemoduleid) {      
-    var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));    
+    var profile = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
     var badges = profile.badges;
     var activity = _getActivityByCourseModuleId(coursemoduleid);
     if (activity) {
@@ -547,20 +530,22 @@ var _updateBadgeStatus = function (coursemoduleid) {
           for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
               if (badges[indexBadge].id == currentBadge.badgeId) {
                   profile.badges[indexBadge].status = "won";
-                  _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
+                  _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile);
               } else {
                   //This else statement is set to avoid errors on execution flows
               }
           }
-      } else {//This else statement is set to avoid errors while debugging in firefox
+      } else {
+        //This else statement is set to avoid errors while debugging in firefox
       }
-    }else{          
+    }else{
+      //This else statement is set to avoid errors while debugging in firefox
     }    
 };
 
 var _updateRewardStatus = function () {
 
-    var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     console.log('Stars from rewards: ' + profile.stars);
     var totalRewards = profile.rewards;
     var profilePoints = profile.stars;
@@ -572,7 +557,7 @@ var _updateRewardStatus = function () {
             profile.rewards[i].dateIssued = new Date();
         }
     }
-    localStorage.setItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
+    localStorage.setItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
 }
 
 var logStartActivityAction = function(activityId, timeStamp) {
@@ -734,8 +719,6 @@ var _progressNotification = function(indexStageId, currentProgress){
     
     var notifications = JSON.parse(localStorage.getItem("notifications"));
     
-    //var progressNotifications = _.where(notifications, { type: notificationTypes.progressNotifications });
-    
     var stageId = indexStageId + 1 ;
     
     for(i = 0; i < notifications.length; i++){
@@ -769,10 +752,11 @@ var successPutStarsCallback = function (data) {
     _updateRewardStatus();
 };
 
-
+/* function to prevent broken code when calling a service */
 var successCallback = function (data) {
 };
 
+/* function to prevent broken code when calling a service */
 var errorCallback = function (data) {
 };
 
@@ -1035,7 +1019,7 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
 }
 
 function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var stars = 0;
     for (var i = 0; i < parentActivity.activities.length; i++) {
@@ -1057,11 +1041,12 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
             date: getdate()
         };
         moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){}, function(){});
-        _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile)
+        _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile)
         _setLocalStorageJsonItem("CurrentUser", currentUser)
     }
 }
 
+/* gets total points from forum */
 var getForumExtraPointsCounter = function(discussionIds) {
     
     var course = moodleFactory.Services.GetCacheJson("course");
@@ -1094,7 +1079,7 @@ var getForumExtraPointsCounter = function(discussionIds) {
 };
 
 function updateUserStars(activityIdentifier, extraPoints) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
@@ -1145,7 +1130,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
 }
 
 function updateUserForumStars(activityIdentifier, extraPoints, callback) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
     
@@ -1169,7 +1154,7 @@ function updateUserForumStars(activityIdentifier, extraPoints, callback) {
 
 
 function updateUserStarsUsingExternalActivity(activity_identifier) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getExtActivityByActivity_identifier(activity_identifier);
     //profile.stars = Number(profile.stars) +  Number(activity.points);
@@ -1227,6 +1212,7 @@ function getExtActivityByActivity_identifier(activity_identifier) {
     }
 }
 
+/* returns current date in a specific format */
 function getdate() {
     var date = new Date(),
         year = date.getFullYear(),
@@ -1243,11 +1229,13 @@ function getdate() {
     return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
 }
 
-syncCacheData();
 var logout = function ($scope, $location) {
     $scope.currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+    
+    _forceUpdateConnectionStatus(function(){
+      
+      if (_isDeviceOnline) {
 
-    if (!_IsOffline()) {
         _httpFactory(
             {
                 method: 'POST',
@@ -1263,15 +1251,16 @@ var logout = function ($scope, $location) {
         ).success(function (data, status, headers, config) {
             }
         );
-    }
+      }
+    
+    }, function(){});
 
     //Deleting objects from Quizes
     ClearLocalStorage("answersQuiz/");
     ClearLocalStorage("otherAnswerQuiz/");
     ClearLocalStorage("activityObject/");
     ClearLocalStorage("owlIndex");
-     ClearLocalStorage("activity");
-    //-------------------------------
+    ClearLocalStorage("activity");
 
     localStorage.removeItem("CurrentUser");    
     localStorage.removeItem("course");
@@ -1326,21 +1315,12 @@ function ClearLocalStorage(startsWith) {
     });
 }
 
+/* play video from dashboard */
 playVideo = function (videoAddress, videoName) {
-    //var videoAddress = "assets/media";
-    //var videoName = "TutorialTest2.mp4";
     if (window.mobilecheck()) {
-        cordova.exec(SuccessVideo, FailureVideo, "CallToAndroid", "PlayLocalVideo", [videoAddress, videoName]);
+        cordova.exec(function(){}, function(){}, "CallToAndroid", "PlayLocalVideo", [videoAddress, videoName]);
     }
 };
-
-function SuccessVideo() {
-
-}
-
-function FailureVideo() {
-
-}
 
 var _badgesPerChallenge = [
     {badgeId: 2, badgeName: "Combustible", challengeId: 113, activity_identifier : "1100"},
@@ -1457,8 +1437,7 @@ var _loadActivityBlockStatus = function () {
 };
 
 //Helps defining if activity can be started
-var _canStartActivity = function(activityIdentifier){
-    //console.log('canStartActivity');
+var _canStartActivity = function(activityIdentifier){    
 
     //If activity tree has not been loaded, return false.
     var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
@@ -1498,12 +1477,14 @@ var _canStartActivity = function(activityIdentifier){
     return true;
 };
 
+/* encodes html characters before saving post */
 function removeHtmlTag(value) {
     value = value.replace(/</g, '&lt;');
     value = value.replace(/>/g, '&gt;');
     return value;
 }
 
+/* decodes html characters before returning to forum page */
 function restoreHtmlTag(value) {
     value = value.replace(/&lt;/g, "<");
     value = value.replace(/&gt;/g, ">");
@@ -1514,14 +1495,10 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
     // Register the event listener
-    document.addEventListener("backbutton", onBackKeyDown, false);
+    document.addEventListener("backbutton", function(){}, false);
 }
 
-// Handle the back button
-//
-function onBackKeyDown() {
-}
-
+/* Validates device version, update version if necessary */
 var _getDeviceVersionAsync = function() {
     
     var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
@@ -1532,7 +1509,6 @@ var _getDeviceVersionAsync = function() {
         
         /* 60 minutes */
         if ((difTimeStamp / 60000) >= 60) {
-            console.log("ya pasaron 2 minutos... a actualizar");
             _updateDeviceVersionCache();
         }
     }else {
@@ -1540,6 +1516,7 @@ var _getDeviceVersionAsync = function() {
     }
 };
 
+/* Compares remote version against local version */
 var _compareSyncDeviceVersions = function() {
     var sync = false;
     
@@ -1579,7 +1556,7 @@ function _updateDeviceVersionCache () {
     if (window.mobilecheck()) {
         if (!FLAG_DEVICE_VERSION_RUNNING) {
             FLAG_DEVICE_VERSION_RUNNING = true;
-            console.log("ejecutando device-version");
+            //console.log("ejecutando device-version");
             cordova.exec(function(data) {
                 deviceVersion.localVersion = data.currentVersion;
                 deviceVersion.remoteVersion = data.latestVersion;
@@ -1605,6 +1582,7 @@ function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
     }
 }
 
+/* gets catalog values by key from moodle */
 var _getCatalogValuesBy = function (catalogName) {
     
     var catalogs = moodleFactory.Services.GetCacheJson("catalogs");
@@ -1617,6 +1595,7 @@ var _getCatalogValuesBy = function (catalogName) {
     }
 };
 
+/* gets awards data */
 var _getAwards = function () {
     
     var catalogs = moodleFactory.Services.GetCacheJson("catalogs");
@@ -1633,6 +1612,7 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
     _forceUpdateConnectionStatus(sucessIsOnlineCallback, errorIsOnlineCallback);
 };
 
+/* loads drupal resources (content) */
 var _loadedDrupalResources = false;
 var _loadDrupalResources = function() {
     _loadedDrupalResources = false;
@@ -1649,6 +1629,7 @@ var _loadDrupalResources = function() {
     }
 }
 
+/* Waits until page is loaded */
 $(document).ready(function(){
     setTimeout(function() {
     _updateDeviceVersionCache();
