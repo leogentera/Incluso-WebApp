@@ -604,7 +604,6 @@ angular
                     }
 
                     $scope.AnswersResult.answers = $scope.answers;
-                    //console.log($scope.AnswersResult.answers);
 
                     var activityModel = {
                         "usercourse": updatedActivityOnUsercourse,
@@ -619,11 +618,6 @@ angular
                     activityModel.answersResult.dateStart = activityModel.startingTime;
                     activityModel.answersResult.dateEnd = activityModel.endingTime;
                     activityModel.answersResult.others = $scope.OtroAnswers;
-
-                    //console.log("Ending Time: " + moment(Date.now()).unix());
-                    console.log("Ending Time: " + moment().format('YYYY-MM-DD HH:mm:ss'));
-                    //var activityObject = JSON.parse(_getItem("activity/" + $scope.coursemoduleid));
-                    //activityObject.status = 1;
 
                     $scope.activityObject.status = 1;
 
