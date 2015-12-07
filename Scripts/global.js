@@ -943,6 +943,7 @@ function updateSubActivityStatus(coursemoduleid) {
                         var subactivity = activity.activities[subactivityIndex];
                         if (subactivity.coursemoduleid == coursemoduleid) {
                             subactivity.status = 1;
+                            subactivity.last_status_update = moment(Date.now()).unix();
                             breakAll = true;
                             break;
                         }
@@ -1127,7 +1128,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
     var userStars = JSON.parse(localStorage.getItem("userStars"));
                         
     var localStorageStarsData = {
-          dateissued : (new Date() / 1000 | 0),
+          dateissued : getdate(),
           instance : data.instance,
           instance_type: data.instanceType,
           message: "",

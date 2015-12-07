@@ -125,10 +125,11 @@ myStarsModule.controller('MyStarsController', [
                 var groupedByActivity = _.map(groups,function(group){
                        var pointsSum = 0;
                        var lastDate = new Date('1999/01/01');
+                       var unixLastDate = moment(lastDate).unix();
                        for(var i=0; i< group.length; i++){
                             pointsSum = pointsSum + group[i].points;
-                            var activityDate = new Date(group[i].last_status_update * 1000);
-                            if (lastDate < activityDate){
+                            var activityDate = Number(group[i].last_status_update);
+                            if (unixLastDate < activityDate){
                                 lastDate = group[i].last_status_update;
                             }
                        }

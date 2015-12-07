@@ -332,8 +332,10 @@ angular
 
                         var userStars = JSON.parse(localStorage.getItem("userStars"));
 
+                        var currentTime = new Date();
+                        
                         var localStorageStarsData = {
-                            dateissued: (new Date() / 1000 | 0),
+                            dateissued: moment(Date.now()).unix(),
                             instance: data.instance,
                             instance_type: data.instanceType,
                             message: "",
