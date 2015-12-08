@@ -76,36 +76,42 @@ angular
                     size: size,
                     windowClass: 'user-help-modal opening-stage-modal'
                 }).result.finally(function () {
-                        $scope.$emit('ShowPreloader');
-                        $timeout(function () {
-                            $scope.$emit('HidePreloader');
-                        }, 1000);
-                    });
+                    $scope.$emit('ShowPreloader');
+                    $timeout(function () {
+                        $scope.$emit('HidePreloader');
+                    }, 1000);
+                });
             };
 
-                        
+
             //#######################################  STARTING POINT ##################################
             getContentAsync();   // get content from drupal
             $scope.openModal();  // turns on robot
             getDataAsync();      // get Quiz data from service
 
-            function getContentAsync()
-            {
+            function getContentAsync() {
                 /*IMPORTANT: It gets content only for the closing message*/
                 var stageContent = "";
-                if($scope.activity_identifier > 999 && $scope.activity_identifier < 2000)
+                if ($scope.activity_identifier > 999 && $scope.activity_identifier < 2000)
                     stageContent = "ZonaDeVueloClosing";
-                else if($scope.activity_identifier > 1999 && $scope.activity_identifier < 3000)
+                else if ($scope.activity_identifier > 1999 && $scope.activity_identifier < 3000)
                     stageContent = "ZonaDeNavegacionClosing";
                 else
                     stageContent = "ZonaDeAterrizajeClosing";
 
                 drupalFactory.Services.GetContent(stageContent, function (data, key) {
-                    _loadedResources = true;
-                    $scope.closingContent = data.node;
-                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                        _loadedResources = true;
+                        $scope.closingContent = data.node;
+                        if (_loadedResources && _pageLoaded) {
+                            $scope.$emit('HidePreloader');
+                        }
                     }, //function () {},
-                    function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } },
+                    function () {
+                        _loadedResources = true;
+                        if (_loadedResources && _pageLoaded) {
+                            $scope.$emit('HidePreloader');
+                        }
+                    },
                     false);  //it was true
             }
 
@@ -123,7 +129,7 @@ angular
                 var owlIndex = localStorage.getItem("owlIndex");
                 destinationPath = "/" + stageNameFromURL + "/Dashboard/" + userCurrentStage + "/" + owlIndex;
 
-                var childActivity = null;               
+                var childActivity = null;
 
                 if (parentActivity != null) {
 
@@ -133,7 +139,7 @@ angular
                         $scope.coursemoduleid = childActivity.coursemoduleid;
                         $scope.activityPoints = childActivity.points;
                         $scope.activityname = childActivity.activityname;
-                        $scope.activity_status = childActivity.status; 
+                        $scope.activity_status = childActivity.status;
 
                     } else {//The activity has no "child" activity
                         $scope.coursemoduleid = parentActivity.coursemoduleid;
@@ -156,8 +162,6 @@ angular
                     if (activityObject !== null) {
                         $scope.activityObject = activityObject;
                     }
-
-                    //console.log($scope.activityObject);
 
                     if ($scope.activity_status === 1) {//If the activity is currently finished, try get it from Local Storage first...
                         localAnswers = JSON.parse(_getItem("answersQuiz/" + $scope.coursemoduleid));
@@ -210,7 +214,7 @@ angular
                     var question;
                     var i, index;
                     var questionNumOfChoices;
-                    
+
                     $scope.numOfOthers = 0;
                     var localOtrosAnswers = null;
                     $scope.placeholder = [];
@@ -263,7 +267,7 @@ angular
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
                             habilities.push(answerLabel);
-                        }                       
+                        }
                     }
 
                     if ($scope.activity_identifier === 1006) {
@@ -290,7 +294,7 @@ angular
                         for (i = 0; i < questionNumOfChoices; i++) {
                             answerLabel = question.answers[i].answer;
                             hobbies.push(answerLabel);
-                        }                        
+                        }
                     }
 
 
@@ -328,32 +332,45 @@ angular
 
                 var multichoiceIndex = $scope.position[index];
 
+                //Section for updating the value of the key userAnswer for each question.
+                var numOptions = $scope.activityObject.questions[index].answers.length;
+                var userAnswerString = "";
+                var k;
+                var longUserAnswerString;
+
+                for (k = 0; k < numOptions; k++) {
+                    if ($scope.answers[index][k] == 1) {
+                        userAnswerString += $scope.activityObject.questions[index].answers[k].answer;
+                    }
+
+                    if (k < numOptions - 1 && $scope.answers[index][k] == 1) {
+                        userAnswerString += "; ";
+                    }
+                }
+
+                userAnswerString = userAnswerString.trim();
+                longUserAnswerString = userAnswerString.length;
+
+                if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
+                    userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
+                }
+
+                $scope.activityObject.questions[index].userAnswer = userAnswerString;
+                //-------------
+
                 // The checkbox for 'Other' is clicked.
-                if ($scope.answers[index][otherIndex] && $scope.questionNumOfChoices[index] - 1 == otherIndex) {
+                if (checkLabel === "Otro" && $scope.answers[index][otherIndex]) {//The "Otro" checkbox has been checked.
                     addHeight($("multichoice" + index)); //Add room for the TextArea
                 }
 
-                if (checkLabel === "Otro" && $scope.answers[index][otherIndex]) {//The "Otro" checkbox has been checked.
-                    //console.log($scope.answers[index]);
-                    //console.log($scope.activityObject.questions[index].userAnswer);
-                }
-
                 if (checkLabel === "Otro" && !$scope.answers[index][otherIndex]) {//The "Otro" checkbox has been unchecked.
-                    //console.log($scope.answers[index]);
-                    //console.log($scope.activityObject.questions[index].userAnswer);
 
-                    //Update status in $scope.activityObject
                     $scope.activityObject.questions[index].other = "";  //First, do "other=''" for the respective questions object.
                     var indexOfOtro = $scope.activityObject.questions[index].userAnswer.indexOf("; Otro"); //Second, remove "Otro" value from the "userAnswer" for the respective questions object.
                     $scope.activityObject.questions[index].userAnswer = $scope.activityObject.questions[index].userAnswer.substring(0, indexOfOtro);
                     $scope.OtroAnswers[multichoiceIndex].answers[0] = ""; //Third, delete user answer from the OtroAnswers object.
 
                     removeHeight($("multichoice" + index)); //Finally, adjust the size of the UI.
-                }
-
-                if ($scope.answers[index][otherIndex] == 0 && $scope.questionNumOfChoices[index] - 1 == otherIndex) {
-                    //$scope.OtroAnswers[multichoiceIndex].answers[0] = "";
-                    //removeHeight($("multichoice" + index));
                 }
 
             };
@@ -380,7 +397,7 @@ angular
 
                 var questionText = question.question; //Contains the text for question.
                 var questionType = question.questionType || question.questiontype;   //Contains the type of question.
-                
+
                 if (questionType == "shortanswer") {
                     questionCode = "shortanswer";
                 }
@@ -391,7 +408,7 @@ angular
 
                 if (questionType == "multichoice" && questionNumOfChoices == 2 || questionType == "truefalse") {
                     questionCode = "binary";
-                }                
+                }
 
                 if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
                     questionCode = "multichoice";
@@ -463,13 +480,13 @@ angular
                                         }
                                     }
                                 }
-                            }  
+                            }
                         }
-                        //alert($scope.answers[2][11]);
+
                         for (index = 0; index < question.answers.length; index++) {
-                          if ($scope.answers[questionIndex][index] !== 1) {
-                              $scope.answers[questionIndex][index] = 0;
-                          }
+                            if ($scope.answers[questionIndex][index] !== 1) {
+                                $scope.answers[questionIndex][index] = 0;
+                            }
                         }
 
                         break;
@@ -484,14 +501,14 @@ angular
                             userAnswers = question.userAnswer.split(";");
 
                             for (indexUserAnswers = 0; indexUserAnswers < userAnswers.length; indexUserAnswers++) {
-                                
+
                                 userAnswer = cleanText(userAnswers[indexUserAnswers]).trim(); //Get each selected option
-                                
+
                                 for (index = 0; index < question.answers.length; index++) {
                                     questionOption = cleanText(question.answers[index].answer).trim();
 
                                     if (questionOption == userAnswer) {//For checked options...
-                                        $scope.answers[questionIndex][index] = 1;                                        
+                                        $scope.answers[questionIndex][index] = 1;
                                     }
                                 }
                             }
@@ -504,20 +521,20 @@ angular
                         }
 
                         break;
-                                           
+
 
                     case "shortanswer":
 
                         if ($scope.answers[questionIndex] === undefined) {
                             $scope.answers[questionIndex] = []; //Adding room for first answer
-                        }                        
+                        }
 
-                        if (question.userAnswer != "") {                            
+                        if (question.userAnswer != "") {
 
                             userAnswers = question.userAnswer.split(';');
 
                             if ($scope.answers[questionIndex].length < userAnswers.length) {
-                                for (i = 0; i < userAnswers.length; i++) {                                
+                                for (i = 0; i < userAnswers.length; i++) {
                                     $scope.answers[questionIndex].push(userAnswers[i]);
                                 }
                             }
@@ -538,16 +555,16 @@ angular
 
                     case "essay":
 
-                        if ($scope.answers[questionIndex]  === undefined) {
+                        if ($scope.answers[questionIndex] === undefined) {
                             $scope.answers[questionIndex] = [];   //Adding room for first answer
                         }
 
-                        if (question.userAnswer != "") {                            
+                        if (question.userAnswer != "") {
 
                             userAnswers = question.userAnswer.split(';');
 
                             if ($scope.answers[questionIndex].length < userAnswers.length) {
-                                for (i = 0; i < userAnswers.length; i++) {                                
+                                for (i = 0; i < userAnswers.length; i++) {
                                     $scope.answers[questionIndex].push(userAnswers[i]);
                                 }
                             }
@@ -565,7 +582,7 @@ angular
             //############################## CODE CALLED WHEN USER FINISHES ACTIVITY ###################################
             $scope.finishActivity = function () {
 
-                $scope.$emit("ShowPreloader");                
+                $scope.$emit("ShowPreloader");
 
                 //This is to avoid killing the preloader up starting.
                 $timeout(function () {
@@ -579,7 +596,7 @@ angular
                         $scope.AnswersResult.activityidnumber = $scope.parentActivity.coursemoduleid;
                     }
 
-                    $scope.isDisabled = true; 
+                    $scope.isDisabled = true;
                     $scope.AnswersResult.userid = $scope.userprofile.id;
                     $scope.AnswersResult.like_status = $scope.like_status;
                     $scope.AnswersResult.updatetype = 1;
@@ -643,8 +660,8 @@ angular
 
                     if ($scope.childActivity) {//Close Quiz activity.
                         activityModel.activityType = "Quiz";
-                        activityModel.coursemoduleid = $scope.childActivity.coursemoduleid;   
-                        
+                        activityModel.coursemoduleid = $scope.childActivity.coursemoduleid;
+
                         _endActivity(activityModel, function () {
                             updateProfile();
                         }, destinationPath);
@@ -758,7 +775,7 @@ angular
                         $scope.userprofile.hobbies.push($scope.OtroAnswers[2].answers[0]);
                     }
 
-                }                
+                }
 
                 if ($scope.activity_identifier === 1005 || $scope.activity_identifier === 1006) {
                     $scope.userId = moodleFactory.Services.GetCacheObject("userId");
@@ -774,7 +791,7 @@ angular
                             if ($scope.activity_status == 0) {
                                 $scope.activity_status = 1;
 
-                                updateUserStars($scope.parentActivity.activity_identifier);                                
+                                updateUserStars($scope.parentActivity.activity_identifier);
                             }
 
                             $location.path(destinationPath);
@@ -792,7 +809,7 @@ angular
                     //Update Activity Log Service.
                     if ($scope.activity_status == 0) {//Update stars only for non-finished activities
                         $scope.activity_status = 1;
-                        updateUserStars($scope.parentActivity.activity_identifier);                                             
+                        updateUserStars($scope.parentActivity.activity_identifier);
                     }
 
                     $location.path(destinationPath);
@@ -822,7 +839,7 @@ angular
                         case "multichoice":
 
                             //Validation: the multichoice must have some 'true' value...
-                            if (  ($scope.answers[index]).indexOf(1)   >   -1   ) {
+                            if (($scope.answers[index]).indexOf(1) > -1) {
                                 //...and Other is 'true' and has a non empty string in the input
                                 var userInput = $scope.OtroAnswers[$scope.position[index]].answers[0].replace(/\r?\n|\r/g, " ").trim();
                                 if (($scope.answers[index][$scope.questionNumOfChoices[index] - 1] && userInput != '') || !$scope.answers[index][$scope.questionNumOfChoices[index] - 1]) {
@@ -832,28 +849,28 @@ angular
 
                             //Unanswered questions should be equal to 0.
                             for (i = 0; i < $scope.activityObject.questions[index].answers.length; i++) {
-                                if ($scope.answers[index][i] != 1) {                                     
-                                    $scope.answers[index][i] = 0;                                        
-                                } 
+                                if ($scope.answers[index][i] != 1) {
+                                    $scope.answers[index][i] = 0;
+                                }
                             }
 
                             break;
 
                         case "multichoicewo":
                             //Validation: the multichoice must have some 'true' value...
-                            if (  ($scope.answers[index]).indexOf(1) > -1  ) {
+                            if (($scope.answers[index]).indexOf(1) > -1) {
                                 numAnswered++;
                             }
 
                             for (i = 0; i < $scope.activityObject.questions[index].answers.length; i++) {
 
-                                if ($scope.answers[index][i] != 1) {                                     
-                                    $scope.answers[index][i] = 0;                                        
-                                } 
+                                if ($scope.answers[index][i] != 1) {
+                                    $scope.answers[index][i] = 0;
+                                }
                             }
 
-                        break;
-                        
+                            break;
+
                         case "shortanswer":
 
                             //Remove repeated entries and blanks in the question.
@@ -1011,7 +1028,7 @@ angular
 
                         }
                     }
-                    
+
                     $scope.score = attainedScore * 100 / totalScore;
                 }
             }
@@ -1033,7 +1050,7 @@ angular
             function addHeight(elem) {
                 var elemHeight = angular.element(elem).height();
                 var containerHeight = angular.element("div.owl-wrapper-outer").height();
-                
+
                 if (containerHeight < 750) {
                     angular.element(".owl-wrapper-outer").css('height', containerHeight + 100);
                     angular.element(elem).css('height', elemHeight + 100);
@@ -1047,7 +1064,7 @@ angular
 
             function addHeightEssay(elem) {
                 var elemHeight = angular.element(elem).height();
-                var containerHeight = angular.element("div.owl-wrapper-outer").height();                
+                var containerHeight = angular.element("div.owl-wrapper-outer").height();
                 angular.element(".owl-wrapper-outer").css('height', containerHeight + 147);
                 angular.element(elem).css('height', elemHeight + 147);
             }
@@ -1067,7 +1084,7 @@ angular
             $scope.deleteAbility = function (elem, index, innerIndex) {
                 removeHeightEssay(elem);
                 $scope.answers[index].splice(innerIndex, 1);
-            };            
+            };
 
             $scope.hideWarning = function () {
                 $scope.showWarning = false;
@@ -1091,9 +1108,11 @@ angular
             _loadedResources = true;
             if (data.node != null) {
                 $scope.title = data.node.titulo_quiz;
-                $scope.instructions = data.node.instrucciones; 
+                $scope.instructions = data.node.instrucciones;
             }
-        }, function () { _loadedResources = true; }, false);  //BEFORE OFLINE: function () { }, true);  //put to:
+        }, function () {
+            _loadedResources = true;
+        }, false);  //BEFORE OFLINE: function () { }, true);  //put to:
 
         $scope.cancel = function () {
             $scope.$emit('ShowPreloader');
@@ -1116,17 +1135,17 @@ angular
                     var currPage;
                     var prevPage;
                     var defaultOptions = {
-                            navigation: false,
-                            pagination: false,
-                            goToFirstSpeed: 2000,
-                            singleItem: true,
-                            autoHeight: true,
-                            mouseDrag: false,
-                            touchDrag: false,
-                            dots: false,
-                            navRewind: true,
-                            transitionStyle: "fade",
-                            afterAction: function (el) {
+                        navigation: false,
+                        pagination: false,
+                        goToFirstSpeed: 2000,
+                        singleItem: true,
+                        autoHeight: true,
+                        mouseDrag: false,
+                        touchDrag: false,
+                        dots: false,
+                        navRewind: true,
+                        transitionStyle: "fade",
+                        afterAction: function (el) {
 
                             //add class active
                             $scope.answerIndex = this.currentItem + 1;
