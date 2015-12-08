@@ -370,6 +370,7 @@
         };
 
         var _postAsyncCommentToActivity = function(key,data,url,successCallback,errorCallback){
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
           _httpFactory({
                 method: 'POST',
                 url: url,
