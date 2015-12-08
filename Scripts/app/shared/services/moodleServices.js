@@ -2,7 +2,6 @@
     namespace('moodleFactory');
 
     moodleFactory.Services = (function () {
-        var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
         var _getAsyncProfile = function (userId, token, successCallback, errorCallback, forceRefresh) {
             _getAsyncData("Perfil/" + userId, API_RESOURCE.format('user/' + userId), token, successCallback, errorCallback, forceRefresh);
@@ -101,7 +100,7 @@
         }
 
         var _getAsyncCatalogs = function(data, succesCb, errorCb, forceRefresh) {
-            _postAsyncData("catalogs", data, API_RESOURCE.format('catalog'), succesCb, errorCb);
+            _postAsyncCatalogs("catalogs", data, API_RESOURCE.format('catalog'), succesCb, errorCb);
         };
 
         var _getAsyncCatalog = function (catalogname,token,successCallback,errorCallback,forceRefresh) {
@@ -340,12 +339,14 @@
         var _postAsyncData = function (key, data, url, successCb, errorCb) {
             _getDeviceVersionAsync();
             
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            
             _httpFactory({
                 method: 'POST',
                 url: url,
                 data: data,
                 headers: { 'Content-Type': 'application/json',
-                             Authorization:currentUser.token },
+                           'Authorization': currentUser.token },
             }).success(function (data, status, headers, config) {
 
                 if (key != null) {
@@ -384,18 +385,50 @@
                 errorCallback();
             });
         };
+        
+        var _postAsyncCatalogs = function (key, data, url, successCb, errorCb) {
+            _getDeviceVersionAsync();
+            
+            _httpFactory({
+                method: 'POST',
+                url: url,
+                data: data,
+                headers: { 'Content-Type': 'application/json' },
+            }).success(function (data, status, headers, config) {
+
+                if (key != null) {
+                    _setLocalStorageJsonItem(key,data);
+                }
+                
+                if (typeof successCb === "function") {
+                    successCb(key, data);
+                }else{
+                    successCallback(key, data);
+                }
+                
+            }).error(function (data, status, headers, config) {
+
+                if (typeof errorCb === "function") {
+                    errorCb();
+                }else {
+                    errorCallback();
+                }
+            });
+        };
+        
 
 	var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
             var discussionid = data.discussionid;
             
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             _httpFactory({
                 method: 'POST',
                 url: url,
                 data: data,
                 headers: { 'Content-Type': 'application/json',
-                            'Authorization': currentUser.token},
+                           'Authorization': currentUser.token },
             }).success(function (data, status, headers, config) {
 
                 if (key != null) {
@@ -444,12 +477,13 @@
         var _putDataNoCache = function (data, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             _httpFactory({
                 method: 'PUT',
                 url: url,
                 data: data,
                 headers: { 'Content-Type': 'application/json',
-                            'Authorization': currentUser.token},
+                           'Authorization': currentUser.token },
             }).success(function (data, status, headers, config) {
                 successCallback();
             }).error(function (data, status, headers, config) {
