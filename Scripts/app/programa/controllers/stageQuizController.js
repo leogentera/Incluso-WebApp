@@ -1104,16 +1104,17 @@ angular
     ]).
     controller('OpeningStageController', function ($scope, $modalInstance, $routeParams) {
 
-        drupalFactory.Services.GetContent($routeParams.activityIdentifier, function (data, key) {
-            _loadedResources = true;
-            if (data.node != null) {
-                $scope.title = data.node.titulo_quiz;
-                $scope.instructions = data.node.instrucciones;
-            }
-        }, function () {
-            _loadedResources = true;
-        }, false);  //BEFORE OFLINE: function () { }, true);  //put to:
-
+        if($routeParams.activityIdentifier){
+            drupalFactory.Services.GetContent($routeParams.activityIdentifier, function (data, key) {
+                _loadedResources = true;
+                if (data.node != null) {
+                    $scope.title = data.node.titulo_quiz;
+                    $scope.instructions = data.node.instrucciones;
+                }
+            }, function () {
+                _loadedResources = true;
+            }, false);  //BEFORE OFLINE: function () { }, true);  //put to:
+        }
         $scope.cancel = function () {
             $scope.$emit('ShowPreloader');
             $modalInstance.dismiss('cancel');
