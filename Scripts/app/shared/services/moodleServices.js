@@ -450,7 +450,8 @@
                 method: 'PUT',
                 url: url,
                 data: dataModel,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' ,
+                           'Authorization': currentUser.token }
             });
             _setLocalStorageJsonItem(key,dataModel);
 
