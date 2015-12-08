@@ -486,7 +486,7 @@ angular
                                 alias: currentUser.alias
                             };
 
-                            $scope.fuenteDeEnergia.activities[i].activityContent.comments.push(newCommentObject);
+                            $scope.fuenteDeEnergia.activities[i].activityContent.comments.unshift(newCommentObject);
 
                             $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
                             $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty++;

@@ -370,6 +370,7 @@
         };
 
         var _postAsyncCommentToActivity = function(key,data,url,successCallback,errorCallback){
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
           _httpFactory({
                 method: 'POST',
                 url: url,
@@ -449,7 +450,8 @@
                 method: 'PUT',
                 url: url,
                 data: dataModel,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json' ,
+                           'Authorization': currentUser.token }
             });
             _setLocalStorageJsonItem(key,dataModel);
 

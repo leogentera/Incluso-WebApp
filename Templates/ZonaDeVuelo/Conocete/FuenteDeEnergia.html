@@ -128,7 +128,7 @@
                       </div>
                   </div>
                   <div>
-                    <div ng-repeat="repeatComment in activity.activityContent.comments | limitTo: activity.activityContent.commentsQty">                      
+                    <div ng-repeat="repeatComment in activity.activityContent.comments | orderBy:repeatComment.dateissued : true | limitTo: activity.activityContent.commentsQty ">
                       <div class="coment block">                        
                         <div>
                           <a class="user-alias" ng-click="navigateTo('Perfil/' + comment.id)">{{repeatComment.alias}}</a>
