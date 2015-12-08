@@ -92,6 +92,7 @@
                                     <input id="{{'multichoicewo' + $parent.$index + $index}}" type="checkbox"
                                            name="{{'multichoicewo' + $parent.$index + $index}}"
                                            ng-true-value="1" ng-false-value="0"
+                                           ng-click="updateOtherField($parent.$index, $index, answerObject.answer)"
                                            ng-model="answers[$parent.$index][$index]" ng-disabled="setReadOnly"/>
                                     <label for="{{'multichoicewo' + $parent.$index + $index}}">{{answerObject.answer}}</label>
 

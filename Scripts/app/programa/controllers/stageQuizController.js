@@ -356,6 +356,7 @@ angular
                 }
 
                 $scope.activityObject.questions[index].userAnswer = userAnswerString;
+                console.log(userAnswerString);
                 //-------------
 
                 // The checkbox for 'Other' is clicked.
@@ -638,43 +639,73 @@ angular
 
                     $scope.activityObject.status = 1;
 
-                    //Update userAnswer for each question within activityObject.
-                    var activitiesWithDynamicFields = [1007, 2009, 2025];
-                    if (activitiesWithDynamicFields.indexOf($scope.activity_identifier) > -1) {
-                        //Section for updating the value of the key userAnswer for each question.
-                        var numQuestions = $scope.activityObject.questions.length;
-                        //var numAnswers = $scope.activityObject.questions[index].answers.length;
-                        var userAnswerString;
-                        var i, k;
-                        var longUserAnswerString;
+                    var qIndex;
 
-                        for (i = 0; i < numQuestions; i++) {
-                            userAnswerString = "";
-                            for (k = 0; k < $scope.answers[i].length; k++) {
+                    for (qIndex = 0; qIndex < $scope.questionTypeCode.length; qIndex++ ) {
+                        switch ($scope.questionTypeCode[qIndex]) {
 
-                                userAnswerString +=  $scope.answers[i][k];
+                            case "binary":
+                                $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
+                                break;
 
-                                if (k < $scope.answers[i].length - 1) {
-                                    userAnswerString += "; ";
+                            case "simplechoice":
+                                $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
+                                break;
+
+                            case "shortanswer":
+                                var userAnswerString = "";
+                                var longUserAnswerString;
+                                var k;
+
+                                for (k = 0; k < $scope.answers[qIndex].length; k++) {
+
+                                    userAnswerString +=  $scope.answers[qIndex][k];
+
+                                    if (k < $scope.answers[qIndex].length - 1) {
+                                        userAnswerString += "; ";
+                                    }
                                 }
-                            }
 
-                            userAnswerString = userAnswerString.trim();
-                            longUserAnswerString = userAnswerString.length;
+                                userAnswerString = userAnswerString.trim();
+                                longUserAnswerString = userAnswerString.length;
 
-                            if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
-                                userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
-                            }
+                                if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
+                                    userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
+                                }
 
-                            $scope.activityObject.questions[i].userAnswer = userAnswerString;
+                                $scope.activityObject.questions[qIndex].userAnswer = userAnswerString;
+                                break;
 
+                            case "essay":
+                                userAnswerString = "";
+                                longUserAnswerString = 0;
+
+                                for (k = 0; k < $scope.answers[qIndex].length; k++) {
+
+                                    userAnswerString +=  $scope.answers[qIndex][k];
+
+                                    if (k < $scope.answers[qIndex].length - 1) {
+                                        userAnswerString += "; ";
+                                    }
+                                }
+
+                                userAnswerString = userAnswerString.trim();
+                                longUserAnswerString = userAnswerString.length;
+
+                                if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
+                                    userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
+                                }
+
+                                $scope.activityObject.questions[qIndex].userAnswer = userAnswerString;
+
+                                break;
+
+                            default:
+                                break;
                         }
-                        //-------------
                     }
 
                     console.log(JSON.stringify($scope.activityObject));
-
-
 
                     // Write Updated objects to Local Storage for later recovery.
                     if ($scope.childActivity) {
