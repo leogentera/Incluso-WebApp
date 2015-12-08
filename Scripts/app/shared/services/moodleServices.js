@@ -518,12 +518,13 @@
         
         var _putAsyncFirstTimeInfo = function (userId, dataModel, successCallback, errorCallback) {
             _getDeviceVersionAsync();
-            
+            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             _httpFactory({
                 method: 'PUT',
                 url: API_RESOURCE.format('usercourse/' + userId),
                 data: dataModel,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                    Authorization:currentUser.token},
             }).success(function (data, status, headers, config) {
                 successCallback();
             }).error(function (data, status, headers, config) {
