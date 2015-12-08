@@ -537,6 +537,7 @@ angular
                             if ($scope.answers[questionIndex].length < userAnswers.length) {
                                 for (i = 0; i < userAnswers.length; i++) {
                                     $scope.answers[questionIndex].push(userAnswers[i]);
+                                    //$scope.answers[questionIndex] += userAnswers[i];
                                 }
                             }
                         }
@@ -652,7 +653,7 @@ angular
                                 $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
                                 break;
 
-                            case "shortanswer":
+                            case "shortanswerrrrr":
                                 var userAnswerString = "";
                                 var longUserAnswerString;
                                 var k;

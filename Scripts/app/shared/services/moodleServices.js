@@ -521,7 +521,7 @@
                 method: 'PUT',
                 url: API_RESOURCE.format('usercourse/' + userId),
                 data: dataModel,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' }
             }).success(function (data, status, headers, config) {
                 successCallback();
             }).error(function (data, status, headers, config) {
