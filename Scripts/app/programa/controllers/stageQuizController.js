@@ -629,7 +629,7 @@ angular
                         "answersResult": $scope.AnswersResult,
                         "userId": $scope.userprofile.id,
                         "startingTime": $scope.startingTime,
-                        "endingTime": moment().format('YYYY-MM-DD HH:mm:ss'),
+                        "endingTime": new Date(),
                         "token": $scope.currentUser.token,
                         "others": $scope.OtroAnswers
                     };

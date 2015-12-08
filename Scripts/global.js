@@ -957,6 +957,7 @@ function updateActivityStatus(activity_identifier) {
                 var activity = challenge.activities[activityIndex];
                 if (activity.activity_identifier == activity_identifier) {
                     activity.status = 1;
+                    activity.last_status_update = moment(Date.now()).unix();
                     updateActivityStatusDictionary(activity.activity_identifier);
                     breakAll = true;
                     break;

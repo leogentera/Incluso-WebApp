@@ -446,6 +446,8 @@
         
         var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
+            
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             addRequestToQueue(key, {
                 method: 'PUT',
                 url: url,
