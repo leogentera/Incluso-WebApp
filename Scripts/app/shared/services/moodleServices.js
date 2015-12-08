@@ -327,7 +327,7 @@
                 method: 'GET',
                 url: url,
                 headers: { 'Content-Type': 'application/json',
-                            Authorization:currentUser.token },
+                            'Authorization': currentUser.token }
             }).success(function (data, status, headers, config) {
                 createTree(data);
                 successCallback();

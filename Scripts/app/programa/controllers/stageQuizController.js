@@ -204,7 +204,7 @@ angular
                 // Check if the Quiz is non editable (attempts == 1) AND it has been finished.
                 $scope.attempts = $scope.activityObject.attempts;
                 if ($scope.attempts === 1 && $scope.activity_status === 1) {
-                    $scope.setReadOnly = true;
+                    //$scope.setReadOnly = true;
                 }
 
                 _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, $scope.activityObject);
@@ -637,6 +637,44 @@ angular
                     activityModel.answersResult.others = $scope.OtroAnswers;
 
                     $scope.activityObject.status = 1;
+
+                    //Update userAnswer for each question within activityObject.
+                    var activitiesWithDynamicFields = [1007, 2009, 2025];
+                    if (activitiesWithDynamicFields.indexOf($scope.activity_identifier) > -1) {
+                        //Section for updating the value of the key userAnswer for each question.
+                        var numQuestions = $scope.activityObject.questions.length;
+                        //var numAnswers = $scope.activityObject.questions[index].answers.length;
+                        var userAnswerString;
+                        var i, k;
+                        var longUserAnswerString;
+
+                        for (i = 0; i < numQuestions; i++) {
+                            userAnswerString = "";
+                            for (k = 0; k < $scope.answers[i].length; k++) {
+
+                                userAnswerString +=  $scope.answers[i][k];
+
+                                if (k < $scope.answers[i].length - 1) {
+                                    userAnswerString += "; ";
+                                }
+                            }
+
+                            userAnswerString = userAnswerString.trim();
+                            longUserAnswerString = userAnswerString.length;
+
+                            if (userAnswerString[longUserAnswerString - 1] == ";") {//If the last character is ;, then remove it.
+                                userAnswerString = userAnswerString.substring(0, longUserAnswerString - 1);
+                            }
+
+                            $scope.activityObject.questions[i].userAnswer = userAnswerString;
+
+                        }
+                        //-------------
+                    }
+
+                    console.log(JSON.stringify($scope.activityObject));
+
+
 
                     // Write Updated objects to Local Storage for later recovery.
                     if ($scope.childActivity) {
