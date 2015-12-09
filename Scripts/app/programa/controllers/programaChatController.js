@@ -28,8 +28,7 @@ angular
             var userId = localStorage.getItem('userId');
             var currentUser = JSON.parse(localStorage.getItem('CurrentUser'));
             var _startedActivityCabinaDeSoporte = JSON.parse(localStorage.getItem("startedActivityCabinaDeSoporte/" + userId));
-            var userCurrentStage = localStorage.getItem("currentStage");
-            console.log(userCurrentStage);
+            var userCurrentStage = localStorage.getItem("currentStage");            
             var messagesToRead = userCurrentStage * 2;
             $scope.senderId = userId;
             $scope.messages = JSON.parse(localStorage.getItem('userChat'));
@@ -42,16 +41,13 @@ angular
             $rootScope.showStage3Footer = false; 
             var interval = -1;
             moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                
-            if ($location.hash() == 'top') {
-                //alert("2");
+            if ($location.hash() == 'top') {                
             $scope.scrollToTop('anchor-bottom'); // VERY Important: setting anchor hash value for first time to allow scroll to bottom
                 $anchorScroll();
             } 
             else 
-            {      
-            //alert("3");                                  
-                interval = setInterval(getMessages,60000);                    
-                console.log('creating interval:' + interval);
+            {                  
+                interval = setInterval(getMessages,60000);                                    
             }
 
 
@@ -84,8 +80,7 @@ angular
                     var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);    
 
                         if (!currentActivity.status) {
-                            var dateStarted = new Date(_startedActivityCabinaDeSoporte.datestarted * 1000);
-                            console.log(dateStarted);
+                            var dateStarted = new Date(_startedActivityCabinaDeSoporte.datestarted * 1000);                            
                             var latestMessages =  _.filter($scope.messages, function(msg) { 
                                 return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
                             });
@@ -192,13 +187,10 @@ angular
                                    
             }
             
-            function getUserChatCallback() {
-                //too late, we already did the scroll
-//                $anchorScroll();
+            function getUserChatCallback() {                
             }
             
-            function errorCallback() { 
-  //              $anchorScroll();
+            function errorCallback() {   
             }
 
             function triggerAndroidKeyboardHide() {
