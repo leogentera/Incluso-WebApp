@@ -534,7 +534,7 @@ angular
 
                         if (question.userAnswer != "") {
 
-                            userAnswers = question.userAnswer.split(';');
+                            userAnswers = question.userAnswer.split('\n');
 
                             if ($scope.answers[questionIndex].length < userAnswers.length) {
                                 for (i = 0; i < userAnswers.length; i++) {
