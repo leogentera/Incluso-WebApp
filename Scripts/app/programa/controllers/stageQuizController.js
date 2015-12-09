@@ -117,8 +117,8 @@ angular
 
             function getDataAsync() {
                 // Quizes: 1001, 1005, 1006, 1007, 1009; 2001, 2009, 2025, 2023; 3101, 3601.
-                // nonEditableQuizzes: 1001, 1009, 2001, 2023, 3101, 3601.
-                // quizHasOther: 1001, 1005, 1006, 2001, 2023, 3101, 3601.
+                // Non editable quizzes: 1001, 1009, 2001, 2023, 3101, 3601.
+                // Quizes with Other: 1001, 1005, 1006, 2001, 2023, 3101, 3601.
 
                 $scope.startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
                 var parentActivity = getActivityByActivity_identifier($scope.activity_identifier);
@@ -204,7 +204,7 @@ angular
                 // Check if the Quiz is non editable (attempts == 1) AND it has been finished.
                 $scope.attempts = $scope.activityObject.attempts;
                 if ($scope.attempts === 1 && $scope.activity_status === 1) {
-                    //$scope.setReadOnly = true;
+                    $scope.setReadOnly = true; //It will not be possible to edit answers.
                 }
 
                 _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, $scope.activityObject);
@@ -238,6 +238,20 @@ angular
                         if (questionType == "multichoice" && questionNumOfChoices > 2 && hasOther) {
                             $scope.numOfOthers++;
                         }
+                    }
+
+                    if ($scope.numOfOthers > 0) {//If the current Quiz has questions including the 'Other' option, then get them from LS
+                        if ($scope.childActivity) {
+                            localOtrosAnswers = JSON.parse(_getItem("otherAnswerQuiz/" + $scope.childActivity.coursemoduleid));
+                        } else {
+                            localOtrosAnswers = JSON.parse(_getItem("otherAnswerQuiz/" + $scope.parentActivity.coursemoduleid));
+                        }
+                    }
+
+                    $scope.OtroAnswers = localOtrosAnswers;
+
+                    if ($scope.OtroAnswers == null) {
+                        $scope.OtroAnswers = [];
                     }
 
                     //Load the arrays for 'Mis Cualidades' and 'Mis Gustos'.
@@ -297,17 +311,6 @@ angular
                         }
                     }
 
-
-                    if ($scope.numOfOthers > 0) {//If the current Quiz has questions including the 'Other' option, then get them from LS
-                        localOtrosAnswers = JSON.parse(_getItem("otherAnswerQuiz/" + $scope.coursemoduleid));
-                    }
-
-                    $scope.OtroAnswers = localOtrosAnswers;
-
-                    if ($scope.OtroAnswers == null) {
-                        $scope.OtroAnswers = [];
-                    }
-
                     for (index = 0; index < numQuestions; index++) {
                         question = $scope.activityObject.questions[index];
                         renderQuestionsAndAnswers(index, question);
@@ -356,7 +359,7 @@ angular
                 }
 
                 $scope.activityObject.questions[index].userAnswer = userAnswerString;
-                console.log(userAnswerString);
+
                 //-------------
 
                 // The checkbox for 'Other' is clicked.
@@ -477,7 +480,7 @@ angular
 
                                         if (userAnswer == "Otro") {//The user checked the "Otros" option, among others...
                                             $scope.OtroAnswers[$scope.position[questionIndex]].answers[0] = question.other;
-                                            _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.activity.coursemoduleid, $scope.OtroAnswers);
+                                            //_setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.activity.coursemoduleid, $scope.OtroAnswers);
                                         }
                                     }
                                 }
@@ -649,6 +652,9 @@ angular
                                 $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
                                 break;
 
+                            case "multichoice":
+                                $scope.activityObject.questions[qIndex].other = $scope.OtroAnswers[$scope.position[qIndex]].answers[0];
+
                             case "shortanswer":
                                 var userAnswerString = "";
                                 var longUserAnswerString;
@@ -699,6 +705,7 @@ angular
                                 break;
                         }
                     }
+
 
                     // Write Updated objects to Local Storage for later recovery.
                     if ($scope.childActivity) {
