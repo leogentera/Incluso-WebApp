@@ -47,8 +47,7 @@ hallOfFameModule
                 
                 $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-                
-                //moodleFactory.Services.GetAsyncCatalog(citiesCatalogKey,$scope.user.token,getCitiesCatalogCallback,function(data){console.log(data)},false);
+                                
                 $scope.cities = _.find(moodleFactory.Services.GetCacheJson("catalogs"), function(object){return object.catalog=="citiesCatalog";} ).values;
                 $scope.cities.unshift("Ver Todo");
                 $scope.default = true;
@@ -94,9 +93,7 @@ hallOfFameModule
     
                 function getCitiesCatalogCallback()
                 {
-                    $scope.cities = moodleFactory.Services.GetCacheJson(citiesCatalogKey);
-                    //FIND ME Temporary
-                    //$scope.cities = ["M\u00e9xico D.F","Estado de M\u00e9xico","OTRO"];
+                    $scope.cities = moodleFactory.Services.GetCacheJson(citiesCatalogKey);                    
                     $scope.cities.unshift("Ver Todo");
                 }
     
