@@ -525,7 +525,6 @@ angular
 
 
                     case "shortanswer":
-
                         if ($scope.answers[questionIndex] === undefined) {
                             $scope.answers[questionIndex] = []; //Adding room for first answer
                         }
@@ -537,7 +536,6 @@ angular
                             if ($scope.answers[questionIndex].length < userAnswers.length) {
                                 for (i = 0; i < userAnswers.length; i++) {
                                     $scope.answers[questionIndex].push(userAnswers[i]);
-                                    //$scope.answers[questionIndex] += userAnswers[i];
                                 }
                             }
                         }
@@ -556,15 +554,12 @@ angular
                         break;
 
                     case "essay":
-
                         if ($scope.answers[questionIndex] === undefined) {
                             $scope.answers[questionIndex] = [];   //Adding room for first answer
                         }
 
                         if (question.userAnswer != "") {
-
                             userAnswers = question.userAnswer.split(';');
-
                             if ($scope.answers[questionIndex].length < userAnswers.length) {
                                 for (i = 0; i < userAnswers.length; i++) {
                                     $scope.answers[questionIndex].push(userAnswers[i]);
@@ -640,6 +635,7 @@ angular
 
                     $scope.activityObject.status = 1;
 
+                    //Section for Updating the "userAnswer" key on each question object for the Quiz.
                     var qIndex;
 
                     for (qIndex = 0; qIndex < $scope.questionTypeCode.length; qIndex++ ) {
@@ -653,7 +649,7 @@ angular
                                 $scope.activityObject.questions[qIndex].userAnswer = $scope.activityObject.questions[qIndex].answers[$scope.answers[qIndex]].answer;
                                 break;
 
-                            case "shortanswerrrrr":
+                            case "shortanswer":
                                 var userAnswerString = "";
                                 var longUserAnswerString;
                                 var k;
@@ -682,7 +678,6 @@ angular
                                 longUserAnswerString = 0;
 
                                 for (k = 0; k < $scope.answers[qIndex].length; k++) {
-
                                     userAnswerString +=  $scope.answers[qIndex][k];
 
                                     if (k < $scope.answers[qIndex].length - 1) {
@@ -698,15 +693,12 @@ angular
                                 }
 
                                 $scope.activityObject.questions[qIndex].userAnswer = userAnswerString;
-
                                 break;
 
                             default:
                                 break;
                         }
                     }
-
-                    console.log(JSON.stringify($scope.activityObject));
 
                     // Write Updated objects to Local Storage for later recovery.
                     if ($scope.childActivity) {
