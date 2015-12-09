@@ -42,8 +42,7 @@
         "TermsAndConditions": 44, /*General - T�rminos y condiciones*/
         "Recognition": 73, /*General - Reconocimiento*/
         "Album": 72, /*General - Album*/
-        "MyStars": 71, /*General - Mis Estrellas*/
-        //"Profile": 70, /*General - Perfil*/
+        "MyStars": 71, /*General - Mis Estrellas*/        
         "HallOfFame": 42,  /*General - Sal�n de la Fama*/
         "FAQS":41, /*General - FAQS*/
         "1001": 58, /* Zona de Vuelo - Exploraci�n inicial */   
