@@ -71,7 +71,8 @@
                                                           name="{{'other' + $parent.$index + $index}}"
                                                           placeholder="{{placeholder[$parent.$index]}}"
                                                           onkeydown="if(event.keyCode == 13) event.preventDefault();"
-                                                          ng-model="OtroAnswers[position[$parent.$index]].answers[0]">
+                                                          ng-model="OtroAnswers[position[$parent.$index]].answers[0]"
+                                                          ng-readonly="setReadOnly">
                                                 </textarea>
                                             </div>
                                         </div>
