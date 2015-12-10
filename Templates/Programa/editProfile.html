@@ -11,7 +11,7 @@
         </div>
     </div>
     <article>
-        <section class="component profile-dashboard">
+        <section class="component profile-dashboard"  ng-class="currentPage == 12 ? 'hide' : ''"">
             <div class="user-avatar">
                 <figure>
                     <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive"/>
