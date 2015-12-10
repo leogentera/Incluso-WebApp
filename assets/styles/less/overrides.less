@@ -108,26 +108,19 @@
     }
     .form-group {margin-bottom: 0;}
     .checkbox {
-        /*width: 66%;*/
-        /*margin:28px 0;*/
         margin: 6vw 0;
 
         input {
             position: static;
             margin-left: 0;
-            /*width: 24px;
-            height: 24px;*/
         }
         label {
-            /*padding-left: 3%;*/
             line-height: 1.4;
             vertical-align: middle;
         }
         label span {
-          /*font-size: 20px;*/
           color: white;
           font-weight: 500;
-          /*margin-left: 20px;*/
         }
     }
     .btn-primary {text-transform: uppercase;}
@@ -178,44 +171,9 @@
     background-position: center -23px;
     background-repeat: no-repeat;
 
-    /*
-    background: #14181d;
-    background: -moz-linear-gradient(top,  #14181d 0%, #173a4a 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#14181d), color-stop(100%,#173a4a));
-    background: -webkit-linear-gradient(top,  #14181d 0%,#173a4a 100%);
-    background: -o-linear-gradient(top,  #14181d 0%,#173a4a 100%);
-    background: -ms-linear-gradient(top,  #14181d 0%,#173a4a 100%);
-    background: linear-gradient(to bottom,  #14181d 0%,#173a4a 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#14181d', endColorstr='#173a4a',GradientType=0 );
-    */
-    /*.container{
-        background-attachment: fixed;
-        background-image: url("../images/bg-stars-01.png");
-        background-size:contain;
-        
-    }
-    #site-canvas{
-        background-attachment: scroll;
-        background-image: url("../images/bg-stars-02.png");
-        background-size:contain;
-    }*/
-
     & > article{
-        /*background-image: url('@{url-images}/bg-stars-01.png');*/
-        /*background-image: url('@{url-images}/svg/bg-dashboard-sky.svg');*/
-        /*background-image: url('@{url-images}/bg-dashboard-full.gif');*/
-        /*background-image: url('@{url-images}/svg/bg-dashboard-full.svg');*/
-
-        // background-image: url('@{url-images}/bg-dashboard-full.gif');
-        // background-position: center top;
-        // .background-size(100%, auto);
-
         .container {
             position: relative;
-            //background-attachment: scroll;
-            //background-image: url('@{url-images}/bg-stars-02.png');
-            //.background-size(100%, auto);
-
             .dash-top {                
                 height: auto; 
                 padding-bottom:0.1vw;
@@ -303,7 +261,6 @@
             span:first-child + span {
                 padding-left: 1vw;
                 font-size: 4.3vw;
-                /*line-height: 4vw;*/
             }
             .icon-arrow, .icon-arrow-up {
                 float: right;
@@ -311,7 +268,6 @@
             }
         }
         .panel-body {
-            /*.clr-blueDark(background-color, 0.9);*/
             background-color: rgba(13,15,20,0.5);
         }
     }
@@ -319,7 +275,7 @@
     /* tabs */
     .active {
         .user-avatar figcaption {
-            background-color: @clr-blueDark; /* @clr-grayDark; */
+            background-color: @clr-blueDark;
         }
         .arrow-up {
             display:block;
@@ -339,7 +295,6 @@
 
 /* Profile Dashboard */
 .incluso-app.profile {   
-    /*.gradient-sky ();*/
     .list-group {
         margin:0 auto;
         width: auto;
@@ -359,7 +314,7 @@
         
         .btn-back-to-top {
             display: block;
-            /*padding:20px 0 0;*/ padding: 5vw 0px 0px;
+            padding: 5vw 0px 0px;
             
         }
         .block-list,
@@ -376,18 +331,6 @@
                 color: @clr-green;
             }
         }
-        /*.panel-body {
-            h5 {
-                color: @clr-blueTurquoise;
-                text-align: left;
-            }
-            h4 {color:white;}
-            p:not(.text-center) {
-                width: auto;
-                color: @clr-white;
-                text-align: left;
-            }
-        }*/
     }
 }
 
@@ -399,7 +342,6 @@
     }
     .panel {
         margin:0 auto;
-        /*width: 92%;*/
     }
     .my-profile-form {
         select.form-control {
@@ -513,11 +455,9 @@
         border-color: @clr-bluenav;
     }
     .video {
-        //max-height: 94vw;
         max-height: 90vw;
         margin: 0;
         padding: 6vw;
-        //background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
         background-image: url('@{url-images}/bg-stage-1-dashboard-full.gif');
         background-color: transparent none;
         background-position: left top;
@@ -536,12 +476,10 @@
         }
     }
     .showcase-carousel {
-        //height: 126vw;
         height: 117vw;
         margin: 0;
         padding:0;
         background-color: transparent none;
-        //background-image: url('@{url-images}/bg-stage-1-dashboard.gif');
         background-image: url('@{url-images}/bg-stage-1-dashboard-full.gif');
         background-position: left -94vw;
         background-repeat: no-repeat;
@@ -635,7 +573,6 @@
 
         }
         .page-number {
-            //margin-top: 37.2vw;
             margin-top: 28vw;
 
             p {
@@ -647,11 +584,9 @@
         min-height: 102vw;
         padding-bottom: 0px;
         border:none;
-        background-color: transparent none; //#4C5458
+        background-color: transparent none;
         background-color: #4C5458;
-        //background-image: url('@{url-images}/bg-stage-1-dashboard-texture.gif');
         background-image:   url('@{url-images}/bg-stage-1-dashboard-full.gif');
-        //background-position: left top;
         background-position: left -212vw;
         background-repeat: no-repeat;
         .background-size(100vw, auto);
@@ -733,13 +668,6 @@
             display: flex;
             .spinner {
                 margin: auto;
-                /*padding: 3% 9% 6%;
-                .circle {
-                    height: 50%;
-                }
-                .text {
-                    top: ~"calc(53% - 25px)";
-                }*/
             }
         }
         .video .panel-video .panel-body {
@@ -773,13 +701,6 @@
             display: flex;
             .spinner {
                 margin: auto;
-                /*padding: 3% 9% 6%;
-                .circle {
-                    height: 50%;
-                }
-                .text {
-                    top: ~"calc(53% - 25px)";
-                }*/
             }
         }
         .video .panel-video .panel-body {
@@ -806,11 +727,6 @@
     .gr-bg{
         background:none #0A9648;
     }
-	/*.stage-zona-de-vuelo {
-		.video, .showcase-carousel, .progreso {
-			background-image: url('@{url-images}/bg-stage-dashboard-zvuelo.gif');
-		}
-	}*/
 }
 .incluso-app.notif-dashboard{
     background: -moz-radial-gradient(center, ellipse cover,  #1f2733 0%, #141921 100%);
@@ -886,8 +802,6 @@
         div{
             display: block;
             font-size:86%;
-            //padding-right: 1.5vw;
-
         }
         .sm-pill{
             display: inline-flex;
@@ -978,7 +892,7 @@ section.part.inbloq{
 
 
 
-//////////////// owl plugin ///////////////////////////
+/***************** owl plugin *****************/
 
 
 .owl-carousel {
@@ -994,7 +908,7 @@ section.part.inbloq{
     }
 }
 
-///////////////// switch-handle [switch slider toggle] ///////////////////////
+/******************* switch-handle [switch slider toggle] ****************************/
 .switch {
     width: 17vw;
     height: 2.5vh;
@@ -1020,7 +934,7 @@ section.part.inbloq{
 
 
 
-///////////////// results-challenge ///////////////////
+/**************** results-challenge **********************/
 .results-challenge {
     .collapse-media {
         .panel {
@@ -1100,7 +1014,7 @@ section.part.inbloq{
     }
 }
 
-////////////////// tutorial /////////////////////
+/********************* tutorial *****************************/
 .tutorial {
     .txt-renglon{
         padding: 5vh 0px;
@@ -1112,7 +1026,7 @@ section.part.inbloq{
     }
 }
 
-//////////////// carousel stage /////////////////
+/********************* carousel stage **********************/
 .holoproj { 
     .owl-wrapper {
         .item {
@@ -1125,7 +1039,7 @@ section.part.inbloq{
 
 
 
-/////////////  ZonaDevuelo/Conocete/PuntoDeEncuentro ////////////
+/**************  ZonaDevuelo/Conocete/PuntoDeEncuentro ***********/
 .topics-forum {
     .txt-bigger {
         font-size: 4.5vw;
@@ -1206,7 +1120,7 @@ section.part.inbloq{
 }
 
 
-///////////////////////  modals rendered to page level ///////////////////////////
+/***************  modals rendered to page level **********************/
 .incluso-app{
     .modal-open {
         .sidebar-left {
@@ -1257,7 +1171,7 @@ section.part.inbloq{
     }
 }
 
-////////////////// activity-closing ///////////////////////
+/***************** activity-closing **********************/
 .incluso-app {
     .activity-closing {
         .sm-pill {
@@ -1279,7 +1193,7 @@ section.part.inbloq{
     }
 }
 
-///////////////// my-habilities ///////////////////////////
+/**************** my-habilities ********************/
 .profile-options {
     .page {
         .panel {
@@ -1290,7 +1204,7 @@ section.part.inbloq{
     }
 }
 
-///////////////// my-habilities ///////////////////////////
+/*************** my-habilities *********************/
 .my-abilities {
     .my-profile-information {
         .profile-info-asset {
@@ -1305,7 +1219,7 @@ section.part.inbloq{
     }
 }
 
-//////////////////// careers /////////////////////////////
+/**************** careers *********************/
 .careers {
     .my-profile-information{     
         .profile-info-asset {
@@ -1318,7 +1232,7 @@ section.part.inbloq{
     }
 }
 
-//////////////////// Hall of fame *///////////////////////
+/**************** Hall of fame *********************/
 .incluso-app.hall-of-fame {
         display: block;
         width:auto;
@@ -1384,7 +1298,7 @@ section.part.inbloq{
     }
 }
 
-////////////////// privacy-notice /////////////////
+/***************** privacy-notice ****************/
 .privacy-notice {
     ul {
         li {
@@ -1394,12 +1308,12 @@ section.part.inbloq{
 }
 
 
-////////////////// Footer Profile /////////////
+/***************** Footer Profile *****************/
 .app-footer.theme-profile {
 	background: url('@{url-images}/Pattern-MetalBG.gif') repeat-y;
 }
 
-////////////////// FAQs //////////////////////
+/********************* FAQs *********************/
 
 .faqs {
     width: auto!important;
