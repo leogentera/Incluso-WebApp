@@ -297,7 +297,7 @@ angular
                 var errors = [];
                 var datePickerValue = $("input[name=birthday]").val();
                 dpValue = datePickerValue;
-                var age = calculate_age();
+                var age = datePickerValue == ""? age = 0 : calculate_age();
                 
                 var passwordPolicy = "debe ser almenos de 8 caracterres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
                 var usernamePolicy = "El nombre de usuario puede contener los siguientes caracteres guión bajo (_), guión (-), punto(.) y arroba(@). El nombre de usuario no debe contener espacios."; 
