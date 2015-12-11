@@ -343,6 +343,14 @@ angular
                     }
                 };
 
+                function deleteRepeatedEntries(arr) {
+                    arr =  arr.filter(function (item, pos) {
+                        return item.trim().length > 0 && arr.indexOf(item) == pos;
+                    });
+
+                    return arr;
+                }
+
 
                 function getDataAsync(callback) {
 
@@ -372,6 +380,20 @@ angular
                         $scope.model.level = $scope.model.currentStudies["level"];
                         $scope.model.grade = $scope.model.currentStudies["grade"];
                         $scope.model.period = $scope.model.currentStudies["period"];
+
+                        $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
+                        $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
+                        $scope.hobbiesList = $scope.hobbiesList.concat($scope.model.hobbies);
+                        $scope.talentsList = $scope.talentsList.concat($scope.model.talents);
+                        $scope.valuesList = $scope.valuesList.concat($scope.model.values);
+                        $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.habilities);
+
+                        $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
+                        $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
+                        $scope.hobbiesList = deleteRepeatedEntries($scope.hobbiesList);
+                        $scope.talentsList = deleteRepeatedEntries($scope.talentsList);
+                        $scope.valuesList = deleteRepeatedEntries($scope.valuesList);
+                        $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
 
                         $scope.$emit('HidePreloader');
 
@@ -411,6 +433,20 @@ angular
                             $scope.model.level = $scope.model.currentStudies["level"];
                             $scope.model.grade = $scope.model.currentStudies["grade"];
                             $scope.model.period = $scope.model.currentStudies["period"];
+
+                            $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
+                            $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
+                            $scope.hobbiesList = $scope.hobbiesList.concat($scope.model.hobbies);
+                            $scope.talentsList = $scope.talentsList.concat($scope.model.talents);
+                            $scope.valuesList = $scope.valuesList.concat($scope.model.values);
+                            $scope.habilitiesList = $scope.habilitiesList.concat($scope.model.habilities);
+
+                            $scope.favoritSportsList = deleteRepeatedEntries($scope.favoritSportsList);
+                            $scope.artisticActivitiesList = deleteRepeatedEntries($scope.artisticActivitiesList);
+                            $scope.hobbiesList = deleteRepeatedEntries($scope.hobbiesList);
+                            $scope.talentsList = deleteRepeatedEntries($scope.talentsList);
+                            $scope.valuesList = deleteRepeatedEntries($scope.valuesList);
+                            $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
 
                         }, function () {
                         }, true);
