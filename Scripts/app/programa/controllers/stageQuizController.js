@@ -65,7 +65,7 @@ angular
 
             var destinationPath = "";
             $scope.isDisabled = false;
-            $scope.activity_identifier = parseInt($routeParams.activityIdentifier);
+            $scope.activity_identifier = parseInt($routeParams.activityIdentifier); console.log($scope.activity_identifier);
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
@@ -759,14 +759,14 @@ angular
             function updateProfile() {
 
                 var i;
-                $scope.userprofile.talents = [];
-                $scope.userprofile.values = [];
-                $scope.userprofile.habilities = [];
-                $scope.userprofile.favoriteSports = [];
-                $scope.userprofile.artisticActivities = [];
-                $scope.userprofile.hobbies = [];
+
+
 
                 if ($scope.activity_identifier === 1005) {//Mis Cualidades - Etapa 1 - CourseModuleId = 71
+
+                    $scope.userprofile.talents = [];
+                    $scope.userprofile.values = [];
+                    $scope.userprofile.habilities = [];
 
                     //Update Talents
                     for (i = 0; i < $scope.answers[0].length - 1; i++) {
@@ -807,6 +807,10 @@ angular
                 }
 
                 if ($scope.activity_identifier === 1006) {//Mis Gustos - Etapa 1 -  CourseModuleId = 70
+
+                    $scope.userprofile.favoriteSports = [];
+                    $scope.userprofile.artisticActivities = [];
+                    $scope.userprofile.hobbies = [];
 
                     //Update favoriteSports
                     for (i = 0; i < $scope.answers[0].length - 1; i++) {
@@ -906,14 +910,31 @@ angular
                             break;
 
                         case "multichoice":
-
+                            var repeated = false;
                             //Validation: the multichoice must have some 'true' value...
                             if (($scope.answers[index]).indexOf(1) > -1) {
                                 //...and Other is 'true' and has a non empty string in the input
                                 var userInput = $scope.OtroAnswers[$scope.position[index]].answers[0].replace(/\r?\n|\r/g, " ").trim();
                                 if (($scope.answers[index][$scope.questionNumOfChoices[index] - 1] && userInput != '') || !$scope.answers[index][$scope.questionNumOfChoices[index] - 1]) {
+                                    /*
+                                    var numAnswers = $scope.activityObject.questions[index].answers.length;
+                                    var opt;
+
+                                    for (var k = 0; k < numAnswers; k++) {
+                                        opt = $scope.activityObject.questions[index].answers[k].answer.toLowerCase();
+
+                                        if (opt == userInput.toLowerCase()) {
+                                            repeated = true;alert("repeatd found");
+                                        }
+                                    }
+                                    */
                                     numAnswered++;
                                 }
+                                /*
+                                if (!repeated) {
+                                    numAnswered++;
+                                }
+                                */
                             }
 
                             //Unanswered questions should be equal to 0.
