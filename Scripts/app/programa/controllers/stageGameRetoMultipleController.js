@@ -245,7 +245,8 @@ angular
                           logEntry.answers.push(data.resultado[i].preguntas[j].respuesta);
                           logEntry.quiz_answered = (data.resultado[i].preguntas[j].respuesta != "" && logEntry.quiz_answered);
                       }
-
+                      activity.questions[3]["userAnswer"] = data.resultado[i].nivelInteligencia;
+                      
                       logEntry.answers.push(data.resultado[i].nivelInteligencia);
                       var isAlto = _.find(predominantes, function(p) {
                           return p == data.resultado[i].subactividad
