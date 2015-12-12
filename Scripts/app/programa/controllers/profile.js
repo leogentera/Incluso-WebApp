@@ -381,12 +381,14 @@ angular
                         $scope.model.grade = $scope.model.currentStudies["grade"];
                         $scope.model.period = $scope.model.currentStudies["period"];
 
+                        /*
                         console.log($scope.model.favoriteSports);
                         console.log($scope.model.artisticActivities);
                         console.log($scope.model.hobbies);
                         console.log($scope.model.talents);
                         console.log($scope.model.values);
                         console.log($scope.model.habilities);
+                        */
 
                         $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                         $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
@@ -440,12 +442,14 @@ angular
                             $scope.model.level = $scope.model.currentStudies["level"];
                             $scope.model.grade = $scope.model.currentStudies["grade"];
                             $scope.model.period = $scope.model.currentStudies["period"];
+                            /*
                             console.log($scope.model.favoriteSports);
                             console.log($scope.model.artisticActivities);
                             console.log($scope.model.hobbies);
                             console.log($scope.model.talents);
                             console.log($scope.model.values);
                             console.log($scope.model.habilities);
+                            */
 
                             $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                             $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
