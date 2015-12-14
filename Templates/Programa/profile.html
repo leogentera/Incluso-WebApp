@@ -149,28 +149,23 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showGeneralData">
+                                                        <div class="profile-info-asset" ng-show="loggedUser ? loggedUser : model.showGeneralData">
                                                             <h4>Datos Generales</h4>
 
-                                                            <div class="from-group">
+                                                            <div class="from-group" ng-show="loggedUser">
                                                                 <label>Nombre(s)</label>
                                                                 <p ng-bind="model.firstname"></p>
                                                             </div>
 
-                                                            <div class="from-group">
+                                                            <div class="from-group" ng-show="loggedUser">
                                                                 <label>Apellido paterno</label>
                                                                 <p ng-bind="model.lastname"></p>
                                                             </div>
 
-                                                            <div class="from-group">
+                                                            <div class="from-group" ng-show="loggedUser">
                                                                 <label>Apellido materno</label>
                                                                 <p ng-bind="model.mothername"></p>
                                                             </div>
-
-                                                            <!--<div class="from-group">
-                                                                <label>Alias</label>
-                                                                <p ng-bind="model.alias"></p>
-                                                            </div>-->
 
                                                             <div class="from-group">
                                                                 <label>Sexo</label>
