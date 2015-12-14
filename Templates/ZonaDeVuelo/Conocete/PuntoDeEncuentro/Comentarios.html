@@ -87,7 +87,7 @@
     </section>
 
     <section class="wall">
-      <div id="item{{$index}}" ng-repeat="p in posts">
+      <div id="item{{$index}}" ng-repeat="p in posts" ng-show="p.reported == 0">
         <div class="part post">
           <div class="author">
             <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" />
@@ -154,7 +154,7 @@
             <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">
               <span class="icomoon icon-comment"></span> Comentar              
             </div>
-            <div ng-click="reportModalClick(p.post_id)">
+            <div ng-click="reportModalClick(p)">
               <span class="icomoon icon-pinch"></span> Reportar
             </div>
           </div>
