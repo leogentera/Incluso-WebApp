@@ -256,19 +256,8 @@ angular
                         $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         checkForumExtraPoints();
-                        checkForumProgress(function(){
-                        
-                            var currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
-                            $scope.posts[isCommentModalCollapsedIndex].replies.push({
-                                "message": dataObejct.message,
-                                "post_autor_id": currentUser.id,
-                                "post_author": currentUser.alias,
-                                "picture_post_author": currentUser.profileimageurl
-                            });
-                            
-                            $scope.$emit('HidePreloader');
-                        
-                        });
+
+                        checkForumProgress(refreshTopicData());
                     },
                     function(){
                         $scope.textToPost=null;
