@@ -32,7 +32,7 @@ angular
             $rootScope.showFooter = $scope.profile.termsAndConditions;
             $scope.showCheckbox = !$scope.accepted;
             $scope.acceptsNewTerms = $scope.accepted;
-            $scope.termsButtonText = $scope.accepted? "Regresar" : "Salir";
+            $scope.termsButtonText = $scope.accepted? "REGRESAR" : "SALIR";
 
             $scope.processNewTerms = function()
             {
@@ -64,9 +64,9 @@ angular
             $scope.changeButton = function()
             {
                 if($scope.acceptsNewTerms)
-                    $scope.termsButtonText =  "Continuar";
+                    $scope.termsButtonText =  "CONTINUAR";
                 else
-                    $scope.termsButtonText = "Salir";
+                    $scope.termsButtonText = "SALIR";
             }
 
 
