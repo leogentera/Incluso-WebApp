@@ -256,8 +256,7 @@ angular
                         $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         checkForumExtraPoints();
-
-                        checkForumProgress(refreshTopicData());
+                        checkForumProgress(refreshTopicData);
                     },
                     function(){
                         $scope.textToPost=null;
@@ -372,6 +371,7 @@ angular
                         $scope.$emit('HidePreloader');
                         $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
                         $scope.isReportedAbuseSentModalCollapsed["id" + postId] = true;
+                        $scope.postToReport.reported = 1;
 
                     }, function(){
                         $scope.$emit('HidePreloader');
@@ -382,7 +382,9 @@ angular
                     }, offlineCallback);
             };
 
-            $scope.reportModalClick = function(postId) {
+            $scope.reportModalClick = function(post) {
+                $scope.postToReport = post;
+                var postId = post.post_id;
                 $scope.isReportedAbuseModalCollapsed['id' + postId] = !$scope.isReportedAbuseModalCollapsed['id' + postId];
                 $scope.isCommentModalCollapsed['id' + postId] = false;
             };

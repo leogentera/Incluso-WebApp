@@ -149,28 +149,23 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showGeneralData">
+                                                        <div class="profile-info-asset" ng-show="loggedUser ? loggedUser : model.showGeneralData">
                                                             <h4>Datos Generales</h4>
 
-                                                            <div class="from-group">
+                                                            <div class="from-group" ng-show="loggedUser">
                                                                 <label>Nombre(s)</label>
                                                                 <p ng-bind="model.firstname"></p>
                                                             </div>
 
-                                                            <div class="from-group">
+                                                            <div class="from-group" ng-show="loggedUser">
                                                                 <label>Apellido paterno</label>
                                                                 <p ng-bind="model.lastname"></p>
                                                             </div>
 
-                                                            <div class="from-group">
+                                                            <div class="from-group" ng-show="loggedUser">
                                                                 <label>Apellido materno</label>
                                                                 <p ng-bind="model.mothername"></p>
                                                             </div>
-
-                                                            <!--<div class="from-group">
-                                                                <label>Alias</label>
-                                                                <p ng-bind="model.alias"></p>
-                                                            </div>-->
 
                                                             <div class="from-group">
                                                                 <label>Sexo</label>
@@ -771,8 +766,8 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="panel panel-default achievement-detail">
-                                    <div class="panel-heading">
-                                        <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(6)"></span>
+                                    <div class="panel-heading" ng-click="navigateToPage(6)">
+                                        <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-badge"></span>
                                         <h3 class="panel-title">{{contentResources.profile_badge_detail}}</h3>
                                         <!--<h3 class="panel-title">Detalle de Insignia</h3>-->

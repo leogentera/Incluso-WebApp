@@ -1323,6 +1323,7 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
     ClearLocalStorage("profile");
+    ClearLocalStorage("Perfil/");
     ClearLocalStorage("UserTalents");
     ClearLocalStorage("postcounter");
     ClearLocalStorage("currentDiscussionIds");

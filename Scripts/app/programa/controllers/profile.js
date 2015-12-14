@@ -49,7 +49,7 @@ angular
                 var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
 
                 $scope.isMultipleChallengeActivityFinished = $scope.loggedUser && _course.isMultipleChallengeActivityFinished;
-                $scope.myStrengths = new Array();
+                $scope.myStrengths = [];
                 $scope.myWindowOfOpportunities = [];
 
                 $scope.setToolbar($location.$$path, "");
@@ -122,7 +122,7 @@ angular
                     $scope.genderItems = _getCatalogValuesBy("gender");
                     $scope.countryItems = _getCatalogValuesBy("country");
                     $scope.cityItems = [];
-                    $scope.stateItems = _getCatalogValuesBy("citiesCatalog")
+                    $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
                     $scope.maritalStatusItems = _getCatalogValuesBy("maritalStatus");
                     $scope.studiesList = _getCatalogValuesBy("studiesLevel");
                     $scope.educationStatusList = _getCatalogValuesBy("educationStatus");
@@ -373,7 +373,7 @@ angular
                             $scope.model.profileimageurl = (_isDeviceOnline ? $scope.model.profileimageurl : 'assets/avatar/default-2.png');
                         }, function(){});
 
-                        initFields($scope.model);
+                        $scope.model = initFields($scope.model);
                         loadStrengths();
                         loadWindowOfOpportunities();
 
@@ -435,7 +435,7 @@ angular
                                 return "";
                             }
 
-                            initFields($scope.model);
+                            $scope.model = initFields($scope.model);
                             loadStrengths();
                             loadWindowOfOpportunities();
 
@@ -495,6 +495,8 @@ angular
                     if (m.address.postalCode == null) {
                         m.address.postalCode = "";
                     }
+
+                    return m;
                 }
 
                 function getAvatarInfoCallback() {
@@ -725,11 +727,13 @@ angular
 
                 var validateEmptyItemsOnLists = function () {
 
+                    var i;
+
                     // Mi Información -------------------------------------------------------------------------------------
 
                     //studies
                     if ($scope.model.studies.length > 0) {
-                        for (var i = 0; i < $scope.model.studies.length; i++) {
+                        for (i = 0; i < $scope.model.studies.length; i++) {
                             if (typeof $scope.model.studies[i].school === "undefined" || typeof $scope.model.studies[i].levelOfStudies === "undefined") {
                                 $scope.model.studies.splice(i, 1);
                                 i = i - 1;
@@ -739,7 +743,7 @@ angular
 
                     //phones
                     if ($scope.model.phones.length > 0) {
-                        for (var i = 0; i < $scope.model.phones.length; i++) {
+                        for (i = 0; i < $scope.model.phones.length; i++) {
                             if (typeof $scope.model.phones[i] === "undefined" || $scope.model.phones[i].length === 0) {
                                 $scope.model.phones.splice(i, 1);
                                 i = i - 1;
@@ -749,7 +753,7 @@ angular
 
                     //socialNetworks
                     if ($scope.model.socialNetworks.length > 0) {
-                        for (var i = 0; i < $scope.model.socialNetworks.length; i++) {
+                        for (i = 0; i < $scope.model.socialNetworks.length; i++) {
                             if (typeof $scope.model.socialNetworks[i].socialNetwork === "undefined") {
                                 $scope.model.socialNetworks.splice(i, 1);
                                 i = i - 1;
@@ -759,7 +763,7 @@ angular
 
                     //familiaCompartamos
                     if ($scope.model.familiaCompartamos.length > 0) {
-                        for (var i = 0; i < $scope.model.familiaCompartamos.length; i++) {
+                        for (i = 0; i < $scope.model.familiaCompartamos.length; i++) {
                             if (typeof $scope.model.familiaCompartamos[i].relationship === "undefined") {
                                 $scope.model.familiaCompartamos.splice(i, 1);
                                 i = i - 1;
@@ -771,7 +775,7 @@ angular
 
                     //favoriteSports
                     if ($scope.model.favoriteSports.length > 0) {
-                        for (var i = 0; i < $scope.model.favoriteSports.length; i++) {
+                        for (i = 0; i < $scope.model.favoriteSports.length; i++) {
                             if (typeof $scope.model.favoriteSports[i] === "undefined" || $scope.model.favoriteSports[i].length === 0) {
                                 $scope.model.favoriteSports.splice(i, 1);
                                 i = i - 1;
@@ -782,7 +786,7 @@ angular
 
                     //artisticActivities
                     if ($scope.model.artisticActivities.length > 0) {
-                        for (var i = 0; i < $scope.model.artisticActivities.length; i++) {
+                        for (i = 0; i < $scope.model.artisticActivities.length; i++) {
                             if (typeof $scope.model.artisticActivities[i] === "undefined" || $scope.model.artisticActivities[i].length === 0) {
                                 $scope.model.artisticActivities.splice(i, 1);
                                 i = i - 1;
@@ -792,7 +796,7 @@ angular
 
                     //hobbies
                     if ($scope.model.hobbies.length > 0) {
-                        for (var i = 0; i < $scope.model.hobbies.length; i++) {
+                        for (i = 0; i < $scope.model.hobbies.length; i++) {
                             if (typeof $scope.model.hobbies[i] === "undefined" || $scope.model.hobbies[i].length === 0) {
                                 $scope.model.hobbies.splice(i, 1);
                                 i = i - 1;
@@ -802,7 +806,7 @@ angular
 
                     //talents
                     if ($scope.model.talents.length > 0) {
-                        for (var i = 0; i < $scope.model.talents.length; i++) {
+                        for (i = 0; i < $scope.model.talents.length; i++) {
                             if (typeof $scope.model.talents[i] === "undefined" || $scope.model.talents[i].length === 0) {
                                 $scope.model.talents.splice(i, 1);
                                 i = i - 1;
@@ -812,7 +816,7 @@ angular
 
                     //values
                     if ($scope.model.values.length > 0) {
-                        for (var i = 0; i < $scope.model.values.length; i++) {
+                        for (i = 0; i < $scope.model.values.length; i++) {
                             if (typeof $scope.model.values[i] === "undefined" || $scope.model.values[i].length === 0) {
                                 $scope.model.values.splice(i, 1);
                                 i = i - 1;
@@ -822,7 +826,7 @@ angular
 
                     //Habilities
                     if ($scope.model.habilities.length > 0) {
-                        for (var i = 0; i < $scope.model.habilities.length; i++) {
+                        for (i = 0; i < $scope.model.habilities.length; i++) {
                             if (typeof $scope.model.habilities[i] === "undefined" || $scope.model.habilities[i].length === 0) {
                                 $scope.model.habilities.splice(i, 1);
                                 i = i - 1;
@@ -832,7 +836,7 @@ angular
 
                     //inspirationalCharacters
                     if ($scope.model.inspirationalCharacters.length > 0) {
-                        for (var i = 0; i < $scope.model.inspirationalCharacters.length; i++) {
+                        for (i = 0; i < $scope.model.inspirationalCharacters.length; i++) {
                             if (typeof $scope.model.inspirationalCharacters[i].characterType === "undefined") {
                                 $scope.model.inspirationalCharacters.splice(i, 1);
                                 i = i - 1;
@@ -844,7 +848,7 @@ angular
 
                     //mainActivity
                     if ($scope.model.mainActivity.length > 0) {
-                        for (var i = 0; i < $scope.model.mainActivity.length; i++) {
+                        for (i = 0; i < $scope.model.mainActivity.length; i++) {
                             if (typeof $scope.model.mainActivity[i] === "undefined") {
                                 $scope.model.mainActivity.splice(i, 1);
                                 i = i - 1;
@@ -854,7 +858,7 @@ angular
 
                     //moneyIncome
                     if ($scope.model.moneyIncome.length > 0) {
-                        for (var i = 0; i < $scope.model.moneyIncome.length; i++) {
+                        for (i = 0; i < $scope.model.moneyIncome.length; i++) {
                             if (typeof $scope.model.moneyIncome[i] === "undefined") {
                                 $scope.model.moneyIncome.splice(i, 1);
                                 i = i - 1;
@@ -866,7 +870,7 @@ angular
 
                     //knownDevices
                     if ($scope.model.knownDevices.length > 0) {
-                        for (var i = 0; i < $scope.model.knownDevices.length; i++) {
+                        for (i = 0; i < $scope.model.knownDevices.length; i++) {
                             if (typeof $scope.model.knownDevices[i] === "undefined") {
                                 $scope.model.knownDevices.splice(i, 1);
                                 i = i - 1;
@@ -876,7 +880,7 @@ angular
 
                     //ownDevices
                     if ($scope.model.ownDevices.length > 0) {
-                        for (var i = 0; i < $scope.model.ownDevices.length; i++) {
+                        for (i = 0; i < $scope.model.ownDevices.length; i++) {
                             if (typeof $scope.model.ownDevices[i] === "undefined") {
                                 $scope.model.ownDevices.splice(i, 1);
                                 i = i - 1;
@@ -886,7 +890,7 @@ angular
 
                     //phoneUsage
                     if ($scope.model.phoneUsage.length > 0) {
-                        for (var i = 0; i < $scope.model.phoneUsage.length; i++) {
+                        for (i = 0; i < $scope.model.phoneUsage.length; i++) {
                             if (typeof $scope.model.phoneUsage[i] === "undefined") {
                                 $scope.model.phoneUsage.splice(i, 1);
                                 i = i - 1;
@@ -896,7 +900,7 @@ angular
 
                     //kindOfVideogames
                     if ($scope.model.kindOfVideogames.length > 0) {
-                        for (var i = 0; i < $scope.model.kindOfVideogames.length; i++) {
+                        for (i = 0; i < $scope.model.kindOfVideogames.length; i++) {
                             if (typeof $scope.model.kindOfVideogames[i] === "undefined") {
                                 $scope.model.kindOfVideogames.splice(i, 1);
                                 i = i - 1;
@@ -906,7 +910,7 @@ angular
 
                     //favoriteGames
                     if ($scope.model.favoriteGames.length > 0) {
-                        for (var i = 0; i < $scope.model.favoriteGames.length; i++) {
+                        for (i = 0; i < $scope.model.favoriteGames.length; i++) {
                             if (typeof $scope.model.favoriteGames[i] === "undefined") {
                                 $scope.model.favoriteGames.splice(i, 1);
                                 i = i - 1;
