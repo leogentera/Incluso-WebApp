@@ -973,7 +973,7 @@ function updateActivityStatus(activity_identifier) {
     return theUserCouerseUpdated;
 }
 
-function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
+function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId, firstActivityLock, isComplete) {
     firstActivityLock = (firstActivityLock === undefined ? true : firstActivityLock);
     var breakAll = false;
     var subactivitiesCompleted = 0;
@@ -988,14 +988,16 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
                     if (activity.status == 1 && firstActivityLock) {
                         breakAll = true;
                         break;
-                    } else if(activity.activities.length == subactivitiesCourseModuleId.length || !firstActivityLock) {
+                    } else if(activity.activities.length  == subactivitiesCourseModuleId.length || !firstActivityLock || isComplete) {
                         activity.status = 1;
+                        activity.last_status_update = moment(Date.now()).unix();
                     }
                     for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {
                         var subactivity = activity.activities[subactivityIndex];
                         for (var subactivityCourseModuleId = 0; subactivityCourseModuleId < subactivitiesCourseModuleId.length; subactivityCourseModuleId++) {
                             if (subactivity.coursemoduleid == subactivitiesCourseModuleId[subactivityCourseModuleId] && subactivity.status == 0) {
                                 subactivity.status = 1;
+                                subactivity.last_status_update = moment(Date.now()).unix();
                                 subactivitiesCompleted++;
                                 break;
                             }
@@ -1041,9 +1043,35 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
             instanceType: 0,
             date: getdate()
         };
-        moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){}, function(){});
+        
+        var userStars = JSON.parse(localStorage.getItem("userStars"));
+ 
+        var localStorageStarsData = {
+             dateissued: moment(Date.now()).unix(),
+             instance: data.instance,
+             instance_type: data.instanceType,
+             message: "",
+             is_extra: false,
+             points: data.stars,
+             userid: parseInt(data.userId)
+        };
+ 
+        userStars.push(localStorageStarsData);
+ 
+        localStorage.setItem("userStars", JSON.stringify(userStars));    
+        
+        moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){
+          
+          
+                   
+          
+          }, function(){});
         _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile)
         _setLocalStorageJsonItem("CurrentUser", currentUser)
+        
+        
+        
+        
     }
 }
 
