@@ -256,8 +256,7 @@ angular
                         $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                         $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                         checkForumExtraPoints();
-
-                        checkForumProgress(refreshTopicData());
+                        checkForumProgress(refreshTopicData);
                     },
                     function(){
                         $scope.textToPost=null;
