@@ -654,6 +654,7 @@ angular
 
                             case "multichoice":
                                 $scope.activityObject.questions[qIndex].other = $scope.OtroAnswers[$scope.position[qIndex]].answers[0];
+                                break;
 
                             case "shortanswer":
                                 var userAnswerString = "";
