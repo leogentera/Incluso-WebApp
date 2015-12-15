@@ -156,6 +156,7 @@ angular
                     $scope.yesNoList = ['Si', 'No'];
 
                     $scope.birthdate_Dateformat = formatDate($scope.model.birthday);
+
                     if ($scope.birthdate_Dateformat instanceof Date) {
                         $scope.birthdate_Dateformat = moment($scope.birthdate_Dateformat).format("DD/MM/YYYY");
                     } else {
@@ -992,6 +993,7 @@ angular
                     $scope.model.currentStudies.level = $scope.model.level;
                     $scope.model.currentStudies.grade = $scope.model.grade;
                     $scope.model.currentStudies.period = $scope.model.period;
+                    $scope.model.birthday = $scope.birthdate_Dateformat;  //Take date from UI.
 
                     if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                         saveUser();
@@ -1225,20 +1227,35 @@ angular
                     var result = false;
 
                     if ($scope.model.firstname) { //Required
+
                         if ($scope.model.lastname) { //Required
+
                             if ($scope.model.mothername) { //Required
+
                                 if ($scope.model.gender) { //Required
+
                                     if ($scope.model.address.country) {
+
                                         if ($scope.birthdate_Dateformat) { //Required
+
                                             if ($scope.model.age) {
+
                                                 if ($scope.model.maritalStatus) {
-                                                    if ($scope.model.studies.length > 0) { // array of objects        
-                                                        if ($scope.model.address.state) {
+
+                                                    if ($scope.model.studies.length > 0) { // array of objects
+
+                                                        if ($scope.model.address.city) {
+
                                                             if ($scope.model.address.town) {
+
                                                                 if ($scope.model.address.postalCode) {
+
                                                                     if ($scope.model.address.street) {
+
                                                                         if ($scope.model.address.num_ext) {
+
                                                                             if ($scope.model.address.colony) {
+
                                                                                 if (phonesAreValid($scope.model.phones)) {//array of objects
                                                                                     if (socialNetsAreValid($scope.model.socialNetworks)) { //array of objects
                                                                                         if (compartamosIsValid($scope.model.familiaCompartamos)) { //array of objects
