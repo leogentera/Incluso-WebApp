@@ -65,7 +65,7 @@ angular
 
             var destinationPath = "";
             $scope.isDisabled = false;
-            $scope.activity_identifier = parseInt($routeParams.activityIdentifier); console.log($scope.activity_identifier);
+            $scope.activity_identifier = parseInt($routeParams.activityIdentifier);
 
             $scope.openModal = function (size) {
                 var modalInstance = $modal.open({
