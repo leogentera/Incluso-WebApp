@@ -992,7 +992,7 @@
         function addRequestToQueue(key, data){
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
-            var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue");            
+            var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);            
             if(cacheQueue instanceof Array){
                 requestQueue = cacheQueue;
             } 
@@ -1000,7 +1000,7 @@
             data.userID = _currentUser.userId //Necesitamos guardar el request en la cola con el usuario actual
             data.key = key;
             requestQueue.push(data);
-            _setLocalStorageJsonItem("RequestQueue", requestQueue);
+            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
             if(requestQueue.length==1 || _queuePaused){
                 if(window.mobilecheck()){                    
                         doRequestforCellphone();                     
@@ -1013,7 +1013,7 @@
 
 
         function doRequestforWeb(){     
-            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
+            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
             if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0){
                 var data = requestQueue[0];
                 if(data.userID == _currentUser.userId){ //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
@@ -1022,12 +1022,12 @@
                             _httpFactory(
                             data
                         ).success(function (response) {
-                            requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
+                            requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
                             requestQueue.shift();
                             if(data.method == 'GET'){
                                 _setLocalStorageJsonItem(data.key, response); 
                             }
-                            _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
                             if(requestQueue.length == 0 && _callback != null){
                                 _callback();
                                 _callback = null;
@@ -1036,14 +1036,14 @@
                         }).error(function (response) {
                             if(navigator.onLine){
                                requestQueue[0].retryCount++;                               
-                                _setLocalStorageJsonItem("RequestQueue", requestQueue);
+                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
                                doRequestforWeb();
                             }                        
                         });
                     }  
                     else{
                         requestQueue.shift();  
-                        _setLocalStorageJsonItem("RequestQueue", requestQueue);
+                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
                         if(requestQueue.length == 0 && _callback != null){
                             _callback();
                             _callback = null;
@@ -1059,7 +1059,7 @@
         }
 
         function doRequestforCellphone(){            
-            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");        
+            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);        
 
             _updateConnectionStatus(function(){                
                 if(_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length>0){
@@ -1072,12 +1072,12 @@
                                 _httpFactory(
                                 data
                             ).success(function (response) {
-                                requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue");
+                                requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
                                 requestQueue.shift();
                                 if(data.method == 'GET'){
                                     _setLocalStorageJsonItem(data.key, response); 
                                 }
-                                _setLocalStorageJsonItem("RequestQueue", requestQueue); 
+                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
                                 if(requestQueue.length == 0 && _callback != null){
                                     _callback();
                                     _callback = null;
@@ -1086,14 +1086,14 @@
                             }).error(function (response) {
                                 if(_isDeviceOnline){
                                    requestQueue[0].retryCount++;                               
-                                    _setLocalStorageJsonItem("RequestQueue", requestQueue);
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
                                    doRequestforCellphone();
                                 }                        
                             });
                         }  
                         else{
                             requestQueue.shift();  
-                            _setLocalStorageJsonItem("RequestQueue", requestQueue);
+                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
                             if(requestQueue.length == 0 && _callback != null){
                                 _callback();
                                 _callback = null;
