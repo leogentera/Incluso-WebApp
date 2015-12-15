@@ -223,13 +223,49 @@ angular
                                 "userid": _userId
                             };
                             
-                            moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, function(){ }, function(){});
+                            moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, countLikesByUser, function(){});
                         }    
                     
                     }, offlineCallback);
                     
                     
                 };
+                
+                
+                function countLikesByUser() {
+                
+                var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+                moodleFactory.Services.CountLikesByUser(userCourse.courseid, _currentUser.token, function (data) {
+                    if (data) {
+                        var likes = parseInt(data.likes);
+                        console.log("user likes" + likes);
+                        if (likes >= 30) {
+                            assignLikesBadge();
+                        }
+                    }
+                }, function () { }, true);
+            }
+
+            function assignLikesBadge() {
+                var badgeModel = {
+                    badgeid: 15 //badge earned when a user likes 30 times.
+                };
+
+                var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ _currentUser.userId));
+                for(var i = 0; i < userProfile.badges.length; i++)
+                {
+                    if (userProfile.badges[i].id == badgeModel.badgeid) {
+                        userProfile.badges[i].status = "won";
+                    }                    
+                }
+                
+                localStorage.setItem("Perfil/" + _currentUser.userId, JSON.stringify(userProfile));
+                
+                moodleFactory.Services.PostBadgeToUser(_currentUser.userId, badgeModel, function () {
+                    console.log("created badge successfully");
+                }, function () { });
+            }
+                
                 
                 var checkForumExtraPoints = function() {
                 

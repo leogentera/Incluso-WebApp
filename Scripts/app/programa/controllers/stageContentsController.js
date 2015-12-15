@@ -445,7 +445,7 @@ angular
                 moodleFactory.Services.CountLikesByUser(userCourse.courseid, currentUser.token, function (data) {
                     if (data) {
                         var likes = parseInt(data.likes);
-                        if (likes > 13) {
+                        if (likes >= 30) {
                             assignLikesBadge();
                         }
                     }
@@ -454,9 +454,19 @@ angular
 
             function assignLikesBadge() {
                 var badgeModel = {
-                    badgeid: 15 //badge earned when a user completes his profile.
+                    badgeid: 15 //badge earned when a user likes 30 times.
                 };
 
+                var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
+                for(var i = 0; i < userProfile.badges.length; i++)
+                {
+                    if (userProfile.badges[i].id == badgeModel.badgeid) {
+                        userProfile.badges[i].status = "won";
+                    }                    
+                }
+                
+                localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
+                
                 moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
                     console.log("created badge successfully");
                 }, function () { });
