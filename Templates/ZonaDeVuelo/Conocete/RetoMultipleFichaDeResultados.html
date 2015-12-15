@@ -1,14 +1,14 @@
 <div class="incluso-app results-challenge" id="site-wrapper">
     <article class="blueprint">
       <!--<div class="subtitle text-uppercase">Mis fortalezas</div>-->
-      <div class="subtitle text-uppercase">{{contentResources.multi_chall_title}}</div>
+      <div class="subtitle text-uppercase" ng-bind="contentResources.multi_chall_title"></div>
       <section class="txt-renglon up-line">
         <h4>Escudo</h4>
         <img src="assets/images/badges/img-{{profile.shield}}.svg" class="centered" />
       </section>  
       <section class="txt-renglon up-line section-title">
         <!--<h4>Fortalezas</h4>-->
-        <h4>{{contentResources.mul_cha_res_strengths_titl}}</h4>
+        <h4 ng-bind="contentResources.mul_cha_res_strengths_titl"></h4>
       </section>
       <div id="item{{index}}" ng-class="{active:$first}" class="collapse-media" ng-repeat="a in fortalezas track by $index">
         <div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}" >      
@@ -28,7 +28,7 @@
 
       <section class="txt-renglon up-line section-title no-border">
         <!--<h4>Inteligencias a fortalecer</h4>-->
-        <h4>{{contentResources.field_mul_cha_res_weakness}}</h4>
+        <h4 ng-bind="contentResources.mul_cha_res_weakness"></h4>
       </section>
 
       <div id="item{{index}}" class="collapse-media" ng-repeat="a in aFortalecer track by $index">
@@ -48,8 +48,8 @@
       </div>
 
       <p class="actions">
-        <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">field_mul_cha_res_back_buttonRegresar</a>-->
-        <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">{{contentResources.field_mul_cha_res_back_button}}</a>
+        <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>-->
+        <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()" ng-bind="contentResources.mul_cha_res_back_button"></a>
       </p>
     </article>
 </div>
