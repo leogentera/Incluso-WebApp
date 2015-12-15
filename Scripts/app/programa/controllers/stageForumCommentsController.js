@@ -96,8 +96,10 @@ angular
                 
                 if (activityFromTree && activityFromTree.status == 1) {
                     /* sumar uno extra al total */
-                    if (forumData.totalExtraPoints < 11) {
-                         updateUserForumStars($routeParams.activityId, 50, function (){
+                    //if (forumData.totalExtraPoints < 11) {
+                    if (forumData.totalExtraPoints < $scope.activity.points_limit) {
+                         //updateUserForumStars($routeParams.activityId, 50, function (){
+                         updateUserForumStars($routeParams.activityId, $scope.activity.extra_points, function (){
                             successPutStarsCallback();
                         });
                     }
