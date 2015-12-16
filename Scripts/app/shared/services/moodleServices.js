@@ -976,13 +976,13 @@
         var _postGeolocation = function(moduleId) {
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             
-            addRequestToQueue("userPosition/" + _currentUser.userId, {
+            addRequestToQueue("userPosition/" + currentUser.userId, {
                 type: "geolocation",
                 data: {
                     method: 'POST',
                     url: API_RESOURCE.format('geolocation'),
                     data: { moduleid: moduleId },
-                    headers: { 'Content-Type': 'application/json', 'Authorization': _currentUser.token }
+                    headers: { 'Content-Type': 'application/json', 'Authorization': currentUser.token }
                 }
             });
         };
@@ -1117,8 +1117,8 @@
                                
                                 //Reemplazamos el token con el token actual
                                 queue.data.headers.Authorization = _currentUser.token;
-                                queue.data.latitude = coords.latitude;
-                                queue.data.longitude = coords.longitude;
+                                queue.data.data.latitude = coords.latitude;
+                                queue.data.data.longitude = coords.longitude;
                                     
                                 _httpFactory(queue.data)
                                 .success(function (response) {
@@ -1235,8 +1235,8 @@
 
                                     //Reemplazamos el token con el token actual
                                     queue.data.headers.Authorization = _currentUser.token;
-                                    queue.data.latitude = coords.latitude;
-                                    queue.data.longitude = coords.longitude;
+                                    queue.data.data.latitude = coords.latitude;
+                                    queue.data.data.longitude = coords.longitude;
 
                                     _httpFactory(queue.data)
                                     .success(function (response) {
