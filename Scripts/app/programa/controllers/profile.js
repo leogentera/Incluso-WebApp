@@ -349,7 +349,31 @@ angular
                         return item.trim().length > 0 && arr.indexOf(item) == pos;
                     });
 
-                    return arr;
+                    return orderCatalog(arr);
+                }
+
+                function orderCatalog(arr) {
+
+                    var n = arr.length;
+                    var i, j;
+                    var finalArr = [];
+                    var orderedArr = [];
+
+                    for (i = 0; i < n; i++) {
+                        orderedArr.push(arr[i].toLowerCase());
+                    }
+
+                    orderedArr = orderedArr.sort();
+
+                    for (i = 0; i < n; i++) {
+                        for (j = 0; j < n; j++) {
+                            if (arr[j].toLowerCase() == orderedArr[i]) {
+                                finalArr.push(arr[j]);
+                            }
+                        }
+                    }
+
+                    return finalArr;
                 }
 
 
@@ -391,6 +415,13 @@ angular
                         console.log($scope.model.habilities);
                         */
 
+                        $scope.model.talents = orderCatalog($scope.model.talents);
+                        $scope.model.values = orderCatalog($scope.model.values);
+                        $scope.model.habilities = orderCatalog($scope.model.habilities);
+                        $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
+                        $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
+                        $scope.model.hobbies = orderCatalog($scope.model.hobbies);
+
                         $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                         $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
                         $scope.hobbiesList = $scope.hobbiesList.concat($scope.model.hobbies);
@@ -404,6 +435,13 @@ angular
                         $scope.talentsList = deleteRepeatedEntries($scope.talentsList);
                         $scope.valuesList = deleteRepeatedEntries($scope.valuesList);
                         $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
+
+                        console.log($scope.model.favoriteSports);
+                        console.log($scope.model.artisticActivities);
+                        console.log($scope.model.hobbies);
+                        console.log($scope.model.talents);
+                        console.log($scope.model.values);
+                        console.log($scope.model.habilities);
 
                         $scope.$emit('HidePreloader');
 
