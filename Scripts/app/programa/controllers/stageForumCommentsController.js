@@ -17,6 +17,7 @@ angular
             var _pageLoaded = false;
             $scope.$emit('ShowPreloader');
 
+            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             $scope.validateConnection(initController, offlineCallback);
             
             function offlineCallback() {
@@ -64,27 +65,62 @@ angular
             };
             var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
 
-                $scope.clickLikeButton = function(postId) {
+            $scope.clickLikeButton = function(postId) {
                     
                     $scope.validateConnection(function() {
                     
-                var post = _.find($scope.posts, function(a){
-                    return a.post_id == postId
-                });
-                
-                if(post.liked == 0){
-                    post.liked = 1;
-                    post.likes = parseInt(post.likes) + 1;
-                }
-                else{
-                    post.liked = 0;
-                    post.likes = parseInt(post.likes) - 1;
-                }                
-                var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
-                        moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, function(){}, function(){} );
+                        var post = _.find($scope.posts, function(a){
+                            return a.post_id == postId
+                        });
+                        
+                        if(post.liked == 0){
+                            post.liked = 1;
+                            post.likes = parseInt(post.likes) + 1;
+                        }
+                        else{
+                            post.liked = 0;
+                            post.likes = parseInt(post.likes) - 1;
+                        }
+                        
+                        var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
+                                moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, countLikesByUser, function(){} );
 
                     }, offlineCallback);
             };
+            
+            function countLikesByUser() {
+                
+                var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+                moodleFactory.Services.CountLikesByUser(userCourse.courseid, currentUser.token, function (data) {
+                    if (data) {
+                        var likes = parseInt(data.likes);
+                        console.log("user likes" + likes);
+                        if (likes >= 30) {
+                            assignLikesBadge();
+                        }
+                    }
+                }, function () { }, true);
+            }
+
+            function assignLikesBadge() {
+                var badgeModel = {
+                    badgeid: 15 //badge earned when a user likes 30 times.
+                };
+
+                var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
+                for(var i = 0; i < userProfile.badges.length; i++)
+                {
+                    if (userProfile.badges[i].id == badgeModel.badgeid) {
+                        userProfile.badges[i].status = "won";
+                    }                    
+                }
+                
+                localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
+                
+                moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
+                    console.log("created badge successfully");
+                }, function () { });
+            }
             
             var checkForumExtraPoints = function() {
             

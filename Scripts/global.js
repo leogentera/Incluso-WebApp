@@ -719,13 +719,17 @@ var _progressNotification = function(indexStageId, currentProgress){
     
     var notifications = JSON.parse(localStorage.getItem("notifications"));
     
-    var stageId = indexStageId + 1 ;
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    
+    var stageId = userCourse.stages[indexStageId].section;
     
     for(i = 0; i < notifications.length; i++){
         var currentNotification = notifications[i];
         
         if (currentNotification.type == notificationTypes.progressNotifications && currentNotification.status != "won" && currentProgress >= currentNotification.progressmin
-            && stageId == currentNotification.stageid) {
+            && currentProgress <= currentNotification.progressmax && stageId == currentNotification.stageid) {
+          
             console.log("progress notification created" + currentNotification.name);
             //Add create notification logic.
             
@@ -742,8 +746,7 @@ var _progressNotification = function(indexStageId, currentProgress){
   
             moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
                 console.log("progress notification created" + currentNotification.name);
-            }, errorCallback, true);
-            
+            }, errorCallback, true);            
         }        
     }
 }

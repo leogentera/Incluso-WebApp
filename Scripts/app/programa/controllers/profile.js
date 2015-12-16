@@ -1160,6 +1160,17 @@ angular
                                 badgeid: 13 //badge earned when a user completes his profile.
                             };
 
+                            var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
+                            for(var i = 0; i < userProfile.badges.length; i++)
+                            {
+                                if (userProfile.badges[i].id == badgeModel.badgeid) {
+                                    userProfile.badges[i].status = "won";
+                                }                    
+                            }
+                            
+                            localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
+                            
+                            
                             moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function () {
                                 //Created badge successfully.
                             }, function () {

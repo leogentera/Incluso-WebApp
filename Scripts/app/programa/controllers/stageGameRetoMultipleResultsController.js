@@ -42,7 +42,7 @@ angular
                 }
                 return -f.total_score
             });
-            $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3"});
+            $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3" && a.score!="-1" });
             if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
 
             $scope.back = function () {

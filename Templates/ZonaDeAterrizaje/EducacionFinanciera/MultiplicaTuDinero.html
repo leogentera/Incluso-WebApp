@@ -1,25 +1,15 @@
 <div class="incluso-app step-dashboard" id="site-wrapper">
   <article class="blueplanets">
-    <div class="subtitle">{{contentResources.multiply_title}}</div>
-    <!--<div class="subtitle">Multiplica Tu Dinero</div>-->
+    <div class="subtitle" ng-bind="contentResources.multiply_title"></div>
     <section class="txt-renglon pill">
-      <!--<div class="fl-left">Estrellas a ganar:</div><div class="fl-right sm-pill">{{stars}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>-->
-      <div class="fl-left">{{contentResources.multiply_stars_mssg}}</div><div class="fl-right sm-pill">{{stars}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+      <div class="fl-left" ng-bind="contentResources.multiply_stars_mssg"></div><div class="fl-right sm-pill">{{stars}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
     </section>
-    <div class="txt-renglon">{{contentResources.multiply_instructions_titl}}</div>
-    <!--<div class="txt-renglon">Instrucciones de uso:</div>-->
+    <div class="txt-renglon" ng-bind="contentResources.multiply_instructions_titl"></div>
     <section class="txt-renglon up-line">
       <div ng-bind-html="contentResources.multiply_instructions.value"></div>
-      <!--<ol>-->
-        <!--<li>Descargar la aplicación Incluso Interactivo con el botón naranja.</li>-->
-        <!--<li>Regresa a Misión Incluso.</li>-->
-        <!--<li>Presiona el botón para iniciar la aplicación.</li>-->
-      <!--</ol>-->
     </section>
 	<a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="!isInstalled" ng-click="downloadGame()">Descargar Juego</a>
-    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="isInstalled" ng-click="downloadGame()">{{contentResources.multiply_start_button}}</a>
-    <!--<a role="button" class="btn btn-primary btn-lg btn-cnt" ng-click="downloadGame()">Iniciar Reto</a>-->
-    <div class="txt-renglon centered" ng-click="back()">{{contentResources.multiply_cancel_button}}</div>
-    <!--<div class="txt-renglon centered" ng-click="back()">Cancelar</div>-->
+    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-bind="contentResources.multiply_start_button" ng-show="isInstalled" ng-click="downloadGame()"></a>
+    <div class="txt-renglon centered" ng-bind="contentResources.multiply_cancel_button" ng-click="back()"></div>
   </article>
 </div>
