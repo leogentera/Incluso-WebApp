@@ -163,10 +163,21 @@ angular
                     }
                     
                     if (postCounter >= 40) {
-                        
+                                                                                        
                         var badgeModel = {
                             badgeid: badgeForum[0].id //badge earned when a user completes his profile.
                             };
+                            
+                        var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
+                        for(var i = 0; i < userProfile.badges.length; i++)
+                        {
+                            if (userProfile.badges[i].id == badgeModel.badgeid) {
+                                userProfile.badges[i].status = "won";
+                            }
+                        }
+            
+                        localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
+                            
                         moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){
                             },function(){
                                 });
