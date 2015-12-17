@@ -301,11 +301,7 @@ angular
             var GetExternalAppData = function(){
                 var user = $scope.currentUserModel.userId;
                 var token = $scope.currentUserModel.token;                
-                moodleFactory.Services.GetAsyncAvatar(user, null, function () {
-                    //Success
-                }, function(){
-                    //Error
-                }, true);
+                moodleFactory.Services.GetAsyncAvatar(user, token, function () {}, function(){}, true);
                 var courseModuleIds = [{"id":1039, "userInfo":true}, {"id":2012, "userInfo":false},{"id":2017, "userInfo":true}, {"id":3302, "userInfo":false}, {"id":3402, "userInfo":true}];
                 for (var i = 0; i < courseModuleIds.length; i++) {
                     var courseModule = courseModuleIds[i];

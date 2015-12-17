@@ -99,6 +99,7 @@ angular
                   "userId": "" + $scope.user.id,
                   "alias": $scope.user.username,
                   "actividad": "Reto múltiple",
+                  "pathImagen": "",
                   "actividadTerminada":"",
                   "subactividades": []
                 };
@@ -162,7 +163,7 @@ angular
                 }
                 catch (e) {
                   successGame(
-                    {"userid":"103","resultado":[{"preguntas":[{"respuesta":"5","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"6","pregunta":"¿Disfruté este reto?"},{"respuesta":"7","pregunta":"¿Sé tocar algún instrumento?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"11800","detallePuntaje":["10000","1800","0","0","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:45:34","duración":"5","subactividad":"Musical","fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"5","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"8","pregunta":"¿Disfruté este reto?"},{"respuesta":"6","pregunta":"¿Me gusta enseñar lo que sé a otras personas?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"1","puntajeInterno":"20000","fechaFin":"11\/23\/2015 12:40:34","duración":"8","subactividad":"Interpersonal","detallePreguntas":["3","2","1","1","2","3","3","3"],"fechaInicio":"11\/23\/2015 12:32:34"},{"preguntas":[{"respuesta":"7","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"7","pregunta":"¿Disfruté este reto?"},{"respuesta":"7","pregunta":"¿Me gustaría tener mi propio jardín en el que pueda cultivar mis alimentos?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"3","puntajeInterno":"10000","detallePuntaje":["34","32","9500","434","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:50:34","duración":"5","subactividad":"Naturalista","fechaInicio":"11\/23\/2015 12:45:34"},{"preguntas":[{"respuesta":"2","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"3","pregunta":"¿Disfruté este reto?"},{"respuesta":"1","pregunta":"¿Me gusta evaluar las consecuencias antes de tomar una decisión?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"2220","fechaFin":"11\/23\/2015 12:45:34","duración":"5","subactividad":"Intrapersonal","detallePreguntas":["1","2","3","4","4","3","2","1"],"fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"4","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"5","pregunta":"¿Disfruté este reto?"},{"respuesta":"10","pregunta":"¿Me gusta ser la primera en bailar en las fiestas?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"10361","detallePuntaje":["250","100","11","1000","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:50:34","duración":"10","subactividad":"Corporal","fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"2","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"3","pregunta":"¿Disfruté este reto?"},{"respuesta":"4","pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"1","puntajeInterno":"4541","detallePuntaje":["3000","1000","500","30","10","1","0","0","0"],"fechaFin":"11\/23\/2015 12:40:34","duración":"2","subactividad":"Espacial","fechaInicio":"11\/23\/2015 12:38:34"},{"nivelInteligencia":"2","preguntas":[{"respuesta":"10","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"8","pregunta":"¿Disfruté este reto?"},{"respuesta":"10","pregunta":"¿Me gusta clasificar cosas por colores, tamaños y tener todo en orden?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"puntajeInterno":"9633","subactividad":"Matemática","duración":"22","fechaFin":"11\/23\/2015 18:33:56","detallePuntaje":["5800","5500","1000","0","0","0","0","0","0"],"fechaInicio":"11\/23\/2015 12:32:34"},{"preguntas":[{"respuesta":"3","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"2","pregunta":"¿Disfruté este reto?"},{"respuesta":"2","pregunta":"¿Me gustan los juegos de palabras y los crucigramas?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"110","detallePuntaje":["50","20","30","10","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:42:34","duración":"2","subactividad":"Lingüística","fechaInicio":"11\/23\/2015 12:40:34"}],"inteligenciaPredominante":[{"puntuación":"11800","inteligencia":"Naturalista"},{"puntuación":"20000","inteligencia":"Interpersonal"},{"puntuación":"10361","inteligencia":"Corporal"}],"userId":"196","escudo":"Naturalista","actividad":"Reto múltiple"}
+                    {"pathImagen":"user_293.png", "imagenRecortada":"user_293.png", "userid":"103","resultado":[{"preguntas":[{"respuesta":"5","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"6","pregunta":"¿Disfruté este reto?"},{"respuesta":"7","pregunta":"¿Sé tocar algún instrumento?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"11800","detallePuntaje":["10000","1800","0","0","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:45:34","duración":"5","subactividad":"Musical","fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"5","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"8","pregunta":"¿Disfruté este reto?"},{"respuesta":"6","pregunta":"¿Me gusta enseñar lo que sé a otras personas?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"1","puntajeInterno":"20000","fechaFin":"11\/23\/2015 12:40:34","duración":"8","subactividad":"Interpersonal","detallePreguntas":["3","2","1","1","2","3","3","3"],"fechaInicio":"11\/23\/2015 12:32:34"},{"preguntas":[{"respuesta":"7","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"7","pregunta":"¿Disfruté este reto?"},{"respuesta":"7","pregunta":"¿Me gustaría tener mi propio jardín en el que pueda cultivar mis alimentos?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"3","puntajeInterno":"10000","detallePuntaje":["34","32","9500","434","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:50:34","duración":"5","subactividad":"Naturalista","fechaInicio":"11\/23\/2015 12:45:34"},{"preguntas":[{"respuesta":"2","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"3","pregunta":"¿Disfruté este reto?"},{"respuesta":"1","pregunta":"¿Me gusta evaluar las consecuencias antes de tomar una decisión?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"2220","fechaFin":"11\/23\/2015 12:45:34","duración":"5","subactividad":"Intrapersonal","detallePreguntas":["1","2","3","4","4","3","2","1"],"fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"4","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"5","pregunta":"¿Disfruté este reto?"},{"respuesta":"10","pregunta":"¿Me gusta ser la primera en bailar en las fiestas?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"10361","detallePuntaje":["250","100","11","1000","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:50:34","duración":"10","subactividad":"Corporal","fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"2","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"3","pregunta":"¿Disfruté este reto?"},{"respuesta":"4","pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"1","puntajeInterno":"4541","detallePuntaje":["3000","1000","500","30","10","1","0","0","0"],"fechaFin":"11\/23\/2015 12:40:34","duración":"2","subactividad":"Espacial","fechaInicio":"11\/23\/2015 12:38:34"},{"nivelInteligencia":"2","preguntas":[{"respuesta":"10","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"8","pregunta":"¿Disfruté este reto?"},{"respuesta":"10","pregunta":"¿Me gusta clasificar cosas por colores, tamaños y tener todo en orden?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"puntajeInterno":"9633","subactividad":"Matemática","duración":"22","fechaFin":"11\/23\/2015 18:33:56","detallePuntaje":["5800","5500","1000","0","0","0","0","0","0"],"fechaInicio":"11\/23\/2015 12:32:34"},{"preguntas":[{"respuesta":"3","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"2","pregunta":"¿Disfruté este reto?"},{"respuesta":"2","pregunta":"¿Me gustan los juegos de palabras y los crucigramas?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"110","detallePuntaje":["50","20","30","10","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:42:34","duración":"2","subactividad":"Lingüística","fechaInicio":"11\/23\/2015 12:40:34"}],"inteligenciaPredominante":[{"puntuación":"11800","inteligencia":"Naturalista"},{"puntuación":"20000","inteligencia":"Interpersonal"},{"puntuación":"10361","inteligencia":"Corporal"}],"userId":"196","escudo":"Naturalista","actividad":"Reto múltiple"}
                     );
                 }
               }
@@ -329,6 +330,35 @@ angular
 
                     $scope.saveUser();
                   }
+                  if (data.imagenRecortada && data.imagenRecortada != "") {
+                    var pathImagen = "assets/avatar/" + data.pathImagen;
+                    encodeImageUri(pathImagen, function (b64) {
+                      var avatarInfo = [{
+                        "userid": $scope.user.id,
+                        "filecontent": b64,
+                        "onlypicture": true
+                      }];
+                      moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function(){console.log("success")}, function(){console.log("failure")});
+                    });
+                  }else{
+                    _loadedResources = false;
+                    _pageLoaded = true;
+                    drupalFactory.Services.GetContent("1039Robot", function (data, key) {
+                        _loadedResources = true;
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                        var modalInstance = $modal.open({
+                            templateUrl: 'RetoMultipleModal.html',
+                            controller: 'stageGameRetoMultipleModalController',
+                            resolve: {
+                                content: function () {
+                                    return data.node;
+                                }
+                            },
+                            windowClass: 'closing-stage-modal user-help-modal'
+                        });
+                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+                    
+                  }
                   _endActivity(parentActivity, function(){});
                   parentActivity.status = 1;
                   if (parentActivity.activities) {
@@ -337,7 +367,6 @@ angular
                 }
                 userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted, true, $scope.IsComplete);
                 userCourseUpdated.isMultipleChallengeActivityFinished = $scope.IsComplete;
-                
                 $scope.$emit('ShowPreloader');
                 for(i = 0; i < quizzesRequests.length; i++){
                   if (quizzesRequests[i].quiz_answered) {
@@ -440,8 +469,32 @@ angular
                 return month + "/" + day + "/" + year + " " + hour + ":" + minute + ":" + second;
             }
 
+            var encodeImageUri = function (imageUri, callback) {
+                var c = document.createElement('canvas');
+                var ctx = c.getContext("2d");
+                var img = new Image();
+                img.onload = function () {
+                    c.width = this.width;
+                    c.height = this.height;
+                    ctx.drawImage(img, 0, 0);
+
+                    if (typeof callback === 'function') {
+                        var dataURL = c.toDataURL("image/png");
+                        callback(dataURL.slice(22, dataURL.length));
+                    }
+                };
+                img.src = imageUri;
+            };
+
             if($routeParams.retry){
               loadData();
             }
 
-        }]);
+        }])
+        .controller('stageGameRetoMultipleModalController', function ($scope, $modalInstance, content) {
+          $scope.message = content.mensaje;
+          $scope.title = content.titulo;
+          $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+          };
+        });

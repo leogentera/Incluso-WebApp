@@ -464,11 +464,13 @@
 
         var _postAsyncDataOffline = function (key, dataModel, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             addRequestToQueue(key, {
                 method: 'POST',
                 url: url,
                 data: dataModel,
-                headers: { 'Content-Type': 'application/json' }
+                headers: { 'Content-Type': 'application/json',
+                           'Authorization': currentUser.token }
             });
             dataModel = (key == "avatarInfo" ? [dataModel] : dataModel );
             _setLocalStorageJsonItem(key,dataModel);

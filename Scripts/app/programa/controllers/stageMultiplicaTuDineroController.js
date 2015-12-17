@@ -144,7 +144,7 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":1,"respuestaId":2},{"preguntaId":2,"respuestaId":6},{"preguntaId":3,"respuestaId":8},{"preguntaId":4,"respuestaId":11},{"preguntaId":10,"respuestaId":29},{"preguntaId":11,"respuestaId":33},{"preguntaId":15,"respuestaId":44},{"preguntaId":18,"respuestaId":52}]}
+                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificación":"Aprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":1,"respuestaId":2},{"preguntaId":2,"respuestaId":6},{"preguntaId":3,"respuestaId":8},{"preguntaId":4,"respuestaId":11},{"preguntaId":10,"respuestaId":29},{"preguntaId":11,"respuestaId":33},{"preguntaId":15,"respuestaId":44},{"preguntaId":18,"respuestaId":52}]}
                     );
                 }
             }
@@ -187,6 +187,7 @@ angular
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
                 var subactivitiesCompleted = [];
                 var activitiesCompleted = 0;
+                subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
                 if (parentActivity.status == 0) {
                     for (var i = 0; i < parentActivity.activities.length; i++) {
                         if(parentActivity.activities[i].status == 1 && i != 0){
@@ -198,10 +199,28 @@ angular
                         _endActivity(parentActivity, function(){ });
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                     }
+                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
+                }
+                if (data["calificación"] && data["calificación"] == "Reprobado") {
+                    $scope.isReprobado = true;
+                    _loadedResources = false;
+                    _pageLoaded = true;
+                    drupalFactory.Services.GetContent("MultiplicaTuDineroRobot", function (data, key) {
+                        _loadedResources = true;
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                        var modalInstance = $modal.open({
+                            templateUrl: 'MultiplicaTuDineroModal.html',
+                            controller: 'stageMultiplicaTuDineroModalController',
+                            resolve: {
+                                content: function () {
+                                    return data.node;
+                                }
+                            },
+                            windowClass: 'closing-stage-modal user-help-modal'
+                        });
+                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
                 }
                 if (parentActivity.activities) {
-                    subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
-                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     for (var i = 0; i < subactivitiesCompleted.length; i++) {
                         $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i]);
                     };
@@ -235,7 +254,13 @@ angular
                         moodleFactory.Services.ExecuteQueue();
                     }
                     $scope.$emit('HidePreloader');
-                    $location.path('/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero');
+                    var url = "";
+                    if ($scope.IsComplete) {
+                        url = ($scope.isReprobado ? '/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302' : '/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero');
+                    }else{
+                        url = '/ZonaDeAterrizaje/Dashboard/3/2';
+                    };
+                    $location.path(url);
                 });
             }
 
@@ -266,4 +291,11 @@ angular
                 }
             }
 
-        }]);
+        }])
+        .controller('stageMultiplicaTuDineroModalController', function ($scope, $modalInstance, content) {
+            $scope.message = content.mensaje;
+            $scope.title = content.titulo;
+            $scope.cancel = function () {
+              $modalInstance.dismiss('cancel');
+            };
+        });

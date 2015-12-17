@@ -22,7 +22,10 @@
         "3304": 51, /* Zona de Aterrizaje - Mapa del Emprendedor - Punto de Encuentro */
         "1039": 78, /*Zona de Vuelo - Con�cete - Reto M�ltiple*/
         "1039results": 79, /*Zona de Vuelo - Con�cete - Reto M�ltiple Resultados*/
+        "1039Robot": 92, /*Zona de Vuelo - Con�cete - Reto M�ltiple Robot*/
         "3303": 80, /*Zona de Aterrizaje - Educaci�n Financiera - Multiplica tu dinero*/
+        "TuEligesRobot": 93, /* Zona de Navegaci�n - T� eliges Reprobado */
+        "MultiplicaTuDineroRobot": 94, /* Zona de Navegaci�n - T� eliges Reprobado */
         "3303results": 81, /*Zona de Aterrizaje - Educaci�n Financiera - Multiplica tu dinero - Resultados*/
         "3401": 35, /* Zona de Aterrizaje - Mapa del Emprendedor - Fuente de energ�a */
         "3404": 52, /* Zona de Aterrizaje - Mapa del Emprendedor - Punto de Encuentro */

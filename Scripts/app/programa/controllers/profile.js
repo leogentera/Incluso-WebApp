@@ -424,7 +424,7 @@ angular
 
                             callback();
 
-                            moodleFactory.Services.GetAsyncAvatar($scope.userId, null, getAvatarInfoCallback, function () {
+                            moodleFactory.Services.GetAsyncAvatar($scope.userId, currentUser.token, getAvatarInfoCallback, function () {
                                 _pageLoaded = true;
                                 if (_loadedResources && _pageLoaded) {
                                     $scope.$emit('HidePreloader');
