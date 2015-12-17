@@ -243,16 +243,22 @@
             else{                
                 if(token){
                     addRequestToQueue(key, {
-                    method: 'GET',
-                    url: url,
-                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                        type: "httpRequest",
+                        data: {
+                            method: 'GET',
+                            url: url,
+                            headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                        }
                     });
                 }
                 else{
                     addRequestToQueue(key, {
-                    method: 'GET',
-                    url: url,
-                    headers: { 'Content-Type': 'application/json'}
+                        type: "httpRequest",
+                        data: {
+                            method: 'GET',
+                            url: url,
+                            headers: { 'Content-Type': 'application/json'}
+                        }
                     });   
                 }
 
@@ -449,11 +455,14 @@
             
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             addRequestToQueue(key, {
-                method: 'PUT',
-                url: url,
-                data: dataModel,
-                headers: { 'Content-Type': 'application/json' ,
-                           'Authorization': currentUser.token }
+                type: "httpRequest",
+                data: {
+                    method: 'PUT',
+                    url: url,
+                    data: dataModel,
+                    headers: { 'Content-Type': 'application/json' ,
+                               'Authorization': currentUser.token }
+                }
             });
             _setLocalStorageJsonItem(key,dataModel);
 
@@ -466,11 +475,13 @@
             _getDeviceVersionAsync();
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             addRequestToQueue(key, {
-                method: 'POST',
-                url: url,
-                data: dataModel,
-                headers: { 'Content-Type': 'application/json',
-                           'Authorization': currentUser.token }
+                type: "httpRequest",
+                data: {
+                    method: 'POST',
+                    url: url,
+                    data: dataModel,
+                    headers: { 'Content-Type': 'application/json' }
+                }
             });
             dataModel = (key == "avatarInfo" ? [dataModel] : dataModel );
             _setLocalStorageJsonItem(key,dataModel);
@@ -504,10 +515,13 @@
             dataModel["stars"] = dataModel.stars ? dataModel.stars : 0;
             
             addRequestToQueue(key, {
-                method: 'PUT',
-                url: url,
-                data: dataModel,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                type: "httpRequest",
+                data: {
+                    method: 'PUT',
+                    url: url,
+                    data: dataModel,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                }
             });
 
             _setLocalStorageJsonItem(key,profile);
@@ -539,10 +553,13 @@
             _getDeviceVersionAsync();
             
             addRequestToQueue(key, {
-                method: 'PUT',
-                url: url,
-                data: data,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                type: "httpRequest",
+                data: {
+                    method: 'PUT',
+                    url: url,
+                    data: data,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                }
             });
 
             _setLocalStorageJsonItem(key,userCourseModel);
@@ -555,10 +572,13 @@
             _getDeviceVersionAsync();
             
             addRequestToQueue('activity/' + activityModel.coursemoduleid, {
-                method: 'PUT',
-                url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),
-                data: data,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                type: "httpRequest",
+                data: {
+                    method: 'PUT',
+                    url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),
+                    data: data,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                }
             });
             if(successCallback){
                 successCallback();
@@ -954,6 +974,20 @@
             });
         };
         
+        var _postGeolocation = function(moduleId) {
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            
+            addRequestToQueue("userPosition/" + currentUser.userId, {
+                type: "geolocation",
+                data: {
+                    method: 'POST',
+                    url: API_RESOURCE.format('geolocation'),
+                    data: { moduleid: moduleId },
+                    headers: { 'Content-Type': 'application/json', 'Authorization': currentUser.token }
+                }
+            });
+        };
+        
         var _calculateForumExtraPoints = function(data) {
             
             var totalExtraPoints = 0;
@@ -991,21 +1025,21 @@
             
         }
 
-        function addRequestToQueue(key, data){
+        function addRequestToQueue(key, queue) {
             _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
             var requestQueue = [];
             var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);            
             if(cacheQueue instanceof Array){
                 requestQueue = cacheQueue;
             } 
-            data.retryCount = 0;
-            data.userID = _currentUser.userId //Necesitamos guardar el request en la cola con el usuario actual
-            data.key = key;
-            requestQueue.push(data);
+            queue.retryCount = 0;
+            queue.userID = _currentUser.userId // Necesitamos guardar el request en la cola con el usuario actual
+            queue.key = key;
+            requestQueue.push(queue);
             _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
             if(requestQueue.length==1 || _queuePaused){
                 if(window.mobilecheck()){                    
-                        doRequestforCellphone();                     
+                        doRequestforCellphone();
                 }                
                 else{
                     doRequestforWeb(); 
@@ -1014,47 +1048,115 @@
         }
 
 
-        function doRequestforWeb(){     
+        function doRequestforWeb() {     
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0){
-                var data = requestQueue[0];
-                if(data.userID == _currentUser.userId){ //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
-                    if(data.retryCount<5){
-                            data.headers.Authorization = _currentUser.token; //Reemplazamos el token con el token actual
-                            _httpFactory(
-                            data
-                        ).success(function (response) {
-                            requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                            requestQueue.shift();
-                            if(data.method == 'GET'){
-                                _setLocalStorageJsonItem(data.key, response); 
-                            }
-                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
-                            if(requestQueue.length == 0 && _callback != null){
+            
+            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0) {
+                var queue = requestQueue[0];
+                
+                //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
+                if(queue.userID == _currentUser.userId) {
+                    
+                    if(queue.type === "httpRequest") {
+                        if(queue.retryCount<5) {
+                        
+                            //Reemplazamos el token con el token actual
+                            queue.data.headers.Authorization = _currentUser.token;
+                            _httpFactory(queue.data)
+                            .success(function (response) {
+
+                                requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                requestQueue.shift();
+                                if(queue.data.method == 'GET') {
+                                    _setLocalStorageJsonItem(queue.key, response); 
+                                }
+
+                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
+                                if(requestQueue.length == 0 && _callback != null) {
+                                    _callback();
+                                    _callback = null;
+                                }   
+                                doRequestforWeb();                                 
+                            }).error(function (response) {
+
+                                if(navigator.onLine) {
+                                   requestQueue[0].retryCount++;                               
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                    doRequestforWeb();
+                                }                        
+                            });
+                        }
+                        else {
+
+                            requestQueue.shift();  
+                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                            if(requestQueue.length == 0 && _callback != null) {
                                 _callback();
                                 _callback = null;
-                            }   
-                            doRequestforWeb();                                 
-                        }).error(function (response) {
-                            if(navigator.onLine){
-                               requestQueue[0].retryCount++;                               
-                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                               doRequestforWeb();
-                            }                        
-                        });
-                    }  
-                    else{
-                        requestQueue.shift();  
-                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                        if(requestQueue.length == 0 && _callback != null){
-                            _callback();
-                            _callback = null;
+                            }
+                            doRequestforWeb();
                         }   
-                        doRequestforWeb();
-                    } 
-                }                                  
+                    } else if(queue.type === "geolocation") {
+                        
+                        var getCurrentPositionSuccesCallback = function(pos) {
+                            _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, { 
+                                latitude: pos.coords.latitude,
+                                longitude: pos.coords.longitude
+                            });
+                            postCurrentPosition();
+                        };
+                        var getCurrentPositionErrorCallback = function() {
+                            postCurrentPosition();
+                        };
+                        navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback);
+                        
+                        var postCurrentPosition = function() {
+                            
+                            if(queue.retryCount < 5 || (queue.retryCount === 5 && moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null)) {
+                                
+                                var coords = moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId);
+                               
+                                //Reemplazamos el token con el token actual
+                                queue.data.headers.Authorization = _currentUser.token;
+                                queue.data.data.latitude = coords.latitude;
+                                queue.data.data.longitude = coords.longitude;
+                                    
+                                _httpFactory(queue.data)
+                                .success(function (response) {
+
+                                    requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                    requestQueue.shift();
+
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
+                                    if(requestQueue.length == 0 && _callback != null) {
+                                        _callback();
+                                        _callback = null;
+                                    }   
+                                    doRequestforWeb();                                 
+                                }).error(function (response) {
+
+                                    if(navigator.onLine) {
+                                       requestQueue[0].retryCount++;                               
+                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                        doRequestforWeb();
+                                    }
+                                });
+                            } else {
+
+                                requestQueue.shift();  
+                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                if(requestQueue.length == 0 && _callback != null) {
+                                    _callback();
+                                    _callback = null;
+                                }
+                                doRequestforWeb();
+                            }
+                            
+                        };
+                    }
+                }
             }
-            else if (_callback != null){
+            else if (_callback != null) {
                 _callback();
                 _callback = null;
             }
@@ -1064,44 +1166,113 @@
             var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);        
 
             _updateConnectionStatus(function(){                
-                if(_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length>0){
-                    var data = requestQueue[0];
-                    if(data.userID == _currentUser.userId){ //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
-                        _queuePaused = false;
-                        var data = requestQueue[0];
-                        if(data.retryCount<5){
-                                data.headers.Authorization = _currentUser.token; //Reemplazamos el token con el token actual
-                                _httpFactory(
-                                data
-                            ).success(function (response) {
-                                requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                                requestQueue.shift();
-                                if(data.method == 'GET'){
-                                    _setLocalStorageJsonItem(data.key, response); 
-                                }
-                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
+                if(_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length>0) {
+                    
+                    var queue = requestQueue[0];
+                    
+                    //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
+                    if(queue.userID == _currentUser.userId) {
+                        
+                        if(queue.type === "httpRequest") {
+                            
+                            _queuePaused = false;
+                        
+                            if(queue.retryCount < 5) {
+                                //Reemplazamos el token con el token actual
+                                queue.data.headers.Authorization = _currentUser.token;
+
+                                _httpFactory(queue.data)
+                                .success(function (response) {
+
+                                    requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                    requestQueue.shift();
+
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
+                                    if(requestQueue.length == 0 && _callback != null) {
+                                        _callback();
+                                        _callback = null;
+                                    }
+                                    doRequestforCellphone();                                                            
+                                }).error(function (response) {
+                                    if(_isDeviceOnline){
+                                       requestQueue[0].retryCount++;                               
+                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                       doRequestforCellphone();
+                                    }                        
+                                });
+                            }  
+                            else{
+                                requestQueue.shift();  
+                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
                                 if(requestQueue.length == 0 && _callback != null){
                                     _callback();
                                     _callback = null;
-                                }                           
-                                doRequestforCellphone();                                                            
-                            }).error(function (response) {
-                                if(_isDeviceOnline){
-                                   requestQueue[0].retryCount++;                               
-                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                   doRequestforCellphone();
-                                }                        
-                            });
-                        }  
-                        else{
-                            requestQueue.shift();  
-                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                            if(requestQueue.length == 0 && _callback != null){
-                                _callback();
-                                _callback = null;
+                                }
+                                doRequestforCellphone();
                             }
-                            doRequestforCellphone();
-                        } 
+                            
+                            
+                        } else if(queue.type === "geolocation") {
+                            
+                            _queuePaused = false;
+                            
+                            var getCurrentPositionSuccesCallback = function(pos) {
+                                _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, { 
+                                    latitude: pos.coords.latitude,
+                                    longitude: pos.coords.longitude
+                                });
+                                postCurrentPosition();
+                            };
+                            var getCurrentPositionErrorCallback = function() {
+                                postCurrentPosition();
+                            };
+                            navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback);
+
+                            var postCurrentPosition = function() {
+
+                                if(queue.retryCount < 5 || (queue.retryCount === 5 && moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null)) {
+
+                                    var coords = moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId);
+
+                                    //Reemplazamos el token con el token actual
+                                    queue.data.headers.Authorization = _currentUser.token;
+                                    queue.data.data.latitude = coords.latitude;
+                                    queue.data.data.longitude = coords.longitude;
+
+                                    _httpFactory(queue.data)
+                                    .success(function (response) {
+
+                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                        requestQueue.shift();
+
+                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
+                                        if(requestQueue.length == 0 && _callback != null) {
+                                            _callback();
+                                            _callback = null;
+                                        }   
+                                        doRequestforCellphone();                                 
+                                    }).error(function (response) {
+
+                                        if(_isDeviceOnline){
+                                           requestQueue[0].retryCount++;                               
+                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                           doRequestforCellphone();
+                                        } 
+                                    });
+                                } else {
+
+                                    requestQueue.shift();  
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                    if(requestQueue.length == 0 && _callback != null){
+                                        _callback();
+                                        _callback = null;
+                                    }
+                                    doRequestforCellphone();
+                                }
+
+                            };
+                            
+                        }
                     }                                
                 }
                 else if(!_isDeviceOnline){
@@ -1160,7 +1331,8 @@
             GetServerDate: _getServerDate,
             ExecuteQueue: _executeQueue,
             PostAsyncAvatar: _postAsyncAvatar,
-            PutAsyncAward: _putAsyncAward
+            PutAsyncAward: _putAsyncAward,
+            PostGeolocation: _postGeolocation
         };
     })();
 }).call(this);
