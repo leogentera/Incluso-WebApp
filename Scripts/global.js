@@ -1650,7 +1650,7 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
 
 /* loads drupal resources (content) */
 var _loadedDrupalResources = false;
-var _loadDrupalResources = function() {
+var _loadDrupalResources = function(callback) {
     _loadedDrupalResources = false;
     var propCounter = 0;
     
@@ -1663,6 +1663,11 @@ var _loadDrupalResources = function() {
                 _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
                 }, true);
     }
+    
+    if (callback) {
+      callback();
+    }
+    
 }
 
 /* Waits until page is loaded */
