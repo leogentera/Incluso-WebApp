@@ -11,7 +11,7 @@
       <div id="item{{$index}}" ng-repeat="t in activity.discussions">
         <!--<div class="part list-item" ng-click="showComentarios(t.discussion, moodleId)">-->
         <div class="part list-item" ng-click="showComentarios(t.discussion)">
-          <span>{{t.name}}</span>
+          <span>{{::t.name}}</span>
           <a href="">
             <span class="icomoon icon-arrow-right-aligned fl-right"></span>
           </a>

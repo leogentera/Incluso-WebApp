@@ -3,7 +3,7 @@
         <div class="alert-message" ng-click="hideWarning">
             <div class="icomoon icon-warning"></div>
             <!--<p>Reposnde todas las preguntas para poder continuar</p>-->
-            <p>{{warningMessage}}</p>
+            <p>{{::warningMessage}}</p>
         </div>
     </div>
 
@@ -52,7 +52,7 @@
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea1" class="form-control form-control-lg theme-form"
                                               row="2"
-                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[0].answers[0]" ng-readonly="{{misGustosAnswers[0][10] == 1}} && {{misGustosOtroAnswers[0].answers[0] != ''}}"></textarea>
+                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[0].answers[0]" ng-readonly="{{::misGustosAnswers[0][10] == 1}} && {{::misGustosOtroAnswers[0].answers[0] != ''}}"></textarea>
                                 </div>
                             </div>
                         </section>
@@ -92,7 +92,7 @@
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea2" class="form-control form-control-lg theme-form" row="2"
-                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[1].answers[0]"  ng-readonly="{{misGustosAnswers[1][10] == 1}} && {{misGustosOtroAnswers[1].answers[0] != ''}}"></textarea>
+                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[1].answers[0]"  ng-readonly="{{::misGustosAnswers[1][10] == 1}} && {{::misGustosOtroAnswers[1].answers[0] != ''}}"></textarea>
                                 </div>
                             </div>
 
@@ -134,7 +134,7 @@
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea3" class="form-control form-control-lg theme-form"
                                               row="2"
-                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[2].answers[0]"  ng-readonly="{{misGustosAnswers[2][10] == 1}} && {{misGustosOtroAnswers[2].answers[0] != ''}}"></textarea>
+                                              name="opciones" placeholder="¿Cuál?" ng-model="misGustosOtroAnswers[2].answers[0]"  ng-readonly="{{::misGustosAnswers[2][10] == 1}} && {{::misGustosOtroAnswers[2].answers[0] != ''}}"></textarea>
                                 </div>
                             </div>
                         </section>
@@ -176,7 +176,7 @@
                     <section class="txt-renglon pill" ng-show="activityPoints > 0 && activity_status == 0">
                         <div class="pull-left">Estrellas ganadas:</div>
                         <div class="pull-right sm-pill">
-                            <span class="pull-left">{{activityPoints}}</span><span class="icomoon icon-star pull-right"></span>
+                            <span class="pull-left">{{::activityPoints}}</span><span class="icomoon icon-star pull-right"></span>
                         </div>
                     </section>
                     <section class="txt-renglon centered form ">

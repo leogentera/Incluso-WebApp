@@ -192,7 +192,7 @@
         	templateUrl: 'Templates/Programa/Dashboard.html',
         	controller: 'programaDashboardController'
         });
-        
+
         $routeProvider.when('/Foro', {
             templateUrl: 'Templates/Programa/foro.html',
             controller: 'programaForoController'
