@@ -163,10 +163,21 @@ angular
                     }
                     
                     if (postCounter >= 40) {
-                        
+                                                                                        
                         var badgeModel = {
                             badgeid: badgeForum[0].id //badge earned when a user completes his profile.
                             };
+                            
+                        var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
+                        for(var i = 0; i < userProfile.badges.length; i++)
+                        {
+                            if (userProfile.badges[i].id == badgeModel.badgeid) {
+                                userProfile.badges[i].status = "won";
+                            }
+                        }
+            
+                        localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
+                            
                         moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){
                             },function(){
                                 });
@@ -281,28 +292,34 @@ angular
             $scope.isReportedAbuseModalCollapsed = new Array();
             $scope.isReportedAbuseSentModalCollapsed = new Array();
             $scope.replyText = null;
+            
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex){
 
-                    $scope.validateConnection(function(){
+                $scope.validateConnection(function(){
                     
-                var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
-                that.replyText = '';
-                $scope.$emit('ShowPreloader');
-                moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
-                    function(){
-                        $scope.textToPost=null;
-                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
-                        $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
-                        checkForumExtraPoints();
-                        checkForumProgress(refreshTopicData);
-                    },
-                    function(){
-                        $scope.textToPost=null;
-                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
-                        $scope.$emit('HidePreloader');
-                    });
+                    var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
+                    that.replyText = '';
+                    $scope.$emit('ShowPreloader');
+                    console.log(parentId);
                     
-                    }, offlineCallback);
+                    $scope.showPreviousComments(parentId);
+                    moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
+                        function(){
+                            $scope.textToPost=null;
+                            $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
+                            $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
+                            checkForumExtraPoints();
+                            checkForumProgress(refreshTopicData);
+                            
+                        },
+                        function(){
+                            $scope.textToPost=null;
+                            $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
+                            $scope.$emit('HidePreloader');
+                        });
+                    
+                }, offlineCallback);
+                                    
             };
 
             $scope.textToPost = null;
@@ -337,7 +354,7 @@ angular
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         checkForumExtraPoints();
-                        checkForumProgress(refreshTopicData);
+                        checkForumProgress(refreshTopicData);                        
                     },
                     function(){
                         $scope.textToPost=null;
@@ -346,6 +363,7 @@ angular
                     });
                         
                     }, offlineCallback);
+                
             };
             $scope.postLinkToForum = function(){
                     

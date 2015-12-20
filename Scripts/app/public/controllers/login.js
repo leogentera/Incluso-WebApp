@@ -1,4 +1,4 @@
-﻿// http://weblogs.asp.net/dwahlin/archive/2013/09/18/building-an-angularjs-modal-service.aspx
+// http://weblogs.asp.net/dwahlin/archive/2013/09/18/building-an-angularjs-modal-service.aspx
 angular
     .module('incluso.public.login', [])
     .controller('publicLoginController', [
@@ -109,18 +109,19 @@ angular
                 if (currentUser && currentUser.token && currentUser.token != "") {
                     $timeout(function(){ $scope.$emit('ShowPreloader'); }, 1500);
                     $timeout(function(){ $scope.validateConnection(function() {
-                        _loadDrupalResources();
+                        _loadDrupalResources(function(){
 
-                        //Run queue
-                        moodleFactory.Services.ExecuteQueue(function(){
+                            //Run queue
+                            moodleFactory.Services.ExecuteQueue(function(){});
+    
+                            //Load Quizzes assets
+                            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                            $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
+                            loadQuizesAssets($scope.userprofile.id, $scope.currentUser.token);
+                            GetExternalAppData();                        
+
                         });
-
-                        //Load Quizzes assets
-                        $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                        $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                        loadQuizesAssets($scope.userprofile.id, $scope.currentUser.token);
-                        GetExternalAppData();                        
-
+                        
                     }, function(){}); }, 2000);
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
                             $scope.$emit('HidePreloader');
@@ -129,6 +130,7 @@ angular
                             $scope.$emit('HidePreloader');
                             $location.path('/ProgramaDashboard');
                         }, true);
+                    
                 } else {
                     $scope.$emit('HidePreloader');
                 }
@@ -163,9 +165,8 @@ angular
             function loginConnectedCallback() {
                 // reflect loading state at UI
 
-                _loadDrupalResources();
-
-                $http(
+                _loadDrupalResources(function(){
+                    $http(
                     {
                         method: 'POST',
                         url: API_RESOURCE.format("authentication"),
@@ -218,7 +219,11 @@ angular
 
                         $scope.$emit('scrollTop');
                         $scope.isLogginIn = false;
-                    });
+                        });
+                    
+                });
+
+                
             }
 
             $scope.loginWithFacebook = function () {
@@ -238,27 +243,27 @@ angular
             function FacebookLoginSuccess(data) {
                 var userFacebook = JSON.parse(data);
 
-                _loadDrupalResources();            
-
+                _loadDrupalResources();
+                                        
                 //save token for further requests and autologin
                 $scope.currentUserModel = userFacebook;
                 $scope.currentUserModel.token = userFacebook.token;
                 $scope.currentUserModel.userId = userFacebook.id;
-
+    
                 _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-
+    
                 _setId(userFacebook.id);
-
+    
                 //Run queue
                 moodleFactory.Services.ExecuteQueue(function(){
                     //Preparing for syncAll...
-
+    
                     //succesful credentials
                     _syncAll(function () {
                         //Came back from redirecting...                        
                         var course = moodleFactory.Services.GetCacheJson("course");
                         moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){}, function() {}, false);
-
+    
                             //Load Quizzes assets
                             loadQuizesAssets(userFacebook.id, userFacebook.token);
                             GetExternalAppData();                            
@@ -274,12 +279,12 @@ angular
                             }, 1000);
                     });
                 });                            
-
+    
                 if ($scope.userCredentialsModel.rememberCredentials) {
                     _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
                 } else {
                     localStorage.removeItem("Credentials");
-                }
+                }                    
             }
 
             function FacebookLoginFailure(data) {
@@ -301,11 +306,7 @@ angular
             var GetExternalAppData = function(){
                 var user = $scope.currentUserModel.userId;
                 var token = $scope.currentUserModel.token;                
-                moodleFactory.Services.GetAsyncAvatar(user, null, function () {
-                    //Success
-                }, function(){
-                    //Error
-                }, true);
+                moodleFactory.Services.GetAsyncAvatar(user, token, function () {}, function(){}, true);
                 var courseModuleIds = [{"id":1039, "userInfo":true}, {"id":2012, "userInfo":false},{"id":2017, "userInfo":true}, {"id":3302, "userInfo":false}, {"id":3402, "userInfo":true}];
                 for (var i = 0; i < courseModuleIds.length; i++) {
                     var courseModule = courseModuleIds[i];

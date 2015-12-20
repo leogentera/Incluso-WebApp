@@ -2,7 +2,7 @@
     <div class="alert alert-warning" role="alert" ng-show="showWarning" ng-cloak>
         <div class="alert-message" ng-click="hideWarning">
             <div class="icomoon icon-warning"></div>
-            <p>{{warningMessage}}</p>
+            <p>{{::warningMessage}}</p>
         </div>
     </div>
 
@@ -49,7 +49,7 @@
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea1" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Cuál?" 
-                                              ng-model="misCualidadesOtroAnswers[0].answers[0]" ng-readonly="{{misCualidadesAnswers[0][11] == 1}} && {{misCualidadesOtroAnswers[0].answers[0] != ''}}"></textarea>
+                                              ng-model="misCualidadesOtroAnswers[0].answers[0]" ng-readonly="{{::misCualidadesAnswers[0][11] == 1}} && {{::misCualidadesOtroAnswers[0].answers[0] != ''}}"></textarea>
                                 </div>                               
                             </div>
                         </section>
@@ -90,7 +90,7 @@
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea2" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Cuál?" 
-                                              ng-model="misCualidadesOtroAnswers[1].answers[0]" ng-readonly="{{misCualidadesAnswers[1][11] == 1}} && {{misCualidadesOtroAnswers[1].answers[0] != ''}}"></textarea>
+                                              ng-model="misCualidadesOtroAnswers[1].answers[0]" ng-readonly="{{::misCualidadesAnswers[1][11] == 1}} && {{::misCualidadesOtroAnswers[1].answers[0] != ''}}"></textarea>
                                 </div>
                             </div>
                         </section>
@@ -131,7 +131,7 @@
                                 <div class="add">
                                     <span class="icomoon icon-edit"></span>
                                     <textarea id="textoarea3" class="form-control form-control-lg theme-form" row="2" name="opciones" placeholder="¿Cuál?" 
-                                              ng-model="misCualidadesOtroAnswers[2].answers[0]" ng-readonly="{{misCualidadesAnswers[2][11] == 1}} && {{misCualidadesOtroAnswers[2].answers[0] != ''}}"></textarea>
+                                              ng-model="misCualidadesOtroAnswers[2].answers[0]" ng-readonly="{{::misCualidadesAnswers[2][11] == 1}} && {{::misCualidadesOtroAnswers[2].answers[0] != ''}}"></textarea>
                                 </div>
 
                             </div>
@@ -172,7 +172,7 @@
                     <section class="txt-renglon pill" ng-show="activityPoints > 0 && activity_status == 0">
                         <div class="pull-left">Estrellas ganadas:</div>
                         <div class="pull-right sm-pill">
-                            <span class="pull-left">{{activityPoints}}</span><span class="icomoon icon-star pull-right"></span>
+                            <span class="pull-left">{{::activityPoints}}</span><span class="icomoon icon-star pull-right"></span>
                         </div>
                     </section>
                     <section class="txt-renglon centered form">

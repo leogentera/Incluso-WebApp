@@ -34,14 +34,14 @@
 				<section class="component global-progress txt-renglon centered">
 					<h3 ng-bind="'- ' + contentResources.global_progress + ' -'"></h3>
 					<div class="spinner">
-						<img src="assets/images/prcnt/{{usercourse == null ? 0 : usercourse.globalProgress}}.png" alt="progress" />
+						<img src="assets/images/prcnt/{{::usercourse == null ? 0 : usercourse.globalProgress}}.png" alt="progress" />
 						<div class="circle"></div>
 						<div class="text" ng-bind="usercourse.globalProgress != null ? usercourse.globalProgress + '%' : '0%'"></div>
 					</div>
 				</section>		
 
 				<section class="component current-satge">
-					<img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
+					<img ng-src="assets/images/estacion{{::currentStage || 1}}.png" alt="estacion"/>
 					<h3 ng-bind="'- ' + usercourse.stages[currentStage-1].sectionname + ' -'"></h3>
 					<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()">
 						<span ng-bind="usercourse.firsttime == 1 ? contentResources.button_start_mission : contentResources.button_continue_mission"></span>
@@ -52,7 +52,7 @@
 			<div class="dash-bottom">
 				<section class="component my-badges">
 					<h3 ng-bind="'- ' + contentResources.shield_title + ' -'"></h3>
-					<img src="assets/images/badges/{{user.shield ? 'img-' + user.shield + '.svg' : 'img-badge-placeholder.svg'}}" alt="badges" />
+					<img src="assets/images/badges/{{::user.shield ? 'img-' + user.shield + '.svg' : 'img-badge-placeholder.svg'}}" alt="badges" />
 				</section>
 				
 				<section class="component top-users" style="width: 100vw">
@@ -63,7 +63,7 @@
 								<div class="user-container">
 									<div class="user-avatar">
 										<figure>
-											<img ng-src="{{course.leaderboard[0].profileimageurl ? course.leaderboard[0].profileimageurl : 'assets/avatar/default.png'}}" alt="avatar" />
+											<img ng-src="{{::course.leaderboard[0].profileimageurl ? course.leaderboard[0].profileimageurl : 'assets/avatar/default.png'}}" alt="avatar" />
 
 
 											<figcaption>1</figcaption>
@@ -90,7 +90,7 @@
 							<div class="user-container">
 								<div class="user-avatar">
 									<figure>
-										<img ng-src="{{course.leaderboard[1].profileimageurl ? course.leaderboard[1].profileimageurl : 'assets/avatar/default.png'}}" alt="avatar" />
+										<img ng-src="{{::course.leaderboard[1].profileimageurl ? course.leaderboard[1].profileimageurl : 'assets/avatar/default.png'}}" alt="avatar" />
 										<figcaption>2</figcaption>
 										<div class="arrow-up"></div>
 									</figure>
@@ -115,7 +115,7 @@
 								<div class="user-container">
 									<div class="user-avatar">
 										<figure>
-											<img ng-src="{{course.leaderboard[2].profileimageurl ? course.leaderboard[2].profileimageurl : 'assets/avatar/default.png'}}" alt="avatar" />
+											<img ng-src="{{::course.leaderboard[2].profileimageurl ? course.leaderboard[2].profileimageurl : 'assets/avatar/default.png'}}" alt="avatar" />
 											<figcaption>3</figcaption>
 											<div class="arrow-up"></div>
 										</figure>
@@ -143,7 +143,7 @@
 								<a href="">
 									<div class="user-avatar">
 										<figure class="user-avatar-">
-											<img ng-src="{{user.profileimageurl}}" alt="avatar"/>
+											<img ng-src="{{::user.profileimageurl}}" alt="avatar"/>
 											<figcaption ng-bind="user.rank"></figcaption>
 										</figure>
 									</div>

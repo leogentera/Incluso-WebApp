@@ -132,7 +132,7 @@ angular
                 }
                 catch (e) {
                     successGame(
-                        {"respuestas":[{"preguntaId":"1", "respuestaId":"2"}, {"preguntaId":"2", "respuestaId":"5"},{"preguntaId":"3", "respuestaId":"7"},{"preguntaId":"4", "respuestaId":"11"},{"preguntaId":"5", "respuestaId":"14"},{"preguntaId":"6", "respuestaId":"17"},{"preguntaId":"7", "respuestaId":"20"},{"preguntaId":"8", "respuestaId":"23"}],"userId":"645","actividad":"Tú Eliges", "duracion":"0", "fechaInicio":"2015-11-30 11:45:13","fechaFin":"2015-11-30 11:45:55","actividadCompleta":"Si", "calificación":"Regular", "gustaActividad":"Si"}
+                        {"respuestas":[{"preguntaId":"1", "respuestaId":"2"}, {"preguntaId":"2", "respuestaId":"5"},{"preguntaId":"3", "respuestaId":"7"},{"preguntaId":"4", "respuestaId":"11"},{"preguntaId":"5", "respuestaId":"14"},{"preguntaId":"6", "respuestaId":"17"},{"preguntaId":"7", "respuestaId":"20"},{"preguntaId":"8", "respuestaId":"23"}],"userId":"645","actividad":"Tú Eliges", "duracion":"0", "fechaInicio":"2015-11-30 11:45:13","fechaFin":"2015-11-30 11:45:55","actividadCompleta":"Si", "calificación":"Aprobado", "gustaActividad":"Si"}
                     );
                 } 
             }
@@ -191,6 +191,25 @@ angular
                         updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     }
                 }
+                if (data["calificación"] && data["calificación"] == "Reprobado") {
+                    $scope.isReprobado = true;
+                    _loadedResources = false;
+                    _pageLoaded = true;
+                    drupalFactory.Services.GetContent("TuEligesRobot", function (data, key) {
+                        _loadedResources = true;
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                        var modalInstance = $modal.open({
+                            templateUrl: 'TuEligesModal.html',
+                            controller: 'stageTuEligesModalController',
+                            resolve: {
+                                content: function () {
+                                    return data.node;
+                                }
+                            },
+                            windowClass: 'closing-stage-modal user-help-modal'
+                        });
+                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+                }
                 if (parentActivity.activities) {
                     for (var i = 0; i < subactivitiesCompleted.length; i++) {
                         $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i]);
@@ -226,11 +245,13 @@ angular
                         moodleFactory.Services.ExecuteQueue();
                     }      
                     $scope.$emit('HidePreloader');
+                    var url = "";
                     if ($scope.IsComplete) {
-                        $location.path('/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
+                        url = ($scope.isReprobado ? '/ZonaDeNavegacion/TuEliges/TuEliges/2012' : '/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
                     }else{
                         $location.path('/ZonaDeNavegacion/Dashboard/2/3')
                     };
+                    $location.path(url);
                 });
             }
                 
@@ -260,4 +281,11 @@ angular
                 );
               }
             }
-        }]);
+        }])
+        .controller('stageTuEligesModalController', function ($scope, $modalInstance, content) {
+            $scope.message = content.mensaje;
+            $scope.title = content.titulo;
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        })

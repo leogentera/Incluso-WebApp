@@ -259,6 +259,9 @@ angular
 
                 if (_tryCloseStage($scope.idEtapa)) {
                     $scope.openModal_CloseStage();
+                    
+                    var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+                    moodleFactory.Services.PostGeolocation(userCourse.stages[$scope.idEtapa].coursemoduleid);
                 }
     
                 //Update progress

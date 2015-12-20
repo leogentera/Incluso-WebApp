@@ -106,6 +106,8 @@ angular
                     "estrellas": "" + $scope.stars,
                     "pathImagenFicha": "",
                     "imagenFicha": "",
+                    "genero": $scope.user.gender,
+                    "pathImagen":"",
                     "fichaProyecto": []
                 }
                 $scope.dimensionMap = [];

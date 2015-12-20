@@ -5,7 +5,7 @@
                 <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
                     <h3>
                         <span class="icomoon icon-video-file"></span>
-                        <span>{{contentResources.stage_video_title}}</span>
+                        <span>{{::contentResources.stage_video_title}}</span>
                         <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
                         <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
                     </h3>
@@ -26,21 +26,21 @@
         </section>
 
         <section class="component showcase-carousel pages">
-            <h3>{{contentResources.challenges_title}}</h3>
+            <h3>{{::contentResources.challenges_title}}</h3>
             <div id="carousel-example-generic2" class="carousel">
                 <div id="owl-demo2" class="owl-carousel">
                     <div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">                            
                         <figure class="item-image">
-                            <img ng-src="{{retosIconos[reto.sectionname]}}" alt="{{reto.sectionname}}" />
+                            <img ng-src="{{::retosIconos[reto.sectionname]}}" alt="{{::reto.sectionname}}" />
                         </figure>
                         <h4 class="item-title" ng-bind="reto.sectionname"></h4>
                         <p class="item-description" ng-bind="reto.activityintro"></p>
 
                         <div class="page-number">
                             <p class="text-center">
-                                <span>{{model.stages[idEtapa].challenges.indexOf(reto) + 1}}</span>
+                                <span>{{::model.stages[idEtapa].challenges.indexOf(reto) + 1}}</span>
                                 <span>/</span>
-                                <span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
+                                <span class="total-number">{{::model.stages[idEtapa].challenges.length}}</span>
                             </p>                    
                         </div>                               
                     </div>
@@ -137,8 +137,8 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
-                <p class="txt-renglon centered">{{actualMessage.message}}</p>
+                <h3 class="subtitle text-center">{{::actualMessage.title}}</h3>
+                <p class="txt-renglon centered">{{::actualMessage.message}}</p>
             </div>
         </div>
     </script>
@@ -152,8 +152,8 @@
                 </a>
             </div>
             <div class="modal-body">
-                <h3 class="subtitle text-center">{{robotMessages.title}}</h3>
-                <p class="txt-renglon centered">{{robotMessages.message}}</p>
+                <h3 class="subtitle text-center">{{::robotMessages.title}}</h3>
+                <p class="txt-renglon centered">{{::robotMessages.message}}</p>
             </div>
             <a class="btn btn-primary btn-lg btn-cnt" id="continuar" style="margin-bottom: 30px;" ng-click="navigateToDashboard()">CONTINUAR</a>
         </div>

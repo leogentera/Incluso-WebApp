@@ -16,4 +16,18 @@
     <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="isInstalled" ng-click="downloadGame()">Empezar Juego</a>
     <div role="button" class="txt-renglon centered" ng-click="back()">Cancelar</div>
   </article>
+  <script type="text/ng-template" id="TuEligesModal.html">
+      <div class="modal-robot robot-lg closing-stage-modal user-help" >
+          <img src="assets/images/img-robot-lg.svg" alt="robot" />
+          <div class="modal-header">
+              <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                  <span class="icomoon icon-cross"></span>
+              </a>
+          </div>
+          <div class="modal-body">
+              <h3 class="subtitle text-center" ng-bind="title"></h3>
+              <p class="txt-renglon centered" ng-bind="message"></p>
+          </div>
+      </div>
+  </script>
 </div>

@@ -111,7 +111,7 @@ angular
 
             $scope.autologin = function(data) {
 
-                _loadDrupalResources();
+                _loadDrupalResources(function(){
 
                 //save token for further requests and autologin
                 $scope.currentUserModel = data;
@@ -120,8 +120,9 @@ angular
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
                 _setId(data.id);
-
-
+                
+                moodleFactory.Services.PostGeolocation(-1);
+                
                 moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
                         var course = moodleFactory.Services.GetCacheJson("course");
                         moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function(){
@@ -184,6 +185,7 @@ angular
                             $location.path('/ProgramaDashboard');
                         }
                     }, true);
+                });
             };
 
             $scope.login = function() {
