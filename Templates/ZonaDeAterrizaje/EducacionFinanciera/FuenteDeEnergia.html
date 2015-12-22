@@ -35,7 +35,7 @@
                       <span class="icomoon icon-hyperlink"></span>
                     </div>
                     <div class="col-xs-9">
-                      <span>{{activity.activityname}}</span>
+                      <span>{{::activity.activityname}}</span>
                     </div>
                     <div class="col-xs-1">
                       <span class="icomoon icon-required" ng-hide="activity.optional"></span>
@@ -52,7 +52,7 @@
                       <span class="icomoon icon-video-file"></span>
                     </div>
                     <div class="col-xs-9">
-                      <span>{{activity.activityname}}</span>
+                      <span>{{::activity.activityname}}</span>
                     </div>
                     <div class="col-xs-1">
                       <span class="icomoon icon-required" ng-hide="activity.optional"></span>
@@ -69,7 +69,7 @@
                       <span class="icomoon icon-text"></span>
                     </div>
                     <div class="col-xs-9">
-                      <span>{{activity.activityname}}</span>
+                      <span>{{::activity.activityname}}</span>
                     </div>
                     <div class="col-xs-1">
                       <span class="icomoon icon-required" ng-hide="activity.optional"></span>
@@ -86,7 +86,7 @@
                       <span class="icomoon icon-camera"></span>
                     </div>
                     <div class="col-xs-9">   
-                      <span>{{activity.activityname.length > 2 ? activity.activityname : ''}}</span>
+                      <span>{{::activity.activityname.length > 2 ? activity.activityname : ''}}</span>
                     </div>        
                     <div class="col-xs-1">
                       <span class="icomoon icon-required" ng-hide="activity.optional"></span>
@@ -105,18 +105,18 @@
                       <span ng-click="updateStatus(activity.groupid)" ng-if="activity.activity_type == 'label' && !activity.status">Mostrar texto...</span>      
 
                       <div ng-if="activity.activity_type == 'resource'" class="image-container">
-                        <a href="{{activity.activityContent.content[0].fileurl}}" target="blank"><img ng-click="updateStatus(activity.groupid)" ng-src="{{activity.status && activity.activityContent.content[0].fileurl || 'assets/images/svg/img_placeholder-01.svg'}}" class="image-element'"></a>
+                        <a href="{{::activity.activityContent.content[0].fileurl}}" target="blank"><img ng-click="updateStatus(activity.groupid)" ng-src="{{::activity.status && activity.activityContent.content[0].fileurl || 'assets/images/svg/img_placeholder-01.svg'}}" class="image-element'"></a>
                       </div>
-                      <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>
+                      <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'" ng-click="updateStatus(activity.groupid)" href={{::activity.activityContent.url}} target="_blank">{{::activity.activityContent.url}}</a>
                       <section class="component ng-scope"  ng-if="activity.activityintro == 'video'">
                         <div class="panel panel-video">
                             <div class="video-player">
                                 <div class="stage">
-                                    <a class="icon icon-play" ng-click="updateStatus(activity.groupid)" href={{activity.activityContent.url}} target="_blank">
+                                    <a class="icon icon-play" ng-click="updateStatus(activity.groupid)" href={{::activity.activityContent.url}} target="_blank">
                                         <span class="glyphicon glyphicon-play"></span>
                                     </a>
                                     <figure class="poster">
-                                        <img ng-src="{{activity.status && activity.activityContent.thumbnail || 'assets/images/svg/img_placeholder-01.svg'}}" alt="video" />
+                                        <img ng-src="{{::activity.status && activity.activityContent.thumbnail || 'assets/images/svg/img_placeholder-01.svg'}}" alt="video" />
                                     </figure>
                                 </div>
                             </div>
@@ -131,10 +131,10 @@
                     <div ng-repeat="repeatComment in activity.activityContent.comments | orderBy:repeatComment.dateissued : true | limitTo: activity.activityContent.commentsQty">
                       <div class="coment block">                        
                         <div>
-                          <a class="user-alias" ng-click="navigateTo('Perfil/' + comment.id)">{{repeatComment.alias}}</a>
+                          <a class="user-alias" ng-click="navigateTo('Perfil/' + comment.id)">{{::repeatComment.alias}}</a>
                           <span>comentó:</span>
-                          <div>{{repeatComment.dateissued * 1000 | date: "dd' de 'MMMM' de 'yyyy', 'h:mm:ss a"}}</div>
-                          <div>{{repeatComment.user_comment}}</div>
+                          <div>{{::repeatComment.dateissued * 1000 | date: "dd' de 'MMMM' de 'yyyy', 'h:mm:ss a"}}</div>
+                          <div>{{::repeatComment.user_comment}}</div>
                         </div>
                       </div>
                     </div>
@@ -182,33 +182,33 @@
       <div class="page evaluation" ng-class="currentPage == 2 ? 'active' : ''">
         <div id="finalized">
             <section class="header-title">                
-                <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message}}</div>
+                <div class="txt-renglon centered txt-bigger min-pad ">{{::closingContent.closing_message}}</div>
                 <div class="subtitle centered min-pad ">"Fuente de energía"</div>                
-                <div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message_congrats}}</div>
+                <div class="txt-renglon centered txt-bigger min-pad ">{{::closingContent.closing_message_congrats}}</div>
             </section>
             <section class="centered txt-bigger ">
                 <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
             </section>
             <section class="txt-renglon pill">
-                <div class="pull-left">{{closingContent.earned_stars}}</div>                
+                <div class="pull-left">{{::closingContent.earned_stars}}</div>                
                 <div class="pull-right sm-pill">
                   <span class="pull-left">250</span>
                   <span class="icomoon icon-star pull-right"></span>
                 </div>
             </section>
             <section class="txt-renglon centered form ">
-                {{closingContent.activity_rating_label}}                
+                {{::closingContent.activity_rating_label}}                
                 <section class="txt-renglon txt-bigger clearfix">
                     <div class="opinion">
                         <input id="like" type="radio" value="1" name="like" ng-model="like_status">                        
-                        <label for="like">{{closingContent.like_label}}</label>
+                        <label for="like">{{::closingContent.like_label}}</label>
                     </div>
                     <div class="opinion">
                         <input id="dislike" type="radio" value="0" name="like" ng-model="like_status">                        
-                        <label for="dislike">{{closingContent.not_like_label}}</label>
+                        <label for="dislike">{{::closingContent.not_like_label}}</label>
                     </div>
                 </section>
-                <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{closingContent.finish_button}}</a>                
+                <a class="btn btn-primary btn-lg btn-cnt" ng-click="finishActivity()">{{::closingContent.finish_button}}</a>                
             </section>
           </div>
       </div>
