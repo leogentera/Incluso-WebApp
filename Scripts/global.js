@@ -1,9 +1,8 @@
 //global variables and functions
 var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-2/RestfulAPI/public/{0}"; //Azure Development environment
 var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
-//var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-Moodle/"
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
-//var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
+
 
 var _courseId = 4;
 var _endActivityCurrentChallenge = null;
@@ -622,7 +621,7 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
     
     var activity = _getActivityByCourseModuleId(courseModuleId, userCourse );
     
-    if (activity) {
+    if (activity && allNotifications) {
       //code
     
       for (var i = 0; i < allNotifications.length; i++) {
@@ -724,33 +723,35 @@ var _progressNotification = function(indexStageId, currentProgress){
     
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     
-    
     var stageId = userCourse.stages[indexStageId].section;
     
-    for(i = 0; i < notifications.length; i++){
-        var currentNotification = notifications[i];
-        
-        if (currentNotification.type == notificationTypes.progressNotifications && currentNotification.status != "won" && currentProgress >= currentNotification.progressmin
-            && currentProgress <= currentNotification.progressmax && stageId == currentNotification.stageid) {
+    if(notifications){
+      
+      for(i = 0; i < notifications.length; i++){
+          var currentNotification = notifications[i];
           
-            console.log("progress notification created" + currentNotification.name);
-            //Add create notification logic.
+          if (currentNotification.type == notificationTypes.progressNotifications && currentNotification.status != "won" && currentProgress >= currentNotification.progressmin
+              && currentProgress <= currentNotification.progressmax && stageId == currentNotification.stageid) {
             
-            var wonDate = new Date();
-            var dataModelNotification = {
-              notificationid : String(currentNotification.id),
-              userid: currentUser.id,
-              wondate : wonDate
-            };
-            
-            notifications[i].wondate = wonDate;
-            notifications[i].status = "won";
-            localStorage.setItem("notifications", JSON.stringify(notifications));
-  
-            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
-                console.log("progress notification created" + currentNotification.name);
-            }, errorCallback, true);            
-        }        
+              console.log("progress notification created" + currentNotification.name);
+              //Add create notification logic.
+              
+              var wonDate = new Date();
+              var dataModelNotification = {
+                notificationid : String(currentNotification.id),
+                userid: currentUser.id,
+                wondate : wonDate
+              };
+              
+              notifications[i].wondate = wonDate;
+              notifications[i].status = "won";
+              localStorage.setItem("notifications", JSON.stringify(notifications));
+    
+              moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
+                  console.log("progress notification created" + currentNotification.name);
+              }, errorCallback, true);            
+          }        
+      }
     }
 }
 

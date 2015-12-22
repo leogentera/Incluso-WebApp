@@ -136,11 +136,11 @@
             function getDataAsyncCallback() {
                 //Load UserCourse structure into model
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
-
+                getUserNotifications($scope.usercourse.courseid);
                 //Load Course from server
                 moodleFactory.Services.GetAsyncCourse($scope.usercourse.courseid, function () {
-                    $scope.course = JSON.parse(localStorage.getItem("course"));
-                    $scope.currentStage = getCurrentStage();
+                    $scope.course = JSON.parse(localStorage.getItem("course"));                    
+                    $scope.currentStage = getCurrentStage();                    
                     _setLocalStorageItem("currentStage", $scope.currentStage);
 
                     _pageLoaded = true;
@@ -155,7 +155,7 @@
                         moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, function () {
                             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
 
-                            getUserNotifications($scope.course.courseid);
+                            
 
                             if (!$scope.profile.termsAndConditions) {
                                 $scope.openTermsModal();
