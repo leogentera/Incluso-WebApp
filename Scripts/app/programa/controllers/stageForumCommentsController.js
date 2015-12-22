@@ -299,8 +299,7 @@ angular
                     
                     var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
                     that.replyText = '';
-                    $scope.$emit('ShowPreloader');
-                    console.log(parentId);
+                    $scope.$emit('ShowPreloader');                    
                     
                     $scope.showPreviousComments(parentId);
                     moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
