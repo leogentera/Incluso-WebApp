@@ -1651,7 +1651,7 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
 
 /* loads drupal resources (content) */
 var _loadedDrupalResources = false;
-var _loadDrupalResources = function(callback) {
+var _loadDrupalResources = function() {
     _loadedDrupalResources = false;
     var propCounter = 0;
     
@@ -1667,10 +1667,6 @@ var _loadDrupalResources = function(callback) {
     function errorDrupalResourcesCallback() {
         propCounter++;
         _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
-    }
-    
-    if (callback) {
-      callback();
     }
 }
 

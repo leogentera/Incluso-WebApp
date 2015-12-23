@@ -109,18 +109,16 @@ angular
                 if (currentUser && currentUser.token && currentUser.token != "") {
                     $timeout(function(){ $scope.$emit('ShowPreloader'); }, 1500);
                     $timeout(function(){ $scope.validateConnection(function() {
-                        _loadDrupalResources(function(){
+                        
+                        _loadDrupalResources();
+                        //Run queue
+                        moodleFactory.Services.ExecuteQueue(function(){});
 
-                            //Run queue
-                            moodleFactory.Services.ExecuteQueue(function(){});
-    
-                            //Load Quizzes assets
-                            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                            $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                            loadQuizesAssets($scope.userprofile.id, $scope.currentUser.token);
-                            GetExternalAppData();                        
-
-                        });
+                        //Load Quizzes assets
+                        $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                        $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
+                        loadQuizesAssets($scope.userprofile.id, $scope.currentUser.token);
+                        GetExternalAppData();   
                         
                     }, function(){}); }, 2000);
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
@@ -164,9 +162,8 @@ angular
 
             function loginConnectedCallback() {
                 // reflect loading state at UI
-
-                _loadDrupalResources(function(){
-                    $http(
+                _loadDrupalResources();
+                $http(
                     {
                         method: 'POST',
                         url: API_RESOURCE.format("authentication"),
@@ -184,7 +181,6 @@ angular
                         //Run queue
                         moodleFactory.Services.ExecuteQueue(function (){
                            //Preparing for syncAll.
-
                             //succesful credentials
                             _syncAll(function () {
 
@@ -220,8 +216,6 @@ angular
                         $scope.$emit('scrollTop');
                         $scope.isLogginIn = false;
                         });
-                    
-                });
 
                 
             }
