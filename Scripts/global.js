@@ -1656,19 +1656,22 @@ var _loadDrupalResources = function(callback) {
     var propCounter = 0;
     
     for (var prop in drupalFactory.NodeRelation) {
-        drupalFactory.Services.GetContent(prop, function() {
-            propCounter++;
-            _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
-            }, function(){
-                propCounter++;
-                _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
-                }, true);
+        drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
+    }
+    
+    function successDrupalResourcesCallback() {
+        propCounter++;
+        _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
+    }
+    
+    function errorDrupalResourcesCallback() {
+        propCounter++;
+        _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
     }
     
     if (callback) {
       callback();
     }
-    
 }
 
 /* Waits until page is loaded */
