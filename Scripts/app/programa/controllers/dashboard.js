@@ -1,4 +1,4 @@
-﻿angular
+angular
     .module('incluso.programa.dashboard', [])
     .controller('programaDashboardController', [
         '$q',
@@ -9,7 +9,8 @@
         '$rootScope',
         '$http',
         '$modal',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal) {
+        '$interval',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $interval) {
 
             var _loadedResources = false;
             var _pageLoaded = false;
@@ -20,8 +21,14 @@
             $scope.$emit('ShowPreloader'); //show preloader
 
             var activity_identifier = "0000";
-
-            getContentResources(activity_identifier);
+            
+            
+            var getContentResourcesInterval = $interval(function() {
+                if(_loadedDrupalResources) {
+                    $interval.cancel(getContentResourcesInterval);
+                    getContentResources(activity_identifier);
+                }
+            }, 1000);
 
             if (!_getItem("userId")) {
                 $location.path('/');
