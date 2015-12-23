@@ -142,8 +142,7 @@ angular
                 }
             };
 
-            var forumBadgeReached = function(){
-                
+            var forumBadgeReached = function(){            
                 var profileBadges = profile.badges;
                 var badgeForum = _.where(profileBadges, { name: "Foro interplanetario"});
                 if (badgeForum && badgeForum[0].status == "pending") {
@@ -176,13 +175,33 @@ angular
                             }
                         }
             
+                        showRobotForum();
                         localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
-                            
-                        moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){
-                            },function(){
-                                });
+                        moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){},function(){});
+                        
                     }
                 }
+            };
+            
+            
+            function showRobotForum(){
+                    $scope.badgeRobotMessages = {
+                        title: $scope.robotContentResources.titulo,
+                        message: $scope.robotContentResources.mensaje
+                    };
+                            
+                    _setLocalStorageItem("badgeRobotMessage", JSON.stringify($scope.badgeRobotMessages));
+                    $scope.openModal_badgeRobotMessage();
+            }
+                
+            $scope.openModal_badgeRobotMessage = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'badgeForumRobotMessageModal.html',
+                    controller: 'badgeForumRobotMessageModal',
+                    size: size,
+                    windowClass: 'closing-stage-modal user-help-modal'
+                });
             };
             
             
@@ -647,15 +666,39 @@ angular
             }
 
             function getContentResources(activityIdentifierId) {
-                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                drupalFactory.Services.GetContent(activityIdentifierId,
+                    function (data, key) {
                         _loadedResources = true;
-                    $scope.setToolbar($location.$$path,data.node.tool_bar_title);
-                    $scope.backButtonText = data.node.back_button_text;
-                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
-
-                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
-            };
+                        $scope.setToolbar($location.$$path,data.node.tool_bar_title);
+                        $scope.backButtonText = data.node.back_button_text;
+                        if (_loadedResources && _pageLoaded) {
+                            $scope.$emit('HidePreloader');
+                        }
+                        getRobotMessageContent();                        
+                    },function () {
+                        _loadedResources = true;
+                        if (_loadedResources && _pageLoaded) {
+                            $scope.$emit('HidePreloader');
+                        }
+                    }, false);
             }
+            
+            function getRobotMessageContent() {
+                    drupalFactory.Services.GetContent("BadgeForumRobot",function(data, key){
+                        $scope.robotContentResources = data.node;
+                        console.log(data.node);                        
+                        },function(){},false); 
+            }
+            
+        }
+        
+        }]).controller('badgeForumRobotMessageModal', function ($scope, $modalInstance) {
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+            
+            var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));            
+            $scope.actualMessage = robotMessage;
+    });
 
-        }]);
 

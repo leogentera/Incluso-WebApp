@@ -196,11 +196,10 @@ angular
                 //Exclude challenges initial and final from showing modal robot
                 var challengeExploracionInicial = 205;
                 var challengeExploracionFinal = 218;
-                if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){
-                    _setLocalStorageItem("challengeMessageId",challengeCompletedId);
+                if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){                    
                     showClosingChallengeRobot(challengeCompletedId);
                 }else{
-                    _setLocalStorageItem("challengeMessageId",0);
+                    localStorage.removeItem("challengeMessage");
                 }
     
                 //Try to close stage. If stage is closed exactly in this attempt, show closing message.
@@ -302,7 +301,6 @@ angular
                 $scope.actualMessage = _.findWhere($scope.robotMessages, { read: "false", challengeId: challengeCompletedId });                
                 if($scope.actualMessage){                
                     _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
-                    console.log($scope.actualMessage);
                     $scope.openModal_CloseChallenge();
                 }
             }
