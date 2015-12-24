@@ -1109,7 +1109,11 @@
                         var getCurrentPositionErrorCallback = function() {
                             postCurrentPosition();
                         };
-                        navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback);
+                        navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback, {
+                            enableHighAccuracy: true,
+                            maximumAge: 4000,
+                            timeout: 5000
+                          });
                         
                         var postCurrentPosition = function() {
                             
@@ -1224,10 +1228,26 @@
                                 });
                                 postCurrentPosition();
                             };
-                            var getCurrentPositionErrorCallback = function() {
-                                postCurrentPosition();
+                            var getCurrentPositionErrorCallback = function(error) {
+                                
+                                if(moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null) {
+                                    postCurrentPosition();    
+                                }else {
+                                    requestQueue.shift();  
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                    if(requestQueue.length == 0 && _callback != null){
+                                        _callback();
+                                        _callback = null;
+                                    }
+                                    doRequestforCellphone();
+                                }
+                                
                             };
-                            navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback);
+                            navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback, {
+                                enableHighAccuracy: true,
+                                maximumAge: 4000,
+                                timeout: 5000
+                              });
 
                             var postCurrentPosition = function() {
 
