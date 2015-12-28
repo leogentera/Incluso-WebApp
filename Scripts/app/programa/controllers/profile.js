@@ -574,6 +574,7 @@ angular
                 };
 
                 $scope.edit = function () {
+                    $scope.$emit('ShowPreloader');
                     $location.path("/Perfil/Editar/" + $scope.userId);
                 };
 
