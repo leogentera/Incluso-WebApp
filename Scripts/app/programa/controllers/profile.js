@@ -443,8 +443,6 @@ angular
                         console.log($scope.model.values);
                         console.log($scope.model.habilities);
 
-                        $scope.$emit('HidePreloader');
-
                     } else {//Try to get user profile data from Service.
 
                         moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
@@ -507,6 +505,10 @@ angular
                         }, function () {
                         }, true);
                     }
+
+                    $timeout(function () {
+                        $scope.$emit('HidePreloader');
+                    }, 2000);
                 }
 
                 function initFields(m) {

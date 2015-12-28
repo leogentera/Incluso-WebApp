@@ -54,6 +54,7 @@ angular
 			
 			/* redirect to profile */
 			$scope.navigateToMyProfile = function(){
+                $scope.$emit('ShowPreloader');
 				$location.path("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             };
 
