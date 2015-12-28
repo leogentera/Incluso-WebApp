@@ -1,113 +1,117 @@
 <div class="incluso-app public">
-  <article class="login">
+    <article class="login">
 
-    <div class="alert alert-warning" role="alert" ng-show="!userCredentialsModel.modelState.isValid">
-      <div class="alert-message">
-        <div class="icomoon icon-warning"></div>
-        <p>¡Error! Verifica tus datos</p>
-        <ul ng-if="userCredentialsModel.modelState.errorMessages.length > 0">
-          <li ng-repeat="msg in userCredentialsModel.modelState.errorMessages">{{msg}}</li>
-        </ul>
-      </div>
-    </div>
-
-    <header>
-      <figure>
-        <!-- <img src="assets/images/img-logo-gentera.svg" alt="" class="login-logo"> -->
-        <img src="assets/images/img-logo-gentera-lg.png" alt="" class="login-logo" />
-        <figcaption class="center-block text-center">
-          <span>Estudia</span>
-          <span>|</span>
-          <span>Trabaja</span>
-          <span>|</span>
-          <span>Emprende</span>
-        </figcaption>
-      </figure> 
-    </header>
-
-    <section>
-      <form action="#" class="login-form container-fluid" name="loginForm">
-
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="form-group">
-              <div class="input-group input-group-lg theme-default">
-                <p class="input-group-addon" id="userNameAddOn">
-                  <span class="icomoon icon-user"></span>
-                </p>
-                <input type="text"
-                       ng-model="userCredentialsModel.username"
-                       name="userName"
-                       class="form-control form-control-lg theme-default"
-                       placeholder="Usuario"
-                       aria-describedby="userNameAddOn"
-                       ng-pattern="/^[-\.@_A-Za-z0-9]+$/"
-                       ng-trim="false" required />
-              </div>
+        <div class="alert alert-warning" role="alert" ng-show="!userCredentialsModel.modelState.isValid">
+            <div class="alert-message">
+                <div class="icomoon icon-warning"></div>
+                <p>¡Error! Verifica tus datos</p>
+                <ul ng-if="userCredentialsModel.modelState.errorMessages.length > 0">
+                    <li ng-repeat="msg in userCredentialsModel.modelState.errorMessages">{{msg}}</li>
+                </ul>
             </div>
-          </div>
-        </div>
-        
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="form-group">
-              <div class="input-group input-group-lg theme-default">
-                <p class="input-group-addon" id="passwordAddOn">
-                  <span class="icomoon icon-lock"></span>
-                </p>
-                <input type="password"
-                       ng-model="userCredentialsModel.password"
-                       name="password"
-                       class="form-control form-control-lg theme-default"
-                       placeholder="Contraseña"
-                       aria-describedby="emailAddOn"
-                       ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_\-.@])[a-zA-Z0-9_\-.@]{8,}/"
-                       ng-trim="false" required />
-              </div>
-            </div>          
-          </div>
         </div>
 
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="checkbox checkbox-custom">
-              <label>
-                <input type="checkbox" ng-model="userCredentialsModel.rememberCredentials" name="rememberCredentials" /> 
-                <span>Recordar contraseña</span>
-              </label>
-            </div>
-          </div>
-        </div>       
+        <header>
+            <figure>
+                <!-- <img src="assets/images/img-logo-gentera.svg" alt="" class="login-logo"> -->
+                <img src="assets/images/img-logo-gentera-lg.png" alt="" class="login-logo"/>
+                <figcaption class="center-block text-center">
+                    <span>Estudia</span>
+                    <span>|</span>
+                    <span>Trabaja</span>
+                    <span>|</span>
+                    <span>Emprende</span>
+                </figcaption>
+            </figure>
+        </header>
 
-        <div class="row">
-          <div class="col-xs-12">
-            <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="login()">Entrar</a>
-          </div>
-        </div>
+        <section>
+            <form action="#" class="login-form container-fluid" name="loginForm">
 
-        <div class="row">
-          <div class="col-xs-12">
-            <p class="center-block text-center btn-spacer">&mdash; ó &mdash;</p>
-          </div>
-        </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <div class="input-group input-group-lg theme-default">
+                                <p class="input-group-addon" id="userNameAddOn">
+                                    <span class="icomoon icon-user"></span>
+                                </p>
+                                <input type="text"
+                                       ng-model="userCredentialsModel.username"
+                                       name="userName"
+                                       class="form-control form-control-lg theme-default"
+                                       placeholder="Usuario"
+                                       aria-describedby="userNameAddOn"
+                                       ng-pattern="/^[-\.@_A-Za-z0-9]+$/"
+                                       ng-trim="false" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="row">
-          <div class="col-xs-12">
-            <a role="button" class="btn btn-default btn-lg btn-block btn-facebook" ng-click="loginWithFacebook()">
-              <span class="icomoon icon-facebook"></span>
-              Entrar con Facebook</a>
-          </div>
-        </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <div class="input-group input-group-lg theme-default">
+                                <p class="input-group-addon" id="passwordAddOn">
+                                    <span class="icomoon icon-lock"></span>
+                                </p>
+                                <input type="password"
+                                       ng-model="userCredentialsModel.password"
+                                       name="password"
+                                       class="form-control form-control-lg theme-default"
+                                       placeholder="Contraseña"
+                                       aria-describedby="emailAddOn"
+                                       ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_\-.@])[a-zA-Z0-9_\-.@]{8,}/"
+                                       ng-trim="false" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-      </form>
-    </section>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="checkbox checkbox-custom">
+                            <label>
+                                <input type="checkbox" ng-model="userCredentialsModel.rememberCredentials"
+                                       name="rememberCredentials"/>
+                                <span>Recordar contraseña</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
 
-    <footer>
-      <ul class="list-unstyled text-center">
-        <li><a class="btn btn-default btn-transparent" ng-click="navigateToRegister()">Soy nuevo y deseo registrarme</a></li>
-        <li><a class="btn btn-default btn-transparent" ng-click="navigateToRecoverPassword()">Olvidé mi Usuario/Contraseña</a></li>
-      </ul>
-    </footer>
-    
-  </article>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="login()">Entrar</a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p class="center-block text-center btn-spacer">&mdash; ó &mdash;</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a role="button" class="btn btn-default btn-lg btn-block btn-facebook"
+                           ng-click="loginWithFacebook()">
+                            <span class="icomoon icon-facebook"></span>
+                            Entrar con Facebook</a>
+                    </div>
+                </div>
+
+            </form>
+        </section>
+
+        <footer>
+            <ul class="list-unstyled text-center">
+                <li><a class="btn btn-default btn-transparent" ng-click="navigateToRegister()">Soy nuevo y deseo
+                    registrarme</a></li>
+                <li><a class="btn btn-default btn-transparent" ng-click="navigateToRecoverPassword()">Olvidé mi
+                    Usuario/Contraseña</a></li>
+            </ul>
+        </footer>
+
+    </article>
 </div>
