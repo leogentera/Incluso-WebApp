@@ -55,14 +55,24 @@
                                 <p class="input-group-addon" id="passwordAddOn">
                                     <span class="icomoon icon-lock"></span>
                                 </p>
+                                <!-- TERMPORARILY REMOVED FOR BACKWARDS-COMPATIBILITY WITH OLDER USERS.
                                 <input type="password"
                                        ng-model="userCredentialsModel.password"
                                        name="password"
                                        class="form-control form-control-lg theme-default"
                                        placeholder="Contraseña"
                                        aria-describedby="emailAddOn"
-                                       ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_\-.@])[a-zA-Z0-9_\-.@]{8,}/"
-                                       ng-trim="false" required/>
+                                       ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_\-.@])[a-zA-Z0-9_\-.@]{8,}$/"
+                                       ng-trim="false" required />
+                                       -->
+                                <input type="password"
+                                       ng-model="userCredentialsModel.password"
+                                       name="password"
+                                       class="form-control form-control-lg theme-default"
+                                       placeholder="Contraseña"
+                                       aria-describedby="emailAddOn"
+                                       required/>
+
                             </div>
                         </div>
                     </div>
