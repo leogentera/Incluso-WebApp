@@ -35,7 +35,14 @@
                 <p class="input-group-addon" id="userNameAddOn">
                   <span class="icomoon icon-user"></span>
                 </p>
-                <input type="text" ng-model="userCredentialsModel.username" name="userName" class="form-control form-control-lg theme-default" placeholder="Usuario" aria-describedby="userNameAddOn" pattern="[A-Za-z0-9@]+" required />
+                <input type="text"
+                       ng-model="userCredentialsModel.username"
+                       name="userName"
+                       class="form-control form-control-lg theme-default"
+                       placeholder="Usuario"
+                       aria-describedby="userNameAddOn"
+                       ng-pattern="/^[-\.@_A-Za-z0-9]+$/"
+                       ng-trim="false" required />
               </div>
             </div>
           </div>
@@ -48,7 +55,14 @@
                 <p class="input-group-addon" id="passwordAddOn">
                   <span class="icomoon icon-lock"></span>
                 </p>
-                <input type="password" ng-model="userCredentialsModel.password" name="password" class="form-control form-control-lg theme-default" placeholder="Contraseña" aria-describedby="emailAddOn" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W|_).{8,}" required />
+                <input type="password"
+                       ng-model="userCredentialsModel.password"
+                       name="password"
+                       class="form-control form-control-lg theme-default"
+                       placeholder="Contraseña"
+                       aria-describedby="emailAddOn"
+                       ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_\-.@])[a-zA-Z0-9_\-.@]{8,}/"
+                       ng-trim="false" required />
               </div>
             </div>          
           </div>

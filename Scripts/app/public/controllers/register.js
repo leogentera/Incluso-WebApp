@@ -150,7 +150,6 @@ angular
                                         $scope.activity_status = parentActivity.status;
                                     }
 
-
                                     if ($scope.activity_status === 1) {//If the activity is currently finished
                                         // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
                                         moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, storeQuiz, errorCallQuiz, true);
@@ -191,7 +190,7 @@ angular
 
             $scope.navigateToPage = function(pageNumber){
                 $scope.currentPage = pageNumber;
-                $scope.$emit('scrollTop'); //- scroll
+                $scope.$emit('scrollTop');
             };
 
             $scope.showPlaceHolderBirthday = function(){                

@@ -13,7 +13,7 @@ angular
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
 
-            $scope.$emit('scrollTop'); //- scroll
+            $scope.$emit('scrollTop');
             $rootScope.showToolbar = false;
             $rootScope.showFooter = false;
             $rootScope.showFooterRocks = false;
@@ -61,7 +61,7 @@ angular
             function offlineCallback() {
                 $timeout(function(){
                     $scope.recoverPasswordModel.modelState.errorMessages = ["Se necesita estar conectado a internet para continuar"];
-                    $scope.$emit('scrollTop'); //- scroll
+                    $scope.$emit('scrollTop');
                 }, 1000);
             }
             
@@ -79,7 +79,7 @@ angular
 
             $scope.navigateToPage = function(pageNumber){
                 $scope.currentPage = pageNumber;
-                $scope.$emit('scrollTop'); //- scroll
+                $scope.$emit('scrollTop');
             };
 
             $scope.getPasswordRecoveryCode = function() {
@@ -97,7 +97,7 @@ angular
 
                 //validating
                 if(errors.length === 0){
-                    $scope.$emit('ShowPreloader'); //show preloader
+                    $scope.$emit('ShowPreloader');
 
                     $http({
                         method: 'POST',
@@ -111,13 +111,13 @@ angular
                         })
                     }).success(function(data, status, headers, config) {
                         
-                        $scope.$emit('HidePreloader'); //hide preloader
+                        $scope.$emit('HidePreloader');
                         $scope.currentPage = 2;
                         $scope.successMessage = "Te hemos enviado un correo con un código para recuperar tu contraseña.";
-                        $scope.$emit('scrollTop'); //- scroll
+                        $scope.$emit('scrollTop');
 
                     }).error(function(data, status, headers, config) {                                            
-                        $scope.$emit('HidePreloader'); //hide preloader
+                        $scope.$emit('HidePreloader');
                         var errorMessage;
                         if((data != null && data.messageerror != null)){
                             errorMessage = window.atob(data.messageerror);
@@ -126,10 +126,10 @@ angular
                         }
 
                         $scope.recoverPasswordModel.modelState.errorMessages = [errorMessage];
-                        $scope.$emit('scrollTop'); //- scroll
+                        $scope.$emit('scrollTop');
                     });
                 } else {
-                    $scope.$emit('scrollTop'); //- scroll
+                    $scope.$emit('scrollTop');
                 }
             }
 
@@ -167,7 +167,7 @@ angular
                 $scope.recoverPasswordModel.modelState.errorMessages = errors;
 
                 if (errors.length === 0){
-                    $scope.$emit('ShowPreloader'); //show preloader
+                    $scope.$emit('ShowPreloader');
 
                     $http({
                         method: 'PUT',
@@ -180,16 +180,16 @@ angular
                         })
                     }).success(function(data, status, headers, config) {
 
-                        $scope.$emit('HidePreloader'); //hide preloader
+                        $scope.$emit('HidePreloader');
                         $scope.recoveredPassword = true;
                         $scope.successMessage = "Se ha restablecido su contraseña, ahora puedes iniciar sesión.";
-                        $scope.$emit('scrollTop'); //- scroll
+                        $scope.$emit('scrollTop');
 
                         $scope.readOnly = true;
 
                     }).error(function(data, status, headers, config) {
                         
-                        $scope.$emit('HidePreloader'); //hide preloader
+                        $scope.$emit('HidePreloader');
                         var errorMessage;
                         if((data != null && data.messageerror != null)){
                             errorMessage = window.atob(data.messageerror);
@@ -198,10 +198,10 @@ angular
                         }
 
                         $scope.recoverPasswordModel.modelState.errorMessages = [errorMessage];
-                        $scope.$emit('scrollTop'); //- scroll
+                        $scope.$emit('scrollTop');
                     });
                 } else{
-                    $scope.$emit('scrollTop'); //- scroll
+                    $scope.$emit('scrollTop');
                 }
             }
         }]);

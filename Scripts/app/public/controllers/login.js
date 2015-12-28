@@ -57,7 +57,7 @@ angular
 
                     if (parentActivity != null) {
 
-                        if (parentActivity.activities) {//The activity HAS a "child" activity
+                        if (parentActivity.activities) {//The activity HAS a "child" activity.
                             childActivity = parentActivity.activities[0];
                             $scope.coursemoduleid = childActivity.coursemoduleid;
                             $scope.activityname = childActivity.activityname;
@@ -69,11 +69,11 @@ angular
                             $scope.activity_status = parentActivity.status;
                         }
 
-                        if ($scope.activity_status === 1) {//If the activity is currently finished
+                        if ($scope.activity_status === 1) {//If the activity is currently finished.
                             
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, storeQuiz, errorCallQuiz, true);
 
-                        } else {//The activity HAS NOT BEEN FINISHED
+                        } else {//The activity HAS NOT BEEN FINISHED.
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, userToken, storeQuiz, errorCallQuiz, true);
                         }
 
@@ -225,7 +225,7 @@ angular
             };
 
             function loginWithFacebookConnectedCallback() {
-                $scope.$emit('ShowPreloader'); //show preloader
+                $scope.$emit('ShowPreloader');
                 //$location.path('/ProgramaDashboard');                
                 var name = API_RESOURCE.format("");
                 name = name.substring(0, name.length - 1);

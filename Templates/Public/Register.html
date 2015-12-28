@@ -93,7 +93,14 @@
                     <p class="input-group-addon" id="userNameAddOn">
                       <span class="icomoon icon-user"></span>
                     </p>
-                    <input type="text" ng-model="registerModel.username" name="userName" class="form-control form-control-lg theme-default" placeholder="Nombre de usuario" aria-describedby="userNameAddOn" pattern="^(?=\S)[-\.@_a-z0-9]*$" required />
+                    <input type="text"
+                           ng-model="registerModel.username"
+                           name="userName"
+                           class="form-control form-control-lg theme-default"
+                           placeholder="Nombre de usuario"
+                           aria-describedby="userNameAddOn"
+                           ng-pattern="/^[-\.@_A-Za-z0-9]+$/"
+                           ng-trim="false" required />
                       <a class="input-group-addon btn-info" ng-click="openModalUsername()">
                         <span class="icomoon icon-information"></span>
                       </a>
@@ -109,7 +116,14 @@
                     <p class="input-group-addon" id="aliasAddOn">
                       <span class="icomoon icon-user"></span>
                     </p>
-                    <input type="text" ng-model="registerModel.firstname" name="firstName" class="form-control form-control-lg theme-default" placeholder="Nombre(s)" aria-describedby="aliasAddOn" pattern="[A-Za-z]+([ ][A-Za-z]+)?" required />
+                    <input type="text"
+                           ng-model="registerModel.firstname"
+                           name="firstName"
+                           class="form-control form-control-lg theme-default"
+                           placeholder="Nombre(s)"
+                           aria-describedby="aliasAddOn"
+                           pattern="[A-Za-z]+([ ][A-Za-z]+)?"
+                           required />
                   </div>
                 </div>
               </div>
@@ -243,7 +257,14 @@
                     <p class="input-group-addon" id="emailAddOn">
                       <span class="icomoon icon-envelope"></span>                      
                     </p>
-                    <input type="text" ng-disabled="isRegistered" ng-model="registerModel.email" name="email" class="form-control form-control-lg theme-default" placeholder="Correo" aria-describedby="emailAddOn" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required/>
+                    <input type="text"
+                           ng-disabled="isRegistered"
+                           ng-model="registerModel.email"
+                           name="email"
+                           class="form-control form-control-lg theme-default"
+                           placeholder="Correo"
+                           aria-describedby="emailAddOn"
+                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required/>
                   </div>
                 </div>
               </div>
@@ -256,7 +277,15 @@
                     <p class="input-group-addon" id="accountPasswordAddOn">
                       <span class="icomoon icon-lock"></span>
                     </p>
-                    <input type="password" ng-disabled="isRegistered" ng-model="registerModel.password" name="password" class="form-control form-control-lg theme-default" placeholder="Contraseña" aria-describedby="accountPasswordAddOn" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W|_).{8,}" required />
+                    <input type="password"
+                           ng-disabled="isRegistered"
+                           ng-model="registerModel.password"
+                           name="password"
+                           class="form-control form-control-lg theme-default"
+                           placeholder="Contraseña"
+                           aria-describedby="accountPasswordAddOn"
+                           ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_\-.@])[a-zA-Z0-9_\-.@]{8,}/"
+                           ng-trim="false" required />
                     <a class="input-group-addon btn-info" ng-click="openModalPassword()">
                     <span class="icomoon icon-information"></span>
                     </a>
@@ -272,7 +301,14 @@
                     <p class="input-group-addon" id="confirmPasswordAddOn">
                       <span class="icomoon icon-lock"></span> 
                     </p>
-                    <input type="password" ng-disabled="isRegistered" ng-model="registerModel.confirmPassword" name="confirmPassword" class="form-control form-control-lg theme-default" placeholder="Repetir contraseña" aria-describedby="confirmPasswordAddOn" required />
+                    <input type="password"
+                           ng-disabled="isRegistered"
+                           ng-model="registerModel.confirmPassword"
+                           name="confirmPassword"
+                           class="form-control form-control-lg theme-default"
+                           placeholder="Repetir contraseña"
+                           aria-describedby="confirmPasswordAddOn"
+                           required />
                   </div>
                 </div>
               </div>
