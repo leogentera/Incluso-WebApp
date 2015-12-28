@@ -331,6 +331,7 @@ angular
                             };
                             
                             $scope.$emit('ShowPreloader');
+                            $scope.showPreviousCommentsByPost(parentId);
                             moodleFactory.Services.PostAsyncForumPost ('reply', requestData,
                                 function(){
                                     

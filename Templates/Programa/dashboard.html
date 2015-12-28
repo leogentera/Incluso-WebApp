@@ -34,7 +34,7 @@
 				<section class="component global-progress txt-renglon centered">
 					<h3 ng-bind="'- ' + contentResources.global_progress + ' -'"></h3>
 					<div class="spinner">
-						<img src="assets/images/prcnt/{{::usercourse == null ? 0 : usercourse.globalProgress}}.png" alt="progress" />
+						<img src="assets/images/prcnt/{{usercourse == null ? 0 : usercourse.globalProgress}}.png" alt="progress" />
 						<div class="circle"></div>
 						<div class="text" ng-bind="usercourse.globalProgress != null ? usercourse.globalProgress + '%' : '0%'"></div>
 					</div>

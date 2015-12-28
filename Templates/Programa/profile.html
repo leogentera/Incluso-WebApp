@@ -760,7 +760,6 @@
                 </div>
                 <!--  End of page -->
 
-
                 <div class="page" ng-class="currentPage == 10 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
@@ -852,4 +851,20 @@
             </div>
         </section>
     </article>
+    
+    <script type="text/ng-template" id="badgeRobotMessageModal.html">
+        <div class="modal-robot robot-sm closing-stage-modal user-help" >
+            <img src="assets/images/img-robot-sm.svg" alt="robot" />
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                <p class="txt-renglon centered">{{actualMessage.message}}</p>
+            </div>
+        </div>
+    </script>
+    
 </div>

@@ -59,7 +59,9 @@
         "2023": 64, /* Zona de Navegaci�n - Exploraci�n Final */
         "3601": 66, /* Zona de Aterrizaje - Exploraci�n Final */
         "3101": 65, /* Zona de Aterrizaje - Exploraci�n Inicial */
-        "HelpAndSupport": 82 /*General - Ayuda y soporte*/
+        "HelpAndSupport": 82, /*General - Ayuda y soporte*/
+        "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
+        "BadgeForumRobot": 101 /*General - Robot al ganar el badge de foros*/
     };
     
 

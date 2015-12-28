@@ -110,9 +110,7 @@ angular
             }
 
             $scope.autologin = function(data) {
-
-                _loadDrupalResources(function(){
-
+                _loadDrupalResources();
                 //save token for further requests and autologin
                 $scope.currentUserModel = data;
                 $scope.currentUserModel.token = data.token;
@@ -185,7 +183,6 @@ angular
                             $location.path('/ProgramaDashboard');
                         }
                     }, true);
-                });
             };
 
             $scope.login = function() {
