@@ -1114,8 +1114,7 @@ angular
                     }
                 }
 
-                function validateAllFieldsCompleted() {
-                    showRobotProfile();
+                function validateAllFieldsCompleted(){
                     if ($scope.userCourse && $scope.userCourse.activities) {
 
                         var activitiesCompleted = _.where($scope.userCourse.activities, {status: 1});
