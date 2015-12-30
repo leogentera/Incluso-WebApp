@@ -336,7 +336,7 @@ angular
                     
                     $scope.robotMessages = {
                         title: "Zona de Navegación",
-                        message: "¡Muy bien! Has reunido los elementos necesarios para salir de la lluvia de asteroides. Recuerda, creer en ti y en todo lo que puede lograr, te llevará a avanzar en el camino que has elegido ¡Adelante!"
+                        message: "¡Muy bien! Has reunido los elementos necesarios para salir de la lluvia de asteroides. Recuerda, creer en ti y en todo lo que puedes lograr, te llevará a avanzar en el camino que has elegido ¡Adelante!"
                     };
                     
                     $scope.navigateToDashboard = function () {                        
