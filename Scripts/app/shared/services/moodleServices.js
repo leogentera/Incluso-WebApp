@@ -1111,8 +1111,8 @@
                         };
                         navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback, {
                             enableHighAccuracy: true,
-                            maximumAge: 4000,
-                            timeout: 5000
+                            maximumAge: 6000,
+                            timeout: 10000
                           });
                         
                         var postCurrentPosition = function() {
@@ -1245,8 +1245,8 @@
                             };
                             navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback, {
                                 enableHighAccuracy: true,
-                                maximumAge: 4000,
-                                timeout: 5000
+                                maximumAge: 6000,
+                                timeout: 10000
                               });
 
                             var postCurrentPosition = function() {
