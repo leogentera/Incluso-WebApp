@@ -1760,6 +1760,7 @@ angular
                 };
 
                 function postAchievement() {
+
                     var customMessage = '<p> ' + $scope.shareAchievementMessage + '</p>';
                     var msgOpenContainer = '<div class="achievement-badge"> ';
                     var appendImg = '<figure> <img src="assets/images/badges/' + $scope.fileName + '" ng-src="assets/images/badges/' + $scope.fileName + '" alt="" /> </figure>';
@@ -1773,8 +1774,8 @@ angular
                         "discussionid": $scope.discussion.discussion,
                         "parentid": $scope.discussion.id,
                         "message": removeHtmlTag(fullMessage),
-                        "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                        "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                        "createdtime": moment(Date.now()).unix(),
+                        "modifiedtime": moment(Date.now()).unix(),
                         "posttype": 1,
                         "fileToUpload": null
                     };
