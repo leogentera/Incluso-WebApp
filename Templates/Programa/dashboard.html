@@ -41,7 +41,7 @@
 				</section>		
 
 				<section class="component current-satge">
-					<img ng-src="assets/images/estacion{{::currentStage || 1}}.png" alt="estacion"/>
+					<img ng-src="assets/images/estacion{{currentStage || 1}}.png" alt="estacion"/>
 					<h3 ng-bind="'- ' + usercourse.stages[currentStage-1].sectionname + ' -'"></h3>
 					<a href="" class="btn btn-primary btn-lg" ng-click="navigateToStage()">
 						<span ng-bind="usercourse.firsttime == 1 ? contentResources.button_start_mission : contentResources.button_continue_mission"></span>
