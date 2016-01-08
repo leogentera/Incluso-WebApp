@@ -149,13 +149,17 @@ angular
 
             $scope.navigateToRegister = function (username, password) {
                 $scope.validateConnection(function () {
-                    $location.path('/Register');
+                    $timeout(function() {
+                        $location.path('/Register');
+                    }, 500);
                 }, offlineCallback);
             };
 
             $scope.navigateToRecoverPassword = function (username, password) {
                 $scope.validateConnection(function () {
-                    $location.path('/RecoverPassword');
+                    $timeout(function() {
+                        $location.path('/RecoverPassword'); 
+                    }, 500);
                 }, offlineCallback);
             };
 
