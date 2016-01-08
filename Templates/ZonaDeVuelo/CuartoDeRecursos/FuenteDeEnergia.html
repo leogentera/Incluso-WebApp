@@ -27,7 +27,7 @@
                     </section>
 
                     <section class="wall">
-                        <div class="part" ng-repeat="activity in fuenteDeEnergia.activities">{{activity.activity_type}}
+                        <div class="part" ng-repeat="activity in fuenteDeEnergia.activities">
                             <div ng-if="filter == activity.activity_type && activity.activityintro != 'video' || !filter || filter == activity.activityintro || filter == 'Obligatorio' && !activity.optional">
                                 <div ng-if="activity.activity_type == 'url' && activity.activityintro != 'video' ">
                                     <div class="type">
