@@ -392,9 +392,9 @@ angular
                         callback();
                         //Get avatar info from Local Storage.
                         $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
-                        _forceUpdateConnectionStatus(function(){
-                            $scope.model.profileimageurl = (_isDeviceOnline ? $scope.model.profileimageurl : 'assets/avatar/default-2.png');
-                        }, function(){});
+                        $timeout(function(){
+                            $scope.validateConnection(function(){}, function(){ $scope.model.profileimageurl = 'assets/avatar/default.png'; });
+                        }, 500);
 
                         $scope.model = initFields($scope.model);
                         loadStrengths();
