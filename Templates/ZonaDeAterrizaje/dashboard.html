@@ -74,7 +74,7 @@
         <section class="progreso">
             <div class="spinner">
                 <span ng-bind="puntosObtenidos"></span>
-                <img src="assets/images/prcnt/{{::Math.ceil(stageProgress)}}.png" alt="progress" /> <!-- <img src="" alt=""> -->
+                <img src="assets/images/prcnt/{{Math.ceil(stageProgress)}}.png" alt="progress" /> <!-- <img src="" alt=""> -->
 
                 <div class="circle"></div>
                 <div class="text">{{::stageProgress}}%</div>
