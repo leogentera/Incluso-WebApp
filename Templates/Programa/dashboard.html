@@ -63,9 +63,7 @@
 								<div class="user-container">
 									<div class="user-avatar">
 										<figure>
-											<img ng-src="{{::course.leaderboard[0].profileimageurl ? course.leaderboard[0].profileimageurl : 'assets/avatar/default.png'}}" alt="avatar" />
-
-
+											<img ng-src="{{course.leaderboard[0].profileimageurl}}" alt="avatar" />
 											<figcaption>1</figcaption>
 											<div class="arrow-up"></div>
 										</figure>
@@ -90,7 +88,7 @@
 							<div class="user-container">
 								<div class="user-avatar">
 									<figure>
-										<img ng-src="{{::course.leaderboard[1].profileimageurl ? course.leaderboard[1].profileimageurl : 'assets/avatar/default.png'}}" alt="avatar" />
+										<img ng-src="{{course.leaderboard[1].profileimageurl}}" alt="avatar" />
 										<figcaption>2</figcaption>
 										<div class="arrow-up"></div>
 									</figure>
@@ -115,7 +113,7 @@
 								<div class="user-container">
 									<div class="user-avatar">
 										<figure>
-											<img ng-src="{{::course.leaderboard[2].profileimageurl ? course.leaderboard[2].profileimageurl : 'assets/avatar/default.png'}}" alt="avatar" />
+											<img ng-src="{{course.leaderboard[2].profileimageurl}}" alt="avatar" />
 											<figcaption>3</figcaption>
 											<div class="arrow-up"></div>
 										</figure>
@@ -143,7 +141,7 @@
 								<a href="">
 									<div class="user-avatar">
 										<figure class="user-avatar-">
-											<img ng-src="{{::user.profileimageurl}}" alt="avatar"/>
+											<img ng-src="{{user.profileimageurl}}" alt="avatar"/>
 											<figcaption ng-bind="user.rank"></figcaption>
 										</figure>
 									</div>

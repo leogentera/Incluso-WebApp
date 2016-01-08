@@ -136,7 +136,38 @@ angular
 
             //Loads UserCourse data from server
             function getDataAsync() {
-                moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback);
+                
+                $timeout(function () {
+                    $scope.validateConnection(function () {
+                        moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), getDataAsyncCallback, errorCallback);
+                    }, function () {
+                        
+                        $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
+                        $scope.course = JSON.parse(localStorage.getItem("course"));
+                        $scope.currentStage = getCurrentStage();                    
+                        _setLocalStorageItem("currentStage", $scope.currentStage);
+                        
+                        var defaultAvatar = 'assets/avatar/default.png';
+                        
+                        var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+                        for(var lb = 0; lb < leaderboard.length; lb++) {
+                            leaderboard[lb].profileimageurl = defaultAvatar;
+                        }
+                        
+                        $scope.user.profileimageurl = defaultAvatar;
+                        $scope.course.leaderboard = leaderboard;
+                        
+                        _pageLoaded = true;
+                        if (_loadedResources && _pageLoaded) {
+                            $scope.$emit('HidePreloader')
+                        }
+
+                        if (!$scope.profile.termsAndConditions) {
+                            $scope.openTermsModal();
+                            $scope.navigateTo('TermsOfUse');
+                        }
+                    });
+                }, 1000);
             }
 
             //Callback function for UserCourse call
@@ -150,19 +181,16 @@ angular
                     $scope.currentStage = getCurrentStage();                    
                     _setLocalStorageItem("currentStage", $scope.currentStage);
 
-                    _pageLoaded = true;
-                    if (_loadedResources && _pageLoaded) {
-                        $scope.$emit('HidePreloader')
-                    }
-
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
-                        $scope.$emit('scrollTop');
 
                         moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, function () {
                             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
 
-                            
+                            _pageLoaded = true;
+                            if (_loadedResources && _pageLoaded) {
+                                $scope.$emit('HidePreloader')
+                            }
 
                             if (!$scope.profile.termsAndConditions) {
                                 $scope.openTermsModal();
