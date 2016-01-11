@@ -109,11 +109,21 @@ hallOfFameModule
                     $scope.userStats.forum = allTop5.current_user_activity.forum;
                     $scope.userStats.messages = allTop5.current_user_activity.messages;
                     $scope.userStats.comunity = allTop5.current_user_activity.comunity;
-                                                            
-                    _pageLoaded = true;
                     
-                                       
-                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                    $timeout(function(){
+                        
+                        $('#top-users-statistics').data('owlCarousel').reinit({
+                            singleItem : false
+                        });
+                        $('#top-users-detail').data('owlCarousel').reinit({
+                            singleItem : false
+                        });
+                        
+                        _pageLoaded = true;
+                        if (_loadedResources && _pageLoaded) { 
+                            $scope.$emit('HidePreloader');
+                        }
+                    }, 1000);
                 }
     
                 $scope.updateByCity = function()

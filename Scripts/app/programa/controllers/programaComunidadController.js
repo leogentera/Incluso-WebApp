@@ -192,6 +192,7 @@ angular
                                 $scope.$emit('HidePreloader');
                                 $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
                                 $scope.isReportedAbuseSentModalCollapsed["id" + postId] = true;
+                                $scope.postToReport.reported = 1;
                                 
                                 }, function(){
                                     $scope.$emit('HidePreloader');
@@ -336,6 +337,7 @@ angular
                                 function(){
                                     
                                     checkForumExtraPoints();
+                                    refreshTopicData();
                                     
                                     $scope.replyText = null;
                                     $scope.isCommentModalCollapsed["id" + parentId] = false;
@@ -382,6 +384,7 @@ angular
                                 function() {
                                     
                                     checkForumExtraPoints();
+                                    refreshTopicData();
                                     
                                     $scope.postTextValue = null;
                                     $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
@@ -420,6 +423,7 @@ angular
                                 function() {
                                     
                                     checkForumExtraPoints();
+                                    refreshTopicData();
                                     
                                     $scope.postLinkValue = null;
                                     $scope.collapseCommunityButtomsTrigger('isLinkCollapsed');
@@ -455,6 +459,7 @@ angular
                                 function() {
                                     
                                     checkForumExtraPoints();
+                                    refreshTopicData();
                                     
                                     $scope.postVideoValue = null;
                                     $scope.collapseCommunityButtomsTrigger('isVideoCollapsed');
@@ -493,6 +498,7 @@ angular
                                 function() {
                                     
                                     checkForumExtraPoints();
+                                    refreshTopicData();
                                     
                                     $scope.postAttachmentValue = {};
                                     $scope.collapseCommunityButtomsTrigger('isAttachmentCollapsed');
@@ -550,9 +556,10 @@ angular
                     $scope.isReportedAbuseModalCollapsed['id' + postId] = false;
                 };
                 
-                $scope.reportModalClick = function(postId) {
-                    $scope.isReportedAbuseModalCollapsed['id' + postId] = !$scope.isReportedAbuseModalCollapsed['id' + postId];
-                    $scope.isCommentModalCollapsed['id' + postId] = false;
+                $scope.reportModalClick = function(post) {
+                    $scope.postToReport = post;
+                    $scope.isReportedAbuseModalCollapsed['id' + post.post_id] = !$scope.isReportedAbuseModalCollapsed['id' + post.post_id];
+                    $scope.isCommentModalCollapsed['id' + post.post_id] = false;
                 };
                 
                 $scope.goToGallery = function(post) {
