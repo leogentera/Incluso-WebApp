@@ -359,15 +359,15 @@ angular
                     var orderedArr = [];
 
                     for (i = 0; i < n; i++) {
-                        orderedArr.push(arr[i].toLowerCase());
+                        orderedArr.push(arr[i].replace(/\r?\n|\r/g, " ").trim().toLowerCase());
                     }
 
                     orderedArr = orderedArr.sort();
 
                     for (i = 0; i < n; i++) {
                         for (j = 0; j < n; j++) {
-                            if (arr[j].toLowerCase() == orderedArr[i]) {
-                                finalArr.push(arr[j]);
+                            if (arr[j].replace(/\r?\n|\r/g, " ").trim().toLowerCase() == orderedArr[i]) {
+                                finalArr.push(arr[j].replace(/\r?\n|\r/g, " ").trim());
                             }
                         }
                     }
@@ -410,6 +410,7 @@ angular
                         $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
                         $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
                         $scope.model.hobbies = orderCatalog($scope.model.hobbies);
+                        $scope.model.knownDevices = orderCatalog($scope.model.knownDevices);
 
                         $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                         $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
@@ -461,7 +462,15 @@ angular
 
                             $scope.model.level = $scope.model.currentStudies["level"];
                             $scope.model.grade = $scope.model.currentStudies["grade"];
-                            $scope.model.period = $scope.model.currentStudies["period"];                          
+                            $scope.model.period = $scope.model.currentStudies["period"];
+
+                            $scope.model.talents = orderCatalog($scope.model.talents);
+                            $scope.model.values = orderCatalog($scope.model.values);
+                            $scope.model.habilities = orderCatalog($scope.model.habilities);
+                            $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
+                            $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
+                            $scope.model.hobbies = orderCatalog($scope.model.hobbies);
+                            $scope.model.knownDevices = orderCatalog($scope.model.knownDevices);
 
                             $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                             $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
