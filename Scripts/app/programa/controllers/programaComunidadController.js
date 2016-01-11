@@ -192,6 +192,7 @@ angular
                                 $scope.$emit('HidePreloader');
                                 $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
                                 $scope.isReportedAbuseSentModalCollapsed["id" + postId] = true;
+                                $scope.postToReport.reported = 1;
                                 
                                 }, function(){
                                     $scope.$emit('HidePreloader');
@@ -550,9 +551,10 @@ angular
                     $scope.isReportedAbuseModalCollapsed['id' + postId] = false;
                 };
                 
-                $scope.reportModalClick = function(postId) {
-                    $scope.isReportedAbuseModalCollapsed['id' + postId] = !$scope.isReportedAbuseModalCollapsed['id' + postId];
-                    $scope.isCommentModalCollapsed['id' + postId] = false;
+                $scope.reportModalClick = function(post) {
+                    $scope.postToReport = post;
+                    $scope.isReportedAbuseModalCollapsed['id' + post.post_id] = !$scope.isReportedAbuseModalCollapsed['id' + post.post_id];
+                    $scope.isCommentModalCollapsed['id' + post.post_id] = false;
                 };
                 
                 $scope.goToGallery = function(post) {
