@@ -344,8 +344,16 @@ angular
                 };
 
                 function deleteRepeatedEntries(arr) {
-                    arr =  arr.filter(function (item, pos) {
-                        return item.trim().length > 0 && arr.indexOf(item) == pos;
+                    var mirrorUpper = [];
+                    var n = arr.length;
+                    var i;
+
+                    for (i = 0; i < n; i++) {
+                        mirrorUpper.push(arr[i].replace(/\r?\n|\r/g, " ").trim().toUpperCase());
+                    }
+
+                    arr = arr.filter(function (item, pos) {
+                        return item.trim().length > 0 && arr.indexOf(item) == pos && mirrorUpper.indexOf(item.trim().toUpperCase()) == pos;
                     });
 
                     return orderCatalog(arr);
