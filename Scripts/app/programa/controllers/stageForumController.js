@@ -26,7 +26,7 @@ angular
             function initController() {
                 var selectedDiscussionId = null;
                 
-                Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+                $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
                 var userId = JSON.parse(localStorage.getItem('userId'));
