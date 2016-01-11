@@ -337,6 +337,7 @@ angular
                                 function(){
                                     
                                     checkForumExtraPoints();
+                                    refreshTopicData();
                                     
                                     $scope.replyText = null;
                                     $scope.isCommentModalCollapsed["id" + parentId] = false;
@@ -383,6 +384,7 @@ angular
                                 function() {
                                     
                                     checkForumExtraPoints();
+                                    refreshTopicData();
                                     
                                     $scope.postTextValue = null;
                                     $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
@@ -421,6 +423,7 @@ angular
                                 function() {
                                     
                                     checkForumExtraPoints();
+                                    refreshTopicData();
                                     
                                     $scope.postLinkValue = null;
                                     $scope.collapseCommunityButtomsTrigger('isLinkCollapsed');
@@ -456,6 +459,7 @@ angular
                                 function() {
                                     
                                     checkForumExtraPoints();
+                                    refreshTopicData();
                                     
                                     $scope.postVideoValue = null;
                                     $scope.collapseCommunityButtomsTrigger('isVideoCollapsed');
@@ -494,6 +498,7 @@ angular
                                 function() {
                                     
                                     checkForumExtraPoints();
+                                    refreshTopicData();
                                     
                                     $scope.postAttachmentValue = {};
                                     $scope.collapseCommunityButtomsTrigger('isAttachmentCollapsed');
