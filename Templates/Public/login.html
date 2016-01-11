@@ -35,14 +35,21 @@
                                 <p class="input-group-addon" id="userNameAddOn">
                                     <span class="icomoon icon-user"></span>
                                 </p>
+                                <!-- TERMPORARILY REMOVED FOR BACKWARDS-COMPATIBILITY WITH OLDER USERS.
                                 <input type="text"
                                        ng-model="userCredentialsModel.username"
                                        name="userName"
                                        class="form-control form-control-lg theme-default"
                                        placeholder="Usuario"
                                        aria-describedby="userNameAddOn"
-                                       ng-pattern="/^[-\.@_A-Za-z0-9]+$/"
-                                       ng-trim="false" required/>
+                                       ng-pattern="/^(?=\S)[-\.@_a-z0-9]*$/" ng-trim="false" required />
+                                       -->
+                                <input type="text"
+                                       ng-model="userCredentialsModel.username"
+                                       name="userName"
+                                       class="form-control form-control-lg theme-default"
+                                       placeholder="Usuario"
+                                       aria-describedby="userNameAddOn" required/>
                             </div>
                         </div>
                     </div>
