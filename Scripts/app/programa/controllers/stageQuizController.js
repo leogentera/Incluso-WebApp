@@ -133,17 +133,17 @@ angular
 
                 if (parentActivity != null) {
 
+                    $scope.activityPoints = parentActivity.points;
+
                     if (parentActivity.activities) {//The activity HAS a "child" activity
 
                         childActivity = parentActivity.activities[0];
                         $scope.coursemoduleid = childActivity.coursemoduleid;
-                        $scope.activityPoints = childActivity.points;
                         $scope.activityname = childActivity.activityname;
                         $scope.activity_status = childActivity.status;
 
                     } else {//The activity has no "child" activity
                         $scope.coursemoduleid = parentActivity.coursemoduleid;
-                        $scope.activityPoints = parentActivity.points;
                         $scope.activityname = parentActivity.activityname;
                         $scope.activity_status = parentActivity.status;
                     }
