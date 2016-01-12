@@ -113,9 +113,25 @@ angular
                                 date: new Date()
                             };
                             
+                            var userStars = JSON.parse(localStorage.getItem("userStars"));
+                                                            
+                            var localStorageStarsData = {
+                                dateissued: moment(Date.now()).unix(),
+                                instance: model.instance,
+                                instance_type: model.instanceType,
+                                message: "",
+                                is_extra: false,
+                                points: model.stars,
+                                userid: parseInt(model.userId)
+                            };
+                            
+                            userStars.push(localStorageStarsData);
+                            
+                            localStorage.setItem("userStars", JSON.stringify(userStars));
+                            
                             moodleFactory.Services.PutStars(model, profile, userToken, function() {
-                              updateActivityStatus($routeParams.activityId);
-                              _updateRewardStatus();
+                                updateActivityStatus($routeParams.activityId);
+                                _updateRewardStatus();
 
                                 profile.stars = Number(profile.stars) + Number(activityFromTree.points);
                                 _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"),profile);
@@ -128,7 +144,9 @@ angular
                                     updateUserForumStars($routeParams.activityId, extraPoints, function (){
                                         successPutStarsCallback();
                                         });
-                                }
+                                }                                                                                        
+
+                                
                                 
                                 var course = moodleFactory.Services.GetCacheJson("course");
                                 var user = moodleFactory.Services.GetCacheJson("CurrentUser");
