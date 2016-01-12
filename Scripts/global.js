@@ -1293,7 +1293,7 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("owlIndex");
     ClearLocalStorage("activity");
 
-    localStorage.removeItem("CurrentUser");    
+    localStorage.removeItem("CurrentUser");
     localStorage.removeItem("course");
     localStorage.removeItem("stage");
     localStorage.removeItem("usercourse");

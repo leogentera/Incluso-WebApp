@@ -125,6 +125,7 @@ angular
                             GetExternalAppData();
 
                         }, function () {
+                            $scope.$emit('HidePreloader');
                         });
                     }, 2000);
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
