@@ -501,7 +501,7 @@ angular
                             $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
                             $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty++;
                             
-                            $scope.showMoreComments(contentId);
+                            //$scope.showMoreComments(contentId);
                             moodleFactory.Services.PostCommentActivity(activityId, data, function () {}, function () {});
                         }
                     }
@@ -522,7 +522,7 @@ angular
 
                     }
                 }
-            }
+            };
 
             $scope.showMoreComments = function (contentId) {
                 for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
@@ -530,7 +530,7 @@ angular
                         $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = $scope.fuenteDeEnergia.activities[i].activityContent.comments.length;
                     }
                 }
-            }
+            };
 
             function getContentResources(activityIdentifierId) {
                 console.log(activityIdentifierId);
