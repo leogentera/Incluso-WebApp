@@ -761,8 +761,6 @@ angular
 
                 var i;
 
-
-
                 if ($scope.activity_identifier === 1005) {//Mis Cualidades - Etapa 1 - CourseModuleId = 71
 
                     $scope.userprofile.talents = [];
