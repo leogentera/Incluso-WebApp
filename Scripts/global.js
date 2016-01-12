@@ -1126,13 +1126,8 @@ function updateUserStars(activityIdentifier, extraPoints) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
         stars = extraPoints;
     } else {
-
-        if (activityIdentifier == "2016" || activityIdentifier == "2007") {
-            profile.stars = parseInt(profile.stars) + parseInt(activity.activities[0].points);
-        } else {
-            profile.stars = Number(profile.stars) + Number(activity.points);
-            stars = activity.points;
-        }
+        profile.stars = Number(profile.stars) + Number(activity.points);
+        stars = activity.points;
     }
       
     console.log("Profile stars = " + profile.stars);
@@ -1140,7 +1135,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
 
     var data = {
         userId: profile.id,
-        stars: activityIdentifier == "2016" || activityIdentifier == "2007" ? parseInt(activity.activities[0].points) + parseInt(extraPoints) : stars,
+        stars: stars,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
