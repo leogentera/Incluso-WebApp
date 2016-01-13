@@ -310,7 +310,7 @@ angular
 
                         var userStars = JSON.parse(localStorage.getItem("userStars"));
 
-                        var currentTime = new Date();
+                        //var currentTime = new Date();
                         
                         var localStorageStarsData = {
                             dateissued: moment(Date.now()).unix(),

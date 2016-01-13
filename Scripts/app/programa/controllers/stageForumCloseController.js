@@ -54,8 +54,9 @@ angular
             var endForumActivity = function(moodleid) {
                 $scope.$emit('ShowPreloader');
                 var activities = parentActivity.activities;
-
+                
                 parentActivity.status = 1;
+                parentActivity.last_status_update = moment(Date.now()).unix();
                 if (activities) {
                     for(var i = 0; i < activities.length; i++) {
                         activities[i].status = 1;
