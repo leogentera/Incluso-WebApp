@@ -1,7 +1,7 @@
 <div class="incluso-app public">
     <article class="login">
 
-        <div class="alert alert-warning" role="alert" ng-show="!userCredentialsModel.modelState.isValid">
+        <div class="alert alert-warning" role="alert" ng-if="!userCredentialsModel.modelState.isValid">
             <div class="alert-message">
                 <div class="icomoon icon-warning"></div>
                 <p>¡Error! Verifica tus datos</p>
