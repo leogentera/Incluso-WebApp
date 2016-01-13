@@ -1,4 +1,4 @@
-﻿angular
+angular
     .module('incluso.account.edit', ['ui.select2', 'ui.multiselect', 'autocomplete'])
     .controller('accountEditController', [
         '$scope',
