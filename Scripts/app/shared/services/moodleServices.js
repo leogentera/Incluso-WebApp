@@ -898,8 +898,7 @@
                 //load activity accessibility flags
                 _loadActivityBlockStatus();
                 //set stages as completed in local storage, as this is not set by the back-end
-                _setStagesStatus();
-                debugger;
+                _setStagesStatus();                
                 _setLocalStorageJsonItem("course",course);
                 _setLocalStorageJsonItem("activityManagers",activityManagers);
 
