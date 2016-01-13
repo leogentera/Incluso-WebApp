@@ -778,7 +778,7 @@
                             course.stages[i].challenges[j].activity_identifier = assign.activity_identifier;
                         }
 
-                        if (course.stages[i].challenges[j].activity_type == "ActivityManager") {
+                        if (course.stages[i].challenges[j].activity_type == "ActivityManager") {                            
                             activityManagers.push(course.stages[i].challenges[j]);
                         }
 
@@ -796,8 +796,7 @@
 
                         //activities
                         for (k = 0; k < course.stages[i].challenges[j].activities.length; k++) {
-
-
+                                                    
                             if (course.stages[i].challenges[j].activities[k].activity_type == 'ActivityManager') {
 
                                 activityManagers.push(course.stages[i].challenges[j].activities[k]);
@@ -813,6 +812,7 @@
                                     course.stages[i].challenges[j].activities[k].activityintro = assign.activityintro;
                                     course.stages[i].challenges[j].activities[k].points = assign.points;
                                     course.stages[i].challenges[j].activities[k].activity_identifier = assign.activity_identifier;
+                                    course.stages[i].challenges[j].activities[k].last_status_update = assign.last_status_update;
                                     course.stages[i].challenges[j].activities[k].status = assign.status;
                                 }
 
@@ -882,6 +882,7 @@
                     datestarted: generalCommunity.datestarted,
                     started: generalCommunity.started
                 };
+                
 
                 var user = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
                 var progress = refreshProgress(course, user);
@@ -898,6 +899,7 @@
                 _loadActivityBlockStatus();
                 //set stages as completed in local storage, as this is not set by the back-end
                 _setStagesStatus();
+                debugger;
                 _setLocalStorageJsonItem("course",course);
                 _setLocalStorageJsonItem("activityManagers",activityManagers);
 
