@@ -108,8 +108,7 @@
                                                   ng-if="activity.activity_type == 'label' && !activity.status">Mostrar texto...</span>
 
                                             <div ng-if="activity.activity_type == 'resource'" class="image-container">
-                                                <a href="{{::activity.activityContent.content[0].fileurl}}"
-                                                   target="blank">
+                                                <a href="{{::activity.activityContent.content[0].fileurl}}" target="blank">
                                                     <img ng-click="updateStatus(activity.groupid)"
                                                          ng-src="{{activity.status && activity.activityContent.content[0].fileurl || 'assets/images/svg/img_placeholder-01.svg'}}"
                                                          class="image-element'">
