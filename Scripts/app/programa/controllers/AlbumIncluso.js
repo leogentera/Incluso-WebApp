@@ -14,12 +14,6 @@ angular
         var _loadedResources = false;
         var _pageLoaded = false;
         
-        drupalFactory.Services.GetContent("Album", function (data, key) {
-            $scope.contentResources = data.node;
-            _loadedResources = true;
-            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
-        }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
-
         $scope.setToolbar($location.$$path, "Album Incluso");
         $rootScope.showFooter = false;
         $rootScope.showFooterRocks = false;
@@ -32,12 +26,11 @@ angular
         
         var _course = moodleFactory.Services.GetCacheJson("course");
         var _userId = moodleFactory.Services.GetCacheObject("userId");
-        var _userProfile = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
+        var _userProfile = moodleFactory.Services.GetCacheJson("Perfil/" + _userId);
         var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
         $scope.hasCommunityAccess = _hasCommunityAccessLegacy(_userProfile.communityAccess);
         var albumSrc = null;
         $scope.avatarSrc = null;
-        
         $scope.discussion = null;
         $scope.forumId = null;
         
@@ -45,9 +38,37 @@ angular
         var ctx = canvas.getContext("2d");
         canvas.width = 1280;
         canvas.height = 1329;
+        
+        $scope.album = {
+            'profileimageurl': null,
+            'shield': null,
+            'myStrengths': [],
+            'myLikes': [],
+            'myAttributes': [],
+            'myIdeas': [],
+            'myDreams': [],
+            'myPlans': {
+                'oneYear': null,
+                'threeYear': null,
+                'fiveYear': null
+            },
+            'myGoals': [],
+            'iKnowWhatIs': ["Ahorro", "Préstamo", "Inversión"],
+            'amountOfCommunityPosts': 0,
+            'amountOfForumPosts': 0,
+            'badges': [],
+            'starsEarned': 0,
+            'project': []
+        };
 
         
         $scope.$emit('ShowPreloader');
+        
+        drupalFactory.Services.GetContent("Album", function (data, key) {
+            $scope.contentResources = data.node;
+            _loadedResources = true;
+            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+        }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
         
         function offlineCallback() {
             $timeout(function() { $location.path("/Offline"); }, 1000);
@@ -248,21 +269,295 @@ angular
 
         function controllerInit() {
             
-            $scope.album = JSON.parse(_getItem("album"));
-            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            loadProfileDataToAlbum();
+            loadPostDataToAlbum();
+            loadQuizData();
+            
+            _pageLoaded = true;
+            if (_loadedResources && _pageLoaded) {
+                $scope.$emit('HidePreloader');
+            }
+        }
+        
+        function loadProfileDataToAlbum() {
+            
+            /* My likes */
+            var myLikes = _userProfile.hobbies.concat(_userProfile.favoriteSports).concat(_userProfile.artisticActivities);
+            var myLikesLength = myLikes.length > 3 ? 3 : myLikes.length;
+            var myLikesResult = [];
+            var myLikesExcludedIndexes = [];
+            
+            for(var i = 0; i < myLikesLength; i++) {
+                
+                var index = getRandomIndex(myLikes.length, myLikesExcludedIndexes);
+                myLikesResult[i] = myLikes[index];
+                
+                myLikesExcludedIndexes.push(index);
+            }
+            
+            /* My attributes */
+            var myAttributes = _userProfile.habilities.concat(_userProfile.talents).concat(_userProfile.values);
+            var myAttributesLength = myAttributes.length > 3 ? 3 : myAttributes.length;
+            var myAttributesResult = [];
+            var myAttributesExcludedIndexes = [];
+            
+            for(var i = 0; i < myAttributesLength; i++) {
+                
+                var index = getRandomIndex(myAttributes.length, myAttributesExcludedIndexes);
+                myAttributesResult[i] = myAttributes[index];
+                
+                myAttributesExcludedIndexes.push(index);
+            }
+            
+            /* Badges */
+            for(var i=0; i< _userProfile.badges.length; i++) {
+                _userProfile.badges[i].filename = getFileName(_userProfile.badges[i].id);
+                _userProfile.badges[i].alt = getAlt(_userProfile.badges[i].id);
+            }
+            
+            $timeout(function() {
+                $scope.validateConnection(function(){
+                    $scope.$apply(function(){
+                        $scope.album.profileimageurl = _userProfile.profileimageurl + "?rnd=" + new Date().getTime();
+                    });
+                }, function(){
+                    $scope.album.profileimageurl = 'assets/avatar/default.png';
+                    $scope.$apply();
+                });
+            }, 1000);
+            
+            $scope.album.shield = _userProfile.shield;
+            $scope.album.myStrengths = _userProfile.strengths;
+            $scope.album.myLikes = myLikesResult;
+            $scope.album.myAttributes = myAttributesResult;
+            $scope.album.starsEarned = Number(_userProfile.stars);
+            $scope.album.badges = _userProfile.badges;
+        }
+        
+        function loadPostDataToAlbum() {
+            var postCounter = moodleFactory.Services.GetCacheJson("postcounter/" + _userProfile.course);
+            var communityPosts = 0;
+            var forumPosts = 0;
+            
+            
+            for(var i = 0; i < postCounter.forums.length; i++) {
+                
+                var forum = postCounter.forums[i];
+                
+                if(forum.forumactivityid != "50000") {
+                    
+                    for(var d = 0; d < forum.discussion.length; d++) {
+                        forumPosts += Number(forum.discussion[d].total);
+                    }
+                    
+                } else {
+                    for(var d = 0; d < forum.discussion.length; d++) {
+                        communityPosts += Number(forum.discussion[d].total);
+                    }
+                }
+            }
+            
+            $scope.album.amountOfCommunityPosts = communityPosts;
+            $scope.album.amountOfForumPosts = forumPosts;
+        }
+        
+        function loadQuizData() {
+            
+            /* My ideas */
+            var myIdeaQuiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("2009"));
+            var myIdeaAnswers = [];
+            
+            for(var i = 0; i < myIdeaQuiz.questions.length; i++) {
+                var question = myIdeaQuiz.questions[i];
+                
+                if(question.userAnswer != "") {
+                    
+                    if(question.userAnswer.indexOf(";") != -1) {
+                        myIdeaAnswers = myIdeaAnswers.concat(question.userAnswer.split(";"));
+                    } else {
+                        myIdeaAnswers.push(question.userAnswer);
+                    }
+                }
+            }
+            
+            var myIdeaAnswersLength = myIdeaAnswers.length > 3 ? 3 : myIdeaAnswers.length;
+            var myIdeaAnswersResult = [];
+            var myIdeaAnswersExcludedIndexes = [];
+            
+            for(var i = 0; i < myIdeaAnswersLength; i++) {
+                
+                var index = getRandomIndex(myIdeaAnswers.length, myIdeaAnswersExcludedIndexes);
+                myIdeaAnswersResult[i] = myIdeaAnswers[index];
+                
+                myIdeaAnswersExcludedIndexes.push(index);
+            }
+            
+            /* My dreams */
+            var myDreamsQuiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("1007"));
+            var myDreamsAnswers = [];
+            
+            for(var i = 0; i < myDreamsQuiz.questions.length; i++) {
+                var question = myDreamsQuiz.questions[i];
+                
+                if(question.userAnswer != "") {
+                    
+                    if(question.userAnswer.indexOf(";") != -1) {
+                        myDreamsAnswers = myDreamsAnswers.concat(question.userAnswer.split(";"));
+                    } else {
+                        myDreamsAnswers.push(question.userAnswer);
+                    }
+                }
+            }
+            
+            var myDreamsAnswersLength = myDreamsAnswers.length > 3 ? 3 : myDreamsAnswers.length;
+            var myDreamsAnswersResult = [];
+            var myDreamsAnswersExcludedIndexes = [];
+            
+            for(var i = 0; i < myDreamsAnswersLength; i++) {
+                
+                var index = getRandomIndex(myDreamsAnswers.length, myDreamsAnswersExcludedIndexes);
+                myDreamsAnswersResult[i] = myDreamsAnswers[index];
+                
+                myDreamsAnswersExcludedIndexes.push(index);
+            }
+            
+            /* My plans */
+            var myPlansQuiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("2025"));
+            var myPlansOneYearAnswers = [];
+            var myPlansThreeYearsAnswers = [];
+            var myPlansFiveYearsAnswers = [];
+            
+            var questionOneYear = myPlansQuiz.questions[0];
+            if(questionOneYear.userAnswer != "") {
+                if(questionOneYear.userAnswer.indexOf(";") != -1) {
+                    myPlansOneYearAnswers = myPlansOneYearAnswers.concat(questionOneYear.userAnswer.split(";"));
+                } else {
+                    myPlansOneYearAnswers.push(questionOneYear.userAnswer);
+                }
+            }
+            
+            var questionThreeYears = myPlansQuiz.questions[1];
+            if(questionThreeYears.userAnswer != "") {
+                if(questionThreeYears.userAnswer.indexOf(";") != -1) {
+                    myPlansThreeYearsAnswers = myPlansThreeYearsAnswers.concat(questionThreeYears.userAnswer.split(";"));
+                } else {
+                    myPlansThreeYearsAnswers.push(questionThreeYears.userAnswer);
+                }
+            }
+            
+            var questionFiveYears = myPlansQuiz.questions[2];
+            if(questionFiveYears.userAnswer != "") {
+                if(questionFiveYears.userAnswer.indexOf(";") != -1) {
+                    myPlansFiveYearsAnswers = myPlansFiveYearsAnswers.concat(questionFiveYears.userAnswer.split(";"));
+                } else {
+                    myPlansFiveYearsAnswers.push(questionFiveYears.userAnswer);
+                }
+            }
+            
+            /* My goals */
+            var myGoals1Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20171") + "?userid=" + _userId);
+            var myGoals2Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20172") + "?userid=" + _userId);
+            var myGoals3Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20173") + "?userid=" + _userId);
+            var myGoals4Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20174") + "?userid=" + _userId);
+            var myGoals5Quiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("20175") + "?userid=" + _userId);
+            
+            var myGoals1QuizAnswers = [];
+            var myGoals2QuizAnswers = [];
+            var myGoals3QuizAnswers = [];
+            var myGoals4QuizAnswers = [];
+            var myGoals5QuizAnswers = [];
+            
+            var myGoalsQuizAnswers = [];
+            
+            var myGoals1Question = myGoals1Quiz.questions[0];
+            var myGoals2Question = myGoals2Quiz.questions[0];
+            var myGoals3Question = myGoals3Quiz.questions[0];
+            var myGoals4Question = myGoals4Quiz.questions[0];
+            var myGoals5Question = myGoals5Quiz.questions[0];
 
-            if ($scope.album == null) {
-                if ($scope.currentUser.userId != null) {
-                    moodleFactory.Services.GetAsyncAlbum($scope.currentUser.userId, $scope.currentUser.token, successfullCallBack, errorCallback, true);
-                }
-                else {
-                    //Albun no reachable
+            if(myGoals1Question.userAnswer != "") {
+                if(myGoals1Question.userAnswer.indexOf(";") != -1) {
+                    myGoals1QuizAnswers = myGoals1QuizAnswers.concat(myGoals1Question.userAnswer.split(";"));
+                } else {
+                    myGoals1QuizAnswers.push(myGoals1Question.userAnswer);
                 }
             }
-            else {
-                _pageLoaded = true;
-                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+            if(myGoals2Question.userAnswer != "") {
+                if(myGoals2Question.userAnswer.indexOf(";") != -1) {
+                    myGoals2QuizAnswers = myGoals2QuizAnswers.concat(myGoals2Question.userAnswer.split(";"));
+                } else {
+                    myGoals2QuizAnswers.push(myGoals2Question.userAnswer);
+                }
             }
+            if(myGoals3Question.userAnswer != "") {
+                if(myGoals3Question.userAnswer.indexOf(";") != -1) {
+                    myGoals3QuizAnswers = myGoals3QuizAnswers.concat(myGoals3Question.userAnswer.split(";"));
+                } else {
+                    myGoals3QuizAnswers.push(myGoals3Question.userAnswer);
+                }
+            }
+            if(myGoals4Question.userAnswer != "") {
+                if(myGoals4Question.userAnswer.indexOf(";") != -1) {
+                    myGoals4QuizAnswers = myGoals4QuizAnswers.concat(myGoals4Question.userAnswer.split(";"));
+                } else {
+                    myGoals4QuizAnswers.push(myGoals4Question.userAnswer);
+                }
+            }
+            if(myGoals5Question.userAnswer != "") {
+                if(myGoals5Question.userAnswer.indexOf(";") != -1) {
+                    myGoals5QuizAnswers = myGoals5QuizAnswers.concat(myGoals5Question.userAnswer.split(";"));
+                } else {
+                    myGoals5QuizAnswers.push(myGoals5Question.userAnswer);
+                }
+            }
+            
+            if(myGoals1QuizAnswers.length > 0) { 
+                myGoalsQuizAnswers.push(myGoals1QuizAnswers[getRandomIndex(myGoals1QuizAnswers.length, [])]); 
+            }
+            if(myGoals2QuizAnswers.length > 0) { 
+                myGoalsQuizAnswers.push(myGoals2QuizAnswers[getRandomIndex(myGoals2QuizAnswers.length, [])]); 
+            }
+            if(myGoals3QuizAnswers.length > 0) { 
+                myGoalsQuizAnswers.push(myGoals3QuizAnswers[getRandomIndex(myGoals3QuizAnswers.length, [])]); 
+            }
+            if(myGoals4QuizAnswers.length > 0) { 
+                myGoalsQuizAnswers.push(myGoals4QuizAnswers[getRandomIndex(myGoals4QuizAnswers.length, [])]); 
+            }
+            if(myGoals5QuizAnswers.length > 0) { 
+                myGoalsQuizAnswers.push(myGoals5QuizAnswers[getRandomIndex(myGoals5QuizAnswers.length, [])]); 
+            }
+            
+            /* My project */
+            var myProjectQuiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("34021") + "?userid=" + _userId);
+            var myProjectAnswers = [];
+            var myProjectQuestion = myProjectQuiz.questions[0];
+            
+            if(myProjectQuestion.userAnswer != "") {
+                if(myProjectQuestion.userAnswer.indexOf(";") != -1) {
+                    myProjectAnswers = myProjectAnswers.concat(myProjectQuestion.userAnswer.split(";"));
+                } else {
+                    myProjectAnswers.push(myProjectQuestion.userAnswer);
+                }
+            }
+            
+            $scope.album.myIdeas = myIdeaAnswersResult;
+            $scope.album.myDreams = myDreamsAnswersResult;
+            $scope.album.myPlans.oneYear = myPlansOneYearAnswers.length > 0 ? myPlansOneYearAnswers[getRandomIndex(myPlansOneYearAnswers.length, [])] : "";
+            $scope.album.myPlans.threeYear = myPlansThreeYearsAnswers.length > 0 ?myPlansThreeYearsAnswers[getRandomIndex(myPlansThreeYearsAnswers.length, [])] : "";
+            $scope.album.myPlans.fiveYear = myPlansFiveYearsAnswers.length > 0 ?myPlansFiveYearsAnswers[getRandomIndex(myPlansFiveYearsAnswers.length, [])] : "";
+            $scope.album.myGoals = myGoalsQuizAnswers;
+            $scope.album.project = myProjectAnswers.length > 0 ? [myProjectAnswers[getRandomIndex(myProjectAnswers.length, [])]] : [];
+        }
+        
+        function getRandomIndex(maxNumber, excludedIndexes) {
+            
+            var selectedIndex = null;
+            
+            while(selectedIndex == null || excludedIndexes.indexOf(selectedIndex) != -1) {
+                selectedIndex = Math.floor((Math.random() * maxNumber));   
+            }
+            
+            return selectedIndex;
         }
 
         function successfullCallBack(albumData) {
@@ -425,7 +720,7 @@ angular
                         ctx.font = '14px Play,sans-serif,Arial';
                         ctx.fillStyle = '#FFF';
                         ctx.textAlign = "center";
-                        wrapText(ctx, $scope.album.project != null ? $scope.album.project[0] : "", 1020, 280, 240, 15);
+                        wrapText(ctx, $scope.album.project != null && $scope.album.project.length > 0 ? $scope.album.project[0] : "", 1020, 280, 240, 15);
                         ctx.restore();
                         
                         /* My participation */
@@ -488,8 +783,8 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": $scope.sharedAlbumMessage,
-                    "createdtime": $filter("date")(new Date(), "MM/dd/yyyy"),
-                    "modifiedtime": $filter("date")(new Date(), "MM/dd/yyyy"),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": 4,
                     "filecontent":albumSrc.replace("data:image/png;base64", ""),
                     "filename": 'album.png',
@@ -514,12 +809,16 @@ angular
         
         $scope.shareAlbumClick = function() {
             
-            $scope.validateConnection(function(){
+            $timeout(function() {
+                $scope.validateConnection(function(){
             
-                $scope.isShareCollapsed = !$scope.isShareCollapsed;
-                $scope.showSharedAlbum = false;
-            
-            }, offlineCallback);
+                    $scope.$apply(function(){
+                        $scope.isShareCollapsed = !$scope.isShareCollapsed;
+                        $scope.showSharedAlbum = false;
+                    });
+
+                }, offlineCallback);
+            }, 500);
             
         };
         

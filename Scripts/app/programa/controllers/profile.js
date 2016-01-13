@@ -1609,8 +1609,10 @@ angular
                 };
 
                 function avatarUploaded(message) {
-                    $location.path('/Perfil/' + $scope.userId);
-                    $route.reload();
+                    setTimeout(function(){ 
+                        $location.path('/Perfil/' + $scope.userId);
+                        $route.reload();
+                    }, 1000);
                 }
 
                 function setEmptyAvatar() {
@@ -1650,31 +1652,15 @@ angular
                         "colorCabello": $scope.avatarInfo[0].color_cabello,
                         "trajeColorPrincipal": $scope.avatarInfo[0].traje_color_principal,
                         "trajeColorSecundario": $scope.avatarInfo[0].traje_color_secundario,
-                        "escudo": shield
+                        "escudo": shield,
+                        "avatarType":"Profile"
                     };
 
                     try {
                         $scope.$emit('ShowPreloader');
                         cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                     } catch (e) {
-                        SuccessAvatar(
-                            {
-                                "userid": $scope.model.id,
-                                "actividad": "Mi Avatar",
-                                "alias": $scope.model.username,
-                                "genero": "Hombre",
-                                "rostro": "Preocupado",
-                                "color_de_piel": "E6C8B0",
-                                "estilo_cabello": "Cabello02",
-                                "color_cabello": "694027",
-                                "traje_color_principal": "00A0FF",
-                                "traje_color_secundario": "006192",
-                                "imagen_recortada": "app/initializr/media",
-                                "fecha_modificacion": "09/05/2015 08:32:04",
-                                "Te_gusto_la_actividad": null,
-                                "pathimagen": "default.png"
-                            }
-                        );
+                        SuccessAvatar({"userId": $scope.userId, "actividad":"Mi Avatar","alias":$scope.model.alias,"genero":"Mujer","rostro":"Preocupado","colorPiel":"E6C8B0","estiloCabello":"Cabello02","colorCabello":"694027","trajeColorPrincipal":"00A0FF","trajeColorSecundario":"006192","imagenRecortada":"app/initializr/media","fechaModificación":"09/05/2015 09:32:04","gustaActividad":"Si","pathImagen":"avatar_196.png"})
 
                     }
                 };
@@ -1841,6 +1827,18 @@ angular
                 }
 
                 $scope.scrollToTop();
+
+                if ($routeParams.retry){
+                    
+                    try {
+                        document.addEventListener("deviceready",  function() { cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", [])}, false);
+                    }
+                    catch (e) {
+                        SuccessAvatar(
+                            {"userId": $scope.userId, "actividad":"Mi Avatar","alias":$scope.model.alias,"genero":"Mujer","rostro":"Preocupado","colorPiel":"E6C8B0","estiloCabello":"Cabello02","colorCabello":"694027","trajeColorPrincipal":"00A0FF","trajeColorSecundario":"006192","imagenRecortada":"app/initializr/media","fechaModificación":"09/05/2015 09:32:04","gustaActividad":"Si", "pathImagen":"avatar_196.png"}
+                        );
+                    }
+                }
 
             }
         }]).controller('badgeRobotMessageModal', function ($scope, $modalInstance) {
