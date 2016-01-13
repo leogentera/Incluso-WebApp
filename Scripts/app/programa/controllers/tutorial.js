@@ -42,17 +42,20 @@ angular
                 "escudo:": "",
                 "imagen_recortada": "",
             }];
-
-            try {
-              cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+            
+            if (!$routeParams.retry) {
+                try {
+                  cordova.exec(function(data) { $scope.isInstalled = data.isInstalled }, function() {} , "CallToAndroid", " isInstalled", []);
+                }
+                catch (e) {
+                    $scope.isInstalled = true;
+                }
             }
-            catch (e) {
-                $scope.isInstalled = true;
-            }
+            
 
             function getDataAsync() {
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-                moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), currentUser.token , getAvatarInfoCallback);
+                //moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), currentUser.token , getAvatarInfoCallback);
                 
                 if (!currentUser) {
                     $location.path('/');
@@ -106,24 +109,25 @@ angular
                 img.src = imageUri;
             }
 
-            uploadAvatar = function(avatarInfo) {                
+            uploadAvatar = function(avatarInfo) {            
                 var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen;
-                encodeImageUri(pathimagen, function(b64) {
+                encodeImageUri(pathimagen, function(b64) {        
                     avatarInfo[0]["filecontent"] = b64;
                     moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], successCallback, errorCallback);
                 });
             }
 
             var successCallback = function(){
+                $scope.$emit('HidePreloader');
                 $location.path('/ProgramaDashboard');
             }
 
             var errorCallback = function(){
+                $scope.$emit('HidePreloader');
                 $location.path('/ProgramaDashboard');
             }
             
             $scope.avatar = function () {
-
                 var avatarInfoForGameIntegration = {
                     "userId": "" + $scope.model.id,
                     "alias": $scope.model.alias,
@@ -137,29 +141,23 @@ angular
                     "colorCabello": $scope.avatarInfo[0].color_cabello,
                     "trajeColorPrincipal": $scope.avatarInfo[0].traje_color_principal,
                     "trajeColorSecundario": $scope.avatarInfo[0].traje_color_secundario,
-                    "escudo": ""
-                };   
+                    "escudo": "",
+                    "avatarType":"Tutorial"
+                };
 
                 $scope.$emit('ShowPreloader');
-
                 try {
-                    if (window.mobilecheck()) {
-                        cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
-                    }else{
-                       SuccessAvatar(
-                        {"userid":$scope.model.id,"actividad":"Mi Avatar","alias": $scope.model.alias, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/05/2015 09:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
-                    ); 
-                    }
+                    cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch(e) {
                     SuccessAvatar(
-                        {"userid":$scope.model.id,"actividad":"Mi Avatar","alias": $scope.model.alias, "genero":"Hombre","rostro":"Preocupado","color_de_piel":"E6C8B0","estilo_cabello":"Cabello02","color_cabello":"694027","traje_color_principal":"00A0FF","traje_color_secundario":"006192","imagen_recortada":"app/initializr/media","fecha_modificacion":"09/05/2015 09:32:04","Te_gusto_la_actividad":null, "pathimagen":"default.png"}                
+                        {"userId": $scope.model.id, "actividad":"Mi Avatar","alias":$scope.model.alias,"genero":"Mujer","rostro":"Preocupado","colorPiel":"E6C8B0","estiloCabello":"Cabello02","colorCabello":"694027","trajeColorPrincipal":"00A0FF","trajeColorSecundario":"006192","imagenRecortada":"app/initializr/media","fechaModificación":"09/05/2015 09:32:04","gustaActividad":"Si", "pathImagen":"default.png"}
                     );
                 }
             };
             
             function SuccessAvatar(data) {
                 $scope.avatarInfo = [{
-                    "userid": data.userId,
+                    "userid": $scope.model.id,
                     "aplicacion": data.actividad,
                     "genero": data.genero,
                     "rostro": data.rostro,
@@ -188,4 +186,16 @@ angular
                 $scope.currentPage = pageNumber;
                 $scope.scrollToTop();
             };
+
+            if ($routeParams.retry){
+                _loadedDrupalResources = true;
+                try {
+                    document.addEventListener("deviceready",  function() { cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", [])}, false);
+                }
+                catch (e) {
+                    SuccessAvatar(
+                        {"userId": $scope.model.id, "actividad":"Mi Avatar","alias":$scope.model.alias,"genero":"Mujer","rostro":"Preocupado","colorPiel":"E6C8B0","estiloCabello":"Cabello02","colorCabello":"694027","trajeColorPrincipal":"00A0FF","trajeColorSecundario":"006192","imagenRecortada":"app/initializr/media","fechaModificación":"09/05/2015 09:32:04","gustaActividad":"Si", "pathImagen":"avatar_196.png"}
+                    );
+                }
+            }
         }]);

@@ -168,6 +168,11 @@
             controller: 'programaProfileController'
         });
 
+        $routeProvider.when('/Perfil/:id/:retry', {
+            templateUrl: 'Templates/Programa/profile.html',
+            controller: 'programaProfileController'
+        });
+
         $routeProvider.when('/Perfil/ConfigurarPrivacidad/:id', {
             templateUrl: 'Templates/Programa/privacySettings.html',
             controller: 'programaProfileController'
@@ -219,6 +224,11 @@
         });
 
         $routeProvider.when('/Tutorial', {
+            templateUrl: 'Templates/Programa/Tutorial.html',
+            controller: 'programaTutorialController'
+        });
+
+        $routeProvider.when('/Tutorial/:retry', {
             templateUrl: 'Templates/Programa/Tutorial.html',
             controller: 'programaTutorialController'
         });
