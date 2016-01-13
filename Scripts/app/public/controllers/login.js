@@ -70,7 +70,6 @@ angular
                         }
 
                         if ($scope.activity_status === 1) {//If the activity is currently finished.
-
                             moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, storeQuiz, errorCallQuiz, true);
 
                         } else {//The activity HAS NOT BEEN FINISHED.
