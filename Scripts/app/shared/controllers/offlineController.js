@@ -1,4 +1,4 @@
-﻿/* Controller to handle offline redirections */
+/* Controller to handle offline redirections */
 angular
 .module('incluso.shared.offlineController', ['GlobalAppConstants'])
 .controller('offlineController', [

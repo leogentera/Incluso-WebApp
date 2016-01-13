@@ -1,4 +1,4 @@
-﻿/* Main controller, all other controllers inherit from this one */
+/* Main controller, all other controllers inherit from this one */
 angular
     .module('incluso.home', [])
     .controller('homeCtrl', [

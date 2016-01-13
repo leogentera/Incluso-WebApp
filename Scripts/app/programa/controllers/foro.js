@@ -1,4 +1,4 @@
-﻿angular
+angular
     .module('incluso.programa.foro', [])
     .controller('programaForoController', [
         '$q',

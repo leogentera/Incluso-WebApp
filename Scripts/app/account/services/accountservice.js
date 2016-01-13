@@ -1,4 +1,4 @@
-﻿angular
+angular
     .module('incluso.service.account', [])
     .factory('accountservice', [
         '$http',

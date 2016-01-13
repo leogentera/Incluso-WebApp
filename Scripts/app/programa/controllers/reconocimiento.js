@@ -1,4 +1,4 @@
-﻿angular
+angular
 .module('incluso.programa.reconocimiento', [])
 .controller('reconocimientoController', [
 	'$q',
