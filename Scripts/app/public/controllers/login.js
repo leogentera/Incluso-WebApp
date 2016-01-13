@@ -93,7 +93,7 @@ angular
                 //loading...
                 if (txtCredentials) {
                     userCredentials = JSON.parse(txtCredentials);
-
+                    //Preload username and password input fields...
                     $scope.userCredentialsModel.username = userCredentials.username;
                     $scope.userCredentialsModel.password = userCredentials.password;
                     $scope.userCredentialsModel.rememberCredentials = userCredentials.rememberCredentials;
@@ -107,28 +107,33 @@ angular
 
                 //autologin
                 if (currentUser && currentUser.token && currentUser.token != "") {
+                    //alert("Sí");
                     $timeout(function () {
                         $scope.$emit('ShowPreloader');
                     }, 1500);
                     $timeout(function () {
                         $scope.validateConnection(function () {
+                            //alert("Validated");
 
                             _loadDrupalResources();
                             //Run queue
                             moodleFactory.Services.ExecuteQueue(function () {
+                                //alert("Queue");
                             });
 
                             //Load Quizzes assets
                             $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                             $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                            loadQuizesAssets($scope.userprofile.id, $scope.currentUser.token);
-                            GetExternalAppData();
+                            loadQuizesAssets($scope.userprofile.id, $scope.currentUser.token);//alert("Quizes loaded");
+                            GetExternalAppData();//alert("External App data loaded");
 
                         }, function () {
                             $scope.$emit('HidePreloader');
                         });
                     }, 2000);
+
                     moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
+                        //alert("GetAsyncUserCourse OK");
                         $scope.$emit('HidePreloader');
                         $location.path('/ProgramaDashboard');
                     }, function () {
@@ -136,7 +141,7 @@ angular
                         $location.path('/ProgramaDashboard');
                     }, true);
 
-                } else {
+                } else {//alert("No");
                     $scope.$emit('HidePreloader');
                 }
             };
