@@ -150,7 +150,7 @@ angular
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch(e) {
                     SuccessAvatar(
-                        {"userId": $scope.model.id, "actividad":"Mi Avatar","alias":$scope.model.alias,"genero":"Mujer","rostro":"Preocupado","colorPiel":"E6C8B0","estiloCabello":"Cabello02","colorCabello":"694027","trajeColorPrincipal":"00A0FF","trajeColorSecundario":"006192","imagenRecortada":"app/initializr/media","fechaModificación":"09/05/2015 09:32:04","gustaActividad":"Si", "pathImagen":"default.png"}
+                        {"userId": $scope.model.id, "actividad":"Mi Avatar","alias":$scope.model.alias,"genero":"Mujer","rostro":"Preocupado","colorPiel":"E6C8B0","estiloCabello":"Cabello02","colorCabello":"694027","trajeColorPrincipal":"00A0FF","trajeColorSecundario":"006192","imagenRecortada":"app/initializr/media","fechaModificaciÃ³n":"09/05/2015 09:32:04","gustaActividad":"Si", "pathImagen":"default.png"}
                     );
                 }
             };
@@ -167,7 +167,7 @@ angular
                     "traje_color_principal": data.trajeColorPrincipal,
                     "traje_color_secundario": data.trajeColorSecundario,
                     "imagen_recortada": data.genero,
-                    "ultima_modificacion": data["fechaModificación"],
+                    "ultima_modificacion": data["fechaModificaciÃ³n"],
                     "Te_gusto_la_actividad": data.gustaActividad,
                     "pathimagen": data.pathImagen,
                     "estrellas": "100",
@@ -194,7 +194,7 @@ angular
                 }
                 catch (e) {
                     SuccessAvatar(
-                        {"userId": $scope.model.id, "actividad":"Mi Avatar","alias":$scope.model.alias,"genero":"Mujer","rostro":"Preocupado","colorPiel":"E6C8B0","estiloCabello":"Cabello02","colorCabello":"694027","trajeColorPrincipal":"00A0FF","trajeColorSecundario":"006192","imagenRecortada":"app/initializr/media","fechaModificación":"09/05/2015 09:32:04","gustaActividad":"Si", "pathImagen":"avatar_196.png"}
+                        {"userId": $scope.model.id, "actividad":"Mi Avatar","alias":$scope.model.alias,"genero":"Mujer","rostro":"Preocupado","colorPiel":"E6C8B0","estiloCabello":"Cabello02","colorCabello":"694027","trajeColorPrincipal":"00A0FF","trajeColorSecundario":"006192","imagenRecortada":"app/initializr/media","fechaModificaciÃ³n":"09/05/2015 09:32:04","gustaActividad":"Si", "pathImagen":"avatar_196.png"}
                     );
                 }
             }
