@@ -33,7 +33,7 @@
                                 <div class="add">{{::contentResources.community_shared_message}}</div>
                                 <!--<div class="add">Has compartido tú album.</div>-->
                                 <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000', '', '5000')">Ir a Comunidad</a>-->
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000', '', '5000')">{{::contentResources.go_to_community_button}}</a>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('Community/50000', 'Comunidad', 50000)">{{::contentResources.go_to_community_button}}</a>
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">{{::contentResources.shared_close_button}}</a>
                                 <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>-->
                             </div>
@@ -128,7 +128,7 @@
                                 <div class="add">{{::contentResources.community_shared_message}}</div>
                                 <!--<div class="add">Has compartido tú album.</div>-->
                                 <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>-->
-                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">{{::contentResources.go_to_community_button}}</a>
+                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('Community/50000', 'Comunidad', 50000)">{{::contentResources.go_to_community_button}}</a>
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">{{::contentResources.shared_close_button}}</a>
                                 <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>-->
                             </div>
@@ -139,7 +139,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="likes in album.myLikes">
-                                    {{::likes}}
+                                    {{likes}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myLikes.length == 0">
                                     <strong>No has seleccionado tus gustos</strong>
@@ -152,7 +152,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="attributes in album.myAttributes">
-                                    {{::attributes}}
+                                    {{attributes}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myAttributes.length == 0">
                                     <strong>No has seleccionado tus cualidades</strong>
@@ -165,7 +165,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="ideas in album.myIdeas">
-                                    {{::ideas}}
+                                    {{ideas}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myIdeas.length == 0">
                                     <strong>No has seleccionado aún nada</strong>
@@ -178,7 +178,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="dreams in album.myDreams">
-                                    {{::dreams}}
+                                    {{dreams}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myDreams.length == 0">
                                     <strong>No has seleccionado aún nada</strong>
@@ -269,7 +269,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="goals in album.myGoals">
-                                    {{::goals}}
+                                    {{goals}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myGoals.length == 0">
                                     <strong>No has seleccionado aún nada</strong>
@@ -282,7 +282,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="iKnow in album.iKnowWhatIs">
-                                    {{::iKnow}}
+                                    {{iKnow}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.iKnowWhatIs.length == 0">
                                     <strong>No has seleccionado aún nada</strong>
@@ -295,7 +295,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="likes in album.myLikes">
-                                    {{::likes}}
+                                    {{likes}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.myLikes.length == 0">
                                     <strong>No has seleccionado tus gustos</strong>
@@ -308,7 +308,7 @@
                         <div class="container">
                             <ul class="list-group">
                                 <li class="list-group-item" ng-repeat="proj in album.project">
-                                    {{::proj}}
+                                    {{proj}}
                                 </li>
                                 <li class="list-group-item" ng-if="album.project.length == 0">
                                     <strong>No has seleccionado aún nada</strong>

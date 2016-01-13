@@ -800,6 +800,50 @@ function getActivityByActivity_identifier(activity_identifier, usercourse) {
     return matchingActivity;
 }
 
+function getActivityQuizModuleId(activity_identifier) {
+    var breakAll = false;
+    var courseModuleId = null;
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+        var stage = userCourse.stages[stageIndex];
+        
+        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+            var challenge = stage.challenges[challengeIndex];
+            
+            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                var activity = challenge.activities[activityIndex];
+                
+                if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
+                    courseModuleId = activity.coursemoduleid;
+                    breakAll = true;
+                    break;
+                }
+                
+                if(activity.activities != null) {
+                    
+                    for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {
+                        var subactivity = activity.activities[subactivityIndex];
+                        
+                        if (parseInt(subactivity.activity_identifier) === parseInt(activity_identifier)) {
+                            courseModuleId = subactivity.coursemoduleid;
+                            breakAll = true;
+                            break;
+                        }
+                    }
+                }
+                
+            }
+            if (breakAll)
+                break;
+        }
+        if (breakAll)
+            break;
+    }
+    
+    return courseModuleId;
+}
+
 function getChallengeByActivity_identifier(activity_identifier, usercourse) {
     var matchingActivity = null;
     var breakAll = false;
