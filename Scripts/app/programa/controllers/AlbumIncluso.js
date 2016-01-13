@@ -604,7 +604,6 @@ angular
                         ctx.fillStyle = '#BCD431';
                         ctx.textAlign = "center";
                         var shield = $scope.album.shield;
-                        console.log($scope.album.shield);
                         wrapText(ctx, shield.toUpperCase(), 270, 535, 200, 15);
                         ctx.restore();
                         
@@ -616,7 +615,6 @@ angular
                         ctx.fillStyle = '#FFF';
                         ctx.textAlign = "center";
                         for(var st = 0; st < strengthsTemp.length; st++) {
-                            console.log(strengthsTemp[st]);
                             wrapText(ctx, strengthsTemp[st], 270, strengthsTempYPosition, 200, 15);
                             strengthsTempYPosition += 34;
                         }
@@ -630,7 +628,6 @@ angular
                         ctx.fillStyle = '#FFF';
                         ctx.textAlign = "center";
                         for(var wil = 0; wil < whatILikeTemp.length; wil++) {
-                            console.log(whatILikeTemp[wil]);
                             wrapText(ctx, whatILikeTemp[wil], 270, whatILikeTempYPosition, 200, 15);
                             whatILikeTempYPosition += 34;
                         }
@@ -644,7 +641,6 @@ angular
                         ctx.fillStyle = '#FFF';
                         ctx.textAlign = "center";
                         for(var qt = 0; qt < qualitiesTemp.length; qt++) {
-                            console.log(qualitiesTemp[qt]);
                             wrapText(ctx, qualitiesTemp[qt], 270, qualitiesYPosition, 200, 15);
                             qualitiesYPosition += 34;
                         }
@@ -658,7 +654,6 @@ angular
                         ctx.fillStyle = '#FFF';
                         ctx.textAlign = "center";
                         for(var wpm = 0; wpm < whatPushesMeTemp.length; wpm++) {
-                            console.log(whatPushesMeTemp[wpm]);
                             wrapText(ctx, whatPushesMeTemp[wpm], 650, whatPushesMeYPosition, 200, 15);
                             whatPushesMeYPosition += 34;
                         }
@@ -672,7 +667,6 @@ angular
                         ctx.fillStyle = '#FFF';
                         ctx.textAlign = "center";
                         for(var my = 0; my < myDreamsMeTemp.length; my++) {
-                            console.log(myDreamsMeTemp[my]);
                             wrapText(ctx, myDreamsMeTemp[my], 650, myDreamsYPosition, 200, 15);
                             myDreamsYPosition += 34;
                         }
@@ -689,10 +683,8 @@ angular
                         ctx.textAlign = "center";
                         for(var mp = 0; mp < myPlansYears.length; mp++) {
                             ctx.fillStyle = '#08B290';
-                            console.log(myPlansYears[mp]);
                             wrapText(ctx, myPlansYears[mp], 550, myPlansYPosition, 200, 15);
                             ctx.fillStyle = '#FFF';
-                            console.log(myPlansTemp[myPlansProps[mp]]);
                             wrapText(ctx, myPlansTemp[myPlansProps[mp]], 670, myPlansYPosition, 200, 15);
                             myPlansYPosition += 34;
                         }
@@ -706,7 +698,6 @@ angular
                         ctx.fillStyle = '#FFF';
                         ctx.textAlign = "center";
                         for(var mg = 0; mg < myGoalsTemp.length; mg++) {
-                            console.log(myGoalsTemp[mg]);
                             wrapText(ctx, myGoalsTemp[mg], 650, myGoalsYPosition, 270, 15);
                             myGoalsYPosition += 34;
                         }
@@ -720,7 +711,6 @@ angular
                         ctx.fillStyle = '#FFF';
                         ctx.textAlign = "center";
                         for(var nik = 0; nik < nowIKnowTemp.length; nik++) {
-                            console.log(nowIKnowTemp[nik]);
                             wrapText(ctx, nowIKnowTemp[nik], 650, nowIKnowYPosition, 200, 15);
                             nowIKnowYPosition += 34;
                         }
