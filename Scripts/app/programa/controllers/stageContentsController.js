@@ -173,7 +173,7 @@ angular
                 }
 
                 function setResources(myActivity) {
-                    if (myActivity.activityContent.thumbnail) {
+                    if (myActivity.activityContent.thumbnail) {console.log(myActivity.activityContent.thumbnail);
                         myActivity.activityContent.thumbnail = myActivity.activityContent.thumbnail.fileurl + "&token=" + $scope.token;
                     }
                     else {
@@ -278,7 +278,7 @@ angular
                 function assingStars(isMandatory, coursemoduleid, stars) {                  
                     
                     $scope.validateConnection(function () {
-                                          
+
                         profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
                         var data = {
                             userId: profile.id,

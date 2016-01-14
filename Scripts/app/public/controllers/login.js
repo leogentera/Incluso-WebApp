@@ -125,6 +125,7 @@ angular
 
                         }, function () {
                             $scope.$emit('HidePreloader');
+                            _loadedDrupalResources = true;
                         });
                     }, 2000);
 
