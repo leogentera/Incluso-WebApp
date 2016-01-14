@@ -433,7 +433,10 @@ angular
                         $scope.talentsList = deleteRepeatedEntries($scope.talentsList);
                         $scope.valuesList = deleteRepeatedEntries($scope.valuesList);
                         $scope.habilitiesList = deleteRepeatedEntries($scope.habilitiesList);
-                       
+
+                        $timeout(function () {
+                            $scope.$emit('HidePreloader');
+                        }, 2000);
 
                     } else {//Try to get user profile data from Service.
 
@@ -1331,6 +1334,11 @@ angular
                             validInfo = false;
                         }
                     }
+
+                    if (!$scope.model.medicalCoverage || !$scope.model.medicalInsurance) {
+                        validInfo = false;
+                    }
+
                     return validInfo;
                 }
 
