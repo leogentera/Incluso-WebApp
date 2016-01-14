@@ -51,7 +51,7 @@ angular
 				}
                 
             };
-			
+
 			/* redirect to profile */
 			$scope.navigateToMyProfile = function(){
                 $scope.$emit('ShowPreloader');
