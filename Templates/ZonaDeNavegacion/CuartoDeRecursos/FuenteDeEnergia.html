@@ -118,8 +118,7 @@
                                             <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'"
                                                ng-click="updateStatus(activity.groupid)"
                                                href={{activity.activityContent.url}} target="_blank">{{activity.activityContent.url}}</a>
-                                            <section class="component ng-scope"
-                                                     ng-if="activity.activityintro == 'video'">
+                                            <section class="component ng-scope" ng-if="activity.activityintro == 'video'">
                                                 <div class="panel panel-video">
                                                     <div class="video-player">
                                                         <div class="stage">

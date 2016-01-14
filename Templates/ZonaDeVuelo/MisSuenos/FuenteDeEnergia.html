@@ -116,8 +116,7 @@
                                             <a ng-if="activity.activityintro != 'video' && activity.activity_type=='url'"
                                                ng-click="updateStatus(activity.groupid)"
                                                href={{::activity.activityContent.url}} target="_blank">{{::activity.activityContent.url}}</a>
-                                            <section class="component ng-scope"
-                                                     ng-if="activity.activityintro == 'video'">
+                                            <section class="component ng-scope" ng-if="activity.activityintro == 'video'">
                                                 <div class="panel panel-video">
                                                     <div class="video-player">
                                                         <div class="stage">
@@ -127,8 +126,7 @@
                                                                 <span class="glyphicon glyphicon-play"></span>
                                                             </a>
                                                             <figure class="poster">
-                                                                <img ng-src="{{activity.status && activity.activityContent.thumbnail || 'assets/images/svg/img_placeholder-01.svg'}}"
-                                                                     alt="video"/>
+                                                                <img ng-src="{{activity.status && activity.activityContent.thumbnail || 'assets/images/svg/img_placeholder-01.svg'}}" alt="video"/>
                                                             </figure>
                                                         </div>
                                                     </div>
