@@ -256,16 +256,15 @@ angular
                                     _setLocalStorageJsonItem("activityManagers", activitymanagers);
                                     _endActivity($scope.fuenteDeEnergia.activities[i]);
                                     if (!$scope.fuenteDeEnergia.activities[i].optional) {
-                                        $scope.statusObligatorios += 1;
+                                        $scope.statusObligatorios += 1;                                        
                                         assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
-                                        starsMandatory += 50;
+                                        
                                         if ($scope.statusObligatorios >= 5 && !$scope.fuenteDeEnergia.status) {
                                             $scope.navigateToPage(2);
                                         }
                                     }
                                     else {
                                         assingStars(false, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
-                                        starsNoMandatory += 50;
                                     }
                                 }
                                 break;
@@ -276,12 +275,10 @@ angular
 
                 };
 
-                function assingStars(isMandatory, coursemoduleid, stars) {
-
+                function assingStars(isMandatory, coursemoduleid, stars) {                  
+                    
                     $scope.validateConnection(function () {
-
-
-
+                                          
                         profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
                         var data = {
                             userId: profile.id,
@@ -291,19 +288,20 @@ angular
                             date: getdate(),
                             is_extra: false
                         };
-                        console.log("Updating Stars");                        
-                        if (starsMandatory < 250 && isMandatory) {
+                        
+                        
+                        if (starsMandatory < 250 && isMandatory) {                            
                             profile.stars = parseInt(profile.stars) + stars;                            
                             moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
-                        }                        
-                        else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources) {
+                        }
+                        else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources) {                            
                             if (totalOptionalPoints + stars > $scope.fuenteDeEnergia.max_resources) {
-                                stars = $scope.fuenteDeEnergia.max_resources - totalOptionalPoints;
+                                stars = $scope.fuenteDeEnergia.max_resources - totalOptionalPoints;                                
                             }
                             data.is_extra = true;
 
                             profile.stars = parseInt(profile.stars) + stars;
-                                                                                            
+                            
                             moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
                             totalOptionalPoints += stars;                            
                         }
@@ -326,6 +324,7 @@ angular
 
                         localStorage.setItem("userStars", JSON.stringify(userStars));
 
+                        starsMandatory += 50;
                     }, offlineCallback);
 
                 }
