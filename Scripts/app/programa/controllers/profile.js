@@ -401,7 +401,13 @@ angular
                         //Get avatar info from Local Storage.
                         $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
                         $timeout(function(){
-                            $scope.validateConnection(function(){}, function(){ $scope.model.profileimageurl = 'assets/avatar/default.png'; });
+                            $scope.validateConnection(function(){}, function(){
+                                
+                                getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.model.profileimageurl, function(niceImageUrl) { 
+                                    $scope.model.profileimageurl = niceImageUrl;
+                                });
+                                
+                            });
                         }, 500);
 
                         $scope.model = initFields($scope.model);

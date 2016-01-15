@@ -316,13 +316,15 @@ angular
             }
             
             $timeout(function() {
-                $scope.validateConnection(function(){
+                $scope.validateConnection(function() {
                     $scope.$apply(function(){
                         $scope.album.profileimageurl = _userProfile.profileimageurl + "?rnd=" + new Date().getTime();
                     });
-                }, function(){
-                    $scope.album.profileimageurl = 'assets/avatar/default.png';
-                    $scope.$apply();
+                }, function() {
+                    getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", _userProfile.profileimageurl, function(niceImageUrl) { 
+                        $scope.album.profileimageurl = niceImageUrl;
+                        $scope.$apply();
+                    });
                 });
             }, 1000);
             
@@ -766,12 +768,9 @@ angular
                         printBadge(1, 1, 1, callback);
                     };
                     
-                    var avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
-                    if(avatarInfo != null && avatarInfo.pathimagen != null) {
-                        imgAvatar.src = "assets/avatar/" + avatarInfo.pathimagen;
-                    }else {
-                        imgAvatar.src = "assets/avatar/default.png";
-                    }
+                    getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", _userProfile.profileimageurl, function(niceImageUrl) { 
+                        imgAvatar.src = niceImageUrl;
+                    });
                 };
                 
                 imgBackground.src = "assets/images/bg-share-album.jpg";

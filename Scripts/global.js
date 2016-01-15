@@ -1709,6 +1709,40 @@ var _loadDrupalResources = function() {
     }
 }
 
+/* params:
+   images - array of objects { path, name, downloadLink }
+*/
+function saveLocalImages(images) {
+    
+    _forceUpdateConnectionStatus(function() {
+        
+        if(window.mobilecheck()) {
+        
+            if(images.length > 0) {
+                cordova.exec(function() {}, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
+            }
+        }
+        
+    }, function() {});
+    
+}
+
+function getImageOrDefault(localPath, imageUrl, getImageOrDefaultCallback) {
+    
+    if(window.mobilecheck()) {
+        cordova.exec(function(data) {
+            if(data.exists) {
+                getImageOrDefaultCallback(localPath);
+            } else {
+                getImageOrDefaultCallback("assets/avatar/default.png");
+            }
+
+        }, function(){}, "CallToAndroid", "fileExists", [localPath]);
+    } else {
+        getImageOrDefaultCallback(imageUrl);
+    }
+}
+
 /* Waits until page is loaded */
 $(document).ready(function(){
     setTimeout(function() {
