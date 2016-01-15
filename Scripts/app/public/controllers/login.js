@@ -133,7 +133,9 @@ angular
             $scope.login = function (username, password) {
                 $scope.$emit('ShowPreloader');
                 $scope.validateConnection(function () {
-                    loginConnectedCallback();
+                    $scope.$apply(function() { 
+                        loginConnectedCallback();
+                    });
                 }, offlineCallback);
             };
 
