@@ -95,7 +95,7 @@ angular
                     if (data) {
                         var likes = parseInt(data.likes);
                         console.log("user likes" + likes);
-                        if (likes >= 30) {
+                        if (likes == 30) {
                             assignLikesBadge();
                         }
                     }
@@ -116,7 +116,7 @@ angular
                 }
                 
                 localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
-                
+                showRobotForum();
                 moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
                     console.log("created badge successfully");
                 }, function () { });
@@ -161,11 +161,11 @@ angular
                         }
                     }
                     
-                    if (postCounter >= 40) {
+                    if (postCounter >= 40 && badgeForum[0].status == "pending") {
                                                                                         
                         var badgeModel = {
                             badgeid: badgeForum[0].id //badge earned when a user completes his profile.
-                            };
+                        };
                             
                         var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
                         for(var i = 0; i < userProfile.badges.length; i++)
@@ -174,9 +174,9 @@ angular
                                 userProfile.badges[i].status = "won";
                             }
                         }
-            
-                        showRobotForum();
+                                    
                         localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
+                        showRobotForum();
                         moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){},function(){});
                         
                     }

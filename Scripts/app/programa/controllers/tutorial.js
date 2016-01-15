@@ -120,6 +120,7 @@ angular
             var successCallback = function(){
                 $scope.$emit('HidePreloader');
                 $location.path('/ProgramaDashboard');
+                _tutorial = true;
             }
 
             var errorCallback = function(){
@@ -144,7 +145,6 @@ angular
                     "escudo": "",
                     "avatarType":"Tutorial"
                 };
-
                 $scope.$emit('ShowPreloader');
                 try {
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);

@@ -13,6 +13,7 @@ var _catalogsLoaded = null;
 var _isDeviceOnline = null;
 var _queuePaused = false;
 var _activityStatus = null;
+var _tutorial = false;
 
 /* Prototypes */
 window.mobilecheck = function() {
@@ -1706,6 +1707,40 @@ var _loadDrupalResources = function() {
     function errorDrupalResourcesCallback() {
         propCounter++;
         _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
+    }
+}
+
+/* params:
+   images - array of objects { path, name, downloadLink }
+*/
+function saveLocalImages(images) {
+    
+    _forceUpdateConnectionStatus(function() {
+        
+        if(window.mobilecheck()) {
+        
+            if(images.length > 0) {
+                cordova.exec(function() {}, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
+            }
+        }
+        
+    }, function() {});
+    
+}
+
+function getImageOrDefault(localPath, imageUrl, getImageOrDefaultCallback) {
+    
+    if(window.mobilecheck()) {
+        cordova.exec(function(data) {
+            if(data.exists) {
+                getImageOrDefaultCallback(localPath);
+            } else {
+                getImageOrDefaultCallback("assets/avatar/default.png");
+            }
+
+        }, function(){}, "CallToAndroid", "fileExists", [localPath]);
+    } else {
+        getImageOrDefaultCallback(imageUrl);
     }
 }
 

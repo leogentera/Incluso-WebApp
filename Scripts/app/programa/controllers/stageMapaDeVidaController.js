@@ -106,7 +106,7 @@ angular
                     "estrellas": "" + $scope.stars,
                     "pathImagenFicha": "",
                     "imagenFicha": "",
-                    "genero": $scope.user.gender,
+                    "genero": ($scope.user.gender.toLowerCase().indexOf('femenino') >= 0 ? 'Mujer' : 'Hombre'),
                     "pathImagen":"",
                     "fichaProyecto": []
                 }

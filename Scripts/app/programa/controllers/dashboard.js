@@ -10,7 +10,8 @@ angular
         '$http',
         '$modal',
         '$interval',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $interval) {
+        '$route',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $interval, $route) {
 
             var _loadedResources = false;
             var _pageLoaded = false;
@@ -33,6 +34,14 @@ angular
             if (!_getItem("userId")) {
                 $location.path('/');
                 return "";
+            }
+
+            if (_tutorial) {
+                setTimeout(function(){ 
+                    $location.path('/ProgramaDashboard');
+                    $route.reload();
+                }, 2000);
+                _tutorial = false;
             }
 
             $scope.stageProgress = 0;
@@ -147,14 +156,17 @@ angular
                         $scope.currentStage = getCurrentStage();                    
                         _setLocalStorageItem("currentStage", $scope.currentStage);
                         
-                        var defaultAvatar = 'assets/avatar/default.png';
                         
+                        getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function(niceImageUrl) {
+                            $scope.user.profileimageurl = niceImageUrl;
+                        });
+
                         var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         for(var lb = 0; lb < leaderboard.length; lb++) {
-                            leaderboard[lb].profileimageurl = defaultAvatar;
+                            getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", leaderboard[lb].profileimageurl, function(niceImageUrl) { 
+                                leaderboard[lb].profileimageurl = niceImageUrl;
+                            });
                         }
-                        
-                        $scope.user.profileimageurl = defaultAvatar;
                         $scope.course.leaderboard = leaderboard;
                         
                         _pageLoaded = true;
@@ -167,6 +179,7 @@ angular
                             $scope.navigateTo('TermsOfUse');
                         }
                     });
+                    
                 }, 1000);
             }
 
@@ -183,9 +196,28 @@ angular
 
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+                        
+                        var images = [];
+                        for(var i = 0; i < $scope.course.leaderboard.length; i++) {
+                            var topuser = $scope.course.leaderboard[i];
+                            
+                            images[i] = { 
+                                'path': "assets/avatar",
+                                'name': "avatar_" + topuser.userId + ".png",
+                                'downloadLink': topuser.profileimageurl
+                            };
+                        }
+                        
+                        saveLocalImages(images);
 
                         moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, function () {
                             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
+                            
+                            saveLocalImages([{ 
+                                'path': "assets/avatar",
+                                'name': "avatar_" + $scope.profile.id + ".png",
+                                'downloadLink': $scope.profile.profileimageurl
+                            }]);
 
                             _pageLoaded = true;
                             if (_loadedResources && _pageLoaded) {
