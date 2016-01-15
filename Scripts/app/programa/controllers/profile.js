@@ -401,7 +401,13 @@ angular
                         //Get avatar info from Local Storage.
                         $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
                         $timeout(function(){
-                            $scope.validateConnection(function(){}, function(){ $scope.model.profileimageurl = 'assets/avatar/default.png'; });
+                            $scope.validateConnection(function(){}, function(){
+                                
+                                getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.model.profileimageurl, function(niceImageUrl) { 
+                                    $scope.model.profileimageurl = niceImageUrl;
+                                });
+                                
+                            });
                         }, 500);
 
                         $scope.model = initFields($scope.model);
@@ -1653,7 +1659,7 @@ angular
                         "actividad": "Mi Avatar",
                         "estrellas": "100",
                         "pathImagen": "",
-                        "genero": $scope.avatarInfo[0].imagen_recortada,
+                        "genero": ($scope.model.gender.toLowerCase().indexOf('femenino') >= 0 ? 'Mujer' : 'Hombre'),
                         "rostro": $scope.avatarInfo[0].rostro,
                         "colorPiel": $scope.avatarInfo[0].color_de_piel,
                         "estiloCabello": $scope.avatarInfo[0].estilo_cabello,
