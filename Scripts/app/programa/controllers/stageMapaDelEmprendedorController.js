@@ -331,7 +331,7 @@ angular
                                                 $scope.isShareCollapsed = false;
                                                 $scope.showSharedAlbum = true;
                                                 $scope.$emit('HidePreloader');
-                                                checkForumExtraPoints();
+                                                //checkForumExtraPoints();
                                                 $location.path('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/3404/' + discussion.discussion);
                                             },
                                             function(){
