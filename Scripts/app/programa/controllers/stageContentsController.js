@@ -444,6 +444,7 @@ angular
                 moodleFactory.Services.CountLikesByUser(userCourse.courseid, currentUser.token, function (data) {
                     if (data) {
                         var likes = parseInt(data.likes);
+                        console.log("likes" + likes);
                         if (likes >= 30) {
                             assignLikesBadge();
                         }
@@ -460,15 +461,19 @@ angular
                 for(var i = 0; i < userProfile.badges.length; i++)
                 {
                     if (userProfile.badges[i].id == badgeModel.badgeid) {
-                        userProfile.badges[i].status = "won";
-                    }                    
+                        
+                        if (userProfile.badges[i].status == "pending") {
+                              userProfile.badges[i].status = "won";
+                              
+                              localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
+                      
+                              moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
+                                    console.log("created badge successfully");
+                              }, function () { });
+                        }                                    
+                    }
                 }
-                
-                localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
-                
-                moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
-                    console.log("created badge successfully");
-                }, function () { });
+                                
             }
 
             $scope.commentSubActivity = function (contentId) {

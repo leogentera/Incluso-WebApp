@@ -246,7 +246,7 @@ angular
                     if (data) {
                         var likes = parseInt(data.likes);
                         console.log("user likes" + likes);
-                        if (likes >= 30) {
+                        if (likes == 30) {
                             assignLikesBadge();
                         }
                     }
@@ -267,7 +267,7 @@ angular
                     }
                     
                     localStorage.setItem("Perfil/" + _currentUser.userId, JSON.stringify(userProfile));
-                    
+                    showRobotForum();
                     moodleFactory.Services.PostBadgeToUser(_currentUser.userId, badgeModel, function () {
                         console.log("created badge successfully");
                     }, function () { });
@@ -310,12 +310,19 @@ angular
                             }
                         }
                         console.log("PostCounter" +  postCounter);
-                        if (postCounter >= 40) {
+                        if (postCounter >= 40 && badgeForum[0].status == "pending") {
                             
                             var badgeModel = {
                                 badgeid: badgeForum[0].id //badge earned when a user completes his profile.
                             };
-                            
+                                                                                    
+                            for(var i = 0; i < _userProfile.badges.length; i++){
+                                if (_userProfile.badges[i].id == badgeModel.badgeid) {
+                                    _userProfile.badges[i].status = "won";
+                                }
+                            }
+                    
+                            localStorage.setItem("Perfil/" + _currentUser.userId, JSON.stringify(_userProfile));
                             showRobotForum();
                             moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){},function(){});
                         }
