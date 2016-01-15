@@ -366,59 +366,63 @@ angular
             /* My ideas */
             var myIdeaQuiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("2009"));
             var myIdeaAnswers = [];
+            var myIdeaAnswersResult = [];
             
-            for(var i = 0; i < myIdeaQuiz.questions.length; i++) {
-                var question = myIdeaQuiz.questions[i];
-                
-                if(question.userAnswer != "") {
-                    
-                    if(question.userAnswer.indexOf(";") != -1) {
-                        myIdeaAnswers = myIdeaAnswers.concat(question.userAnswer.split(";"));
-                    } else {
-                        myIdeaAnswers.push(question.userAnswer);
+            if(myIdeaQuiz && myIdeaQuiz.questions) {
+                for(var i = 0; i < myIdeaQuiz.questions.length; i++) {
+                    var question = myIdeaQuiz.questions[i];
+
+                    if(question.userAnswer != "") {
+
+                        if(question.userAnswer.indexOf(";") != -1) {
+                            myIdeaAnswers = myIdeaAnswers.concat(question.userAnswer.split(";"));
+                        } else {
+                            myIdeaAnswers.push(question.userAnswer);
+                        }
                     }
                 }
-            }
-            
-            var myIdeaAnswersLength = myIdeaAnswers.length > 3 ? 3 : myIdeaAnswers.length;
-            var myIdeaAnswersResult = [];
-            var myIdeaAnswersExcludedIndexes = [];
-            
-            for(var i = 0; i < myIdeaAnswersLength; i++) {
-                
-                var index = getRandomIndex(myIdeaAnswers.length, myIdeaAnswersExcludedIndexes);
-                myIdeaAnswersResult[i] = myIdeaAnswers[index];
-                
-                myIdeaAnswersExcludedIndexes.push(index);
+
+                var myIdeaAnswersLength = myIdeaAnswers.length > 3 ? 3 : myIdeaAnswers.length;
+                var myIdeaAnswersExcludedIndexes = [];
+
+                for(var i = 0; i < myIdeaAnswersLength; i++) {
+
+                    var index = getRandomIndex(myIdeaAnswers.length, myIdeaAnswersExcludedIndexes);
+                    myIdeaAnswersResult[i] = myIdeaAnswers[index];
+
+                    myIdeaAnswersExcludedIndexes.push(index);
+                }
             }
             
             /* My dreams */
             var myDreamsQuiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("1007"));
             var myDreamsAnswers = [];
+            var myDreamsAnswersResult = [];
             
-            for(var i = 0; i < myDreamsQuiz.questions.length; i++) {
-                var question = myDreamsQuiz.questions[i];
-                
-                if(question.userAnswer != "") {
-                    
-                    if(question.userAnswer.indexOf(";") != -1) {
-                        myDreamsAnswers = myDreamsAnswers.concat(question.userAnswer.split(";"));
-                    } else {
-                        myDreamsAnswers.push(question.userAnswer);
+            if(myDreamsQuiz && myDreamsQuiz.questions) {
+                for(var i = 0; i < myDreamsQuiz.questions.length; i++) {
+                    var question = myDreamsQuiz.questions[i];
+
+                    if(question.userAnswer != "") {
+
+                        if(question.userAnswer.indexOf(";") != -1) {
+                            myDreamsAnswers = myDreamsAnswers.concat(question.userAnswer.split(";"));
+                        } else {
+                            myDreamsAnswers.push(question.userAnswer);
+                        }
                     }
                 }
-            }
-            
-            var myDreamsAnswersLength = myDreamsAnswers.length > 3 ? 3 : myDreamsAnswers.length;
-            var myDreamsAnswersResult = [];
-            var myDreamsAnswersExcludedIndexes = [];
-            
-            for(var i = 0; i < myDreamsAnswersLength; i++) {
-                
-                var index = getRandomIndex(myDreamsAnswers.length, myDreamsAnswersExcludedIndexes);
-                myDreamsAnswersResult[i] = myDreamsAnswers[index];
-                
-                myDreamsAnswersExcludedIndexes.push(index);
+
+                var myDreamsAnswersLength = myDreamsAnswers.length > 3 ? 3 : myDreamsAnswers.length;
+                var myDreamsAnswersExcludedIndexes = [];
+
+                for(var i = 0; i < myDreamsAnswersLength; i++) {
+
+                    var index = getRandomIndex(myDreamsAnswers.length, myDreamsAnswersExcludedIndexes);
+                    myDreamsAnswersResult[i] = myDreamsAnswers[index];
+
+                    myDreamsAnswersExcludedIndexes.push(index);
+                }
             }
             
             /* My plans */
@@ -427,30 +431,32 @@ angular
             var myPlansThreeYearsAnswers = [];
             var myPlansFiveYearsAnswers = [];
             
-            var questionOneYear = myPlansQuiz.questions[0];
-            if(questionOneYear.userAnswer != "") {
-                if(questionOneYear.userAnswer.indexOf(";") != -1) {
-                    myPlansOneYearAnswers = myPlansOneYearAnswers.concat(questionOneYear.userAnswer.split(";"));
-                } else {
-                    myPlansOneYearAnswers.push(questionOneYear.userAnswer);
+            if(myPlansQuiz && myPlansQuiz.questions) {
+                var questionOneYear = myPlansQuiz.questions[0];
+                if(questionOneYear && questionOneYear.userAnswer != "") {
+                    if(questionOneYear.userAnswer.indexOf(";") != -1) {
+                        myPlansOneYearAnswers = myPlansOneYearAnswers.concat(questionOneYear.userAnswer.split(";"));
+                    } else {
+                        myPlansOneYearAnswers.push(questionOneYear.userAnswer);
+                    }
                 }
-            }
-            
-            var questionThreeYears = myPlansQuiz.questions[1];
-            if(questionThreeYears.userAnswer != "") {
-                if(questionThreeYears.userAnswer.indexOf(";") != -1) {
-                    myPlansThreeYearsAnswers = myPlansThreeYearsAnswers.concat(questionThreeYears.userAnswer.split(";"));
-                } else {
-                    myPlansThreeYearsAnswers.push(questionThreeYears.userAnswer);
+
+                var questionThreeYears = myPlansQuiz.questions[1];
+                if(questionThreeYears && questionThreeYears.userAnswer != "") {
+                    if(questionThreeYears.userAnswer.indexOf(";") != -1) {
+                        myPlansThreeYearsAnswers = myPlansThreeYearsAnswers.concat(questionThreeYears.userAnswer.split(";"));
+                    } else {
+                        myPlansThreeYearsAnswers.push(questionThreeYears.userAnswer);
+                    }
                 }
-            }
-            
-            var questionFiveYears = myPlansQuiz.questions[2];
-            if(questionFiveYears.userAnswer != "") {
-                if(questionFiveYears.userAnswer.indexOf(";") != -1) {
-                    myPlansFiveYearsAnswers = myPlansFiveYearsAnswers.concat(questionFiveYears.userAnswer.split(";"));
-                } else {
-                    myPlansFiveYearsAnswers.push(questionFiveYears.userAnswer);
+
+                var questionFiveYears = myPlansQuiz.questions[2];
+                if(questionFiveYears && questionFiveYears.userAnswer != "") {
+                    if(questionFiveYears.userAnswer.indexOf(";") != -1) {
+                        myPlansFiveYearsAnswers = myPlansFiveYearsAnswers.concat(questionFiveYears.userAnswer.split(";"));
+                    } else {
+                        myPlansFiveYearsAnswers.push(questionFiveYears.userAnswer);
+                    }
                 }
             }
             
@@ -469,41 +475,41 @@ angular
             
             var myGoalsQuizAnswers = [];
             
-            var myGoals1Question = myGoals1Quiz.questions[0];
-            var myGoals2Question = myGoals2Quiz.questions[0];
-            var myGoals3Question = myGoals3Quiz.questions[0];
-            var myGoals4Question = myGoals4Quiz.questions[0];
-            var myGoals5Question = myGoals5Quiz.questions[0];
+            var myGoals1Question = myGoals1Quiz && myGoals1Quiz.questions ? myGoals1Quiz.questions[0] : null;
+            var myGoals2Question = myGoals2Quiz && myGoals2Quiz.questions ? myGoals2Quiz.questions[0] : null;
+            var myGoals3Question = myGoals3Quiz && myGoals3Quiz.questions ? myGoals3Quiz.questions[0] : null;
+            var myGoals4Question = myGoals4Quiz && myGoals4Quiz.questions ? myGoals4Quiz.questions[0] : null;
+            var myGoals5Question = myGoals5Quiz && myGoals5Quiz.questions ? myGoals5Quiz.questions[0] : null;
 
-            if(myGoals1Question.userAnswer != "") {
+            if(myGoals1Question && myGoals1Question.userAnswer != "") {
                 if(myGoals1Question.userAnswer.indexOf(";") != -1) {
                     myGoals1QuizAnswers = myGoals1QuizAnswers.concat(myGoals1Question.userAnswer.split(";"));
                 } else {
                     myGoals1QuizAnswers.push(myGoals1Question.userAnswer);
                 }
             }
-            if(myGoals2Question.userAnswer != "") {
+            if(myGoals2Question && myGoals2Question.userAnswer != "") {
                 if(myGoals2Question.userAnswer.indexOf(";") != -1) {
                     myGoals2QuizAnswers = myGoals2QuizAnswers.concat(myGoals2Question.userAnswer.split(";"));
                 } else {
                     myGoals2QuizAnswers.push(myGoals2Question.userAnswer);
                 }
             }
-            if(myGoals3Question.userAnswer != "") {
+            if(myGoals3Question && myGoals3Question.userAnswer != "") {
                 if(myGoals3Question.userAnswer.indexOf(";") != -1) {
                     myGoals3QuizAnswers = myGoals3QuizAnswers.concat(myGoals3Question.userAnswer.split(";"));
                 } else {
                     myGoals3QuizAnswers.push(myGoals3Question.userAnswer);
                 }
             }
-            if(myGoals4Question.userAnswer != "") {
+            if(myGoals4Question && myGoals4Question.userAnswer != "") {
                 if(myGoals4Question.userAnswer.indexOf(";") != -1) {
                     myGoals4QuizAnswers = myGoals4QuizAnswers.concat(myGoals4Question.userAnswer.split(";"));
                 } else {
                     myGoals4QuizAnswers.push(myGoals4Question.userAnswer);
                 }
             }
-            if(myGoals5Question.userAnswer != "") {
+            if(myGoals5Question && myGoals5Question.userAnswer != "") {
                 if(myGoals5Question.userAnswer.indexOf(";") != -1) {
                     myGoals5QuizAnswers = myGoals5QuizAnswers.concat(myGoals5Question.userAnswer.split(";"));
                 } else {
@@ -530,9 +536,9 @@ angular
             /* My project */
             var myProjectQuiz = moodleFactory.Services.GetCacheJson("activity/" + getActivityQuizModuleId("34021") + "?userid=" + _userId);
             var myProjectAnswers = [];
-            var myProjectQuestion = myProjectQuiz.questions[0];
+            var myProjectQuestion = myProjectQuiz && myProjectQuiz.questions ? myProjectQuiz.questions[0] : null;
             
-            if(myProjectQuestion.userAnswer != "") {
+            if(myProjectQuestion && myProjectQuestion.userAnswer != "") {
                 if(myProjectQuestion.userAnswer.indexOf(";") != -1) {
                     myProjectAnswers = myProjectAnswers.concat(myProjectQuestion.userAnswer.split(";"));
                 } else {
