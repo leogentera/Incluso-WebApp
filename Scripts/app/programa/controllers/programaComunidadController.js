@@ -78,6 +78,12 @@ angular
                 function _initCommunity() {
 
                     $scope.$emit('ShowPreloader');
+                                                        
+                    drupalFactory.Services.GetContent("BadgeForumRobot",function(data, key){
+                        $scope.robotContentResources = data.node;
+                        console.log(data.node);                        
+                        },function(){},false);
+                    
                     moodleFactory.Services.GetAsyncForumDiscussions(_course.community.coursemoduleid, $scope.userToken, initCommunitySuccessCallback, initCommunityErrorCallback, true);
                     
                     function initCommunitySuccessCallback (data, key) {
@@ -247,25 +253,25 @@ angular
                 }, function () { }, true);
             }
 
-            function assignLikesBadge() {
-                var badgeModel = {
-                    badgeid: 15 //badge earned when a user likes 30 times.
-                };
-
-                var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ _currentUser.userId));
-                for(var i = 0; i < userProfile.badges.length; i++)
-                {
-                    if (userProfile.badges[i].id == badgeModel.badgeid) {
-                        userProfile.badges[i].status = "won";
-                    }                    
+                function assignLikesBadge() {
+                    var badgeModel = {
+                        badgeid: 15 //badge earned when a user likes 30 times.
+                    };
+    
+                    var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ _currentUser.userId));
+                    for(var i = 0; i < userProfile.badges.length; i++)
+                    {
+                        if (userProfile.badges[i].id == badgeModel.badgeid) {
+                            userProfile.badges[i].status = "won";
+                        }                    
+                    }
+                    
+                    localStorage.setItem("Perfil/" + _currentUser.userId, JSON.stringify(userProfile));
+                    
+                    moodleFactory.Services.PostBadgeToUser(_currentUser.userId, badgeModel, function () {
+                        console.log("created badge successfully");
+                    }, function () { });
                 }
-                
-                localStorage.setItem("Perfil/" + _currentUser.userId, JSON.stringify(userProfile));
-                
-                moodleFactory.Services.PostBadgeToUser(_currentUser.userId, badgeModel, function () {
-                    console.log("created badge successfully");
-                }, function () { });
-            }
                 
                 
                 var checkForumExtraPoints = function() {
@@ -303,15 +309,38 @@ angular
                                 }
                             }
                         }
-                        
+                        console.log("PostCounter" +  postCounter);
                         if (postCounter >= 40) {
                             
                             var badgeModel = {
                                 badgeid: badgeForum[0].id //badge earned when a user completes his profile.
-                                };
+                            };
+                            
+                            showRobotForum();
                             moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){},function(){});
                         }
                     }
+                };
+                
+                
+                function showRobotForum(){
+                    $scope.badgeRobotMessages = {
+                        title: $scope.robotContentResources.titulo,
+                        message: $scope.robotContentResources.mensaje
+                    };
+                            
+                    _setLocalStorageItem("badgeRobotMessage", JSON.stringify($scope.badgeRobotMessages));
+                    $scope.openModal_badgeRobotMessage();
+                }
+                
+                $scope.openModal_badgeRobotMessage = function (size) {
+                    var modalInstance = $modal.open({
+                        animation: $scope.animationsEnabled,
+                        templateUrl: 'badgeForumRobotMessageModal.html',
+                        controller: 'badgeForumRobotMessageModal',
+                        size: size,
+                        windowClass: 'closing-stage-modal user-help-modal'
+                    });
                 };
                 
                 
@@ -593,4 +622,11 @@ angular
                 
             }
             
-        }]);
+        }]).controller('badgeForumRobotMessageModal', function ($scope, $modalInstance) {
+                $scope.cancel = function () {
+                    $modalInstance.dismiss('cancel');
+                };
+                
+                var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));            
+                $scope.actualMessage = robotMessage;
+        });
