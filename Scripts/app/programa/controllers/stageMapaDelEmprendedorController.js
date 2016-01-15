@@ -209,6 +209,7 @@ angular
                                 }
                             });
                             quizzesRequests.push(logEntry);
+                            _setLocalStorageJsonItem("activity/" + logEntry.coursemoduleid + "?userid=" + logEntry.userid, activity);
                         }
                     }
                 }
