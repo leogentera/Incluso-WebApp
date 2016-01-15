@@ -500,7 +500,7 @@ angular
                             $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
                             $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty++;
                             
-                            //$scope.showMoreComments(contentId);
+                            $scope.showMoreComments(contentId);
                             moodleFactory.Services.PostCommentActivity(activityId, data, function () {}, function () {});
                         }
                     }
