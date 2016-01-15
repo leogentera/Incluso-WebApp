@@ -106,36 +106,24 @@ angular
 
                 //autologin
                 if (currentUser && currentUser.token && currentUser.token != "") {
+                    
                     $timeout(function () {
                         $scope.$emit('ShowPreloader');
-                    }, 1500);
-                    $timeout(function () {
+                        
                         $scope.validateConnection(function () {
-
-                            _loadDrupalResources();
-                            //Run queue
-                            moodleFactory.Services.ExecuteQueue(function () {
-                            });
-
-                            //Load Quizzes assets
-                            $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                            $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                            loadQuizesAssets($scope.userprofile.id, $scope.currentUser.token);
-                            GetExternalAppData();
-
-                        }, function () {
                             $scope.$emit('HidePreloader');
-                            _loadedDrupalResources = true;
+                            $scope.login();
+                            
+                        }, function () {
+                            
+                            $scope.$apply(function(){
+                                $scope.$emit('HidePreloader');
+                                _loadedDrupalResources = true;
+                                $location.path('/ProgramaDashboard');
+                            });
+                            
                         });
-                    }, 2000);
-
-                    moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function () {
-                        $scope.$emit('HidePreloader');
-                        $location.path('/ProgramaDashboard');
-                    }, function () {
-                        $scope.$emit('HidePreloader');
-                        $location.path('/ProgramaDashboard');
-                    }, true);
+                    }, 500);
 
                 } else {
                     $scope.$emit('HidePreloader');
