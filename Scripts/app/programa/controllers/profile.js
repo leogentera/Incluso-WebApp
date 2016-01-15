@@ -1659,7 +1659,7 @@ angular
                         "actividad": "Mi Avatar",
                         "estrellas": "100",
                         "pathImagen": "",
-                        "genero": $scope.avatarInfo[0].imagen_recortada,
+                        "genero": ($scope.model.gender.toLowerCase().indexOf('femenino') >= 0 ? 'Mujer' : 'Hombre'),
                         "rostro": $scope.avatarInfo[0].rostro,
                         "colorPiel": $scope.avatarInfo[0].color_de_piel,
                         "estiloCabello": $scope.avatarInfo[0].estilo_cabello,

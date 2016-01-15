@@ -10,7 +10,8 @@ angular
         '$http',
         '$modal',
         '$interval',
-        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $interval) {
+        '$route',
+        function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $interval, $route) {
 
             var _loadedResources = false;
             var _pageLoaded = false;
@@ -33,6 +34,14 @@ angular
             if (!_getItem("userId")) {
                 $location.path('/');
                 return "";
+            }
+
+            if (_tutorial) {
+                setTimeout(function(){ 
+                    $location.path('/ProgramaDashboard');
+                    $route.reload();
+                }, 2000);
+                _tutorial = false;
             }
 
             $scope.stageProgress = 0;

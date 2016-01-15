@@ -13,6 +13,7 @@ var _catalogsLoaded = null;
 var _isDeviceOnline = null;
 var _queuePaused = false;
 var _activityStatus = null;
+var _tutorial = false;
 
 /* Prototypes */
 window.mobilecheck = function() {
