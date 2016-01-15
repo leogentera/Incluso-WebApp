@@ -253,9 +253,9 @@ angular
                     var activity = _.find($scope.retoMultipleActivities, function(a){ return a.name == data.resultado[i].subactividad; });
                     if (activity) {
                       for (var j = 0; j < data.resultado[i].preguntas.length - 1; j++) {
-                          activity.questions[j]["userAnswer"] = data.resultado[i].preguntas[j].respuesta;
-                          logEntry.answers.push(data.resultado[i].preguntas[j].respuesta);
-                          logEntry.quiz_answered = (data.resultado[i].preguntas[j].respuesta != "" && logEntry.quiz_answered);
+                          activity.questions[j]["userAnswer"] = (activity.questions[j]["userAnswer"] == "" ? data.resultado[i].preguntas[j].respuesta : activity.questions[j]["userAnswer"] );
+                          logEntry.answers.push(activity.questions[j]["userAnswer"]);
+                          logEntry.quiz_answered = (activity.questions[j]["userAnswer"] != "" && logEntry.quiz_answered);
                       }
                       activity.questions[3]["userAnswer"] = data.resultado[i].nivelInteligencia;
                       
