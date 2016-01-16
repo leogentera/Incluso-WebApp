@@ -296,7 +296,8 @@
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Correo"
                                                aria-describedby="emailAddOn"
-                                               pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" required/>
+                                               ng-pattern="/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/"
+                                               ng-trim="false" required/>
                                     </div>
                                 </div>
                             </div>

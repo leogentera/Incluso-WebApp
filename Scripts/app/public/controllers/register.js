@@ -17,7 +17,6 @@ angular
             _httpFactory = $http;
             var dpValue;
             $scope.$emit('scrollTop');
-            var hidePreloader = false;
 
             /* ViewModel */
             $scope.registerModel = {
@@ -218,7 +217,6 @@ angular
             }
 
             function FailureDatePicker(data) {
-
             }
 
             var registerUser = function () {
