@@ -138,7 +138,6 @@ angular
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
@@ -150,6 +149,7 @@ angular
             }
 
             function successGame(data){
+                _successGame = function(){};
                 $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("multiplicaTuDineroQuestionMap"));
                 var logEntry = {
                     "userid": $scope.user.id,
@@ -279,6 +279,8 @@ angular
                     }
                 }
             }
+            
+            _successGame = successGame;
 
             if ($routeParams.retry){
                 try {

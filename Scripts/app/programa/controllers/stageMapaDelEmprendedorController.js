@@ -168,6 +168,7 @@ angular
             }
 
             function successGame(data){
+                _successGame = function(){};
                 var quizzesRequests = [];
                 $scope.projectMap = ($scope.dimensionMap ? $scope.dimensionMap : moodleFactory.Services.GetCacheJson("mapaDelEmprendedorProjectsMap"));
                 $scope.pathImagenFicha = (!data.imagenFicha || data.imagenFicha == "" ? data.pathImagenFicha : data.imagenFicha );
@@ -413,6 +414,8 @@ angular
                 return result;
             }
 
+            _successGame = successGame;
+            
             if($routeParams.retry){
                 try {
                     document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setFabricaDeEmprendimientoCallback", [])}, false);
