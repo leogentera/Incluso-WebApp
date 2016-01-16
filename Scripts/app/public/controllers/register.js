@@ -266,22 +266,25 @@ angular
             };
 
             function calculate_age() {
-                var birth_month = dpValue.substring(0, 2);
-                var birth_day = dpValue.substring(3, 5);
+                var birth_day = dpValue.substring(0, 2);
+                var birth_month = dpValue.substring(3, 5);
                 var birth_year = dpValue.substring(6, 10);
-                dpValue = birth_month + '/' + birth_day + '/' + birth_year;
-                today_date = new Date();
-                today_year = today_date.getFullYear();
-                today_month = today_date.getMonth();
-                today_day = today_date.getDate();
-                age = today_year - birth_year;
+                dpValue = birth_day + '/' + birth_month + '/' + birth_year;
+                var today_date = new Date();
+                var today_year = today_date.getFullYear();
+                var today_month = today_date.getMonth();
+                var today_day = today_date.getDate();
 
-                if (today_month < (birth_month - 1)) {
+                var age = today_year - birth_year;
+
+                if (today_month < (parseInt(birth_month, 10) - 1)) {
                     age--;
                 }
-                if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
+
+                if ( ((parseInt(birth_month, 10) - 1) == today_month) && (today_day < parseInt(birth_day, 10))) {
                     age--;
                 }
+
                 return age;
             }
 
