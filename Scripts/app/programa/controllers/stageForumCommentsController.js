@@ -468,7 +468,10 @@ angular
             };
 
             clickPostAttachment = function(){
-                cordova.exec(function(data) { $scope.attachmentToPost = data; }, function(data) {}, "CallToAndroid", "AttachPicture", []);
+                cordova.exec(function(data) {
+                    $scope.$apply(function(){$scope.attachmentToPost = data;})
+
+                }, function(data) {}, "CallToAndroid", "AttachPicture", []);
             };
 
             $scope.postAttachmentToForum = function(){
@@ -498,7 +501,7 @@ angular
                         checkForumProgress(refreshTopicData);
                     },
                     function(){
-                        $scope.videoToPost = null;
+                        $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                         $scope.$emit('HidePreloader');
                     });
