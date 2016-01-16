@@ -19,6 +19,8 @@ angular
         		$scope.loading = false;
         	}
 
+            var classdisable;
+
             $scope.sideToggle = function(outside){ 
                 getProgress();
 
@@ -98,11 +100,12 @@ angular
             };
 
             $scope.toolbarOptionActive = function (path) {
+
                 if(path.constructor === Array){
                     classdisable = "";
                     for(i= 0; i < path.length; i++){
 						
-						if (path[i] === "/Perfil/Editar") {
+						if (path[i] == "/Perfil/Editar" || path[i] == "/Perfil" || path[i] == "/Perfil/ConfigurarPrivacidad" || path[i] == "/Juegos/Avatar") {
 							path[i] = path[i] + "/" + moodleFactory.Services.GetCacheObject("userId");
 						}
 						
@@ -111,7 +114,8 @@ angular
                         }
                     }
                     return classdisable;
-                }else{
+
+                } else {
                     if($location.path().substr(0, path.length) === path)
                         return "active disabled";
                     else
