@@ -22,7 +22,7 @@
   	</section>
 	<section class="starcontain">
 	  <div class="subtitle centered">{{contentResources.my_stars_title}}</div>		
-	  <div class="part" ng-repeat="activity in activitiesCompleted" ng-show="qtyStarsByAcctivity()" ng-hide="activity.activityname.toUpperCase() == 'Puntos extra mapa del emprendedor'.toUpperCase()">
+	  <div class="part" ng-repeat="activity in activitiesCompleted" ng-show="qtyStarsByAcctivity()">
 		<div class="pull-left"><div class="date">{{activity.last_status_update * 1000| date :'dd MMMM yyyy - hh:mm a'}}</div>{{activity.sectionname | Capitalize}} : {{activity.activityname}}</div>
     <div class="pull-right sm-pill">
 
