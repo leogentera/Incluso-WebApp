@@ -99,9 +99,9 @@ angular
                     errors.push("Respuesta secreta inválida.");
                 }
                 
-                $scope.$apply(function() {
+                $timeout(function() {
                     $scope.recoverPasswordModel.modelState.errorMessages = errors;
-                });
+                }, 1);
 
                 //validating
                 if (errors.length === 0) {
