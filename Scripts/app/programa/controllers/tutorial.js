@@ -146,6 +146,7 @@ angular
                     "avatarType":"Tutorial"
                 };
                 $scope.$emit('ShowPreloader');
+                _successGame = SuccessAvatar;
                 try {
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch(e) {
@@ -156,6 +157,7 @@ angular
             };
             
             function SuccessAvatar(data) {
+                _successGame = function(){};
                 $scope.avatarInfo = [{
                     "userid": $scope.model.id,
                     "aplicacion": data.actividad,

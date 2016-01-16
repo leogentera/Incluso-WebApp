@@ -157,6 +157,7 @@ angular
               _setLocalStorageJsonItem("retoMultipleScores/" + $scope.user.id, scores);
               request.actividadTerminada = (isFinished ? "Si" : "No");
               $scope.$emit('HidePreloader');
+              _successGame = successGame;
               if (!$routeParams.retry) {
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [request]);
@@ -185,6 +186,7 @@ angular
             }
             
             var successGame = function (data){
+              _successGame = function(){};
                 var shield = "";
                 var quizzesRequests = [];
                 var predominantes = [];

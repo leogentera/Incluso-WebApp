@@ -157,6 +157,7 @@ angular
 
             $scope.downloadGame = function () {
                 var r = createRequest();
+                _successGame = successGame;
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
@@ -168,6 +169,7 @@ angular
             }
 
             function successGame(data){
+                _successGame = function(){};
                 var quizzesRequests = [];
                 $scope.projectMap = ($scope.dimensionMap ? $scope.dimensionMap : moodleFactory.Services.GetCacheJson("mapaDelEmprendedorProjectsMap"));
                 $scope.pathImagenFicha = (!data.imagenFicha || data.imagenFicha == "" ? data.pathImagenFicha : data.imagenFicha );
