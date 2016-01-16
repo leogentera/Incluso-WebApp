@@ -56,6 +56,10 @@ angular
             
             $scope.navigateToStageDashboard = function(url, sideToggle, activityId) {
 				
+                if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
+                    return false;
+                }
+                
                 var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
                 
                 //Check if first time with course
