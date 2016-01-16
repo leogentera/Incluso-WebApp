@@ -233,19 +233,14 @@ angular
                                 $scope.navigateTo('TermsOfUse');
                             }
 
-                            //var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
-
                             for(var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
-                                console.log($scope.course.leaderboard[lb].userId);
-                                if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) {//If someone in Leaderboard it is ME...
+
+                                if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) {//If I AM within the Leaderboard...
                                     $scope.profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
                                     $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
 
                                     _setLocalStorageJsonItem("Perfil/" + currentUserID, $scope.profile);  //Update rank in Perfil/nnn in LS,
                                     _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Update rank in CurrentUser in LS.
-
-                                } else {
-                                    console.log("Sorry!!! " + currentUserID);
                                 }
                             }
 

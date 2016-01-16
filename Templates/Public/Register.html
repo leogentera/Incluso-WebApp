@@ -43,7 +43,7 @@
             </div>
             <div class="modal-body">
                 <p>
-                    Es necesario que tu contraseña tenga 8 caracteres, en los cuales debe haber por lo menos un carácter
+                    Es necesario que tu contraseña incluya al menos 8 caracteres, en los cuales debe haber por lo menos un carácter
                     especial, un número, una letra mayúscula y una minúscula.
                 </p>
             </div>
@@ -316,7 +316,7 @@
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Contraseña"
                                                aria-describedby="accountPasswordAddOn"
-                                               ng-pattern="/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[_\-.@])[a-zA-Z0-9_\-.@]{8,}/"
+                                               ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_\-@#$%^&+=$¡!*¿?/()+´~¬|°:;,<>^áéíóúÁÉÍÓÚ÷[\]])[A-Za-z\d_\-@#$%^&+=$¡!*¿?/()+´~¬|°:;,<>^áéíóúÁÉÍÓÚ÷[\]]{8,}$/"
                                                ng-trim="false" required/>
                                         <a class="input-group-addon btn-info" ng-click="openModalPassword()">
                                             <span class="icomoon icon-information"></span>
