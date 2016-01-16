@@ -341,7 +341,10 @@ angular
                 if (isNaN(age) || age < 13) {
                     errors.push("Debes ser mayor de 13 años para poder registrarte.");
                 }
-                $scope.registerModel.modelState.errorMessages = errors;
+                $scope.$apply(function() {
+                    $scope.registerModel.modelState.errorMessages = errors;
+                    
+                });
                 return (errors.length === 0);
             }
 

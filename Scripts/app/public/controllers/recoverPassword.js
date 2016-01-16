@@ -98,7 +98,10 @@ angular
                 if (!$scope.recoverPasswordForm.secretAnswer.$valid) {
                     errors.push("Respuesta secreta inválida.");
                 }
-                $scope.recoverPasswordModel.modelState.errorMessages = errors;
+                
+                $scope.$apply(function() {
+                    $scope.recoverPasswordModel.modelState.errorMessages = errors;
+                });
 
                 //validating
                 if (errors.length === 0) {
