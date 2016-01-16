@@ -280,6 +280,7 @@ angular
                     $scope.validateConnection(function () {
 
                         profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
+                        
                         var data = {
                             userId: profile.id,
                             stars: stars,
@@ -287,15 +288,17 @@ angular
                             instanceType: 0,
                             date: getdate(),
                             is_extra: false
-                        };
-                        
-                        
-                        if (starsMandatory < 250 && isMandatory) {                            
-                            profile.stars = parseInt(profile.stars) + stars;                            
-                            moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
+                        };                        
+                        if (starsMandatory < 250 && isMandatory) {
+                            console.log("starsMandatory < 250 and IsMandatory");  
+                            profile.stars = parseInt(profile.stars) + stars;
+                            updateLocalStorageStars(data);
+                            moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);                           
                         }
-                        else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources) {                            
+                        else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources) {
+                            console.log("!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources");  
                             if (totalOptionalPoints + stars > $scope.fuenteDeEnergia.max_resources) {
+                                console.log("totalOptionalPoints + stars > $scope.fuenteDeEnergia.max_resources");
                                 stars = $scope.fuenteDeEnergia.max_resources - totalOptionalPoints;                                
                             }
                             data.is_extra = true;
@@ -303,13 +306,20 @@ angular
                             profile.stars = parseInt(profile.stars) + stars;
                             
                             moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
-                            totalOptionalPoints += stars;                            
+                            totalOptionalPoints += stars;
+                            updateLocalStorageStars(data);
                         }
-
-                        var userStars = JSON.parse(localStorage.getItem("userStars"));
-
-                        //var currentTime = new Date();
+                        starsMandatory += 50;
                         
+                    }, offlineCallback);
+
+                }
+
+                function updateLocalStorageStars(data) {
+                        console.log("updatelocalStorageStars");
+                        console.log(data);
+                        var userStars = JSON.parse(localStorage.getItem("userStars"));
+                                          
                         var localStorageStarsData = {
                             dateissued: moment(Date.now()).unix(),
                             instance: data.instance,
@@ -323,12 +333,8 @@ angular
                         userStars.push(localStorageStarsData);
 
                         localStorage.setItem("userStars", JSON.stringify(userStars));
-
-                        starsMandatory += 50;
-                    }, offlineCallback);
-
                 }
-
+                
                 $scope.back = function () {                    
                     $scope.$emit("ShowPreloader");
 
