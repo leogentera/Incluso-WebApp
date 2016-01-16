@@ -65,6 +65,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+            var currentUserID = localStorage.getItem("userId");
 
             try {//Get stage from local storage
 
@@ -167,6 +168,7 @@ angular
                                 leaderboard[lb].profileimageurl = niceImageUrl;
                             });
                         }
+
                         $scope.course.leaderboard = leaderboard;
                         
                         _pageLoaded = true;
@@ -178,6 +180,7 @@ angular
                             $scope.openTermsModal();
                             $scope.navigateTo('TermsOfUse');
                         }
+
                     });
                     
                 }, 1000);
@@ -211,6 +214,7 @@ angular
                         saveLocalImages(images);
 
                         moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, function () {
+
                             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
                             
                             saveLocalImages([{ 
@@ -227,6 +231,22 @@ angular
                             if (!$scope.profile.termsAndConditions) {
                                 $scope.openTermsModal();
                                 $scope.navigateTo('TermsOfUse');
+                            }
+
+                            //var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+
+                            for(var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
+                                console.log($scope.course.leaderboard[lb].userId);
+                                if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) {//If someone in Leaderboard it is ME...
+                                    $scope.profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
+                                    $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
+
+                                    _setLocalStorageJsonItem("Perfil/" + currentUserID, $scope.profile);  //Update rank in Perfil/nnn in LS,
+                                    _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Update rank in CurrentUser in LS.
+
+                                } else {
+                                    console.log("Sorry!!! " + currentUserID);
+                                }
                             }
 
                         }, function () {
