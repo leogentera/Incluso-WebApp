@@ -164,7 +164,7 @@ angular
                     errors.push(passwordPolicy);
                 }
 
-                if (!passwordsCoincide) {
+                if (!passwordsCoincide && $scope.recoverPasswordModel.password) {
                     errors.push("Las contraseñas capturadas no coinciden.");
                 }
 
@@ -173,6 +173,7 @@ angular
                 }
 
                 $scope.recoverPasswordModel.modelState.errorMessages = errors;
+
 
                 if (errors.length === 0) {
                     $scope.$emit('ShowPreloader');
