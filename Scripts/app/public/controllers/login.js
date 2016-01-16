@@ -21,7 +21,6 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-
             /* ViewModel */
             $scope.userCredentialsModel = {
                 username: "",
@@ -162,7 +161,6 @@ angular
 
             function loginConnectedCallback() {
                 // reflect loading state at UI
-                _loadDrupalResources();
                 $http(
                     {
                         method: 'POST',
@@ -180,6 +178,8 @@ angular
 
                     _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
                     _setId(data.id);
+                    
+                    _loadDrupalResources();
 
                     //Run queue
                     moodleFactory.Services.ExecuteQueue(function () {
@@ -212,11 +212,10 @@ angular
                     }
 
                 }).error(function (data, status, headers, config) {
-                    $scope.$emit('HidePreloader');
 
                     var errorMessage = window.atob(data.messageerror);
                     $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
-
+                    $scope.$emit('HidePreloader');
                     $scope.$emit('scrollTop');
                     $scope.isLogginIn = false;
                 });

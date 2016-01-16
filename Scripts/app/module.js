@@ -174,7 +174,7 @@ angular
         });
 
         $routeProvider.when('/Perfil/ConfigurarPrivacidad/:id', {
-            templateUrl: 'Templates/Programa/privacySettings.html',
+            templateUrl: 'Templates/Programa/PrivacySettings.html',
             controller: 'programaProfileController'
         });
 
@@ -205,22 +205,26 @@ angular
     
         $routeProvider.when('/', {
             templateUrl: 'Templates/Public/Login.html',
-            controller: 'publicLoginController'
+            controller: 'publicLoginController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/RecoverPassword', {
             templateUrl: 'Templates/Public/RecoverPassword.html',
-            controller: 'publicRecoverPasswordController'
+            controller: 'publicRecoverPasswordController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/RecoverPasswordEmail', {
             templateUrl: 'Templates/Public/RecoverPasswordEmail.html',
-            controller: 'publicRecoverPasswordController'
+            controller: 'publicRecoverPasswordController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/Register', {
             templateUrl: 'Templates/Public/Register.html',
-            controller: 'publicRegisterController'
+            controller: 'publicRegisterController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/Tutorial', {

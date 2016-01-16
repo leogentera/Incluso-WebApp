@@ -19,6 +19,8 @@ angular
         		$scope.loading = false;
         	}
 
+            var classdisable;
+
             $scope.sideToggle = function(outside){ 
                 getProgress();
 
@@ -50,6 +52,61 @@ angular
 						$rootScope.sidebar = !$rootScope.sidebar;	
 				}
                 
+            };
+            
+            $scope.navigateToStageDashboard = function(url, sideToggle, activityId) {
+				
+                if(activityId != undefined && activityId > 0 && _activityBlocked[activityId] && _activityBlocked[activityId].disabled) {
+                    return false;
+                }
+                
+                var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+                
+                //Check if first time with course
+                if (userCourse.firsttime) {
+                    $scope.welcomeoOpenModal();
+                    
+                    //Update model
+                    userCourse.firsttime = 0;
+                    _setLocalStorageJsonItem("usercourse", userCourse);
+                    
+                    //Update back-end
+                    var dataModel = {
+                        firstTime: userCourse.firsttime,
+                        courseId: userCourse.courseid
+                    };
+
+                    moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {}, function () {});
+                }
+
+                //Update current stage
+                for (var i = 0; i < userCourse.stages.length; i++) {
+                    var uc = userCourse.stages[i];
+                    _setLocalStorageJsonItem("stage", uc);
+
+                    if (uc.status === 0) {
+                        break;
+                    }
+                }
+                
+                
+                $scope.navigateTo(url, sideToggle, activityId);
+                
+            };
+            
+            //Open Welcome Message modal
+            $scope.welcomeoOpenModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'programWelcome.html',
+                    controller: function ($scope, $modalInstance) {
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    },
+                    size: size,
+                    windowClass: 'user-help-modal dashboard-programa'
+                });
             };
 
 			/* redirect to profile */
@@ -98,11 +155,12 @@ angular
             };
 
             $scope.toolbarOptionActive = function (path) {
+
                 if(path.constructor === Array){
                     classdisable = "";
                     for(i= 0; i < path.length; i++){
 						
-						if (path[i] === "/Perfil/Editar") {
+						if (path[i] == "/Perfil/Editar" || path[i] == "/Perfil" || path[i] == "/Perfil/ConfigurarPrivacidad" || path[i] == "/Juegos/Avatar") {
 							path[i] = path[i] + "/" + moodleFactory.Services.GetCacheObject("userId");
 						}
 						
@@ -111,7 +169,8 @@ angular
                         }
                     }
                     return classdisable;
-                }else{
+
+                } else {
                     if($location.path().substr(0, path.length) === path)
                         return "active disabled";
                     else
