@@ -157,7 +157,6 @@ angular
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-                _successGame = successGame;
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
@@ -415,6 +414,8 @@ angular
                 return result;
             }
 
+            _successGame = successGame;
+            
             if($routeParams.retry){
                 try {
                     document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setFabricaDeEmprendimientoCallback", [])}, false);

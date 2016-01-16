@@ -146,7 +146,6 @@ angular
                     "avatarType":"Tutorial"
                 };
                 $scope.$emit('ShowPreloader');
-                _successGame = SuccessAvatar;
                 try {
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch(e) {
@@ -188,6 +187,8 @@ angular
                 $scope.currentPage = pageNumber;
                 $scope.scrollToTop();
             };
+
+            _successGame = SuccessAvatar;
 
             if ($routeParams.retry){
                 _loadedDrupalResources = true;

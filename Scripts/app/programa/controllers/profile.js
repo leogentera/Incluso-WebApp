@@ -1670,8 +1670,6 @@ angular
                         "avatarType":"Profile"
                     };
 
-                    _successGame = SuccessAvatar;
-
                     try {
                         $scope.$emit('ShowPreloader');
                         cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
@@ -1845,8 +1843,10 @@ angular
 
                 $scope.scrollToTop();
 
+                _successGame = SuccessAvatar;
+
                 if ($routeParams.retry){
-                    
+                    _successGame = SuccessAvatar;
                     try {
                         document.addEventListener("deviceready",  function() { cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", [])}, false);
                     }
