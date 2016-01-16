@@ -1108,6 +1108,8 @@
                             postCurrentPosition();
                         };
                         var getCurrentPositionErrorCallback = function() {
+                            requestQueue[0].retryCount = 5;
+                            queue.retryCount = 5;
                             postCurrentPosition();
                         };
                         navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback, {
@@ -1230,6 +1232,10 @@
                                 postCurrentPosition();
                             };
                             var getCurrentPositionErrorCallback = function(error) {
+                                
+                                requestQueue[0].retryCount = 5;
+                                queue.retryCount = 5;
+                                
                                 
                                 if(moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null) {
                                     postCurrentPosition();    

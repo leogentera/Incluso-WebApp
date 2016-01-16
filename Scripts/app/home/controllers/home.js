@@ -53,6 +53,57 @@ angular
 				}
                 
             };
+            
+            $scope.navigateToStageDashboard = function(url, sideToggle, activityId) {
+				
+                var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+                
+                //Check if first time with course
+                if (userCourse.firsttime) {
+                    $scope.welcomeoOpenModal();
+                    
+                    //Update model
+                    userCourse.firsttime = 0;
+                    _setLocalStorageJsonItem("usercourse", userCourse);
+                    
+                    //Update back-end
+                    var dataModel = {
+                        firstTime: userCourse.firsttime,
+                        courseId: userCourse.courseid
+                    };
+
+                    moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {}, function () {});
+                }
+
+                //Update current stage
+                for (var i = 0; i < userCourse.stages.length; i++) {
+                    var uc = userCourse.stages[i];
+                    _setLocalStorageJsonItem("stage", uc);
+
+                    if (uc.status === 0) {
+                        break;
+                    }
+                }
+                
+                
+                $scope.navigateTo(url, sideToggle, activityId);
+                
+            };
+            
+            //Open Welcome Message modal
+            $scope.welcomeoOpenModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'programWelcome.html',
+                    controller: function ($scope, $modalInstance) {
+                        $scope.cancel = function () {
+                            $modalInstance.dismiss('cancel');
+                        };
+                    },
+                    size: size,
+                    windowClass: 'user-help-modal dashboard-programa'
+                });
+            };
 
 			/* redirect to profile */
 			$scope.navigateToMyProfile = function(){
