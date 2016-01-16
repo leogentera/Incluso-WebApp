@@ -327,7 +327,9 @@ angular
                             $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                             $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
                             checkForumExtraPoints();
+                            refreshRepliesToPost(parentId);
                             checkForumProgress(refreshTopicData);
+
                             
                         },
                         function(){
@@ -561,6 +563,10 @@ angular
             var refreshTopicData = function(){
                 moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
             };
+                var refreshRepliesToPost = function(parentId){
+                    //moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
+                    moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid,Number(parentId)+1, postPager.to,   0, "default", getPostsDataCallback, null, true);
+                };
 
             function getActivityInfoCallback(data) {
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid ));
