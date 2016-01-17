@@ -999,6 +999,30 @@ angular
 
                 $scope.index = function () {//Redirect to editing profile again.
                     if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && showResultsPage) {
+                        //Make the title.
+                        /*
+                        var i;
+                        $scope.title = "";
+
+                        for (i = 0; i < $scope.completedSections.length; i++) {
+                            $scope.title += $scope.completedSections[i].name + ", ";
+                        }
+
+                        $scope.title = $scope.title.trim();
+
+                        //Trim leading comma, if present.
+                        if ($scope.title[$scope.title.length - 1] === ",") {
+                            $scope.title = $scope.title.substring(0, $scope.title.length - 1);
+                        }
+                        */
+
+                        //Make up the total points earned.
+                        $scope.sum = 0;
+
+                        for (i = 0; i < $scope.completedSections.length; i++) {
+                            $scope.sum += $scope.completedSections[i].points;
+                        }
+
                         $scope.currentPage = 12; //Show results page
                     }
 
@@ -1092,10 +1116,24 @@ angular
                                     break;
                             }
 
-                            if (result) {
-                                //The user has successfully completed a profile's section.
+                            if (result) {//The user has successfully completed a profile's section.
                                 var sectionObject = {};
-                                sectionObject.name = activity.activityname.substring(7);
+
+                                switch (activity.activity_identifier) {//Make up the message strings.
+                                    case "3000":  // "Llenar mi informacion"; points to assign: 400
+                                        sectionObject.name = "Mi información";
+                                        break;
+                                    case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
+                                        sectionObject.name = "Mi personalidad";
+                                        break;
+                                    case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
+                                        sectionObject.name = "Socioeconómicos";
+                                        break;
+                                    case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
+                                        sectionObject.name = "Uso de la tecnología";
+                                        break;
+                                }
+
                                 sectionObject.points = activity.points;
                                 $scope.completedSections.push(sectionObject);
 
@@ -1191,8 +1229,7 @@ angular
                     var i;
                     var itemWithoutPhone = false;
 
-                    if (phones.length > 0) {
-                        //There is at least one phone item.
+                    if (phones.length > 0) {//There is at least one phone item.
 
                         for (i = 0; i < phones.length; i++) {
                             //For all items, if phone then something in phoneId too.
@@ -1206,16 +1243,16 @@ angular
                             }
                         }
 
-                        if (validInfo ) {
+                        if (validInfo) {
                             if (itemWithoutPhone && phones.length > 1) {
                                 validInfo = false;
                             }
                         }
 
-                    } else {//The user has not entered phone numbers.
+                    } else {
                         validInfo = false;
                     }
-
+                    //console.log("info from phone: " + validInfo);
                     return validInfo;
                 }
 
@@ -1244,10 +1281,10 @@ angular
                             }
                         }
 
-                    } else { //The user has not entered social networks.
+                    } else {
                         validInfo = false;
                     }
-
+                    //console.log("info from Social Nets: " + validInfo);
                     return validInfo;
                 }
 
@@ -1271,7 +1308,10 @@ angular
                                 validInfo = false;
                             }
                         }
+                    } else {
+                        validInfo = false;
                     }
+                    //console.log("info from Compartamos: " + validInfo);
                     return validInfo;
                 }
 
@@ -1314,7 +1354,7 @@ angular
 
                         }
 
-                    } else { //The user has not entered social networks.
+                    } else { //The user has not entered characters.
                         validInfo = false;
                     }
 

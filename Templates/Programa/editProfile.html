@@ -446,9 +446,9 @@
                                                                     <select class="form-control form-control-lg theme-form"
                                                                             ng-model="model.phones[$index].phone"
                                                                             ng-options="item for item in phoneTypeList"
-                                                                            ng-init="model.phone == null"
+                                                                            ng-init="model.phones == null"
                                                                             ng-class="{'selected': model.phones[$index].phone.length != 0 && model.phones[$index].phone != null}">
-                                                                        <option value="" ng-disabled="!!model.phone">
+                                                                        <option value="" ng-disabled="!!model.phones">
                                                                             Tipo de teléfono
                                                                         </option>
                                                                     </select>
@@ -580,15 +580,13 @@
                                                                     <input type="text"
                                                                            class="form-control form-control-lg theme-form"
                                                                            placeholder="No. Cliente Compartamos"
-                                                                           ng-model="model.familiaCompartamos[$index].idClient"
-                                                                    />
+                                                                           ng-model="model.familiaCompartamos[$index].idClient" />
                                                                 </div>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <input type="text"
                                                                            class="form-control form-control-lg theme-form"
                                                                            placeholder="Nombre Completo"
-                                                                           ng-model="model.familiaCompartamos[$index].relativeName"
-                                                                    />
+                                                                           ng-model="model.familiaCompartamos[$index].relativeName" />
                                                                 </div>
                                                                 <div class="form-group-control custom-caret-wrapper">
                                                                     <select class="form-control form-control-lg theme-form"
@@ -1683,19 +1681,27 @@
                                     <div class="centered txt-bigger min-pad ">Has avanzado en tu Perfil</div>
                                     <!--<div class="subtitle centered min-pad ">{{activityname}}</div>-->
                                     <!--div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message_congrats}}</div-->
-                                    <div class="txt-renglon centered txt-bigger min-pad ">¡Felicidades!</div>
+                                    <div ng-repeat="section in completedSections track by $index">
+                                        <div class="subtitle txt-renglon centered min-pad">{{section.name}}</div>
+                                    </div>
+                                    <div class="txt-renglon centered txt-bigger min-pad">¡Bien hecho!</div>
                                 </section>
                                 <section class="centered txt-bigger ">
                                     <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
                                 </section>
+                                <!--
+                                <div ng-repeat="section in completedSections track by $index">
 
-                                <section class="txt-renglon pill activityPoints"
-                                         ng-repeat="section in completedSections track by $index">
-                                    <!--div class="pull-left">{{closingContent.earned_stars}}</div-->
-                                    <div class="pull-left">{{section.name}}:</div>
+                                   <div class="subtitle txt-renglon centered min-pad">{{section.title}}</div>
+                                </div>
+                                -->
+
+                                <section class="txt-renglon pill activityPoints">
+                                    <!--div class="pull-left">{{closingContent.earned_stars}}</div> -->
+                                    <div class="pull-left">Estrellas ganadas</div>
                                     <div class="pull-right sm-pill">
-                                        <!--span class="pull-left">{{activityPoints}}</span-->
-                                        <span class="pull-left">{{section.points}}</span>
+                                        <!--span class="pull-left">{{activityPoints}}</span> -->
+                                        <span class="pull-left">{{sum}}</span>
                                         <span class="icomoon icon-star pull-right"></span>
                                     </div>
                                 </section>
