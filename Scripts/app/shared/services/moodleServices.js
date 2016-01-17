@@ -533,24 +533,25 @@
                 successCallback(); 
             }
         };
-
-        
         
         var _putAsyncFirstTimeInfo = function (userId, dataModel, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-            _httpFactory({
-                method: 'PUT',
-                url: API_RESOURCE.format('usercourse/' + userId),
-                data: dataModel,
-
-                headers: { 'Content-Type': 'application/json',
-                    'Authorization' : currentUser.token}
-            }).success(function (data, status, headers, config) {
-                successCallback();
-            }).error(function (data, status, headers, config) {
-                errorCallback();
+            
+            addRequestToQueue(null, {
+                type: "httpRequest",
+                data: {
+                    method: 'PUT',
+                    url: API_RESOURCE.format('usercourse/' + userId),
+                    data: dataModel,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': currentUser.token }
+                }
             });
+
+            if(successCallback) {
+                successCallback(); 
+            }
+            
         };
         
         var _endActivity = function (key, data, userCourseModel, url, token, successCallback, errorCallback) {
@@ -1073,7 +1074,9 @@
                                 requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
                                 requestQueue.shift();
                                 if(queue.data.method == 'GET') {
-                                    _setLocalStorageJsonItem(queue.key, response); 
+                                    if(queue.key) {
+                                        _setLocalStorageJsonItem(queue.key, response);    
+                                    }
                                 }
 
                                 _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
@@ -1197,6 +1200,12 @@
 
                                     requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
                                     requestQueue.shift();
+                                    if(queue.data.method == 'GET') {
+                                        if(queue.key) {
+                                            _setLocalStorageJsonItem(queue.key, response);    
+                                        }
+                                    }
+
 
                                     _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
                                     if(requestQueue.length == 0 && _callback != null) {
