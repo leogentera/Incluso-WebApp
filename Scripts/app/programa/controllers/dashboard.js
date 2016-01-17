@@ -50,7 +50,7 @@ angular
             $scope.user.profileimageurl = $scope.user.profileimageurl + "?rnd=" + new Date().getTime();
             $scope.profile = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is not used in this page, it is only used for stars.
 
-            if ($scope.profile && $scope.profile.stars) {console.log("Yeah!!");
+            if ($scope.profile && $scope.profile.stars) {
                 //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
                 //the entire application updates profile.stars.  The cached version of stars should be read from profile (if it exists)
                 //Update "CurrentUser" properties: "rank" & "stars", to be in sync with "Perfil/nnn".
