@@ -276,42 +276,38 @@ angular
                 };
 
                 function assingStars(isMandatory, coursemoduleid, stars) {                  
+                                       
+                    profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
                     
-                    $scope.validateConnection(function () {
-
-                        profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
-                        
-                        var data = {
-                            userId: profile.id,
-                            stars: stars,
-                            instance: coursemoduleid,
-                            instanceType: 0,
-                            date: getdate(),
-                            is_extra: false
-                        };                        
-                        if (starsMandatory < 250 && isMandatory) {
-                            console.log("starsMandatory < 250 and IsMandatory");  
-                            profile.stars = parseInt(profile.stars) + stars;
-                            updateLocalStorageStars(data);
-                            moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);                           
+                    var data = {
+                        userId: profile.id,
+                        stars: stars,
+                        instance: coursemoduleid,
+                        instanceType: 0,
+                        date: getdate(),
+                        is_extra: false
+                    };                        
+                    if (starsMandatory < 250 && isMandatory) {
+                        console.log("starsMandatory < 250 and IsMandatory");  
+                        profile.stars = parseInt(profile.stars) + stars;
+                        updateLocalStorageStars(data);
+                        moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);                           
+                    }
+                    else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources) {
+                        console.log("!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources");  
+                        if (totalOptionalPoints + stars > $scope.fuenteDeEnergia.max_resources) {
+                            console.log("totalOptionalPoints + stars > $scope.fuenteDeEnergia.max_resources");
+                            stars = $scope.fuenteDeEnergia.max_resources - totalOptionalPoints;                                
                         }
-                        else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources) {
-                            console.log("!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources");  
-                            if (totalOptionalPoints + stars > $scope.fuenteDeEnergia.max_resources) {
-                                console.log("totalOptionalPoints + stars > $scope.fuenteDeEnergia.max_resources");
-                                stars = $scope.fuenteDeEnergia.max_resources - totalOptionalPoints;                                
-                            }
-                            data.is_extra = true;
+                        data.is_extra = true;
 
-                            profile.stars = parseInt(profile.stars) + stars;
-                            
-                            moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
-                            totalOptionalPoints += stars;
-                            updateLocalStorageStars(data);
-                        }
-                        starsMandatory += 50;
+                        profile.stars = parseInt(profile.stars) + stars;
                         
-                    }, offlineCallback);
+                        moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
+                        totalOptionalPoints += stars;
+                        updateLocalStorageStars(data);
+                    }
+                    starsMandatory += 50;
 
                 }
 
