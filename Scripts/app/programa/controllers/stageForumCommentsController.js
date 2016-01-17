@@ -104,7 +104,7 @@ angular
             
             
 
-            function assignLikesBadge() {
+            function assignLikesBadge() {                            
                 var badgeModel = {
                     badgeid: 15 //badge earned when a user likes 30 times.
                 };
@@ -112,16 +112,18 @@ angular
                 var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
                 for(var i = 0; i < userProfile.badges.length; i++)
                 {
-                    if (userProfile.badges[i].id == badgeModel.badgeid) {
+                    if (userProfile.badges[i].id == badgeModel.badgeid && userProfile.badges[i].status == "pending") {                        
                         userProfile.badges[i].status = "won";
-                    }                    
+                        
+                        showRobotForum();
+                        localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
+                        
+                        moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
+                            console.log("created badge successfully");
+                        }, function () { });
+                        
+                    }
                 }
-                
-                localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
-                showRobotForum();
-                moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
-                    console.log("created badge successfully");
-                }, function () { });
             }
             
             var checkForumExtraPoints = function() {
