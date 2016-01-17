@@ -294,7 +294,7 @@ angular
                 var datePickerValue = $("input[name=birthday]").val();
                 dpValue = datePickerValue;
                 var age = datePickerValue == "" ? age = 0 : calculate_age();
-                var patternPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_\-@#$%^&+=$¡!*¿?\"/()+¨´~¬|¬°:;.,<>^áéíóúÁÉÍÓÚ÷])[A-Za-z\d_\-@#$%^&+=$¡!*¿?\"/()+¨´~¬|¬°:;.,<>^áéíóúÁÉÍÓÚ÷]{8,}$/g;
+                var patternPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_\W])[\S]{8,}$/g;
 
                 var passwordPolicy = "debe contener al menos 8 caracteres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
                 var usernamePolicy = "El nombre de usuario puede contener los siguientes caracteres: guión bajo (_), guión (-), punto(.) y arroba(@). El nombre de usuario no debe contener espacios.";
