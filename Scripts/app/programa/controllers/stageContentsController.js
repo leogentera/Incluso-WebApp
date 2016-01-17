@@ -256,9 +256,9 @@ angular
                                     _setLocalStorageJsonItem("activityManagers", activitymanagers);
                                     _endActivity($scope.fuenteDeEnergia.activities[i]);
                                     if (!$scope.fuenteDeEnergia.activities[i].optional) {
-                                        $scope.statusObligatorios += 1;                                        
-                                        assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);
-                                        
+                                        $scope.statusObligatorios += 1;
+                                        starsMandatory += 50;
+                                        assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);                                        
                                         if ($scope.statusObligatorios >= 5 && !$scope.fuenteDeEnergia.status) {
                                             $scope.navigateToPage(2);
                                         }
@@ -287,7 +287,7 @@ angular
                         date: getdate(),
                         is_extra: false
                     };                        
-                    if (starsMandatory < 250 && isMandatory) {
+                    if (starsMandatory <= 250 && isMandatory) {
                         console.log("starsMandatory < 250 and IsMandatory");  
                         profile.stars = parseInt(profile.stars) + stars;
                         updateLocalStorageStars(data);
@@ -306,8 +306,7 @@ angular
                         moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
                         totalOptionalPoints += stars;
                         updateLocalStorageStars(data);
-                    }
-                    starsMandatory += 50;
+                    }                    
 
                 }
 
