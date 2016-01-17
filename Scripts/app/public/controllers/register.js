@@ -299,7 +299,7 @@ angular
                 var passwordPolicy = "debe contener al menos 8 caracteres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
                 var usernamePolicy = "El nombre de usuario puede contener los siguientes caracteres: guión bajo (_), guión (-), punto(.) y arroba(@). El nombre de usuario no debe contener espacios.";
 
-                if ( !patternPassword.test($scope.registerModel.password) ) {alert(patternPassword.test($scope.registerModel.password));
+                if ( !patternPassword.test($scope.registerModel.password) ) {
                     errors.push("Formato de contraseña incorrecto. La contraseña " + passwordPolicy);
                 } else {
                     if (!isConfirmedPasswordValid) {
