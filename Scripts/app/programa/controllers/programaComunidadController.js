@@ -218,13 +218,19 @@ angular
                         if ($scope.hasCommunityAccess) {
                             var post = _.find($scope.posts, function(a){ return a.post_id == postId });
                         
+                            var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
+                        
                             if(post.liked == 0) {
                                 post.liked = 1;
                                 post.likes = parseInt(post.likes) + 1;
+                                userLikes.likes +=1;
                             } else {
                                 post.liked = 0;
                                 post.likes = parseInt(post.likes) - 1;
+                                userLikes.likes -=1;
                             }
+                            
+                            localStorage.setItem("likesByUser",JSON.stringify(userLikes));
                             
                             var userIdObject = {
                                 "userid": _userId
@@ -240,18 +246,12 @@ angular
                 
                 
                 function countLikesByUser() {
-                
-                var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-                moodleFactory.Services.CountLikesByUser(userCourse.courseid, _currentUser.token, function (data) {
-                    if (data) {
-                        var likes = parseInt(data.likes);
-                        console.log("user likes" + likes);
-                        if (likes == 30) {
+                    var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
+                    console.log(userLikes);
+                    if (userLikes && userLikes.likes == 30){
                             assignLikesBadge();
-                        }
                     }
-                }, function () { }, true);
-            }
+                }
 
                 function assignLikesBadge() {
                     var badgeModel = {
@@ -261,16 +261,20 @@ angular
                     var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ _currentUser.userId));
                     for(var i = 0; i < userProfile.badges.length; i++)
                     {
-                        if (userProfile.badges[i].id == badgeModel.badgeid) {
+                        if (userProfile.badges[i].id == badgeModel.badgeid && userProfile.badges[i].status == "pending") {
                             userProfile.badges[i].status = "won";
+                            
+                            localStorage.setItem("Perfil/" + _currentUser.userId, JSON.stringify(userProfile));
+                            showRobotForum();
+                            
+                            moodleFactory.Services.PostBadgeToUser(_currentUser.userId, badgeModel, function () {
+                                console.log("created badge successfully");
+                            }, function () { });
+                            
                         }                    
                     }
                     
-                    localStorage.setItem("Perfil/" + _currentUser.userId, JSON.stringify(userProfile));
-                    showRobotForum();
-                    moodleFactory.Services.PostBadgeToUser(_currentUser.userId, badgeModel, function () {
-                        console.log("created badge successfully");
-                    }, function () { });
+                    
                 }
                 
                 
