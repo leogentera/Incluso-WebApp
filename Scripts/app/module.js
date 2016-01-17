@@ -163,18 +163,13 @@ angular
             controller: 'programaProfileController'
         });
 
-        $routeProvider.when('/Perfil/:id', {
-            templateUrl: 'Templates/Programa/profile.html',
-            controller: 'programaProfileController'
-        });
-
-        $routeProvider.when('/Perfil/:id/:retry', {
-            templateUrl: 'Templates/Programa/profile.html',
-            controller: 'programaProfileController'
-        });
-
         $routeProvider.when('/Perfil/ConfigurarPrivacidad/:id', {
             templateUrl: 'Templates/Programa/PrivacySettings.html',
+            controller: 'programaProfileController'
+        });
+        
+        $routeProvider.when('/Perfil/:id/:retry?', {
+            templateUrl: 'Templates/Programa/profile.html',
             controller: 'programaProfileController'
         });
 
