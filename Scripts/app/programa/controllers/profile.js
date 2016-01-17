@@ -1130,7 +1130,7 @@ angular
                                 });
 
                                 result = false;  //Restore 'result' value
-                            }  //else { showResultsPage = false; }
+                            }
                         } else { //The subsection has been previously completed.
                             if (!showResultsPage && activity.activity_identifier == $scope.origin) {
                                 showResultsPage = true;

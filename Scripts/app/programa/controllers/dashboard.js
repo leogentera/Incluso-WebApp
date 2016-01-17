@@ -48,14 +48,18 @@ angular
 
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
             $scope.user.profileimageurl = $scope.user.profileimageurl + "?rnd=" + new Date().getTime();
-
             $scope.profile = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is not used in this page, it is only used for stars.
 
-            if ($scope.profile && $scope.profile.stars) {
+            if ($scope.profile && $scope.profile.stars) {console.log("Yeah!!");
                 //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
                 //the entire application updates profile.stars.  The cached version of stars should be read from profile (if it exists)
-                $scope.user.stars = $scope.profile.stars;
-                $scope.profile = null;   //profile is not used in this page, it is only used for stars
+                //Update "CurrentUser" properties: "rank" & "stars", to be in sync with "Perfil/nnn".
+                //WARNING: Within "CurrentUser", the "stars" property value is a string: "stars" : "350",
+                //         but within "Perfil/nnn", the "stars" property value is an integer: "stars" : 350.
+                $scope.user.rank = $scope.profile.rank;
+                $scope.user.stars = $scope.profile.stars; //Saved as an integer.
+
+                _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
             }
 
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
@@ -157,7 +161,6 @@ angular
                         $scope.currentStage = getCurrentStage();                    
                         _setLocalStorageItem("currentStage", $scope.currentStage);
                         
-                        
                         getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.user.profileimageurl, function(niceImageUrl) {
                             $scope.user.profileimageurl = niceImageUrl;
                         });
@@ -243,6 +246,10 @@ angular
                                     _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Update rank in CurrentUser in LS.
                                 }
                             }
+
+                            $scope.profile.stars = parseInt($scope.profile.stars, 10);
+                            _setLocalStorageJsonItem("Perfil/" + $scope.user.id,  $scope.profile);
+                            $scope.profile = null;   //profile is not used in this page, it is only used for stars
 
                         }, function () {
                         }, true);
