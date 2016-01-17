@@ -155,7 +155,10 @@
 
         var _putEndActivityQuizes = function (activityId, data, userCourseModel, token, successCallback, errorCallback, forceRefresh) {
             _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
-
+        };
+        
+        var _likeActivity = function(activityId, data, userLikes, token, successCallback, errorCallback, forceRefresh){
+            _endActivity("likesByUser", data, userLikes, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
         };
 
         var _putForumPostLikeNoCache = function (postId, data, successCallback, errorCallback) {
@@ -424,7 +427,7 @@
         };
         
 
-	var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback) {
+        var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
             var discussionid = data.discussionid;
@@ -1360,6 +1363,7 @@
             ExecuteQueue: _executeQueue,
             PostAsyncAvatar: _postAsyncAvatar,
             PutAsyncAward: _putAsyncAward,
+            LikeActivity: _likeActivity,
             PostGeolocation: _postGeolocation
         };
     })();

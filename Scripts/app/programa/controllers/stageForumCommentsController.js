@@ -73,34 +73,36 @@ angular
                             return a.post_id == postId
                         });
                         
+                        var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
+                        
                         if(post.liked == 0){
                             post.liked = 1;
                             post.likes = parseInt(post.likes) + 1;
+                            userLikes.likes +=1;
                         }
                         else{
                             post.liked = 0;
                             post.likes = parseInt(post.likes) - 1;
+                            userLikes.likes -=1;
                         }
+                        
+                        localStorage.setItem("likesByUser",JSON.stringify(userLikes));
                         
                         var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
                                 moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, countLikesByUser, function(){} );
 
                     }, offlineCallback);
             };
-            
+
             function countLikesByUser() {
-                
-                var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-                moodleFactory.Services.CountLikesByUser(userCourse.courseid, currentUser.token, function (data) {
-                    if (data) {
-                        var likes = parseInt(data.likes);
-                        console.log("user likes" + likes);
-                        if (likes == 30) {
-                            assignLikesBadge();
-                        }
-                    }
-                }, function () { }, true);
+                  var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
+                  console.log(userLikes);
+                  if (userLikes && userLikes.likes == 30){
+                        assignLikesBadge();
+                  }
             }
+            
+            
 
             function assignLikesBadge() {
                 var badgeModel = {

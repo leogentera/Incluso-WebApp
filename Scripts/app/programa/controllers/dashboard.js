@@ -346,10 +346,16 @@ angular
                     _setLocalStorageItem('chatAmountRead', chatAmount.true);
 
                     getUserStarsByPoints();
+                    getUserLikes();
 
                 }, errorCallback, false);
             }
 
+            function getUserLikes() {
+                moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
+                },function(){},true);
+            }
+            
             function getUserStarsByPoints() {
 
                 moodleFactory.Services.GetAsyncStars($scope.user.id, $scope.user.token, function (dataStars) {

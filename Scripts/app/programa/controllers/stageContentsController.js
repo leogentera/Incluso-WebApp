@@ -417,47 +417,48 @@ angular
 
                         for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
 
-                            if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
-
-                                var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                
-                                var currentUserId = currentUser.userId;
-                                var isLike = $scope.fuenteDeEnergia.activities[i].activityContent.liked == 0 ? 1 : 0;
-                                $scope.fuenteDeEnergia.activities[i].activityContent.liked = isLike;
-                                var data = { userid: currentUserId, like_status: isLike, only_like: 1 };
-
-                                var likes = Number($scope.fuenteDeEnergia.activities[i].activityContent.likes);
-
-                                if ($scope.fuenteDeEnergia.activities[i].activityContent.liked == 0) {
-                                    likes -= 1;
-                                } else {
-                                    likes += 1;
-                                }
-
-                                $scope.fuenteDeEnergia.activities[i].activityContent.likes = likes;
-
-                                moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, countLikesByUser, errorCallback);
-                            }
+                              if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
+                                    
+                                    var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
+                                    var activityId = $scope.fuenteDeEnergia.activities[i].coursemoduleid;                                
+                                    var currentUserId = currentUser.userId;
+                                    var isLike = $scope.fuenteDeEnergia.activities[i].activityContent.liked == 0 ? 1 : 0;
+                                    $scope.fuenteDeEnergia.activities[i].activityContent.liked = isLike;
+                                      
+                                    var data = {
+                                          userid: currentUserId,
+                                          like_status: isLike,
+                                          only_like: 1
+                                    };
+      
+                                    var likes = Number($scope.fuenteDeEnergia.activities[i].activityContent.likes);
+      
+                                    if ($scope.fuenteDeEnergia.activities[i].activityContent.liked == 0) {
+                                          likes -= 1;
+                                          userLikes.likes -=1;
+                                    } else {
+                                          likes += 1;
+                                          userLikes.likes += 1;
+                                    }
+                                    
+                                    $scope.fuenteDeEnergia.activities[i].activityContent.likes = likes;      
+                                    moodleFactory.Services.LikeActivity(activityId, data, userLikes, currentUser.token,countLikesByUser,errorCallback,true);                                    
+                              }
                         }
 
                     }, offlineCallback);
 
                 }
-            }
+            }      
 
             function countLikesByUser() {
-
-                var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-                moodleFactory.Services.CountLikesByUser(userCourse.courseid, currentUser.token, function (data) {
-                    if (data) {
-                        var likes = parseInt(data.likes);
-                        console.log("likes" + likes);
-                        if (likes >= 30) {
-                            assignLikesBadge();
-                        }
-                    }
-                }, function () { }, true);
+                  var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
+                  console.log(userLikes);
+                  if (userLikes && userLikes.likes == 30){
+                        assignLikesBadge();
+                  }
             }
-
+            
             function assignLikesBadge() {
                 var badgeModel = {
                     badgeid: 15 //badge earned when a user likes 30 times.
