@@ -320,7 +320,7 @@
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Contraseña"
                                                aria-describedby="accountPasswordAddOn"
-                                               ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[_\-@#$%^&+=$¡!*¿?/()+´~¬|°:;,<>^áéíóúÁÉÍÓÚ÷[\]])[A-Za-z\d_\-@#$%^&+=$¡!*¿?/()+´~¬|°:;,<>^áéíóúÁÉÍÓÚ÷[\]]{8,}$/"
+                                               ng-pattern="/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)[\S]{8,}$/"
                                                ng-trim="false" required/>
                                         <a class="input-group-addon btn-info" ng-click="openModalPassword()">
                                             <span class="icomoon icon-information"></span>
