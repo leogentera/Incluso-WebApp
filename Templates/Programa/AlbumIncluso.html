@@ -23,7 +23,6 @@
                         <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed" ng-show="hasCommunityAccess">
                             <div>
                                 <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
-                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>-->
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">{{::contentResources.community_share_button}}</a>
                             </div>
                         </div>
@@ -31,8 +30,6 @@
                             <div>
                                 <a title="close" class="close"></a>
                                 <div class="add">{{::contentResources.community_shared_message}}</div>
-                                <!--<div class="add">Has compartido tú album.</div>-->
-                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000', '', '5000')">Ir a Comunidad</a>-->
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('Community/50000', 'Comunidad', 50000)">{{::contentResources.go_to_community_button}}</a>
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">{{::contentResources.shared_close_button}}</a>
                                 <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>-->
@@ -118,7 +115,6 @@
                         <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed" ng-show="hasCommunityAccess">
                             <div>
                                 <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
-                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>-->
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">{{::contentResources.community_share_button}}</a>
                             </div>
                         </div>
@@ -126,8 +122,6 @@
                             <div>
                                 <a title="close" class="close"></a>
                                 <div class="add">{{::contentResources.community_shared_message}}</div>
-                                <!--<div class="add">Has compartido tú album.</div>-->
-                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000')">Ir a Comunidad</a>-->
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('Community/50000', 'Comunidad', 50000)">{{::contentResources.go_to_community_button}}</a>
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">{{::contentResources.shared_close_button}}</a>
                                 <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAlbum = false">Cerrar</a>-->
@@ -235,11 +229,10 @@
                         <div id="shareAlbum" class="modalDialog" collapse="!isShareCollapsed" ng-show="hasCommunityAccess">
                             <div>
                                 <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
-                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>-->
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">{{::contentResources.community_share_button}}</a>
                             </div>
                         </div>
-                        <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess && isShareCollapsed">
+                        <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess">
                             <div>
                                 <a title="close" class="close"></a>
                                 <div class="add">{{::contentResources.community_shared_message}}</div>
@@ -365,10 +358,9 @@
                             <div>
                                 <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="sharedAlbumMessage"></textarea></div>
                                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">{{::contentResources.community_share_button}}</a>
-                                <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToCommunity()">Compartir en Comunidad</a>-->
                             </div>
                         </div>
-                        <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess && isShareCollapsed">
+                        <div id="openModal2" class="modalDialog reportModal" ng-show="showSharedAlbum && hasCommunityAccess">
                             <div>
                                 <a title="close" class="close"></a>
                                 <div class="add">{{::contentResources.community_shared_message}}</div>
