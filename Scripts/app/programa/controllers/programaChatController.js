@@ -51,6 +51,10 @@ angular
             }
 
 
+            $(".typing-section textarea").keypress(function() {
+                $(".typing-section textarea").focus();
+            });
+
 
             function getUserRefreshChatCallback() {
                 
@@ -120,7 +124,7 @@ angular
                         moodleFactory.Services.GetUserChat(userId, currentUser.token, getUserRefreshChatCallback, errorCallback, true);                                                                                            
                     }
                     
-                }, offlineCallback);
+                }, function() {});
                     
             }   
             
