@@ -321,7 +321,8 @@ angular
                                         "posttype": 4,
                                         "filecontent": b64,
                                         "filename": 'mapa_de_vida_' + $scope.user.id + '.jpg',
-                                        "picture_post_author": $scope.user.profileimageurlsmall
+                                        "picture_post_author": $scope.user.profileimageurlsmall,
+                                        "iscountable":1
                                     };
                                     
                                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,

@@ -368,7 +368,8 @@ angular
                                 "createdtime": moment(Date.now()).unix(),
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 1,
-                                "fileToUpload": ""
+                                "fileToUpload": "",
+                                "iscountable":1
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -416,7 +417,8 @@ angular
                                 "createdtime": moment(Date.now()).unix(),
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 1,
-                                "fileToUpload": null
+                                "fileToUpload": null,
+                                "iscountable":1
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -455,7 +457,8 @@ angular
                                 "createdtime": moment(Date.now()).unix(),
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 2,
-                                "fileToUpload": null
+                                "fileToUpload": null,
+                                "iscountable":1
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -492,7 +495,8 @@ angular
                                 "createdtime": moment(Date.now()).unix(),
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 3,
-                                "fileToUpload": null
+                                "fileToUpload": null,
+                                "iscountable":1
                             };
                             
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
@@ -530,7 +534,8 @@ angular
                                 "posttype": 4,
                                 "filecontent":$scope.postAttachmentValue.image,
                                 "filename": _userId + $scope.postAttachmentValue.fileName,
-                                "picture_post_author": _userProfile.profileimageurlsmall
+                                "picture_post_author": _userProfile.profileimageurlsmall,
+                                "iscountable":1
                             };
             
                             $scope.$emit('ShowPreloader');
