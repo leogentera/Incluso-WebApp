@@ -1226,22 +1226,6 @@ function updateUserForumStars(activityIdentifier, points, isExtra, callback) {
 }
 
 
-function updateUserStarsUsingExternalActivity(activity_identifier) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
-    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-    var activity = getExtActivityByActivity_identifier(activity_identifier);
-    //profile.stars = Number(profile.stars) +  Number(activity.points);
-    var data = {
-        userId: profile.id,
-        stars: activity.points,
-        instance: activity.coursemoduleid,
-        instanceType: 0,
-        date: getdate()
-    };
-
-    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
-}
-
 function updateActivityManager(activityManager, coursemoduleid, activity_identifier) {
     var breakAll = false;
     if (!activityManager) {

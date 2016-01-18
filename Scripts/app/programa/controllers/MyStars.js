@@ -72,7 +72,19 @@ myStarsModule.controller('MyStarsController', [
                         var courseModuleId = data[i].instance;
                         var extra = data[i].is_extra;
                         var userCourse = JSON.parse(localStorage.getItem("usercourse"));
-                        var stages = userCourse.stages;
+                        
+                        if (userCourse && userCourse.activities) {
+                            for(var p = 0; p < userCourse.activities.length; p++){
+                                var profileActivity = userCourse.activities[p];
+                                if (profileActivity.coursemoduleid == courseModuleId && profileActivity.status == 1) {
+                                    profileActivity.sectionname = "Perfil " ;
+                                    console.log(profileActivity);
+                                    starsByActivity.push(profileActivity);
+                                }                                
+                            }
+                        }
+                        
+                        var stages = userCourse.stages;                                            
                         for(var j=0; j < stages.length; j++){
                             var challenges = stages[j].challenges;
                             var stageName = stages[j].sectionname;
@@ -87,7 +99,7 @@ myStarsModule.controller('MyStarsController', [
                                         }                                          
                                         activity.sectionname = stageName + " - " + challengeName;
                                         starsByActivity.push(activity);
-                                        points = points + activity.points;
+                                        //points = points + activity.points;
                                     }
                                     else{
                                         if (activity.activities) {
@@ -105,7 +117,7 @@ myStarsModule.controller('MyStarsController', [
                                                     subactivity.sectionname = stageName + " - " + challengeName;
                                                     subactivity.activityname = extraPointsName;
                                                     starsByActivity.push(subactivity)
-                                                    points = points + subactivity.points;
+                                                    //points = points + subactivity.points;
                                                 }
                                             }
                                         }
@@ -144,7 +156,10 @@ myStarsModule.controller('MyStarsController', [
                 $scope.activitiesCompleted = _.sortBy(groupedByActivity, function(act){
                     return act.last_status_update;
                 });
-            }                        
+            }
+            
+            
+            
             
             $scope.rewardsEarned = _.filter(profile.rewards, function(reward){
                     return reward.status == "won";

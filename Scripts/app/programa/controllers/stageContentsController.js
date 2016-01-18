@@ -291,7 +291,7 @@ angular
                         console.log("starsMandatory < 250 and IsMandatory");  
                         profile.stars = parseInt(profile.stars) + stars;
                         updateLocalStorageStars(data);
-                        moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);                           
+                        moodleFactory.Services.PutStars(data, profile, $scope.token, function(){}, errorCallback);                           
                     }
                     else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources) {
                         console.log("!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources");  
