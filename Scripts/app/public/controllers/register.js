@@ -101,12 +101,6 @@ angular
                 }, 1000);
             }
 
-            function storeQuiz(quizObject) {
-            }
-
-            function errorCallQuiz() {
-            }
-
             $scope.autologin = function (data) {
                 _loadDrupalResources();
                 //save token for further requests and autologin
@@ -150,10 +144,10 @@ angular
 
                                 if ($scope.activity_status === 1) {//If the activity is currently finished
                                     // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, storeQuiz, errorCallQuiz, true);
+                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, function() {}, function() {}, true);
 
                                 } else {
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, data.token, storeQuiz, errorCallQuiz, true);
+                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, data.token, function() {}, function() {}, true);
                                 }
 
                             } else {

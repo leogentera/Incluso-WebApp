@@ -162,7 +162,7 @@ angular
                        
                 $scope.validateConnection(function() {
                     
-                    moodleFactory.Services.GetUserChat(_getItem("userId"),function() {                    
+                    moodleFactory.Services.GetUserChat(_getItem("userId"), currentUser.token, function() {                    
                         var chat = JSON.parse(localStorage.getItem('userChat'));
                         var userId = localStorage.getItem("userId");
                         var messagesFlow = [];

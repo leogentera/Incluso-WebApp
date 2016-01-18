@@ -69,10 +69,10 @@ angular
                         }
 
                         if ($scope.activity_status === 1) {//If the activity is currently finished.
-                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, storeQuiz, errorCallQuiz, true);
+                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, userId, userToken, function() {}, function() {}, true);
 
                         } else {//The activity HAS NOT BEEN FINISHED.
-                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, userToken, storeQuiz, errorCallQuiz, true);
+                            moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, userToken, function() {}, function() {}, true);
                         }
 
                     } else {
@@ -313,10 +313,10 @@ angular
                     if (parentActivity && parentActivity.activities && parentActivity.activities.length > 0) {
                         for (var j = 0; j < parentActivity.activities.length; j++) {
                             var activity = parentActivity.activities[j];
-                            moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid, token, storeQuiz, errorCallQuiz, true);
+                            moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid, token, function() {}, function() {}, true);
                             if (courseModule.userInfo) {
                                 if (courseModule.id != 1039 || (courseModule.id == 1039 && activity.activityname.toLowerCase().indexOf("resultados") >= 0)) {
-                                    moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid + "?userid=" + user, token, storeQuiz, errorCallQuiz, true);
+                                    moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid + "?userid=" + user, token, function() {}, function() {}, true);
                                 }
                             }
                         }
