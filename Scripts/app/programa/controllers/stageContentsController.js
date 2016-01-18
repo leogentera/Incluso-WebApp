@@ -430,14 +430,16 @@ angular
       
                                     if ($scope.fuenteDeEnergia.activities[i].activityContent.liked == 0) {
                                           likes -= 1;
-                                          userLikes.likes -=1;
+                                          userLikes.likes = parseInt(userLikes.likes) - 1;
                                     } else {
                                           likes += 1;
-                                          userLikes.likes += 1;
+                                          userLikes.likes = parseInt(userLikes.likes) + 1;
                                     }
                                     
-                                    $scope.fuenteDeEnergia.activities[i].activityContent.likes = likes;      
-                                    moodleFactory.Services.LikeActivity(activityId, data, userLikes, currentUser.token,countLikesByUser,errorCallback,true);                                    
+                                    $scope.fuenteDeEnergia.activities[i].activityContent.likes = likes;
+                                                                        
+                                    localStorage.setItem("likesByUser",JSON.stringify(userLikes));
+                                    moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, countLikesByUser, errorCallback);                                    
                               }
                         }
 

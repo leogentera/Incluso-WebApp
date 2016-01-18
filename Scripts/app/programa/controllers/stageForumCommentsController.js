@@ -78,12 +78,12 @@ angular
                         if(post.liked == 0){
                             post.liked = 1;
                             post.likes = parseInt(post.likes) + 1;
-                            userLikes.likes +=1;
+                            userLikes.likes = parseInt(userLikes.likes) + 1;
                         }
                         else{
                             post.liked = 0;
                             post.likes = parseInt(post.likes) - 1;
-                            userLikes.likes -=1;
+                            userLikes.likes = parseInt(userLikes.likes) -1 ;
                         }
                         
                         localStorage.setItem("likesByUser",JSON.stringify(userLikes));

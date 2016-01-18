@@ -360,6 +360,8 @@ angular
 
             function getUserLikes() {
                 moodleFactory.Services.CountLikesByUser($scope.usercourse.courseid,  $scope.user.token, function (data) {
+                    
+                    
                 },function(){},true);
             }
             
