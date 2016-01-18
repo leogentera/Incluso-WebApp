@@ -292,7 +292,7 @@ angular
 
             function showClosingChallengeRobot(challengeCompletedId) {
 
-                console.log("show closing challengeRobot");
+                //console.log("show closing challengeRobot");
                 $scope.robotMessages = [
                     {
                         title: $scope.contentResources.robot_title_challenge_one,
@@ -329,7 +329,7 @@ angular
                 $scope.actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
                 if ($scope.actualMessage) {
                     _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
-                    console.log($scope.actualMessage);
+                    //console.log($scope.actualMessage);
                     $scope.openModal_CloseChallenge();
                 }
             }
