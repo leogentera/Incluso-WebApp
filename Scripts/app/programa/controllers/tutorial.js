@@ -118,9 +118,12 @@ angular
             }
 
             var successCallback = function(){
+                _tutorial = true;
+                if ($routeParams.retry) {
+                    moodleFactory.Services.ExecuteQueue();
+                }
                 $scope.$emit('HidePreloader');
                 $location.path('/ProgramaDashboard');
-                _tutorial = true;
             }
 
             var errorCallback = function(){
