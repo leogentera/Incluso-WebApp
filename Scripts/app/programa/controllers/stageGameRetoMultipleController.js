@@ -215,6 +215,7 @@ angular
                   "endingTime": getdatenow(),
                   "quiz_answered": false
                 };
+                var completedActivities = {"completed" : 0};
                 if (data.resultado) {
                   var scoreQuiz = moodleFactory.Services.GetCacheJson("retoMultipleScores/" + $scope.user.id);
                   scoreQuiz = (!scoreQuiz || !scoreQuiz.questions ? _find($scope.retoMultipleActivities, function(a){ a.name.toLowerCase().indexOf("resultados") >= 0 }) : scoreQuiz );
@@ -226,6 +227,8 @@ angular
                       var isAnswered = _.countBy((isQuestion ? inteligencia.detallePreguntas : inteligencia.detallePuntaje ), function(p){ return p == (isQuestion ? 0 : -1 ) ? 'unanswered' : 'answered' });
                       var answer = (isQuestion ? fillArray(inteligencia.puntajeInterno, ( !isAnswered.unanswered ? "0" : "-1"), 9) : inteligencia.detallePuntaje);
                       scoreEntry.quiz_answered = scoreEntry.quiz_answered || isAnswered.answered > 0;
+                      completedActivities.completed += (isAnswered.unanswered > 0 ? 0 : 1 );
+                      $scope.activitiesLength++;
                       _.each(scoreQuiz.questions, function(question){
                         var questionTitle = question.title.toLowerCase();
                         if (questionTitle.indexOf(r.name.toLowerCase()) >= 0) {
@@ -275,17 +278,6 @@ angular
                     }
                   }
                 }
-                $scope.activitiesLength = 0;
-                var completedActivities = _.countBy($scope.retoMultipleActivities, function(a) {
-                    if (a.questions && a.name.toLowerCase().indexOf("puntaje") < 0 && a.name.toLowerCase().indexOf("resultados") < 0) {
-                        var questionAnswers = _.countBy(a.questions, function(q) {
-                            return q.userAnswer && q.userAnswer != '' ? 'answered' : 'unanswered';
-                        });
-                        $scope.activitiesLength++;
-                        return questionAnswers && questionAnswers.answered > 0 ? 'completed' : 'incompleted';
-                    }
-                });
-
                 $scope.IsComplete = $scope.retoMultipleActivities && 
                                     completedActivities.completed && 
                                     $scope.retoMultipleActivities && 
