@@ -220,7 +220,32 @@ angular
 				}
 			};
 			
+            $scope.isChatUnread = false;
 			$scope.showChatNotification = function(){
+				var readChatNotification = localStorage.getItem('chatRead');				
+				if ($scope.pageName == 'Chat' || readChatNotification == "true" || readChatNotification == undefined) {
+					$scope.isChatUnread = false;
+				}else{
+					var userChat = JSON.parse(localStorage.getItem('userChat'));
+					if (userChat && userChat.length >= 1) {					
+						var userId = localStorage.getItem('userId');
+						
+						var lastMessage = _.max(userChat,function(chat){
+							return chat.messagedate;
+						});
+						
+						if (lastMessage.messagesenderid != userId) {
+							$scope.isChatUnread = true;
+						}
+					}else{
+						$scope.isChatUnread = false;						
+					}
+				}
+			};
+            
+            $scope.showChatUnreadNotification = function(){
+                $scope.showChatNotification();
+                
 				var readChatNotification = localStorage.getItem('chatRead');				
 				if ($scope.pageName == 'Chat' || readChatNotification == "true" || readChatNotification == undefined) {
 					return false;

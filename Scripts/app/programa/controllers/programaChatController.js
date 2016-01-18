@@ -19,7 +19,7 @@ angular
                 $timeout(function() { $location.path("/Offline"); }, 1000);
             }
             
-            function initController() {   
+            function initController() {
 
             _timeout = $timeout;
             _httpFactory = $http;
@@ -162,7 +162,8 @@ angular
                        
                 $scope.validateConnection(function() {
                     
-                    moodleFactory.Services.GetUserChat(_getItem("userId"), currentUser.token, function() {                    
+                    moodleFactory.Services.GetUserChat(_getItem("userId"), currentUser.token, function() {
+                        
                         var chat = JSON.parse(localStorage.getItem('userChat'));
                         var userId = localStorage.getItem("userId");
                         var messagesFlow = [];
@@ -179,6 +180,9 @@ angular
                         }
     
                         _setLocalStorageItem('chatAmountRead',chatAmount.true);
+                        
+                        $scope.showChatNotification();
+                        
                     }, errorCallback, true);                
                     
                     
