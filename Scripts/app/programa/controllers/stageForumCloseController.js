@@ -142,7 +142,7 @@ angular
                                 var extraPoints = Number(moodleFactory.Services.GetCacheObject("starsToAssignedAfterFinishActivity"));
                                 
                                 if (extraPoints != 0) {
-                                    updateUserForumStars($routeParams.activityId, extraPoints, function (){
+                                    updateUserForumStars($routeParams.activityId, extraPoints,true, function (){
                                         successPutStarsCallback();
                                         });
                                 }                                                                                        

@@ -177,7 +177,7 @@ angular
             var forum = _.find(forumData.forums, function(elem){ return elem.forumactivityid == "50000"; });
             
             if (Number(forum.discussion[0].total) <= 15) {
-                updateUserForumStars("50000", 50, function (){
+                updateUserForumStars("50000", 50, false, function (){
                     successPutStarsCallback();
                 });
             }

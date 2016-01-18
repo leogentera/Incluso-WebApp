@@ -1816,7 +1816,7 @@ angular
                     });
 
                     if (Number(forum.discussion[0].total) <= 15) {
-                        updateUserForumStars("50000", 50, function () {
+                        updateUserForumStars("50000", 50, false, function () {
                             successPutStarsCallback();
                         });
                     }
