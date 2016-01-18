@@ -355,7 +355,7 @@ angular
                     getUserStarsByPoints();
                     getUserLikes();
 
-                }, errorCallback, false);
+                }, errorCallback, true);
             }
 
             function getUserLikes() {
