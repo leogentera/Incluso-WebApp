@@ -169,6 +169,7 @@ angular
                 }
               }
               else{
+                _loadedDrupalResources = true;
                 try {
                   document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setRetoMultipleCallback", [])}, false);
                 }

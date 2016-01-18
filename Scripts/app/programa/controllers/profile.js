@@ -1892,7 +1892,7 @@ angular
                 _successGame = SuccessAvatar;
 
                 if ($routeParams.retry){
-                    _successGame = SuccessAvatar;
+                    _loadedDrupalResources = true;
                     try {
                         document.addEventListener("deviceready",  function() { cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", [])}, false);
                     }

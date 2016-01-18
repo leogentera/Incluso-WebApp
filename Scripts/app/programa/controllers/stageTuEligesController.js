@@ -276,14 +276,15 @@ angular
             _successGame = successGame;
 
             if($routeParams.retry){
-              try {
-                document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setTuEligesCallback", [])}, false);
-              }
-              catch (e) {
-                successGame(
-                    {"respuestas":[{"preguntaId":"1", "respuestaId":"2"}, {"preguntaId":"2", "respuestaId":"5"},{"preguntaId":"3", "respuestaId":"7"},{"preguntaId":"4", "respuestaId":"11"},{"preguntaId":"5", "respuestaId":"14"},{"preguntaId":"6", "respuestaId":"17"},{"preguntaId":"7", "respuestaId":"20"},{"preguntaId":"8", "respuestaId":"23"}],"userId":"645","actividad":"Tú Eliges", "duracion":"0", "fechaInicio":"2015-11-30 11:45:13","fechaFin":"2015-11-30 11:45:55","actividadCompleta":"Si", "calificación":"Regular", "gustaActividad":"Si"}
-                );
-              }
+                _loadedDrupalResources = true;
+                try {
+                    document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setTuEligesCallback", [])}, false);
+                }
+                catch (e) {
+                    successGame(
+                        {"respuestas":[{"preguntaId":"1", "respuestaId":"2"}, {"preguntaId":"2", "respuestaId":"5"},{"preguntaId":"3", "respuestaId":"7"},{"preguntaId":"4", "respuestaId":"11"},{"preguntaId":"5", "respuestaId":"14"},{"preguntaId":"6", "respuestaId":"17"},{"preguntaId":"7", "respuestaId":"20"},{"preguntaId":"8", "respuestaId":"23"}],"userId":"645","actividad":"Tú Eliges", "duracion":"0", "fechaInicio":"2015-11-30 11:45:13","fechaFin":"2015-11-30 11:45:55","actividadCompleta":"Si", "calificación":"Regular", "gustaActividad":"Si"}
+                    );
+                }
             }
         }])
         .controller('stageTuEligesModalController', function ($scope, $modalInstance, content) {
