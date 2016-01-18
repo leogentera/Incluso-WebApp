@@ -122,7 +122,8 @@ angular
                                 "modifiedtime": moment(Date.now()).unix(),//$filter("date")(new Date(), "MM/dd/yyyy"),
                                 "posttype": 5,
                                 "filecontent": fileContents,
-                                "filename": fileNames
+                                "filename": fileNames,
+                                "iscountable":0
                         };
                         
                         moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,

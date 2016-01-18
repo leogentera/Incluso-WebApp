@@ -306,7 +306,8 @@ angular
                     "createdtime": moment(Date.now()).unix(),
                     "modifiedtime": moment(Date.now()).unix(),
                     "posttype": postType,
-                    "fileToUpload":""
+                    "fileToUpload":"",
+                    "iscountable":1
                 };
                 return dataObject;
             };
@@ -361,7 +362,8 @@ angular
                     "createdtime": moment(Date.now()).unix(),
                     "modifiedtime": moment(Date.now()).unix(),
                     "posttype": postType,
-                    "fileToUpload": attachment? attachment.base64 : null
+                    "fileToUpload": attachment? attachment.base64 : null,
+                    "iscountable":1
                 };
                 return dataObject;
             };
@@ -495,7 +497,8 @@ angular
                     "posttype": 4,
                     "filecontent":$scope.attachmentToPost.image,
                     "filename": userId + $scope.attachmentToPost.fileName,
-                    "picture_post_author": profile.profileimageurlsmall
+                    "picture_post_author": profile.profileimageurlsmall,
+                    "iscountable":1
                 };
 
                 $scope.$emit('ShowPreloader');
