@@ -1982,10 +1982,11 @@
                 background: -o-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
                 background: -ms-radial-gradient(center, ellipse cover,  #1f2733 0%,#141921 100%);
                 background: radial-gradient(ellipse at center,  #1f2733 0%,#141921 100%);
-                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );                            
+                filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1f2733', endColorstr='#141921',GradientType=1 );               
                 .date{
                     color: rgba(255, 255, 255, 0.3);
-                   font-size: 70%;
+                    font-size: 70%;
+                    display: block;
                 }
                 .icomoon{
                     color:@clr-greenLight;
@@ -2001,9 +2002,13 @@
                 div{
                     display: block;
                     width: 100%;
-                    padding: 0px 3vw;
+                    overflow-x: hidden; 
+                    margin: 0px 3vw;
                     font-size: 86%;
-
+                    word-break: break-word;
+                    -webkit-hyphens: auto;
+                    -moz-hyphens: auto;
+                    hyphens: auto;
                 }
                 span{
                     line-height: normal;
