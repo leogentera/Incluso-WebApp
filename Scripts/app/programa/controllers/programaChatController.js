@@ -181,8 +181,6 @@ angular
     
                         _setLocalStorageItem('chatAmountRead',chatAmount.true);
                         
-                        $scope.showChatNotification();
-                        
                     }, errorCallback, true);                
                     
                     

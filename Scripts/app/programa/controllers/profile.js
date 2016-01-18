@@ -1374,16 +1374,22 @@ angular
                 function checkMedicalServices() {
                     var validInfo = true;
 
-                    if (($scope.model.medicalCoverage) == "Sí") {
-                        if ($scope.model.medicalInsurance == "No tengo") {
+                    if ($scope.model.medicalCoverage == "Sí") {
+                        if ($scope.model.medicalInsurance == "") {
                             validInfo = false;
                         }
                     }
 
-                    if (!$scope.model.medicalCoverage || !$scope.model.medicalInsurance) {
-                        validInfo = false;
+                    if ($scope.model.medicalCoverage == "No") {
+                        if ($scope.model.medicalInsurance != "No tengo seguro") {
+                            validInfo = false;
+                        }
                     }
 
+                    if ($scope.model.medicalCoverage == "" && $scope.model.medicalInsurance) {
+                        validInfo = false;
+                    }
+                    //console.log(validInfo);
                     return validInfo;
                 }
 
