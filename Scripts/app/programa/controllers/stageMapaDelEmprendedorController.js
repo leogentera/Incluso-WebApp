@@ -401,6 +401,7 @@ angular
             _successGame = successGame;
             
             if($routeParams.retry){
+                _loadedDrupalResources = true;
                 try {
                     document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setFabricaDeEmprendimientoCallback", [])}, false);
                 }
