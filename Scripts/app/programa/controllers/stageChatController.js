@@ -175,12 +175,11 @@ angular
                     else
                         stageClosingContent = "ZonaDeAterrizajeClosing";
     
-                    drupalFactory.Services.GetContent(stageClosingContent, function (data, key)
-                    {
+                    drupalFactory.Services.GetContent(stageClosingContent, function (data, key) {
                         _loadedResources = true;
                         $scope.closingContent = data.node;
                     }, function () { _loadedResources = true; }, false);
-                };
+                }
                 
             }
 
