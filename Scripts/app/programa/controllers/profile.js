@@ -1499,7 +1499,7 @@ angular
                 };
 
                 $scope.addFavoriteSports = function () {
-                    $scope.model.favoriteSports.push(new String());
+                    $scope.model.favoriteSports.push("");
                 };
 
                 $scope.deleteFavoriteSports = function (index) {
@@ -1759,21 +1759,6 @@ angular
                     $elem.addClass('changed');
                 });
 
-                function getdate() {
-                    var currentdate = new Date();
-                    var datetime = currentdate.getFullYear() + ":"
-                        + addZeroBefore((currentdate.getMonth() + 1)) + ":"
-                        + addZeroBefore(currentdate.getDate()) + " "
-                        + addZeroBefore(currentdate.getHours()) + ":"
-                        + addZeroBefore(currentdate.getMinutes()) + ":"
-                        + addZeroBefore(currentdate.getSeconds());
-                    return datetime;
-                }
-
-                function addZeroBefore(n) {
-                    return (n < 10 ? '0' : '') + n;
-                }
-
                 $scope.shareAchievement = function () {
 
                     if ($scope.hasCommunityAccess) {
@@ -1787,6 +1772,7 @@ angular
                                 for (var d = 0; d < data.discussions.length; d++) {
                                     currentDiscussionIds.push(data.discussions[d].discussion);
                                 }
+
                                 localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
                                 $scope.discussion = data.discussions[0];
                                 $scope.forumId = data.forumid;
@@ -1797,8 +1783,8 @@ angular
                                 $scope.shareAchievementMessage = "";
                                 $scope.showShareAchievementMessage = false;
                                 $scope.showSharedAchievement = true;
-
                                 $scope.$emit('HidePreloader');
+
                             }, true);
                         } else {
                             postAchievement();
