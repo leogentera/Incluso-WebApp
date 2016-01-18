@@ -1141,15 +1141,26 @@ angular
 
                                 $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
                                 activity.status = 1;   //Update activity status.
-
-                                //Get local user profile.
+                                activity.last_status_update = moment(Date.now()).unix();
+                                
                                 var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + $scope.userId));
                                 var newPoints = parseInt(profile.stars) + parseInt(activity.points); //Update points
                                 profile.stars = newPoints;  //Update the 'stars' key.
-
-                                _setLocalStorageJsonItem("Perfil/" + $scope.userId, profile); //Save updated profile to Local Storage.
-                                updateUserStarsUsingExternalActivity(activity.activity_identifier); //Update profile in Moodle.
-
+                                
+                                var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
+                                
+                                var model = {
+                                    userId: currentUser.userId,
+                                    stars: newPoints,
+                                    instance: activity.coursemoduleid,
+                                    instanceType: 0,
+                                    date: getdate()
+                                };
+                                  
+                                updateLocalStorageStars(model);
+                                
+                                moodleFactory.Services.PutStars(model, profile, currentUser.token, function(){}, function(){}, true);                                                                                               
+                                
                                 endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
                                 var activityModel = {
@@ -1161,7 +1172,7 @@ angular
                                     "token": currentUser.token,
                                     "activityType": "Assign"
                                 };
-
+                                                                
                                 //Finish Activity.
                                 _endActivity(activityModel, function () {
                                     validateAllFieldsCompleted();
@@ -1177,6 +1188,27 @@ angular
                     }
                 }
 
+                function updateLocalStorageStars(data) {
+                        console.log("updatelocalStorageStars");
+                        console.log(data);
+                        var userStars = JSON.parse(localStorage.getItem("userStars"));
+                                          
+                        var localStorageStarsData = {
+                            dateissued: moment(Date.now()).unix(),
+                            instance: data.instance,
+                            instance_type: data.instanceType,
+                            message: "",
+                            is_extra: false,
+                            points: data.stars,
+                            userid: parseInt(data.userId)
+                        };
+
+                        userStars.push(localStorageStarsData);
+
+                        localStorage.setItem("userStars", JSON.stringify(userStars));
+                }
+                
+                
                 function validateAllFieldsCompleted(){
                     if ($scope.userCourse && $scope.userCourse.activities) {
 

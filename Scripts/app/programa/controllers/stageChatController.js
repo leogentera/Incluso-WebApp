@@ -120,7 +120,7 @@ angular
                                    
                             updateLocalStorageStars(model);
                             profile.stars = parseInt(profile.stars) + treeActivity.points;
-                            moodleFactory.Services.PutStars(model, profile, currentUser.token, successfullCallBack, errorCallback, true);                    
+                            moodleFactory.Services.PutStars(model, profile, currentUser.token, function(){}, function(){}, true);
                         }, function(){
                             $scope.$emit('HidePreloader'); //hide preloader  
                         });
