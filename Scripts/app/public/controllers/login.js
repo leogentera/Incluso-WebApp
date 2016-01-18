@@ -152,13 +152,6 @@ angular
                 }, offlineCallback);
             };
 
-
-            function storeQuiz(quizObject) {
-            }
-
-            function errorCallQuiz() {
-            }
-
             function loginConnectedCallback() {
                 // reflect loading state at UI
                 $http(
@@ -297,9 +290,11 @@ angular
             }
 
             function offlineCallback() {
-                $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
-                $scope.$emit('scrollTop');
-                $scope.$emit('HidePreloader');
+                $timeout(function(){
+                    $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                    $scope.$emit('scrollTop');
+                    $scope.$emit('HidePreloader');
+                }, 1);
             }
 
             var GetExternalAppData = function () {
