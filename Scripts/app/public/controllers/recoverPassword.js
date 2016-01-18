@@ -151,17 +151,15 @@ angular
                 var passwordPolicy = "Debe contener al menos 8 caracteres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
                 var passwordsHaveValidFormat = false;
                 var passwordsCoincide = false;
-
-                if ($scope.recoverPasswordModel.password && $scope.recoverPasswordModel.confirmPassword) {
+                
+                if ($scope.recoverPasswordModel.password) {
                     passwordsHaveValidFormat = true;
+                } else {
+                    errors.push(passwordPolicy);
                 }
 
                 if (passwordsHaveValidFormat) {
                     passwordsCoincide = checkEqualityOfPasswords($scope.recoverPasswordModel.password, $scope.recoverPasswordModel.confirmPassword);
-                }
-
-                if (!passwordsHaveValidFormat) {
-                    errors.push(passwordPolicy);
                 }
 
                 if (!passwordsCoincide && $scope.recoverPasswordModel.password) {

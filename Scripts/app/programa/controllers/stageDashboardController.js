@@ -1,7 +1,7 @@
 angular
     .module('incluso.stage.dashboardcontroller', [])
     .controller('stageDashboardController', [
-       '$q',
+        '$q',
         '$scope',
         '$location',
         '$routeParams',
@@ -38,7 +38,7 @@ angular
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
 
             getContentResources($scope.thisStage.activity_identifier);
-                                                
+
             setTimeout(function () {
                 var hits = 1;
 
@@ -90,6 +90,7 @@ angular
                     owl.trigger("owl.goTo", item);
                     $("span#index").text((item + 1));
                 }
+
                 function callback2(event) {
                     item = this.currentItem;
                     owl.trigger("owl.goTo", item);
@@ -132,17 +133,17 @@ angular
                     windowClass: 'user-help-modal dashboard-stage-intro'
                 });
             };
-            
+
             $scope.openModal_CloseChallenge = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'ClosingChallengeModal.html',
                     controller: 'closingChallengeController',
                     size: size,
-                    windowClass: 'closing-stage-modal user-help-modal'                    
+                    windowClass: 'closing-stage-modal user-help-modal'
                 });
             };
-            
+
             $scope.openModal_CloseStage = function (size) {
                 var modalInstance = $modal.open({
                     animation: $scope.animationsEnabled,
@@ -175,10 +176,12 @@ angular
                     ]
                 };
 
-                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () { }, function () { });
+                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
+                }, function () {
+                });
 
-            };                    
-            
+            };
+
             //Load challenges images
             $scope.retosIconos = {
                 "Exploración inicial": "assets/images/challenges/stage-1/img-evaluacion-inicial.svg",
@@ -204,7 +207,10 @@ angular
             });
             // this is the dirty way to hide owl's carousel rendering process while user waits
             $timeout(function () {
-                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
+                if (_loadedResources && _pageLoaded) {
+                    $scope.$emit('HidePreloader')
+                }
+                ;
             }, 2000);
 
             $scope.playVideo = function (videoAddress, videoName) {
@@ -212,23 +218,25 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
-                
+
                 if (_activityBlocked[activity.activity_identifier].disabled) return false;
-                var url = _.filter(_activityRoutes, function (x) { return x.id == activity.activity_identifier })[0].url;
+                var url = _.filter(_activityRoutes, function (x) {
+                    return x.id == activity.activity_identifier
+                })[0].url;
 
                 //Store an Index of the chosen menu item.
                 _setLocalStorageJsonItem("owlIndex", parentIndex);
 
                 if (url) {
-                    
+
                     if (_compareSyncDeviceVersions()) {
-						var activityId = activity.activity_identifier;
+                        var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
                         logStartActivityAction(activityId, timeStamp);
                         $location.path(url);
-					}else {
-						$scope.openUpdateAppModal();
-					}
+                    } else {
+                        $scope.openUpdateAppModal();
+                    }
                 }
             };
 
@@ -236,7 +244,7 @@ angular
                 var activity = _getActivityByCourseModuleId(coursemoduleid);
                 return activity.status;
             };
-            
+
             function loadController() {
                 if ($scope.thisStage.firsttime) {
                     $scope.openModal_StageFirstTime();
@@ -244,13 +252,13 @@ angular
                 }
 
                 var challengeCompletedId = _closeChallenge($scope.idEtapa);
-    
+
                 _coachNotification($scope.idEtapa);
-    
+
                 //Exclude challenges initial and final from showing modal robot
                 var challengeExploracionInicial = 140;
                 var challengeExploracionFinal = 152;
-                if (challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)) {                
+                if (challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)) {
                     showClosingChallengeRobot(challengeCompletedId);
                 } else {
                     localStorage.removeItem("challengeMessage");
@@ -259,11 +267,11 @@ angular
 
                 if (_tryCloseStage($scope.idEtapa)) {
                     $scope.openModal_CloseStage();
-                    
+
                     var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
                     moodleFactory.Services.PostGeolocation(1);
                 }
-    
+
                 //Update progress
                 var userid = localStorage.getItem("userId");
                 var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
@@ -272,82 +280,90 @@ angular
                 $scope.model = progress.course;
                 _setLocalStorageJsonItem("usercourse", $scope.model);
                 $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
-                
+
                 _progressNotification($scope.idEtapa, $scope.stageProgress);
 
             }
-                        
+
             function getContentResources(activityIdentifierId) {
                 drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
                     _loadedResources = true;
-                    $scope.contentResources = data.node;                    
+                    $scope.contentResources = data.node;
+                    console.log($scope.contentResources);
                     loadController();
-                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
-                    
-                    }, function () { _loadedResources = true;  if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
+
+                }, function () {
+                    _loadedResources = true;
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
+                }, false);
             }
-                        
-            function showClosingChallengeRobot(challengeCompletedId){
-                                        
+
+            function showClosingChallengeRobot(challengeCompletedId) {
+
                 console.log("show closing challengeRobot");
                 $scope.robotMessages = [
-                                {
-                                    title: $scope.contentResources.robot_title_challenge_one,
-                                    message: $scope.contentResources.robot_challenge_one,
-                                    read: "false",
-                                    challengeId: 113
-                                },
-                                {
-                                    title: $scope.contentResources.robot_title_challenge_two,
-                                    message: $scope.contentResources.robot_challenge_two,
-                                    read: "false",
-                                    challengeId: 114
-                                },
-                                {
-                                    title: $scope.contentResources.robot_title_challenge_thre,
-                                    message: $scope.contentResources.robot_challenge_three,
-                                    read: "false",
-                                    challengeId: 115
-                                },
-                                {
-                                    title:  $scope.contentResources.robot_challenge_four,
-                                    message: $scope.contentResources.robot_challenge_four,
-                                    read: "false",
-                                    challengeId: 116
-                                }];
-            
-                
-                $scope.actualMessage = _.findWhere($scope.robotMessages, { read: "false", challengeId: challengeCompletedId });                
-                if($scope.actualMessage){                
+                    {
+                        title: $scope.contentResources.robot_title_challenge_one,
+                        message: $scope.contentResources.robot_challenge_one,
+                        read: "false",
+                        challengeId: 113
+                    },
+                    {
+                        title: $scope.contentResources.robot_title_challenge_two,
+                        message: $scope.contentResources.robot_challenge_two,
+                        read: "false",
+                        challengeId: 114
+                    },
+                    {
+                        title: $scope.contentResources.robot_title_challenge_thre,
+                        message: $scope.contentResources.robot_challenge_three,
+                        read: "false",
+                        challengeId: 115
+                    },
+                    {
+                        title: $scope.contentResources.robot_title_challenge_four,
+                        message: $scope.contentResources.robot_challenge_four,
+                        read: "false",
+                        challengeId: 116
+                    }];
+
+
+                $scope.actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
+                if ($scope.actualMessage) {
                     _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
                     console.log($scope.actualMessage);
                     $scope.openModal_CloseChallenge();
                 }
-            }                        
-            
+            }
+
         }]).controller('closingChallengeController', function ($scope, $modalInstance) {
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-                        
-            var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
-                              
-            $scope.actualMessage = challengeMessage;
-             
-        }).controller('closingStageController', function ($scope, $modalInstance, $location) {
-            $scope.cancel = function () {
-                    $modalInstance.dismiss('cancel');
-                    $location.path('/ProgramaDashboard');  //Redirect to dashboard inicio.
-            };
-                    
-            $scope.robotMessages = {
-                title: "Cierre Zona de Vuelo",
-                message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
-            };
-                    
-            $scope.navigateToDashboard = function () {                        
-                $modalInstance.dismiss('cancel');
-                        $location.path('/ProgramaDashboard');
-             };
-             _setLocalStorageItem('robotEndStageShown', true);
-        });
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+    var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
+
+    $scope.actualMessage = challengeMessage;
+
+}).controller('closingStageController', function ($scope, $modalInstance, $location) {
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+        $location.path('/ProgramaDashboard');  //Redirect to dashboard inicio.
+    };
+
+    $scope.robotMessages = {
+        title: "Cierre Zona de Vuelo",
+        message: "¡Muy bien! Recuperaste todas las piezas para reparar la nave y continuar el viaje. Recuerda, los sueños son el motor principal de tu nave ¡Ahora tu aventura ya tiene un rumbo!"
+    };
+
+    $scope.navigateToDashboard = function () {
+        $modalInstance.dismiss('cancel');
+        $location.path('/ProgramaDashboard');
+    };
+    _setLocalStorageItem('robotEndStageShown', true);
+});
