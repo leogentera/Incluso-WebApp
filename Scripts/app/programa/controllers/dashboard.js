@@ -47,9 +47,9 @@ angular
             $scope.stageProgress = 0;
 
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
-            $scope.user.profileimageurl = $scope.user.profileimageurl + "?rnd=" + new Date().getTime();
             $scope.profile = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
-
+            $scope.user.profileimageurl = $scope.profile != null ? $scope.profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
+            
             if ($scope.profile && $scope.profile.stars) {
                 //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
                 //the entire application updates profile.stars.  The cached version of stars should be read from profile (if it exists)
@@ -219,6 +219,9 @@ angular
                         moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, function () {
 
                             $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
+                            $timeout(function(){
+                                $scope.user.profileimageurl = $scope.profile != null ? $scope.profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
+                            }, 1);
                             
                             saveLocalImages([{ 
                                 'path': "assets/avatar",
@@ -249,7 +252,6 @@ angular
 
                             $scope.profile.stars = parseInt($scope.profile.stars, 10);
                             _setLocalStorageJsonItem("Perfil/" + $scope.user.id,  $scope.profile);
-                            $scope.profile = null;   //profile is not used in this page, it is only used for stars
 
                         }, function () {
                         }, true);
@@ -355,7 +357,7 @@ angular
                     getUserStarsByPoints();
                     getUserLikes();
 
-                }, errorCallback, false);
+                }, errorCallback, true);
             }
 
             function getUserLikes() {

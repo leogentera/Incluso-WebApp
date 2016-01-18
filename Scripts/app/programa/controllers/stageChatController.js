@@ -91,7 +91,22 @@ angular
         
                         // Update activity in usercourse
                         treeActivity.status = 1;
+                        treeActivity.last_status_update =  moment(Date.now()).unix();
                         localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                        
+                        for(var i =0; i< $scope.model.stages.length; i++){
+                            var stage = $scope.model.stages[i];
+                            for(var j=0;j < stage.challenges.length; j++){
+                                var challenge = stage.challenges[j];
+                                for(var k=0; k < challenge.activities.length;k++){
+                                    var activity = challenge.activities[k];
+                                    if (activity.coursemoduleid == treeActivity.coursemoduleid){
+                                        activity = treeActivity;
+                                    }
+                                }
+                            }
+                        }
+                                                                    
                         moodleFactory.Services.PutEndActivity(treeActivity.coursemoduleid, data, treeActivity, currentUser.token, function () {
                             _setLocalStorageJsonItem('usercourse', $scope.model);
                             var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
@@ -100,9 +115,10 @@ angular
                                 stars: $scope.activityPoints,
                                 instance: treeActivity.coursemoduleid,
                                 instanceType: 0,
-                                date: new Date()
+                                date: getdate()
                             };
-        
+                                   
+                            updateLocalStorageStars(model);
                             profile.stars = parseInt(profile.stars) + treeActivity.points;
                             moodleFactory.Services.PutStars(model, profile, currentUser.token, successfullCallBack, errorCallback, true);                    
                         }, function(){
@@ -113,6 +129,27 @@ angular
                     }, offlineCallback);
                     
                 };
+                
+                
+                function updateLocalStorageStars(data) {
+                        console.log("updatelocalStorageStars");
+                        console.log(data);
+                        var userStars = JSON.parse(localStorage.getItem("userStars"));
+                                          
+                        var localStorageStarsData = {
+                            dateissued: moment(Date.now()).unix(),
+                            instance: data.instance,
+                            instance_type: data.instanceType,
+                            message: "",
+                            is_extra: false,
+                            points: data.stars,
+                            userid: parseInt(data.userId)
+                        };
+
+                        userStars.push(localStorageStarsData);
+
+                        localStorage.setItem("userStars", JSON.stringify(userStars));
+                }
                     
                 function successfullCallBack(){
                     //trigger activity type 2 is sent when the activity ends.
