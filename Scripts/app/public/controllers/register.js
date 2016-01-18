@@ -340,31 +340,9 @@ angular
                 $timeout(function(){
                     $scope.registerModel.modelState.errorMessages = errors;
                 }, 1);
+
                 return (errors.length === 0);
             }
-
-            function initModel() {
-
-                $scope.registerModel = {
-                    username: "",
-                    birthday: "",
-                    gender: "",
-                    country: "",
-                    city: "",
-                    email: "",
-                    password: "",
-                    confirmPassword: "",
-                    secretQuestion: "",
-                    secretAnswer: "",
-                    termsAndConditions: false,
-                    modelState: {
-                        isValid: null,
-                        errorMessages: []
-                    }
-                };
-
-            }
-
 
             /* open terms and conditions modal */
             $scope.openModal = function (size) {
