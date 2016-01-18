@@ -793,7 +793,8 @@ angular
                     "posttype": 4,
                     "filecontent":albumSrc.replace("data:image/png;base64", ""),
                     "filename": 'album.png',
-                    "picture_post_author": _userProfile.profileimageurlsmall
+                    "picture_post_author": _userProfile.profileimageurlsmall,
+                    "iscountable":0
                 };
                 
                 moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,

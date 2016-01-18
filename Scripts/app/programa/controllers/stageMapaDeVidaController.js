@@ -322,7 +322,7 @@ angular
                                         "filecontent": b64,
                                         "filename": 'mapa_de_vida_' + $scope.user.id + '.jpg',
                                         "picture_post_author": $scope.user.profileimageurlsmall,
-                                        "iscountable":1
+                                        "iscountable":0
                                     };
                                     
                                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,

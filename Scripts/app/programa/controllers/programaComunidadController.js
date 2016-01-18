@@ -369,7 +369,7 @@ angular
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 1,
                                 "fileToUpload": "",
-                                "iscountable":1
+                                "iscountable":0
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -418,7 +418,7 @@ angular
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 1,
                                 "fileToUpload": null,
-                                "iscountable":1
+                                "iscountable":0
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -458,7 +458,7 @@ angular
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 2,
                                 "fileToUpload": null,
-                                "iscountable":1
+                                "iscountable":0
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -496,7 +496,7 @@ angular
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 3,
                                 "fileToUpload": null,
-                                "iscountable":1
+                                "iscountable":0
                             };
                             
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
@@ -535,7 +535,7 @@ angular
                                 "filecontent":$scope.postAttachmentValue.image,
                                 "filename": _userId + $scope.postAttachmentValue.fileName,
                                 "picture_post_author": _userProfile.profileimageurlsmall,
-                                "iscountable":1
+                                "iscountable":0
                             };
             
                             $scope.$emit('ShowPreloader');

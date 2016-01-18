@@ -1840,7 +1840,8 @@ angular
                         "createdtime": moment(Date.now()).unix(),
                         "modifiedtime": moment(Date.now()).unix(),
                         "posttype": 1,
-                        "fileToUpload": null
+                        "fileToUpload": null,
+                        "iscountable":0
                     };
 
                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,

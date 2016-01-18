@@ -123,7 +123,7 @@ angular
                                 "posttype": 5,
                                 "filecontent": fileContents,
                                 "filename": fileNames,
-                                "iscountable":1
+                                "iscountable":0
                         };
                         
                         moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
