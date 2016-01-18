@@ -1275,12 +1275,6 @@ angular
                             }
                         }
 
-                        if (validInfo) {
-                            if (itemWithoutNet && nets.length > 1) {
-                                validInfo = false;
-                            }
-                        }
-
                     } else {
                         validInfo = false;
                     }
