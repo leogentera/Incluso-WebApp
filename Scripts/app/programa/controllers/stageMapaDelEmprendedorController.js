@@ -334,7 +334,6 @@ angular
                                                 $scope.isShareCollapsed = false;
                                                 $scope.showSharedAlbum = true;
                                                 $scope.$emit('HidePreloader');
-                                                //checkForumExtraPoints();
                                                 $location.path('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/3404/' + discussion.discussion);
                                             },
                                             function(){
@@ -361,22 +360,6 @@ angular
             function offlineCallback() {
                 $timeout(function() { $location.path("/Offline"); }, 1000);
             }
-            
-            var checkForumExtraPoints = function() {
-            
-                var activityFromTree = getActivityByActivity_identifier(3404);
-                
-                var course = moodleFactory.Services.GetCacheJson("course");
-                var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
-                
-                if (activityFromTree && activityFromTree.status == 1) {
-                    if (forumData.totalExtraPoints < 11) {
-                         updateUserForumStars($routeParams.moodleid, 50, function (){
-                            successPutStarsCallback();
-                        });
-                    }
-                }
-            };
 
             var failureGame = function (data){
                 $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
