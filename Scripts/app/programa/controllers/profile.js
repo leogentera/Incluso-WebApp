@@ -1375,7 +1375,7 @@ angular
                     var validInfo = true;
 
                     if ($scope.model.medicalCoverage == "Sí") {
-                        if ($scope.model.medicalInsurance == "") {
+                        if ($scope.model.medicalInsurance == "" || $scope.model.medicalInsurance == "No tengo seguro") {
                             validInfo = false;
                         }
                     }
@@ -1386,7 +1386,7 @@ angular
                         }
                     }
 
-                    if ($scope.model.medicalCoverage == "" && $scope.model.medicalInsurance) {
+                    if ($scope.model.medicalCoverage == "" && $scope.model.medicalInsurance != "No tengo seguro") {
                         validInfo = false;
                     }
                     //console.log(validInfo);

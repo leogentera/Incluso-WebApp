@@ -869,21 +869,22 @@ section.part.inbloq{
     &.text-left {
     div {
         text-align: left;
-
+        overflow-x: hidden;
+        word-break: break-word;
+        -webkit-hyphens: auto;
+        -moz-hyphens: auto;
+        hyphens: auto;
         &.notif-title {
             font-weight: 600;
             position: relative;
-
+            display: flex;
             span{
                 &.icomoon {
                     font-size: 12vw;
                     color: #bcd431;
-                    padding-right: 3%;
+                    padding-right: 5vw;
+                    margin: auto;
                 }
-                &.alert-name {
-                    position: absolute;
-                    bottom: 0;
-                } 
             }                
         }         
     }
