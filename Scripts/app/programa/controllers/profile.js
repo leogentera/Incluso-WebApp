@@ -1802,7 +1802,7 @@ angular
                     });
 
                     if (Number(forum.discussion[0].total) <= 15) {
-                        updateUserForumStars("50000", 50, function () {
+                        updateUserForumStars("50000", 50, false, function () {
                             successPutStarsCallback();
                         });
                     }
@@ -1826,7 +1826,8 @@ angular
                         "createdtime": moment(Date.now()).unix(),
                         "modifiedtime": moment(Date.now()).unix(),
                         "posttype": 1,
-                        "fileToUpload": null
+                        "fileToUpload": null,
+                        "iscountable":0
                     };
 
                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
@@ -1877,7 +1878,7 @@ angular
                 _successGame = SuccessAvatar;
 
                 if ($routeParams.retry){
-                    _successGame = SuccessAvatar;
+                    _loadedDrupalResources = true;
                     try {
                         document.addEventListener("deviceready",  function() { cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", [])}, false);
                     }

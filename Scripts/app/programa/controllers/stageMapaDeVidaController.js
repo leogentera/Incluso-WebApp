@@ -321,7 +321,8 @@ angular
                                         "posttype": 4,
                                         "filecontent": b64,
                                         "filename": 'mapa_de_vida_' + $scope.user.id + '.jpg',
-                                        "picture_post_author": $scope.user.profileimageurlsmall
+                                        "picture_post_author": $scope.user.profileimageurlsmall,
+                                        "iscountable":0
                                     };
                                     
                                     moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
@@ -330,8 +331,7 @@ angular
                                             $scope.isShareCollapsed = false;
                                             $scope.showSharedAlbum = true;
                                             $scope.$emit('HidePreloader');
-                                            
-                                            checkForumExtraPoints();
+                                                                                        
                                             $location.path('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/' + discussion.discussion);
                                         },
                                         function(){
@@ -357,22 +357,7 @@ angular
             function offlineCallback() {
                 $timeout(function() { $location.path("/Offline"); }, 1000);
             }
-            
-            var checkForumExtraPoints = function() {
-            
-                var activityFromTree = getActivityByActivity_identifier(2026);
-                
-                var course = moodleFactory.Services.GetCacheJson("course");
-                var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
-                
-                if (activityFromTree && activityFromTree.status == 1) {
-                    if (forumData.totalExtraPoints < 11) {
-                         updateUserForumStars($routeParams.moodleid, 50, function (){
-                            successPutStarsCallback();
-                        });
-                    }
-                }
-            };
+                      
 
             var failureGame = function (data){
               $location.path('/ZonaDeNavegacion/Dashboard/2/4');
@@ -414,6 +399,7 @@ angular
             _successGame = successGame;
 
             if($routeParams.retry){
+                _loadedDrupalResources = true;
                 try {
                     document.addEventListener("deviceready",  function() {cordova.exec(successGame, failureGame, "CallToAndroid", "setProyectaTuVidaCallback", [])}, false);
                 }

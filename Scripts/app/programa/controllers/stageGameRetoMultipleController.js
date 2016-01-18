@@ -169,6 +169,7 @@ angular
                 }
               }
               else{
+                _loadedDrupalResources = true;
                 try {
                   document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setRetoMultipleCallback", [])}, false);
                 }
@@ -186,7 +187,7 @@ angular
             }
             
             var successGame = function (data){
-              _successGame = function(){};
+                _successGame = function(){};
                 var shield = "";
                 var quizzesRequests = [];
                 var predominantes = [];
@@ -202,10 +203,13 @@ angular
                       var inteligencia = data.inteligenciaPredominante[i].inteligencia;
                       if (inteligencia != "") {
                         predominantes.push((inteligencia.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ( inteligencia.toLowerCase().indexOf('ling') > -1 ? 'Lingüística' : inteligencia )));
+                      }else if ($scope.user.strengths && $scope.user.strengths.length > 0){
+                        predominantes.push($scope.user.strengths[i]);
                       }
                     }
                   }
                 }
+
                 var scoreEntry = {
                   "userid": $scope.user.id,
                   "answers": [],
@@ -215,6 +219,7 @@ angular
                   "endingTime": getdatenow(),
                   "quiz_answered": false
                 };
+                $scope.activitiesLength = 0;
                 var completedActivities = {"completed" : 0};
                 if (data.resultado) {
                   var scoreQuiz = moodleFactory.Services.GetCacheJson("retoMultipleScores/" + $scope.user.id);
@@ -222,20 +227,29 @@ angular
                   _.each($scope.retoMultipleActivities, function(r){ 
                     var inteligencia = _.find(data.resultado,function(a){ return r.name.toLowerCase().indexOf(a.subactividad.toLowerCase()) > -1; });
                     if(inteligencia){
-                      inteligencia.puntajeInterno = (inteligencia.puntajeInterno == "" ? "0" : inteligencia.puntajeInterno );
+                      inteligencia.puntajeInterno = (inteligencia.puntajeInterno == "" ? 0 : inteligencia.puntajeInterno);
                       var isQuestion = (inteligencia.subactividad.toLowerCase().indexOf("personal") >= 0);
                       var isAnswered = _.countBy((isQuestion ? inteligencia.detallePreguntas : inteligencia.detallePuntaje ), function(p){ return p == (isQuestion ? 0 : -1 ) ? 'unanswered' : 'answered' });
                       var answer = (isQuestion ? fillArray(inteligencia.puntajeInterno, ( !isAnswered.unanswered ? "0" : "-1"), 9) : inteligencia.detallePuntaje);
-                      scoreEntry.quiz_answered = scoreEntry.quiz_answered || isAnswered.answered > 0;
-                      completedActivities.completed += (isAnswered.unanswered > 0 ? 0 : 1 );
-                      $scope.activitiesLength++;
                       _.each(scoreQuiz.questions, function(question){
                         var questionTitle = question.title.toLowerCase();
                         if (questionTitle.indexOf(r.name.toLowerCase()) >= 0) {
-                          question.userAnswer = (questionTitle.indexOf("puntaje") >= 0 ? 
-                            inteligencia.puntajeInterno : ( questionTitle.indexOf("nivel") >= 0 ? inteligencia.nivelInteligencia : getAnswer(answer,true)));
+                          if (questionTitle.indexOf("puntaje") >= 0 ) {
+                            question.userAnswer = (question.userAnswer > 0 ? question.userAnswer : inteligencia.puntajeInterno);
+                            inteligencia.puntajeInterno = question.userAnswer;
+                            answer = (isQuestion ? fillArray(inteligencia.puntajeInterno, ( inteligencia.puntajeInterno > 0 ? "0" : "-1"), 9) : answer);
+                          }
+                          question.userAnswer = (questionTitle.indexOf("puntaje") >= 0 ? question.userAnswer : 
+                            ( questionTitle.indexOf("nivel") >= 0 ? inteligencia.nivelInteligencia : getAnswer(answer,true)));
                         }
                       });
+                      if (isQuestion && isAnswered.unanswered > 0 && inteligencia.puntajeInterno > 0) {
+                        isAnswered["unanswered"] = 0;
+                        isAnswered["answered"] = 8;
+                      }
+                      scoreEntry.quiz_answered = scoreEntry.quiz_answered || isAnswered.answered > 0;
+                      completedActivities.completed += (isAnswered.unanswered > 0 ? 0 : 1 );
+                      $scope.activitiesLength++;
                       scoreEntry.answers.push(inteligencia.puntajeInterno);
                       scoreEntry.answers.push(getAnswer(answer, false));
                       scoreEntry.answers.push(inteligencia.nivelInteligencia);
@@ -325,7 +339,7 @@ angular
                     $scope.saveUser();
                   }
                   if (data.imagenRecortada && data.imagenRecortada != "") {
-                    var pathImagen = "assets/avatar/" + data.pathImagen;
+                    var pathImagen = "assets/avatar/avatar_" + $scope.user.id + ".png";
                     encodeImageUri(pathImagen, function (b64) {
                       var avatarInfo = [{
                         "userid": $scope.user.id,

@@ -177,7 +177,7 @@ angular
             var forum = _.find(forumData.forums, function(elem){ return elem.forumactivityid == "50000"; });
             
             if (Number(forum.discussion[0].total) <= 15) {
-                updateUserForumStars("50000", 50, function (){
+                updateUserForumStars("50000", 50, false, function (){
                     successPutStarsCallback();
                 });
             }
@@ -194,7 +194,8 @@ angular
                     "posttype": 4,
                     "filecontent":reconocimientoSrc.replace("data:image/png;base64", ""),
                     "filename": 'reconocimiento.png',
-                    "picture_post_author": $scope.profile.profileimageurlsmall
+                    "picture_post_author": $scope.profile.profileimageurlsmall,
+					"iscountable":0
                 };
                 
                 moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,

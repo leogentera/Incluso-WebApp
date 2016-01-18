@@ -286,7 +286,7 @@ angular
                     var forum = _.find(forumData.forums, function(elem){ return elem.forumactivityid == "50000"; });
                     
                     if (Number(forum.discussion[0].total) <= 15) {
-                        updateUserForumStars("50000", 50, function (){
+                        updateUserForumStars("50000", 50, false, function (){
                             successPutStarsCallback();
                         });
                     }
@@ -368,7 +368,8 @@ angular
                                 "createdtime": moment(Date.now()).unix(),
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 1,
-                                "fileToUpload": ""
+                                "fileToUpload": "",
+                                "iscountable":0
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -416,7 +417,8 @@ angular
                                 "createdtime": moment(Date.now()).unix(),
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 1,
-                                "fileToUpload": null
+                                "fileToUpload": null,
+                                "iscountable":0
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -455,7 +457,8 @@ angular
                                 "createdtime": moment(Date.now()).unix(),
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 2,
-                                "fileToUpload": null
+                                "fileToUpload": null,
+                                "iscountable":0
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -492,7 +495,8 @@ angular
                                 "createdtime": moment(Date.now()).unix(),
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 3,
-                                "fileToUpload": null
+                                "fileToUpload": null,
+                                "iscountable":0
                             };
                             
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
@@ -530,7 +534,8 @@ angular
                                 "posttype": 4,
                                 "filecontent":$scope.postAttachmentValue.image,
                                 "filename": _userId + $scope.postAttachmentValue.fileName,
-                                "picture_post_author": _userProfile.profileimageurlsmall
+                                "picture_post_author": _userProfile.profileimageurlsmall,
+                                "iscountable":0
                             };
             
                             $scope.$emit('ShowPreloader');
