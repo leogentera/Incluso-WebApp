@@ -314,7 +314,7 @@ angular
                             }
                         }
                         console.log("PostCounter" +  postCounter);
-                        if (postCounter >= 40 && badgeForum[0].status == "pending") {
+                        if (postCounter >= 30 && badgeForum[0].status == "pending") {
                             
                             var badgeModel = {
                                 badgeid: badgeForum[0].id //badge earned when a user completes his profile.
