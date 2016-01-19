@@ -222,7 +222,7 @@ angular
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
                     
                     var extraPointsCounter = 0;
-                    var extraPoints = 0;
+                    var points = 0;
                     
                     /* check over extra points */
                     var course = moodleFactory.Services.GetCacheJson("course");
@@ -240,10 +240,10 @@ angular
                             extraPointsCounter = availableExtraPoints;
                          }
                          
-                         extraPoints = (extraPointsCounter * 50);
+                         points = (extraPointsCounter * 50);
                     }
                     
-                    localStorage.setItem("starsToAssignedAfterFinishActivity", extraPoints);
+                    localStorage.setItem("starsToAssignedAfterFinishActivity", points);
 
                     switch (Number($scope.moodleId)) {
                         case 73:

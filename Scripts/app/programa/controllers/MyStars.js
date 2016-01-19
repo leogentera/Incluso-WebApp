@@ -95,11 +95,12 @@ myStarsModule.controller('MyStarsController', [
                                     var activity = activities[l];
                                     if (activity.coursemoduleid == courseModuleId){
                                         if (extra) {                                              
-                                            activity.activityname = "Puntos extra " + activity.activityname;  
-                                        }                                          
+                                            activity.activityname = "Puntos extra " + activity.activityname;
+                                            activity.points = data[i].points;
+                                        }
                                         activity.sectionname = stageName + " - " + challengeName;
                                         starsByActivity.push(activity);
-                                        //points = points + activity.points;
+                                        points = points + activity.points;
                                     }
                                     else{
                                         if (activity.activities) {
@@ -117,7 +118,7 @@ myStarsModule.controller('MyStarsController', [
                                                     subactivity.sectionname = stageName + " - " + challengeName;
                                                     subactivity.activityname = extraPointsName;
                                                     starsByActivity.push(subactivity)
-                                                    //points = points + subactivity.points;
+                                                    points = points + subactivity.points;
                                                 }
                                             }
                                         }
