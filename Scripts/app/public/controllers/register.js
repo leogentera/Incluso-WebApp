@@ -345,7 +345,7 @@ angular
                 if (!$scope.registerModel.city) {
                     errors.push("Estado inválido.");
                 }
-                if (!$scope.registerForm.email.$valid) {
+                if ($scope.registerForm.email.$error.pattern) {
                     errors.push("Formato de correo incorrecto.");
                 }
                 if (!$scope.registerModel.secretQuestion) {
