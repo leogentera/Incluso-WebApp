@@ -113,41 +113,57 @@ angular
                                 instanceType: 0,
                                 date: new Date()
                             };
-                            
-                            var userStars = JSON.parse(localStorage.getItem("userStars"));
-                                                            
-                            var localStorageStarsData = {
-                                dateissued: moment(Date.now()).unix(),
-                                instance: model.instance,
-                                instance_type: model.instanceType,
-                                message: "",
-                                is_extra: false,
-                                points: model.stars,
-                                userid: parseInt(model.userId)
-                            };
-                            
-                            userStars.push(localStorageStarsData);
-                            
-                            localStorage.setItem("userStars", JSON.stringify(userStars));
-                            
+                                                    
                             moodleFactory.Services.PutStars(model, profile, userToken, function() {
                                 updateActivityStatus($routeParams.activityId);
                                 _updateRewardStatus();
-
+                                
                                 profile.stars = Number(profile.stars) + Number(activityFromTree.points);
                                 _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"),profile);
+                                
                                 $routeParams.activityId == 1049? moodleid =$routeParams.moodleId : moodleid = getMoodleIdFromTreeActivity($routeParams.activityId);
-                                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
+                                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));                                                            
+                                
+                                var userStars = JSON.parse(localStorage.getItem("userStars"));
+                                                            
+                                var localStorageStarsData = {
+                                    dateissued: moment(Date.now()).unix(),
+                                    instance: model.instance,
+                                    instance_type: model.instanceType,
+                                    message: "",
+                                    is_extra: false,
+                                    points: model.stars,
+                                    userid: parseInt(model.userId)
+                                };
+                            
+                                userStars.push(localStorageStarsData);
+                                
+                                localStorage.setItem("userStars", JSON.stringify(userStars));
                                 
                                 var extraPoints = Number(moodleFactory.Services.GetCacheObject("starsToAssignedAfterFinishActivity"));
                                 
                                 if (extraPoints != 0) {
-                                    updateUserForumStars($routeParams.activityId, extraPoints,true, function (){
-                                        successPutStarsCallback();
-                                        });
-                                }                                                                                        
-
+                                    
+                                    var userStars = JSON.parse(localStorage.getItem("userStars"));
+                                                            
+                                    var localStorageStarsData = {
+                                        dateissued: moment(Date.now()).unix(),
+                                        instance: model.instance,
+                                        instance_type: model.instanceType,
+                                        message: "",
+                                        is_extra: true,
+                                        points: extraPoints,
+                                        userid: parseInt(model.userId)
+                                    };
                                 
+                                    userStars.push(localStorageStarsData);
+                                    
+                                    localStorage.setItem("userStars", JSON.stringify(userStars));
+                                    
+                                    updateUserForumStars($routeParams.activityId, extraPoints,true, function (){                                                                                                                
+                                        successPutStarsCallback();
+                                    });
+                                }
                                 
                                 var course = moodleFactory.Services.GetCacheJson("course");
                                 var user = moodleFactory.Services.GetCacheJson("CurrentUser");

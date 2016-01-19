@@ -1222,6 +1222,22 @@ function updateUserForumStars(activityIdentifier, points, isExtra, callback) {
         is_extra: isExtra
     };
     
+      var userStars = JSON.parse(localStorage.getItem("userStars"));
+ 
+      var localStorageStarsData = {
+             dateissued: moment(Date.now()).unix(),
+             instance: data.instance,
+             instance_type: data.instanceType,
+             message: "",
+             is_extra: isExtra,
+             points: data.stars,
+             userid: parseInt(data.userId)
+        };
+ 
+        userStars.push(localStorageStarsData);
+ 
+        localStorage.setItem("userStars", JSON.stringify(userStars)); 
+        
     moodleFactory.Services.PutStars(data, profile, currentUser.token, callback, errorCallback);
 }
 
