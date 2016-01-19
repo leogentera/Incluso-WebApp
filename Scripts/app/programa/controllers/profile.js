@@ -1752,7 +1752,6 @@ angular
 
                 function SuccessAvatar(data) {
                     //the next fields should match the database in moodle
-                    _successGame = function(){};
                     $scope.avatarInfo = [{
                         "userid": data.userId,
                         "aplicacion": data.actividad,
@@ -1901,7 +1900,6 @@ angular
 
                 $scope.scrollToTop();
 
-                _successGame = SuccessAvatar;
 
                 if ($routeParams.retry){
                     _loadedDrupalResources = true;

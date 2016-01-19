@@ -14,7 +14,6 @@ var _isDeviceOnline = null;
 var _queuePaused = false;
 var _activityStatus = null;
 var _tutorial = false;
-var _successGame = function(){ };
 
 /* Prototypes */
 window.mobilecheck = function() {
