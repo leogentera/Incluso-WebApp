@@ -149,7 +149,6 @@ angular
             }
 
             function successGame(data){
-                _successGame = function(){};
                 $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("multiplicaTuDineroQuestionMap"));
                 var logEntry = {
                     "userid": $scope.user.id,
@@ -280,7 +279,6 @@ angular
                 }
             }
             
-            _successGame = successGame;
 
             if ($routeParams.retry){
                 _loadedDrupalResources = true;

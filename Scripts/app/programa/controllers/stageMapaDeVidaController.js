@@ -152,7 +152,6 @@ angular
             }
 
             function successGame(data){
-                _successGame = function(){};
                 var quizzesRequests = [];
                 $scope.dimensionMap = ($scope.dimensionMap ? $scope.dimensionMap : moodleFactory.Services.GetCacheJson("mapaDeVidaDimensionMap"));
                 $scope.pathImagenFicha = data.imagenFicha;
@@ -396,7 +395,6 @@ angular
                 return result;
             }
 
-            _successGame = successGame;
 
             if($routeParams.retry){
                 _loadedDrupalResources = true;

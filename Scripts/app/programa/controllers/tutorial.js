@@ -159,7 +159,6 @@ angular
             };
             
             function SuccessAvatar(data) {
-                _successGame = function(){};
                 $scope.avatarInfo = [{
                     "userid": $scope.model.id,
                     "aplicacion": data.actividad,
@@ -191,7 +190,6 @@ angular
                 $scope.scrollToTop();
             };
 
-            _successGame = SuccessAvatar;
 
             if ($routeParams.retry){
                 _loadedDrupalResources = true;
