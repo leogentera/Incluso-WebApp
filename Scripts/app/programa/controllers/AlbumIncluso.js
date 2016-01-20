@@ -310,9 +310,17 @@ angular
             }
             
             /* Badges */
+            var badgesWon = [];
             for(var i=0; i< _userProfile.badges.length; i++) {
-                _userProfile.badges[i].filename = getFileName(_userProfile.badges[i].id);
-                _userProfile.badges[i].alt = getAlt(_userProfile.badges[i].id);
+                
+                if(_userProfile.badges[i].status === "won") {
+                    
+                    _userProfile.badges[i].filename = getFileName(_userProfile.badges[i].id);
+                    _userProfile.badges[i].alt = getAlt(_userProfile.badges[i].id);
+                    
+                    badgesWon.push(_userProfile.badges[i]);
+                }
+
             }
             
             $timeout(function() {
@@ -333,7 +341,7 @@ angular
             $scope.album.myLikes = myLikesResult;
             $scope.album.myAttributes = myAttributesResult;
             $scope.album.starsEarned = Number(_userProfile.stars);
-            $scope.album.badges = _userProfile.badges;
+            $scope.album.badges = badgesWon;
         }
         
         function loadPostDataToAlbum() {
