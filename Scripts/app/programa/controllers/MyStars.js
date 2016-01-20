@@ -155,6 +155,7 @@ myStarsModule.controller('MyStarsController', [
                        }
                     });
                 
+                
                 $scope.activitiesCompleted = _.sortBy(groupedByActivity, function(act){
                     return act.last_status_update;
                 });

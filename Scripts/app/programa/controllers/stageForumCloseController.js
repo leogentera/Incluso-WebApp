@@ -143,24 +143,8 @@ angular
                                 var extraPoints = Number(moodleFactory.Services.GetCacheObject("starsToAssignedAfterFinishActivity"));
                                 
                                 if (extraPoints != 0) {
-                                    
-                                    var userStars = JSON.parse(localStorage.getItem("userStars"));
-                                                            
-                                    var localStorageStarsData = {
-                                        dateissued: moment(Date.now()).unix(),
-                                        instance: model.instance,
-                                        instance_type: model.instanceType,
-                                        message: "",
-                                        is_extra: true,
-                                        points: extraPoints,
-                                        userid: parseInt(model.userId)
-                                    };
-                                
-                                    userStars.push(localStorageStarsData);
-                                    
-                                    localStorage.setItem("userStars", JSON.stringify(userStars));
-                                    
-                                    updateUserForumStars($routeParams.activityId, extraPoints,true, function (){                                                                                                                
+
+                                    updateUserForumStars($routeParams.activityId, extraPoints,true, function (){
                                         successPutStarsCallback();
                                     });
                                 }
