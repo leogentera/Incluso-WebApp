@@ -80,7 +80,7 @@
         </header>
 
         <section>
-            <form action="" class="register-form container-fluid" name="registerForm">
+            <form action="" class="register-form container-fluid" name="registerForm" novalidate>
                 <div class="row">
                     <div class="col-xs-12">
                         <h1>Datos de registro</h1>
@@ -102,8 +102,8 @@
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Nombre de usuario"
                                                aria-describedby="userNameAddOn"
-                                               ng-pattern="/^(?=\S)[-\.@_a-zA-Z0-9]*$/"
-                                               ng-trim="false" required/>
+                                               ng-pattern="/^(?=\S)[-.@_a-zA-Z0-9ñÑ]*$/"
+                                               ng-trim="true" required />
                                         <a class="input-group-addon btn-info" ng-click="openModalUsername()">
                                             <span class="icomoon icon-information"></span>
                                         </a>
@@ -126,7 +126,7 @@
                                                placeholder="Nombre(s)"
                                                aria-describedby="aliasAddOn"
                                                ng-pattern="/^[\sa-zA-ZáéíóúÁÉÍÓÚ'ñÑ]+$/"
-                                               ng-trim="false" required/>
+                                               ng-trim="true" required />
                                     </div>
                                 </div>
                             </div>
@@ -144,7 +144,7 @@
                                                placeholder="Apellido paterno"
                                                aria-describedby="aliasAddOn"
                                                ng-pattern="/^[\sa-zA-ZáéíóúÁÉÍÓÚ'ñÑ]+$/"
-                                               ng-trim="false" required/>
+                                               ng-trim="true" required />
                                     </div>
                                 </div>
                             </div>
@@ -159,9 +159,10 @@
                                         </p>
                                         <input type="text" ng-model="registerModel.mothername" name="motherName"
                                                class="form-control form-control-lg theme-default"
-                                               placeholder="Apellido materno" aria-describedby="aliasAddOn"
+                                               placeholder="Apellido materno"
+                                               aria-describedby="aliasAddOn"
                                                ng-pattern="/^[\sa-zA-ZáéíóúÁÉÍÓÚ'ñÑ]+$/"
-                                               ng-trim="false" required/>
+                                               ng-trim="true" required />
                                     </div>
                                 </div>
                             </div>
@@ -183,7 +184,7 @@
                                                    ng-focus="showPlaceHolderBirthday()"
                                                    class="form-control form-control-lg theme-default"
                                                    aria-describedby="birthDateAddOn" minlength="10" maxlength="10"
-                                                   placeholder="Fecha de nacimiento" required/>
+                                                   placeholder="Fecha de nacimiento" required />
                                         </p>
                                     </div>
                                 </div>
@@ -299,8 +300,8 @@
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Correo"
                                                aria-describedby="emailAddOn"
-                                               ng-pattern="/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/"
-                                               ng-trim="false" required/>
+                                               ng-pattern="/^[a-zA-ZñÑ0-9._%+-]+@[a-zA-ZñÑ0-9.-]+\.[a-zA-ZñÑ]{2,3}$/"
+                                               ng-trim="true" required />
                                     </div>
                                 </div>
                             </div>
@@ -320,7 +321,7 @@
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Contraseña"
                                                aria-describedby="accountPasswordAddOn"
-                                               ng-trim="false" required/>
+                                               ng-trim="true" required />
                                         <a class="input-group-addon btn-info" ng-click="openModalPassword()">
                                             <span class="icomoon icon-information"></span>
                                         </a>
@@ -343,7 +344,7 @@
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Repetir contraseña"
                                                aria-describedby="confirmPasswordAddOn"
-                                               required/>
+                                               required />
                                     </div>
                                 </div>
                             </div>
@@ -357,7 +358,8 @@
                                             <span class="icomoon icon-help"></span>
                                         </p>
                                         <p class="input-group-control custom-caret-wrapper custom-placeholder-wrapper">
-                                            <select ng-disabled="isRegistered" ng-model="registerModel.secretQuestion"
+                                            <select ng-disabled="isRegistered"
+                                                    ng-model="registerModel.secretQuestion"
                                                     ng-init="registerModel.secretQuestion == null"
                                                     ng-options="item for item in securityquestionItems"
                                                     name="securityQuestion"
@@ -387,7 +389,9 @@
                                                ng-model="registerModel.secretAnswer" name="secretAnswer"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Respuesta de seguridad"
-                                               aria-describedby="securityAnswerAddOn" patern="[A-Za-z0-9]" required/>
+                                               aria-describedby="securityAnswerAddOn"
+                                               ng-pattern="/^[.,\s\-A-Za-z0-9áéíóúñÁÉÍÓÚÑ]+$/"
+                                               ng-trim="true" required />
                                     </div>
                                 </div>
                             </div>
