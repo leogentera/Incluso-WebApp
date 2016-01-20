@@ -119,8 +119,8 @@
             _postAsyncData("", data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
-        var _postAsyncForumPost = function (key, data, successCallback, errorCallback, forceRefresh) {
-            _postAsyncForumPostData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback);
+        var _postAsyncForumPost = function (key, data, successCallback, errorCallback, forceRefresh, updatePostCounter) {
+            _postAsyncForumPostData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback, updatePostCounter);
         };
         
         var _postAsyncReportAbuse = function (key, data, successCallback, errorCallback, forceRefresh) {
@@ -423,7 +423,7 @@
         };
         
 
-        var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback) {
+        var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback, needUpdatePostCounter) {
             _getDeviceVersionAsync();
             
             var discussionid = data.discussionid;
@@ -441,7 +441,10 @@
                     _setLocalStorageJsonItem(key,data);
                 }
                 
-                updatePostCounter(discussionid);
+                if(needUpdatePostCounter == true){
+                    updatePostCounter(discussionid);
+                }else{}
+
                 successCallback();
             }).error(function (data, status, headers, config) {
                 _setLocalStorageJsonItem(key,data);

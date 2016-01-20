@@ -340,7 +340,7 @@ angular
                             $scope.textToPost=null;
                             $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                             $scope.$emit('HidePreloader');
-                        });
+                        }, null, true);
                     
                 }, offlineCallback);
                                     
@@ -385,7 +385,7 @@ angular
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         $scope.$emit('HidePreloader');
-                    });
+                    }, null, true);
                         
                     }, offlineCallback);
                 
@@ -407,7 +407,7 @@ angular
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                         $scope.$emit('HidePreloader');
-                    });
+                    }, null, true);
                     }, offlineCallback);
                     
             };
@@ -427,7 +427,7 @@ angular
                     function(){
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
-                    });
+                    }, null, true);
                     
                     }, offlineCallback);
             };
@@ -512,7 +512,7 @@ angular
                         $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                         $scope.$emit('HidePreloader');
-                    });
+                    }, null, true);
                     
                     }, offlineCallback);
                     
