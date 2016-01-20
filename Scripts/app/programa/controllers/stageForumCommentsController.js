@@ -290,8 +290,12 @@ angular
                 };
             };
             $scope.collapseForumButtomsTrigger = function(element, callFileBrowser){
-                callFileBrowser?clickPostAttachment():'';
-                _uncollapse(element, $scope.forumModals);
+                //callFileBrowser?clickPostAttachment():'';
+                if(callFileBrowser){
+                    clickPostAttachment();
+                }else {
+                    _uncollapse(element, $scope.forumModals);
+                }
             };
 
             var createReplyDataObject = function( parentId, message, postType){
@@ -476,9 +480,17 @@ angular
 
             clickPostAttachment = function(){
                 cordova.exec(function(data) {
-                    $scope.$apply(function(){$scope.attachmentToPost = data;})
+                    //Expand attachment modal
 
-                }, function(data) {}, "CallToAndroid", "AttachPicture", []);
+                    if(data != null){
+                        $scope.$apply(function(){$scope.attachmentToPost = data;})
+                        $scope.$apply($scope.collapseForumButtomsTrigger('isAttachmentCollapsed'));
+                    }else{}
+
+
+                }, function(data) {
+                    $scope.$apply($scope.collapseForumButtomsTrigger('isAttachmentCollapsed'));
+                }, "CallToAndroid", "AttachPicture", []);
             };
 
             $scope.postAttachmentToForum = function(){
