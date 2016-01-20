@@ -120,7 +120,11 @@ angular
             var successCallback = function(){
                 _tutorial = true;
                 if ($routeParams.retry) {
-                    moodleFactory.Services.ExecuteQueue();
+                    _forceUpdateConnectionStatus(function() {
+                        if (_isDeviceOnline) {
+                            moodleFactory.Services.ExecuteQueue();
+                        }
+                    }, function() {} );
                 }
                 $scope.$emit('HidePreloader');
                 $location.path('/ProgramaDashboard');

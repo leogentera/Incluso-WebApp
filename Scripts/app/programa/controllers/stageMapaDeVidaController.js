@@ -294,7 +294,11 @@ angular
                     activitiesPosted++;
                     if (activitiesPosted == activitiesAtLeastOne) {
                         if ($routeParams.retry) {
-                            moodleFactory.Services.ExecuteQueue();
+                            _forceUpdateConnectionStatus(function() {
+                                if (_isDeviceOnline) {
+                                    moodleFactory.Services.ExecuteQueue();
+                                }
+                            }, function() {} );
                         }    
                         if ($scope.pathImagenFicha != "" && parentStatus) {
                             
