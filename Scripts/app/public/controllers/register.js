@@ -109,6 +109,11 @@ angular
                 $scope.currentUserModel.userId = data.id;
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                _setLocalStorageJsonItem("Credentials", {
+                    username: $scope.registerModel.username,
+                    password: $scope.registerModel.password,
+                    rememberCredentials: true
+                });
                 _setId(data.id);
 
                 moodleFactory.Services.PostGeolocation(-1);

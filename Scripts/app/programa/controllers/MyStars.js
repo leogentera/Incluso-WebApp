@@ -78,6 +78,7 @@ myStarsModule.controller('MyStarsController', [
                                 var profileActivity = userCourse.activities[p];
                                 if (profileActivity.coursemoduleid == courseModuleId && profileActivity.status == 1) {
                                     profileActivity.sectionname = "Perfil " ;
+                                    profileActivity.points = data[i].points;
                                     console.log(profileActivity);
                                     starsByActivity.push(profileActivity);
                                 }                                
@@ -100,7 +101,7 @@ myStarsModule.controller('MyStarsController', [
                                         }
                                         activity.sectionname = stageName + " - " + challengeName;
                                         starsByActivity.push(activity);
-                                        points = points + activity.points;
+                                        points = points + data[i].points;
                                     }
                                     else{
                                         if (activity.activities) {

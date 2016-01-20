@@ -295,7 +295,11 @@ angular
                 $scope.$emit('ShowPreloader');
                 _endActivity(activityModel, function() {
                     if ($routeParams.retry) {
-                        moodleFactory.Services.ExecuteQueue();
+                        _forceUpdateConnectionStatus(function() {
+                            if (_isDeviceOnline) {
+                                moodleFactory.Services.ExecuteQueue();
+                            }
+                        }, function() {} );
                     }    
                     activitiesPosted++;
                     if (activitiesPosted == subactivitiesCompleted.length) {                   
