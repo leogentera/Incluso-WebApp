@@ -101,7 +101,7 @@ myStarsModule.controller('MyStarsController', [
                                         }
                                         activity.sectionname = stageName + " - " + challengeName;
                                         starsByActivity.push(activity);
-                                        points = points + activity.points;
+                                        points = points + data[i].points;
                                     }
                                     else{
                                         if (activity.activities) {
