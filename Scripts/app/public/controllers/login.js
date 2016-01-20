@@ -91,10 +91,13 @@ angular
                 //loading...
                 if (txtCredentials) {
                     userCredentials = JSON.parse(txtCredentials);
-                    //Preload username and password input fields...
-                    $scope.userCredentialsModel.username = userCredentials.username;
-                    $scope.userCredentialsModel.password = userCredentials.password;
-                    $scope.userCredentialsModel.rememberCredentials = userCredentials.rememberCredentials;
+                    
+                    if(userCredentials.rememberCredentials) {
+                        //Preload username and password input fields...
+                        $scope.userCredentialsModel.username = userCredentials.username;
+                        $scope.userCredentialsModel.password = userCredentials.password;
+                        $scope.userCredentialsModel.rememberCredentials = userCredentials.rememberCredentials;   
+                    }
                 }
 
                 if (txtCurrentUser) {
@@ -115,12 +118,18 @@ angular
                             
                         }, function () {
                             
-                            $scope.$apply(function(){
-                                $scope.$emit('HidePreloader');
-                                _loadedDrupalResources = true;
-                                $location.path('/ProgramaDashboard');
-                            });
-                            
+                            /* para auto iniciar sesión en offline es necesario que se haya cargado por lo menos una vez toda la información */
+                            if(localStorage.getItem("leaderboard") && localStorage.getItem("Perfil/" + $scope.currentUserModel.userId)) {
+                                $timeout(function(){
+                                    $scope.$emit('HidePreloader');
+                                    _loadedDrupalResources = true;
+                                    $location.path('/ProgramaDashboard');
+                                }, 1);   
+                            } else {
+                                $timeout(function(){
+                                    $scope.$emit('HidePreloader');
+                                }, 1);
+                            }
                         });
                     }, 500);
 
@@ -198,11 +207,7 @@ angular
                         });
                     });
 
-                    if ($scope.userCredentialsModel.rememberCredentials) {
-                        _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
-                    } else {
-                        localStorage.removeItem("Credentials");
-                    }
+                    _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
 
                 }).error(function (data, status, headers, config) {
 
