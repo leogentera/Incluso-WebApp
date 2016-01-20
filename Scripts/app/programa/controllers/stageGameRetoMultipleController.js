@@ -406,7 +406,11 @@ angular
                 activitiesPosted++;
                 if (activitiesPosted == activitiesFinished.length) {
                   if ($routeParams.retry) {
-                    moodleFactory.Services.ExecuteQueue();
+                    _forceUpdateConnectionStatus(function() {
+                        if (_isDeviceOnline) {
+                            moodleFactory.Services.ExecuteQueue();
+                        }
+                    }, function() {} );
                   }                  
                   $scope.$emit('HidePreloader');
                   if ($scope.IsComplete) {
