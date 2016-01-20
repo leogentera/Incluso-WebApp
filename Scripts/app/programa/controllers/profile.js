@@ -1147,19 +1147,8 @@ angular
                                 var newPoints = parseInt(profile.stars) + parseInt(activity.points); //Update points
                                 profile.stars = newPoints;  //Update the 'stars' key.
                                 
-                                var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
-                                
-                                var model = {
-                                    userId: currentUser.userId,
-                                    stars: newPoints,
-                                    instance: activity.coursemoduleid,
-                                    instanceType: 0,
-                                    date: getdate()
-                                };
-                                  
-                                updateLocalStorageStars(model);
-                                
-                                moodleFactory.Services.PutStars(model, profile, currentUser.token, function(){}, function(){}, true);                                                                                               
+                                _setLocalStorageJsonItem("Perfil/" + $scope.userId, profile); //Save updated profile to Local Storage.
+                                updateUserStarsUsingExternalActivity(activity.activity_identifier); //Update profile in Moodle.
                                 
                                 endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
@@ -1186,27 +1175,7 @@ angular
                             }
                         }
                     }
-                }
-
-                function updateLocalStorageStars(data) {
-                        console.log("updatelocalStorageStars");
-                        console.log(data);
-                        var userStars = JSON.parse(localStorage.getItem("userStars"));
-                                          
-                        var localStorageStarsData = {
-                            dateissued: moment(Date.now()).unix(),
-                            instance: data.instance,
-                            instance_type: data.instanceType,
-                            message: "",
-                            is_extra: false,
-                            points: data.stars,
-                            userid: parseInt(data.userId)
-                        };
-
-                        userStars.push(localStorageStarsData);
-
-                        localStorage.setItem("userStars", JSON.stringify(userStars));
-                }
+                }            
                 
                 
                 function validateAllFieldsCompleted(){

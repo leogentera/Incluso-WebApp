@@ -716,6 +716,39 @@ var _coachNotification = function (stageIndex) {
 };
 
 
+function updateUserStarsUsingExternalActivity(activity_identifier) {
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
+    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+    var activity = getExtActivityByActivity_identifier(activity_identifier);
+    //profile.stars = Number(profile.stars) +  Number(activity.points);
+    var data = {
+        userId: profile.id,
+        stars: activity.points,
+        instance: activity.coursemoduleid,
+        instanceType: 0,
+        date: getdate()
+    };
+
+    var userStars = JSON.parse(localStorage.getItem("userStars"));
+                                          
+    var localStorageStarsData = {
+        dateissued: moment(Date.now()).unix(),
+        instance: data.instance,
+        instance_type: data.instanceType,
+        message: "",
+        is_extra: false,
+        points: data.stars,
+        userid: parseInt(data.userId)
+    };
+    
+    userStars.push(localStorageStarsData);
+    
+    localStorage.setItem("userStars", JSON.stringify(userStars));
+    
+    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
+}
+
+
 var _progressNotification = function(indexStageId, currentProgress){
     
     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
