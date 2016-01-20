@@ -84,12 +84,26 @@ angular
                     var currentActivity = _getActivityByCourseModuleId(_startedActivityCabinaDeSoporte.coursemoduleid, _usercourse);    
 
                         if (!currentActivity.status) {
-                            var dateStarted = new Date(_startedActivityCabinaDeSoporte.datestarted * 1000);                            
-                            var latestMessages =  _.filter($scope.messages, function(msg) { 
-                                return (new Date(msg.messagedate)) > dateStarted && msg.messagesenderid != $scope.senderId;
+                            var dateStarted = new Date(_startedActivityCabinaDeSoporte.datestarted * 1000);
+                            
+                            var latestMessages =  _.filter($scope.messages, function(msg) {
+                                return (new Date(msg.messagedate)) > dateStarted;
                             });
+                            
+                            var latestCoachAndSenderMessages = 0;
+                            for(var m = 0; m < latestMessages.length; m++) {
+                                var message = latestMessages[m];
+                                
+                                if(message.messagesenderid == $scope.senderId) {
+                                    var nextMessage = (m + 1) < latestMessages.length ? latestMessages[m + 1] : null;
+                                    
+                                    if(nextMessage && nextMessage.messagesenderid != $scope.senderId) {
+                                        latestCoachAndSenderMessages++;
+                                    }
+                                }
+                            }
 
-                            if (latestMessages.length >= 2) {                                
+                            if (latestCoachAndSenderMessages >= 2) {                                
                                 localStorage.removeItem("startedActivityCabinaDeSoporte/" + userId);   
                                 _setLocalStorageItem("finishCabinaSoporte/" + userId, _startedActivityCabinaDeSoporte.activity_identifier);
                                 $location.path(zone +'/CabinaDeSoporte/' + _startedActivityCabinaDeSoporte.activity_identifier);
