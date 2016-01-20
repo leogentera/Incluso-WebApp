@@ -351,7 +351,6 @@ angular
                     errors.push("Estado inválido.");
                 }
                 if (!$scope.registerForm.email.$valid) {//$error.pattern || $scope.registerForm.email.$error.required) {
-                    console.log($scope.registerModel.email);
                     errors.push("Formato de correo incorrecto.");
                 }
                 if (!$scope.registerModel.secretQuestion) {
