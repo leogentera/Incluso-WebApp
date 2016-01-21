@@ -249,14 +249,16 @@ angular
                             }
                         }, function() {} );
                     }
-                    $scope.$emit('HidePreloader');
-                    var url = "";
-                    if ($scope.IsComplete) {
-                        url = ($scope.isReprobado ? '/ZonaDeNavegacion/TuEliges/TuEliges/2012' : '/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
-                    }else{
-                        $location.path('/ZonaDeNavegacion/Dashboard/2/3')
-                    };
-                    $location.path(url);
+                    $timeout(function(){
+                        $scope.$emit('HidePreloader');
+                        var url = "";
+                        if ($scope.IsComplete) {
+                            url = ($scope.isReprobado ? '/ZonaDeNavegacion/TuEliges/TuEliges/2012' : '/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
+                        }else{
+                            $location.path('/ZonaDeNavegacion/Dashboard/2/3')
+                        };
+                        $location.path(url);
+                    },1000);
                 });
             }
                 

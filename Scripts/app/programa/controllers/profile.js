@@ -1663,7 +1663,7 @@ angular
                 };
 
                 function avatarUploaded(message) {
-                    setTimeout(function(){ 
+                    $timeout(function(){ 
                         $location.path('/Perfil/' + $scope.userId);
                         $route.reload();
                     }, 1000);
