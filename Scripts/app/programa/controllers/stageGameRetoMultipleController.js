@@ -411,13 +411,15 @@ angular
                             moodleFactory.Services.ExecuteQueue();
                         }
                     }, function() {} );
-                  }                  
-                  $scope.$emit('HidePreloader');
-                  if ($scope.IsComplete) {
-                    $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
-                  }else{
-                      $location.path('/ZonaDeVuelo/Dashboard/1/2');
                   }
+                  $timeout(function(){
+                    $scope.$emit('HidePreloader');
+                    if ($scope.IsComplete) {
+                      $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
+                    }else{
+                        $location.path('/ZonaDeVuelo/Dashboard/1/2');
+                    }
+                  }, 1000);
                 }
               });
             }

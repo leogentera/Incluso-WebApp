@@ -256,14 +256,16 @@ angular
                             }
                         }, function() {} );
                     }
-                    $scope.$emit('HidePreloader');
-                    var url = "";
-                    if ($scope.IsComplete) {
-                        url = ($scope.isReprobado ? '/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302' : '/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero');
-                    }else{
-                        url = '/ZonaDeAterrizaje/Dashboard/3/2';
-                    };
-                    $location.path(url);
+                    $timeout(function(){
+                        $scope.$emit('HidePreloader');
+                        var url = "";
+                        if ($scope.IsComplete) {
+                            url = ($scope.isReprobado ? '/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302' : '/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero');
+                        }else{
+                            url = '/ZonaDeAterrizaje/Dashboard/3/2';
+                        };
+                        $location.path(url);
+                    }, 1000);
                 });
             }
 

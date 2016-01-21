@@ -290,8 +290,12 @@ angular
                 };
             };
             $scope.collapseForumButtomsTrigger = function(element, callFileBrowser){
-                callFileBrowser?clickPostAttachment():'';
-                _uncollapse(element, $scope.forumModals);
+                //callFileBrowser?clickPostAttachment():'';
+                if(callFileBrowser){
+                    clickPostAttachment();
+                }else {
+                    _uncollapse(element, $scope.forumModals);
+                }
             };
 
             var createReplyDataObject = function( parentId, message, postType){
@@ -340,7 +344,7 @@ angular
                             $scope.textToPost=null;
                             $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                             $scope.$emit('HidePreloader');
-                        });
+                        }, null, true);
                     
                 }, offlineCallback);
                                     
@@ -385,7 +389,7 @@ angular
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         $scope.$emit('HidePreloader');
-                    });
+                    }, null, true);
                         
                     }, offlineCallback);
                 
@@ -407,7 +411,7 @@ angular
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                         $scope.$emit('HidePreloader');
-                    });
+                    }, null, true);
                     }, offlineCallback);
                     
             };
@@ -427,7 +431,7 @@ angular
                     function(){
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
-                    });
+                    }, null, true);
                     
                     }, offlineCallback);
             };
@@ -476,9 +480,17 @@ angular
 
             clickPostAttachment = function(){
                 cordova.exec(function(data) {
-                    $scope.$apply(function(){$scope.attachmentToPost = data;})
+                    //Expand attachment modal
 
-                }, function(data) {}, "CallToAndroid", "AttachPicture", []);
+                    if(data != null){
+                        $scope.$apply(function(){$scope.attachmentToPost = data;})
+                        $scope.$apply($scope.collapseForumButtomsTrigger('isAttachmentCollapsed'));
+                    }else{}
+
+
+                }, function(data) {
+                    $scope.$apply($scope.collapseForumButtomsTrigger('isAttachmentCollapsed'));
+                }, "CallToAndroid", "AttachPicture", []);
             };
 
             $scope.postAttachmentToForum = function(){
@@ -512,7 +524,7 @@ angular
                         $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                         $scope.$emit('HidePreloader');
-                    });
+                    }, null, true);
                     
                     }, offlineCallback);
                     

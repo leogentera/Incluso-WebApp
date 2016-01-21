@@ -126,8 +126,10 @@ angular
                         }
                     }, function() {} );
                 }
-                $scope.$emit('HidePreloader');
-                $location.path('/ProgramaDashboard');
+                $timeout(function(){
+                    $scope.$emit('HidePreloader');
+                    $location.path('/ProgramaDashboard');
+                }, 1000);
             }
 
             var errorCallback = function(){
