@@ -89,7 +89,7 @@ angular
                 //Start Code Recovery
                 //fetching errors list
                 var errors = [];
-                if ($scope.recoverPasswordForm.email.$error.pattern || $scope.recoverPasswordForm.email.$error.required) {
+                if (!$scope.recoverPasswordForm.email.$valid) {//$error.pattern || $scope.recoverPasswordForm.email.$error.required) {
                     errors.push("Formato de correo incorrecto.");
                 }
                 if (!$scope.recoverPasswordModel.secretQuestion) {
