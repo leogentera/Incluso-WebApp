@@ -286,28 +286,21 @@ angular
                         instanceType: 0,
                         date: getdate(),
                         is_extra: false
-                    };                        
-                    if (starsMandatory <= 250 && isMandatory) {
-                        console.log("starsMandatory < 250 and IsMandatory");  
+                    };
+                    if (starsMandatory <= 250 && isMandatory){
                         profile.stars = parseInt(profile.stars) + stars;
                         updateLocalStorageStars(data);
-                        moodleFactory.Services.PutStars(data, profile, $scope.token, function(){}, errorCallback);                           
+                        moodleFactory.Services.PutStars(data, profile, $scope.token, function(){}, errorCallback);
                     }
-                    else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources) {
-                        console.log("!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources");  
-                        if (totalOptionalPoints + stars > $scope.fuenteDeEnergia.max_resources) {
-                            console.log("totalOptionalPoints + stars > $scope.fuenteDeEnergia.max_resources");
-                            stars = $scope.fuenteDeEnergia.max_resources - totalOptionalPoints;                                
+                    else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources){
+                        if ((totalOptionalPoints + stars) < $scope.fuenteDeEnergia.max_resources){
+                              data.is_extra = true;
+                              profile.stars = parseInt(profile.stars) + stars;
+                              moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
+                              totalOptionalPoints += stars;
+                              updateLocalStorageStars(data);
                         }
-                        data.is_extra = true;
-
-                        profile.stars = parseInt(profile.stars) + stars;
-                        
-                        moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
-                        totalOptionalPoints += stars;
-                        updateLocalStorageStars(data);
-                    }                    
-
+                    }
                 }
 
                 function updateLocalStorageStars(data) {
@@ -427,55 +420,23 @@ angular
                                     };
       
                                     var likes = Number($scope.fuenteDeEnergia.activities[i].activityContent.likes);
-      
+
                                     if ($scope.fuenteDeEnergia.activities[i].activityContent.liked == 0) {
                                           likes -= 1;
-                                          userLikes.likes = parseInt(userLikes.likes) - 1;
+                                          //userLikes.likes = parseInt(userLikes.likes) - 1;
                                     } else {
                                           likes += 1;
-                                          userLikes.likes = parseInt(userLikes.likes) + 1;
+                                          //userLikes.likes = parseInt(userLikes.likes) + 1;
                                     }
                                     
                                     $scope.fuenteDeEnergia.activities[i].activityContent.likes = likes;
                                                                         
                                     localStorage.setItem("likesByUser",JSON.stringify(userLikes));
-                                    moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, countLikesByUser, errorCallback);                                    
+                                    moodleFactory.Services.PutEndActivity(activityId, data, $scope.fuenteDeEnergia, currentUser.token, function(){}, errorCallback);
                               }
                         }
-
                     }, offlineCallback);
-
                 }
-            }      
-
-            function countLikesByUser() {
-                  var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
-                  console.log(userLikes);
-                  if (userLikes && userLikes.likes == 30){
-                        assignLikesBadge();
-                  }
-            }
-            
-            function assignLikesBadge() {
-                var badgeModel = {
-                    badgeid: 15 //badge earned when a user likes 30 times.
-                };
-
-                var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
-                for(var i = 0; i < userProfile.badges.length; i++)
-                {
-                    if (userProfile.badges[i].id == badgeModel.badgeid && userProfile.badges[i].status == "pending") {
-                                               
-                        userProfile.badges[i].status = "won";
-                        
-                        localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
-                
-                        moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
-                              console.log("created badge successfully");
-                        }, function () { });
-                    }
-                }
-                                
             }
 
             $scope.commentSubActivity = function (contentId) {

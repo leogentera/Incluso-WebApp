@@ -612,36 +612,11 @@ angular
                     $location.path('/ProgramaDashboard');
                 };
 
-                /*
-                function calculate_age() {
-                    var dpValue = $scope.model.birthday;
-                    var birth_month = dpValue.substring(0, 2);
-                    var birth_day = dpValue.substring(3, 5);
-                    var birth_year = dpValue.substring(6, 10);
-                    today_date = new Date();
-                    today_year = today_date.getFullYear();
-                    today_month = today_date.getMonth();
-                    today_day = today_date.getDate();
-                    age = today_year - birth_year;
-
-                    if (today_month < (birth_month - 1)) {
-                        age--;
-                    }
-
-                    if (((birth_month - 1) == today_month) && (today_day < birth_day)) {
-                        age--;
-                    }
-
-                    return age;
-                }
-                */
-
                 function calculate_age() {
                     var dpValue = $scope.model.birthday;
                     var birth_day = dpValue.substring(0, 2);
                     var birth_month = dpValue.substring(3, 5);
                     var birth_year = dpValue.substring(6, 10);
-                    //console.log(birth_day + '/' + birth_month + '/' + birth_year);
                     var today_date = new Date();
                     var today_year = today_date.getFullYear();
                     var today_month = today_date.getMonth();
@@ -656,7 +631,7 @@ angular
                     if ( ((parseInt(birth_month, 10) - 1) == today_month) && (today_day < parseInt(birth_day, 10))) {
                         age--;
                     }
-                    //console.log(age);
+
                     return age;
                 }
 

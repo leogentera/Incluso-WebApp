@@ -1,9 +1,9 @@
 //global variables and functions
-//var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-2/RestfulAPI/public/{0}"; //Azure Development environment
-//var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
+var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-2/RestfulAPI/public/{0}"; //Azure Development environment
+var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
 //var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
-var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
-var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
+//var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
+//var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
 
 var _courseId = 4;
 var _endActivityCurrentChallenge = null;
@@ -269,11 +269,6 @@ var notificationTypes = {
     generalNotifications: 2,
     profileNotifications: 3,
     progressNotifications: 4
-};
-
-/* sync course after logging */
-var _syncAll = function (callback) {
-    moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), callback, function() {} );
 };
 
 var allServicesCallback = function () {
@@ -1721,9 +1716,12 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
 
 /* loads drupal resources (content) */
 var _loadedDrupalResources = false;
+var _loadedDrupalResourcesWithErrors = false;
 var _loadDrupalResources = function() {
     _loadedDrupalResources = false;
     var propCounter = 0;
+    _loadedDrupalResources = false;
+    _loadedDrupalResourcesWithErrors = false;
     
     for (var prop in drupalFactory.NodeRelation) {
         drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
@@ -1737,6 +1735,7 @@ var _loadDrupalResources = function() {
     function errorDrupalResourcesCallback() {
         propCounter++;
         _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
+        _loadedDrupalResourcesWithErrors = true;
     }
 }
 
