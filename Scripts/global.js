@@ -271,11 +271,6 @@ var notificationTypes = {
     progressNotifications: 4
 };
 
-/* sync course after logging */
-var _syncAll = function (callback) {
-    moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), callback, function() {} );
-};
-
 var allServicesCallback = function () {
     _syncCallback();
 };
@@ -1721,9 +1716,12 @@ var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCall
 
 /* loads drupal resources (content) */
 var _loadedDrupalResources = false;
+var _loadedDrupalResourcesWithErrors = false;
 var _loadDrupalResources = function() {
     _loadedDrupalResources = false;
     var propCounter = 0;
+    _loadedDrupalResources = false;
+    _loadedDrupalResourcesWithErrors = false;
     
     for (var prop in drupalFactory.NodeRelation) {
         drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
@@ -1737,6 +1735,7 @@ var _loadDrupalResources = function() {
     function errorDrupalResourcesCallback() {
         propCounter++;
         _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
+        _loadedDrupalResourcesWithErrors = true;
     }
 }
 

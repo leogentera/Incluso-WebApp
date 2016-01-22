@@ -25,6 +25,16 @@ angular
             
             
             var getContentResourcesInterval = $interval(function() {
+                
+                if(_loadedDrupalResourcesWithErrors) {
+                    $interval.cancel(getContentResourcesInterval);
+                    $scope.$emit('HidePreloader');
+                    localStorage.setItem("offlineConnection", "");
+                    $timeout(function(){
+                        $location.path('/');
+                    }, 1000);
+                }
+                
                 if(_loadedDrupalResources) {
                     $interval.cancel(getContentResourcesInterval);
                     getContentResources(activity_identifier);
@@ -258,10 +268,8 @@ angular
                             $scope.profile.stars = parseInt($scope.profile.stars, 10);
                             _setLocalStorageJsonItem("Perfil/" + $scope.user.id,  $scope.profile);
 
-                        }, function () {
-                        }, true);
+                        }, errorCallback, true);
                     }, errorCallback, true);
-
                 }, errorCallback);
 
                 calculateTotalProgress();
@@ -295,6 +303,21 @@ angular
             }
 
             function errorCallback(data) {
+                
+                if(localStorage.getItem("course") == null) {
+                    $scope.$emit('HidePreloader');
+                    localStorage.setItem("offlineConnection", "");
+                    $location.path('/');
+                } else if(localStorage.getItem("leaderboard") == null) {
+                    $scope.$emit('HidePreloader');
+                    localStorage.setItem("offlineConnection", "");
+                    $location.path('/');
+                } else if(localStorage.getItem("Perfil/" + localStorage.getItem("userId")) == null) {
+                    $scope.$emit('HidePreloader');
+                    localStorage.setItem("offlineConnection", "");
+                    $location.path('/');
+                }
+                
                 _pageLoaded = true;
 
                 if (_loadedResources && _pageLoaded) {
