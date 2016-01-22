@@ -386,11 +386,12 @@
                                             <span class="icomoon icon-help"></span>
                                         </p>
                                         <input type="text" ng-disabled="isRegistered"
-                                               ng-model="registerModel.secretAnswer" name="secretAnswer"
+                                               ng-model="registerModel.secretAnswer"
+                                               name="secretAnswer"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Respuesta de seguridad"
                                                aria-describedby="securityAnswerAddOn"
-                                               ng-pattern="/^[.,\s\-A-Za-z0-9áéíóúñÁÉÍÓÚÑ]+$/"
+                                               ng-pattern="/^[\w\W]+$/"
                                                ng-trim="true" required />
                                     </div>
                                 </div>

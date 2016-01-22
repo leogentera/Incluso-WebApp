@@ -44,7 +44,7 @@
             <div id="openModal1" class="modalDialog" collapse="forumModals['isTextCollapsed']">
                 <div>
                     <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
-                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()" ng-disabled="!textToPost">Compartir</a>
                 </div>
             </div>
             <div id="openModal2" class="modalDialog" collapse="forumModals['isLinkCollapsed']">
@@ -76,7 +76,7 @@
                     <!--<div class="add"><form><input type="file" placeholder="Atachea algo..." value="Buscar" ng-model="attachmentToPost"  base-sixty-four-input maxsize="2000000" accept="image/*"></form></div>-->
                     <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="clickPostAttachment()" >Buscar</a>-->
                     <div class="add"> {{attachmentToPost.fileName}} </div>
-                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postAttachmentToForum()" >Compartir</a>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postAttachmentToForum()"  >Compartir</a>
                 </div>
             </div>
         </section>
@@ -154,7 +154,7 @@
                             <span class="close"></span>
                             <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
 
-                            <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
+                            <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" ng-disabled="!replyText" >Compartir</a>
                         </div>
                     </div>
                     <div id="openModal5" class="modalDialog reportModal" ng-show="isReportedAbuseModalCollapsed['id' + p.post_id]">
