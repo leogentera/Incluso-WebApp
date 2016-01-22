@@ -127,6 +127,7 @@ angular
                     }, function() {} );
                 }
                 $timeout(function(){
+                    _loadedDrupalResources = true;
                     $scope.$emit('HidePreloader');
                     $location.path('/ProgramaDashboard');
                 }, 1000);
@@ -198,7 +199,6 @@ angular
 
 
             if ($routeParams.retry){
-                _loadedDrupalResources = true;
                 try {
                     document.addEventListener("deviceready",  function() { cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", [])}, false);
                 }

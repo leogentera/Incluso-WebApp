@@ -37,7 +37,7 @@ angular
             }
 
             if (_tutorial) {
-                setTimeout(function(){ 
+                $timeout(function(){ 
                     $location.path('/ProgramaDashboard');
                     $route.reload();
                 }, 2000);
@@ -57,7 +57,7 @@ angular
                 //WARNING: Within "CurrentUser", the "stars" property value is a string: "stars" : "350",
                 //         but within "Perfil/nnn", the "stars" property value is an integer: "stars" : 350.
                 $scope.user.rank = $scope.profile.rank;
-                $scope.user.stars = $scope.profile.stars; //Saved as an integer.
+                $scope.user.stars = parseInt($scope.profile.stars, 10); //Saved as an integer.
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
             }
@@ -238,6 +238,11 @@ angular
                                 $scope.openTermsModal();
                                 $scope.navigateTo('TermsOfUse');
                             }
+
+                            $scope.user.rank = $scope.profile.rank;
+                            $scope.user.stars = parseInt($scope.profile.stars, 10); //Saved as an integer.
+
+                            _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
 
                             for(var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
 

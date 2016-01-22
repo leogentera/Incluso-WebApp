@@ -193,23 +193,25 @@ angular
                     }
                 }
                 if (data["calificación"] && data["calificación"] == "Reprobado") {
-                    $scope.isReprobado = true;
-                    _loadedResources = false;
-                    _pageLoaded = true;
-                    drupalFactory.Services.GetContent("TuEligesRobot", function (data, key) {
-                        _loadedResources = true;
-                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
-                        var modalInstance = $modal.open({
-                            templateUrl: 'TuEligesModal.html',
-                            controller: 'stageTuEligesModalController',
-                            resolve: {
-                                content: function () {
-                                    return data.node;
-                                }
-                            },
-                            windowClass: 'closing-stage-modal user-help-modal'
-                        });
-                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+                    $timeout(function(){
+                        $scope.isReprobado = true;
+                        _loadedResources = false;
+                        _pageLoaded = true;
+                        drupalFactory.Services.GetContent("TuEligesRobot", function (data, key) {
+                            _loadedResources = true;
+                            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                            var modalInstance = $modal.open({
+                                templateUrl: 'TuEligesModal.html',
+                                controller: 'stageTuEligesModalController',
+                                resolve: {
+                                    content: function () {
+                                        return data.node;
+                                    }
+                                },
+                                windowClass: 'closing-stage-modal user-help-modal'
+                            });
+                        }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+                    }, 1000);
                 }
                 if (parentActivity.activities) {
                     for (var i = 0; i < subactivitiesCompleted.length; i++) {
@@ -250,11 +252,14 @@ angular
                         }, function() {} );
                     }
                     $timeout(function(){
+                        console.log('Ending activity')
                         $scope.$emit('HidePreloader');
                         var url = "";
                         if ($scope.IsComplete) {
+                            console.log('is complete')
                             url = ($scope.isReprobado ? '/ZonaDeNavegacion/TuEliges/TuEliges/2012' : '/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
                         }else{
+                            console.log('redirect')
                             $location.path('/ZonaDeNavegacion/Dashboard/2/3')
                         };
                         $location.path(url);
