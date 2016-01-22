@@ -185,6 +185,11 @@ angular
                         //-----------------------------------------------------------------------------------------------
 
                     }, function () {
+                        
+                        $scope.$emit('HidePreloader');
+                        localStorage.setItem("offlineConnection", "offline");
+                        $location.path('/');
+                        
                     }, true);
 
                     try {
@@ -196,12 +201,10 @@ angular
 
                 }, function () {
 
-                    try {
-                        $scope.$emit('HidePreloader');
-                        $location.path('/Tutorial');
-                    } catch (e) {
-                        $location.path('/ProgramaDashboard');
-                    }
+                    $scope.$emit('HidePreloader');
+                    localStorage.setItem("offlineConnection", "offline");
+                    $location.path('/');
+                    
                 }, true);
             };
 

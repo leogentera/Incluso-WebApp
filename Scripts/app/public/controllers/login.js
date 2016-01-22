@@ -114,7 +114,10 @@ angular
                         
                         $scope.validateConnection(function () {
                             $scope.$emit('HidePreloader');
-                            $scope.login();
+                            
+                            if(txtCredentials) {
+                                $scope.login();   
+                            }
                             
                         }, function () {
                             
@@ -347,12 +350,13 @@ angular
             };
             
             
-            if(localStorage.getItem("offlineConnection") == "") {
+            if(localStorage.getItem("offlineConnection") == "offline") {
                 $timeout(function(){
                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
-                    $scope.$emit('scrollTop');
                     $scope.$emit('HidePreloader');
-                }, 1000);
+                    $scope.$emit('scrollTop');
+                    localStorage.removeItem("offlineConnection");
+                }, 2000);
             } else {
                 $scope.loadCredentials();    
             }
