@@ -252,14 +252,11 @@ angular
                         }, function() {} );
                     }
                     $timeout(function(){
-                        console.log('Ending activity')
                         $scope.$emit('HidePreloader');
                         var url = "";
                         if ($scope.IsComplete) {
-                            console.log('is complete')
                             url = ($scope.isReprobado ? '/ZonaDeNavegacion/TuEliges/TuEliges/2012' : '/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
                         }else{
-                            console.log('redirect')
                             $location.path('/ZonaDeNavegacion/Dashboard/2/3')
                         };
                         $location.path(url);
