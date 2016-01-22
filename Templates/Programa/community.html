@@ -35,7 +35,7 @@
       <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
         <div>    
           <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="postTextValue"></textarea></div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postText()">Compartir</a>
+          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postText()" ng-disabled="!postTextValue">Compartir</a>
         </div>
       </div>
       <div id="openModal2" class="modalDialog" collapse="communityModals['isLinkCollapsed']">
@@ -147,7 +147,7 @@
                       <span class="close"></span>
                       <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."  ng-model="replyText"></textarea></div>
   
-                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
+                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" nd-disabled="!replyText">Compartir</a>
                   </div>
               </div>
               
