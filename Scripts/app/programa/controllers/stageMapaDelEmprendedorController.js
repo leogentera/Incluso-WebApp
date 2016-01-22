@@ -236,22 +236,26 @@ angular
                         subactivitiesCompleted.push(q.coursemoduleid);
                     }
                 });
-
                 if (parentActivity.status == 0 && quizzesAnswered.completed > 0) {
                     parentUpdated = true;
                     _endActivity(parentActivity);
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted, false);
                 }
-                
-                if (parentActivity.activities) {
-                    userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted, false);
-                    _setLocalStorageJsonItem("usercourse", userCourseUpdated);
-                    for (var i = 0; i < quizzesRequests.length; i++) {
-                        if (quizzesRequests[i].at_least_one) {
-                            var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                            $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, parentUpdated);
+                if (subactivitiesCompleted.length > 0) {
+                    if (parentActivity.activities) {
+                        userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted, false);
+                        _setLocalStorageJsonItem("usercourse", userCourseUpdated);
+                        for (var i = 0; i < quizzesRequests.length; i++) {
+                            if (quizzesRequests[i].at_least_one) {
+                                var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
+                                $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, parentUpdated);
+                            }
                         }
                     }
+                }else{
+                    $timeout(function(){
+                        $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                    }, 1000);
                 }
             }
 
@@ -302,54 +306,61 @@ angular
                         }, function() {} );
                     }    
                     activitiesPosted++;
-                    if (activitiesPosted == subactivitiesCompleted.length) {                   
+                    if (activitiesPosted == subactivitiesCompleted.length) {
                         $timeout(function(){
                             if ($scope.pathImagenFicha != "" && canPost) {
-                                $scope.validateConnection(function() {
-                                    moodleFactory.Services.GetAsyncForumDiscussions(91, currentUser.token, function(data, key) {
-                                        var currentDiscussionIds = [];
-                                        for(var d = 0; d < data.discussions.length; d++) {
-                                            currentDiscussionIds.push(data.discussions[d].discussion);
-                                        }
-                                        localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
-                                        
-                                        var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
-        
-                                        encodeImageUri($scope.pathImagenFicha, function (b64) {
-                                            var requestData = {
-                                                "userid": $scope.user.id,
-                                                "discussionid": discussion.discussion,
-                                                "parentid": discussion.id,
-                                                "message": "Mi mapa del emprendedor",
-                                                "createdtime": ((new Date(quiz.startingTime).getTime()) / 1000),
-                                                "modifiedtime": ((new Date(quiz.endingTime).getTime()) / 1000),
-                                                "posttype": 4,
-                                                "filecontent": b64,
-                                                "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.jpg',
-                                                "picture_post_author": $scope.user.profileimageurlsmall,
-                                                "iscountable":0
-                                            };
-                                            
-                                            moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                                                function() {
+                                moodleFactory.Services.GetAsyncForumDiscussions(91, currentUser.token, function(data, key) {
+                                    var currentDiscussionIds = [];
+                                    for(var d = 0; d < data.discussions.length; d++) {
+                                        currentDiscussionIds.push(data.discussions[d].discussion);
+                                    }
+                                    localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                                    
+                                    var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
+                                    encodeImageUri($scope.pathImagenFicha, function (b64) {
+                                        var requestData = {
+                                            "userid": $scope.user.id,
+                                            "discussionid": discussion.discussion,
+                                            "parentid": discussion.id,
+                                            "message": "Mi mapa del emprendedor",
+                                            "createdtime": ((new Date(quiz.startingTime).getTime()) / 1000),
+                                            "modifiedtime": ((new Date(quiz.endingTime).getTime()) / 1000),
+                                            "posttype": 4,
+                                            "filecontent": b64,
+                                            "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.jpg',
+                                            "picture_post_author": $scope.user.profileimageurlsmall,
+                                            "iscountable":0
+                                        };
+                                        moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                                            function() {
+                                                $timeout(function () {
                                                     $scope.sharedAlbumMessage = null;
                                                     $scope.isShareCollapsed = false;
                                                     $scope.showSharedAlbum = true;
-                                                    $scope.$emit('HidePreloader');
-                                                    $location.path('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/3404/' + discussion.discussion);
-                                                },
-                                                function(){
+                                                    $timeout(function(){
+                                                        _forceUpdateConnectionStatus(function() {
+                                                            if (_isDeviceOnline) {
+                                                                $location.path('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/3404/' + discussion.discussion);
+                                                            }else{
+                                                                $scope.$apply(function() {
+                                                                    $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                                                });
+                                                            }
+                                                        }, function() {} );
+                                                    }, 500);
+                                                }, 500);
+                                            },
+                                            function(){
+                                                $timeout(function () {
                                                     $scope.sharedAlbumMessage = null;
                                                     $scope.isShareCollapsed = false;
                                                     $scope.showSharedAlbum = false;
                                                     $scope.$emit('HidePreloader');
                                                     $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
-                                                }
-                                            );
-                                        });
-                                        
-                                    }, function(){}, true);
-                                    
+                                                }, 1000);
+                                            }, true
+                                        );
+                                    });
                                 }, function(){});
                             } else {
                                 $location.path('/ZonaDeAterrizaje/Dashboard/3/3');

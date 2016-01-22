@@ -119,8 +119,8 @@
             _postAsyncData("", data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
-        var _postAsyncForumPost = function (key, data, successCallback, errorCallback, forceRefresh, updatePostCounter) {
-            _postAsyncForumPostData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback, updatePostCounter);
+        var _postAsyncForumPost = function (key, data, successCallback, errorCallback, addToQueue, updatePostCounter) {
+            _postAsyncForumPostData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback, updatePostCounter, addToQueue);
         };
         
         var _postAsyncReportAbuse = function (key, data, successCallback, errorCallback, forceRefresh) {
@@ -423,33 +423,49 @@
         };
         
 
-        var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback, needUpdatePostCounter) {
+        var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback, needUpdatePostCounter, addToQueue) {
             _getDeviceVersionAsync();
             
             var discussionid = data.discussionid;
-            
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-            _httpFactory({
-                method: 'POST',
-                url: url,
-                data: data,
-                headers: { 'Content-Type': 'application/json',
-                           'Authorization': currentUser.token },
-            }).success(function (data, status, headers, config) {
-
-                if (key != null) {
-                    _setLocalStorageJsonItem(key,data);
+            if (addToQueue) {
+                addRequestToQueue(key, {
+                    type: "httpRequest",
+                    data: {
+                        method: 'POST',
+                        url: url,
+                        data: data,
+                        headers: { 'Content-Type': 'application/json',
+                               'Authorization': currentUser.token }
+                    }
+                });
+                _setLocalStorageJsonItem(key, data);
+                if (successCallback) {
+                    successCallback();
                 }
-                
-                if(needUpdatePostCounter == true){
-                    updatePostCounter(discussionid);
-                }else{}
+            }else{
+                _httpFactory({
+                    method: 'POST',
+                    url: url,
+                    data: data,
+                    headers: { 'Content-Type': 'application/json',
+                               'Authorization': currentUser.token },
+                }).success(function (data, status, headers, config) {
 
-                successCallback();
-            }).error(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,data);
-                errorCallback();
-            });
+                    if (key != null) {
+                        _setLocalStorageJsonItem(key,data);
+                    }
+                    
+                    if(needUpdatePostCounter == true){
+                        updatePostCounter(discussionid);
+                    }else{}
+
+                    successCallback();
+                }).error(function (data, status, headers, config) {
+                    _setLocalStorageJsonItem(key,data);
+                    errorCallback();
+                });
+            }
         };
         
         var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {

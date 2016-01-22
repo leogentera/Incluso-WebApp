@@ -237,22 +237,27 @@ angular
                     _endActivity(parentActivity);
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                 }
-
-                if (parentActivity.activities) {
-                    for (var i = 0; i < subactivitiesCompleted.length; i++) {
-                        $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i], true);
-                    };
-                    userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
-                    _setLocalStorageJsonItem("usercourse", userCourseUpdated);
-                    _setLocalStorageJsonItem("activityManagers", $scope.activities);
-                    $scope.$emit('ShowPreloader');
-                    for (var i = 0; i < quizzesRequests.length; i++) {
-                        if (quizzesRequests[i].at_least_one) {
-                            var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                            $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, (parent_finished));
-                        }
-                    };
-                }  
+                if (activitiesAtLeastOne > 0) {
+                    if (parentActivity.activities) {
+                        for (var i = 0; i < subactivitiesCompleted.length; i++) {
+                            $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i], true);
+                        };
+                        userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted);
+                        _setLocalStorageJsonItem("usercourse", userCourseUpdated);
+                        _setLocalStorageJsonItem("activityManagers", $scope.activities);
+                        $scope.$emit('ShowPreloader');
+                        for (var i = 0; i < quizzesRequests.length; i++) {
+                            if (quizzesRequests[i].at_least_one) {
+                                var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
+                                $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, (parent_finished));
+                            }
+                        };
+                    }  
+                }else{
+                    $timeout(function(){
+                        $location.path('/ZonaDeNavegacion/Dashboard/2/4');
+                    }, 1000);
+                }
             }
 
             encodeImageUri = function (imageUri, callback) {
@@ -302,8 +307,6 @@ angular
                         }    
                         $timeout(function(){
                             if ($scope.pathImagenFicha != "" && parentStatus) {
-                                $scope.validateConnection(function() {
-                                
                                 moodleFactory.Services.GetAsyncForumDiscussions(85, currentUser.token, function(data, key) {
                                     var currentDiscussionIds = [];
                                     for(var d = 0; d < data.discussions.length; d++) {
@@ -327,28 +330,37 @@ angular
                                             "picture_post_author": $scope.user.profileimageurlsmall,
                                             "iscountable":0
                                         };
-                                        
                                         moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                             function() {
-                                                $scope.sharedAlbumMessage = null;
-                                                $scope.isShareCollapsed = false;
-                                                $scope.showSharedAlbum = true;
-                                                $scope.$emit('HidePreloader');
-                                                                                            
-                                                $location.path('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/' + discussion.discussion);
+                                                $timeout(function () {
+                                                    $scope.sharedAlbumMessage = null;
+                                                    $scope.isShareCollapsed = false;
+                                                    $scope.showSharedAlbum = true;
+                                                    $timeout(function(){
+                                                        _forceUpdateConnectionStatus(function() {
+                                                            if (_isDeviceOnline) {
+                                                                $location.path('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/' + discussion.discussion);
+                                                            }else{
+                                                                $scope.$apply(function() {
+                                                                    $location.path('/ZonaDeNavegacion/Dashboard/2/4');
+                                                                });
+                                                            }
+                                                        }, function() {} );
+                                                    }, 500);
+                                                }, 500);
                                             },
                                             function(){
-                                                $scope.sharedAlbumMessage = null;
-                                                $scope.isShareCollapsed = false;
-                                                $scope.showSharedAlbum = false;
-                                                $scope.$emit('HidePreloader');
-                                                $location.path('/ZonaDeNavegacion/Dashboard/2/4');
-                                            }
+                                                $timeout(function () {
+                                                    $scope.sharedAlbumMessage = null;
+                                                    $scope.isShareCollapsed = false;
+                                                    $scope.showSharedAlbum = false;
+                                                    $scope.$emit('HidePreloader');
+                                                    $location.path('/ZonaDeNavegacion/Dashboard/2/4');
+                                                }, 1000);
+                                            }, true
                                         );
                                     });
-                                }, function(){}, true);
-                                
-                                }, function(){});  
+                                }, function(){}); 
                             }else{
                                 $location.path('/ZonaDeNavegacion/Dashboard/2/4');
                             }
