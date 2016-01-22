@@ -201,23 +201,25 @@ angular
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                 }
                 if (data["calificación"] && data["calificación"] == "Reprobado") {
-                    $scope.isReprobado = true;
-                    _loadedResources = false;
-                    _pageLoaded = true;
-                    drupalFactory.Services.GetContent("MultiplicaTuDineroRobot", function (data, key) {
-                        _loadedResources = true;
-                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
-                        var modalInstance = $modal.open({
-                            templateUrl: 'MultiplicaTuDineroModal.html',
-                            controller: 'stageMultiplicaTuDineroModalController',
-                            resolve: {
-                                content: function () {
-                                    return data.node;
-                                }
-                            },
-                            windowClass: 'closing-stage-modal user-help-modal'
-                        });
-                    }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+                    $timeout(function() {
+                        $scope.isReprobado = true;
+                        _loadedResources = false;
+                        _pageLoaded = true;
+                        drupalFactory.Services.GetContent("MultiplicaTuDineroRobot", function (data, key) {
+                            _loadedResources = true;
+                            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                            var modalInstance = $modal.open({
+                                templateUrl: 'MultiplicaTuDineroModal.html',
+                                controller: 'stageMultiplicaTuDineroModalController',
+                                resolve: {
+                                    content: function () {
+                                        return data.node;
+                                    }
+                                },
+                                windowClass: 'closing-stage-modal user-help-modal'
+                            });
+                        }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+                    }, 1000);
                 }
                 if (parentActivity.activities) {
                     for (var i = 0; i < subactivitiesCompleted.length; i++) {

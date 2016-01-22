@@ -37,7 +37,7 @@ angular
             }
 
             if (_tutorial) {
-                setTimeout(function(){ 
+                $timeout(function(){ 
                     $location.path('/ProgramaDashboard');
                     $route.reload();
                 }, 2000);
