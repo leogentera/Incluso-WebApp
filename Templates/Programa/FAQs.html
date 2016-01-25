@@ -1,0 +1,36 @@
+<div class="incluso-app content-page-theme" id="site-wrapper">
+    <article>
+        <section class="component faqs">
+            <div class="pages">
+                <div ng-show="showingList">
+                    <div class="container">
+                        <h3 ng-class="main-title">{{content.faqs_title}}</h3>
+                        <p>{{content.faqs_content}}</p>
+                        <ul class="list-group separate-items">
+                            <li class="list-group-item" ng-repeat="faqQuestion in FAQsContent">
+                                <a href="" ng-click="goToDetail($index)">
+                                    <span>{{faqQuestion.question}}</span>
+                                    <span class="icomoon icon-arrow-slim-right"></span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div ng-repeat="faqDetail in FAQsContent">
+                    <div ng-show="faqDetail.showingDetail">
+                        <div class="container">
+                            <section class="component">
+                                <h3 ng-class="main-title">{{content.faqs_title}}</h3>
+                                <p class="subtitle"><b>{{faqDetail.question}}</b></p>
+                                <p>
+                                    {{faqDetail.answer}}
+                                </p>
+                                <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="showList()">{{content.faq_detail_button}}</a>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>
+</div>

@@ -1,21 +1,17 @@
 <div class="incluso-app results-challenge" id="site-wrapper">
-  <div id="site-menu" >
-  </div>
-  <div id="site-canvas">
   <article class="blueplanets evaluation">
     <div id="finalized">
         <section class="header-title">
-          <div class="txt-renglon centered txt-bigger min-pad">Has completado la actividad</div>
-          <div class="subtitle centered min-pad">"Multiplica Tu Dinero"</div>
-          <div class="txt-renglon centered txt-bigger min-pad">¡Felicidades!</div>
+          <div class="txt-renglon centered txt-bigger min-pad" ng-bind="contentResourcesResult.multi_mon_res_completed"></div>
+          <div class="subtitle centered min-pad" ng-bind="contentResourcesResult.multi_mon_res_name"></div>
+          <div class="txt-renglon centered txt-bigger min-pad" ng-bind="contentResourcesResult.multi_mon_res_congrats"></div>
         </section>        
         <section class="centered txt-bigger">
           <span class="icomoon icon-checked-join txt-bigger green-giant"></span>
         </section>
         <section class="txt-renglon centered form">
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
+          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()" ng-bind="contentResourcesResult.multi_mon_res_back_button"></a>
         </section>
       </div>
   </article>
-  </div>
 </div>

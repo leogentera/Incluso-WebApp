@@ -1,4 +1,3 @@
-// http://weblogs.asp.net/dwahlin/archive/2013/09/18/building-an-angularjs-modal-service.aspx
 angular
     .module('incluso.stage.gameretomultipleresultscontroller', [])
     .controller('stageGameRetoMultipleResultsController', [
@@ -12,8 +11,17 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
 
             $scope.$emit('ShowPreloader');
+
+            drupalFactory.Services.GetContent("1039results", function (data, key) {
+                _loadedResources = true;
+                $scope.contentResources = data.node;
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+            }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
@@ -25,7 +33,7 @@ angular
             $scope.isCollapsed = true;
 
             $scope.retoMultipleActivities = moodleFactory.Services.GetCacheJson("retoMultipleActivities");
-            $scope.profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+            $scope.profile = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
            
             $scope.fortalezas = _.filter($scope.retoMultipleActivities, function(a){ return a.score == "3"});
             $scope.fortalezas = _.sortBy($scope.fortalezas, function(f){ 
@@ -34,8 +42,8 @@ angular
                 }
                 return -f.total_score
             });
-            $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3"});
-            $scope.$emit('HidePreloader');
+            $scope.aFortalecer = _.filter($scope.retoMultipleActivities, function(a){ return a.score != "3" && a.score!="-1" });
+            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
 
             $scope.back = function () {
                 $location.path('/ZonaDeVuelo/Dashboard/1/2');

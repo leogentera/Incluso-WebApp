@@ -1,0 +1,49 @@
+<div class="incluso-app step-dashboard comments-forum gallery-detail" id="site-wrapper">
+    <article class="blueprint community">
+        <div class="title-section">
+            <h3>Foro Común</h3>
+        </div>
+        <section class="wall">
+            <div class="part post">
+                <div class="author">
+                    <img ng-click="navigateTo('Perfil/' + model.post_autor_id)" ng-if="model.picture_post_author" ng-src="{{model.picture_post_author + '?token=' + userToken}}" alt="author" />
+					<img ng-click="navigateTo('Perfil/' + model.post_autor_id)" ng-id="!model.picture_post_author" src="assets/avatar/default-2.png" />
+                    <div>
+                        <a class="user-alias" ng-click="navigateTo('Perfil/' + model.post_autor_id)" ng-bind="model.post_author"></a>
+                        <span>publicó:</span>
+                        <div>{{model.created * 1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
+                    </div>
+                </div>
+                <div class="block-not post-contents">
+                    <div>
+                        <p ng-bind="model.message"></p>
+						
+                        <div class="achievement-badge" id="gallery-carousel">
+                            <div class="item" ng-repeat="img in model.attachment">
+                                <img src="{{img.fileurl + '?token=' + userToken}}" alt="post" />
+                            </div>
+                        </div>
+						
+                        <div class="control-panel">
+                            <a class="control back" href="#" id="prev">
+		                        <span class="icomoon icon-arrow-bold-left"></span>
+	                        </a>
+                            <p class="text-center">
+                                <span class="currentItem"></span>
+                                <span>/</span>
+                                <span class="total-number"></span>
+                            </p>
+	                        <a class="control next" href="#" id="next">
+		                        <span class="icomoon icon-arrow-bold-right"></span>
+	                        </a>
+                        </div>
+                    </div>           
+                </div>
+            </div>
+            <br>
+            <section>
+                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/5000')">Regresar</a>
+            </section>
+        </section>
+    </article>
+</div>

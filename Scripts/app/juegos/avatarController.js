@@ -22,7 +22,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-            var user = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+            var user = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
             $scope.selectAvatarCabelloAmarillo = function() {
                 if ( $scope.avatarInfo != null) {
                     $scope.avatarInfo[0]["color_cabello"] = "amarillo";

@@ -13,7 +13,7 @@
         </select>
         <span class="icomoon icon-arrow"></span>
     </section>
-    <section class="txt-renglon distribuido" ng-show="hasCommunityAccess">
+    <section class="txt-renglon distribuido" ng-disabled="!hasCommunityAccess">
       <a href="" class="icon-circle" ng-click="collapseCommunityButtomsTrigger('isTextCollapsed')" ng-class="{'active': !communityModals['isTextCollapsed']}">
         <span class="icomoon icon-text text-bigger"></span>
         <span class="arrow-up"></span>
@@ -35,7 +35,7 @@
       <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
         <div>    
           <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="postTextValue"></textarea></div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postText()">Compartir</a>
+          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postText()" ng-disabled="!postTextValue">Compartir</a>
         </div>
       </div>
       <div id="openModal2" class="modalDialog" collapse="communityModals['isLinkCollapsed']">
@@ -64,7 +64,7 @@
 
       <div id="openModal4" class="modalDialog" collapse="communityModals['isAttachmentCollapsed']">
         <div>
-          <a href="#close" title="Close" class="close"></a>
+          <!--a href="#close" title="Close" class="close"></a-->
           <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Adjuntar archivo..." value="" ng-model="postAttachmentValue" /></div>
           <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postAttachment()" >Compartir</button>
         </div>
@@ -72,13 +72,13 @@
     </section>
     <section class="wall">
       
-      <div id="item{{$index}}" ng-repeat="p in posts">
+      <div id="item{{$index}}" ng-repeat="p in posts" ng-show="p.reported == 0">
         <div class="part post">
           <div class="author">
-            <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> 
-            <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
+            <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" />
+            <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
             <div>
-              <a class="user-alias" ng-click="navigateTo('Profile/' + p.post_autor_id)">{{p.post_author}} </a>
+              <a class="user-alias" ng-click="navigateTo('Perfil/' + p.post_autor_id)">{{p.post_author}} </a>
               <span>publicó:</span>
               <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
             </div>
@@ -92,22 +92,28 @@
                 <p ng-bind="p.message"></p>
                 <div class="achievement-badge">
                   <figure>
-                    <a href="{{p.fileurl + '?token=' + userToken}}">
-                      <img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" />
+                    <a ng-if="p.attachment.length > 1">
+                      <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
+                    <a ng-if="p.attachment.length == 1" href="{{p.attachment[0].fileurl + '?token=' + userToken}}">
+                      <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
                     </a>
                   </figure>
+                    <a role="button" ng-click="goToGallery(p)" class="btn-gallery-detail {{p.attachment.length == 1 ? '' : 'active'}}">
+                        <span class="icomoon icon-photo-gallery"></span>
+                    </a>
                 </div>
               </div>
             </div>              
-            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
+            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> <span ng-hide="p.likes < 2" >jóvenes</span><span ng-hide="p.likes >= 2" >joven</span> le<span ng-hide="p.likes < 2" >s</span> gusta esto
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showedCommentsByPost['id' + p.post_id]">
             <div class="coment block">
-              <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> 
-              <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
+              <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" />
+              <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
               <div>
-                <a class="user-alias" ng-click="navigateTo('Profile/' + r.post_autor_id)">{{r.post_author}}</a>
+                <a class="user-alias" ng-click="navigateTo('Perfil/' + r.post_autor_id)">{{r.post_author}}</a>
                 <span>comentó:</span>   
                 <div>{{r.message}}</div>
               </div>
@@ -129,7 +135,7 @@
             <div ng-click="commentModalClick(p.post_id)">
               <span class="icomoon icon-comment"></span> Comentar              
             </div>
-            <div ng-click="reportModalClick(p.post_id)">
+            <div ng-click="reportModalClick(p)">
               <span class="icomoon icon-pinch"></span> Reportar
             </div>
           </div>
@@ -141,7 +147,7 @@
                       <span class="close"></span>
                       <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."  ng-model="replyText"></textarea></div>
   
-                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
+                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" nd-disabled="!replyText">Compartir</a>
                   </div>
               </div>
               
@@ -176,4 +182,18 @@
 
     </section>    
   </article>
+  <script type="text/ng-template" id="badgeForumRobotMessageModal.html">
+        <div class="modal-robot robot-sm closing-stage-modal user-help" >
+            <img src="assets/images/img-robot-sm.svg" alt="robot" />
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                <p class="txt-renglon centered">{{actualMessage.message}}</p>
+            </div>
+        </div>
+    </script>
 </div>

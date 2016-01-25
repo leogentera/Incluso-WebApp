@@ -1,20 +1,21 @@
 <div class="incluso-app results-challenge" id="site-wrapper">
-  <div id="site-canvas">
     <article class="blueprint">
-      <div class="subtitle">Mis fortalezas</div>
+      <!--<div class="subtitle">Mis fortalezas</div>-->
+      <div class="subtitle text-uppercase" ng-bind="contentResources.multi_chall_title"></div>
       <section class="txt-renglon up-line">
         <h4>Escudo</h4>
-        <img src="assets/images/escudos/{{profile.shield}}.png" class="centered" />
+        <img src="assets/images/escudos/{{::profile.shield}}.png" class="centered" />
       </section>  
       <section class="txt-renglon up-line">
-        <h4>Fortalezas</h4>
+        <!--<h4>Fortalezas</h4>-->
+        <h4 ng-bind="contentResources.mul_cha_res_strengths_titl"></h4>
       </section>
-      <div id="item{{index}}" class="collapse-media" ng-repeat="a in fortalezas">
+      <div id="item{{::index}}" class="collapse-media" ng-repeat="a in fortalezas">
         <div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}" >      
           <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">        
-            <i class="icomoon icon-checked-join white"></i>{{a.name}}
+            <i class="icomoon icon-checked-join white"></i>{{::a.name}}
             <div>
-              <span>{{a.calificacion}}</span> 
+              <span>{{::a.calificacion}}</span> 
               <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
               <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
               <!--<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-up': !status.open}"></i>-->
@@ -26,16 +27,17 @@
       </div>
 
       <section class="txt-renglon up-line">
-        <h4>Inteligencias a fortalecer</h4>
+        <!--<h4>Inteligencias a fortalecer</h4>-->
+        <h4 ng-bind="contentResources.mul_cha_res_weakness"></h4>
       </section>
 
-      <div id="item{{index}}" class="collapse-media" ng-repeat="a in aFortalecer">
+      <div id="item{{::index}}" class="collapse-media" ng-repeat="a in aFortalecer">
 
         <div class="txt-renglon panel" ng-class="{'collapsed': isCollapsed}" >
           <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">          
-            <i class="icomoon icon-checked-join white"></i>{{a.name}} 
+            <i class="icomoon icon-checked-join white"></i>{{::a.name}} 
             <div>
-              <span>{{a.calificacion}}</span> 
+              <span>{{::a.calificacion}}</span> 
               <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
               <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
               <!--<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-up': !status.open}"></i>-->
@@ -45,8 +47,8 @@
         </div>
       </div>
 
-      <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>
+      <!--<button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="back()">Regresar</button>-->
+      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()" ng-bind="contentResources.mul_cha_res_back_button"></a>
     </article>
-  </div>
 </div>
   

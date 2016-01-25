@@ -1,12 +1,12 @@
-/* JS for navigation */
-
-
+/* Controller to handle navigation controls */
 var app = angular.module('inlcuso.shared.mainNavigation', ['ui.bootstrap']);
-
 app.controller('navController', function($scope){
+	
+	/* Shows left menu */
 	$scope.isNavCollapsed = true;	
 });
 
+/* Controller to handle navigation controls */
 app.controller('menuController', [
 	'$rootScope',
 	'$scope',
@@ -28,6 +28,7 @@ app.controller('menuController', [
         }; 
 }]);
  
+ /* Controller to handle navigation controls */
  app.controller('menuOffCanvas',[
  	'$scope',
  	'$location',

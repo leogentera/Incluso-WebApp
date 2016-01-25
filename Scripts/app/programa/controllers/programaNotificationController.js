@@ -24,7 +24,7 @@ angular
             $scope.notification = _.find(userNotifications, function(d){return d.id == $routeParams.id; });
             
             $scope.scrollToTop();
-            $scope.$emit('HidePreloader'); //hide preloader
+            $scope.$emit('HidePreloader');
 
             $scope.back = function () {
                 $location.path('/ProgramaDashboard');

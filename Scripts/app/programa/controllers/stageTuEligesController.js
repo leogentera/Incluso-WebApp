@@ -26,7 +26,7 @@ angular
 
             _setLocalStorageItem("tuEligesActivities", null);
 
-            $scope.user = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+            $scope.user = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.tuEligesActivities = moodleFactory.Services.GetCacheJson("tuEligesActivities");
             $scope.stars = 0;
@@ -57,7 +57,7 @@ angular
                                 $scope.tuEligesActivities = activity;
                                 assignCourseModuleId(false, tuEligesActivity.activities[i]);
                             }else{
-                                moodleFactory.Services.GetAsyncActivity(tuEligesActivity.activities[i].coursemoduleid, function(data){
+                                moodleFactory.Services.GetAsyncActivity(tuEligesActivity.activities[i].coursemoduleid, currentUser.token, function(data){
                                     $scope.tuEligesActivities = data;
                                     assignCourseModuleId(true, data);
                                 });
@@ -78,82 +78,89 @@ angular
 
             function createRequest () {
             	var request = {
-            		"userid": $scope.user.id,
+            		"userId": "" + $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": $scope.tuEligesActivities.name,
             		"pathImagenes": "",
-                    "estrellas":$scope.stars,
-                    "introduccion": $scope.tuEligesActivities.description,
-                    //TODO: Find a way to un-hardcode this.
+                    "estrellas": "" + $scope.stars,
+                    "introducción": $scope.tuEligesActivities.description,
                     "instrucciones":"Toma este reto y pon a prueba tu toma de decisiones. ¡Sólo tú decides el rumbo de tu vida!",
             		"preguntas": [],
-                    "retro_aprobado":(_.max($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
-                    "retro_regular":(_.find($scope.tuEligesActivities.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
-                    "retro_reprobado":(_.min($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
+                    "retroAprobado":(_.max($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
+                    "retroRegular":(_.find($scope.tuEligesActivities.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
+                    "retroReprobado":(_.min($scope.tuEligesActivities.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
             	}
+                $scope.questionMap = [];
             	for (var i = 0; i < $scope.tuEligesActivities.questions.length; i++) {
             		var currentQuestion = $scope.tuEligesActivities.questions[i];
+                    var questionMap = { "questionId": "" + currentQuestion.id, "orderId": "" + (i + 1), "answers": [] };
             		var question = {
-            			"orden": i + 1,
-            			"preguntaId": currentQuestion.id,
+            			"orden": "" + (i + 1),
+            			"preguntaId": "" + (i + 1),
             			"pregunta": currentQuestion.question,
             			"imagen":"imagen"+currentQuestion.id+".jpg",
                         "respuestas": [],
-                        "retro_resp_correcta":"",
-                        "retro_resp_incorrecta":""
+                        "retroRespCorrecta":"",
+                        "retroRespIncorrecta":""
             		}
             		for(var j = 0; j < currentQuestion.answers.length; j++){
             			var currentAnswer = currentQuestion.answers[j];
 	            		var answer = {
-	            			"respuestaId": currentAnswer.id,
+	            			"respuestaId": "" + (i * 3 + (j + 1)),
 	            			"respuesta": currentAnswer.answer,
                             "tipo": (currentAnswer.fraction == 0 ? "incorrecta" : "correcta")
 	            		}
+                        questionMap.answers.push({"answerId": "" + currentAnswer.id, "orderId": "" + (i * 3 + (j + 1))});
                         if (currentAnswer.fraction == 0) {
-                            question.retro_resp_incorrecta = currentAnswer.feedback;
+                            question.retroRespIncorrecta = currentAnswer.feedback;
                         }else{
-                            question.retro_resp_correcta = currentAnswer.feedback;
+                            question.retroRespCorrecta = currentAnswer.feedback;
                         }
 	            		question.respuestas.push(answer);
             		}
             		request.preguntas.push(question);
+                    $scope.questionMap.push(questionMap);
             	}
+                _setLocalStorageJsonItem("tuEligesQuestionMap", $scope.questionMap);
             	return request;
             }
 
             $scope.downloadGame = function () {
                 var r = createRequest();
+                
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
                 catch (e) {
                     successGame(
-                        { "userid":$scope.user.id,"actividad":"Tu Eliges","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":105,"respuestaId":469},{"preguntaId":104,"respuestaId":466},{"preguntaId":106,"respuestaId":473},{"preguntaId":107,"respuestaId":476},{"preguntaId":108,"respuestaId":479},{"preguntaId":109,"respuestaId":481},{"preguntaId":110,"respuestaId":484},{"preguntaId":111,"respuestaId":487}] }
+                        {"respuestas":[{"preguntaId":"1", "respuestaId":"2"}, {"preguntaId":"2", "respuestaId":"5"},{"preguntaId":"3", "respuestaId":"7"},{"preguntaId":"4", "respuestaId":"11"},{"preguntaId":"5", "respuestaId":"14"},{"preguntaId":"6", "respuestaId":"17"},{"preguntaId":"7", "respuestaId":"20"},{"preguntaId":"8", "respuestaId":"23"}],"userId":"645","actividad":"Tú Eliges", "duracion":"0", "fechaInicio":"2015-11-30 11:45:13","fechaFin":"2015-11-30 11:45:55","actividadCompleta":"Si", "calificación":"Aprobado", "gustaActividad":"Si"}
                     );
                 } 
             }
 
             function successGame(data){
-            	//asign answers to the questions
+                $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("tuEligesQuestionMap"));
             	var logEntry = {
             		"userid":$scope.user.id,
             		"answers": [],
             		"coursemoduleid": $scope.tuEligesActivities.coursemoduleid,
-            		"like_status": (data.gusta_actividad == "Si" ? 1 : 0 ),
-            		"startingTime": data.fecha_inicio,
-            		"endingTime": data.fecha_fin
+            		"like_status": (data.gustaActividad == "Si" ? 1 : 0 ),
+            		"startingTime": data.fechaInicio,
+            		"endingTime": data.fechaFin
             	};
             	for (var i = 0; i < data.respuestas.length; i++) {
+                    var questionMap = _.find($scope.questionMap, function(q){ return q.orderId == data.respuestas[i].preguntaId });
             		_.each($scope.tuEligesActivities.questions, function(q){
-            			if (q.id == data.respuestas[i].preguntaId) {
+            			if (q.id == questionMap.questionId) {
+                            var answerMap = _.find(questionMap.answers, function(a){ return a.orderId == data.respuestas[i].respuestaId});
             				q.userAnswer = data.respuestas[i].respuestaId;
-            				//finds index of answer to insert it into array of logentry
-            				var answerIndex = q.answers.getIndexBy("id", data.respuestas[i].respuestaId);
+            				var answerIndex = q.answers.getIndexBy("id", answerMap.answerId);
             				logEntry.answers.push(answerIndex);
             			}
             		});
             	}
-                var quiz_finished = (data.actividad_completa == "Si" ? true : false);
+
+                var quiz_finished = (data.actividadCompleta == "Si" ? true : false);
 
             	var questionsAnswered = _.countBy($scope.tuEligesActivities.questions, function(q) {
             		return (q.userAnswer && q.userAnswer != '' ? 'completed' : 'incompleted');
@@ -165,7 +172,6 @@ angular
                                     questionsAnswered.completed > 0 &&
                                     quiz_finished ;
 
-                //save response
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
                 var subactivitiesCompleted = [];
@@ -173,20 +179,39 @@ angular
 
                 subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
 
-                //It only ends activity once but saves all later attempts
                 if (parentActivity.status == 0) {
                     for (var i = 0; i < parentActivity.activities.length; i++) {
                         if(parentActivity.activities[i].status == 1 && i != 0){
                             activitiesCompleted++;
                         }
                     }
-                    //Checks if siblings activities are finished and ends parent activity
                     if ($scope.IsComplete && activitiesCompleted == parentActivity.activities.length - 1) {
                         parentActivity.status = 1;
                         _endActivity(parentActivity, function(){ });
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                         updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     }
+                }
+                if (data["calificación"] && data["calificación"] == "Reprobado") {
+                    $timeout(function(){
+                        $scope.isReprobado = true;
+                        _loadedResources = false;
+                        _pageLoaded = true;
+                        drupalFactory.Services.GetContent("TuEligesRobot", function (data, key) {
+                            _loadedResources = true;
+                            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                            var modalInstance = $modal.open({
+                                templateUrl: 'TuEligesModal.html',
+                                controller: 'stageTuEligesModalController',
+                                resolve: {
+                                    content: function () {
+                                        return data.node;
+                                    }
+                                },
+                                windowClass: 'closing-stage-modal user-help-modal'
+                            });
+                        }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+                    }, 1000);
                 }
                 if (parentActivity.activities) {
                     for (var i = 0; i < subactivitiesCompleted.length; i++) {
@@ -201,7 +226,6 @@ angular
 
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
-                //Update quiz on server
                 var results = {
                     "userid": currentUser.userId,
                     "answers": quiz.answers,
@@ -220,12 +244,23 @@ angular
                 };             
                 $scope.$emit('ShowPreloader');
                 _endActivity(activityModel, function(){
-                    $scope.$emit('HidePreloader');
-                    if ($scope.IsComplete) {
-                        $location.path('/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
-                    }else{
-                        $location.path('/ZonaDeNavegacion/Dashboard/2/3')
-                    };
+                    if ($routeParams.retry) {
+                        _forceUpdateConnectionStatus(function() {
+                            if (_isDeviceOnline) {
+                                moodleFactory.Services.ExecuteQueue();
+                            }
+                        }, function() {} );
+                    }
+                    $timeout(function(){
+                        $scope.$emit('HidePreloader');
+                        var url = "";
+                        if ($scope.IsComplete) {
+                            url = ($scope.isReprobado ? '/ZonaDeNavegacion/TuEliges/TuEliges/2012' : '/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
+                        }else{
+                            $location.path('/ZonaDeNavegacion/Dashboard/2/3')
+                        };
+                        $location.path(url);
+                    },1000);
                 });
             }
                 
@@ -237,22 +272,31 @@ angular
                 $location.path('/ZonaDeNavegacion/Dashboard/2/3');
             }
 
-            if($routeParams.retry){
-              try {
-                document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setTuEligesCallback", [])}, false);
-              }
-              catch (e) {
-                successGame(
-                    { "userid":$scope.user.id,"actividad":"T� Eliges","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":105,"respuestaId":469},{"preguntaId":104,"respuestaId":466},{"preguntaId":106,"respuestaId":473},{"preguntaId":107,"respuestaId":476},{"preguntaId":108,"respuestaId":479},{"preguntaId":109,"respuestaId":481},{"preguntaId":110,"respuestaId":484},{"preguntaId":111,"respuestaId":487}] }
-                );
-              }
+            Array.prototype.getIndexBy = function (name, value) {
+                for (var i = 0; i < this.length; i++) {
+                    if (this[i][name] == value) {
+                        return i;
+                    }
+                }
             }
             
-            Array.prototype.getIndexBy = function (name, value) {
-			    for (var i = 0; i < this.length; i++) {
-			        if (this[i][name] == value) {
-			            return i;
-			        }
-			    }
-			}
-        }]);
+
+            if($routeParams.retry){
+                _loadedDrupalResources = true;
+                try {
+                    document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setTuEligesCallback", [])}, false);
+                }
+                catch (e) {
+                    successGame(
+                        {"respuestas":[{"preguntaId":"1", "respuestaId":"2"}, {"preguntaId":"2", "respuestaId":"5"},{"preguntaId":"3", "respuestaId":"7"},{"preguntaId":"4", "respuestaId":"11"},{"preguntaId":"5", "respuestaId":"14"},{"preguntaId":"6", "respuestaId":"17"},{"preguntaId":"7", "respuestaId":"20"},{"preguntaId":"8", "respuestaId":"23"}],"userId":"645","actividad":"Tú Eliges", "duracion":"0", "fechaInicio":"2015-11-30 11:45:13","fechaFin":"2015-11-30 11:45:55","actividadCompleta":"Si", "calificación":"Regular", "gustaActividad":"Si"}
+                    );
+                }
+            }
+        }])
+        .controller('stageTuEligesModalController', function ($scope, $modalInstance, content) {
+            $scope.message = content.mensaje;
+            $scope.title = content.titulo;
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+        })

@@ -2,7 +2,7 @@
   <article class="blueprint forum">
     <section>
       <div class="txt-renglon centered txt-bigger"></div>
-      <div class="subtitle">{{discussion.name}}</div>
+      <div class="subtitle">{{::discussion.name}}</div>
       <div class="txt-renglon txt-bigger" ng-bind-html="discussion.message | linky"></div>
     </section>
 
@@ -11,7 +11,7 @@
         <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
           <h3>
             <span class="icomoon icon-camera"></span>
-        <span>{{discussion.attachments.length == 1 ? discussion.attachments[0].filename : "" }}</span>
+        <span>{{::discussion.attachments.length == 1 ? discussion.attachments[0].filename : "" }}</span>
             <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
             <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
           </h3>
@@ -19,7 +19,7 @@
         <div class="panel-body" collapse="isCollapsed">
           <div class="stage perform">
             <figure class="player">
-                <img src="{{ discussion.attachments[0].fileurl + '?token=' + userToken }}" alt="{{ discussion.attachments[0].filename }}" alt="discussion" />
+                <img src="{{:: discussion.attachments[0].fileurl + '?token=' + userToken }}" alt="{{:: discussion.attachments[0].filename }}" alt="discussion" />
             </figure>
           </div>
         </div>
@@ -49,7 +49,7 @@
       <div id="openModal1" class="modalDialog" collapse="forumModals['isTextCollapsed']">
         <div>    
           <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToPost"></textarea></div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()">Compartir</a>
+          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postTextToForum()" ng-disabled="!textToPost">Compartir</a>
         </div>
       </div>
       <div id="openModal2" class="modalDialog" collapse="forumModals['isLinkCollapsed']">
@@ -87,36 +87,51 @@
     </section>
 
     <section class="wall">
-      <div id="item{{$index}}" ng-repeat="p in posts">
+      <div id="item{{$index}}" ng-repeat="p in posts" ng-show="p.reported == 0">
         <div class="part post">
           <div class="author">
-            <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" /> 
-            <img ng-click="navigateTo('Profile/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
+            <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{::p.picture_post_author + '?token=' + userToken}}" alt="author" />
+            <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
             <div>
-              <a class="user-alias" ng-click="navigateTo('Profile/' + p.post_autor_id)">{{p.post_author}} </a>
+              <a class="user-alias" ng-click="navigateTo('Perfil/' + p.post_autor_id)">{{::p.post_author}} </a>
               <span>publicó:</span>
-              <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
+              <div>{{::p.created * 1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
             </div>
           </div>
           <div class="block">
-            <span ng-switch="p.post_type">
-              <span ng-switch-default>{{ p.message }}</span>
+            <div ng-switch="p.post_type">
+              <span ng-switch-default>{{:: p.message }}</span>
               <span ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></span>              
-              <span ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></span>
-              <span ng-switch-when="4"><a ng-href="{{p.fileurl + '?token=' + userToken}}"><img src="{{p.fileurl + '?token=' + userToken}}"  alt="post" /> </a></span>
-            </span>              
-            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> jóvenes les gusta esto
+              <span ng-switch-when="3"><a ng-href="{{::p.message}}"><span class="icomoon icon-video-file"></span></a></span>
+              <div ng-switch-when="4">
+                <p ng-bind="p.message"></p>
+                <div class="achievement-badge">
+                  <figure>
+                    <a ng-if="p.attachment.length > 1">
+                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
+                    <a ng-if="p.attachment.length == 1" href="{{::p.attachment[0].fileurl + '?token=' + userToken}}">
+                      <img src="{{::p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
+                  </figure>
+                    <a role="button" ng-click="goToGallery(p)" class="btn-gallery-detail {{::p.attachment.length == 1 ? '' : 'active'}}">
+                        <span class="icomoon icon-photo-gallery"></span>
+                    </a>
+                </div>
+              </div>
+            </div>              
+            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> <span ng-hide="p.likes < 2" >jóvenes les</span><span ng-hide="p.likes >= 2" >joven le</span>  gusta esto
             </div>
           </div>
           <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
             <div class="coment block">
-              <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" /> 
-              <img ng-click="navigateTo('Profile/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />              
+              <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{::r.picture_post_author + '?token=' + userToken}}" alt="author" />
+              <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
               <div>
-                <a class="user-alias" ng-click="navigateTo('Profile/' + r.post_autor_id)">{{r.post_author}} </a>
+                <a class="user-alias" ng-click="navigateTo('Perfil/' + r.post_autor_id)">{{::r.post_author}} </a>
                 <span>comentó:</span>
                 <!--<br> <span> <div> {{r.created *1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}} </div> </span>-->
-                <div>{{r.message}}</div>
+                <div>{{::r.message}}</div>
               </div>
             </div>
           </div>
@@ -139,6 +154,9 @@
             <div ng-click="isCommentModalCollapsed[$index] = !isCommentModalCollapsed[$index]">
               <span class="icomoon icon-comment"></span> Comentar              
             </div>
+            <div ng-click="reportModalClick(p)">
+              <span class="icomoon icon-pinch"></span> Reportar
+            </div>
           </div>
 
         </div>
@@ -149,9 +167,25 @@
                     <span class="close"></span>
                     <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
 
-                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" >Compartir</a>
+                    <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" ng-disabled="!replyText">Compartir</a>
                 </div>
             </div>
+            <div id="openModal5" class="modalDialog reportModal" ng-show="isReportedAbuseModalCollapsed['id' + p.post_id]">
+                <div>
+                  <a title="close" class="close"></a>
+                  <div class="add">¿Reportar contenido abusivo?</div>
+                  <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="reportPost(p.post_id)">Si</a>
+                  <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="isReportedAbuseModalCollapsed['id' + p.post_id] = false">No</a>
+                </div>
+              </div>
+              
+              <div id="openModal6" class="modalDialog reportModal" ng-show="isReportedAbuseSentModalCollapsed['id' + p.post_id]">
+                <div>
+                  <a title="close" class="close"></a>
+                  <div class="add">El contenido ha sido reportado exitosamente.</div>
+                  <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="isReportedAbuseSentModalCollapsed['id' + p.post_id] = false">Ok</a>
+                </div>
+              </div>
          </section>
       </div>
 
@@ -166,4 +200,18 @@
       </section>
     </section>
   </article>
+<script type="text/ng-template" id="badgeForumRobotMessageModal.html">
+        <div class="modal-robot robot-sm closing-stage-modal user-help" >
+            <img src="assets/images/img-robot-sm.svg" alt="robot" />
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                <p class="txt-renglon centered">{{actualMessage.message}}</p>
+            </div>
+        </div>
+    </script>
 </div>

@@ -1,60 +1,48 @@
 <div class="incluso-app use-terms experience-share">	
 	<article class="starway component">		
-		<h3 class="main-title text-left">Compartir experiencia</h3>
-			<p>Aquí podrás darnos tu testimonio de cómo te fue con tus proyectos.</p>
+		<h3 class="main-title text-left" ng-bind="contentResources.sec_title"></h3>
+			<p ng-bind="contentResources.sec_description"></p>
 		<div class="container">			
 			<section class="">
-				<h4>Mi testimonio</h4>
+				<h4 ng-bind="contentResources.sec_label1"></h4>
 				<div class="form-group theme-form">
 					<div class="form-group-control">
 						<div class="add">
                             <span class="icomoon icon-edit"></span>
                             <textarea 
-                                id="textoarea1" 
                                 class="form-control form-control-lg theme-form ng-pristine ng-valid ng-touched"
                                 row="2"
-                                name="opciones" 
-                                placeholder="Escribe aquí acerca de tu experiencia con Misión Incluso, todo lo que has logrado..." 
-                                ng-model="dreamsLists.answers[0][$index]" ng-readonly="setReadOnly">                                                
-                            </textarea>
+                                placeholder="{{contentResources.sec_label1_description}}"
+								ng-model="model.testimony"></textarea>
                         </div>
 					</div>
 				</div>
 			</section>
 
 			<section class="media-experience">
-				<h4>Fotografias</h4>
+				<h4 ng-bind="contentResources.sec_label2"></h4>
 				<ul class="media-list">
-					<li class="media-item">						
-						<figure class="">
+					<li class="media-item clearfix" ng-repeat="attachedImage in model.attachedImages">
+						<figure class="clearfix">
 							<caption>
-								<a class="btn btn-circle pull-right" ng-click="deleteSueno1($index)" ng-hide="setReadOnly">
+								<a class="btn btn-circle pull-right" ng-click="removeImage($index)">
                                 	<span class="icomoon icon-cross white"></span>
 	                            </a>
                             </caption>
-							<img src="assets/images/ptr-video-0001.jpg" alt="sample" />
-						</figure>
-					</li>
-					<li class="media-item">
-						<figure class="">
-							<caption>
-								<a class="btn btn-circle pull-right" ng-click="deleteSueno1($index)" ng-hide="setReadOnly">
-                                	<span class="icomoon icon-cross white"></span>
-	                            </a>
-                            </caption>
-							<img src="assets/images/ptr-video-0001.jpg" alt="sample" />
+							<img src="{{'data:image/' + attachedImage.fileExtension + ';base64,' + attachedImage.image}}" alt="attachedImage.fileName" />
 						</figure>
 					</li>
 				</ul>
-				<a class="btn btn-block btn-add" ng-click="addStudy();">
-					<span class="icomoon icon-plus"></span>Agregar nueva fotografía...
+				
+				<a class="btn btn-block btn-add" ng-click="attachImage()">
+					<span class="icomoon icon-plus"></span>{{contentResources.sec_btn_add_photo}}
 				</a>
 			</section>
 		
 			<div class="actions">
 				<div class="page-controls">													
-					<a type="button" class="btn btn-primary btn-lg btn-block" ng-click="save()">Compartir</a>
-					<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
+					<a type="button" class="btn btn-primary btn-lg btn-block" ng-click="shareToCommunity()" ng-show="hasCommunityAccess" ng-disabled="!hasCommunityAccess && (limitPhotoSize == 6)" ng-bind="contentResources.sec_btn_share | uppercase"></a>
+					<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateTo('/Dashboard')" ng-bind="contentResources.sec_btn_cancel"></a>
 				</div>
 				
 			</div>

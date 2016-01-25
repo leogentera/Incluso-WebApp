@@ -1,15 +1,64 @@
-//global variables
-
-var API_RESOURCE = " http://moodlemysql01.cloudapp.net/{0}";
-
+//global variables and functions
+//var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-2/RestfulAPI/public/{0}"; //Azure Development environment
+//var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
+//var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
+var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
+var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
 
 var _courseId = 4;
 var _endActivityCurrentChallenge = null;
 var _httpFactory = null;
 var _timeout = null;
 var _location = null;
-
+var _catalogsLoaded = null;
+var _isDeviceOnline = null;
+var _queuePaused = false;
 var _activityStatus = null;
+var _tutorial = false;
+
+/* Prototypes */
+window.mobilecheck = function() {
+  var check = false;
+  (function(a){if(/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(a)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(a.substr(0,4)))check = true})(navigator.userAgent||navigator.vendor||window.opera);
+  return check;
+}
+
+/* catalog keys from moodle */
+var _catalogNames = ["sports",
+    "arts",
+    "hobbiescatalog",
+    "talentscatalog",
+    "valuescatalog",
+    "habilitiescatalog",
+    "relativeOrTutor",
+    "activity",
+    "studiesLevel",
+    "studiesGrade",
+    "periodOfStudies",
+    "moneyInComecatalog",
+    "medicalInsurancecatalog",
+    "devices",
+    "phoneActivity",
+    "videogamesFrecuencycatalog",
+    "videogamesHourscatalog",
+    "kindOfVideogamescatalog",
+    "educationStatus",
+    "phoneType",
+    "socialNetworkType",
+    "kindOfCharacter",
+    "relationship",
+    "citiescatalog",
+    "secretquestion",
+    "country",
+    "maritalStatus",
+    "medicalCoverage",
+    "children",
+    "gotMoneyIncome",
+    "playVideogames",
+    "communityAccess",
+    "citiesCatalog",
+    "gender"
+];
 
 var _activityDependencies=[
     //Stage 1 dependencies
@@ -215,45 +264,29 @@ var _activityDependenciesLegacy = [
     }
 ];
 
-var _IsOffline = function () {
-    return false;
-};
-
-var _syncAll = function (callback) {
-    moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), callback, function() {} );
+var notificationTypes = {    
+    activityNotifications: 1,
+    generalNotifications: 2,
+    profileNotifications: 3,
+    progressNotifications: 4
 };
 
 var allServicesCallback = function () {
     _syncCallback();
 };
 
-var _setToken = function (token) {
-    $.ajaxSetup({
-        headers: {'Access_token': token.token}
-    });
-};
-
+/* save user id in cache */
 var _setId = function (userId) {
     _setLocalStorageItem("userId", userId);
 
 };
 
+/* get data from cache */
 var _getItem = function (key) {
     return localStorage.getItem(key);
 };
 
-var _readNotification = function (currentUserId, currentNotificationId) {
-
-    var data = {
-        userid: currentUserId,
-        notificationid: currentNotificationId
-    };
-
-    moodleFactory.Services.PutUserNotificationRead(currentNotificationId, data, function () {
-    }, function () {
-    });
-};
-
+/* save data in cache */
 var _setLocalStorageItem = function (key, value) {
     try {
         localStorage.setItem(key, value);
@@ -271,6 +304,7 @@ var _setLocalStorageItem = function (key, value) {
     }
 }
 
+/* save json data in cache */
 var _setLocalStorageJsonItem = function (key, object) {
     try {
         localStorage.setItem(key, JSON.stringify(object));
@@ -282,10 +316,7 @@ var _setLocalStorageJsonItem = function (key, object) {
     }
 }
 
-function syncCacheData() {
-
-}
-
+/* updates counter per discussion after posting in forums */
 function updatePostCounter(discussionid) {
     var course = moodleFactory.Services.GetCacheJson("course");
     var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
@@ -332,6 +363,7 @@ var updateActivityStatusDictionary = function (activityIdentifierId) {
     _loadActivityBlockStatus();
 };
 
+/* ends an activity */
 var _endActivity = function (activityModel, callback, pathCh) {
 
     //trigger activity type 2 is sent when the activity ends.
@@ -341,12 +373,9 @@ var _endActivity = function (activityModel, callback, pathCh) {
     var activityId = activityModel.coursemoduleid;
     callback = callback || successCallback;
     //create notification
-    _createNotification(activityId, triggerActivity);
+    _activityNotification(activityId, triggerActivity);
     if (activityModel.activityType == "Quiz") {
         _endActivityCurrentChallenge = pathCh;
-        //activityModel.answersResult.dateStart = activityModel.startingTime;
-        //activityModel.answersResult.dateEnd = activityModel.endingTime;
-        //activityModel.answersResult.others = activityModel.others;
         moodleFactory.Services.PutEndActivityQuizes(activityId, activityModel.answersResult, activityModel.usercourse, activityModel.token, callback, errorCallback);
     }
     else if (activityModel.activityType == "Assign") {
@@ -361,6 +390,7 @@ var _endActivity = function (activityModel, callback, pathCh) {
     }
 };
 
+/* callback from quiz request with status 200 */
 var successQuizCallback = function () {
     var currentStage = localStorage.getItem("currentStage");
 
@@ -369,13 +399,13 @@ var successQuizCallback = function () {
     }
 };
 
+/* convert community access value to bool */
 var _hasCommunityAccessLegacy = function(value) {
     return (value == "Enable" || value == "1");
 };
 
 //This function updates in localStorage the status of the stage when completed
 var _updateStageStatus = function () {
-    console.log("update stage status");
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));
     
     var stageCompleted = false;
@@ -418,6 +448,39 @@ var _tryCloseStage = function(stageIndex){
     return false;
 };
 
+/* assigns an award after finishing the course */
+var _tryAssignAward = function() {
+  
+  var userid = localStorage.getItem("userId");
+  var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
+  
+  // assign award
+  if (!user.awards.title) {
+      var awardData = {
+          "award": true,
+          "dataissued": moment().format("YYYY/MM/DD h:mm:ss")
+      };
+      moodleFactory.Services.PutAsyncAward(userid, awardData, function(){}, function(){});
+      
+      // update profile
+      var awards = _getAwards();
+      if (awards) {
+        
+        var stars = Number(user.stars);
+        
+        for (a = 0; a < awards.length; a++) {
+          var award = awards[a];
+          
+          if (stars >= award.min_points_range && stars <= award.max_points_range) {
+            user.awards.title = award.title;
+            localStorage.setItem("Perfil/" + userid, JSON.stringify(user));
+            break;
+          }
+        }
+      }
+  }
+};
+
 var _closeChallenge = function (stageId) {    
     var success = 0;
     var userCourse = JSON.parse(localStorage.getItem("usercourse"));    
@@ -443,7 +506,6 @@ var _closeChallenge = function (stageId) {
                 };
                 moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallback);
                 success = currentActivityModuleId;
-                console.log("challengeCompleted true");                    
                 return success;
             } else {
                success = 0;
@@ -456,10 +518,8 @@ var _closeChallenge = function (stageId) {
 }
 
 
-
-
 var _updateBadgeStatus = function (coursemoduleid) {      
-    var profile = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));    
+    var profile = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
     var badges = profile.badges;
     var activity = _getActivityByCourseModuleId(coursemoduleid);
     if (activity) {
@@ -469,20 +529,22 @@ var _updateBadgeStatus = function (coursemoduleid) {
           for (var indexBadge = 0; indexBadge < badges.length; indexBadge++) {
               if (badges[indexBadge].id == currentBadge.badgeId) {
                   profile.badges[indexBadge].status = "won";
-                  _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile);
+                  _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile);
               } else {
                   //This else statement is set to avoid errors on execution flows
               }
           }
-      } else {//This else statement is set to avoid errors while debugging in firefox
+      } else {
+        //This else statement is set to avoid errors while debugging in firefox
       }
     }else{          
+      //This else statement is set to avoid errors while debugging in firefox
     }    
 };
 
 var _updateRewardStatus = function () {
 
-    var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     console.log('Stars from rewards: ' + profile.stars);
     var totalRewards = profile.rewards;
     var profilePoints = profile.stars;
@@ -494,7 +556,7 @@ var _updateRewardStatus = function () {
             profile.rewards[i].dateIssued = new Date();
         }
     }
-    localStorage.setItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
+    localStorage.setItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), JSON.stringify(profile));
 }
 
 var logStartActivityAction = function(activityId, timeStamp) {
@@ -521,24 +583,23 @@ var logStartActivityAction = function(activityId, timeStamp) {
         moodleFactory.Services.PutStartActivity(data, treeActivity, currentUser.token, function (size) {
 
             var triggerActivity = 1;
-            _createNotification(treeActivity.coursemoduleid, triggerActivity);
+            _activityNotification(treeActivity.coursemoduleid, triggerActivity);
 
             if (_.find(_activitiesCabinaDeSoporte, function (id) { return activityId == id})) {
-                 console.log("global");
                 var key = "startedActivityCabinaDeSoporte/" + currentUser.id;
-                
                 if (localStorage.getItem(key) == null && !treeActivity.status && localStorage.getItem("finishCabinaSoporte/" + currentUser.id) == null) {
+                    moodleFactory.Services.GetServerDate(function(date){
                     _setLocalStorageJsonItem(key, {
-                        datestarted: getdate(),
+                        datestarted: date.time,
                         coursemoduleid: treeActivity.coursemoduleid,
                         activity_identifier: treeActivity.activity_identifier
                     });
                     
                     localStorage.removeItem("finishCabinaSoporte/" + currentUser.id);
+                    })                    
                 }
             }
             
-            console.log('logStartSctivityAction Is working from dashboard');
 
         }, function () {
             console.log('Error callback');
@@ -547,65 +608,66 @@ var logStartActivityAction = function(activityId, timeStamp) {
 }
 
 
-var _createNotification = function (activityId, triggerActivity) {
+var _activityNotification = function (courseModuleId, triggerActivity) {
 
     currentUserId = localStorage.getItem("userId");
 
     var allNotifications = JSON.parse(localStorage.getItem("notifications"));
 
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    var activity = _getActivityByCourseModuleId(courseModuleId, userCourse );
+    
+    if (activity && allNotifications) {
+      //code
+    
     for (var i = 0; i < allNotifications.length; i++) {
         var currentNotification = allNotifications[i];
-        if (currentNotification.trigger == triggerActivity && currentNotification.activityidnumber == activityId) {
-            allNotifications[i].timemodified = new Date();
-            _setLocalStorageJsonItem("notifications", allNotifications);
+          if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
+                          
+            var wonDate = new Date();                        
             var dataModelNotification = {
-                notificationid: allNotifications[i].id,
-                timemodified: new Date(),
+              notificationid : String(currentNotification.id),
                 userid: currentUserId,
-                already_read: 0
+              wondate : wonDate
             };
-            moodleFactory.Services.PostUserNoitifications(currentUserId, dataModelNotification, successCallback, errorCallback);
+  
+            allNotifications[i].wondate = wonDate;
+            allNotifications[i].status = "won"
+            localStorage.setItem("notifications",JSON.stringify(allNotifications));
+            
+            moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){              
+                console.log("create notification successful");
+            }, errorCallback, true);
+              
         } else {
+            
         }
+    }
     }
 };
 
 
 var _coachNotification = function (stageIndex) {
 
-    var activity_identifier = "";
-    switch(stageIndex)
-    {
-      case 0:
-        activity_identifier = "1002";
-        break;
-      case 1:
-        activity_identifier = "2022";
-        break;
-      case 2:
-        activity_identifier = "3501";
-        break;
-      default:
-        activity_identifier = "1002";
-        break;
-    }
-    
-
     var notifications = JSON.parse(localStorage.getItem("notifications"));
+    
     var userId = localStorage.getItem('userId');
+        
+    var stageId = stageIndex + 1;
+            
     var notificationCoach = _.find(notifications, function (notif) {
-        if ((notif.id == 4 && stageIndex == 0) || (notif.id == 8 && stageIndex == 1) || (notif.id == 12 && stageIndex == 2)) {
+        if (notif.type == notificationTypes.activityNotifications && notif.trigger_condition == 3 && notif.activityidnumber.substring(0,1) == stageId) {
             return notif;
-        } else {
-
         }
     });
 
-    if (notificationCoach && !notificationCoach.timemodified) {
-        var activity = getActivityByActivity_identifier(activity_identifier);
-        if ((activity)) {
+    if (notificationCoach && notificationCoach.status == "pending") {      
+        var activity = getActivityByActivity_identifier(notificationCoach.activityidnumber);
 
-            var triggerActivity = 3;
+                        
+        var notificationId = notificationCoach.id;
+        if ((activity)) {
             var chatUser = JSON.parse(localStorage.getItem("userChat"));
             if (chatUser && chatUser.length > 0) {
                 var lastChat = _.max(chatUser, function (chat) {
@@ -615,11 +677,32 @@ var _coachNotification = function (stageIndex) {
                 });
 
                 //'minutes'- 'days'
-                var lastDateChat = moment(new Date(lastChat.messagedate)).add(2, 'days');
+                var daysOfNoChat = notificationCoach.days;
+                var lastDateChat = moment(new Date(lastChat.messagedate)).add(daysOfNoChat, 'days');
 
                 var today = new Date();
                 if (lastDateChat < today) {
-                    _createNotification(activity.coursemoduleid, triggerActivity);
+                    //Create chat notification
+                    //moodleFactory.services.createNotification(userId,notificationId, function(){},function(){});
+                    var wonDate = new Date();
+                    var dataModelNotification = {
+                        notificationid : notificationId,
+                        userid: userId,
+                        wondate: wonDate
+                      };
+                                                             
+                    for (var i = 0; i< notifications.length; i++) {
+                      if (notifications[i].id == notificationId) {
+                          notifications[i].wondate = wonDate;
+                          notifications[i].status = "won";
+                      }
+                    }
+                    localStorage.setItem("notifications",JSON.stringify(notifications));
+            
+                    moodleFactory.Services.PostUserNotifications( dataModelNotification, function(){
+                        console.log("create notification successful");
+                      }, errorCallback,true);
+                    
                 } else {
                     return false;
                 }
@@ -629,48 +712,89 @@ var _coachNotification = function (stageIndex) {
 };
 
 
-var _generalNotification = function(){  
-    var notifications = JSON.parse(localStorage.getItem("notifications"));
-    var userId = localStorage.getItem('userId');
-    //trigger activity 4: general notification
-    var triggerActivity = 4;
+function updateUserStarsUsingExternalActivity(activity_identifier) {
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
+    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+    var activity = getExtActivityByActivity_identifier(activity_identifier);
+    //profile.stars = Number(profile.stars) +  Number(activity.points);
+    var data = {
+        userId: profile.id,
+        stars: activity.points,
+        instance: activity.coursemoduleid,
+        instanceType: 0,
+        date: getdate()
+    };
     
-    var notificationGeneral = _.filter(notifications, function (notif) {
-        if (notif.id == 13 || notif.id == 14 || notif.id == 15) {
-            return notif;
-        } else {
+    var userStars = JSON.parse(localStorage.getItem("userStars"));
+                                          
+    var localStorageStarsData = {
+        dateissued: moment(Date.now()).unix(),
+        instance: data.instance,
+        instance_type: data.instanceType,
+        message: "",
+        is_extra: false,
+        points: data.stars,
+        userid: parseInt(data.userId)
+    };
+    
+    userStars.push(localStorageStarsData);
+    
+    localStorage.setItem("userStars", JSON.stringify(userStars));
+    
+    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
         }
-    });
 
-    for(var i = 0; i <= notificationGeneral.length; i++)
-    {
-      if (notificationGeneral[i] && !notificationGeneral[i].timemodified) {                          
-          _createNotification(notificationGeneral[i].activityidnumber, triggerActivity);
+
+var _progressNotification = function(indexStageId, currentProgress){
+    
+    var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+    
+    var notifications = JSON.parse(localStorage.getItem("notifications"));
+    
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    var stageId = userCourse.stages[indexStageId].section;
+    
+    if(notifications){
+      
+      for(i = 0; i < notifications.length; i++){
+          var currentNotification = notifications[i];
+          
+          if (currentNotification.type == notificationTypes.progressNotifications && currentNotification.status != "won" && currentProgress >= currentNotification.progressmin
+              && currentProgress <= currentNotification.progressmax && stageId == currentNotification.stageid) {
+            
+              console.log("progress notification created" + currentNotification.name);
+              //Add create notification logic.
+              
+              var wonDate = new Date();
+              var dataModelNotification = {
+                notificationid : String(currentNotification.id),
+                userid: currentUser.id,
+                wondate : wonDate
+              };
+              
+              notifications[i].wondate = wonDate;
+              notifications[i].status = "won";
+              localStorage.setItem("notifications", JSON.stringify(notifications));
+    
+              moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
+                  console.log("progress notification created" + currentNotification.name);
+              }, errorCallback, true);            
       }
     }  
+}
 }
 
 var successPutStarsCallback = function (data) {
     _updateRewardStatus();
 };
 
-
+/* function to prevent broken code when calling a service */
 var successCallback = function (data) {
 };
 
+/* function to prevent broken code when calling a service */
 var errorCallback = function (data) {
-};
-
-var _notificationExists = function () {
-
-    var userNotifications = JSON.parse(localStorage.getItem('notifications'));
-    //var countNotificationsUnread = _.where(userNotifications, {read: false}).length;
-    var countNotificationsUnread = _.filter(userNotifications, function (notif) {
-        return (notif.timemodified != null && notif.read != true);
-    });
-    var totalNotifications = countNotificationsUnread.length;
-    return totalNotifications;
-
 };
 
 function getActivityByActivity_identifier(activity_identifier, usercourse) {
@@ -704,6 +828,50 @@ function getActivityByActivity_identifier(activity_identifier, usercourse) {
     }
     
     return matchingActivity;
+}
+
+function getActivityQuizModuleId(activity_identifier) {
+    var breakAll = false;
+    var courseModuleId = null;
+    var userCourse = JSON.parse(localStorage.getItem("usercourse"));
+    
+    for (var stageIndex = 0; stageIndex < userCourse.stages.length; stageIndex++) {
+        var stage = userCourse.stages[stageIndex];
+        
+        for (var challengeIndex = 0; challengeIndex < stage.challenges.length; challengeIndex++) {
+            var challenge = stage.challenges[challengeIndex];
+            
+            for (var activityIndex = 0; activityIndex < challenge.activities.length; activityIndex++) {
+                var activity = challenge.activities[activityIndex];
+                
+                if (parseInt(activity.activity_identifier) === parseInt(activity_identifier)) {
+                    courseModuleId = activity.coursemoduleid;
+                    breakAll = true;
+                    break;
+                }
+                
+                if(activity.activities != null) {
+                    
+                    for(var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {
+                        var subactivity = activity.activities[subactivityIndex];
+                        
+                        if (parseInt(subactivity.activity_identifier) === parseInt(activity_identifier)) {
+                            courseModuleId = subactivity.coursemoduleid;
+                            breakAll = true;
+                            break;
+                        }
+                    }
+                }
+                
+            }
+            if (breakAll)
+                break;
+        }
+        if (breakAll)
+            break;
+    }
+    
+    return courseModuleId;
 }
 
 function getChallengeByActivity_identifier(activity_identifier, usercourse) {
@@ -840,6 +1008,7 @@ function updateSubActivityStatus(coursemoduleid) {
                         var subactivity = activity.activities[subactivityIndex];
                         if (subactivity.coursemoduleid == coursemoduleid) {
                             subactivity.status = 1;
+                            subactivity.last_status_update = moment(Date.now()).unix();
                             breakAll = true;
                             break;
                         }
@@ -869,6 +1038,7 @@ function updateActivityStatus(activity_identifier) {
                 var activity = challenge.activities[activityIndex];
                 if (activity.activity_identifier == activity_identifier) {
                     activity.status = 1;
+                    activity.last_status_update = moment(Date.now()).unix();
                     updateActivityStatusDictionary(activity.activity_identifier);
                     breakAll = true;
                     break;
@@ -884,7 +1054,7 @@ function updateActivityStatus(activity_identifier) {
     return theUserCouerseUpdated;
 }
 
-function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
+function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseModuleId, firstActivityLock, isComplete) {
     firstActivityLock = (firstActivityLock === undefined ? true : firstActivityLock);
     var breakAll = false;
     var subactivitiesCompleted = 0;
@@ -899,14 +1069,16 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
                     if (activity.status == 1 && firstActivityLock) {
                         breakAll = true;
                         break;
-                    } else if(activity.activities.length == subactivitiesCourseModuleId.length || !firstActivityLock) {
+                    } else if(activity.activities.length  == subactivitiesCourseModuleId.length || !firstActivityLock || isComplete) {
                         activity.status = 1;
+                        activity.last_status_update = moment(Date.now()).unix();
                     }
                     for (var subactivityIndex = 0; subactivityIndex < activity.activities.length; subactivityIndex++) {
                         var subactivity = activity.activities[subactivityIndex];
                         for (var subactivityCourseModuleId = 0; subactivityCourseModuleId < subactivitiesCourseModuleId.length; subactivityCourseModuleId++) {
                             if (subactivity.coursemoduleid == subactivitiesCourseModuleId[subactivityCourseModuleId] && subactivity.status == 0) {
                                 subactivity.status = 1;
+                                subactivity.last_status_update = moment(Date.now()).unix();
                                 subactivitiesCompleted++;
                                 break;
                             }
@@ -931,7 +1103,7 @@ function updateMultipleSubActivityStatuses(parentActivity, subactivitiesCourseMo
 }
 
 function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModuleId, firstActivityLock) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var stars = 0;
     for (var i = 0; i < parentActivity.activities.length; i++) {
@@ -952,12 +1124,39 @@ function updateMultipleSubactivityStars(parentActivity, subactivitiesCourseModul
             instanceType: 0,
             date: getdate()
         };
-        moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){}, function(){});
-        _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"), profile)
+        
+        var userStars = JSON.parse(localStorage.getItem("userStars"));
+ 
+        var localStorageStarsData = {
+             dateissued: moment(Date.now()).unix(),
+             instance: data.instance,
+             instance_type: data.instanceType,
+             message: "",
+             is_extra: false,
+             points: data.stars,
+             userid: parseInt(data.userId)
+        };
+ 
+        userStars.push(localStorageStarsData);
+ 
+        localStorage.setItem("userStars", JSON.stringify(userStars));    
+        
+        moodleFactory.Services.PutStars(data, profile, currentUser.token, function(){
+          
+          
+                   
+          
+          }, function(){});
+        _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"), profile)
         _setLocalStorageJsonItem("CurrentUser", currentUser)
+        
+        
+        
+        
     }
 }
 
+/* gets total points from forum */
 var getForumExtraPointsCounter = function(discussionIds) {
     
     var course = moodleFactory.Services.GetCacheJson("course");
@@ -989,75 +1188,87 @@ var getForumExtraPointsCounter = function(discussionIds) {
     return tempDiscussions;
 };
 
-function updateUserStars(activityIdentifier, extraPoints, quizPoints) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+function updateUserStars(activityIdentifier, extraPoints) {
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
 
     extraPoints ? '' : extraPoints = 0;
-    quizPoints ? '' : quizPoints = 0;
 
     var stars = 0;
     if (extraPoints != 0) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
         stars = extraPoints;
     } else {
-
-        if (activityIdentifier == "2016") {
-            profile.stars = Number(profile.stars) + Number(activity.activities[0].points);
-        } else {
             profile.stars = Number(profile.stars) + Number(activity.points);
             stars = activity.points;
         }
-    }
 
     console.log("Profile stars = " + profile.stars);
     console.log("Forum stars to assign: " + stars);
 
     var data = {
         userId: profile.id,
-        stars: activityIdentifier == "2016" ? parseInt(activity.activities[0].points) + Number(extraPoints) : stars,
+        stars: stars,
         instance: activity.coursemoduleid,
         instanceType: 0,
         date: getdate()
     };
 
+    var userStars = JSON.parse(localStorage.getItem("userStars"));
+                        
+    var localStorageStarsData = {
+          dateissued : getdate(),
+          instance : data.instance,
+          instance_type: data.instanceType,
+          message: "",
+          is_extra: false,
+          points: data.stars,
+          userid: parseInt(data.userId)
+    };
+                        
+    userStars.push(localStorageStarsData);
+                        
+    localStorage.setItem("userStars", JSON.stringify(userStars));
+
     moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
 }
 
-function updateUserForumStars(activityIdentifier, extraPoints, callback) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+function updateUserForumStars(activityIdentifier, points, isExtra, callback) {
+    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
     var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
     var activity = getActivityByActivity_identifier(activityIdentifier);
     
-    profile.stars = Number(profile.stars) + Number(extraPoints);
+    profile.stars = Number(profile.stars) + Number(points);
 
     var data = {
         userId: profile.id,
-        stars: extraPoints,
+        stars: points,
         instance: activity.coursemoduleid,
         instanceType: 0,
-        date: getdate()
+        date: getdate(),
+        is_extra: isExtra
     };
+
+      var userStars = JSON.parse(localStorage.getItem("userStars"));
+
+      var localStorageStarsData = {
+             dateissued: moment(Date.now()).unix(),
+             instance: data.instance,
+             instance_type: data.instanceType,
+             message: "",
+             is_extra: isExtra,
+             points: data.stars,
+             userid: parseInt(data.userId)
+    };
+
+        userStars.push(localStorageStarsData);
+ 
+        localStorage.setItem("userStars", JSON.stringify(userStars)); 
+        
     moodleFactory.Services.PutStars(data, profile, currentUser.token, callback, errorCallback);
 }
 
-
-function updateUserStarsUsingExternalActivity(activity_identifier) {
-    var profile = JSON.parse(moodleFactory.Services.GetCacheObject("profile/" + moodleFactory.Services.GetCacheObject("userId")));
-    var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-    var activity = getExtActivityByActivity_identifier(activity_identifier);
-    //profile.stars = Number(profile.stars) +  Number(activity.points);
-    var data = {
-        userId: profile.id,
-        stars: activity.points,
-        instance: activity.coursemoduleid,
-        instanceType: 0,
-        date: getdate()
-    };
-
-    moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
-}
 
 function updateActivityManager(activityManager, coursemoduleid, activity_identifier) {
     var breakAll = false;
@@ -1102,6 +1313,7 @@ function getExtActivityByActivity_identifier(activity_identifier) {
     }
 }
 
+/* returns current date in a specific format */
 function getdate() {
     var date = new Date(),
         year = date.getFullYear(),
@@ -1118,11 +1330,13 @@ function getdate() {
     return year + ":" + month + ":" + day + " " + hour + ":" + minute + ":" + second;
 }
 
-syncCacheData();
 var logout = function ($scope, $location) {
     $scope.currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
 
-    if (!_IsOffline()) {
+    _forceUpdateConnectionStatus(function(){
+      
+      if (_isDeviceOnline) {
+
         _httpFactory(
             {
                 method: 'POST',
@@ -1139,6 +1353,16 @@ var logout = function ($scope, $location) {
             }
         );
     }
+    
+    }, function(){});
+
+    //Deleting objects from Quizes
+    ClearLocalStorage("answersQuiz/");
+    ClearLocalStorage("otherAnswerQuiz/");
+    ClearLocalStorage("activityObject/");
+    ClearLocalStorage("owlIndex");
+    ClearLocalStorage("activity");
+
     localStorage.removeItem("CurrentUser");    
     localStorage.removeItem("course");
     localStorage.removeItem("stage");
@@ -1154,17 +1378,24 @@ var logout = function ($scope, $location) {
     localStorage.removeItem("chatAmountRead");
     localStorage.removeItem("challengeMessageId");
     localStorage.removeItem("userCurrentStage");
+    localStorage.removeItem("halloffame");
+    localStorage.removeItem("citiescatalog");
     localStorage.removeItem("tuEligesActivities");
     localStorage.removeItem("reply");    
     localStorage.removeItem("mapaDeVidaActivities");
     localStorage.removeItem("starsToAssignedAfterFinishActivity");
+    localStorage.removeItem("userStars");
+    localStorage.removeItem("likesByUser");
+    ClearLocalStorage("termsAndConditions");
     ClearLocalStorage("activity");
+    ClearLocalStorage("drupal"); //If content must be refreshed every time user log in - TODO: Is better to not delete this info and create a process to uptated? 
     ClearLocalStorage("forum");
     ClearLocalStorage("discussion");
     ClearLocalStorage("activitiesCache");
     ClearLocalStorage("activityAnswers");
     ClearLocalStorage("album");    
     ClearLocalStorage("profile");
+    ClearLocalStorage("Perfil/");
     ClearLocalStorage("UserTalents");
     ClearLocalStorage("postcounter");
     ClearLocalStorage("currentDiscussionIds");
@@ -1186,34 +1417,27 @@ function ClearLocalStorage(startsWith) {
     });
 }
 
+/* play video from dashboard */
 playVideo = function (videoAddress, videoName) {
-    //var videoAddress = "assets/media";
-    //var videoName = "TutorialTest2.mp4";
-    cordova.exec(SuccessVideo, FailureVideo, "CallToAndroid", "PlayLocalVideo", [videoAddress, videoName]);
+    if (window.mobilecheck()) {
+        cordova.exec(function(){}, function(){}, "CallToAndroid", "PlayLocalVideo", [videoAddress, videoName]);
+    }
 };
-
-function SuccessVideo() {
-
-}
-
-function FailureVideo() {
-
-}
 
 var _badgesPerChallenge = [
     {badgeId: 2, badgeName: "Combustible", challengeId: 113, activity_identifier : "1100"},
     {badgeId: 3, badgeName: "Turbina C0N0-CT", challengeId: 114, activity_identifier : "1200"},
     {badgeId: 4, badgeName: "Ala Ctu-3000", challengeId: 115, activity_identifier : "1300"},
-    {badgeId: 5, badgeName: "Sistema de Navegación", challengeId: 116, activity_identifier : "1002"},
+    {badgeId: 5, badgeName: "Sistema de NavegaciÃ³n", challengeId: 116, activity_identifier : "1002"},
     {badgeId: 6, badgeName: "Propulsor", challengeId: 155, activity_identifier : "2003"},
     {badgeId: 7, badgeName: "Misiles", challengeId: 157, activity_identifier : "2005"},
-    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 81, activity_identifier : "2014"},
+    {badgeId: 8, badgeName: "Campo de fuerza", challengeId: 160, activity_identifier : "2010"},
     {badgeId: 9, badgeName: "Radar", challengeId: 167, activity_identifier : "2020"},
-    {badgeId: 18, badgeName: "Turbo", challengeId: 160, activity_identifier : "2010"},
-    {badgeId: 10, badgeName: "Tanque de oxígeno", challengeId: 206, activity_identifier : "3200"},
+    {badgeId: 18, badgeName: "Turbo", challengeId: 81, activity_identifier : "2014"},
+    {badgeId: 10, badgeName: "Tanque de oxÃ­geno", challengeId: 206, activity_identifier : "3200"},
     {badgeId: 16, badgeName: "Casco espacial", challengeId: 208, activity_identifier : "3300"},
     {badgeId: 11, badgeName: "Sonda espacial", challengeId: 90, activity_identifier : "3400"},
-    {badgeId: 17, badgeName: "Radio de comunicación", challengeId: 217, activity_identifier : "3500"}
+    {badgeId: 17, badgeName: "Radio de comunicaciÃ³n", challengeId: 217, activity_identifier : "3500"}
 ];
 
 //This array is a dictionary of activities and their route in the application
@@ -1316,7 +1540,6 @@ var _loadActivityBlockStatus = function () {
 
 //Helps defining if activity can be started
 var _canStartActivity = function(activityIdentifier){
-    console.log('canStartActivity');
 
     //If activity tree has not been loaded, return false.
     var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
@@ -1356,12 +1579,14 @@ var _canStartActivity = function(activityIdentifier){
     return true;
 };
 
+/* encodes html characters before saving post */
 function removeHtmlTag(value) {
     value = value.replace(/</g, '&lt;');
     value = value.replace(/>/g, '&gt;');
     return value;
 }
 
+/* decodes html characters before returning to forum page */
 function restoreHtmlTag(value) {
     value = value.replace(/&lt;/g, "<");
     value = value.replace(/&gt;/g, ">");
@@ -1372,14 +1597,10 @@ document.addEventListener("deviceready", onDeviceReady, false);
 
 function onDeviceReady() {
     // Register the event listener
-    document.addEventListener("backbutton", onBackKeyDown, false);
+    document.addEventListener("backbutton", function(){}, false);
 }
 
-// Handle the back button
-//
-function onBackKeyDown() {
-}
-
+/* Validates device version, update version if necessary */
 var _getDeviceVersionAsync = function() {
     
     var deviceVersion = JSON.parse(localStorage.getItem("device-version"));
@@ -1390,7 +1611,6 @@ var _getDeviceVersionAsync = function() {
         
         /* 60 minutes */
         if ((difTimeStamp / 60000) >= 60) {
-            console.log("ya pasaron 2 minutos... a actualizar");
             _updateDeviceVersionCache();
         }
     }else {
@@ -1398,6 +1618,7 @@ var _getDeviceVersionAsync = function() {
     }
 };
 
+/* Compares remote version against local version */
 var _compareSyncDeviceVersions = function() {
     var sync = false;
     
@@ -1407,9 +1628,9 @@ var _compareSyncDeviceVersions = function() {
         var localVSplit = deviceVersion.localVersion.split("."),
             remoteVSplit = deviceVersion.remoteVersion.split(".");
             
-        sync = Number(localVSplit[0]) === Number(remoteVSplit[0]) &&
-               Number(localVSplit[1]) === Number(remoteVSplit[1]) &&
-               Number(localVSplit[2]) === Number(remoteVSplit[2]);
+        sync = Number(localVSplit[0]) >= Number(remoteVSplit[0]) &&
+               Number(localVSplit[1]) >= Number(remoteVSplit[1]) &&
+               Number(localVSplit[2]) >= Number(remoteVSplit[2]);
     }else {
         sync = true;
     }
@@ -1434,10 +1655,10 @@ function _updateDeviceVersionCache () {
         deviceVersion.lastTimeUpdated = currentDate.getTime();
     }
     
-    if (cordova != null && typeof cordova.exec === "function") {
+    if (window.mobilecheck()) {
         if (!FLAG_DEVICE_VERSION_RUNNING) {
             FLAG_DEVICE_VERSION_RUNNING = true;
-            console.log("ejecutando device-version");
+            //console.log("ejecutando device-version");
             cordova.exec(function(data) {
                 deviceVersion.localVersion = data.currentVersion;
                 deviceVersion.remoteVersion = data.latestVersion;
@@ -1448,8 +1669,120 @@ function _updateDeviceVersionCache () {
     }
 }
 
+function _forceUpdateConnectionStatus(callback, errorIsOnlineCallback) {
+
+    if(window.mobilecheck()){
+        cordova.exec(function(data) {
+            _isDeviceOnline = data.online;
+
+            callback();
+        }, function() { errorIsOnlineCallback();}, "CallToAndroid", "isonline", []);
+    }
+    else{
+        _isDeviceOnline = true;
+        callback();
+    }
+}
+
+/* gets catalog values by key from moodle */
+var _getCatalogValuesBy = function (catalogName) {
+    
+    var catalogs = moodleFactory.Services.GetCacheJson("catalogs");
+    
+    if (catalogs) {
+        var catalog = _.filter(catalogs, function(c) { return c.type === "catalogs" && c.catalog === catalogName; });
+        return (catalog != null && catalog[0].values.length) > 0 ? catalog[0].values : [];
+    }else{
+        return [];
+    }
+};
+
+/* gets awards data */
+var _getAwards = function () {
+    
+    var catalogs = moodleFactory.Services.GetCacheJson("catalogs");
+    
+    if (catalogs) {
+        var awards = _.filter(catalogs, function(c) { return c.type === "award" });
+        return (awards != null && awards[0].values.length) > 0 ? awards[0].values : null;
+    }else{
+        return null;
+    }
+};
+
+var _updateConnectionStatus = function(sucessIsOnlineCallback, errorIsOnlineCallback) {
+    _forceUpdateConnectionStatus(sucessIsOnlineCallback, errorIsOnlineCallback);
+};
+
+/* loads drupal resources (content) */
+var _loadedDrupalResources = false;
+var _loadedDrupalResourcesWithErrors = false;
+var _loadDrupalResources = function() {
+    _loadedDrupalResources = false;
+    var propCounter = 0;
+    _loadedDrupalResources = false;
+    _loadedDrupalResourcesWithErrors = false;
+    
+    for (var prop in drupalFactory.NodeRelation) {
+        drupalFactory.Services.GetContent(prop, successDrupalResourcesCallback, errorDrupalResourcesCallback, true);
+    }
+    
+    function successDrupalResourcesCallback() {
+        propCounter++;
+        _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
+    }
+    
+    function errorDrupalResourcesCallback() {
+        propCounter++;
+        _loadedDrupalResources = propCounter === Object.keys(drupalFactory.NodeRelation).length;
+        _loadedDrupalResourcesWithErrors = true;
+    }
+}
+
+/* params:
+   images - array of objects { path, name, downloadLink }
+*/
+function saveLocalImages(images) {
+    
+    _forceUpdateConnectionStatus(function() {
+        
+        if(window.mobilecheck()) {
+        
+            if(images.length > 0) {
+                cordova.exec(function() {}, function(){}, "CallToAndroid", "downloadPictures", [JSON.stringify(images)]);
+            }
+        }
+        
+    }, function() {});
+    
+}
+
+function getImageOrDefault(localPath, imageUrl, getImageOrDefaultCallback) {
+    
+    if(window.mobilecheck()) {
+        cordova.exec(function(data) {
+            if(data.exists) {
+                getImageOrDefaultCallback(localPath);
+            } else {
+                getImageOrDefaultCallback("assets/avatar/default.png");
+            }
+
+        }, function(){}, "CallToAndroid", "fileExists", [localPath]);
+    } else {
+        getImageOrDefaultCallback(imageUrl);
+    }
+}
+
+/* Waits until page is loaded */
 $(document).ready(function(){
     setTimeout(function() {
     _updateDeviceVersionCache();
+
+    (function() {
+        /* Load catalogs */
+        var requestData = {"catalog": _catalogNames};
+        moodleFactory.Services.GetAsyncCatalogs(requestData, function(key, data) { _catalogsLoaded = true; }, function(){ _catalogsLoaded = false; }, true);
+    })();
+    
     }, 2000);
 });

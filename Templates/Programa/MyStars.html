@@ -1,12 +1,4 @@
 <div class="incluso-app content-page-theme my-stars score-dashboard" id="site-wrapper">
-<!--   <article>
-    <section class="component">
-      <h3>Mis estrellas</h3>
-
-      <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateTo('ProgramaDashboard', 'sideToggle')">Regresar</a> 
-    </section>
-  </article> -->
-
   <article class="starway">
 
   	<section class="score centered txt-bigger lightgreen">
@@ -29,24 +21,28 @@
   		</div>
   	</section>
 	<section class="starcontain">
-	  <div class="subtitle centered">Mis estrellas</div>
+	  <div class="subtitle centered">{{contentResources.my_stars_title}}</div>		
 	  <div class="part" ng-repeat="activity in activitiesCompleted" ng-show="qtyStarsByAcctivity()">
-		<div class="pull-left"><div class="date">{{activity.last_status_update * 1000| date :'dd MMMM yyyy - hh:mm a'}}</div>{{activity.sectionname}} : {{activity.activityname}}</div>
-    <div class="pull-right sm-pill"><span class="pull-left">{{activity.points}}&nbsp;&nbsp;</span><span class="icomoon icon-star pull-right"></span></div>
+		<div class="pull-left"><div class="date">{{activity.last_status_update * 1000| date :'dd MMMM yyyy - hh:mm a'}}</div>{{activity.sectionname | Capitalize}} : {{activity.activityname}}</div>
+    <div class="pull-right sm-pill">
+
+        <span class="pull-left">{{activity.points}}</span> <span class="icomoon icon-star pull-right"></span>
+
+        </div>
 	  </div>
 	  <div class="part showmore" ng-click="showMore()" ng-show="showLoadMoreBar()">
-  			<span class="icomoon  icon-show-more pull-right"></span> Mostrar más estrellas...
+  			<span class="icomoon  icon-show-more pull-right"></span> {{contentResources.more_button}}		  
   		</div>
 	</section>  	
   	<section class="starcontain" style="display:none">
-  		<div class="subtitle centered">Mis Recompensas</div>
+  		<div class="subtitle centered">{{contentResources.rewards_title}}</div>		
   		<div class="part" ng-repeat="reward in rewardsEarned" ng-show="qtyRewards()" ng-click="showRewardDetail(reward.id)">
   			<div class="pull-left"><div class="date">{{reward.dateIssued | date: 'fullDate'}}</div>{{reward.name}}</div>
   			<span class="icomoon icon-arrow-bold-right pull-right"></span>
   		</div>
   		
   		<div class="part showmore" ng-click="showMoreRewards()" ng-show="showMoreBarRewards()">
-  			<span class="icomoon  icon-show-more pull-right"></span> Mostrar más recompensas...
+  			<span class="icomoon  icon-show-more pull-right"></span> {{contentResources.more_rewards_button}}			
   		</div>
   	</section>
   </article>

@@ -11,9 +11,29 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             _httpFactory = $http;
             _timeout = $timeout;
+            
 
+            //Closing message content from drupal
+            var closingActivityId = $routeParams.activityId;
+            var stageClosingContent = "";
+            if(closingActivityId > 999 && closingActivityId < 2000)
+                stageClosingContent = "ZonaDeVueloClosing";
+            else if(closingActivityId > 1999 && closingActivityId < 3000)
+                stageClosingContent = "ZonaDeNavegacionClosing";
+            else
+                stageClosingContent = "ZonaDeAterrizajeClosing";
+            drupalFactory.Services.GetContent(stageClosingContent, function (data, key)
+            {
+                _loadedResources = true;
+                $scope.closingContent = data.node;
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+            }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+            //finish getting content
+            
             var userCourse = JSON.parse(localStorage.getItem('usercourse'));
             var parentActivity = getActivityByActivity_identifier($routeParams.activityId, userCourse);
             var activityFromTree;
@@ -25,18 +45,18 @@ angular
             }
 
             $scope.activityPoints = activityFromTree.points;
-            $scope.activityname = activityFromTree.activityname;
+            $scope.activityname = Number($routeParams.moodleId) == 148? "Foro Artístico": activityFromTree.activityname;
             $scope.like_status = 1;
             $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
 
-            $scope.$emit('HidePreloader');
+            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
 
             var endForumActivity = function(moodleid) {
-                console.log('Closing time: ' + moodleid);
                 $scope.$emit('ShowPreloader');
                 var activities = parentActivity.activities;
-
+                
                 parentActivity.status = 1;
+                parentActivity.last_status_update = moment(Date.now()).unix();
                 if (activities) {
                     for(var i = 0; i < activities.length; i++) {
                         activities[i].status = 1;
@@ -44,7 +64,6 @@ angular
                 }
                 _setLocalStorageJsonItem('usercourse', userCourse);
 
-                console.log('Finishing activity...');
                 var like_status = $scope.like_status;
 
                 var userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
@@ -86,7 +105,7 @@ angular
                 
                     moodleFactory.Services.PutEndActivity(parentActivity.coursemoduleid, data, parentActivity, userToken,
                       function(response){
-                            var profile = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+                            var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
                             var model = {
                                 userId: userId,
                                 stars: activityFromTree.points,
@@ -94,23 +113,40 @@ angular
                                 instanceType: 0,
                                 date: new Date()
                             };
-                            
-                            console.log("asignar estrellas por termino de actividad");
+                                                    
                             moodleFactory.Services.PutStars(model, profile, userToken, function() {
-                              updateActivityStatus($routeParams.activityId);
-                              _updateRewardStatus();
-  
+                                updateActivityStatus($routeParams.activityId);
+                                _updateRewardStatus();
+                                
                                 profile.stars = Number(profile.stars) + Number(activityFromTree.points);
-                                _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),profile);
+                                _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"),profile);
+                                
                                 $routeParams.activityId == 1049? moodleid =$routeParams.moodleId : moodleid = getMoodleIdFromTreeActivity($routeParams.activityId);
-                                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));
+                                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));                                                            
+                                
+                                var userStars = JSON.parse(localStorage.getItem("userStars"));
+                                                            
+                                var localStorageStarsData = {
+                                    dateissued: moment(Date.now()).unix(),
+                                    instance: model.instance,
+                                    instance_type: model.instanceType,
+                                    message: "",
+                                    is_extra: false,
+                                    points: model.stars,
+                                    userid: parseInt(model.userId)
+                                };
+                            
+                                userStars.push(localStorageStarsData);
+                                
+                                localStorage.setItem("userStars", JSON.stringify(userStars));
                                 
                                 var extraPoints = Number(moodleFactory.Services.GetCacheObject("starsToAssignedAfterFinishActivity"));
                                 
                                 if (extraPoints != 0) {
-                                    updateUserForumStars($routeParams.activityId, extraPoints, function (){
+
+                                    updateUserForumStars($routeParams.activityId, extraPoints,true, function (){
                                         successPutStarsCallback();
-                                        });
+                                    });
                                 }
                                 
                                 var course = moodleFactory.Services.GetCacheJson("course");
@@ -158,4 +194,4 @@ angular
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
-        });   
+        });  

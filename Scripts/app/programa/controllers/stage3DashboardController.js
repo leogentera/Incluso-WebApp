@@ -11,6 +11,8 @@ angular
         '$modal',
         '$filter',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $modal, $filter) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             /* $routeParams.stageId */
             _timeout = $timeout;
             _httpFactory = $http;
@@ -18,7 +20,7 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
             $scope.model = JSON.parse(localStorage.getItem("usercourse"));
             $scope.resetActivityBlockedStatus();//Copies last version of activity blocked status into model variable
-            $scope.setToolbar($location.$$path,"");
+            $scope.setToolbar($location.$$path, "");
 
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
@@ -35,6 +37,9 @@ angular
             $scope.nombreEtapaActual = $scope.thisStage.sectionname;
             _setLocalStorageItem("userCurrentStage", $routeParams['stageId']);
 
+            var activity_identifier = "1000";
+            getContentResources(activity_identifier);
+
             setTimeout(function () {
                 var hits = 1;
 
@@ -48,9 +53,9 @@ angular
                     goToFirstSpeed: 2000,
                     singleItem: true,
                     autoHeight: true,
-                    touchDrag:false,
-                    mouseDrag:false,
-                    transitionStyle:"fade",
+                    touchDrag: true,
+                    mouseDrag: false,
+                    transitionStyle: "fade",
                     afterMove: callback1
                 });
 
@@ -64,50 +69,52 @@ angular
                     goToFirstSpeed: 2000,
                     singleItem: true,
                     autoHeight: true,
-                    touchDrag:false,
-                    mouseDrag:false,
-                    transitionStyle:"fade",
+                    touchDrag: true,
+                    mouseDrag: false,
+                    transitionStyle: "fade",
                     afterMove: callback2
                 });
 
                 this.currentItem = $scope.idReto;
                 var currentItem;
                 owl.trigger("owl.goTo", $scope.idReto);
-                $("span#index").text(($scope.idReto+1));
+                $("span#index").text(($scope.idReto + 1));
 
                 owl2.trigger("owl.goTo", $scope.idReto);
-                $("span#index").text(($scope.idReto+1));
+                $("span#index").text(($scope.idReto + 1));
 
                 function callback1(event) {
                     var item = this.currentItem;
                     currentItem = parseInt(this.owl.currentItem);
                     owl2.trigger("owl.goTo", item);
-                    $("span#index").text((item+1));
+                    owl.trigger("owl.goTo", item);
+                    $("span#index").text((item + 1));
                 }
 
                 function callback2(event) {
                     item = this.currentItem;
                     owl.trigger("owl.goTo", item);
-                    $("span#index").text((item+1));
+                    owl2.trigger("owl.goTo", item);
+                    $("span#index").text((item + 1));
                 }
 
                 $("#prev").click(function (ev) {
-                    if(currentItem){
+                    if (currentItem) {
                         owl.trigger('owl.goTo', currentItem - 1);
                         owl2.trigger('owl.goTo', currentItem - 1);
                     }
-                    else{
+                    else {
                         owl.trigger('owl.prev');
                         owl2.trigger('owl.prev');
                     }
                     ev.preventDefault();
                 });
                 $("#next").click(function (ev) {
-                    if(currentItem){
+                    if (currentItem) {
                         owl.trigger('owl.goTo', currentItem + 1);
                         owl2.trigger('owl.goTo', currentItem + 1);
                     }
-                    else{
+                    else {
                         owl.trigger('owl.next');
                         owl2.trigger('owl.next');
                     }
@@ -126,7 +133,6 @@ angular
                     windowClass: 'user-help-modal dashboard-stage-intro'
                 });
             };
-
 
 
             $scope.openModal_CloseChallenge = function (size) {
@@ -151,70 +157,97 @@ angular
 
 
             //Updated stage first time flag in scope, local storage and server
-            $scope.updateStageFirstTime = function(){
+            $scope.updateStageFirstTime = function () {
                 //Update model
                 $scope.thisStage.firsttime = 0;
                 $scope.model.stages[$scope.idEtapa].firsttime = 0;
                 //Update local storage
                 var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
-                if(userCourse!={}) {
+                if (userCourse != {}) {
                     userCourse.stages[$scope.idEtapa].firsttime = 0;
-                    _setLocalStorageJsonItem("usercourse",userCourse);
+                    _setLocalStorageJsonItem("usercourse", userCourse);
                 }
                 //Update back-end
                 var dataModel = {
                     stages: [
                         {
-                            firstTime:0,
-                            section:$scope.thisStage.section
+                            firstTime: 0,
+                            section: $scope.thisStage.section
                         }
                     ]
                 };
 
-                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel,function(){},function(){});
+                moodleFactory.Services.PutAsyncFirstTimeInfo(_getItem("userId"), dataModel, function () {
+                }, function () {
+                });
 
             };
 
-            if($scope.thisStage.firsttime){
-                $scope.openModal_StageFirstTime();
-                $scope.updateStageFirstTime();
+            function loadController() {
+                var userid = localStorage.getItem("userId");
+                var user = JSON.parse(localStorage.getItem("Perfil/" + userid));
+
+                if ($scope.thisStage.firsttime) {
+                    $scope.openModal_StageFirstTime();
+                    $scope.updateStageFirstTime();
+                }
+
+                var challengeCompletedId = _closeChallenge($scope.idEtapa);
+
+                _coachNotification($scope.idEtapa);
+
+                //Exclude challenges initial and final from showing modal robot
+                var challengeExploracionInicial = 205;
+                var challengeExploracionFinal = 218;
+                if (challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)) {
+                    showClosingChallengeRobot(challengeCompletedId);
+                } else {
+                    localStorage.removeItem("challengeMessage");
+                }
+
+                //Try to close stage. If stage is closed exactly in this attempt, show closing message.
+                if (_tryCloseStage($scope.idEtapa)) {
+                    _tryAssignAward();
+                    $scope.openModal_CloseStage();
+
+                    var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
+                    moodleFactory.Services.PostGeolocation(3);
+                }
+
+                //Update progress
+                $scope.model = JSON.parse(localStorage.getItem("usercourse"));
+                var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
+                $scope.model = progress.course;
+                _setLocalStorageJsonItem("usercourse", $scope.model);
+
+                $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
+
+                _progressNotification($scope.idEtapa, $scope.stageProgress);
             }
 
-            var challengeCompletedId = _closeChallenge($scope.idEtapa);
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId, function (data, key) {
+                    _loadedResources = true;
+                    $scope.contentResources = data.node;
+                    loadController();
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
 
-            _coachNotification($scope.idEtapa);
-
-            //Exclude challenges initial and final from showing modal robot
-            var challengeExploracionInicial = 205;
-            var challengeExploracionFinal = 218;
-            if(challengeCompletedId && (challengeCompletedId != challengeExploracionInicial) && (challengeCompletedId != challengeExploracionFinal)){
-                _setLocalStorageItem("challengeMessageId",challengeCompletedId);
-                $scope.openModal_CloseChallenge();
-            }else{
-                _setLocalStorageItem("challengeMessageId",0);
+                }, function () {
+                    _loadedResources = true;
+                    if (_loadedResources && _pageLoaded) {
+                        $scope.$emit('HidePreloader');
+                    }
+                }, false);
             }
-
-            //Try to close stage. If stage is closed exactly in this attempt, show closing message.
-            if(_tryCloseStage($scope.idEtapa)){
-                $scope.openModal_CloseStage();
-            }
-
-            //Update progress
-            var userid = localStorage.getItem("userId");
-            var user = JSON.parse(localStorage.getItem("profile/" + userid));
-            $scope.model = JSON.parse(localStorage.getItem("usercourse"));
-            var progress = moodleFactory.Services.RefreshProgress($scope.model, user);
-            $scope.model = progress.course;            
-            _setLocalStorageJsonItem("usercourse", $scope.model);
-
-            $scope.stageProgress = $scope.model.stages[$scope.idEtapa].stageProgress;
 
             // this is the propper way, but since owl isn't part of angular framework, it is rendered afterwards angular finishes
-            $scope.$on('$viewContentLoaded', function() {
+            $scope.$on('$viewContentLoaded', function () {
                 //$scope.$emit('HidePreloader'); //hide preloader
             });
             // this is the dirty way to hide owl's carousel rendering process while user waits
-            $timeout(function() {
+            $timeout(function () {
                 $scope.$emit('HidePreloader'); //hide preloader
             }, 2000);
 
@@ -223,19 +256,24 @@ angular
             };
 
             $scope.startActivity = function (activity, index, parentIndex) {
-                if(_activityBlocked[activity.activity_identifier].disabled) return false;
-                var url = _.filter(_activityRoutes, function(x) { return x.id == activity.activity_identifier })[0].url;
+                if (_activityBlocked[activity.activity_identifier].disabled) return false;
+                var url = _.filter(_activityRoutes, function (x) {
+                    return x.id == activity.activity_identifier
+                })[0].url;
+
+                //Store an Index of the chosen menu item.
+                _setLocalStorageJsonItem("owlIndex", parentIndex);
 
                 if (url) {
-                    
+
                     if (_compareSyncDeviceVersions()) {
-						var activityId = activity.activity_identifier;
+                        var activityId = activity.activity_identifier;
                         var timeStamp = $filter('date')(new Date(), 'MM/dd/yyyy HH:mm:ss');
                         logStartActivityAction(activityId, timeStamp);
                         $location.path(url);
-					}else {
-						$scope.openUpdateAppModal();
-					}
+                    } else {
+                        $scope.openUpdateAppModal();
+                    }
                 }
             };
 
@@ -244,48 +282,58 @@ angular
                 return activity.status;
             };
 
-        }]).controller('closingStageThreeChallengeController', function ($scope, $modalInstance) {
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-    
-            var challengeMessageId = JSON.parse(localStorage.getItem("challengeMessageId"));
-    
-            $scope.robotMessages = [
+            function showClosingChallengeRobot(challengeCompletedId) {
+
+                $scope.robotMessages = [
                     {
-                        title : "CUARTO DE RECURSOS",
-                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Recuerda, un emprendedor ve oportunidades donde otros ven problemas.",                        
-                        read : "false",
-                        challengeId : 206},
+                        title: $scope.contentResources.robot_title_challenge_one,
+                        message: $scope.contentResources.robot_challenge_one,
+                        read: "false",
+                        challengeId: 206
+                    },
                     {
-                        title : "EDUCACI\u00D3N FINANCIERA",
-                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Est\u00E1s listo para conseguir lo que te propongas, ahorrar puede ayudarte a reunir los recursos que necesitas para lograrlo.",
-                        read : "false",
-                        challengeId : 208},
+                        title: $scope.contentResources.robot_title_challenge_two,
+                        message: $scope.contentResources.robot_challenge_two,
+                        read: "false",
+                        challengeId: 208
+                    },
                     {
-                        title : "MAPA DEL EMPRENDEDOR",
-                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! Todos podemos ser emprendedores, s\u00F3lo hace falta creer en nuestras ideas y tomar las acciones necesarias para hacerlas realidad.",
-                        read : "false",
-                        challengeId : 90},
+                        title: $scope.contentResources.robot_title_challenge_thre,
+                        message: $scope.contentResources.robot_challenge_three,
+                        read: "false",
+                        challengeId: 90
+                    },
                     {
-                        title : "CABINA DE SOPORTE",
-                        message : "!Ahora tienes una pieza m\u00E1s del equipo de exploraci\u00F3n! El mapa de tu idea de negocio esta completo, ya tienes todas las piezas para volverlo realidad, ahora s\u00F3lo depende de ti.",
-                        read : "false",
-                        challengeId : 217
+                        title: $scope.contentResources.robot_title_challenge_four,
+                        message: $scope.contentResources.robot_challenge_four,
+                        read: "false",
+                        challengeId: 217
                     }];
 
-        $scope.actualMessage = _.findWhere($scope.robotMessages,{read: "false", challengeId: challengeMessageId});
+                $scope.actualMessage = _.findWhere($scope.robotMessages, {read: "false", challengeId: challengeCompletedId});
+                if ($scope.actualMessage) {
+                    _setLocalStorageItem("challengeMessage", JSON.stringify($scope.actualMessage));
+                    $scope.openModal_CloseChallenge();
+                }
+            }
 
-    }).controller('closingStageThreeController', function ($scope, $modalInstance,$location) {
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
+        }]).controller('closingStageThreeChallengeController', function ($scope, $modalInstance) {
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
 
+    var challengeMessage = JSON.parse(localStorage.getItem("challengeMessage"));
 
+    $scope.actualMessage = challengeMessage;
 
-        $scope.navigateToDashboard = function () {
-            $modalInstance.dismiss('cancel');
-            $location.path('/ProgramaDashboard');
-        };
-        _setLocalStorageItem('robotEndStageThreeShown',true);
-    });
+}).controller('closingStageThreeController', function ($scope, $modalInstance, $location) {
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+    $scope.navigateToDashboard = function () {
+        $modalInstance.dismiss('cancel');
+        $location.path('/ProgramaDashboard');
+    };
+    _setLocalStorageItem('robotEndStageThreeShown', true);
+});

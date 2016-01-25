@@ -10,11 +10,25 @@ angular
         '$anchorScroll',
         '$modal',
         function ($scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
 
             _timeout = $timeout;
             _httpFactory = $http;
 
             $scope.$emit('ShowPreloader');
+
+            drupalFactory.Services.GetContent("3303", function (data, key) {
+                _loadedResources = true;
+                $scope.contentResources = data.node;
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+            }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+
+            drupalFactory.Services.GetContent("3303results", function (data, key) {
+                _loadedResources = true;
+                $scope.contentResourcesResult = data.node;
+            }, function () { _loadedResources = true; }, false);
+
             $scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
@@ -26,7 +40,7 @@ angular
 
             _setLocalStorageItem("multiplicaTuDineroActivities", null);
 
-            $scope.user = moodleFactory.Services.GetCacheJson("profile/" + moodleFactory.Services.GetCacheObject("userId"));
+            $scope.user = moodleFactory.Services.GetCacheJson("Perfil/" + moodleFactory.Services.GetCacheObject("userId"));
             $scope.activities = moodleFactory.Services.GetCacheJson("activityManagers");
             $scope.multiplicaTuDineroActivity = moodleFactory.Services.GetCacheJson("multiplicaTuDineroActivities");
             var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser")); 
@@ -39,15 +53,6 @@ angular
                 }
                 catch (e) {
                     $scope.isInstalled = true;
-                }
-            }else{
-                try {
-                    document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setMultiplicaTuDineroCallback", [])}, false);
-                }
-                catch (e) {
-                    successGame(
-                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuestaId":529},{"preguntaId":129,"respuestaId":534},{"preguntaId":130,"respuestaId":536},{"preguntaId":133,"respuestaId":545},{"preguntaId":137,"respuestaId":557},{"preguntaId":139,"respuestaId":563},{"preguntaId":140,"respuestaId":567},{"preguntaId":142,"respuestaId":573}]}
-                    );
                 }
             }
             if ($routeParams.moodleid) {
@@ -63,7 +68,7 @@ angular
                                 $scope.multiplicaTuDineroActivity = activity;
                                 assignCourseModuleId(false, multiplicaTuDinero.activities[i]);
                             }else{
-                                moodleFactory.Services.GetAsyncActivity(multiplicaTuDinero.activities[i].coursemoduleid, function(data){
+                                moodleFactory.Services.GetAsyncActivity(multiplicaTuDinero.activities[i].coursemoduleid, currentUser.token, function(data){
                                     $scope.multiplicaTuDineroActivity = data;
                                     assignCourseModuleId(true, data);
                                 })
@@ -84,78 +89,85 @@ angular
 
             function createRequest(){
                 var request = {
-                    "userid": $scope.user.id,
+                    "userId": "" + $scope.user.id,
                     "alias": $scope.user.username,
                     "actividad": "Multiplica tu dinero",
                     "estrellas": "" + $scope.stars,
                     "pathImagenes":"",
                     "preguntas": [],
                     "introducción": $scope.multiplicaTuDineroActivity.description,
-                    "retro_aprobado":(_.max($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
-                    "retro_regular":(_.find($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
-                    "retro_reprobado":(_.min($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
+                    "instrucciones": "Responde las siguientes preguntas, pon a prueba tus decisiones y conoce más acerca de cómo cuidar tus finanzas.",
+                    "retroAprobado":(_.max($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext,
+                    "retroRegular":(_.find($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.maxgrade == 5; })).feedbacktext,
+                    "retroReprobado":(_.min($scope.multiplicaTuDineroActivity.quiz_feedback, function(a){ return a.mingrade; })).feedbacktext
                 }
+                $scope.questionMap = [];
                 for (var i = 0; i < $scope.multiplicaTuDineroActivity.questions.length; i++) {
                     var currentQuestion = $scope.multiplicaTuDineroActivity.questions[i];
+                    var questionMap = { "questionId": "" + currentQuestion.id, "orderId": "" + (i + 1), "answers": [] };
                     var question = {
-                        "orden": i + 1,
-                        "preguntaId": currentQuestion.id,
+                        "orden": "" + (i + 1),
+                        "preguntaId": "" + (i + 1),
                         "pregunta": currentQuestion.question,
                         "imagen": currentQuestion.tag + ".jpg",
                         "respuestas":[],
-                        "retro_resp_correcta":"",
-                        "retro_resp_incorrecta":""
+                        "retroRespCorrecta":"",
+                        "retroRespIncorrecta":""
                     }
                     for(var j = 0; j < currentQuestion.answers.length; j++){
                         var currentAnswer = currentQuestion.answers[j];
                         var answer = {
-                            "respuestaId": currentAnswer.id,
+                            "respuestaId": "" + (i * 3 + (j + 1)),
                             "respuesta": currentAnswer.answer,
                             "tipo": (currentAnswer.fraction == 0 ? "incorrecta" : "correcta")
                         }
+                        questionMap.answers.push({"answerId": "" + currentAnswer.id, "orderId": "" + (i * 3 + (j + 1))});
                         question.respuestas.push(answer);
                         if (currentAnswer.fraction == 0) {
-                            question.retro_resp_incorrecta = currentAnswer.feedback;
+                            question.retroRespIncorrecta = currentAnswer.feedback;
                         }else{
-                            question.retro_resp_correcta = currentAnswer.feedback;
+                            question.retroRespCorrecta = currentAnswer.feedback;
                         }
                     }
                     request.preguntas.push(question);
+                    $scope.questionMap.push(questionMap);
                 }
+                _setLocalStorageJsonItem("multiplicaTuDineroQuestionMap", $scope.questionMap);
                 return request;
             }
 
             $scope.downloadGame = function () {
                 var r = createRequest();
-
                 try {
                   cordova.exec(successGame, failureGame, "CallToAndroid", "openApp", [r]);
                 }
                 catch (e) {
                     successGame(
-                        /*Completo*/ //{"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si", "calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuesta":529},{"preguntaId":128,"respuesta":532},{"preguntaId":129,"respuesta":534},{"preguntaId":130,"respuesta":536},{"preguntaId":131,"respuesta":540},{"preguntaId":132,"respuesta":543},{"preguntaId":133,"respuesta":545},{"preguntaId":134,"respuesta":550},{"preguntaId":135,"respuesta":552},{"preguntaId":136,"respuesta":555},{"preguntaId":137,"respuesta":557},{"preguntaId":138,"respuesta":560},{"preguntaId":139,"respuesta":563},{"preguntaId":140,"respuesta":567},{"preguntaId":141,"respuesta":570},{"preguntaId":142,"respuesta":573},{"preguntaId":143,"respuesta":576},{"preguntaId":144,"respuesta":579},{"preguntaId":145,"respuesta":581},{"preguntaId":146,"respuesta":584}]}
-                        /*8 respuestas*/ {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":127,"respuestaId":529},{"preguntaId":129,"respuestaId":534},{"preguntaId":130,"respuestaId":536},{"preguntaId":133,"respuestaId":545},{"preguntaId":137,"respuestaId":557},{"preguntaId":139,"respuestaId":563},{"preguntaId":140,"respuestaId":567},{"preguntaId":142,"respuestaId":573}]}
+                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificación":"Aprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":1,"respuestaId":2},{"preguntaId":2,"respuestaId":6},{"preguntaId":3,"respuestaId":8},{"preguntaId":4,"respuestaId":11},{"preguntaId":10,"respuestaId":29},{"preguntaId":11,"respuestaId":33},{"preguntaId":15,"respuestaId":44},{"preguntaId":18,"respuestaId":52}]}
                     );
                 }
             }
 
             function successGame(data){
-                //asign answers to the questions
+                $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("multiplicaTuDineroQuestionMap"));
                 var logEntry = {
                     "userid":$scope.user.id,
                     "answers": [],
                     "coursemoduleid": $scope.multiplicaTuDineroActivity.coursemoduleid,
-                    "like_status": (data.gusta_actividad == "Si" ? 1 : 0 ),
-                    "startingTime": data.fecha_inicio,
-                    "endingTime": data.fecha_fin
+                    "like_status": (data.gustaActividad == "Si" ? 1 : 0 ),
+                    "startingTime": data.fechaInicio,
+                    "endingTime": data.fechaFin
                 };
-                var quiz_finished = (data.actividad_completa == "Si" ? true : false);
+
+                var quiz_finished = (data.actividadCompleta == "Si" ? true : false);
                 for(var i = 0; i < $scope.multiplicaTuDineroActivity.questions.length; i++){
                     var activity = $scope.multiplicaTuDineroActivity.questions[i];
                     _.each(data.respuestas, function(a){
-                        if (a.preguntaId == activity.id) {
-                            activity.userAnswer = a.respuestaId;
-                            var answerIndex = activity.answers.getIndexBy("id", a.respuestaId);
+                        var questionMap = _.find($scope.questionMap, function(q){ return q.orderId == a.preguntaId });
+                        if (questionMap.questionId == activity.id) {
+                            var answerMap = _.find(questionMap.answers, function(answer){ return answer.orderId == a.respuestaId });
+                            activity.userAnswer = answerMap.answerId;
+                            var answerIndex = activity.answers.getIndexBy("id", answerMap.answerId);
                             logEntry.answers.push(answerIndex);
                         }
                     });
@@ -168,17 +180,13 @@ angular
                 });
 
                 $scope.IsComplete = $scope.multiplicaTuDineroActivity && 
-                                    questionsAnswered.completed == data.respuestas.length; //&&
-                                    //questionsAnswered.completed && 
-                                    //questionsAnswered.completed >= $scope.multiplicaTuDineroActivity.questions.length &&
-                                    //questionsAnswered.completed > 0 &&
-                                    //quiz_finished;
+                                    questionsAnswered.completed == data.respuestas.length;
 
-                //save response
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
                 var subactivitiesCompleted = [];
                 var activitiesCompleted = 0;
+                subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
                 if (parentActivity.status == 0) {
                     for (var i = 0; i < parentActivity.activities.length; i++) {
                         if(parentActivity.activities[i].status == 1 && i != 0){
@@ -190,11 +198,30 @@ angular
                         _endActivity(parentActivity, function(){ });
                         $scope.activities = updateActivityManager($scope.activities, parentActivity.coursemoduleid);
                     }
+                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
+                }
+                if (data["calificación"] && data["calificación"] == "Reprobado") {
+                    $timeout(function() {
+                        $scope.isReprobado = true;
+                        _loadedResources = false;
+                        _pageLoaded = true;
+                        drupalFactory.Services.GetContent("MultiplicaTuDineroRobot", function (data, key) {
+                            _loadedResources = true;
+                            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+                            var modalInstance = $modal.open({
+                                templateUrl: 'MultiplicaTuDineroModal.html',
+                                controller: 'stageMultiplicaTuDineroModalController',
+                                resolve: {
+                                    content: function () {
+                                        return data.node;
+                                    }
+                                },
+                                windowClass: 'closing-stage-modal user-help-modal'
+                            });
+                        }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+                    }, 1000);
                 }
                 if (parentActivity.activities) {
-                    //TODO: change for all activities in case there are other siblings completed
-                    subactivitiesCompleted.push(parentActivity.activities[0].coursemoduleid);
-                    updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                     for (var i = 0; i < subactivitiesCompleted.length; i++) {
                         $scope.activities = updateActivityManager($scope.activities, subactivitiesCompleted[i]);
                     };
@@ -206,7 +233,6 @@ angular
             }
 
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated) {
-                //Update quiz on server
                 var results = {
                     "userid": currentUser.userId,
                     "answers": quiz.answers,
@@ -225,8 +251,23 @@ angular
                 };  
                 $scope.$emit('ShowPreloader');          
                 _endActivity(activityModel, function(){
-                    $scope.$emit('HidePreloader');
-                    $location.path('/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero');
+                    if ($routeParams.retry) {
+                        _forceUpdateConnectionStatus(function() {
+                            if (_isDeviceOnline) {
+                                moodleFactory.Services.ExecuteQueue();
+                            }
+                        }, function() {} );
+                    }
+                    $timeout(function(){
+                        $scope.$emit('HidePreloader');
+                        var url = "";
+                        if ($scope.IsComplete) {
+                            url = ($scope.isReprobado ? '/ZonaDeAterrizaje/EducacionFinanciera/MultiplicaTuDinero/3302' : '/ZonaDeAterrizaje/EducacionFinanciera/ResultadosMultiplicaTuDinero');
+                        }else{
+                            url = '/ZonaDeAterrizaje/Dashboard/3/2';
+                        };
+                        $location.path(url);
+                    }, 1000);
                 });
             }
 
@@ -245,5 +286,25 @@ angular
                     }
                 }
             }
+            
 
-        }]);
+            if ($routeParams.retry){
+                _loadedDrupalResources = true;
+                try {
+                    document.addEventListener("deviceready",  function() { cordova.exec(successGame, failureGame, "CallToAndroid", "setMultiplicaTuDineroCallback", [])}, false);
+                }
+                catch (e) {
+                    successGame(
+                        {"userid":2,"pathImagenes":"","actividad":"Multiplica tu dinero","duracion":"5","fecha_inicio":"2015-07-15 14:23:12","fecha_fin":"2015-07-15  14:28:12","actividad_completa":"Si","calificacion":"Reprobado","gusta_actividad":"Si","respuestas":[{"preguntaId":1,"respuestaId":2},{"preguntaId":2,"respuestaId":6},{"preguntaId":3,"respuestaId":8},{"preguntaId":4,"respuestaId":11},{"preguntaId":10,"respuestaId":29},{"preguntaId":11,"respuestaId":33},{"preguntaId":15,"respuestaId":44},{"preguntaId":18,"respuestaId":52}]}
+                    );
+                }
+            }
+
+        }])
+        .controller('stageMultiplicaTuDineroModalController', function ($scope, $modalInstance, content) {
+            $scope.message = content.mensaje;
+            $scope.title = content.titulo;
+            $scope.cancel = function () {
+              $modalInstance.dismiss('cancel');
+            };
+        });

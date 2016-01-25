@@ -2,12 +2,21 @@
     namespace('moodleFactory');
 
     moodleFactory.Services = (function () {
-        var _getAsyncProfile = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("profile/" + userId, API_RESOURCE.format('user/' + userId), successCallback, errorCallback, forceRefresh);
+
+        var _getAsyncProfile = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("Perfil/" + userId, API_RESOURCE.format('user/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putAsyncProfile = function (userId, data, successCallback, errorCallback, forceRefresh) {
-            _putAsyncData("profile/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
+            _putAsyncData("Perfil/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
+        };
+
+        var _putAsyncAcceptTermsAndConditions = function (userId, data, successCallback, errorCallback, forceRefresh){
+            _putAsyncData("termsAndConditions/" + userId, data, API_RESOURCE.format('user/' + userId), successCallback, errorCallback);
+        };
+        
+        var _putAsyncAward = function (userId, data, successCallback, errorCallback) {
+            _putAsyncData("usercourseaward", data, API_RESOURCE.format('usercourse/' + userId), successCallback, errorCallback);
         };
 
         var _getAsyncUserCourse = function (userId, successCallback, errorCallback, forceRefresh) {
@@ -15,24 +24,24 @@
             _getCourseAsyncData("course", API_RESOURCE.format('course/' + userId), successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncAvatarInfo = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("avatarInfo", API_RESOURCE.format('avatar/' + userId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncAvatarInfo = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("avatarInfo", API_RESOURCE.format('avatar/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncActivityInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivitiesEnergy = function (activityArray, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("activity/" + activityArray, API_RESOURCE.format('activity?' + activityArray), successCallback, errorCallback, forceRefresh);
+        var _getAsyncActivitiesEnergy = function (activityArray, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("activity/" + activityArray, API_RESOURCE.format('activity?' + activityArray), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _getAsyncForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
             _getForumAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
         
-        var _getAsyncForumDiscussions = function (coursemoduleid, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), successCallback, errorCallback, forceRefresh);
+        var _getAsyncForumDiscussions = function (coursemoduleid, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("forum/" + coursemoduleid, API_RESOURCE.format('forum/' + coursemoduleid), token, successCallback, errorCallback, forceRefresh);
         };
         
         var _getAsyncUserPostCounter = function(token, courseId, successCallback, errorCallback, forceRefresh) {
@@ -53,58 +62,77 @@
             _putAsyncData("activity", API_RESOURCE.format('activityId' + activityId + '/user/' + userId), successCallback, errorCallback);
         };
 
-        var _getAsyncActivitiesInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncActivitiesInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("activities/" + activityId, API_RESOURCE.format('activities/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _getAsyncActivityQuizInfo = function (activityId, userId, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncActivityQuizInfo = function (activityId, userId, token, successCallback, errorCallback, forceRefresh) {
             if (userId != -1) {
-                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId + '?userid=' + userId), successCallback, errorCallback, forceRefresh);
+                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId + '?userid=' + userId), token, successCallback, errorCallback, forceRefresh);
             }
             else {
-                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
+                _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
             }
         };
+        
+        var _postBadgeToUser = function(userId,badgeModel,successCallback,errroCallback){
+                        
+            _putAsyncData("badges", badgeModel, API_RESOURCE.format('badges/' + userId), successCallback, errorCallback);            
+        };
 
-        var _getAsyncActivityForumInfo = function (activityId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncActivityForumInfo = function (activityId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("activity/" + activityId, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _getAsyncCourse = function (courseId, successCallback, errorCallback, forceRefresh) {
             successCallback();
         };
 
-        var _getAsyncLeaderboard = function (courseId, successCallback, errorCallback, forceRefresh) {
-            successCallback();
-            _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncLeaderboard = function (courseId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("leaderboard", API_RESOURCE.format('leaderboard/' + courseId), token, successCallback, errorCallback, forceRefresh);
         };
+
+        var _getAsyncHallOfFame = function (courseId,city,token,successCallback,errorCallback,forceRefresh){
+            var url = 'leaderboard/{0}?type=1'.format(courseId);
+            if(city != "Ver Todo")
+                url = url + "&city=" + city;
+            _getAsyncData("halloffame", API_RESOURCE.format(url), token, successCallback, errorCallback,forceRefresh);
+        }
+
+        var _getAsyncCatalogs = function(data, succesCb, errorCb, forceRefresh) {
+            _postAsyncCatalogs("catalogs", data, API_RESOURCE.format('catalog'), succesCb, errorCb);
+        };
+
+        var _getAsyncCatalog = function (catalogname,token,successCallback,errorCallback,forceRefresh) {
+            _getAsyncData(catalogname,API_RESOURCE.format('catalog?catalogname='+catalogname),token,successCallback,errorCallback,forceRefresh);
+        }
 
         var _putAsyncQuiz = function (activityId, data, successCallback, errorCallback, forceRefresh) {
             _putAsyncData("activity/" + activityId, data, API_RESOURCE.format('activity/' + activityId), successCallback, errorCallback);
         };
 
-        var _getUserNotifications = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("notifications", API_RESOURCE.format('notification/' + userId), successCallback, errorCallback, forceRefresh);
+        var _getUserNotifications = function (userId, courseId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("notifications", API_RESOURCE.format('notification/' + userId + '?courseid=' + courseId), token, successCallback, errorCallback, forceRefresh);
         };
 
-        var _postUserNotifications = function (userId, data, successCallback, errorCallback, forceRefresh) {
-            _postAsyncData(null, data, API_RESOURCE.format('notification'), successCallback, errorCallback);
+        var _postUserNotifications = function ( data, successCallback, errorCallback, forceRefresh) {
+            _postAsyncData("", data, API_RESOURCE.format('notification'), successCallback, errorCallback);
         };
 
-        var _postAsyncForumPost = function (key, data, successCallback, errorCallback, forceRefresh) {
-            _postAsyncForumPostData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback);
+        var _postAsyncForumPost = function (key, data, successCallback, errorCallback, addToQueue, updatePostCounter) {
+            _postAsyncForumPostData(key, data, API_RESOURCE.format('forum'), successCallback, errorCallback, updatePostCounter, addToQueue);
         };
         
         var _postAsyncReportAbuse = function (key, data, successCallback, errorCallback, forceRefresh) {
             _postAsyncData(key, data, API_RESOURCE.format('reportabuse'), successCallback, errorCallback);
         };
 
-        var _putUserNotificationRead = function (notificationId, data, successCallback, errorCallback, forceRefresh) {
-            _putAsyncData(null, data, API_RESOURCE.format('notification/') + notificationId, successCallback, errorCallback);
+        var _putUserNotificationRead = function (userId, data, successCallback, errorCallback, forceRefresh) {
+            _putAsyncData(null, data, API_RESOURCE.format('notification/') + userId, successCallback, errorCallback);
         };
 
-        var _getUserChat = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId), successCallback, errorCallback, forceRefresh);
+        var _getUserChat = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("userChat", API_RESOURCE.format('messaging/' + userId), token, successCallback, errorCallback, forceRefresh);
         };
 
         var _putUserChat = function (userId, data, successCallback, errorCallback) {
@@ -113,7 +141,7 @@
 
         var _assignStars = function (data, profile, token, successCallback, errorCallback, forceRefresh) {
 
-            _putAsyncStars("profile/" + data.userId, data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
+            _putAsyncStars("Perfil/" + data.userId, data, profile, API_RESOURCE.format('stars/' + data.userId), token, successCallback, errorCallback);
         };
 
         var _putEndActivity = function (activityId, data, activityModel, token, successCallback, errorCallback) {
@@ -121,21 +149,48 @@
 
         };
 
+        var _postAsyncAvatar = function (data, successCallback, errorCallback){
+            _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
+        }
+
         var _putEndActivityQuizes = function (activityId, data, userCourseModel, token, successCallback, errorCallback, forceRefresh) {
             _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
-
-        };
+        };                
 
         var _putForumPostLikeNoCache = function (postId, data, successCallback, errorCallback) {
             _putDataNoCache(data, API_RESOURCE.format('forum/' + postId), successCallback, errorCallback);
         };
 
-        var _getAsyncAlbum = function (userId, successCallback, errorCallback, forceRefresh) {
-            _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), successCallback, errorCallback, forceRefresh);
+        var _getAsyncAlbum = function (userId, token, successCallback, errorCallback, forceRefresh) {
+            _getAsyncData("album", API_RESOURCE.format('albumincluso/' + userId), token, successCallback, errorCallback, forceRefresh);
+        };
+        
+        var _postCommentActivity = function(activityId,data,successCallback,errorCallback){
+            _postAsyncCommentToActivity('activityComment/' + activityId,data, API_RESOURCE.format('comment'), successCallback, errorCallback );
+        };
+        
+        var _getCommentByActivity = function(activityId, first,since,to,count, token,successCallback, errorCallback){
+            
+            var url = 'comment/{0}?first={1}&since={2}&to={3}&count={4}'.format(activityId,first,since,to,count);
+            _getAsyncData('comment', API_RESOURCE.format(url), token, successCallback, errorCallback,true);
         };
 
-        var _getAsyncStars = function(userId, successCallback, errorCallback, forceRefresh){
-            _getAsyncData("userStars", API_RESOURCE.format('stars/'+ userId),successCallback, errorCallback, forceRefresh);
+        var _getAsyncStars = function(userId, token, successCallback, errorCallback, forceRefresh){            
+            _getAsyncData("userStars", API_RESOURCE.format('stars/'+ userId), token, successCallback, errorCallback, forceRefresh);
+        };
+        
+        var _countLikesByUser = function(courseId, token, successCallback, errorCallback, forceRefresh){
+            _getAsyncData("likesByUser", API_RESOURCE.format('postcounter/'+ courseId + '?likes=true'), token, successCallback, errorCallback, forceRefresh);
+        };
+
+        var _getServerDate = function(successCallback){
+            _httpFactory({
+                    method: 'GET',
+                    url: API_RESOURCE.format('date'),
+                    headers: { 'Content-Type': 'application/json'}
+                }).success(function (data) {                                        
+                    successCallback(data);
+                });            
         };
         
         var _getCacheObject = function (key) {
@@ -151,26 +206,66 @@
             }
         };
 
-        var _getAsyncData = function (key, url, successCallback, errorCallback, forceRefresh) {
+        var _getAsyncData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
             _getDeviceVersionAsync();
-            
             var returnValue = (forceRefresh) ? null : _getCacheJson(key);
 
             if (returnValue) {
                 _timeout(function () { successCallback(returnValue, key) }, 1000);
                 return returnValue;
             }
+            else if(forceRefresh){
+                if (token) {
+                    _httpFactory({
+                        method: 'GET',
+                        url: url,
+                        headers: { 'Content-Type': 'application/json' , 'Authorization': token}
+                    }).success(function (data, status, headers, config) {
+                        _setLocalStorageJsonItem(key, data);
+                        successCallback(data, key);
+                    }).error(function (data, status, headers, config) {
+                        errorCallback(data);
+                    });            
+                }else{
+                    _httpFactory({
+                        method: 'GET',
+                        url: url,
+                        headers: { 'Content-Type': 'application/json'}
+                    }).success(function (data, status, headers, config) {
+                        _setLocalStorageJsonItem(key, data);
+                        successCallback(data, key);
+                    }).error(function (data, status, headers, config) {
+                        errorCallback(data);
+                    });                                 
+                } 
+            }
+            else{                
+                if(token){
+                    addRequestToQueue(key, {
+                        type: "httpRequest",
+                        data: {
+                            method: 'GET',
+                            url: url,
+                            headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                        }
+                    });
+                }
+                else{
+                    addRequestToQueue(key, {
+                        type: "httpRequest",
+                        data: {
+                            method: 'GET',
+                            url: url,
+                            headers: { 'Content-Type': 'application/json'}
+                        }
+                    });   
+                }
 
-            _httpFactory({
-                method: 'GET',
-                url: url,
-                headers: { 'Content-Type': 'application/json' }
-            }).success(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key, data);
-                successCallback(data, key);
-            }).error(function (data, status, headers, config) {
-                errorCallback(data);
-            });
+                if(successCallback){
+                    successCallback(); 
+                }
+            } 
+                        
         };
         
         var _getAsyncForumDiscussionsData = function (key, url, token, successCallback, errorCallback, forceRefresh) {
@@ -232,11 +327,12 @@
                 _timeout(function () { successCallback(returnValue, key) }, 1000);
                 return returnValue;
             }
-
+            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             _httpFactory({
                 method: 'GET',
                 url: url,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                            'Authorization': currentUser.token }
             }).success(function (data, status, headers, config) {
                 createTree(data);
                 successCallback();
@@ -245,33 +341,59 @@
             });
         };
 
-        var _postAsyncData = function (key, data, url, successCallback, errorCallback) {
+        var _postAsyncData = function (key, data, url, successCb, errorCb) {
             _getDeviceVersionAsync();
+            
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             
             _httpFactory({
                 method: 'POST',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                           'Authorization': currentUser.token },
             }).success(function (data, status, headers, config) {
-                console.log('success');
-                
+
                 if (key != null) {
                     _setLocalStorageJsonItem(key,data);
                 }
                 
-                successCallback();
+                if (typeof successCb === "function") {
+                    successCb(key, data);
+                }else{
+                    successCallback(key, data);
+                }
+                
             }).error(function (data, status, headers, config) {
-                console.log(data);
-                _setLocalStorageJsonItem(key,data);
+
+                if (typeof errorCb === "function") {
+                    errorCb();
+                }else {
+                    errorCallback();
+                }
+            });
+        };
+
+        var _postAsyncCommentToActivity = function(key,data,url,successCallback,errorCallback){
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+          _httpFactory({
+                method: 'POST',
+                url: url,
+                data: data,
+                headers: {'Content-Type': 'application/json',
+                    'Authorization': currentUser.token},
+          }).success(function(){                
+                if (key != null) {
+                    _setLocalStorageJsonItem(key,data);
+                }
+                successCallback();                
+            }).error(function(){            
                 errorCallback();
             });
         };
         
-        var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback) {
+        var _postAsyncCatalogs = function (key, data, url, successCb, errorCb) {
             _getDeviceVersionAsync();
-            
-            var discussionid = data.discussionid;
             
             _httpFactory({
                 method: 'POST',
@@ -279,51 +401,128 @@
                 data: data,
                 headers: { 'Content-Type': 'application/json' },
             }).success(function (data, status, headers, config) {
-                console.log('success');
-                
+
                 if (key != null) {
                     _setLocalStorageJsonItem(key,data);
                 }
                 
-                updatePostCounter(discussionid);
-                successCallback();
+                if (typeof successCb === "function") {
+                    successCb(key, data);
+                }else{
+                    successCallback(key, data);
+                }
+                
             }).error(function (data, status, headers, config) {
-                console.log(data);
-                _setLocalStorageJsonItem(key,data);
-                errorCallback();
+
+                if (typeof errorCb === "function") {
+                    errorCb();
+                }else {
+                    errorCallback();
+                }
             });
         };
+        
 
+        var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback, needUpdatePostCounter, addToQueue) {
+            _getDeviceVersionAsync();
+            
+            var discussionid = data.discussionid;
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            if (addToQueue) {
+                addRequestToQueue(key, {
+                    type: "httpRequest",
+                    data: {
+                        method: 'POST',
+                        url: url,
+                        data: data,
+                        headers: { 'Content-Type': 'application/json',
+                               'Authorization': currentUser.token }
+                    }
+                });
+                _setLocalStorageJsonItem(key, data);
+                if (successCallback) {
+                    successCallback();
+                }
+            }else{
+                _httpFactory({
+                    method: 'POST',
+                    url: url,
+                    data: data,
+                    headers: { 'Content-Type': 'application/json',
+                               'Authorization': currentUser.token },
+                }).success(function (data, status, headers, config) {
+
+                    if (key != null) {
+                        _setLocalStorageJsonItem(key,data);
+                    }
+                    
+                    if(needUpdatePostCounter == true){
+                        updatePostCounter(discussionid);
+                    }else{}
+
+                    successCallback();
+                }).error(function (data, status, headers, config) {
+                    _setLocalStorageJsonItem(key,data);
+                    errorCallback();
+                });
+            }
+        };
+        
         var _putAsyncData = function (key, dataModel, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
-            _httpFactory({
-                method: 'PUT',
-                url: url,
-                data: dataModel,
-                headers: { 'Content-Type': 'application/json' },
-            }).success(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,dataModel);
-                successCallback();
-            }).error(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,dataModel);
-                errorCallback();
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            addRequestToQueue(key, {
+                type: "httpRequest",
+                data: {
+                    method: 'PUT',
+                    url: url,
+                    data: dataModel,
+                    headers: { 'Content-Type': 'application/json' ,
+                               'Authorization': currentUser.token }
+                }
             });
+            _setLocalStorageJsonItem(key,dataModel);
+
+            if(successCallback){
+                successCallback(); 
+            }
+        };
+
+        var _postAsyncDataOffline = function (key, dataModel, url, successCallback, errorCallback) {
+            _getDeviceVersionAsync();
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            addRequestToQueue(key, {
+                type: "httpRequest",
+                data: {
+                    method: 'POST',
+                    url: url,
+                    data: dataModel,
+                    headers: { 'Content-Type': 'application/json' ,
+                               'Authorization': currentUser.token }
+                }
+            });
+            dataModel = (key == "avatarInfo" ? [dataModel] : dataModel );
+            _setLocalStorageJsonItem(key,dataModel);
+
+            if(successCallback){
+                successCallback(); 
+            }
         };
 
         var _putDataNoCache = function (data, url, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             _httpFactory({
                 method: 'PUT',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json',
+                           'Authorization': currentUser.token },
             }).success(function (data, status, headers, config) {
-                //_setLocalStorageJsonItem(key,dataModel);
                 successCallback();
             }).error(function (data, status, headers, config) {
-                //_setLocalStorageJsonItem(key,dataModel);
                 errorCallback();
             });
         };
@@ -333,68 +532,77 @@
 
             //avoid sending null stars
             dataModel["stars"] = dataModel.stars ? dataModel.stars : 0;
-
-            _httpFactory({
-                method: 'PUT',
-                url: url,
-                data: dataModel,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token },
-            }).success(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,profile);
-                successCallback();
-            }).error(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,profile);
-                errorCallback();
+            
+            addRequestToQueue(key, {
+                type: "httpRequest",
+                data: {
+                    method: 'PUT',
+                    url: url,
+                    data: dataModel,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                }
             });
-        };
 
-        
+            _setLocalStorageJsonItem(key,profile);
+            if(successCallback){
+                successCallback(); 
+            }
+        };
         
         var _putAsyncFirstTimeInfo = function (userId, dataModel, successCallback, errorCallback) {
             _getDeviceVersionAsync();
+            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
             
-            _httpFactory({
-                method: 'PUT',
-                url: API_RESOURCE.format('usercourse/' + userId),
-                data: dataModel,
-                headers: { 'Content-Type': 'application/json' },
-            }).success(function (data, status, headers, config) {
-                successCallback();
-            }).error(function (data, status, headers, config) {
-                errorCallback();
+            addRequestToQueue(null, {
+                type: "httpRequest",
+                data: {
+                    method: 'PUT',
+                    url: API_RESOURCE.format('usercourse/' + userId),
+                    data: dataModel,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': currentUser.token }
+                }
             });
+
+            if(successCallback) {
+                successCallback(); 
+            }
+            
         };
         
         var _endActivity = function (key, data, userCourseModel, url, token, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
-            _httpFactory({
-                method: 'PUT',
-                url: url,
-                data: data,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token }
-            }).success(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,userCourseModel);
-                successCallback(data);
-            }).error(function (data, status, headers, config) {
-                _setLocalStorageJsonItem(key,userCourseModel);
-                errorCallback();
+            addRequestToQueue(key, {
+                type: "httpRequest",
+                data: {
+                    method: 'PUT',
+                    url: url,
+                    data: data,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                }
             });
+
+            _setLocalStorageJsonItem(key,userCourseModel);
+            if(successCallback){
+                successCallback(data);
+            }
         };
 
         var _startActivity = function (data, activityModel, token, successCallback, errorCallback) {
             _getDeviceVersionAsync();
             
-            _httpFactory({
-                method: 'PUT',
-                url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),
-                data: data,
-                headers: { 'Content-Type': 'application/json', 'Authorization': token },
-            }).success(function (data, status, headers, config) {
-                successCallback();
-            }).error(function (data, status, headers, config) {
-                errorCallback();
+            addRequestToQueue('activity/' + activityModel.coursemoduleid, {
+                type: "httpRequest",
+                data: {
+                    method: 'PUT',
+                    url: API_RESOURCE.format('activity/' + activityModel.coursemoduleid),
+                    data: data,
+                    headers: { 'Content-Type': 'application/json', 'Authorization': token }
+                }
             });
+            if(successCallback){
+                successCallback();
+            }            
         };
 
         var createPostsTree = function(posts) {
@@ -492,24 +700,7 @@
 
                                 if (usercourse.stages[i].challenges[j].activities) {
                                     for (k = 0; k < usercourse.stages[i].challenges[j].activities.length; k++) {
-                                        //activities
 
-                                        /*if (usercourse.stages[i].challenges[j].activities[k].activities) {
-                                            for(l =0; l < usercourse.stages[i].challenges[j].activities[k].activities.length; l++) {
-                                                if (usercourse.stages[i].challenges[j].activities[k].activities[l].activity_type != 'ActivityManager')
-                                                {
-                                                    globalActivities++;
-                                                    stageActivities++;
-                                                    if (usercourse.stages[i].challenges[j].activities[k].activities[l].status == 1) {
-                                                        globalCompletedActivities++;
-                                                        stageCompletedActivities++;
-                                                        globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].activities[l].points;
-                                                    }
-                                                }
-                                            }
-                                        } 
-                                        else
-                                        {*/
                                         globalActivities++;
                                         stageActivities++;
 
@@ -518,7 +709,6 @@
                                             stageCompletedActivities++;
                                             globalPointsAchieved += usercourse.stages[i].challenges[j].activities[k].points;
                                         }
-                                        //}
 
                                     }
                                 }
@@ -538,7 +728,6 @@
                     }
                 }
             }
-            //usercourse.globalProgress = Math.floor(100.0 * globalCompletedActivities / globalActivities, 0);
             usercourse.globalProgress = Math.floor(100*globalProgress/300);
             if (user) {
                 user.stars = globalPointsAchieved;
@@ -558,6 +747,7 @@
                     section: activities[0].section,
                     courseid: activities[0].courseid,
                     firsttime: activities[0].firsttime,
+                    max_resources: activities[0].max_resources,
                     globalProgress: 0,
                     stages: _.filter(activities, function (a) {
                         return a.parentsection == activities[0].section && a.section != activities[0].section && a.activity_type == 'ActivityManager'
@@ -586,13 +776,9 @@
                     if (assign) {
                         course.stages[i].coursemoduleid = assign.coursemoduleid;
                         course.stages[i].points = assign.points;
-                        course.stages[i].status = assign.status;
                         course.stages[i].activityintro = assign.activityintro;
                         course.stages[i].activity_identifier = assign.activity_identifier;
                     }
-
-
-
 
                     //challenges
                     for (j = 0; j < course.stages[i].challenges.length; j++) {
@@ -611,7 +797,7 @@
                             course.stages[i].challenges[j].activity_identifier = assign.activity_identifier;
                         }
 
-                        if (course.stages[i].challenges[j].activity_type == "ActivityManager") {
+                        if (course.stages[i].challenges[j].activity_type == "ActivityManager") {                            
                             activityManagers.push(course.stages[i].challenges[j]);
                         }
 
@@ -629,8 +815,7 @@
 
                         //activities
                         for (k = 0; k < course.stages[i].challenges[j].activities.length; k++) {
-
-
+                                                    
                             if (course.stages[i].challenges[j].activities[k].activity_type == 'ActivityManager') {
 
                                 activityManagers.push(course.stages[i].challenges[j].activities[k]);
@@ -646,6 +831,7 @@
                                     course.stages[i].challenges[j].activities[k].activityintro = assign.activityintro;
                                     course.stages[i].challenges[j].activities[k].points = assign.points;
                                     course.stages[i].challenges[j].activities[k].activity_identifier = assign.activity_identifier;
+                                    course.stages[i].challenges[j].activities[k].last_status_update = assign.last_status_update;
                                     course.stages[i].challenges[j].activities[k].status = assign.status;
                                 }
 
@@ -671,7 +857,7 @@
                     }
                 }
 
-                /* Conocete - reto múltiple */ 
+                /* Conocete - reto mï¿½ltiple */ 
                 var multipleChallengeActivityId = _.filter(_activityRoutes, function (ar){
                     return ar.name == "Reto Multiple";
                 });
@@ -715,22 +901,23 @@
                     datestarted: generalCommunity.datestarted,
                     started: generalCommunity.started
                 };
+                
 
-                var user = JSON.parse(localStorage.getItem("profile/" + moodleFactory.Services.GetCacheObject("userId")));
+                var user = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
                 var progress = refreshProgress(course, user);
                 course = progress.course;
                 course.community = community;
                 course.multipleChallenges = multipleChallengesArray;
                 course.isMultipleChallengeActivityFinished = (multipleChallengeActivity[0].status === 1);
                 user = progress.user;
-                _setLocalStorageJsonItem("profile/" + moodleFactory.Services.GetCacheObject("userId"),user);
+                _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"),user);
                 _setLocalStorageJsonItem("usercourse",course);
                 //reload activty status dictionary
                 _loadActivityStatus();
                 //load activity accessibility flags
                 _loadActivityBlockStatus();
                 //set stages as completed in local storage, as this is not set by the back-end
-                _setStagesStatus();
+                _setStagesStatus();                
                 _setLocalStorageJsonItem("course",course);
                 _setLocalStorageJsonItem("activityManagers",activityManagers);
 
@@ -758,7 +945,6 @@
             }
             _setLocalStorageJsonItem("activityStatus",activityStatus);
             _activityStatus = activityStatus;
-            console.log("Loaded activityStatus");
         };
 
         //This function updates the status of each stage in local status
@@ -809,6 +995,20 @@
             });
         };
         
+        var _postGeolocation = function(moduleId) {
+            var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            
+            addRequestToQueue("userPosition/" + currentUser.userId, {
+                type: "geolocation",
+                data: {
+                    method: 'POST',
+                    url: API_RESOURCE.format('geolocation'),
+                    data: { moduleid: moduleId },
+                    headers: { 'Content-Type': 'application/json', 'Authorization': currentUser.token }
+                }
+            });
+        };
+        
         var _calculateForumExtraPoints = function(data) {
             
             var totalExtraPoints = 0;
@@ -829,27 +1029,341 @@
             
             data.totalExtraPoints = totalExtraPoints;
         }
+        
+        var _callback;
+        var _currentUser;
+
+        var _executeQueue = function(callback){
+            _callback = callback;
+            _currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+            
+            if(window.mobilecheck()){                    
+                    doRequestforCellphone();                     
+            }                
+            else{
+                doRequestforWeb(); 
+            }                
+            
+        }
+
+        function addRequestToQueue(key, queue) {
+            _currentUser = JSON.parse(localStorage.getItem("CurrentUser")); //Extraemos el usuario actual de cache
+            var requestQueue = [];
+            var cacheQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);            
+            if(cacheQueue instanceof Array){
+                requestQueue = cacheQueue;
+            } 
+            queue.retryCount = 0;
+            queue.userID = _currentUser.userId // Necesitamos guardar el request en la cola con el usuario actual
+            queue.key = key;
+            requestQueue.push(queue);
+            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+            if(requestQueue.length==1 || _queuePaused){
+                if(window.mobilecheck()){                    
+                        doRequestforCellphone();
+                }                
+                else{
+                    doRequestforWeb(); 
+                }                
+            }
+        }
+
+
+        function doRequestforWeb() {     
+            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+            
+            if(navigator.onLine && _httpFactory && requestQueue && requestQueue.length>0) {
+                var queue = requestQueue[0];
+                
+                //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
+                if(queue.userID == _currentUser.userId) {
+                    
+                    if(queue.type === "httpRequest") {
+                        if(queue.retryCount<5) {
+                        
+                            //Reemplazamos el token con el token actual
+                            queue.data.headers.Authorization = _currentUser.token;
+                            _httpFactory(queue.data)
+                            .success(function (response) {
+
+                                requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                requestQueue.shift();
+                                if(queue.data.method == 'GET') {
+                                    if(queue.key) {
+                                        _setLocalStorageJsonItem(queue.key, response);    
+                                    }
+                                }
+
+                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
+                                if(requestQueue.length == 0 && _callback != null) {
+                                    _callback();
+                                    _callback = null;
+                                }   
+                                doRequestforWeb();                                 
+                            }).error(function (response) {
+
+                                if(navigator.onLine) {
+                                   requestQueue[0].retryCount++;                               
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                    doRequestforWeb();
+                                }                        
+                            });
+                        }
+                        else {
+
+                            requestQueue.shift();  
+                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                            if(requestQueue.length == 0 && _callback != null) {
+                                _callback();
+                                _callback = null;
+                            }
+                            doRequestforWeb();
+                        }   
+                    } else if(queue.type === "geolocation") {
+                        
+                        var getCurrentPositionSuccesCallback = function(pos) {
+                            _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, { 
+                                latitude: pos.coords.latitude,
+                                longitude: pos.coords.longitude
+                            });
+                            postCurrentPosition();
+                        };
+                        var getCurrentPositionErrorCallback = function() {
+                            requestQueue[0].retryCount = 5;
+                            queue.retryCount = 5;
+                            postCurrentPosition();
+                        };
+                        navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback, {
+                            enableHighAccuracy: true,
+                            maximumAge: 6000,
+                            timeout: 10000
+                          });
+                        
+                        var postCurrentPosition = function() {
+                            
+                            if(queue.retryCount < 5 || (queue.retryCount === 5 && moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null)) {
+                                
+                                var coords = moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId);
+                               
+                                //Reemplazamos el token con el token actual
+                                queue.data.headers.Authorization = _currentUser.token;
+                                queue.data.data.latitude = coords.latitude;
+                                queue.data.data.longitude = coords.longitude;
+                                    
+                                _httpFactory(queue.data)
+                                .success(function (response) {
+
+                                    requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                    requestQueue.shift();
+
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
+                                    if(requestQueue.length == 0 && _callback != null) {
+                                        _callback();
+                                        _callback = null;
+                                    }   
+                                    doRequestforWeb();                                 
+                                }).error(function (response) {
+
+                                    if(navigator.onLine) {
+                                       requestQueue[0].retryCount++;                               
+                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                        doRequestforWeb();
+                                    }
+                                });
+                            } else {
+
+                                requestQueue.shift();  
+                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                if(requestQueue.length == 0 && _callback != null) {
+                                    _callback();
+                                    _callback = null;
+                                }
+                                doRequestforWeb();
+                            }
+                            
+                        };
+                    }
+                }
+            }
+            else if (_callback != null) {
+                _callback();
+                _callback = null;
+            }
+        }
+
+        function doRequestforCellphone(){            
+            var requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);        
+
+            _updateConnectionStatus(function(){                
+                if(_isDeviceOnline && _httpFactory && requestQueue && requestQueue.length>0) {
+                    
+                    var queue = requestQueue[0];
+                    
+                    //Validamos que el usuario que ejecuta el request sea el que lo puso en cola para tener token correcto
+                    if(queue.userID == _currentUser.userId) {
+                        
+                        if(queue.type === "httpRequest") {
+                            
+                            _queuePaused = false;
+                        
+                            if(queue.retryCount < 5) {
+                                //Reemplazamos el token con el token actual
+                                queue.data.headers.Authorization = _currentUser.token;
+
+                                _httpFactory(queue.data)
+                                .success(function (response) {
+
+                                    requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                    requestQueue.shift();
+                                    if(queue.data.method == 'GET') {
+                                        if(queue.key) {
+                                            _setLocalStorageJsonItem(queue.key, response);    
+                                        }
+                                    }
+
+
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
+                                    if(requestQueue.length == 0 && _callback != null) {
+                                        _callback();
+                                        _callback = null;
+                                    }
+                                    doRequestforCellphone();                                                            
+                                }).error(function (response) {
+                                    if(_isDeviceOnline){
+                                       requestQueue[0].retryCount++;                               
+                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                       doRequestforCellphone();
+                                    }                        
+                                });
+                            }  
+                            else{
+                                requestQueue.shift();  
+                                _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                if(requestQueue.length == 0 && _callback != null){
+                                    _callback();
+                                    _callback = null;
+                                }
+                                doRequestforCellphone();
+                            }
+                            
+                            
+                        } else if(queue.type === "geolocation") {
+                            
+                            _queuePaused = false;
+                            
+                            var getCurrentPositionSuccesCallback = function(pos) {
+                                _setLocalStorageJsonItem("userPosition/" + _currentUser.userId, { 
+                                    latitude: pos.coords.latitude,
+                                    longitude: pos.coords.longitude
+                                });
+                                postCurrentPosition();
+                            };
+                            var getCurrentPositionErrorCallback = function(error) {
+                                
+                                requestQueue[0].retryCount = 5;
+                                queue.retryCount = 5;
+                                
+                                
+                                if(moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null) {
+                                    postCurrentPosition();    
+                                }else {
+                                    requestQueue.shift();  
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                    if(requestQueue.length == 0 && _callback != null){
+                                        _callback();
+                                        _callback = null;
+                                    }
+                                    doRequestforCellphone();
+                                }
+                                
+                            };
+                            navigator.geolocation.getCurrentPosition(getCurrentPositionSuccesCallback, getCurrentPositionErrorCallback, {
+                                enableHighAccuracy: true,
+                                maximumAge: 6000,
+                                timeout: 10000
+                              });
+
+                            var postCurrentPosition = function() {
+
+                                if(queue.retryCount < 5 || (queue.retryCount === 5 && moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId) != null)) {
+
+                                    var coords = moodleFactory.Services.GetCacheJson("userPosition/" + _currentUser.userId);
+
+                                    //Reemplazamos el token con el token actual
+                                    queue.data.headers.Authorization = _currentUser.token;
+                                    queue.data.data.latitude = coords.latitude;
+                                    queue.data.data.longitude = coords.longitude;
+
+                                    _httpFactory(queue.data)
+                                    .success(function (response) {
+
+                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                        requestQueue.shift();
+
+                                        _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
+                                        if(requestQueue.length == 0 && _callback != null) {
+                                            _callback();
+                                            _callback = null;
+                                        }   
+                                        doRequestforCellphone();                                 
+                                    }).error(function (response) {
+
+                                        if(_isDeviceOnline){
+                                           requestQueue[0].retryCount++;                               
+                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                           doRequestforCellphone();
+                                        } 
+                                    });
+                                } else {
+
+                                    requestQueue.shift();  
+                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                    if(requestQueue.length == 0 && _callback != null){
+                                        _callback();
+                                        _callback = null;
+                                    }
+                                    doRequestforCellphone();
+                                }
+
+                            };
+                            
+                        }
+                    }                                
+                }
+                else if(!_isDeviceOnline){
+                    _queuePaused = true;
+                }
+                else if (_callback != null){
+                    _callback();
+                    _callback = null;
+                }
+            }, function(){                           
+            });            
+        }    
 
         return {
             GetAsyncProfile: _getAsyncProfile,
             PutAsyncProfile: _putAsyncProfile,
+            PutAcceptTermsAndConditions: _putAsyncAcceptTermsAndConditions,
             GetAsyncUserCourse: _getAsyncUserCourse,
             GetAsyncAvatar: _getAsyncAvatarInfo,
             GetAsyncCourse: _getAsyncCourse,
             GetCacheObject: _getCacheObject,
             GetCacheJson: _getCacheJson,
             GetAsyncActivity: _getAsyncActivityInfo,
-            GetAsyncActivities: _getAsyncActivitiesInfo,
             GetAsyncActivitiesEnergy: _getAsyncActivitiesEnergy,
+            GetAsyncActivities: _getAsyncActivitiesInfo,
             GetAsyncActivityQuizInfo: _getAsyncActivityQuizInfo,
             PutAsyncQuiz: _putAsyncQuiz,
             GetAsyncForumInfo: _getAsyncForumInfo,
             GetUserNotification: _getUserNotifications,
             PutUserNotificationRead: _putUserNotificationRead,
-            PostUserNoitifications: _postUserNotifications,
+            PostUserNotifications: _postUserNotifications,
             PostAsyncForumPost: _postAsyncForumPost,
             PutAsyncFirstTimeInfo: _putAsyncFirstTimeInfo,
             GetAsyncLeaderboard: _getAsyncLeaderboard,
+            GetAsyncHallOfFame: _getAsyncHallOfFame,
+            GetAsyncCatalog: _getAsyncCatalog,
             GetUserChat: _getUserChat,
             PutUserChat: _putUserChat,
             PutStars: _assignStars,
@@ -863,7 +1377,17 @@
             PostAsyncReportAbuse: _postAsyncReportAbuse,
             GetAsyncAlbum: _getAsyncAlbum,
             RefreshProgress: refreshProgress,
-            GetAsyncUserPostCounter: _getAsyncUserPostCounter
+            PostCommentActivity: _postCommentActivity,
+            PostBadgeToUser: _postBadgeToUser,
+            GetCommentByActivity: _getCommentByActivity,
+            GetAsyncUserPostCounter: _getAsyncUserPostCounter,
+            GetAsyncCatalogs: _getAsyncCatalogs,
+            CountLikesByUser: _countLikesByUser,
+            GetServerDate: _getServerDate,
+            ExecuteQueue: _executeQueue,
+            PostAsyncAvatar: _postAsyncAvatar,
+            PutAsyncAward: _putAsyncAward,            
+            PostGeolocation: _postGeolocation
         };
     })();
 }).call(this);

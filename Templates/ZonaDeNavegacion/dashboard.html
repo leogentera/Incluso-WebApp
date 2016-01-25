@@ -5,7 +5,7 @@
                 <div class="panel-heading clearfix" ng-click="isCollapsed = !isCollapsed">
                     <h3>
                         <span class="icomoon icon-video-file"></span>
-                        <span>Mis batallas</span>
+                        <span>{{contentResources.stage_video_title}}</span>
                         <span class="icomoon icon-arrow" ng-show="isCollapsed"></span>
                         <span class="icomoon icon-arrow-up" ng-show="!isCollapsed"></span>
                     </h3>
@@ -13,10 +13,10 @@
                 <div class="panel-body" collapse="isCollapsed">
                     <div class="video-player">
                         <div class="stage">
-                            <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-zona-de-navegacion.mp4')">
+                            <a class="icon icon-play" href="{{contentResources.dashboard_video_url}}" target="_blank">
                                 <span class="glyphicon glyphicon-play"></span>
                             </a>
-                            <figure class="poster" ng-click="playVideo('assets/media', 'video-zona-de-navegacion.mp4')">
+                            <figure class="poster">
                                 <img src="assets/media/thumb-zona-de-navegacion.jpg" alt="video" />
                             </figure>
                         </div>
@@ -26,7 +26,7 @@
         </section>
 
         <section class="component showcase-carousel pages">
-            <h3>Retos</h3>
+            <h3>{{contentResources.challenges_title}}</h3>
             <div id="carousel-example-generic2" class="carousel">
                 <div id="owl-demo2" class="owl-carousel">
                     <div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">
@@ -35,7 +35,6 @@
                         </figure>
                         <h4 class="item-title" ng-bind="reto.sectionname"></h4>
                         <p class="item-description" ng-bind="reto.activityintro"></p>
-                        <!-- <p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : 'Cada sueño en su lugar' "></p> -->
 
                         <div class="page-number">
                             <p class="text-center">
@@ -81,9 +80,8 @@
                 <div class="text">{{stageProgress}}%</div>
             </div>
             <div>
-                <p class="title">Mi avance</p>
-                <p>en la zona</p>
-            </div>
+                <p class="title">{{contentResources.progress}}</p>                
+            </div>            
         </section>
     </article>
 
