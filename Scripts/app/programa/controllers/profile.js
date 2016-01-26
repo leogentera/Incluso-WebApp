@@ -1000,6 +1000,7 @@ angular
 
                 $scope.index = function () {//Redirect to editing profile again.
                     if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && showResultsPage) {
+                        var i;
                         //Make the title.
                         /*
                         var i;
@@ -1377,7 +1378,7 @@ angular
                     }
 
                     if ($scope.model.medicalCoverage == "No") {
-                        if ($scope.model.medicalInsurance != "No tengo seguro") {
+                        if ($scope.model.medicalInsurance != "No tengo seguro" && $scope.model.medicalInsurance != "") {
                             validInfo = false;
                         }
                     }
