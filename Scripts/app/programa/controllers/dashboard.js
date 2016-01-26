@@ -29,7 +29,7 @@ angular
                 if(_loadedDrupalResourcesWithErrors) {
                     $interval.cancel(getContentResourcesInterval);
                     $scope.$emit('HidePreloader');
-                    localStorage.setItem("offlineConnection", "");
+                    localStorage.setItem("offlineConnection", "offline");
                     $timeout(function(){
                         $location.path('/');
                     }, 1000);
@@ -306,15 +306,15 @@ angular
                 
                 if(localStorage.getItem("course") == null) {
                     $scope.$emit('HidePreloader');
-                    localStorage.setItem("offlineConnection", "");
+                    localStorage.setItem("offlineConnection", "offline");
                     $location.path('/');
                 } else if(localStorage.getItem("leaderboard") == null) {
                     $scope.$emit('HidePreloader');
-                    localStorage.setItem("offlineConnection", "");
+                    localStorage.setItem("offlineConnection", "offline");
                     $location.path('/');
                 } else if(localStorage.getItem("Perfil/" + localStorage.getItem("userId")) == null) {
                     $scope.$emit('HidePreloader');
-                    localStorage.setItem("offlineConnection", "");
+                    localStorage.setItem("offlineConnection", "offline");
                     $location.path('/');
                 }
                 

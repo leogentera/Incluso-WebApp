@@ -162,9 +162,9 @@ angular
 
                         var user = $scope.currentUserModel.userId;
                         var token = $scope.currentUserModel.token;
-                        moodleFactory.Services.GetAsyncAvatar(user, token, function () {
-                        }, function () {
-                        }, true);
+                        moodleFactory.Services.GetAsyncAvatar(user, token, function () {}, function () {}, true);
+                        moodleFactory.Services.GetAsyncForumDiscussions(85, token, function () {}, function () {}, true);
+                        moodleFactory.Services.GetAsyncForumDiscussions(91, token, function () {}, function () {}, true);
                         var courseModuleIds = [{"id": 1039, "userInfo": true}, {"id": 2012, "userInfo": false}, 
                             {"id": 2017,"userInfo": true }, {"id": 3302, "userInfo": false}, {"id": 3402, "userInfo": true}];
                         for (var i = 0; i < courseModuleIds.length; i++) {
@@ -185,6 +185,11 @@ angular
                         //-----------------------------------------------------------------------------------------------
 
                     }, function () {
+                        
+                        $scope.$emit('HidePreloader');
+                        localStorage.setItem("offlineConnection", "offline");
+                        $location.path('/');
+                        
                     }, true);
 
                     try {
@@ -196,12 +201,10 @@ angular
 
                 }, function () {
 
-                    try {
-                        $scope.$emit('HidePreloader');
-                        $location.path('/Tutorial');
-                    } catch (e) {
-                        $location.path('/ProgramaDashboard');
-                    }
+                    $scope.$emit('HidePreloader');
+                    localStorage.setItem("offlineConnection", "offline");
+                    $location.path('/');
+                    
                 }, true);
             };
 

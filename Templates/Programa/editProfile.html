@@ -1681,8 +1681,8 @@
                                     <div class="centered txt-bigger min-pad ">Has completado la actividad</div>
                                     <!--<div class="subtitle centered min-pad ">{{activityname}}</div>-->
                                     <!--div class="txt-renglon centered txt-bigger min-pad ">{{closingContent.closing_message_congrats}}</div-->
-                                    <div ng-repeat="section in completedSections track by $index">
-                                        <div class="subtitle txt-renglon centered min-pad">{{section.name}}</div>
+                                    <div ng-repeat="section in logOfSections track by $index">
+                                        <div class="subtitle txt-renglon centered min-pad" ng-show="section.visited" ng-bind="section.name"></div>
                                     </div>
                                     <div class="txt-renglon centered txt-bigger min-pad">¡Bien hecho!</div>
                                 </section>
@@ -1696,7 +1696,7 @@
                                 </div>
                                 -->
 
-                                <section class="txt-renglon pill activityPoints">
+                                <section class="txt-renglon pill activityPoints" ng-if="sum > 0">
                                     <!--div class="pull-left">{{closingContent.earned_stars}}</div> -->
                                     <div class="pull-left">Estrellas ganadas</div>
                                     <div class="pull-right sm-pill">

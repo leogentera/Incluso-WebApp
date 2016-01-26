@@ -114,7 +114,10 @@ angular
                         
                         $scope.validateConnection(function () {
                             $scope.$emit('HidePreloader');
-                            $scope.login();
+                            
+                            if(txtCredentials) {
+                                $scope.login();   
+                            }
                             
                         }, function () {
                             
@@ -322,9 +325,9 @@ angular
             var GetExternalAppData = function () {
                 var user = $scope.currentUserModel.userId;
                 var token = $scope.currentUserModel.token;
-                moodleFactory.Services.GetAsyncAvatar(user, token, function () {
-                }, function () {
-                }, true);
+                moodleFactory.Services.GetAsyncAvatar(user, token, function () {}, function () {}, true);
+                moodleFactory.Services.GetAsyncForumDiscussions(85, token, function () {}, function () {}, true);
+                moodleFactory.Services.GetAsyncForumDiscussions(91, token, function () {}, function () {}, true);
                 var courseModuleIds = [{"id": 1039, "userInfo": true}, {"id": 2012, "userInfo": false}, {
                     "id": 2017,
                     "userInfo": true
@@ -347,12 +350,13 @@ angular
             };
             
             
-            if(localStorage.getItem("offlineConnection") == "") {
+            if(localStorage.getItem("offlineConnection") == "offline") {
                 $timeout(function(){
                     $scope.userCredentialsModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
-                    $scope.$emit('scrollTop');
                     $scope.$emit('HidePreloader');
-                }, 1000);
+                    $scope.$emit('scrollTop');
+                    localStorage.removeItem("offlineConnection");
+                }, 2000);
             } else {
                 $scope.loadCredentials();    
             }

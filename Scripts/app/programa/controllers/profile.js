@@ -73,7 +73,7 @@ angular
                 $scope.hasCommunityAccess = false;
                 var startingTime;
                 var endingTime;
-                $scope.completedSections = [];
+                $scope.logOfSections = [];
 
                 getDataAsync(function () {
                     
@@ -959,10 +959,11 @@ angular
                     }
 
                 };
-
+                $scope.visitedSections = [];
                 $scope.navigateToSection = function (pageNumber) {
                     $scope.currentPage = pageNumber;
                     $scope.accessedSubsection = true;
+
 
                     $scope.origin = "";
 
@@ -980,9 +981,11 @@ angular
                             $scope.origin = "3003";
                             break;
                         default:
-                            result = false;
+                            $scope.origin = "3000";
                             break;
                     }
+
+                    $scope.visitedSections.push($scope.origin); //For tracking user activity in sections.
                 };
 
                 $scope.navigateToPage = function (pageNumber) {
@@ -1000,31 +1003,22 @@ angular
 
                 $scope.index = function () {//Redirect to editing profile again.
                     if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && showResultsPage) {
-                        //Make the title.
-                        /*
-                        var i;
-                        $scope.title = "";
 
-                        for (i = 0; i < $scope.completedSections.length; i++) {
-                            $scope.title += $scope.completedSections[i].name + ", ";
-                        }
-
-                        $scope.title = $scope.title.trim();
-
-                        //Trim leading comma, if present.
-                        if ($scope.title[$scope.title.length - 1] === ",") {
-                            $scope.title = $scope.title.substring(0, $scope.title.length - 1);
-                        }
-                        */
-
-                        //Make up the total points earned.
+                        //Make up the total points earned & title.
                         $scope.sum = 0;
+                        var i;
 
-                        for (i = 0; i < $scope.completedSections.length; i++) {
-                            $scope.sum += $scope.completedSections[i].points;
+                        for (i = 0; i < $scope.logOfSections.length; i++) {
+                            //If the section was actually visited or has points > 0 ...
+                            if ( $scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 || $scope.logOfSections[i].points > 0 ) {
+                                $scope.sum += $scope.logOfSections[i].points;
+                                $scope.logOfSections[i].visited = true;
+                            }
                         }
 
-                        $scope.currentPage = 12; //Show results page
+                        $scope.visitedSections = []; //Clean record of visited sections.
+                        //console.log(JSON.stringify($scope.logOfSections));
+                        $scope.currentPage = 12; //Finally, show the results page.
                     }
 
                     if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && !showResultsPage) {
@@ -1079,67 +1073,69 @@ angular
                         },
                         function (data) {
                             //Save profile fail...
+                            $scope.$emit('HidePreloader'); //--
                         });
                 }
 
                 function updateStarsForCompletedSections() {
                     //Here we look for completed profile sections;
                     //completed sections will be given their corresponding points.
-
                     var sectionIndex;
                     var usercourse = JSON.parse(localStorage.getItem("usercourse"));
                     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-
-                    $scope.userCourse = usercourse;
+                    var sectionName, sectionId;
+                    showResultsPage = true; //Show page 12 for Final Results.
 
                     for (sectionIndex = 0; sectionIndex < usercourse.activities.length; sectionIndex++) {
                         var activity = usercourse.activities[sectionIndex];
 
+                        switch (activity.activity_identifier) {
+                            case "3000":  // "Llenar mi informacion"; points to assign: 400
+                                sectionName = "Mi información";
+                                sectionId = "3000";
+                                break;
+                            case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
+                                sectionName = "Mi personalidad";
+                                sectionId = "3001";
+                                break;
+                            case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
+                                sectionName = "Socioeconómicos";
+                                sectionId = "3002";
+                                break;
+                            case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
+                                sectionName = "Uso de la tecnología";
+                                sectionId = "3003";
+                                break;
+                            default:
+                                sectionName = "Mi información";
+                                break;
+                        }
+
                         if (activity.status == 0) {//The section has not been filled.
 
-                            var result;
+                            var sectionFieldsAreOk;
 
                             switch (activity.activity_identifier) {
                                 case "3000":  // "Llenar mi informacion"; points to assign: 400
-                                    result = assignmentMiInformacion();
+                                    sectionFieldsAreOk = assignmentMiInformacion();
                                     break;
                                 case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
-                                    result = assignmentMiPersonalidad();
+                                    sectionFieldsAreOk = assignmentMiPersonalidad();
                                     break;
                                 case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
-                                    result = assignmentSocioeconomicos();
+                                    sectionFieldsAreOk = assignmentSocioeconomicos();
                                     break;
                                 case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
-                                    result = assignmentTecnologia();
+                                    sectionFieldsAreOk = assignmentTecnologia();
                                     break;
                                 default:
-                                    result = false;
+                                    sectionFieldsAreOk = false;
                                     break;
                             }
 
-                            if (result) {//The user has successfully completed a profile's section.
-                                var sectionObject = {};
+                            if (sectionFieldsAreOk) {//The user has successfully completed a profile's section.
 
-                                switch (activity.activity_identifier) {//Make up the message strings.
-                                    case "3000":  // "Llenar mi informacion"; points to assign: 400
-                                        sectionObject.name = "Mi información";
-                                        break;
-                                    case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
-                                        sectionObject.name = "Mi personalidad";
-                                        break;
-                                    case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
-                                        sectionObject.name = "Socioeconómicos";
-                                        break;
-                                    case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
-                                        sectionObject.name = "Uso de la tecnología";
-                                        break;
-                                }
-
-                                sectionObject.points = activity.points;
-                                $scope.completedSections.push(sectionObject);
-
-                                showResultsPage = true; //Show page 12
-
+                                $scope.logOfSections.push({"id" : sectionId,"name" : sectionName, "points" : activity.points});
                                 $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
                                 activity.status = 1;   //Update activity status.
                                 activity.last_status_update = moment(Date.now()).unix();
@@ -1168,12 +1164,19 @@ angular
                                     validateAllFieldsCompleted();
                                 });
 
-                                result = false;  //Restore 'result' value
+                                sectionFieldsAreOk = false;  //Restore 'sectionFieldsAreOk' value
+                            } else {//Not all fields were completed.
+                                $scope.logOfSections.push({"id" : sectionId, "name" : sectionName, "points" : 0});
                             }
                         } else { //The subsection has been previously completed.
+
+                            /* This does not seem necessary...
                             if (!showResultsPage && activity.activity_identifier == $scope.origin) {
                                 showResultsPage = true;
                             }
+                            */
+
+                            $scope.logOfSections.push({"id" : sectionId, "name" : sectionName, "points" : 0});
                         }
                     }
                 }            
@@ -1377,7 +1380,7 @@ angular
                     }
 
                     if ($scope.model.medicalCoverage == "No") {
-                        if ($scope.model.medicalInsurance != "No tengo seguro") {
+                        if ($scope.model.medicalInsurance != "No tengo seguro" && $scope.model.medicalInsurance != "") {
                             validInfo = false;
                         }
                     }

@@ -415,8 +415,11 @@
             .border-radius(5px);
         }
         .fuente-energia .wall .part .detail .message {
-            padding: 0 3vw 8vw;
+            padding: 8vw 3vw 8vw;
             border-bottom: .1em solid rgba(255,255,255,.08);
+            span {
+                display: block!important;
+            }
         }
         .fuente-energia .wall .part .detail .message .component,
         .fuente-energia .wall .part .detail .message .component .panel,
@@ -425,7 +428,8 @@
         }
         .fuente-energia .wall .part .detail .message > a {
             display: block;
-            text-align: center;
+            text-align: left;
+            word-break: break-all;
         }
         .fuente-energia .wall .message {
             color: rgb(256,256,256);
