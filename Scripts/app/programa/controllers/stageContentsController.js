@@ -95,7 +95,6 @@ angular
 
                 $scope.currentPage = 1;
 
-
                 getContentResources(moduleid);
                 $rootScope.showFooter = true;
                 $rootScope.showFooterRocks = false;
@@ -137,7 +136,7 @@ angular
                 };
 
                 function getDataAsync() {
-                    for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                    for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
 
                         activitiesData += "activity[" + i + "]=" + $scope.fuenteDeEnergia.activities[i].coursemoduleid + "&";
                     }
@@ -149,12 +148,12 @@ angular
                     }
                     if (waitPreloader == 0) {
                         _pageLoaded = true;
-                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader') };
+                        if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader') }
                     }
                 }
 
                 function getActivityInfoCallback(data, key) {
-                    for (i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
+                    for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                         var myActivity = $scope.fuenteDeEnergia.activities[i];
 
                         if (!myActivity.activityContent) {
@@ -464,9 +463,10 @@ angular
                             };
 
                             $scope.fuenteDeEnergia.activities[i].activityContent.comments.unshift(newCommentObject);
-
                             $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
                             $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty++;
+                            //console.log(JSON.stringify($scope.fuenteDeEnergia.activities[i].activityContent.comments[0]));
+                            _setLocalStorageJsonItem("activitiesCache/" + $routeParams.moodleid, $scope.fuenteDeEnergia);
                             
                             $scope.showMoreComments(contentId);
                             moodleFactory.Services.PostCommentActivity(activityId, data, function () {}, function () {});
@@ -485,8 +485,8 @@ angular
                         } else {
                             $scope.fuenteDeEnergia.activities[i].activityContent.showCommentBox = false;
                         }
-                        $scope.fuenteDeEnergia.activities[i].activityContent.newComment = '';
 
+                        $scope.fuenteDeEnergia.activities[i].activityContent.newComment = '';
                     }
                 }
             };
