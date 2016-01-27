@@ -39,6 +39,11 @@ angular
         canvas.width = 1280;
         canvas.height = 1329;
         
+        $scope.navigateToBadges = function() {
+            localStorage.setItem("profile_page", 6);
+            $location.path('Perfil/' + _userId);
+        };
+        
         $scope.album = {
             'profileimageurl': null,
             'shield': null,

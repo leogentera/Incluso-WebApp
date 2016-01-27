@@ -55,9 +55,13 @@ angular
 
                 $scope.setToolbar($location.$$path, "");
 
-                $scope.currentPage = 1;
                 if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                     $scope.currentPage = 2;
+                } else if(localStorage.getItem("profile_page")) {
+                    $scope.currentPage = Number(localStorage.getItem("profile_page"));
+                    localStorage.removeItem("profile_page");
+                } else {
+                    $scope.currentPage = 1;
                 }
 
                 $rootScope.showFooter = false;
