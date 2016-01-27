@@ -33,20 +33,24 @@
             <a href="" class="icon-circle" ng-click="shareByEmail()">
                 <span class="icomoon icon-envelope"></span>
             </a>
-            <a href="" class="icon-circle" ng-click="shareToCommunityClick()" ng-show="hasCommunityAccess">
+            <a href="" class="icon-circle" ng-click="shareToCommunityClick()" ng-show="hasCommunityAccess" ng-class="{'active': !communityModalOpen}">
                 <span class="icomoon icon-share"></span>
             </a>
             <a href="" class="icon-circle" ng-click="shareToSocialNetworks()">
                 <span class="icomoon icon-more-options-horizontal"></span>
             </a>
         </section>
+
         <div id="shareAlbum" class="modalDialog" collapse="communityModalOpen" ng-show="hasCommunityAccess">
+            <span class="arrow-up"></span>
             <div>
-                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Comenta..." value="" ng-model="textToCommunity"></textarea></div>
+                <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="textToCommunity"></textarea></div>
                 <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareToCommunity()">{{::contentResources.share_button}}</a>
                 <!--<a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareToCommunity()">Compartir en Comunidad</a>-->
             </div>
         </div>
+
+
         <div id="openModal2" class="modalDialog reportModal" ng-show="shareToCommunityOpen">
             <div>
                 <a title="close" class="close"></a>
