@@ -283,23 +283,7 @@ angular
                     
                     
                 }
-                
-                
-                var checkForumExtraPoints = function() {
-                
-                    /* check over extra points */
-                    var course = moodleFactory.Services.GetCacheJson("course");
-                    var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
-                    var forum = _.find(forumData.forums, function(elem){ return elem.forumactivityid == "50000"; });
-                    
-                    if (Number(forum.discussion[0].total) <= 15) {
-                        updateUserForumStars("50000", 50, false, function (){
-                            successPutStarsCallback();
-                        });
-                    }
-                };
-                
-                
+
                 var communityBadgeReached = function(){
                                     
                     var profileBadges = _userProfile.badges;
@@ -383,8 +367,7 @@ angular
                             $scope.showPreviousCommentsByPost(parentId);
                             moodleFactory.Services.PostAsyncForumPost ('reply', requestData,
                                 function(){
-                                    
-                                    checkForumExtraPoints();
+
                                     refreshTopicData();
                                     
                                     $scope.replyText = null;
@@ -431,8 +414,7 @@ angular
                             $scope.$emit('ShowPreloader');
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                 function() {
-                                    
-                                    checkForumExtraPoints();
+
                                     refreshTopicData();
                                     
                                     $scope.postTextValue = null;
@@ -471,8 +453,7 @@ angular
                             $scope.$emit('ShowPreloader');
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                 function() {
-                                    
-                                    checkForumExtraPoints();
+
                                     refreshTopicData();
                                     
                                     $scope.postLinkValue = null;
@@ -508,8 +489,7 @@ angular
                             
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                 function() {
-                                    
-                                    checkForumExtraPoints();
+
                                     refreshTopicData();
                                     
                                     $scope.postVideoValue = null;
@@ -548,8 +528,7 @@ angular
                             $scope.$emit('ShowPreloader');
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                 function() {
-                                    
-                                    checkForumExtraPoints();
+
                                     refreshTopicData();
                                     
                                     $scope.postAttachmentValue = {};
