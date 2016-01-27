@@ -53,6 +53,13 @@ angular
                 $scope.postAttachmentValue = null;
                 $scope.filter = "";
                 
+                $scope.urlify = function (text) {
+                    var urlRegex = /(https?:\/\/[^\s]+)/g;
+                    return text.replace(urlRegex, function(url) {
+                        return '<a class="urlify" href="' + url + '">' + url + '</a>';
+                    });
+                }
+
                 /* View settings */
                 $rootScope.pageName = "Comunidad";
                 $rootScope.navbarBlue = false;
