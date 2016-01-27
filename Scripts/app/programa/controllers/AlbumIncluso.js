@@ -807,7 +807,7 @@ angular
                     "filecontent":albumSrc.replace("data:image/png;base64", ""),
                     "filename": 'album.png',
                     "picture_post_author": _userProfile.profileimageurlsmall,
-                    "iscountable":0
+                    "iscountable":1
                 };
                 
                 moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
@@ -822,7 +822,7 @@ angular
                         $scope.isShareCollapsed = false;
                         $scope.showSharedAlbum = false;
                         $scope.$emit('HidePreloader');
-                    }
+                    }, null, true
                 );
         }
         
