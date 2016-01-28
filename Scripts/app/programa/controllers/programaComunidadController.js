@@ -360,14 +360,14 @@ angular
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 1,
                                 "fileToUpload": "",
-                                "iscountable":0
+                                "iscountable":1
                             };
                             
                             $scope.$emit('ShowPreloader');
                             $scope.showPreviousCommentsByPost(parentId);
                             moodleFactory.Services.PostAsyncForumPost ('reply', requestData,
                                 function(){
-
+                                    updatePostCounter($scope.discussion.discussion);
                                     refreshTopicData();
                                     
                                     $scope.replyText = null;
@@ -408,7 +408,7 @@ angular
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 1,
                                 "fileToUpload": null,
-                                "iscountable":0
+                                "iscountable":1
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -416,6 +416,7 @@ angular
                                 function() {
 
                                     refreshTopicData();
+                                    updatePostCounter($scope.discussion.discussion);
                                     
                                     $scope.postTextValue = null;
                                     $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
@@ -447,7 +448,7 @@ angular
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 2,
                                 "fileToUpload": null,
-                                "iscountable":0
+                                "iscountable":1
                             };
                             
                             $scope.$emit('ShowPreloader');
@@ -455,6 +456,7 @@ angular
                                 function() {
 
                                     refreshTopicData();
+                                    updatePostCounter($scope.discussion.discussion);
                                     
                                     $scope.postLinkValue = null;
                                     $scope.collapseCommunityButtomsTrigger('isLinkCollapsed');
@@ -484,13 +486,14 @@ angular
                                 "modifiedtime": moment(Date.now()).unix(),
                                 "posttype": 3,
                                 "fileToUpload": null,
-                                "iscountable":0
+                                "iscountable":1
                             };
                             
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                 function() {
 
                                     refreshTopicData();
+                                    updatePostCounter($scope.discussion.discussion);
                                     
                                     $scope.postVideoValue = null;
                                     $scope.collapseCommunityButtomsTrigger('isVideoCollapsed');
@@ -522,7 +525,7 @@ angular
                                 "filecontent":$scope.postAttachmentValue.image,
                                 "filename": _userId + $scope.postAttachmentValue.fileName,
                                 "picture_post_author": _userProfile.profileimageurlsmall,
-                                "iscountable":0
+                                "iscountable":1
                             };
             
                             $scope.$emit('ShowPreloader');
@@ -530,6 +533,7 @@ angular
                                 function() {
 
                                     refreshTopicData();
+                                    updatePostCounter($scope.discussion.discussion);
                                     
                                     $scope.postAttachmentValue = {};
                                     $scope.collapseCommunityButtomsTrigger('isAttachmentCollapsed');
