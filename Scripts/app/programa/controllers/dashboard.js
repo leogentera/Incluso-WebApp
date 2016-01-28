@@ -270,8 +270,10 @@ angular
                                 $scope.navigateTo('TermsOfUse');
                             }
 
-                            $scope.user.rank = currentUserProfile.rank;
-                            $scope.user.stars = parseInt(currentUserProfile.stars, 10); //Saved as an integer.
+                            if (currentUserProfile) {
+                                $scope.user.rank = currentUserProfile.rank;
+                                $scope.user.stars = parseInt(currentUserProfile.stars, 10); //Saved as an integer.
+                            }
 
                             _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
 
