@@ -59,14 +59,15 @@ angular
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
             $scope.user.profileimageurl = currentUserProfile != null ? currentUserProfile.profileimageurl + "?rnd=" + new Date().getTime() : "";
             
-            if (currentUserProfile && currentUserProfile.stars) {
+            var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
+            if (profileData && profileData.stars) {
                 //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
                 //the entire application updates profile.stars.  The cached version of stars should be read from profile (if it exists)
                 //Update "CurrentUser" properties: "rank" & "stars", to be in sync with "Perfil/nnn".
                 //WARNING: Within "CurrentUser", the "stars" property value is a string: "stars" : "350",
                 //         but within "Perfil/nnn", the "stars" property value is an integer: "stars" : 350.
-                $scope.user.rank = currentUserProfile.rank;
-                $scope.user.stars = parseInt(currentUserProfile.stars, 10); //Saved as an integer.
+                $scope.user.rank = profileData.rank;
+                $scope.user.stars = parseInt(profileData.stars, 10); //Saved as an integer.
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
             }
@@ -194,6 +195,11 @@ angular
 
                         var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         for(var lb = 0; lb < leaderboard.length; lb++) {
+                            
+                            if (leaderboard[lb].userId === parseInt(currentUserID, 10)) {
+                                leaderboard[lb].stars = $scope.user.stars;
+                            }
+                            
                             getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", leaderboard[lb].profileimageurl, function(niceImageUrl) { 
                                 leaderboard[lb].profileimageurl = niceImageUrl;
                             });
@@ -271,9 +277,15 @@ angular
 
                             for(var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
 
-                                if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) {//If I AM within the Leaderboard...
+                                if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...
+                                    
+                                    profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
+                                    profile.stars = parseInt($scope.course.leaderboard[lb].stars, 10);
                                     $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
-
+                                    $scope.user.stars = $scope.course.leaderboard[lb].stars;  //Update stars in template,
+                                    
+                                    
+                                    _setLocalStorageJsonItem("Perfil/" + _getItem("userId"), profile);  //Update rank in Perfil/nnn in LS,
                                     _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Update rank in CurrentUser in LS.
                                     break;
                                 }
