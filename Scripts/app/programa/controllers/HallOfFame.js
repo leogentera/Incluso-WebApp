@@ -53,6 +53,7 @@ hallOfFameModule
 
                 $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");
                 $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
+                var profile = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.userId);
 
                 $scope.cities = _.find(moodleFactory.Services.GetCacheJson("catalogs"), function (object) {
                     return object.catalog == "citiesCatalog";
@@ -60,21 +61,18 @@ hallOfFameModule
                 $scope.cities.unshift("Ver Todo");
                 $scope.default = true;
                 getTop5("Ver Todo");
-                var userId = localStorage.getItem("userId");
-                var profileKey = "Perfil/" + userId;
-                var jsonProfile = localStorage.getItem(profileKey);
-                var profile = JSON.parse(jsonProfile);
-                var imageUrl = $scope.user.profileimageurl;
-                var userStats =
-                {
+
+                var imageUrl = profile.profileimageurl;
+
+                var userStats = {
                     profileImageUrl: imageUrl,
                     alias: profile.alias,
                     rank: profile.rank,
                     progress: JSON.parse(localStorage.getItem("usercourse")).globalProgress,
-                    stars: JSON.parse(localStorage.getItem("CurrentUser")).stars,
+                    stars: profile.stars,
                     amount: profile.badges.filter(function (value) {
                         return (value !== undefined && value.status === "won")
-                    }).length,
+                    }).length
                 };
 
                 if (userStats.stars == "") userStats.stars = "0";
