@@ -47,6 +47,7 @@ hallOfFameModule
                 $rootScope.showStage1Footer = false;
                 $rootScope.showStage2Footer = false;
                 $rootScope.showStage3Footer = false;
+
                 $scope.back = function () {
                     $location.path('/ProgramaDashboard');
                 };
@@ -62,13 +63,11 @@ hallOfFameModule
                 $scope.default = true;
                 getTop5("Ver Todo");
 
-                var imageUrl = profile.profileimageurl;
-
                 var userStats = {
-                    profileImageUrl: imageUrl,
+                    profileImageUrl: profile.profileimageurl,
                     alias: profile.alias,
                     rank: profile.rank,
-                    progress: JSON.parse(localStorage.getItem("usercourse")).globalProgress,
+                    progress: $scope.usercourse.globalProgress,
                     stars: profile.stars,
                     amount: profile.badges.filter(function (value) {
                         return (value !== undefined && value.status === "won")
@@ -88,7 +87,6 @@ hallOfFameModule
                     };
 
                     $scope.userProgressBars.push(classObject);
-
                 }
 
 
@@ -168,21 +166,21 @@ hallOfFameModule.directive('progressBar', function ($compile) {
 );
 
 hallOfFameModule.filter('numberToCardinal', function () {
-        return function (number) {
-            switch (number) {
-                case 1:
-                    return "1er";
-                case 2:
-                    return "2do";
-                case 3:
-                    return "3er";
-                case 4:
-                    return "4to";
-                case 5:
-                    return "5to";
-            }
-        };
-    });
+    return function (number) {
+        switch (number) {
+            case 1:
+                return "1er";
+            case 2:
+                return "2do";
+            case 3:
+                return "3er";
+            case 4:
+                return "4to";
+            case 5:
+                return "5to";
+        }
+    };
+});
 
 
 
