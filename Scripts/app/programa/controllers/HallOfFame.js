@@ -74,7 +74,10 @@ hallOfFameModule
                     }).length
                 };
 
-                if (userStats.stars == "") userStats.stars = "0";
+                if (!userStats.stars) {
+                    userStats.stars = 0;
+                }
+
                 $scope.userStats = userStats;
 
                 $scope.userProgressBars = [];
