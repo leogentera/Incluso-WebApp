@@ -2,12 +2,13 @@
     <article>
         <section class="showcase-carousel">
             <div class="owl-carousel-" id="top-users-statistics">
+
                 <div class="item">
                     <div class="user-stats by-progress component">
                         <h3>{{contentResources.hall_of_fame_title}} <span>Avance</span></h3>
                         <div class="user-avatar">
                             <figure>
-                                <img ng-src="{{userStats.profileImageUrl}}" alt="avatar"/>
+                                <img ng-src="{{userStats.profileImageUrll}}" alt="avatar"/>
                             </figure>
                         </div>
                         <div class="user-data">
@@ -23,6 +24,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="item">
                     <div class="user-stats by-star component">
                         <h3>{{contentResources.hall_of_fame_title}} <span>Estrellas</span></h3>
@@ -40,6 +42,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="item">
                     <div class="user-stats by-star component">
                         <h3>{{contentResources.hall_of_fame_title}} <span>Participación</span></h3>
@@ -56,6 +59,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="item">
                     <div class="user-stats by-star component">
                         <h3>{{contentResources.hall_of_fame_title}} <span>Insignias</span></h3>
@@ -71,6 +75,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             <a class="control back" href="#" id="prev">
                 <span class="icomoon icon-arrow-bold-left"></span>
@@ -92,7 +97,7 @@
                 <div class="user-stats by-progress component" ng-repeat="userProgress in topProgress">
                     <div class="user-avatar">
                         <figure>
-                            <img ng-src="{{userProgress.profileimageurl}}+ '?token='+ {{user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userProgress.userid)">
+                            <img onerror="this.src = 'assets/avatar/default-2.png'" ng-src="{{userProgress.profileimageurl + '?token=' + user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userProgress.userid)">
                         </figure>
                     </div>
                     <div class="user-data">
@@ -106,7 +111,7 @@
                 <div class="user-stats by-star component" ng-repeat="userStars in topStars">
                     <div class="user-avatar">
                         <figure>
-                            <img ng-src="{{userStars.profileimageurl}}+ '?token='+ {{user.token}} " alt="avatar" ng-click="navigateTo('Perfil/' + userStars.userid)"/>
+                            <img onerror="this.src = 'assets/avatar/default-2.png'" ng-src="{{userStars.profileimageurl + '?token='+ user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userStars.userid)"/>
                         </figure>
                     </div>
                     <div class="user-data">
@@ -123,7 +128,7 @@
                 <div class="user-stats by-star component" ng-repeat="userContribution in topContribution">
                     <div class="user-avatar">
                         <figure>
-                            <img ng-src="{{userContribution.profileimageurl}} + '?token='+ {{user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userContribution.userid)"/>
+                            <img onerror="this.src = 'assets/avatar/default-2.png'" ng-src="{{userContribution.profileimageurl + '?token='+ user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userContribution.userid)"/>
                         </figure>
                     </div>
                     <div class="user-data">
@@ -139,7 +144,7 @@
                 <div class="user-stats by-star component" ng-repeat="userBadges in topBadges">
                     <div class="user-avatar">
                         <figure>
-                            <img ng-src="{{userBadges.profileimageurl}} + '?token='+ {{user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userBadges.userid)"/>
+                            <img onerror="this.src = 'assets/avatar/default-2.png'" ng-src="{{userBadges.profileimageurl + '?token='+ user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userBadges.userid)"/>
                         </figure>
                     </div>
                     <div class="user-data">

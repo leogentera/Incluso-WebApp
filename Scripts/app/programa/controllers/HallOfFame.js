@@ -76,6 +76,7 @@ hallOfFameModule
                         return (value !== undefined && value.status === "won")
                     }).length,
                 };
+
                 if (userStats.stars == "") userStats.stars = "0";
                 $scope.userStats = userStats;
 
@@ -112,8 +113,6 @@ hallOfFameModule
                     $scope.topStars = allTop5.stars;
                     $scope.topBadges = allTop5.badges;
                     $scope.topContribution = allTop5.activity;
-
-
                     $scope.userStats.forum = allTop5.current_user_activity.forum;
                     $scope.userStats.messages = allTop5.current_user_activity.messages;
                     $scope.userStats.comunity = allTop5.current_user_activity.comunity;
@@ -185,6 +184,7 @@ hallOfFameModule.filter('numberToCardinal', function () {
                     return "5to";
             }
         };
-    }
-);
+    });
+
+
 
