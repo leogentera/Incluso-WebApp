@@ -61,8 +61,24 @@ angular
             $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.profile.communityAccess);
 
             oText.username = $scope.profile.firstname + " " + $scope.profile.lastname + " " + $scope.profile.mothername;
+            
+            
+            // update profile
+            var awards = _getAwards();
+            if (awards && !$scope.profile.awards.title) {
 
+                var stars = Number($scope.profile.stars);
 
+                for (a = 0; a < awards.length; a++) {
+                    var award = awards[a];
+
+                    if (stars >= award.min_points_range && stars <= award.max_points_range) {
+                        $scope.profile.awards.title = award.title;
+                        localStorage.setItem("Perfil/" + $scope.currentUser.id, JSON.stringify($scope.profile));
+                        break;
+                    }
+                }
+              }
         }
 
         function offlineCallback() {
@@ -78,7 +94,7 @@ angular
                 drawInclusoLogo(ctx);
                 drawDiplomaFrame(ctx);
                 drawStripesDeco(ctx);
-                console.log($scope.profile.awards.title);
+                
                 drawMedal(ctx, $scope.profile.awards.title);
                 renderText(ctx, oText);
 
