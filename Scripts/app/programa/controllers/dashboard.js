@@ -22,7 +22,7 @@ angular
             $scope.$emit('ShowPreloader'); //show preloader
 
             var activity_identifier = "0000";
-            
+            var currentUserProfile = getCurrentUserProfile();
             
             var getContentResourcesInterval = $interval(function() {
                 
@@ -57,17 +57,17 @@ angular
             $scope.stageProgress = 0;
 
             $scope.user = moodleFactory.Services.GetCacheJson("CurrentUser");//load current user from local storage
-            $scope.profile = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
-            $scope.user.profileimageurl = $scope.profile != null ? $scope.profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
+            $scope.user.profileimageurl = currentUserProfile != null ? currentUserProfile.profileimageurl + "?rnd=" + new Date().getTime() : "";
             
-            if ($scope.profile && $scope.profile.stars) {
+            var profileData = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.user.id); //profile is only used to get updated stars & rank.
+            if (profileData && profileData.stars) {
                 //the first time the user logs in to the application, the stars come from CurrentUser (authentication service)
                 //the entire application updates profile.stars.  The cached version of stars should be read from profile (if it exists)
                 //Update "CurrentUser" properties: "rank" & "stars", to be in sync with "Perfil/nnn".
                 //WARNING: Within "CurrentUser", the "stars" property value is a string: "stars" : "350",
                 //         but within "Perfil/nnn", the "stars" property value is an integer: "stars" : 350.
-                $scope.user.rank = $scope.profile.rank;
-                $scope.user.stars = parseInt($scope.profile.stars, 10); //Saved as an integer.
+                $scope.user.rank = profileData.rank;
+                $scope.user.stars = parseInt(profileData.stars, 10); //Saved as an integer.
 
                 _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
             }
@@ -99,7 +99,25 @@ angular
             $scope.logout = function () {
                 logout($http, $scope, $location);
             };
-
+            
+            function getCurrentUserProfile() {
+                
+                var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
+                var currentUserProfileTemp = null;
+                
+                if(leaderboard) {
+                    for(var i = 0; i < leaderboard.length; i++) {
+                        var topuser = leaderboard[i];
+                        
+                        if(topuser.userId == Number(_getItem("userId"))) {
+                            currentUserProfileTemp = topuser;
+                            break;
+                        }
+                    }   
+                }
+                
+                return currentUserProfileTemp;
+            }
 
             $scope.navigateToStage = function () {
                 //Check if first time with course
@@ -177,6 +195,11 @@ angular
 
                         var leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
                         for(var lb = 0; lb < leaderboard.length; lb++) {
+                            
+                            if (leaderboard[lb].userId === parseInt(currentUserID, 10)) {
+                                leaderboard[lb].stars = $scope.user.stars;
+                            }
+                            
                             getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", leaderboard[lb].profileimageurl, function(niceImageUrl) { 
                                 leaderboard[lb].profileimageurl = niceImageUrl;
                             });
@@ -187,11 +210,6 @@ angular
                         _pageLoaded = true;
                         if (_loadedResources && _pageLoaded) {
                             $scope.$emit('HidePreloader')
-                        }
-
-                        if (!$scope.profile.termsAndConditions) {
-                            $scope.openTermsModal();
-                            $scope.navigateTo('TermsOfUse');
                         }
 
                     });
@@ -212,7 +230,7 @@ angular
 
                     moodleFactory.Services.GetAsyncLeaderboard($scope.usercourse.courseid, $scope.user.token, function () {
                         $scope.course.leaderboard = JSON.parse(localStorage.getItem("leaderboard"));
-                        
+                        currentUserProfile = getCurrentUserProfile();
                         var images = [];
                         for(var i = 0; i < $scope.course.leaderboard.length; i++) {
                             var topuser = $scope.course.leaderboard[i];
@@ -225,50 +243,56 @@ angular
                         }
                         
                         saveLocalImages(images);
-
-                        moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, function () {
-
-                            $scope.profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                            $timeout(function(){
-                                $scope.user.profileimageurl = $scope.profile != null ? $scope.profile.profileimageurl + "?rnd=" + new Date().getTime() : "";
-                            }, 1);
+                        
+                        
+                        var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
+                        
+                        if(profile) {
+                            profileCallback();
+                        } else {
+                            moodleFactory.Services.GetAsyncProfile(_getItem("userId"), $scope.user.token, profileCallback, errorCallback, true);
+                        }
+                        
+                        function profileCallback() {
                             
-                            saveLocalImages([{ 
-                                'path': "assets/avatar",
-                                'name': "avatar_" + $scope.profile.id + ".png",
-                                'downloadLink': $scope.profile.profileimageurl
-                            }]);
+                            var profile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
+                            $timeout(function(){
+                                $scope.user.profileimageurl = currentUserProfile != null ? currentUserProfile.profileimageurl + "?rnd=" + new Date().getTime() : "";
+                            }, 1);
 
                             _pageLoaded = true;
                             if (_loadedResources && _pageLoaded) {
                                 $scope.$emit('HidePreloader')
                             }
 
-                            if (!$scope.profile.termsAndConditions) {
+                            if (!profile.termsAndConditions) {
                                 $scope.openTermsModal();
                                 $scope.navigateTo('TermsOfUse');
                             }
 
-                            $scope.user.rank = $scope.profile.rank;
-                            $scope.user.stars = parseInt($scope.profile.stars, 10); //Saved as an integer.
+                            $scope.user.rank = currentUserProfile.rank;
+                            $scope.user.stars = parseInt(currentUserProfile.stars, 10); //Saved as an integer.
 
                             _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Finally, update "CurrentUser" in LS.
 
                             for(var lb = 0; lb < $scope.course.leaderboard.length; lb++) {
 
-                                if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) {//If I AM within the Leaderboard...
-                                    $scope.profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
+                                if ($scope.course.leaderboard[lb].userId === parseInt(currentUserID, 10)) { //If I AM within the Leaderboard...
+                                    
+                                    profile.rank = $scope.course.leaderboard[lb].rank;  //Take the rank from Leaderboard,
+                                    profile.stars = parseInt($scope.course.leaderboard[lb].stars, 10);
                                     $scope.user.rank = $scope.course.leaderboard[lb].rank;  //Update rank in template,
-
-                                    _setLocalStorageJsonItem("Perfil/" + currentUserID, $scope.profile);  //Update rank in Perfil/nnn in LS,
+                                    $scope.user.stars = $scope.course.leaderboard[lb].stars;  //Update stars in template,
+                                    
+                                    
+                                    _setLocalStorageJsonItem("Perfil/" + _getItem("userId"), profile);  //Update rank in Perfil/nnn in LS,
                                     _setLocalStorageJsonItem("CurrentUser", $scope.user);  //Update rank in CurrentUser in LS.
+                                    break;
                                 }
                             }
+                            
+                        }
 
-                            $scope.profile.stars = parseInt($scope.profile.stars, 10);
-                            _setLocalStorageJsonItem("Perfil/" + $scope.user.id,  $scope.profile);
-
-                        }, errorCallback, true);
                     }, errorCallback, true);
                 }, errorCallback);
 
