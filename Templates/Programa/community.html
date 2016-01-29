@@ -85,8 +85,8 @@
           </div>
           <div class="block-not post-contents">
             <div ng-switch="p.post_type">
-              <div ng-switch-default ng-bind-html="p.message"></div>
-              <p ng-switch-when="2"><span ng-bind-html="p.message | linky"></span></p>              
+              <div ng-switch-default ng-bind-html="urlify(p.message)"></div>
+              <p ng-switch-when="2"><span class="urlify" ng-bind-html="p.message | linky"></span></p>              
               <p ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></p>
               <div ng-switch-when="4">
                 <p ng-bind="p.message"></p>
@@ -145,7 +145,7 @@
               <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed['id' + p.post_id]">
                   <div>
                       <span class="close"></span>
-                      <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."  ng-model="replyText"></textarea></div>
+                      <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
   
                       <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" nd-disabled="!replyText">Compartir</a>
                   </div>

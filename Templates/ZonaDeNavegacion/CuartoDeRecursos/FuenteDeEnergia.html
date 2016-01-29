@@ -146,8 +146,10 @@
                                     <div>
                                         <div ng-repeat="repeatComment in activity.activityContent.comments | orderBy:repeatComment.dateissued : true | limitTo: activity.activityContent.commentsQty">
                                             <div class="coment block">
+                                                <img ng-click="navigateTo('Perfil/' + repeatComment.id)" ng-if="repeatComment.picture_comment_author" ng-src="{{repeatComment.picture_comment_author + '?token=' + token}}" alt="author"/>
+                                                <img ng-click="navigateTo('Perfil/' + repeatComment.id)" ng-if="!repeatComment.picture_comment_author" src="assets/avatar/default-2.png" alt="user"/>
                                                 <div>
-                                                    <a class="user-alias" ng-click="navigateTo('Perfil/' + comment.id)">{{repeatComment.alias}}</a>
+                                                    <a class="user-alias" ng-click="navigateTo('Perfil/' + repeatComment.id)">{{repeatComment.alias}}</a>
                                                     <span>comentó:</span>
                                                     <div>{{repeatComment.dateissued * 1000 | date: "dd' de 'MMMM' de 'yyyy', 'h:mm:ss a"}}
                                                     </div>

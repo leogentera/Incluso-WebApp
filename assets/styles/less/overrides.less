@@ -1057,7 +1057,6 @@ section.part.inbloq{
 }
 
 
-
 /**************  ZonaDevuelo/Conocete/PuntoDeEncuentro ***********/
 .topics-forum {
     .txt-bigger {
@@ -1410,4 +1409,31 @@ span.htmlContent {
 
 .no-margin {
    margin: 0 !important;
+}
+
+/************ Share box modal ***************/
+.album #shareAlbum > div {
+    margin-top: 2%;
+}
+
+#shareAlbum {
+    position: relative;
+    .arrow-up {
+        position: absolute;
+        width: 0px;
+        height: 0px;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-bottom: 20px solid #FFF;
+        display: block;
+        top: -3vw;
+        left: 55.5vw;
+    }
+    & > div {
+        padding: 4% 0px 7%;
+
+        .add span {
+            padding-left: 0;
+        }
+    }
 }

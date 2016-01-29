@@ -494,7 +494,7 @@ Parallel work file for UI Developer 01
                         border: none;
                         color: #08b190;
                         width: 100%;
-                        font-size: 4.5vw;
+                        font-size: 80%;
                         font-weight: bold;
                         margin: 0 2%;
                         padding: 3vw;
@@ -684,14 +684,17 @@ Parallel work file for UI Developer 01
 
             .logo {
                 background-image: url('@{url-images}/bg-notifications-sky.gif');
-                background-position: 63% - 74.7%;
-                background-size: auto auto;
                 left: 1%;
-                margin: 0 auto;
+                margin: 0px auto;
                 position: absolute;
-                right: 0;
-                top: -6.3%;
+                right: 0px;
+                background-repeat: no-repeat;
+                background-size: auto auto;
                 width: 89%;
+                top: -6%;
+                background-position: center 102%;
+                padding: 0 .5em;
+                box-sizing: content-box;
             }
 
             img.medalla {
@@ -776,18 +779,17 @@ Parallel work file for UI Developer 01
             padding: 3% 0;
             border-bottom: 0.1em solid rgba(255, 255, 255, 0.08);
 
+            a.urlify, .urlify a {
+                word-break: break-all;
+                display: inline-block;
+                color: #FFF;
+            }
+            
             & > div {
                 display: block;
                 width: 90%;
                 margin: 0 auto;
                 padding: 0;
-                & > div {
-                    overflow-x: hidden;
-                    word-break: break-word;
-                    -webkit-hyphens: auto;
-                    -moz-hyphens: auto;
-                    hyphens: auto;
-                }
             }
 
             .achievement-badge {

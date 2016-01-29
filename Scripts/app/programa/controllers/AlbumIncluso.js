@@ -39,6 +39,11 @@ angular
         canvas.width = 1280;
         canvas.height = 1329;
         
+        $scope.navigateToBadges = function() {
+            localStorage.setItem("profile_page", 6);
+            $location.path('Perfil/' + _userId);
+        };
+        
         $scope.album = {
             'profileimageurl': null,
             'shield': null,
@@ -802,7 +807,7 @@ angular
                     "filecontent":albumSrc.replace("data:image/png;base64", ""),
                     "filename": 'album.png',
                     "picture_post_author": _userProfile.profileimageurlsmall,
-                    "iscountable":0
+                    "iscountable":1
                 };
                 
                 moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
@@ -817,7 +822,7 @@ angular
                         $scope.isShareCollapsed = false;
                         $scope.showSharedAlbum = false;
                         $scope.$emit('HidePreloader');
-                    }
+                    }, null, true
                 );
         }
         

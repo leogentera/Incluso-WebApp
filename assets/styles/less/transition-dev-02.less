@@ -376,12 +376,52 @@
             right: 2vw;
         }
         .fuente-energia .wall {
-            padding: 2vw 5%;
+            padding: 2vw 0;
         }
         .fuente-energia .wall .part {
             margin: 0 0 3vw;
             width: 100%;
             display: block;
+            background: transparent;
+            border-radius: 0;
+            & > div > div {
+              margin: 0 5%;
+              background: transparent radial-gradient(ellipse at center center , #1F2733 0px, #141921 100%) repeat scroll 0% 0%;
+              &:first-child {
+                  border-radius: 5px 5px 0 0;
+                  margin-top: 2vh;
+              }
+              &:nth-last-child(2) {
+                  border-radius: 0 0 5px 5px;
+                  margin-bottom: 2vh;
+              }
+              &:last-child{
+                  margin: 0;
+                  background: transparent;
+              }  
+            }
+            .modalDialog {
+                font-size: 84%;
+                & > div {
+                    padding: 4% 0px 7%;
+                }
+                .btn-primary {
+                    width: 90%;
+                    margin: 0px 5vw;
+                }
+                .add textarea {
+                    width: 87%;
+                    padding: 0px 2vw;
+                    border: 0px solid transparent;
+                    resize: none;
+                    line-height: 1;
+                }
+                .icomoon {
+                    color: inherit;
+                    font-size: inherit;
+                    padding: 0;
+                }
+            }
         }
         .fuente-energia .wall .part .type {
             padding: 2vw 3.4vw 2vw 1vw;
@@ -415,8 +455,11 @@
             .border-radius(5px);
         }
         .fuente-energia .wall .part .detail .message {
-            padding: 0 3vw 8vw;
+            padding: 8vw 3vw 8vw;
             border-bottom: .1em solid rgba(255,255,255,.08);
+            span {
+                display: block!important;
+            }
         }
         .fuente-energia .wall .part .detail .message .component,
         .fuente-energia .wall .part .detail .message .component .panel,
@@ -425,7 +468,8 @@
         }
         .fuente-energia .wall .part .detail .message > a {
             display: block;
-            text-align: center;
+            text-align: left;
+            word-break: break-all;
         }
         .fuente-energia .wall .message {
             color: rgb(256,256,256);

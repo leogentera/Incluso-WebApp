@@ -1,7 +1,7 @@
 <div class="incluso-app public">
     <article class="register">
 
-        <div class="alert alert-warning" role="alert" ng-show="!registerModel.modelState.isValid && !isRegistered"
+        <div class="alert alert-warning" role="alert" ng-if="!registerModel.modelState.isValid && !isRegistered"
              ng-cloak>
             <div class="alert-message">
                 <div class="icomoon icon-warning"></div>
@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <div class="alert alert-success" role="alert" ng-show="isRegistered" ng-cloak>
+        <div class="alert alert-success" role="alert" ng-if="isRegistered">
             <div class="alert-message">
                 <div class="icomoon icon-checked-clip"></div>
                 <p>¡Te has registrado correctamente!</p>

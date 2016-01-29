@@ -231,8 +231,10 @@ angular
                     /* sumar uno extra al total */
                     if (forumData.totalExtraPoints < 11) {
                          _.each(historicalDiscussions.discussions, function(elem, index, list) {
-                                extraPointsCounter += (elem.total - 2);
-                            });
+                            if (parseInt(elem.total) > 0) {
+                                extraPointsCounter += (parseInt(elem.total) - 2);
+                            }
+                        });
                          
                          /* sumar uno extra al total */
                          var availableExtraPoints = (11 - forumData.totalExtraPoints);
