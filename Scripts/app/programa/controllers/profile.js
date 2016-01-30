@@ -1794,22 +1794,6 @@ angular
                     }
                 };
 
-                var checkForumExtraPoints = function () {
-
-                    /* check over extra points */
-                    var course = moodleFactory.Services.GetCacheJson("course");
-                    var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
-                    var forum = _.find(forumData.forums, function (elem) {
-                        return elem.forumactivityid == "50000";
-                    });
-
-                    if (Number(forum.discussion[0].total) <= 15) {
-                        updateUserForumStars("50000", 50, false, function () {
-                            successPutStarsCallback();
-                        });
-                    }
-                };
-
                 function postAchievement() {
 
                     var customMessage = '<p> ' + $scope.shareAchievementMessage + '</p>';
@@ -1839,7 +1823,6 @@ angular
                             $scope.showSharedAchievement = true;
 
                             $scope.$emit('HidePreloader');
-                            checkForumExtraPoints();
                         },
                         function () {
                             $scope.shareAchievementMessage = "";
