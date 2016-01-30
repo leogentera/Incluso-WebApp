@@ -455,11 +455,14 @@ angular
                                 dateissued: (new Date() / 1000 | 0),
                                 comment: newComment
                             };
+                            
+                            var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + currentUserId));
 
                             var newCommentObject = {
                                 user_comment: newComment,
                                 dateissued: (new Date() / 1000 | 0),
-                                alias: currentUser.alias
+                                alias: currentUser.alias,
+                                picture_comment_author: profile.profileimageurl
                             };
 
                             $scope.fuenteDeEnergia.activities[i].activityContent.comments.unshift(newCommentObject);
