@@ -96,9 +96,9 @@ myStarsModule.controller('MyStarsController', [
                                     var activity = activities[l];
                                     if (activity.coursemoduleid == courseModuleId){
                                         if (extra) {                                              
-                                            activity.activityname = "Puntos extra " + activity.activityname;
-                                            activity.points = data[i].points;
+                                            activity.activityname = "Puntos extra " + activity.activityname;                                            
                                         }
+                                        activity.points = data[i].points;
                                         activity.sectionname = stageName + " - " + challengeName;
                                         starsByActivity.push(activity);
                                         points = points + data[i].points;
