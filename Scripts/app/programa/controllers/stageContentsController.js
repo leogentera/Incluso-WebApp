@@ -266,8 +266,8 @@ angular
                                     if (!$scope.fuenteDeEnergia.activities[i].optional) {
                                         $scope.statusObligatorios += 1;
                                         starsMandatory += 50;
-                                        assingStars(true, $scope.fuenteDeEnergia.activities[i].coursemoduleid, $scope.fuenteDeEnergia.activities[i].points);                                        
                                         if ($scope.statusObligatorios >= 5 && !$scope.fuenteDeEnergia.status) {
+                                            assingStars(true, $scope.fuenteDeEnergia.coursemoduleid, $scope.fuenteDeEnergia.points);
                                             $scope.navigateToPage(2);
                                         }
                                     }
@@ -295,19 +295,17 @@ angular
                         date: getdate(),
                         is_extra: false
                     };
-                    if (starsMandatory <= 250 && isMandatory){
+                    if (isMandatory){
                         profile.stars = parseInt(profile.stars) + stars;
                         updateLocalStorageStars(data);
                         moodleFactory.Services.PutStars(data, profile, $scope.token, function(){}, errorCallback);
                     }
-                    else if (!isMandatory && totalOptionalPoints < $scope.fuenteDeEnergia.max_resources){
-                        if ((totalOptionalPoints + stars) < $scope.fuenteDeEnergia.max_resources){
-                              data.is_extra = true;
-                              profile.stars = parseInt(profile.stars) + stars;
-                              moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
-                              totalOptionalPoints += stars;
-                              updateLocalStorageStars(data);
-                        }
+                    else if (!isMandatory && ((totalOptionalPoints + stars) < $scope.fuenteDeEnergia.max_resources)){
+                        data.is_extra = true;
+                        profile.stars = parseInt(profile.stars) + stars;
+                        moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
+                        totalOptionalPoints += stars;
+                        updateLocalStorageStars(data);
                     }
                 }
 

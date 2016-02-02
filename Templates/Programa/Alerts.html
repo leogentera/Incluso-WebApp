@@ -3,7 +3,7 @@
 	<tabset class="notifications txt-renglon green-lantern-theme">          
 	  <tab heading="Todas" class="item">
 		<ul class="green-lantern-theme">
-		  <li class="{{notif.seen_date != null ? 'list-item rounded-item' : 'list-item rounded-item highlight'}}" ng-repeat="notif in notifications | orderBy: 'description'" ng-show="qty('All')" ng-click="showAlertDetail(notif.id)">
+		  <li class="{{notif.seen_date != null ? 'list-item rounded-item' : 'list-item rounded-item highlight'}}" ng-repeat="notif in notifications" ng-show="qty('All')" ng-click="showAlertDetail(notif.id)">
 			<span class="icomoon icon-antena pull-left no-padding pink"></span>
 			<div class="pull-left">
 			  <span class="date">{{ notif.wondate | date: 'fullDate'}}</span>
