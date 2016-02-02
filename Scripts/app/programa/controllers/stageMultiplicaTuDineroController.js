@@ -266,7 +266,9 @@ angular
                         }else{
                             url = '/ZonaDeAterrizaje/Dashboard/3/2';
                         };
-                        $location.path(url);
+                        $scope.$apply(function() {
+                            $location.path(url);
+                        });
                     }, 1000);
                 });
             }

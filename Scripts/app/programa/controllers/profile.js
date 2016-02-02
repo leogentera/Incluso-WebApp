@@ -1671,9 +1671,11 @@ angular
                 };
 
                 function avatarUploaded(message) {
-                    $timeout(function(){ 
-                        $location.path('/Perfil/' + $scope.userId);
-                        $route.reload();
+                    $timeout(function () {
+                        $scope.$apply(function () {
+                            $location.path('/Perfil/' + $scope.userId);
+                            $route.reload();
+                        });
                     }, 1000);
                 }
 

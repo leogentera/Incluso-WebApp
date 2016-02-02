@@ -384,7 +384,6 @@ angular
                 _setLocalStorageJsonItem("usercourse", userCourseUpdated);
             }
 
-
             $scope.saveQuiz = function(activity, quiz, userCourseUpdated, activitiesFinished) {
               var results = {
                 "userid": currentUser.userId,
@@ -414,11 +413,15 @@ angular
                   }
                   $timeout(function(){
                     $scope.$emit('HidePreloader');
+                    var url = "";
                     if ($scope.IsComplete) {
-                      $location.path('/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados');  
+                      url = '/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados';  
                     }else{
-                        $location.path('/ZonaDeVuelo/Dashboard/1/2');
+                      url = '/ZonaDeVuelo/Dashboard/1/2';
                     }
+                    $scope.$apply(function() {
+                        $location.path(url);
+                    });
                   }, 1000);
                 }
               });
