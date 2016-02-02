@@ -1773,6 +1773,23 @@ function getImageOrDefault(localPath, imageUrl, getImageOrDefaultCallback) {
     }
 }
 
+function encodeImageWithUri(imageUri, datatype, callback) {
+    var c = document.createElement('canvas');
+    var ctx = c.getContext("2d");
+    var img = new Image();
+    img.onload = function () {
+        c.width = this.width;
+        c.height = this.height;
+        ctx.drawImage(img, 0, 0);
+
+        if (typeof callback === 'function') {
+            var dataURL = c.toDataURL(datatype);
+            callback(dataURL.slice(22, dataURL.length));
+        }
+    };
+    img.src = imageUri;
+}
+
 /* Waits until page is loaded */
 $(document).ready(function(){
     setTimeout(function() {

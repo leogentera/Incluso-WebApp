@@ -128,6 +128,8 @@ angular
                                 var userAnswer = questionAnswer.userAnswer;
                                 respuesta.respuesta = ( userAnswer.indexOf(";") > -1 || j == 2 ? (userAnswer != "" ? userAnswer.split(";") : []) : userAnswer );
                             }
+                        }else if (j == 2 && respuesta.respuesta == "" ){
+                            respuesta.respuesta = [];
                         }
                         proyecto.respuestas.push(respuesta);
                         dimensionMap.questions.push({ "questionId":"" + q.id, "orderId" : "" + (j + 1) });
@@ -298,25 +300,16 @@ angular
                 _endActivity(activityModel, function() {
                     activitiesPosted++;
                     if (activitiesPosted == activitiesAtLeastOne) {
-                        if ($routeParams.retry) {
-                            _forceUpdateConnectionStatus(function() {
-                                if (_isDeviceOnline) {
-                                    moodleFactory.Services.ExecuteQueue();
-                                }
-                            }, function() {} );
-                        }    
-                        $timeout(function(){
-                            if ($scope.pathImagenFicha != "" && parentStatus) {
-                                moodleFactory.Services.GetAsyncForumDiscussions(85, currentUser.token, function(data, key) {
-                                    var currentDiscussionIds = [];
-                                    for(var d = 0; d < data.discussions.length; d++) {
-                                        currentDiscussionIds.push(data.discussions[d].discussion);
-                                    }
-                                    localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
-                                    
-                                    var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
-
-                                    encodeImageUri($scope.pathImagenFicha, function (b64) {
+                        _forceUpdateConnectionStatus(function() {
+                            $timeout(function(){
+                                if ($scope.pathImagenFicha != "" && parentStatus) {
+                                    moodleFactory.Services.GetAsyncForumDiscussions(85, currentUser.token, function(data, key) {
+                                        var currentDiscussionIds = [];
+                                        for(var d = 0; d < data.discussions.length; d++) {
+                                            currentDiscussionIds.push(data.discussions[d].discussion);
+                                        }
+                                        
+                                        var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
                                         var requestData = {
                                             "userid": $scope.user.id,
                                             "discussionid": discussion.discussion,
@@ -325,46 +318,68 @@ angular
                                             "createdtime": ((new Date(quiz.startingTime).getTime()) / 1000),
                                             "modifiedtime": ((new Date(quiz.endingTime).getTime()) / 1000),
                                             "posttype": 4,
-                                            "filecontent": b64,
+                                            "hasfilecontent": true,
+                                            "imageuri": $scope.pathImagenFicha,
+                                            "datatype": "image/jpg",
+                                            "filecontent": "",
                                             "filename": 'mapa_de_vida_' + $scope.user.id + '.jpg',
                                             "picture_post_author": $scope.user.profileimageurlsmall,
                                             "iscountable":0
                                         };
-                                        moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                                            function() {
-                                                $timeout(function () {
-                                                    $scope.sharedAlbumMessage = null;
-                                                    $scope.isShareCollapsed = false;
-                                                    $scope.showSharedAlbum = true;
-                                                    $timeout(function(){
-                                                        _forceUpdateConnectionStatus(function() {
+                                        function postToForum(){
+                                            moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                                                function() {
+                                                    $timeout(function () {
+                                                        $scope.sharedAlbumMessage = null;
+                                                        $scope.isShareCollapsed = false;
+                                                        $scope.showSharedAlbum = true;
+                                                        $timeout(function(){
+                                                            var url = '';
                                                             if (_isDeviceOnline) {
-                                                                $location.path('/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/' + discussion.discussion);
+                                                                url = '/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Comentarios/2026/' + discussion.discussion;
                                                             }else{
-                                                                $scope.$apply(function() {
-                                                                    $location.path('/ZonaDeNavegacion/Dashboard/2/4');
-                                                                });
+                                                                url = '/ZonaDeNavegacion/Dashboard/2/4';
                                                             }
-                                                        }, function() {} );
+                                                            $scope.$apply(function() {
+                                                                $location.path(url);
+                                                            });
+                                                        }, 500);
                                                     }, 500);
-                                                }, 500);
-                                            },
-                                            function(){
-                                                $timeout(function () {
-                                                    $scope.sharedAlbumMessage = null;
-                                                    $scope.isShareCollapsed = false;
-                                                    $scope.showSharedAlbum = false;
-                                                    $scope.$emit('HidePreloader');
-                                                    $location.path('/ZonaDeNavegacion/Dashboard/2/4');
-                                                }, 1000);
-                                            }, true
-                                        );
-                                    });
-                                }, function(){}); 
-                            }else{
-                                $location.path('/ZonaDeNavegacion/Dashboard/2/4');
-                            }
-                        }, 1000);
+                                                },
+                                                function(){
+                                                    $timeout(function () {
+                                                        $scope.sharedAlbumMessage = null;
+                                                        $scope.isShareCollapsed = false;
+                                                        $scope.showSharedAlbum = false;
+                                                        $scope.$emit('HidePreloader');
+                                                        $location.path('/ZonaDeNavegacion/Dashboard/2/4');
+                                                    }, 1000);
+                                                }, (!_isDeviceOnline)
+                                            );
+                                        }
+                                        if (_isDeviceOnline) {
+                                            encodeImageUri($scope.pathImagenFicha, function (b64) {
+                                                requestData.filecontent = b64;
+                                                postToForum();
+                                            });
+                                        }else{
+                                            postToForum();
+                                        }
+                                    }, function(){}); 
+                                }else{
+                                    $timeout(function () {
+                                        $scope.$apply(function() {
+                                            $location.path('/ZonaDeNavegacion/Dashboard/2/4');
+                                        });
+                                    }, 1000);
+                                }
+                            }, 1000);
+                            if ($routeParams.retry) {
+                                if (_isDeviceOnline) {
+                                    moodleFactory.Services.ExecuteQueue();
+                                }
+                            }    
+                        }, function() {} );
                     }
                 });
             }
