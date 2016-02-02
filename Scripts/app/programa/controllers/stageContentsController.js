@@ -233,9 +233,18 @@ angular
                         for (var i = 0; i < $scope.fuenteDeEnergia.activities.length; i++) {
                             if ($scope.fuenteDeEnergia.activities[i].groupid == contentId) {
                                 if (!$scope.fuenteDeEnergia.activities[i].status) {
+                                    
+                                    // update model
                                     $scope.fuenteDeEnergia.activities[i].status = true;
-                                    _setLocalStorageJsonItem("activitiesCache/" + moduleid, $scope.fuenteDeEnergia);
+
                                     //Update cache even if not read from the loading, the cache object could have been created by interaction with anoother element such as "like"
+                                    var fuenteDeEnergiaCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $routeParams.moodleid));
+                                    if(fuenteDeEnergiaCache) {
+                                        fuenteDeEnergiaCache.activities[i].status = true;
+                                        _setLocalStorageJsonItem("activitiesCache/" + $routeParams.moodleid, fuenteDeEnergiaCache);
+                                    } else {
+                                        _setLocalStorageJsonItem("activitiesCache/" + $routeParams.moodleid, $scope.fuenteDeEnergia);
+                                    }
 
                                     // Update activityManagers
                                     for (var am = 0; am < activitymanagers.length; am++) {
@@ -464,12 +473,24 @@ angular
                                 alias: currentUser.alias,
                                 picture_comment_author: profile.profileimageurl
                             };
-
+                            
+                            // update model
                             $scope.fuenteDeEnergia.activities[i].activityContent.comments.unshift(newCommentObject);
                             $scope.fuenteDeEnergia.activities[i].activityContent.newComment = "";
-                            $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty++;
-                            //console.log(JSON.stringify($scope.fuenteDeEnergia.activities[i].activityContent.comments[0]));
-                            _setLocalStorageJsonItem("activitiesCache/" + $routeParams.moodleid, $scope.fuenteDeEnergia);
+                            $scope.fuenteDeEnergia.activities[i].activityContent.commentsQty = 3;
+                            
+                            // update cache
+                            var fuenteDeEnergiaCache = JSON.parse(moodleFactory.Services.GetCacheObject("activitiesCache/" + $routeParams.moodleid));
+                            if(fuenteDeEnergiaCache) {
+                                fuenteDeEnergiaCache.activities[i].activityContent.comments.unshift(newCommentObject);
+                                fuenteDeEnergiaCache.activities[i].activityContent.newComment = "";
+                                fuenteDeEnergiaCache.activities[i].activityContent.commentsQty = 3;
+                                
+                                _setLocalStorageJsonItem("activitiesCache/" + $routeParams.moodleid, fuenteDeEnergiaCache);
+                                
+                            } else {
+                                _setLocalStorageJsonItem("activitiesCache/" + $routeParams.moodleid, $scope.fuenteDeEnergia);
+                            }
                             
                             $scope.showMoreComments(contentId);
                             moodleFactory.Services.PostCommentActivity(activityId, data, function () {}, function () {});
