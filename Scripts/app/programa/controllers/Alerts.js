@@ -13,10 +13,17 @@ angular
                           
             var userNotifications = JSON.parse(localStorage.getItem("notifications"));
             $scope.$emit('ShowPreloader'); //show preloader
-            $scope.notifications = _.filter(userNotifications, function(notif){
-                    return (notif.status != "pending" && notif.wondate != null);
-                });
 
+            var allNotifications = _.filter(userNotifications, function(notif){
+                return (notif.status != "pending" && notif.wondate != null);
+            });
+            
+            var sortedNotifications = _.sortBy(allNotifications,function(notif){
+                return notif.wondate;
+            });
+            
+            $scope.notifications = sortedNotifications.reverse();
+            
             //Quantity of notifications to show in an initial load
             var notificationsQuantityInitial = 6;
             
