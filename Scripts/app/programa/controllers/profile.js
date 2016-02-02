@@ -1320,6 +1320,7 @@ angular
                     var sectionIndex;
                     var usercourse = JSON.parse(localStorage.getItem("usercourse"));
                     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                    $scope.userCourse = usercourse;
                     var sectionName, sectionId;
                     showResultsPage = true; //Show page 12 for Final Results.
 
@@ -1369,7 +1370,7 @@ angular
                                     sectionFieldsAreOk = false;
                                     break;
                             }
-
+                            
                             if (sectionFieldsAreOk) {//The user has successfully completed a profile's section.
 
                                 activity.status = 1;   //Update activity status.
