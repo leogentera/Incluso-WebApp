@@ -644,7 +644,7 @@ angular
 
                     return age;
                 }
-                
+
                 $scope.inMobile = false;
                 $scope.datePickerClick = function () {
                     if (window.mobilecheck()) {
@@ -1251,11 +1251,6 @@ angular
                                         //sectionName = "Mi información";
                                         break;
                                 }
-
-                                //$scope.logOfSections[i].visited = true;
-                                //showResultsPage = true;
-                                //console.log($scope.logOfSections[i].name);
-
                             }
                         }
 
@@ -1276,7 +1271,6 @@ angular
                     }
 
                     $scope.accessedSubsection = false;
-                    showResultsPage = false;
                 };
 
                 $scope.save = function () {
