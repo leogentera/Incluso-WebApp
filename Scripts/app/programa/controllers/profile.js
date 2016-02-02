@@ -641,9 +641,10 @@ angular
                     if ( ((parseInt(birth_month, 10) - 1) == today_month) && (today_day < parseInt(birth_day, 10))) {
                         age--;
                     }
-                    console.log("Age = " + age + ": " + dpValue);
+
                     return age;
                 }
+                
                 $scope.inMobile = false;
                 $scope.datePickerClick = function () {
                     if (window.mobilecheck()) {
@@ -651,13 +652,14 @@ angular
                         cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='date']").val()]);
                     }
                 };
-                $scope.myAge = calculate_age($scope.birthdate_Dateformat);
+
+                //$scope.myAge = calculate_age($scope.birthdate_Dateformat);
                 function SuccessDatePicker(data) {
                     $("input[name='date']").val(data);
                     var splitDate = data.split("/");
                     var birthday = new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
                     $scope.model.birthday = moment(birthday).format("MM/DD/YYYY");
-                    $scope.myAge = calculate_age($scope.model.birthday);console.log("Success = " + $scope.myAge);
+                    $scope.myAge = calculate_age($scope.model.birthday);
                 }
 
                 function FailureDatePicker(data) {
@@ -671,7 +673,7 @@ angular
                     var d = matches[1];
                     var y = matches[3];
                     var composedDate = new Date(y, m, d);
-                    console.log(composedDate.getDate() == d && composedDate.getMonth() == m && composedDate.getFullYear() == y);
+
                     return composedDate.getDate() == d && composedDate.getMonth() == m && composedDate.getFullYear() == y;
                 }
 
