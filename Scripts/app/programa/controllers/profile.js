@@ -399,6 +399,9 @@ angular
                             $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                         }
 
+                        //Save a oopy of the original data...
+                        _setLocalStorageJsonItem("originalProfile/" + $scope.userId, $scope.model);
+
                         $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
 
                         callback();
@@ -453,6 +456,9 @@ angular
                         moodleFactory.Services.GetAsyncProfile($scope.userId, currentUser.token, function () {
 
                             $scope.model = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.userId);
+
+                            //Save a oopy of the original data...
+                            _setLocalStorageJsonItem("originalProfile/" + $scope.userId, $scope.model);
 
                             if ($scope.model.profileimageurl) {
                                 $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
@@ -1007,6 +1013,34 @@ angular
                     }, 1);
                 };
 
+                Array.prototype.compare = function(testArr) {
+                    if (this.length != testArr.length) return false;
+                    for (var i = 0; i < testArr.length; i++) {
+                        if (this[i].compare) {
+                            if (!this[i].compare(testArr[i])) return false;
+                        }
+                        if (this[i] !== testArr[i]) return false;
+                    }
+                    return true;
+                };
+
+                function arraysAreEqual(ary1, ary2){
+                    if(ary1.length !== ary2.length) {
+                        return false;
+                    }
+
+                    for(var i = 0; i < ary1.length; i++) {
+                        for(var key in ary1[i]) {
+                            //console.log(ary1[i][key] + " -- " + ary2[i][key]);
+                            if (ary1[i][key] !== ary2[i][key] && key != "$$hashKey") {
+                                return false;
+                            }
+                        }
+                    }
+
+                    return true;
+                }
+
                 $scope.index = function () {//Redirect to editing profile again.
                     if ($location.$$path == '/Perfil/Editar/' + $scope.userId) {
 
@@ -1014,6 +1048,7 @@ angular
                         $scope.sum = 0;
                         var i;
                         var showResultsPage = false;
+                        var edited = false;
 
                         for (i = 0; i < $scope.logOfSections.length; i++) {
                             //If the user just completed some section in Profile...
@@ -1028,9 +1063,189 @@ angular
                         for (i = 0; i < $scope.logOfSections.length; i++) {
                             //If the user just visited some previously finished activity...
                             if ($scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 && $scope.logOfSections[i].points == 0 && $scope.logOfSections[i].status == 1) {
-                                $scope.logOfSections[i].visited = true;
-                                showResultsPage = true;
+                                //Recover original Profile data from LS...
+                                var originalProfile = JSON.parse(localStorage.getItem("originalProfile/" + $scope.userId));
+
+                                switch ($scope.logOfSections[i].id) {
+                                    case "3000":  // "Llenar mi informacion"; points to assign: 400
+
+                                        if ($scope.model.firstname !== originalProfile.firstname) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.lastname !== originalProfile.lastname) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.mothername !== originalProfile.mothername) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.gender !== originalProfile.gender) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.birthCountry !== originalProfile.birthCountry) {
+                                            edited = true;
+                                        }
+                                        if ($scope.birthdate_Dateformat !== originalProfile.birthday) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.maritalStatus !== originalProfile.maritalStatus) {
+                                            edited = true;
+                                        }
+                                        if (!arraysAreEqual($scope.model.studies, originalProfile.studies)) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.country !== originalProfile.country) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.city !== originalProfile.city) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.town !== originalProfile.town) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.postalCode !== originalProfile.postalCode) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.street !== originalProfile.street) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.num_ext !== originalProfile.num_ext) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.num_int !== originalProfile.num_int) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.colony !== originalProfile.colony) {
+                                            edited = true;
+                                        }
+                                        if (!arraysAreEqual($scope.model.phones, originalProfile.phones)) {
+                                            edited = true;
+                                        }
+                                        if (!arraysAreEqual($scope.model.socialNetworks, originalProfile.socialNetworks)) {
+                                            edited = true;
+                                        }
+                                        if (!arraysAreEqual($scope.model.familiaCompartamos, originalProfile.familiaCompartamos)) {
+                                            edited = true;
+                                        }
+
+                                        if (edited) {
+                                            $scope.logOfSections[i].visited = true;
+                                            showResultsPage = true;
+                                            edited = false;
+                                        }
+
+                                        break;
+                                    case "3001":  // "Llenar Mi Personalidad"; points to assign: 400
+
+                                        if (!$scope.model.favoriteSports.compare(originalProfile.favoriteSports)) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.artisticActivities.compare(originalProfile.artisticActivities)) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.hobbies.compare(originalProfile.hobbies)) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.talents.compare(originalProfile.talents)) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.values.compare(originalProfile.values)) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.habilities.compare(originalProfile.habilities)) {
+                                            edited = true;
+                                        }
+                                        if (!arraysAreEqual($scope.model.inspirationalCharacters, originalProfile.inspirationalCharacters)) {
+                                            edited = true;
+                                        }
+
+                                        if (edited) {
+                                            $scope.logOfSections[i].visited = true;
+                                            showResultsPage = true;
+                                            edited = false;
+                                        }
+
+                                        break;
+                                    case "3002":  // "Llenar Llenar Socioeconomicos"; points to assign: 400
+                                        if ($scope.model.iLiveWith !== originalProfile.iLiveWith) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.mainActivity.compare(originalProfile.mainActivity)) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.level !== originalProfile.level) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.grade !== originalProfile.grade) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.period !== originalProfile.period) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.children !== originalProfile.children) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.gotMoneyIncome !== originalProfile.gotMoneyIncome) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.moneyIncome.compare(originalProfile.moneyIncome)) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.medicalCoverage !== originalProfile.medicalCoverage) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.medicalInsurance !== originalProfile.medicalInsurance) {
+                                            edited = true;
+                                        }
+
+                                        if (edited) {
+                                            $scope.logOfSections[i].visited = true;
+                                            showResultsPage = true;
+                                            edited = false;
+                                        }
+
+                                        break;
+                                    case "3003":  // "Llenar Uso de la tecnologia"; points to assign: 400
+                                        if (!$scope.model.knownDevices.compare(originalProfile.knownDevices)) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.ownDevices.compare(originalProfile.ownDevices)) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.phoneUsage.compare(originalProfile.phoneUsage)) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.playVideogames !== originalProfile.playVideogames) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.videogamesFrecuency !== originalProfile.videogamesFrecuency) {
+                                            edited = true;
+                                        }
+                                        if ($scope.model.videogamesHours !== originalProfile.videogamesHours) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.kindOfVideogames.compare(originalProfile.kindOfVideogames)) {
+                                            edited = true;
+                                        }
+                                        if (!$scope.model.favoriteGames.compare(originalProfile.favoriteGames)) {
+                                            edited = true;
+                                        }
+
+                                        if (edited) {
+                                            $scope.logOfSections[i].visited = true;
+                                            showResultsPage = true;
+                                            edited = false;
+                                        }
+
+                                        break;
+                                    default:
+                                        //sectionName = "Mi información";
+                                        break;
+                                }
+
+                                //$scope.logOfSections[i].visited = true;
+                                //showResultsPage = true;
                                 //console.log($scope.logOfSections[i].name);
+
                             }
                         }
 
@@ -1039,6 +1254,7 @@ angular
                         }
 
                         $scope.visitedSections = null; //Clean record of visited sections.
+                        ClearLocalStorage("originalProfile/");
                     }
 
                     if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && !showResultsPage) {
