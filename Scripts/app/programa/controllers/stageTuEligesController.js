@@ -170,7 +170,7 @@ angular
                                     questionsAnswered.completed && 
                                     questionsAnswered.completed >= $scope.tuEligesActivities.questions.length &&
                                     questionsAnswered.completed > 0 &&
-                                    quiz_finished ;
+                                    quiz_finished;
 
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
@@ -257,9 +257,11 @@ angular
                         if ($scope.IsComplete) {
                             url = ($scope.isReprobado ? '/ZonaDeNavegacion/TuEliges/TuEliges/2012' : '/ZonaDeNavegacion/TuEliges/ResultadosTuEliges');
                         }else{
-                            $location.path('/ZonaDeNavegacion/Dashboard/2/3')
+                            url = '/ZonaDeNavegacion/Dashboard/2/3';
                         };
-                        $location.path(url);
+                        $scope.$apply(function() {
+                            $location.path(url);
+                        });
                     },1000);
                 });
             }
@@ -292,6 +294,17 @@ angular
                     );
                 }
             }
+            
+            function getContentResources() {
+
+                drupalFactory.Services.GetContent("tuEliges", function (data, key) {
+                    $scope.contentResources = data.node;
+                }, function () {
+                }, false);
+
+            }
+            
+            getContentResources();
         }])
         .controller('stageTuEligesModalController', function ($scope, $modalInstance, content) {
             $scope.message = content.mensaje;

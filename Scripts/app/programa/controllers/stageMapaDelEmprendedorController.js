@@ -298,26 +298,19 @@ angular
                 
                 $scope.$emit('ShowPreloader');
                 _endActivity(activityModel, function() {
-                    if ($routeParams.retry) {
-                        _forceUpdateConnectionStatus(function() {
-                            if (_isDeviceOnline) {
-                                moodleFactory.Services.ExecuteQueue();
-                            }
-                        }, function() {} );
-                    }    
                     activitiesPosted++;
                     if (activitiesPosted == subactivitiesCompleted.length) {
-                        $timeout(function(){
-                            if ($scope.pathImagenFicha != "" && canPost) {
-                                moodleFactory.Services.GetAsyncForumDiscussions(91, currentUser.token, function(data, key) {
-                                    var currentDiscussionIds = [];
-                                    for(var d = 0; d < data.discussions.length; d++) {
-                                        currentDiscussionIds.push(data.discussions[d].discussion);
-                                    }
-                                    localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
-                                    
-                                    var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
-                                    encodeImageUri($scope.pathImagenFicha, function (b64) {
+                        _forceUpdateConnectionStatus(function() {
+                            $timeout(function(){
+                                if ($scope.pathImagenFicha != "" && canPost) {
+                                    moodleFactory.Services.GetAsyncForumDiscussions(91, currentUser.token, function(data, key) {
+                                        var currentDiscussionIds = [];
+                                        for(var d = 0; d < data.discussions.length; d++) {
+                                            currentDiscussionIds.push(data.discussions[d].discussion);
+                                        }
+                                        localStorage.setItem("currentDiscussionIds", JSON.stringify(currentDiscussionIds));
+                                        
+                                        var discussion = _.find(data.discussions, function(d){ return d.name.toLowerCase().indexOf("comparte") > -1 });
                                         var requestData = {
                                             "userid": $scope.user.id,
                                             "discussionid": discussion.discussion,
@@ -326,46 +319,69 @@ angular
                                             "createdtime": ((new Date(quiz.startingTime).getTime()) / 1000),
                                             "modifiedtime": ((new Date(quiz.endingTime).getTime()) / 1000),
                                             "posttype": 4,
-                                            "filecontent": b64,
+                                            "hasfilecontent": true,
+                                            "imageuri": $scope.pathImagenFicha,
+                                            "datatype": "image/jpg",
+                                            "filecontent": "",
                                             "filename": 'mapa_de_emprendedor_' + $scope.user.id + '.jpg',
                                             "picture_post_author": $scope.user.profileimageurlsmall,
                                             "iscountable":0
                                         };
-                                        moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
-                                            function() {
-                                                $timeout(function () {
-                                                    $scope.sharedAlbumMessage = null;
-                                                    $scope.isShareCollapsed = false;
-                                                    $scope.showSharedAlbum = true;
-                                                    $timeout(function(){
-                                                        _forceUpdateConnectionStatus(function() {
-                                                            if (_isDeviceOnline) {
-                                                                $location.path('/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/3404/' + discussion.discussion);
-                                                            }else{
+
+                                        function postToForum(){
+                                            moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                                                function() {
+                                                    $timeout(function () {
+                                                        $scope.sharedAlbumMessage = null;
+                                                        $scope.isShareCollapsed = false;
+                                                        $scope.showSharedAlbum = true;
+                                                        $timeout(function(){
+                                                                var url = '';
+                                                                if (_isDeviceOnline) {
+                                                                    url = '/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Comentarios/3404/' + discussion.discussion;
+                                                                }else{
+                                                                    url = '/ZonaDeAterrizaje/Dashboard/3/3';
+                                                                }
                                                                 $scope.$apply(function() {
-                                                                    $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                                                    $location.path(url);
                                                                 });
-                                                            }
-                                                        }, function() {} );
+                                                        }, 500);
                                                     }, 500);
-                                                }, 500);
-                                            },
-                                            function(){
-                                                $timeout(function () {
-                                                    $scope.sharedAlbumMessage = null;
-                                                    $scope.isShareCollapsed = false;
-                                                    $scope.showSharedAlbum = false;
-                                                    $scope.$emit('HidePreloader');
-                                                    $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
-                                                }, 1000);
-                                            }, true
-                                        );
-                                    });
-                                }, function(){});
-                            } else {
-                                $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
-                            }
-                        }, 1000);
+                                                },
+                                                function(){
+                                                    $timeout(function () {
+                                                        $scope.sharedAlbumMessage = null;
+                                                        $scope.isShareCollapsed = false;
+                                                        $scope.showSharedAlbum = false;
+                                                        $scope.$emit('HidePreloader');
+                                                        $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                                    }, 1000);
+                                                }, (!_isDeviceOnline)
+                                            );
+                                        }
+                                        if (_isDeviceOnline) {
+                                            encodeImageUri($scope.pathImagenFicha, function (b64) {
+                                                requestData.filecontent = b64;
+                                                postToForum();
+                                            });
+                                        }else{
+                                            postToForum();
+                                        }
+                                    }, function(){});
+                                } else {
+                                    $timeout(function () {
+                                        $scope.$apply(function() {
+                                            $location.path('/ZonaDeAterrizaje/Dashboard/3/3');
+                                        });
+                                    }, 1000);
+                                }
+                            }, 1000);
+                            if ($routeParams.retry) {
+                                if (_isDeviceOnline) {
+                                    moodleFactory.Services.ExecuteQueue();
+                                }
+                            }    
+                        }, function(){});
                     }
                 });
             }
