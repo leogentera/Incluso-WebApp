@@ -300,7 +300,7 @@ angular
                         updateLocalStorageStars(data);
                         moodleFactory.Services.PutStars(data, profile, $scope.token, function(){}, errorCallback);
                     }
-                    else if (!isMandatory && ((totalOptionalPoints + stars) < $scope.fuenteDeEnergia.max_resources)){
+                    else if (!isMandatory && ((totalOptionalPoints + stars) <= $scope.fuenteDeEnergia.max_resources)){
                         data.is_extra = true;
                         profile.stars = parseInt(profile.stars) + stars;
                         moodleFactory.Services.PutStars(data, profile, $scope.token, successfullCallBack, errorCallback);
