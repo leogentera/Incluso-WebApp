@@ -989,7 +989,9 @@ angular
                             break;
                     }
 
-                    $scope.visitedSections.push($scope.origin); //For tracking user activity in sections.
+                    if ($scope.visitedSections.indexOf($scope.origin) == -1) {
+                        $scope.visitedSections.push($scope.origin); //For tracking user activity in sections.
+                    }
                 };
 
                 $scope.navigateToPage = function (pageNumber) {
@@ -1006,23 +1008,37 @@ angular
                 };
 
                 $scope.index = function () {//Redirect to editing profile again.
-                    if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && showResultsPage) {
+                    if ($location.$$path == '/Perfil/Editar/' + $scope.userId) {
 
                         //Make up the total points earned & title.
                         $scope.sum = 0;
                         var i;
+                        var showResultsPage = false;
 
                         for (i = 0; i < $scope.logOfSections.length; i++) {
-                            //If the section was actually visited or has points > 0 ...
-                            if ( $scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 || $scope.logOfSections[i].points > 0 ) {
+                            //If the user just completed some section in Profile...
+                            if ($scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 && $scope.logOfSections[i].points > 0) {
                                 $scope.sum += $scope.logOfSections[i].points;
                                 $scope.logOfSections[i].visited = true;
+                                showResultsPage = true;
+                                //console.log("+ :" + $scope.logOfSections[i].name);
                             }
                         }
 
-                        $scope.visitedSections = []; //Clean record of visited sections.
-                        //console.log(JSON.stringify($scope.logOfSections));
-                        $scope.currentPage = 12; //Finally, show the results page.
+                        for (i = 0; i < $scope.logOfSections.length; i++) {
+                            //If the user just visited some previously finished activity...
+                            if ($scope.visitedSections.indexOf($scope.logOfSections[i].id) > -1 && $scope.logOfSections[i].points == 0 && $scope.logOfSections[i].status == 1) {
+                                $scope.logOfSections[i].visited = true;
+                                showResultsPage = true;
+                                //console.log($scope.logOfSections[i].name);
+                            }
+                        }
+
+                        if (showResultsPage) {
+                            $scope.currentPage = 12; //Finally, show the results page.
+                        }
+
+                        $scope.visitedSections = null; //Clean record of visited sections.
                     }
 
                     if ($location.$$path != '/Perfil/ConfigurarPrivacidad' && !showResultsPage) {
@@ -1055,14 +1071,15 @@ angular
                     if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                         saveUser();
                     } else {
-                        var validationResult = validateRestrictions();  //Valid if validateModel() returns true
-
-                        deleteRepeatedValues();   //Validates for required restrictions.
+                        var validationResult = validateRestrictions();  //Valid if validateModel() returns true.
 
                         if (validationResult) {
+                            $scope.model.modelState.isValid = true;
+                            deleteRepeatedValues();   //Validates for required restrictions.
                             $scope.$emit('ShowPreloader');
                             saveUser();
                         } else {
+                            $scope.model.modelState.isValid = false;
                             $scope.$emit('scrollTop');
                         }
                     }
@@ -1139,9 +1156,10 @@ angular
 
                             if (sectionFieldsAreOk) {//The user has successfully completed a profile's section.
 
-                                $scope.logOfSections.push({"id" : sectionId,"name" : sectionName, "points" : activity.points});
-                                $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
                                 activity.status = 1;   //Update activity status.
+                                $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": activity.points, "status": 1});
+                                $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
+
                                 activity.last_status_update = moment(Date.now()).unix();
                                 
                                 var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + $scope.userId));
@@ -1170,7 +1188,7 @@ angular
 
                                 sectionFieldsAreOk = false;  //Restore 'sectionFieldsAreOk' value
                             } else {//Not all fields were completed.
-                                $scope.logOfSections.push({"id" : sectionId, "name" : sectionName, "points" : 0});
+                                $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": 0, "status": 0});
                             }
                         } else { //The subsection has been previously completed.
 
@@ -1180,7 +1198,7 @@ angular
                             }
                             */
 
-                            $scope.logOfSections.push({"id" : sectionId, "name" : sectionName, "points" : 0});
+                            $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": 0, "status": 1});
                         }
                     }
                 }            
@@ -1321,8 +1339,8 @@ angular
                 function assignmentMiInformacion() {//Asign 400 points if all fields are full.
                     var result = false;
 
-                    if ($scope.model.firstname && $scope.model.lastname && $scope.model.mothername && $scope.model.gender && $scope.model.address.country
-                            && $scope.birthdate_Dateformat && $scope.model.age && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.city
+                    if ($scope.model.firstname && $scope.model.lastname && $scope.model.mothername && $scope.model.gender && $scope.model.birthCountry
+                            && $scope.birthdate_Dateformat && $scope.model.age && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.country && $scope.model.address.city
                                 && $scope.model.address.town && $scope.model.address.postalCode && $scope.model.address.street && $scope.model.address.num_ext
                                     && $scope.model.address.colony && phonesAreValid($scope.model.phones) && socialNetsAreValid($scope.model.socialNetworks) 
                                         && compartamosIsValid($scope.model.familiaCompartamos)){
