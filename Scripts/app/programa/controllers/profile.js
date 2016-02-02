@@ -641,7 +641,7 @@ angular
                     if ( ((parseInt(birth_month, 10) - 1) == today_month) && (today_day < parseInt(birth_day, 10))) {
                         age--;
                     }
-
+                    
                     return age;
                 }
 
@@ -669,7 +669,7 @@ angular
                     var d = matches[1];
                     var y = matches[3];
                     var composedDate = new Date(y, m, d);
-
+                    console.log(composedDate.getDate() == d && composedDate.getMonth() == m && composedDate.getFullYear() == y);
                     return composedDate.getDate() == d && composedDate.getMonth() == m && composedDate.getFullYear() == y;
                 }
 
@@ -969,6 +969,7 @@ angular
                     }
 
                 };
+
                 $scope.visitedSections = [];
                 $scope.navigateToSection = function (pageNumber) {
                     $scope.currentPage = pageNumber;
@@ -1282,7 +1283,7 @@ angular
                     $scope.model.currentStudies.level = $scope.model.level;
                     $scope.model.currentStudies.grade = $scope.model.grade;
                     $scope.model.currentStudies.period = $scope.model.period;
-                    $scope.model.birthday = $scope.birthdate_Dateformat;  //Take date from UI.
+                    //$scope.model.birthday = $scope.birthdate_Dateformat;  //Take date from UI.
 
                     if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                         saveUser();
@@ -1556,7 +1557,7 @@ angular
                     var result = false;
 
                     if ($scope.model.firstname && $scope.model.lastname && $scope.model.mothername && $scope.model.gender && $scope.model.birthCountry
-                            && $scope.birthdate_Dateformat && $scope.model.age && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.country && $scope.model.address.city
+                            && $scope.birthdate_Dateformat && $scope.model.age > 13 && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.country && $scope.model.address.city
                                 && $scope.model.address.town && $scope.model.address.postalCode && $scope.model.address.street && $scope.model.address.num_ext
                                     && $scope.model.address.colony && phonesAreValid($scope.model.phones) && socialNetsAreValid($scope.model.socialNetworks) 
                                         && compartamosIsValid($scope.model.familiaCompartamos)){
