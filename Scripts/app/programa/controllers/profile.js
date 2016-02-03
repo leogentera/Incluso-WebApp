@@ -470,14 +470,15 @@ angular
                                     } else {//If the password Does not Match...
                                         $scope.model.modelState.isValid = false;
                                         $scope.model.modelState.errorMessages = ["La contraseña no es correcta."];
+                                        $scope.$emit('HidePreloader');
                                     }
 
                                 },
 
                                 function () {//The request was not successfull.
-                                    $scope.$emit('HidePreloader');
                                     $scope.model.modelState.isValid = false;
                                     $scope.model.modelState.errorMessages = ["Intente de nuevo más tarde."];
+                                    $scope.$emit('HidePreloader');
 
                                 });
 

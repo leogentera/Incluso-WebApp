@@ -399,7 +399,7 @@
                 method: 'POST',
                 url: url,
                 data: data,
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json' }
             }).success(function (data, status, headers, config) {
 
                 if (key != null) {
@@ -421,7 +421,6 @@
                 }
             });
         };
-        
 
         var _postAsyncForumPostData = function (key, data, url, successCallback, errorCallback, needUpdatePostCounter, addToQueue) {
             _getDeviceVersionAsync();
@@ -1008,6 +1007,20 @@
                 }
             });
         };
+
+        var _desactivateUser = function (userId, token, password, successCallback, errorCallback) {
+
+            _httpFactory({
+                method: 'PATCH',
+                url: API_RESOURCE.format("user/" + userId),
+                headers: {'Content-Type': 'application/json', 'Authorization': token},
+                data: {password: password}
+            }).success(function (data) {
+                successCallback(data);
+            }).error(function () {
+                errorCallback();
+            });
+        };
         
         var _calculateForumExtraPoints = function(data) {
             
@@ -1387,7 +1400,8 @@
             ExecuteQueue: _executeQueue,
             PostAsyncAvatar: _postAsyncAvatar,
             PutAsyncAward: _putAsyncAward,            
-            PostGeolocation: _postGeolocation
+            PostGeolocation: _postGeolocation,
+            DesactivateUser: _desactivateUser
         };
     })();
 }).call(this);
