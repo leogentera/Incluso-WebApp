@@ -1296,17 +1296,29 @@ body {
             }
             .modal-body {
                 padding: 4vw;
+                padding-bottom: 8vw;
                 -webkit-overflow-scrolling: touch;
                 .subtitle {
                     margin: 0px;
                 }
-                p, ol li {
+                ul {
+                    margin: 0 10%;
+                    padding: 0;
+                    text-align: left;
+                    li {
+                        margin-left: 10%;
+                    }
+                }
+                p, ol li, ul {
                     color: @clr-white;
                     font-size: 5vw;
                 }
                 figure {
                     margin-top: 4vh;
                     .border-radius(4px);
+                }
+                .checkbox {
+                    margin: 2em 0;
                 }
             }
             .modal-footer { 
@@ -1420,7 +1432,7 @@ body {
             }
         }
         .navbar-assets {
-            display:block;
+            display: flex;
             position:static;
             padding:0;
             margin: 0;
@@ -1430,13 +1442,11 @@ body {
             line-height: 13vw;
 
             .navbar-heading {
-                display:inline-block;
                 overflow:hidden;
-                float:left;
                 padding:0;
                 margin:0;
+                margin-right: auto;
                 height: inherit;
-                width:50%;
                 color:#fff;
                 font-size: 4.1vw;
                 font-weight:bold;
@@ -1445,16 +1455,12 @@ body {
                 white-space:nowrap
             }
             .navbar-tools {
-                display:inline-block; 
-                float: right;
                 padding:0;
                 margin:0;
                 height: inherit;
-                width:50%;
-                max-width:50%;
                 list-style-type:none;
                 line-height: inherit;
-
+                margin-left: auto;
                 li {
                     display:inline-block;
                     float: right;

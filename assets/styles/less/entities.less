@@ -110,6 +110,9 @@
             .white{
                 color:white !important;
             }
+            .yellowgreen {
+                color: #b8cf36!important;
+            }
             .pill{
                 border: 2px solid rgba(255, 255, 255, 0.3);
                 border-radius: 200px;
@@ -1902,9 +1905,82 @@
                         }
                     }
                 }
+                &.my-account {
+                    li {
+                        cursor: pointer;
+                        span {
+                            color: #8098A0;
+                            position: absolute;
+                            right: 0px;
+                            top: 0px;
+                            font-size: 5vw;
+                            line-height: 9vw;
+                            padding-right: 4vw;
+                        }
+                        .red-color {
+                            color: #F05736;
+                        }
+                        > div {
+                            position: relative;
+                        }
+                    }
+                }
             }
             .actions {
                 margin-top: 4vh;
+            }
+            .disabled-account {
+                p, span {
+                    color: #F05736;
+                    text-align: left;
+                    width: 100%;
+                }
+                .icomoon {
+                    font-size: 1.5em;
+                    line-height: 1.5em;
+                }
+              
+                .input-group {
+                    border-bottom: 1pt solid;
+                    .input-group-addon {
+                        width: 24px;
+                        text-align: center;
+                        font-size: 1.2em;
+                        background: none;
+                        color: #8EAAB3;
+                        padding-right: 1em;
+                    }
+                    .theme-form {
+                        border: 0;
+                        margin-bottom: 0;
+                    }
+                }
+                .pass-verify p {
+                    color: #8098A0;
+                }
+                
+            }
+            .pass-recovery {
+                .input-group-addon {
+                    width: initial;
+                    color: #8EAAB3;
+                    padding: 0;
+                    padding-right: 0.5em;
+                    text-align: left;
+                }
+                .btn-info {
+                    padding-right: 0!important;
+                }
+                .form-control.theme-form {
+                    margin: 0;
+                }
+                .input-group {
+                    border-bottom: 1pt solid;
+                }
+                .checkbox {
+                    margin-bottom: 6vw;
+                    margin-top: 10vw;
+                }
             }
         }
         /***********************************************************************/
@@ -3211,6 +3287,20 @@
             padding: 0;
             margin: 0 auto;
             overflow: hidden;
+        }
+    }
+
+    /********************* Password recovery *************************/
+    .password-recovery {
+        p {
+            color: #FFF;
+            font-size: 5vw;
+        }
+        .btn-info {
+            padding-right: 0!important;
+        }
+        .theme-default.secret-question {
+            border: 0!important;
         }
     }
 }
