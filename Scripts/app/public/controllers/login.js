@@ -41,6 +41,18 @@ angular
             $scope.$watch("userCredentialsModel.modelState.errorMessages", function (newValue, oldValue) {
                 $scope.userCredentialsModel.modelState.isValid = (newValue.length === 0);
             });
+            
+            function validateModel(){                
+                var errors = [];
+                
+                var passwordPolicy = "La contraseña es requerida";
+                var usernamePolicy = "El nombre de usuario es requerido"; 
+                
+                if(!$scope.loginForm.password.$valid){ errors.push(passwordPolicy); }
+                if(!$scope.loginForm.userName.$valid){ errors.push(usernamePolicy); }
+                $scope.userCredentialsModel.modelState.errorMessages = errors;
+                return (errors.length === 0);
+            }
 
             function loadQuizesAssets(userId, userToken) {
                 $scope.$emit('ShowPreloader');
@@ -166,7 +178,11 @@ angular
 
             function loginConnectedCallback() {
                 // reflect loading state at UI
-                $http(
+                
+                
+                if(validateModel()) {
+                    
+                    $http(
                     {
                         method: 'POST',
                         url: API_RESOURCE.format("authentication"),
@@ -176,64 +192,68 @@ angular
                             password: $scope.userCredentialsModel.password
                         })
                     }
-                ).success(function (data, status, headers, config) {
-                    
-                    localStorage.removeItem("offlineConnection");
-                    //save token for further requests and autologin
-                    $scope.currentUserModel = data;
-                    $scope.currentUserModel.userId = data.id;
+                    ).success(function (data, status, headers, config) {
 
-                    _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
-                    _setId(data.id);
-                    
-                    _loadDrupalResources();
+                        localStorage.removeItem("offlineConnection");
+                        //save token for further requests and autologin
+                        $scope.currentUserModel = data;
+                        $scope.currentUserModel.userId = data.id;
 
-                    //Run queue
-                    moodleFactory.Services.ExecuteQueue(function () {
-                        //Preparing for syncAll.
-                        //succesful credentials
-                        moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
-                            
-                            var course = moodleFactory.Services.GetCacheJson("course");
-                            moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
+                        _setLocalStorageJsonItem("CurrentUser", $scope.currentUserModel);
+                        _setId(data.id);
 
-                                //Load Quizzes assets
-                                loadQuizesAssets(data.id, data.token);
-                                GetExternalAppData();
-                                
-                                $timeout(
-                                function () {
-                                    $scope.$emit('HidePreloader');
-                                    $location.path('/ProgramaDashboard');
-                                }, 1000);
+                        _loadDrupalResources();
 
-                            }, function () {
+                        //Run queue
+                        moodleFactory.Services.ExecuteQueue(function () {
+                            //Preparing for syncAll.
+                            //succesful credentials
+                            moodleFactory.Services.GetAsyncUserCourse(_getItem("userId"), function() {
+
+                                var course = moodleFactory.Services.GetCacheJson("course");
+                                moodleFactory.Services.GetAsyncUserPostCounter(data.token, course.courseid, function () {
+
+                                    //Load Quizzes assets
+                                    loadQuizesAssets(data.id, data.token);
+                                    GetExternalAppData();
+
+                                    $timeout(
+                                    function () {
+                                        $scope.$emit('HidePreloader');
+                                        $location.path('/ProgramaDashboard');
+                                    }, 1000);
+
+                                }, function () {
+                                    offlineCallback();
+                                }, true);
+
+                            }, function() {
                                 offlineCallback();
-                            }, true);
-                            
-                        }, function() {
-                            offlineCallback();
+                            });
                         });
+
+                        _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
+
+                    }).error(function (data, status, headers, config) {
+
+                        var errorMessage = "";
+                        if(data && data.messageerror) {
+                            errorMessage = window.atob(data.messageerror);  
+                        } else{
+                            errorMessage = "Se necesita estar conectado a Internet para continuar";
+                        }
+
+                        $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
+                        $scope.$emit('HidePreloader');
+                        $scope.$emit('scrollTop');
+                        $scope.isLogginIn = false;
                     });
-
-                    _setLocalStorageJsonItem("Credentials", $scope.userCredentialsModel);
-
-                }).error(function (data, status, headers, config) {
-                    
-                    var errorMessage = "";
-                    if(data && data.messageerror) {
-                        errorMessage = window.atob(data.messageerror);  
-                    } else{
-                        errorMessage = "Se necesita estar conectado a Internet para continuar";
-                    }
-
-                    $scope.userCredentialsModel.modelState.errorMessages = [errorMessage];
-                    $scope.$emit('HidePreloader');
-                    $scope.$emit('scrollTop');
-                    $scope.isLogginIn = false;
-                });
-
-
+                } else {
+                    $timeout(function(){
+                        $scope.$emit('HidePreloader');
+                        $scope.$emit('scrollTop');
+                    }, 1);
+                }
             }
 
             $scope.loginWithFacebook = function () {
