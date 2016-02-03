@@ -168,6 +168,52 @@ angular
                 }, 1000);
             }
 
+            function validateModel() {
+                var errors = [];
+                var datePickerValue = $("input[name=birthday]").val();
+                dpValue = datePickerValue;
+                var age = datePickerValue == "" ? age = 0 : calculate_age();
+
+                if (!$scope.registerForm.firstName.$valid) {
+                    errors.push("Formato de nombre incorrecto.");
+                }
+                if (!$scope.registerForm.lastName.$valid) {
+                    errors.push("Formato de apellido paterno incorrecto.");
+                }
+                if (!$scope.registerForm.motherName.$valid) {
+                    errors.push("Formato de apellido materno incorrecto.");
+                }
+                if (!$scope.registerModel.gender) {
+                    errors.push("Género inválido.");
+                }
+                if (!$scope.registerModel.country) {
+                    errors.push("País inválido.");
+                }
+                if (!$scope.registerModel.city) {
+                    errors.push("Estado inválido.");
+                }
+                if (!$scope.registerForm.email.$valid) {
+                    errors.push("Formato de correo incorrecto.");
+                }
+                if (!$scope.registerModel.secretQuestion) {
+                    errors.push("Pregunta secreta inválida.");
+                }
+                if (!$scope.registerForm.secretAnswer.$valid) {
+                    errors.push("Respuesta secreta inválida.");
+                }
+                if (!$scope.registerModel.termsAndConditions) {
+                    errors.push("Debe aceptar los términos y condiciones.");
+                }
+                if (isNaN(age) || age < 13) {
+                    errors.push("Debes ser mayor de 13 años para poder registrarte.");
+                }
+                $timeout(function () {
+                    $scope.registerModel.modelState.errorMessages = errors;
+
+                }, 1);
+                return (errors.length === 0);
+            }
+
             $scope.autologin = function (data) {
                 _loadDrupalResources();
                 //save token for further requests and autologin
@@ -362,54 +408,21 @@ angular
                 return age;
             }
 
+            //var visible = false;
+            $scope.togglePassword = function () {
+                var inputPassword = $("#password");
+                var inputConfirmPassword = $("#confirmPassword");
 
-            function validateModel() {
-                var errors = [];
-                var datePickerValue = $("input[name=birthday]").val();
-                dpValue = datePickerValue;
-                var age = datePickerValue == "" ? age = 0 : calculate_age();
-
-                if (!$scope.registerForm.firstName.$valid) {
-                    errors.push("Formato de nombre incorrecto.");
+                if (inputPassword.attr("type") == "text") {
+                    visible = false;
+                    inputPassword.attr("type", "password");
+                    inputConfirmPassword.attr("type", "password");
+                } else {
+                    visible = true;
+                    inputPassword.attr("type", "text");
+                    inputConfirmPassword.attr("type", "text");
                 }
-                if (!$scope.registerForm.lastName.$valid) {
-                    errors.push("Formato de apellido paterno incorrecto.");
-                }
-                if (!$scope.registerForm.motherName.$valid) {
-                    errors.push("Formato de apellido materno incorrecto.");
-                }
-                if (!$scope.registerModel.gender) {
-                    errors.push("Género inválido.");
-                }
-                if (!$scope.registerModel.country) {
-                    errors.push("País inválido.");
-                }
-                if (!$scope.registerModel.city) {
-                    errors.push("Estado inválido.");
-                }
-                if (!$scope.registerForm.email.$valid) {
-                    errors.push("Formato de correo incorrecto.");
-                }
-                if (!$scope.registerModel.secretQuestion) {
-                    errors.push("Pregunta secreta inválida.");
-                }
-                if (!$scope.registerForm.secretAnswer.$valid) {
-                    errors.push("Respuesta secreta inválida.");
-                }
-                if (!$scope.registerModel.termsAndConditions) {
-                    errors.push("Debe aceptar los términos y condiciones.");
-                }
-                if (isNaN(age) || age < 13) {
-                    errors.push("Debes ser mayor de 13 años para poder registrarte.");
-                }
-                $timeout(function () {
-                    $scope.registerModel.modelState.errorMessages = errors;
-
-                }, 1);
-                return (errors.length === 0);
-            }
-
-
+            };
 
             var waitForCatalogsLoaded = setInterval(waitForCatalogsLoadedTimer, 1500);
 

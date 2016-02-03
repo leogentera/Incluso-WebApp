@@ -364,7 +364,7 @@
                                         <input type="password"
                                                ng-disabled="isRegistered"
                                                ng-model="registerModel.confirmPassword"
-                                               name="confirmPassword"
+                                               name="confirmPassword" id="confirmPassword"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Repetir contraseña"
                                                aria-describedby="confirmPasswordAddOn"
@@ -379,6 +379,19 @@
                                                   ng-click="openModalPassword()">
                                             </span>
                                         </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <div class="checkbox checkbox-custom">
+                                        <label>
+                                            <input type="checkbox" name="termsAndConditions" ng-click="togglePassword()"/>
+                                            <span>Mostrar contraseña</span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
