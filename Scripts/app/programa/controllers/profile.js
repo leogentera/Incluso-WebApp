@@ -21,7 +21,17 @@ angular
 
             $scope.$emit('ShowPreloader');
 
-            //var userId = moodleFactory.Services.GetCacheObject("userId");
+            $scope.passwordChanged = false;
+
+            $scope.changePasswordModel = {
+                currentPassword: undefined,
+                passwordOne: undefined,
+                passwordTwo: undefined,
+                modelState: {
+                    isValid: true,
+                    errorMessages: []
+                }
+            };
 
             if ($routeParams.id != moodleFactory.Services.GetCacheObject("userId")) {
                 $scope.validateConnection(initController, offlineCallback);
@@ -41,6 +51,22 @@ angular
                 _timeout = $timeout;
 
                 var _course = moodleFactory.Services.GetCacheJson("course");
+
+                $scope.togglePasswordChange = function () {
+                    var currentPassword = $("#currentPassword");
+                    var inputPassword = $("#passwordOne");
+                    var inputConfirmPassword = $("#passwordTwo");
+
+                    if (currentPassword.attr("type") == "text") {
+                        currentPassword.attr("type", "password");
+                        inputPassword.attr("type", "password");
+                        inputConfirmPassword.attr("type", "password");
+                    } else {
+                        currentPassword.attr("type", "text");
+                        inputPassword.attr("type", "text");
+                        inputConfirmPassword.attr("type", "text");
+                    }
+                };
 
                 $scope.discussion = null;
                 $scope.forumId = null;
@@ -1182,6 +1208,15 @@ angular
                         $scope.$emit('ShowPreloader');
                         $location.path("Perfil/" + $scope.userId);
                     }, 1);
+                };
+
+                $scope.returnToPrivacySettings = function () {//After pressing "Cancelar" button.
+                    //Remove variables from memory
+                    $scope.changePasswordModel.currentPassword = null;
+                    $scope.changePasswordModel.passwordOne = null;
+                    $scope.changePasswordModel.passwordTwo = null;
+
+                    $scope.currentPage = 2; //Go back to initial view.
                 };
 
                 Array.prototype.compare = function(testArr) {
