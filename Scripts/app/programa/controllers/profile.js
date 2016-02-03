@@ -541,11 +541,7 @@ angular
                                 localStorage.setItem("Credentials", JSON.stringify(Credentials));
                             }
 
-                            //Show success message to the user.
                             $scope.passwordChanged = true;
-                            //$scope.changePasswordModel.modelState.isValid = true;
-                            //$scope.successMessage = "Tu contraseña ha sido modificada exitosamente.";
-
                             logout($scope, $location);
                             //$modalInstance.dismiss('cancel');
                             $location.path('/');
