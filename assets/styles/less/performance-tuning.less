@@ -10,63 +10,83 @@
 ********************************************************************************/
 @import "less-utilities.less";
 
-	.incluso-app {
+.incluso-app {
 
-		&.start-dashboard {
-			.gradient-sky();
+    &.start-dashboard {
+        .gradient-sky();
 
-			.video-gallery .stage .icon-play {
-				background-image: none;
-			}
+        .video-gallery .stage .icon-play {
+            background-image: none;
+        }
 
-			.my-badges {
-				background: none;
+        .my-badges {
+            background: none;
 
-				&::before {
-					background: none;
-				}
-				&::after {
-					background: none;
-				}        
-			}
-			.top-users {
-				background: none;
+            &::before {
+                background: none;
+            }
 
-				&::before {
-					background:none;
-				}
-			}
-			.ilustration {
-				background:none;
-				height: 55vw;
-			}
-		}
+            &::after {
+                background: none;
+            }
+        }
 
-		.app {
-			transition: none;
-			transform: none;
-		}
-		.app-body {
-			display: block;
-			-webkit-overflow-scrolling: touch;
-			overflow-y: auto;
-			width:100vw;
+        .top-users {
+            background: none;
 
-			transition: none;
-			transform: none;
-		}
-	}
+            &::before {
+                background: none;
+            }
+        }
 
-    /* PERFORMANCE TESTING */
-    .incluso-app .app-footer.theme-rocks {
-        background-color:none;
-        background-image: url('@{url-images}/bg-dashboard-full.gif');
-        background-position: bottom center;
-        background-repeat: none;
-    }
-    .incluso-app .app-preloader {
-        .spinner-circle {
-            -webkit-animation: rotateSpinner .6s infinite linear;
-            animation: rotateSpinner .6s infinite linear;
+        .ilustration {
+            background: none;
+            height: 55vw;
         }
     }
+
+    .app {
+        -moz-transition: none;
+        -o-transition: none;
+        -webkit-transition: none;
+        transition: none;
+        -moz-transform: none;
+        -ms-transform: none;
+        -o-transform: none;
+        -webkit-transform: none;
+        transform: none;
+    }
+
+    .app-body {
+        display: block;
+        -webkit-overflow-scrolling: touch;
+        overflow-y: auto;
+        width: 100vw;
+        -moz-transition: none;
+        -o-transition: none;
+        -webkit-transition: none;
+        transition: none;
+        -moz-transform: none;
+        -ms-transform: none;
+        -o-transform: none;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+/* PERFORMANCE TESTING */
+.incluso-app .app-footer.theme-rocks {
+    background-color: none;
+    background-image: url('@{url-images}/bg-dashboard-full.gif');
+    background-position: bottom center;
+    background-repeat: no-repeat;
+}
+
+.incluso-app .app-preloader {
+    .spinner-circle {
+        -webkit-animation: rotateSpinner .6s infinite linear;
+        -moz-animation: rotateSpinner .6s infinite linear;
+        -o-animation: rotateSpinner .6s infinite linear;
+        animation: rotateSpinner .6s infinite linear;
+    }
+}
