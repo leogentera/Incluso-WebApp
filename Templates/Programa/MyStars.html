@@ -1,50 +1,63 @@
 <div class="incluso-app content-page-theme my-stars score-dashboard" id="site-wrapper">
-  <article class="starway">
+    <article class="starway">
 
-  	<section class="score centered txt-bigger lightgreen">
-  		<div id="totstars">{{profileStars}}</div>
-  	</section>
-  	<section class="centered" style="display:none">
-  		<div class="sharer">
-  			<span class="icomoon icon-share icon"></span><a href="#openModal1" class="modbut"><div class="txt">Compartir puntuación</div></a>
-  		</div>
-  	</section>
-  	<section class="modales" style="display:none">
-  		<div id="openModal1" class="modalDialog">
-  			<div>
-  				<a href="#close" title="Close" class="close"></a>
-  				<div class="txt-renglon txt-bigger">"Puntuación {{profileStars}} Estrellas"</div>
-  				<div class="add"><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar texto..." value=""/></div>
+        <section class="score centered txt-bigger lightgreen">
+            <div id="totstars">{{profileStars}}</div>
+        </section>
+        <section class="centered" style="display:none">
+            <div class="sharer">
+                <span class="icomoon icon-share icon"></span><a href="#openModal1" class="modbut">
+                <div class="txt">Compartir puntuación</div>
+            </a>
+            </div>
+        </section>
+        <section class="modales" style="display:none">
+            <div id="openModal1" class="modalDialog">
+                <div>
+                    <a href="#close" title="Close" class="close"></a>
+                    <div class="txt-renglon txt-bigger">"Puntuación {{profileStars}} Estrellas"</div>
+                    <div class="add"><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar texto..." value=""/></div>
 
-  				<button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
-  			</div>
-  		</div>
-  	</section>
-	<section class="starcontain">
-	  <div class="subtitle centered">{{contentResources.my_stars_title}}</div>		
-	  <div class="part" ng-repeat="activity in activitiesCompleted" ng-show="qtyStarsByAcctivity()">
-		<div class="pull-left"><div class="date">{{activity.last_status_update * 1000| date :'dd MMMM yyyy - hh:mm a'}}</div>{{activity.sectionname | Capitalize}} : {{activity.activityname}}</div>
-    <div class="pull-right sm-pill">
+                    <button class="btn btn-primary btn-lg btn-cnt" type="button">Compartir</button>
+                </div>
+            </div>
+        </section>
+        <section class="starcontain">
+            <div class="subtitle centered">{{contentResources.my_stars_title}}</div>
+            <div class="part" ng-repeat="activity in activitiesCompleted" ng-show="qtyStarsByAcctivity()">
+                <div class="pull-left">
+                    <div class="date">{{activity.last_status_update * 1000| date :'dd MMMM yyyy - hh:mm a'}}</div>
+                    {{activity.sectionname | Capitalize}} : {{activity.activityname}}
+                </div>
+                <div class="pull-right sm-pill">
 
-        <span class="pull-left">{{activity.points}}</span> <span class="icomoon icon-star pull-right"></span>
+                    <span class="pull-left">{{activity.points}}</span> <span class="icomoon icon-star pull-right"></span>
 
-        </div>
-	  </div>
-	  <div class="part showmore" ng-click="showMore()" ng-show="showLoadMoreBar()">
-  			<span class="icomoon  icon-show-more pull-right"></span> {{contentResources.more_button}}		  
-  		</div>
-	</section>  	
-  	<section class="starcontain" style="display:none">
-  		<div class="subtitle centered">{{contentResources.rewards_title}}</div>		
-  		<div class="part" ng-repeat="reward in rewardsEarned" ng-show="qtyRewards()" ng-click="showRewardDetail(reward.id)">
-  			<div class="pull-left"><div class="date">{{reward.dateIssued | date: 'fullDate'}}</div>{{reward.name}}</div>
-  			<span class="icomoon icon-arrow-bold-right pull-right"></span>
-  		</div>
-  		
-  		<div class="part showmore" ng-click="showMoreRewards()" ng-show="showMoreBarRewards()">
-  			<span class="icomoon  icon-show-more pull-right"></span> {{contentResources.more_rewards_button}}			
-  		</div>
-  	</section>
-  </article>
+                </div>
+            </div>
+            <div class="part showmore" ng-click="showMore()" ng-show="showLoadMoreBar()">
+                <span class="icomoon  icon-show-more pull-right"></span> {{contentResources.more_button}}
+            </div>
+        </section>
+        <section class="starcontain" style="display:none">
+            <div class="subtitle centered">{{contentResources.rewards_title}}</div>
+            <div class="part" ng-repeat="reward in rewardsEarned" ng-show="qtyRewards()" ng-click="showRewardDetail(reward.id)">
+                <div class="pull-left">
+                    <div class="date">{{reward.dateIssued | date: 'fullDate'}}</div>
+                    {{reward.name}}
+                </div>
+                <span class="icomoon icon-arrow-bold-right pull-right"></span>
+            </div>
+
+            <div class="part showmore" ng-click="showMoreRewards()" ng-show="showMoreBarRewards()">
+                <span class="icomoon  icon-show-more pull-right"></span> {{contentResources.more_rewards_button}}
+            </div>
+        </section>
+
+        <section class="txt-renglon centered form">
+            <a class="btn btn-primary btn-lg btn-cnt" ng-click="backToProfile()" ng-disabled="isDisabled">{{contentResources.boton_terminar}}</a>
+        </section>
+
+    </article>
 
 </div>
