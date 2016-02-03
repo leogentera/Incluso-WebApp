@@ -62,7 +62,7 @@ angular
                             $scope.activityname = childActivity.activityname;
                             $scope.activity_status = childActivity.status;
 
-                        } else {
+                        } else {//The activity has no "child" activity
                             $scope.coursemoduleid = parentActivity.coursemoduleid;
                             $scope.activityname = parentActivity.activityname;
                             $scope.activity_status = parentActivity.status;
