@@ -1,5 +1,5 @@
 angular
-    .module('incluso.programa.tutorial', [])
+    .module('incluso.programa.tutorial', ['ngSanitize'])
     .controller('programaTutorialController', [
         '$q',
         '$scope',
