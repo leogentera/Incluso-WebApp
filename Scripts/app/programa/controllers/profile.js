@@ -1324,7 +1324,7 @@ angular
                     var sectionIndex;
                     var usercourse = JSON.parse(localStorage.getItem("usercourse"));
                     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                    $scope.userCourse = usercourse;
+                    $scope.userCourse = usercourse; /**/
                     var sectionName, sectionId;
                     showResultsPage = true; //Show page 12 for Final Results.
 
