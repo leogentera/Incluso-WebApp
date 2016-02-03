@@ -39,6 +39,15 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
+
+            $scope.modelState = {
+                isValid: null,
+                errorMessages: []
+            };
+            /* Watchers */
+            $scope.$watch("modelState.errorMessages", function (newValue, oldValue) {
+                $scope.modelState.isValid = (newValue.length === 0);
+            });
             
             var _userId = moodleFactory.Services.GetCacheObject("userId");
 
@@ -66,6 +75,8 @@ angular
             var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
 
             $scope.clickLikeButton = function(postId) {
+                
+                $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
                     
@@ -320,19 +331,21 @@ angular
             $scope.isCommentModalCollapsed= [];
             $scope.isReportedAbuseModalCollapsed = new Array();
             $scope.isReportedAbuseSentModalCollapsed = new Array();
-            $scope.replyText = null;
             
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex){
+                
+                $scope.modelState.errorMessages = [];
 
                 $scope.validateConnection(function(){
                     
                     var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
-                    that.replyText = '';
                     $scope.$emit('ShowPreloader');                    
                     
                     $scope.showPreviousComments(parentId);
                     moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
                         function(){
+                            that.replyText = '';
+                            $scope.replyText = null;
                             $scope.textToPost=null;
                             $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
                             $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
@@ -342,10 +355,11 @@ angular
 
                             
                         },
-                        function(){
-                            $scope.textToPost=null;
-                            $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
+                        function(data){
                             $scope.$emit('HidePreloader');
+                            var errorMessage = [window.atob(data.messageerror)];
+                            $scope.modelState.errorMessages = errorMessage;
+                            $scope.scrollToTop();
                         }, null, true);
                     
                 }, offlineCallback);
@@ -374,6 +388,8 @@ angular
             };
 
             $scope.postTextToForum = function(){
+                
+                $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
                         
@@ -387,16 +403,19 @@ angular
                         checkForumExtraPoints();
                         checkForumProgress(refreshTopicData);                        
                     },
-                    function(){
-                        $scope.textToPost=null;
-                        $scope.collapseForumButtomsTrigger('isTextCollapsed');
+                    function(data){
                         $scope.$emit('HidePreloader');
+                        var errorMessage = [window.atob(data.messageerror)];
+                        $scope.modelState.errorMessages = errorMessage;
+                        $scope.scrollToTop();
                     }, null, true);
                         
                     }, offlineCallback);
                 
             };
             $scope.postLinkToForum = function(){
+                
+                $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function(){
                         
@@ -418,6 +437,8 @@ angular
                     
             };
             $scope.postVideoToForum = function(){
+                
+                $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function(){
                     
@@ -439,6 +460,8 @@ angular
             };
 
             $scope.reportPost = function(postId) {
+                
+                $scope.modelState.errorMessages = [];
 
                     $scope.validateConnection(function() {
                         
@@ -477,7 +500,9 @@ angular
             };
 
             $scope.clickPostAttachment = function(){
-                    $scope.validateConnection(clickPostAttachment, offlineCallback);
+                
+                $scope.modelState.errorMessages = [];
+                $scope.validateConnection(clickPostAttachment, offlineCallback);
             };
 
             clickPostAttachment = function(){
@@ -496,6 +521,8 @@ angular
             };
 
             $scope.postAttachmentToForum = function(){
+                
+                $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
                         
@@ -618,6 +645,8 @@ angular
             };
             
             $scope.showMore = function() {
+                
+                $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
                         
