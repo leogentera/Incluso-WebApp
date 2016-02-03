@@ -387,6 +387,10 @@ angular
                     return finalArr;
                 }
 
+                $scope.goToStars = function () {
+                    $location.path("/MyStars");
+                };
+
                 function getDataAsync(callback) {
 
                     startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
