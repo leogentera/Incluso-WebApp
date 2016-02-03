@@ -408,7 +408,6 @@ angular
                 return age;
             }
 
-            //var visible = false;
             $scope.togglePassword = function () {
                 var inputPassword = $("#password");
                 var inputConfirmPassword = $("#confirmPassword");
