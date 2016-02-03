@@ -463,7 +463,7 @@
                     successCallback();
                 }).error(function (data, status, headers, config) {
                     _setLocalStorageJsonItem(key,data);
-                    errorCallback();
+                    errorCallback(data);
                 });
             }
         };

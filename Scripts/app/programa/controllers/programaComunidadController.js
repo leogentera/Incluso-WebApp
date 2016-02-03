@@ -58,7 +58,17 @@ angular
                     return text.replace(urlRegex, function(url) {
                         return '<a class="urlify" href="' + url + '">' + url + '</a>';
                     });
-                }
+                };
+                
+                $scope.modelState = {
+                    isValid: null,
+                    errorMessages: []
+                };
+                /* Watchers */
+                $scope.$watch("modelState.errorMessages", function (newValue, oldValue) {
+                    $scope.modelState.isValid = (newValue.length === 0);
+                });
+                
 
                 /* View settings */
                 $rootScope.pageName = "Comunidad";
@@ -119,6 +129,8 @@ angular
                 };
                 
                 $scope.showMorePosts = function() {
+                    
+                    $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function(){
                         
@@ -186,6 +198,8 @@ angular
                 
                 $scope.reportPost = function(postId) {
                     
+                    $scope.modelState.errorMessages = [];
+                    
                     $scope.validateConnection(function() {
                     
                         if ($scope.hasCommunityAccess) {
@@ -219,6 +233,7 @@ angular
                 
                 $scope.likePost = function(postId) {
                     
+                    $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
                     
@@ -348,6 +363,8 @@ angular
                 
                 $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex) {
                     
+                    $scope.modelState.errorMessages = [];
+                    
                     $scope.validateConnection(function() {
                     
                         if ($scope.hasCommunityAccess) {
@@ -384,9 +401,11 @@ angular
                                     
                                     $scope.$emit('HidePreloader');
                                 },
-                                function(){
-                                    $scope.replyText = null;
-                                    $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
+                                function(data){
+                                    $scope.$emit('HidePreloader');
+                                    var errorMessage = [window.atob(data.messageerror)];
+                                    $scope.modelState.errorMessages = errorMessage;
+                                    $scope.scrollToTop();
                                 }
                             );
                         }
@@ -395,6 +414,8 @@ angular
                 };
     
                 $scope.postText = function() {
+                    
+                    $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
                         
@@ -423,9 +444,11 @@ angular
                                     communityBadgeReached();
                                     refreshTopicData();                                            
                                 },
-                                function(){
-                                    $scope.postTextValue = null;
-                                    $scope.collapseCommunityButtomsTrigger('isTextCollapsed');
+                                function(data){
+                                    $scope.$emit('HidePreloader');
+                                    var errorMessage = [window.atob(data.messageerror)];
+                                    $scope.modelState.errorMessages = errorMessage;
+                                    $scope.scrollToTop();
                                 }
                             );
                         }
@@ -435,6 +458,8 @@ angular
                 };
                 
                 $scope.postLink = function() {
+                    
+                    $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
                     
@@ -474,6 +499,8 @@ angular
                 
                 $scope.postVideo = function() {
                     
+                    $scope.modelState.errorMessages = [];
+                    
                     $scope.validateConnection(function() {
                     
                         if ($scope.hasCommunityAccess) {
@@ -510,6 +537,8 @@ angular
                 };
                 
                 $scope.postAttachment = function() {
+                    
+                    $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
                     
@@ -551,6 +580,8 @@ angular
                 };
                 
                 $scope.clickPostAttachment = function() {
+                    
+                    $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
                     
