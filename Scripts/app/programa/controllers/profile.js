@@ -622,8 +622,8 @@ angular
                     $location.path('/ProgramaDashboard');
                 };
 
-                function calculate_age() {
-                    var dpValue = $scope.model.birthday;
+                function calculate_age(dpValue) {
+                    //var dpValue = $scope.model.birthday;
                     var birth_day = dpValue.substring(0, 2);
                     var birth_month = dpValue.substring(3, 5);
                     var birth_year = dpValue.substring(6, 10);
@@ -645,17 +645,21 @@ angular
                     return age;
                 }
 
+                $scope.inMobile = false;
                 $scope.datePickerClick = function () {
                     if (window.mobilecheck()) {
+                        $scope.inMobile = true;
                         cordova.exec(SuccessDatePicker, FailureDatePicker, "CallToAndroid", "datepicker", [$("input[name='date']").val()]);
                     }
                 };
 
+                //$scope.myAge = calculate_age($scope.birthdate_Dateformat);
                 function SuccessDatePicker(data) {
                     $("input[name='date']").val(data);
                     var splitDate = data.split("/");
                     var birthday = new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
                     $scope.model.birthday = moment(birthday).format("MM/DD/YYYY");
+                    $scope.myAge = calculate_age($scope.model.birthday);
                 }
 
                 function FailureDatePicker(data) {
@@ -679,8 +683,13 @@ angular
                     validateEmptyItemsOnLists();
 
                     // ************************ The following are required fields. ****************************
+                    var age;
 
-                    var age = calculate_age();
+                    if ($scope.inMobile) {
+                        age = calculate_age($scope.model.birthday);
+                    } else {
+                        age = calculate_age($scope.birthdate_Dateformat);
+                    }
 
                     if (age < 13) {
                         errors.push("Debes ser mayor de 13 años para poder registrarte.");
@@ -969,6 +978,7 @@ angular
                     }
 
                 };
+
                 $scope.visitedSections = [];
                 $scope.navigateToSection = function (pageNumber) {
                     $scope.currentPage = pageNumber;
@@ -1241,11 +1251,6 @@ angular
                                         //sectionName = "Mi información";
                                         break;
                                 }
-
-                                //$scope.logOfSections[i].visited = true;
-                                //showResultsPage = true;
-                                //console.log($scope.logOfSections[i].name);
-
                             }
                         }
 
@@ -1266,7 +1271,6 @@ angular
                     }
 
                     $scope.accessedSubsection = false;
-                    showResultsPage = false;
                 };
 
                 $scope.save = function () {
@@ -1282,7 +1286,7 @@ angular
                     $scope.model.currentStudies.level = $scope.model.level;
                     $scope.model.currentStudies.grade = $scope.model.grade;
                     $scope.model.currentStudies.period = $scope.model.period;
-                    $scope.model.birthday = $scope.birthdate_Dateformat;  //Take date from UI.
+                    //$scope.model.birthday = $scope.birthdate_Dateformat;  //Take date from UI.
 
                     if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                         saveUser();
@@ -1320,6 +1324,7 @@ angular
                     var sectionIndex;
                     var usercourse = JSON.parse(localStorage.getItem("usercourse"));
                     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
+                    $scope.userCourse = usercourse; /**/
                     var sectionName, sectionId;
                     showResultsPage = true; //Show page 12 for Final Results.
 
@@ -1369,7 +1374,7 @@ angular
                                     sectionFieldsAreOk = false;
                                     break;
                             }
-
+                            
                             if (sectionFieldsAreOk) {//The user has successfully completed a profile's section.
 
                                 activity.status = 1;   //Update activity status.
@@ -1556,7 +1561,7 @@ angular
                     var result = false;
 
                     if ($scope.model.firstname && $scope.model.lastname && $scope.model.mothername && $scope.model.gender && $scope.model.birthCountry
-                            && $scope.birthdate_Dateformat && $scope.model.age && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.country && $scope.model.address.city
+                            && $scope.birthdate_Dateformat && $scope.model.age > 13 && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.country && $scope.model.address.city
                                 && $scope.model.address.town && $scope.model.address.postalCode && $scope.model.address.street && $scope.model.address.num_ext
                                     && $scope.model.address.colony && phonesAreValid($scope.model.phones) && socialNetsAreValid($scope.model.socialNetworks) 
                                         && compartamosIsValid($scope.model.familiaCompartamos)){
