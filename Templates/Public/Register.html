@@ -34,33 +34,34 @@
             <div class="modal-footer"></div>
         </script>
 
-        <script type="text/ng-template" id="passwordInfoModal.html">
+        <script type="text/ng-template" id="usernameInfoModal.html">
             <div class="modal-header">
-                <h3 class="modal-title"> Contraseña </h3>
+                <h3 class="modal-title">Nombre de Usuario</h3>
                 <a role="button" class="icon icon-close btn btn-circle" ng-click="cancel()">
                     <span class="icomoon icon-cross"></span>
                 </a>
             </div>
             <div class="modal-body">
                 <p>
-                    Es necesario que tu contraseña incluya al menos 8 caracteres, en los cuales debe haber por lo menos un carácter
-                    especial, un número, una letra mayúscula y una minúscula.
+                    Es necesario que tu nombre de usuario incluya al menos 8 caracteres, en los cuales debe haber por lo menos un carácter
+                    especial, un número, una letra mayúscula y una minúscula. No debe contener espacios.
                 </p>
             </div>
             <div class="modal-footer"></div>
         </script>
 
-        <script type="text/ng-template" id="usernameInfoModal.html">
+        <script type="text/ng-template" id="passwordInfoModal.html">
             <div class="modal-header">
-                <h3 class="modal-title"> Nombre de Usuario </h3>
+                <h3 class="modal-title">Contraseña</h3>
                 <a role="button" class="icon icon-close btn btn-circle" ng-click="cancel()">
                     <span class="icomoon icon-cross"></span>
                 </a>
             </div>
             <div class="modal-body">
                 <p>
-                    Tu nombre de usuario puede contener caracteres especiales como guión bajo (_), guión (-), punto (.)
-                    y arroba (@), y no debe contener espacios.
+                    Es necesario que tu contraseña tenga al menos 8 caracteres, en los cuales debe haber por lo menos un
+                    carácter especial, como guión bajo (_), guión (-), punto (.) y arroba (@), un número, una letra
+                    mayúscula y una letra minúscula. No debe contener espacios.
                 </p>
             </div>
             <div class="modal-footer"></div>
@@ -98,14 +99,20 @@
                                         </p>
                                         <input type="text"
                                                ng-model="registerModel.username"
-                                               name="userName"
+                                               name="userName" id="userName"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Nombre de usuario"
                                                aria-describedby="userNameAddOn"
                                                ng-pattern="/^(?=\S)[-.@_a-zA-Z0-9ñÑ]*$/"
                                                ng-trim="true" required />
                                         <a class="input-group-addon btn-info" ng-click="openModalUsername()">
-                                            <span class="icomoon icon-information"></span>
+                                            <span class="icomoon icon-error red"
+                                                  ng-show="registerForm.userName.$dirty && (registerForm.userName.$error.pattern || registerForm.userName.$error.required)"
+                                                  ng-click="togglePassword()"></span>
+                                            <span class="icomoon icon-success yellowgreen"
+                                                  ng-show="registerForm.userName.$dirty && !registerForm.userName.$error.pattern && !registerForm.userName.$error.required"
+                                                  ng-click="togglePassword()"></span>
+                                            <span class="icomoon icon-information" ng-show="registerForm.userName.$pristine"></span>
                                         </a>
                                     </div>
                                 </div>
@@ -139,7 +146,9 @@
                                         <p class="input-group-addon" id="aliasAddOn">
                                             <span class="icomoon icon-user"></span>
                                         </p>
-                                        <input type="text" ng-model="registerModel.lastname" name="lastName"
+                                        <input type="text"
+                                               ng-model="registerModel.lastname"
+                                               name="lastName"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Apellido paterno"
                                                aria-describedby="aliasAddOn"
@@ -157,7 +166,9 @@
                                         <p class="input-group-addon" id="aliasAddOn">
                                             <span class="icomoon icon-user"></span>
                                         </p>
-                                        <input type="text" ng-model="registerModel.mothername" name="motherName"
+                                        <input type="text"
+                                               ng-model="registerModel.mothername"
+                                               name="motherName"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Apellido materno"
                                                aria-describedby="aliasAddOn"
@@ -274,7 +285,9 @@
 
                         <div class="row">
                             <div class="col-xs-12">
-                                <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateToPage(2)">Continuar</a>
+                                <a role="button" class="btn btn-primary btn-lg btn-block"
+                                   ng-disabled="registerForm.userName.$pristine || registerForm.userName.$error.pattern || registerForm.userName.$error.required"
+                                   ng-click="navigateToPage(2)">Continuar</a>
                             </div>
                             <div class="col-xs-12">
                                 <a role="button" class="btn btn-default btn-transparent btn-lg btn-block"
@@ -317,13 +330,24 @@
                                         <input type="password"
                                                ng-disabled="isRegistered"
                                                ng-model="registerModel.password"
-                                               name="password"
+                                               name="password" id="password"
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Contraseña"
                                                aria-describedby="accountPasswordAddOn"
                                                ng-trim="true" required />
-                                        <a class="input-group-addon btn-info" ng-click="openModalPassword()">
-                                            <span class="icomoon icon-information"></span>
+                                        <a class="input-group-addon btn-info">
+                                            <span class="icomoon icon-error red"
+                                                  ng-show="registerForm.password.$dirty && !showPasswd"
+                                                  ng-click="openModalPassword()">
+                                            </span>
+                                            <span class="icomoon icon-success yellowgreen"
+                                                  ng-show="registerForm.password.$dirty && showPasswd"
+                                                  ng-click="openModalPassword()">
+                                            </span>
+                                            <span class="icomoon icon-information"
+                                                  ng-click="openModalPassword()"
+                                                  ng-show="registerForm.password.$pristine">
+                                            </span>
                                         </a>
                                     </div>
                                 </div>
@@ -344,7 +368,17 @@
                                                class="form-control form-control-lg theme-default"
                                                placeholder="Repetir contraseña"
                                                aria-describedby="confirmPasswordAddOn"
-                                               required />
+                                               ng-trim="true" required/>
+                                        <a class="input-group-addon btn-info">
+                                            <span class="icomoon icon-error red"
+                                                  ng-show="registerForm.confirmPassword.$dirty && !showPasswdCf"
+                                                  ng-click="openModalPassword()">
+                                            </span>
+                                            <span class="icomoon icon-success yellowgreen"
+                                                  ng-show="registerForm.confirmPassword.$dirty && showPasswdCf"
+                                                  ng-click="openModalPassword()">
+                                            </span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -426,11 +460,13 @@
                         <div class="row">
                             <div class="col-xs-12" ng-show="!isRegistered">
                                 <div class="button-group">
-                                    <a role="button" ng-disabled="isRegistered" class="btn btn-primary btn-lg"
+                                    <a role="button" ng-show="!isRegistered" class="btn btn-primary btn-lg"
+                                       ng-disabled="registerForm.password.$pristine || !showPasswd || !showPasswdCf"
                                        ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                     </a>
-                                    <a role="button" ng-disabled="isRegistered" ng-click="register()"
+                                    <a role="button" ng-show="!isRegistered" ng-click="register()"
+                                       ng-disabled="registerForm.password.$pristine || !showPasswd || !showPasswdCf"
                                        class="btn btn-primary btn-lg">Registrarme</a>
                                 </div>
                             </div>

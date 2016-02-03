@@ -18,9 +18,19 @@ angular
             var dpValue;
             $scope.$emit('scrollTop');
 
+            //var isConfirmedPasswordValid = false;
+            $scope.currentPage = 1;
+            $scope.isRegistered = false;
+            $rootScope.showToolbar = false;
+            $rootScope.showFooter = false;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
+
             /* ViewModel */
             $scope.registerModel = {
-                username: "",
+                username: undefined,
                 firstname: "",
                 lastname: "",
                 mothername: "",
@@ -29,8 +39,8 @@ angular
                 country: "",
                 city: "",
                 email: "",
-                password: "",
-                confirmPassword: "",
+                password: undefined,
+                confirmPassword: undefined,
                 secretQuestion: "",
                 secretAnswer: "",
                 termsAndConditions: false,
@@ -45,17 +55,65 @@ angular
                 userId: ""
             };
 
+            $scope.recoverPasswordModel = {
+                modelState: {
+                    isValid: null,
+                    errorMessages: []
+                }
+            };
 
-            /* Helpers */
-            var isConfirmedPasswordValid = false;
-            $scope.currentPage = 1;
-            $scope.isRegistered = false;
-            $rootScope.showToolbar = false;
-            $rootScope.showFooter = false;
-            $rootScope.showFooterRocks = false;
-            $rootScope.showStage1Footer = false;
-            $rootScope.showStage2Footer = false;
-            $rootScope.showStage3Footer = false;
+            /* open terms and conditions modal */
+            $scope.openModal = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'termsAndConditionsModal.html',
+                    controller: 'termsAndConditionsController',
+                    size: size,
+                    windowClass: 'modal-theme-default terms-and-conditions',
+                    backdrop: 'static'
+                });
+            };
+
+            $scope.openModalUsername = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'usernameInfoModal.html',
+                    controller: 'termsAndConditionsController',
+                    size: size,
+                    windowClass: 'modal-theme-default terms-and-conditions',
+                    backdrop: 'static'
+                });
+            };
+
+            $scope.openModalPassword = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'passwordInfoModal.html',
+                    controller: 'termsAndConditionsController',
+                    size: size,
+                    windowClass: 'modal-theme-default terms-and-conditions',
+                    backdrop: 'static'
+                });
+            };
+
+            $scope.login = function () {
+                $location.path('/');
+            };
+
+            $scope.navigateToPage = function (pageNumber) {
+                $scope.currentPage = pageNumber;
+                $scope.$emit('scrollTop');
+            };
+
+            $scope.showPlaceHolderBirthday = function () {
+                var bd = $("input[name='birthday']").val();
+                if (bd) {
+                    $scope.showPlaceHolder = false;
+                } else {
+                    $scope.showPlaceHolder = true;
+                }
+            };
+
             $scope.genderItems = _getCatalogValuesBy("gender");
             $scope.countryItems = _getCatalogValuesBy("country");
             $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
@@ -67,15 +125,24 @@ angular
 
             $scope.$emit('HidePreloader');
 
+            $scope.showPasswd = false;
+            $scope.showPasswdCf = false;
+
             /* Watchers */
-            $scope.$watch("registerModel.confirmPassword", function (newValue, oldValue) {
-                isConfirmedPasswordValid = (newValue === $scope.registerModel.password);
-            });
-            $scope.$watch("registerModel.password", function (newValue, oldValue) {
-                isConfirmedPasswordValid = (newValue === $scope.registerModel.confirmPassword);
-            });
             $scope.$watch("registerModel.modelState.errorMessages", function (newValue, oldValue) {
                 $scope.registerModel.modelState.isValid = (newValue.length === 0);
+            });
+
+            $scope.$watch("registerModel.password", function (newValue, oldValue) {
+                var passWordPattern = /^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[_\W])[\S]{8,}$/;
+                $scope.showPasswd = passWordPattern.test(newValue) && $scope.registerModel.password;
+                $scope.showPasswdCf = $scope.registerModel.confirmPassword == newValue && $scope.registerModel.confirmPassword && $scope.showPasswd;
+            });
+
+            $scope.$watch("registerModel.confirmPassword", function (newValue, oldValue) {
+                var passWordPattern = /^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[_\W])[\S]{8,}$/;
+                $scope.showPasswd = passWordPattern.test($scope.registerModel.password) && $scope.registerModel.password;
+                $scope.showPasswdCf = newValue == $scope.registerModel.password && $scope.registerModel.confirmPassword && $scope.showPasswd;
             });
 
             $scope.register = function () {
@@ -208,24 +275,6 @@ angular
                 }, true);
             };
 
-            $scope.login = function () {
-                $location.path('/');
-            };
-
-            $scope.navigateToPage = function (pageNumber) {
-                $scope.currentPage = pageNumber;
-                $scope.$emit('scrollTop');
-            };
-
-            $scope.showPlaceHolderBirthday = function () {
-                var bd = $("input[name='birthday']").val();
-                if (bd) {
-                    $scope.showPlaceHolder = false;
-                } else {
-                    $scope.showPlaceHolder = true;
-                }
-            };
-
             function change(time) {
                 var r = time.match(/^\s*([0-9]+)\s*-\s*([0-9]+)\s*-\s*([0-9]+)(.*)$/);
                 return r[2] + "-" + r[3] + "-" + r[1] + r[4];
@@ -319,22 +368,7 @@ angular
                 var datePickerValue = $("input[name=birthday]").val();
                 dpValue = datePickerValue;
                 var age = datePickerValue == "" ? age = 0 : calculate_age();
-                var patternPassword = /^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[_\W])[\S]{8,}$/g;
 
-                var passwordPolicy = "debe contener al menos 8 caracteres, incluir un caracter especial, una letra mayúscula, una minúscula y un número.";
-                var usernamePolicy = "El nombre de usuario puede contener los siguientes caracteres: guión bajo (_), guión (-), punto(.) y arroba(@). El nombre de usuario no debe contener espacios.";
-
-                if ( !patternPassword.test($scope.registerModel.password) ) {
-                    errors.push("Formato de contraseña incorrecto. La contraseña " + passwordPolicy);
-                } else {
-                    if (!isConfirmedPasswordValid) {
-                        errors.push("Las contraseñas capturadas no coinciden.");
-                    }
-                }
-
-                if (!$scope.registerForm.userName.$valid) {
-                    errors.push("Formato de usuario incorrecto. " + usernamePolicy);
-                }
                 if (!$scope.registerForm.firstName.$valid) {
                     errors.push("Formato de nombre incorrecto.");
                 }
@@ -353,7 +387,7 @@ angular
                 if (!$scope.registerModel.city) {
                     errors.push("Estado inválido.");
                 }
-                if (!$scope.registerForm.email.$valid) {//$error.pattern || $scope.registerForm.email.$error.required) {
+                if (!$scope.registerForm.email.$valid) {
                     errors.push("Formato de correo incorrecto.");
                 }
                 if (!$scope.registerModel.secretQuestion) {
@@ -368,46 +402,13 @@ angular
                 if (isNaN(age) || age < 13) {
                     errors.push("Debes ser mayor de 13 años para poder registrarte.");
                 }
-                $timeout(function(){
+                $timeout(function () {
                     $scope.registerModel.modelState.errorMessages = errors;
-                }, 1);
 
+                }, 1);
                 return (errors.length === 0);
             }
 
-            /* open terms and conditions modal */
-            $scope.openModal = function (size) {
-                var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'termsAndConditionsModal.html',
-                    controller: 'termsAndConditionsController',
-                    size: size,
-                    windowClass: 'modal-theme-default terms-and-conditions',
-                    backdrop: 'static'
-                });
-            };
-
-
-            $scope.openModalUsername = function (size) {
-                var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'usernameInfoModal.html',
-                    controller: 'termsAndConditionsController',
-                    size: size,
-                    windowClass: 'modal-theme-default terms-and-conditions',
-                    backdrop: 'static'
-                });
-            };
-            $scope.openModalPassword = function (size) {
-                var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'passwordInfoModal.html',
-                    controller: 'termsAndConditionsController',
-                    size: size,
-                    windowClass: 'modal-theme-default terms-and-conditions',
-                    backdrop: 'static'
-                });
-            };
 
 
             var waitForCatalogsLoaded = setInterval(waitForCatalogsLoadedTimer, 1500);
