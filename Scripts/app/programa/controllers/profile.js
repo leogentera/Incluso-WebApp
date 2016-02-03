@@ -52,6 +52,22 @@ angular
 
                 var _course = moodleFactory.Services.GetCacheJson("course");
 
+                $scope.togglePasswordChange = function () {
+                    var currentPassword = $("#currentPassword");
+                    var inputPassword = $("#passwordOne");
+                    var inputConfirmPassword = $("#passwordTwo");
+
+                    if (currentPassword.attr("type") == "text") {
+                        currentPassword.attr("type", "password");
+                        inputPassword.attr("type", "password");
+                        inputConfirmPassword.attr("type", "password");
+                    } else {
+                        currentPassword.attr("type", "text");
+                        inputPassword.attr("type", "text");
+                        inputConfirmPassword.attr("type", "text");
+                    }
+                };
+
                 $scope.discussion = null;
                 $scope.forumId = null;
 
