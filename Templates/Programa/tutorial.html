@@ -4,7 +4,7 @@
       <form action="" class="container-fluid" name="registerForm" ng-show="!isRegistered">
         <div class="row">
           <div class="col-xs-12">
-            <h3 class="subtitle centered text-uppercase" ng-class="main-title">Guía de uso</div>
+            <h3 class="subtitle centered text-uppercase" ng-class="main-title" ng-bind="contentResources.tutorial_title"></div>
           </div>
         
         <div class="pages">
@@ -33,18 +33,12 @@
                 </div>
               </div>
               <div class="txt-renglon">                
-                <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="navigateToPage(2)">Continuar</button>                
+                <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="navigateToPage(2)" ng-bind="contentResources.tutorial_continue_button"></button>                
               </div>
           </div>
           <div class="page" data-page="2" ng-class="currentPage === 2 ? 'active' : ''">
             <section>
-              <div class="txt-renglon centered">
-                <p>Instrucciones</p>
-                <p>Para continuar con la misi&oacute;n debes de realizar los siguientes pasos:</p>
-                <p>1. Da clic en el bot&oacute;n de "Descarga incluso interactivo" para poder personalizar tu avatar.</p>
-                <p>2. Personaliza tu avatar para distinguirte en la misión.</p>
-                <p>3. Inicia tu misi&oacute;n.</p>
-              </div>
+              <div class="txt-renglon centered" ng-bind-html="contentResources.tutorial_instructions.safe_value | linky"></div>
             </section>
             <section class="container-fluid">
               <div class="row">
@@ -62,8 +56,8 @@
               </div> 
             </section>
             <section class="txt-renglon">
-              <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-show="!isInstalled" ng-click="avatar()">Descargar Incluso Interactivo</button>
-              <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-show="isInstalled" ng-click="avatar()">Empezar Incluso Interactivo</button>
+              <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-show="!isInstalled" ng-click="avatar()" ng-bind="contentResources.tutorial_download_button"></button>
+              <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-show="isInstalled" ng-click="avatar()" ng-bind="contentResources.tutorial_start_game_button"></button>
             </section>
           </div>
         </div>

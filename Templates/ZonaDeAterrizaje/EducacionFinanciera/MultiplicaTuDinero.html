@@ -8,7 +8,7 @@
     <section class="txt-renglon up-line">
       <div ng-bind-html="contentResources.multiply_instructions.value"></div>
     </section>
-	<a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="!isInstalled" ng-click="downloadGame()">Descargar Juego</a>
+	<a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="!isInstalled" ng-click="downloadGame()" ng-bind="contentResources.multiply_download_button"></a>
     <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-bind="contentResources.multiply_start_button" ng-show="isInstalled" ng-click="downloadGame()"></a>
     <div class="txt-renglon centered" ng-bind="contentResources.multiply_cancel_button" ng-click="back()"></div>
   </article>

@@ -425,6 +425,17 @@ angular
                 result = userAnswer.replace("/\n/", "");
                 return result;
             }
+            
+            function getContentResources() {
+
+                drupalFactory.Services.GetContent("tutorial", function (data, key) {
+                    $scope.contentResources = data.node;
+                }, function () {
+                }, false);
+
+            }
+            
+            getContentResources();   
 
 
             if($routeParams.retry){

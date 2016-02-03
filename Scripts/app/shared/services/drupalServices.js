@@ -2,6 +2,7 @@
     namespace('drupalFactory');
     
     drupalFactory.NodeRelation = {
+        "tutorial": 95, /* General - Tutorial */
         "0000": 57, /* Programa - Dashboard */
         "1002": 53, /* Zona de Vuelo - Cabina de Soporte - Chat */
         "1010": 46, /* Zona de Vuelo - Con�cete - Punto de Encuentro */
@@ -60,6 +61,8 @@
         "3601": 66, /* Zona de Aterrizaje - Exploraci�n Final */
         "3101": 65, /* Zona de Aterrizaje - Exploraci�n Inicial */
         "HelpAndSupport": 82, /*General - Ayuda y soporte*/
+        "tuEliges": 96, /* Zona de Navegación - Tu Eliges - Tu Eliges */
+        "mapaVida": 97, /* Zona de Navegación - Proyecta tu vida - Mapa de vida */
         "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
         "BadgeForumRobot": 101 /*General - Robot al ganar el badge de foros*/
     };
