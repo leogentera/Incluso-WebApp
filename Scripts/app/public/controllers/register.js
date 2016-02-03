@@ -28,7 +28,34 @@ angular
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
 
-            /* ViewModel */
+            function offlineCallback() {
+                $timeout(function () {
+                    $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
+                    $scope.$emit('scrollTop');
+                }, 1000);
+            }
+
+            var waitForCatalogsLoaded = setInterval(waitForCatalogsLoadedTimer, 1500);
+
+            function waitForCatalogsLoadedTimer() {
+
+                if (_catalogsLoaded != null) {
+                    $scope.$emit('HidePreloader');
+                    clearInterval(waitForCatalogsLoaded);
+                    $scope.genderItems = _getCatalogValuesBy("gender");
+                    $scope.countryItems = _getCatalogValuesBy("country");
+                    $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
+                    $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
+                    $scope.$apply();
+                }
+            }
+
+            $scope.genderItems = _getCatalogValuesBy("gender");
+            $scope.countryItems = _getCatalogValuesBy("country");
+            $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
+            $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
+            $scope.showPlaceHolder = true;
+
             $scope.registerModel = {
                 username: undefined,
                 firstname: "",
@@ -114,12 +141,6 @@ angular
                 }
             };
 
-            $scope.genderItems = _getCatalogValuesBy("gender");
-            $scope.countryItems = _getCatalogValuesBy("country");
-            $scope.cityItems = $scope.stateItems = _getCatalogValuesBy("citiesCatalog");
-            $scope.securityquestionItems = _getCatalogValuesBy("secretquestion");
-            $scope.showPlaceHolder = true;
-
             $scope.validateConnection(function () {
             }, offlineCallback);
 
@@ -159,13 +180,6 @@ angular
                 } else {
                     $scope.$emit('scrollTop');
                 }
-            }
-
-            function offlineCallback() {
-                $timeout(function () {
-                    $scope.registerModel.modelState.errorMessages = ["Se necesita estar conectado a Internet para continuar"];
-                    $scope.$emit('scrollTop');
-                }, 1000);
             }
 
             function validateModel() {
@@ -262,10 +276,14 @@ angular
 
                                 if ($scope.activity_status === 1) {//If the activity is currently finished
                                     // GET request; example: http://incluso.definityfirst.com/RestfulAPI/public/activity/150?userid=656
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, function() {}, function() {}, true);
+                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, data.id, data.token, function () {
+                                    }, function () {
+                                    }, true);
 
                                 } else {
-                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, data.token, function() {}, function() {}, true);
+                                    moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, data.token, function () {
+                                    }, function () {
+                                    }, true);
                                 }
 
                             } else {
@@ -275,21 +293,31 @@ angular
 
                         var user = $scope.currentUserModel.userId;
                         var token = $scope.currentUserModel.token;
-                        moodleFactory.Services.GetAsyncAvatar(user, token, function () {}, function () {}, true);
-                        moodleFactory.Services.GetAsyncForumDiscussions(85, token, function () {}, function () {}, true);
-                        moodleFactory.Services.GetAsyncForumDiscussions(91, token, function () {}, function () {}, true);
-                        var courseModuleIds = [{"id": 1039, "userInfo": true}, {"id": 2012, "userInfo": false}, 
-                            {"id": 2017,"userInfo": true }, {"id": 3302, "userInfo": false}, {"id": 3402, "userInfo": true}];
+                        moodleFactory.Services.GetAsyncAvatar(user, token, function () {
+                        }, function () {
+                        }, true);
+                        moodleFactory.Services.GetAsyncForumDiscussions(85, token, function () {
+                        }, function () {
+                        }, true);
+                        moodleFactory.Services.GetAsyncForumDiscussions(91, token, function () {
+                        }, function () {
+                        }, true);
+                        var courseModuleIds = [{"id": 1039, "userInfo": true}, {"id": 2012, "userInfo": false},
+                            {"id": 2017, "userInfo": true}, {"id": 3302, "userInfo": false}, {"id": 3402, "userInfo": true}];
                         for (var i = 0; i < courseModuleIds.length; i++) {
                             var courseModule = courseModuleIds[i];
                             var parentActivity = getActivityByActivity_identifier(courseModule.id);
                             if (parentActivity && parentActivity.activities && parentActivity.activities.length > 0) {
                                 for (var j = 0; j < parentActivity.activities.length; j++) {
                                     var activity = parentActivity.activities[j];
-                                    moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid, token, function() {}, function() {}, true);
+                                    moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid, token, function () {
+                                    }, function () {
+                                    }, true);
                                     if (courseModule.userInfo) {
                                         if (courseModule.id != 1039 || (courseModule.id == 1039 && activity.activityname.toLowerCase().indexOf("resultados") >= 0)) {
-                                            moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid + "?userid=" + user, token, function() {}, function() {}, true);
+                                            moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid + "?userid=" + user, token, function () {
+                                            }, function () {
+                                            }, true);
                                         }
                                     }
                                 }
@@ -298,11 +326,11 @@ angular
                         //-----------------------------------------------------------------------------------------------
 
                     }, function () {
-                        
+
                         $scope.$emit('HidePreloader');
                         localStorage.setItem("offlineConnection", "offline");
                         $location.path('/');
-                        
+
                     }, true);
 
                     try {
@@ -317,7 +345,7 @@ angular
                     $scope.$emit('HidePreloader');
                     localStorage.setItem("offlineConnection", "offline");
                     $location.path('/');
-                    
+
                 }, true);
             };
 
@@ -360,13 +388,10 @@ angular
                         gender: $scope.registerModel.gender,
                         autologin: true
                     })
-                }).success(function (data, status, headers, config) {
-
+                }).success(function (data, status, headers, config) {//Successfully register and logged in.
                     $scope.isRegistered = true;
-
-                    //Successfully register and logged in.
+                    $scope.registerModel.modelState.isValid = true;
                     $scope.$emit('scrollTop');
-
                     $scope.autologin(data);
 
                 }).error(function (data, status, headers, config) {
@@ -379,7 +404,6 @@ angular
                     }
 
                     $scope.registerModel.modelState.errorMessages = [errorMessage];
-
                     $scope.$emit('HidePreloader');
                     $scope.$emit('scrollTop');
                 });
@@ -401,7 +425,7 @@ angular
                     age--;
                 }
 
-                if ( ((parseInt(birth_month, 10) - 1) == today_month) && (today_day < parseInt(birth_day, 10))) {
+                if (((parseInt(birth_month, 10) - 1) == today_month) && (today_day < parseInt(birth_day, 10))) {
                     age--;
                 }
 
@@ -413,11 +437,9 @@ angular
                 var inputConfirmPassword = $("#confirmPassword");
 
                 if (inputPassword.attr("type") == "text") {
-                    visible = false;
                     inputPassword.attr("type", "password");
                     inputConfirmPassword.attr("type", "password");
                 } else {
-                    visible = true;
                     inputPassword.attr("type", "text");
                     inputConfirmPassword.attr("type", "text");
                 }
