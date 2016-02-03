@@ -45,8 +45,8 @@ angular
             function validateModel(){                
                 var errors = [];
                 
-                var passwordPolicy = "La contraseña es requerida";
-                var usernamePolicy = "El nombre de usuario es requerido"; 
+                var passwordPolicy = "Contraseña inválida";
+                var usernamePolicy = "Nombre de usuario inválido"; 
                 
                 if(!$scope.loginForm.password.$valid){ errors.push(passwordPolicy); }
                 if(!$scope.loginForm.userName.$valid){ errors.push(usernamePolicy); }
