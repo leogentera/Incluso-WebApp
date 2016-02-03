@@ -642,6 +642,7 @@ angular
                         age--;
                     }
 
+                    $scope.model.birthday = dpValue;
                     return age;
                 }
 
@@ -658,8 +659,7 @@ angular
                     $("input[name='date']").val(data);
                     var splitDate = data.split("/");
                     var birthday = new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
-                    $scope.model.birthday = moment(birthday).format("MM/DD/YYYY");
-                    $scope.myAge = calculate_age($scope.model.birthday);
+                    $scope.model.birthday = moment(birthday).format("DD/MM/YYYY");
                 }
 
                 function FailureDatePicker(data) {
