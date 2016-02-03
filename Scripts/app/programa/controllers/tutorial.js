@@ -191,6 +191,17 @@ angular
             function FailureAvatar(data) {
                 $location.path('/ProgramaDashboard');
             }
+                     
+            function getContentResources() {
+
+                drupalFactory.Services.GetContent("tutorial", function (data, key) {
+                    $scope.contentResources = data.node;
+                }, function () {
+                }, false);
+
+            }
+            
+            getContentResources();
 
             $scope.navigateToPage = function(pageNumber){
                 $scope.currentPage = pageNumber;

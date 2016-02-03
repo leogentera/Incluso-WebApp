@@ -1,19 +1,13 @@
 <div class="incluso-app step-dashboard" id="site-wrapper">
   <article class="bluespace">
-    <div class="subtitle">Mapa de Vida</div>
+    <div class="subtitle" ng-bind="contentResources.multiply_title"></div>
     <section class="txt-renglon pill">
-      <div class="fl-left">Estrellas a ganar:</div><div class="fl-right sm-pill">{{stars}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+      <div class="fl-left" ng-bind="contentResources.multiply_stars_mssg"></div><div class="fl-right sm-pill">{{stars}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
     </section>
-    <div class="txt-renglon">Instrucciones de uso:</div>
-    <section class="txt-renglon up-line">
-      <ol>
-        <li>Descargar la aplicación Incluso Interactivo con el botón naranja.</li>
-        <li>Regresa a Misión Incluso.</li>
-        <li>Presiona el botón para iniciar la aplicación.</li>
-      </ol>
-    </section>  
-    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="!isInstalled" ng-click="downloadGame()">Descargar Juego</a>
-    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="isInstalled" ng-click="downloadGame()">Empezar Juego</a>
-    <div role="button" class="txt-renglon centered" ng-click="back()">Cancelar</div>
+    <div class="txt-renglon" ng-bind="contentResources.multiply_instructions_titl"></div>
+    <section class="txt-renglon up-line" ng-bind-html="contentResources.multiply_instructions.value"> 
+    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="!isInstalled" ng-click="downloadGame()" ng-bind="contentResources.multiply_download_button"></a>
+    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="isInstalled" ng-click="downloadGame()" ng-bind="contentResources.multiply_start_button"></a>
+    <div role="button" class="txt-renglon centered" ng-click="back()" ng-bind="contentResources.multiply_cancel_button"></div>
   </article>
 </div>

@@ -1,20 +1,14 @@
 <div class="incluso-app step-dashboard" id="site-wrapper">
   <article class="bluespace">
-    <div class="subtitle">Tú Eliges</div>
+    <div class="subtitle" ng-bind="contentResources.tu_eliges_title"></div>
     <section class="txt-renglon pill">
-      <div class="fl-left">Estrellas a ganar:</div><div class="fl-right sm-pill">{{stars}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
+      <div class="fl-left">{{contentResources.tu_eliges_stars_to_win}}</div><div class="fl-right sm-pill">{{stars}}&nbsp;&nbsp;<i class="icomoon icon-star fl-right"></i></div>
     </section>
-    <div class="txt-renglon">Instrucciones de uso:</div>
-    <section class="txt-renglon up-line">
-      <ol>
-        <li>Descargar la aplicación Incluso Interactivo con el botón naranja.</li>
-        <li>Regresa a Misión Incluso.</li>
-        <li>Presiona el botón para iniciar la aplicación.</li>
-      </ol>
-    </section>  
-    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="!isInstalled" ng-click="downloadGame()">Descargar Juego</a>
-    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="isInstalled" ng-click="downloadGame()">Empezar Juego</a>
-    <div role="button" class="txt-renglon centered" ng-click="back()">Cancelar</div>
+    <div class="txt-renglon" ng-bind="contentResources.tu_eliges_instructions_tit"></div>
+    <section class="txt-renglon up-line" ng-bind-html="contentResources.tu_eliges_instructions.safe_value | linky"></section>    
+    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="!isInstalled" ng-click="downloadGame()" ng-bind="contentResources.tu_eliges_download_game"></a>
+    <a role="button" class="btn btn-primary btn-lg btn-cnt" ng-show="isInstalled" ng-click="downloadGame()" ng-bind="contentResources.tu_eliges_start_game"></a>
+    <div role="button" class="txt-renglon centered" ng-click="back()" ng-bind="contentResources.tu_eliges_cancel"></div>
   </article>
   <script type="text/ng-template" id="TuEligesModal.html">
       <div class="modal-robot robot-lg closing-stage-modal user-help" >

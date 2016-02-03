@@ -105,7 +105,7 @@ angular
                 };
                 var scoresActivity;
                 _.each($scope.retoMultipleActivities, function(activity){
-                  if (activity.name.toLowerCase().indexOf("puntaje") < 0 && activity.name.toLowerCase().indexOf("resultados") < 0) {
+                  if (activity.name.toLowerCase().indexOf("puntaje") < 0 && activity.name.toLowerCase().indexOf("resultado") < 0) {
                     var subactivity = {
                         "estrellas": "300",
                         "subactividad": activity.name,
