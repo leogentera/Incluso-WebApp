@@ -38,7 +38,7 @@
             </div>
         </section>
         <section class="component profile-options">
-            <form action="" name="editForm">
+            <form name="accountManagement" novalidate>
                 <div class="pages">
                     <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
                         <div class="container-fluid">
@@ -62,7 +62,7 @@
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="panel panel-default panel-form">
-                                        <div class="panel-heading with-icons" ng-click="navigateToPage(1)">
+                                        <div class="panel-heading with-icons" ng-click="navigateToPage(2)">
                                             <span class="icomoon icon-arrow-slim-left"></span>
                                             <span class="icomoon icon-lock"></span>
                                             <span class="panel-title">Privacidad</span>
@@ -107,30 +107,7 @@
                                                                 </ui-switch>
                                                             </div>
                                                         </li>
-                                                        <!-- Modified Privacy Settings on 14/12/2015. Maintained here as a Reference.
-                                                        <li class="form-group-control">
-                                                            <div class="col-xs-9">
-                                                                <label>Dirección</label>
-                                                                <span class="type-show" ng-class="{'private': !model.showAddress}">{{model.showAddress == true ? 'Público' : 'Privado'}}</span>
-                                                            </div>
-                                                            <div class="col-xs-3">
-                                                                <ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showAddress">
-                                                                    <div class="switch-handle"></div>
-                                                                </ui-switch>
-                                                            </div>
-                                                        </li>
-                                                        <li class="form-group-control">
-                                                            <div class="col-xs-9">
-                                                                <label>Teléfonos</label>
-                                                                <span class="type-show" ng-class="{'private': !model.showPhones}">{{model.showPhones == true ? 'Público' : 'Privado'}}</span>
-                                                            </div>
-                                                            <div class="col-xs-3">
-                                                                <ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showPhones">
-                                                                    <div class="switch-handle active"></div>
-                                                                </ui-switch>
-                                                            </div>
-                                                        </li>
-                                                        -->
+
                                                         <li class="form-group-control">
                                                             <div class="col-xs-9">
                                                                 <label>Redes sociales</label>
@@ -242,6 +219,24 @@
                                                     </ul>
                                                 </section>
 
+                                                <section class="form-content-list my-account">
+                                                    <h4>Confirmación de la cuenta</h4>
+                                                    <ul class="block-list">
+                                                        <li class="form-group-control" ng-click="changePassword()">
+                                                            <div class="col-xs-12">
+                                                                <label>Cambio de contraseña</label>
+                                                                <span class="icomoon icon-arrow-bold-right"></span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="form-group-control" ng-click="goToDesactivateAccountView()">
+                                                            <div class="col-xs-12">
+                                                                <label class="red-color">Desactivar cuenta</label>
+                                                                <span class="icomoon icon-arrow-bold-right"></span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </section>
+
                                                 <div class="actions">
                                                     <div class="page-controls">
                                                         <a class="btn btn-primary btn-lg btn-block" ng-click="save()">Guardar</a>
@@ -256,9 +251,220 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div><!-- Closing Page 2  -->
+
+                    <div class="page" ng-class="currentPage == 3 ? 'active' : ''">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="panel panel-default panel-form">
+                                        <div class="panel-heading with-icons" ng-click="navigateToPage(2)">
+                                            <span class="icomoon icon-lock"></span>
+                                            <span class="panel-title">Privacidad</span>
+                                        </div>
+                                        <div class="panel-body">
+                                            <!-----Cambio de Contraseña---->
+                                            <div class="pass-recovery">
+                                                <fieldset class="my-profile-form">
+                                                    <h4 class="text-uppercase">Cambio de contraseña</h4>
+                                                    <div class="form-group theme-form">
+
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-lg theme-default">
+                                                                        <p class="input-group-addon">
+                                                                            <span class="icomoon icon-lock"></span>
+                                                                        </p>
+                                                                        <input type="password"
+                                                                               class="form-control form-control-lg theme-form"
+                                                                               placeholder="Contraseña Actual"
+                                                                               name="currentPassword" id="currentPassword"
+                                                                               ng-disabled="passwordChanged"
+                                                                               ng-model="changePasswordModel.currentPassword"
+                                                                               ng-pattern="/^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[_\W])[\S]{8,}$/"
+                                                                               ng-trim="true" required/>
+                                                                        <a class="input-group-addon btn-info">
+                                                                            <span class="icomoon icon-error red"
+                                                                                  ng-show="accountManagement.currentPassword.$dirty && accountManagement.currentPassword.$invalid"
+                                                                                  ng-click="openModalPassword()"></span>
+                                                                            <span class="icomoon icon-success yellowgreen"
+                                                                                  ng-show="accountManagement.currentPassword.$dirty && accountManagement.currentPassword.$valid"
+                                                                                  ng-click="openModalPassword()"></span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-lg theme-default">
+                                                                        <p class="input-group-addon">
+                                                                            <span class="icomoon icon-lock"></span>
+                                                                        </p>
+                                                                        <input type="password"
+                                                                               class="form-control form-control-lg theme-form"
+                                                                               placeholder="Nueva Contraseña"
+                                                                               name="passwordOne" id="passwordOne"
+                                                                               ng-model="changePasswordModel.passwordOne"
+                                                                               ng-pattern="/^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[_\W])[\S]{8,}$/"
+                                                                               ng-trim="true" required/>
+                                                                        <a class="input-group-addon btn-info">
+                                                                            <span class="icomoon icon-error red"
+                                                                                  ng-show="accountManagement.passwordOne.$dirty && accountManagement.passwordOne.$invalid"
+                                                                                  ng-click="openModalPassword()"></span>
+                                                                            <span class="icomoon icon-success yellowgreen"
+                                                                                  ng-show="accountManagement.passwordOne.$dirty && accountManagement.passwordOne.$valid"
+                                                                                  ng-click="openModalPassword()"></span>
+                                                                            <span class="icomoon icon-information" ng-click="openModalPassword()" ng-show="accountManagement.passwordOne.$pristine"></span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="form-group">
+                                                                    <div class="input-group input-group-lg theme-default">
+                                                                        <p class="input-group-addon">
+                                                                            <span class="icomoon icon-lock"></span>
+                                                                        </p>
+                                                                        <input type="password"
+                                                                               class="form-control form-control-lg theme-form"
+                                                                               placeholder="Repetir Nueva Contraseña"
+                                                                               name="passwordTwo" id="passwordTwo"
+                                                                               ng-model="changePasswordModel.passwordTwo"
+                                                                               ng-trim="true" required/>
+                                                                        <a class="input-group-addon btn-info">
+                                                                            <span class="icomoon icon-error red"
+                                                                                  ng-show="accountManagement.passwordTwo.$dirty && (changePasswordModel.passwordOne != changePasswordModel.passwordTwo || !changePasswordModel.passwordTwo)"
+                                                                                  ng-click="openModalPassword()"></span>
+                                                                            <span class="icomoon icon-success yellowgreen"
+                                                                                  ng-show="accountManagement.passwordTwo.$dirty && changePasswordModel.passwordOne == changePasswordModel.passwordTwo && changePasswordModel.passwordTwo"
+                                                                                  ng-click="openModalPassword()"></span>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <div class="form-group">
+                                                                    <div class="checkbox checkbox-custom">
+                                                                        <label>
+                                                                            <input type="checkbox" name="termsAndConditions" ng-click="togglePasswordChange()"/>
+                                                                            <span>Mostrar contraseña</span>
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="actions">
+                                                        <div class="page-controls">
+                                                            <a class="btn btn-primary btn-lg btn-block"
+                                                               ng-disabled="accountManagement.passwordOne.$pristine || (changePasswordModel.passwordOne != changePasswordModel.passwordTwo || accountManagement.currentPassword.$invalid  || accountManagement.passwordOne.$invalid)"
+                                                               ng-click="updatePassword()">Cambiar contraseña</a>
+                                                        </div>
+                                                        <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="returnToPrivacySettings()">Cancelar</a>
+                                                    </div>
+                                                </fieldset>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- Closing Page 3  -->
+
+                    <div class="page" ng-class="currentPage == 4 ? 'active' : ''">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="panel panel-default panel-form">
+                                        <div class="panel-heading with-icons" ng-click="navigateToPage(2)">
+                                            <span class="icomoon icon-lock"></span>
+                                            <span class="panel-title">Privacidad</span>
+                                        </div>
+                                        <div class="panel-body">
+                                            <!-----Desactivar Cuenta -->
+                                            <div class="disabled-account">
+                                                <fieldset class="my-profile-form" ng-if="!confirmDesactivation">
+                                                    <div class="media">
+                                                        <h4 class="text-uppercase">Desactivación de la cuenta</h4>
+                                                        <div class="media-left">
+                                                            <span class="icomoon icon-warning"></span>
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <p>Estas a punto de desactivar tu cuenta, toda tu información y avances serán eliminados.</p>
+                                                            <p>¿Estás seguro de esto?</p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="actions">
+                                                        <div class="page-controls">
+                                                            <a class="btn btn-primary btn-lg btn-block" ng-click="confirmDesactivate()">Desactivar cuenta ahora</a>
+                                                        </div>
+                                                        <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="returnToPrivacySettings()">Cancelar</a>
+                                                    </div>
+                                                </fieldset>
+
+                                                <fieldset class="my-profile-form pass-verify" ng-if="confirmDesactivation">
+                                                    <h4 class="text-uppercase">Desactivación de la cuenta</h4>
+                                                    <p>Por seguridad, por favor ingresa tu contraseña para continuar:</p>
+
+                                                    <div class="form-group theme-form">
+                                                        <div class="input-group">
+                                                            <span class="icomoon icon-lock input-group-addon"></span>
+                                                            <input type="password"
+                                                                   class="form-control form-control-lg theme-form"
+                                                                   placeholder="Contraseña"
+                                                                   ng-model="changePasswordModel.currentPassword"
+                                                                   ng-trim="true" required />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="actions">
+                                                        <div class="page-controls">
+                                                            <a class="btn btn-primary btn-lg btn-block" ng-click="desactivateAccount()">Continuar</a>
+                                                        </div>
+                                                        <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="returnToPrivacySettings()">Cancelar</a>
+                                                    </div>
+                                                </fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- Closing Page 4  -->
+
                 </div>
             </form>
         </section>
     </article>
+    <script type="text/ng-template" id="passwordInfoModal.html">
+        <div class="modal-header">
+            <h3 class="modal-title"> Contraseña </h3>
+            <a role="button" class="icon icon-close btn btn-circle" ng-click="cancel()">
+                <span class="icomoon icon-cross"></span>
+            </a>
+        </div>
+        <div class="modal-body">
+            <p>
+                Es necesario que tu contraseña tenga al menos 8 caracteres, en los cuales debe haber por lo menos un
+                carácter especial, como guión bajo (_), guión (-), punto (.) y arroba (@), un número, una letra
+                mayúscula y una letra minúscula. No debe contener espacios.
+            </p>
+        </div>
+        <div class="modal-footer"></div>
+    </script>
 </div>
