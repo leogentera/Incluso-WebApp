@@ -81,6 +81,18 @@
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
                                     </li>
+
+                                    <!-- Mis Estrellas -->
+                                    <li class="list-group-item no-badge" ng-click="goToStars()" ng-show="loggedUser?loggedUser:model.showMyAchievements">
+                                        <a href="">
+                                            <span class="icomoon icon-earned-stars"></span>
+                                            <!--<span>Mis estrellas</span>-->
+                                            <span>{{contentResources.seccion_mis_estrellas}}</span>
+                                            <span class="icomoon icon-star"></span>
+                                            <span class="icomoon icon-arrow-slim-right"></span>
+                                        </a>
+                                    </li>
+
                                     <li class="list-group-item no-badge" ng-click="navigateToPage(6)" ng-show="loggedUser?loggedUser:model.showMyAchievements">
 
                                         <a href="">
