@@ -83,7 +83,7 @@ angular
 
                 if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
                     $scope.currentPage = 2;
-                } else if(localStorage.getItem("profile_page")) {
+                } else if (localStorage.getItem("profile_page")) {
                     $scope.currentPage = Number(localStorage.getItem("profile_page"));
                     localStorage.removeItem("profile_page");
                 } else {
@@ -106,8 +106,8 @@ angular
                 $scope.logOfSections = [];
 
                 getDataAsync(function () {
-                    
-                    getContent();                                        
+
+                    getContent();
 
                     //privacy settings initial switches [boolean]
                     $scope.generalInfo = true;
@@ -437,6 +437,7 @@ angular
 
                     $scope.initDesactivation = function () {
                         $scope.currentPage = 4;
+                        document.querySelector("#option-position").scrollIntoView();
                     };
 
                     $scope.confirmDesactivate = function () {
@@ -464,7 +465,7 @@ angular
                                         ClearLocalStorage("userPosition");
 
                                         //... and redirect the user to login view.
-                                        $timeout(function(){
+                                        $timeout(function () {
                                             $scope.$emit('HidePreloader');
                                             logout($scope, $location);
                                         }, 1);
@@ -531,7 +532,7 @@ angular
                         $http({
                             method: 'PUT',
                             url: API_RESOURCE.format("authentication") + "/" + currentUser.userId,
-                            headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': currentUser.token},
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': currentUser.token },
                             data: $.param({
                                 password: $scope.changePasswordModel.currentPassword,
                                 new_password: $scope.changePasswordModel.passwordOne
@@ -540,7 +541,6 @@ angular
 
                             $scope.$emit('scrollTop');
                             $scope.$emit('HidePreloader');
-                            console.log("SUCCESS: " + JSON.stringify(data));
                             var resultData = JSON.parse(data);
 
                             if (resultData.success == "true") {//If the
@@ -613,13 +613,13 @@ angular
                         callback();
                         //Get avatar info from Local Storage.
                         $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
-                        $timeout(function(){
-                            $scope.validateConnection(function(){}, function(){
-                                
-                                getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.model.profileimageurl, function(niceImageUrl) { 
+                        $timeout(function () {
+                            $scope.validateConnection(function () { }, function () {
+
+                                getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
                                     $scope.model.profileimageurl = niceImageUrl;
                                 });
-                                
+
                             });
                         }, 500);
 
@@ -630,7 +630,7 @@ angular
                         $scope.model.level = $scope.model.currentStudies["level"];
                         $scope.model.grade = $scope.model.currentStudies["grade"];
                         $scope.model.period = $scope.model.currentStudies["period"];
-                       
+
                         $scope.model.talents = orderCatalog($scope.model.talents);
                         $scope.model.values = orderCatalog($scope.model.values);
                         $scope.model.habilities = orderCatalog($scope.model.habilities);
@@ -681,10 +681,10 @@ angular
                             if ($scope.model.profileimageurl) {
                                 $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                             }
-                            _forceUpdateConnectionStatus(function(){
+                            _forceUpdateConnectionStatus(function () {
                                 $scope.model.profileimageurl = (_isDeviceOnline ? $scope.model.profileimageurl : 'assets/avatar/default-2.png');
-                            }, function(){});
-                            
+                            }, function () { });
+
                             $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
 
                             callback();
@@ -868,7 +868,7 @@ angular
                         age--;
                     }
 
-                    if ( ((parseInt(birth_month, 10) - 1) == today_month) && (today_day < parseInt(birth_day, 10))) {
+                    if (((parseInt(birth_month, 10) - 1) == today_month) && (today_day < parseInt(birth_day, 10))) {
                         age--;
                     }
 
@@ -1244,6 +1244,7 @@ angular
 
                 $scope.changePassword = function () {
                     $scope.currentPage = 3;
+                    document.querySelector("#option-position").scrollIntoView();
                 };
 
                 $scope.returnToProfile = function () {//After pressing "Terminar" button.
@@ -1261,7 +1262,7 @@ angular
                     $scope.currentPage = 2; //Go back to initial view.
                 };
 
-                Array.prototype.compare = function(testArr) {
+                Array.prototype.compare = function (testArr) {
                     if (this.length != testArr.length) return false;
                     for (var i = 0; i < testArr.length; i++) {
                         if (this[i].compare) {
@@ -1272,13 +1273,13 @@ angular
                     return true;
                 };
 
-                function arraysAreEqual(ary1, ary2){
-                    if(ary1.length !== ary2.length) {
+                function arraysAreEqual(ary1, ary2) {
+                    if (ary1.length !== ary2.length) {
                         return false;
                     }
 
-                    for(var i = 0; i < ary1.length; i++) {
-                        for(var key in ary1[i]) {
+                    for (var i = 0; i < ary1.length; i++) {
+                        for (var key in ary1[i]) {
                             //console.log(ary1[i][key] + " -- " + ary2[i][key]);
                             if (ary1[i][key] !== ary2[i][key] && key != "$$hashKey") {
                                 return false;
@@ -1613,22 +1614,22 @@ angular
                                     sectionFieldsAreOk = false;
                                     break;
                             }
-                            
+
                             if (sectionFieldsAreOk) {//The user has successfully completed a profile's section.
 
                                 activity.status = 1;   //Update activity status.
-                                $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": activity.points, "status": 1});
+                                $scope.logOfSections.push({ "id": sectionId, "name": sectionName, "points": activity.points, "status": 1 });
                                 $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
 
                                 activity.last_status_update = moment(Date.now()).unix();
-                                
+
                                 var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + $scope.userId));
                                 var newPoints = parseInt(profile.stars) + parseInt(activity.points); //Update points
                                 profile.stars = newPoints;  //Update the 'stars' key.
-                                
+
                                 _setLocalStorageJsonItem("Perfil/" + $scope.userId, profile); //Save updated profile to Local Storage.
                                 updateUserStarsUsingExternalActivity(activity.activity_identifier); //Update profile in Moodle.
-                                
+
                                 endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
                                 var activityModel = {
@@ -1640,7 +1641,7 @@ angular
                                     "token": currentUser.token,
                                     "activityType": "Assign"
                                 };
-                                                                
+
                                 //Finish Activity.
                                 _endActivity(activityModel, function () {
                                     validateAllFieldsCompleted();
@@ -1648,26 +1649,26 @@ angular
 
                                 sectionFieldsAreOk = false;  //Restore 'sectionFieldsAreOk' value
                             } else {//Not all fields were completed.
-                                $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": 0, "status": 0});
+                                $scope.logOfSections.push({ "id": sectionId, "name": sectionName, "points": 0, "status": 0 });
                             }
                         } else { //The subsection has been previously completed.
 
                             /* This does not seem necessary...
                             if (!showResultsPage && activity.activity_identifier == $scope.origin) {
-                                showResultsPage = true;
+                            showResultsPage = true;
                             }
                             */
 
-                            $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": 0, "status": 1});
+                            $scope.logOfSections.push({ "id": sectionId, "name": sectionName, "points": 0, "status": 1 });
                         }
                     }
-                }            
-                
-                
-                function validateAllFieldsCompleted(){
+                }
+
+
+                function validateAllFieldsCompleted() {
                     if ($scope.userCourse && $scope.userCourse.activities) {
 
-                        var activitiesCompleted = _.where($scope.userCourse.activities, {status: 1});
+                        var activitiesCompleted = _.where($scope.userCourse.activities, { status: 1 });
 
                         if (activitiesCompleted && activitiesCompleted.length == $scope.userCourse.activities.length) {
 
@@ -1675,17 +1676,17 @@ angular
                                 badgeid: 13 //badge earned when a user completes his profile.
                             };
 
-                            var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
-                            for(var i = 0; i < userProfile.badges.length; i++){
+                            var userProfile = JSON.parse(localStorage.getItem("Perfil/" + currentUser.userId));
+                            for (var i = 0; i < userProfile.badges.length; i++) {
                                 if (userProfile.badges[i].id == badgeModel.badgeid) {
                                     userProfile.badges[i].status = "won";
                                 }
                             }
-                            
+
                             localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
                             showRobotProfile();
-                            moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function () {}, function () {});
-                            
+                            moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function () { }, function () { });
+
                         }
                     }
                 }
@@ -1695,11 +1696,11 @@ angular
                         title: $scope.robotContentResources.titulo,
                         message: $scope.robotContentResources.mensaje
                     };
-                            
+
                     _setLocalStorageItem("badgeRobotMessage", JSON.stringify($scope.badgeRobotMessages));
-                    $scope.openModal_badgeRobotMessage();                                    
+                    $scope.openModal_badgeRobotMessage();
                 }
-                
+
                 $scope.openModal_badgeRobotMessage = function (size) {
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
@@ -1709,7 +1710,7 @@ angular
                         windowClass: 'closing-stage-modal user-help-modal'
                     });
                 };
-                
+
                 function phonesAreValid(phones) {
 
                     var validInfo = true;
@@ -1802,9 +1803,9 @@ angular
                     if ($scope.model.firstname && $scope.model.lastname && $scope.model.mothername && $scope.model.gender && $scope.model.birthCountry
                             && $scope.birthdate_Dateformat && $scope.model.age > 13 && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.country && $scope.model.address.city
                                 && $scope.model.address.town && $scope.model.address.postalCode && $scope.model.address.street && $scope.model.address.num_ext
-                                    && $scope.model.address.colony && phonesAreValid($scope.model.phones) && socialNetsAreValid($scope.model.socialNetworks) 
-                                        && compartamosIsValid($scope.model.familiaCompartamos)){
-                                            result = true;
+                                    && $scope.model.address.colony && phonesAreValid($scope.model.phones) && socialNetsAreValid($scope.model.socialNetworks)
+                                        && compartamosIsValid($scope.model.familiaCompartamos)) {
+                        result = true;
                     }
                     return result;
                 }
@@ -1846,10 +1847,10 @@ angular
                     var result = false;
                     if ($scope.model.favoriteSports.length > 0 && $scope.model.artisticActivities.length > 0 && $scope.model.hobbies.length > 0
                         && $scope.model.talents.length > 0 && $scope.model.values.length > 0 && $scope.model.habilities.length > 0
-                            && charactersIsValid($scope.model.inspirationalCharacters)){
-                                                result = true;
+                            && charactersIsValid($scope.model.inspirationalCharacters)) {
+                        result = true;
                     }
-                    return result;                
+                    return result;
                 }
 
                 function checkMedicalServices() {
@@ -1877,8 +1878,8 @@ angular
                 function assignmentSocioeconomicos() {
                     var result = false;
                     if ($scope.model.iLiveWith && $scope.model.mainActivity.length > 0 && $scope.model.level && $scope.model.grade && $scope.model.period
-                            && $scope.model.children && $scope.model.gotMoneyIncome && $scope.model.moneyIncome.length > 0 && checkMedicalServices()){
-                                result = true;
+                            && $scope.model.children && $scope.model.gotMoneyIncome && $scope.model.moneyIncome.length > 0 && checkMedicalServices()) {
+                        result = true;
                     }
                     return result;
                 }
@@ -1887,8 +1888,8 @@ angular
                     var result = false;
                     if ($scope.model.knownDevices.length > 0 && $scope.model.ownDevices.length > 0 && $scope.model.phoneUsage.length > 0
                         && $scope.model.playVideogames && $scope.model.videogamesFrecuency && $scope.model.videogamesHours
-                            && $scope.model.kindOfVideogames.length > 0 && $scope.model.favoriteGames.length > 0){
-                                result = true;
+                            && $scope.model.kindOfVideogames.length > 0 && $scope.model.favoriteGames.length > 0) {
+                        result = true;
                     }
                     return result;
                 }
@@ -2144,7 +2145,7 @@ angular
                     var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                     encodeImageUri(pathimagen, function (b64) {
                         avatarInfo[0]["filecontent"] = b64;
-                        moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function(){avatarUploaded("Éxito")}, function(){avatarUploaded("Error")});
+                        moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function () { avatarUploaded("Éxito") }, function () { avatarUploaded("Error") });
                     });
                 };
 
@@ -2180,7 +2181,7 @@ angular
                     if (!$scope.avatarInfo[0]) {
                         setEmptyAvatar();
                     }
-                    var shield = ( $scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ( $scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Ling��stica' : $scope.model.shield ));
+                    var shield = ($scope.model.shield.toLowerCase().indexOf('matem') > -1 ? 'Matemática' : ($scope.model.shield.toLowerCase().indexOf('ling') > -1 ? 'Ling��stica' : $scope.model.shield));
                     var avatarInfoForGameIntegration = {
                         "userId": "" + $scope.model.id,
                         "alias": $scope.model.username,
@@ -2195,14 +2196,14 @@ angular
                         "trajeColorPrincipal": $scope.avatarInfo[0].traje_color_principal,
                         "trajeColorSecundario": $scope.avatarInfo[0].traje_color_secundario,
                         "escudo": shield,
-                        "avatarType":"Profile"
+                        "avatarType": "Profile"
                     };
 
                     try {
                         $scope.$emit('ShowPreloader');
                         cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                     } catch (e) {
-                        SuccessAvatar({"userId": $scope.userId, "actividad":"Mi Avatar","alias":$scope.model.alias,"genero":"Mujer","rostro":"Preocupado","colorPiel":"E6C8B0","estiloCabello":"Cabello02","colorCabello":"694027","trajeColorPrincipal":"00A0FF","trajeColorSecundario":"006192","imagenRecortada":"app/initializr/media","fechaModificación":"09/05/2015 09:32:04","gustaActividad":"Si","pathImagen":"avatar_196.png"})
+                        SuccessAvatar({ "userId": $scope.userId, "actividad": "Mi Avatar", "alias": $scope.model.alias, "genero": "Mujer", "rostro": "Preocupado", "colorPiel": "E6C8B0", "estiloCabello": "Cabello02", "colorCabello": "694027", "trajeColorPrincipal": "00A0FF", "trajeColorSecundario": "006192", "imagenRecortada": "app/initializr/media", "fechaModificación": "09/05/2015 09:32:04", "gustaActividad": "Si", "pathImagen": "avatar_196.png" })
 
                     }
                 };
@@ -2293,10 +2294,10 @@ angular
                         "modifiedtime": moment(Date.now()).unix(),
                         "posttype": 1,
                         "fileToUpload": null,
-                        "iscountable":0
+                        "iscountable": 0
                     };
 
-                    moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
+                    moodleFactory.Services.PostAsyncForumPost('new_post', requestData,
                         function () {
                             $scope.shareAchievementMessage = "";
                             $scope.showShareAchievementMessage = false;
@@ -2315,11 +2316,11 @@ angular
                 }
 
                 function getRobotMessageContent() {
-                    drupalFactory.Services.GetContent("BadgePerfilRobot",function(data, key){
+                    drupalFactory.Services.GetContent("BadgePerfilRobot", function (data, key) {
                         $scope.robotContentResources = data.node;
-                        },function(){},false);
+                    }, function () { }, false);
                 }
-                
+
                 function getContent() {
                     drupalFactory.Services.GetContent("7001", function (data, key) {
                         _loadedResources = true;
@@ -2328,37 +2329,37 @@ angular
                             $scope.$emit('HidePreloader');
                         }
                         getRobotMessageContent();
-                        
+
                     }, function () {
                         _loadedResources = true;
                         if (_loadedResources && _pageLoaded) {
                             $scope.$emit('HidePreloader');
                         }
-                        
+
                     }, false);
                 }
 
                 $scope.scrollToTop();
 
 
-                if ($routeParams.retry){
+                if ($routeParams.retry) {
                     _loadedDrupalResources = true;
                     try {
-                        document.addEventListener("deviceready",  function() { cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", [])}, false);
+                        document.addEventListener("deviceready", function () { cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", []) }, false);
                     }
                     catch (e) {
                         SuccessAvatar(
-                            {"userId": $scope.userId, "actividad":"Mi Avatar","alias":$scope.model.alias,"genero":"Mujer","rostro":"Preocupado","colorPiel":"E6C8B0","estiloCabello":"Cabello02","colorCabello":"694027","trajeColorPrincipal":"00A0FF","trajeColorSecundario":"006192","imagenRecortada":"app/initializr/media","fechaModificación":"09/05/2015 09:32:04","gustaActividad":"Si", "pathImagen":"avatar_196.png"}
+                            { "userId": $scope.userId, "actividad": "Mi Avatar", "alias": $scope.model.alias, "genero": "Mujer", "rostro": "Preocupado", "colorPiel": "E6C8B0", "estiloCabello": "Cabello02", "colorCabello": "694027", "trajeColorPrincipal": "00A0FF", "trajeColorSecundario": "006192", "imagenRecortada": "app/initializr/media", "fechaModificación": "09/05/2015 09:32:04", "gustaActividad": "Si", "pathImagen": "avatar_196.png" }
                         );
                     }
                 }
 
             }
-        }]).controller('badgeRobotMessageModal', function ($scope, $modalInstance) {
+        } ]).controller('badgeRobotMessageModal', function ($scope, $modalInstance) {
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
-            
-            var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));            
+
+            var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
             $scope.actualMessage = robotMessage;
-    });
+        });
