@@ -78,7 +78,7 @@ Parallel work file for UI Developer 01
 
                     .icomoon {
                         font-size: 86% !important;
-                        padding-left: 0px;
+                        padding-left: 0;
                         padding-right: 0 !important;
                     }
 
@@ -459,6 +459,7 @@ Parallel work file for UI Developer 01
 
                 div {
                     min-width: 80%;
+                    -ms-word-wrap: break-word;
                     word-wrap: break-word;
 
                     span {
@@ -521,6 +522,7 @@ Parallel work file for UI Developer 01
                         font-weight: bold;
                         font-size: 85%;
                         max-width: 75%;
+                        -ms-word-wrap: break-word;
                         word-wrap: break-word;
 
                         span, > div {
@@ -648,7 +650,7 @@ Parallel work file for UI Developer 01
     .privacy-notice, .use-terms {
 
         .component {
-            padding: 0 7.5%!important;
+            padding: 0 7.5% !important;
 
             p, ul {
                 font-size: 1.1em;
@@ -694,6 +696,8 @@ Parallel work file for UI Developer 01
                 top: -6%;
                 background-position: center 102%;
                 padding: 0 .5em;
+                -moz-box-sizing: content-box;
+                -webkit-box-sizing: content-box;
                 box-sizing: content-box;
             }
 
@@ -780,11 +784,12 @@ Parallel work file for UI Developer 01
             border-bottom: 0.1em solid rgba(255, 255, 255, 0.08);
 
             a.urlify, .urlify a {
+                -ms-word-break: break-all;
                 word-break: break-all;
                 display: inline-block;
                 color: #FFF;
             }
-            
+
             & > div {
                 display: block;
                 width: 90%;
@@ -972,6 +977,7 @@ Parallel work file for UI Developer 01
     .chat-support-modal {
         .controls {
             position: relative;
+
             .centered {
 
                 span {
