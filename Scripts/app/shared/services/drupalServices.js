@@ -63,6 +63,8 @@
         "HelpAndSupport": 82, /*General - Ayuda y soporte*/
         "tuEliges": 96, /* Zona de Navegación - Tu Eliges - Tu Eliges */
         "mapaVida": 97, /* Zona de Navegación - Proyecta tu vida - Mapa de vida */
+        "systemRequirements": 98,
+        "fuenteDeEnergiaRequirements": 99,
         "BadgePerfilRobot": 100, /*General - Robot al ganar el badge de perfil*/
         "BadgeForumRobot": 101 /*General - Robot al ganar el badge de foros*/
     };
