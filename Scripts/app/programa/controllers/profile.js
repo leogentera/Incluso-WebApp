@@ -619,7 +619,19 @@ angular
                         $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
                         $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
                         $scope.model.hobbies = orderCatalog($scope.model.hobbies);
-                        $scope.model.knownDevices = orderCatalog($scope.model.knownDevices);
+
+                        $scope.genderItems = orderCatalog($scope.genderItems);
+                        $scope.countryItems = orderCatalog($scope.countryItems);
+                        $scope.maritalStatusItems = orderCatalog($scope.maritalStatusItems);
+                        $scope.stateItems = orderCatalog($scope.stateItems);
+                        $scope.phoneTypeList = orderCatalog($scope.phoneTypeList);
+                        $scope.socialNetworksList = orderCatalog($scope.socialNetworksList);
+                        $scope.familiaCompartamosList = orderCatalog($scope.familiaCompartamosList);
+                        $scope.inspirationalCharactersList = orderCatalog($scope.inspirationalCharactersList);
+                        $scope.iLiveWithList = orderCatalog($scope.iLiveWithList);
+                        $scope.knownDevicesList = orderCatalog($scope.knownDevicesList);
+                        $scope.phoneUsageList = orderCatalog($scope.phoneUsageList);
+                        $scope.kindOfVideoGamesList = orderCatalog($scope.kindOfVideoGamesList);
 
                         $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                         $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
@@ -685,7 +697,19 @@ angular
                             $scope.model.favoriteSports = orderCatalog($scope.model.favoriteSports);
                             $scope.model.artisticActivities = orderCatalog($scope.model.artisticActivities);
                             $scope.model.hobbies = orderCatalog($scope.model.hobbies);
-                            $scope.model.knownDevices = orderCatalog($scope.model.knownDevices);
+
+                            $scope.genderItems = orderCatalog($scope.genderItems);
+                            $scope.countryItems = orderCatalog($scope.countryItems);
+                            $scope.maritalStatusItems = orderCatalog($scope.maritalStatusItems);
+                            $scope.stateItems = orderCatalog($scope.stateItems);
+                            $scope.phoneTypeList = orderCatalog($scope.phoneTypeList);
+                            $scope.socialNetworksList = orderCatalog($scope.socialNetworksList);
+                            $scope.familiaCompartamosList = orderCatalog($scope.familiaCompartamosList);
+                            $scope.inspirationalCharactersList = orderCatalog($scope.inspirationalCharactersList);
+                            $scope.iLiveWithList = orderCatalog($scope.iLiveWithList);
+                            $scope.knownDevicesList = orderCatalog($scope.knownDevicesList);
+                            $scope.phoneUsageList = orderCatalog($scope.phoneUsageList);
+                            $scope.kindOfVideoGamesList = orderCatalog($scope.kindOfVideoGamesList);
 
                             $scope.favoritSportsList = $scope.favoritSportsList.concat($scope.model.favoriteSports);
                             $scope.artisticActivitiesList = $scope.artisticActivitiesList.concat($scope.model.artisticActivities);
