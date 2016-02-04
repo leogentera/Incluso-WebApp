@@ -1,10 +1,10 @@
 <div class="incluso-app privacy-settings">
 
-    <div class="alert alert-warning" role="alert" ng-if="!model.modelState.isValid && model.modelState.errorMessages.length > 0">
+    <div class="alert alert-warning" role="alert" ng-show="!dataIsOk">
         <div class="alert-message">
             <div class="icomoon icon-warning"></div>
             <p>¡Error! Verifica tus datos</p>
-            <ul ng-if="model.modelState.errorMessages.length > 0">
+            <ul ng-show="model.modelState.errorMessages.length > 0">
                 <li ng-repeat="msg in model.modelState.errorMessages">{{msg}}</li>
             </ul>
         </div>
@@ -228,7 +228,7 @@
                                                                 <span class="icomoon icon-arrow-bold-right"></span>
                                                             </div>
                                                         </li>
-                                                        <li class="form-group-control" ng-click="goToDesactivateAccountView()">
+                                                        <li class="form-group-control" ng-click="initDesactivation()">
                                                             <div class="col-xs-12">
                                                                 <label class="red-color">Desactivar cuenta</label>
                                                                 <span class="icomoon icon-arrow-bold-right"></span>
@@ -254,6 +254,7 @@
                     </div><!-- Closing Page 2  -->
 
                     <div class="page" ng-class="currentPage == 3 ? 'active' : ''">
+                        <a id="topView"></a>
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -384,7 +385,7 @@
                         </div>
                     </div><!-- Closing Page 3  -->
 
-                    <div class="page" ng-class="currentPage == 4 ? 'active' : ''">
+                    <div class="page" ng-class="currentPage == 4 ? 'active' : ''" id="desactivate">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12">
