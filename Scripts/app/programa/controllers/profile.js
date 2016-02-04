@@ -27,6 +27,7 @@ angular
                 currentPassword: undefined,
                 passwordOne: undefined,
                 passwordTwo: undefined,
+                currentPasswordDesactivate: undefined,
                 modelState: {
                     isValid: true,
                     errorMessages: []
@@ -446,55 +447,68 @@ angular
 
                     $scope.desactivateAccount = function () {
 
-                        $scope.$emit('ShowPreloader');
+                        var Credentials = moodleFactory.Services.GetCacheJson("Credentials");
+                        var localPassword = Credentials.password;
 
-                        var myPassword = $scope.changePasswordModel.currentPassword;
+                        if (localPassword != $scope.changePasswordModel.currentPasswordDesactivate) {
+                            $scope.model.modelState.isValid = false;
+                            $scope.model.modelState.errorMessages = ["Debe introducir su contraseña actual."];
+                            $scope.dataIsOk = false;
+                            $scope.$emit('scrollTop');
 
-                        if (myPassword) {
+                        } else {//Proceed with desactivation.
 
-                            //PATCH request.
-                            moodleFactory.Services.DesactivateUser($scope.userId, currentUser.token, myPassword,
+                            $scope.$emit('ShowPreloader');
 
-                                function (data) {
+                            var myPassword = $scope.changePasswordModel.currentPasswordDesactivate;
 
-                                    if (data.success == "true") {//If the password Matchs...
+                            if (myPassword) {
 
-                                        //Delete user data from Local Storage.
-                                        ClearLocalStorage("Credentials");
-                                        ClearLocalStorage("RequestQueue");
-                                        ClearLocalStorage("userPosition");
+                                //PATCH request.
+                                moodleFactory.Services.DesactivateUser($scope.userId, currentUser.token, myPassword,
 
-                                        //... and redirect the user to login view.
-                                        $timeout(function () {
+                                    function (data) {
+
+                                        if (data.success == "true") {//If the password Matchs...
+
+                                            //Delete user data from Local Storage.
+                                            ClearLocalStorage("Credentials");
+                                            ClearLocalStorage("RequestQueue");
+                                            ClearLocalStorage("userPosition");
+
+                                            //... and redirect the user to login view.
+                                            $timeout(function () {
+                                                $scope.$emit('HidePreloader');
+                                                logout($scope, $location);
+                                            }, 1);
+
+                                        } else {//If the password Does not Match...
+                                            $scope.model.modelState.isValid = false;
+                                            $scope.model.modelState.errorMessages = ["La contraseña no es correcta."];
+                                            $scope.dataIsOk = false;
+                                            $scope.$emit('scrollTop');
                                             $scope.$emit('HidePreloader');
-                                            logout($scope, $location);
-                                        }, 1);
+                                        }
 
-                                    } else {//If the password Does not Match...
+                                    },
+
+                                    function () {//The request was not successfull.
                                         $scope.model.modelState.isValid = false;
-                                        $scope.model.modelState.errorMessages = ["La contraseña no es correcta."];
+                                        $scope.model.modelState.errorMessages = ["Intente de nuevo más tarde."];
                                         $scope.dataIsOk = false;
                                         $scope.$emit('scrollTop');
                                         $scope.$emit('HidePreloader');
-                                    }
+                                    });
 
-                                },
-
-                                function () {//The request was not successfull.
-                                    $scope.model.modelState.isValid = false;
-                                    $scope.model.modelState.errorMessages = ["Intente de nuevo más tarde."];
-                                    $scope.dataIsOk = false;
-                                    $scope.$emit('scrollTop');
-                                    $scope.$emit('HidePreloader');
-                                });
-
-                        } else {//The password is empty...
-                            $scope.model.modelState.isValid = false;
-                            $scope.model.modelState.errorMessages = ["Debe introducir su contraseña"];
-                            $scope.dataIsOk = false;
-                            $scope.$emit('scrollTop');
-                            $scope.$emit('HidePreloader');
+                            } else {//The password is empty...
+                                $scope.model.modelState.isValid = false;
+                                $scope.model.modelState.errorMessages = ["Debe introducir su contraseña"];
+                                $scope.dataIsOk = false;
+                                $scope.$emit('scrollTop');
+                                $scope.$emit('HidePreloader');
+                            }
                         }
+
                     };
 
                     $scope.updatePassword = function () {
@@ -517,8 +531,11 @@ angular
                     function passwordsAreValid() {
                         var errors = [];
 
-                        if (!$scope.changePasswordModel.passwordOne === $scope.changePasswordModel.currentPassword) {
-                            errors.push("La nueva contraseña debe ser distinta a la actual.");
+                        var Credentials = moodleFactory.Services.GetCacheJson("Credentials");
+                        var localPassword = Credentials.password;
+
+                        if (localPassword != $scope.changePasswordModel.currentPassword) {
+                            errors.push("Debe introducir su contraseña actual.");
                         }
 
                         $scope.model.modelState.errorMessages = errors;
@@ -528,63 +545,79 @@ angular
                     var changePassword = function () {//When the user choose to change pasword from Profile.
 
                         var currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
+                        var Credentials = moodleFactory.Services.GetCacheJson("Credentials");
+                        var localPassword = Credentials.password;
 
-                        $http({
-                            method: 'PUT',
-                            url: API_RESOURCE.format("authentication") + "/" + currentUser.userId,
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': currentUser.token },
-                            data: $.param({
-                                password: $scope.changePasswordModel.currentPassword,
-                                new_password: $scope.changePasswordModel.passwordOne
-                            })
-                        }).success(function (data, status, headers, config) {//Successfull change of Password.
-
+                        if (localPassword != $scope.changePasswordModel.currentPassword) {
+                            $scope.model.modelState.isValid = false;
+                            $scope.model.modelState.errorMessages = ["Debe introducir su contraseña actual."];
+                            $scope.dataIsOk = false;
                             $scope.$emit('scrollTop');
                             $scope.$emit('HidePreloader');
-                            var resultData = JSON.parse(data);
 
-                            if (resultData.success == "true") {//If the
+                        } else {
 
-                                //Update the new username/password pair in Local Storage.
-                                var Credentials = JSON.parse(localStorage.getItem("Credentials"));
+                            $scope.dataIsOk = true;
 
-                                if (Credentials) {
-                                    Credentials.password = $scope.changePasswordModel.passwordOne;
-                                    localStorage.setItem("Credentials", JSON.stringify(Credentials));
-                                }
+                            $http({
+                                method: 'PUT',
+                                url: API_RESOURCE.format("authentication") + "/" + currentUser.userId,
+                                headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': currentUser.token },
+                                data: $.param({
+                                    password: $scope.changePasswordModel.currentPassword,
+                                    new_password: $scope.changePasswordModel.passwordOne
+                                })
+                            }).success(function (data, status, headers, config) {//Successfull change of Password.
 
-                                $scope.model.modelState.isValid = true;
-                                $scope.passwordChanged = true;
-
-                                //... and redirect the user to login view.
-                                $timeout(function(){
-                                    $scope.$emit('HidePreloader');
-                                    logout($scope, $location);
-                                }, 1);
-
-                            } else {
-                                $scope.model.modelState.isValid = false;
-                                $scope.model.modelState.errorMessages = ["La contraseña no es correcta."];
-                                $scope.dataIsOk = false;
                                 $scope.$emit('scrollTop');
                                 $scope.$emit('HidePreloader');
-                            }
+                                var resultData = JSON.parse(data);
 
-                        }).error(function (data, status, headers, config) {
-                            var errorMessage;
-                            
-                            if (data != null && data.messageerror != null) {
-                                errorMessage = window.atob(data.messageerror);
-                            } else {
-                                errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
-                            }
+                                if (resultData.success == "true") {//If the
 
-                            $scope.model.modelState.isValid = false; //For activating message area in template.
-                            $scope.model.modelState.errorMessages = [errorMessage];
-                            $scope.dataIsOk = false;
-                            $scope.$emit('HidePreloader');
-                            $scope.$emit('scrollTop');
-                        });
+                                    //Update the new username/password pair in Local Storage.
+                                    var Credentials = JSON.parse(localStorage.getItem("Credentials"));
+
+                                    if (Credentials) {
+                                        Credentials.password = $scope.changePasswordModel.passwordOne;
+                                        localStorage.setItem("Credentials", JSON.stringify(Credentials));
+                                    }
+
+                                    $scope.model.modelState.isValid = true;
+                                    $scope.passwordChanged = true;
+
+                                    //... and redirect the user to login view.
+                                    $timeout(function(){
+                                        $scope.$emit('HidePreloader');
+                                        logout($scope, $location);
+                                    }, 1);
+
+                                } else {
+                                    $scope.model.modelState.isValid = false;
+                                    $scope.model.modelState.errorMessages = ["La contraseña no es correcta."];
+                                    $scope.dataIsOk = false;
+                                    $scope.$emit('scrollTop');
+                                    $scope.$emit('HidePreloader');
+                                }
+
+                            }).error(function (data, status, headers, config) {
+                                var errorMessage;
+
+                                if (data != null && data.messageerror != null) {
+                                    errorMessage = window.atob(data.messageerror);
+                                } else {
+                                    errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
+                                }
+
+                                $scope.model.modelState.isValid = false; //For activating message area in template.
+                                $scope.model.modelState.errorMessages = [errorMessage];
+                                $scope.dataIsOk = false;
+                                $scope.$emit('HidePreloader');
+                                $scope.$emit('scrollTop');
+                            });
+                        }
+
+
 
                     };
 
@@ -1258,7 +1291,6 @@ angular
 
                 $scope.returnToPrivacySettings = function () {//After pressing "Cancelar" button.
                     //Remove variables from memory
-                    $scope.confirmDesactivation = null;
                     $scope.currentPage = 2; //Go back to initial view.
                 };
 
