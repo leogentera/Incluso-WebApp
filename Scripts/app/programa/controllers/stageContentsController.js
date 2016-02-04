@@ -443,6 +443,47 @@ angular
                         }
                     }, offlineCallback);
                 }
+
+                $scope.openRequirementsModal = function (size) {
+                    var modalInstance = $modal.open({
+                        animation: false,
+                        templateUrl: 'openingRequirementsModal.html',
+                        controller: function ($scope, $modalInstance) {
+                            $scope.neverShowAgain = false;
+                            drupalFactory.Services.GetContent("fuenteDeEnergiaRequirements", function (data, key) {
+                                $scope.contentResources = data.node;
+                            }, function () { 
+                                $scope.contentResources = {}; 
+                            }, false);
+
+                            $scope.continue = function () {
+                                if($scope.neverShowAgain) {
+
+                                    var currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
+
+                                    var profile = moodleFactory.Services.GetCacheJson("Perfil/" + currentUser.userId);
+                                    profile.hasRequiredApps = true;
+                                    moodleFactory.Services.PutAsyncProfile(currentUser.userId, profile,
+                                    function (data) {},
+                                    function (data) {});
+                                }
+                                $modalInstance.dismiss('cancel');
+                            };
+
+                        },
+                        size: size,
+                        windowClass: 'user-help-modal dashboard-stage-intro'
+                    });
+                };
+                
+                function openRequirementsModal() {
+                    var profile = moodleFactory.Services.GetCacheJson("Perfil/" + currentUser.userId)
+                    if(!profile.hasRequiredApps) {
+                        $scope.openRequirementsModal();
+                    }
+                }
+
+                openRequirementsModal();
             }
 
             $scope.commentSubActivity = function (contentId) {

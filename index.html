@@ -62,6 +62,25 @@
                         </div>
                     </script>
 
+                    <script type="text/ng-template" id="openingRequirementsModal.html">
+                        <div class="modal-robot robot-lg user-help">
+                            <img src="assets/images/img-robot-lg.svg" alt="robot" />
+                            <div class="modal-header">
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="subtitle centered" ng-bind="contentResources.generic_title"></h3>
+                                <div class="centered" ng-bind-html="contentResources.generic_content.safe_value"></div>
+                                <div class="checkbox checkbox-custom change-of-term centered">
+                                    <label>
+                                        <input type="checkbox"  name="neverShowAgain" class="ng-pristine ng-untouched ng-valid" ng-model="neverShowAgain">
+                                        <span>No volver a mostrar</span>
+                                    </label>
+                                </div>
+                                <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="continue()">Continuar</a>
+                            </div>
+                        </div>
+                    </script>
+
                     <div tabindex="-1" id="offlineModal" role="dialog" class="modal ng-isolate-scope user-help-modal opening-stage-modal error-connection">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -170,6 +189,7 @@
         <script src="Scripts/app/programa/controllers/HallOfFame.js"></script> 
         <script src="Scripts/app/programa/controllers/PrivacyNotice.js"></script> 
         <script src="Scripts/app/programa/controllers/TermsOfUse.js"></script>
+        <script src="Scripts/app/programa/controllers/systemRequirementsController.js"></script>
         <script src="Scripts/app/programa/controllers/ExplorationInitial.js"></script> 
         <script src="Scripts/app/programa/controllers/ExplorationFinal.js"></script> 
         <script src="Scripts/app/programa/controllers/HelpAndSupport.js"></script> 

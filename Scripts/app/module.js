@@ -22,6 +22,7 @@ angular
         'incluso.programa.dashboard',
         //'incluso.programa.dashboard.etapa',
         'incluso.programa.profile',
+        'incluso.program.systemRequirements',
         'incluso.programa.notificationcontroller',
         'incluso.programa.chatcontroller',
         'incluso.programa.leaderboard',
@@ -73,6 +74,7 @@ angular
         $http.get('Templates/Programa/profile.html', { cache: true });
         $http.get('Templates/Programa/editProfile.html', { cache: true });        
         $http.get('Templates/Programa/Tutorial.html', { cache: true });
+        $http.get('Templates/Programa/system-requirements.html', { cache: true });
         $http.get('Templates/Programa/acercaPrograma.html', { cache: true });  
         $http.get('Templates/Juegos/Avatar.html', { cache: true });
         $http.get('Templates/Programa/Alerts.html', { cache: true });
@@ -230,6 +232,11 @@ angular
         $routeProvider.when('/Tutorial/:retry', {
             templateUrl: 'Templates/Programa/Tutorial.html',
             controller: 'programaTutorialController'
+        });
+
+        $routeProvider.when('/Requerimientos', {
+            templateUrl: 'Templates/Programa/system-requirements.html',
+            controller: 'programaSystemRequirementsController'
         });
 
         $routeProvider.when('/Juegos/Avatar', {
