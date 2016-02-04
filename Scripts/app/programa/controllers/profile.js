@@ -414,7 +414,7 @@ angular
                 }
 
                 $scope.goToStars = function () {
-                    $location.path("/MyStars");
+                    $location.path('/MyStars');
                 };
 
                 function getDataAsync(callback) {
@@ -495,9 +495,9 @@ angular
                     };
 
                     function updatePasswordCallback() {//Update user password.
-                        $scope.changePasswordModel.modelState.isValid = passwordsAreValid();
+                        //$scope.changePasswordModel.modelState.isValid = passwordsAreValid();
 
-                        if ($scope.changePasswordModel.modelState.isValid) {//Check that passwords are OK.
+                        if (true) {//Check that passwords are OK.
                             $scope.$emit('ShowPreloader');
                             changePassword();
                         } else {
@@ -509,7 +509,7 @@ angular
                     function passwordsAreValid() {
                         var errors = [];
 
-                        if ($scope.changePasswordModel.passwordOne === $scope.changePasswordModel.currentPassword) {
+                        if (!$scope.changePasswordModel.passwordOne === $scope.changePasswordModel.currentPassword) {
                             errors.push("La nueva contraseña debe ser distinta a la actual.");
                         }
 
@@ -542,14 +542,20 @@ angular
                                 localStorage.setItem("Credentials", JSON.stringify(Credentials));
                             }
 
+                            $scope.model.modelState.isValid = true;
                             $scope.passwordChanged = true;
-                            logout($scope, $location);
-                            //$modalInstance.dismiss('cancel');
-                            $location.path('/');
+                            //... and redirect the user to login view.
+
+                            //$location.path('/');
+                            $timeout(function(){
+                                $scope.$emit('HidePreloader');
+                                logout($scope, $location);
+                            }, 1);
+
 
                         }).error(function (data, status, headers, config) {
                             var errorMessage;
-                            $scope.changePasswordModel.modelState.isValid = false; //For activating message area in template.
+                            $scope.model.modelState.isValid = false; //For activating message area in template.
 
                             if ((data != null && data.messageerror != null)) {
                                 errorMessage = window.atob(data.messageerror);
@@ -557,7 +563,7 @@ angular
                                 errorMessage = "Problema con la red, asegúrate de tener Internet e intenta de nuevo.";
                             }
 
-                            $scope.changePasswordModel.modelState.errorMessages = [errorMessage];
+                            $scope.model.modelState.errorMessages = [errorMessage];
                             $scope.$emit('HidePreloader');
                             $scope.$emit('scrollTop');
                         });
