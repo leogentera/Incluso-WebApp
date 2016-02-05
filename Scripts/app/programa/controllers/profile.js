@@ -606,6 +606,7 @@ angular
                     $scope.returnToPrivacySettings = function () {//After pressing "Cancelar" button.
                         //Remove variables from memory
                         $scope.confirmDesactivation = false;
+                        $scope.dataIsOk = true;
                         $scope.currentPage = 2; //Go back to initial view.
                     };
 

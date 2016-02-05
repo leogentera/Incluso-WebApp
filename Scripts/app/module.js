@@ -167,7 +167,8 @@ angular
 
         $routeProvider.when('/Perfil/ConfigurarPrivacidad/:id', {
             templateUrl: 'Templates/Programa/PrivacySettings.html',
-            controller: 'programaProfileController'
+            controller: 'programaProfileController',
+            reloadOnSearch: false
         });
         
         $routeProvider.when('/Perfil/:id/:retry?', {
