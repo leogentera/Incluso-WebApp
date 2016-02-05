@@ -9,9 +9,11 @@ angular
         '$routeParams',
         '$timeout',
         '$rootScope',
-        '$http', '$window',
+        '$http',
+        '$window',
         '$modal',
-        '$filter', '$anchorScroll',
+        '$filter',
+        '$anchorScroll',
         '$route',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $window, $modal, $filter, $anchorScroll, $route) {
             var _loadedResources = false;
@@ -516,33 +518,8 @@ angular
                     };
 
                     function updatePasswordCallback() {//Update user password.
-                        //$scope.changePasswordModel.modelState.isValid = passwordsAreValid();
 
-                        if (true) {//Check that passwords are OK.
-                            $scope.$emit('ShowPreloader');
-                            changePassword();
-                        } else {
-                            $scope.model.modelState.isValid = false; //To be able to show the red Message to the user.
-                            $scope.dataIsOk = false;
-                            $scope.$emit('scrollTop');
-                        }
-                    }
-
-                    function passwordsAreValid() {
-                        var errors = [];
-
-                        var Credentials = moodleFactory.Services.GetCacheJson("Credentials");
-                        var localPassword = Credentials.password;
-
-                        if (localPassword != $scope.changePasswordModel.currentPassword) {
-                            errors.push("Debe introducir su contraseña actual.");
-                        }
-
-                        $scope.model.modelState.errorMessages = errors;
-                        return (errors.length === 0);
-                    }
-
-                    var changePassword = function () {//When the user choose to change pasword from Profile.
+                        $scope.$emit('ShowPreloader');
 
                         var currentUser = moodleFactory.Services.GetCacheJson("CurrentUser");
                         var Credentials = moodleFactory.Services.GetCacheJson("Credentials");
@@ -585,6 +562,7 @@ angular
 
                                     $scope.model.modelState.isValid = true;
                                     $scope.passwordChanged = true;
+                                    $scope.dataIsOk = true;
 
                                     //... and redirect the user to login view.
                                     $timeout(function(){
@@ -616,10 +594,7 @@ angular
                                 $scope.$emit('scrollTop');
                             });
                         }
-
-
-
-                    };
+                    }
 
                     function offlineCallback() {
                         $timeout(function () {
@@ -628,12 +603,18 @@ angular
                         }, 1000);
                     }
 
+                    $scope.returnToPrivacySettings = function () {//After pressing "Cancelar" button.
+                        //Remove variables from memory
+                        $scope.confirmDesactivation = false;
+                        $scope.currentPage = 2; //Go back to initial view.
+                    };
+
                     //************ END OF SECTION FOR ACCOUNT MANAGEMENT
 
                     //Try to get user profile data from Local Storage.
                     $scope.model = moodleFactory.Services.GetCacheJson("Perfil/" + $scope.userId);
 
-                    if ($scope.model !== null) {// If profile existes in Local Storage, then...
+                    if ($scope.model !== null) {// If profile exists in Local Storage, then...
                         if ($scope.model.profileimageurl) {
                             $scope.model.profileimageurl = $scope.model.profileimageurl + "?rnd=" + new Date().getTime();
                         }
@@ -1287,11 +1268,6 @@ angular
                         $scope.$emit('ShowPreloader');
                         $location.path("Perfil/" + $scope.userId);
                     }, 1);
-                };
-
-                $scope.returnToPrivacySettings = function () {//After pressing "Cancelar" button.
-                    //Remove variables from memory
-                    $scope.currentPage = 2; //Go back to initial view.
                 };
 
                 Array.prototype.compare = function (testArr) {
