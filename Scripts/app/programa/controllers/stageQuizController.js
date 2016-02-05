@@ -1021,7 +1021,7 @@ angular
                     $scope.scrollToTop();
 
                 } else {
-                    $scope.warningMessage = "Asegurate de contestar todas las preguntas antes de guardar";
+                    $scope.warningMessage = "Asegúrate de contestar todas las preguntas antes de guardar";
                     $scope.showWarning = true;
                     showWarningAndGoToTop();
                 }
