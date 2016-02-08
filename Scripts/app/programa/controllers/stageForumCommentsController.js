@@ -145,8 +145,10 @@ angular
                 }
             };
 
-            var forumBadgeReached = function(){            
-                var profileBadges = profile.badges;
+            var forumBadgeReached = function(){
+                
+                var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
+                var profileBadges = userProfile.badges;
                 var badgeForum = _.where(profileBadges, { name: "Foro interplanetario"});
                 if (badgeForum && badgeForum[0].status == "pending") {
                     var postCounter = 0;
@@ -163,21 +165,16 @@ angular
                             }
                         }
                     }
-                    
+
                     if (postCounter >= 40 && badgeForum[0].status == "pending") {
-                                                                                        
                         var badgeModel = {
                             badgeid: badgeForum[0].id //badge earned when a user completes his profile.
                         };
-                            
-                        var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
-                        for(var i = 0; i < userProfile.badges.length; i++)
-                        {
+                        for(var i = 0; i < userProfile.badges.length; i++){
                             if (userProfile.badges[i].id == badgeModel.badgeid) {
                                 userProfile.badges[i].status = "won";
                             }
                         }
-                                    
                         localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
                         showRobotForum();
                         moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){},function(){});
