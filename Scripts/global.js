@@ -1,7 +1,6 @@
 //global variables and functions
 //var API_RESOURCE = "http://definityincluso.cloudapp.net:82/restfulapiv2-2/RestfulAPI/public/{0}"; //Azure Development environment
 //var DRUPAL_API_RESOURCE = "http://definityincluso.cloudapp.net/incluso-drupal/rest/node/{0}"; //Azure Development environment
-//var API_RESOURCE = "http://moodlemysql01.cloudapp.net:801/Incluso-RestfulAPI/RestfulAPI/public/{0}"; //Pruebas de aceptacion Cliente
 var API_RESOURCE = "http://moodlemysql01.cloudapp.net/{0}"; //Azure production environment
 var DRUPAL_API_RESOURCE = "http://moodlemysql01.cloudapp.net:802/incluso-drupal/rest/node/{0}"; //Azure production environment
 
@@ -505,7 +504,7 @@ var _closeChallenge = function (stageId) {
                     activity_identifier: currentChallenge.activity_identifier
                 };
                 moodleFactory.Services.PutEndActivity(currentActivityModuleId, data, activitymodel, currentUser.token, successCallback, errorCallback);
-                success = currentActivityModuleId;
+                success = currentActivityModuleId;                  
                 return success;
             } else {
                success = 0;
@@ -537,7 +536,7 @@ var _updateBadgeStatus = function (coursemoduleid) {
       } else {
         //This else statement is set to avoid errors while debugging in firefox
       }
-    }else{          
+    }else{
       //This else statement is set to avoid errors while debugging in firefox
     }    
 };
@@ -621,14 +620,14 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
     if (activity && allNotifications) {
       //code
     
-    for (var i = 0; i < allNotifications.length; i++) {
-        var currentNotification = allNotifications[i];
+      for (var i = 0; i < allNotifications.length; i++) {
+          var currentNotification = allNotifications[i];
           if (currentNotification.status == "pending" && currentNotification.trigger_condition == triggerActivity && currentNotification.activityidnumber == activity.activity_identifier) {
                           
             var wonDate = new Date();                        
             var dataModelNotification = {
               notificationid : String(currentNotification.id),
-                userid: currentUserId,
+              userid: currentUserId,
               wondate : wonDate
             };
   
@@ -640,10 +639,10 @@ var _activityNotification = function (courseModuleId, triggerActivity) {
                 console.log("create notification successful");
             }, errorCallback, true);
               
-        } else {
+          } else {
             
-        }
-    }
+          }
+      }
     }
 };
 
@@ -658,13 +657,13 @@ var _coachNotification = function (stageIndex) {
             
     var notificationCoach = _.find(notifications, function (notif) {
         if (notif.type == notificationTypes.activityNotifications && notif.trigger_condition == 3 && notif.activityidnumber.substring(0,1) == stageId) {
-            return notif;
-        }
+          return notif; 
+        }      
     });
-
+        
     if (notificationCoach && notificationCoach.status == "pending") {      
         var activity = getActivityByActivity_identifier(notificationCoach.activityidnumber);
-
+                
                         
         var notificationId = notificationCoach.id;
         if ((activity)) {
@@ -724,7 +723,7 @@ function updateUserStarsUsingExternalActivity(activity_identifier) {
         instanceType: 0,
         date: getdate()
     };
-    
+
     var userStars = JSON.parse(localStorage.getItem("userStars"));
                                           
     var localStorageStarsData = {
@@ -742,7 +741,7 @@ function updateUserStarsUsingExternalActivity(activity_identifier) {
     localStorage.setItem("userStars", JSON.stringify(userStars));
     
     moodleFactory.Services.PutStars(data, profile, currentUser.token, successPutStarsCallback, errorCallback);
-        }
+}
 
 
 var _progressNotification = function(indexStageId, currentProgress){
@@ -780,9 +779,9 @@ var _progressNotification = function(indexStageId, currentProgress){
               moodleFactory.Services.PostUserNotifications(dataModelNotification, function(){
                   console.log("progress notification created" + currentNotification.name);
               }, errorCallback, true);            
+          }        
       }
-    }  
-}
+    }
 }
 
 var successPutStarsCallback = function (data) {
@@ -1200,10 +1199,10 @@ function updateUserStars(activityIdentifier, extraPoints) {
         profile.stars = Number(profile.stars) + Number(extraPoints);
         stars = extraPoints;
     } else {
-            profile.stars = Number(profile.stars) + Number(activity.points);
-            stars = activity.points;
-        }
-
+        profile.stars = Number(profile.stars) + Number(activity.points);
+        stars = activity.points;
+    }
+      
     console.log("Profile stars = " + profile.stars);
     console.log("Forum stars to assign: " + stars);
 
@@ -1214,7 +1213,7 @@ function updateUserStars(activityIdentifier, extraPoints) {
         instanceType: 0,
         date: getdate()
     };
-
+    
     var userStars = JSON.parse(localStorage.getItem("userStars"));
                         
     var localStorageStarsData = {
@@ -1240,7 +1239,7 @@ function updateUserForumStars(activityIdentifier, points, isExtra, callback) {
     var activity = getActivityByActivity_identifier(activityIdentifier);
     
     profile.stars = Number(profile.stars) + Number(points);
-
+    
     var data = {
         userId: profile.id,
         stars: points,
@@ -1249,9 +1248,9 @@ function updateUserForumStars(activityIdentifier, points, isExtra, callback) {
         date: getdate(),
         is_extra: isExtra
     };
-
+    
       var userStars = JSON.parse(localStorage.getItem("userStars"));
-
+ 
       var localStorageStarsData = {
              dateissued: moment(Date.now()).unix(),
              instance: data.instance,
@@ -1260,8 +1259,8 @@ function updateUserForumStars(activityIdentifier, points, isExtra, callback) {
              is_extra: isExtra,
              points: data.stars,
              userid: parseInt(data.userId)
-    };
-
+        };
+ 
         userStars.push(localStorageStarsData);
  
         localStorage.setItem("userStars", JSON.stringify(userStars)); 
@@ -1332,7 +1331,7 @@ function getdate() {
 
 var logout = function ($scope, $location) {
     $scope.currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
-
+    
     _forceUpdateConnectionStatus(function(){
       
       if (_isDeviceOnline) {
@@ -1352,7 +1351,7 @@ var logout = function ($scope, $location) {
         ).success(function (data, status, headers, config) {
             }
         );
-    }
+      }
     
     }, function(){});
 
@@ -1363,7 +1362,7 @@ var logout = function ($scope, $location) {
     ClearLocalStorage("owlIndex");
     ClearLocalStorage("activity");
 
-    localStorage.removeItem("CurrentUser");    
+    localStorage.removeItem("CurrentUser");
     localStorage.removeItem("course");
     localStorage.removeItem("stage");
     localStorage.removeItem("usercourse");
@@ -1540,7 +1539,7 @@ var _loadActivityBlockStatus = function () {
 };
 
 //Helps defining if activity can be started
-var _canStartActivity = function(activityIdentifier){
+var _canStartActivity = function(activityIdentifier){    
 
     //If activity tree has not been loaded, return false.
     var userCourse = moodleFactory.Services.GetCacheJson("usercourse");
