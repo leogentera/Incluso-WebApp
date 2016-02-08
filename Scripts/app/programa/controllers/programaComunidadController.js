@@ -298,7 +298,7 @@ angular
                     
                     
                 }
-
+                
                 var communityBadgeReached = function(){
                                     
                     var profileBadges = _userProfile.badges;
@@ -435,7 +435,7 @@ angular
                             $scope.$emit('ShowPreloader');
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                 function() {
-
+                                    
                                     refreshTopicData();
                                     updatePostCounter($scope.discussion.discussion);
                                     
@@ -479,7 +479,7 @@ angular
                             $scope.$emit('ShowPreloader');
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                 function() {
-
+                                    
                                     refreshTopicData();
                                     updatePostCounter($scope.discussion.discussion);
                                     
@@ -518,7 +518,7 @@ angular
                             
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                 function() {
-
+                                    
                                     refreshTopicData();
                                     updatePostCounter($scope.discussion.discussion);
                                     
@@ -560,7 +560,7 @@ angular
                             $scope.$emit('ShowPreloader');
                             moodleFactory.Services.PostAsyncForumPost ('new_post', requestData,
                                 function() {
-
+                                    
                                     refreshTopicData();
                                     updatePostCounter($scope.discussion.discussion);
                                     

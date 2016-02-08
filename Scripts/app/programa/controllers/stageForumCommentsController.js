@@ -39,7 +39,7 @@ angular
             $rootScope.showStage1Footer = false;
             $rootScope.showStage2Footer = false;
             $rootScope.showStage3Footer = false;
-
+            
             $scope.modelState = {
                 isValid: null,
                 errorMessages: []
@@ -75,7 +75,7 @@ angular
             var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
 
             $scope.clickLikeButton = function(postId) {
-                
+                    
                 $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
@@ -333,7 +333,7 @@ angular
             $scope.isReportedAbuseSentModalCollapsed = new Array();
             
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex){
-                
+
                 $scope.modelState.errorMessages = [];
 
                 $scope.validateConnection(function(){
@@ -388,7 +388,7 @@ angular
             };
 
             $scope.postTextToForum = function(){
-                
+                    
                 $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
@@ -414,7 +414,7 @@ angular
                 
             };
             $scope.postLinkToForum = function(){
-                
+                    
                 $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function(){
@@ -437,7 +437,7 @@ angular
                     
             };
             $scope.postVideoToForum = function(){
-                
+                    
                 $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function(){
@@ -460,7 +460,7 @@ angular
             };
 
             $scope.reportPost = function(postId) {
-                
+
                 $scope.modelState.errorMessages = [];
 
                     $scope.validateConnection(function() {
@@ -502,7 +502,7 @@ angular
             $scope.clickPostAttachment = function(){
                 
                 $scope.modelState.errorMessages = [];
-                $scope.validateConnection(clickPostAttachment, offlineCallback);
+                    $scope.validateConnection(clickPostAttachment, offlineCallback);
             };
 
             clickPostAttachment = function(){
@@ -521,7 +521,7 @@ angular
             };
 
             $scope.postAttachmentToForum = function(){
-                
+                    
                 $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
@@ -645,7 +645,7 @@ angular
             };
             
             $scope.showMore = function() {
-                
+                    
                 $scope.modelState.errorMessages = [];
                     
                     $scope.validateConnection(function() {
