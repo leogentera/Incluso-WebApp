@@ -383,17 +383,15 @@ angular
             var myIdeaAnswers = [];
             var myIdeaAnswersResult = [];
             
-            if(myIdeaQuiz && myIdeaQuiz.questions) {
-                for(var i = 0; i < myIdeaQuiz.questions.length; i++) {
-                    var question = myIdeaQuiz.questions[i];
+            if(myIdeaQuiz && myIdeaQuiz.questions && myIdeaQuiz.questions.length >= 2) {
+                var question = myIdeaQuiz.questions[1];
 
-                    if(question.userAnswer != "") {
+                if(question.userAnswer != "") {
 
-                        if(question.userAnswer.indexOf(";") != -1) {
-                            myIdeaAnswers = myIdeaAnswers.concat(question.userAnswer.split(";"));
-                        } else {
-                            myIdeaAnswers.push(question.userAnswer);
-                        }
+                    if(question.userAnswer.indexOf(";") != -1) {
+                        myIdeaAnswers = myIdeaAnswers.concat(question.userAnswer.split(";"));
+                    } else {
+                        myIdeaAnswers.push(question.userAnswer);
                     }
                 }
 

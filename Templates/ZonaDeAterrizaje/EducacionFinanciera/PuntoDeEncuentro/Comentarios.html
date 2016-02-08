@@ -84,7 +84,7 @@
             <div id="item{{::$index}}" ng-repeat="p in posts" ng-show="p.reported == 0">
                 <div class="part">
                     <div class="author">
-                        <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{::p.picture_post_author + '?token=' + userToken}}" alt="author" />
+                        <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author.replace('webservice/', '') + '?rnd=' + currentDate}}" alt="author" />
                         <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
                         <div><a class="user-alias" ng-click="navigateTo('Perfil/' + p.post_autor_id)">{{::p.post_author}} </a> <span>publicó:</span>
                             <div>{{::p.created * 1000 | date: "dd 'de' MMMM',' yyyy - HH:mm 'hrs'"}}</div>
@@ -114,7 +114,7 @@
                     </div>
                     <div id="item{{::$index}}" ng-repeat="r in p.replies | limitTo: showAllCommentsByPost['id' + p.post_id]">
                         <div class="coment block">
-                            <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{::r.picture_post_author + '?token=' + userToken}}" alt="author" />
+                            <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author.replace('webservice/', '') + '?rnd=' + currentDate}}" alt="author" />
                             <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
                             <div><a class="user-alias" ng-click="navigateTo('Perfil/' + r.post_autor_id)">{{::r.post_author}} </a> <span>comentó:</span>   <div>{{::r.message}}</div>
                             </div>
