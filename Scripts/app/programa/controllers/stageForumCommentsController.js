@@ -54,6 +54,7 @@ angular
             $scope.morePendingPosts = true;
             $scope.showAllCommentsByPost = new Array();
             $scope.posts = new Array();
+            $scope.currentDate = new Date().getTime();
 
             $scope.scrollToTop();
 

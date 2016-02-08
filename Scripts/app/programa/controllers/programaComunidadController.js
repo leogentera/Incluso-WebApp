@@ -34,6 +34,7 @@ angular
                 var _postPager = { from: 0, to: 0 };
                 var _currentFilter = "default";
                 $scope.hasCommunityAccess = false;
+                $scope.currentDate = new Date().getTime();
                 
                 $scope.userToken = _currentUser.token;
                 $scope.moodleId = $routeParams.moodleid;
