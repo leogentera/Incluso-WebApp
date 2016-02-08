@@ -2,214 +2,176 @@
   <article class="blueprint community">
     <section>
       <div class="txt-renglon centered txt-bigger"></div>
-      <div class="txt-renglon txt-bigger">Comparte ideas y gustos con el resto de la comunidad Incluso.</div>
+      <div class="txt-renglon txt-bigger" ng-bind-html="discussion.message"></div>
     </section>
     <section class="filter-section form">
         <span class="icomoon icon-list"></span>
-        <select name="filter" class="form-control form-control-lg theme-default" ng-model="filter"> 
+        <select name="filter" class="form-control form-control-lg theme-default" ng-model="filter" ng-change="updateFilter();"> 
           <option value="" disabled>Filtrar contenido por...</option>
-          <option value="">Ver Todo</option>
-          <option value="relevancia">Relevancia</option> 
+          <option value="default">Ver Todo</option>
+          <option value="relevant">Relevancia</option> 
         </select>
         <span class="icomoon icon-arrow"></span>
     </section>
-    <section class="txt-renglon distribuido">
-      <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isTextCollapsed')" ng-class="{'active': !communityModals['isTextCollapsed']}">
+    <section class="txt-renglon distribuido" ng-disabled="!hasCommunityAccess">
+      <a href="" class="icon-circle" ng-click="collapseCommunityButtomsTrigger('isTextCollapsed')" ng-class="{'active': !communityModals['isTextCollapsed']}">
         <span class="icomoon icon-text text-bigger"></span>
         <span class="arrow-up"></span>
       </a>
-      <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isLinkCollapsed')" ng-class="{'active': !communityModals['isLinkCollapsed']}">
+      <a href="" class="icon-circle" ng-click="collapseCommunityButtomsTrigger('isLinkCollapsed')" ng-class="{'active': !communityModals['isLinkCollapsed']}">
         <span class="icomoon icon-hyperlink"></span>
         <span class="arrow-up"></span>
       </a>
-      <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isVideoCollapsed')" ng-class="{'active': !communityModals['isVideoCollapsed']}">
+      <a href="" class="icon-circle" ng-click="collapseCommunityButtomsTrigger('isVideoCollapsed')" ng-class="{'active': !communityModals['isVideoCollapsed']}">
         <span class="icomoon icon-video-file"></span>
         <span class="arrow-up"></span>
       </a>
-      <a href="" class="icon-circle" ng-click="collapseForumButtomsTrigger('isAttachmentCollapsed')" ng-class="{'active': !communityModals['isAttachmentCollapsed']}">
+      <a href="" class="icon-circle" ng-click="collapseCommunityButtomsTrigger('isAttachmentCollapsed', 1)" ng-class="{'active': !communityModals['isAttachmentCollapsed']}">
         <span class="icomoon icon-attachment"></span>
         <span class="arrow-up"></span>
       </a>
     </section>
-    <section class="modales">
+    <section class="modales" ng-show="hasCommunityAccess">
       <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
-        <div>
-          <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value=""></textarea></div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
-        </div>        
+        <div>    
+          <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..." value="" ng-model="postTextValue"></textarea></div>
+          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postText()" ng-disabled="!postTextValue">Compartir</a>
+        </div>
       </div>
       <div id="openModal2" class="modalDialog" collapse="communityModals['isLinkCollapsed']">
-        <div>        
-          <div class="add"><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar tu enlace..." value=""></div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
-        </div>        
+        <div>
+          <form name="postUrlForm">
+
+          <div class="add"><span class="icomoon icon-edit"></span>
+            <input type="url" name="urlToPost" placeholder="Agregar tu enlace..." ng-model="postLinkValue"  required /></div>
+          <div class="error txt-renglon" ng-show="postUrlForm.urlToPost.$error.url">Link invalido, introduzca una URL con el formato http://exemplo.com </div>
+          <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postLink()" ng-disabled="!postUrlForm.urlToPost.$valid" >Compartir</a>
+          </form>
+        </div>
       </div>
       <div id="openModal3" class="modalDialog" collapse="communityModals['isVideoCollapsed']">
         <div>
-          <div class="add"><span class="icomoon icon-edit"></span><input type="text" placeholder="Agregar ruta de tu peli..." value=""></div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
-        </div>        
+          <form name="postVideoUrlForm">
+            <div class="add">
+              <span class="icomoon icon-edit"></span>
+              <input type="url" name="videoUrlToPost" placeholder="Agregar tu enlace de video..." ng-model="postVideoValue" required />
+            </div>
+            <div class="error txt-renglon" ng-show="postVideoUrlForm.videoUrlToPost.$error.url">Link invalido, introduzca una URL con el formato http://exemplo.com </div>
+            <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="postVideo()" ng-disabled="!postVideoUrlForm.videoUrlToPost.$valid" >Compartir</a>
+          </form>
+        </div>
       </div>
+
       <div id="openModal4" class="modalDialog" collapse="communityModals['isAttachmentCollapsed']">
         <div>
-          <div class="add"> {{attachmentToPost.fileName}} </div>
-          <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
-        </div>        
-      </div>     
+          <!--a href="#close" title="Close" class="close"></a-->
+          <div class="add"><i class="icomoon icon-edit"></i><input type="text" placeholder="Adjuntar archivo..." value="" ng-model="postAttachmentValue" /></div>
+          <button class="btn btn-primary btn-lg btn-cnt" type="button" ng-click="postAttachment()" >Compartir</button>
+        </div>
+      </div>
     </section>
     <section class="wall">
-      <div class="part">
-        <div class="author">
-          <img src="assets/images/img-avatar-dummy-01.png">
-          <div>GalacticGirl2015 <span>publicó:</span>
-            <div>16 Junio 2015</div>
+      
+      <div id="item{{$index}}" ng-repeat="p in posts" ng-show="p.reported == 0">
+        <div class="part post">
+          <div class="author">
+            <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="p.picture_post_author" ng-src="{{p.picture_post_author + '?token=' + userToken}}" alt="author" />
+            <img ng-click="navigateTo('Perfil/' + p.post_autor_id)" ng-if="!p.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
+            <div>
+              <a class="user-alias" ng-click="navigateTo('Perfil/' + p.post_autor_id)">{{p.post_author}} </a>
+              <span>publicó:</span>
+              <div>{{p.created * 1000 | date: "dd 'de' MMMM',' yyyy"}}</div>
+            </div>
+          </div>
+          <div class="block-not post-contents">
+            <div ng-switch="p.post_type">
+              <div ng-switch-default ng-bind-html="urlify(p.message)"></div>
+              <p ng-switch-when="2"><span class="urlify" ng-bind-html="p.message | linky"></span></p>              
+              <p ng-switch-when="3"><a ng-href="{{p.message}}"><span class="icomoon icon-video-file"></span></a></p>
+              <div ng-switch-when="4">
+                <p ng-bind="p.message"></p>
+                <div class="achievement-badge">
+                  <figure>
+                    <a ng-if="p.attachment.length > 1">
+                      <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
+                    <a ng-if="p.attachment.length == 1" href="{{p.attachment[0].fileurl + '?token=' + userToken}}">
+                      <img src="{{p.attachment[0].fileurl + '?token=' + userToken}}"  alt="post" />
+                    </a>
+                  </figure>
+                    <a role="button" ng-click="goToGallery(p)" class="btn-gallery-detail {{p.attachment.length == 1 ? '' : 'active'}}">
+                        <span class="icomoon icon-photo-gallery"></span>
+                    </a>
+                </div>
+              </div>
+            </div>              
+            <div class="popularity" ng-show="p.likes != 0" >A <span class="green">{{p.likes || 0}}</span> <span ng-hide="p.likes < 2" >jóvenes</span><span ng-hide="p.likes >= 2" >joven</span> le<span ng-hide="p.likes < 2" >s</span> gusta esto
+            </div>
+          </div>
+          <div id="item{{$index}}" ng-repeat="r in p.replies | limitTo: showedCommentsByPost['id' + p.post_id]">
+            <div class="coment block">
+              <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="r.picture_post_author" ng-src="{{r.picture_post_author + '?token=' + userToken}}" alt="author" />
+              <img ng-click="navigateTo('Perfil/' + r.post_autor_id)" ng-if="!r.picture_post_author" src="assets/avatar/default-2.png" alt="user" />
+              <div>
+                <a class="user-alias" ng-click="navigateTo('Perfil/' + r.post_autor_id)">{{r.post_author}}</a>
+                <span>comentó:</span>   
+                <div>{{r.message}}</div>
+              </div>
+            </div>
+          </div>
+          <div class="coment block" ng-show="(showedCommentsByPost['id' + p.post_id] === 3 && p.replies.length > 3)" ng-click="showPreviousCommentsByPost(p.post_id)">
+            <div class="vermas">
+              <span class="icomoon icon-show-more"></span>
+              Mostrar más comentarios...
+            </div>
+          </div>
+          <div class="social" ng-show="hasCommunityAccess">
+            <div class="pink" ng-hide="p.liked >= 1" ng-click="likePost(p.post_id)">
+              <span class="icomoon icon-like pink"></span> Me gusta              
+            </div>
+            <div ng-hide="p.liked == 0" ng-click="likePost(p.post_id)">
+              <span class="icomoon icon-like"></span> Ya no me gusta
+            </div>
+            <div ng-click="commentModalClick(p.post_id)">
+              <span class="icomoon icon-comment"></span> Comentar              
+            </div>
+            <div ng-click="reportModalClick(p)">
+              <span class="icomoon icon-pinch"></span> Reportar
+            </div>
           </div>
         </div>
-        <div class="block">
-          ¡Les comparto una foto que tomé!
-          <img src="assets/images/avatar.svg">
-          <div class="popularity">A <span class="green">30</span> jóvenes les gusta esto</div>
-        </div>
-        <div class="coment block">
-          <img src="assets/images/img-avatar-dummy-01.png">
-          <div>
-            CosmonautaDF <span>comentó:</span> 
-            <div>Me gustó mucho tu foto :)</div>
-          </div>
-        </div>
-        <div class="coment block">
-          <img src="assets/images/img-avatar-dummy-02.png">
-          <div>
-            Spaceboy95 <span>comentó:</span> 
-            <div>Ahí salgo yooooo jajaja xD</div>
-          </div>
-        </div>
-        <div class="coment block">
-          <img src="assets/images/img-avatar-dummy-03.png">
-          <div>
-            SaraPlanetaria22 <span>comentó:</span> 
-            <div>Me gustó mucho tu foto :)</div>
-          </div>
-        </div>
-        <div class="coment block">
-          <div class="vermas">
-            <span class="icomoon icon-show-more"></span>
-            Mostrar más comentarios...
-          </div>
-        </div>
-        <div class="social">
-          <div><span class="icomoon icon-like"></span> Me gusta</div>
-          <div class="hidden"><span class="icomoon icon-like"></span> Ya no me gusta</div>
-          <div><span class="icomoon icon-comment"></span> Comentar</div>
-          <div><span class="icomoon icon-pinch"></span> Reportar</div>
-        </div>        
+        
+        <section class="modales" ng-show="hasCommunityAccess">
+              <div id="openModal1" class="modalDialog" ng-show="isCommentModalCollapsed['id' + p.post_id]">
+                  <div>
+                      <span class="close"></span>
+                      <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="replyText"></textarea></div>
+  
+                      <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="replyToPost(this, p.post_id, p.post_parent, $index)" nd-disabled="!replyText">Compartir</a>
+                  </div>
+              </div>
+              
+              <div id="openModal5" class="modalDialog reportModal" ng-show="isReportedAbuseModalCollapsed['id' + p.post_id]">
+                <div>
+                  <a title="close" class="close"></a>
+                  <div class="add">¿Reportar contenido abusivo?</div>
+                  <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="reportPost(p.post_id)">Si</a>
+                  <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="isReportedAbuseModalCollapsed['id' + p.post_id] = false">No</a>
+                </div>
+              </div>
+              
+              <div id="openModal6" class="modalDialog reportModal" ng-show="isReportedAbuseSentModalCollapsed['id' + p.post_id]">
+                <div>
+                  <a title="close" class="close"></a>
+                  <div class="add">El contenido ha sido reportado exitosamente.</div>
+                  <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="isReportedAbuseSentModalCollapsed['id' + p.post_id] = false">Ok</a>
+                </div>
+              </div>
+        </section>
       </div>
-      <section class="modales">
-        <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
-          <div>
-            <a href="#close" title="Close" class="close"></a>
-            <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."></textarea></div>
-            <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
-          </div>
-        </div>
-      </section>
-
-      <div class="part">
-        <div class="author">
-          <img src="assets/images/img-avatar-dummy-01.png">
-          <div>CosmonautaDF <span>publicó:</span>
-            <div>16 Junio 2015</div>
-          </div>
-        </div>
-        <div class="block">
-          Maecenas sed diam eget risus varius blandit sit amet non manga.<br>
-          Maecenas faucibus mollis interdum.<br>Duis mollis, est non commodo luctus,
-          nisi erat porttitor ligula amet.
-          <div class="popularity">A <span class="green">12</span> jóvenes les gusta esto</div>
-        </div>
-        <div class="coment block">
-          <img src="assets/images/img-avatar-dummy-02.png">
-          <div>DianizPlanetario22 <span>comentó:</span>
-            <div>Me gustó mucho tu post :)</div>
-          </div>
-        </div>
-        <div class="social">
-          <div><span class="icomoon icon-like"></span> Me gusta</div>
-          <div class="hidden"><span class="icomoon icon-like"></span> Ya no me gusta</div>
-          <div><span class="icomoon icon-comment"></span> Comentar</div>
-          <div><span class="icomoon icon-pinch"></span> Reportar</div>
-        </div>
-      </div>
-      <section class="modales">
-        <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
-          <div>
-            <a href="#close" title="Close" class="close"></a>
-            <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."></textarea></div>
-            <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
-          </div>
-        </div>
-      </section>
-
-      <div class="part">
-        <div class="author">
-          <img src="assets/images/img-avatar-dummy-01.png">
-          <div>LorenaH829X <span>publicó:</span>
-            <div>11 Junio 2015</div>
-          </div>
-        </div>
-        <div class="block">
-          <span class="icomoon icon-hyperlink green"></span>
-          <span>http://www.incluso.com.mx</span>
-          <div class="popularity">A <span class="green">tí y a 98</span> jóvenes les gusta esto</div>
-        </div>
-        <div class="social">
-          <div><span class="icomoon icon-like"></span> Me gusta</div>
-          <div class="hidden"><span class="icomoon icon-like"></span> Ya no me gusta</div>
-          <div><span class="icomoon icon-comment"></span> Comentar</div>
-          <div><span class="icomoon icon-pinch"></span> Reportar</div>
-        </div>
-      </div>
-      <section class="modales">
-        <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
-          <div>
-            <a href="#close" title="Close" class="close"></a>
-            <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."></textarea></div>
-            <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
-          </div>
-        </div>
-      </section>
-
-      <div class="part">
-        <div class="author">
-          <img src="assets/images/img-avatar-dummy-01.png">
-          <div>Astronaura23 <span>publicó:</span>
-            <div>16 Junio 2015</div>
-          </div>
-        </div>
-        <div class="block">
-          ¡Les comparto una foto que tomé!
-          <img src="assets/images/avatar.svg">
-          <div>A <span class="green">30</span> jóvenes les gusta esto</div>
-        </div>
-        <div class="social">
-          <div><span class="icomoon icon-like"></span> Me gusta</div>
-          <div class="hidden"><span class="icomoon icon-like"></span> Ya no me gusta</div>
-          <div><span class="icomoon icon-comment"></span> Comentar</div>
-          <div><span class="icomoon icon-pinch"></span> Reportar</div>
-        </div>      
-      </div>
-      <section class="modales">
-        <div id="openModal1" class="modalDialog" collapse="communityModals['isTextCollapsed']">
-          <div>
-            <a href="#close" title="Close" class="close"></a>
-            <div class="add"><span class="icomoon icon-edit"></span><textarea placeholder="Escribe tus comentarios aquí..."></textarea></div>
-            <a class="btn btn-primary btn-lg btn-cnt" role="button">Compartir</a>
-          </div>
-        </div>
-      </section>
 
       <section>
-      <a class="btn btn-showmore btn-lg" role="button">
+      <a class="btn btn-showmore btn-lg" role="button" ng-click="showMorePosts()" ng-show="morePendingPosts">
         <span class="icomoon icon-show-more"></span>Mostrar más publicaciones...
       </a>
     </section>
@@ -220,4 +182,18 @@
 
     </section>    
   </article>
+  <script type="text/ng-template" id="badgeForumRobotMessageModal.html">
+        <div class="modal-robot robot-sm closing-stage-modal user-help" >
+            <img src="assets/images/img-robot-sm.svg" alt="robot" />
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                <p class="txt-renglon centered">{{actualMessage.message}}</p>
+            </div>
+        </div>
+    </script>
 </div>

@@ -111,7 +111,6 @@ angular
             }
 =======
                 if($scope.currentMessage.trim() != ""){
-                    debugger;
                     var newMessage = {
                     messagetext: $scope.currentMessage,
                     messagesenderid: $scope.senderId,                    

@@ -1,4 +1,4 @@
-﻿angular
+angular
     .module('incluso.account.detail', [])
     .controller('accountDetailController', [
         '$scope',

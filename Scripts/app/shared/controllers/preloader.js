@@ -1,7 +1,5 @@
-/* JS for preloader */
-
+/* Controller to handle terms and conditions */
 var preloader = angular.module('inlcuso.shared.preloader', ['ui.bootstrap']);
-
 preloader.controller('preloaderController', [
 	'$rootScope',
 	'$scope',

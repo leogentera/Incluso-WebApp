@@ -1,45 +1,3 @@
-<!-- <div id="navBar" class="navbar navbar-app navbar-absolute-top" ng-class="{'navbar-blue': navbarBlue, 'navbar-orange': navbarOrange, 'show': showToolbar, 'navbar-green': navbarGreen, 'navbar-pink': navbarPink }">
-  <div class="navbar-brand navbar-brand-center navbar-assets" ui-yield-to="title">
-      <div class="btn-group pull-left">
-        <div ui-toggle="uiSidebarLeft" class="btn sidebar-toggle" ng-click="sideToggle()">
-          <h1 class="navbar-heading"><a id="menuton"><i class="icomoon icon-more-options"></i> <span>{{pageName}}</span></a></h1>
-        </div>
-      </div>
-      <ul class="navbar-tools">
-          <li class="contribute" ng-class="toolbarOptionActive('/Community')">
-            <a ng-click="navigateTo('Community', 'Comunidad', 'null', 'navbarblue')">
-              <i class="icomoon icon-community"></i>
-            </a>
-          </li>
-          <li class="notifications" ng-class="toolbarOptionActive('/Alerts')">          
-
-            <a ng-click="navigateTo('Alerts', 'Notificaciones', 'null', 'navbarorange')">
-              <i class="icomoon icon-broadcast"></i>              
-            </a>
-            <div class="bubble bubble-sm" ng-show="showNotification()">
-              <span class="glyphicon glyphicon-triangle-top"></span>
-              <span class="number-alerts">{{totalNotifications}}</span>
-            </div>
-          </li>
-          <li class="chat" ng-class="toolbarOptionActive('/Chat')">
-            <a ng-click="navigateTo('/Chat', 'Cabina de soporte', 'null', 'navbarorange')">
-              <i class="icomoon icon-headset"></i>
-            </a>
-            <div class="bubble bubble-sm" ng-show="showChatNotification()">
-              <span class="glyphicon glyphicon-triangle-top"></span>
-              <span class="number-alerts">...</span>
-            </div>
-          </li>
-          <li class="profile" ng-class="toolbarOptionActive(['/Profile','/Perfil/Editar', '/Juegos/Avatar'])">
-            <a ng-click="navigateTo('Profile', 'Mi perfil', 'null', 'navbarblue')">
-              <i class="icomoon icon-profile"></i>
-            </a>
-          </li>
-        </ul>
-        
-  </div>
-</div> -->
-
 <div class="navbar navbar-app navbar-absolute-top" id="navBar" ng-class="{'navbar-blue': navbarBlue, 'navbar-orange': navbarOrange, 'show': showToolbar, 'navbar-green': navbarGreen, 'navbar-pink': navbarPink }">
   <a class="navbar-toggle collapsed" ng-click="sideToggle()">
     <span class="sr-only">Toggle navigation</span>
@@ -50,8 +8,8 @@
     <h1 class="navbar-heading">{{pageName}}</h1>
     <ul class="navbar-tools">
 
-      <li ng-class="toolbarOptionActive(['/Profile','/Perfil/Editar', '/Juegos/Avatar'])">
-        <a ng-click="navigateTo('Profile', 'Mi perfil', 'null', 'navbarblue')">
+      <li ng-class="toolbarOptionActive(['/Perfil','/Perfil/Editar', '/Perfil/ConfigurarPrivacidad', '/Juegos/Avatar'])">
+        <a ng-click="navigateToMyProfile()">
           <span class="icomoon icon-profile"></span>
         </a>
       </li>  
@@ -78,8 +36,8 @@
         </div>
       </li>      
 
-      <li class="hidden" ng-class="toolbarOptionActive('/Community')">
-        <a ng-click="navigateTo('Community', 'Comunidad', 'null', 'navbarblue')">
+      <li ng-class="toolbarOptionActive('/Community/50000')">
+        <a ng-click="navigateTo('Community/50000', 'Comunidad', 50000)">
           <span class="icomoon icon-community"></span>
         </a>
       </li>

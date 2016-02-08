@@ -1,239 +1,264 @@
 <div class="incluso-app privacy-settings">
 
-	<div class="alert alert-warning" role="alert" ng-show="!model.modelState.isValid && model.modelState.errorMessages.length > 0" ng-cloak>
-		<div class="alert-message">
-			<div class="icomoon icon-warning"></div>
-			<p>¡Error! Verifica tus datos</p>
-			<ul ng-if="model.modelState.errorMessages.length > 0">
-				<li ng-repeat="msg in model.modelState.errorMessages">{{msg}}</li>
-			</ul>
-		</div>
-	</div>
+    <div class="alert alert-warning" role="alert" ng-if="!model.modelState.isValid && model.modelState.errorMessages.length > 0">
+        <div class="alert-message">
+            <div class="icomoon icon-warning"></div>
+            <p>¡Error! Verifica tus datos</p>
+            <ul ng-if="model.modelState.errorMessages.length > 0">
+                <li ng-repeat="msg in model.modelState.errorMessages">{{msg}}</li>
+            </ul>
+        </div>
+    </div>
 
-	<article>
-		<section class="component profile-dashboard">
-				<div class="user-avatar">
-					<figure>
-						<img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive" />
-						<figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption>
-					</figure>
-					<a type="button" id="editProfile" ng-click="avatar()" class="btn">
-						<span class="icomoon icon-edit"></span>
-					</a>
-				</div>
-				<div class="profile-data">
-					<h4 class="user-name" ng-bind="model.alias"></h4>
-					<p class="user-points">
-						<span ng-bind="model.stars"></span>
-						<span class="icomoon icon-star"></span>
-					</p>
-				</div>
-				<div class="profile-settings">
-					<a class="btn btn-icon-aside left active" ng-click="save();">
-						<div class="btn-icon">
-							<span class="icomoon icon-settings"></span>
-						</div>
-						<span for="">Guardar</span>
-					</a>					
-				</div>
-		</section>
-		<section class="component profile-options">
-			<form action="" name="editForm">
-				<div class="pages">
-					<div class="page" ng-class="currentPage == 1 ? 'active' : ''">
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-xs-12">
-									<ul class="list-group separate-items">
-										<li class="list-group-item" ng-click="navigateToPage(2)">
-											<a href="">
-												<span class="icomoon icon-lock"></span>
-												<span>Privacidad</span>												
-											</a>
-										</li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
+    <article>
+        <section class="component profile-dashboard">
+            <div class="user-avatar">
+                <figure>
+                    <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive"/>
+                    <figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption>
+                </figure>
+                <a type="button" id="editProfile" ng-click="avatar()" class="btn">
+                    <span class="icomoon icon-edit"></span>
+                </a>
+            </div>
+            <div class="profile-data">
+                <h4 class="user-name" ng-bind="model.alias"></h4>
+                <p class="user-points">
+                    <span ng-bind="model.stars"></span>
+                    <span class="icomoon icon-star"></span>
+                </p>
+            </div>
+            <div class="profile-settings">
+                <a class="btn btn-icon-aside left active" ng-click="save()">
+                    <div class="btn-icon">
+                        <span class="icomoon icon-settings"></span>
+                    </div>
+                    <span>Guardar</span>
+                </a>
+            </div>
+        </section>
+        <section class="component profile-options">
+            <form action="" name="editForm">
+                <div class="pages">
+                    <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <ul class="list-group separate-items">
+                                        <li class="list-group-item" ng-click="navigateToPage(2)">
+                                            <a href="">
+                                                <span class="icomoon icon-lock"></span>
+                                                <span>Privacidad</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-					<div class="page" ng-class="currentPage == 2 ? 'active' : ''">
-						<div class="container-fluid">
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="panel panel-default panel-form">
-										<div class="panel-heading with-icons" ng-click="navigateToPage(1)">
-											<span class="icomoon icon-arrow-slim-left"></span>
-											<span class="icomoon icon-lock"></span>
-											<span class="panel-title">Privacidad</span>
-										</div>
-										<div class="panel-body">
-											<fieldset class="my-profile-form">
+                    <div class="page" ng-class="currentPage == 2 ? 'active' : ''">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="panel panel-default panel-form">
+                                        <div class="panel-heading with-icons" ng-click="navigateToPage(1)">
+                                            <span class="icomoon icon-arrow-slim-left"></span>
+                                            <span class="icomoon icon-lock"></span>
+                                            <span class="panel-title">Privacidad</span>
+                                        </div>
+                                        <div class="panel-body">
+                                            <fieldset class="my-profile-form">
 
-												<!--<div class="checkbox checkbox-custom">
-													<label>
-														<input type="checkbox" ng-model="model.allowToSendAdvertisement" name="allowToSendAdvertisement" />
-														<span>Deseo recibir promoción y publicidad</span>
-													</label>
-												</div>-->
+                                                <!--<div class="checkbox checkbox-custom">
+                                                    <label>
+                                                        <input type="checkbox" ng-model="model.allowToSendAdvertisement" name="allowToSendAdvertisement" />
+                                                        <span>Deseo recibir promoción y publicidad</span>
+                                                    </label>
+                                                </div>-->
 
-												<section class="form-content-list">
-													<h4>Mi información</h4>
-													<ul class="block-list">
-														<li class="form-group-control">
-															<div class="col-xs-9"> 
-																<label>Datos Generales</label>
-																<span class="type-show" ng-class="{'private': !generalInfo}">{{generalInfo == true ? 'Público' : 'Privado'}}</span>
-															</div>
-															<div class="col-xs-3"> 										
-	    														<ui-switch ng-model="generalInfo">
-	    															<div class="switch-handle"></div>
-	    														</ui-switch>
-	    													</div>
-														</li>
-														<li class="form-group-control">
-															<div class="col-xs-9"> 
-																<label>Educación</label>
-																<span class="type-show" ng-class="{'private': !schoolarship}">{{schoolarship == true ? 'Público' : 'Privado'}}</span>
-															</div>
-															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="schoolarship">
-	    															<div class="switch-handle"></div>
-	    														</ui-switch>
-	    													</div>
-														</li>
-														<li class="form-group-control">
-															<div class="col-xs-9"> 
-																<label>Dirección</label>
-																<span class="type-show private">Privado</span>
-															</div>
-															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="address">
-	    															<div class="switch-handle"></div>
-	    														</ui-switch>
-	    													</div>
-														</li>
-														<li class="form-group-control">
-															<div class="col-xs-9"> 
-																<label>Teléfonos</label>
-																<span class="type-show">Público</span>
-															</div>
-															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="phone">
-	    															<div class="switch-handle active"></div>
-	    														</ui-switch>
-	    													</div>
-														</li>
-														<li class="form-group-control">
-															<div class="col-xs-9"> 
-																<label>Redes sociales</label>
-																<span class="type-show">Publico</span>
-															</div>
-															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="socialNet">
-	    															<div class="switch-handle"></div>
-	    														</ui-switch>
-	    													</div>
-														</li>
-														<li class="form-group-control">
-															<div class="col-xs-9"> 
-																<label>Familia compartamos</label>
-																<span class="type-show private">Privado</span>
-															</div>
-															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="family">
-	    															<div class="switch-handle active"></div>
-	    														</ui-switch>
-	    													</div>
-														</li>
-													</ul>
-					
-												</section>
+                                                <section class="form-content-list">
+                                                    <h4>Mi información</h4>
 
-												<section class="form-content-list">
-													<h4>Mi personalidad</h4>
-													<ul class="block-list">
-														<li class="form-group-control">
-															<div class="col-xs-9"> 
-																<label>Mis gustos</label>
-																<span class="type-show">Público</span>
-															</div>
-															<div class="col-xs-3"> 										
-	    														<ui-switch class="active" ng-model="generalInfo">
-	    															<div class="switch-handle active"></div>
-	    														</ui-switch>
-	    													</div>
-														</li>
-														<li class="form-group-control">
-																<div class="col-xs-9"> 
-																	<label>Mis cualidades</label>
-																	<span class="type-show private">Privado</span>
-																</div>
-																<div class="col-xs-3"> 										
-		    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="schoolarship">
-		    															<div class="switch-handle"></div>
-		    														</ui-switch>
-		    													</div>
-														</li>
-														<li class="form-group-control">
-															<div class="col-xs-9"> 
-																<label>A quién admiro</label>
-																<span class="type-show private">Privado</span>
-															</div>
-															<div class="col-xs-3"> 										
-	    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="address">
-	    															<div class="switch-handle"></div>
-	    														</ui-switch>
-	    													</div>
-														</li>
-													</ul>
-												</section>
+                                                    <ul class="block-list">
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>Datos Generales</label>
+                                                                <span class="type-show"
+                                                                      ng-class="{'private': !model.showGeneralData}">{{model.showGeneralData == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch ng-model="model.showGeneralData">
+                                                                    <div class="switch-handle"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>Educación</label>
+                                                                <span class="type-show"
+                                                                      ng-class="{'private': !model.showEducation}">{{model.showEducation == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch
+                                                                        class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active"
+                                                                        ng-model="model.showEducation">
+                                                                    <div class="switch-handle"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                        <!-- Modified Privacy Settings on 14/12/2015. Maintained here as a Reference.
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>Dirección</label>
+                                                                <span class="type-show" ng-class="{'private': !model.showAddress}">{{model.showAddress == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showAddress">
+                                                                    <div class="switch-handle"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>Teléfonos</label>
+                                                                <span class="type-show" ng-class="{'private': !model.showPhones}">{{model.showPhones == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="model.showPhones">
+                                                                    <div class="switch-handle active"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                        -->
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>Redes sociales</label>
+                                                                <span class="type-show"
+                                                                      ng-class="{'private': !model.showSocialNetworks}">{{model.showSocialNetworks == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch
+                                                                        class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active"
+                                                                        ng-model="model.showSocialNetworks">
+                                                                    <div class="switch-handle"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>Familia compartamos</label>
+                                                                <span class="type-show"
+                                                                      ng-class="{'private': !model.showFamiliaCompartamos}">{{model.showFamiliaCompartamos == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch
+                                                                        class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active"
+                                                                        ng-model="model.showFamiliaCompartamos">
+                                                                    <div class="switch-handle active"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
 
-												<section class="form-content-list">
-													<h4>Uso tecnología</h4>
-													<ul class="block-list">
-														<li class="form-group-control">
-															<div class="col-xs-9"> 
-																<label>Dispositivos</label>
-																<span class="type-show">Público</span>
-															</div>
-															<div class="col-xs-3"> 										
-	    														<ui-switch class="active" ng-model="generalInfo">
-	    															<div class="switch-handle active"></div>
-	    														</ui-switch>
-	    													</div>
-														</li>
-														<li class="form-group-control">
-																<div class="col-xs-9"> 
-																	<label>Videojuegos</label>
-																	<span class="type-show private">Privado</span>
-																</div>
-																<div class="col-xs-3"> 										
-		    														<ui-switch class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active" ng-model="schoolarship">
-		    															<div class="switch-handle"></div>
-		    														</ui-switch>
-		    													</div>
-														</li>
-													</ul>
-												</section>
+                                                </section>
 
-											 	<div class="actions">
-											 		<div class="page-controls">												 		
-														<a class="btn btn-primary btn-lg btn-block" ng-click="save()">Guardar</a>	
-													</div>
-													<a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="navigateToPage(1);">Cancelar</a>
-											 	</div>
+                                                <section class="form-content-list">
+                                                    <h4>Mi personalidad</h4>
+                                                    <ul class="block-list">
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>Mis gustos</label>
+                                                                <span class="type-show"
+                                                                      ng-class="{'private': !model.showLikesAndPreferences}">{{model.showLikesAndPreferences == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch class="active"
+                                                                           ng-model="model.showLikesAndPreferences">
+                                                                    <div class="switch-handle active"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>Mis cualidades</label>
+                                                                <span class="type-show"
+                                                                      ng-class="{'private': !model.showAttributesAndQualities}">{{model.showAttributesAndQualities == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch
+                                                                        class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active"
+                                                                        ng-model="model.showAttributesAndQualities">
+                                                                    <div class="switch-handle"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>A quién admiro</label>
+                                                                <span class="type-show"
+                                                                      ng-class="{'private': !model.showWhomAdmires}">{{model.showWhomAdmires == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch
+                                                                        class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active"
+                                                                        ng-model="model.showWhomAdmires">
+                                                                    <div class="switch-handle"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </section>
 
-											</fieldset>
-						  				</div>
-									</div>
-					  			</div>
-							</div>
-				  		</div>
-					</div>
+                                                <section class="form-content-list">
+                                                    <h4>Uso tecnología</h4>
+                                                    <ul class="block-list">
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>Dispositivos</label>
+                                                                <span class="type-show"
+                                                                      ng-class="{'private': !model.showDevices}">{{model.showDevices == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch class="active" ng-model="model.showDevices">
+                                                                    <div class="switch-handle active"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                        <li class="form-group-control">
+                                                            <div class="col-xs-9">
+                                                                <label>Videojuegos</label>
+                                                                <span class="type-show"
+                                                                      ng-class="{'private': !model.showVideogames}">{{model.showVideogames == true ? 'Público' : 'Privado'}}</span>
+                                                            </div>
+                                                            <div class="col-xs-3">
+                                                                <ui-switch
+                                                                        class="ng-pristine ng-untouched ng-valid ng-isolate-scope switch switch-transition-enabled active"
+                                                                        ng-model="model.showVideogames">
+                                                                    <div class="switch-handle"></div>
+                                                                </ui-switch>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </section>
 
-				
-			</form>
-	 	</section>
-	</article>
+                                                <div class="actions">
+                                                    <div class="page-controls">
+                                                        <a class="btn btn-primary btn-lg btn-block" ng-click="save()">Guardar</a>
+                                                    </div>
+                                                    <a class="btn btn-default btn-transparent btn-lg btn-block"
+                                                       ng-click="returnToProfile()">Cancelar</a>
+                                                </div>
+
+                                            </fieldset>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </article>
 </div>

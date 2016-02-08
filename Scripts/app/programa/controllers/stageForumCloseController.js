@@ -11,45 +11,59 @@ angular
         '$anchorScroll',
         '$modal',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal) {
+            var _loadedResources = false;
+            var _pageLoaded = true;
             _httpFactory = $http;
             _timeout = $timeout;
+            
 
-            localStorage.removeItem('currentForumsProgress');
+            //Closing message content from drupal
+            var closingActivityId = $routeParams.activityId;
+            var stageClosingContent = "";
+            if(closingActivityId > 999 && closingActivityId < 2000)
+                stageClosingContent = "ZonaDeVueloClosing";
+            else if(closingActivityId > 1999 && closingActivityId < 3000)
+                stageClosingContent = "ZonaDeNavegacionClosing";
+            else
+                stageClosingContent = "ZonaDeAterrizajeClosing";
+            drupalFactory.Services.GetContent(stageClosingContent, function (data, key)
+            {
+                _loadedResources = true;
+                $scope.closingContent = data.node;
+                if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); }
+            }, function () { _loadedResources = true; if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader'); } }, false);
+            //finish getting content
+            
+            var userCourse = JSON.parse(localStorage.getItem('usercourse'));
+            var parentActivity = getActivityByActivity_identifier($routeParams.activityId, userCourse);
+            var activityFromTree;
 
-            $scope.currentChallenge = 2;
-             var userCourse = JSON.parse(localStorage.getItem('usercourse'));
-             var parentActivity = getActivityByActivity_identifier($routeParams.moodleid);
-             var activityFromTree;
-             if (parentActivity.activities && parentActivity.activities.length) {
+            if (parentActivity.activities && parentActivity.activities.length) {
                 activityFromTree = parentActivity.activities[0];
-             } else {
-                activityFromTree = parentActivity
-             }
+            } else {
+                activityFromTree = parentActivity;
+            }
 
+            $scope.activityPoints = activityFromTree.points;
+            $scope.activityname = Number($routeParams.moodleId) == 148? "Foro Artístico": activityFromTree.activityname;
+            $scope.like_status = 1;
+            $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
 
+            if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
 
-             $scope.activityPoints = activityFromTree.points;
-             $scope.activityname = activityFromTree.activityname;
-             $scope.like_status = 1;
-
-            $scope.$emit('HidePreloader');
-
-            var endForumActivity = function(moodleid){
+            var endForumActivity = function(moodleid) {
                 $scope.$emit('ShowPreloader');
-                //debugger;
-               var parentActivity = getActivityByActivity_identifier($routeParams.moodleid, userCourse);
-               var activities = parentActivity.activities;
+                var activities = parentActivity.activities;
+                
+                parentActivity.status = 1;
+                parentActivity.last_status_update = moment(Date.now()).unix();
+                if (activities) {
+                    for(var i = 0; i < activities.length; i++) {
+                        activities[i].status = 1;
+                    }
+                }
+                _setLocalStorageJsonItem('usercourse', userCourse);
 
-               parentActivity.status = 1;
-               if (activities) {
-                 for(var i = 0; i < activities.length; i++) {
-                    activities[i].status = 1;
-                 }
-               }
-               _setLocalStorageJsonItem('usercourse', userCourse);
-
-
-                console.log('Finishing activity...');
                 var like_status = $scope.like_status;
 
                 var userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
@@ -61,59 +75,117 @@ angular
                 };
 
                 var userCurrentStage = localStorage.getItem("currentStage");
+                
+                var finishChildCounter = 0;
+                if (activities){
+                    for(var i = 0; i < activities.length; i++) {
+                        if ($routeParams.moodleId == 147 || $routeParams.moodleId == 148) {
+                            
+                            if (activities[i].coursemoduleid == $routeParams.moodleId) {
+                                moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
+                                    endParentActivity();
+                                });
+                            }
+                            
+                        }else {
+                            moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {
+                                finishChildCounter++;
+                                
+                                if (finishChildCounter == activities.length) {
+                                    endParentActivity();
+                                }
+                            });
+                        }
+                    }
+                }else{
+                    endParentActivity();
+                }
+               
+               function endParentActivity() {
+                
+                    moodleFactory.Services.PutEndActivity(parentActivity.coursemoduleid, data, parentActivity, userToken,
+                      function(response){
+                            var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
+                            var model = {
+                                userId: userId,
+                                stars: activityFromTree.points,
+                                instance: parentActivity.coursemoduleid,
+                                instanceType: 0,
+                                date: new Date()
+                            };
+                                                    
+                            moodleFactory.Services.PutStars(model, profile, userToken, function() {
+                                updateActivityStatus($routeParams.activityId);
+                                _updateRewardStatus();
+                                
+                                profile.stars = Number(profile.stars) + Number(activityFromTree.points);
+                                _setLocalStorageJsonItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId"),profile);
+                                
+                                $routeParams.activityId == 1049? moodleid =$routeParams.moodleId : moodleid = getMoodleIdFromTreeActivity($routeParams.activityId);
+                                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + moodleid ));                                                            
+                                
+                                var userStars = JSON.parse(localStorage.getItem("userStars"));
+                                                            
+                                var localStorageStarsData = {
+                                    dateissued: moment(Date.now()).unix(),
+                                    instance: model.instance,
+                                    instance_type: model.instanceType,
+                                    message: "",
+                                    is_extra: false,
+                                    points: model.stars,
+                                    userid: parseInt(model.userId)
+                                };
+                            
+                                userStars.push(localStorageStarsData);
+                                
+                                localStorage.setItem("userStars", JSON.stringify(userStars));
+                                
+                                var extraPoints = Number(moodleFactory.Services.GetCacheObject("starsToAssignedAfterFinishActivity"));
+                                
+                                if (extraPoints != 0) {
 
-               if (activities) {
-                 for(var i = 0; i < activities.length; i++) {
-                  moodleFactory.Services.PutEndActivity(activities[i].coursemoduleid, data, activities[i], userToken, function() {});
-                 }
-               }
-
-                moodleFactory.Services.PutEndActivity(moodleid, data, parentActivity, userToken,
-                    function(response){
-                          var profile = JSON.parse(localStorage.getItem("profile"));
-                          var model = {
-                              userId: userId,
-                              stars: activityFromTree.points,
-                              instance: parentActivity.coursemoduleid,
-                              instanceType: 0,
-                              date: new Date()
-                          };
-
-                          moodleFactory.Services.PutStars(model, profile, userToken, function() {
-                            updateActivityStatus(moodleid);
-                              var activity_identifier = null;
-                              var moodleId = $routeParams.moodleid;
-                              if(moodleId == 151){
-                                  activity_identifier = 1010;
-                                  moodleid = 64;
-                              } else if(moodleId == 64){
-                                  activity_identifier = 1010;
-                                  moodleid = 64;
-                              } else if(moodleId == 73){
-                                  activity_identifier = 1008;
-                                  moodleid = 73;
-                              } else if(moodleId == 147){
-                                  activity_identifier = 1049;
-                                  moodleid = 147;
-                              } else if(moodleId == 148){
-                                  activity_identifier = 1049;
-                                  moodleid = 148;
-
-                              }
-                              updateUserStars(moodleId);
-                              $scope.$emit('HidePreloader');
-                            $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
-                          }, errorCallback);
-                    },
-                    function(){
-                      $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + $scope.currentChallenge);
-                    });
+                                    updateUserForumStars($routeParams.activityId, extraPoints,true, function (){
+                                        successPutStarsCallback();
+                                    });
+                                }
+                                
+                                var course = moodleFactory.Services.GetCacheJson("course");
+                                var user = moodleFactory.Services.GetCacheJson("CurrentUser");
+                                moodleFactory.Services.GetAsyncUserPostCounter(user.token, course.courseid, function(){}, function() {}, true);
+                                
+                                localStorage.removeItem("starsToAssignedAfterFinishActivity");
+  
+                                $scope.$emit('HidePreloader');
+                                var activityId = Number($routeParams.activityId);
+  
+                                if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
+                                    $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
+                                } else if(activityId == 2030 || activityId == 2026){
+                                    $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
+                                } else if(activityId == 3304 || activityId == 3404){
+                                    $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
+                                }
+  
+                            }, errorCallback);
+                      },
+                      function(){
+                          var activityId = Number($routeParams.activityId);
+                          if(activityId == 1010 || activityId == 1049 || activityId == 1008 ){
+                              $location.path('/ZonaDeVuelo/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
+                          } else if(activityId == 2030 || activityId == 2026){
+                              $location.path('/ZonaDeNavegacion/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
+                          } else if(activityId == 3304 || activityId == 3404){
+                              $location.path('/ZonaDeAterrizaje/Dashboard/' + userCurrentStage + '/' + getChallengeByActivity_identifier(activityId, userCourse));
+                          }
+                      });
+                }
 
             };
 
 
             $scope.finishActivity = function () {
-               endForumActivity(parentActivity.coursemoduleid);
+                var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+                endForumActivity(moodleId);
             }
 
 
@@ -122,4 +194,4 @@ angular
             $scope.cancel = function () {
                 $modalInstance.dismiss('cancel');
             };
-        });   
+        });  

@@ -15,24 +15,19 @@
 
 
 .incluso-app {
-    
     /********************************************************************************
      Base styles (if needed)
     ********************************************************************************/
     /* Start writing base classes here */
-
     /********************************************************************************
      Entities styles (if needed)
     ********************************************************************************/
     /* Start writing base classes here */
-
-  
     /********************************************************************************
      Overrides styles (if needed)
     ********************************************************************************/
     /* Start writing base classes here */
-
-    /* Mis Logros */    
+    /* Mis Logros */
     .achievements .panel-body .badge-item {
         height: 45vw;
         padding: 2vw 0 4vw;
@@ -44,12 +39,14 @@
         vertical-align: top;
         width: 33%;
     }
+
     .achievements .panel-body .badge-item img {
         height: auto;
         width: 100%;
         text-align: center;
         margin: 0 auto;
     }
+
     .achievements .panel-body .badge-item .badgename {
         color: #fff;
         font-family: Play;
@@ -59,41 +56,48 @@
         margin: 0;
         padding: 0;
     }
+
     .achievements .panel-body .pager {
         display: block;
         margin: 8vw 0 0;
     }
+
     .achievements .panel-body .pager > * {
         display: inline-block;
         vertical-align: middle;
         margin: 0 2vw;
     }
+
     .incluso-app .achievements .panel-body .pager .icomoon {
         font-size: 13vw;
         color: rgb(0,173,138);
         cursor: pointer;
     }
+
     .incluso-app .achievements .panel-body .pager span {
         font-size: 5vw;
         color: rgb(256,256,256);
         font-weight: bold;
     }
+
     .incluso-app .achievements .panel-body .pager .actual-page {
         color: rgb(0,173,138);
     }
+
     .incluso-app .achievements .panel-body .pager .icomoon.disabled {
         opacity: 0.3;
     }
-
-    /* Detalle de Logro */  
+    /* Detalle de Logro */
     .achievement-detail .panel-body .text-center .achievement-badge {
         border-bottom: 1px solid rgb(139,168,177);
         margin-bottom: 5vw;
     }
+
     .achievement-detail .panel-body .text-center .achievement-badge img {
         width: 50vw;
         height: 50vw;
     }
+
     .achievement-detail .panel-body .text-center .achievement-badge .badgename {
         color: #fff;
         font-family: Play;
@@ -102,6 +106,7 @@
         text-align: center;
         padding: 4vw 0 0;
     }
+
     .achievement-detail .panel-body .text-center .achievement-badge .badgedate {
         font-family: Play;
         font-size: 4vw;
@@ -109,6 +114,7 @@
         padding: 2vw 0 4vw;
         color: rgb(153,153,153);
     }
+
     .achievement-detail .panel-body .text-center .achievement-description {
         color: #fff;
         font-family: Play;
@@ -116,6 +122,7 @@
         line-height: 7vw;
         padding: 4vw 0;
     }
+
     .achievement-detail .panel-body .text-center .earned-info {
         color: rgb(99,119,125);
         font-family: Play;
@@ -124,9 +131,11 @@
         font-weight: bold;
         letter-spacing: 1px;
     }
+
     .achievement-detail .panel-body .text-center .earned-info .users {
         color: rgb(184,207,51);
     }
+
     .achievement-detail .panel-body .text-center .share-achievement {
         position: relative;
         overflow: visible;
@@ -134,6 +143,7 @@
         padding: 4vw;
         cursor: pointer;
     }
+
     .achievement-detail .panel-body .text-center .share-achievement .icon-container {
         .border-radius-circle();
         background: rgb(72,81,87);
@@ -145,321 +155,425 @@
         width: auto;
         position: relative;
     }
-        .achievement-detail .panel-body .text-center .share-achievement .icon-container .icon-share {
-            .border-radius-circle();
-            background: rgb(184,207,51);
-            border-radius: 90px;
-            font-size: 7vw;
-            font-weight: bold;
-            padding: 8px;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        .achievement-detail .panel-body .text-center .share-achievement .share-text {
-            background: rgb(72,81,87);
-            .border-radius(10vw);
-            display: inline-block;
-            padding: 2vw 4vw 2vw 12vw;
-            font-size: 4vw;
-            margin-left: -10vw;
-            vertical-align: middle;
-            color: #fff;
-        }
-        .achievement-detail .panel-body .text-center .return-btn {
-            .border-radius(10px);
-            border-bottom: 1vw solid rgb(209,64,39);
-            background: rgb(237,72,35);
-            padding: 4vw 6vw;
-            color: rgb(256,256,256);
-            font-family: play;
-            font-size: 7vw;
-            font-weight: bold;
-            padding: 2vw 4vw;
-            text-transform: uppercase;
-            display: block;
-            cursor: pointer;
-            margin: 4vw 1vw 0;
-        }
 
-        /* Chat */  
-        .chat {
-            .starway {
-                padding-bottom: 10vh;
-            }
-        }
-        .chat .component {
-            padding: 0;
-            margin: 0;
-            position: relative;
-        }
-        .chat .component .container-shadow {
-            height: 1vw;
-            position: absolute;
-            top: 0;
-            box-shadow: 0 0 10vw 20vw rgb(0,0,0);
-            z-index: 1;
-            height: 1vw;
-            background: rgb(0,0,0);
-            opacity: 0.3;
-        }
-        .chat .component .msg-container {
-            padding: 5vw 2%;
-            display: block;
-            min-height: 70vh;
-            max-height: 74vh;
-            overflow-y: auto;
-        }
-        .chat .component .msg-container .msg {
-            display: block;
-            margin: 0 0 4vw 0;
-            position: relative;
-            width: 100%;
-            float: left;
+    .achievement-detail .panel-body .text-center .share-achievement .icon-container .icon-share {
+        .border-radius-circle();
+        background: rgb(184,207,51);
+        border-radius: 90px;
+        font-size: 7vw;
+        font-weight: bold;
+        padding: 8px;
+        display: inline-block;
+        vertical-align: middle;
+    }
 
+    .achievement-detail .panel-body .text-center .share-achievement .share-text {
+        background: rgb(72,81,87);
+        .border-radius(10vw);
+        display: inline-block;
+        padding: 2vw 4vw 2vw 12vw;
+        font-size: 4vw;
+        margin-left: -10vw;
+        vertical-align: middle;
+        color: #fff;
+    }
+
+    .achievement-detail .panel-body .text-center .return-btn {
+        .border-radius(10px);
+        border-bottom: 1vw solid rgb(209,64,39);
+        background: rgb(237,72,35);
+        color: rgb(256,256,256);
+        font-family: play;
+        font-size: 7vw;
+        font-weight: bold;
+        padding: 2vw 4vw;
+        text-transform: uppercase;
+        display: block;
+        cursor: pointer;
+        margin: 4vw 1vw 0;
+    }
+    /* Chat */
+    .chat {
+        .starway {
+            padding-bottom: 10vh;
         }
-        .chat .component .msg-container .msg .text span {
-            width: 100%;
-            color: rgb(256,256,256);
-            font-family: Play;
-            font-size: 4vw;
-            display: block;
-            word-wrap: break-word;
+    }
+
+    .chat .component {
+        padding: 0;
+        margin: 0;
+        position: relative;
+    }
+
+    .chat .component .container-shadow {
+        position: absolute;
+        top: 0;
+        box-shadow: 0 0 10vw 20vw rgb(0,0,0);
+        z-index: 1;
+        height: 1vw;
+        background: rgb(0,0,0);
+        opacity: 0.3;
+    }
+
+    .chat .component .msg-container {
+        padding: 5vw 2%;
+        display: block;
+        min-height: 70vh;
+        max-height: 74vh;
+        overflow-y: auto;
+    }
+
+    .chat .component .msg-container .msg {
+        display: block;
+        margin: 0 0 4vw 0;
+        position: relative;
+        width: 100%;
+        float: left;
+    }
+
+    .chat .component .msg-container .msg .text span {
+        width: 100%;
+        color: rgb(256,256,256);
+        font-family: Play;
+        font-size: 4vw;
+        display: block;
+        -ms-word-wrap: break-word;
+        word-wrap: break-word;
+    }
+
+    .chat .component .msg-container .msg .text .date {
+        color: rgb(255,255,255);
+        font-size: 3.5vw;
+        text-align: right;
+        opacity: 0.5;
+        margin: 2vw 0 0;
+    }
+
+    .chat .component .msg-container .msg.received .text {
+        background: rgb(0,78,112);
+        border-radius: 4vw 4vw 4vw 0;
+        padding: 1vw 4vw;
+        width: 65vw;
+        margin-left: 20px;
+    }
+
+    .chat .component .msg-container .msg.received .msg-icn {
+        display: block;
+        color: rgb(0,78,112);
+        font-size: 5vw;
+        position: absolute;
+        left: 1.5vw;
+        top: auto;
+        bottom: -1px;
+
+        &::before {
+            content: "\e66a";
         }
-        .chat .component .msg-container .msg .text .date {
-            color: rgb(255,255,255);
-            font-size: 3.5vw;
-            text-align: right;
-            opacity: 0.5;
-            margin: 2vw 0 0;
+    }
+
+    .chat .component .msg-container .msg.sent {
+        float: right;
+    }
+
+    .chat .component .msg-container .msg.sent .text {
+        background: rgb(4,135,109);
+        color: rgb(4,135,109);
+        font-size: 5vw;
+        border-radius: 4vw 4vw 0 4vw;
+        padding: 1vw 4vw;
+        width: 65vw;
+        margin-right: 20px;
+        float: right;
+    }
+
+    .chat .component .msg-container .msg.sent .msg-icn {
+        font-size: 5vw;
+        display: block;
+        top: auto;
+        bottom: -1px;
+        color: rgb(4,135,109);
+        position: absolute;
+        right: 1.5vw;
+
+        &::before {
+            content: "\e669";
         }
-        .chat .component .msg-container .msg.received .text {
-            background: rgb(0,78,112);
-            border-radius: 4vw 4vw 4vw 0;
-            padding: 1vw 4vw;
-            width: 65vw;
-            margin-left: 20px;
-        }
-        .chat .component .msg-container .msg.received .msg-icn {
-            display: block;
-            color: rgb(0,78,112);
-            font-size: 5vw;
-            position: absolute;
-            left: 1.5vw;
-            top: auto;
-            bottom: -1px;
-            &::before {
-                content: "\e66a";
-            }
-        }
-        .chat .component .msg-container .msg.sent {
-            float: right;            
-        }
-        .chat .component .msg-container .msg.sent .text {
-            background: rgb(4,135,109);
-            color: rgb(4,135,109);
-            font-size: 5vw;
-            border-radius: 4vw 4vw 0 4vw;
-            padding: 1vw 4vw;
-            width: 65vw;
-            margin-right: 20px;
-            float: right;
-        }
-        .chat .component .msg-container .msg.sent .msg-icn {
-            font-size: 5vw;
-            display: block;
-            top: auto;
-            bottom: -1px;
-            color: rgb(4,135,109);
-            position: absolute;
-            right: 1.5vw;
-            &::before {
-                content: "\e669";
-            }
-        }
-        .chat .component .typing-section {
-            /*min-height: 6vh;
+    }
+
+    .chat .component .typing-section {
+        /*min-height: 6vh;
             max-height: 20vh;*/
-            height: auto;
-            background: rgb(256,256,256);
-            padding: 2vw 0;
-        }
-        .chat .component .typing-section input[type="text"],
-        .chat .component .typing-section textarea {
-            float: none;
-            display: inline-block;
-            width: 88%;
-            height: 11vh;
-            resize: none;            
-            padding: 2vh 2vw 0;
-            border-color: transparent;
-            overflow-y: auto;
-            font-size: 4.5vw;
+        height: auto;
+        background: rgb(256,256,256);
+        padding: 2vw 0;
+    }
+
+    .chat .component .typing-section input[type="text"],
+    .chat .component .typing-section textarea {
+        float: none;
+        display: inline-block;
+        width: 88%;
+        height: 11vh;
+        resize: none;
+        padding: 2vh 2vw 0;
+        border-color: transparent;
+        overflow-y: auto;
+        font-size: 4.5vw;
+        outline: none;
+        vertical-align: middle;
+
+        &:focus {
             outline: none;
-            vertical-align: middle;
-            &:focus {
-                outline: none;
+        }
+    }
+
+    .chat .component .typing-section input[type="text"]::-webkit-input-placeholder {
+        color: rgb(86,86,86);
+    }
+
+    .chat .component .typing-section input[type="text"]:-moz-placeholder {
+        color: rgb(86,86,86);
+    }
+
+    .chat .component .typing-section input[type="text"]::-moz-placeholder {
+        color: rgb(86,86,86);
+    }
+
+    .chat .component .typing-section input[type="text"]:-ms-input-placeholder {
+        color: rgb(86,86,86);
+    }
+
+    .chat .component .typing-section .send-text {
+        float: none;
+        display: inline-block;
+        color: rgb(237,72,35);
+        font-size: 7vw;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+    /* Fuente de energia */
+    .fuente-energia .title-section .txt-renglon {
+        margin: 0 5%;
+        display: block;
+    }
+
+    .fuente-energia .title-section .subtitle {
+        font-size: 5vw;
+        text-transform: uppercase;
+        font-family: play;
+        padding: 0 5%;
+        font-weight: bold;
+        display: block;
+    }
+
+    .fuente-energia .title-section span {
+        font-size: 4vw;
+        color: rgb(170,170,170);
+        padding: 4vw 5% 2vw;
+        display: block;
+    }
+
+    .fuente-energia .filter-section {
+        margin: 5%;
+        padding: 0;
+    }
+
+    .fuente-energia .filter-section {
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        padding: 0;
+        margin: 0 10vw;
+        position: relative;
+    }
+
+    .fuente-energia .filter-section span {
+        font-size: 5vw;
+        display: inline-block;
+        vertical-align: middle;
+        color: rgb(256,256,256);
+    }
+
+    .fuente-energia .filter-section select {
+        font-size: 5vw;
+        font-weight: bold;
+        color: white;
+        width: 92%;
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        text-indent: 0 !important;
+        padding-left: 1.4vw;
+    }
+
+    .fuente-energia .filter-section .icon-arrow {
+        font-size: 3vw;
+        position: absolute;
+        top: 6vw;
+        right: 2vw;
+    }
+
+    .fuente-energia .wall {
+        padding: 2vw 0;
+    }
+
+    .fuente-energia .wall .part {
+        margin: 0 0 3vw;
+        width: 100%;
+        display: block;
+        background: transparent;
+        border-radius: 0;
+
+        & > div > div {
+            margin: 0 5%;
+            background: transparent radial-gradient(ellipse at center center, #1F2733 0px, #141921 100%) repeat scroll 0% 0%;
+
+            &:first-child {
+                border-radius: 5px 5px 0 0;
+                margin-top: 2vh;
+            }
+
+            &:nth-last-child(2) {
+                border-radius: 0 0 5px 5px;
+                margin-bottom: 2vh;
+            }
+
+            &:last-child {
+                margin: 0;
+                background: transparent;
             }
         }
 
-        .chat .component .typing-section input[type="text"]::-webkit-input-placeholder {
-            color: rgb(86,86,86);
-        }
-        .chat .component .typing-section input[type="text"]:-moz-placeholder {
-            color: rgb(86,86,86);
-        }
-        .chat .component .typing-section input[type="text"]::-moz-placeholder {
-            color: rgb(86,86,86);
-        }
-        .chat .component .typing-section input[type="text"]:-ms-input-placeholder {  
-            color: rgb(86,86,86);
-        }
-        .chat .component .typing-section .send-text {
-            /*width: 0; 
-            height: 0; 
-            border-left: 20px solid rgb(237,72,35);
-            border-top: 10px solid transparent;
-            border-bottom: 10px solid transparent; */
-            float: none;
-            display: inline-block;
-            color: rgb(237,72,35);
-            font-size: 7vw;
-            vertical-align: middle;
-            cursor: pointer;
-        }
+        .modalDialog {
+            font-size: 84%;
 
-        /* Fuente de energia */ 
-        .fuente-energia .title-section .txt-renglon {
-            margin: 0 5%;
-            display: block;
+            & > div {
+                padding: 4% 0px 7%;
+            }
+
+            .btn-primary {
+                width: 90%;
+                margin: 0 5vw;
+            }
+
+            .add textarea {
+                width: 87%;
+                padding: 0 2vw;
+                border: 0 solid transparent;
+                resize: none;
+                line-height: 1;
+            }
+
+            .icomoon {
+                color: inherit;
+                font-size: inherit;
+                padding: 0;
+            }
         }
-        .fuente-energia .title-section .subtitle {
-            font-size: 5vw;
-            text-transform: uppercase;
-            font-family: play;
-            padding: 0 5%;
-            font-weight: bold;
-            display: block;
+    }
+
+    .fuente-energia .wall .part .type {
+        padding: 2vw 3.4vw 2vw 1vw;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .fuente-energia .wall .part .type * {
+        float: none;
+        display: table-cell;
+        vertical-align: middle;
+        padding-right: 1px;
+    }
+
+    .fuente-energia .wall .part .type [class*='icon-'] {
+        color: rgb(98,118,124);
+        font-size: 7vw;
+        cursor: pointer;
+    }
+
+    .fuente-energia .wall .part .type .icon-checked-join {
+        color: rgb(10,150,72);
+    }
+
+    .fuente-energia .wall .part .type .icon-required {
+        color: rgb(240,99,68);
+        font-size: 3vw;
+    }
+
+    .fuente-energia .wall .part .detail .image-container {
+        display: block;
+        padding: 0 3vw;
+    }
+
+    .fuente-energia .wall .part .detail .image-element {
+        height: 45vw;
+        display: block;
+        .border-radius(5px);
+    }
+
+    .fuente-energia .wall .part .detail .message {
+        padding: 8vw 3vw 8vw;
+        border-bottom: .1em solid rgba(255,255,255,.08);
+
+        span {
+            display: block !important;
         }
-        .fuente-energia .title-section span {
-            font-size: 4vw;
-            color: rgb(170,170,170);
-            padding: 4vw 5% 2vw;
-            display: block;
-        }
-        .fuente-energia .filter-section {
-            margin: 5%;
-            padding: 0;
-        }
-        .fuente-energia .filter-section {
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 0;
-            margin: 0 10vw;
-            position: relative;
-        }
-        .fuente-energia .filter-section span {
-            font-size: 5vw;
-            display: inline-block;
-            vertical-align: middle;
-            color: rgb(256,256,256);
-        }
-        .fuente-energia .filter-section select {
-            font-size: 5vw;
-            font-weight: bold;
-            color: white;
-            width: 92%;
-            display: inline-block;
-            vertical-align: middle;
-            position: relative;
-            text-indent: 0 !important;
-            padding-left: 1.4vw;
-        }
-        .fuente-energia .filter-section .icon-arrow {
-            font-size: 3vw;
-            position: absolute;
-            top: 6vw;
-            right: 2vw;
-        }
-        .fuente-energia .wall {
-            padding: 2vw 5%;
-        }
-        .fuente-energia .wall .part {
-            margin: 0 0 3vw;
-            width: 100%;
-            display: block;
-        }
-        .fuente-energia .wall .part .type {
-            padding: 2vw 3.4vw 2vw 1vw;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
-        }
-        .fuente-energia .wall .part .type * {
-            float: none;
-            display: table-cell;
-            vertical-align: middle;
-            padding-right: 1px;
-        }        
-        .fuente-energia .wall .part .type [class*='icon-'] {
-            color: rgb(98,118,124);
-            font-size: 7vw;
-            cursor: pointer;
-        }
-        .fuente-energia .wall .part .type .icon-checked-join {
-            color: rgb(10,150,72);
-        }
-        .fuente-energia .wall .part .type .icon-required {
-            color: rgb(240,99,68);
-            font-size: 3vw;
-        }
-        .fuente-energia .wall .part .detail .image-container {
-            display: block;
-            padding: 3vw;
-        }
-        .fuente-energia .wall .part .detail .image-element {
-            height: 45vw;
-            display: block;
-            .border-radius(5px);
-        }
-        .fuente-energia .wall .part .detail .message {
-            padding: 0 3vw 3vw; 
-        }
-        .fuente-energia .wall .message {
-            color: rgb(256,256,256);
-            font-size: 5vw;
-        }
-        .fuente-energia .wall .part .detail .interact {
-            display: table;
-            width: 100%;
-            border-top: 2px solid rgba(255, 255, 255, 0.08);
-        }
-        .fuente-energia .wall .part .detail .interact div {
-            float: none;
-            display: table-cell;
-            vertical-align: middle;
-            text-align: center;
-            padding: 3vw 0;
-            cursor: pointer;
-        }
-        .fuente-energia .wall .part .detail .interact .like {            
-            border-right: 2px solid rgba(255, 255, 255, 0.08);
-        }
-        .fuente-energia .wall .part .detail .interact .like * {
-            color: rgb(230,9,128);
-            font-size: 5vw;
-            padding: 0;
-            display: inline-block;
-            vertical-align: middle;
-        }
-        .fuente-energia .wall .part .detail .interact .comment * {            
-            color: rgb(2,175,142);
-            font-size: 5vw;
-            padding: 0;
-            display: inline-block;
-            vertical-align: middle;
-        }
+    }
+
+    .fuente-energia .wall .part .detail .message .component,
+    .fuente-energia .wall .part .detail .message .component .panel,
+    .fuente-energia .wall .part .detail .message .component .panel .video-player {
+        margin: 0;
+    }
+
+    .fuente-energia .wall .part .detail .message > a {
+        display: block;
+        text-align: left;
+        -ms-word-break: break-all;
+        word-break: break-all;
+    }
+
+    .fuente-energia .wall .message {
+        color: rgb(256,256,256);
+        font-size: 5vw;
+    }
+
+    .fuente-energia .wall .part .detail .interact {
+        display: table;
+        width: 100%;
+        border-top: 2px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .fuente-energia .wall .part .detail .interact div {
+        float: none;
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        padding: 3vw 0;
+        cursor: pointer;
+    }
+
+    .fuente-energia .wall .part .detail .interact .like {
+        border-right: 2px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .fuente-energia .wall .part .detail .interact .like * {
+        color: rgb(230,9,128);
+        font-size: 5vw;
+        padding: 0;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .fuente-energia .wall .part .detail .interact .comment * {
+        color: rgb(2,175,142);
+        font-size: 5vw;
+        padding: 0;
+        display: inline-block;
+        vertical-align: middle;
+    }
 
     .fuente-energia .message {
         .panel-video {
-            display:block;
+            display: block;
             background-color: transparent;
 
             .panel-heading {
@@ -473,23 +587,28 @@
                     margin: 0 auto;
                     text-align: left;
                 }
+
                 span {
-                    display:inline-block;
+                    display: inline-block;
                     vertical-align: top;
                     line-height: 6vw;
                 }
+
                 span:first-child {
                     font-size: 6vw;
                 }
+
                 span:first-child + span {
                     padding-left: 1vw;
                     font-size: 4.3vw;
                 }
+
                 .icon-arrow, .icon-arrow-up {
                     float: right;
                     font-size: 5vw;
                 }
             }
+
             .panel-body {
                 background-color: rgba(13,15,20,0.5);
             }

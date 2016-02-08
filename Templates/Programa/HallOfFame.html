@@ -1,162 +1,214 @@
 <div class="incluso-app hall-of-fame" id="site-wrapper">
-	<article>
-		<section class="showcase-carousel">
-			<div class="owl-carousel-" id="top-users-statistics">
-				<div class="item">
-					<!-- <div class="showcase"> -->
-						<div class="user-stats by-stars component">
-							<h3>Top 5: <span>Estrellas</span></h3>
-							<div class="user-avatar">
-								<figure>
-									<img src="assets/images/img-avatar-placeholder.svg" alt="avatar" />
-								</figure>
-							</div>
-							<div class="user-data">
-								<p class="user-name">Mis estrellas</p>
-								<p class="user-points">
-				                    <span>0</span>
-				                    <span class="icomoon icon-star"></span>
-				                </p>
-							</div>
-						</div>
-					<!-- </div> -->
-				</div>
-				<div class="item"></div>
-				<div class="item"></div>
-				<div class="item"></div>
+    <article>
+        <section class="showcase-carousel">
+            <div class="owl-carousel-" id="top-users-statistics">
 
-				<a class="control back" href="#" id="prev">
-					<span class="icomoon icon-arrow-bold-left"></span>
-				</a>
-				<a class="control next" href="#" id="next">
-					<span class="icomoon icon-arrow-bold-right"></span>
-				</a>
-			</div>
-		</section>
+                <div class="item">
+                    <div class="user-stats by-progress component">
+                        <h3>{{contentResources.hall_of_fame_title}} <span>Avance</span></h3>
+                        <div class="user-avatar">
+                            <figure>
+                                <img onerror="this.src='assets/avatar/default-2.png'" ng-src="{{userStats.profileImageUrl}}" alt="avatar"/>
+                            </figure>
+                        </div>
+                        <div class="user-data">
+                            <p class="user-name">Mi Avance</p>
+                            <div class="user-progress-bar">
+                                <div>
+                                    <div class="container">
+                                        <div class="{{classObject.objectClass}}" ng-repeat="classObject in userProgressBars"></div>
+                                    </div>
+                                    <label>{{userStats.progress}}%</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-		<section class="block-list">
-			
-		</section>
-		<section class="component">
-			<h3>Salón de la fama</h3>
-			<div></div>
-		</section>
-	</article>
-	
-	<!-- <div id="carousel-example-generic2" class="carousel">
-		<div id="owl-demo2" class="owl-carousel">
-			<div class="item" ng-repeat="reto in model.stages[idEtapa].challenges">                            
-				<figure class="item-image">
-					<img ng-src="{{retosIconos[reto.sectionname]}}" alt="{{reto.sectionname}}" />
-				</figure>
-				<h4 class="item-title" ng-bind="reto.sectionname"></h4>
-				<p class="item-description" ng-bind="reto.activityintro"></p>
-				<p class="item-description" ng-bind="reto.activityintro.length > 0 ? reto.activityintro : 'Cada sueño en su lugar' "></p>
+                <div class="item">
+                    <div class="user-stats by-star component">
+                        <h3>{{contentResources.hall_of_fame_title}} <span>Estrellas</span></h3>
+                        <div class="user-avatar">
+                            <figure>
+                                <img ng-src="{{userStats.profileImageUrl}}" alt="avatar"/>
+                            </figure>
+                        </div>
+                        <div class="user-data">
+                            <p class="user-name">Mis Estrellas</p>
+                            <p class="user-points">
+                                <span>{{userStats.stars}}</span>
+                                <span class="icomoon icon-star"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="page-number">
-					<p class="text-center">
-						<span>{{model.stages[idEtapa].challenges.indexOf(reto) + 1}}</span>
-						<span>/</span>
-						<span class="total-number">{{model.stages[idEtapa].challenges.length}}</span>
-					</p>                    
-				</div>                               
-			</div>
-		</div>
+                <div class="item">
+                    <div class="user-stats by-star component">
+                        <h3>{{contentResources.hall_of_fame_title}} <span>Participación</span></h3>
+                        <div class="user-avatar">
+                            <figure>
+                                <img ng-src="{{userStats.profileImageUrl}}" alt="avatar"/>
+                            </figure>
+                        </div>
+                        <div class="user-data">
+                            <p class="user-name">Mi participación</p>
+                            <p class="list-records"><span style="color:#bcd431;font-size:1.2em">{{userStats.forum}}</span> publicaciones en foros</p>
+                            <p class="list-records"><span style="color:#bcd431;font-size:1.2em">{{userStats.messages}}</span> mensajes en chat</p>
+                            <p class="list-records"><span style="color:#bcd431;font-size:1.2em">{{userStats.comunity}}</span> mensajes en comunidad</p>
+                        </div>
+                    </div>
+                </div>
 
-		<a class="control back" href="#" id="prev">
-			<span class="icomoon icon-arrow-bold-left"></span>
-		</a>
-		<a class="control next" href="#" id="next">
-			<span class="icomoon icon-arrow-bold-right"></span>
-		</a>                    
-	</div> -->
+                <div class="item">
+                    <div class="user-stats by-star component">
+                        <h3>{{contentResources.hall_of_fame_title}} <span>Insignias</span></h3>
+                        <div class="user-avatar">
+                            <figure>
+                                <img ng-src="{{userStats.profileImageUrl}}" alt="avatar"/>
+                            </figure>
+                        </div>
+                        <div class="user-data">
+                            <p class="user-name">Mis insignias</p>
+                            <p class="list-records">
+                                <span class="icomoon icon-badge" style="color:#bcd431"></span><span style="color:#bcd431;font-size:1.2em">{{userStats.amount}}</span> Insignias ganadas</p>
+                        </div>
+                    </div>
+                </div>
 
-  <!-- <div id="site-menu" >
+            </div>
+            <a class="control back" href="#" id="prev">
+                <span class="icomoon icon-arrow-bold-left"></span>
+            </a>
+            <a class="control next" href="#" id="next">
+                <span class="icomoon icon-arrow-bold-right"></span>
+            </a>
+        </section>
+        <section class="filter-section form">
+            <span class="icomoon icon-list"></span>
+            <select name="filter" class="form-control form-control-lg theme-default ng-pristine ng-untouched ng-valid" ng-model="selectedCity"
+                    ng-options="obj as obj for obj in cities" ng-change="updateByCity()">
+                <option value="" selected="true" disabled="disabled">Filtrar contenido por...</option>
+            </select>
+            <span class="icomoon icon-arrow"></span>
+        </section>
+        <section class="component" id="top-users-detail">
+            <div class="ranking-list">
+                <div class="user-stats by-progress component" ng-repeat="userProgress in topProgress">
+                    <div class="user-avatar">
+                        <figure>
+                            <img onerror="this.src = 'assets/avatar/default-2.png'" ng-src="{{userProgress.profileimageurl + '?token=' + user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userProgress.userid)">
+                        </figure>
+                    </div>
+                    <div class="user-data">
+                        <h4>{{userProgress.rank | numberToCardinal}} Lugar</h4>
+                        <p class="user-name">{{userProgress.alias}}</p>
+                        <div class="user-progress-bar" progress-bar={{userProgress.progress}}></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-list">
+                <div class="user-stats by-star component" ng-repeat="userStars in topStars">
+                    <div class="user-avatar">
+                        <figure>
+                            <img onerror="this.src = 'assets/avatar/default-2.png'" ng-src="{{userStars.profileimageurl + '?token='+ user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userStars.userid)"/>
+                        </figure>
+                    </div>
+                    <div class="user-data">
+                        <h4>{{userStars.rank | numberToCardinal}} Lugar</h4>
+                        <p class="user-name">{{userStars.alias}}</p>
+                        <p class="user-points">
+                            <span>{{userStars.stars}}</span>
+                            <span class="icomoon icon-star"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-list">
+                <div class="user-stats by-star component" ng-repeat="userContribution in topContribution">
+                    <div class="user-avatar">
+                        <figure>
+                            <img onerror="this.src = 'assets/avatar/default-2.png'" ng-src="{{userContribution.profileimageurl + '?token='+ user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userContribution.userid)"/>
+                        </figure>
+                    </div>
+                    <div class="user-data">
+                        <h4>{{userContribution.rank | numberToCardinal}} Lugar</h4>
+                        <p class="user-name">{{userContribution.alias}}</p>
+                        <p class="list-records"><span>{{userContribution.forum}}</span> publicaciones en foros</p>
+                        <p class="list-records"><span>{{userContribution.messages}}</span> mensajes en chat</p>
+                        <p class="list-records"><span>{{userContribution.comunity}}</span> mensajes en comunidad</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ranking-list">
+                <div class="user-stats by-star component" ng-repeat="userBadges in topBadges">
+                    <div class="user-avatar">
+                        <figure>
+                            <img onerror="this.src = 'assets/avatar/default-2.png'" ng-src="{{userBadges.profileimageurl + '?token='+ user.token}}" alt="avatar" ng-click="navigateTo('Perfil/' + userBadges.userid)"/>
+                        </figure>
+                    </div>
+                    <div class="user-data">
+                        <h4>{{userBadges.rank | numberToCardinal}} Lugar</h4>
+                        <p class="user-name">{{userBadges.alias}}</p>
+                        <p class="list-records"><span class="icomoon icon-badge"></span><span> {{userBadges.amount}}</span> Insignias ganadas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>
 
-  </div> -->
-<!--   <div id="site-canvas">
-
-	<article>
-	  <div class="container">
-
-		<section class="component">
-		  <h3 ng-class="main-title">Salón de la fama</h3>
-				<p>Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </p>
-
-			  <p>Nulla vitae elit libero, a pharetra augue. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Aenean lacinia bibendum nulla sed consectetur. </p> 
-		</section>
-		s
-	  </div> 
-
-	</article>
-
-  </div>
- -->
 </div>
-  
-// <script>
-//     $(document).ready(function () {
-//         function myController($scope) {
-//             $scope.challengeName = "MIS RETOS";
-//         }
 
-//         setTimeout(function () {
-//             var hits = 1;
+<script>
+    jQuery.fn.UserProgressBar = function () {
+        $.each(this, function () {
+            var base = $(this);
+            var p = parseInt(base.data("progress-bar"));
+            base.find("label").text(p + "%");
+            progress = Math.round(p / 5);
+            for (var i = 0; i < 20; i++) {
+                base.find(".container").append($("<div>", {
+                    "class": "bar" + (i < progress ? " active" : "")
+                }))
+            }
+        })
+    };
+    $(document).ready(function () {
+        var topUsers = $("#top-users-statistics");
+        var topDetail = $("#top-users-detail");
+        topDetail.owlCarousel({
+            navigation: false,
+            pagination: false,
+            paginationSpeed: 1000,
+            goToFirstSpeed: 2000,
+            singleItem: true,
+            autoHeight: false,
+            touchDrag: false,
+            mouseDrag: false,
+            transitionStyle: "fade"
+        });
+        topUsers.owlCarousel({
+            navigation: false,
+            pagination: false,
+            paginationSpeed: 1000,
+            goToFirstSpeed: 2000,
+            singleItem: true,
+            autoHeight: false,
+            touchDrag: false,
+            mouseDrag: false,
+            transitionStyle: "fade"
+        });
+        $(".control.next").click(function (e) {
+            topUsers.trigger('owl.next');
+            topDetail.trigger('owl.next');
+            e.preventDefault();
+        })
+        $(".control.back").click(function (e) {
+            topUsers.trigger('owl.prev');
+            topDetail.trigger('owl.prev');
+            e.preventDefault();
+        })
 
-//                 //Carrusel de retos
-//                 var owl2 = $("#owl-demo2");
+    });
 
-//                 owl2.owlCarousel({
-//                     navigation: false,
-//                     pagination: false,
-//                     //paginationSpeed: 1000,
-//                     goToFirstSpeed: 2000,
-//                     singleItem: true,
-//                     autoHeight: true,
-//                     touchDrag:false,
-//                     mouseDrag:false,
-//                     transitionStyle:"fade",
-//                     afterMove: callback1
-//                 });
-
-//                 //Carrusel de Actividades
-//                 var owl = $("#owl-demo");
-
-//                 owl.owlCarousel({
-//                     navigation: false,
-//                     pagination: false,
-//                     //paginationSpeed: 1000,
-//                     goToFirstSpeed: 2000,
-//                     singleItem: true,
-//                     autoHeight: true,
-//                     touchDrag:false,
-//                     mouseDrag:false,
-//                     transitionStyle:"fade",
-//                     afterMove: callback2
-//                 });
-
-//                 function callback1(event) {
-//                     var item = this.currentItem;
-//                     owl.trigger("owl.goTo", item);
-//                     $("span#index").text((item+1));
-//                 }
-
-//                 function callback2(event) {
-//                     var item = this.currentItem;
-//                     owl2.trigger("owl.goTo", item);
-//                     $("span#index").text((item+1));
-//                 }
-
-//                 $("#next").click(function (ev) {
-//                     owl.trigger('owl.next');
-//                     ev.preventDefault();
-
-//                 });
-
-//                 $("#prev").click(function (ev) {
-//                     owl.trigger('owl.prev');
-//                     ev.preventDefault();
-//                 });
-//             }, 1000);
-//     });
-// </script>
+</script>

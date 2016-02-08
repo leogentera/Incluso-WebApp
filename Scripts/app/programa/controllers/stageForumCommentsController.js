@@ -1,5 +1,5 @@
 angular
-    .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants', 'naif.base64'])
+    .module('incluso.stage.forumcommentscontroller', ['GlobalAppConstants'])
     .controller('stageForumCommentsController', [
         '$q',
         '$scope',
@@ -13,22 +13,42 @@ angular
         '$filter',
         'MoodleIds',
         function ($q, $scope, $location, $routeParams, $timeout, $rootScope, $http, $anchorScroll, $modal, $filter, MoodleIds) {
+            var _loadedResources = false;
+            var _pageLoaded = false;
+            $scope.$emit('ShowPreloader');
 
+            var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
+            $scope.validateConnection(initController, offlineCallback);
+            
+            function offlineCallback() {
+                $timeout(function() { $location.path("/Offline"); }, 1000);
+            }
+            
+            function initController() {
+                
             _httpFactory = $http;
             _timeout = $timeout;
-            $scope.$emit('ShowPreloader');
             $rootScope.pageName = "Estación: Conócete"
             $rootScope.navbarBlue = true;
             $rootScope.showToolbar = true;
-            
-            $scope.setToolbar($location.$$path,"");
+
+            getContentResources($routeParams.activityId);
+            //$scope.setToolbar($location.$$path,"");
             $rootScope.showFooter = true;
             $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
+            
+            var _userId = moodleFactory.Services.GetCacheObject("userId");
 
             $scope.userToken = JSON.parse(localStorage.getItem('CurrentUser')).token;
             $scope.liked = null;
-            $scope.moodleId = $routeParams.moodleid;
-            
+            $scope.moodleId;
+            Number($routeParams.activityId) == 1049? $scope.moodleId = $routeParams.moodleId     : $scope.moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
+            $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId));
+            $scope.currentDiscussionsIds = moodleFactory.Services.GetCacheJson("currentDiscussionIds");
+            $scope.currentDiscussionsExtraPoints;
             var showMoreCounter = 1;
             var postPager = { from: 0, to: 0 };
             $scope.morePendingPosts = true;
@@ -43,97 +63,224 @@ angular
                 "isVideoCollapsed":true,
                 "isAttachmentCollapsed":true
             };
+            var profile = JSON.parse(localStorage.getItem("Perfil/" + moodleFactory.Services.GetCacheObject("userId")));
 
-            var profile = JSON.parse(localStorage.getItem("profile"));
-            $scope.clickLikeButton = function(postId){
-                var post = _.find($scope.posts, function(a){
-                    return a.post_id == postId
-                });
-                
-                if(post.liked == 0){
-                    post.liked = 1;
-                    post.likes = parseInt(post.likes) + 1;
-                }
-                else{
-                    post.liked = 0;
-                    post.likes = parseInt(post.likes) - 1;
-                }                
-                var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
-                moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject,
-                    function(){
+            $scope.clickLikeButton = function(postId) {
+                    
+                    $scope.validateConnection(function() {
+                    
+                        var post = _.find($scope.posts, function(a){
+                            return a.post_id == postId
+                        });
+                        
+                        var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
+                        
+                        if(post.liked == 0){
+                            post.liked = 1;
+                            post.likes = parseInt(post.likes) + 1;
+                            userLikes.likes = parseInt(userLikes.likes) + 1;
+                        }
+                        else{
+                            post.liked = 0;
+                            post.likes = parseInt(post.likes) - 1;
+                            userLikes.likes = parseInt(userLikes.likes) -1 ;
+                        }
+                        
+                        localStorage.setItem("likesByUser",JSON.stringify(userLikes));
+                        
+                        var userIdObject = {'userid': JSON.parse(localStorage.getItem('userId'))};
+                                moodleFactory.Services.PutForumPostLikeNoCache(postId, userIdObject, countLikesByUser, function(){} );
 
-                    },
-                    function(){
-
-                    } );
+                    }, offlineCallback);
             };
 
-            function getForumsProgress(){
-                var forumsProgress = localStorage.getItem('currentForumsProgress')? JSON.parse(localStorage.getItem('currentForumsProgress')) : new Array();
-                return forumsProgress;
-            };
+            function countLikesByUser() {
+                  var userLikes = JSON.parse(localStorage.getItem("likesByUser"));
+                  console.log(userLikes);
+                  if (userLikes && userLikes.likes == 30){
+                        assignLikesBadge();
+                  }
+            }
+            
+            
 
-            function updateForumProgress(discussionId){
-                var forumsCommentsCountCollection = getForumsProgress();
-                var alreadyCommented = _.find(forumsCommentsCountCollection, function(forum){ return forum.discussion_id == discussionId; });
-                alreadyCommented? alreadyCommented.replies_counter++ : forumsCommentsCountCollection.push({'discussion_id':discussionId, 'replies_counter':1});
-                _setLocalStorageJsonItem('currentForumsProgress', forumsCommentsCountCollection);
-            };
+            function assignLikesBadge() {                            
+                var badgeModel = {
+                    badgeid: 15 //badge earned when a user likes 30 times.
+                };
 
-            var getForumsExtraPointsCounter = function(){
-                var forumExtraPointsCounter = JSON.parse(localStorage.getItem('extraPointsForums'));
-                return forumExtraPointsCounter;
-            };
-
-            var addExtraForumParticipation = function(discussionId){
-
-              var extraPointsCounter = getForumsExtraPointsCounter();
-                var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == discussionId; });
-                currentDiscussionCounter.extra_replies_counter++;
-                _setLocalStorageJsonItem('extraPointsForums', extraPointsCounter);
-            };
-
-            var checkForumProgress = function(callback){
-                var forumsCommentsCountCollection = getForumsProgress();
-                var isActivityFinished = null;
-
-                $scope.currentActivity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid));
-
-                var numberOfDiscussionsWithMoreThan2Replies = _.filter(forumsCommentsCountCollection, function(d) { return d.replies_counter >= 2});
-                isActivityFinished = Number(numberOfDiscussionsWithMoreThan2Replies.length) == Number($scope.currentActivity.discussions.length);
-
-                var activity_identifier = null;
-                if($scope.moodleId == 151){
-                    activity_identifier = 1010;
-                    moodleid = 64;
-                } else if($scope.moodleId == 64){
-                    activity_identifier = 1010;
-                    moodleid = 64;
-                } else if($scope.moodleId == 73){
-                    activity_identifier = 1008;
-                    moodleid = 73;
-                } else if($scope.moodleId == 147){
-                    activity_identifier = 1049;
-                    moodleid = 147;
-                } else if($scope.moodleId == 148){
-                    activity_identifier = 1049;
-                    moodleid = 148;
-
-                }
-                var moodleid;
-
-               var activityFromTree = getActivityByActivity_identifier(activity_identifier);
-                if(activityFromTree.status == 1){
-                    addExtraForumParticipation($scope.discussion.id);
-                    var extraPointsCounter = getForumsExtraPointsCounter();
-                    var currentDiscussionCounter = _.find(extraPointsCounter, function(discussion){ return discussion.discussion_id == $scope.discussion.id; });
-                    if(currentDiscussionCounter.extra_replies_counter <= 10) {
-                        updateUserStars(activity_identifier, 50 );
+                var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
+                for(var i = 0; i < userProfile.badges.length; i++)
+                {
+                    if (userProfile.badges[i].id == badgeModel.badgeid && userProfile.badges[i].status == "pending") {                        
+                        userProfile.badges[i].status = "won";
+                        
+                        showRobotForum();
+                        localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
+                        
+                        moodleFactory.Services.PostBadgeToUser(currentUser.userId, badgeModel, function () {
+                            console.log("created badge successfully");
+                        }, function () { });
+                        
                     }
                 }
+            }
+            
+            var checkForumExtraPoints = function() {
+            
+                var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
+                
+                /* check over extra points */
+                var course = moodleFactory.Services.GetCacheJson("course");
+                var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+                
+                if (activityFromTree && activityFromTree.status == 1) {
+                    /* sumar uno extra al total */
+                    //if (forumData.totalExtraPoints < 11) {
+                    if (forumData.totalExtraPoints < $scope.activity.points_limit) {                         
+                         updateUserForumStars($routeParams.activityId, $scope.activity.extra_points,true, function (){
+                            successPutStarsCallback();
+                        });
+                    }
+                }
+            };
 
+            var forumBadgeReached = function(){            
+                var profileBadges = profile.badges;
+                var badgeForum = _.where(profileBadges, { name: "Foro interplanetario"});
+                if (badgeForum && badgeForum[0].status == "pending") {
+                    var postCounter = 0;
+                    var courseId = $scope.usercourse.courseid;
+                    var postCounterForums = JSON.parse(localStorage.getItem("postcounter/"+ courseId));
+                    if (postCounterForums.forums) {
+                        for(var i = 0; i < postCounterForums.forums.length; i++){                            
+                            if (postCounterForums.forums[i].forumactivityid != "50000") {                                                        
+                                var discussions = postCounterForums.forums[i].discussion;
+                                for(var j=0; j < discussions.length; j++){
+                                    var comments = discussions[j].total;
+                                    postCounter = postCounter + parseInt(discussions[j].total);
+                                }
+                            }
+                        }
+                    }
+                    
+                    if (postCounter >= 40 && badgeForum[0].status == "pending") {
+                                                                                        
+                        var badgeModel = {
+                            badgeid: badgeForum[0].id //badge earned when a user completes his profile.
+                        };
+                            
+                        var userProfile = JSON.parse(localStorage.getItem("Perfil/"+ currentUser.userId));
+                        for(var i = 0; i < userProfile.badges.length; i++)
+                        {
+                            if (userProfile.badges[i].id == badgeModel.badgeid) {
+                                userProfile.badges[i].status = "won";
+                            }
+                        }
+                                    
+                        localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
+                        showRobotForum();
+                        moodleFactory.Services.PostBadgeToUser(_userId, badgeModel, function(){},function(){});
+                        
+                    }
+                }
+            };
+            
+            
+            function showRobotForum(){
+                    $scope.badgeRobotMessages = {
+                        title: $scope.robotContentResources.titulo,
+                        message: $scope.robotContentResources.mensaje
+                    };
+                            
+                    _setLocalStorageItem("badgeRobotMessage", JSON.stringify($scope.badgeRobotMessages));
+                    $scope.openModal_badgeRobotMessage();
+            }
+                
+            $scope.openModal_badgeRobotMessage = function (size) {
+                var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'badgeForumRobotMessageModal.html',
+                    controller: 'badgeForumRobotMessageModal',
+                    size: size,
+                    windowClass: 'closing-stage-modal user-help-modal'
+                });
+            };
+            
+            
+            var checkForumProgress = function(callback){
+                
+                var historicalDiscussions = getForumExtraPointsCounter($scope.currentDiscussionsIds);
+                var historicalDiscussionsFinished = _.filter(historicalDiscussions.discussions, function(hd){ return hd.total >= 2; });
+                
+                var isActivityFinished = (historicalDiscussionsFinished.length === $scope.currentDiscussionsIds.length);
+                var activityFromTree = getActivityByActivity_identifier($routeParams.activityId);
+                                            
+                
+                forumBadgeReached();
+                                            
                 if (isActivityFinished && activityFromTree && activityFromTree.status == 0) {
-                    $location.path('/ZonaDeVuelo/ForoCierre/' + activity_identifier);                    
+                    
+                    var extraPointsCounter = 0;
+                    var points = 0;
+                    
+                    /* check over extra points */
+                    var course = moodleFactory.Services.GetCacheJson("course");
+                    var forumData = moodleFactory.Services.GetCacheJson("postcounter/" + course.courseid);
+                    
+                    /* sumar uno extra al total */
+                    if (forumData.totalExtraPoints < 11) {
+                         _.each(historicalDiscussions.discussions, function(elem, index, list) {
+                            if (parseInt(elem.total) > 0) {
+                                extraPointsCounter += (parseInt(elem.total) - 2);
+                            }
+                        });
+                         
+                         /* sumar uno extra al total */
+                         var availableExtraPoints = (11 - forumData.totalExtraPoints);
+                         if (extraPointsCounter > availableExtraPoints) {
+                            extraPointsCounter = availableExtraPoints;
+                         }
+                         
+                         points = (extraPointsCounter * 50);
+                    }
+                    
+                    localStorage.setItem("starsToAssignedAfterFinishActivity", points);
+
+                    switch (Number($scope.moodleId)) {
+                        case 73:
+                            $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ $scope.moodleId);
+                            break;
+                        case 64:
+                            $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ $scope.moodleId);
+                            break;
+                        case 149:
+                                $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ $scope.moodleId);
+                            break;
+                        case 148:
+                                $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ $scope.moodleId);
+                            break;
+                        case 147:
+                                $location.path('/ZonaDeVuelo/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ $scope.moodleId);
+                            break;
+
+                        case 179:
+                                $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ $scope.moodleId);
+                            break;
+                        case 178:
+                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ $scope.moodleId);
+                            break;
+                        case 197:
+                            $location.path('/ZonaDeNavegacion/ForoCierre/' + $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ $scope.moodleId);
+                            break;
+                        case 85:
+                            $location.path('/ZonaDeNavegacion/ForoCierre/'+ $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ $scope.moodleId);
+                            break;
+                        default :
+                            $location.path('/ZonaDeAterrizaje/ForoCierre/'+ $routeParams.activityId +'/'+ $scope.discussion.id +'/'+ $scope.moodleId);
+                            break;
+                        $scope.scrollToTop();
+                    }
                 } else {
                    callback();
                 }
@@ -145,8 +292,12 @@ angular
                 };
             };
             $scope.collapseForumButtomsTrigger = function(element, callFileBrowser){
-                callFileBrowser?clickPostAttachment():'';
-                _uncollapse(element, $scope.forumModals);
+                //callFileBrowser?clickPostAttachment():'';
+                if(callFileBrowser){
+                    clickPostAttachment();
+                }else {
+                    _uncollapse(element, $scope.forumModals);
+                }
             };
 
             var createReplyDataObject = function( parentId, message, postType){
@@ -157,35 +308,48 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": parentId,
                     "message": message,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": postType,
-                    "fileToUpload":""
+                    "fileToUpload":"",
+                    "iscountable":1
                 };
                 return dataObject;
             };
 
             $scope.isCommentModalCollapsed= [];
+            $scope.isReportedAbuseModalCollapsed = new Array();
+            $scope.isReportedAbuseSentModalCollapsed = new Array();
             $scope.replyText = null;
+            
             $scope.replyToPost = function(that, parentId, topicId, isCommentModalCollapsedIndex){
 
-                var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
-                $scope.$emit('ShowPreloader');
-                moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
-                    function(){
-                        $scope.textToPost=null;
-                        //$scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
-                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
-                        $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
-                        updateForumProgress(topicId);
-                        checkForumProgress(refreshTopicData);
-                    },
-                    function(){
-                        $scope.textToPost=null;
-                        //$scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = true;
-                        $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
-                        $scope.$emit('HidePreloader');
-                    });
+                $scope.validateConnection(function(){
+                    
+                    var dataObejct = createReplyDataObject(parentId, that.replyText, 1);
+                    that.replyText = '';
+                    $scope.$emit('ShowPreloader');                    
+                    
+                    $scope.showPreviousComments(parentId);
+                    moodleFactory.Services.PostAsyncForumPost ('reply', dataObejct,
+                        function(){
+                            $scope.textToPost=null;
+                            $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
+                            $scope.discussion.replies = $scope.discussion.replies + 1;   //add a new reply to the current discussion
+                            checkForumExtraPoints();
+                            refreshRepliesToPost(parentId);
+                            checkForumProgress(refreshTopicData);
+
+                            
+                        },
+                        function(){
+                            $scope.textToPost=null;
+                            $scope.isCommentModalCollapsed[isCommentModalCollapsedIndex] = false;
+                            $scope.$emit('HidePreloader');
+                        }, null, true);
+                    
+                }, offlineCallback);
+                                    
             };
 
             $scope.textToPost = null;
@@ -200,15 +364,19 @@ angular
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": message,
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": postType,
-                    "fileToUpload": attachment? attachment.base64 : null
+                    "fileToUpload": attachment? attachment.base64 : null,
+                    "iscountable":1
                 };
                 return dataObject;
             };
 
             $scope.postTextToForum = function(){
+                    
+                    $scope.validateConnection(function() {
+                        
                 var dataObject = createPostDataObject($scope.textToPost, 1, null);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
@@ -216,76 +384,134 @@ angular
                         $scope.textToPost='';
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
-                        updateForumProgress($scope.discussion.post_id);
-                        //refreshTopicData();
-                        checkForumProgress(refreshTopicData);
+                        checkForumExtraPoints();
+                        checkForumProgress(refreshTopicData);                        
                     },
                     function(){
                         $scope.textToPost=null;
                         $scope.collapseForumButtomsTrigger('isTextCollapsed');
                         $scope.$emit('HidePreloader');
-                    });
+                    }, null, true);
+                        
+                    }, offlineCallback);
+                
             };
             $scope.postLinkToForum = function(){
+                    
+                    $scope.validateConnection(function(){
+                        
                 var dataObject = createPostDataObject($scope.linkToPost, 2, null);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
-                        updateForumProgress($scope.discussion.post_id);
-                        //refreshTopicData();
+                        checkForumExtraPoints();
                         checkForumProgress(refreshTopicData);
                     },
                     function(){
                         $scope.linkToPost = null;
                         $scope.collapseForumButtomsTrigger('isLinkCollapsed');
                         $scope.$emit('HidePreloader');
-                    });
+                    }, null, true);
+                    }, offlineCallback);
+                    
             };
             $scope.postVideoToForum = function(){
+                    
+                    $scope.validateConnection(function(){
+                    
                 var dataObject = createPostDataObject($scope.videoToPost, 3, null);
                 $scope.$emit('ShowPreloader');
                 moodleFactory.Services.PostAsyncForumPost ('new_post', dataObject,
                     function(){
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
-                        updateForumProgress($scope.discussion.post_id);
-                        //refreshTopicData();
+                        checkForumExtraPoints();
                         checkForumProgress(refreshTopicData);
                     },
                     function(){
                         $scope.videoToPost = null;
                         $scope.collapseForumButtomsTrigger('isVideoCollapsed');
-                    });
+                    }, null, true);
+                    
+                    }, offlineCallback);
             };
+
+            $scope.reportPost = function(postId) {
+
+                    $scope.validateConnection(function() {
+                        
+                    var createdDate = (new Date().getTime() / 1000).toFixed(0);
+
+                    var requestData = {
+                        "postid": postId,
+                        "userid": _userId,
+                        "create": createdDate,
+                        "forumid": $scope.currentActivity.forumid,
+                        "discussionid": $scope.discussion.discussion,
+                    };
+
+                    $scope.$emit('ShowPreloader');
+                    moodleFactory.Services.PostAsyncReportAbuse(null, requestData, function(){
+
+                        $scope.$emit('HidePreloader');
+                        $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
+                        $scope.isReportedAbuseSentModalCollapsed["id" + postId] = true;
+                        $scope.postToReport.reported = 1;
+
+                    }, function(){
+                        $scope.$emit('HidePreloader');
+                        $scope.isReportedAbuseModalCollapsed["id" + postId] = false;
+                        $scope.isReportedAbuseSentModalCollapsed["id" + postId] = false;
+                    }, true);
+                        
+                    }, offlineCallback);
+            };
+
+            $scope.reportModalClick = function(post) {
+                $scope.postToReport = post;
+                var postId = post.post_id;
+                $scope.isReportedAbuseModalCollapsed['id' + postId] = !$scope.isReportedAbuseModalCollapsed['id' + postId];
+                $scope.isCommentModalCollapsed['id' + postId] = false;
+            };
+
             $scope.clickPostAttachment = function(){
-                clickPostAttachment();
+                    $scope.validateConnection(clickPostAttachment, offlineCallback);
             };
+
             clickPostAttachment = function(){
-                cordova.exec(SuccessAttachment, FailureAttachment, "CallToAndroid", "AttachPicture", []);
+                cordova.exec(function(data) {
+                    //Expand attachment modal
+
+                    if(data != null){
+                        $scope.$apply(function(){$scope.attachmentToPost = data;})
+                        $scope.$apply($scope.collapseForumButtomsTrigger('isAttachmentCollapsed'));
+                    }else{}
+
+
+                }, function(data) {
+                    $scope.$apply($scope.collapseForumButtomsTrigger('isAttachmentCollapsed'));
+                }, "CallToAndroid", "AttachPicture", []);
             };
 
-            var SuccessAttachment = function (data) {
-                $scope.attachmentToPost = data;
-            }
-
-            var FailureAttachment = function(data) {
-
-            }
             $scope.postAttachmentToForum = function(){
+                    
+                    $scope.validateConnection(function() {
+                        
                 var userId = localStorage.getItem("userId");
                 var dataObject = {
                     "userid":userId,
                     "discussionid": $scope.discussion.discussion,
                     "parentid": $scope.discussion.id,
                     "message": '',
-                    "createdtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
-                    "modifiedtime": $filter('date')(new Date(), 'MM/dd/yyyy'),
+                    "createdtime": moment(Date.now()).unix(),
+                    "modifiedtime": moment(Date.now()).unix(),
                     "posttype": 4,
                     "filecontent":$scope.attachmentToPost.image,
                     "filename": userId + $scope.attachmentToPost.fileName,
-                    "picture_post_author": profile.profileimageurlsmall
+                    "picture_post_author": profile.profileimageurlsmall,
+                    "iscountable":1
                 };
 
                 $scope.$emit('ShowPreloader');
@@ -293,38 +519,48 @@ angular
                     function(){
                         $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
-                        updateForumProgress($scope.discussion.post_id);
-                        //refreshTopicData();
+                        checkForumExtraPoints();
                         checkForumProgress(refreshTopicData);
                     },
                     function(){
-                        $scope.videoToPost = null;
+                        $scope.attachmentToPost = null;
                         $scope.collapseForumButtomsTrigger('isAttachmentCollapsed');
                         $scope.$emit('HidePreloader');
-                    });
+                    }, null, true);
+                    
+                    }, offlineCallback);
+                    
             };
 
             function getTopicData() {
-                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid ));
-                $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == $routeParams.discussionId; });
+                $scope.usercourse = JSON.parse(localStorage.getItem("usercourse"));
+                $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $scope.moodleId ));
+                $scope.discussion = _.find($scope.activity.discussions, function(d){ return d.discussion == Number($routeParams.discussionId); });
                 
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
+                    moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, function(){}, true);
+                
+                forceUpdateForumProgress();
             }
             
             function getPostsDataCallback(data, key) {
-                postPager.from = data.sinceid;
-                postPager.to = data.maxid;
+                
+                postPager.from = (postPager.from < 0 && postPager.from < data.maxid) ? postPager.from : data.maxid;
+                postPager.to = postPager.to > data.sinceid ? postPager.to : data.sinceid;
                 
                 var posts = data.posts;
                 $scope.morePendingPosts = posts.length === 10;
                 posts.forEach(initializeCommentsData);
                 $scope.posts.sort(function(a, b) { return Number(b.post_id) - Number(a.post_id); });
-                $scope.$emit('HidePreloader');
+                    
+                    _pageLoaded = true;
+                    if (_loadedResources && _pageLoaded) { $scope.$emit('HidePreloader')};
             }
 
             var initializeCommentsData = function(element, index, array){
                 $scope.isCommentModalCollapsed[index] = false;
-                
+                $scope.isReportedAbuseModalCollapsed["id" + element.post_id] = false;
+                $scope.isReportedAbuseSentModalCollapsed["id" + element.post_id] = false;
+
                 if ($scope.showAllCommentsByPost['id' + element.post_id] != 1000000) {
                     $scope.showAllCommentsByPost['id' + element.post_id] = 3;   
                 }
@@ -345,9 +581,12 @@ angular
             };
 
             var refreshTopicData = function(){
-                console.log("refreshTopicData");
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
             };
+                var refreshRepliesToPost = function(parentId){
+                    //moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 1, "default", getPostsDataCallback, null, true);
+                    moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid,Number(parentId)+1, postPager.to,   0, "default", getPostsDataCallback, null, true);
+                };
 
             function getActivityInfoCallback(data) {
                 $scope.activity = JSON.parse(moodleFactory.Services.GetCacheObject("forum/" + $routeParams.moodleid ));
@@ -369,31 +608,70 @@ angular
 
             getTopicData();
             
+            function forceUpdateForumProgress() {
+                checkForumProgress(refreshTopicData);
+            }
+            
             $scope.showPreviousComments = function(postId) {
             
                 $scope.showAllCommentsByPost['id' + postId] = 1000000;
             };
             
             $scope.showMore = function() {
+                    
+                    $scope.validateConnection(function() {
+                        
                 showMoreCounter++;
                 
                 $scope.$emit('ShowPreloader');
-                moodleFactory.Services.GetAsyncDiscussionPosts($scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, getPostsDataCallback, null, true);
+                moodleFactory.Services.GetAsyncDiscussionPosts(moodleFactory.Services.GetCacheJson("CurrentUser").token, $scope.discussion.id, $scope.discussion.discussion, $scope.activity.forumid, postPager.from, postPager.to, 0, "default", getPostsDataCallback, null, true);
+                        
+                    }, offlineCallback);
+                    
             };
 
             $scope.back = function () {
+                var moodleId = getMoodleIdFromTreeActivity($routeParams.activityId);
 
-                switch ($routeParams.moodleid) {
-                    case "64":
-                        $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/' + $routeParams.moodleid);
+                switch (moodleId) {
+                    case 64:
+                        $location.path('ZonaDeVuelo/Conocete/PuntoDeEncuentro/Topicos/' + $routeParams.activityId);
                         break;
-                    case "73":
-                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.moodleid);
+                    case 73:
+                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.activityId);
+                        break;
+                    case 197:
+                        $location.path("/ZonaDeVuelo/MisSuenos/PuntosDeEncuentro/Topicos/" + $routeParams.activityId);
+                        break;
+                    case 85:
+                        $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
+                        break;
+                    case 93:
+                        $location.path("/ZonaDeAterrizaje/EducacionFinanciera/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
+                        break;
+                    case 179:
+                        $location.path("/ZonaDeNavegacion/Transformate/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
+                        break;
+                    case 91:
+                        $location.path("/ZonaDeAterrizaje/MapaDelEmprendedor/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
                     default:
-                        $location.path("/ZonaDeVuelo/Conocete/ZonaDeContacto/Artisticos/Topicos/" + $routeParams.moodleid);
+                        $location.path("/ZonaDeNavegacion/ProyectaTuVida/PuntoDeEncuentro/Topicos/" + $routeParams.activityId);
                         break;
                 }
+            };
+            
+            $scope.goToGallery = function(post) {
+                
+                var obj = {
+                    post_autor_id: post.post_autor_id,
+                    post_author: post.post_author,
+                    created: post.created,
+                    message: post.message,
+                    attachment: post.attachment
+                }
+                localStorage.setItem("galleryDetail", JSON.stringify(obj));
+                $scope.navigateTo("/GalleryDetail");
             };
 
             function getDataAsync() {
@@ -415,5 +693,41 @@ angular
 
                 $scope.$emit('scrollTop');
             }
-        }]);
+
+            function getContentResources(activityIdentifierId) {
+                drupalFactory.Services.GetContent(activityIdentifierId,
+                    function (data, key) {
+                        _loadedResources = true;
+                        $scope.setToolbar($location.$$path,data.node.tool_bar_title);
+                        $scope.backButtonText = data.node.back_button_text;
+                        if (_loadedResources && _pageLoaded) {
+                            $scope.$emit('HidePreloader');
+                        }
+                        getRobotMessageContent();                        
+                    },function () {
+                        _loadedResources = true;
+                        if (_loadedResources && _pageLoaded) {
+                            $scope.$emit('HidePreloader');
+                        }
+                    }, false);
+            }
+            
+            function getRobotMessageContent() {
+                    drupalFactory.Services.GetContent("BadgeForumRobot",function(data, key){
+                        $scope.robotContentResources = data.node;
+                        console.log(data.node);                        
+                        },function(){},false); 
+            }
+            
+        }
+        
+        }]).controller('badgeForumRobotMessageModal', function ($scope, $modalInstance) {
+            $scope.cancel = function () {
+                $modalInstance.dismiss('cancel');
+            };
+            
+            var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));            
+            $scope.actualMessage = robotMessage;
+    });
+
 

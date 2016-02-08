@@ -1,0 +1,26 @@
+<div class="incluso-app step-dashboard topics-forum">
+    <article class="bluespace">
+        <section>
+            <div class="subtitle">Punto de encuentro</div>
+            <div class="txt-renglon txt-bigger"> ¡Haz públicas tus ideas! <br>
+                Deja que conozcan tus ideas, toma los retos y comenta a los demás.<br/><br/>
+          Para terminar esta actividad debes realizar por lo menos dos publicaciones en cada uno de los siguientes tópicos.
+            </div>
+        </section>
+        <section class="list txt-renglon">
+            <div id="item{{$index}}" ng-repeat="t in activity.discussions">
+                <div class="part list-item" ng-click="showComentarios(t.discussion, moodleId)">
+                    <span>{{t.name}}</span>
+                    <a href="">
+                        <span class="icomoon icon-arrow-right-aligned fl-right"></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+        <section>
+            <!-- TODO Redireccionar el botón back a la URL correcta-->
+            <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="back()">Regresar</a>
+            <div class="txt-renglon centered txt-bigger"></div>
+        </section>
+    </article>
+</div>

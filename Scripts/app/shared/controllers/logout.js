@@ -1,4 +1,4 @@
-﻿angular
+angular
     .module('incluso.shared.logout', [])
     .controller('logoutController', [
         '$scope',

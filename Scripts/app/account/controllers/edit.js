@@ -1,4 +1,4 @@
-﻿angular
+angular
     .module('incluso.account.edit', ['ui.select2', 'ui.multiselect', 'autocomplete'])
     .controller('accountEditController', [
         '$scope',
@@ -29,6 +29,10 @@
             $rootScope.navbarBlue = false;
             $rootScope.showToolbar = true;
             $rootScope.showFooter = true;
+            $rootScope.showFooterRocks = false;
+            $rootScope.showStage1Footer = false;
+            $rootScope.showStage2Footer = false;
+            $rootScope.showStage3Footer = false;
 
         	$scope.account = {
         		AccountId: -1,

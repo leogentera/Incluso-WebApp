@@ -6,10 +6,19 @@
     <a class="to-top" ng-click="$emit('scrollTop');"><i class="icomoon icon-double-arrow-up"></i><br/>SUBIR</a>
 </footer> -->
 
-<footer class="app-footer" ng-class="{'theme-rocks': showFooterRocks ,'show': showFooter}">
+<footer class="app-footer" 
+    ng-class="{
+        'show': showFooter,
+		'theme-profile': showProfileFooter == false,
+        'theme-rocks': showFooterRocks,
+        'theme-stage-1': showStage1Footer,
+        'theme-stage-2': showStage2Footer,
+        'theme-stage-3': showStage3Footer,
+        'links-stage2-footer': linksStage2Footer, 
+        'links-stage3-footer': linksStage3Footer}">
     <ul class="block-list">
         <li>
-        	<a href="" class="btn-link">Preguntas Frecuentes</a>
+        	<a href="" class="btn-link" ng-click="navigateTo('FAQs','sidebar')">Preguntas Frecuentes</a>
         </li>
         <li>
         	<a href="" class="btn-link" ng-click="navigateTo('HelpAndSupport','sidebar')">Ayuda y Soporte</a>

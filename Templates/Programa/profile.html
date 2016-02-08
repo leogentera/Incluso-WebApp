@@ -6,7 +6,7 @@
                     <img ng-src="{{model.profileimageurl}}" alt="" class="img-responsive" />
                     <figcaption ng-bind="model.rank >= 0 ? model.rank : '?'"></figcaption>
                 </figure>
-                <a id="editProfile" ng-click="avatar()" class="btn">
+                <a id="editProfile" ng-click="avatar()" class="btn" ng-show="loggedUser">
                     <span class="icomoon icon-edit"></span>
                 </a>
             </div>
@@ -18,18 +18,20 @@
                 </p>
             </div>
             <div class="profile-settings">
-                <a class="btn btn-icon-aside left" ng-click="edit();">
+                <a class="btn btn-icon-aside left" ng-click="edit()" ng-show="loggedUser">
                     <div class="btn-icon">
                         <span class="icomoon icon-settings"></span>
                     </div>
-                    <span for="">Editar</span>
+                    <!--<span for="">Editar</span>-->
+                    <span for="">{{contentResources.profile_edit_button}}</span>
                 </a>
 
-                <a class="btn btn-icon-aside right" ng-click="navigateTo('/Perfil/ConfigurarPrivacidad', null, null, null)">
+                <a class="btn btn-icon-aside right" ng-click="privacySettings()" ng-show="loggedUser">
                     <div class="btn-icon">
                         <span class="icomoon icon-lock"></span>
                     </div>
-                    <span for="">Privacidad</span>
+                    <!--<span for="">Privacidad</span>-->
+                    <span for="">{{contentResources.profile_privacy_button}}</span>
                 </a>
             </div>
         </section>
@@ -39,81 +41,85 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
-                                <ul class="list-group separate-items">
-                                    <li class="list-group-item" ng-click="navigateToPage(2)">
+                                <ul class="list-group separate-items">                                    
+                                    <li class="list-group-item" ng-click="navigateToPage(2)"  ng-show="loggedUser ? loggedUser : (model.showGeneralData || model.showEducation || model.showAddress || model.showPhones || model.showSocialNetworks || model.showFamiliaCompartamos)">
                                         <a href="">
                                             <span class="icomoon icon-information"></span>
-                                            <span>Mi Información</span>
+                                            <span>{{contentResources.profile_my_info_section}}</span>
+                                            <!--<span>Mi Información</span>-->
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
                                     </li>
 
-                                    <li class="list-group-item" ng-click="navigateToPage(3)">
+                                    <li class="list-group-item" ng-click="navigateToPage(3)"  ng-show="loggedUser ? loggedUser :(model.showLikesAndPreferences || model.showAttributesAndQualities || model.showWhomAdmires)">
                                         <a href="">
                                             <span class="icomoon icon-star-clip"></span>
-                                            <span>Mi Personalidad</span>
+                                            <!--<span>Mi Personalidad</span>-->
+                                            <span>{{contentResources.profile_my_personality_sec}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
                                     </li>
 
-                                    <li class="list-group-item hidden" ng-click="navigateToPage(4)">
+                                    <li class="list-group-item" ng-click="navigateToPage(4)" ng-show="loggedUser?loggedUser:false">
                                         <a href="">
                                             <span class="icomoon icon-wallet"></span>
-                                            <span>Socioeconómicos</span>
+                                            <span>{{contentResources.profile_socioeconomics_sec}}</span>
+                                            <!--<span>Socioeconómicos</span>-->
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
                                     </li>
 
-                                    <li class="list-group-item no-badge hidden" ng-click="navigateToPage(5)">
+                                    <li class="list-group-item" ng-click="navigateToPage(5)" ng-show="loggedUser?loggedUser:( model.showDevices || model.showVideogames )">
                                         <a href="">
                                             <span class="icomoon icon-smartphone"></span>
-                                            <span>Uso Tecnología</span>
+                                            <!--<span>Uso Tecnología</span>-->
+                                            <span>{{contentResources.profile_technology_section}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
                                     </li>
-
-                                    <!-- <li class="list-group-item no-badge" ng-click="navigateToPage(6)" ng-show="model.strengths.length > 0">  -->
-                                    <li class="list-group-item no-badge" ng-click="navigateToPage(6)">
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(6)" ng-show="loggedUser?loggedUser:model.showMyAchievements">
 
                                         <a href="">
                                             <span class="icomoon icon-badge"></span>
-                                            <span>Mis Logros</span>
+                                            <!--<span>Mis Logros</span>-->
+                                            <span>{{contentResources.profile_my_achievments_sec}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
                                     </li>
 
                                     <!-- Mis habilidades -->
-                                    <!--<li class="list-group-item no-badge" ng-click="navigateToPage(7)" ng-show="model.recomendedBachelorDegrees.length > 0">-->
-                                    <li class="list-group-item no-badge hidden" ng-click="navigateToPage(7)">
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(7)" ng-show="isMultipleChallengeActivityFinished">
                                         <a href="">
                                             <span class="icomoon icon-user"></span>
-                                            <span>Mis Habilidades</span>
+                                            <!--<span>Mis Habilidades</span>-->
+                                            <span>{{contentResources.profile_my_skills_section}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
                                     </li>
 
                                     <!-- Mis areas de oportunidad -->
-                                    <!--<li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">-->
-                                        <li class="list-group-item no-badge hidden" ng-click="navigateToPage(8)">
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(8)" ng-show="isMultipleChallengeActivityFinished">
                                         <a href="">
                                             <span class="icomoon icon-workman"></span>
-                                            <span>Mis Áreas de Oportunidad</span>
+                                            <!--<span>Mis Áreas de Oportunidad</span>-->
+                                            <span>{{contentResources.profile_window_of_opp_sect}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
                                     </li>
-
-                                    <!--<li class="list-group-item no-badge" ng-click="navigateToPage(9)" ng-show="(model.dreamsToBe.length > 0 || model.dreamsToHave.length > 0 || model.dreamsToDo.length > 0)">-->
-                                    <li class="list-group-item no-badge hidden" ng-click="navigateToPage(9)">
+                                    
+                                    <!-- Elige el Rumbo -->
+                                    <li class="list-group-item no-badge" ng-click="navigateToPage(9)" ng-show="isMultipleChallengeActivityFinished">
                                         <a href="">
                                             <span class="icomoon icon-rocket"></span>
-                                            <span>Elige el Rumbo</span>
+                                            <!--<span>Elige el Rumbo</span>-->
+                                            <span>{{contentResources.profile_choose_the_way_sec}}</span>
                                             <span class="icomoon icon-star"></span>
                                             <span class="icomoon icon-arrow-slim-right"></span>
                                         </a>
@@ -125,7 +131,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mi informacion /////////// -->
                 <div class="page" ng-class="currentPage == 2 ? 'active' : ''">
                     <div class="container-fluid">
@@ -135,7 +140,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-information"></span>
-                                        <h3 class="panel-title">Mi Información</h3>
+                                        <!--<h3 class="panel-title">Mi Información</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_my_info_section}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -143,28 +149,23 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser ? loggedUser : model.showGeneralData">
                                                             <h4>Datos Generales</h4>
 
-                                                            <div class="from-group">
+                                                            <div class="from-group" ng-show="loggedUser">
                                                                 <label>Nombre(s)</label>
                                                                 <p ng-bind="model.firstname"></p>
                                                             </div>
 
-                                                            <div class="from-group">
+                                                            <div class="from-group" ng-show="loggedUser">
                                                                 <label>Apellido paterno</label>
                                                                 <p ng-bind="model.lastname"></p>
                                                             </div>
 
-                                                            <div class="from-group">
+                                                            <div class="from-group" ng-show="loggedUser">
                                                                 <label>Apellido materno</label>
                                                                 <p ng-bind="model.mothername"></p>
                                                             </div>
-
-                                                            <!--<div class="from-group">
-                                                                <label>Alias</label>
-                                                                <p ng-bind="model.alias"></p>
-                                                            </div>-->
 
                                                             <div class="from-group">
                                                                 <label>Sexo</label>
@@ -178,7 +179,7 @@
 
                                                             <div class="from-group">
                                                                 <label>Fecha de nacimiento</label>
-                                                                <p ng-bind="model.birthday" ng-init="model.birthday == 'MM/dd/yyyy'"></p>
+                                                                <p ng-bind="birthdate_Dateformat" ng-init="birthdate_Dateformat == 'dd/MM/yyyy'"></p>
                                                                 <!--p {{ng-bind="model.birthday" | date: "MM/dd/yyyy"}}></p-->
                                                             </div>
 
@@ -193,7 +194,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showEducation">
                                                             <h4>Educación</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.studies">
@@ -205,7 +206,7 @@
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showAddress">
                                                             <h4>Dirección</h4>
                                                             <div class="from-group">
                                                                 <label>País</label>
@@ -213,7 +214,7 @@
                                                             </div>
 
                                                             <div class="from-group">
-                                                                <label>Ciudad</label>
+                                                                <label>Estado</label>
                                                                 <p ng-bind="model.address.city"></p>
                                                             </div>
 
@@ -243,19 +244,19 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showPhones">
                                                             <h4>Teléfonos</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.phones">
                                                                     <div class="from-group">
-                                                                        <label>Teléfono {{model.phones.indexOf(s) + 1}}</label>
-                                                                        <p ng-bind="s"></p>
+                                                                        <label>Teléfono {{s.phone}}</label>
+                                                                        <p ng-bind="s.phoneId"></p>
                                                                     </div>
                                                                 </li>
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser ? loggedUser : model.showSocialNetworks">
                                                             <h4>Redes sociales</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.socialNetworks">
@@ -267,7 +268,7 @@
                                                             </ul>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:model.showFamiliaCompartamos">
                                                             <h4>Familia Compartamos</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.familiaCompartamos">
@@ -294,7 +295,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mi personalidad /////////// -->
                 <div class="page" ng-class="currentPage == 3 ? 'active' : ''">
                     <div class="container-fluid">
@@ -305,7 +305,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-star-clip"></span>
-                                        <h3 class="panel-title">Mi Personalidad</h3>
+                                        <!--<h3 class="panel-title">Mi Personalidad</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_my_personality_sec}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -313,7 +314,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:model.showLikesAndPreferences">
                                                             <h4>Mis gustos</h4>
                                                             <div class="from-group">
                                                                 <label>Mis deportes preferidos</label>
@@ -343,7 +344,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:model.showAttributesAndQualities">
                                                             <h4>Mis cualidades</h4>
                                                             <div class="from-group">
                                                                 <label>Talentos</label>
@@ -373,7 +374,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showWhomAdmires">
                                                             <h4>A quién admiro</h4>
                                                             <ul class="block-list">
                                                                 <li ng-repeat="s in model.inspirationalCharacters">
@@ -401,7 +402,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Socioeconomicos /////////// -->
                 <div class="page" ng-class="currentPage == 4 ? 'active' : ''">
                     <div class="container-fluid">
@@ -412,7 +412,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-wallet"></span>
-                                        <h3 class="panel-title">Socioeconómicos</h3>
+                                        <!--<h3 class="panel-title">Socioeconómicos</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_socioeconomics_sec}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -420,7 +421,7 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset"  ng-show="loggedUser?loggedUser:model.showILiveWith">
                                                             <h4>Vivienda</h4>
                                                             <div class="from-group">
                                                                 <label>Vivo con</label>
@@ -428,31 +429,35 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showMainActivity">
                                                             <h4>Actividad</h4>
                                                             <div class="from-group">
                                                                 <label>Mi actividad principal</label>
                                                                 <ul class="block-list">
-                                                                    <li ng-repeat="s in model.mainActivity">
+                                                                    <li ng-repeat="s in model.mainActivity track by $index">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showCurrentEducation">
                                                             <h4>Actualmente estudio</h4>
-                                                            <ul class="block-list">
-                                                                <li ng-repeat="s in model.currentStudies">
-                                                                    <div class="from-group">
-                                                                        <label>Nivel</label>
-                                                                        <p ng-bind="s"></p>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
+                                                            <div class="from-group">
+                                                                <label>Nivel</label>
+                                                                <p ng-bind="model.level"></p>
+                                                            </div>
+                                                            <div class="from-group">
+                                                                <label>Grado</label>
+                                                                <p ng-bind="model.grade"></p>
+                                                            </div>
+                                                            <div class="from-group">
+                                                                <label>Periodo</label>
+                                                                <p ng-bind="model.period"></p>
+                                                            </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showFamiliar">
                                                             <h4>Familiar</h4>
                                                             <div class="from-group">
                                                                 <label>Tengo hijos</label>
@@ -460,7 +465,7 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showMoneyIncome">
                                                             <h4>Ingresos</h4>
                                                             <div class="from-group">
                                                                 <label>Recibo ingresos</label>
@@ -469,14 +474,14 @@
                                                             <div class="from-group">
                                                                 <label>Fuente de ingresos</label>
                                                                 <ul class="block-list">
-                                                                    <li ng-repeat="s in model.moneyIncome">
+                                                                    <li ng-repeat="s in model.moneyIncome track by $index">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showHealth">
                                                             <h4>Salud</h4>
                                                             <div class="from-group">
                                                                 <label>Cuento con seguro médico</label>
@@ -500,7 +505,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Uso tecnologia /////////// -->
                 <div class="page" ng-class="currentPage == 5 ? 'active' : ''">
                     <div class="container-fluid">
@@ -511,7 +515,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-smartphone"></span>
-                                        <h3 class="panel-title">Uso Tecnología</h3>
+                                        <!--<h3 class="panel-title">Uso Tecnología</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_technology_section}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
@@ -519,12 +524,12 @@
                                                 <div class="row">
                                                     <div class="col-xs-12">
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showDevices">
                                                             <h4>Dispositivos</h4>
                                                             <div class="from-group">
                                                                 <label>¿Qué dispositivo sabes usar?</label>
                                                                 <ul class="block-list">
-                                                                    <li ng-repeat="s in model.knownDevices">
+                                                                    <li ng-repeat="s in model.knownDevices  track by $index">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>
@@ -533,7 +538,7 @@
                                                             <div class="from-group">
                                                                 <label>¿Con qué dispositivos móviles cuentas?</label>
                                                                 <ul class="block-list">
-                                                                    <li ng-repeat="s in model.ownDevices">
+                                                                    <li ng-repeat="s in model.ownDevices track by $index">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>
@@ -542,14 +547,14 @@
                                                             <div class="from-group">
                                                                 <label>¿Qué es lo que más haces con un celular?</label>
                                                                 <ul class="block-list">
-                                                                    <li ng-repeat="s in model.phoneUsage">
+                                                                    <li ng-repeat="s in model.phoneUsage track by $index">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>
                                                             </div>
                                                         </div>
 
-                                                        <div class="profile-info-asset">
+                                                        <div class="profile-info-asset" ng-show="loggedUser?loggedUser:model.showVideogames">
                                                             <h4>Videojuegos</h4>
                                                             <div class="from-group">
                                                                 <label>¿Juegas videojuegos?</label>
@@ -565,12 +570,17 @@
                                                             </div>
                                                             <div class="from-group">
                                                                 <label>¿Qué tipo de videojuegos te gustan más?</label>
-                                                                <p ng-bind="model.kindOfVideogames"></p>
+                                                                <!--<p ng-bind="model.kindOfVideogames"></p>-->
+                                                                <ul class="block-list">
+                                                                    <li ng-repeat="s in model.kindOfVideogames track by $index">
+                                                                        <p ng-bind="s"></p>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
                                                             <div class="from-group">
                                                                 <label>¿Cuáles son tus juegos favoritos?</label>
                                                                 <ul class="block-list">
-                                                                    <li ng-repeat="s in model.favoriteGames">
+                                                                    <li ng-repeat="s in model.favoriteGames track by $index">
                                                                         <p ng-bind="s"></p>
                                                                     </li>
                                                                 </ul>
@@ -589,9 +599,8 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mis logros /////////// -->
-                <div class="page" ng-class="currentPage == 6 ? 'active' : ''">
+                <div class="page" ng-class="currentPage == 6 ? 'active' : ''" ng-show="loggedUser?loggedUser:model.showBadgesEarned">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
@@ -599,7 +608,8 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-badge"></span>
-                                        <h3 class="panel-title">Mis Logros</h3>
+                                        <!--<h3 class="panel-title">Mis Logros</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_my_achievments_sec}}</h3>
                                     </div>
                                     <div class="panel-body">
 
@@ -607,14 +617,8 @@
                                             <div class="row">
 
                                                 <div ng-repeat="badge in wholeBadgesPages[badgePage]" class="badge-item text-center">
-                                                    <img class="badgesviews" ng-src="assets/images/badges/{{badge.filename}}" alt="" class="img-responsive" width="100px"
-                                                    height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times, badge.description, badge.status)" />                                              />
-
-                                                    <!--
-                                                    <img class="badgesviews" ng-src="assets/images/badges/default_placeholder.svg" alt="" class="img-responsive" width="100px"
-                                                    height="100px" ng-click="showDetailBadge('default_placeholder.svg', badge.name, badge.dateIssued, badge.earned_times, badge.status)" ng-show="badge.status == 'pending'"
-                                                    />
-                                                    -->
+                                                    <img class="badgesviews img-responsive" ng-src="assets/images/badges/{{badge.filename}}" alt="" width="100px"
+                                                    height="100px" ng-click="showDetailBadge(badge.filename, badge.name, badge.dateIssued, badge.earned_times, badge.description, badge.status)" /> 
                                                     
                                                     <span class="badgename text-center" ng-bind="badge.name"></span>
                                                 </div>
@@ -638,7 +642,6 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
                 <!-- ////////// Mis habilidades /////////// -->
                 <div class="page my-abilities" ng-class="currentPage == 7 ? 'active' : ''">
                     <div class="container-fluid">
@@ -649,30 +652,21 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-user"></span>
-                                        <h3 class="panel-title">Mis habilidades</h3>
+                                        <!--<h3 class="panel-title">Mis habilidades</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_my_skills_section}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <!--<ul class="block-list" ng-repeat="b in model.recomendedBachelorDegrees">
-                                                            <li>
-                                                                <p ng-bind="b"></p>
-                                                            </li>
-                                                        </ul>-->
+
                                                         <ul class="block-list">
-                                                            <li class="profile-info-asset">
-                                                                <h4>Musical</h4>
-                                                                    <p>
-                                                                        Si en clase de ciencias, mate y biología haces ritmos con tus plumas en vez de apuntar, el ipod es tu mejor compañia y cantas a todo pulmon en la ducha.
-                                                                    </p>
-                                                            </li>
-                                                            <li class="profile-info-asset">
-                                                                <h4>Interpersonal</h4>
-                                                                    <p>
-                                                                        Si en tu escuela eres el mejor amigo de todos, el que pide todos los permisos a los papás de tus amigos y todos recurren a ti para que escuches y aconsejes sus truenes.
-                                                                    </p>
+                                                            <li class="profile-info-asset" ng-repeat="s in myStrengths">
+                                                                <h4 ng-bind="s.name"></h4>
+                                                                    
+                                                                    <div ng-bind-html="s.description">
+                                                                    </div>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -686,7 +680,8 @@
                     </div>
                 </div>
                 <!--  End of page -->
-
+                
+                <!-- ////////// Mis áreas de oportunidad /////////// -->
                 <div class="page my-abilities" ng-class="currentPage == 8 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
@@ -696,49 +691,20 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-workman"></span>
-                                        <h3 class="panel-title">Mis Áreas de Oportunidad</h3>
+                                        <!--<h3 class="panel-title">Mis Áreas de Oportunidad</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_window_of_opp_sect}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <!-- <h4>Sueños Ser</h5>
-                                                        <ul class="block-list" ng-repeat="db in model.dreamsToBe">
-                                                            <li>
-                                                                <p ng-bind="db"></p>
-                                                            </li>
-                                                        </ul>
-                                                        <hr />
-
-                                                        <h4>Sueños Tener</h5>
-                                                        <ul class="block-list" ng-repeat="dh in model.dreamsToHave">
-                                                            <li>
-                                                                <p ng-bind="dh"></p>
-                                                            </li>
-                                                        </ul>
-                                                        <hr />
-
-                                                        <h4>Sueños Hacer</h5>
-                                                        <ul class="block-list" ng-repeat="dd in model.dreamsToDo">
-                                                            <li>
-                                                                <p ng-bind="dd"></p>
-                                                            </li>
-                                                        </ul>
-                                                        <hr />
-                                                        <br />-->
                                                         <ul class="block-list">
-                                                            <li class="profile-info-asset">
-                                                                <h4>Interpersonal</h4>
-                                                                    <p>
-                                                                        Si en clase de filosofía, eres el unico despierto, preguntas el por qué de las cosas, frecuentemente escuchas a tus amigos decirte no me regañes y antes de tomar una decisión evaluas las consecuencias.
-                                                                    </p>
-                                                            </li>
-                                                            <li class="profile-info-asset">
-                                                                <h4>Interpersonal</h4>
-                                                                    <p>
-                                                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-                                                                    </p>
+                                                            <li class="profile-info-asset" ng-repeat="s in myWindowOfOpportunities">
+                                                                <h4 ng-bind="s.name"></h4>
+                                                                    
+                                                                <div ng-bind-html="s.description">
+                                                                </div>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -763,27 +729,17 @@
                                     <div class="panel-heading" ng-click="navigateToPage(1)">
                                         <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-rocket"></span>
-                                        <h3 class="panel-title">Carreras Afines</h3>
+                                        <!--<h3 class="panel-title">Carreras Afines</h3>-->
+                                        <h3 class="panel-title">{{contentResources.profile_choose_the_way_sec}}</h3>
                                     </div>
                                     <div class="panel-body">
                                         <div class="my-profile-information">
                                             <div class="container-fluid">
                                                 <div class="row">
                                                     <div class="col-xs-12">
-                                                        <!--<ul class="block-list" ng-repeat="b in model.recomendedBachelorDegrees">
-                                                            <li>
+                                                        <ul class="block-list">
+                                                            <li class="profile-info-asset" ng-repeat="b in model.recomendedBachelorDegrees">
                                                                 <p ng-bind="b"></p>
-                                                            </li>
-                                                        </ul>-->
-                                                         <ul class="block-list">
-                                                            <li class="profile-info-asset">
-                                                                <p>Biólogo</p>
-                                                            </li>
-                                                            <li class="profile-info-asset">
-                                                                <p>Nutriólogo</p>
-                                                            </li>
-                                                            <li class="profile-info-asset">
-                                                                <p>Agrónomo</p>
                                                             </li>
                                                         </ul>
                                                     </div>
@@ -798,16 +754,16 @@
                 </div>
                 <!--  End of page -->
 
-
                 <div class="page" ng-class="currentPage == 10 ? 'active' : ''">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="panel panel-default achievement-detail">
-                                    <div class="panel-heading">
-                                        <span class="icomoon icon-arrow-slim-left" ng-click="navigateToPage(6)"></span>
+                                    <div class="panel-heading" ng-click="navigateToPage(6)">
+                                        <span class="icomoon icon-arrow-slim-left"></span>
                                         <span class="icomoon icon-badge"></span>
-                                        <h3 class="panel-title">Detalle de Insignia</h3>
+                                        <h3 class="panel-title">{{contentResources.profile_badge_detail}}</h3>
+                                        <!--<h3 class="panel-title">Detalle de Insignia</h3>-->
                                     </div>
                                     <div class="panel-body">
 
@@ -816,17 +772,10 @@
                                             <div class="row">
                                                 <div class="text-center">
                                                     <div class="achievement-badge">
-                                                        <!--
-                                                        <img class="badgesviews" ng-src="assets/images/insignias/{{badgeId}}.svg" alt="" class="img-responsive" width="100px" height="100px"
-                                                        />
-                                                        -->
-                                                        <img class="badgesviews" ng-src="assets/images/badges/{{fileName}}" alt="" class="img-responsive" width="100px"
+
+                                                        <img class="badgesviews img-responsive" ng-src="assets/images/badges/{{fileName}}" alt="" width="100px"
                                                         height="100px" />
-                                                        <!--
-                                                        <img class="badgesviews" ng-src="assets/images/insignias/placeholder.svg" alt="" class="img-responsive" width="100px"
-                                                        height="100px" ng-show="status == 'pending'"
-                                                        />
-                                                        -->
+
                                                         <div class="badgename" ng-bind="badgeName"></div>
                                                         <div class="badgedate" ng-bind="badgeDateIssued"></div>
                                                     </div>
@@ -835,23 +784,43 @@
                                                     </div>
                                                     <div class="earned-info">
                                                         <span class="users">
-                                                            <span  ng-show="earnedTimes > 0">
+                                                                <span ng-show="earnedTimes > 0">
                                                                 <span ng-show="status == 'won'">Tú y</span>
                                                                 <span ng-bind="earnedTimes"></span>
                                                             jóven<span ng-show="earnedTimes != 1">es</span> ha<span ng-show="earnedTimes != 1">n</span>
-                                                            </span><span  ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
+                                                                </span><span ng-show="earnedTimes == 0">Ningún jóven ha</span> ganado esta insignia
                                                     </div>
-                                                    <!--
-                                                    <div class="share-achievement">
+
+                                                    <div class="share-achievement" ng-show="status == 'won' && hasCommunityAccess">
                                                         <span class="icon-container">
                                                             <span class="icomoon icon-share"></span>
 
                                                         </span>
-                                                        <span class="share-text">Compartir Insignia</span>
+                                                        <!--<span class="share-text" ng-click="showShareAchievementMessage = !showShareAchievementMessage">Compartir Insignia</span>-->
+                                                        <span class="share-text" ng-click="showShareAchievementMessage = !showShareAchievementMessage">{{contentResources.profile_share_badge_button}}</span>
                                                     </div>
-                                                    -->
+                                                    
+                                                    <section class="modales" ng-show="status == 'won' && hasCommunityAccess">
+                                                        <div id="openModal1" class="modalDialog" ng-show="showShareAchievementMessage">
+                                                            <div>
+                                                                <span class="close"></span>
+                                                                <div class="add" ><span class="icomoon icon-edit"></span><textarea placeholder="Agregar texto..."  ng-model="shareAchievementMessage"></textarea></div>
+                                            
+                                                                <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="shareAchievement()" >Compartir</a>
+                                                            </div>
+                                                        </div>
+                                                        <div id="openModal6" class="modalDialog reportModal" ng-show="showSharedAchievement">
+                                                            <div>
+                                                              <a title="close" class="close"></a>
+                                                              <div class="add">La insignia ha sido compartida.</div>
+                                                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="navigateTo('/Community/50000',null,50000)">Ir a Comunidad</a>
+                                                              <a class="btn btn-primary btn-lg btn-cnt" role="button" ng-click="showSharedAchievement = false">Cerrar</a>
+                                                            </div>
+                                                    </div>
+                                                    </section>
 
-                                                    <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>
+                                                    <!--<a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">Regresar</a>-->
+                                                    <a class="btn btn-primary btn-lg btn-cnt" ng-click="navigateToPage(6)">{{contentResources.profile_back_button}}</a>
                                                     <div class="txt-renglon centered txt-bigger"></div>
                                                 </div>
 
@@ -869,4 +838,20 @@
             </div>
         </section>
     </article>
+    
+    <script type="text/ng-template" id="badgeRobotMessageModal.html">
+        <div class="modal-robot robot-sm closing-stage-modal user-help" >
+            <img src="assets/images/img-robot-sm.svg" alt="robot" />
+            <div class="modal-header">
+                <a class="icon icon-close btn btn-circle" ng-click="cancel()">
+                    <span class="icomoon icon-cross"></span>
+                </a>
+            </div>
+            <div class="modal-body">
+                <h3 class="subtitle text-center">{{actualMessage.title}}</h3>
+                <p class="txt-renglon centered">{{actualMessage.message}}</p>
+            </div>
+        </div>
+    </script>
+    
 </div>

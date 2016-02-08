@@ -1,29 +1,33 @@
-<div class="incluso-app start-dashboard acerca-programa" id="site-wrapper">
-  <div id="site-menu" >
-
-  </div>
-  <div id="site-canvas">
-
+<div class="incluso-app acerca-programa" id="site-wrapper">
     <article class="use-terms">
       <div class="container">
 
         <section class="component">
-          <h3 ng-class="main-title">Ayuda y soporte</h3>
-      		<p>Tu misión: encontrar al planeta IPSE 1.0 recorriendo las tres zonas de retos. Debes explorar cada una y conseguir las piezas que te permitan continuar.</p>
-          <p>Descarga la  app “Incluso interactivo”, donde puedes dar personalidad a tu avatar y realizar otros retos que son parte de la misión. Asegúrate de llenar toda la información. En caso de que perder la señal de tu nave, te contactaremos con ayuda de tu perfil. Tu información es muy valiosa por lo que no te olvides de tenerla actualizada. Recuerda que tu información está protegida y sólo tú decides qué compartir con los demás en cualquier momento.</p>
-          <p>En uno de los retos de la misión obtendrás el escudo que representa tus fortalezas y que siempre se mostrará en tu perfil.</p>
-          <p>Inclubot será tu acompañante de viaje y te dará mensajes de guía para cumplir tu misión.</p>
-          <p>En cada zona, tendrás que enfrentarte a retos y actividades, encontrarás fuentes de energía para descubrir más información de apoyo. Participa en los foros para ayudar y recibir apoyo de otros capitanes. Al terminar las actividades obtendrás estrellas; cada reto te hará ganar piezas y herramientas que te ayudarán en tu misión.</p>
-          <p>Intercambia estrategias con otros capitanes en la comunidad compartiendo información de interés. Tendrás a contacto con un coach que te asesorará lograr la misión. Recuerda revisar tus notificaciones.</p>
-          <p>Desde este menú podrás editar tu perfil cada vez que así lo requieras.</p>
-          <a role="button" class="btn btn-primary btn-lg btn-block" ng-click="navigateTo('ProgramaDashboard', 'sideToggle')">Regresar</a>
+          <h3 ng-class="main-title">{{contentResources.help_and_support_title}}</h3>
+            <!--<h3 ng-class="main-title">Ayuda para…</h3>-->
+            <div ng-repeat="section in contentObjects">
+                <h4 class="sub-title">{{section.subtitle}}</h4>
+                <p>{{section.content}}</p>
+            </div>
+            <!--<h4 class="sub-title">Guía de uso de Misión Incluso</h4>-->
+            <!--<p>Si no sabes por dónde empezar en Incluso, te recomendamos ver la guía de uso disponible en el menú principal. La torre de control te dará las herramientas suficientes para que no te pierdas en la misión. -->
+<!--Personalizar avatar.</p>-->
+            <!--<h4 class="sub-title">Personalizar avatar</h4>-->
+            <!--<p>Para poder distinguirte en Misión Incluso debes generar tu Avatar para esto, en el menú superior da clic en el icono de la persona, una vez en el perfil da clic en el icono de editar que está a un costado de la imagen del Avatar.</p>-->
+            <!--<h4 class="sub-title">Primera actividad de cada Zona</h4>-->
+            <!--<p>Para poder iniciar los retos de cada una de las zonas, debes realizar primero la exploración inicial para que se activen los demás retos y actividades.</p>-->
+            <!--<h4 class="sub-title">Punto de encuentro y Zona de contacto</h4>-->
+            <!--<p>En las zonas de la misión encontrarás las actividades “Punto de encuentro” y “Zona de contacto”, cada foro tiene tópicos y debes hacer “dos” aportaciones en cada uno para poder tener la actividad completada.</p>-->
+            <!--<h4 class="sub-title">Cabina de soporte</h4>-->
+            <!--<p>Para pasar el reto "Cabina de soporte" de cada zona, entra a la actividad “Chat” y conversa con tu coach dos veces, asegúrate de que él también te responda las mismas dos veces ya que sólo así podrás continuar. Una vez con los 4 comentarios, regresa a la "Cabina de soporte" de la zona en la que te encuentras y da clic nuevamente en la actividad de “Chat” para que ésta aparezca como completada.</p>-->
+            <!--<h4 class="sub-title">Exploración final</h4>-->
+            <!--<p>Para activarla, debes tener completadas todas las actividades de los retos anteriores, incluyendo  “Cabina de Soporte” y haber respondido si te gusto o no la actividad. Si no estás seguro, vuelve a entrar a las actividades que te aparecen como no completadas y revisa si cumpliste con las condiciones para pasar, finalmente responde si te gustó o no.</p>-->
+          <a role="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="navigateTo('ProgramaDashboard', 'sideToggle')">{{contentResources.back_button}}</a>
+            <!--<a role="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="navigateTo('ProgramaDashboard', 'sideToggle')">Regresar</a>-->
         </section>
         
       </div> <!-- /.container -->
       <img src=".../../assets/images/img-lines-ftr.png" class="centered">
       
     </article>
-
-  </div>
 </div>
-  

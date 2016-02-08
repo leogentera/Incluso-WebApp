@@ -1,72 +1,74 @@
 <div class="incluso-app tutorial" ng-app>
-  <article>
-    <section>
-      <form action="" class="container-fluid" name="registerForm" ng-show="!isRegistered">
-        <div class="row">
-          <div class="col-xs-12">
-            <h3 class="subtitle centered text-uppercase" ng-class="main-title">Guía de uso</div>
-          </div>
-        
-        <div class="pages">
-          <div class="page" data-page="1" ng-class="currentPage === 1 ? 'active' : ''">
-            <div class="video-gallery">
-                <div class="stage">
-                  <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-tutorial.mp4')">
-                    <span class="glyphicon glyphicon-play"></span>
-                  </a>
-                  <figure class="poster">
-                    <img src="assets/media/thumb-tutorial.jpg" />
-                  </figure>
+    <article>
+        <section>
+            <form action="" class="container-fluid" name="registerForm" ng-show="!isRegistered">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3 class="subtitle centered text-uppercase" ng-class="main-title">Guía de uso</h3>
+                    </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-xs-12">
-                  <div class="page-number">
-                    <p class="text-center">
-                      <a class="disabled"><span class="icomoon icon-arrow-bold-left"></span></a>
-                      <span>1</span>
-                      <span>/</span>
-                      <span class="total-number">2</span>
-                      <a ng-click="navigateToPage(2)"><span class="icomoon icon-arrow-bold-right"></span></a>
-                    </p>
-                  </div>
+
+                <div class="pages">
+                    <div class="page" data-page="1" ng-class="currentPage === 1 ? 'active' : ''">
+                        <div class="video-gallery">
+                            <div class="stage">
+                                <a class="icon icon-play" ng-click="playVideo('assets/media', 'video-tutorial.mp4')">
+                                    <span class="glyphicon glyphicon-play"></span>
+                                </a>
+                                <figure class="poster">
+                                    <img src="assets/media/thumb-tutorial.jpg"/>
+                                </figure>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="page-number">
+                                    <p class="text-center">
+                                        <a class="disabled"><span class="icomoon icon-arrow-bold-left"></span></a>
+                                        <span>1</span>
+                                        <span>/</span>
+                                        <span class="total-number">2</span>
+                                        <a ng-click="navigateToPage(2)"><span class="icomoon icon-arrow-bold-right"></span></a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="txt-renglon">
+                            <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="navigateToPage(2)">Continuar</button>
+                        </div>
+                    </div>
+                    <div class="page" data-page="2" ng-class="currentPage === 2 ? 'active' : ''">
+                        <section>
+                            <div class="txt-renglon centered">
+                                <p>Instrucciones</p>
+                                <p>Para continuar con la misi&oacute;n debes de realizar los siguientes pasos:</p>
+                                <p>1. Da clic en el bot&oacute;n de "Descarga incluso interactivo" para poder personalizar tu avatar.</p>
+                                <p>2. Personaliza tu avatar para distinguirte en la misión.</p>
+                                <p>3. Inicia tu misi&oacute;n.</p>
+                            </div>
+                        </section>
+                        <section class="container-fluid">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="page-number">
+                                        <p class="text-center">
+                                            <a ng-click="navigateToPage(1)"><span class="icomoon icon-arrow-bold-left"></span></a>
+                                            <span>2</span>
+                                            <span>/</span>
+                                            <span class="total-number">2</span>
+                                            <a class="disabled"><span class="icomoon icon-arrow-bold-right"></span></a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="txt-renglon">
+                            <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-show="!isInstalled" ng-click="avatar()">Descargar Incluso Interactivo</button>
+                            <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-show="isInstalled" ng-click="avatar()">Empezar Incluso Interactivo</button>
+                        </section>
+                    </div>
                 </div>
-              </div>
-              <div class="txt-renglon">                
-                <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="navigateToPage(2)">Continuar</button>                
-              </div>
-          </div>
-          <div class="page" data-page="2" ng-class="currentPage === 2 ? 'active' : ''">
-            <section>
-              <div class="txt-renglon centered">
-                <p>Instrucciones</p>
-                <p>Para continuar con la misi&oacute;n debes de realizar los siguientes pasos:</p>
-                <p>1. Da clic en el bot&oacute;n de "Descarga incluso interactivo" para poder personalizar tu avatar.</p>
-                <p>2. Personaliza tu avatar para distinguirte en la misión.</p>
-                <p>3. Inicia tu misi&oacute;n.</p>
-              </div>
-            </section>
-            <section class="container-fluid">
-              <div class="row">
-                <div class="col-xs-12">
-                  <div class="page-number">
-                    <p class="text-center">
-                      <a ng-click="navigateToPage(1)"><span class="icomoon icon-arrow-bold-left"></span></a>
-                      <span>2</span>
-                      <span>/</span>
-                      <span class="total-number">2</span>
-                      <a class="disabled"><span class="icomoon icon-arrow-bold-right"></span></a>
-                    </p>
-                  </div>
-                </div>
-              </div> 
-            </section>
-            <section class="txt-renglon">
-              <button type="button" class="btn btn-primary btn-lg btn-block text-uppercase" ng-click="avatar()">Descargar incluso interactivo</button>
-            </section>
-          </div>
-        </div>
-      </form>
-    </section>
-  </article>
+            </form>
+        </section>
+    </article>
 </div>

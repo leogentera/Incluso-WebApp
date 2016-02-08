@@ -1,4 +1,4 @@
-﻿angular
+angular
     .module('incluso.account.index', ['ngGrid', 'ui.select2'])
     .controller('accountListController', [
         '$scope',
