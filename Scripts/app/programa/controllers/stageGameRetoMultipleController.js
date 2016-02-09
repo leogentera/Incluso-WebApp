@@ -105,7 +105,7 @@ angular
                 };
                 var scoresActivity;
                 _.each($scope.retoMultipleActivities, function(activity){
-                  if (activity.name.toLowerCase().indexOf("puntaje") < 0 && activity.name.toLowerCase().indexOf("resultado") < 0) {
+                  if (activity.name.toLowerCase().indexOf("resultados") < 0) {
                     var subactivity = {
                         "estrellas": "300",
                         "subactividad": activity.name,
@@ -113,7 +113,7 @@ angular
                     };
                     request.subactividades.push(subactivity);
                   }
-                  else  if (activity.name.toLowerCase().indexOf("resultadopruebas") >= 0){
+                  else  if (activity.name.toLowerCase().indexOf("resultados") >= 0){
                     scoresActivity = activity;
                   }
                 });
@@ -283,10 +283,7 @@ angular
                             intelligence.answers.push(getAnswer(inteligencia.tiempoIntentos, false));
                           }
                         }
-                        /*if (challenge.type == "3" && isAnswered.unanswered > 0 && inteligencia.puntajeInterno > 0) {
-                          isAnswered["unanswered"] = 0;
-                          isAnswered["answered"] = 8;
-                        }*/
+
                         var currentQuestions = _.filter(scoreQuiz.questions, function(q) { return q.title.toLowerCase().indexOf(inteligencia.subactividad.toLowerCase()) >= 0 });
                         _.each(currentQuestions, function(question){
                           var questionTitle = question.title.toLowerCase();
@@ -308,7 +305,7 @@ angular
                           }
                           question.userAnswer = answer;
                         });
-                        completedActivities.completed += (isAnswered.unanswered > 0 ? 0 : 1 );
+                        completedActivities.completed += (challenge.type == "3" ? (isAnswered.answered > 0 ? 1 : 0) : (isAnswered.unanswered > 0 ? 0 : 1));
                         $scope.activitiesLength++;
                         scoreRequest.intelligences.push(intelligence);
                       }
@@ -509,7 +506,7 @@ angular
 
             var getHighestDetail = function(newAnswer, currentAnswer, unansweredParameter){
               if (currentAnswer == "") {
-                return newAnswer; // Current vacío
+                return newAnswer;
               }else{
                 var newArray = (typeof newAnswer == 'string' ? newAnswer.split(";") : newAnswer);
                 var currentArray = (typeof currentAnswer == 'string' ? currentAnswer.split(";") : currentAnswer);
@@ -521,7 +518,7 @@ angular
                       if (isCurrentAnswered.unanswered == currentArray.length) {
                         return newArray;
                       }else{
-                        return (isNewAnswered.unanswered >= isCurrentAnswered.unanswered ? newArray : currentArray);
+                        return (isNewAnswered.unanswered >= isCurrentAnswered.unanswered ? currentArray : newArray);
                       }
                     }else{
                       return currentArray;
@@ -529,7 +526,7 @@ angular
                   }
                   else{
                     if (isCurrentAnswered.unanswered) {
-                      return (isNewAnswered.unanswered >= isCurrentAnswered.unanswered ? newArray : currentArray);
+                      return (isNewAnswered.unanswered >= isCurrentAnswered.unanswered ? currentArray : newArray);
                     }else{
                       return newArray;
                     }
