@@ -1050,7 +1050,7 @@ angular
 
                 if ($scope.activity_identifier === 1005 || $scope.activity_identifier === 1006) {
                     $scope.userId = moodleFactory.Services.GetCacheObject("userId");
-                    console.log($scope.userprofile.values);
+
                     moodleFactory.Services.PutAsyncProfile($scope.userId, $scope.userprofile,
 
                         function (responseData) {
