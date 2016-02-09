@@ -1,12 +1,18 @@
 <div class="incluso-app privacy-settings">
 
-    <div class="alert alert-warning" role="alert" ng-show="!dataIsOk">
+    <div class="alert alert-warning" role="alert" ng-if="!model.modelState.isValid && model.modelState.errorMessages.length > 0">
         <div class="alert-message">
             <div class="icomoon icon-warning"></div>
             <p>¡Error! Verifica tus datos</p>
-            <ul ng-show="model.modelState.errorMessages.length > 0">
+            <ul>
                 <li ng-repeat="msg in model.modelState.errorMessages">{{msg}}</li>
             </ul>
+        </div>
+    </div>
+    <div class="alert alert-success" role="alert" ng-if="model.modelState.isValid">
+        <div class="alert-message">
+            <div class="icomoon icon-checked-clip"  ng-click="returnToProfile()"></div>
+            <p>Tu contraseña ha sido modificada correctamente.</p>
         </div>
     </div>
 
@@ -308,6 +314,7 @@
                                                                                class="form-control form-control-lg theme-form"
                                                                                placeholder="Nueva Contraseña"
                                                                                name="passwordOne" id="passwordOne"
+                                                                               ng-disabled="passwordChanged"
                                                                                ng-model="changePasswordModel.passwordOne"
                                                                                ng-pattern="/^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[_\W])[\S]{8,}$/"
                                                                                ng-trim="true" required/>
@@ -336,6 +343,7 @@
                                                                                class="form-control form-control-lg theme-form"
                                                                                placeholder="Repetir Nueva Contraseña"
                                                                                name="passwordTwo" id="passwordTwo"
+                                                                               ng-disabled="passwordChanged"
                                                                                ng-model="changePasswordModel.passwordTwo"
                                                                                ng-trim="true" required/>
                                                                         <a class="input-group-addon btn-info">
@@ -368,7 +376,7 @@
                                                     <div class="actions">
                                                         <div class="page-controls">
                                                             <a class="btn btn-primary btn-lg btn-block"
-                                                               ng-disabled="accountManagement.passwordOne.$pristine || (changePasswordModel.passwordOne != changePasswordModel.passwordTwo || accountManagement.currentPassword.$invalid  || accountManagement.passwordOne.$invalid)"
+                                                               ng-disabled="passwordChanged || accountManagement.passwordOne.$pristine || (changePasswordModel.passwordOne != changePasswordModel.passwordTwo || accountManagement.currentPassword.$invalid  || accountManagement.passwordOne.$invalid)"
                                                                ng-click="updatePassword()">Cambiar contraseña</a>
                                                         </div>
                                                         <a class="btn btn-default btn-transparent btn-lg btn-block" ng-click="returnToPrivacySettings()">Cancelar</a>
@@ -384,7 +392,7 @@
                         </div>
                     </div><!-- Closing Page 3  -->
 
-                    <div class="page" ng-class="currentPage == 4 ? 'active' : ''" id="desactivate">
+                    <div class="page" ng-class="currentPage == 4 ? 'active' : ''">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12">
