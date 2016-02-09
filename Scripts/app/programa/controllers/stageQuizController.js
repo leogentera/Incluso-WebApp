@@ -308,16 +308,14 @@ angular
                             _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.coursemoduleid, otherAnswerQuiz);
                             _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, activityObject);
                             $scope.activityObject = activityObject;
-                            console.log(JSON.stringify(otherAnswerQuiz));
-                            console.log(JSON.stringify(codedAnswers));
-
+                            //console.log(JSON.stringify(otherAnswerQuiz));
+                            //console.log(JSON.stringify(codedAnswers));
 
                         } else if ($scope.activity_identifier === 1006 && activityObject !== null) {//Mis Gustos.
 
                             var favoriteSports = $scope.userprofile.favoriteSports;
                             var artisticActivities = $scope.userprofile.artisticActivities;
                             var hobbies = $scope.userprofile.hobbies;
-                            var activityObject = JSON.parse(_getItem("activity/" + $scope.coursemoduleid));
 
                             if (otherAnswerQuiz === null) {//Create this object if it doesn't exists...
                                 var otherAnswerQuiz = [
@@ -455,8 +453,8 @@ angular
                             _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.coursemoduleid, otherAnswerQuiz);
                             _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, activityObject);
                             $scope.activityObject = activityObject;
-                            console.log(JSON.stringify(otherAnswerQuiz));
-                            console.log(JSON.stringify(codedAnswers));
+                            //console.log(JSON.stringify(otherAnswerQuiz));
+                            //console.log(JSON.stringify(codedAnswers));
                         }
 
                         localAnswers = JSON.parse(_getItem("answersQuiz/" + $scope.coursemoduleid));
