@@ -29,11 +29,7 @@ angular
                 currentPassword: undefined,
                 passwordOne: undefined,
                 passwordTwo: undefined,
-                currentPasswordDesactivate: undefined,
-                modelState: {
-                    isValid: true,
-                    errorMessages: []
-                }
+                currentPasswordDesactivate: undefined
             };
 
             if ($routeParams.id != moodleFactory.Services.GetCacheObject("userId")) {
@@ -425,7 +421,6 @@ angular
                     startingTime = moment().format('YYYY:MM:DD HH:mm:ss');
 
                     //************ BEGIN OF SECTION FOR ACCOUNT MANAGEMENT
-                    $scope.dataIsOk = true;
 
                     $scope.openModalPassword = function (size) {
                         var modalInstance = $modal.open({
@@ -439,7 +434,11 @@ angular
                     };
 
                     $scope.initDesactivation = function () {
+                        //Initialize proper variables.
                         $scope.currentPage = 4;
+                        $scope.model.modelState.isValid = false;
+                        $scope.model.modelState.errorMessages = [];
+                        $scope.passwordChanged = false;
                         document.querySelector("#option-position").scrollIntoView();
                     };
 
@@ -455,7 +454,6 @@ angular
                         if (localPassword != $scope.changePasswordModel.currentPasswordDesactivate) {
                             $scope.model.modelState.isValid = false;
                             $scope.model.modelState.errorMessages = ["Debe introducir su contraseña actual."];
-                            $scope.dataIsOk = false;
                             $scope.$emit('scrollTop');
 
                         } else {//Proceed with desactivation.
@@ -487,7 +485,6 @@ angular
                                         } else {//If the password Does not Match...
                                             $scope.model.modelState.isValid = false;
                                             $scope.model.modelState.errorMessages = ["La contraseña no es correcta."];
-                                            $scope.dataIsOk = false;
                                             $scope.$emit('scrollTop');
                                             $scope.$emit('HidePreloader');
                                         }
@@ -497,7 +494,6 @@ angular
                                     function () {//The request was not successfull.
                                         $scope.model.modelState.isValid = false;
                                         $scope.model.modelState.errorMessages = ["Intente de nuevo más tarde."];
-                                        $scope.dataIsOk = false;
                                         $scope.$emit('scrollTop');
                                         $scope.$emit('HidePreloader');
                                     });
@@ -505,7 +501,6 @@ angular
                             } else {//The password is empty...
                                 $scope.model.modelState.isValid = false;
                                 $scope.model.modelState.errorMessages = ["Debe introducir su contraseña"];
-                                $scope.dataIsOk = false;
                                 $scope.$emit('scrollTop');
                                 $scope.$emit('HidePreloader');
                             }
@@ -528,13 +523,10 @@ angular
                         if (localPassword != $scope.changePasswordModel.currentPassword) {
                             $scope.model.modelState.isValid = false;
                             $scope.model.modelState.errorMessages = ["Debe introducir su contraseña actual."];
-                            $scope.dataIsOk = false;
                             $scope.$emit('scrollTop');
                             $scope.$emit('HidePreloader');
 
                         } else {
-
-                            $scope.dataIsOk = true;
 
                             $http({
                                 method: 'PUT',
@@ -548,9 +540,10 @@ angular
 
                                 $scope.$emit('scrollTop');
                                 $scope.$emit('HidePreloader');
-                                var resultData = JSON.parse(data);
+                                //console.log(data); console.log(JSON.stringify(data));
+                                //var resultData = data;
 
-                                if (resultData.success == "true") {//If the
+                                if (data.success == true) {//If the
 
                                     //Update the new username/password pair in Local Storage.
                                     var Credentials = JSON.parse(localStorage.getItem("Credentials"));
@@ -561,19 +554,20 @@ angular
                                     }
 
                                     $scope.model.modelState.isValid = true;
+                                    $scope.model.modelState.errorMessages = [];
                                     $scope.passwordChanged = true;
-                                    $scope.dataIsOk = true;
 
                                     //... and redirect the user to login view.
+                                    /*
                                     $timeout(function(){
                                         $scope.$emit('HidePreloader');
                                         logout($scope, $location);
                                     }, 1);
+                                    */
 
                                 } else {
                                     $scope.model.modelState.isValid = false;
                                     $scope.model.modelState.errorMessages = ["La contraseña no es correcta."];
-                                    $scope.dataIsOk = false;
                                     $scope.$emit('scrollTop');
                                     $scope.$emit('HidePreloader');
                                 }
@@ -589,7 +583,6 @@ angular
 
                                 $scope.model.modelState.isValid = false; //For activating message area in template.
                                 $scope.model.modelState.errorMessages = [errorMessage];
-                                $scope.dataIsOk = false;
                                 $scope.$emit('HidePreloader');
                                 $scope.$emit('scrollTop');
                             });
@@ -606,7 +599,9 @@ angular
                     $scope.returnToPrivacySettings = function () {//After pressing "Cancelar" button.
                         //Remove variables from memory
                         $scope.confirmDesactivation = false;
-                        $scope.dataIsOk = true;
+                        $scope.model.modelState.isValid = false;
+                        $scope.model.modelState.errorMessages = [];
+                        $scope.passwordChanged = false;
                         $scope.currentPage = 2; //Go back to initial view.
                     };
 
@@ -1258,17 +1253,24 @@ angular
                 };
 
                 $scope.changePassword = function () {
+                    //Initialize proper variables
                     $scope.currentPage = 3;
+                    $scope.model.modelState.isValid = false;
+                    $scope.model.modelState.errorMessages = [];
+                    $scope.passwordChanged = false;
                     document.querySelector("#option-position").scrollIntoView();
                 };
 
                 $scope.returnToProfile = function () {//After pressing "Terminar" button.
 
                     $scope.$emit('ShowPreloader');
+                    $location.path("Perfil/" + $scope.userId);
+                    /*
                     $timeout(function () {
                         $scope.$emit('ShowPreloader');
                         $location.path("Perfil/" + $scope.userId);
                     }, 1);
+                    */
                 };
 
                 Array.prototype.compare = function (testArr) {
@@ -1548,7 +1550,6 @@ angular
                             saveUser();
                         } else {
                             $scope.model.modelState.isValid = false;
-                            $scope.dataIsOk = false;
                             $scope.$emit('scrollTop');
                         }
                     }
