@@ -337,7 +337,8 @@ angular
 
         $routeProvider.when('/ZonaDeVuelo/ExploracionInicial/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
     
         $routeProvider.when('/ZonaDeVuelo/ExploracionInicialCierre', { 
@@ -422,7 +423,8 @@ angular
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisCualidades/Cierre', {
@@ -432,7 +434,8 @@ angular
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/MisGustos/Cierre', {
@@ -442,7 +445,8 @@ angular
     
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/ZonaDeVuelo/MisSuenos/Suena/Cierre', {
@@ -477,7 +481,8 @@ angular
     
         $routeProvider.when('/ZonaDeVuelo/ExploracionFinal/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/ZonaDeVuelo/ExploracionFinalCierre', {
@@ -499,7 +504,8 @@ angular
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicial/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionInicialCierre', {
@@ -514,7 +520,8 @@ angular
 
         $routeProvider.when('/ZonaDeNavegacion/Transformate/TusIdeas/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/ZonaDeNavegacion/Transformate/FuenteDeEnergia/:moodleid', {
@@ -564,7 +571,8 @@ angular
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/13y5/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html',
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ProyectaTuVida/MapaDeVida/:moodleid', {
@@ -609,7 +617,8 @@ angular
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionFinal/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/ZonaDeNavegacion/ExploracionFinalCierre', {
@@ -635,12 +644,14 @@ angular
 
         $routeProvider.when('/ZonaDeAterrizaje/ExploracionInicial/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/ZonaDeAterrizaje/ExploracionFinal/:activityIdentifier', {
             templateUrl: 'Templates/quiz.html', 
-            controller: 'stageQuizController'
+            controller: 'stageQuizController',
+            reloadOnSearch: false
         });
 
         $routeProvider.when('/ZonaDeAterrizaje/ForoCierre/:activityId/:discussionId/:moodleId', {
