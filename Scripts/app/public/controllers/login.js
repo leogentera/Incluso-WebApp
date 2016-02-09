@@ -360,7 +360,7 @@ angular
                             var activity = parentActivity.activities[j];
                             moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid, token, function() {}, function() {}, true);
                             if (courseModule.userInfo) {
-                                if (courseModule.id != 1039 || (courseModule.id == 1039 && activity.activityname.toLowerCase().indexOf("resultados") >= 0)) {
+                                if (courseModule.id != 1039 || (courseModule.id == 1039 && activity.activityname.toLowerCase().indexOf("resultadopruebas") >= 0)) {
                                     moodleFactory.Services.GetAsyncActivity(activity.coursemoduleid + "?userid=" + user, token, function() {}, function() {}, true);
                                 }
                             }
