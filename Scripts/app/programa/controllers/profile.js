@@ -120,6 +120,14 @@ angular
                         errorMessages: []
                     };
 
+                    //Get status of Quiz "Mis Cualidades"
+                    var activity71 = moodleFactory.Services.GetCacheJson("activity/71");
+                    $scope.status71 = parseInt(activity71.status, 10);
+
+                    //Get status of Quiz "Mis Gustos"
+                    var activity70 = moodleFactory.Services.GetCacheJson("activity/70");
+                    $scope.status70 = parseInt(activity70.status, 10);
+
                     $rootScope.pageName = "Mi perfil";
                     $rootScope.navbarBlue = false;
                     $rootScope.showToolbar = true;
@@ -1745,53 +1753,115 @@ angular
                     $scope.model.socialNetworks.splice(index, 1);
                 };
 
+                // **************** Section for MIS GUSTOS **************************
+                function canIErase(arr, index, quizStatus) {
+                    if (quizStatus === 1) {//Quiz is Finished.
+
+                        if (arr[index] == "") {//...You can delete this element...
+                            return true;
+                        } else {
+                            //Check if there are at lest 2 non null-string elements...
+                            var count = 0, i;
+                            for (i = 0; i < arr.length; i++) {
+                                if (arr[i] != "") {
+                                    count++;
+                                }
+                            }
+
+                            if (count > 1) {//...You can delete the item...
+                                return true;
+                            } else {//...You can NOT delete the item...
+                                return false;
+                            }
+                        }
+
+                    } else {
+                        return true;
+                    }
+                }
+
                 $scope.addFavoriteSports = function () {
                     $scope.model.favoriteSports.push("");
                 };
 
                 $scope.deleteFavoriteSports = function (index) {
-                    $scope.model.favoriteSports.splice(index, 1);
+
+                    var canI = canIErase($scope.model.favoriteSports, index, $scope.status70);
+
+                    if (canI) {
+                        $scope.model.favoriteSports.splice(index, 1);
+                    }
                 };
 
                 $scope.addArtisticActivities = function () {
-                    $scope.model.artisticActivities.push(new String());
+                    $scope.model.artisticActivities.push("");
                 };
 
                 $scope.deleteArtisticActivities = function (index) {
-                    $scope.model.artisticActivities.splice(index, 1);
+
+                    var canI = canIErase($scope.model.artisticActivities, index, $scope.status70);
+
+                    if (canI) {
+                        $scope.model.artisticActivities.splice(index, 1);
+                    }
                 };
 
                 $scope.addHobbies = function () {
-                    $scope.model.hobbies.push(new String());
+                    $scope.model.hobbies.push("");
                 };
 
                 $scope.deleteHobbies = function (index) {
-                    $scope.model.hobbies.splice(index, 1);
+
+                    var canI = canIErase($scope.model.hobbies, index, $scope.status70);
+
+                    if (canI) {
+                        $scope.model.hobbies.splice(index, 1);
+                    }
                 };
 
+                // **************** End of Section for MIS GUSTOS **************************
+
+                // **************** Section for MIS CUALIDADES **************************
                 $scope.addTalents = function () {
-                    $scope.model.talents.push(new String());
+                    $scope.model.talents.push("");
                 };
 
                 $scope.deleteTalents = function (index) {
-                    $scope.model.talents.splice(index, 1);
+
+                    var canI = canIErase($scope.model.talents, index, $scope.status71);
+
+                    if (canI) {
+                        $scope.model.talents.splice(index, 1);
+                    }
                 };
 
                 $scope.addValue = function () {
-                    $scope.model.values.push(new String());
+                    $scope.model.values.push("");
                 };
 
                 $scope.deleteValue = function (index) {
-                    $scope.model.values.splice(index, 1);
+
+                    var canI = canIErase($scope.model.values, index, $scope.status71);
+
+                    if (canI) {
+                        $scope.model.values.splice(index, 1);
+                    }
                 };
 
                 $scope.addHabilitie = function () {
-                    $scope.model.habilities.push(new String());
+                    $scope.model.habilities.push("");
                 };
 
                 $scope.deleteHabilitie = function (index) {
-                    $scope.model.habilities.splice(index, 1);
+
+                    var canI = canIErase($scope.model.habilities, index, $scope.status71);
+
+                    if (canI) {
+                        $scope.model.habilities.splice(index, 1);
+                    }
                 };
+
+                // **************** End of Section for MIS CUALIDADES **************************
 
                 $scope.addInspirationalCharacter = function () {
                     $scope.model.inspirationalCharacters.push({});
