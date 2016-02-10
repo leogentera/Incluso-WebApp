@@ -115,6 +115,144 @@ angular
                     false);  //it was true
             }
 
+            function syncWithProfile(arr1, arr2, arr3, obj, activityObject) {
+
+                var otherAnswerQuiz = JSON.parse(localStorage.getItem("otherAnswerQuiz/" + $scope.coursemoduleid));
+
+                if (otherAnswerQuiz === null) {//Create this object if it doesn't exists...
+                    var otherAnswerQuiz = obj;
+                }
+
+                //Modify & save the new "answerQuiz/71" object.
+                var codedAnswers = [[], [], []];
+                var j;
+
+                //  Check for arr1. ---------------------------------------------------------
+                var setOfLabels = [];
+                var otherFound = false;
+                var numAnswers = activityObject.questions[0].answers.length;
+
+                for (j = 0; j < numAnswers; j++) {//Get the labels of answers.
+                    var label = activityObject.questions[0].answers[j].answer;
+
+                    if (label != "Otro") {//Not including the "Otro" label.
+                        setOfLabels.push(label);
+                    }
+                }
+
+                for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of arr1...
+                    if (arr1.indexOf(setOfLabels[j]) > -1) {
+                        codedAnswers[0].push(1);
+                    } else {
+                        codedAnswers[0].push(0);
+                    }
+                }
+
+                for (j = 0; j < arr1.length; j++) {//Check if jth-talent is within setOfLabels...
+                    if (setOfLabels.indexOf(arr1[j]) == -1) {
+                        //It must be the string for the !Other" option...
+                        otherFound = true;
+                        otherAnswerQuiz[0].answers = [arr1[j]];
+                        codedAnswers[0].push(1);
+                        activityObject.questions[0].userAnswer = arr1.join("; ") + "; Otro";
+                        activityObject.questions[0].other = arr1[j];
+                        break;
+                    }
+                }
+
+                if (!otherFound) {
+                    otherAnswerQuiz[0].answers = [""];
+                    codedAnswers[0].push(0);
+                    activityObject.questions[0].userAnswer = arr1.join("; ");
+                    activityObject.questions[0].other = "";
+                }
+
+                //  Check for arr2.  ---------------------------------------------------------
+                var setOfLabels = [];
+                otherFound = false;
+                var numAnswers = activityObject.questions[1].answers.length;
+
+                for (j = 0; j < numAnswers; j++) {//Get the labels of answers.
+                    var label = activityObject.questions[1].answers[j].answer;
+
+                    if (label != "Otro") {//Not including the "Otro" label.
+                        setOfLabels.push(label);
+                    }
+                }
+
+                for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of arr2...
+                    if (arr2.indexOf(setOfLabels[j]) > -1) {
+                        codedAnswers[1].push(1);
+                    } else {
+                        codedAnswers[1].push(0);
+                    }
+                }
+
+                for (j = 0; j < arr2.length; j++) {//Check if jth-value is within setOfLabels...
+                    if (setOfLabels.indexOf(arr2[j]) == -1) {
+                        //It must be the string for the !Other" option...
+                        otherFound = true;
+                        otherAnswerQuiz[1].answers = [arr2[j]];
+                        codedAnswers[1].push(1);
+                        activityObject.questions[1].userAnswer = arr2.join("; ") + "; Otro";
+                        activityObject.questions[1].other = arr2[j];
+                        break;
+                    }
+                }
+
+                if (!otherFound) {
+                    otherAnswerQuiz[1].answers = [""];
+                    codedAnswers[1].push(0);
+                    activityObject.questions[1].userAnswer = arr2.join("; ");
+                    activityObject.questions[1].other = "";
+                }
+
+                //  Check for arr3.  ---------------------------------------------------------
+                var setOfLabels = [];
+                otherFound = false;
+                var numAnswers = activityObject.questions[2].answers.length;
+
+                for (j = 0; j < numAnswers; j++) {//Get the labels of answers.
+                    var label = activityObject.questions[2].answers[j].answer;
+
+                    if (label != "Otro") {//Not including the "Otro" label.
+                        setOfLabels.push(label);
+                    }
+                }
+
+                for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of arr3...
+                    if (arr3.indexOf(setOfLabels[j]) > -1) {
+                        codedAnswers[2].push(1);
+                    } else {
+                        codedAnswers[2].push(0);
+                    }
+                }
+
+                for (j = 0; j < arr3.length; j++) {//Check if jth-hability is within setOfLabels...
+                    if (setOfLabels.indexOf(arr3[j]) == -1) {
+                        //It must be the string for the !Other" option...
+                        otherFound = true;
+                        otherAnswerQuiz[2].answers = [arr3[j]];
+                        codedAnswers[2].push(1);
+                        activityObject.questions[2].userAnswer = arr3.join("; ") + "; Otro";
+                        activityObject.questions[2].other = arr3[j];
+                        break;
+                    }
+                }
+
+                if (!otherFound) {
+                    otherAnswerQuiz[2].answers = [""];
+                    codedAnswers[2].push(0);
+                    activityObject.questions[2].userAnswer = arr3.join("; ");
+                    activityObject.questions[2].other = "";
+                }
+
+                _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, codedAnswers);
+                _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.coursemoduleid, otherAnswerQuiz);
+                _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, activityObject);
+                $scope.activityObject = activityObject;
+            }
+
             function getDataAsync() {
                 // Quizes: 1001, 1005, 1006, 1007, 1009; 2001, 2009, 2025, 2023; 3101, 3601.
                 // Non editable quizzes: 1001, 1009, 2001, 2023, 3101, 3601.
@@ -150,7 +288,7 @@ angular
 
                     $scope.currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
                     $scope.userprofile = JSON.parse(localStorage.getItem("Perfil/" + localStorage.getItem("userId")));
-                    var otherAnswerQuiz = JSON.parse(_getItem("otherAnswerQuiz/" + $scope.coursemoduleid));
+                    var otherAnswerQuiz = JSON.parse(localStorage.getItem("otherAnswerQuiz/" + $scope.coursemoduleid));
 
                     $scope.activity = parentActivity;
                     $scope.parentActivity = parentActivity;
@@ -172,144 +310,13 @@ angular
                             var values = $scope.userprofile.values;
                             var habilities = $scope.userprofile.habilities;
 
-                            if (otherAnswerQuiz === null) {//Create this object if it doesn't exists...
-                                var otherAnswerQuiz = [
-                                    {"questionid": 16, "answers": []},
-                                    {"questionid": 17, "answers": []},
-                                    {"questionid": 18, "answers": []}
-                                ];
-                            }
+                            var obj = [
+                                {"questionid": 16, "answers": []},
+                                {"questionid": 17, "answers": []},
+                                {"questionid": 18, "answers": []}
+                            ];
 
-                            //Modify & save the new "answerQuiz/71" object.
-                            var codedAnswers = [[], [], []];
-                            var j;
-
-                            //  Check for Talents. ---------------------------------------------------------
-                            var setOfLabels = [];
-                            var otherFound = false;
-                            var numAnswers = activityObject.questions[0].answers.length;
-
-                            for (j = 0; j < numAnswers; j++) {//Get the labels of answers.
-                                var label = activityObject.questions[0].answers[j].answer;
-
-                                if (label != "Otro") {//Not including the "Otro" label.
-                                    setOfLabels.push(label);
-                                }
-                            }
-
-                            for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of talents...
-                                if (talents.indexOf(setOfLabels[j]) > -1) {
-                                    codedAnswers[0].push(1);
-                                } else {
-                                    codedAnswers[0].push(0);
-                                }
-                            }
-
-                            for (j = 0; j < talents.length; j++) {//Check if jth-talent is within setOfLabels...
-                                if (setOfLabels.indexOf(talents[j]) == -1) {
-                                    //It must be the string for the !Other" option...
-                                    otherFound = true;
-                                    otherAnswerQuiz[0].answers = [talents[j]];
-                                    codedAnswers[0].push(1);
-                                    activityObject.questions[0].userAnswer = talents.join("; ") + "; Otro";
-                                    activityObject.questions[0].other = talents[j];
-                                    break;
-                                }
-                            }
-
-                            if (!otherFound) {
-                                otherAnswerQuiz[0].answers = [""];
-                                codedAnswers[0].push(0);
-                                activityObject.questions[0].userAnswer = talents.join("; ");
-                                activityObject.questions[0].other = "";
-                            }
-
-                            //  Check for Values.  ---------------------------------------------------------
-                            var setOfLabels = [];
-                            otherFound = false;
-                            var numAnswers = activityObject.questions[1].answers.length;
-
-                            for (j = 0; j < numAnswers; j++) {//Get the labels of answers.
-                                var label = activityObject.questions[1].answers[j].answer;
-
-                                if (label != "Otro") {//Not including the "Otro" label.
-                                    setOfLabels.push(label);
-                                }
-                            }
-
-                            for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of values...
-                                if (values.indexOf(setOfLabels[j]) > -1) {
-                                    codedAnswers[1].push(1);
-                                } else {
-                                    codedAnswers[1].push(0);
-                                }
-                            }
-
-                            for (j = 0; j < values.length; j++) {//Check if jth-value is within setOfLabels...
-                                if (setOfLabels.indexOf(values[j]) == -1) {
-                                    //It must be the string for the !Other" option...
-                                    otherFound = true;
-                                    otherAnswerQuiz[1].answers = [values[j]];
-                                    codedAnswers[1].push(1);
-                                    activityObject.questions[1].userAnswer = values.join("; ") + "; Otro";
-                                    activityObject.questions[1].other = values[j];
-                                    break;
-                                }
-                            }
-
-                            if (!otherFound) {
-                                otherAnswerQuiz[1].answers = [""];
-                                codedAnswers[1].push(0);
-                                activityObject.questions[1].userAnswer = values.join("; ");
-                                activityObject.questions[1].other = "";
-                            }
-
-                            //  Check for Habilities.  ---------------------------------------------------------
-                            var setOfLabels = [];
-                            otherFound = false;
-                            var numAnswers = activityObject.questions[2].answers.length;
-
-                            for (j = 0; j < numAnswers; j++) {//Get the labels of answers.
-                                var label = activityObject.questions[2].answers[j].answer;
-
-                                if (label != "Otro") {//Not including the "Otro" label.
-                                    setOfLabels.push(label);
-                                }
-                            }
-
-                            for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of habilities...
-                                if (habilities.indexOf(setOfLabels[j]) > -1) {
-                                    codedAnswers[2].push(1);
-                                } else {
-                                    codedAnswers[2].push(0);
-                                }
-                            }
-
-                            for (j = 0; j < habilities.length; j++) {//Check if jth-hability is within setOfLabels...
-                                if (setOfLabels.indexOf(habilities[j]) == -1) {
-                                    //It must be the string for the !Other" option...
-                                    otherFound = true;
-                                    otherAnswerQuiz[2].answers = [habilities[j]];
-                                    codedAnswers[2].push(1);
-                                    activityObject.questions[2].userAnswer = habilities.join("; ") + "; Otro";
-                                    activityObject.questions[2].other = habilities[j];
-                                    break;
-                                }
-                            }
-
-                            if (!otherFound) {
-                                otherAnswerQuiz[2].answers = [""];
-                                codedAnswers[2].push(0);
-                                activityObject.questions[2].userAnswer = habilities.join("; ");
-                                activityObject.questions[2].other = "";
-                            }
-
-                            _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, codedAnswers);
-                            _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.coursemoduleid, otherAnswerQuiz);
-                            _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, activityObject);
-                            $scope.activityObject = activityObject;
-                            //console.log(JSON.stringify(otherAnswerQuiz));
-                            //console.log(JSON.stringify(codedAnswers));
+                            syncWithProfile(talents, values, habilities, obj, activityObject);
 
                         } else if ($scope.activity_identifier === 1006 && activityObject !== null) {//Mis Gustos.
 
@@ -317,144 +324,13 @@ angular
                             var artisticActivities = $scope.userprofile.artisticActivities;
                             var hobbies = $scope.userprofile.hobbies;
 
-                            if (otherAnswerQuiz === null) {//Create this object if it doesn't exists...
-                                var otherAnswerQuiz = [
-                                    {"questionid": 43, "answers": []},
-                                    {"questionid": 44, "answers": []},
-                                    {"questionid": 45, "answers": []}
-                                ];
-                            }
+                            var obj = [
+                                {"questionid": 43, "answers": []},
+                                {"questionid": 44, "answers": []},
+                                {"questionid": 45, "answers": []}
+                            ];
 
-                            //Modify & save the new "answerQuiz/70" object.
-                            var codedAnswers = [[], [], []];
-                            var j;
-
-                            //  Check for favoriteSports. ---------------------------------------------------------
-                            var setOfLabels = [];
-                            var otherFound = false;
-                            var numAnswers = activityObject.questions[0].answers.length;
-
-                            for (j = 0; j < numAnswers; j++) {
-                                var label = activityObject.questions[0].answers[j].answer;
-
-                                if (label != "Otro") {//Not including the "Otro" label.
-                                    setOfLabels.push(label);
-                                }
-                            }
-
-                            for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of favoriteSports...
-                                if (favoriteSports.indexOf(setOfLabels[j]) > -1) {
-                                    codedAnswers[0].push(1);
-                                } else {
-                                    codedAnswers[0].push(0);
-                                }
-                            }
-
-                            for (j = 0; j < favoriteSports.length; j++) {//Check if jth-favoriteSport is within setOfLabels...
-                                if (setOfLabels.indexOf(favoriteSports[j]) == -1) {
-                                    //It must be the string for the !Other" option...
-                                    otherFound = true;
-                                    otherAnswerQuiz[0].answers = [favoriteSports[j]];
-                                    codedAnswers[0].push(1);
-                                    activityObject.questions[0].userAnswer = favoriteSports.join("; ") + "; Otro";
-                                    activityObject.questions[0].other = favoriteSports[j];
-                                    break;
-                                }
-                            }
-
-                            if (!otherFound) {
-                                otherAnswerQuiz[0].answers = [""];
-                                codedAnswers[0].push(0);
-                                activityObject.questions[0].userAnswer = favoriteSports.join("; ");
-                                activityObject.questions[0].other = "";
-                            }
-
-                            //  Check for artisticActivities.  ---------------------------------------------------------
-                            var setOfLabels = [];
-                            otherFound = false;
-                            var numAnswers = activityObject.questions[1].answers.length;
-
-                            for (j = 0; j < numAnswers; j++) {
-                                var label = activityObject.questions[1].answers[j].answer;
-
-                                if (label != "Otro") {//Not including the "Otro" label.
-                                    setOfLabels.push(label);
-                                }
-                            }
-
-                            for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of artisticActivities...
-                                if (artisticActivities.indexOf(setOfLabels[j]) > -1) {
-                                    codedAnswers[1].push(1);
-                                } else {
-                                    codedAnswers[1].push(0);
-                                }
-                            }
-
-                            for (j = 0; j < artisticActivities.length; j++) {//Check if jth-artisticActivity is within setOfLabels...
-                                if (setOfLabels.indexOf(artisticActivities[j]) == -1) {
-                                    //It must be the string for the !Other" option...
-                                    otherFound = true;
-                                    otherAnswerQuiz[1].answers = [artisticActivities[j]];
-                                    codedAnswers[1].push(1);
-                                    activityObject.questions[1].userAnswer = artisticActivities.join("; ") + "; Otro";
-                                    activityObject.questions[1].other = artisticActivities[j];
-                                    break;
-                                }
-                            }
-
-                            if (!otherFound) {
-                                otherAnswerQuiz[1].answers = [""];
-                                codedAnswers[1].push(0);
-                                activityObject.questions[1].userAnswer = artisticActivities.join("; ");
-                                activityObject.questions[1].other = "";
-                            }
-
-                            //  Check for hobbies.  ---------------------------------------------------------
-                            var setOfLabels = [];
-                            otherFound = false;
-                            var numAnswers = activityObject.questions[2].answers.length;
-
-                            for (j = 0; j < numAnswers; j++) {
-                                var label = activityObject.questions[2].answers[j].answer;
-
-                                if (label != "Otro") {//Not including the "Otro" label.
-                                    setOfLabels.push(label);
-                                }
-                            }
-
-                            for (j = 0; j < setOfLabels.length; j++) {//Check if jth-label is an element of hobbies...
-                                if (hobbies.indexOf(setOfLabels[j]) > -1) {
-                                    codedAnswers[2].push(1);
-                                } else {
-                                    codedAnswers[2].push(0);
-                                }
-                            }
-
-                            for (j = 0; j < hobbies.length; j++) {//Check if jth-hobby is within setOfLabels...
-                                if (setOfLabels.indexOf(hobbies[j]) == -1) {
-                                    //It must be the string for the !Other" option...
-                                    otherFound = true;
-                                    otherAnswerQuiz[2].answers = [hobbies[j]];
-                                    codedAnswers[2].push(1);
-                                    activityObject.questions[2].userAnswer = hobbies.join("; ") + "; Otro";
-                                    activityObject.questions[2].other = hobbies[j];
-                                    break;
-                                }
-                            }
-
-                            if (!otherFound) {
-                                otherAnswerQuiz[2].answers = [""];
-                                codedAnswers[2].push(0);
-                                activityObject.questions[2].userAnswer = hobbies.join("; ");
-                                activityObject.questions[2].other = "";
-                            }
-
-                            _setLocalStorageJsonItem("answersQuiz/" + $scope.coursemoduleid, codedAnswers);
-                            _setLocalStorageJsonItem("otherAnswerQuiz/" + $scope.coursemoduleid, otherAnswerQuiz);
-                            _setLocalStorageJsonItem("activity/" + $scope.coursemoduleid, activityObject);
-                            $scope.activityObject = activityObject;
-                            //console.log(JSON.stringify(otherAnswerQuiz));
-                            //console.log(JSON.stringify(codedAnswers));
+                            syncWithProfile(favoriteSports, artisticActivities, hobbies, obj, activityObject);
                         }
 
                         localAnswers = JSON.parse(_getItem("answersQuiz/" + $scope.coursemoduleid));
@@ -479,6 +355,36 @@ angular
                             //moodleFactory.Services.GetAsyncActivityQuizInfo($scope.coursemoduleid, -1, $scope.currentUser.token, loadModelVariables, errorCallback, true);
                             $location.path('/');
                         } else {//The questions were found in Local Storage.
+
+                            //Load the arrays for 'Mis Cualidades' and 'Mis Gustos' from "Perfil/nnn".
+                            if ($scope.activity_identifier === 1005 && activityObject !== null) { //Mis Cualidades.
+                                var talents = $scope.userprofile.talents;
+                                var values = $scope.userprofile.values;
+                                var habilities = $scope.userprofile.habilities;
+
+                                var obj = [
+                                    {"questionid": 16, "answers": []},
+                                    {"questionid": 17, "answers": []},
+                                    {"questionid": 18, "answers": []}
+                                ];
+
+                                syncWithProfile(talents, values, habilities, obj, activityObject);
+
+                            } else if ($scope.activity_identifier === 1006 && activityObject !== null) {//Mis Gustos.
+
+                                var favoriteSports = $scope.userprofile.favoriteSports;
+                                var artisticActivities = $scope.userprofile.artisticActivities;
+                                var hobbies = $scope.userprofile.hobbies;
+
+                                var obj = [
+                                    {"questionid": 43, "answers": []},
+                                    {"questionid": 44, "answers": []},
+                                    {"questionid": 45, "answers": []}
+                                ];
+
+                                syncWithProfile(favoriteSports, artisticActivities, hobbies, obj, activityObject);
+                            }
+
                             loadModelVariables($scope.activityObject);
                         }
                     }
@@ -934,7 +840,7 @@ angular
                     //Section for Updating the "userAnswer" key on each question object for the Quiz.
                     var qIndex;
 
-                    for (qIndex = 0; qIndex < $scope.questionTypeCode.length; qIndex++ ) {
+                    for (qIndex = 0; qIndex < $scope.questionTypeCode.length; qIndex++) {
                         switch ($scope.questionTypeCode[qIndex]) {
 
                             case "binary":
@@ -956,7 +862,7 @@ angular
 
                                 for (k = 0; k < $scope.answers[qIndex].length; k++) {
 
-                                    userAnswerString +=  $scope.answers[qIndex][k];
+                                    userAnswerString += $scope.answers[qIndex][k];
 
                                     if (k < $scope.answers[qIndex].length - 1) {
                                         userAnswerString += "; ";
@@ -978,7 +884,7 @@ angular
                                 longUserAnswerString = 0;
 
                                 for (k = 0; k < $scope.answers[qIndex].length; k++) {
-                                    userAnswerString +=  $scope.answers[qIndex][k];
+                                    userAnswerString += $scope.answers[qIndex][k];
 
                                     if (k < $scope.answers[qIndex].length - 1) {
                                         userAnswerString += "; ";
@@ -1484,10 +1390,9 @@ angular
             };
 
         }
-    ]).
-    controller('OpeningStageController', function ($scope, $modalInstance, $routeParams) {
+    ]).controller('OpeningStageController', function ($scope, $modalInstance, $routeParams) {
 
-        if($routeParams.activityIdentifier){
+        if ($routeParams.activityIdentifier) {
             drupalFactory.Services.GetContent($routeParams.activityIdentifier, function (data, key) {
                 _loadedResources = true;
                 if (data.node != null) {
@@ -1506,8 +1411,7 @@ angular
     })
     .controller('videoCollapsiblePanelController', function ($scope) {
         $scope.isCollapsed = false;
-    }).
-    directive("owlCarousel", function () {
+    }).directive("owlCarousel", function () {
         //Source: http://stackoverflow.com/questions/29157623/owl-carousel-not-identifying-elements-of-ng-repeat
 
         return {
