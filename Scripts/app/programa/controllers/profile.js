@@ -81,7 +81,7 @@ angular
                 $scope.setToolbar($location.$$path, "");
 
                 if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
-                    $scope.currentPage = 2;
+                    $scope.currentPage = 1;
                 } else if (localStorage.getItem("profile_page")) {
                     $scope.currentPage = Number(localStorage.getItem("profile_page"));
                     localStorage.removeItem("profile_page");
@@ -451,7 +451,7 @@ angular
 
                     $scope.initDesactivation = function () {
                         //Initialize proper variables.
-                        $scope.currentPage = 4;
+                        $scope.currentPage = 3;
                         $scope.model.modelState.isValid = false;
                         $scope.model.modelState.errorMessages = [];
                         $scope.passwordChanged = false;
@@ -618,7 +618,7 @@ angular
                         $scope.model.modelState.isValid = false;
                         $scope.model.modelState.errorMessages = [];
                         $scope.passwordChanged = false;
-                        $scope.currentPage = 2; //Go back to initial view.
+                        $scope.currentPage = 1; //Go back to initial view.
                     };
 
                     //************ END OF SECTION FOR ACCOUNT MANAGEMENT
@@ -1272,7 +1272,7 @@ angular
 
                 $scope.changePassword = function () {
                     //Initialize proper variables
-                    $scope.currentPage = 3;
+                    $scope.currentPage = 2;
                     $scope.model.modelState.isValid = false;
                     $scope.model.modelState.errorMessages = [];
                     $scope.passwordChanged = false;
