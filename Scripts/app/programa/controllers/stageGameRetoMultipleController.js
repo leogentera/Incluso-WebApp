@@ -105,7 +105,7 @@ angular
                 };
                 var scoresActivity;
                 _.each($scope.retoMultipleActivities, function(activity){
-                  if (activity.name.toLowerCase().indexOf("puntaje") < 0 && activity.name.toLowerCase().indexOf("resultado") < 0) {
+                  if (activity.name.toLowerCase().indexOf("resultados") < 0) {
                     var subactivity = {
                         "estrellas": "300",
                         "subactividad": activity.name,
@@ -127,33 +127,43 @@ angular
                   }); 
                 }
             }
-
+         
             var setUserAnswers = function(request, scores, scoresActivity){
               var equalsLength = (scores.questions != null && scores.questions.length == scoresActivity.questions.length);
               var isFinished = equalsLength;
-              var scoreQuestions = (equalsLength ? scores.questions : scoresActivity.questions);
               scores.questions = (scores.questions ? scores.questions : scoresActivity.questions);
               _.each(request.subactividades, function(subactividad) {
                 var currentQuestions = _.filter(scores.questions, function(q) { return q.title.toLowerCase().indexOf(subactividad.subactividad.toLowerCase()) >= 0 });
                 _.each(currentQuestions, function(question) {
-                  var answer = fillArray("-1", "-1", 9);
-                  var isQuestion = question.title.toLowerCase().indexOf("personal") >= 0;
-                  if (question.title.toLowerCase().indexOf("puntaje") >= 0) {
-                    answer = (question.userAnswer == "" ? "0" : question.userAnswer);
-                    subactividad["puntajeFinal"] = answer;
-                  }else if(question.title.toLowerCase().indexOf("detalle") >= 0){
-                    answer = (question.userAnswer == "" ? answer : question.userAnswer.split(";"));
-                    if (!isQuestion) {   
-                      subactividad["detallePuntaje"] = answer;
+                  var questionTitle = question.title.toLowerCase();
+                  if (questionTitle.indexOf("tiempo") < 0 && questionTitle.indexOf("intento") < 0) {
+                    var answer;
+                    if (questionTitle.indexOf("detalle") >= 0) {
+                      answer = (question.userAnswer == "" ? fillArray("-1", "-1", 9) : question.userAnswer.split(";"));
+                    }else{
+                      answer = (question.userAnswer == "" ? "0" : question.userAnswer);
                     }
-                  }
-                  if (question.title.toLowerCase().indexOf("nivel") < 0) {
-                    question.userAnswer = getAnswer(answer, true);
-                    isFinished = isFinished && (typeof answer == 'object' ? !(_.countBy(answer, function(a){ return a==-1 ? 'unanswered':'answered' }).unanswered) : true);
+                    var detail = "";
+                    if (questionTitle.indexOf("puntaje") >= 0) {
+                      if (questionTitle.indexOf("detalle") >= 0) {
+                        detail = "detallePuntaje";
+                        question.userAnswer = getAnswer(answer, true);
+                        isFinished = isFinished && (typeof answer == 'object' ? !(_.countBy(answer, function(a){ return a==-1 ? 'unanswered':'answered' }).unanswered) : true);
+                      }else{
+                        detail = "puntajeFinal";
+                      }
+                    }else if (questionTitle.indexOf("nivel") >= 0){
+                      detail = "nivelInteligencia";
+                    }else if(questionTitle.indexOf("aciertos") >= 0){
+                      detail = "detalleAciertos";
+                    }else if (questionTitle.indexOf("preguntas") >= 0) {
+                      isFinished = isFinished && (typeof answer == 'object' ? !(_.countBy(answer, function(a){ return a==0 ? 'unanswered':'answered' }).unanswered) : true);
+                      detail = "detallePreguntas";
+                    }
+                    subactividad[detail] = answer;
                   }
                 });
               });
-              _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
               _setLocalStorageJsonItem("retoMultipleScores/" + $scope.user.id, scores);
               request.actividadTerminada = (isFinished ? "Si" : "No");
               $scope.$emit('HidePreloader');
@@ -163,7 +173,8 @@ angular
                 }
                 catch (e) {
                   successGame(
-                    {"pathImagen":"user_293.png", "imagenRecortada":"user_293.png", "userid":"103","resultado":[{"preguntas":[{"respuesta":"5","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"6","pregunta":"¿Disfruté este reto?"},{"respuesta":"7","pregunta":"¿Sé tocar algún instrumento?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"11800","detallePuntaje":["10000","1800","0","0","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:45:34","duración":"5","subactividad":"Musical","fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"5","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"8","pregunta":"¿Disfruté este reto?"},{"respuesta":"6","pregunta":"¿Me gusta enseñar lo que sé a otras personas?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"1","puntajeInterno":"20000","fechaFin":"11\/23\/2015 12:40:34","duración":"8","subactividad":"Interpersonal","detallePreguntas":["3","2","1","1","2","3","3","3"],"fechaInicio":"11\/23\/2015 12:32:34"},{"preguntas":[{"respuesta":"7","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"7","pregunta":"¿Disfruté este reto?"},{"respuesta":"7","pregunta":"¿Me gustaría tener mi propio jardín en el que pueda cultivar mis alimentos?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"3","puntajeInterno":"10000","detallePuntaje":["34","32","9500","434","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:50:34","duración":"5","subactividad":"Naturalista","fechaInicio":"11\/23\/2015 12:45:34"},{"preguntas":[{"respuesta":"2","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"3","pregunta":"¿Disfruté este reto?"},{"respuesta":"1","pregunta":"¿Me gusta evaluar las consecuencias antes de tomar una decisión?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"2220","fechaFin":"11\/23\/2015 12:45:34","duración":"5","subactividad":"Intrapersonal","detallePreguntas":["1","2","3","4","4","3","2","1"],"fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"4","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"5","pregunta":"¿Disfruté este reto?"},{"respuesta":"10","pregunta":"¿Me gusta ser la primera en bailar en las fiestas?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"10361","detallePuntaje":["250","100","11","1000","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:50:34","duración":"10","subactividad":"Corporal","fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"2","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"3","pregunta":"¿Disfruté este reto?"},{"respuesta":"4","pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"1","puntajeInterno":"4541","detallePuntaje":["3000","1000","500","30","10","1","0","0","0"],"fechaFin":"11\/23\/2015 12:40:34","duración":"2","subactividad":"Espacial","fechaInicio":"11\/23\/2015 12:38:34"},{"nivelInteligencia":"2","preguntas":[{"respuesta":"10","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"8","pregunta":"¿Disfruté este reto?"},{"respuesta":"10","pregunta":"¿Me gusta clasificar cosas por colores, tamaños y tener todo en orden?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"puntajeInterno":"9633","subactividad":"Matemática","duración":"22","fechaFin":"11\/23\/2015 18:33:56","detallePuntaje":["5800","5500","1000","0","0","0","0","0","0"],"fechaInicio":"11\/23\/2015 12:32:34"},{"preguntas":[{"respuesta":"3","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"2","pregunta":"¿Disfruté este reto?"},{"respuesta":"2","pregunta":"¿Me gustan los juegos de palabras y los crucigramas?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"110","detallePuntaje":["50","20","30","10","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:42:34","duración":"2","subactividad":"Lingüística","fechaInicio":"11\/23\/2015 12:40:34"}],"inteligenciaPredominante":[{"puntuación":"11800","inteligencia":"Naturalista"},{"puntuación":"20000","inteligencia":"Interpersonal"},{"puntuación":"10361","inteligencia":"Corporal"}],"userId":"196","escudo":"Naturalista","actividad":"Reto múltiple"}
+                    //{"pathImagen":"user_293.png","imagenRecortada":"user_293.png","userid":"103","resultado":[{"subactividad":"Musical","duración":"240","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"0","detallePuntaje":["10000","5000","0","0","0","0","0","0","0"],"tiempoIntentos":["30","20","0","0","0","0","0","0","0"],"detalleAciertos":["4","2","0","0","0","0","0","0","0"],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto se me facilita tocar un instrumento?","respuesta":"2"},{"pregunta":"¿Qué tanto me gusta usar audífonos todo el tiempo?","respuesta":"1"},{"pregunta":"¿Qué tanto me gusta aprenderme canciones e interpretarlas?","respuesta":"3"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Interpersonal","duración":"75","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"15500","detallePreguntas":["2","1","2","3","3","1","2","3"],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto me gusta ser el centro de atención de la fiesta?","respuesta":"2"},{"pregunta":"¿Qué tanto me gusta resolver los conflictos de mis amigos?","respuesta":"1"},{"pregunta":"¿Qué tanto me gusta relacionarme con todo tipo de personas?","respuesta":"4"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Naturalista","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"0","detalleAciertos":["-1","-1","-1","-1","-1","-1","-1","-1",],"detallePuntaje":["-1","-1","-1","-1","-1","-1","-1","-1",],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto me gusta observar el cielo, la luna y las estrellas?","respuesta":""},{"pregunta":"¿Qué tanto disfruto los documentales sobre el reino animal y su hábitat?","respuesta":""},{"pregunta":"¿Qué tanto me gusta reciclar y cuidar el medio ambiente?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Intrapersonal","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"0","detallePreguntas":["0","0","0","0","0","0","0",],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto me gusta reflexionar sobre mis sentimientos? ","respuesta":""},{"pregunta":"¿Qué tanto me gusta escribir un diario?","respuesta":""},{"pregunta":"¿Qué tanto me gusta jugar y hacer mis trabajos escolares solo?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Corporal","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"6800","detalleAciertos":["3","4","2","-1","-1","-1","-1","-1",],"tiempoIntentos":["1","3","2","-1","-1","-1","-1","-1",],"detallePuntaje":["-1","-1","-1","-1","-1","-1","-1","-1",],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto me gusta correr, brincar y saltar?","respuesta":""},{"pregunta":"¿Qué tanto disfrutas crear cosas con plastilina, barro, cera, etc.?","respuesta":""},{"pregunta":"¿Qué tanto me gusta bailar distintos ritmos?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Espacial","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"0","detalleAciertos":["-1","-1","-1","-1","-1","-1","-1","-1",],"tiempoIntentos":["-1","-1","-1","-1","-1","-1","-1","-1",],"detallePuntaje":["-1","-1","-1","-1","-1","-1","-1","-1",],"nivelInteligencia":"0","preguntas":[{"pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?","respuesta":""},{"pregunta":"¿Qué tanto se me facilita encontrar las diferencias entre dos imágenes que parecen similares?","respuesta":""},{"pregunta":"¿Qué tanto disfrutas leer mapas?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Matemática","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"0","detalleAciertos":["-1","-1","-1","-1","-1","-1","-1","-1",],"tiempoIntentos":["-1","-1","-1","-1","-1","-1","-1","-1",],"detallePuntaje":["-1","-1","-1","-1","-1","-1","-1","-1",],"nivelInteligencia":"0","preguntas":[{"pregunta":"¿Qué tanto se me facilita hacer rompecabezas y armar figuras?","respuesta":""},{"pregunta":"¿Qué tanto te entretienen los videojuegos?","respuesta":""},{"pregunta":" ¿Qué tanto se te facilitan los juegos de mesa (dominó, cartas, damas chinas, etc.)?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Lingüística","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"15500","detalleAciertos":["7","5","8","3","2","1","2","3","1"],"detallePuntaje":["3550","2000","4000","500","600","800","0","6000","550"],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto disfruto contar cuentos, chistes y chismes?","respuesta":"9"},{"pregunta":"¿Me gustan los juegos de palabras y los crucigramas? ","respuesta":"8"},{"pregunta":"¿Qué tanto participo o doy mi opinión en un debate o discusión?","respuesta":"7"},{"pregunta":"¿Te gustó la actividad?","respuesta":"No"}]}],"inteligenciaPredominante":[],"userId":"196","escudo":"","actividad":"Reto múltiple"}
+                    {"pathImagen":"user_293.png","imagenRecortada":"user_293.png","userid":"103","resultado":[{"subactividad":"Musical","duración":"240","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"15000","detallePuntaje":["10000","5000","0","0","0","0","0","0","0"],"tiempoIntentos":["30","20","0","0","0","0","0","0","0"],"detalleAciertos":["4","2","0","0","0","0","0","0","0"],"nivelInteligencia":"2","preguntas":[{"pregunta":"¿Qué tanto se me facilita tocar un instrumento?","respuesta":""},{"pregunta":"¿Qué tanto me gusta usar audífonos todo el tiempo?","respuesta":""},{"pregunta":"¿Qué tanto me gusta aprenderme canciones e interpretarlas?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Interpersonal","duración":"75","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"15500","detallePreguntas":["2","1","2","3","3","1","2","3"],"nivelInteligencia":"2","preguntas":[{"pregunta":"¿Qué tanto me gusta ser el centro de atención de la fiesta?","respuesta":""},{"pregunta":"¿Qué tanto me gusta resolver los conflictos de mis amigos?","respuesta":""},{"pregunta":"¿Qué tanto me gusta relacionarme con todo tipo de personas?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Naturalista","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"90000","detalleAciertos":["5000","10000","5000","3000","7000","40000","10000","10000","0"],"detallePuntaje":["2","3","13","23","1","6","5","8","0"],"nivelInteligencia":"3","preguntas":[{"pregunta":"¿Qué tanto me gusta observar el cielo, la luna y las estrellas?","respuesta":"8"},{"pregunta":"¿Qué tanto disfruto los documentales sobre el reino animal y su hábitat?","respuesta":"8"},{"pregunta":"¿Qué tanto me gusta reciclar y cuidar el medio ambiente?","respuesta":"10"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Intrapersonal","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"25600","detallePreguntas":["2","3","4","5","6","7","8","9"],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto me gusta reflexionar sobre mis sentimientos? ","respuesta":"2"},{"pregunta":"¿Qué tanto me gusta escribir un diario?","respuesta":"3"},{"pregunta":"¿Qué tanto me gusta jugar y hacer mis trabajos escolares solo?","respuesta":"2"},{"pregunta":"¿Te gustó la actividad?","respuesta":"No"}]},{"subactividad":"Corporal","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"6800","detalleAciertos":["3","4","2","1","1","5","0","0","0"],"tiempoIntentos":["1","3","2","3","6","3","0","0","0"],"detallePuntaje":["1800","2000","500","500","1550","450","0","0","0"],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto me gusta correr, brincar y saltar?","respuesta":"6"},{"pregunta":"¿Qué tanto disfrutas crear cosas con plastilina, barro, cera, etc.?","respuesta":"5"},{"pregunta":"¿Qué tanto me gusta bailar distintos ritmos?","respuesta":"4"},{"pregunta":"¿Te gustó la actividad?","respuesta":"No"}]},{"subactividad":"Espacial","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"100","detalleAciertos":["1","2","4","0","0","0","0","0","0"],"tiempoIntentos":["2","3","1","0","0","0","0","0","0"],"detallePuntaje":["20","30","50","0","0","0","0","0","0"],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?","respuesta":"2"},{"pregunta":"¿Qué tanto se me facilita encontrar las diferencias entre dos imágenes que parecen similares?","respuesta":"1"},{"pregunta":"¿Qué tanto disfrutas leer mapas?","respuesta":"2"},{"pregunta":"¿Te gustó la actividad?","respuesta":"No"}]},{"subactividad":"Matemática","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"85000","detalleAciertos":["10","9","8","0","0","0","5","2","2"],"tiempoIntentos":["1","2","3","1","1","1","2","2","4"],"detallePuntaje":["15000","15000","15000","0","0","0","15000","15000","10000"],"nivelInteligencia":"3","preguntas":[{"pregunta":"¿Qué tanto se me facilita hacer rompecabezas y armar figuras?","respuesta":"10"},{"pregunta":"¿Qué tanto te entretienen los videojuegos?","respuesta":"10"},{"pregunta":" ¿Qué tanto se te facilitan los juegos de mesa (dominó, cartas, damas chinas, etc.)?","respuesta":"10"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Lingüística","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"15500","detalleAciertos":["7","5","8","3","2","1","0","3","1"],"detallePuntaje":["3550","2000","4000","500","600","800","0","6000","550"],"nivelInteligencia":"2","preguntas":[{"pregunta":"¿Qué tanto disfruto contar cuentos, chistes y chismes?","respuesta":""},{"pregunta":"¿Me gustan los juegos de palabras y los crucigramas? ","respuesta":""},{"pregunta":"¿Qué tanto participo o doy mi opinión en un debate o discusión?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]}],"inteligenciaPredominante":[{"inteligencia":"Intrapersonal","puntuación":"25600"},{"inteligencia":"Matemático","puntuación":"85000"},{"inteligencia":"Naturalista","puntuación":"90000"}],"userId":"196","escudo":"Matemático","actividad":"Reto múltiple"}
                     );
                 }
               }
@@ -174,7 +185,7 @@ angular
                 }
                 catch (e) {
                   successGame(
-                    {"userid":"103","resultado":[{"preguntas":[{"respuesta":"5","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"6","pregunta":"¿Disfruté este reto?"},{"respuesta":"7","pregunta":"¿Sé tocar algún instrumento?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"11800","detallePuntaje":["10000","1800","0","0","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:45:34","duración":"5","subactividad":"Musical","fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"5","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"8","pregunta":"¿Disfruté este reto?"},{"respuesta":"6","pregunta":"¿Me gusta enseñar lo que sé a otras personas?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"1","puntajeInterno":"20000","fechaFin":"11\/23\/2015 12:40:34","duración":"8","subactividad":"Interpersonal","detallePreguntas":["3","2","1","1","2","3","3","3"],"fechaInicio":"11\/23\/2015 12:32:34"},{"preguntas":[{"respuesta":"7","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"7","pregunta":"¿Disfruté este reto?"},{"respuesta":"7","pregunta":"¿Me gustaría tener mi propio jardín en el que pueda cultivar mis alimentos?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"3","puntajeInterno":"10000","detallePuntaje":["34","32","9500","434","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:50:34","duración":"5","subactividad":"Naturalista","fechaInicio":"11\/23\/2015 12:45:34"},{"preguntas":[{"respuesta":"2","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"3","pregunta":"¿Disfruté este reto?"},{"respuesta":"1","pregunta":"¿Me gusta evaluar las consecuencias antes de tomar una decisión?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"2220","fechaFin":"11\/23\/2015 12:45:34","duración":"5","subactividad":"Intrapersonal","detallePreguntas":["1","2","3","4","4","3","2","1"],"fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"4","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"5","pregunta":"¿Disfruté este reto?"},{"respuesta":"10","pregunta":"¿Me gusta ser la primera en bailar en las fiestas?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"10361","detallePuntaje":["250","100","11","1000","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:50:34","duración":"10","subactividad":"Corporal","fechaInicio":"11\/23\/2015 12:40:34"},{"preguntas":[{"respuesta":"2","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"3","pregunta":"¿Disfruté este reto?"},{"respuesta":"4","pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"1","puntajeInterno":"4541","detallePuntaje":["3000","1000","500","30","10","1","0","0","0"],"fechaFin":"11\/23\/2015 12:40:34","duración":"2","subactividad":"Espacial","fechaInicio":"11\/23\/2015 12:38:34"},{"nivelInteligencia":"2","preguntas":[{"respuesta":"10","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"8","pregunta":"¿Disfruté este reto?"},{"respuesta":"10","pregunta":"¿Me gusta clasificar cosas por colores, tamaños y tener todo en orden?"},{"respuesta":"Si","pregunta":"¿Te gustó la actividad?"}],"puntajeInterno":"9633","subactividad":"Matemática","duración":"22","fechaFin":"11\/23\/2015 18:33:56","detallePuntaje":["5800","5500","1000","0","0","0","0","0","0"],"fechaInicio":"11\/23\/2015 12:32:34"},{"preguntas":[{"respuesta":"3","pregunta":"¿Me fue fácil completar el reto?"},{"respuesta":"2","pregunta":"¿Disfruté este reto?"},{"respuesta":"2","pregunta":"¿Me gustan los juegos de palabras y los crucigramas?"},{"respuesta":"No","pregunta":"¿Te gustó la actividad?"}],"nivelInteligencia":"2","puntajeInterno":"110","detallePuntaje":["50","20","30","10","0","0","0","0","0"],"fechaFin":"11\/23\/2015 12:42:34","duración":"2","subactividad":"Lingüística","fechaInicio":"11\/23\/2015 12:40:34"}],"inteligenciaPredominante":[{"puntuación":"11800","inteligencia":"Naturalista"},{"puntuación":"20000","inteligencia":"Interpersonal"},{"puntuación":"10361","inteligencia":"Corporal"}],"userId":"196","escudo":"Naturalista","actividad":"Reto múltiple"}
+                    {"pathImagen":"user_293.png","imagenRecortada":"user_293.png","userid":"103","resultado":[{"subactividad":"Musical","duración":"240","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"0","detallePuntaje":["10000","5000","0","0","0","0","0","0","0"],"tiempoIntentos":["30","20","0","0","0","0","0","0","0"],"detalleAciertos":["4","2","0","0","0","0","0","0","0"],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto se me facilita tocar un instrumento?","respuesta":"2"},{"pregunta":"¿Qué tanto me gusta usar audífonos todo el tiempo?","respuesta":"1"},{"pregunta":"¿Qué tanto me gusta aprenderme canciones e interpretarlas?","respuesta":"3"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Interpersonal","duración":"75","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"15500","detallePreguntas":["2","1","2","3","3","1","2","3"],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto me gusta ser el centro de atención de la fiesta?","respuesta":"2"},{"pregunta":"¿Qué tanto me gusta resolver los conflictos de mis amigos?","respuesta":"1"},{"pregunta":"¿Qué tanto me gusta relacionarme con todo tipo de personas?","respuesta":"4"},{"pregunta":"¿Te gustó la actividad?","respuesta":"Si"}]},{"subactividad":"Naturalista","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"0","detalleAciertos":["-1","-1","-1","-1","-1","-1","-1","-1",],"detallePuntaje":["-1","-1","-1","-1","-1","-1","-1","-1",],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto me gusta observar el cielo, la luna y las estrellas?","respuesta":""},{"pregunta":"¿Qué tanto disfruto los documentales sobre el reino animal y su hábitat?","respuesta":""},{"pregunta":"¿Qué tanto me gusta reciclar y cuidar el medio ambiente?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Intrapersonal","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"0","detallePreguntas":["0","0","0","0","0","0","0",],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto me gusta reflexionar sobre mis sentimientos? ","respuesta":""},{"pregunta":"¿Qué tanto me gusta escribir un diario?","respuesta":""},{"pregunta":"¿Qué tanto me gusta jugar y hacer mis trabajos escolares solo?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Corporal","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"6800","detalleAciertos":["3","4","2","-1","-1","-1","-1","-1",],"tiempoIntentos":["1","3","2","-1","-1","-1","-1","-1",],"detallePuntaje":["-1","-1","-1","-1","-1","-1","-1","-1",],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto me gusta correr, brincar y saltar?","respuesta":""},{"pregunta":"¿Qué tanto disfrutas crear cosas con plastilina, barro, cera, etc.?","respuesta":""},{"pregunta":"¿Qué tanto me gusta bailar distintos ritmos?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Espacial","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"0","detalleAciertos":["-1","-1","-1","-1","-1","-1","-1","-1",],"tiempoIntentos":["-1","-1","-1","-1","-1","-1","-1","-1",],"detallePuntaje":["-1","-1","-1","-1","-1","-1","-1","-1",],"nivelInteligencia":"0","preguntas":[{"pregunta":"¿Cuándo me dirijo a un lugar nuevo, me es fácil ubicarme?","respuesta":""},{"pregunta":"¿Qué tanto se me facilita encontrar las diferencias entre dos imágenes que parecen similares?","respuesta":""},{"pregunta":"¿Qué tanto disfrutas leer mapas?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Matemática","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"0","detalleAciertos":["-1","-1","-1","-1","-1","-1","-1","-1",],"tiempoIntentos":["-1","-1","-1","-1","-1","-1","-1","-1",],"detallePuntaje":["-1","-1","-1","-1","-1","-1","-1","-1",],"nivelInteligencia":"0","preguntas":[{"pregunta":"¿Qué tanto se me facilita hacer rompecabezas y armar figuras?","respuesta":""},{"pregunta":"¿Qué tanto te entretienen los videojuegos?","respuesta":""},{"pregunta":" ¿Qué tanto se te facilitan los juegos de mesa (dominó, cartas, damas chinas, etc.)?","respuesta":""},{"pregunta":"¿Te gustó la actividad?","respuesta":""}]},{"subactividad":"Lingüística","duración":"5","fechaInicio":"2015/07/15 14:23:12","fechaFin":"2015/07/15 14:28:12","puntajeInterno":"15500","detalleAciertos":["7","5","8","3","2","1","2","3","1"],"detallePuntaje":["3550","2000","4000","500","600","800","0","6000","550"],"nivelInteligencia":"1","preguntas":[{"pregunta":"¿Qué tanto disfruto contar cuentos, chistes y chismes?","respuesta":"9"},{"pregunta":"¿Me gustan los juegos de palabras y los crucigramas? ","respuesta":"8"},{"pregunta":"¿Qué tanto participo o doy mi opinión en un debate o discusión?","respuesta":"7"},{"pregunta":"¿Te gustó la actividad?","respuesta":"No"}]}],"inteligenciaPredominante":[],"userId":"196","escudo":"","actividad":"Reto múltiple"}
                   );
                }
               }
@@ -187,14 +198,31 @@ angular
             
             var successGame = function (data){
                 var shield = "";
-                var quizzesRequests = [];
+                var subactivitiesCompleted = [];
                 var predominantes = [];
+                $scope.activitiesLength = 0;
+                var completedActivities = {"completed": 0};
+                var challengesStructure = [{"name":"Naturalista", "type":"1"},{"name":"Lingüística", "type":"1"},{"name":"Corporal", "type":"2"},{"name":"Espacial", "type":"2"},{"name":"Musical", "type":"2"},{"name":"Matemática", "type":"2"},{"name":"Intrapersonal", "type":"3"},{"name":"Interpersonal", "type":"3"}];
+                var request = {
+                  "userid": $scope.user.id,
+                  "moduleid": "",
+                  "type":"assign",
+                  "activities": [],
+                  "results": {}
+                };
+                var scoreRequest = {
+                  "type":"quiz",
+                  "intelligences":[],
+                  "like_status":1,
+                  "moduleid":"",
+                  "datestart": moment(Date.now()).unix(),
+                  "dateend": moment(Date.now()).unix()
+                };
 
                 if (data.escudo != "") {
                   shield = data.escudo;
                   shield = ( shield.toLowerCase().indexOf('matem') > -1 ? 'Matematica' : ( shield.toLowerCase().indexOf('ling') > -1 ? 'Linguistica' : shield ));
                 }
-
                 if (data.inteligenciaPredominante) {
                   for (var i = 0; i < data.inteligenciaPredominante.length; i++) {
                     if (data.inteligenciaPredominante[i]) {
@@ -207,89 +235,88 @@ angular
                     }
                   }
                 }
-
-                var scoreEntry = {
-                  "userid": $scope.user.id,
-                  "answers": [],
-                  "coursemoduleid": "",
-                  "like_status": 1,
-                  "startingTime": getdatenow(),
-                  "endingTime": getdatenow(),
-                  "quiz_answered": false
-                };
-                $scope.activitiesLength = 0;
-                var completedActivities = {"completed" : 0};
                 if (data.resultado) {
                   var scoreQuiz = moodleFactory.Services.GetCacheJson("retoMultipleScores/" + $scope.user.id);
                   scoreQuiz = (!scoreQuiz || !scoreQuiz.questions ? _find($scope.retoMultipleActivities, function(a){ a.name.toLowerCase().indexOf("resultados") >= 0 }) : scoreQuiz );
-                  _.each($scope.retoMultipleActivities, function(r){ 
-                    var inteligencia = _.find(data.resultado,function(a){ return r.name.toLowerCase().indexOf(a.subactividad.toLowerCase()) > -1; });
+                  request.moduleid = $scope.retosMultipleChallenge.coursemoduleid;
+                  _.each($scope.retoMultipleActivities, function(r){
+                    var inteligencia = _.find(data.resultado, function(a){ return r.name.toLowerCase().indexOf(a.subactividad.toLowerCase()) > -1; });
                     if(inteligencia){
-                      inteligencia.puntajeInterno = (inteligencia.puntajeInterno == "" ? 0 : inteligencia.puntajeInterno);
-                      var isQuestion = (inteligencia.subactividad.toLowerCase().indexOf("personal") >= 0);
-                      var isAnswered = _.countBy((isQuestion ? inteligencia.detallePreguntas : inteligencia.detallePuntaje ), function(p){ return p == (isQuestion ? 0 : -1 ) ? 'unanswered' : 'answered' });
-                      var answer = (isQuestion ? fillArray(inteligencia.puntajeInterno, ( !isAnswered.unanswered ? "0" : "-1"), 9) : inteligencia.detallePuntaje);
-                      _.each(scoreQuiz.questions, function(question){
-                        var questionTitle = question.title.toLowerCase();
-                        if (questionTitle.indexOf(r.name.toLowerCase()) >= 0) {
-                          if (questionTitle.indexOf("puntaje") >= 0 ) {
-                            question.userAnswer = (question.userAnswer > 0 ? question.userAnswer : inteligencia.puntajeInterno);
-                            inteligencia.puntajeInterno = question.userAnswer;
-                            answer = (isQuestion ? fillArray(inteligencia.puntajeInterno, ( inteligencia.puntajeInterno > 0 ? "0" : "-1"), 9) : answer);
-                          }
-                          question.userAnswer = (questionTitle.indexOf("puntaje") >= 0 ? question.userAnswer : 
-                            ( questionTitle.indexOf("nivel") >= 0 ? inteligencia.nivelInteligencia : getAnswer(answer,true)));
-                        }
-                      });
-                      if (isQuestion && isAnswered.unanswered > 0 && inteligencia.puntajeInterno > 0) {
-                        isAnswered["unanswered"] = 0;
-                        isAnswered["answered"] = 8;
+                      var intelligence = {
+                        "moduleid": r.coursemoduleid,
+                        "answers":[]
                       }
-                      scoreEntry.quiz_answered = scoreEntry.quiz_answered || isAnswered.answered > 0;
-                      completedActivities.completed += (isAnswered.unanswered > 0 ? 0 : 1 );
-                      $scope.activitiesLength++;
-                      scoreEntry.answers.push(inteligencia.puntajeInterno);
-                      scoreEntry.answers.push(getAnswer(answer, false));
-                      scoreEntry.answers.push(inteligencia.nivelInteligencia);
+                      var activityRequest = {
+                          "answers": [],
+                          "like_status": (inteligencia.preguntas[3].respuesta == "No" ? 0 : 1),
+                          "moduleid": r.coursemoduleid,
+                          "datestart": (inteligencia.fechaInicio != "" ? moment(new Date(inteligencia.fechaInicio)).unix() : ""),
+                          "dateend": (inteligencia.fechaFin != "" ? moment(new Date(inteligencia.fechaFin)).unix() : ""),
+                          "type":"quiz",
+                          "quiz_answered": true
+                      }
+                      for (var i = 0; i < inteligencia.preguntas.length - 1; i++) {
+                          r.questions[i]["userAnswer"] = (r.questions[i]["userAnswer"] == "" ? inteligencia.preguntas[i].respuesta : r.questions[i]["userAnswer"] );
+                          activityRequest.answers.push(r.questions[i]["userAnswer"]);
+                          activityRequest.quiz_answered = (r.questions[i]["userAnswer"] != "" && activityRequest.quiz_answered);
+                      }
+                      r.questions[3]["userAnswer"] = !inteligencia.nivelInteligencia || inteligencia.nivelInteligencia == "" ? "0" : inteligencia.nivelInteligencia;
+                      activityRequest.answers.push(r.questions[3]["userAnswer"]);
+                      var isAlto = _.find(predominantes, function(p) { return p == inteligencia.subactividad; });
+                      r.score = (isAlto) ? 3 : 1;
+                      r.total_score = inteligencia.puntajeInterno;
+                      if (activityRequest.quiz_answered) {
+                        subactivitiesCompleted.push(activityRequest.moduleid);
+                        delete activityRequest.quiz_answered;
+                        request.activities.push(activityRequest);
+                      }
+                      var challenge = _.find(challengesStructure, function(c){ return c.name.toLowerCase().indexOf(inteligencia.subactividad.toLowerCase()) >= 0; });
+                      if (challenge) {
+                        var detail = (challenge.type == "3" ? "detallePreguntas" : "detallePuntaje");
+                        var isAnswered = _.countBy(inteligencia[detail], function(p){ return p == (challenge.type == "3" ? 0 : -1 ) ? 'unanswered' : 'answered' });
+                        inteligencia.puntajeInterno = (!inteligencia.puntajeInterno || inteligencia.puntajeInterno == "" ? "0" : inteligencia.puntajeInterno);
+                        intelligence.answers.push(inteligencia.puntajeInterno);
+                        intelligence.answers.push(getAnswer(inteligencia[detail], false));
+                        if (challenge.type == "1" || challenge.type == "2") {
+                          intelligence.answers.push(getAnswer(inteligencia.detalleAciertos, false));
+                          if (challenge.type == "2") {
+                            intelligence.answers.push(getAnswer(inteligencia.tiempoIntentos, false));
+                          }
+                        }
+
+                        var currentQuestions = _.filter(scoreQuiz.questions, function(q) { return q.title.toLowerCase().indexOf(inteligencia.subactividad.toLowerCase()) >= 0 });
+                        _.each(currentQuestions, function(question){
+                          var questionTitle = question.title.toLowerCase();
+                          var answer;
+                          if (questionTitle.indexOf("puntaje") >= 0) {
+                            if (questionTitle.indexOf("detalle") >= 0) {
+                              answer = getAnswer(getHighestDetail(inteligencia.detallePuntaje, question.userAnswer, -1), true);
+                            }else{
+                              answer = (question.userAnswer > 0 ? question.userAnswer : inteligencia.puntajeInterno);
+                            }
+                          }else if (questionTitle.indexOf("nivel") >= 0){
+                            answer = (question.userAnswer > 0 ? question.userAnswer : inteligencia.nivelInteligencia);
+                          }else if(questionTitle.indexOf("aciertos") >= 0){
+                            answer = getAnswer(getHighestDetail(inteligencia.detalleAciertos, question.userAnswer, -1), true);
+                          }else if (questionTitle.indexOf("preguntas") >= 0) {
+                            answer = getAnswer(getHighestDetail(inteligencia.detallePreguntas, question.userAnswer, 0), true);
+                          }else if (questionTitle.indexOf("tiempo") >= 0){
+                            answer = getAnswer(getHighestDetail(inteligencia.tiempoIntentos, question.userAnswer, -1), true);
+                          }
+                          question.userAnswer = answer;
+                        });
+                        completedActivities.completed += (challenge.type == "3" ? (isAnswered.answered > 0 ? 1 : 0) : (isAnswered.unanswered > 0 ? 0 : 1));
+                        $scope.activitiesLength++;
+                        scoreRequest.intelligences.push(intelligence);
+                      }
                     }else if (r.name.toLowerCase().indexOf("resultados") >= 0){
-                      scoreEntry.coursemoduleid = r.coursemoduleid;
+                      scoreRequest.moduleid = r.coursemoduleid;
                     }
                   });
-                  _setLocalStorageJsonItem("retoMultipleScores/" + $scope.user.id, scoreQuiz);
-                  quizzesRequests.push(scoreEntry);
-                  for (var i = 0; i < data.resultado.length; i++) {
-                    var logEntry = {
-                      "userid": $scope.user.id,
-                      "answers": [],
-                      "coursemoduleid": "",
-                      "like_status": "",
-                      "startingTime":"",
-                      "endingTime": "",
-                      "quiz_answered": true
-                    };
-                    var activity = _.find($scope.retoMultipleActivities, function(a){ return a.name == data.resultado[i].subactividad; });
-                    if (activity) {
-                      for (var j = 0; j < data.resultado[i].preguntas.length - 1; j++) {
-                          activity.questions[j]["userAnswer"] = (activity.questions[j]["userAnswer"] == "" ? data.resultado[i].preguntas[j].respuesta : activity.questions[j]["userAnswer"] );
-                          logEntry.answers.push(activity.questions[j]["userAnswer"]);
-                          logEntry.quiz_answered = (activity.questions[j]["userAnswer"] != "" && logEntry.quiz_answered);
-                      }
-                      activity.questions[3]["userAnswer"] = data.resultado[i].nivelInteligencia;
-                      
-                      logEntry.answers.push(data.resultado[i].nivelInteligencia);
-                      var isAlto = _.find(predominantes, function(p) {
-                          return p == data.resultado[i].subactividad
-                      });
-                      activity.score = (isAlto) ? 3 : 1;
-                      activity.total_score = data.resultado[i].puntajeInterno;
-                      logEntry.coursemoduleid = activity.coursemoduleid;
-                      logEntry.like_status = (data.resultado[i].preguntas[3].respuesta == "No" ? 0 : 1);
-                      logEntry.startingTime = data.resultado[i].fechaInicio;
-                      logEntry.endingTime = data.resultado[i].fechaFin;
-                      quizzesRequests.push(logEntry);
-                    }
-                  }
                 }
+                request.results = scoreRequest;
+                _setLocalStorageJsonItem("retoMultipleScores/" + $scope.user.id, scoreQuiz);
+
                 $scope.IsComplete = $scope.retoMultipleActivities && 
                                     completedActivities.completed && 
                                     $scope.retoMultipleActivities && 
@@ -299,12 +326,6 @@ angular
                 var userCourseUpdated = JSON.parse(localStorage.getItem("usercourse"));
                 var parentActivityIdentifier = $routeParams.moodleid;
                 var parentActivity = getActivityByActivity_identifier(parentActivityIdentifier, userCourseUpdated);
-                var subactivitiesCompleted = [];
-                _.each(quizzesRequests, function(q){
-                  if(q.quiz_answered){
-                    subactivitiesCompleted.push(q.coursemoduleid);
-                  }
-                });
 
                 if (parentActivity.status == 0 && $scope.IsComplete) {
                   if (shield != "" && $scope.profile) {
@@ -338,14 +359,14 @@ angular
                   }
                   if (data.imagenRecortada && data.imagenRecortada != "") {
                     var pathImagen = "assets/avatar/avatar_" + $scope.user.id + ".png";
-                    encodeImageUri(pathImagen, function (b64) {
+                    encodeImageWithUri(pathImagen, "image/png", function(b64){
                       var avatarInfo = [{
                         "userid": $scope.user.id,
                         "filecontent": b64,
                         "onlypicture": true
                       }];
                       moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function(){console.log("success")}, function(){console.log("failure")});
-                    });
+                    })
                   }else{
                     _loadedResources = false;
                     _pageLoaded = true;
@@ -371,59 +392,52 @@ angular
                     updateMultipleSubactivityStars(parentActivity, subactivitiesCompleted);
                   }
                 }
-                userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted, true, $scope.IsComplete);
-                userCourseUpdated.isMultipleChallengeActivityFinished = $scope.IsComplete;
-                $scope.$emit('ShowPreloader');
-                for(i = 0; i < quizzesRequests.length; i++){
-                  if (quizzesRequests[i].quiz_answered) {
-                    var userActivity = _.find(parentActivity.activities, function(a){ return a.coursemoduleid == quizzesRequests[i].coursemoduleid });
-                    $scope.saveQuiz(userActivity, quizzesRequests[i], userCourseUpdated, subactivitiesCompleted);
+                if (completedActivities.completed && completedActivities.completed > 0) {
+                  userCourseUpdated = updateMultipleSubActivityStatuses(parentActivity, subactivitiesCompleted, true, $scope.IsComplete);
+                  userCourseUpdated.isMultipleChallengeActivityFinished = $scope.IsComplete;
+                  $scope.$emit('ShowPreloader');
+                  if (completedActivities.completed && completedActivities.completed > 1) {
+                    $scope.saveQuiz(request, userCourseUpdated);
                   }
-                }
-                _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
-                _setLocalStorageJsonItem("usercourse", userCourseUpdated);
+                  saveLocalStorageActivities($scope.retoMultipleActivities);
+                  _setLocalStorageJsonItem("retoMultipleActivities", $scope.retoMultipleActivities);
+                  _setLocalStorageJsonItem("usercourse", userCourseUpdated);
+              }else{
+                $timeout(function(){
+                  $scope.$apply(function() {
+                      $location.path('/ZonaDeVuelo/Dashboard/1/2');
+                  });
+                }, 1000);
+              }
             }
 
-            $scope.saveQuiz = function(activity, quiz, userCourseUpdated, activitiesFinished) {
-              var results = {
-                "userid": currentUser.userId,
-                "answers": quiz.answers,
-                "like_status": quiz.like_status,
-                "activityidnumber": activity.coursemoduleid,
-                "dateStart": quiz.startingTime,
-                "dateEnd": quiz.endingTime
-              };
-              var activityModel = {
-                "usercourse": userCourseUpdated,
-                "coursemoduleid": activity.coursemoduleid,
-                "answersResult": results,
-                "userId": quiz.userid,
-                "token": currentUser.token,
-                "activityType": "Quiz"
-              };
-              _endActivity(activityModel, function(){
-                activitiesPosted++;
-                if (activitiesPosted == activitiesFinished.length) {
-                  if ($routeParams.retry) {
-                    _forceUpdateConnectionStatus(function() {
-                        if (_isDeviceOnline) {
-                            moodleFactory.Services.ExecuteQueue();
-                        }
-                    }, function() {} );
-                  }
-                  $timeout(function(){
-                    $scope.$emit('HidePreloader');
-                    var url = "";
-                    if ($scope.IsComplete) {
-                      url = '/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados';  
-                    }else{
-                      url = '/ZonaDeVuelo/Dashboard/1/2';
-                    }
-                    $scope.$apply(function() {
-                        $location.path(url);
-                    });
-                  }, 1000);
+            $scope.saveQuiz = function(quiz, userCourseUpdated) {
+              moodleFactory.Services.PostMultipleActivities("usercourse", quiz, userCourseUpdated, 'multipleactivities', function(){
+                if ($routeParams.retry) {
+                  _forceUpdateConnectionStatus(function() {
+                      if (_isDeviceOnline) {
+                          moodleFactory.Services.ExecuteQueue();
+                      }
+                  }, function() {} );
                 }
+                $timeout(function(){
+                  $scope.$emit('HidePreloader');
+                  var url = "";
+                  if ($scope.IsComplete) {
+                    url = '/ZonaDeVuelo/Conocete/RetoMultipleFichaDeResultados';  
+                  }else{
+                    url = '/ZonaDeVuelo/Dashboard/1/2';
+                  }
+                  $scope.$apply(function() {
+                      $location.path(url);
+                  });
+                }, 1000);
+              }, function(){
+                $timeout(function(){
+                  $scope.$apply(function() {
+                      $location.path('/ZonaDeVuelo/Dashboard/1/2');
+                  });
+                }, 1000);
               });
             }
 
@@ -484,25 +498,43 @@ angular
                 return month + "/" + day + "/" + year + " " + hour + ":" + minute + ":" + second;
             }
 
-            var encodeImageUri = function (imageUri, callback) {
-                var c = document.createElement('canvas');
-                var ctx = c.getContext("2d");
-                var img = new Image();
-                img.onload = function () {
-                    c.width = this.width;
-                    c.height = this.height;
-                    ctx.drawImage(img, 0, 0);
+            var saveLocalStorageActivities = function(retosMultiples){
+              for (var i = 0; i < retosMultiples.length; i++) {
+                _setLocalStorageJsonItem("activity/" + retosMultiples[i].coursemoduleid, retosMultiples[i]);
+              };
+            }
 
-                    if (typeof callback === 'function') {
-                        var dataURL = c.toDataURL("image/png");
-                        callback(dataURL.slice(22, dataURL.length));
+            var getHighestDetail = function(newAnswer, currentAnswer, unansweredParameter){
+              if (currentAnswer == "") {
+                return newAnswer;
+              }else{
+                var newArray = (typeof newAnswer == 'string' ? newAnswer.split(";") : newAnswer);
+                var currentArray = (typeof currentAnswer == 'string' ? currentAnswer.split(";") : currentAnswer);
+                var isNewAnswered = _.countBy(newArray, function(e){ return e == unansweredParameter ? 'unanswered' : 'answered' });
+                var isCurrentAnswered = _.countBy(currentArray, function(e){ return e == unansweredParameter ? 'unanswered' : 'answered' });
+                if (isNewAnswered.unanswered) {
+                  if (isNewAnswered.unanswered == newArray.length) {
+                    if (isCurrentAnswered.unanswered) {
+                      if (isCurrentAnswered.unanswered == currentArray.length) {
+                        return newArray;
+                      }else{
+                        return (isNewAnswered.unanswered >= isCurrentAnswered.unanswered ? currentArray : newArray);
+                      }
+                    }else{
+                      return currentArray;
                     }
-                };
-                img.src = imageUri;
-            };
-
-            if($routeParams.retry){
-              loadData();
+                  }
+                  else{
+                    if (isCurrentAnswered.unanswered) {
+                      return (isNewAnswered.unanswered >= isCurrentAnswered.unanswered ? currentArray : newArray);
+                    }else{
+                      return newArray;
+                    }
+                  }
+                }else{
+                  return newArray;
+                }
+              }
             }
 
         }])

@@ -153,9 +153,13 @@
             _postAsyncDataOffline("avatarInfo", data, API_RESOURCE.format('avatar'), successCallback, errorCallback);           
         }
 
+        var _postMultipleActivities = function(key, data, userCourseModel, url, successCallback, errorCallback){
+            _postAsyncDataOffline(key, data, API_RESOURCE.format(url), successCallback, errorCallback, userCourseModel);
+        }
+
         var _putEndActivityQuizes = function (activityId, data, userCourseModel, token, successCallback, errorCallback, forceRefresh) {
             _endActivity("usercourse", data, userCourseModel, API_RESOURCE.format('activity/' + activityId), token, successCallback, errorCallback);
-        };                
+        };
 
         var _putForumPostLikeNoCache = function (postId, data, successCallback, errorCallback) {
             _putDataNoCache(data, API_RESOURCE.format('forum/' + postId), successCallback, errorCallback);
@@ -454,7 +458,7 @@
                     if (key != null) {
                         _setLocalStorageJsonItem(key,data);
                     }
-                    
+
                     if(needUpdatePostCounter == true){
                         updatePostCounter(discussionid);
                     }else{}
@@ -488,7 +492,7 @@
             }
         };
 
-        var _postAsyncDataOffline = function (key, dataModel, url, successCallback, errorCallback) {
+        var _postAsyncDataOffline = function (key, dataModel, url, successCallback, errorCallback, otherDataModel) {
             _getDeviceVersionAsync();
             var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
             addRequestToQueue(key, {
@@ -501,7 +505,7 @@
                                'Authorization': currentUser.token }
                 }
             });
-            dataModel = (key == "avatarInfo" ? [dataModel] : dataModel );
+            dataModel = (key == "avatarInfo" ? [dataModel] : (!otherDataModel ? dataModel : otherDataModel) );
             _setLocalStorageJsonItem(key,dataModel);
 
             if(successCallback){
@@ -1223,32 +1227,43 @@
                                 //Reemplazamos el token con el token actual
                                 queue.data.headers.Authorization = _currentUser.token;
 
-                                _httpFactory(queue.data)
-                                .success(function (response) {
+                                function finalExecution(){
+                                    _httpFactory(queue.data)
+                                    .success(function (response) {
 
-                                    requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
-                                    requestQueue.shift();
-                                    if(queue.data.method == 'GET') {
-                                        if(queue.key) {
-                                            _setLocalStorageJsonItem(queue.key, response);    
+                                        requestQueue = moodleFactory.Services.GetCacheJson("RequestQueue/" + _currentUser.userId);
+                                        requestQueue.shift();
+                                        if(queue.data.method == 'GET') {
+                                            if(queue.key) {
+                                                _setLocalStorageJsonItem(queue.key, response);
+                                            }
                                         }
-                                    }
 
 
-                                    _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue); 
-                                    if(requestQueue.length == 0 && _callback != null) {
-                                        _callback();
-                                        _callback = null;
-                                    }
-                                    doRequestforCellphone();                                                            
-                                }).error(function (response) {
-                                    if(_isDeviceOnline){
-                                       requestQueue[0].retryCount++;                               
                                         _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
-                                       doRequestforCellphone();
-                                    }                        
-                                });
-                            }  
+                                        if(requestQueue.length == 0 && _callback != null) {
+                                            _callback();
+                                            _callback = null;
+                                        }
+                                        doRequestforCellphone();
+                                    }).error(function (response) {
+                                        if(_isDeviceOnline){
+                                           requestQueue[0].retryCount++;
+                                            _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
+                                           doRequestforCellphone();
+                                        }
+                                    });
+                                }
+                                if (queue.data.data.hasfilecontent) {
+                                    encodeImageWithUri(queue.data.data.imageuri, queue.data.data.datatype, function(b64){
+                                        console.log('imageencodedsuccessfully')
+                                        queue.data.data.filecontent = b64;
+                                        finalExecution();
+                                    });
+                                }else{
+                                    finalExecution();
+                                }
+                            }
                             else{
                                 requestQueue.shift();  
                                 _setLocalStorageJsonItem("RequestQueue/" + _currentUser.userId, requestQueue);
@@ -1399,7 +1414,8 @@
             GetServerDate: _getServerDate,
             ExecuteQueue: _executeQueue,
             PostAsyncAvatar: _postAsyncAvatar,
-            PutAsyncAward: _putAsyncAward,            
+            PostMultipleActivities: _postMultipleActivities,
+            PutAsyncAward: _putAsyncAward,
             PostGeolocation: _postGeolocation,
             DesactivateUser: _desactivateUser
         };

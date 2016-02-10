@@ -259,8 +259,8 @@
                                                             <div class="form-group theme-form">
                                                                 <h5>
                                                                     <span>Estudio {{model.studies.indexOf(s) + 1}}</span>
-                                                                    <button class="btn btn-circle"
-                                                                            ng-click="deleteStudy($index);">
+                                                                    <button class="btn btn-circle" type="button"
+                                                                            ng-click="deleteStudy($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
                                                                 </h5>
@@ -390,8 +390,7 @@
                                                             <input type="text"
                                                                    class="form-control form-control-lg theme-form"
                                                                    placeholder="Municipio / Delegación"
-                                                                   ng-model="model.address.town"
-                                                            />
+                                                                   ng-model="model.address.town"/>
                                                         </div>
                                                     </div>
 
@@ -400,8 +399,7 @@
                                                             <input type="text"
                                                                    class="form-control form-control-lg theme-form"
                                                                    placeholder="Código Postal"
-                                                                   ng-model="model.address.postalCode"
-                                                            />
+                                                                   ng-model="model.address.postalCode"/>
                                                         </div>
                                                     </div>
 
@@ -420,8 +418,7 @@
                                                                     <input type="text"
                                                                            class="form-control form-control-lg theme-form"
                                                                            placeholder="Núm. Ext."
-                                                                           ng-model="model.address.num_ext"
-                                                                    />
+                                                                           ng-model="model.address.num_ext"/>
                                                                 </div>
                                                             </div>
 
@@ -430,8 +427,7 @@
                                                                     <input type="text"
                                                                            class="form-control form-control-lg theme-form"
                                                                            placeholder="Núm. Int."
-                                                                           ng-model="model.address.num_int"
-                                                                    />
+                                                                           ng-model="model.address.num_int"/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -441,8 +437,7 @@
                                                         <div class="form-group-control">
                                                             <input type="text"
                                                                    class="form-control form-control-lg theme-form"
-                                                                   placeholder="Colonia" ng-model="model.address.colony"
-                                                            />
+                                                                   placeholder="Colonia" ng-model="model.address.colony"/>
                                                         </div>
                                                     </div>
                                                 </section>
@@ -454,7 +449,7 @@
                                                             <div class="form-group theme-form">
                                                                 <h5>
                                                                     <span>Teléfono {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deletePhone($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -496,7 +491,7 @@
                                                                 <h5>
                                                                     <!-- <span>Red Social {{model.socialNetworks.indexOf(sn) + 1}}</span> -->
                                                                     <span>Red Social {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteSocialNetwork($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -519,8 +514,7 @@
                                                                     <input type="text"
                                                                            class="form-control form-control-lg theme-form"
                                                                            placeholder="Nombre de usuario"
-                                                                           ng-model="model.socialNetworks[$index].socialNetworkId"
-                                                                    />
+                                                                           ng-model="model.socialNetworks[$index].socialNetworkId"/>
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -587,7 +581,7 @@
                                                                 <h5>
                                                                     <!-- <span>Familiar Compartamos {{model.familiaCompartamos.indexOf(fc) + 1}}</span>  -->
                                                                     <span>Familiar Compartamos {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteFamiliaCompartamos($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -684,7 +678,7 @@
                                                                 <h5>
                                                                     <!-- <span>Deporte {{model.favoriteSports.indexOf(sn) + 1}}</span> -->
                                                                     <span>Deporte {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteFavoriteSports($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -721,7 +715,7 @@
                                                                 <h5>
                                                                     <!-- <span>Actividad {{model.artisticActivities.indexOf(s) + 1}}</span> -->
                                                                     <span>Actividad {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteArtisticActivities($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -740,8 +734,6 @@
                                                                     </select>
                                                                     <span class="glyphicon glyphicon-triangle-bottom custom-caret"></span>
                                                                 </div>
-
-
                                                             </div>
                                                         </li>
                                                     </ul>
@@ -759,7 +751,7 @@
                                                                 <h5>
                                                                     <!-- <span>Hobbie {{model.hobbies.indexOf(s) + 1}}</span> -->
                                                                     <span>Hobbie {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteHobbies($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -843,7 +835,7 @@
                                                                 <h5>
                                                                     <!-- <span>Talento {{model.talents.indexOf(s) + 1}}</span> -->
                                                                     <span>Talento {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteTalents($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -879,7 +871,7 @@
                                                                 <h5>
                                                                     <!-- <span>Valor {{model.values.indexOf(s) + 1}}</span>  -->
                                                                     <span>Valor {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteValue($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -915,7 +907,7 @@
                                                                 <h5>
                                                                     <!-- <span>Habilidad {{model.habilities.indexOf(s) + 1}}</span> -->
                                                                     <span>Habilidad {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteHabilitie($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -1002,7 +994,7 @@
                                                             <div class="form-group theme-form">
                                                                 <h5>
                                                                     <span>Personaje {{model.inspirationalCharacters.indexOf(p) + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteInspirationalCharacter($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -1027,8 +1019,7 @@
                                                                     <input type="text"
                                                                            class="form-control form-control-lg theme-form"
                                                                            placeholder="Nombre Personaje"
-                                                                           ng-model="model.inspirationalCharacters[$index].characterName"
-                                                                    />
+                                                                           ng-model="model.inspirationalCharacters[$index].characterName"/>
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -1117,7 +1108,7 @@
                                                             <div class="form-group theme-form">
                                                                 <h5>
                                                                     <span>Mi actividad principal {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteMainActivity($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -1278,7 +1269,7 @@
                                                             <div class="form-group theme-form">
                                                                 <h5>
                                                                     <span>Ingreso {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteMoneyIncome($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -1397,7 +1388,7 @@
                                                             <div class="form-group theme-form">
                                                                 <h5>
                                                                     <span>Dispositivo {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteKnownDevice($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -1431,7 +1422,7 @@
                                                             <div class="form-group theme-form">
                                                                 <h5>
                                                                     <span>Dispositivo {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteOwnDevice($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -1465,7 +1456,7 @@
                                                             <div class="form-group theme-form">
                                                                 <h5>
                                                                     <span>Actividad {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deletePhoneUsage($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -1600,7 +1591,7 @@
                                                             <div class="form-group theme-form">
                                                                 <h5>
                                                                     <span>Videojuego {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteKindOfVideoGame($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>
@@ -1634,7 +1625,7 @@
                                                             <div class="form-group theme-form">
                                                                 <h5>
                                                                     <span>Juego {{$index + 1}}</span>
-                                                                    <button class="btn btn-circle"
+                                                                    <button class="btn btn-circle" type="button"
                                                                             ng-click="deleteFavoriteGame($index)">
                                                                         <span class="icomoon icon-cross"></span>
                                                                     </button>

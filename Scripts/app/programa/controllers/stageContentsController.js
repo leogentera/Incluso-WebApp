@@ -93,7 +93,8 @@ angular
 
                 $scope.contentResources = {};
 
-            $scope.currentPage = 1;  
+            $scope.currentPage = 1;
+            $scope.currentDate = new Date().getTime();
 
                 getContentResources(moduleid);
             $rootScope.showFooter = true; 

@@ -151,7 +151,7 @@ angular
             function successGame(data){
                 $scope.questionMap = ($scope.questionMap ? $scope.questionMap : moodleFactory.Services.GetCacheJson("multiplicaTuDineroQuestionMap"));
                 var logEntry = {
-                    "userid":$scope.user.id,
+                    "userid": $scope.user.id,
                     "answers": [],
                     "coursemoduleid": $scope.multiplicaTuDineroActivity.coursemoduleid,
                     "like_status": (data.gustaActividad == "Si" ? 1 : 0 ),

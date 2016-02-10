@@ -282,17 +282,6 @@ angular
                 }
             }
             
-            function getContentResources() {
-
-                drupalFactory.Services.GetContent("tuEliges", function (data, key) {
-                    $scope.contentResources = data.node;
-                }, function () {
-                }, false);
-
-            }
-            
-            getContentResources();
-            
 
             if($routeParams.retry){
                 _loadedDrupalResources = true;
@@ -306,6 +295,16 @@ angular
                 }
             }
             
+            function getContentResources() {
+
+                drupalFactory.Services.GetContent("tuEliges", function (data, key) {
+                    $scope.contentResources = data.node;
+                }, function () {
+                }, false);
+
+            }
+            
+            getContentResources();
         }])
         .controller('stageTuEligesModalController', function ($scope, $modalInstance, content) {
             $scope.message = content.mensaje;
