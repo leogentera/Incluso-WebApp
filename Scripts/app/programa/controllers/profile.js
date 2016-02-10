@@ -612,6 +612,7 @@ angular
                         }, 1000);
                     }
 
+
                     $scope.returnToPrivacySettings = function () {//After pressing "Cancelar" button.
                         //Remove variables from memory
                         $scope.confirmDesactivation = false;
@@ -1309,7 +1310,7 @@ angular
 
                     for (var i = 0; i < ary1.length; i++) {
                         for (var key in ary1[i]) {
-                            //console.log(ary1[i][key] + " -- " + ary2[i][key]);
+
                             if (ary1[i][key] !== ary2[i][key] && key != "$$hashKey") {
                                 return false;
                             }
@@ -1334,7 +1335,6 @@ angular
                                 $scope.sum += $scope.logOfSections[i].points;
                                 $scope.logOfSections[i].visited = true;
                                 showResultsPage = true;
-                                //console.log("+ :" + $scope.logOfSections[i].name);
                             }
                         }
 
@@ -1545,7 +1545,7 @@ angular
 
                     var fromPath = $location.$$path;
                     var fromPrivacy = fromPath == "/Perfil/ConfigurarPrivacidad/" + $scope.userId;
-                    if (!$scope.accessedSubsection && !fromPrivacy) {console.log("RETURNED");
+                    if (!$scope.accessedSubsection && !fromPrivacy) {
                         $location.path("Perfil/" + $scope.userId);
                         return;
                     }
@@ -1771,7 +1771,7 @@ angular
                     } else {
                         validInfo = false;
                     }
-                    //console.log("info from phone: " + validInfo);
+
                     return validInfo;
                 }
 
@@ -1797,7 +1797,7 @@ angular
                     } else {
                         validInfo = false;
                     }
-                    //console.log("info from Social Nets: " + validInfo);
+
                     return validInfo;
                 }
 
@@ -1824,7 +1824,7 @@ angular
                     } else {
                         validInfo = false;
                     }
-                    //console.log("info from Compartamos: " + validInfo);
+
                     return validInfo;
                 }
 
@@ -1902,7 +1902,7 @@ angular
                     if ($scope.model.medicalCoverage == "" && $scope.model.medicalInsurance != "No tengo seguro") {
                         validInfo = false;
                     }
-                    //console.log(validInfo);
+
                     return validInfo;
                 }
 
