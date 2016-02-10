@@ -122,11 +122,15 @@ angular
 
                     //Get status of Quiz "Mis Cualidades"
                     var activity71 = moodleFactory.Services.GetCacheJson("activity/71");
-                    $scope.status71 = parseInt(activity71.status, 10);
+                    if (activity71 !== null) {
+                        $scope.status71 = parseInt(activity71.status, 10);
+                    }
 
                     //Get status of Quiz "Mis Gustos"
                     var activity70 = moodleFactory.Services.GetCacheJson("activity/70");
-                    $scope.status70 = parseInt(activity70.status, 10);
+                    if (activity70 !== null) {
+                        $scope.status70 = parseInt(activity70.status, 10);
+                    }
 
                     $rootScope.pageName = "Mi perfil";
                     $rootScope.navbarBlue = false;
