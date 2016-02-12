@@ -4,14 +4,14 @@
         <div class="alert-message">
             <div class="icomoon icon-warning"></div>
             <p>¡Error! Verifica tus datos</p>
-            <ul>
+            <ul ng-show="">
                 <li ng-repeat="msg in model.modelState.errorMessages">{{msg}}</li>
             </ul>
         </div>
     </div>
     <div class="alert alert-success" role="alert" ng-if="model.modelState.isValid">
         <div class="alert-message">
-            <div class="icomoon icon-checked-clip"  ng-click="returnToProfile()"></div>
+            <div class="icomoon icon-checked-clip" ng-click="returnToProfile()"></div>
             <p>Tu contraseña ha sido modificada correctamente.</p>
         </div>
     </div>
@@ -35,8 +35,14 @@
                 </p>
             </div>
             <div class="profile-settings">
-                <a class="btn btn-icon-aside left active" ng-click="save()">
+                <a class="btn btn-icon-aside left" ng-click="">
+                    <span>Editar Perfil</span>
                     <div class="btn-icon">
+                        <span class="icomoon icon-edit"></span>
+                    </div>
+                </a>
+                <a class="btn btn-icon-aside right active" ng-click="save()">
+                    <div class="btn-icon red">
                         <span class="icomoon icon-settings"></span>
                     </div>
                     <span>Guardar</span>
@@ -46,43 +52,44 @@
         <section class="component profile-options" id="option-position">
             <form name="accountManagement" novalidate>
                 <div class="pages">
-                    <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <ul class="list-group separate-items">
-                                        <li class="list-group-item" ng-click="navigateToPage(2)">
-                                            <a href="">
-                                                <span class="icomoon icon-lock"></span>
-                                                <span>Privacidad</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="page" ng-class="currentPage == 2 ? 'active' : ''">
+                    <div class="page" ng-class="currentPage == 1 ? 'active' : ''">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12">
                                     <div class="panel panel-default panel-form">
                                         <div class="panel-heading with-icons" ng-click="navigateToPage(2)">
-                                            <span class="icomoon icon-lock"></span>
-                                            <span class="panel-title">Privacidad</span>
+                                            <span class="icomoon icon-settings"></span>
+                                            <span class="panel-title">Configuración</span>
                                         </div>
                                         <div class="panel-body">
                                             <fieldset class="my-profile-form">
-
                                                 <!--<div class="checkbox checkbox-custom">
                                                     <label>
                                                         <input type="checkbox" ng-model="model.allowToSendAdvertisement" name="allowToSendAdvertisement" />
                                                         <span>Deseo recibir promoción y publicidad</span>
                                                     </label>
                                                 </div>-->
+                                                <section class="form-content-list my-account">
+                                                    <h4 class="text-uppercase">Configuración de la cuenta</h4>
+                                                    <ul class="block-list">
+                                                        <li class="form-group-control" ng-click="changePassword()">
+                                                            <div class="col-xs-12">
+                                                                <label>Cambio de contraseña</label>
+                                                                <span class="icomoon icon-arrow-bold-right"></span>
+                                                            </div>
+                                                        </li>
+                                                        <li class="form-group-control" ng-click="initDesactivation()">
+                                                            <div class="col-xs-12">
+                                                                <label class="red-color">Desactivar cuenta</label>
+                                                                <span class="icomoon icon-arrow-bold-right"></span>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </section>
 
                                                 <section class="form-content-list">
+                                                    <h4 class="text-uppercase">Privacidad</h4>
                                                     <h4>Mi información</h4>
 
                                                     <ul class="block-list">
@@ -224,23 +231,7 @@
                                                     </ul>
                                                 </section>
 
-                                                <section class="form-content-list my-account">
-                                                    <h4>Confirmación de la cuenta</h4>
-                                                    <ul class="block-list">
-                                                        <li class="form-group-control" ng-click="changePassword()">
-                                                            <div class="col-xs-12">
-                                                                <label>Cambio de contraseña</label>
-                                                                <span class="icomoon icon-arrow-bold-right"></span>
-                                                            </div>
-                                                        </li>
-                                                        <li class="form-group-control" ng-click="initDesactivation()">
-                                                            <div class="col-xs-12">
-                                                                <label class="red-color">Desactivar cuenta</label>
-                                                                <span class="icomoon icon-arrow-bold-right"></span>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </section>
+
 
                                                 <div class="actions">
                                                     <div class="page-controls">
@@ -258,7 +249,7 @@
                         </div>
                     </div><!-- Closing Page 2  -->
 
-                    <div class="page" ng-class="currentPage == 3 ? 'active' : ''">
+                    <div class="page" ng-class="currentPage == 2 ? 'active' : ''">
                         <a id="topView"></a>
                         <div class="container-fluid">
                             <div class="row">
@@ -392,7 +383,7 @@
                         </div>
                     </div><!-- Closing Page 3  -->
 
-                    <div class="page" ng-class="currentPage == 4 ? 'active' : ''">
+                    <div class="page" ng-class="currentPage == 3 ? 'active' : ''">
                         <div class="container-fluid">
                             <div class="row">
                                 <div class="col-xs-12">
@@ -435,7 +426,7 @@
                                                                    class="form-control form-control-lg theme-form"
                                                                    placeholder="Contraseña"
                                                                    ng-model="changePasswordModel.currentPasswordDesactivate"
-                                                                   ng-trim="true" required />
+                                                                   ng-trim="true" required/>
                                                         </div>
                                                     </div>
 

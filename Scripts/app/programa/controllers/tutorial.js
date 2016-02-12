@@ -55,6 +55,7 @@ angular
                 }
             }
 
+
             function getDataAsync() {
                 var currentUser = JSON.parse(moodleFactory.Services.GetCacheObject("CurrentUser"));
                 //moodleFactory.Services.GetAsyncAvatar(_getItem("userId"), currentUser.token , getAvatarInfoCallback);
@@ -87,7 +88,6 @@ angular
                         "imagen_recortada": ""
                     }];
                 }
-
                 $scope.$emit('HidePreloader');
             }
 
@@ -100,7 +100,6 @@ angular
                 var c = document.createElement('canvas');
                 var ctx = c.getContext("2d");
                 var img = new Image();
-
                 img.onload = function () {
                     c.width = this.width;
                     c.height = this.height;
@@ -110,7 +109,6 @@ angular
                         callback(dataURL.slice(22, dataURL.length));
                     }
                 };
-
                 img.src = imageUri;
             };
 
@@ -132,7 +130,6 @@ angular
                     }, function () {
                     });
                 }
-
                 $timeout(function () {
                     _loadedDrupalResources = true;
                     $scope.$emit('HidePreloader');
@@ -162,9 +159,7 @@ angular
                     "escudo": "",
                     "avatarType": "Tutorial"
                 };
-
                 $scope.$emit('ShowPreloader');
-
                 try {
                     cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                 } catch (e) {
@@ -216,22 +211,10 @@ angular
                 $location.path('/ProgramaDashboard');
             }
 
-            function getContentResources() {
-
-                drupalFactory.Services.GetContent("tutorial", function (data, key) {
-                    $scope.contentResources = data.node;
-                }, function () {
-                }, false);
-
-            }
-
-            getContentResources();
-
             $scope.navigateToPage = function (pageNumber) {
                 $scope.currentPage = pageNumber;
                 $scope.scrollToTop();
             };
-
 
             if ($routeParams.retry) {
                 try {
@@ -260,4 +243,15 @@ angular
                     );
                 }
             }
+
+            function getContentResources() {
+
+                drupalFactory.Services.GetContent("tutorial", function (data, key) {
+                    $scope.contentResources = data.node;
+                }, function () {
+                }, false);
+
+            }
+
+            getContentResources();
         }]);

@@ -81,7 +81,7 @@ angular
                 $scope.setToolbar($location.$$path, "");
 
                 if ($location.$$path == ('/Perfil/ConfigurarPrivacidad/' + $scope.userId)) {
-                    $scope.currentPage = 2;
+                    $scope.currentPage = 1;
                 } else if (localStorage.getItem("profile_page")) {
                     $scope.currentPage = Number(localStorage.getItem("profile_page"));
                     localStorage.removeItem("profile_page");
@@ -105,8 +105,8 @@ angular
                 $scope.logOfSections = [];
 
                 getDataAsync(function () {
-                    
-                    getContent();                                        
+
+                    getContent();
 
                     //privacy settings initial switches [boolean]
                     $scope.generalInfo = true;
@@ -144,6 +144,22 @@ angular
                         isValid: false,
                         errorMessages: []
                     };
+
+                    //Get status of Quiz "Mis Cualidades"
+                    var activity71 = moodleFactory.Services.GetCacheJson("activity/71");
+                    if (activity71 !== null) {
+                        $scope.status71 = parseInt(activity71.status, 10);
+                    } else {
+                        $scope.status71 = -1;
+                    }
+
+                    //Get status of Quiz "Mis Gustos"
+                    var activity70 = moodleFactory.Services.GetCacheJson("activity/70");
+                    if (activity70 !== null) {
+                        $scope.status70 = parseInt(activity70.status, 10);
+                    } else {
+                        $scope.status70 = -1;
+                    }
 
                     $rootScope.pageName = "Mi perfil";
                     $rootScope.navbarBlue = false;
@@ -435,7 +451,7 @@ angular
 
                     $scope.initDesactivation = function () {
                         //Initialize proper variables.
-                        $scope.currentPage = 4;
+                        $scope.currentPage = 3;
                         $scope.model.modelState.isValid = false;
                         $scope.model.modelState.errorMessages = [];
                         $scope.passwordChanged = false;
@@ -531,7 +547,7 @@ angular
                             $http({
                                 method: 'PUT',
                                 url: API_RESOURCE.format("authentication") + "/" + currentUser.userId,
-                                headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': currentUser.token },
+                                headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': currentUser.token},
                                 data: $.param({
                                     password: $scope.changePasswordModel.currentPassword,
                                     new_password: $scope.changePasswordModel.passwordOne
@@ -559,11 +575,11 @@ angular
 
                                     //... and redirect the user to login view.
                                     /*
-                                    $timeout(function(){
-                                        $scope.$emit('HidePreloader');
-                                        logout($scope, $location);
-                                    }, 1);
-                                    */
+                                     $timeout(function(){
+                                     $scope.$emit('HidePreloader');
+                                     logout($scope, $location);
+                                     }, 1);
+                                     */
 
                                 } else {
                                     $scope.model.modelState.isValid = false;
@@ -596,13 +612,14 @@ angular
                         }, 1000);
                     }
 
+
                     $scope.returnToPrivacySettings = function () {//After pressing "Cancelar" button.
                         //Remove variables from memory
                         $scope.confirmDesactivation = false;
                         $scope.model.modelState.isValid = false;
                         $scope.model.modelState.errorMessages = [];
                         $scope.passwordChanged = false;
-                        $scope.currentPage = 2; //Go back to initial view.
+                        $scope.currentPage = 1; //Go back to initial view.
                     };
 
                     //************ END OF SECTION FOR ACCOUNT MANAGEMENT
@@ -624,12 +641,13 @@ angular
                         //Get avatar info from Local Storage.
                         $scope.avatarInfo = moodleFactory.Services.GetCacheJson("avatarInfo");
                         $timeout(function () {
-                            $scope.validateConnection(function () { }, function () {
-                                
+                            $scope.validateConnection(function () {
+                            }, function () {
+
                                 getImageOrDefault("assets/avatar/avatar_" + _getItem("userId") + ".png", $scope.model.profileimageurl, function (niceImageUrl) {
                                     $scope.model.profileimageurl = niceImageUrl;
                                 });
-                                
+
                             });
                         }, 500);
 
@@ -640,7 +658,7 @@ angular
                         $scope.model.level = $scope.model.currentStudies["level"];
                         $scope.model.grade = $scope.model.currentStudies["grade"];
                         $scope.model.period = $scope.model.currentStudies["period"];
-                       
+
                         $scope.model.talents = orderCatalog($scope.model.talents);
                         $scope.model.values = orderCatalog($scope.model.values);
                         $scope.model.habilities = orderCatalog($scope.model.habilities);
@@ -693,8 +711,9 @@ angular
                             }
                             _forceUpdateConnectionStatus(function () {
                                 $scope.model.profileimageurl = (_isDeviceOnline ? $scope.model.profileimageurl : 'assets/avatar/default-2.png');
-                            }, function () { });
-                            
+                            }, function () {
+                            });
+
                             $scope.hasCommunityAccess = _hasCommunityAccessLegacy($scope.model.communityAccess);
 
                             callback();
@@ -1254,7 +1273,7 @@ angular
 
                 $scope.changePassword = function () {
                     //Initialize proper variables
-                    $scope.currentPage = 3;
+                    $scope.currentPage = 2;
                     $scope.model.modelState.isValid = false;
                     $scope.model.modelState.errorMessages = [];
                     $scope.passwordChanged = false;
@@ -1266,11 +1285,11 @@ angular
                     $scope.$emit('ShowPreloader');
                     $location.path("Perfil/" + $scope.userId);
                     /*
-                    $timeout(function () {
-                        $scope.$emit('ShowPreloader');
-                        $location.path("Perfil/" + $scope.userId);
-                    }, 1);
-                    */
+                     $timeout(function () {
+                     $scope.$emit('ShowPreloader');
+                     $location.path("Perfil/" + $scope.userId);
+                     }, 1);
+                     */
                 };
 
                 Array.prototype.compare = function (testArr) {
@@ -1291,7 +1310,7 @@ angular
 
                     for (var i = 0; i < ary1.length; i++) {
                         for (var key in ary1[i]) {
-                            //console.log(ary1[i][key] + " -- " + ary2[i][key]);
+
                             if (ary1[i][key] !== ary2[i][key] && key != "$$hashKey") {
                                 return false;
                             }
@@ -1316,7 +1335,6 @@ angular
                                 $scope.sum += $scope.logOfSections[i].points;
                                 $scope.logOfSections[i].visited = true;
                                 showResultsPage = true;
-                                //console.log("+ :" + $scope.logOfSections[i].name);
                             }
                         }
 
@@ -1574,7 +1592,8 @@ angular
                     var sectionIndex;
                     var usercourse = JSON.parse(localStorage.getItem("usercourse"));
                     var currentUser = JSON.parse(localStorage.getItem("CurrentUser"));
-                    $scope.userCourse = usercourse; /**/
+                    $scope.userCourse = usercourse;
+                    /**/
                     var sectionName, sectionId;
                     showResultsPage = true; //Show page 12 for Final Results.
 
@@ -1624,22 +1643,22 @@ angular
                                     sectionFieldsAreOk = false;
                                     break;
                             }
-                            
+
                             if (sectionFieldsAreOk) {//The user has successfully completed a profile's section.
 
                                 activity.status = 1;   //Update activity status.
-                                $scope.logOfSections.push({ "id": sectionId, "name": sectionName, "points": activity.points, "status": 1 });
+                                $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": activity.points, "status": 1});
                                 $scope.model.stars = parseInt($scope.model.stars) + activity.points; // Add the activity points.
 
                                 activity.last_status_update = moment(Date.now()).unix();
-                                
+
                                 var profile = JSON.parse(moodleFactory.Services.GetCacheObject("Perfil/" + $scope.userId));
                                 var newPoints = parseInt(profile.stars) + parseInt(activity.points); //Update points
                                 profile.stars = newPoints;  //Update the 'stars' key.
-                                
+
                                 _setLocalStorageJsonItem("Perfil/" + $scope.userId, profile); //Save updated profile to Local Storage.
                                 updateUserStarsUsingExternalActivity(activity.activity_identifier); //Update profile in Moodle.
-                                
+
                                 endingTime = moment().format('YYYY-MM-DD HH:mm:ss');
 
                                 var activityModel = {
@@ -1651,7 +1670,7 @@ angular
                                     "token": currentUser.token,
                                     "activityType": "Assign"
                                 };
-                                                                
+
                                 //Finish Activity.
                                 _endActivity(activityModel, function () {
                                     validateAllFieldsCompleted();
@@ -1659,26 +1678,26 @@ angular
 
                                 sectionFieldsAreOk = false;  //Restore 'sectionFieldsAreOk' value
                             } else {//Not all fields were completed.
-                                $scope.logOfSections.push({ "id": sectionId, "name": sectionName, "points": 0, "status": 0 });
+                                $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": 0, "status": 0});
                             }
                         } else { //The subsection has been previously completed.
 
                             /* This does not seem necessary...
-                            if (!showResultsPage && activity.activity_identifier == $scope.origin) {
-                                showResultsPage = true;
-                            }
-                            */
+                             if (!showResultsPage && activity.activity_identifier == $scope.origin) {
+                             showResultsPage = true;
+                             }
+                             */
 
-                            $scope.logOfSections.push({ "id": sectionId, "name": sectionName, "points": 0, "status": 1 });
+                            $scope.logOfSections.push({"id": sectionId, "name": sectionName, "points": 0, "status": 1});
                         }
                     }
-                }            
-                
-                
+                }
+
+
                 function validateAllFieldsCompleted() {
                     if ($scope.userCourse && $scope.userCourse.activities) {
 
-                        var activitiesCompleted = _.where($scope.userCourse.activities, { status: 1 });
+                        var activitiesCompleted = _.where($scope.userCourse.activities, {status: 1});
 
                         if (activitiesCompleted && activitiesCompleted.length == $scope.userCourse.activities.length) {
 
@@ -1692,11 +1711,13 @@ angular
                                     userProfile.badges[i].status = "won";
                                 }
                             }
-                            
+
                             localStorage.setItem("Perfil/" + currentUser.userId, JSON.stringify(userProfile));
                             showRobotProfile();
-                            moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function () { }, function () { });
-                            
+                            moodleFactory.Services.PostBadgeToUser($scope.userId, badgeModel, function () {
+                            }, function () {
+                            });
+
                         }
                     }
                 }
@@ -1706,11 +1727,11 @@ angular
                         title: $scope.robotContentResources.titulo,
                         message: $scope.robotContentResources.mensaje
                     };
-                            
+
                     _setLocalStorageItem("badgeRobotMessage", JSON.stringify($scope.badgeRobotMessages));
-                    $scope.openModal_badgeRobotMessage();                                    
+                    $scope.openModal_badgeRobotMessage();
                 }
-                
+
                 $scope.openModal_badgeRobotMessage = function (size) {
                     var modalInstance = $modal.open({
                         animation: $scope.animationsEnabled,
@@ -1720,7 +1741,7 @@ angular
                         windowClass: 'closing-stage-modal user-help-modal'
                     });
                 };
-                
+
                 function phonesAreValid(phones) {
 
                     var validInfo = true;
@@ -1750,7 +1771,7 @@ angular
                     } else {
                         validInfo = false;
                     }
-                    //console.log("info from phone: " + validInfo);
+
                     return validInfo;
                 }
 
@@ -1776,7 +1797,7 @@ angular
                     } else {
                         validInfo = false;
                     }
-                    //console.log("info from Social Nets: " + validInfo);
+
                     return validInfo;
                 }
 
@@ -1803,7 +1824,7 @@ angular
                     } else {
                         validInfo = false;
                     }
-                    //console.log("info from Compartamos: " + validInfo);
+
                     return validInfo;
                 }
 
@@ -1811,11 +1832,11 @@ angular
                     var result = false;
 
                     if ($scope.model.firstname && $scope.model.lastname && $scope.model.mothername && $scope.model.gender && $scope.model.birthCountry
-                            && $scope.birthdate_Dateformat && $scope.model.age > 13 && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.country && $scope.model.address.city
-                                && $scope.model.address.town && $scope.model.address.postalCode && $scope.model.address.street && $scope.model.address.num_ext
-                                    && $scope.model.address.colony && phonesAreValid($scope.model.phones) && socialNetsAreValid($scope.model.socialNetworks) 
-                                        && compartamosIsValid($scope.model.familiaCompartamos)) {
-                                            result = true;
+                        && $scope.birthdate_Dateformat && $scope.model.age > 13 && $scope.model.maritalStatus && $scope.model.studies.length > 0 && $scope.model.address.country && $scope.model.address.city
+                        && $scope.model.address.town && $scope.model.address.postalCode && $scope.model.address.street && $scope.model.address.num_ext
+                        && $scope.model.address.colony && phonesAreValid($scope.model.phones) && socialNetsAreValid($scope.model.socialNetworks)
+                        && compartamosIsValid($scope.model.familiaCompartamos)) {
+                        result = true;
                     }
                     return result;
                 }
@@ -1857,10 +1878,10 @@ angular
                     var result = false;
                     if ($scope.model.favoriteSports.length > 0 && $scope.model.artisticActivities.length > 0 && $scope.model.hobbies.length > 0
                         && $scope.model.talents.length > 0 && $scope.model.values.length > 0 && $scope.model.habilities.length > 0
-                            && charactersIsValid($scope.model.inspirationalCharacters)) {
-                                                result = true;
+                        && charactersIsValid($scope.model.inspirationalCharacters)) {
+                        result = true;
                     }
-                    return result;                
+                    return result;
                 }
 
                 function checkMedicalServices() {
@@ -1881,15 +1902,15 @@ angular
                     if ($scope.model.medicalCoverage == "" && $scope.model.medicalInsurance != "No tengo seguro") {
                         validInfo = false;
                     }
-                    //console.log(validInfo);
+
                     return validInfo;
                 }
 
                 function assignmentSocioeconomicos() {
                     var result = false;
                     if ($scope.model.iLiveWith && $scope.model.mainActivity.length > 0 && $scope.model.level && $scope.model.grade && $scope.model.period
-                            && $scope.model.children && $scope.model.gotMoneyIncome && $scope.model.moneyIncome.length > 0 && checkMedicalServices()) {
-                                result = true;
+                        && $scope.model.children && $scope.model.gotMoneyIncome && $scope.model.moneyIncome.length > 0 && checkMedicalServices()) {
+                        result = true;
                     }
                     return result;
                 }
@@ -1898,8 +1919,8 @@ angular
                     var result = false;
                     if ($scope.model.knownDevices.length > 0 && $scope.model.ownDevices.length > 0 && $scope.model.phoneUsage.length > 0
                         && $scope.model.playVideogames && $scope.model.videogamesFrecuency && $scope.model.videogamesHours
-                            && $scope.model.kindOfVideogames.length > 0 && $scope.model.favoriteGames.length > 0) {
-                                result = true;
+                        && $scope.model.kindOfVideogames.length > 0 && $scope.model.favoriteGames.length > 0) {
+                        result = true;
                     }
                     return result;
                 }
@@ -1990,53 +2011,115 @@ angular
                     $scope.model.socialNetworks.splice(index, 1);
                 };
 
+                // **************** Section for MIS GUSTOS **************************
+                function canIErase(arr, index, quizStatus) {
+                    if (quizStatus === 1) {//Quiz is Finished.
+
+                        if (arr[index] == "") {//...You can delete this element...
+                            return true;
+                        } else {
+                            //Check if there are at lest 2 non null-string elements...
+                            var count = 0, i;
+                            for (i = 0; i < arr.length; i++) {
+                                if (arr[i] != "") {
+                                    count++;
+                                }
+                            }
+
+                            if (count > 1) {//...You can delete the item...
+                                return true;
+                            } else {//...You can NOT delete the item...
+                                return false;
+                            }
+                        }
+
+                    } else {
+                        return true;
+                    }
+                }
+
                 $scope.addFavoriteSports = function () {
                     $scope.model.favoriteSports.push("");
                 };
 
                 $scope.deleteFavoriteSports = function (index) {
-                    $scope.model.favoriteSports.splice(index, 1);
+
+                    var canI = canIErase($scope.model.favoriteSports, index, $scope.status70);
+
+                    if (canI) {
+                        $scope.model.favoriteSports.splice(index, 1);
+                    }
                 };
 
                 $scope.addArtisticActivities = function () {
-                    $scope.model.artisticActivities.push(new String());
+                    $scope.model.artisticActivities.push("");
                 };
 
                 $scope.deleteArtisticActivities = function (index) {
-                    $scope.model.artisticActivities.splice(index, 1);
+
+                    var canI = canIErase($scope.model.artisticActivities, index, $scope.status70);
+
+                    if (canI) {
+                        $scope.model.artisticActivities.splice(index, 1);
+                    }
                 };
 
                 $scope.addHobbies = function () {
-                    $scope.model.hobbies.push(new String());
+                    $scope.model.hobbies.push("");
                 };
 
                 $scope.deleteHobbies = function (index) {
-                    $scope.model.hobbies.splice(index, 1);
+
+                    var canI = canIErase($scope.model.hobbies, index, $scope.status70);
+
+                    if (canI) {
+                        $scope.model.hobbies.splice(index, 1);
+                    }
                 };
 
+                // **************** End of Section for MIS GUSTOS **************************
+
+                // **************** Section for MIS CUALIDADES **************************
                 $scope.addTalents = function () {
-                    $scope.model.talents.push(new String());
+                    $scope.model.talents.push("");
                 };
 
                 $scope.deleteTalents = function (index) {
-                    $scope.model.talents.splice(index, 1);
+
+                    var canI = canIErase($scope.model.talents, index, $scope.status71);
+
+                    if (canI) {
+                        $scope.model.talents.splice(index, 1);
+                    }
                 };
 
                 $scope.addValue = function () {
-                    $scope.model.values.push(new String());
+                    $scope.model.values.push("");
                 };
 
                 $scope.deleteValue = function (index) {
-                    $scope.model.values.splice(index, 1);
+
+                    var canI = canIErase($scope.model.values, index, $scope.status71);
+
+                    if (canI) {
+                        $scope.model.values.splice(index, 1);
+                    }
                 };
 
                 $scope.addHabilitie = function () {
-                    $scope.model.habilities.push(new String());
+                    $scope.model.habilities.push("");
                 };
 
                 $scope.deleteHabilitie = function (index) {
-                    $scope.model.habilities.splice(index, 1);
+
+                    var canI = canIErase($scope.model.habilities, index, $scope.status71);
+
+                    if (canI) {
+                        $scope.model.habilities.splice(index, 1);
+                    }
                 };
+
+                // **************** End of Section for MIS CUALIDADES **************************
 
                 $scope.addInspirationalCharacter = function () {
                     $scope.model.inspirationalCharacters.push({});
@@ -2155,7 +2238,11 @@ angular
                     var pathimagen = "assets/avatar/" + avatarInfo[0].pathimagen + "?rnd=" + new Date().getTime();
                     encodeImageUri(pathimagen, function (b64) {
                         avatarInfo[0]["filecontent"] = b64;
-                        moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function () { avatarUploaded("Éxito") }, function () { avatarUploaded("Error") });
+                        moodleFactory.Services.PostAsyncAvatar(avatarInfo[0], function () {
+                            avatarUploaded("Éxito");
+                        }, function () {
+                            avatarUploaded("Error");
+                        });
                     });
                 };
 
@@ -2213,7 +2300,22 @@ angular
                         $scope.$emit('ShowPreloader');
                         cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "openApp", [JSON.stringify(avatarInfoForGameIntegration)]);
                     } catch (e) {
-                        SuccessAvatar({ "userId": $scope.userId, "actividad": "Mi Avatar", "alias": $scope.model.alias, "genero": "Mujer", "rostro": "Preocupado", "colorPiel": "E6C8B0", "estiloCabello": "Cabello02", "colorCabello": "694027", "trajeColorPrincipal": "00A0FF", "trajeColorSecundario": "006192", "imagenRecortada": "app/initializr/media", "fechaModificación": "09/05/2015 09:32:04", "gustaActividad": "Si", "pathImagen": "avatar_196.png" })
+                        SuccessAvatar({
+                            "userId": $scope.userId,
+                            "actividad": "Mi Avatar",
+                            "alias": $scope.model.alias,
+                            "genero": "Mujer",
+                            "rostro": "Preocupado",
+                            "colorPiel": "E6C8B0",
+                            "estiloCabello": "Cabello02",
+                            "colorCabello": "694027",
+                            "trajeColorPrincipal": "00A0FF",
+                            "trajeColorSecundario": "006192",
+                            "imagenRecortada": "app/initializr/media",
+                            "fechaModificación": "09/05/2015 09:32:04",
+                            "gustaActividad": "Si",
+                            "pathImagen": "avatar_196.png"
+                        });
 
                     }
                 };
@@ -2328,9 +2430,10 @@ angular
                 function getRobotMessageContent() {
                     drupalFactory.Services.GetContent("BadgePerfilRobot", function (data, key) {
                         $scope.robotContentResources = data.node;
-                    }, function () { }, false);
+                    }, function () {
+                    }, false);
                 }
-                
+
                 function getContent() {
                     drupalFactory.Services.GetContent("7001", function (data, key) {
                         _loadedResources = true;
@@ -2339,13 +2442,13 @@ angular
                             $scope.$emit('HidePreloader');
                         }
                         getRobotMessageContent();
-                        
+
                     }, function () {
                         _loadedResources = true;
                         if (_loadedResources && _pageLoaded) {
                             $scope.$emit('HidePreloader');
                         }
-                        
+
                     }, false);
                 }
 
@@ -2355,21 +2458,38 @@ angular
                 if ($routeParams.retry) {
                     _loadedDrupalResources = true;
                     try {
-                        document.addEventListener("deviceready", function () { cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", []) }, false);
+                        document.addEventListener("deviceready", function () {
+                            cordova.exec(SuccessAvatar, FailureAvatar, "CallToAndroid", "setMiAvatarIntentCallback", []);
+                        }, false);
                     }
                     catch (e) {
                         SuccessAvatar(
-                            { "userId": $scope.userId, "actividad": "Mi Avatar", "alias": $scope.model.alias, "genero": "Mujer", "rostro": "Preocupado", "colorPiel": "E6C8B0", "estiloCabello": "Cabello02", "colorCabello": "694027", "trajeColorPrincipal": "00A0FF", "trajeColorSecundario": "006192", "imagenRecortada": "app/initializr/media", "fechaModificación": "09/05/2015 09:32:04", "gustaActividad": "Si", "pathImagen": "avatar_196.png" }
+                            {
+                                "userId": $scope.userId,
+                                "actividad": "Mi Avatar",
+                                "alias": $scope.model.alias,
+                                "genero": "Mujer",
+                                "rostro": "Preocupado",
+                                "colorPiel": "E6C8B0",
+                                "estiloCabello": "Cabello02",
+                                "colorCabello": "694027",
+                                "trajeColorPrincipal": "00A0FF",
+                                "trajeColorSecundario": "006192",
+                                "imagenRecortada": "app/initializr/media",
+                                "fechaModificación": "09/05/2015 09:32:04",
+                                "gustaActividad": "Si",
+                                "pathImagen": "avatar_196.png"
+                            }
                         );
                     }
                 }
 
             }
-        } ]).controller('badgeRobotMessageModal', function ($scope, $modalInstance) {
-            $scope.cancel = function () {
-                $modalInstance.dismiss('cancel');
-            };
-            
-            var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));            
-            $scope.actualMessage = robotMessage;
-    });
+        }]).controller('badgeRobotMessageModal', function ($scope, $modalInstance) {
+    $scope.cancel = function () {
+        $modalInstance.dismiss('cancel');
+    };
+
+    var robotMessage = JSON.parse(localStorage.getItem("badgeRobotMessage"));
+    $scope.actualMessage = robotMessage;
+});
